@@ -73,7 +73,6 @@ namespace POA_CORBA
     class EventDef;
     typedef EventDef *EventDef_ptr;
     
-    class _TAO_EventDef_Strategized_Proxy_Broker;
     
     class  EventDef
       : public virtual POA_CORBA::ExtValueDef
@@ -144,7 +143,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -155,7 +154,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       lookup_skel (
@@ -166,7 +165,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       contents_skel (
@@ -177,7 +176,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       lookup_name_skel (
@@ -188,7 +187,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_contents_skel (
@@ -199,7 +198,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_module_skel (
@@ -210,7 +209,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_constant_skel (
@@ -221,7 +220,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_struct_skel (
@@ -232,7 +231,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_union_skel (
@@ -243,7 +242,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_enum_skel (
@@ -254,7 +253,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_alias_skel (
@@ -265,7 +264,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_interface_skel (
@@ -276,7 +275,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_value_skel (
@@ -287,7 +286,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_value_box_skel (
@@ -298,7 +297,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_exception_skel (
@@ -309,7 +308,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_native_skel (
@@ -320,7 +319,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_abstract_interface_skel (
@@ -331,7 +330,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_local_interface_skel (
@@ -342,7 +341,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_ext_value_skel (
@@ -425,7 +424,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_skel (
@@ -436,7 +435,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       move_skel (
@@ -567,7 +566,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       is_a_skel (
@@ -578,7 +577,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_value_skel (
@@ -589,7 +588,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_value_member_skel (
@@ -600,7 +599,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_attribute_skel (
@@ -611,7 +610,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_operation_skel (
@@ -638,7 +637,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_ext_value_skel (
@@ -649,7 +648,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_ext_attribute_skel (
@@ -660,58 +659,12 @@ namespace POA_CORBA
         );
     };
     
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_EventDef_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_EventDef_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_EventDef_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_EventDef_Strategized_Proxy_Broker *
-      the_TAO_EventDef_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
-    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
     
     class Container;
     typedef Container *Container_ptr;
     
-    class _TAO_Container_Strategized_Proxy_Broker;
     
     class  Container
       : public virtual POA_CORBA::Container
@@ -855,7 +808,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -866,7 +819,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       lookup_skel (
@@ -877,7 +830,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       contents_skel (
@@ -888,7 +841,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       lookup_name_skel (
@@ -899,7 +852,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_contents_skel (
@@ -910,7 +863,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_module_skel (
@@ -921,7 +874,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_constant_skel (
@@ -932,7 +885,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_struct_skel (
@@ -943,7 +896,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_union_skel (
@@ -954,7 +907,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_enum_skel (
@@ -965,7 +918,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_alias_skel (
@@ -976,7 +929,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_interface_skel (
@@ -987,7 +940,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_value_skel (
@@ -998,7 +951,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_value_box_skel (
@@ -1009,7 +962,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_exception_skel (
@@ -1020,7 +973,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_native_skel (
@@ -1031,7 +984,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_abstract_interface_skel (
@@ -1042,7 +995,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_local_interface_skel (
@@ -1053,7 +1006,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_ext_value_skel (
@@ -1064,58 +1017,12 @@ namespace POA_CORBA
         );
     };
     
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_Container_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_Container_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_Container_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_Container_Strategized_Proxy_Broker *
-      the_TAO_Container_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
-    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
     
     class ModuleDef;
     typedef ModuleDef *ModuleDef_ptr;
     
-    class _TAO_ModuleDef_Strategized_Proxy_Broker;
     
     class  ModuleDef
       : public virtual POA_CORBA::ModuleDef,
@@ -1187,7 +1094,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -1198,7 +1105,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       lookup_skel (
@@ -1209,7 +1116,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       contents_skel (
@@ -1220,7 +1127,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       lookup_name_skel (
@@ -1231,7 +1138,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_contents_skel (
@@ -1242,7 +1149,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_module_skel (
@@ -1253,7 +1160,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_constant_skel (
@@ -1264,7 +1171,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_struct_skel (
@@ -1275,7 +1182,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_union_skel (
@@ -1286,7 +1193,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_enum_skel (
@@ -1297,7 +1204,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_alias_skel (
@@ -1308,7 +1215,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_interface_skel (
@@ -1319,7 +1226,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_value_skel (
@@ -1330,7 +1237,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_value_box_skel (
@@ -1341,7 +1248,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_exception_skel (
@@ -1352,7 +1259,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_native_skel (
@@ -1363,7 +1270,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_abstract_interface_skel (
@@ -1374,7 +1281,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_local_interface_skel (
@@ -1385,7 +1292,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_ext_value_skel (
@@ -1468,7 +1375,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_skel (
@@ -1479,7 +1386,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       move_skel (
@@ -1490,7 +1397,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_component_skel (
@@ -1501,7 +1408,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_home_skel (
@@ -1512,7 +1419,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_event_skel (
@@ -1523,58 +1430,12 @@ namespace POA_CORBA
         );
     };
     
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_ModuleDef_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_ModuleDef_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_ModuleDef_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_ModuleDef_Strategized_Proxy_Broker *
-      the_TAO_ModuleDef_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
-    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
     
     class Repository;
     typedef Repository *Repository_ptr;
     
-    class _TAO_Repository_Strategized_Proxy_Broker;
     
     class  Repository
       : public virtual POA_CORBA::Repository,
@@ -1646,7 +1507,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -1657,7 +1518,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       lookup_skel (
@@ -1668,7 +1529,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       contents_skel (
@@ -1679,7 +1540,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       lookup_name_skel (
@@ -1690,7 +1551,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_contents_skel (
@@ -1701,7 +1562,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_module_skel (
@@ -1712,7 +1573,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_constant_skel (
@@ -1723,7 +1584,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_struct_skel (
@@ -1734,7 +1595,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_union_skel (
@@ -1745,7 +1606,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_enum_skel (
@@ -1756,7 +1617,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_alias_skel (
@@ -1767,7 +1628,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_interface_skel (
@@ -1778,7 +1639,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_value_skel (
@@ -1789,7 +1650,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_value_box_skel (
@@ -1800,7 +1661,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_exception_skel (
@@ -1811,7 +1672,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_native_skel (
@@ -1822,7 +1683,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_abstract_interface_skel (
@@ -1833,7 +1694,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_local_interface_skel (
@@ -1844,7 +1705,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_ext_value_skel (
@@ -1855,7 +1716,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       lookup_id_skel (
@@ -1866,7 +1727,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       get_canonical_typecode_skel (
@@ -1877,7 +1738,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       get_primitive_skel (
@@ -1888,7 +1749,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_string_skel (
@@ -1899,7 +1760,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_wstring_skel (
@@ -1910,7 +1771,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_sequence_skel (
@@ -1921,7 +1782,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_array_skel (
@@ -1932,7 +1793,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_fixed_skel (
@@ -1943,7 +1804,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_component_skel (
@@ -1954,7 +1815,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_home_skel (
@@ -1965,7 +1826,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_event_skel (
@@ -1976,58 +1837,12 @@ namespace POA_CORBA
         );
     };
     
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_Repository_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_Repository_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_Repository_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_Repository_Strategized_Proxy_Broker *
-      the_TAO_Repository_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
-    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
     
     class ProvidesDef;
     typedef ProvidesDef *ProvidesDef_ptr;
     
-    class _TAO_ProvidesDef_Strategized_Proxy_Broker;
     
     class  ProvidesDef
       : public virtual POA_CORBA::Contained
@@ -2133,7 +1948,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -2216,7 +2031,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_skel (
@@ -2227,7 +2042,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       move_skel (
@@ -2238,58 +2053,12 @@ namespace POA_CORBA
         );
     };
     
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_ProvidesDef_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_ProvidesDef_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_ProvidesDef_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_ProvidesDef_Strategized_Proxy_Broker *
-      the_TAO_ProvidesDef_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
-    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
     
     class UsesDef;
     typedef UsesDef *UsesDef_ptr;
     
-    class _TAO_UsesDef_Strategized_Proxy_Broker;
     
     class  UsesDef
       : public virtual POA_CORBA::Contained
@@ -2430,7 +2199,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -2513,7 +2282,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_skel (
@@ -2524,7 +2293,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       move_skel (
@@ -2535,58 +2304,12 @@ namespace POA_CORBA
         );
     };
     
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_UsesDef_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_UsesDef_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_UsesDef_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_UsesDef_Strategized_Proxy_Broker *
-      the_TAO_UsesDef_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
-    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
     
     class EventPortDef;
     typedef EventPortDef *EventPortDef_ptr;
     
-    class _TAO_EventPortDef_Strategized_Proxy_Broker;
     
     class  EventPortDef
       : public virtual POA_CORBA::Contained
@@ -2710,7 +2433,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -2793,7 +2516,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_skel (
@@ -2804,7 +2527,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       move_skel (
@@ -2815,58 +2538,12 @@ namespace POA_CORBA
         );
     };
     
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_EventPortDef_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_EventPortDef_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_EventPortDef_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_EventPortDef_Strategized_Proxy_Broker *
-      the_TAO_EventPortDef_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
-    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
     
     class EmitsDef;
     typedef EmitsDef *EmitsDef_ptr;
     
-    class _TAO_EmitsDef_Strategized_Proxy_Broker;
     
     class  EmitsDef
       : public virtual POA_CORBA::ComponentIR::EventPortDef
@@ -2937,7 +2614,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -3020,7 +2697,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_skel (
@@ -3031,7 +2708,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       move_skel (
@@ -3058,7 +2735,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       is_a_skel (
@@ -3069,58 +2746,12 @@ namespace POA_CORBA
         );
     };
     
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_EmitsDef_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_EmitsDef_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_EmitsDef_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_EmitsDef_Strategized_Proxy_Broker *
-      the_TAO_EmitsDef_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
-    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
     
     class PublishesDef;
     typedef PublishesDef *PublishesDef_ptr;
     
-    class _TAO_PublishesDef_Strategized_Proxy_Broker;
     
     class  PublishesDef
       : public virtual POA_CORBA::ComponentIR::EventPortDef
@@ -3191,7 +2822,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -3274,7 +2905,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_skel (
@@ -3285,7 +2916,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       move_skel (
@@ -3312,7 +2943,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       is_a_skel (
@@ -3323,58 +2954,12 @@ namespace POA_CORBA
         );
     };
     
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_PublishesDef_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_PublishesDef_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_PublishesDef_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_PublishesDef_Strategized_Proxy_Broker *
-      the_TAO_PublishesDef_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
-    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
     
     class ConsumesDef;
     typedef ConsumesDef *ConsumesDef_ptr;
     
-    class _TAO_ConsumesDef_Strategized_Proxy_Broker;
     
     class  ConsumesDef
       : public virtual POA_CORBA::ComponentIR::EventPortDef
@@ -3445,7 +3030,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -3528,7 +3113,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_skel (
@@ -3539,7 +3124,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       move_skel (
@@ -3566,7 +3151,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       is_a_skel (
@@ -3577,58 +3162,12 @@ namespace POA_CORBA
         );
     };
     
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_ConsumesDef_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_ConsumesDef_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_ConsumesDef_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_ConsumesDef_Strategized_Proxy_Broker *
-      the_TAO_ConsumesDef_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
-    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
     
     class ComponentDef;
     typedef ComponentDef *ComponentDef_ptr;
     
-    class _TAO_ComponentDef_Strategized_Proxy_Broker;
     
     class  ComponentDef
       : public virtual POA_CORBA::ExtInterfaceDef
@@ -3875,7 +3414,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -3886,7 +3425,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       lookup_skel (
@@ -3897,7 +3436,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       contents_skel (
@@ -3908,7 +3447,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       lookup_name_skel (
@@ -3919,7 +3458,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_contents_skel (
@@ -3930,7 +3469,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_module_skel (
@@ -3941,7 +3480,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_constant_skel (
@@ -3952,7 +3491,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_struct_skel (
@@ -3963,7 +3502,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_union_skel (
@@ -3974,7 +3513,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_enum_skel (
@@ -3985,7 +3524,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_alias_skel (
@@ -3996,7 +3535,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_interface_skel (
@@ -4007,7 +3546,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_value_skel (
@@ -4018,7 +3557,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_value_box_skel (
@@ -4029,7 +3568,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_exception_skel (
@@ -4040,7 +3579,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_native_skel (
@@ -4051,7 +3590,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_abstract_interface_skel (
@@ -4062,7 +3601,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_local_interface_skel (
@@ -4073,7 +3612,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_ext_value_skel (
@@ -4156,7 +3695,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_skel (
@@ -4167,7 +3706,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       move_skel (
@@ -4202,7 +3741,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       is_a_skel (
@@ -4213,7 +3752,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_interface_skel (
@@ -4224,7 +3763,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_attribute_skel (
@@ -4235,7 +3774,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_operation_skel (
@@ -4246,7 +3785,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_ext_interface_skel (
@@ -4257,7 +3796,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_ext_attribute_skel (
@@ -4268,58 +3807,12 @@ namespace POA_CORBA
         );
     };
     
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_ComponentDef_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_ComponentDef_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_ComponentDef_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_ComponentDef_Strategized_Proxy_Broker *
-      the_TAO_ComponentDef_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
-    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
     
     class FactoryDef;
     typedef FactoryDef *FactoryDef_ptr;
     
-    class _TAO_FactoryDef_Strategized_Proxy_Broker;
     
     class  FactoryDef
       : public virtual POA_CORBA::OperationDef
@@ -4390,7 +3883,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -4473,7 +3966,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_skel (
@@ -4484,7 +3977,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       move_skel (
@@ -4583,58 +4076,12 @@ namespace POA_CORBA
         );
     };
     
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_FactoryDef_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_FactoryDef_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_FactoryDef_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_FactoryDef_Strategized_Proxy_Broker *
-      the_TAO_FactoryDef_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
-    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
     
     class FinderDef;
     typedef FinderDef *FinderDef_ptr;
     
-    class _TAO_FinderDef_Strategized_Proxy_Broker;
     
     class  FinderDef
       : public virtual POA_CORBA::OperationDef
@@ -4705,7 +4152,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -4788,7 +4235,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_skel (
@@ -4799,7 +4246,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       move_skel (
@@ -4898,58 +4345,12 @@ namespace POA_CORBA
         );
     };
     
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_FinderDef_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_FinderDef_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_FinderDef_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_FinderDef_Strategized_Proxy_Broker *
-      the_TAO_FinderDef_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
-    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
     
     class HomeDef;
     typedef HomeDef *HomeDef_ptr;
     
-    class _TAO_HomeDef_Strategized_Proxy_Broker;
     
     class  HomeDef
       : public virtual POA_CORBA::ExtInterfaceDef
@@ -5204,7 +4605,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       destroy_skel (
@@ -5215,7 +4616,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       lookup_skel (
@@ -5226,7 +4627,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       contents_skel (
@@ -5237,7 +4638,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       lookup_name_skel (
@@ -5248,7 +4649,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_contents_skel (
@@ -5259,7 +4660,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_module_skel (
@@ -5270,7 +4671,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_constant_skel (
@@ -5281,7 +4682,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_struct_skel (
@@ -5292,7 +4693,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_union_skel (
@@ -5303,7 +4704,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_enum_skel (
@@ -5314,7 +4715,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_alias_skel (
@@ -5325,7 +4726,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_interface_skel (
@@ -5336,7 +4737,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_value_skel (
@@ -5347,7 +4748,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_value_box_skel (
@@ -5358,7 +4759,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_exception_skel (
@@ -5369,7 +4770,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_native_skel (
@@ -5380,7 +4781,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_abstract_interface_skel (
@@ -5391,7 +4792,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_local_interface_skel (
@@ -5402,7 +4803,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_ext_value_skel (
@@ -5485,7 +4886,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_skel (
@@ -5496,7 +4897,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       move_skel (
@@ -5531,7 +4932,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       is_a_skel (
@@ -5542,7 +4943,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_interface_skel (
@@ -5553,7 +4954,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_attribute_skel (
@@ -5564,7 +4965,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_operation_skel (
@@ -5575,7 +4976,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       describe_ext_interface_skel (
@@ -5586,7 +4987,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1939
+      // be\be_interface.cpp:1859
       
       static void
       create_ext_attribute_skel (
@@ -5596,51 +4997,6 @@ namespace POA_CORBA
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         );
     };
-    
-    ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
-    //
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-    
-    class  _TAO_HomeDef_Strategized_Proxy_Broker
-      : public virtual TAO::Collocation_Proxy_Broker
-    {
-    public: 
-      _TAO_HomeDef_Strategized_Proxy_Broker (void);
-      
-      virtual ~_TAO_HomeDef_Strategized_Proxy_Broker (void);
-      
-      TAO::Collocation_Strategy
-      get_strategy (
-          CORBA::Object_ptr obj
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      
-      void
-      dispatch (
-          CORBA::Object_ptr obj,
-          CORBA::Object_out forward_obj,
-          TAO::Argument ** args,
-          int num_args,
-          const char * op,
-          size_t op_len,
-          TAO::Collocation_Strategy strategy
-          ACE_ENV_ARG_DECL
-        )
-        ACE_THROW_SPEC ((CORBA::Exception));
-      
-      static _TAO_HomeDef_Strategized_Proxy_Broker *
-      the_TAO_HomeDef_Strategized_Proxy_Broker (void);
-    };
-    
-    //
-    //            End Strategized Proxy Broker Declaration 
-    ///////////////////////////////////////////////////////////////////////
-    
-    
   
   // TAO_IDL - Generated from
   // be\be_visitor_module/module_sh.cpp:80
