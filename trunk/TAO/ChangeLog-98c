@@ -1,3 +1,13 @@
+1998-12-29  Seth Widoff  <swidoff@cs.cmu.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.{h,cpp}:
+	  For the "in" operator, the trader now uses Dynamic Anys to
+	  access the values of service offer sequences rather than
+	  the deprecated Any::value method. Thanks to Nanbor
+	  <nanbor@cs.wustl.edu> for noticing this use of the deprecated
+	  method.
+
 Tue Dec 29 14:29:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/try_macros.h: 
