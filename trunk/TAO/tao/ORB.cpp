@@ -674,15 +674,15 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_initial_references (CORBA::String name,
-                                       CORBA_Environment &_env)
+                                       CORBA_Environment &TAO_IN_ENV)
 {
-  return this->resolve_initial_references (name, 0, _env);
+  return this->resolve_initial_references (name, 0, TAO_IN_ENV);
 }
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_initial_references (CORBA::String name,
                                        ACE_Time_Value *timeout,
-                                       CORBA_Environment &_env)
+                                       CORBA_Environment &TAO_IN_ENV)
 {
   if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
     return this->resolve_name_service (timeout);

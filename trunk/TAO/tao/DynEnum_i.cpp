@@ -154,7 +154,7 @@ TAO_DynEnum_i::from_any (const CORBA_Any& any,
 }
 
 CORBA::Any_ptr
-TAO_DynEnum_i::to_any (CORBA::Environment& _env)
+TAO_DynEnum_i::to_any (CORBA::Environment& TAO_IN_ENV)
 {
   TAO_OutputCDR out_cdr;
 

@@ -426,7 +426,7 @@ public:
                                CORBA::ULong old_length);
   virtual void _downcast (void* target,
                           CORBA_Object* src,
-                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   virtual CORBA_Object* _upcast (void* src) const;
 };
 
@@ -482,7 +482,7 @@ public:
                                CORBA::ULong old_length);
   virtual void _downcast (void* target,
                           CORBA_Object* src,
-                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   virtual CORBA_Object* _upcast (void* src) const;
 };
 

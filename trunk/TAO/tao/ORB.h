@@ -832,12 +832,12 @@ public:
   // can be used for initialization or in comparisons.
 
   virtual CORBA::Object_ptr string_to_object (const char *str,
-                                              CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
+                                              CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
   // Turn a string-ified object reference back into an object pointer.
   // Each type of ORB, e.g. an IIOP ORB, must implement this.
   // Typically these strings are created using <object_to_string()>.
   virtual CORBA::String object_to_string (CORBA::Object_ptr obj,
-                                          CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
+                                          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
   // Turn an object reference into a string.  Each type of ORB,
   // e.g. an IIOP ORB, must implement this.  This can be used by
   // servers to publish their whereabouts to clients.  The output of
@@ -905,11 +905,11 @@ public:
   // currently supported.
 
   CORBA_Object_ptr resolve_initial_references (CORBA::String name,
-                                               CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                               CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
 
   CORBA_Object_ptr resolve_initial_references (CORBA::String name,
                                                ACE_Time_Value *timeout,
-                                               CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                               CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // This method acts as a mini-bootstrapping Naming Service, which is
   // provided by the ORB for certain well-known object references.
   // TAO supports the "NameService", "TradingService", "RootPOA", and
@@ -932,13 +932,13 @@ public:
 
   STUB_Object *create_stub_object (const TAO_ObjectKey &key,
                                    const char *type_id,
-                                   CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Makes sure that the ORB is open and then creates an IIOP object
   // based on the endpoint.
 
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
                                   const char *type_id,
-                                  CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Convert key into an object reference.  Return Object_ptr as out
   // parameter.  Errors will come through the environment.
   //
@@ -970,7 +970,7 @@ public:
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
 
-  static void init_orb_globals (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  static void init_orb_globals (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Initialize the ORB globals correctly, i.e., only when they
   // haven't been initialized yet.
 

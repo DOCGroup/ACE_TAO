@@ -44,27 +44,27 @@ public:
 
   int init (int& argc,
             char *argv[],
-            CORBA_Environment &_env = CORBA_Environment::default_environment ());
+            CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Initialize the ORB/root POA, using the supplied command line
   // arguments or the default ORB components.  Returns -1 on failure.
 
   int init_child_poa (int& argc,
                       char *argv[],
                       char *poa_name,
-                      CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                      CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Creates a child poa under the root poa with PERSISTENT and
   // USER_ID policies.  Call this if you want a <child_poa> with the
   // above policies, otherwise call init.  Returns -1 on failure.
 
   CORBA::String activate (PortableServer::Servant servant,
-                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Activate <servant>, using the POA <activate_object> call.  Users
   // can call this method multiple times to activate multiple objects.
   // Returns 0 on failure.
 
   CORBA::String activate_under_child_poa (const char *servant_name,
                                           PortableServer::Servant servant,
-                                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Precondition: init_child_poa has been called.  Activate <servant>
   // using the POA <activate_object_with_id> created from the string
   // servant_name. Users should call this to activate objects under
