@@ -1251,7 +1251,6 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
   return return_val;
 }
 
-#if ((ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
 int
 ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
                                    size_t bytes_to_read,
@@ -1261,6 +1260,7 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
                                    int priority,
                                    int signal_number)
 {
+#if ((ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   static const size_t page_size = ACE_OS::getpagesize();
 
   FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
@@ -1360,9 +1360,11 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
   }
 
   return initiate_result;
+#else /*#if ( (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))*/
+  ACE_NOTSUP_RETURN (-1);
+#endif /*#if ( (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))*/
 }
 
-#endif /*#if ( (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))*/
 
 ACE_WIN32_Asynch_Read_File::~ACE_WIN32_Asynch_Read_File (void)
 {
@@ -1646,7 +1648,6 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
   return return_val;
 }
 
-#if ((ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
 int
 ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
                                      size_t bytes_to_write,
@@ -1656,6 +1657,7 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
                                      int priority,
                                      int signal_number)
 {
+#if ((ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   static const size_t page_size = ACE_OS::getpagesize();
 
   FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
@@ -1760,9 +1762,13 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
   }
 
   return initiate_result;
+#else /*#if ((ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))*/
+
+  ACE_NOTSUP_RETURN (-1);
+
+#endif /* */
 }
 
-#endif /*#if ((ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))*/
 
 ACE_WIN32_Asynch_Write_File::~ACE_WIN32_Asynch_Write_File (void)
 {
