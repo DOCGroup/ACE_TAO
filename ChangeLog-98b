@@ -61,6 +61,9 @@ Tue Sep 08 07:28:05 1998  David L. Levine  <levine@cs.wustl.edu>
         * docs/ACE-guidelines.html: notify via email if a particular
           individual's attention is needed to address a comment in the code.
 
+        * ace/Basic_Types.h: corrected comment:  the dump method
+          is named output, because it takes an argument.
+
 Mon Sep  7 22:12:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/config-freebsd.h: Added ACE_HAS_SIGINFO_T,
