@@ -16,7 +16,7 @@ old_tao_version=`version <TAO/VERSION TAO`
 if [ -z $old_ace_version ]; then echo No existing ACE version; exit 1; fi
 if [ -z $old_tao_version ]; then echo No existing TAO version; exit 1; fi
 
-cvs update -A VERSION TAO/VERSION
+cvs update -A VERSION TAO/VERSION Makefile
 
 ace_version=`version <VERSION ACE`
 tao_version=`version <TAO/VERSION TAO`
@@ -30,7 +30,7 @@ echo New software version tags: $ace_version $tao_version
 
 # Conserve net bandwidth if no change was observed
 if [ $old_ace_version != $ace_version ]; then
-  cvs -q update -Pd -r $ace_version `ls|egrep -v '^(\.|\.\.|TAO|CVS)$'`
+  cvs -q update -Pd -r $ace_version `make -s show_controlled_files`
 fi
 if [ $old_tao_version != $tao_version ]; then
   cvs -q update -Pd -r $tao_version TAO
