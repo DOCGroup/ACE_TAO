@@ -13,7 +13,7 @@
 #include "ace/pre.h"
 
 #include "ace/ACE.h"
-#include "ace/Addr.h"
+#include "ace/IPC/Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -172,7 +172,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/ATM_Addr.i"
+#include "ace/ATM/ATM_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -1,15 +1,15 @@
 // ATM_Connector.cpp
 // $Id$
 
-#include "ace/Handle_Set.h"
-#include "ace/ATM_Connector.h"
+#include "ace/OS/Handle_Set.h"
+#include "ace/ATM/ATM_Connector.h"
 
 ACE_RCSID(ace, ATM_Connector, "$Id$")
 
 #if defined (ACE_HAS_ATM)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ATM_Connector.i"
+#include "ace/ATM/ATM_Connector.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Connector)
@@ -29,7 +29,7 @@ ACE_ATM_Connector::ACE_ATM_Connector (void)
 // Connect the <new_stream> to the <remote_sap>, waiting up to
 // <timeout> amount of time if necessary.
 
-int
+iint
 ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
                             const ACE_ATM_Addr &remote_sap,
                             ACE_ATM_Params params,

@@ -14,9 +14,9 @@
 #define ACE_ATM_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "ace/ATM_Stream.h"
-#include "ace/ATM_Params.h"
-#include "ace/ATM_QoS.h"
+#include "ace/ATM/ATM_Stream.h"
+#include "ace/ATM/ATM_Params.h"
+#include "ace/ATM/ATM_QoS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
