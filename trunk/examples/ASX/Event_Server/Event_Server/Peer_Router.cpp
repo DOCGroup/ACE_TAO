@@ -252,9 +252,6 @@ Peer_Handler::open (void *)
   else if (this->prc_->bind_peer (this->get_handle (), this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "bind_peer"), -1);
 
-  // Turn off non-blocking I/O in case it was turned on.
-  else if (this->peer ().disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "disable non-blocking I/O"), -1);
   else
     return 0;
 }
