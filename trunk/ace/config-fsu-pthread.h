@@ -28,7 +28,10 @@
 #define	ACE_LACKS_RWLOCK_T
 #define	ACE_LACKS_SETSCHED
 
+#if !defined(ACE_HAS_POSIX_TIME)
+#define	ACE_HAS_POSIX_TIME
 #define	ACE_LACKS_TIMESPEC_T
+#endif
 
 #include <pthread.h>
 

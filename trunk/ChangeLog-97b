@@ -1,3 +1,37 @@
+Wed Oct 29 07:39:38 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/LOCK_SOCK_Acceptor.h: Removed the typedef of
+ 	  ACE_SOCK_Acceptor with a full expansion of the name to fix a G++
+ 	  bug.
+
+	* tests/Conn_Test.cpp: Fixed a template instantiation problem.
+
+	* ACE-INSTALL.html: Pointed out that ACE is ported to LynxOS and
+	  Chorus.
+
+	* ACE-INSTALL.html: Added information about cloning that explains
+ 	  how you must to build a config.h and platform_macros.GNU in
+ 	  cloned directory.  Thanks to Arturo for this.
+
+        * bin/Makefile: Added
+ 	  $(ACE_ROOT)/include/makeinclude/platform_macros.GNU to Makefile
+ 	  so we can compile clone on any ACE platform.  Thanks to Arturo
+ 	  for this.
+
+        * include/makefiles: Added new platform file for SCO UNIX with
+ 	  nothreads.  Thanks to Arturo for this.
+
+        * ace: Added new config files for SCO UNIX with nothreads.
+	  Thanks to Arturo for this.
+
+	* apps/JAWS/server/HTTP_Server.cpp: Fixed the typedef for
+ 	  ACE_LOCK_SOCK_Acceptor.  Thanks to Hans Rohnert for reporting
+ 	  this.
+
+	* tests/Conn_Test.cpp: Changed template instantiations from
+ 	  SOCK_ACCEPTOR to LOCK_SOCK_ACCEPTOR.  Thanks to Han Rohnert for
+ 	  reporting this.
+
 Wed Oct 29 02:10:37 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.31, released Wed Oct 29 02:10:37 1997.

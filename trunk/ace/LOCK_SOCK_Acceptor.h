@@ -42,9 +42,6 @@ public:
   // Return a reference to the lock.
 
 protected:
-  typedef ACE_SOCK_Acceptor SUPER;
-  // Useful typedef
-
   ACE_LOCK lock_;
   // Type of locking mechanism.
 };

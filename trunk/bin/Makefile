@@ -4,11 +4,13 @@
 #
 #############################################################################
 
-CXX		= CC
+include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+
+# CXX		= gcc 
 CFILES		= clone.cpp 
 OFILES		= clone.o
-DFLAGS		= -g
-CFLAGS		= $(DFLAGS) -I$(ACE_ROOT)
+DFLAGS		= -b elf
+CFLAGS		= $(CCFLAGS) -I$(ACE_ROOT)
 
 #############################################################################
 # C++ directives

@@ -1,25 +1,34 @@
 # $Id$
 
-# SCO v5.0.2; gcc version 2.7-95q4(Skunkware96 distribution from media images)
-
-debug = 1
-optimize = 1
-
+# Requires FSU pthreads and gcc 2.7.2 installed in /usr/progressive
+# to produce libACE.so correctly changed the specs file for gcc 2.7.2
+# for not link -lc and -lgcc and other not shared libraries
 CC              = gcc
+# for threads
+# for no threads
+#CXX		= gcc -fno-implicit-templates -w -fno-strict-prototypes
+# LDFLAGS	+= -L $(ACE_ROOT)/ace -L ./ ${FSU_PTHREADS_DIR}/init/init.o # -z muldefs
+# LDLIBS	+= -L $(ACE_ROOT)/ace -L ./ ${FSU_PTHREADS_DIR}/init/init.o -lACE # -z muldefs
+LDLIBS	+= -L $(ACE_ROOT)/ace # -z muldefs
 CXX		= g++
-CFLAGS		+= -b elf -w
-CCFLAGS		+= $(CFLAGS) -Xpg4plus -fno-implicit-templates \
-		   -I/usr/progressive/lib/g++-include
+CFLAGS		+= $(DCFLAGS) -b elf -w -O2
+CCFLAGS		+= $(DCCFLAGS) -b elf -O2 -fpic -fno-implicit-templates -I /usr/progressive/lib/g++-include
+#DCFLAGS		+= -gstabs -DACE_HAS_BIG_FD_SET
 DCFLAGS		+= -gstabs
+DCCFLAGS	+= $(DCFLAGS)
 DLD             = $(CXX)
-LD		= $(CXX)
-LIBS            += -lsocket -lnsl -ldl
-OCFLAGS		+= -O2
-PIC             = -fpic 
+LD              = $(CXX)
+LIBS            = -lnsl -lsocket
+PIC             = -fpic
 AR              = ar
 ARFLAGS         = ruv
 RANLIB          = /bin/true
 
-SOFLAGS = $(CPPFLAGS) -b elf -fpic -G
+SOFLAGS = $(CPPFLAGS) -b elf -fpic -G 
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
-PRELIB  = @true
+# SOLINK	= $(SOLINK.cc) -o $@ $(LDFLAGS) $<
+# PRELIB  = (echo "main() { }" > gcctemp.c && \
+#           $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
+#           $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) $(LDLIBS) $(LIBS); \
+#           status=$$?; exit $$status)
+PRELIB = @true
