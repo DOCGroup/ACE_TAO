@@ -6452,25 +6452,33 @@ ACE_U_LongLong::operator== (const ACE_U_LongLong &ll) const
 ACE_INLINE int
 ACE_U_LongLong::operator< (const ACE_U_LongLong &ll) const
 {
-  return hi_ < ll.hi_  &&  lo_ < ll.lo_;
+  return hi_ < ll.hi_ ? 1
+                      : hi_ > ll.hi_ ? 0
+                                     : lo_ < ll.lo_;
 }
 
 ACE_INLINE int
 ACE_U_LongLong::operator<= (const ACE_U_LongLong &ll) const
 {
-  return hi_ <= ll.hi_  &&  lo_ <= ll.lo_;
+  return hi_ < ll.hi_ ? 1
+                      : hi_ > ll.hi_ ? 0
+                                     : lo_ <= ll.lo_;
 }
 
 ACE_INLINE int
 ACE_U_LongLong::operator> (const ACE_U_LongLong &ll) const
 {
-  return hi_ > ll.hi_  &&  lo_ > ll.lo_;
+  return hi_ > ll.hi_ ? 1
+                      : hi_ < ll.hi_ ? 0
+                                     : lo_ > ll.lo_;
 }
 
 ACE_INLINE int
 ACE_U_LongLong::operator>= (const ACE_U_LongLong &ll) const
 {
-  return hi_ >= ll.hi_  &&  lo_ >= ll.lo_;
+  return hi_ > ll.hi_ ? 1
+                      : hi_ < ll.hi_ ? 0
+                                     : lo_ >= ll.lo_;
 }
 
 ACE_INLINE
