@@ -139,3 +139,7 @@ main (int, char *[])
   return 0;
 }
 
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Unbounded_Set<ACE_Log_Msg*>;
+#endif

@@ -79,12 +79,7 @@ ACE_Unbounded_Set<ACE_Log_Msg*> x;
 
 static void TestCounter64()
 {
-  static long l = LONG_MAX, nl = LONG_MIN;  // limits.h
-  static unsigned long ul = ULONG_MAX, def = 0;
-  static int i = INT_MAX, ni = INT_MIN;
-  static unsigned int ui = UINT_MAX;
-  static unsigned short us = 10;
-  static short si = 65535;
+  static unsigned long ul = ULONG_MAX;
   LLONG ll =  (LLONG) 0x7fffffffffffffff; 
   LLONG mll =  (LLONG) ((-ll) - 1); 
   ULLONG ull =  (ULLONG) 0xffffffffffffffff; 
@@ -161,3 +156,7 @@ main (int, char *[])
   return 0;
 }
 
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Unbounded_Set<ACE_Log_Msg *>;
+#endif
