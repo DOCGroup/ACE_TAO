@@ -182,7 +182,7 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads, ACE_Timer_Queue *tq)
     this->completion_port_ = cp;
   else // Failure.
     {
-      int error = ::GetLastError ();
+      int error = ACE_OS::last_error ();
       // If errno == ERROR_INVALID_PARAMETER, then this handle was
       // already registered.
       if (error != ERROR_INVALID_PARAMETER)
@@ -258,19 +258,20 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
   u_long bytes_transferred = 0;
 
   int error = 0;
-#if defined (ACE_WIN32)
   ACE_HANDLE io_handle = ACE_INVALID_HANDLE;
   int timeout = how_long == 0 ? INFINITE : how_long->msec ();
 
+  BOOL result = 0;
+ 
   // When we port this to use Posix async I/O, this call will be
   // replace will a generic ACE_OS call.
-  BOOL result;
- 
+#if defined (ACE_WIN32)
   result = ::GetQueuedCompletionStatus (completion_port_,
 					&bytes_transferred,
 					(u_long *) &io_handle,
 					(ACE_OVERLAPPED **) &overlapped,
 					timeout);
+#endif /* ACE_WIN32 */
 
   // Check for a failed dequeue.  This can happen either because
   // of problems with the IO completion port (in which case
@@ -279,7 +280,7 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
   // we'll stash the error value so that we can update errno
   // appropriate later on.
   if (result == FALSE)
-    error = ::GetLastError ();
+    error = ACE_OS::last_error ();
 
   // Check for any timers that can be handled before we dispatch the
   // dequeued event.  Note that this is done irrespective of whether
@@ -302,7 +303,6 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
 			 "%p GetQueuedCompletionStatus failed errno = %d.\n",
 			 "ACE_Proactor::handle_events", error), -1);
     }
-#endif /* ACE_WIN32 */
 
   // Dequeued a failed or successful operation.  Dispatch the
   // Event_Handler.  Note that GetQueuedCompletionStatus returns false
@@ -363,14 +363,12 @@ ACE_Proactor::initiate (ACE_Event_Handler *handler,
   // Create the state for this operation.  This object "is-a"
   // OVERLAPPED structure, and holds other data and methods for this
   // operation.
-  ACE_Overlapped_IO *overlapped;
+  ACE_Overlapped_IO *overlapped = 0;
   
-#if defined (ACE_WIN32)
   ACE_NEW_RETURN (overlapped,
-		  ACE_Overlapped_IO (mask, handler, msg, 
-				     file, shared_event_.handle ()),
+		  ACE_Overlapped_IO (mask, handler, msg,
+				     file, this->get_handle ()),
 		  -1);
-#endif
 
   // Tell the handler that *this* <Proactor> is dispatching it.
   handler->proactor (this);
@@ -382,12 +380,12 @@ ACE_Proactor::initiate (ACE_Event_Handler *handler,
 int
 ACE_Proactor::initiate (ACE_Overlapped_IO *overlapped)
 {
-#if defined (ACE_WIN32)
   u_long bytes_transferred = 0;
 
   ACE_HANDLE io_handle = overlapped->handler_->get_handle ();
-  ACE_HANDLE cp;
+  ACE_HANDLE cp = 0;
 
+#if defined (ACE_WIN32)
   cp = ::CreateIoCompletionPort (io_handle,
 				 this->completion_port_,
 				 (u_long) io_handle,
@@ -398,7 +396,7 @@ ACE_Proactor::initiate (ACE_Overlapped_IO *overlapped)
     this->completion_port_ = cp;
   else // Failure.
     {
-      int error = ::GetLastError ();
+      int error = ACE_OS::last_error ();
       // If errno == ERROR_INVALID_PARAMETER, then this handle was
       // already registered.
       if (error != ERROR_INVALID_PARAMETER)
@@ -416,7 +414,7 @@ ACE_Proactor::initiate (ACE_Overlapped_IO *overlapped)
     return 1;
 
   // If initiate failed, check for a bad error.
-  int err = ::GetLastError ();
+  int err = ACE_OS::last_error ();
   switch (err)
     {
     case ERROR_HANDLE_EOF:
