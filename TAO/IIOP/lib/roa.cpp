@@ -2,17 +2,32 @@
 #include "tcpoa.hh"
 #include "debug.hh"
 
-int         ACE_ROA::end_reactor_event_loop_ = 0;
-ACE_Reactor ACE_ROA::theReactor;
-int         ACE_ROA::usingThreads_ = 0;
-unsigned int ACE_ROA::theThreadFlags = THR_NEW_LWP;
-void*       ACE_ROA::context_p = 0;
-ACE_ROA::UpcallFunc ACE_ROA::theUpcall = 0;
-ACE_ROA::ForwardFunc ACE_ROA::theForwarder = 0;
-TCP_OA_ptr     ACE_ROA::theOA = 0;
+ROA_Parameters* ROA_Parameters::_instance = 0;
+
+ROA_Parameters::ROA_Parameters()
+  : usingThreads_(0), threadFlags_(THR_NEW_LWP),
+    context_p_(0), reactor_(0),
+    upcall_(0), forwarder_(0), oa_(0)
+{
+}
+
+ROA_Parameters*
+ROA_Parameters::instance()
+{
+  if (_instance == 0)
+    {
+      _instance = new ROA_Parameters;
+    }
+  return _instance;
+}
 
 ROA_Handler::ROA_Handler()
 {
+  // Grab the singleton...at some later point in time
+  // we can provide an argumented CTOR so have per-instance
+  // parameters.
+  params_ = ROA_Parameters::instance();
+  ACE_ASSERT (params_ != 0);
 }
 
 int
@@ -23,9 +38,9 @@ ROA_Handler::open(void*)
   if (this->peer().get_remote_addr(addr) == -1)
     return -1;
 
-  if (ACE_ROA::usingThreads())
+  if (params_->usingThreads())
     {
-      if (activate(ACE_ROA::threadFlags()) == -1)
+      if (activate(params_->threadFlags()) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "ROA_Handler unable to spawn a thread: %p\n", "spawn"), -1);
       else
 	ACE_DEBUG ((LM_DEBUG,
@@ -34,7 +49,7 @@ ROA_Handler::open(void*)
     }
   else
     {
-      if (ACE_ROA::reactor()->register_handler(this, ACE_Event_Handler::READ_MASK) == -1)
+      if (params_->reactor()->register_handler(this, ACE_Event_Handler::READ_MASK) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "(%P|%t) can't register with reactor\n"), -1);
       else
@@ -75,10 +90,10 @@ ROA_Handler::handle_input(ACE_HANDLE fd)
   CORBA_Environment env;
   Dispatch_Context ctx;
 
-  ctx.skeleton = ACE_ROA::upcall();
-  ctx.context = ACE_ROA::context();
-  ctx.check_forward = ACE_ROA::forwarder();
-  ctx.oa = ACE_ROA::oa();
+  ctx.skeleton = params_->upcall();
+  ctx.context = params_->context();
+  ctx.check_forward = params_->forwarder();
+  ctx.oa = params_->oa();
   ctx.endpoint = peer();
 
 #ifdef	_POSIX_THREADS
@@ -88,7 +103,7 @@ ROA_Handler::handle_input(ACE_HANDLE fd)
   // Need to have a handle to a TCP_OA instance to make this call!!
   int ret;
 
-  switch(ACE_ROA::oa()->handle_message (ctx, env))
+  switch(params_->oa()->handle_message (ctx, env))
     {
     case 1:
     default:

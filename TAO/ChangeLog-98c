@@ -1,3 +1,8 @@
+Mon Apr 14 13:45:54 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* roa.{hh,i,cpp},tcpoa.cpp,svr.cpp: Replaced ACE_ROA with
+ 	ROA_Parameters, which is a GoF-style singleton.
+
 Sun Apr 13 00:01:56 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* roa.cpp: Fix continuation condition in ROA_Handler::svc()'s loop
