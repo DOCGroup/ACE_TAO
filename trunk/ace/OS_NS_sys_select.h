@@ -25,6 +25,10 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_SYS_SELECT_NEEDS_UNISTD_H)
+ #include "ace/OS_NS_unistd.h"
+#endif
+
 #include "ace/os_include/sys/os_select.h"
 #include "ace/ACE_export.h"
 
