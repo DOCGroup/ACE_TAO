@@ -25,7 +25,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "orbsvcs/LoadBalancingC.h"
 
-#include "LB_Replica_Set.h"
+#include "LB_ReplicaInfo_Set.h"
 
 
 /**
@@ -37,13 +37,12 @@
  */
 class TAO_LB_ObjectGroup_Map
 {
-
 public:
 
   /**
    * @class Map_Entry
    *
-   * @brief Value field of the replica map.
+   * @brief Value field of the ObjectGroup map.
    *
    * Mapping from and to all of the following fields:
    * @param object_group, @param factory_creation_id, @param factory,
@@ -57,11 +56,14 @@ public:
     CORBA::String_var type_id;
 
     /// Reference to the ObjectGroup.
-    TAO_LoadBalancing::ObjectGroup_var object_group;
+    LoadBalancing::ObjectGroup_var object_group;
 
     /// Unbounded set containing replica references and all related
     /// information for each replica.
     TAO_LB_ReplicaInfo_Set replica_infos;
+
+    /// Lock used to synchronize access to the ReplicaInfo set.
+    TAO_SYNCH_MUTEX lock;
   };
 
   /// FactoryCreationId hash map.  A FactoryCreationId is represented

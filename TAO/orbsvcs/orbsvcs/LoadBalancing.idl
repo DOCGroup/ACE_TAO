@@ -18,6 +18,7 @@
 #ifndef TAO_LOADBALANCING_IDL
 #define TAO_LOADBALANCING_IDL
 
+#include "tao/PortableInterceptor.pidl"
 #include "CosNaming.idl"
 #include "orb.idl"
 
@@ -27,7 +28,7 @@
  * @class LoadBalancing
  *
  * @brief This module defines the interfaces and data types used in
- * TAO's Load Balancing service. 
+ * TAO's Load Balancing service.
  * @par
  * TAO's Load Balancer manages distribution of requests to replicas of
  * a given Object in an effort to ensure that the  applications/hosts
@@ -52,6 +53,7 @@ module LoadBalancing
   /// Specification of Common Types and Exceptions for ReplicationManager
   interface GenericFactory;
   interface LoadNotifier;
+  interface LoadMonitor;
 
   typedef unsigned long long ObjectGroupId;
   typedef unsigned long ObjectGroupRefVersion;
@@ -168,7 +170,7 @@ module LoadBalancing
   };
 
   /// Specification of ObjectGroupManager Interface which
-  /// ReplicationManager Inherits 
+  /// ReplicationManager Inherits
   interface ObjectGroupManager {
     ObjectGroup create_member (in ObjectGroup object_group,
                                in Location the_location,
@@ -249,6 +251,23 @@ module LoadBalancing
     LoadMonitor get_load_monitor (in Location the_location)
       raises (InterfaceNotFound);
 
+  };
+
+  /// Interface that all load monitors must implement.
+  interface LoadMonitor
+  {
+    /// Return the current load at the location the load monitor
+    /// resides.
+    readonly attribute LoadList current_load;
+
+    /// Force redirection of requests for targets with the given
+    /// RepositoryId to the target pointed to by the given object
+    /// reference.
+    void register_redirect (in string type_id,
+                            in Object redirect_to);
+
+    /// Remove the redirect for targets of the given RepositoryId.
+    void remove_redirect (in string type_id);
   };
 
 };

@@ -35,8 +35,12 @@ class TAO_LB_ObjectGroup_Map;
 /**
  * @class TAO_LB_GenericFactory
  *
- * @brief 
+ * @brief LoadBalancing::GenericFactory implementation used by the
+ *        load balancer when creating object groups.
  *
+ * This GenericFactory creates an object group reference for given set
+ * of replicas.  Those replicas will be created by this GenericFactory
+ * if the "infrastructure-controlled" membership style is configured.
  */
 class TAO_LB_GenericFactory
   : public virtual LoadBalancing::GenericFactory

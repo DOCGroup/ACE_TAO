@@ -10,7 +10,7 @@ ReplicaLocator::pre_invoke ()
     LoadAnalyzer.get_replica ( ObjectId )
        {
          ObjectId_Replica_Map.find (ObjectId, Location_Replica_Map);
-        
+
          Location_Replica_Map (select replica from it);
        }
 
@@ -109,4 +109,3 @@ if (!CORBA::is_nil (replica_map_entry->factory_info.the_factory.in ())
 
 delete replica_map_entry;
 // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-
