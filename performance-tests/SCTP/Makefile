@@ -24,6 +24,9 @@ SOCK_SEQPACK_SRV_OBJ = $(SOCK_SEQPACK_SRV_SRC:%.cpp=%.o)
 SOCK_SEQPACK_ASSOCIATION_TEST_SRC = SOCK_SEQPACK_Association_Test.cpp
 SOCK_SEQPACK_ASSOCIATION_TEST_OBJ = $(SOCK_SEQPACK_ASSOCIATION_TEST_SRC:%.cpp=%.o)
 
+BIN     = SOCK_STREAM_clt SOCK_STREAM_srv SOCK_SEQPACK_clt SOCK_SEQPACK_srv SOCK_SEQPACK_Association_Test
+# For make depend.
+SRC = $(SOCK_STREAM_CLT_SRC) $(SOCK_STREAM_SRV_SRC) $(SOCK_SEQPACK_CLT_SRC) $(SOCK_SEQPACK_SRV_SRC) $(SOCK_SEQPACK_ASSOCIATION_TEST_SRC)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -33,18 +36,12 @@ include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
 #	Local targets
 #----------------------------------------------------------------------------
 
-# BIN and SRC are deliberately placed after incuded macros and targets
-# so that default rules are not generated for the binaries.
-BIN     = SOCK_STREAM_clt SOCK_STREAM_srv SOCK_SEQPACK_clt SOCK_SEQPACK_srv SOCK_SEQPACK_Association_Test
-# For make depend.
-SRC = $(SOCK_STREAM_CLT_SRC) $(SOCK_STREAM_SRV_SRC) $(SOCK_SEQPACK_CLT_SRC) $(SOCK_SEQPACK_SRV_SRC) $(SOCK_SEQPACK_ASSOCIATION_TEST_SRC)
 
 all: SOCK_STREAM_clt SOCK_STREAM_srv SOCK_SEQPACK_clt SOCK_SEQPACK_srv SOCK_SEQPACK_Association_Test
 
