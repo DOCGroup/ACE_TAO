@@ -244,7 +244,7 @@ private:
 
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event_Utilities.i"
+#include "orbsvcs/orbsvcs/Event_Utilities.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
