@@ -3,7 +3,7 @@
 #ifndef CIAO_UPGRADEABLE_CONTEXT_IMPL_T_C
 #define CIAO_UPGRADEABLE_CONTEXT_IMPL_T_C
 
-#include "Upgradeable_Context_Impl.h"
+#include "Upgradeable_Context_Impl_T.h"
 
 namespace CIAO
 {
@@ -16,7 +16,8 @@ namespace CIAO
               Components::CCMHome_ptr home,
               Session_Container *c,
               SVNT *sv)
-    : servant_ (sv)
+    : Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR> (home, c, sv),
+      servant_ (sv)
   {
   }
 
