@@ -1577,7 +1577,7 @@ public:
   // = Initialization and termination methods.
   ACE_Guard (ACE_Null_Mutex &) {}
   ACE_Guard (ACE_Null_Mutex &, int) {}
-  ~ACE_Guard (void) {}
+  // ~ACE_Guard (void) {}
 
   int acquire (void) { return 0; }
   int tryacquire (void) { return 0; }
