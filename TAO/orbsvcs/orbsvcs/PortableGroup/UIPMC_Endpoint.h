@@ -57,7 +57,6 @@ public:
 
   virtual TAO_Endpoint *next (void);
   virtual int addr_to_string (char *buffer, size_t length);
-  virtual void reset_hint (void);
 
   /// Makes a copy of <this>
   virtual TAO_Endpoint *duplicate (void);

@@ -1,3 +1,9 @@
+Sat Jun 07 09:34:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.h: Religiously
+	  replicated the changes made to other protocols.
+
 Sat Jun 07 09:10:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAOACE.dsw (Package): Added TAO_Strategies library as a
