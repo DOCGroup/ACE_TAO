@@ -1,3 +1,10 @@
+Tue Aug 12 22:18:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+
+          Regenerated type codes initialized in the constructor of
+          TAO_Valuetype_Adapter_Impl to have the "omg.org" prefix.
+
 Tue Aug 12 17:05:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/corbafwd.cpp:
