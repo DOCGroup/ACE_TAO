@@ -1,3 +1,8 @@
+Sat May 15 16:51:08 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* tao/ObjectIDList.i : Fixed some warnings on VxWorks. Thanks to 
+	  David Levine for pointing this out.
+
 Sat May 15 16:26:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
