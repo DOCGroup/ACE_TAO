@@ -4,7 +4,7 @@ Fri Aug  1 19:40:55 PDT 1997
 0) collapse CMU and HP code - make this thing faster since it is really
    slow and bulky...
 
-1) implement statistics collection so that timeout can vary based
+1) implement response time statistics collection so that timeout can vary based
    on empirical response times
 
 2) Implement pdu fragmentation based on tooBig errors or app directed
