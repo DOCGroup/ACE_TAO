@@ -36,10 +36,13 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (__Lynx__)
+#if defined (ACE_LACKS_STRCASECMP_PROTOTYPE)
   int strcasecmp(const char *, const char *);
+#endif /* ACE_LACKS_STRCASECMP_PROTOTYPE */
+
+#if defined (ACE_LACKS_STRNCASECMP_PROTOTYPE)
   int strncasecmp(const char *, const char *, size_t);
-#endif /* __Lynx__ */
+#endif /* ACE_LACKS_STRNCASECMP_PROTOTYPE */
     
 #ifdef __cplusplus
 }
