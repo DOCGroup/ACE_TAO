@@ -211,7 +211,10 @@ public:
   int set_grp (ACE_thread_t, int grp_id);
   int get_grp (ACE_thread_t, int &grp_id);
 
-  // = The following methods are new methods which resemble current methods in ACE_Thread Manager. For example, the new apply_task() method resembles the old apply_thr() method, and suspend_task() resembles suspend_thr().
+  // = The following methods are new methods which resemble current
+  // methods in ACE_Thread Manager. For example, the new apply_task()
+  // method resembles the old apply_thr() method, and suspend_task()
+  // resembles suspend_thr().
   
   int wait_task (ACE_Task_Base *task, 
 		 const ACE_Time_Value *timeout = 0);
@@ -233,7 +236,9 @@ public:
   int cancel_task (ACE_Task_Base *task);
   // Cancel all threads in an ACE_Task.
 
-  // = The following method provide new functionality. They do not follow the same design as current methods. They provide new functionality.
+  // = The following method provide new functionality. They do not
+  // follow the same design as current methods. They provide new
+  // functionality.
 
   int num_tasks_in_group (int grp_id);
   // Returns the number of ACE_Task in a group.
@@ -313,7 +318,8 @@ private:
   void remove_thr (int i);	
   // Remove thread from the table. 
 
-  // = The following four methods implement a simple scheme for operating on a collection of threads atomically.
+  // = The following four methods implement a simple scheme for
+  // operating on a collection of threads atomically.
   typedef int (ACE_Thread_Manager::*THR_FUNC)(int, int);
 
   int check_state (ACE_Thread_State state, ACE_thread_t thread);

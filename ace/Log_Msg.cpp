@@ -914,7 +914,7 @@ void
 ACE_Log_Msg::file (const char *s)
 {
   ACE_OS::strncpy (this->file_, s, 
-		   sizeof this->file_);
+		   (sizeof this->file_ / sizeof char));
 }
 
 char *
@@ -927,7 +927,7 @@ void
 ACE_Log_Msg::msg (char *m)
 {
   ACE_OS::strncpy (this->msg_, m, 
-		   sizeof this->msg_);
+		   (sizeof this->msg_ / sizeof char));
 }
 
 ostream *
