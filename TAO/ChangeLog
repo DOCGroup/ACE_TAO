@@ -1,3 +1,8 @@
+Tue Dec  2 11:04:21 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
+          Fixed incorrect usage of exception macros.
+
 Tue Dec  2 10:42:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
