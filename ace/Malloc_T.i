@@ -102,7 +102,8 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t, size_t, char)
 template <class ACE_LOCK> ACE_INLINE void
 ACE_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
 {
-  this->free_list_.add ((ACE_Cached_Mem_Pool_Node<char> *) ptr);
+  if (ptr != 0)
+    this->free_list_.add ((ACE_Cached_Mem_Pool_Node<char> *) ptr);
 }
 
 template <class MALLOC> ACE_INLINE void *
