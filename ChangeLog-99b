@@ -3,6 +3,9 @@ Thu Jan 21 14:25:58 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/SString.h: changed !ACE_HAS_WINCE wrap of ostream
           operators to !ACE_LACKS_IOSTREAM_TOTALLY.
 
+        * ace/OS.h (getuid): added static cast of -1 to uid_t on
+          Chorus, to avoid compiler warning about change in sign.
+
 Thu Jan 21 15:19:26 1999  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/001/Makefile:
