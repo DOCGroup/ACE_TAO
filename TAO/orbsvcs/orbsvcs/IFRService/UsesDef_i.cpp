@@ -82,6 +82,32 @@ TAO_UsesDef_i::interface_type_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SIN
   return 0;
 }
 
+void 
+TAO_UsesDef_i::interface_type (
+    CORBA::InterfaceDef_ptr interface_type
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->interface_type_i (interface_type
+                          ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+void 
+TAO_UsesDef_i::interface_type_i (
+    CORBA::InterfaceDef_ptr interface_type
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException)) 
+{
+  // TODO
+}
+
 CORBA::Boolean
 TAO_UsesDef_i::is_multiple (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -100,5 +126,31 @@ TAO_UsesDef_i::is_multiple_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE
 {
   // TODO
   return 0;
+}
+
+void 
+TAO_UsesDef_i::is_multiple (
+    CORBA::Boolean is_multiple
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->is_multiple_i (is_multiple
+                       ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+void 
+TAO_UsesDef_i::is_multiple_i (
+    CORBA::Boolean is_multiple
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException)) 
+{
+  // TODO
 }
 

@@ -56,8 +56,6 @@
 
 #include "IFR_Basic.pidl"
 
-#pragma prefix "omg.org"
-
 module CORBA
 {
 // Already defined in corbafwd.h, included from orb.idl.
@@ -98,7 +96,9 @@ module CORBA
     attribute Visibility access;
   };
 
-  interface ValueDef : Container, Contained, IDLType 
+  interface ValueDef : Container, 
+		       Contained, 
+		       IDLType 
   {
     // read/write interface
     attribute InterfaceDefSeq supported_interfaces;
@@ -172,6 +172,45 @@ module CORBA
     RepositoryIdSeq abstract_base_values;
     boolean is_truncatable;
     RepositoryId base_value;
+  };
+
+  interface ExtValueDef : ValueDef 
+  {
+    // read/write interface
+    attribute ExtInitializerSeq ext_initializers;
+
+    // read interface
+    struct ExtFullValueDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      boolean is_abstract;
+      boolean is_custom;
+      RepositoryId defined_in;
+      VersionSpec version;
+      OpDescriptionSeq operations;
+      ExtAttrDescriptionSeq attributes;
+      ValueMemberSeq members;
+      ExtInitializerSeq initializers;
+      RepositoryIdSeq supported_interfaces;
+      RepositoryIdSeq abstract_base_values;
+      boolean is_truncatable;
+      RepositoryId base_value;
+      TypeCode type;
+    };
+
+    ExtFullValueDescription describe_ext_value ();
+
+    // write interface
+    ExtAttributeDef create_ext_attribute (
+	in RepositoryId id,
+	in Identifier name,
+	in VersionSpec version,
+	in IDLType type,
+	in AttributeMode mode,
+	in ExceptionDefSeq get_exceptions,
+	in ExceptionDefSeq set_exceptions
+      );
   };
 
   interface ValueBoxDef : TypedefDef 

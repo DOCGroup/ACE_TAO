@@ -579,6 +579,26 @@ TAO_NAMESPACE  POA_CORBA
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
+    ::CORBA::ExtValueDef_ptr create_ext_value (
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA::Boolean is_custom,
+        CORBA::Boolean is_abstract,
+        CORBA::ValueDef_ptr base_value,
+        CORBA::Boolean is_truncatable,
+        const CORBA::ValueDefSeq & abstract_base_values,
+        const CORBA::InterfaceDefSeq & supported_interfaces,
+        const CORBA::ExtInitializerSeq & initializers
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    
     ::CORBA::DefinitionKind def_kind (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )

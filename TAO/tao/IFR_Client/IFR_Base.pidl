@@ -55,10 +55,12 @@
 #ifndef _IFR_BASE_IDL_
 #define _IFR_BASE_IDL_
 
-#pragma prefix "omg.org"
+#include <orb.idl>
 
 module CORBA
 {
+  typeprefix CORBA "omg.org";
+
   typedef string Identifier;
   typedef string ScopedName;
   typedef string RepositoryId;
@@ -107,6 +109,7 @@ module CORBA
   {
     // read interface
     readonly attribute DefinitionKind def_kind;
+
     // write interface
     void destroy ();
   };
@@ -145,8 +148,6 @@ module CORBA
       );
   };
 
-  typedef sequence <Contained> ContainedSeq;
-
   interface ModuleDef;
   interface ConstantDef;
   interface IDLType;
@@ -154,17 +155,40 @@ module CORBA
   interface UnionDef;
   interface EnumDef;
   interface AliasDef;
+
   interface InterfaceDef;
   typedef sequence<InterfaceDef> InterfaceDefSeq;
+
   interface ExceptionDef;
   interface NativeDef;
+
   interface ValueDef;
   typedef sequence<ValueDef> ValueDefSeq;
+
   interface ValueBoxDef;
+
   interface AbstractInterfaceDef;
   typedef sequence<AbstractInterfaceDef> AbstractInterfaceDefSeq;
+
   interface LocalInterfaceDef;
   typedef sequence<LocalInterfaceDef> LocalInterfaceDefSeq;
+
+  interface ExtInterfaceDef;
+  typedef sequence <ExtInterfaceDef> ExtInterfaceDefSeq;
+
+  interface ExtValueDef;
+  typedef sequence <ExtValueDef> ExtValueDefSeq;
+
+  interface ExtAbstractInterfaceDef;
+  typedef sequence <ExtAbstractInterfaceDef>
+
+  ExtAbstractInterfaceDefSeq;
+  interface ExtLocalInterfaceDef;
+
+  typedef sequence <ExtLocalInterfaceDef>
+  ExtLocalInterfaceDefSeq;
+
+  typedef sequence <Contained> ContainedSeq;
 
   struct StructMember
   {
@@ -182,6 +206,26 @@ module CORBA
   };
 
   typedef sequence <Initializer> InitializerSeq;
+
+  struct ExceptionDescription 
+  {
+    Identifier name;
+    RepositoryId id;
+    RepositoryId defined_in;
+    VersionSpec version;
+    TypeCode type;
+  };
+
+  typedef sequence <ExceptionDescription> ExcDescriptionSeq;
+
+  struct ExtInitializer 
+  {
+    StructMemberSeq members;
+    ExcDescriptionSeq exceptions;
+    Identifier name;
+  };
+
+  typedef sequence <ExtInitializer> ExtInitializerSeq;
 
   struct UnionMember
   {
@@ -224,12 +268,15 @@ module CORBA
         in boolean exclude_inherited,
         in long max_returned_objs
       );
+
     // write interface
+
     ModuleDef create_module (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version
       );
+
     ConstantDef create_constant (
         in RepositoryId id,
         in Identifier name,
@@ -237,12 +284,14 @@ module CORBA
         in IDLType type,
         in any value
       );
+
     StructDef create_struct (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
         in StructMemberSeq members
       );
+
     UnionDef create_union (
         in RepositoryId id,
         in Identifier name,
@@ -250,25 +299,29 @@ module CORBA
         in IDLType discriminator_type,
         in UnionMemberSeq members
       );
+
     EnumDef create_enum (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
         in EnumMemberSeq members
       );
+
     AliasDef create_alias (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
         in IDLType original_type
       );
+
     InterfaceDef create_interface (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
         in InterfaceDefSeq base_interfaces
       );
-    ValueDef create_value(
+
+    ValueDef create_value (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
@@ -280,34 +333,52 @@ module CORBA
         in InterfaceDefSeq supported_interfaces,
         in InitializerSeq initializers
       );
+
     ValueBoxDef create_value_box(
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
         in IDLType original_type_def
       );
+
     ExceptionDef create_exception(
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
         in StructMemberSeq members
       );
+
     NativeDef create_native(
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version
       );
+
     AbstractInterfaceDef create_abstract_interface (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
         in AbstractInterfaceDefSeq base_interfaces
       );
+
     LocalInterfaceDef create_local_interface (
         in RepositoryId id,
         in Identifier name,
         in VersionSpec version,
         in InterfaceDefSeq base_interfaces
+      );
+
+    ExtValueDef create_ext_value (
+	in RepositoryId id,
+	in Identifier name,
+	in VersionSpec version,
+	in boolean is_custom,
+	in boolean is_abstract,
+	in ValueDef base_value,
+	in boolean is_truncatable,
+	in ValueDefSeq abstract_base_values,
+	in InterfaceDefSeq supported_interfaces,
+	in ExtInitializerSeq initializers
       );
   };
 

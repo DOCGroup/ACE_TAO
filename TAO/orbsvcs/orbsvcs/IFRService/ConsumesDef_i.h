@@ -20,7 +20,7 @@
 #ifndef TAO_CONSUMESDEF_I_H
 #define TAO_CONSUMESDEF_I_H
 
-#include "EventDef_i.h"
+#include "EventPortDef_i.h"
 #include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,7 +34,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IFRService_Export TAO_ConsumesDef_i : public virtual TAO_EventDef_i
+class TAO_IFRService_Export TAO_ConsumesDef_i 
+  : public virtual TAO_EventPortDef_i
 {
   // = TITLE
   //    TAO_ConsumesDef_i
@@ -51,31 +52,20 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Remove the repository entry.
-
-  virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
   virtual CORBA::Contained::Description *describe (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
   virtual CORBA::Contained::Description *describe_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 };

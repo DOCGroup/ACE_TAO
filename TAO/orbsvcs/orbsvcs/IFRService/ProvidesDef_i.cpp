@@ -84,3 +84,28 @@ TAO_ProvidesDef_i::interface_type_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV
   return 0;
 }
 
+void 
+TAO_ProvidesDef_i::interface_type (
+    CORBA::InterfaceDef_ptr interface_type
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->interface_type_i (interface_type
+                          ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+void 
+TAO_ProvidesDef_i::interface_type_i (
+    CORBA::InterfaceDef_ptr interface_type
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException)) 
+{
+  // TODO
+}

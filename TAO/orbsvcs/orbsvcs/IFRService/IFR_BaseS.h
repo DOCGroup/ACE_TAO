@@ -1139,6 +1139,33 @@ TAO_NAMESPACE  POA_CORBA
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
+      );
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
+    
+    virtual ::CORBA::ExtValueDef_ptr create_ext_value (
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA::Boolean is_custom,
+        CORBA::Boolean is_abstract,
+        CORBA::ValueDef_ptr base_value,
+        CORBA::Boolean is_truncatable,
+        const CORBA::ValueDefSeq & abstract_base_values,
+        const CORBA::InterfaceDefSeq & supported_interfaces,
+        const CORBA::ExtInitializerSeq & initializers
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+    static void create_ext_value_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_servant,
+        void *_tao_servant_upcall
+        ACE_ENV_ARG_DECL
       );    static void _get_def_kind_skel (
         TAO_ServerRequest &req,
         void *obj,
@@ -1470,6 +1497,27 @@ TAO_NAMESPACE  POA_CORBA
         const char * name,
         const char * version,
         const CORBA::InterfaceDefSeq & base_interfaces
+        ACE_ENV_ARG_DECL
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
+    
+    virtual ::CORBA::ExtValueDef_ptr create_ext_value (
+        CORBA_Object *_collocated_tao_target_,
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA::Boolean is_custom,
+        CORBA::Boolean is_abstract,
+        CORBA::ValueDef_ptr base_value,
+        CORBA::Boolean is_truncatable,
+        const CORBA::ValueDefSeq & abstract_base_values,
+        const CORBA::InterfaceDefSeq & supported_interfaces,
+        const CORBA::ExtInitializerSeq & initializers
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((

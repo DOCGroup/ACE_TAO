@@ -54,40 +54,40 @@ public:
   // Destructor.
 
   virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove our contents.
 
   virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Contained_ptr lookup (
       const char *search_name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Contained_ptr lookup_i (
       const char *search_name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ContainedSeq *contents (
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ContainedSeq *contents_i (
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ContainedSeq *lookup_name (
@@ -95,8 +95,8 @@ public:
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ContainedSeq *lookup_name_i (
@@ -104,40 +104,40 @@ public:
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Container::DescriptionSeq *describe_contents (
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Long max_returned_objs
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Container::DescriptionSeq *describe_contents_i (
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Long max_returned_objs
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ModuleDef_ptr create_module (
       const char *id,
       const char *name,
       const char *version
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ModuleDef_ptr create_module_i (
       const char *id,
       const char *name,
       const char *version
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ConstantDef_ptr create_constant (
@@ -146,8 +146,8 @@ public:
       const char *version,
       CORBA::IDLType_ptr type,
       const CORBA::Any & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ConstantDef_ptr create_constant_i (
@@ -156,8 +156,8 @@ public:
       const char *version,
       CORBA::IDLType_ptr type,
       const CORBA::Any & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::StructDef_ptr create_struct (
@@ -165,8 +165,8 @@ public:
       const char *name,
       const char *version,
       const CORBA::StructMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::StructDef_ptr create_struct_i (
@@ -174,8 +174,8 @@ public:
       const char *name,
       const char *version,
       const CORBA::StructMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::UnionDef_ptr create_union (
@@ -184,8 +184,8 @@ public:
       const char *version,
       CORBA::IDLType_ptr discriminator_type,
       const CORBA::UnionMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::UnionDef_ptr create_union_i (
@@ -194,8 +194,8 @@ public:
       const char *version,
       CORBA::IDLType_ptr discriminator_type,
       const CORBA::UnionMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::EnumDef_ptr create_enum (
@@ -203,8 +203,8 @@ public:
       const char *name,
       const char *version,
       const CORBA::EnumMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::EnumDef_ptr create_enum_i (
@@ -212,8 +212,8 @@ public:
       const char *name,
       const char *version,
       const CORBA::EnumMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::AliasDef_ptr create_alias (
@@ -221,8 +221,8 @@ public:
       const char *name,
       const char *version,
       CORBA::IDLType_ptr original_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::AliasDef_ptr create_alias_i (
@@ -230,8 +230,8 @@ public:
       const char *name,
       const char *version,
       CORBA::IDLType_ptr original_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::InterfaceDef_ptr create_interface (
@@ -239,8 +239,8 @@ public:
       const char *name,
       const char *version,
       const CORBA::InterfaceDefSeq &base_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::InterfaceDef_ptr create_interface_i (
@@ -248,8 +248,8 @@ public:
       const char *name,
       const char *version,
       const CORBA::InterfaceDefSeq &base_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ValueDef_ptr create_value (
@@ -263,8 +263,8 @@ public:
       const CORBA::ValueDefSeq &abstract_base_values,
       const CORBA::InterfaceDefSeq & supported_interfaces,
       const CORBA::InitializerSeq &initializers
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ValueDef_ptr create_value_i (
@@ -278,8 +278,8 @@ public:
       const CORBA::ValueDefSeq &abstract_base_values,
       const CORBA::InterfaceDefSeq & supported_interfaces,
       const CORBA::InitializerSeq &initializers
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ValueBoxDef_ptr create_value_box (
@@ -287,8 +287,8 @@ public:
       const char *name,
       const char *version,
       CORBA::IDLType_ptr original_type_def
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ValueBoxDef_ptr create_value_box_i (
@@ -296,8 +296,8 @@ public:
       const char *name,
       const char *version,
       CORBA::IDLType_ptr original_type_def
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ExceptionDef_ptr create_exception (
@@ -305,8 +305,8 @@ public:
       const char *name,
       const char *version,
       const CORBA::StructMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ExceptionDef_ptr create_exception_i (
@@ -314,24 +314,24 @@ public:
       const char *name,
       const char *version,
       const CORBA::StructMemberSeq &members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::NativeDef_ptr create_native (
       const char *id,
       const char *name,
       const char *version
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::NativeDef_ptr create_native_i (
       const char *id,
       const char *name,
       const char *version
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::AbstractInterfaceDef_ptr create_abstract_interface (
@@ -339,8 +339,8 @@ public:
       const char *name,
       const char *version,
       const CORBA::AbstractInterfaceDefSeq &base_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::AbstractInterfaceDef_ptr create_abstract_interface_i (
@@ -348,8 +348,8 @@ public:
       const char *name,
       const char *version,
       const CORBA::AbstractInterfaceDefSeq &base_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::LocalInterfaceDef_ptr create_local_interface (
@@ -357,8 +357,8 @@ public:
       const char *name,
       const char *version,
       const CORBA::InterfaceDefSeq &base_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::LocalInterfaceDef_ptr create_local_interface_i (
@@ -366,14 +366,44 @@ public:
       const char *name,
       const char *version,
       const CORBA::InterfaceDefSeq &base_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual ::CORBA::ExtValueDef_ptr create_ext_value (
+      const char *id,
+      const char *name,
+      const char *version,
+      CORBA::Boolean is_custom,
+      CORBA::Boolean is_abstract,
+      CORBA::ValueDef_ptr base_value,
+      CORBA::Boolean is_truncatable,
+      const CORBA::ValueDefSeq &abstract_base_values,
+      const CORBA::InterfaceDefSeq &supported_interfaces,
+      const CORBA::ExtInitializerSeq &initializers
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::ExtValueDef_ptr create_ext_value_i (
+      const char *id,
+      const char *name,
+      const char *version,
+      CORBA::Boolean is_custom,
+      CORBA::Boolean is_abstract,
+      CORBA::ValueDef_ptr base_value,
+      CORBA::Boolean is_truncatable,
+      const CORBA::ValueDefSeq &abstract_base_values,
+      const CORBA::InterfaceDefSeq &supported_interfaces,
+      const CORBA::ExtInitializerSeq &initializers
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean name_exists (
       const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Checks for local existence of <name>.
 
@@ -381,16 +411,16 @@ protected:
    void store_label (
       ACE_Configuration_Section_Key key,
       const CORBA::Any &value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Store a union member's label value.
 
   CORBA::Boolean pre_exist (
       const char *id,
       const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Bundles id_exists and name_exists together.
 

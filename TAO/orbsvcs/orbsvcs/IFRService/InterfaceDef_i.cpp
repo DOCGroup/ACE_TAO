@@ -1385,3 +1385,4 @@ TAO_InterfaceDef_i::check_inherited_attrs (const char *name
 
   return 0;
 }
+

@@ -47,7 +47,7 @@
 #include "ConsumesDef_i.h"
 #include "PublishesDef_i.h"
 #include "EmitsDef_i.h"
-#include "PrimaryKeyDef_i.h"
+#include "EventDef_i.h"
 #include "ProvidesDef_i.h"
 #include "UsesDef_i.h"
 

@@ -20,4152 +20,26 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-#if !defined (_IR_REPOSITORYIDSEQ_CI_)
-#define _IR_REPOSITORYIDSEQ_CI_
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
-
-// *************************************************************
-// Inline operations for class IR::RepositoryIdSeq_var
-// *************************************************************
-
-ACE_INLINE
-IR::RepositoryIdSeq_var::RepositoryIdSeq_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-IR::RepositoryIdSeq_var::RepositoryIdSeq_var (RepositoryIdSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-IR::RepositoryIdSeq_var::RepositoryIdSeq_var (const ::IR::RepositoryIdSeq_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::IR::RepositoryIdSeq (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::RepositoryIdSeq_var::~RepositoryIdSeq_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-IR::RepositoryIdSeq_var &
-IR::RepositoryIdSeq_var::operator= (RepositoryIdSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-::IR::RepositoryIdSeq_var &
-IR::RepositoryIdSeq_var::operator= (const ::IR::RepositoryIdSeq_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          RepositoryIdSeq *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              RepositoryIdSeq (*p.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              RepositoryIdSeq *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-const ::IR::RepositoryIdSeq *
-IR::RepositoryIdSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::RepositoryIdSeq *
-IR::RepositoryIdSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::RepositoryIdSeq_var::operator const ::IR::RepositoryIdSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::RepositoryIdSeq_var::operator ::IR::RepositoryIdSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::RepositoryIdSeq_var::operator ::IR::RepositoryIdSeq &() const // cast 
-{
-  return *this->ptr_;
-}
-
-// Variable-size types only.
-ACE_INLINE
-IR::RepositoryIdSeq_var::operator ::IR::RepositoryIdSeq *&() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_SeqElem_String_Manager
-IR::RepositoryIdSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE
-const ::IR::RepositoryIdSeq &
-IR::RepositoryIdSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::RepositoryIdSeq &
-IR::RepositoryIdSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::RepositoryIdSeq *&
-IR::RepositoryIdSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::RepositoryIdSeq *
-IR::RepositoryIdSeq_var::_retn (void)
-{
-  ::IR::RepositoryIdSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE
-::IR::RepositoryIdSeq *
-IR::RepositoryIdSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
-
-// *************************************************************
-// Inline operations for class IR::RepositoryIdSeq_out
-// *************************************************************
-
-ACE_INLINE
-IR::RepositoryIdSeq_out::RepositoryIdSeq_out (RepositoryIdSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::RepositoryIdSeq_out::RepositoryIdSeq_out (RepositoryIdSeq_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::RepositoryIdSeq_out::RepositoryIdSeq_out (const ::IR::RepositoryIdSeq_out &p)
-  : ptr_ (ACE_const_cast (RepositoryIdSeq_out&, p).ptr_)
-{}
-
-ACE_INLINE
-::IR::RepositoryIdSeq_out &
-IR::RepositoryIdSeq_out::operator= (const ::IR::RepositoryIdSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (RepositoryIdSeq_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-::IR::RepositoryIdSeq_out &
-IR::RepositoryIdSeq_out::operator= (RepositoryIdSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-IR::RepositoryIdSeq_out::operator ::IR::RepositoryIdSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::RepositoryIdSeq *&
-IR::RepositoryIdSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::RepositoryIdSeq *
-IR::RepositoryIdSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_SeqElem_String_Manager
-IR::RepositoryIdSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_COMPONENTDEFSEQ_CI_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_COMPONENTDEFSEQ_CI_
-
-ACE_INLINE
-IR::ComponentDef **
-IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (CORBA::ULong nelems)
-{
-  IR::ComponentDef **buf = 0;
-  
-  ACE_NEW_RETURN (buf, IR::ComponentDef*[nelems], 0);
-  
-  for (CORBA::ULong i = 0; i < nelems; i++)
-    {
-      buf[i] = IR::ComponentDef::_nil ();
-    }
-  
-  return buf;
-}
-
-ACE_INLINE
-void 
-IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::freebuf (IR::ComponentDef **buffer)
-{
-  if (buffer == 0)
-    {
-      return;
-    }
-  
-  delete[] buffer;
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (void)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (CORBA::ULong maximum)
-  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (maximum))
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (
-    CORBA::ULong maximum,
-    CORBA::ULong length,
-    IR::ComponentDef* *value,
-    CORBA::Boolean release
-  )
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq(
-    const _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq &rhs
-  )
-  : TAO_Unbounded_Base_Sequence (rhs)
-{
-  if (rhs.buffer_ != 0)
-    {
-      IR::ComponentDef **tmp1 =
-        _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (this->maximum_);
-      IR::ComponentDef ** const tmp2 =
-        ACE_reinterpret_cast (IR::ComponentDef ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = IR::ComponentDef::_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
-    }
-  else
-    {
-      this->buffer_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq &
-IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::operator= (
-    const _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq &rhs
-  )
-{
-  if (this == &rhs)
-    {
-      return *this;
-    }
-  
-  if (this->release_)
-    {
-      IR::ComponentDef **tmp =
-        ACE_reinterpret_cast (IR::ComponentDef **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          CORBA::release (tmp[i]);
-          tmp[i] = IR::ComponentDef::_nil ();
-        }
-      
-      if (this->maximum_ < rhs.maximum_)
-        {
-          _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::freebuf (tmp);
-          this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (rhs.maximum_);
-        }
-    }
-  else
-    {
-      this->buffer_ =
-        _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (rhs.maximum_);
-    }
-  
-  TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
-  IR::ComponentDef **tmp1 =
-    ACE_reinterpret_cast (IR::ComponentDef **, this->buffer_);
-  
-  IR::ComponentDef ** const tmp2 =
-    ACE_reinterpret_cast (IR::ComponentDef ** ACE_CAST_CONST, rhs.buffer_);
-  
-  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-    {
-      tmp1[i] = IR::ComponentDef::_duplicate (tmp2[i]);
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::ComponentDef,IR::ComponentDef_var>
-IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::operator[] (CORBA::ULong index) const
-{
-  ACE_ASSERT (index < this->maximum_);
-  IR::ComponentDef ** const tmp =
-    ACE_reinterpret_cast (IR::ComponentDef ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<IR::ComponentDef,IR::ComponentDef_var> (tmp + index, this->release_);
-}
-
-ACE_INLINE
-IR::ComponentDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::get_buffer (CORBA::Boolean orphan)
-{
-  IR::ComponentDef **result = 0;
-  
-  if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-        {
-          result =
-            _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (this->maximum_);
-          this->buffer_ = result;
-          this->release_ = 1;
-        }
-      else
-        {
-          result =
-            ACE_reinterpret_cast (IR::ComponentDef**, this->buffer_);
-        }
-    }
-  else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-        {
-          // We set the state back to default and relinquish ownership.
-          result =
-            ACE_reinterpret_cast(IR::ComponentDef**,this->buffer_);
-          this->maximum_ = 0;
-          this->length_ = 0;
-          this->buffer_ = 0;
-          this->release_ = 0;
-        }
-    }
-  
-  return result;
-}
-
-ACE_INLINE
-const IR::ComponentDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::get_buffer (void) const
-{
-  return ACE_reinterpret_cast (const IR::ComponentDef ** ACE_CAST_CONST, this->buffer_);
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IR_COMPONENTDEFSEQ_CI_)
-#define _IR_COMPONENTDEFSEQ_CI_
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
-
-// *************************************************************
-// Inline operations for class IR::ComponentDefSeq_var
-// *************************************************************
-
-ACE_INLINE
-IR::ComponentDefSeq_var::ComponentDefSeq_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-IR::ComponentDefSeq_var::ComponentDefSeq_var (ComponentDefSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-IR::ComponentDefSeq_var::ComponentDefSeq_var (const ::IR::ComponentDefSeq_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::IR::ComponentDefSeq (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::ComponentDefSeq_var::~ComponentDefSeq_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-IR::ComponentDefSeq_var &
-IR::ComponentDefSeq_var::operator= (ComponentDefSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-::IR::ComponentDefSeq_var &
-IR::ComponentDefSeq_var::operator= (const ::IR::ComponentDefSeq_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          ComponentDefSeq *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              ComponentDefSeq (*p.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              ComponentDefSeq *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-const ::IR::ComponentDefSeq *
-IR::ComponentDefSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ComponentDefSeq *
-IR::ComponentDefSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::ComponentDefSeq_var::operator const ::IR::ComponentDefSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::ComponentDefSeq_var::operator ::IR::ComponentDefSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::ComponentDefSeq_var::operator ::IR::ComponentDefSeq &() const // cast 
-{
-  return *this->ptr_;
-}
-
-// Variable-size types only.
-ACE_INLINE
-IR::ComponentDefSeq_var::operator ::IR::ComponentDefSeq *&() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::ComponentDef, IR::ComponentDef_var>
-IR::ComponentDefSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE
-const ::IR::ComponentDefSeq &
-IR::ComponentDefSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::ComponentDefSeq &
-IR::ComponentDefSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::ComponentDefSeq *&
-IR::ComponentDefSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ComponentDefSeq *
-IR::ComponentDefSeq_var::_retn (void)
-{
-  ::IR::ComponentDefSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE
-::IR::ComponentDefSeq *
-IR::ComponentDefSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
-
-// *************************************************************
-// Inline operations for class IR::ComponentDefSeq_out
-// *************************************************************
-
-ACE_INLINE
-IR::ComponentDefSeq_out::ComponentDefSeq_out (ComponentDefSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::ComponentDefSeq_out::ComponentDefSeq_out (ComponentDefSeq_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::ComponentDefSeq_out::ComponentDefSeq_out (const ::IR::ComponentDefSeq_out &p)
-  : ptr_ (ACE_const_cast (ComponentDefSeq_out&, p).ptr_)
-{}
-
-ACE_INLINE
-::IR::ComponentDefSeq_out &
-IR::ComponentDefSeq_out::operator= (const ::IR::ComponentDefSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (ComponentDefSeq_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-::IR::ComponentDefSeq_out &
-IR::ComponentDefSeq_out::operator= (ComponentDefSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-IR::ComponentDefSeq_out::operator ::IR::ComponentDefSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ComponentDefSeq *&
-IR::ComponentDefSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ComponentDefSeq *
-IR::ComponentDefSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::ComponentDef, IR::ComponentDef_var>
-IR::ComponentDefSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_PROVIDESDEFSEQ_CI_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_PROVIDESDEFSEQ_CI_
-
-ACE_INLINE
-IR::ProvidesDef **
-IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (CORBA::ULong nelems)
-{
-  IR::ProvidesDef **buf = 0;
-  
-  ACE_NEW_RETURN (buf, IR::ProvidesDef*[nelems], 0);
-  
-  for (CORBA::ULong i = 0; i < nelems; i++)
-    {
-      buf[i] = IR::ProvidesDef::_nil ();
-    }
-  
-  return buf;
-}
-
-ACE_INLINE
-void 
-IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::freebuf (IR::ProvidesDef **buffer)
-{
-  if (buffer == 0)
-    {
-      return;
-    }
-  
-  delete[] buffer;
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (void)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (CORBA::ULong maximum)
-  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (maximum))
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (
-    CORBA::ULong maximum,
-    CORBA::ULong length,
-    IR::ProvidesDef* *value,
-    CORBA::Boolean release
-  )
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq(
-    const _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq &rhs
-  )
-  : TAO_Unbounded_Base_Sequence (rhs)
-{
-  if (rhs.buffer_ != 0)
-    {
-      IR::ProvidesDef **tmp1 =
-        _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (this->maximum_);
-      IR::ProvidesDef ** const tmp2 =
-        ACE_reinterpret_cast (IR::ProvidesDef ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = IR::ProvidesDef::_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
-    }
-  else
-    {
-      this->buffer_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq &
-IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::operator= (
-    const _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq &rhs
-  )
-{
-  if (this == &rhs)
-    {
-      return *this;
-    }
-  
-  if (this->release_)
-    {
-      IR::ProvidesDef **tmp =
-        ACE_reinterpret_cast (IR::ProvidesDef **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          CORBA::release (tmp[i]);
-          tmp[i] = IR::ProvidesDef::_nil ();
-        }
-      
-      if (this->maximum_ < rhs.maximum_)
-        {
-          _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::freebuf (tmp);
-          this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (rhs.maximum_);
-        }
-    }
-  else
-    {
-      this->buffer_ =
-        _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (rhs.maximum_);
-    }
-  
-  TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
-  IR::ProvidesDef **tmp1 =
-    ACE_reinterpret_cast (IR::ProvidesDef **, this->buffer_);
-  
-  IR::ProvidesDef ** const tmp2 =
-    ACE_reinterpret_cast (IR::ProvidesDef ** ACE_CAST_CONST, rhs.buffer_);
-  
-  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-    {
-      tmp1[i] = IR::ProvidesDef::_duplicate (tmp2[i]);
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::ProvidesDef,IR::ProvidesDef_var>
-IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::operator[] (CORBA::ULong index) const
-{
-  ACE_ASSERT (index < this->maximum_);
-  IR::ProvidesDef ** const tmp =
-    ACE_reinterpret_cast (IR::ProvidesDef ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<IR::ProvidesDef,IR::ProvidesDef_var> (tmp + index, this->release_);
-}
-
-ACE_INLINE
-IR::ProvidesDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::get_buffer (CORBA::Boolean orphan)
-{
-  IR::ProvidesDef **result = 0;
-  
-  if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-        {
-          result =
-            _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (this->maximum_);
-          this->buffer_ = result;
-          this->release_ = 1;
-        }
-      else
-        {
-          result =
-            ACE_reinterpret_cast (IR::ProvidesDef**, this->buffer_);
-        }
-    }
-  else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-        {
-          // We set the state back to default and relinquish ownership.
-          result =
-            ACE_reinterpret_cast(IR::ProvidesDef**,this->buffer_);
-          this->maximum_ = 0;
-          this->length_ = 0;
-          this->buffer_ = 0;
-          this->release_ = 0;
-        }
-    }
-  
-  return result;
-}
-
-ACE_INLINE
-const IR::ProvidesDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::get_buffer (void) const
-{
-  return ACE_reinterpret_cast (const IR::ProvidesDef ** ACE_CAST_CONST, this->buffer_);
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IR_PROVIDESDEFSEQ_CI_)
-#define _IR_PROVIDESDEFSEQ_CI_
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
-
-// *************************************************************
-// Inline operations for class IR::ProvidesDefSeq_var
-// *************************************************************
-
-ACE_INLINE
-IR::ProvidesDefSeq_var::ProvidesDefSeq_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-IR::ProvidesDefSeq_var::ProvidesDefSeq_var (ProvidesDefSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-IR::ProvidesDefSeq_var::ProvidesDefSeq_var (const ::IR::ProvidesDefSeq_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::IR::ProvidesDefSeq (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::ProvidesDefSeq_var::~ProvidesDefSeq_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-IR::ProvidesDefSeq_var &
-IR::ProvidesDefSeq_var::operator= (ProvidesDefSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-::IR::ProvidesDefSeq_var &
-IR::ProvidesDefSeq_var::operator= (const ::IR::ProvidesDefSeq_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          ProvidesDefSeq *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              ProvidesDefSeq (*p.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              ProvidesDefSeq *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-const ::IR::ProvidesDefSeq *
-IR::ProvidesDefSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ProvidesDefSeq *
-IR::ProvidesDefSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::ProvidesDefSeq_var::operator const ::IR::ProvidesDefSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::ProvidesDefSeq_var::operator ::IR::ProvidesDefSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::ProvidesDefSeq_var::operator ::IR::ProvidesDefSeq &() const // cast 
-{
-  return *this->ptr_;
-}
-
-// Variable-size types only.
-ACE_INLINE
-IR::ProvidesDefSeq_var::operator ::IR::ProvidesDefSeq *&() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::ProvidesDef, IR::ProvidesDef_var>
-IR::ProvidesDefSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE
-const ::IR::ProvidesDefSeq &
-IR::ProvidesDefSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::ProvidesDefSeq &
-IR::ProvidesDefSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::ProvidesDefSeq *&
-IR::ProvidesDefSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ProvidesDefSeq *
-IR::ProvidesDefSeq_var::_retn (void)
-{
-  ::IR::ProvidesDefSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE
-::IR::ProvidesDefSeq *
-IR::ProvidesDefSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
-
-// *************************************************************
-// Inline operations for class IR::ProvidesDefSeq_out
-// *************************************************************
-
-ACE_INLINE
-IR::ProvidesDefSeq_out::ProvidesDefSeq_out (ProvidesDefSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::ProvidesDefSeq_out::ProvidesDefSeq_out (ProvidesDefSeq_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::ProvidesDefSeq_out::ProvidesDefSeq_out (const ::IR::ProvidesDefSeq_out &p)
-  : ptr_ (ACE_const_cast (ProvidesDefSeq_out&, p).ptr_)
-{}
-
-ACE_INLINE
-::IR::ProvidesDefSeq_out &
-IR::ProvidesDefSeq_out::operator= (const ::IR::ProvidesDefSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (ProvidesDefSeq_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-::IR::ProvidesDefSeq_out &
-IR::ProvidesDefSeq_out::operator= (ProvidesDefSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-IR::ProvidesDefSeq_out::operator ::IR::ProvidesDefSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ProvidesDefSeq *&
-IR::ProvidesDefSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ProvidesDefSeq *
-IR::ProvidesDefSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::ProvidesDef, IR::ProvidesDef_var>
-IR::ProvidesDefSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_USESDEFSEQ_CI_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_USESDEFSEQ_CI_
-
-ACE_INLINE
-IR::UsesDef **
-IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (CORBA::ULong nelems)
-{
-  IR::UsesDef **buf = 0;
-  
-  ACE_NEW_RETURN (buf, IR::UsesDef*[nelems], 0);
-  
-  for (CORBA::ULong i = 0; i < nelems; i++)
-    {
-      buf[i] = IR::UsesDef::_nil ();
-    }
-  
-  return buf;
-}
-
-ACE_INLINE
-void 
-IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::freebuf (IR::UsesDef **buffer)
-{
-  if (buffer == 0)
-    {
-      return;
-    }
-  
-  delete[] buffer;
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (void)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (CORBA::ULong maximum)
-  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (maximum))
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (
-    CORBA::ULong maximum,
-    CORBA::ULong length,
-    IR::UsesDef* *value,
-    CORBA::Boolean release
-  )
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq(
-    const _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq &rhs
-  )
-  : TAO_Unbounded_Base_Sequence (rhs)
-{
-  if (rhs.buffer_ != 0)
-    {
-      IR::UsesDef **tmp1 =
-        _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (this->maximum_);
-      IR::UsesDef ** const tmp2 =
-        ACE_reinterpret_cast (IR::UsesDef ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = IR::UsesDef::_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
-    }
-  else
-    {
-      this->buffer_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq &
-IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::operator= (
-    const _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq &rhs
-  )
-{
-  if (this == &rhs)
-    {
-      return *this;
-    }
-  
-  if (this->release_)
-    {
-      IR::UsesDef **tmp =
-        ACE_reinterpret_cast (IR::UsesDef **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          CORBA::release (tmp[i]);
-          tmp[i] = IR::UsesDef::_nil ();
-        }
-      
-      if (this->maximum_ < rhs.maximum_)
-        {
-          _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::freebuf (tmp);
-          this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (rhs.maximum_);
-        }
-    }
-  else
-    {
-      this->buffer_ =
-        _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (rhs.maximum_);
-    }
-  
-  TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
-  IR::UsesDef **tmp1 =
-    ACE_reinterpret_cast (IR::UsesDef **, this->buffer_);
-  
-  IR::UsesDef ** const tmp2 =
-    ACE_reinterpret_cast (IR::UsesDef ** ACE_CAST_CONST, rhs.buffer_);
-  
-  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-    {
-      tmp1[i] = IR::UsesDef::_duplicate (tmp2[i]);
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::UsesDef,IR::UsesDef_var>
-IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::operator[] (CORBA::ULong index) const
-{
-  ACE_ASSERT (index < this->maximum_);
-  IR::UsesDef ** const tmp =
-    ACE_reinterpret_cast (IR::UsesDef ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<IR::UsesDef,IR::UsesDef_var> (tmp + index, this->release_);
-}
-
-ACE_INLINE
-IR::UsesDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::get_buffer (CORBA::Boolean orphan)
-{
-  IR::UsesDef **result = 0;
-  
-  if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-        {
-          result =
-            _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (this->maximum_);
-          this->buffer_ = result;
-          this->release_ = 1;
-        }
-      else
-        {
-          result =
-            ACE_reinterpret_cast (IR::UsesDef**, this->buffer_);
-        }
-    }
-  else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-        {
-          // We set the state back to default and relinquish ownership.
-          result =
-            ACE_reinterpret_cast(IR::UsesDef**,this->buffer_);
-          this->maximum_ = 0;
-          this->length_ = 0;
-          this->buffer_ = 0;
-          this->release_ = 0;
-        }
-    }
-  
-  return result;
-}
-
-ACE_INLINE
-const IR::UsesDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::get_buffer (void) const
-{
-  return ACE_reinterpret_cast (const IR::UsesDef ** ACE_CAST_CONST, this->buffer_);
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IR_USESDEFSEQ_CI_)
-#define _IR_USESDEFSEQ_CI_
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
-
-// *************************************************************
-// Inline operations for class IR::UsesDefSeq_var
-// *************************************************************
-
-ACE_INLINE
-IR::UsesDefSeq_var::UsesDefSeq_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-IR::UsesDefSeq_var::UsesDefSeq_var (UsesDefSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-IR::UsesDefSeq_var::UsesDefSeq_var (const ::IR::UsesDefSeq_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::IR::UsesDefSeq (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::UsesDefSeq_var::~UsesDefSeq_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-IR::UsesDefSeq_var &
-IR::UsesDefSeq_var::operator= (UsesDefSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-::IR::UsesDefSeq_var &
-IR::UsesDefSeq_var::operator= (const ::IR::UsesDefSeq_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          UsesDefSeq *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              UsesDefSeq (*p.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              UsesDefSeq *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-const ::IR::UsesDefSeq *
-IR::UsesDefSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::UsesDefSeq *
-IR::UsesDefSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::UsesDefSeq_var::operator const ::IR::UsesDefSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::UsesDefSeq_var::operator ::IR::UsesDefSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::UsesDefSeq_var::operator ::IR::UsesDefSeq &() const // cast 
-{
-  return *this->ptr_;
-}
-
-// Variable-size types only.
-ACE_INLINE
-IR::UsesDefSeq_var::operator ::IR::UsesDefSeq *&() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::UsesDef, IR::UsesDef_var>
-IR::UsesDefSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE
-const ::IR::UsesDefSeq &
-IR::UsesDefSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::UsesDefSeq &
-IR::UsesDefSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::UsesDefSeq *&
-IR::UsesDefSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::UsesDefSeq *
-IR::UsesDefSeq_var::_retn (void)
-{
-  ::IR::UsesDefSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE
-::IR::UsesDefSeq *
-IR::UsesDefSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
-
-// *************************************************************
-// Inline operations for class IR::UsesDefSeq_out
-// *************************************************************
-
-ACE_INLINE
-IR::UsesDefSeq_out::UsesDefSeq_out (UsesDefSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::UsesDefSeq_out::UsesDefSeq_out (UsesDefSeq_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::UsesDefSeq_out::UsesDefSeq_out (const ::IR::UsesDefSeq_out &p)
-  : ptr_ (ACE_const_cast (UsesDefSeq_out&, p).ptr_)
-{}
-
-ACE_INLINE
-::IR::UsesDefSeq_out &
-IR::UsesDefSeq_out::operator= (const ::IR::UsesDefSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (UsesDefSeq_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-::IR::UsesDefSeq_out &
-IR::UsesDefSeq_out::operator= (UsesDefSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-IR::UsesDefSeq_out::operator ::IR::UsesDefSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::UsesDefSeq *&
-IR::UsesDefSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::UsesDefSeq *
-IR::UsesDefSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::UsesDef, IR::UsesDef_var>
-IR::UsesDefSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_HOMEDEFSEQ_CI_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_HOMEDEFSEQ_CI_
-
-ACE_INLINE
-IR::HomeDef **
-IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (CORBA::ULong nelems)
-{
-  IR::HomeDef **buf = 0;
-  
-  ACE_NEW_RETURN (buf, IR::HomeDef*[nelems], 0);
-  
-  for (CORBA::ULong i = 0; i < nelems; i++)
-    {
-      buf[i] = IR::HomeDef::_nil ();
-    }
-  
-  return buf;
-}
-
-ACE_INLINE
-void 
-IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::freebuf (IR::HomeDef **buffer)
-{
-  if (buffer == 0)
-    {
-      return;
-    }
-  
-  delete[] buffer;
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (void)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (CORBA::ULong maximum)
-  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (maximum))
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (
-    CORBA::ULong maximum,
-    CORBA::ULong length,
-    IR::HomeDef* *value,
-    CORBA::Boolean release
-  )
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq(
-    const _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq &rhs
-  )
-  : TAO_Unbounded_Base_Sequence (rhs)
-{
-  if (rhs.buffer_ != 0)
-    {
-      IR::HomeDef **tmp1 =
-        _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (this->maximum_);
-      IR::HomeDef ** const tmp2 =
-        ACE_reinterpret_cast (IR::HomeDef ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = IR::HomeDef::_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
-    }
-  else
-    {
-      this->buffer_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq &
-IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::operator= (
-    const _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq &rhs
-  )
-{
-  if (this == &rhs)
-    {
-      return *this;
-    }
-  
-  if (this->release_)
-    {
-      IR::HomeDef **tmp =
-        ACE_reinterpret_cast (IR::HomeDef **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          CORBA::release (tmp[i]);
-          tmp[i] = IR::HomeDef::_nil ();
-        }
-      
-      if (this->maximum_ < rhs.maximum_)
-        {
-          _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::freebuf (tmp);
-          this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (rhs.maximum_);
-        }
-    }
-  else
-    {
-      this->buffer_ =
-        _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (rhs.maximum_);
-    }
-  
-  TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
-  IR::HomeDef **tmp1 =
-    ACE_reinterpret_cast (IR::HomeDef **, this->buffer_);
-  
-  IR::HomeDef ** const tmp2 =
-    ACE_reinterpret_cast (IR::HomeDef ** ACE_CAST_CONST, rhs.buffer_);
-  
-  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-    {
-      tmp1[i] = IR::HomeDef::_duplicate (tmp2[i]);
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::HomeDef,IR::HomeDef_var>
-IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::operator[] (CORBA::ULong index) const
-{
-  ACE_ASSERT (index < this->maximum_);
-  IR::HomeDef ** const tmp =
-    ACE_reinterpret_cast (IR::HomeDef ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<IR::HomeDef,IR::HomeDef_var> (tmp + index, this->release_);
-}
-
-ACE_INLINE
-IR::HomeDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::get_buffer (CORBA::Boolean orphan)
-{
-  IR::HomeDef **result = 0;
-  
-  if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-        {
-          result =
-            _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (this->maximum_);
-          this->buffer_ = result;
-          this->release_ = 1;
-        }
-      else
-        {
-          result =
-            ACE_reinterpret_cast (IR::HomeDef**, this->buffer_);
-        }
-    }
-  else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-        {
-          // We set the state back to default and relinquish ownership.
-          result =
-            ACE_reinterpret_cast(IR::HomeDef**,this->buffer_);
-          this->maximum_ = 0;
-          this->length_ = 0;
-          this->buffer_ = 0;
-          this->release_ = 0;
-        }
-    }
-  
-  return result;
-}
-
-ACE_INLINE
-const IR::HomeDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::get_buffer (void) const
-{
-  return ACE_reinterpret_cast (const IR::HomeDef ** ACE_CAST_CONST, this->buffer_);
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IR_HOMEDEFSEQ_CI_)
-#define _IR_HOMEDEFSEQ_CI_
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
-
-// *************************************************************
-// Inline operations for class IR::HomeDefSeq_var
-// *************************************************************
-
-ACE_INLINE
-IR::HomeDefSeq_var::HomeDefSeq_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-IR::HomeDefSeq_var::HomeDefSeq_var (HomeDefSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-IR::HomeDefSeq_var::HomeDefSeq_var (const ::IR::HomeDefSeq_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::IR::HomeDefSeq (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::HomeDefSeq_var::~HomeDefSeq_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-IR::HomeDefSeq_var &
-IR::HomeDefSeq_var::operator= (HomeDefSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-::IR::HomeDefSeq_var &
-IR::HomeDefSeq_var::operator= (const ::IR::HomeDefSeq_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          HomeDefSeq *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              HomeDefSeq (*p.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              HomeDefSeq *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-const ::IR::HomeDefSeq *
-IR::HomeDefSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::HomeDefSeq *
-IR::HomeDefSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::HomeDefSeq_var::operator const ::IR::HomeDefSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::HomeDefSeq_var::operator ::IR::HomeDefSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::HomeDefSeq_var::operator ::IR::HomeDefSeq &() const // cast 
-{
-  return *this->ptr_;
-}
-
-// Variable-size types only.
-ACE_INLINE
-IR::HomeDefSeq_var::operator ::IR::HomeDefSeq *&() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::HomeDef, IR::HomeDef_var>
-IR::HomeDefSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE
-const ::IR::HomeDefSeq &
-IR::HomeDefSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::HomeDefSeq &
-IR::HomeDefSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::HomeDefSeq *&
-IR::HomeDefSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::HomeDefSeq *
-IR::HomeDefSeq_var::_retn (void)
-{
-  ::IR::HomeDefSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE
-::IR::HomeDefSeq *
-IR::HomeDefSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
-
-// *************************************************************
-// Inline operations for class IR::HomeDefSeq_out
-// *************************************************************
-
-ACE_INLINE
-IR::HomeDefSeq_out::HomeDefSeq_out (HomeDefSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::HomeDefSeq_out::HomeDefSeq_out (HomeDefSeq_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::HomeDefSeq_out::HomeDefSeq_out (const ::IR::HomeDefSeq_out &p)
-  : ptr_ (ACE_const_cast (HomeDefSeq_out&, p).ptr_)
-{}
-
-ACE_INLINE
-::IR::HomeDefSeq_out &
-IR::HomeDefSeq_out::operator= (const ::IR::HomeDefSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (HomeDefSeq_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-::IR::HomeDefSeq_out &
-IR::HomeDefSeq_out::operator= (HomeDefSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-IR::HomeDefSeq_out::operator ::IR::HomeDefSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::HomeDefSeq *&
-IR::HomeDefSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::HomeDefSeq *
-IR::HomeDefSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::HomeDef, IR::HomeDef_var>
-IR::HomeDefSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_EMITSDEFSEQ_CI_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_EMITSDEFSEQ_CI_
-
-ACE_INLINE
-IR::EmitsDef **
-IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (CORBA::ULong nelems)
-{
-  IR::EmitsDef **buf = 0;
-  
-  ACE_NEW_RETURN (buf, IR::EmitsDef*[nelems], 0);
-  
-  for (CORBA::ULong i = 0; i < nelems; i++)
-    {
-      buf[i] = IR::EmitsDef::_nil ();
-    }
-  
-  return buf;
-}
-
-ACE_INLINE
-void 
-IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::freebuf (IR::EmitsDef **buffer)
-{
-  if (buffer == 0)
-    {
-      return;
-    }
-  
-  delete[] buffer;
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (void)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (CORBA::ULong maximum)
-  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (maximum))
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (
-    CORBA::ULong maximum,
-    CORBA::ULong length,
-    IR::EmitsDef* *value,
-    CORBA::Boolean release
-  )
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq(
-    const _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq &rhs
-  )
-  : TAO_Unbounded_Base_Sequence (rhs)
-{
-  if (rhs.buffer_ != 0)
-    {
-      IR::EmitsDef **tmp1 =
-        _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (this->maximum_);
-      IR::EmitsDef ** const tmp2 =
-        ACE_reinterpret_cast (IR::EmitsDef ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = IR::EmitsDef::_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
-    }
-  else
-    {
-      this->buffer_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq &
-IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::operator= (
-    const _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq &rhs
-  )
-{
-  if (this == &rhs)
-    {
-      return *this;
-    }
-  
-  if (this->release_)
-    {
-      IR::EmitsDef **tmp =
-        ACE_reinterpret_cast (IR::EmitsDef **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          CORBA::release (tmp[i]);
-          tmp[i] = IR::EmitsDef::_nil ();
-        }
-      
-      if (this->maximum_ < rhs.maximum_)
-        {
-          _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::freebuf (tmp);
-          this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (rhs.maximum_);
-        }
-    }
-  else
-    {
-      this->buffer_ =
-        _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (rhs.maximum_);
-    }
-  
-  TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
-  IR::EmitsDef **tmp1 =
-    ACE_reinterpret_cast (IR::EmitsDef **, this->buffer_);
-  
-  IR::EmitsDef ** const tmp2 =
-    ACE_reinterpret_cast (IR::EmitsDef ** ACE_CAST_CONST, rhs.buffer_);
-  
-  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-    {
-      tmp1[i] = IR::EmitsDef::_duplicate (tmp2[i]);
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::EmitsDef,IR::EmitsDef_var>
-IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::operator[] (CORBA::ULong index) const
-{
-  ACE_ASSERT (index < this->maximum_);
-  IR::EmitsDef ** const tmp =
-    ACE_reinterpret_cast (IR::EmitsDef ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<IR::EmitsDef,IR::EmitsDef_var> (tmp + index, this->release_);
-}
-
-ACE_INLINE
-IR::EmitsDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::get_buffer (CORBA::Boolean orphan)
-{
-  IR::EmitsDef **result = 0;
-  
-  if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-        {
-          result =
-            _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (this->maximum_);
-          this->buffer_ = result;
-          this->release_ = 1;
-        }
-      else
-        {
-          result =
-            ACE_reinterpret_cast (IR::EmitsDef**, this->buffer_);
-        }
-    }
-  else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-        {
-          // We set the state back to default and relinquish ownership.
-          result =
-            ACE_reinterpret_cast(IR::EmitsDef**,this->buffer_);
-          this->maximum_ = 0;
-          this->length_ = 0;
-          this->buffer_ = 0;
-          this->release_ = 0;
-        }
-    }
-  
-  return result;
-}
-
-ACE_INLINE
-const IR::EmitsDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::get_buffer (void) const
-{
-  return ACE_reinterpret_cast (const IR::EmitsDef ** ACE_CAST_CONST, this->buffer_);
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IR_EMITSDEFSEQ_CI_)
-#define _IR_EMITSDEFSEQ_CI_
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
-
-// *************************************************************
-// Inline operations for class IR::EmitsDefSeq_var
-// *************************************************************
-
-ACE_INLINE
-IR::EmitsDefSeq_var::EmitsDefSeq_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-IR::EmitsDefSeq_var::EmitsDefSeq_var (EmitsDefSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-IR::EmitsDefSeq_var::EmitsDefSeq_var (const ::IR::EmitsDefSeq_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::IR::EmitsDefSeq (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::EmitsDefSeq_var::~EmitsDefSeq_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-IR::EmitsDefSeq_var &
-IR::EmitsDefSeq_var::operator= (EmitsDefSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-::IR::EmitsDefSeq_var &
-IR::EmitsDefSeq_var::operator= (const ::IR::EmitsDefSeq_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          EmitsDefSeq *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              EmitsDefSeq (*p.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              EmitsDefSeq *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-const ::IR::EmitsDefSeq *
-IR::EmitsDefSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::EmitsDefSeq *
-IR::EmitsDefSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::EmitsDefSeq_var::operator const ::IR::EmitsDefSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::EmitsDefSeq_var::operator ::IR::EmitsDefSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::EmitsDefSeq_var::operator ::IR::EmitsDefSeq &() const // cast 
-{
-  return *this->ptr_;
-}
-
-// Variable-size types only.
-ACE_INLINE
-IR::EmitsDefSeq_var::operator ::IR::EmitsDefSeq *&() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::EmitsDef, IR::EmitsDef_var>
-IR::EmitsDefSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE
-const ::IR::EmitsDefSeq &
-IR::EmitsDefSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::EmitsDefSeq &
-IR::EmitsDefSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::EmitsDefSeq *&
-IR::EmitsDefSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::EmitsDefSeq *
-IR::EmitsDefSeq_var::_retn (void)
-{
-  ::IR::EmitsDefSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE
-::IR::EmitsDefSeq *
-IR::EmitsDefSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
-
-// *************************************************************
-// Inline operations for class IR::EmitsDefSeq_out
-// *************************************************************
-
-ACE_INLINE
-IR::EmitsDefSeq_out::EmitsDefSeq_out (EmitsDefSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::EmitsDefSeq_out::EmitsDefSeq_out (EmitsDefSeq_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::EmitsDefSeq_out::EmitsDefSeq_out (const ::IR::EmitsDefSeq_out &p)
-  : ptr_ (ACE_const_cast (EmitsDefSeq_out&, p).ptr_)
-{}
-
-ACE_INLINE
-::IR::EmitsDefSeq_out &
-IR::EmitsDefSeq_out::operator= (const ::IR::EmitsDefSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (EmitsDefSeq_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-::IR::EmitsDefSeq_out &
-IR::EmitsDefSeq_out::operator= (EmitsDefSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-IR::EmitsDefSeq_out::operator ::IR::EmitsDefSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::EmitsDefSeq *&
-IR::EmitsDefSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::EmitsDefSeq *
-IR::EmitsDefSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::EmitsDef, IR::EmitsDef_var>
-IR::EmitsDefSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_PUBLISHESDEFSEQ_CI_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_PUBLISHESDEFSEQ_CI_
-
-ACE_INLINE
-IR::PublishesDef **
-IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (CORBA::ULong nelems)
-{
-  IR::PublishesDef **buf = 0;
-  
-  ACE_NEW_RETURN (buf, IR::PublishesDef*[nelems], 0);
-  
-  for (CORBA::ULong i = 0; i < nelems; i++)
-    {
-      buf[i] = IR::PublishesDef::_nil ();
-    }
-  
-  return buf;
-}
-
-ACE_INLINE
-void 
-IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::freebuf (IR::PublishesDef **buffer)
-{
-  if (buffer == 0)
-    {
-      return;
-    }
-  
-  delete[] buffer;
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (void)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (CORBA::ULong maximum)
-  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (maximum))
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (
-    CORBA::ULong maximum,
-    CORBA::ULong length,
-    IR::PublishesDef* *value,
-    CORBA::Boolean release
-  )
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq(
-    const _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq &rhs
-  )
-  : TAO_Unbounded_Base_Sequence (rhs)
-{
-  if (rhs.buffer_ != 0)
-    {
-      IR::PublishesDef **tmp1 =
-        _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (this->maximum_);
-      IR::PublishesDef ** const tmp2 =
-        ACE_reinterpret_cast (IR::PublishesDef ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = IR::PublishesDef::_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
-    }
-  else
-    {
-      this->buffer_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq &
-IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::operator= (
-    const _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq &rhs
-  )
-{
-  if (this == &rhs)
-    {
-      return *this;
-    }
-  
-  if (this->release_)
-    {
-      IR::PublishesDef **tmp =
-        ACE_reinterpret_cast (IR::PublishesDef **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          CORBA::release (tmp[i]);
-          tmp[i] = IR::PublishesDef::_nil ();
-        }
-      
-      if (this->maximum_ < rhs.maximum_)
-        {
-          _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::freebuf (tmp);
-          this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (rhs.maximum_);
-        }
-    }
-  else
-    {
-      this->buffer_ =
-        _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (rhs.maximum_);
-    }
-  
-  TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
-  IR::PublishesDef **tmp1 =
-    ACE_reinterpret_cast (IR::PublishesDef **, this->buffer_);
-  
-  IR::PublishesDef ** const tmp2 =
-    ACE_reinterpret_cast (IR::PublishesDef ** ACE_CAST_CONST, rhs.buffer_);
-  
-  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-    {
-      tmp1[i] = IR::PublishesDef::_duplicate (tmp2[i]);
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::PublishesDef,IR::PublishesDef_var>
-IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::operator[] (CORBA::ULong index) const
-{
-  ACE_ASSERT (index < this->maximum_);
-  IR::PublishesDef ** const tmp =
-    ACE_reinterpret_cast (IR::PublishesDef ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<IR::PublishesDef,IR::PublishesDef_var> (tmp + index, this->release_);
-}
-
-ACE_INLINE
-IR::PublishesDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::get_buffer (CORBA::Boolean orphan)
-{
-  IR::PublishesDef **result = 0;
-  
-  if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-        {
-          result =
-            _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (this->maximum_);
-          this->buffer_ = result;
-          this->release_ = 1;
-        }
-      else
-        {
-          result =
-            ACE_reinterpret_cast (IR::PublishesDef**, this->buffer_);
-        }
-    }
-  else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-        {
-          // We set the state back to default and relinquish ownership.
-          result =
-            ACE_reinterpret_cast(IR::PublishesDef**,this->buffer_);
-          this->maximum_ = 0;
-          this->length_ = 0;
-          this->buffer_ = 0;
-          this->release_ = 0;
-        }
-    }
-  
-  return result;
-}
-
-ACE_INLINE
-const IR::PublishesDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::get_buffer (void) const
-{
-  return ACE_reinterpret_cast (const IR::PublishesDef ** ACE_CAST_CONST, this->buffer_);
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IR_PUBLISHESDEFSEQ_CI_)
-#define _IR_PUBLISHESDEFSEQ_CI_
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
-
-// *************************************************************
-// Inline operations for class IR::PublishesDefSeq_var
-// *************************************************************
-
-ACE_INLINE
-IR::PublishesDefSeq_var::PublishesDefSeq_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-IR::PublishesDefSeq_var::PublishesDefSeq_var (PublishesDefSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-IR::PublishesDefSeq_var::PublishesDefSeq_var (const ::IR::PublishesDefSeq_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::IR::PublishesDefSeq (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::PublishesDefSeq_var::~PublishesDefSeq_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-IR::PublishesDefSeq_var &
-IR::PublishesDefSeq_var::operator= (PublishesDefSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-::IR::PublishesDefSeq_var &
-IR::PublishesDefSeq_var::operator= (const ::IR::PublishesDefSeq_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          PublishesDefSeq *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              PublishesDefSeq (*p.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              PublishesDefSeq *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-const ::IR::PublishesDefSeq *
-IR::PublishesDefSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::PublishesDefSeq *
-IR::PublishesDefSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::PublishesDefSeq_var::operator const ::IR::PublishesDefSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::PublishesDefSeq_var::operator ::IR::PublishesDefSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::PublishesDefSeq_var::operator ::IR::PublishesDefSeq &() const // cast 
-{
-  return *this->ptr_;
-}
-
-// Variable-size types only.
-ACE_INLINE
-IR::PublishesDefSeq_var::operator ::IR::PublishesDefSeq *&() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::PublishesDef, IR::PublishesDef_var>
-IR::PublishesDefSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE
-const ::IR::PublishesDefSeq &
-IR::PublishesDefSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::PublishesDefSeq &
-IR::PublishesDefSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::PublishesDefSeq *&
-IR::PublishesDefSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::PublishesDefSeq *
-IR::PublishesDefSeq_var::_retn (void)
-{
-  ::IR::PublishesDefSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE
-::IR::PublishesDefSeq *
-IR::PublishesDefSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
-
-// *************************************************************
-// Inline operations for class IR::PublishesDefSeq_out
-// *************************************************************
-
-ACE_INLINE
-IR::PublishesDefSeq_out::PublishesDefSeq_out (PublishesDefSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::PublishesDefSeq_out::PublishesDefSeq_out (PublishesDefSeq_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::PublishesDefSeq_out::PublishesDefSeq_out (const ::IR::PublishesDefSeq_out &p)
-  : ptr_ (ACE_const_cast (PublishesDefSeq_out&, p).ptr_)
-{}
-
-ACE_INLINE
-::IR::PublishesDefSeq_out &
-IR::PublishesDefSeq_out::operator= (const ::IR::PublishesDefSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (PublishesDefSeq_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-::IR::PublishesDefSeq_out &
-IR::PublishesDefSeq_out::operator= (PublishesDefSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-IR::PublishesDefSeq_out::operator ::IR::PublishesDefSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::PublishesDefSeq *&
-IR::PublishesDefSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::PublishesDefSeq *
-IR::PublishesDefSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::PublishesDef, IR::PublishesDef_var>
-IR::PublishesDefSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_CONSUMESDEFSEQ_CI_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_CONSUMESDEFSEQ_CI_
-
-ACE_INLINE
-IR::ConsumesDef **
-IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (CORBA::ULong nelems)
-{
-  IR::ConsumesDef **buf = 0;
-  
-  ACE_NEW_RETURN (buf, IR::ConsumesDef*[nelems], 0);
-  
-  for (CORBA::ULong i = 0; i < nelems; i++)
-    {
-      buf[i] = IR::ConsumesDef::_nil ();
-    }
-  
-  return buf;
-}
-
-ACE_INLINE
-void 
-IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::freebuf (IR::ConsumesDef **buffer)
-{
-  if (buffer == 0)
-    {
-      return;
-    }
-  
-  delete[] buffer;
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (void)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (CORBA::ULong maximum)
-  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (maximum))
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (
-    CORBA::ULong maximum,
-    CORBA::ULong length,
-    IR::ConsumesDef* *value,
-    CORBA::Boolean release
-  )
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq(
-    const _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq &rhs
-  )
-  : TAO_Unbounded_Base_Sequence (rhs)
-{
-  if (rhs.buffer_ != 0)
-    {
-      IR::ConsumesDef **tmp1 =
-        _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (this->maximum_);
-      IR::ConsumesDef ** const tmp2 =
-        ACE_reinterpret_cast (IR::ConsumesDef ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = IR::ConsumesDef::_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
-    }
-  else
-    {
-      this->buffer_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq &
-IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::operator= (
-    const _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq &rhs
-  )
-{
-  if (this == &rhs)
-    {
-      return *this;
-    }
-  
-  if (this->release_)
-    {
-      IR::ConsumesDef **tmp =
-        ACE_reinterpret_cast (IR::ConsumesDef **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          CORBA::release (tmp[i]);
-          tmp[i] = IR::ConsumesDef::_nil ();
-        }
-      
-      if (this->maximum_ < rhs.maximum_)
-        {
-          _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::freebuf (tmp);
-          this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (rhs.maximum_);
-        }
-    }
-  else
-    {
-      this->buffer_ =
-        _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (rhs.maximum_);
-    }
-  
-  TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
-  IR::ConsumesDef **tmp1 =
-    ACE_reinterpret_cast (IR::ConsumesDef **, this->buffer_);
-  
-  IR::ConsumesDef ** const tmp2 =
-    ACE_reinterpret_cast (IR::ConsumesDef ** ACE_CAST_CONST, rhs.buffer_);
-  
-  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-    {
-      tmp1[i] = IR::ConsumesDef::_duplicate (tmp2[i]);
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::ConsumesDef,IR::ConsumesDef_var>
-IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::operator[] (CORBA::ULong index) const
-{
-  ACE_ASSERT (index < this->maximum_);
-  IR::ConsumesDef ** const tmp =
-    ACE_reinterpret_cast (IR::ConsumesDef ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<IR::ConsumesDef,IR::ConsumesDef_var> (tmp + index, this->release_);
-}
-
-ACE_INLINE
-IR::ConsumesDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::get_buffer (CORBA::Boolean orphan)
-{
-  IR::ConsumesDef **result = 0;
-  
-  if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-        {
-          result =
-            _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (this->maximum_);
-          this->buffer_ = result;
-          this->release_ = 1;
-        }
-      else
-        {
-          result =
-            ACE_reinterpret_cast (IR::ConsumesDef**, this->buffer_);
-        }
-    }
-  else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-        {
-          // We set the state back to default and relinquish ownership.
-          result =
-            ACE_reinterpret_cast(IR::ConsumesDef**,this->buffer_);
-          this->maximum_ = 0;
-          this->length_ = 0;
-          this->buffer_ = 0;
-          this->release_ = 0;
-        }
-    }
-  
-  return result;
-}
-
-ACE_INLINE
-const IR::ConsumesDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::get_buffer (void) const
-{
-  return ACE_reinterpret_cast (const IR::ConsumesDef ** ACE_CAST_CONST, this->buffer_);
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IR_CONSUMESDEFSEQ_CI_)
-#define _IR_CONSUMESDEFSEQ_CI_
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
-
-// *************************************************************
-// Inline operations for class IR::ConsumesDefSeq_var
-// *************************************************************
-
-ACE_INLINE
-IR::ConsumesDefSeq_var::ConsumesDefSeq_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-IR::ConsumesDefSeq_var::ConsumesDefSeq_var (ConsumesDefSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-IR::ConsumesDefSeq_var::ConsumesDefSeq_var (const ::IR::ConsumesDefSeq_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::IR::ConsumesDefSeq (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::ConsumesDefSeq_var::~ConsumesDefSeq_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-IR::ConsumesDefSeq_var &
-IR::ConsumesDefSeq_var::operator= (ConsumesDefSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-::IR::ConsumesDefSeq_var &
-IR::ConsumesDefSeq_var::operator= (const ::IR::ConsumesDefSeq_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          ConsumesDefSeq *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              ConsumesDefSeq (*p.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              ConsumesDefSeq *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-const ::IR::ConsumesDefSeq *
-IR::ConsumesDefSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ConsumesDefSeq *
-IR::ConsumesDefSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::ConsumesDefSeq_var::operator const ::IR::ConsumesDefSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::ConsumesDefSeq_var::operator ::IR::ConsumesDefSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::ConsumesDefSeq_var::operator ::IR::ConsumesDefSeq &() const // cast 
-{
-  return *this->ptr_;
-}
-
-// Variable-size types only.
-ACE_INLINE
-IR::ConsumesDefSeq_var::operator ::IR::ConsumesDefSeq *&() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::ConsumesDef, IR::ConsumesDef_var>
-IR::ConsumesDefSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE
-const ::IR::ConsumesDefSeq &
-IR::ConsumesDefSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::ConsumesDefSeq &
-IR::ConsumesDefSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::ConsumesDefSeq *&
-IR::ConsumesDefSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ConsumesDefSeq *
-IR::ConsumesDefSeq_var::_retn (void)
-{
-  ::IR::ConsumesDefSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE
-::IR::ConsumesDefSeq *
-IR::ConsumesDefSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
-
-// *************************************************************
-// Inline operations for class IR::ConsumesDefSeq_out
-// *************************************************************
-
-ACE_INLINE
-IR::ConsumesDefSeq_out::ConsumesDefSeq_out (ConsumesDefSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::ConsumesDefSeq_out::ConsumesDefSeq_out (ConsumesDefSeq_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::ConsumesDefSeq_out::ConsumesDefSeq_out (const ::IR::ConsumesDefSeq_out &p)
-  : ptr_ (ACE_const_cast (ConsumesDefSeq_out&, p).ptr_)
-{}
-
-ACE_INLINE
-::IR::ConsumesDefSeq_out &
-IR::ConsumesDefSeq_out::operator= (const ::IR::ConsumesDefSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (ConsumesDefSeq_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-::IR::ConsumesDefSeq_out &
-IR::ConsumesDefSeq_out::operator= (ConsumesDefSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-IR::ConsumesDefSeq_out::operator ::IR::ConsumesDefSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ConsumesDefSeq *&
-IR::ConsumesDefSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ConsumesDefSeq *
-IR::ConsumesDefSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::ConsumesDef, IR::ConsumesDef_var>
-IR::ConsumesDefSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_FACTORYDEFSEQ_CI_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_FACTORYDEFSEQ_CI_
-
-ACE_INLINE
-IR::FactoryDef **
-IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (CORBA::ULong nelems)
-{
-  IR::FactoryDef **buf = 0;
-  
-  ACE_NEW_RETURN (buf, IR::FactoryDef*[nelems], 0);
-  
-  for (CORBA::ULong i = 0; i < nelems; i++)
-    {
-      buf[i] = IR::FactoryDef::_nil ();
-    }
-  
-  return buf;
-}
-
-ACE_INLINE
-void 
-IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::freebuf (IR::FactoryDef **buffer)
-{
-  if (buffer == 0)
-    {
-      return;
-    }
-  
-  delete[] buffer;
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (void)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (CORBA::ULong maximum)
-  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (maximum))
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (
-    CORBA::ULong maximum,
-    CORBA::ULong length,
-    IR::FactoryDef* *value,
-    CORBA::Boolean release
-  )
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq(
-    const _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq &rhs
-  )
-  : TAO_Unbounded_Base_Sequence (rhs)
-{
-  if (rhs.buffer_ != 0)
-    {
-      IR::FactoryDef **tmp1 =
-        _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (this->maximum_);
-      IR::FactoryDef ** const tmp2 =
-        ACE_reinterpret_cast (IR::FactoryDef ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = IR::FactoryDef::_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
-    }
-  else
-    {
-      this->buffer_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq &
-IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::operator= (
-    const _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq &rhs
-  )
-{
-  if (this == &rhs)
-    {
-      return *this;
-    }
-  
-  if (this->release_)
-    {
-      IR::FactoryDef **tmp =
-        ACE_reinterpret_cast (IR::FactoryDef **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          CORBA::release (tmp[i]);
-          tmp[i] = IR::FactoryDef::_nil ();
-        }
-      
-      if (this->maximum_ < rhs.maximum_)
-        {
-          _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::freebuf (tmp);
-          this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (rhs.maximum_);
-        }
-    }
-  else
-    {
-      this->buffer_ =
-        _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (rhs.maximum_);
-    }
-  
-  TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
-  IR::FactoryDef **tmp1 =
-    ACE_reinterpret_cast (IR::FactoryDef **, this->buffer_);
-  
-  IR::FactoryDef ** const tmp2 =
-    ACE_reinterpret_cast (IR::FactoryDef ** ACE_CAST_CONST, rhs.buffer_);
-  
-  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-    {
-      tmp1[i] = IR::FactoryDef::_duplicate (tmp2[i]);
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::FactoryDef,IR::FactoryDef_var>
-IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::operator[] (CORBA::ULong index) const
-{
-  ACE_ASSERT (index < this->maximum_);
-  IR::FactoryDef ** const tmp =
-    ACE_reinterpret_cast (IR::FactoryDef ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<IR::FactoryDef,IR::FactoryDef_var> (tmp + index, this->release_);
-}
-
-ACE_INLINE
-IR::FactoryDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::get_buffer (CORBA::Boolean orphan)
-{
-  IR::FactoryDef **result = 0;
-  
-  if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-        {
-          result =
-            _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (this->maximum_);
-          this->buffer_ = result;
-          this->release_ = 1;
-        }
-      else
-        {
-          result =
-            ACE_reinterpret_cast (IR::FactoryDef**, this->buffer_);
-        }
-    }
-  else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-        {
-          // We set the state back to default and relinquish ownership.
-          result =
-            ACE_reinterpret_cast(IR::FactoryDef**,this->buffer_);
-          this->maximum_ = 0;
-          this->length_ = 0;
-          this->buffer_ = 0;
-          this->release_ = 0;
-        }
-    }
-  
-  return result;
-}
-
-ACE_INLINE
-const IR::FactoryDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::get_buffer (void) const
-{
-  return ACE_reinterpret_cast (const IR::FactoryDef ** ACE_CAST_CONST, this->buffer_);
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IR_FACTORYDEFSEQ_CI_)
-#define _IR_FACTORYDEFSEQ_CI_
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
-
-// *************************************************************
-// Inline operations for class IR::FactoryDefSeq_var
-// *************************************************************
-
-ACE_INLINE
-IR::FactoryDefSeq_var::FactoryDefSeq_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-IR::FactoryDefSeq_var::FactoryDefSeq_var (FactoryDefSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-IR::FactoryDefSeq_var::FactoryDefSeq_var (const ::IR::FactoryDefSeq_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::IR::FactoryDefSeq (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::FactoryDefSeq_var::~FactoryDefSeq_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-IR::FactoryDefSeq_var &
-IR::FactoryDefSeq_var::operator= (FactoryDefSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-::IR::FactoryDefSeq_var &
-IR::FactoryDefSeq_var::operator= (const ::IR::FactoryDefSeq_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          FactoryDefSeq *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              FactoryDefSeq (*p.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              FactoryDefSeq *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-const ::IR::FactoryDefSeq *
-IR::FactoryDefSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::FactoryDefSeq *
-IR::FactoryDefSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::FactoryDefSeq_var::operator const ::IR::FactoryDefSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::FactoryDefSeq_var::operator ::IR::FactoryDefSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::FactoryDefSeq_var::operator ::IR::FactoryDefSeq &() const // cast 
-{
-  return *this->ptr_;
-}
-
-// Variable-size types only.
-ACE_INLINE
-IR::FactoryDefSeq_var::operator ::IR::FactoryDefSeq *&() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::FactoryDef, IR::FactoryDef_var>
-IR::FactoryDefSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE
-const ::IR::FactoryDefSeq &
-IR::FactoryDefSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::FactoryDefSeq &
-IR::FactoryDefSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::FactoryDefSeq *&
-IR::FactoryDefSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::FactoryDefSeq *
-IR::FactoryDefSeq_var::_retn (void)
-{
-  ::IR::FactoryDefSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE
-::IR::FactoryDefSeq *
-IR::FactoryDefSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
-
-// *************************************************************
-// Inline operations for class IR::FactoryDefSeq_out
-// *************************************************************
-
-ACE_INLINE
-IR::FactoryDefSeq_out::FactoryDefSeq_out (FactoryDefSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::FactoryDefSeq_out::FactoryDefSeq_out (FactoryDefSeq_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::FactoryDefSeq_out::FactoryDefSeq_out (const ::IR::FactoryDefSeq_out &p)
-  : ptr_ (ACE_const_cast (FactoryDefSeq_out&, p).ptr_)
-{}
-
-ACE_INLINE
-::IR::FactoryDefSeq_out &
-IR::FactoryDefSeq_out::operator= (const ::IR::FactoryDefSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (FactoryDefSeq_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-::IR::FactoryDefSeq_out &
-IR::FactoryDefSeq_out::operator= (FactoryDefSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-IR::FactoryDefSeq_out::operator ::IR::FactoryDefSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::FactoryDefSeq *&
-IR::FactoryDefSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::FactoryDefSeq *
-IR::FactoryDefSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::FactoryDef, IR::FactoryDef_var>
-IR::FactoryDefSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_FINDERDEFSEQ_CI_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_FINDERDEFSEQ_CI_
-
-ACE_INLINE
-IR::FinderDef **
-IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (CORBA::ULong nelems)
-{
-  IR::FinderDef **buf = 0;
-  
-  ACE_NEW_RETURN (buf, IR::FinderDef*[nelems], 0);
-  
-  for (CORBA::ULong i = 0; i < nelems; i++)
-    {
-      buf[i] = IR::FinderDef::_nil ();
-    }
-  
-  return buf;
-}
-
-ACE_INLINE
-void 
-IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::freebuf (IR::FinderDef **buffer)
-{
-  if (buffer == 0)
-    {
-      return;
-    }
-  
-  delete[] buffer;
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (void)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (CORBA::ULong maximum)
-  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (maximum))
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (
-    CORBA::ULong maximum,
-    CORBA::ULong length,
-    IR::FinderDef* *value,
-    CORBA::Boolean release
-  )
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq(
-    const _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq &rhs
-  )
-  : TAO_Unbounded_Base_Sequence (rhs)
-{
-  if (rhs.buffer_ != 0)
-    {
-      IR::FinderDef **tmp1 =
-        _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (this->maximum_);
-      IR::FinderDef ** const tmp2 =
-        ACE_reinterpret_cast (IR::FinderDef ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = IR::FinderDef::_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
-    }
-  else
-    {
-      this->buffer_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq &
-IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::operator= (
-    const _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq &rhs
-  )
-{
-  if (this == &rhs)
-    {
-      return *this;
-    }
-  
-  if (this->release_)
-    {
-      IR::FinderDef **tmp =
-        ACE_reinterpret_cast (IR::FinderDef **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          CORBA::release (tmp[i]);
-          tmp[i] = IR::FinderDef::_nil ();
-        }
-      
-      if (this->maximum_ < rhs.maximum_)
-        {
-          _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::freebuf (tmp);
-          this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (rhs.maximum_);
-        }
-    }
-  else
-    {
-      this->buffer_ =
-        _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (rhs.maximum_);
-    }
-  
-  TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
-  IR::FinderDef **tmp1 =
-    ACE_reinterpret_cast (IR::FinderDef **, this->buffer_);
-  
-  IR::FinderDef ** const tmp2 =
-    ACE_reinterpret_cast (IR::FinderDef ** ACE_CAST_CONST, rhs.buffer_);
-  
-  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-    {
-      tmp1[i] = IR::FinderDef::_duplicate (tmp2[i]);
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::FinderDef,IR::FinderDef_var>
-IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::operator[] (CORBA::ULong index) const
-{
-  ACE_ASSERT (index < this->maximum_);
-  IR::FinderDef ** const tmp =
-    ACE_reinterpret_cast (IR::FinderDef ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<IR::FinderDef,IR::FinderDef_var> (tmp + index, this->release_);
-}
-
-ACE_INLINE
-IR::FinderDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::get_buffer (CORBA::Boolean orphan)
-{
-  IR::FinderDef **result = 0;
-  
-  if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-        {
-          result =
-            _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (this->maximum_);
-          this->buffer_ = result;
-          this->release_ = 1;
-        }
-      else
-        {
-          result =
-            ACE_reinterpret_cast (IR::FinderDef**, this->buffer_);
-        }
-    }
-  else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-        {
-          // We set the state back to default and relinquish ownership.
-          result =
-            ACE_reinterpret_cast(IR::FinderDef**,this->buffer_);
-          this->maximum_ = 0;
-          this->length_ = 0;
-          this->buffer_ = 0;
-          this->release_ = 0;
-        }
-    }
-  
-  return result;
-}
-
-ACE_INLINE
-const IR::FinderDef* *
-IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::get_buffer (void) const
-{
-  return ACE_reinterpret_cast (const IR::FinderDef ** ACE_CAST_CONST, this->buffer_);
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IR_FINDERDEFSEQ_CI_)
-#define _IR_FINDERDEFSEQ_CI_
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
-
-// *************************************************************
-// Inline operations for class IR::FinderDefSeq_var
-// *************************************************************
-
-ACE_INLINE
-IR::FinderDefSeq_var::FinderDefSeq_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-IR::FinderDefSeq_var::FinderDefSeq_var (FinderDefSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-IR::FinderDefSeq_var::FinderDefSeq_var (const ::IR::FinderDefSeq_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::IR::FinderDefSeq (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::FinderDefSeq_var::~FinderDefSeq_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-IR::FinderDefSeq_var &
-IR::FinderDefSeq_var::operator= (FinderDefSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-::IR::FinderDefSeq_var &
-IR::FinderDefSeq_var::operator= (const ::IR::FinderDefSeq_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          FinderDefSeq *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              FinderDefSeq (*p.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              FinderDefSeq *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-const ::IR::FinderDefSeq *
-IR::FinderDefSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::FinderDefSeq *
-IR::FinderDefSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::FinderDefSeq_var::operator const ::IR::FinderDefSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::FinderDefSeq_var::operator ::IR::FinderDefSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::FinderDefSeq_var::operator ::IR::FinderDefSeq &() const // cast 
-{
-  return *this->ptr_;
-}
-
-// Variable-size types only.
-ACE_INLINE
-IR::FinderDefSeq_var::operator ::IR::FinderDefSeq *&() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::FinderDef, IR::FinderDef_var>
-IR::FinderDefSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE
-const ::IR::FinderDefSeq &
-IR::FinderDefSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::FinderDefSeq &
-IR::FinderDefSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::FinderDefSeq *&
-IR::FinderDefSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::FinderDefSeq *
-IR::FinderDefSeq_var::_retn (void)
-{
-  ::IR::FinderDefSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE
-::IR::FinderDefSeq *
-IR::FinderDefSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
-
-// *************************************************************
-// Inline operations for class IR::FinderDefSeq_out
-// *************************************************************
-
-ACE_INLINE
-IR::FinderDefSeq_out::FinderDefSeq_out (FinderDefSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::FinderDefSeq_out::FinderDefSeq_out (FinderDefSeq_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::FinderDefSeq_out::FinderDefSeq_out (const ::IR::FinderDefSeq_out &p)
-  : ptr_ (ACE_const_cast (FinderDefSeq_out&, p).ptr_)
-{}
-
-ACE_INLINE
-::IR::FinderDefSeq_out &
-IR::FinderDefSeq_out::operator= (const ::IR::FinderDefSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (FinderDefSeq_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-::IR::FinderDefSeq_out &
-IR::FinderDefSeq_out::operator= (FinderDefSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-IR::FinderDefSeq_out::operator ::IR::FinderDefSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::FinderDefSeq *&
-IR::FinderDefSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::FinderDefSeq *
-IR::FinderDefSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO_Object_Manager<IR::FinderDef, IR::FinderDef_var>
-IR::FinderDefSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-#endif /* end #if !defined */
-
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
-#if !defined (_IR_COMPONENTREPOSITORY___CI_)
-#define _IR_COMPONENTREPOSITORY___CI_
+#if !defined (_CORBA_COMPONENTIR_EVENTDEF___CI_)
+#define _CORBA_COMPONENTIR_EVENTDEF___CI_
 
 ACE_INLINE
-IR::ComponentRepository::ComponentRepository (
+CORBA::ComponentIR::EventDef::EventDef (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->IR_ComponentRepository_setup_collocation (_tao_collocated);
+  this->CORBA_ComponentIR_EventDef_setup_collocation (_tao_collocated);
 }
 
 ACE_INLINE
 CORBA::Boolean
-IR::ComponentRepository::marshal (TAO_OutputCDR &cdr)
+CORBA::ComponentIR::EventDef::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
 }
@@ -4175,23 +49,101 @@ IR::ComponentRepository::marshal (TAO_OutputCDR &cdr)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
-#if !defined (_IR_PROVIDESDEF___CI_)
-#define _IR_PROVIDESDEF___CI_
+#if !defined (_CORBA_COMPONENTIR_CONTAINER___CI_)
+#define _CORBA_COMPONENTIR_CONTAINER___CI_
 
 ACE_INLINE
-IR::ProvidesDef::ProvidesDef (
+CORBA::ComponentIR::Container::Container (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->IR_ProvidesDef_setup_collocation (_tao_collocated);
+  this->CORBA_ComponentIR_Container_setup_collocation (_tao_collocated);
 }
 
 ACE_INLINE
 CORBA::Boolean
-IR::ProvidesDef::marshal (TAO_OutputCDR &cdr)
+CORBA::ComponentIR::Container::marshal (TAO_OutputCDR &cdr)
+{
+  return (cdr << this);
+}
+
+#endif /* end #if !defined */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+
+#if !defined (_CORBA_COMPONENTIR_MODULEDEF___CI_)
+#define _CORBA_COMPONENTIR_MODULEDEF___CI_
+
+ACE_INLINE
+CORBA::ComponentIR::ModuleDef::ModuleDef (
+    TAO_Stub *objref,
+    CORBA::Boolean _tao_collocated,
+    TAO_Abstract_ServantBase *servant
+  )
+  : CORBA_Object (objref, _tao_collocated, servant)
+{
+  this->CORBA_ComponentIR_ModuleDef_setup_collocation (_tao_collocated);
+}
+
+ACE_INLINE
+CORBA::Boolean
+CORBA::ComponentIR::ModuleDef::marshal (TAO_OutputCDR &cdr)
+{
+  return (cdr << this);
+}
+
+#endif /* end #if !defined */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+
+#if !defined (_CORBA_COMPONENTIR_REPOSITORY___CI_)
+#define _CORBA_COMPONENTIR_REPOSITORY___CI_
+
+ACE_INLINE
+CORBA::ComponentIR::Repository::Repository (
+    TAO_Stub *objref,
+    CORBA::Boolean _tao_collocated,
+    TAO_Abstract_ServantBase *servant
+  )
+  : CORBA_Object (objref, _tao_collocated, servant)
+{
+  this->CORBA_ComponentIR_Repository_setup_collocation (_tao_collocated);
+}
+
+ACE_INLINE
+CORBA::Boolean
+CORBA::ComponentIR::Repository::marshal (TAO_OutputCDR &cdr)
+{
+  return (cdr << this);
+}
+
+#endif /* end #if !defined */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+
+#if !defined (_CORBA_COMPONENTIR_PROVIDESDEF___CI_)
+#define _CORBA_COMPONENTIR_PROVIDESDEF___CI_
+
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDef::ProvidesDef (
+    TAO_Stub *objref,
+    CORBA::Boolean _tao_collocated,
+    TAO_Abstract_ServantBase *servant
+  )
+  : CORBA_Object (objref, _tao_collocated, servant)
+{
+  this->CORBA_ComponentIR_ProvidesDef_setup_collocation (_tao_collocated);
+}
+
+ACE_INLINE
+CORBA::Boolean
+CORBA::ComponentIR::ProvidesDef::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
 }
@@ -4202,25 +154,25 @@ IR::ProvidesDef::marshal (TAO_OutputCDR &cdr)
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
 
 // *************************************************************
-// Inline operations for class IR::ProvidesDescription_var
+// Inline operations for class CORBA::ComponentIR::ProvidesDescription_var
 // *************************************************************
 
 ACE_INLINE
-IR::ProvidesDescription_var::ProvidesDescription_var (void)
+CORBA::ComponentIR::ProvidesDescription_var::ProvidesDescription_var (void)
   : ptr_ (0)
 {}
 
 ACE_INLINE
-IR::ProvidesDescription_var::ProvidesDescription_var (ProvidesDescription *p)
+CORBA::ComponentIR::ProvidesDescription_var::ProvidesDescription_var (ProvidesDescription *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-IR::ProvidesDescription_var::ProvidesDescription_var (const ::IR::ProvidesDescription_var &p)
+CORBA::ComponentIR::ProvidesDescription_var::ProvidesDescription_var (const ::CORBA::ComponentIR::ProvidesDescription_var &p)
 {
   if (p.ptr_)
     {
-      ACE_NEW (this->ptr_, ::IR::ProvidesDescription (*p.ptr_));
+      ACE_NEW (this->ptr_, ::CORBA::ComponentIR::ProvidesDescription (*p.ptr_));
     }
   else
     {
@@ -4229,14 +181,14 @@ IR::ProvidesDescription_var::ProvidesDescription_var (const ::IR::ProvidesDescri
 }
 
 ACE_INLINE
-IR::ProvidesDescription_var::~ProvidesDescription_var (void)
+CORBA::ComponentIR::ProvidesDescription_var::~ProvidesDescription_var (void)
 {
   delete this->ptr_;
 }
 
 ACE_INLINE
-IR::ProvidesDescription_var &
-IR::ProvidesDescription_var::operator= (ProvidesDescription *_tao_struct_var)
+CORBA::ComponentIR::ProvidesDescription_var &
+CORBA::ComponentIR::ProvidesDescription_var::operator= (ProvidesDescription *_tao_struct_var)
 {
   delete this->ptr_;
   this->ptr_ = _tao_struct_var;
@@ -4244,8 +196,8 @@ IR::ProvidesDescription_var::operator= (ProvidesDescription *_tao_struct_var)
 }
 
 ACE_INLINE
-::IR::ProvidesDescription_var &
-IR::ProvidesDescription_var::operator= (const ::IR::ProvidesDescription_var &_tao_struct_var)
+::CORBA::ComponentIR::ProvidesDescription_var &
+CORBA::ComponentIR::ProvidesDescription_var::operator= (const ::CORBA::ComponentIR::ProvidesDescription_var &_tao_struct_var)
 {
   if (this != &_tao_struct_var)
     {
@@ -4276,74 +228,74 @@ IR::ProvidesDescription_var::operator= (const ::IR::ProvidesDescription_var &_ta
   return *this;
 }
 
-ACE_INLINE const ::IR::ProvidesDescription *
-IR::ProvidesDescription_var::operator-> (void) const
+ACE_INLINE const ::CORBA::ComponentIR::ProvidesDescription *
+CORBA::ComponentIR::ProvidesDescription_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::ProvidesDescription *
-IR::ProvidesDescription_var::operator-> (void)
+ACE_INLINE ::CORBA::ComponentIR::ProvidesDescription *
+CORBA::ComponentIR::ProvidesDescription_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-IR::ProvidesDescription_var::operator const ::IR::ProvidesDescription &() const // cast
+CORBA::ComponentIR::ProvidesDescription_var::operator const ::CORBA::ComponentIR::ProvidesDescription &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IR::ProvidesDescription_var::operator ::IR::ProvidesDescription &() // cast 
+CORBA::ComponentIR::ProvidesDescription_var::operator ::CORBA::ComponentIR::ProvidesDescription &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IR::ProvidesDescription_var::operator ::IR::ProvidesDescription &() const // cast 
+CORBA::ComponentIR::ProvidesDescription_var::operator ::CORBA::ComponentIR::ProvidesDescription &() const // cast 
 {
   return *this->ptr_;
 }
 
 // Variable-size types only.
 ACE_INLINE
-IR::ProvidesDescription_var::operator ::IR::ProvidesDescription *&() // cast 
+CORBA::ComponentIR::ProvidesDescription_var::operator ::CORBA::ComponentIR::ProvidesDescription *&() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE const ::IR::ProvidesDescription &
-IR::ProvidesDescription_var::in (void) const
+ACE_INLINE const ::CORBA::ComponentIR::ProvidesDescription &
+CORBA::ComponentIR::ProvidesDescription_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ::IR::ProvidesDescription &
-IR::ProvidesDescription_var::inout (void)
+ACE_INLINE ::CORBA::ComponentIR::ProvidesDescription &
+CORBA::ComponentIR::ProvidesDescription_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // Mapping for variable size.
-ACE_INLINE ::IR::ProvidesDescription *&
-IR::ProvidesDescription_var::out (void)
+ACE_INLINE ::CORBA::ComponentIR::ProvidesDescription *&
+CORBA::ComponentIR::ProvidesDescription_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::ProvidesDescription *
-IR::ProvidesDescription_var::_retn (void)
+ACE_INLINE ::CORBA::ComponentIR::ProvidesDescription *
+CORBA::ComponentIR::ProvidesDescription_var::_retn (void)
 {
-  ::IR::ProvidesDescription *tmp = this->ptr_;
+  ::CORBA::ComponentIR::ProvidesDescription *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE ::IR::ProvidesDescription *
-IR::ProvidesDescription_var::ptr (void) const
+ACE_INLINE ::CORBA::ComponentIR::ProvidesDescription *
+CORBA::ComponentIR::ProvidesDescription_var::ptr (void) const
 {
   return this->ptr_;
 }
@@ -4352,18 +304,18 @@ IR::ProvidesDescription_var::ptr (void) const
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:523
 
 // *************************************************************
-// Inline operations for class IR::ProvidesDescription_out
+// Inline operations for class CORBA::ComponentIR::ProvidesDescription_out
 // *************************************************************
 
 ACE_INLINE
-IR::ProvidesDescription_out::ProvidesDescription_out (::IR::ProvidesDescription *&p)
+CORBA::ComponentIR::ProvidesDescription_out::ProvidesDescription_out (::CORBA::ComponentIR::ProvidesDescription *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-IR::ProvidesDescription_out::ProvidesDescription_out (ProvidesDescription_var &p)
+CORBA::ComponentIR::ProvidesDescription_out::ProvidesDescription_out (ProvidesDescription_var &p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -4371,40 +323,40 @@ IR::ProvidesDescription_out::ProvidesDescription_out (ProvidesDescription_var &p
 }
 
 ACE_INLINE
-IR::ProvidesDescription_out::ProvidesDescription_out (const ::IR::ProvidesDescription_out &p)
+CORBA::ComponentIR::ProvidesDescription_out::ProvidesDescription_out (const ::CORBA::ComponentIR::ProvidesDescription_out &p)
   : ptr_ (ACE_const_cast (ProvidesDescription_out&, p).ptr_)
 {}
 
 ACE_INLINE
-IR::ProvidesDescription_out &
-IR::ProvidesDescription_out::operator= (const ::IR::ProvidesDescription_out &p)
+CORBA::ComponentIR::ProvidesDescription_out &
+CORBA::ComponentIR::ProvidesDescription_out::operator= (const ::CORBA::ComponentIR::ProvidesDescription_out &p)
 {
   this->ptr_ = ACE_const_cast (ProvidesDescription_out&, p).ptr_;
   return *this;
 }
 
 ACE_INLINE
-IR::ProvidesDescription_out &
-IR::ProvidesDescription_out::operator= (ProvidesDescription *_tao_struct_out)
+CORBA::ComponentIR::ProvidesDescription_out &
+CORBA::ComponentIR::ProvidesDescription_out::operator= (ProvidesDescription *_tao_struct_out)
 {
   this->ptr_ = _tao_struct_out;
   return *this;
 }
 
 ACE_INLINE 
-IR::ProvidesDescription_out::operator ::IR::ProvidesDescription *&() // cast
+CORBA::ComponentIR::ProvidesDescription_out::operator ::CORBA::ComponentIR::ProvidesDescription *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::ProvidesDescription *&
-IR::ProvidesDescription_out::ptr (void) // ptr
+ACE_INLINE ::CORBA::ComponentIR::ProvidesDescription *&
+CORBA::ComponentIR::ProvidesDescription_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::ProvidesDescription *
-IR::ProvidesDescription_out::operator-> (void)
+ACE_INLINE ::CORBA::ComponentIR::ProvidesDescription *
+CORBA::ComponentIR::ProvidesDescription_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -4412,23 +364,23 @@ IR::ProvidesDescription_out::operator-> (void)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
-#if !defined (_IR_USESDEF___CI_)
-#define _IR_USESDEF___CI_
+#if !defined (_CORBA_COMPONENTIR_USESDEF___CI_)
+#define _CORBA_COMPONENTIR_USESDEF___CI_
 
 ACE_INLINE
-IR::UsesDef::UsesDef (
+CORBA::ComponentIR::UsesDef::UsesDef (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->IR_UsesDef_setup_collocation (_tao_collocated);
+  this->CORBA_ComponentIR_UsesDef_setup_collocation (_tao_collocated);
 }
 
 ACE_INLINE
 CORBA::Boolean
-IR::UsesDef::marshal (TAO_OutputCDR &cdr)
+CORBA::ComponentIR::UsesDef::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
 }
@@ -4439,25 +391,25 @@ IR::UsesDef::marshal (TAO_OutputCDR &cdr)
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
 
 // *************************************************************
-// Inline operations for class IR::UsesDescription_var
+// Inline operations for class CORBA::ComponentIR::UsesDescription_var
 // *************************************************************
 
 ACE_INLINE
-IR::UsesDescription_var::UsesDescription_var (void)
+CORBA::ComponentIR::UsesDescription_var::UsesDescription_var (void)
   : ptr_ (0)
 {}
 
 ACE_INLINE
-IR::UsesDescription_var::UsesDescription_var (UsesDescription *p)
+CORBA::ComponentIR::UsesDescription_var::UsesDescription_var (UsesDescription *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-IR::UsesDescription_var::UsesDescription_var (const ::IR::UsesDescription_var &p)
+CORBA::ComponentIR::UsesDescription_var::UsesDescription_var (const ::CORBA::ComponentIR::UsesDescription_var &p)
 {
   if (p.ptr_)
     {
-      ACE_NEW (this->ptr_, ::IR::UsesDescription (*p.ptr_));
+      ACE_NEW (this->ptr_, ::CORBA::ComponentIR::UsesDescription (*p.ptr_));
     }
   else
     {
@@ -4466,14 +418,14 @@ IR::UsesDescription_var::UsesDescription_var (const ::IR::UsesDescription_var &p
 }
 
 ACE_INLINE
-IR::UsesDescription_var::~UsesDescription_var (void)
+CORBA::ComponentIR::UsesDescription_var::~UsesDescription_var (void)
 {
   delete this->ptr_;
 }
 
 ACE_INLINE
-IR::UsesDescription_var &
-IR::UsesDescription_var::operator= (UsesDescription *_tao_struct_var)
+CORBA::ComponentIR::UsesDescription_var &
+CORBA::ComponentIR::UsesDescription_var::operator= (UsesDescription *_tao_struct_var)
 {
   delete this->ptr_;
   this->ptr_ = _tao_struct_var;
@@ -4481,8 +433,8 @@ IR::UsesDescription_var::operator= (UsesDescription *_tao_struct_var)
 }
 
 ACE_INLINE
-::IR::UsesDescription_var &
-IR::UsesDescription_var::operator= (const ::IR::UsesDescription_var &_tao_struct_var)
+::CORBA::ComponentIR::UsesDescription_var &
+CORBA::ComponentIR::UsesDescription_var::operator= (const ::CORBA::ComponentIR::UsesDescription_var &_tao_struct_var)
 {
   if (this != &_tao_struct_var)
     {
@@ -4513,74 +465,74 @@ IR::UsesDescription_var::operator= (const ::IR::UsesDescription_var &_tao_struct
   return *this;
 }
 
-ACE_INLINE const ::IR::UsesDescription *
-IR::UsesDescription_var::operator-> (void) const
+ACE_INLINE const ::CORBA::ComponentIR::UsesDescription *
+CORBA::ComponentIR::UsesDescription_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::UsesDescription *
-IR::UsesDescription_var::operator-> (void)
+ACE_INLINE ::CORBA::ComponentIR::UsesDescription *
+CORBA::ComponentIR::UsesDescription_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-IR::UsesDescription_var::operator const ::IR::UsesDescription &() const // cast
+CORBA::ComponentIR::UsesDescription_var::operator const ::CORBA::ComponentIR::UsesDescription &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IR::UsesDescription_var::operator ::IR::UsesDescription &() // cast 
+CORBA::ComponentIR::UsesDescription_var::operator ::CORBA::ComponentIR::UsesDescription &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IR::UsesDescription_var::operator ::IR::UsesDescription &() const // cast 
+CORBA::ComponentIR::UsesDescription_var::operator ::CORBA::ComponentIR::UsesDescription &() const // cast 
 {
   return *this->ptr_;
 }
 
 // Variable-size types only.
 ACE_INLINE
-IR::UsesDescription_var::operator ::IR::UsesDescription *&() // cast 
+CORBA::ComponentIR::UsesDescription_var::operator ::CORBA::ComponentIR::UsesDescription *&() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE const ::IR::UsesDescription &
-IR::UsesDescription_var::in (void) const
+ACE_INLINE const ::CORBA::ComponentIR::UsesDescription &
+CORBA::ComponentIR::UsesDescription_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ::IR::UsesDescription &
-IR::UsesDescription_var::inout (void)
+ACE_INLINE ::CORBA::ComponentIR::UsesDescription &
+CORBA::ComponentIR::UsesDescription_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // Mapping for variable size.
-ACE_INLINE ::IR::UsesDescription *&
-IR::UsesDescription_var::out (void)
+ACE_INLINE ::CORBA::ComponentIR::UsesDescription *&
+CORBA::ComponentIR::UsesDescription_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::UsesDescription *
-IR::UsesDescription_var::_retn (void)
+ACE_INLINE ::CORBA::ComponentIR::UsesDescription *
+CORBA::ComponentIR::UsesDescription_var::_retn (void)
 {
-  ::IR::UsesDescription *tmp = this->ptr_;
+  ::CORBA::ComponentIR::UsesDescription *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE ::IR::UsesDescription *
-IR::UsesDescription_var::ptr (void) const
+ACE_INLINE ::CORBA::ComponentIR::UsesDescription *
+CORBA::ComponentIR::UsesDescription_var::ptr (void) const
 {
   return this->ptr_;
 }
@@ -4589,18 +541,18 @@ IR::UsesDescription_var::ptr (void) const
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:523
 
 // *************************************************************
-// Inline operations for class IR::UsesDescription_out
+// Inline operations for class CORBA::ComponentIR::UsesDescription_out
 // *************************************************************
 
 ACE_INLINE
-IR::UsesDescription_out::UsesDescription_out (::IR::UsesDescription *&p)
+CORBA::ComponentIR::UsesDescription_out::UsesDescription_out (::CORBA::ComponentIR::UsesDescription *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-IR::UsesDescription_out::UsesDescription_out (UsesDescription_var &p)
+CORBA::ComponentIR::UsesDescription_out::UsesDescription_out (UsesDescription_var &p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -4608,980 +560,64 @@ IR::UsesDescription_out::UsesDescription_out (UsesDescription_var &p)
 }
 
 ACE_INLINE
-IR::UsesDescription_out::UsesDescription_out (const ::IR::UsesDescription_out &p)
+CORBA::ComponentIR::UsesDescription_out::UsesDescription_out (const ::CORBA::ComponentIR::UsesDescription_out &p)
   : ptr_ (ACE_const_cast (UsesDescription_out&, p).ptr_)
 {}
 
 ACE_INLINE
-IR::UsesDescription_out &
-IR::UsesDescription_out::operator= (const ::IR::UsesDescription_out &p)
+CORBA::ComponentIR::UsesDescription_out &
+CORBA::ComponentIR::UsesDescription_out::operator= (const ::CORBA::ComponentIR::UsesDescription_out &p)
 {
   this->ptr_ = ACE_const_cast (UsesDescription_out&, p).ptr_;
   return *this;
 }
 
 ACE_INLINE
-IR::UsesDescription_out &
-IR::UsesDescription_out::operator= (UsesDescription *_tao_struct_out)
+CORBA::ComponentIR::UsesDescription_out &
+CORBA::ComponentIR::UsesDescription_out::operator= (UsesDescription *_tao_struct_out)
 {
   this->ptr_ = _tao_struct_out;
   return *this;
 }
 
 ACE_INLINE 
-IR::UsesDescription_out::operator ::IR::UsesDescription *&() // cast
+CORBA::ComponentIR::UsesDescription_out::operator ::CORBA::ComponentIR::UsesDescription *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::UsesDescription *&
-IR::UsesDescription_out::ptr (void) // ptr
+ACE_INLINE ::CORBA::ComponentIR::UsesDescription *&
+CORBA::ComponentIR::UsesDescription_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::UsesDescription *
-IR::UsesDescription_out::operator-> (void)
+ACE_INLINE ::CORBA::ComponentIR::UsesDescription *
+CORBA::ComponentIR::UsesDescription_out::operator-> (void)
 {
   return this->ptr_;
 }
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ci.cpp:99
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_PROVIDESDESCSEQ_CI_)
-#define __TAO_UNBOUNDED_SEQUENCE_IR_PROVIDESDESCSEQ_CI_
-
-ACE_INLINE
-IR::ProvidesDescription *
-IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (CORBA::ULong size)
-{
-  IR::ProvidesDescription *retval = 0;
-  ACE_NEW_RETURN (retval, IR::ProvidesDescription[size], 0);
-  return retval;
-}
-
-ACE_INLINE
-void IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::freebuf (IR::ProvidesDescription *buffer)
-{
-  delete [] buffer;
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (void)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (CORBA::ULong maximum) 
-  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (maximum))
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (
-    CORBA::ULong maximum,
-    CORBA::ULong length,
-    IR::ProvidesDescription *data,
-    CORBA::Boolean release
-  )
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (
-    const _TAO_Unbounded_Sequence_IR_ProvidesDescSeq &rhs
-  )
-  : TAO_Unbounded_Base_Sequence (rhs)
-{
-  if (rhs.buffer_ != 0)
-    {
-      IR::ProvidesDescription *tmp1 =
-        _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (this->maximum_);
-      IR::ProvidesDescription * const tmp2 =
-        ACE_reinterpret_cast (IR::ProvidesDescription * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          tmp1[i] = tmp2[i];
-        }
-      
-      this->buffer_ = tmp1;
-    }
-  else
-    {
-      this->buffer_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq &
-IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::operator= (
-    const _TAO_Unbounded_Sequence_IR_ProvidesDescSeq &rhs
-  )
-{
-  if (this == &rhs)
-    {
-      return *this;
-    }
-  
-  if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-        {
-          // Free the old buffer.
-          IR::ProvidesDescription *tmp =
-            ACE_reinterpret_cast (IR::ProvidesDescription *, this->buffer_);
-          
-          _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::freebuf (tmp);
-          
-          this->buffer_ =
-            _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (rhs.maximum_);
-        }
-    }
-  else
-    {
-      this->buffer_ =
-        _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (rhs.maximum_);
-    }
-  
-  TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
-  IR::ProvidesDescription *tmp1 =
-    ACE_reinterpret_cast (IR::ProvidesDescription *, this->buffer_);
-  IR::ProvidesDescription * const tmp2 =
-    ACE_reinterpret_cast (IR::ProvidesDescription * ACE_CAST_CONST, rhs.buffer_);
-  
-  for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      tmp1[i] = tmp2[i];
-    }
-  
-  return *this;
-}
-
-// = Accessors.
-ACE_INLINE
-IR::ProvidesDescription &
-IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::operator[] (CORBA::ULong i)
-{
-  ACE_ASSERT (i < this->maximum_);
-  IR::ProvidesDescription* tmp =
-    ACE_reinterpret_cast (IR::ProvidesDescription*, this->buffer_);
-  return tmp[i];
-}
-
-ACE_INLINE
-const IR::ProvidesDescription &
-IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::operator[] (CORBA::ULong i) const
-{
-  ACE_ASSERT (i < this->maximum_);
-  IR::ProvidesDescription * const tmp =
-    ACE_reinterpret_cast (IR::ProvidesDescription* ACE_CAST_CONST, this->buffer_);
-  return tmp[i];
-}
-
-// Implement the TAO_Base_Sequence methods (see Sequence.h)
-
-ACE_INLINE
-IR::ProvidesDescription *
-IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::get_buffer (CORBA::Boolean orphan)
-{
-  IR::ProvidesDescription *result = 0;
-  
-  if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-        {
-          result =
-            _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (this->length_);
-          this->buffer_ = result;
-          this->release_ = 1;
-        }
-      else
-        {
-          result =
-            ACE_reinterpret_cast (IR::ProvidesDescription*, this->buffer_);
-        }
-    }
-  else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-        {
-          // We set the state back to default and relinquish ownership.
-          result =
-            ACE_reinterpret_cast(IR::ProvidesDescription*,this->buffer_);
-          this->maximum_ = 0;
-          this->length_ = 0;
-          this->buffer_ = 0;
-          this->release_ = 0;
-        }
-    }
-  
-  return result;
-}
-
-ACE_INLINE
-const IR::ProvidesDescription *
-IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::get_buffer (void) const
-{
-  return ACE_reinterpret_cast (const IR::ProvidesDescription * ACE_CAST_CONST, this->buffer_);
-}
-
-ACE_INLINE
-void
-IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::replace (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    IR::ProvidesDescription *data,
-    CORBA::Boolean release
-  )
-{
-  this->maximum_ = max;
-  this->length_ = length;
-  
-  if (this->buffer_ && this->release_ == 1)
-    {
-      IR::ProvidesDescription *tmp =
-        ACE_reinterpret_cast (IR::ProvidesDescription*, this->buffer_);
-      _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::freebuf (tmp);
-    }
-  
-  this->buffer_ = data;
-  this->release_ = release;
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IR_PROVIDESDESCSEQ_CI_)
-#define _IR_PROVIDESDESCSEQ_CI_
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
-
-// *************************************************************
-// Inline operations for class IR::ProvidesDescSeq_var
-// *************************************************************
-
-ACE_INLINE
-IR::ProvidesDescSeq_var::ProvidesDescSeq_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-IR::ProvidesDescSeq_var::ProvidesDescSeq_var (ProvidesDescSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-IR::ProvidesDescSeq_var::ProvidesDescSeq_var (const ::IR::ProvidesDescSeq_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::IR::ProvidesDescSeq (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::ProvidesDescSeq_var::~ProvidesDescSeq_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-IR::ProvidesDescSeq_var &
-IR::ProvidesDescSeq_var::operator= (ProvidesDescSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-::IR::ProvidesDescSeq_var &
-IR::ProvidesDescSeq_var::operator= (const ::IR::ProvidesDescSeq_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          ProvidesDescSeq *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              ProvidesDescSeq (*p.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              ProvidesDescSeq *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-const ::IR::ProvidesDescSeq *
-IR::ProvidesDescSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ProvidesDescSeq *
-IR::ProvidesDescSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::ProvidesDescSeq_var::operator const ::IR::ProvidesDescSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::ProvidesDescSeq_var::operator ::IR::ProvidesDescSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::ProvidesDescSeq_var::operator ::IR::ProvidesDescSeq &() const // cast 
-{
-  return *this->ptr_;
-}
-
-// Variable-size types only.
-ACE_INLINE
-IR::ProvidesDescSeq_var::operator ::IR::ProvidesDescSeq *&() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::ProvidesDescription &
-IR::ProvidesDescSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE
-const IR::ProvidesDescription &
-IR::ProvidesDescSeq_var::operator[] (CORBA::ULong index) const
-{
-  return ACE_const_cast (const IR::ProvidesDescription &, this->ptr_->operator[] (index));
-}
-
-ACE_INLINE
-const ::IR::ProvidesDescSeq &
-IR::ProvidesDescSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::ProvidesDescSeq &
-IR::ProvidesDescSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::ProvidesDescSeq *&
-IR::ProvidesDescSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ProvidesDescSeq *
-IR::ProvidesDescSeq_var::_retn (void)
-{
-  ::IR::ProvidesDescSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE
-::IR::ProvidesDescSeq *
-IR::ProvidesDescSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
-
-// *************************************************************
-// Inline operations for class IR::ProvidesDescSeq_out
-// *************************************************************
-
-ACE_INLINE
-IR::ProvidesDescSeq_out::ProvidesDescSeq_out (ProvidesDescSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::ProvidesDescSeq_out::ProvidesDescSeq_out (ProvidesDescSeq_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::ProvidesDescSeq_out::ProvidesDescSeq_out (const ::IR::ProvidesDescSeq_out &p)
-  : ptr_ (ACE_const_cast (ProvidesDescSeq_out&, p).ptr_)
-{}
-
-ACE_INLINE
-::IR::ProvidesDescSeq_out &
-IR::ProvidesDescSeq_out::operator= (const ::IR::ProvidesDescSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (ProvidesDescSeq_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-::IR::ProvidesDescSeq_out &
-IR::ProvidesDescSeq_out::operator= (ProvidesDescSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-IR::ProvidesDescSeq_out::operator ::IR::ProvidesDescSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ProvidesDescSeq *&
-IR::ProvidesDescSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::ProvidesDescSeq *
-IR::ProvidesDescSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::ProvidesDescription &
-IR::ProvidesDescSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ci.cpp:99
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_USESDESCSEQ_CI_)
-#define __TAO_UNBOUNDED_SEQUENCE_IR_USESDESCSEQ_CI_
-
-ACE_INLINE
-IR::UsesDescription *
-IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (CORBA::ULong size)
-{
-  IR::UsesDescription *retval = 0;
-  ACE_NEW_RETURN (retval, IR::UsesDescription[size], 0);
-  return retval;
-}
-
-ACE_INLINE
-void IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::freebuf (IR::UsesDescription *buffer)
-{
-  delete [] buffer;
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (void)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (CORBA::ULong maximum) 
-  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (maximum))
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (
-    CORBA::ULong maximum,
-    CORBA::ULong length,
-    IR::UsesDescription *data,
-    CORBA::Boolean release
-  )
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-{
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (
-    const _TAO_Unbounded_Sequence_IR_UsesDescSeq &rhs
-  )
-  : TAO_Unbounded_Base_Sequence (rhs)
-{
-  if (rhs.buffer_ != 0)
-    {
-      IR::UsesDescription *tmp1 =
-        _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (this->maximum_);
-      IR::UsesDescription * const tmp2 =
-        ACE_reinterpret_cast (IR::UsesDescription * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          tmp1[i] = tmp2[i];
-        }
-      
-      this->buffer_ = tmp1;
-    }
-  else
-    {
-      this->buffer_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq &
-IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::operator= (
-    const _TAO_Unbounded_Sequence_IR_UsesDescSeq &rhs
-  )
-{
-  if (this == &rhs)
-    {
-      return *this;
-    }
-  
-  if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-        {
-          // Free the old buffer.
-          IR::UsesDescription *tmp =
-            ACE_reinterpret_cast (IR::UsesDescription *, this->buffer_);
-          
-          _TAO_Unbounded_Sequence_IR_UsesDescSeq::freebuf (tmp);
-          
-          this->buffer_ =
-            _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (rhs.maximum_);
-        }
-    }
-  else
-    {
-      this->buffer_ =
-        _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (rhs.maximum_);
-    }
-  
-  TAO_Unbounded_Base_Sequence::operator= (rhs);
-  
-  IR::UsesDescription *tmp1 =
-    ACE_reinterpret_cast (IR::UsesDescription *, this->buffer_);
-  IR::UsesDescription * const tmp2 =
-    ACE_reinterpret_cast (IR::UsesDescription * ACE_CAST_CONST, rhs.buffer_);
-  
-  for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      tmp1[i] = tmp2[i];
-    }
-  
-  return *this;
-}
-
-// = Accessors.
-ACE_INLINE
-IR::UsesDescription &
-IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::operator[] (CORBA::ULong i)
-{
-  ACE_ASSERT (i < this->maximum_);
-  IR::UsesDescription* tmp =
-    ACE_reinterpret_cast (IR::UsesDescription*, this->buffer_);
-  return tmp[i];
-}
-
-ACE_INLINE
-const IR::UsesDescription &
-IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::operator[] (CORBA::ULong i) const
-{
-  ACE_ASSERT (i < this->maximum_);
-  IR::UsesDescription * const tmp =
-    ACE_reinterpret_cast (IR::UsesDescription* ACE_CAST_CONST, this->buffer_);
-  return tmp[i];
-}
-
-// Implement the TAO_Base_Sequence methods (see Sequence.h)
-
-ACE_INLINE
-IR::UsesDescription *
-IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::get_buffer (CORBA::Boolean orphan)
-{
-  IR::UsesDescription *result = 0;
-  
-  if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-        {
-          result =
-            _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (this->length_);
-          this->buffer_ = result;
-          this->release_ = 1;
-        }
-      else
-        {
-          result =
-            ACE_reinterpret_cast (IR::UsesDescription*, this->buffer_);
-        }
-    }
-  else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-        {
-          // We set the state back to default and relinquish ownership.
-          result =
-            ACE_reinterpret_cast(IR::UsesDescription*,this->buffer_);
-          this->maximum_ = 0;
-          this->length_ = 0;
-          this->buffer_ = 0;
-          this->release_ = 0;
-        }
-    }
-  
-  return result;
-}
-
-ACE_INLINE
-const IR::UsesDescription *
-IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::get_buffer (void) const
-{
-  return ACE_reinterpret_cast (const IR::UsesDescription * ACE_CAST_CONST, this->buffer_);
-}
-
-ACE_INLINE
-void
-IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::replace (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    IR::UsesDescription *data,
-    CORBA::Boolean release
-  )
-{
-  this->maximum_ = max;
-  this->length_ = length;
-  
-  if (this->buffer_ && this->release_ == 1)
-    {
-      IR::UsesDescription *tmp =
-        ACE_reinterpret_cast (IR::UsesDescription*, this->buffer_);
-      _TAO_Unbounded_Sequence_IR_UsesDescSeq::freebuf (tmp);
-    }
-  
-  this->buffer_ = data;
-  this->release_ = release;
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IR_USESDESCSEQ_CI_)
-#define _IR_USESDESCSEQ_CI_
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
-
-// *************************************************************
-// Inline operations for class IR::UsesDescSeq_var
-// *************************************************************
-
-ACE_INLINE
-IR::UsesDescSeq_var::UsesDescSeq_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-IR::UsesDescSeq_var::UsesDescSeq_var (UsesDescSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-IR::UsesDescSeq_var::UsesDescSeq_var (const ::IR::UsesDescSeq_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::IR::UsesDescSeq (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::UsesDescSeq_var::~UsesDescSeq_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-IR::UsesDescSeq_var &
-IR::UsesDescSeq_var::operator= (UsesDescSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-::IR::UsesDescSeq_var &
-IR::UsesDescSeq_var::operator= (const ::IR::UsesDescSeq_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          UsesDescSeq *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              UsesDescSeq (*p.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              UsesDescSeq *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-ACE_INLINE
-const ::IR::UsesDescSeq *
-IR::UsesDescSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::UsesDescSeq *
-IR::UsesDescSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::UsesDescSeq_var::operator const ::IR::UsesDescSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::UsesDescSeq_var::operator ::IR::UsesDescSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::UsesDescSeq_var::operator ::IR::UsesDescSeq &() const // cast 
-{
-  return *this->ptr_;
-}
-
-// Variable-size types only.
-ACE_INLINE
-IR::UsesDescSeq_var::operator ::IR::UsesDescSeq *&() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::UsesDescription &
-IR::UsesDescSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE
-const IR::UsesDescription &
-IR::UsesDescSeq_var::operator[] (CORBA::ULong index) const
-{
-  return ACE_const_cast (const IR::UsesDescription &, this->ptr_->operator[] (index));
-}
-
-ACE_INLINE
-const ::IR::UsesDescSeq &
-IR::UsesDescSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::UsesDescSeq &
-IR::UsesDescSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-::IR::UsesDescSeq *&
-IR::UsesDescSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::UsesDescSeq *
-IR::UsesDescSeq_var::_retn (void)
-{
-  ::IR::UsesDescSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE
-::IR::UsesDescSeq *
-IR::UsesDescSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
-
-// *************************************************************
-// Inline operations for class IR::UsesDescSeq_out
-// *************************************************************
-
-ACE_INLINE
-IR::UsesDescSeq_out::UsesDescSeq_out (UsesDescSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::UsesDescSeq_out::UsesDescSeq_out (UsesDescSeq_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::UsesDescSeq_out::UsesDescSeq_out (const ::IR::UsesDescSeq_out &p)
-  : ptr_ (ACE_const_cast (UsesDescSeq_out&, p).ptr_)
-{}
-
-ACE_INLINE
-::IR::UsesDescSeq_out &
-IR::UsesDescSeq_out::operator= (const ::IR::UsesDescSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (UsesDescSeq_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-::IR::UsesDescSeq_out &
-IR::UsesDescSeq_out::operator= (UsesDescSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-IR::UsesDescSeq_out::operator ::IR::UsesDescSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::UsesDescSeq *&
-IR::UsesDescSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-::IR::UsesDescSeq *
-IR::UsesDescSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::UsesDescription &
-IR::UsesDescSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-#endif /* end #if !defined */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
-#if !defined (_IR_EVENTDEF___CI_)
-#define _IR_EVENTDEF___CI_
+#if !defined (_CORBA_COMPONENTIR_EVENTPORTDEF___CI_)
+#define _CORBA_COMPONENTIR_EVENTPORTDEF___CI_
 
 ACE_INLINE
-IR::EventDef::EventDef (
+CORBA::ComponentIR::EventPortDef::EventPortDef (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->IR_EventDef_setup_collocation (_tao_collocated);
+  this->CORBA_ComponentIR_EventPortDef_setup_collocation (_tao_collocated);
 }
 
 ACE_INLINE
 CORBA::Boolean
-IR::EventDef::marshal (TAO_OutputCDR &cdr)
+CORBA::ComponentIR::EventPortDef::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
 }
@@ -5592,25 +628,25 @@ IR::EventDef::marshal (TAO_OutputCDR &cdr)
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
 
 // *************************************************************
-// Inline operations for class IR::EventDescription_var
+// Inline operations for class CORBA::ComponentIR::EventPortDescription_var
 // *************************************************************
 
 ACE_INLINE
-IR::EventDescription_var::EventDescription_var (void)
+CORBA::ComponentIR::EventPortDescription_var::EventPortDescription_var (void)
   : ptr_ (0)
 {}
 
 ACE_INLINE
-IR::EventDescription_var::EventDescription_var (EventDescription *p)
+CORBA::ComponentIR::EventPortDescription_var::EventPortDescription_var (EventPortDescription *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-IR::EventDescription_var::EventDescription_var (const ::IR::EventDescription_var &p)
+CORBA::ComponentIR::EventPortDescription_var::EventPortDescription_var (const ::CORBA::ComponentIR::EventPortDescription_var &p)
 {
   if (p.ptr_)
     {
-      ACE_NEW (this->ptr_, ::IR::EventDescription (*p.ptr_));
+      ACE_NEW (this->ptr_, ::CORBA::ComponentIR::EventPortDescription (*p.ptr_));
     }
   else
     {
@@ -5619,14 +655,14 @@ IR::EventDescription_var::EventDescription_var (const ::IR::EventDescription_var
 }
 
 ACE_INLINE
-IR::EventDescription_var::~EventDescription_var (void)
+CORBA::ComponentIR::EventPortDescription_var::~EventPortDescription_var (void)
 {
   delete this->ptr_;
 }
 
 ACE_INLINE
-IR::EventDescription_var &
-IR::EventDescription_var::operator= (EventDescription *_tao_struct_var)
+CORBA::ComponentIR::EventPortDescription_var &
+CORBA::ComponentIR::EventPortDescription_var::operator= (EventPortDescription *_tao_struct_var)
 {
   delete this->ptr_;
   this->ptr_ = _tao_struct_var;
@@ -5634,8 +670,8 @@ IR::EventDescription_var::operator= (EventDescription *_tao_struct_var)
 }
 
 ACE_INLINE
-::IR::EventDescription_var &
-IR::EventDescription_var::operator= (const ::IR::EventDescription_var &_tao_struct_var)
+::CORBA::ComponentIR::EventPortDescription_var &
+CORBA::ComponentIR::EventPortDescription_var::operator= (const ::CORBA::ComponentIR::EventPortDescription_var &_tao_struct_var)
 {
   if (this != &_tao_struct_var)
     {
@@ -5646,16 +682,16 @@ IR::EventDescription_var::operator= (const ::IR::EventDescription_var &_tao_stru
         }
       else
         {
-          EventDescription *deep_copy = 0;
+          EventPortDescription *deep_copy = 0;
           ACE_NEW_RETURN (
               deep_copy,
-              EventDescription (*_tao_struct_var.ptr_),
+              EventPortDescription (*_tao_struct_var.ptr_),
               *this
             );
           
           if (deep_copy != 0)
             {
-              EventDescription *tmp = deep_copy;
+              EventPortDescription *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -5666,74 +702,74 @@ IR::EventDescription_var::operator= (const ::IR::EventDescription_var &_tao_stru
   return *this;
 }
 
-ACE_INLINE const ::IR::EventDescription *
-IR::EventDescription_var::operator-> (void) const
+ACE_INLINE const ::CORBA::ComponentIR::EventPortDescription *
+CORBA::ComponentIR::EventPortDescription_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::EventDescription *
-IR::EventDescription_var::operator-> (void)
+ACE_INLINE ::CORBA::ComponentIR::EventPortDescription *
+CORBA::ComponentIR::EventPortDescription_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-IR::EventDescription_var::operator const ::IR::EventDescription &() const // cast
+CORBA::ComponentIR::EventPortDescription_var::operator const ::CORBA::ComponentIR::EventPortDescription &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IR::EventDescription_var::operator ::IR::EventDescription &() // cast 
+CORBA::ComponentIR::EventPortDescription_var::operator ::CORBA::ComponentIR::EventPortDescription &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IR::EventDescription_var::operator ::IR::EventDescription &() const // cast 
+CORBA::ComponentIR::EventPortDescription_var::operator ::CORBA::ComponentIR::EventPortDescription &() const // cast 
 {
   return *this->ptr_;
 }
 
 // Variable-size types only.
 ACE_INLINE
-IR::EventDescription_var::operator ::IR::EventDescription *&() // cast 
+CORBA::ComponentIR::EventPortDescription_var::operator ::CORBA::ComponentIR::EventPortDescription *&() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE const ::IR::EventDescription &
-IR::EventDescription_var::in (void) const
+ACE_INLINE const ::CORBA::ComponentIR::EventPortDescription &
+CORBA::ComponentIR::EventPortDescription_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ::IR::EventDescription &
-IR::EventDescription_var::inout (void)
+ACE_INLINE ::CORBA::ComponentIR::EventPortDescription &
+CORBA::ComponentIR::EventPortDescription_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // Mapping for variable size.
-ACE_INLINE ::IR::EventDescription *&
-IR::EventDescription_var::out (void)
+ACE_INLINE ::CORBA::ComponentIR::EventPortDescription *&
+CORBA::ComponentIR::EventPortDescription_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::EventDescription *
-IR::EventDescription_var::_retn (void)
+ACE_INLINE ::CORBA::ComponentIR::EventPortDescription *
+CORBA::ComponentIR::EventPortDescription_var::_retn (void)
 {
-  ::IR::EventDescription *tmp = this->ptr_;
+  ::CORBA::ComponentIR::EventPortDescription *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE ::IR::EventDescription *
-IR::EventDescription_var::ptr (void) const
+ACE_INLINE ::CORBA::ComponentIR::EventPortDescription *
+CORBA::ComponentIR::EventPortDescription_var::ptr (void) const
 {
   return this->ptr_;
 }
@@ -5742,18 +778,18 @@ IR::EventDescription_var::ptr (void) const
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:523
 
 // *************************************************************
-// Inline operations for class IR::EventDescription_out
+// Inline operations for class CORBA::ComponentIR::EventPortDescription_out
 // *************************************************************
 
 ACE_INLINE
-IR::EventDescription_out::EventDescription_out (::IR::EventDescription *&p)
+CORBA::ComponentIR::EventPortDescription_out::EventPortDescription_out (::CORBA::ComponentIR::EventPortDescription *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-IR::EventDescription_out::EventDescription_out (EventDescription_var &p)
+CORBA::ComponentIR::EventPortDescription_out::EventPortDescription_out (EventPortDescription_var &p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -5761,40 +797,40 @@ IR::EventDescription_out::EventDescription_out (EventDescription_var &p)
 }
 
 ACE_INLINE
-IR::EventDescription_out::EventDescription_out (const ::IR::EventDescription_out &p)
-  : ptr_ (ACE_const_cast (EventDescription_out&, p).ptr_)
+CORBA::ComponentIR::EventPortDescription_out::EventPortDescription_out (const ::CORBA::ComponentIR::EventPortDescription_out &p)
+  : ptr_ (ACE_const_cast (EventPortDescription_out&, p).ptr_)
 {}
 
 ACE_INLINE
-IR::EventDescription_out &
-IR::EventDescription_out::operator= (const ::IR::EventDescription_out &p)
+CORBA::ComponentIR::EventPortDescription_out &
+CORBA::ComponentIR::EventPortDescription_out::operator= (const ::CORBA::ComponentIR::EventPortDescription_out &p)
 {
-  this->ptr_ = ACE_const_cast (EventDescription_out&, p).ptr_;
+  this->ptr_ = ACE_const_cast (EventPortDescription_out&, p).ptr_;
   return *this;
 }
 
 ACE_INLINE
-IR::EventDescription_out &
-IR::EventDescription_out::operator= (EventDescription *_tao_struct_out)
+CORBA::ComponentIR::EventPortDescription_out &
+CORBA::ComponentIR::EventPortDescription_out::operator= (EventPortDescription *_tao_struct_out)
 {
   this->ptr_ = _tao_struct_out;
   return *this;
 }
 
 ACE_INLINE 
-IR::EventDescription_out::operator ::IR::EventDescription *&() // cast
+CORBA::ComponentIR::EventPortDescription_out::operator ::CORBA::ComponentIR::EventPortDescription *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::EventDescription *&
-IR::EventDescription_out::ptr (void) // ptr
+ACE_INLINE ::CORBA::ComponentIR::EventPortDescription *&
+CORBA::ComponentIR::EventPortDescription_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::EventDescription *
-IR::EventDescription_out::operator-> (void)
+ACE_INLINE ::CORBA::ComponentIR::EventPortDescription *
+CORBA::ComponentIR::EventPortDescription_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -5802,23 +838,23 @@ IR::EventDescription_out::operator-> (void)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
-#if !defined (_IR_EMITSDEF___CI_)
-#define _IR_EMITSDEF___CI_
+#if !defined (_CORBA_COMPONENTIR_EMITSDEF___CI_)
+#define _CORBA_COMPONENTIR_EMITSDEF___CI_
 
 ACE_INLINE
-IR::EmitsDef::EmitsDef (
+CORBA::ComponentIR::EmitsDef::EmitsDef (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->IR_EmitsDef_setup_collocation (_tao_collocated);
+  this->CORBA_ComponentIR_EmitsDef_setup_collocation (_tao_collocated);
 }
 
 ACE_INLINE
 CORBA::Boolean
-IR::EmitsDef::marshal (TAO_OutputCDR &cdr)
+CORBA::ComponentIR::EmitsDef::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
 }
@@ -5828,23 +864,23 @@ IR::EmitsDef::marshal (TAO_OutputCDR &cdr)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
-#if !defined (_IR_PUBLISHESDEF___CI_)
-#define _IR_PUBLISHESDEF___CI_
+#if !defined (_CORBA_COMPONENTIR_PUBLISHESDEF___CI_)
+#define _CORBA_COMPONENTIR_PUBLISHESDEF___CI_
 
 ACE_INLINE
-IR::PublishesDef::PublishesDef (
+CORBA::ComponentIR::PublishesDef::PublishesDef (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->IR_PublishesDef_setup_collocation (_tao_collocated);
+  this->CORBA_ComponentIR_PublishesDef_setup_collocation (_tao_collocated);
 }
 
 ACE_INLINE
 CORBA::Boolean
-IR::PublishesDef::marshal (TAO_OutputCDR &cdr)
+CORBA::ComponentIR::PublishesDef::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
 }
@@ -5854,23 +890,23 @@ IR::PublishesDef::marshal (TAO_OutputCDR &cdr)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
-#if !defined (_IR_CONSUMESDEF___CI_)
-#define _IR_CONSUMESDEF___CI_
+#if !defined (_CORBA_COMPONENTIR_CONSUMESDEF___CI_)
+#define _CORBA_COMPONENTIR_CONSUMESDEF___CI_
 
 ACE_INLINE
-IR::ConsumesDef::ConsumesDef (
+CORBA::ComponentIR::ConsumesDef::ConsumesDef (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->IR_ConsumesDef_setup_collocation (_tao_collocated);
+  this->CORBA_ComponentIR_ConsumesDef_setup_collocation (_tao_collocated);
 }
 
 ACE_INLINE
 CORBA::Boolean
-IR::ConsumesDef::marshal (TAO_OutputCDR &cdr)
+CORBA::ComponentIR::ConsumesDef::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
 }
@@ -5880,52 +916,268 @@ IR::ConsumesDef::marshal (TAO_OutputCDR &cdr)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
-#if !defined (_IR_COMPONENTDEF___CI_)
-#define _IR_COMPONENTDEF___CI_
+#if !defined (_CORBA_COMPONENTIR_COMPONENTDEF___CI_)
+#define _CORBA_COMPONENTIR_COMPONENTDEF___CI_
 
 ACE_INLINE
-IR::ComponentDef::ComponentDef (
+CORBA::ComponentIR::ComponentDef::ComponentDef (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->IR_ComponentDef_setup_collocation (_tao_collocated);
+  this->CORBA_ComponentIR_ComponentDef_setup_collocation (_tao_collocated);
 }
 
 ACE_INLINE
 CORBA::Boolean
-IR::ComponentDef::marshal (TAO_OutputCDR &cdr)
+CORBA::ComponentIR::ComponentDef::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
 }
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ci.cpp:98
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_COMPONENTIR_PROVIDESDESCRIPTIONSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_CORBA_COMPONENTIR_PROVIDESDESCRIPTIONSEQ_CI_
+
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDescription *
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::allocbuf (CORBA::ULong size)
+{
+  CORBA::ComponentIR::ProvidesDescription *retval = 0;
+  ACE_NEW_RETURN (retval, CORBA::ComponentIR::ProvidesDescription[size], 0);
+  return retval;
+}
+
+ACE_INLINE
+void CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::freebuf (CORBA::ComponentIR::ProvidesDescription *buffer)
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq (void)
+{
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq (CORBA::ULong maximum) 
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq (
+    CORBA::ULong maximum,
+    CORBA::ULong length,
+    CORBA::ComponentIR::ProvidesDescription *data,
+    CORBA::Boolean release
+  )
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq (
+    const _TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq &rhs
+  )
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
+    {
+      CORBA::ComponentIR::ProvidesDescription *tmp1 =
+        _TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::allocbuf (this->maximum_);
+      CORBA::ComponentIR::ProvidesDescription * const tmp2 =
+        ACE_reinterpret_cast (CORBA::ComponentIR::ProvidesDescription * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        {
+          tmp1[i] = tmp2[i];
+        }
+      
+      this->buffer_ = tmp1;
+    }
+  else
+    {
+      this->buffer_ = 0;
+    }
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq &
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::operator= (
+    const _TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq &rhs
+  )
+{
+  if (this == &rhs)
+    {
+      return *this;
+    }
+  
+  if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+        {
+          // Free the old buffer.
+          CORBA::ComponentIR::ProvidesDescription *tmp =
+            ACE_reinterpret_cast (CORBA::ComponentIR::ProvidesDescription *, this->buffer_);
+          
+          _TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::freebuf (tmp);
+          
+          this->buffer_ =
+            _TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::allocbuf (rhs.maximum_);
+        }
+    }
+  else
+    {
+      this->buffer_ =
+        _TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::allocbuf (rhs.maximum_);
+    }
+  
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  CORBA::ComponentIR::ProvidesDescription *tmp1 =
+    ACE_reinterpret_cast (CORBA::ComponentIR::ProvidesDescription *, this->buffer_);
+  CORBA::ComponentIR::ProvidesDescription * const tmp2 =
+    ACE_reinterpret_cast (CORBA::ComponentIR::ProvidesDescription * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      tmp1[i] = tmp2[i];
+    }
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDescription &
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::operator[] (CORBA::ULong i)
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA::ComponentIR::ProvidesDescription* tmp =
+    ACE_reinterpret_cast (CORBA::ComponentIR::ProvidesDescription*, this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE
+const CORBA::ComponentIR::ProvidesDescription &
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::operator[] (CORBA::ULong i) const
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA::ComponentIR::ProvidesDescription * const tmp =
+    ACE_reinterpret_cast (CORBA::ComponentIR::ProvidesDescription* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDescription *
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA::ComponentIR::ProvidesDescription *result = 0;
+  
+  if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+        {
+          result =
+            _TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::allocbuf (this->length_);
+          this->buffer_ = result;
+          this->release_ = 1;
+        }
+      else
+        {
+          result =
+            ACE_reinterpret_cast (CORBA::ComponentIR::ProvidesDescription*, this->buffer_);
+        }
+    }
+  else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+        {
+          // We set the state back to default and relinquish ownership.
+          result =
+            ACE_reinterpret_cast(CORBA::ComponentIR::ProvidesDescription*,this->buffer_);
+          this->maximum_ = 0;
+          this->length_ = 0;
+          this->buffer_ = 0;
+          this->release_ = 0;
+        }
+    }
+  
+  return result;
+}
+
+ACE_INLINE
+const CORBA::ComponentIR::ProvidesDescription *
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast (const CORBA::ComponentIR::ProvidesDescription * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE
+void
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::replace (
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA::ComponentIR::ProvidesDescription *data,
+    CORBA::Boolean release
+  )
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  
+  if (this->buffer_ && this->release_ == 1)
+    {
+      CORBA::ComponentIR::ProvidesDescription *tmp =
+        ACE_reinterpret_cast (CORBA::ComponentIR::ProvidesDescription*, this->buffer_);
+      _TAO_Unbounded_Sequence_CORBA_ComponentIR_ProvidesDescriptionSeq::freebuf (tmp);
+    }
+  
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
+#endif /* end #if !defined */
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_CORBA_COMPONENTIR_PROVIDESDESCRIPTIONSEQ_CI_)
+#define _CORBA_COMPONENTIR_PROVIDESDESCRIPTIONSEQ_CI_
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
 
 // *************************************************************
-// Inline operations for class IR::ComponentDescription_var
+// Inline operations for class CORBA::ComponentIR::ProvidesDescriptionSeq_var
 // *************************************************************
 
 ACE_INLINE
-IR::ComponentDescription_var::ComponentDescription_var (void)
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::ProvidesDescriptionSeq_var (void)
   : ptr_ (0)
 {}
 
 ACE_INLINE
-IR::ComponentDescription_var::ComponentDescription_var (ComponentDescription *p)
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::ProvidesDescriptionSeq_var (ProvidesDescriptionSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-IR::ComponentDescription_var::ComponentDescription_var (const ::IR::ComponentDescription_var &p)
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::ProvidesDescriptionSeq_var (const ::CORBA::ComponentIR::ProvidesDescriptionSeq_var &p)
 {
   if (p.ptr_)
     {
-      ACE_NEW (this->ptr_, ::IR::ComponentDescription (*p.ptr_));
+      ACE_NEW (this->ptr_, ::CORBA::ComponentIR::ProvidesDescriptionSeq (*p.ptr_));
     }
   else
     {
@@ -5934,14 +1186,1172 @@ IR::ComponentDescription_var::ComponentDescription_var (const ::IR::ComponentDes
 }
 
 ACE_INLINE
-IR::ComponentDescription_var::~ComponentDescription_var (void)
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::~ProvidesDescriptionSeq_var (void)
 {
   delete this->ptr_;
 }
 
 ACE_INLINE
-IR::ComponentDescription_var &
-IR::ComponentDescription_var::operator= (ComponentDescription *_tao_struct_var)
+CORBA::ComponentIR::ProvidesDescriptionSeq_var &
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::operator= (ProvidesDescriptionSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::ProvidesDescriptionSeq_var &
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::operator= (const ::CORBA::ComponentIR::ProvidesDescriptionSeq_var &p)
+{
+  if (this != &p)
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          ProvidesDescriptionSeq *deep_copy = 0;
+          ACE_NEW_RETURN (
+              deep_copy,
+              ProvidesDescriptionSeq (*p.ptr_),
+              *this
+            );
+          
+          if (deep_copy != 0)
+            {
+              ProvidesDescriptionSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
+  return *this;
+}
+
+ACE_INLINE
+const ::CORBA::ComponentIR::ProvidesDescriptionSeq *
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::ProvidesDescriptionSeq *
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::operator const ::CORBA::ComponentIR::ProvidesDescriptionSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::operator ::CORBA::ComponentIR::ProvidesDescriptionSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::operator ::CORBA::ComponentIR::ProvidesDescriptionSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// Variable-size types only.
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::operator ::CORBA::ComponentIR::ProvidesDescriptionSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDescription &
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE
+const CORBA::ComponentIR::ProvidesDescription &
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const CORBA::ComponentIR::ProvidesDescription &, this->ptr_->operator[] (index));
+}
+
+ACE_INLINE
+const ::CORBA::ComponentIR::ProvidesDescriptionSeq &
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::ProvidesDescriptionSeq &
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::ProvidesDescriptionSeq *&
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::ProvidesDescriptionSeq *
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::_retn (void)
+{
+  ::CORBA::ComponentIR::ProvidesDescriptionSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::ProvidesDescriptionSeq *
+CORBA::ComponentIR::ProvidesDescriptionSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:566
+
+// *************************************************************
+// Inline operations for class CORBA::ComponentIR::ProvidesDescriptionSeq_out
+// *************************************************************
+
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDescriptionSeq_out::ProvidesDescriptionSeq_out (ProvidesDescriptionSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDescriptionSeq_out::ProvidesDescriptionSeq_out (ProvidesDescriptionSeq_var &p)
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDescriptionSeq_out::ProvidesDescriptionSeq_out (const ::CORBA::ComponentIR::ProvidesDescriptionSeq_out &p)
+  : ptr_ (ACE_const_cast (ProvidesDescriptionSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE
+::CORBA::ComponentIR::ProvidesDescriptionSeq_out &
+CORBA::ComponentIR::ProvidesDescriptionSeq_out::operator= (const ::CORBA::ComponentIR::ProvidesDescriptionSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (ProvidesDescriptionSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::ProvidesDescriptionSeq_out &
+CORBA::ComponentIR::ProvidesDescriptionSeq_out::operator= (ProvidesDescriptionSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDescriptionSeq_out::operator ::CORBA::ComponentIR::ProvidesDescriptionSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::ProvidesDescriptionSeq *&
+CORBA::ComponentIR::ProvidesDescriptionSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::ProvidesDescriptionSeq *
+CORBA::ComponentIR::ProvidesDescriptionSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::ProvidesDescription &
+CORBA::ComponentIR::ProvidesDescriptionSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+#endif /* end #if !defined */
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ci.cpp:98
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_COMPONENTIR_USESDESCRIPTIONSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_CORBA_COMPONENTIR_USESDESCRIPTIONSEQ_CI_
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescription *
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::allocbuf (CORBA::ULong size)
+{
+  CORBA::ComponentIR::UsesDescription *retval = 0;
+  ACE_NEW_RETURN (retval, CORBA::ComponentIR::UsesDescription[size], 0);
+  return retval;
+}
+
+ACE_INLINE
+void CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::freebuf (CORBA::ComponentIR::UsesDescription *buffer)
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq (void)
+{
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq (CORBA::ULong maximum) 
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq (
+    CORBA::ULong maximum,
+    CORBA::ULong length,
+    CORBA::ComponentIR::UsesDescription *data,
+    CORBA::Boolean release
+  )
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq (
+    const _TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq &rhs
+  )
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
+    {
+      CORBA::ComponentIR::UsesDescription *tmp1 =
+        _TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::allocbuf (this->maximum_);
+      CORBA::ComponentIR::UsesDescription * const tmp2 =
+        ACE_reinterpret_cast (CORBA::ComponentIR::UsesDescription * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        {
+          tmp1[i] = tmp2[i];
+        }
+      
+      this->buffer_ = tmp1;
+    }
+  else
+    {
+      this->buffer_ = 0;
+    }
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq &
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::operator= (
+    const _TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq &rhs
+  )
+{
+  if (this == &rhs)
+    {
+      return *this;
+    }
+  
+  if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+        {
+          // Free the old buffer.
+          CORBA::ComponentIR::UsesDescription *tmp =
+            ACE_reinterpret_cast (CORBA::ComponentIR::UsesDescription *, this->buffer_);
+          
+          _TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::freebuf (tmp);
+          
+          this->buffer_ =
+            _TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::allocbuf (rhs.maximum_);
+        }
+    }
+  else
+    {
+      this->buffer_ =
+        _TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::allocbuf (rhs.maximum_);
+    }
+  
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  CORBA::ComponentIR::UsesDescription *tmp1 =
+    ACE_reinterpret_cast (CORBA::ComponentIR::UsesDescription *, this->buffer_);
+  CORBA::ComponentIR::UsesDescription * const tmp2 =
+    ACE_reinterpret_cast (CORBA::ComponentIR::UsesDescription * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      tmp1[i] = tmp2[i];
+    }
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE
+CORBA::ComponentIR::UsesDescription &
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::operator[] (CORBA::ULong i)
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA::ComponentIR::UsesDescription* tmp =
+    ACE_reinterpret_cast (CORBA::ComponentIR::UsesDescription*, this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE
+const CORBA::ComponentIR::UsesDescription &
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::operator[] (CORBA::ULong i) const
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA::ComponentIR::UsesDescription * const tmp =
+    ACE_reinterpret_cast (CORBA::ComponentIR::UsesDescription* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescription *
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA::ComponentIR::UsesDescription *result = 0;
+  
+  if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+        {
+          result =
+            _TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::allocbuf (this->length_);
+          this->buffer_ = result;
+          this->release_ = 1;
+        }
+      else
+        {
+          result =
+            ACE_reinterpret_cast (CORBA::ComponentIR::UsesDescription*, this->buffer_);
+        }
+    }
+  else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+        {
+          // We set the state back to default and relinquish ownership.
+          result =
+            ACE_reinterpret_cast(CORBA::ComponentIR::UsesDescription*,this->buffer_);
+          this->maximum_ = 0;
+          this->length_ = 0;
+          this->buffer_ = 0;
+          this->release_ = 0;
+        }
+    }
+  
+  return result;
+}
+
+ACE_INLINE
+const CORBA::ComponentIR::UsesDescription *
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast (const CORBA::ComponentIR::UsesDescription * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE
+void
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::replace (
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA::ComponentIR::UsesDescription *data,
+    CORBA::Boolean release
+  )
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  
+  if (this->buffer_ && this->release_ == 1)
+    {
+      CORBA::ComponentIR::UsesDescription *tmp =
+        ACE_reinterpret_cast (CORBA::ComponentIR::UsesDescription*, this->buffer_);
+      _TAO_Unbounded_Sequence_CORBA_ComponentIR_UsesDescriptionSeq::freebuf (tmp);
+    }
+  
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
+#endif /* end #if !defined */
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_CORBA_COMPONENTIR_USESDESCRIPTIONSEQ_CI_)
+#define _CORBA_COMPONENTIR_USESDESCRIPTIONSEQ_CI_
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
+
+// *************************************************************
+// Inline operations for class CORBA::ComponentIR::UsesDescriptionSeq_var
+// *************************************************************
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescriptionSeq_var::UsesDescriptionSeq_var (void)
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescriptionSeq_var::UsesDescriptionSeq_var (UsesDescriptionSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescriptionSeq_var::UsesDescriptionSeq_var (const ::CORBA::ComponentIR::UsesDescriptionSeq_var &p)
+{
+  if (p.ptr_)
+    {
+      ACE_NEW (this->ptr_, ::CORBA::ComponentIR::UsesDescriptionSeq (*p.ptr_));
+    }
+  else
+    {
+      this->ptr_ = 0;
+    }
+}
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescriptionSeq_var::~UsesDescriptionSeq_var (void)
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescriptionSeq_var &
+CORBA::ComponentIR::UsesDescriptionSeq_var::operator= (UsesDescriptionSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::UsesDescriptionSeq_var &
+CORBA::ComponentIR::UsesDescriptionSeq_var::operator= (const ::CORBA::ComponentIR::UsesDescriptionSeq_var &p)
+{
+  if (this != &p)
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          UsesDescriptionSeq *deep_copy = 0;
+          ACE_NEW_RETURN (
+              deep_copy,
+              UsesDescriptionSeq (*p.ptr_),
+              *this
+            );
+          
+          if (deep_copy != 0)
+            {
+              UsesDescriptionSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
+  return *this;
+}
+
+ACE_INLINE
+const ::CORBA::ComponentIR::UsesDescriptionSeq *
+CORBA::ComponentIR::UsesDescriptionSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::UsesDescriptionSeq *
+CORBA::ComponentIR::UsesDescriptionSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescriptionSeq_var::operator const ::CORBA::ComponentIR::UsesDescriptionSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescriptionSeq_var::operator ::CORBA::ComponentIR::UsesDescriptionSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescriptionSeq_var::operator ::CORBA::ComponentIR::UsesDescriptionSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// Variable-size types only.
+ACE_INLINE
+CORBA::ComponentIR::UsesDescriptionSeq_var::operator ::CORBA::ComponentIR::UsesDescriptionSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescription &
+CORBA::ComponentIR::UsesDescriptionSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE
+const CORBA::ComponentIR::UsesDescription &
+CORBA::ComponentIR::UsesDescriptionSeq_var::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const CORBA::ComponentIR::UsesDescription &, this->ptr_->operator[] (index));
+}
+
+ACE_INLINE
+const ::CORBA::ComponentIR::UsesDescriptionSeq &
+CORBA::ComponentIR::UsesDescriptionSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::UsesDescriptionSeq &
+CORBA::ComponentIR::UsesDescriptionSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::UsesDescriptionSeq *&
+CORBA::ComponentIR::UsesDescriptionSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::UsesDescriptionSeq *
+CORBA::ComponentIR::UsesDescriptionSeq_var::_retn (void)
+{
+  ::CORBA::ComponentIR::UsesDescriptionSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::UsesDescriptionSeq *
+CORBA::ComponentIR::UsesDescriptionSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:566
+
+// *************************************************************
+// Inline operations for class CORBA::ComponentIR::UsesDescriptionSeq_out
+// *************************************************************
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescriptionSeq_out::UsesDescriptionSeq_out (UsesDescriptionSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescriptionSeq_out::UsesDescriptionSeq_out (UsesDescriptionSeq_var &p)
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescriptionSeq_out::UsesDescriptionSeq_out (const ::CORBA::ComponentIR::UsesDescriptionSeq_out &p)
+  : ptr_ (ACE_const_cast (UsesDescriptionSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE
+::CORBA::ComponentIR::UsesDescriptionSeq_out &
+CORBA::ComponentIR::UsesDescriptionSeq_out::operator= (const ::CORBA::ComponentIR::UsesDescriptionSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (UsesDescriptionSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::UsesDescriptionSeq_out &
+CORBA::ComponentIR::UsesDescriptionSeq_out::operator= (UsesDescriptionSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescriptionSeq_out::operator ::CORBA::ComponentIR::UsesDescriptionSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::UsesDescriptionSeq *&
+CORBA::ComponentIR::UsesDescriptionSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::UsesDescriptionSeq *
+CORBA::ComponentIR::UsesDescriptionSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::UsesDescription &
+CORBA::ComponentIR::UsesDescriptionSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+#endif /* end #if !defined */
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ci.cpp:98
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_COMPONENTIR_EVENTPORTDESCRIPTIONSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_CORBA_COMPONENTIR_EVENTPORTDESCRIPTIONSEQ_CI_
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescription *
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::allocbuf (CORBA::ULong size)
+{
+  CORBA::ComponentIR::EventPortDescription *retval = 0;
+  ACE_NEW_RETURN (retval, CORBA::ComponentIR::EventPortDescription[size], 0);
+  return retval;
+}
+
+ACE_INLINE
+void CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::freebuf (CORBA::ComponentIR::EventPortDescription *buffer)
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq (void)
+{
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq (CORBA::ULong maximum) 
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq (
+    CORBA::ULong maximum,
+    CORBA::ULong length,
+    CORBA::ComponentIR::EventPortDescription *data,
+    CORBA::Boolean release
+  )
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq (
+    const _TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq &rhs
+  )
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
+    {
+      CORBA::ComponentIR::EventPortDescription *tmp1 =
+        _TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::allocbuf (this->maximum_);
+      CORBA::ComponentIR::EventPortDescription * const tmp2 =
+        ACE_reinterpret_cast (CORBA::ComponentIR::EventPortDescription * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        {
+          tmp1[i] = tmp2[i];
+        }
+      
+      this->buffer_ = tmp1;
+    }
+  else
+    {
+      this->buffer_ = 0;
+    }
+}
+
+ACE_INLINE
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq &
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::operator= (
+    const _TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq &rhs
+  )
+{
+  if (this == &rhs)
+    {
+      return *this;
+    }
+  
+  if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+        {
+          // Free the old buffer.
+          CORBA::ComponentIR::EventPortDescription *tmp =
+            ACE_reinterpret_cast (CORBA::ComponentIR::EventPortDescription *, this->buffer_);
+          
+          _TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::freebuf (tmp);
+          
+          this->buffer_ =
+            _TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::allocbuf (rhs.maximum_);
+        }
+    }
+  else
+    {
+      this->buffer_ =
+        _TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::allocbuf (rhs.maximum_);
+    }
+  
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  CORBA::ComponentIR::EventPortDescription *tmp1 =
+    ACE_reinterpret_cast (CORBA::ComponentIR::EventPortDescription *, this->buffer_);
+  CORBA::ComponentIR::EventPortDescription * const tmp2 =
+    ACE_reinterpret_cast (CORBA::ComponentIR::EventPortDescription * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      tmp1[i] = tmp2[i];
+    }
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescription &
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::operator[] (CORBA::ULong i)
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA::ComponentIR::EventPortDescription* tmp =
+    ACE_reinterpret_cast (CORBA::ComponentIR::EventPortDescription*, this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE
+const CORBA::ComponentIR::EventPortDescription &
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::operator[] (CORBA::ULong i) const
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA::ComponentIR::EventPortDescription * const tmp =
+    ACE_reinterpret_cast (CORBA::ComponentIR::EventPortDescription* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescription *
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA::ComponentIR::EventPortDescription *result = 0;
+  
+  if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+        {
+          result =
+            _TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::allocbuf (this->length_);
+          this->buffer_ = result;
+          this->release_ = 1;
+        }
+      else
+        {
+          result =
+            ACE_reinterpret_cast (CORBA::ComponentIR::EventPortDescription*, this->buffer_);
+        }
+    }
+  else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+        {
+          // We set the state back to default and relinquish ownership.
+          result =
+            ACE_reinterpret_cast(CORBA::ComponentIR::EventPortDescription*,this->buffer_);
+          this->maximum_ = 0;
+          this->length_ = 0;
+          this->buffer_ = 0;
+          this->release_ = 0;
+        }
+    }
+  
+  return result;
+}
+
+ACE_INLINE
+const CORBA::ComponentIR::EventPortDescription *
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast (const CORBA::ComponentIR::EventPortDescription * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE
+void
+CORBA::ComponentIR::_TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::replace (
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA::ComponentIR::EventPortDescription *data,
+    CORBA::Boolean release
+  )
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  
+  if (this->buffer_ && this->release_ == 1)
+    {
+      CORBA::ComponentIR::EventPortDescription *tmp =
+        ACE_reinterpret_cast (CORBA::ComponentIR::EventPortDescription*, this->buffer_);
+      _TAO_Unbounded_Sequence_CORBA_ComponentIR_EventPortDescriptionSeq::freebuf (tmp);
+    }
+  
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
+#endif /* end #if !defined */
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_CORBA_COMPONENTIR_EVENTPORTDESCRIPTIONSEQ_CI_)
+#define _CORBA_COMPONENTIR_EVENTPORTDESCRIPTIONSEQ_CI_
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
+
+// *************************************************************
+// Inline operations for class CORBA::ComponentIR::EventPortDescriptionSeq_var
+// *************************************************************
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescriptionSeq_var::EventPortDescriptionSeq_var (void)
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescriptionSeq_var::EventPortDescriptionSeq_var (EventPortDescriptionSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescriptionSeq_var::EventPortDescriptionSeq_var (const ::CORBA::ComponentIR::EventPortDescriptionSeq_var &p)
+{
+  if (p.ptr_)
+    {
+      ACE_NEW (this->ptr_, ::CORBA::ComponentIR::EventPortDescriptionSeq (*p.ptr_));
+    }
+  else
+    {
+      this->ptr_ = 0;
+    }
+}
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescriptionSeq_var::~EventPortDescriptionSeq_var (void)
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescriptionSeq_var &
+CORBA::ComponentIR::EventPortDescriptionSeq_var::operator= (EventPortDescriptionSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::EventPortDescriptionSeq_var &
+CORBA::ComponentIR::EventPortDescriptionSeq_var::operator= (const ::CORBA::ComponentIR::EventPortDescriptionSeq_var &p)
+{
+  if (this != &p)
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          EventPortDescriptionSeq *deep_copy = 0;
+          ACE_NEW_RETURN (
+              deep_copy,
+              EventPortDescriptionSeq (*p.ptr_),
+              *this
+            );
+          
+          if (deep_copy != 0)
+            {
+              EventPortDescriptionSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
+  return *this;
+}
+
+ACE_INLINE
+const ::CORBA::ComponentIR::EventPortDescriptionSeq *
+CORBA::ComponentIR::EventPortDescriptionSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::EventPortDescriptionSeq *
+CORBA::ComponentIR::EventPortDescriptionSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescriptionSeq_var::operator const ::CORBA::ComponentIR::EventPortDescriptionSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescriptionSeq_var::operator ::CORBA::ComponentIR::EventPortDescriptionSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescriptionSeq_var::operator ::CORBA::ComponentIR::EventPortDescriptionSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// Variable-size types only.
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescriptionSeq_var::operator ::CORBA::ComponentIR::EventPortDescriptionSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescription &
+CORBA::ComponentIR::EventPortDescriptionSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE
+const CORBA::ComponentIR::EventPortDescription &
+CORBA::ComponentIR::EventPortDescriptionSeq_var::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const CORBA::ComponentIR::EventPortDescription &, this->ptr_->operator[] (index));
+}
+
+ACE_INLINE
+const ::CORBA::ComponentIR::EventPortDescriptionSeq &
+CORBA::ComponentIR::EventPortDescriptionSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::EventPortDescriptionSeq &
+CORBA::ComponentIR::EventPortDescriptionSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::EventPortDescriptionSeq *&
+CORBA::ComponentIR::EventPortDescriptionSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::EventPortDescriptionSeq *
+CORBA::ComponentIR::EventPortDescriptionSeq_var::_retn (void)
+{
+  ::CORBA::ComponentIR::EventPortDescriptionSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::EventPortDescriptionSeq *
+CORBA::ComponentIR::EventPortDescriptionSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:566
+
+// *************************************************************
+// Inline operations for class CORBA::ComponentIR::EventPortDescriptionSeq_out
+// *************************************************************
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescriptionSeq_out::EventPortDescriptionSeq_out (EventPortDescriptionSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescriptionSeq_out::EventPortDescriptionSeq_out (EventPortDescriptionSeq_var &p)
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescriptionSeq_out::EventPortDescriptionSeq_out (const ::CORBA::ComponentIR::EventPortDescriptionSeq_out &p)
+  : ptr_ (ACE_const_cast (EventPortDescriptionSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE
+::CORBA::ComponentIR::EventPortDescriptionSeq_out &
+CORBA::ComponentIR::EventPortDescriptionSeq_out::operator= (const ::CORBA::ComponentIR::EventPortDescriptionSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (EventPortDescriptionSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::EventPortDescriptionSeq_out &
+CORBA::ComponentIR::EventPortDescriptionSeq_out::operator= (EventPortDescriptionSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescriptionSeq_out::operator ::CORBA::ComponentIR::EventPortDescriptionSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::EventPortDescriptionSeq *&
+CORBA::ComponentIR::EventPortDescriptionSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+::CORBA::ComponentIR::EventPortDescriptionSeq *
+CORBA::ComponentIR::EventPortDescriptionSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::EventPortDescription &
+CORBA::ComponentIR::EventPortDescriptionSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+#endif /* end #if !defined */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
+
+// *************************************************************
+// Inline operations for class CORBA::ComponentIR::ComponentDescription_var
+// *************************************************************
+
+ACE_INLINE
+CORBA::ComponentIR::ComponentDescription_var::ComponentDescription_var (void)
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+CORBA::ComponentIR::ComponentDescription_var::ComponentDescription_var (ComponentDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+CORBA::ComponentIR::ComponentDescription_var::ComponentDescription_var (const ::CORBA::ComponentIR::ComponentDescription_var &p)
+{
+  if (p.ptr_)
+    {
+      ACE_NEW (this->ptr_, ::CORBA::ComponentIR::ComponentDescription (*p.ptr_));
+    }
+  else
+    {
+      this->ptr_ = 0;
+    }
+}
+
+ACE_INLINE
+CORBA::ComponentIR::ComponentDescription_var::~ComponentDescription_var (void)
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ComponentIR::ComponentDescription_var &
+CORBA::ComponentIR::ComponentDescription_var::operator= (ComponentDescription *_tao_struct_var)
 {
   delete this->ptr_;
   this->ptr_ = _tao_struct_var;
@@ -5949,8 +2359,8 @@ IR::ComponentDescription_var::operator= (ComponentDescription *_tao_struct_var)
 }
 
 ACE_INLINE
-::IR::ComponentDescription_var &
-IR::ComponentDescription_var::operator= (const ::IR::ComponentDescription_var &_tao_struct_var)
+::CORBA::ComponentIR::ComponentDescription_var &
+CORBA::ComponentIR::ComponentDescription_var::operator= (const ::CORBA::ComponentIR::ComponentDescription_var &_tao_struct_var)
 {
   if (this != &_tao_struct_var)
     {
@@ -5981,74 +2391,74 @@ IR::ComponentDescription_var::operator= (const ::IR::ComponentDescription_var &_
   return *this;
 }
 
-ACE_INLINE const ::IR::ComponentDescription *
-IR::ComponentDescription_var::operator-> (void) const
+ACE_INLINE const ::CORBA::ComponentIR::ComponentDescription *
+CORBA::ComponentIR::ComponentDescription_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::ComponentDescription *
-IR::ComponentDescription_var::operator-> (void)
+ACE_INLINE ::CORBA::ComponentIR::ComponentDescription *
+CORBA::ComponentIR::ComponentDescription_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-IR::ComponentDescription_var::operator const ::IR::ComponentDescription &() const // cast
+CORBA::ComponentIR::ComponentDescription_var::operator const ::CORBA::ComponentIR::ComponentDescription &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IR::ComponentDescription_var::operator ::IR::ComponentDescription &() // cast 
+CORBA::ComponentIR::ComponentDescription_var::operator ::CORBA::ComponentIR::ComponentDescription &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IR::ComponentDescription_var::operator ::IR::ComponentDescription &() const // cast 
+CORBA::ComponentIR::ComponentDescription_var::operator ::CORBA::ComponentIR::ComponentDescription &() const // cast 
 {
   return *this->ptr_;
 }
 
 // Variable-size types only.
 ACE_INLINE
-IR::ComponentDescription_var::operator ::IR::ComponentDescription *&() // cast 
+CORBA::ComponentIR::ComponentDescription_var::operator ::CORBA::ComponentIR::ComponentDescription *&() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE const ::IR::ComponentDescription &
-IR::ComponentDescription_var::in (void) const
+ACE_INLINE const ::CORBA::ComponentIR::ComponentDescription &
+CORBA::ComponentIR::ComponentDescription_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ::IR::ComponentDescription &
-IR::ComponentDescription_var::inout (void)
+ACE_INLINE ::CORBA::ComponentIR::ComponentDescription &
+CORBA::ComponentIR::ComponentDescription_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // Mapping for variable size.
-ACE_INLINE ::IR::ComponentDescription *&
-IR::ComponentDescription_var::out (void)
+ACE_INLINE ::CORBA::ComponentIR::ComponentDescription *&
+CORBA::ComponentIR::ComponentDescription_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::ComponentDescription *
-IR::ComponentDescription_var::_retn (void)
+ACE_INLINE ::CORBA::ComponentIR::ComponentDescription *
+CORBA::ComponentIR::ComponentDescription_var::_retn (void)
 {
-  ::IR::ComponentDescription *tmp = this->ptr_;
+  ::CORBA::ComponentIR::ComponentDescription *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE ::IR::ComponentDescription *
-IR::ComponentDescription_var::ptr (void) const
+ACE_INLINE ::CORBA::ComponentIR::ComponentDescription *
+CORBA::ComponentIR::ComponentDescription_var::ptr (void) const
 {
   return this->ptr_;
 }
@@ -6057,18 +2467,18 @@ IR::ComponentDescription_var::ptr (void) const
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:523
 
 // *************************************************************
-// Inline operations for class IR::ComponentDescription_out
+// Inline operations for class CORBA::ComponentIR::ComponentDescription_out
 // *************************************************************
 
 ACE_INLINE
-IR::ComponentDescription_out::ComponentDescription_out (::IR::ComponentDescription *&p)
+CORBA::ComponentIR::ComponentDescription_out::ComponentDescription_out (::CORBA::ComponentIR::ComponentDescription *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-IR::ComponentDescription_out::ComponentDescription_out (ComponentDescription_var &p)
+CORBA::ComponentIR::ComponentDescription_out::ComponentDescription_out (ComponentDescription_var &p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -6076,40 +2486,40 @@ IR::ComponentDescription_out::ComponentDescription_out (ComponentDescription_var
 }
 
 ACE_INLINE
-IR::ComponentDescription_out::ComponentDescription_out (const ::IR::ComponentDescription_out &p)
+CORBA::ComponentIR::ComponentDescription_out::ComponentDescription_out (const ::CORBA::ComponentIR::ComponentDescription_out &p)
   : ptr_ (ACE_const_cast (ComponentDescription_out&, p).ptr_)
 {}
 
 ACE_INLINE
-IR::ComponentDescription_out &
-IR::ComponentDescription_out::operator= (const ::IR::ComponentDescription_out &p)
+CORBA::ComponentIR::ComponentDescription_out &
+CORBA::ComponentIR::ComponentDescription_out::operator= (const ::CORBA::ComponentIR::ComponentDescription_out &p)
 {
   this->ptr_ = ACE_const_cast (ComponentDescription_out&, p).ptr_;
   return *this;
 }
 
 ACE_INLINE
-IR::ComponentDescription_out &
-IR::ComponentDescription_out::operator= (ComponentDescription *_tao_struct_out)
+CORBA::ComponentIR::ComponentDescription_out &
+CORBA::ComponentIR::ComponentDescription_out::operator= (ComponentDescription *_tao_struct_out)
 {
   this->ptr_ = _tao_struct_out;
   return *this;
 }
 
 ACE_INLINE 
-IR::ComponentDescription_out::operator ::IR::ComponentDescription *&() // cast
+CORBA::ComponentIR::ComponentDescription_out::operator ::CORBA::ComponentIR::ComponentDescription *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::ComponentDescription *&
-IR::ComponentDescription_out::ptr (void) // ptr
+ACE_INLINE ::CORBA::ComponentIR::ComponentDescription *&
+CORBA::ComponentIR::ComponentDescription_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::ComponentDescription *
-IR::ComponentDescription_out::operator-> (void)
+ACE_INLINE ::CORBA::ComponentIR::ComponentDescription *
+CORBA::ComponentIR::ComponentDescription_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -6117,23 +2527,75 @@ IR::ComponentDescription_out::operator-> (void)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
-#if !defined (_IR_PRIMARYKEYDEF___CI_)
-#define _IR_PRIMARYKEYDEF___CI_
+#if !defined (_CORBA_COMPONENTIR_FACTORYDEF___CI_)
+#define _CORBA_COMPONENTIR_FACTORYDEF___CI_
 
 ACE_INLINE
-IR::PrimaryKeyDef::PrimaryKeyDef (
+CORBA::ComponentIR::FactoryDef::FactoryDef (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->IR_PrimaryKeyDef_setup_collocation (_tao_collocated);
+  this->CORBA_ComponentIR_FactoryDef_setup_collocation (_tao_collocated);
 }
 
 ACE_INLINE
 CORBA::Boolean
-IR::PrimaryKeyDef::marshal (TAO_OutputCDR &cdr)
+CORBA::ComponentIR::FactoryDef::marshal (TAO_OutputCDR &cdr)
+{
+  return (cdr << this);
+}
+
+#endif /* end #if !defined */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+
+#if !defined (_CORBA_COMPONENTIR_FINDERDEF___CI_)
+#define _CORBA_COMPONENTIR_FINDERDEF___CI_
+
+ACE_INLINE
+CORBA::ComponentIR::FinderDef::FinderDef (
+    TAO_Stub *objref,
+    CORBA::Boolean _tao_collocated,
+    TAO_Abstract_ServantBase *servant
+  )
+  : CORBA_Object (objref, _tao_collocated, servant)
+{
+  this->CORBA_ComponentIR_FinderDef_setup_collocation (_tao_collocated);
+}
+
+ACE_INLINE
+CORBA::Boolean
+CORBA::ComponentIR::FinderDef::marshal (TAO_OutputCDR &cdr)
+{
+  return (cdr << this);
+}
+
+#endif /* end #if !defined */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+
+#if !defined (_CORBA_COMPONENTIR_HOMEDEF___CI_)
+#define _CORBA_COMPONENTIR_HOMEDEF___CI_
+
+ACE_INLINE
+CORBA::ComponentIR::HomeDef::HomeDef (
+    TAO_Stub *objref,
+    CORBA::Boolean _tao_collocated,
+    TAO_Abstract_ServantBase *servant
+  )
+  : CORBA_Object (objref, _tao_collocated, servant)
+{
+  this->CORBA_ComponentIR_HomeDef_setup_collocation (_tao_collocated);
+}
+
+ACE_INLINE
+CORBA::Boolean
+CORBA::ComponentIR::HomeDef::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
 }
@@ -6144,25 +2606,25 @@ IR::PrimaryKeyDef::marshal (TAO_OutputCDR &cdr)
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
 
 // *************************************************************
-// Inline operations for class IR::PrimaryKeyDescription_var
+// Inline operations for class CORBA::ComponentIR::HomeDescription_var
 // *************************************************************
 
 ACE_INLINE
-IR::PrimaryKeyDescription_var::PrimaryKeyDescription_var (void)
+CORBA::ComponentIR::HomeDescription_var::HomeDescription_var (void)
   : ptr_ (0)
 {}
 
 ACE_INLINE
-IR::PrimaryKeyDescription_var::PrimaryKeyDescription_var (PrimaryKeyDescription *p)
+CORBA::ComponentIR::HomeDescription_var::HomeDescription_var (HomeDescription *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-IR::PrimaryKeyDescription_var::PrimaryKeyDescription_var (const ::IR::PrimaryKeyDescription_var &p)
+CORBA::ComponentIR::HomeDescription_var::HomeDescription_var (const ::CORBA::ComponentIR::HomeDescription_var &p)
 {
   if (p.ptr_)
     {
-      ACE_NEW (this->ptr_, ::IR::PrimaryKeyDescription (*p.ptr_));
+      ACE_NEW (this->ptr_, ::CORBA::ComponentIR::HomeDescription (*p.ptr_));
     }
   else
     {
@@ -6171,303 +2633,14 @@ IR::PrimaryKeyDescription_var::PrimaryKeyDescription_var (const ::IR::PrimaryKey
 }
 
 ACE_INLINE
-IR::PrimaryKeyDescription_var::~PrimaryKeyDescription_var (void)
+CORBA::ComponentIR::HomeDescription_var::~HomeDescription_var (void)
 {
   delete this->ptr_;
 }
 
 ACE_INLINE
-IR::PrimaryKeyDescription_var &
-IR::PrimaryKeyDescription_var::operator= (PrimaryKeyDescription *_tao_struct_var)
-{
-  delete this->ptr_;
-  this->ptr_ = _tao_struct_var;
-  return *this;
-}
-
-ACE_INLINE
-::IR::PrimaryKeyDescription_var &
-IR::PrimaryKeyDescription_var::operator= (const ::IR::PrimaryKeyDescription_var &_tao_struct_var)
-{
-  if (this != &_tao_struct_var)
-    {
-      if (_tao_struct_var.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          PrimaryKeyDescription *deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              PrimaryKeyDescription (*_tao_struct_var.ptr_),
-              *this
-            );
-          
-          if (deep_copy != 0)
-            {
-              PrimaryKeyDescription *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-ACE_INLINE const ::IR::PrimaryKeyDescription *
-IR::PrimaryKeyDescription_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::IR::PrimaryKeyDescription *
-IR::PrimaryKeyDescription_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-IR::PrimaryKeyDescription_var::operator const ::IR::PrimaryKeyDescription &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::PrimaryKeyDescription_var::operator ::IR::PrimaryKeyDescription &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-IR::PrimaryKeyDescription_var::operator ::IR::PrimaryKeyDescription &() const // cast 
-{
-  return *this->ptr_;
-}
-
-// Variable-size types only.
-ACE_INLINE
-IR::PrimaryKeyDescription_var::operator ::IR::PrimaryKeyDescription *&() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE const ::IR::PrimaryKeyDescription &
-IR::PrimaryKeyDescription_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::IR::PrimaryKeyDescription &
-IR::PrimaryKeyDescription_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// Mapping for variable size.
-ACE_INLINE ::IR::PrimaryKeyDescription *&
-IR::PrimaryKeyDescription_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE ::IR::PrimaryKeyDescription *
-IR::PrimaryKeyDescription_var::_retn (void)
-{
-  ::IR::PrimaryKeyDescription *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE ::IR::PrimaryKeyDescription *
-IR::PrimaryKeyDescription_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:523
-
-// *************************************************************
-// Inline operations for class IR::PrimaryKeyDescription_out
-// *************************************************************
-
-ACE_INLINE
-IR::PrimaryKeyDescription_out::PrimaryKeyDescription_out (::IR::PrimaryKeyDescription *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::PrimaryKeyDescription_out::PrimaryKeyDescription_out (PrimaryKeyDescription_var &p)
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-IR::PrimaryKeyDescription_out::PrimaryKeyDescription_out (const ::IR::PrimaryKeyDescription_out &p)
-  : ptr_ (ACE_const_cast (PrimaryKeyDescription_out&, p).ptr_)
-{}
-
-ACE_INLINE
-IR::PrimaryKeyDescription_out &
-IR::PrimaryKeyDescription_out::operator= (const ::IR::PrimaryKeyDescription_out &p)
-{
-  this->ptr_ = ACE_const_cast (PrimaryKeyDescription_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE
-IR::PrimaryKeyDescription_out &
-IR::PrimaryKeyDescription_out::operator= (PrimaryKeyDescription *_tao_struct_out)
-{
-  this->ptr_ = _tao_struct_out;
-  return *this;
-}
-
-ACE_INLINE 
-IR::PrimaryKeyDescription_out::operator ::IR::PrimaryKeyDescription *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::IR::PrimaryKeyDescription *&
-IR::PrimaryKeyDescription_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::IR::PrimaryKeyDescription *
-IR::PrimaryKeyDescription_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_IR_FACTORYDEF___CI_)
-#define _IR_FACTORYDEF___CI_
-
-ACE_INLINE
-IR::FactoryDef::FactoryDef (
-    TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
-    TAO_Abstract_ServantBase *servant
-  )
-  : CORBA_Object (objref, _tao_collocated, servant)
-{
-  this->IR_FactoryDef_setup_collocation (_tao_collocated);
-}
-
-ACE_INLINE
-CORBA::Boolean
-IR::FactoryDef::marshal (TAO_OutputCDR &cdr)
-{
-  return (cdr << this);
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_IR_FINDERDEF___CI_)
-#define _IR_FINDERDEF___CI_
-
-ACE_INLINE
-IR::FinderDef::FinderDef (
-    TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
-    TAO_Abstract_ServantBase *servant
-  )
-  : CORBA_Object (objref, _tao_collocated, servant)
-{
-  this->IR_FinderDef_setup_collocation (_tao_collocated);
-}
-
-ACE_INLINE
-CORBA::Boolean
-IR::FinderDef::marshal (TAO_OutputCDR &cdr)
-{
-  return (cdr << this);
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
-#if !defined (_IR_HOMEDEF___CI_)
-#define _IR_HOMEDEF___CI_
-
-ACE_INLINE
-IR::HomeDef::HomeDef (
-    TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
-    TAO_Abstract_ServantBase *servant
-  )
-  : CORBA_Object (objref, _tao_collocated, servant)
-{
-  this->IR_HomeDef_setup_collocation (_tao_collocated);
-}
-
-ACE_INLINE
-CORBA::Boolean
-IR::HomeDef::marshal (TAO_OutputCDR &cdr)
-{
-  return (cdr << this);
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
-
-// *************************************************************
-// Inline operations for class IR::HomeDescription_var
-// *************************************************************
-
-ACE_INLINE
-IR::HomeDescription_var::HomeDescription_var (void)
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-IR::HomeDescription_var::HomeDescription_var (HomeDescription *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-IR::HomeDescription_var::HomeDescription_var (const ::IR::HomeDescription_var &p)
-{
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_, ::IR::HomeDescription (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
-}
-
-ACE_INLINE
-IR::HomeDescription_var::~HomeDescription_var (void)
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE
-IR::HomeDescription_var &
-IR::HomeDescription_var::operator= (HomeDescription *_tao_struct_var)
+CORBA::ComponentIR::HomeDescription_var &
+CORBA::ComponentIR::HomeDescription_var::operator= (HomeDescription *_tao_struct_var)
 {
   delete this->ptr_;
   this->ptr_ = _tao_struct_var;
@@ -6475,8 +2648,8 @@ IR::HomeDescription_var::operator= (HomeDescription *_tao_struct_var)
 }
 
 ACE_INLINE
-::IR::HomeDescription_var &
-IR::HomeDescription_var::operator= (const ::IR::HomeDescription_var &_tao_struct_var)
+::CORBA::ComponentIR::HomeDescription_var &
+CORBA::ComponentIR::HomeDescription_var::operator= (const ::CORBA::ComponentIR::HomeDescription_var &_tao_struct_var)
 {
   if (this != &_tao_struct_var)
     {
@@ -6507,74 +2680,74 @@ IR::HomeDescription_var::operator= (const ::IR::HomeDescription_var &_tao_struct
   return *this;
 }
 
-ACE_INLINE const ::IR::HomeDescription *
-IR::HomeDescription_var::operator-> (void) const
+ACE_INLINE const ::CORBA::ComponentIR::HomeDescription *
+CORBA::ComponentIR::HomeDescription_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::HomeDescription *
-IR::HomeDescription_var::operator-> (void)
+ACE_INLINE ::CORBA::ComponentIR::HomeDescription *
+CORBA::ComponentIR::HomeDescription_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-IR::HomeDescription_var::operator const ::IR::HomeDescription &() const // cast
+CORBA::ComponentIR::HomeDescription_var::operator const ::CORBA::ComponentIR::HomeDescription &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IR::HomeDescription_var::operator ::IR::HomeDescription &() // cast 
+CORBA::ComponentIR::HomeDescription_var::operator ::CORBA::ComponentIR::HomeDescription &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IR::HomeDescription_var::operator ::IR::HomeDescription &() const // cast 
+CORBA::ComponentIR::HomeDescription_var::operator ::CORBA::ComponentIR::HomeDescription &() const // cast 
 {
   return *this->ptr_;
 }
 
 // Variable-size types only.
 ACE_INLINE
-IR::HomeDescription_var::operator ::IR::HomeDescription *&() // cast 
+CORBA::ComponentIR::HomeDescription_var::operator ::CORBA::ComponentIR::HomeDescription *&() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE const ::IR::HomeDescription &
-IR::HomeDescription_var::in (void) const
+ACE_INLINE const ::CORBA::ComponentIR::HomeDescription &
+CORBA::ComponentIR::HomeDescription_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ::IR::HomeDescription &
-IR::HomeDescription_var::inout (void)
+ACE_INLINE ::CORBA::ComponentIR::HomeDescription &
+CORBA::ComponentIR::HomeDescription_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // Mapping for variable size.
-ACE_INLINE ::IR::HomeDescription *&
-IR::HomeDescription_var::out (void)
+ACE_INLINE ::CORBA::ComponentIR::HomeDescription *&
+CORBA::ComponentIR::HomeDescription_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::HomeDescription *
-IR::HomeDescription_var::_retn (void)
+ACE_INLINE ::CORBA::ComponentIR::HomeDescription *
+CORBA::ComponentIR::HomeDescription_var::_retn (void)
 {
-  ::IR::HomeDescription *tmp = this->ptr_;
+  ::CORBA::ComponentIR::HomeDescription *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE ::IR::HomeDescription *
-IR::HomeDescription_var::ptr (void) const
+ACE_INLINE ::CORBA::ComponentIR::HomeDescription *
+CORBA::ComponentIR::HomeDescription_var::ptr (void) const
 {
   return this->ptr_;
 }
@@ -6583,18 +2756,18 @@ IR::HomeDescription_var::ptr (void) const
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:523
 
 // *************************************************************
-// Inline operations for class IR::HomeDescription_out
+// Inline operations for class CORBA::ComponentIR::HomeDescription_out
 // *************************************************************
 
 ACE_INLINE
-IR::HomeDescription_out::HomeDescription_out (::IR::HomeDescription *&p)
+CORBA::ComponentIR::HomeDescription_out::HomeDescription_out (::CORBA::ComponentIR::HomeDescription *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-IR::HomeDescription_out::HomeDescription_out (HomeDescription_var &p)
+CORBA::ComponentIR::HomeDescription_out::HomeDescription_out (HomeDescription_var &p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -6602,221 +2775,55 @@ IR::HomeDescription_out::HomeDescription_out (HomeDescription_var &p)
 }
 
 ACE_INLINE
-IR::HomeDescription_out::HomeDescription_out (const ::IR::HomeDescription_out &p)
+CORBA::ComponentIR::HomeDescription_out::HomeDescription_out (const ::CORBA::ComponentIR::HomeDescription_out &p)
   : ptr_ (ACE_const_cast (HomeDescription_out&, p).ptr_)
 {}
 
 ACE_INLINE
-IR::HomeDescription_out &
-IR::HomeDescription_out::operator= (const ::IR::HomeDescription_out &p)
+CORBA::ComponentIR::HomeDescription_out &
+CORBA::ComponentIR::HomeDescription_out::operator= (const ::CORBA::ComponentIR::HomeDescription_out &p)
 {
   this->ptr_ = ACE_const_cast (HomeDescription_out&, p).ptr_;
   return *this;
 }
 
 ACE_INLINE
-IR::HomeDescription_out &
-IR::HomeDescription_out::operator= (HomeDescription *_tao_struct_out)
+CORBA::ComponentIR::HomeDescription_out &
+CORBA::ComponentIR::HomeDescription_out::operator= (HomeDescription *_tao_struct_out)
 {
   this->ptr_ = _tao_struct_out;
   return *this;
 }
 
 ACE_INLINE 
-IR::HomeDescription_out::operator ::IR::HomeDescription *&() // cast
+CORBA::ComponentIR::HomeDescription_out::operator ::CORBA::ComponentIR::HomeDescription *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::HomeDescription *&
-IR::HomeDescription_out::ptr (void) // ptr
+ACE_INLINE ::CORBA::ComponentIR::HomeDescription *&
+CORBA::ComponentIR::HomeDescription_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IR::HomeDescription *
-IR::HomeDescription_out::operator-> (void)
+ACE_INLINE ::CORBA::ComponentIR::HomeDescription *
+CORBA::ComponentIR::HomeDescription_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/cdr_op_ci.cpp:51
-
-ACE_INLINE
-CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR::DefinitionKind &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
-}
-
-ACE_INLINE
-CORBA::Boolean operator>> (TAO_InputCDR &strm, IR::DefinitionKind &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
-  if (_tao_result == 1)
-    {
-      _tao_enumval = ACE_static_cast (IR::DefinitionKind, _tao_temp);
-    }
-  
-  return _tao_result;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
-
-#if !defined _TAO_CDR_OP_IR_RepositoryIdSeq_I_
-#define _TAO_CDR_OP_IR_RepositoryIdSeq_I_
-
-CORBA::Boolean TAO_IFR_Client_Export operator<< (
-    TAO_OutputCDR &,
-    const IR::RepositoryIdSeq &
-  );
-
-CORBA::Boolean TAO_IFR_Client_Export operator>> (
-    TAO_InputCDR &,
-    IR::RepositoryIdSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_RepositoryIdSeq_I_ */
-
-// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const IR::ComponentDef_ptr
+    const CORBA::ComponentIR::ComponentDef_ptr
   );
 
 TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    IR::ComponentDef_ptr &
-  );
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
-
-#if !defined _TAO_CDR_OP_IR_ComponentDefSeq_I_
-#define _TAO_CDR_OP_IR_ComponentDefSeq_I_
-
-CORBA::Boolean TAO_IFR_Client_Export operator<< (
-    TAO_OutputCDR &,
-    const IR::ComponentDefSeq &
-  );
-
-CORBA::Boolean TAO_IFR_Client_Export operator>> (
-    TAO_InputCDR &,
-    IR::ComponentDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_ComponentDefSeq_I_ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
-
-TAO_IFR_Client_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const IR::ProvidesDef_ptr
-  );
-
-TAO_IFR_Client_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    IR::ProvidesDef_ptr &
-  );
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
-
-#if !defined _TAO_CDR_OP_IR_ProvidesDefSeq_I_
-#define _TAO_CDR_OP_IR_ProvidesDefSeq_I_
-
-CORBA::Boolean TAO_IFR_Client_Export operator<< (
-    TAO_OutputCDR &,
-    const IR::ProvidesDefSeq &
-  );
-
-CORBA::Boolean TAO_IFR_Client_Export operator>> (
-    TAO_InputCDR &,
-    IR::ProvidesDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_ProvidesDefSeq_I_ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
-
-TAO_IFR_Client_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const IR::UsesDef_ptr
-  );
-
-TAO_IFR_Client_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    IR::UsesDef_ptr &
-  );
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
-
-#if !defined _TAO_CDR_OP_IR_UsesDefSeq_I_
-#define _TAO_CDR_OP_IR_UsesDefSeq_I_
-
-CORBA::Boolean TAO_IFR_Client_Export operator<< (
-    TAO_OutputCDR &,
-    const IR::UsesDefSeq &
-  );
-
-CORBA::Boolean TAO_IFR_Client_Export operator>> (
-    TAO_InputCDR &,
-    IR::UsesDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_UsesDefSeq_I_ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
-
-TAO_IFR_Client_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const IR::HomeDef_ptr
-  );
-
-TAO_IFR_Client_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    IR::HomeDef_ptr &
-  );
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
-
-#if !defined _TAO_CDR_OP_IR_HomeDefSeq_I_
-#define _TAO_CDR_OP_IR_HomeDefSeq_I_
-
-CORBA::Boolean TAO_IFR_Client_Export operator<< (
-    TAO_OutputCDR &,
-    const IR::HomeDefSeq &
-  );
-
-CORBA::Boolean TAO_IFR_Client_Export operator>> (
-    TAO_InputCDR &,
-    IR::HomeDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_HomeDefSeq_I_ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
-
-TAO_IFR_Client_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const IR::EventDef_ptr
-  );
-
-TAO_IFR_Client_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    IR::EventDef_ptr &
+    CORBA::ComponentIR::ComponentDef_ptr &
   );
 
 // TAO_IDL - Generated from
@@ -6824,167 +2831,12 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const IR::EmitsDef_ptr
+    const CORBA::ComponentIR::HomeDef_ptr
   );
 
 TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    IR::EmitsDef_ptr &
-  );
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
-
-#if !defined _TAO_CDR_OP_IR_EmitsDefSeq_I_
-#define _TAO_CDR_OP_IR_EmitsDefSeq_I_
-
-CORBA::Boolean TAO_IFR_Client_Export operator<< (
-    TAO_OutputCDR &,
-    const IR::EmitsDefSeq &
-  );
-
-CORBA::Boolean TAO_IFR_Client_Export operator>> (
-    TAO_InputCDR &,
-    IR::EmitsDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_EmitsDefSeq_I_ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
-
-TAO_IFR_Client_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const IR::PublishesDef_ptr
-  );
-
-TAO_IFR_Client_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    IR::PublishesDef_ptr &
-  );
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
-
-#if !defined _TAO_CDR_OP_IR_PublishesDefSeq_I_
-#define _TAO_CDR_OP_IR_PublishesDefSeq_I_
-
-CORBA::Boolean TAO_IFR_Client_Export operator<< (
-    TAO_OutputCDR &,
-    const IR::PublishesDefSeq &
-  );
-
-CORBA::Boolean TAO_IFR_Client_Export operator>> (
-    TAO_InputCDR &,
-    IR::PublishesDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_PublishesDefSeq_I_ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
-
-TAO_IFR_Client_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const IR::ConsumesDef_ptr
-  );
-
-TAO_IFR_Client_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    IR::ConsumesDef_ptr &
-  );
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
-
-#if !defined _TAO_CDR_OP_IR_ConsumesDefSeq_I_
-#define _TAO_CDR_OP_IR_ConsumesDefSeq_I_
-
-CORBA::Boolean TAO_IFR_Client_Export operator<< (
-    TAO_OutputCDR &,
-    const IR::ConsumesDefSeq &
-  );
-
-CORBA::Boolean TAO_IFR_Client_Export operator>> (
-    TAO_InputCDR &,
-    IR::ConsumesDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_ConsumesDefSeq_I_ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
-
-TAO_IFR_Client_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const IR::FactoryDef_ptr
-  );
-
-TAO_IFR_Client_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    IR::FactoryDef_ptr &
-  );
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
-
-#if !defined _TAO_CDR_OP_IR_FactoryDefSeq_I_
-#define _TAO_CDR_OP_IR_FactoryDefSeq_I_
-
-CORBA::Boolean TAO_IFR_Client_Export operator<< (
-    TAO_OutputCDR &,
-    const IR::FactoryDefSeq &
-  );
-
-CORBA::Boolean TAO_IFR_Client_Export operator>> (
-    TAO_InputCDR &,
-    IR::FactoryDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_FactoryDefSeq_I_ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
-
-TAO_IFR_Client_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const IR::FinderDef_ptr
-  );
-
-TAO_IFR_Client_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    IR::FinderDef_ptr &
-  );
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
-
-#if !defined _TAO_CDR_OP_IR_FinderDefSeq_I_
-#define _TAO_CDR_OP_IR_FinderDefSeq_I_
-
-CORBA::Boolean TAO_IFR_Client_Export operator<< (
-    TAO_OutputCDR &,
-    const IR::FinderDefSeq &
-  );
-
-CORBA::Boolean TAO_IFR_Client_Export operator>> (
-    TAO_InputCDR &,
-    IR::FinderDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_FinderDefSeq_I_ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
-
-TAO_IFR_Client_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const IR::PrimaryKeyDef_ptr
-  );
-
-TAO_IFR_Client_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    IR::PrimaryKeyDef_ptr &
+    CORBA::ComponentIR::HomeDef_ptr &
   );
 
 // TAO_IDL - Generated from
@@ -6992,21 +2844,73 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const IR::ComponentRepository_ptr
+    const CORBA::ComponentIR::EventDef_ptr
   );
 
 TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    IR::ComponentRepository_ptr &
+    CORBA::ComponentIR::EventDef_ptr &
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ComponentIR::Container_ptr
+  );
+
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    CORBA::ComponentIR::Container_ptr &
+  );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ComponentIR::ModuleDef_ptr
+  );
+
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    CORBA::ComponentIR::ModuleDef_ptr &
+  );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ComponentIR::Repository_ptr
+  );
+
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    CORBA::ComponentIR::Repository_ptr &
+  );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ComponentIR::ProvidesDef_ptr
+  );
+
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    CORBA::ComponentIR::ProvidesDef_ptr &
+  );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
 
 ACE_INLINE
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const IR::ProvidesDescription &_tao_aggregate
+    const CORBA::ComponentIR::ProvidesDescription &_tao_aggregate
   )
 {
   if (
@@ -7014,7 +2918,7 @@ CORBA::Boolean operator<< (
     (strm << _tao_aggregate.id.in ()) &&
     (strm << _tao_aggregate.defined_in.in ()) &&
     (strm << _tao_aggregate.version.in ()) &&
-    _tao_aggregate.interface_type.in ()->marshal (strm)
+    (strm << _tao_aggregate.interface_type.in ())
    )
     {
       return 1;
@@ -7028,7 +2932,7 @@ CORBA::Boolean operator<< (
 ACE_INLINE
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    IR::ProvidesDescription &_tao_aggregate
+    CORBA::ComponentIR::ProvidesDescription &_tao_aggregate
   )
 {
   if (
@@ -7048,12 +2952,25 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ComponentIR::UsesDef_ptr
+  );
+
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    CORBA::ComponentIR::UsesDef_ptr &
+  );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
 
 ACE_INLINE
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const IR::UsesDescription &_tao_aggregate
+    const CORBA::ComponentIR::UsesDescription &_tao_aggregate
   )
 {
   if (
@@ -7061,7 +2978,7 @@ CORBA::Boolean operator<< (
     (strm << _tao_aggregate.id.in ()) &&
     (strm << _tao_aggregate.defined_in.in ()) &&
     (strm << _tao_aggregate.version.in ()) &&
-    _tao_aggregate.interface_type.in ()->marshal (strm) &&
+    (strm << _tao_aggregate.interface_type.in ()) &&
     (strm << CORBA::Any::from_boolean (_tao_aggregate.is_multiple))
    )
     {
@@ -7076,7 +2993,7 @@ CORBA::Boolean operator<< (
 ACE_INLINE
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    IR::UsesDescription &_tao_aggregate
+    CORBA::ComponentIR::UsesDescription &_tao_aggregate
   )
 {
   if (
@@ -7097,48 +3014,25 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
-#if !defined _TAO_CDR_OP_IR_ProvidesDescSeq_I_
-#define _TAO_CDR_OP_IR_ProvidesDescSeq_I_
-
-CORBA::Boolean TAO_IFR_Client_Export operator<< (
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const IR::ProvidesDescSeq &
+    const CORBA::ComponentIR::EventPortDef_ptr
   );
 
-CORBA::Boolean TAO_IFR_Client_Export operator>> (
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    IR::ProvidesDescSeq &
+    CORBA::ComponentIR::EventPortDef_ptr &
   );
-
-#endif /* _TAO_CDR_OP_IR_ProvidesDescSeq_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
-
-#if !defined _TAO_CDR_OP_IR_UsesDescSeq_I_
-#define _TAO_CDR_OP_IR_UsesDescSeq_I_
-
-CORBA::Boolean TAO_IFR_Client_Export operator<< (
-    TAO_OutputCDR &,
-    const IR::UsesDescSeq &
-  );
-
-CORBA::Boolean TAO_IFR_Client_Export operator>> (
-    TAO_InputCDR &,
-    IR::UsesDescSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_UsesDescSeq_I_ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
 
 ACE_INLINE
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const IR::EventDescription &_tao_aggregate
+    const CORBA::ComponentIR::EventPortDescription &_tao_aggregate
   )
 {
   if (
@@ -7146,7 +3040,7 @@ CORBA::Boolean operator<< (
     (strm << _tao_aggregate.id.in ()) &&
     (strm << _tao_aggregate.defined_in.in ()) &&
     (strm << _tao_aggregate.version.in ()) &&
-    _tao_aggregate.value.in ()->marshal (strm)
+    (strm << _tao_aggregate.event.in ())
    )
     {
       return 1;
@@ -7160,7 +3054,7 @@ CORBA::Boolean operator<< (
 ACE_INLINE
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    IR::EventDescription &_tao_aggregate
+    CORBA::ComponentIR::EventPortDescription &_tao_aggregate
   )
 {
   if (
@@ -7168,7 +3062,7 @@ CORBA::Boolean operator>> (
     (strm >> _tao_aggregate.id.out ()) &&
     (strm >> _tao_aggregate.defined_in.out ()) &&
     (strm >> _tao_aggregate.version.out ()) &&
-    (strm >> _tao_aggregate.value.out ())
+    (strm >> _tao_aggregate.event.out ())
    )
     {
       return 1;
@@ -7180,12 +3074,105 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ComponentIR::EmitsDef_ptr
+  );
+
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    CORBA::ComponentIR::EmitsDef_ptr &
+  );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ComponentIR::PublishesDef_ptr
+  );
+
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    CORBA::ComponentIR::PublishesDef_ptr &
+  );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ComponentIR::ConsumesDef_ptr
+  );
+
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    CORBA::ComponentIR::ConsumesDef_ptr &
+  );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+
+#if !defined _TAO_CDR_OP_CORBA_ComponentIR_ProvidesDescriptionSeq_I_
+#define _TAO_CDR_OP_CORBA_ComponentIR_ProvidesDescriptionSeq_I_
+
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ComponentIR::ProvidesDescriptionSeq &
+  );
+
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
+    TAO_InputCDR &,
+    CORBA::ComponentIR::ProvidesDescriptionSeq &
+  );
+
+#endif /* _TAO_CDR_OP_CORBA_ComponentIR_ProvidesDescriptionSeq_I_ */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+
+#if !defined _TAO_CDR_OP_CORBA_ComponentIR_UsesDescriptionSeq_I_
+#define _TAO_CDR_OP_CORBA_ComponentIR_UsesDescriptionSeq_I_
+
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ComponentIR::UsesDescriptionSeq &
+  );
+
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
+    TAO_InputCDR &,
+    CORBA::ComponentIR::UsesDescriptionSeq &
+  );
+
+#endif /* _TAO_CDR_OP_CORBA_ComponentIR_UsesDescriptionSeq_I_ */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+
+#if !defined _TAO_CDR_OP_CORBA_ComponentIR_EventPortDescriptionSeq_I_
+#define _TAO_CDR_OP_CORBA_ComponentIR_EventPortDescriptionSeq_I_
+
+CORBA::Boolean TAO_IFR_Client_Export operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ComponentIR::EventPortDescriptionSeq &
+  );
+
+CORBA::Boolean TAO_IFR_Client_Export operator>> (
+    TAO_InputCDR &,
+    CORBA::ComponentIR::EventPortDescriptionSeq &
+  );
+
+#endif /* _TAO_CDR_OP_CORBA_ComponentIR_EventPortDescriptionSeq_I_ */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
 
 ACE_INLINE
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const IR::ComponentDescription &_tao_aggregate
+    const CORBA::ComponentIR::ComponentDescription &_tao_aggregate
   )
 {
   if (
@@ -7194,14 +3181,14 @@ CORBA::Boolean operator<< (
     (strm << _tao_aggregate.defined_in.in ()) &&
     (strm << _tao_aggregate.version.in ()) &&
     (strm << _tao_aggregate.base_component.in ()) &&
-    (strm << _tao_aggregate.supports_interfaces) &&
-    (strm << _tao_aggregate.provides_interfaces) &&
-    (strm << _tao_aggregate.uses_interfaces) &&
-    (strm << _tao_aggregate.attributes) &&
+    (strm << _tao_aggregate.supported_interfaces) &&
+    (strm << _tao_aggregate.provided_interfaces) &&
+    (strm << _tao_aggregate.used_interfaces) &&
     (strm << _tao_aggregate.emits_events) &&
     (strm << _tao_aggregate.publishes_events) &&
     (strm << _tao_aggregate.consumes_events) &&
-    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_basic))
+    (strm << _tao_aggregate.attributes) &&
+    (strm << _tao_aggregate.type.in ())
    )
     {
       return 1;
@@ -7215,7 +3202,7 @@ CORBA::Boolean operator<< (
 ACE_INLINE
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    IR::ComponentDescription &_tao_aggregate
+    CORBA::ComponentIR::ComponentDescription &_tao_aggregate
   )
 {
   if (
@@ -7224,14 +3211,14 @@ CORBA::Boolean operator>> (
     (strm >> _tao_aggregate.defined_in.out ()) &&
     (strm >> _tao_aggregate.version.out ()) &&
     (strm >> _tao_aggregate.base_component.out ()) &&
-    (strm >> _tao_aggregate.supports_interfaces) &&
-    (strm >> _tao_aggregate.provides_interfaces) &&
-    (strm >> _tao_aggregate.uses_interfaces) &&
-    (strm >> _tao_aggregate.attributes) &&
+    (strm >> _tao_aggregate.supported_interfaces) &&
+    (strm >> _tao_aggregate.provided_interfaces) &&
+    (strm >> _tao_aggregate.used_interfaces) &&
     (strm >> _tao_aggregate.emits_events) &&
     (strm >> _tao_aggregate.publishes_events) &&
     (strm >> _tao_aggregate.consumes_events) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_basic))
+    (strm >> _tao_aggregate.attributes) &&
+    (strm >> _tao_aggregate.type.out ())
    )
     {
       return 1;
@@ -7243,59 +3230,38 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
-ACE_INLINE
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const IR::PrimaryKeyDescription &_tao_aggregate
-  )
-{
-  if (
-    (strm << _tao_aggregate.name.in ()) &&
-    (strm << _tao_aggregate.id.in ()) &&
-    (strm << _tao_aggregate.defined_in.in ()) &&
-    (strm << _tao_aggregate.version.in ()) &&
-    _tao_aggregate.primary_key.in ()->marshal (strm)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
-}
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ComponentIR::FactoryDef_ptr
+  );
 
-ACE_INLINE
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    IR::PrimaryKeyDescription &_tao_aggregate
-  )
-{
-  if (
-    (strm >> _tao_aggregate.name.out ()) &&
-    (strm >> _tao_aggregate.id.out ()) &&
-    (strm >> _tao_aggregate.defined_in.out ()) &&
-    (strm >> _tao_aggregate.version.out ()) &&
-    (strm >> _tao_aggregate.primary_key.out ())
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
-}
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    CORBA::ComponentIR::FactoryDef_ptr &
+  );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ComponentIR::FinderDef_ptr
+  );
+
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    CORBA::ComponentIR::FinderDef_ptr &
+  );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
 
 ACE_INLINE
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const IR::HomeDescription &_tao_aggregate
+    const CORBA::ComponentIR::HomeDescription &_tao_aggregate
   )
 {
   if (
@@ -7305,12 +3271,12 @@ CORBA::Boolean operator<< (
     (strm << _tao_aggregate.version.in ()) &&
     (strm << _tao_aggregate.base_home.in ()) &&
     (strm << _tao_aggregate.managed_component.in ()) &&
-    _tao_aggregate.primary_key_def.in ()->marshal (strm) &&
+    (strm << _tao_aggregate.primary_key) &&
     (strm << _tao_aggregate.factories) &&
     (strm << _tao_aggregate.finders) &&
     (strm << _tao_aggregate.operations) &&
     (strm << _tao_aggregate.attributes) &&
-    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_basic))
+    (strm << _tao_aggregate.type.in ())
    )
     {
       return 1;
@@ -7324,7 +3290,7 @@ CORBA::Boolean operator<< (
 ACE_INLINE
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    IR::HomeDescription &_tao_aggregate
+    CORBA::ComponentIR::HomeDescription &_tao_aggregate
   )
 {
   if (
@@ -7334,12 +3300,12 @@ CORBA::Boolean operator>> (
     (strm >> _tao_aggregate.version.out ()) &&
     (strm >> _tao_aggregate.base_home.out ()) &&
     (strm >> _tao_aggregate.managed_component.out ()) &&
-    (strm >> _tao_aggregate.primary_key_def.out ()) &&
+    (strm >> _tao_aggregate.primary_key) &&
     (strm >> _tao_aggregate.factories) &&
     (strm >> _tao_aggregate.finders) &&
     (strm >> _tao_aggregate.operations) &&
     (strm >> _tao_aggregate.attributes) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_basic))
+    (strm >> _tao_aggregate.type.out ())
    )
     {
       return 1;

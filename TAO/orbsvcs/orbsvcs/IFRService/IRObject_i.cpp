@@ -282,8 +282,8 @@ TAO_IRObject_i::create_objref (CORBA::DefinitionKind def_kind,
     case CORBA::dk_Finder:
       repo_id += "IR/FinderDef:";
       break;
-    case CORBA::dk_PrimaryKey:
-      repo_id += "IR/PrimaryKeyDef:";
+    case CORBA::dk_Event:
+      repo_id += "IR/EventDef:";
       break;
     case CORBA::dk_Emits:
       repo_id += "IR/EmitsDef:";
