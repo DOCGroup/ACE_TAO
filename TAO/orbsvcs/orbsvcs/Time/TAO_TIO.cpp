@@ -129,11 +129,11 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_TRY_ENV, "Exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CosTime::OTNoOverlap);
-
+  
   return CosTime::OTNoOverlap;
 }
 
@@ -238,7 +238,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_TRY_ENV,"Exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Exception:");
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CosTime::OTNoOverlap);
