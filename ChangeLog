@@ -1,3 +1,13 @@
+Tue Nov  5 05:54:16 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/Multicast_Test.cpp: Fixed typo in pragma instantiation, 
+	  and replaced an instance of char* with ACE_TCHAR* to fix unicode
+	  builds.  Added #ifdef for ACE_HAS_THREADS, since it uses 
+	  ACE_Task as an active object.
+
+	* tests/run_test;lst:  Turned off Multicast_Test and 
+	  Token_Stategy_Test for single threaded builds.
+
 Mon Nov  4 18:01:25 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/Makefile.bor:  Added new Multicast_Test.  Thanks to
