@@ -970,10 +970,10 @@ ImplementationRepository::ServerInformationIterator::_is_a (
           "IDL:ImplementationRepository/ServerInformationIterator:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
@@ -1672,10 +1672,10 @@ ImplementationRepository::Administration::_is_a (
           "IDL:ImplementationRepository/Administration:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }

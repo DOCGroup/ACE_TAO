@@ -260,10 +260,10 @@ ImplementationRepository::ServerObject::_is_a (
           "IDL:ImplementationRepository/ServerObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
