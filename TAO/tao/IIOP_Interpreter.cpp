@@ -607,11 +607,25 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
 {
   CORBA::ULong members;
   CORBA::ULong temp;
-  size_t discrim_size;
+  size_t discrim_and_base_size;
+  size_t discrim_and_base_size_with_pad;
   size_t value_alignment;
   size_t value_size;
+  // define a dummy structure to compute alignment of pointer type
+  struct align_ptr
+  {
+    void *one;
+    char dummy [TAO_MAXIMUM_NATIVE_TYPE_SIZE + 1 - sizeof (void*)];
+    void *two;
+  };
+  align_ptr ap;
+  
+  // the first member of the union internal representation is the VPTR
+  // since every union inherits from TAO_Base_Union
+  overall_alignment = (char *) &ap.two - (char *) &ap.one
+    - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
 
-  overall_alignment = value_alignment = 1;
+  value_alignment = 1;
   value_size = discrim_size_with_pad = 0;
 
   // Skip initial optional members (type ID and name).
@@ -629,13 +643,18 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
 
   CORBA::TypeCode discrim_tc (CORBA::tk_void);
 
-  discrim_size = calc_nested_size_and_alignment (&discrim_tc,
-                                                 stream,
-                                                 overall_alignment,
-                                                 env);
+  discrim_and_base_size = sizeof (TAO_Base_Union) +
+    calc_nested_size_and_alignment (&discrim_tc, 
+                                    stream,
+                                    value_alignment,
+                                    env);
   if (env.exception () != 0)
     return 0;
 
+  if (value_alignment > overall_alignment)
+    overall_alignment = value_alignment;
+
+  
   // skip "default used" indicator, and save "member count"
 
   if (!stream->read_ulong (temp)                 // default used
@@ -649,6 +668,7 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   // their types, which can affect either alignment or padding
   // requirement for the union part of the construct.
 
+  value_alignment = 1;
   for ( ; members != 0; members--) {
     size_t member_size, member_alignment;
 
@@ -730,15 +750,6 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
 
     if (var_sized_member)
       {
-        // define a dummy structure to compute alignment of pointer type
-        struct align_ptr
-        {
-          void *one;
-          char dummy [TAO_MAXIMUM_NATIVE_TYPE_SIZE + 1 - sizeof (void*)];
-          void *two;
-        };
-        align_ptr ap;
-
         member_size = sizeof (void*);
         member_alignment = (char *) &ap.two - (char *) &ap.one
           - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
@@ -767,9 +778,10 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
 
   // Round up the discriminator's size to include padding it needs in
   // order to be followed by the value.
-  discrim_size_with_pad = (size_t) align_binary (discrim_size,
-                                                 value_alignment);
-
+  discrim_and_base_size_with_pad = 
+    (size_t) align_binary (discrim_and_base_size, value_alignment);
+  discrim_size_with_pad = discrim_and_base_size_with_pad - 
+    sizeof (TAO_Base_Union);
   // Now calculate the overall size of the structure, which is the
   // discriminator, inter-element padding, value, and tail padding.
   // We know all of those except tail padding, which is a function of
@@ -779,8 +791,7 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   if (value_alignment > overall_alignment)
     overall_alignment = value_alignment;
 
-  return (size_t) align_binary (discrim_size_with_pad + value_size
-                                + sizeof (TAO_Base_Union),
+  return (size_t) align_binary (discrim_and_base_size_with_pad + value_size,
                                 overall_alignment);
 }
 

@@ -87,7 +87,6 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
       << node->name () << " *&_tao_elem)" << be_nl
       << "{" << be_idt_nl
-      << "_tao_elem = 0;" << be_nl
       << "TAO_TRY" << be_nl
       << "{" << be_idt_nl
       << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
@@ -107,9 +106,13 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << "((CORBA::Any *)&_tao_any)->replace ("
       << node->tc_name () << ", _tao_elem, 1, TAO_TRY_ENV);" << be_nl
       << "TAO_CHECK_ENV;" << be_nl
-      << "  return 1;" << be_uidt_nl
+      << "return 1;" << be_uidt_nl
       << "}" << be_nl
-      << "TAO_CHECK_ENV;" << be_uidt_nl
+      << "else" << be_nl
+      << "{" << be_idt_nl
+      << "delete _tao_elem;" << be_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl  // else any does not own the data
       << "{" << be_idt_nl
@@ -123,8 +126,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << "delete _tao_elem;" << be_nl
       << "return 0; " << be_uidt_nl
       << "}" << be_nl
-      << "TAO_ENDTRY;" << be_nl
-      << "return 0;" << be_uidt_nl
+      << "TAO_ENDTRY;" << be_uidt_nl
       << "}\n\n";
 
 
