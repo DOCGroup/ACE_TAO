@@ -1,3 +1,8 @@
+Sat May 22 22:16:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	  The busy_hwm should be set in the attributes now.
+
 Sat May 22 18:43:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs.dsw:
