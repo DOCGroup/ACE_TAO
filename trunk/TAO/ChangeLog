@@ -1,3 +1,7 @@
+Sun May 11 09:12:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* utils/*/Makefile: Updated dependencies.
+
 Sun May 11 08:50:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* rules.tao.GNU: Added the list of new libraries to
