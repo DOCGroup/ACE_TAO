@@ -10,6 +10,18 @@ Thu Mar 20 22:38:27 1997  David L. Levine  <levine@cs.wustl.edu>
 	              Token_Handler.cpp: added template specializations.
 	  There are still many missing from libnetsvcs.
 
+	* tests/Conn_Test.cpp,
+	        Future_Test.cpp
+	        IOStream_Test.cpp
+	        Map_Manager_Test.cpp
+	        Message_Block_Test.cpp
+	        Message_Queue_Test.cpp
+	        Reader_Writer_Test.cpp
+	        SV_Shared_Memory_Test.cpp
+	        Thread_Pool_Test.cpp}: added template specializations.
+	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de>
+	  for providing these.
+
 	* ace/Log_Msg.cpp: removed commented-out template specialization.
 
 	* include/makeinclude/platform_{chorus,hpux,hpux_gcc}.GNU:
