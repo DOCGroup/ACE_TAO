@@ -1104,6 +1104,14 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
   continue_encoding = stream->write_string (tc->id (ACE_TRY_ENV));
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
   
+#if defined (__BORLANDC__)
+  // Borland C++ Builder 4.0 doesn't seem to align caught exceptions
+  // along the correct boundaries!  Therefore we will assume that the
+  // data pointer passed in is already aligned correctly and we will
+  // calculate member alignments relative to this pointer.
+  char *base_ptr = (char *) data;
+#endif /* __BORLANDC__ */
+
   data = (char *) data + sizeof (CORBA::Exception);
   // @@ (ASG) The reason this is done is because we want to skip the size
   // of the the base class and its private data members (type_ and
@@ -1127,7 +1135,14 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
       alignment = param->alignment (ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
+#if defined (__BORLANDC__)
+      ptrdiff_t offset = (char *) data - base_ptr;
+      offset = (ptrdiff_t) ptr_align_binary (offset, alignment);
+      data = base_ptr + offset;
+#else
       data = ptr_align_binary (data, alignment);
+#endif /* __BORLANDC__ */
+
       switch (param->kind_)
         {
         case CORBA::tk_null:

@@ -248,6 +248,15 @@
 #undef major
 #endif /* major*/
 
+#if !defined (TAO_EXPORT_NESTED_CLASSES) \
+    && defined (ACE_EXPORT_NESTED_CLASSES)
+#define TAO_EXPORT_NESTED_CLASSES
+#endif /* !defined TAO_EXPORT_NESTED_CLASSES */
+
+#if !defined (TAO_EXPORT_NESTED_MACRO)
+#define TAO_EXPORT_NESTED_MACRO
+#endif /* !defined (TAO_EXPORT_NESTED_MACRO) */
+
 // Assume DOS/Windows if "configure" didn't get run.
 
 #if defined (_WIN32)

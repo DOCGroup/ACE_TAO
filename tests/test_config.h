@@ -6,9 +6,15 @@
 // = FILENAME
 //    test_config.h
 //
+// = DESCRIPTION
+//
+//   This file factors out common macros and other utilities used by the
+//   ACE automated regression tests.
+//
 // = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu>, Tim Harrison
-//    <harrison@cs.wustl.edu>, and David Levine <levine@cs.wustl.edu>
+//    Prashant Jain <pjain@cs.wustl.edu>,
+//    Tim Harrison <harrison@cs.wustl.edu>,
+//    and David Levine <levine@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -262,10 +268,10 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
                    ACE_LOG_FILE_EXT_NAME_A);
 
 #if defined (VXWORKS)
-  // This is the only way I could figure out to avoid a console warning
-  // about opening an existing file (w/o O_CREAT), or attempting to unlink
-  // a non-existant one.
-  int fd = ACE_OS::open (temp, O_WRONLY | O_CREAT, 0x644);
+  // This is the only way I could figure out to avoid a console
+  // warning about opening an existing file (w/o O_CREAT), or
+  // attempting to unlink a non-existant one.
+  ACE_HANDLE fd = ACE_OS::open (temp, O_WRONLY | O_CREAT, 0x644);
   if (fd != ERROR)
     {
       ACE_OS::close (fd);
@@ -273,7 +279,7 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
     }
 #else /* ! VXWORKS */
   // This doesn't seem to work on VxWorks if the directory doesn't
-  // exist:  it creates a plain file instead of a directory.  If the
+  // exist: it creates a plain file instead of a directory.  If the
   // directory does exist, it causes a wierd console error message
   // about "cat: input error on standard input: Is a directory".  So,
   // VxWorks users must create the directory manually.
@@ -289,9 +295,7 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
 
   this->output_file_->open (temp, flags);
   if (this->output_file_->bad ())
-    {
-      return -1;
-    }
+    return -1;
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
   ASYS_TCHAR *fmode = 0;
   if (append)
