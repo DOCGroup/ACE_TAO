@@ -6,7 +6,7 @@
 #include "ace/Naming_Context.h"
 #include "ace/Remote_Name_Space.h"
 #include "ace/Local_Name_Space.h"
-//#include "ace/Registry_Name_Space.h"
+#include "ace/Registry_Name_Space.h"
 
 // Make life easier later on...
 
@@ -64,29 +64,31 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
   // Perform factory operation to select appropriate type of
   // Name_Space subclass.
 
-#if 0
-//#if defined (ACE_WIN32)
-  // Use ACE_Registry
-  ACE_NEW_RETURN (this->name_space_, ACE_Registry_Name_Space (this->name_options_), -1);
-#else
-  if (scope_in == ACE_Naming_Context::NET_LOCAL && this->local () == 0)
-    {
-      // Use NET_LOCAL name space, set up connection with remote server.
-      ACE_NEW_RETURN (this->name_space_, 
-		      ACE_Remote_Name_Space (this->netnameserver_host_,
-					     this->netnameserver_port_),
-		      -1);
-    }
-  else // Use NODE_LOCAL or PROC_LOCAL name space.
-    {
-      if (lite)
-	ACE_NEW_RETURN (this->name_space_, LITE_LOCAL_NAME_SPACE (scope_in, this->name_options_), -1);
-      else
-	ACE_NEW_RETURN (this->name_space_, LOCAL_NAME_SPACE (scope_in, this->name_options_), -1);
-    }
-#endif /* ACE_WIN32 */
-
-  if (ACE_LOG_MSG->op_status ())
+#if (defined (ACE_WIN32) && (defined (UNICODE)))
+// This only works on Win32 platforms when UNICODE is turned on
+  
+  if (this->name_options_->use_registry ())
+    // Use ACE_Registry
+    ACE_NEW_RETURN (this->name_space_, ACE_Registry_Name_Space (this->name_options_), -1);
+#endif /* ACE_WIN32 && UNICODE */
+  if (!this->name_options_->use_registry ())
+    if (scope_in == ACE_Naming_Context::NET_LOCAL && this->local () == 0)
+      {
+	// Use NET_LOCAL name space, set up connection with remote server.
+	ACE_NEW_RETURN (this->name_space_, 
+			ACE_Remote_Name_Space (this->netnameserver_host_,
+					       this->netnameserver_port_),
+			-1);
+      }
+    else // Use NODE_LOCAL or PROC_LOCAL name space.
+      {
+	if (lite)
+	  ACE_NEW_RETURN (this->name_space_, LITE_LOCAL_NAME_SPACE (scope_in, this->name_options_), -1);
+	else
+	  ACE_NEW_RETURN (this->name_space_, LOCAL_NAME_SPACE (scope_in, this->name_options_), -1);
+      }
+  
+  if (ACE_LOG_MSG->op_status () != 0 || this->name_space_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "NAME_SPACE::NAME_SPACE\n"), -1);          
   return 0;
 }
@@ -345,7 +347,8 @@ ACE_Name_Options::ACE_Name_Options (void)
     namespace_dir_  (ACE_OS::strdup (ACE_DEFAULT_NAMESPACE_DIR)),
     process_name_ (0),
     database_ (0),
-    base_address_ (ACE_DEFAULT_BASE_ADDR)
+    base_address_ (ACE_DEFAULT_BASE_ADDR),
+    use_registry_ (0)
 {
   ACE_TRACE ("ACE_Name_Options::ACE_Name_Options");
 }
@@ -469,6 +472,20 @@ ACE_Name_Options::debug (void)
 }
 
 int 
+ACE_Name_Options::use_registry (void)
+{
+  ACE_TRACE ("ACE_Name_Options::use_registry");
+  return this->use_registry_;
+}
+
+void
+ACE_Name_Options::use_registry (int x)
+{
+  ACE_TRACE ("ACE_Name_Options::use_registry");
+  this->use_registry_ = x;
+}
+
+int 
 ACE_Name_Options::verbose (void)
 {
   ACE_TRACE ("ACE_Name_Options::verbose");
@@ -490,7 +507,7 @@ ACE_Name_Options::parse_args (int argc, char *argv[])
   // clean it up in the destructor).
   this->database (this->process_name ());
 
-  ACE_Get_Opt get_opt (argc, argv, "b:c:dh:l:P:p:s:T:v");
+  ACE_Get_Opt get_opt (argc, argv, "b:c:dh:l:P:p:s:T:vr");
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -507,6 +524,9 @@ ACE_Name_Options::parse_args (int argc, char *argv[])
 	break;
       case 'd':
 	this->debugging_ = 1;
+	break;
+      case 'r':
+	this->use_registry_ = 1;
 	break;
       case 'h':
 	this->nameserver_host (get_opt.optarg);
@@ -545,6 +565,7 @@ ACE_Name_Options::parse_args (int argc, char *argv[])
 			 "\t[-s database name]\n"
 			 "\t[-b base address]\n"
 			 "\t[-v] (verbose) \n",
+			 "\t[-r] (use Win32 Registry) \n",
 			 argv[0]);
 	/* NOTREACHED */
 	break;
