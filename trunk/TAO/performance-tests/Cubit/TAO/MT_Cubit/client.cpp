@@ -123,7 +123,7 @@ main (int argc, char *argv [])
               "Creating %d clients with low priority\n", 
               ts.thread_count_ - 1));
 
-  for (int i = 0; i < ts.thread_count_ - 1; i++)
+  for (u_int i = 0; i < ts.thread_count_ - 1; i++)
     {
       // the first thread starts at min + 1, since the minimum
       // priority thread is the utilization thread
