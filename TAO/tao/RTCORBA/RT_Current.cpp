@@ -3,11 +3,11 @@
 //
 
 #include "RT_Current.h"
+#include "Priority_Mapping.h"
 
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Protocols_Hooks.h"
-#include "Priority_Mapping.h"
 
 #include "ace/Thread.h"
 
