@@ -353,6 +353,18 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Service_Config.i \
+  $(ACE_ROOT)/ace/Reactor.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
+  $(ACE_ROOT)/ace/Timer_Queue.h \
+  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+  $(ACE_ROOT)/ace/Test_and_Set.h \
+  $(ACE_ROOT)/ace/Test_and_Set.i \
+  $(ACE_ROOT)/ace/Test_and_Set.cpp \
+  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor.i \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   RMCast_Reassembly.i RMCast_Partial_Message.h \
   $(ACE_ROOT)/ace/Task.h \
@@ -1149,6 +1161,18 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Service_Config.i \
+  $(ACE_ROOT)/ace/Reactor.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
+  $(ACE_ROOT)/ace/Timer_Queue.h \
+  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+  $(ACE_ROOT)/ace/Test_and_Set.h \
+  $(ACE_ROOT)/ace/Test_and_Set.i \
+  $(ACE_ROOT)/ace/Test_and_Set.cpp \
+  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor.i \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   RMCast_Reassembly.i RMCast_Reordering.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
@@ -1543,12 +1567,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Service_Config.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  RMCast_IO_UDP.i RMCast_UDP_Proxy.h RMCast_Proxy.h RMCast_Proxy.i \
-  RMCast_UDP_Proxy.i RMCast_Module_Factory.h RMCast_Module_Factory.i \
+  $(ACE_ROOT)/ace/Reactor.h \
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/Handle_Set.i \
-  $(ACE_ROOT)/ace/Reactor.h \
   $(ACE_ROOT)/ace/Timer_Queue.h \
   $(ACE_ROOT)/ace/Timer_Queue_T.h \
   $(ACE_ROOT)/ace/Test_and_Set.h \
@@ -1558,6 +1579,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  RMCast_IO_UDP.i RMCast_UDP_Proxy.h RMCast_Proxy.h RMCast_Proxy.i \
+  RMCast_UDP_Proxy.i RMCast_Module_Factory.h RMCast_Module_Factory.i \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -1690,6 +1714,18 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Service_Config.i \
+  $(ACE_ROOT)/ace/Reactor.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
+  $(ACE_ROOT)/ace/Timer_Queue.h \
+  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+  $(ACE_ROOT)/ace/Test_and_Set.h \
+  $(ACE_ROOT)/ace/Test_and_Set.i \
+  $(ACE_ROOT)/ace/Test_and_Set.cpp \
+  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor.i \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   RMCast_IO_UDP.i RMCast_UDP_Proxy.h RMCast_Proxy.h RMCast_Proxy.i \
   RMCast_UDP_Proxy.i RMCast_Module_Factory.h RMCast_Module_Factory.i
@@ -1820,6 +1856,18 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Service_Config.i \
+  $(ACE_ROOT)/ace/Reactor.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
+  $(ACE_ROOT)/ace/Timer_Queue.h \
+  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+  $(ACE_ROOT)/ace/Test_and_Set.h \
+  $(ACE_ROOT)/ace/Test_and_Set.i \
+  $(ACE_ROOT)/ace/Test_and_Set.cpp \
+  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor.i \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   RMCast_IO_UDP.i RMCast_Module_Factory.h RMCast_Module_Factory.i \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1956,10 +2004,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Service_Config.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  RMCast_IO_UDP.i RMCast_UDP_Proxy.h RMCast_Proxy.h RMCast_Proxy.i \
-  RMCast_UDP_Proxy.i RMCast_UDP_Reliable_Receiver.i \
-  RMCast_UDP_Event_Handler.h RMCast_UDP_Event_Handler.i \
   $(ACE_ROOT)/ace/Reactor.h \
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/Handle_Set.i \
@@ -1971,7 +2015,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  RMCast_IO_UDP.i RMCast_UDP_Proxy.h RMCast_Proxy.h RMCast_Proxy.i \
+  RMCast_UDP_Proxy.i RMCast_UDP_Reliable_Receiver.i \
+  RMCast_UDP_Event_Handler.h RMCast_UDP_Event_Handler.i
 
 .obj/RMCast_UDP_Reliable_Sender.o .obj/RMCast_UDP_Reliable_Sender.o .obj/RMCast_UDP_Reliable_Sender.o .obj/RMCast_UDP_Reliable_Sender.o: RMCast_UDP_Reliable_Sender.cpp \
   RMCast_UDP_Reliable_Sender.h \
@@ -2100,6 +2148,18 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/Service_Config.i \
+  $(ACE_ROOT)/ace/Reactor.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
+  $(ACE_ROOT)/ace/Timer_Queue.h \
+  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+  $(ACE_ROOT)/ace/Test_and_Set.h \
+  $(ACE_ROOT)/ace/Test_and_Set.i \
+  $(ACE_ROOT)/ace/Test_and_Set.cpp \
+  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor.i \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   RMCast_IO_UDP.i RMCast_UDP_Proxy.h RMCast_Proxy.h RMCast_Proxy.i \
   RMCast_UDP_Proxy.i RMCast_Sequencer.h RMCast_Sequencer.i \
@@ -2121,18 +2181,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   RMCast_Membership.i RMCast_Fragment.h RMCast_Fragment.i RMCast_Fork.h \
   RMCast_Fork.i RMCast_UDP_Reliable_Sender.i RMCast_UDP_Event_Handler.h \
   RMCast_UDP_Event_Handler.i RMCast_Resend_Handler.h \
-  RMCast_Resend_Handler.i \
-  $(ACE_ROOT)/ace/Reactor.h \
-  $(ACE_ROOT)/ace/Handle_Set.h \
-  $(ACE_ROOT)/ace/Handle_Set.i \
-  $(ACE_ROOT)/ace/Timer_Queue.h \
-  $(ACE_ROOT)/ace/Timer_Queue_T.h \
-  $(ACE_ROOT)/ace/Test_and_Set.h \
-  $(ACE_ROOT)/ace/Test_and_Set.i \
-  $(ACE_ROOT)/ace/Test_and_Set.cpp \
-  $(ACE_ROOT)/ace/Timer_Queue_T.i \
-  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
-  $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h
+  RMCast_Resend_Handler.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
