@@ -1,0 +1,49 @@
+#! /bin/sh
+# $Id$
+#
+# Spawns MT_Cubit server and client executables on a single host.
+
+usage="usage: $0 [-n <iterations>] <number of low priority threads>"
+
+user=`whoami`
+ior_file=/var/tmp/MT_Cubit-ior.${user}
+iterations=100
+
+
+########
+######## Interpret command arguments.
+########
+while getopts ?n: arg; do
+  case $arg in
+      '?' ) echo $usage; exit 0 ;;
+      n   ) iterations=$OPTARG ;;
+  esac
+done
+shift `expr $OPTIND - 1`
+
+if [ $# -ne 1 ]; then
+  echo $usage
+  exit 1
+fi
+threads=`expr $1 + 1`
+
+
+########
+######## Enable signal handler.
+########
+trap 'kill -1 $server_pid; /bin/rm -f $ior_file' 0 1 2 15
+
+
+########
+######## Start server and save its pid.
+########
+./server -s -f $ior_file -t $threads > server.log 2>&1 &
+server_pid=$!
+
+sleep 4
+
+
+########
+######## Start client.
+########
+./client -s -f $ior_file -t $threads -n $iterations > client.log 2>&1
