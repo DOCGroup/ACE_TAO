@@ -1,3 +1,14 @@
+Tue Nov  5 14:26:32 1996  David Levine  <levine@cs.wustl.edu>
+	* include/makeinclude/wrapper_macros.GNU:  Changed LINK.{c,cc}
+	  commands to use LD instead of CXX.  Changed all platform
+	  macros files (except for g++ on VxWorks) to correspond.
+	* tests/run_tests.sh:  changed -e test to -f for portability and
+	  reordered tests.  Thanks to Michael Michael Rueger
+	  <m_rueger@SYSCOMP.DE> for originally creating run_tests.sh, and
+	  for maintaining it, and to Alan Stewart <axs2@osi.com> for
+	  suggesting fixes/enhancements.
+	* tests/run_tests.ksh:  added, at suggestion of Alan Stewart
+
 Fri Nov  1 03:53:39 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* STL: Added STL files to $WRAPPER_ROOT/STL.  This code is a
