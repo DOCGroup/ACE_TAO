@@ -372,6 +372,12 @@ ACE_Log_Msg::close (void)
   ACE_MT (ACE_Log_Msg_Manager::close ());
 }
 
+void
+ACE_Log_Msg::sync_hook (const ACE_TCHAR *prg_name)
+{
+  ACE_LOG_MSG->sync (prg_name);
+}
+
 // Call after a fork to resynchronize the PID and PROGRAM_NAME
 // variables.
 void
@@ -497,10 +503,6 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     tracing_enabled_ (1), // On by default?
     delete_ostream_(0),
     thr_desc_ (0),
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-    seh_except_selector_ (ACE_SEH_Default_Exception_Selector),
-    seh_except_handler_ (ACE_SEH_Default_Exception_Handler),
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
     priority_mask_ (default_priority_mask_)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
@@ -511,7 +513,9 @@ ACE_Log_Msg::ACE_Log_Msg (void)
 
   if (this->instance_count_ == 1)
     ACE_Thread_Adapter::set_log_msg_hooks (ACE_Log_Msg_Attributes::init_hook,
-                                           ACE_Log_Msg_Attributes::inherit_hook);
+                                           ACE_Log_Msg_Attributes::inherit_hook,
+                                           ACE_Log_Msg::close,
+                                           ACE_Log_Msg::sync_hook);
 }
 
 ACE_Log_Msg::~ACE_Log_Msg (void)
@@ -1631,35 +1635,31 @@ ACE_Log_Msg::thr_desc (ACE_Thread_Descriptor *td)
     td->acquire_release ();
 }
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS) && !defined(ACE_HAS_LATEST_AND_GREATEST)
 ACE_SEH_EXCEPT_HANDLER
 ACE_Log_Msg::seh_except_selector (void)
 {
-  return this->seh_except_selector_;
+  return ACE_OS_Object_Manager::seh_except_selector ();
 }
 
 ACE_SEH_EXCEPT_HANDLER
 ACE_Log_Msg::seh_except_selector (ACE_SEH_EXCEPT_HANDLER n)
 {
-  ACE_SEH_EXCEPT_HANDLER retv = this->seh_except_selector_;
-  this->seh_except_selector_ = n;
-  return retv;
+  return ACE_OS_Object_Manager::seh_except_selector (n);
 }
 
 ACE_SEH_EXCEPT_HANDLER
 ACE_Log_Msg::seh_except_handler (void)
 {
-  return this->seh_except_handler_;
+  return ACE_OS_Object_Manager::seh_except_handler ();
 }
 
 ACE_SEH_EXCEPT_HANDLER
 ACE_Log_Msg::seh_except_handler (ACE_SEH_EXCEPT_HANDLER n)
 {
-  ACE_SEH_EXCEPT_HANDLER retv = this->seh_except_handler_;
-  this->seh_except_handler_ = n;
-  return retv;
+  return ACE_OS_Object_Manager::seh_except_handler (n);
 }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && !ACE_HAS_LATEST_AND_GREATEST */
 
 // Enable the tracing facility on a per-thread basis.
 

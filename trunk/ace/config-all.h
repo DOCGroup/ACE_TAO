@@ -504,6 +504,10 @@ typedef void (*ACE_INIT_LOG_MSG_HOOK) (void*&
                                        );
 typedef void (*ACE_INHERIT_LOG_MSG_HOOK) (ACE_OS_Thread_Descriptor*, void*&);
 
+typedef void (*ACE_CLOSE_LOG_MSG_HOOK) (void);
+
+typedef void (*ACE_SYNC_LOG_MSG_HOOK) (const ACE_TCHAR *prog_name);
+
 // ============================================================================
 // Fundamental types
 // ============================================================================
