@@ -99,10 +99,10 @@ namespace TAO
                          PortableServer::Current::NoContext));
 
       /// Set the POA implementation.
-      void poa (TAO_Root_POA *);
+      void poa (::TAO_Root_POA *);
 
       /// Get the POA implemantation
-      TAO_Root_POA *poa (void) const;
+      ::TAO_Root_POA *poa (void) const;
 
       /// ORB Core for this current.
       TAO_ORB_Core &orb_core (void) const;
@@ -144,12 +144,12 @@ namespace TAO
       void teardown (void);
 
       /// Setup the current.
-      void setup (TAO_Root_POA *impl,
+      void setup (::TAO_Root_POA *impl,
                   const TAO::ObjectKey &key);
 
     protected:
       /// The POA implementation invoking an upcall
-      TAO_Root_POA *poa_;
+      ::TAO_Root_POA *poa_;
 
       /**
        * The object ID of the current context.  This is the user id and
