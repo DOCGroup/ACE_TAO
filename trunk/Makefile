@@ -76,6 +76,7 @@ CONTROLLED_FILES = ACE-INSTALL.html \
                 ACE-lessons.html \
                 ASNMP \
                 BIBLIOGRAPHY \
+		CE-status \
                 COPYING \
                 ChangeLog \
 		ChangeLog-98a \
