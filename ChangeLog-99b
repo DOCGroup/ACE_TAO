@@ -1,5 +1,9 @@
 Thu Apr 29 15:30:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/INET_Addr.cpp (string_to_addr): Added support to check for
+ 	  both "port numbers" and "port names".  Thanks to Jerry D. De
+ 	  Master <jdemaste@ipdinc.com> for suggesting this.
+
 	* ace/Select_Reactor_T.h,
 	  ace/Reactor.h,
 	  ace/Select_Reactor_T.h,
@@ -398,11 +402,10 @@ Thu Apr 22 21:39:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 Thu Apr 22 20:50:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * ace/CDR_Stream.i:
-          Modified reset() to reset all the message blocks, instead of
-          just the first one as it had previously done. Thanks to
-          Jerry D. De Master <jdemaste@ipdinc.com> for pointing out
-          the problem and suggesting a fix.
+        * ace/CDR_Stream.i: Modified reset() to reset all the message
+ 	  blocks, instead of just the first one as it had previously done.
+  	  Thanks to Jerry D. De Master <jdemaste@ipdinc.com> for pointing
+ 	  out the problem and suggesting a fix.
 
 Thu Apr 22 19:40:52 1999  Steve Huston  <shuston@riverace.com>
 
