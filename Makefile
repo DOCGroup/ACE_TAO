@@ -117,7 +117,7 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                    if ( ! $$message_printed++ ) { print "$$message\n"; } \
                    print; } ' $$CHANGELOG; \
               cvs commit -m"$$ACE_VERSION" VERSION $$CHANGELOG; \
-              chmod 644 VERSION) &&
+              chmod 644 VERSION $$CHANGELOG) &&
 else
   TIMESTAMP =
 endif
