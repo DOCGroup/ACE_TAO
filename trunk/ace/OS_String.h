@@ -24,10 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Basic_Types.h"
-
-#if !defined (ACE_HAS_WINCE)
-#include <stddef.h>
-#endif  // ACE_HAS_WINCE
+#include "ace/os_include/os_stddef.h"
 
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)

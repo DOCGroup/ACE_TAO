@@ -216,6 +216,16 @@
 
 // #define ACE_LACKS_SYSTIME_H
 
+// @todo: (dhinton) Not sure about this, but the following was in ace/OS_String.h
+// #if !defined (ACE_PSOS_DIAB_MIPS)
+//  # include /**/ <stdlib.h>
+//  # include /**/ <string.h>
+// #endif /* !ACE_PSOS_DIAB_MIPS */
+
+#define ACE_LACKS_STDLIB_H
+#define ACE_LACKS_STRING_H
+
+
 #define ACE_PAGE_SIZE 4096
 
 #if !defined (ACE_NTRACE)

@@ -19,18 +19,10 @@
 # endif /* !ACE_LACKS_MEMORY_H */
 #endif /* ACE_HAS_GNU_CSTRING_H */
 
-#if !defined (ACE_PSOS_DIAB_MIPS)
-# include /**/ <stdlib.h>
-# include /**/ <string.h>
-#endif /* !ACE_PSOS_DIAB_MIPS */
-
-// We need strings.h on some platforms (qnx-neutrino, for example)
-// to get the declaration for strcasecmp
-#if defined (ACE_HAS_STRINGS)
-# include /**/ <strings.h>
-#endif /* ACE_HAS_STRINGS */
-
-#include /**/ <ctype.h>
+#include "ace/os_include/os_stdlib.h"
+#include "ace/os_include/os_string.h"
+#include "ace/os_include/os_strings.h"
+#include "ace/os_include/os_ctype.h"
 
 ACE_INLINE const void *
 ACE_OS_String::memchr (const void *s, int c, size_t len)
