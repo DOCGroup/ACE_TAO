@@ -245,7 +245,7 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
         if (ACE_Service_Config::svc_queue_ == 0)
           ACE_Service_Config::svc_queue_ = new ACE_SVC_QUEUE;
 
-        if (ACE_Service_Config::svc_queue_->enqueue_head 
+        if (ACE_Service_Config::svc_queue_->enqueue_head
             (ACE_CString (getopt.optarg)) == -1)
           ACE_ERROR ((LM_ERROR,
                       ASYS_TEXT ("%p\n"), "enqueue_head"));
@@ -681,6 +681,9 @@ template class ACE_Node<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>;
 template class ACE_Node<ACE_CString>;
+template class ACE_Unbounded_Queue<ACE_CString>;
+template class ACE_Unbounded_Queue_Iterator<ACE_CString>;
+template class ACE_Unbounded_Queue_Iterator<ACE_CString>;
 template class ACE_Unbounded_Set<ACE_CString>;
 template class ACE_Unbounded_Set_Iterator<ACE_CString>;
 template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
@@ -692,7 +695,10 @@ template class ACE_Auto_Basic_Ptr<ACE_Obstack>;
 #pragma instantiate ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>
 #pragma instantiate ACE_Node<ACE_CString>
-#pragma instantiate ACE_Unbounded_Set<ACE_ACE_CString>
+#pragma instantiate ACE_Unbounded_Queue<ACE_CString>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_CString>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_CString>
+#pragma instantiate ACE_Unbounded_Set<ACE_CString>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_CString>
 #pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>
 #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >
