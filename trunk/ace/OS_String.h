@@ -216,10 +216,10 @@ public:
   /// Finds the next token in a string (char version).
   static char *strtok (char *s, const char *tokens);
 
-#if defined (ACE_HAS_WCHAR)
+#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOK)
   /// Finds the next token in a string (wchar_t version).
   static wchar_t *strtok (wchar_t *s, const wchar_t *tokens);
-#endif /* ACE_HAS_WCHAR */
+#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOK */
 
   //@}
 
@@ -474,7 +474,7 @@ private:
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSNCMP)
   /// Emulated wcsncmp - Compares two arrays.
-  static int wcsncmp_emulation (const wchar_t string1, 
+  static int wcsncmp_emulation (const wchar_t *string1, 
                                 const wchar_t *string2, 
                                 size_t len);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSNCMP */
@@ -509,6 +509,12 @@ private:
   /// character in a string.
   static const wchar_t *wcsrchr_emulation (const wchar_t *string, wint_t c);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSRCHR */
+
+#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCSPN)
+  /// Emulated wcsspn.
+  static size_t wcscspn_emulation (const wchar_t *string, 
+                                   const wchar_t *reject);
+#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCSPN */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSSPN)
   /// Emulated wcsspn.

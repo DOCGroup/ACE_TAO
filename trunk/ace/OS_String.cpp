@@ -526,6 +526,27 @@ ACE_OS_String::itow_emulation (int value, wchar_t *string, int radix)
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_ITOW */
 
+#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCSPN)
+size_t
+ACE_OS_String::wcscspn_emulation (const wchar_t *s, const wchar_t *reject)
+{
+  const wchar_t *scan;
+  const wchar_t *rej_scan;
+  int count = 0;
+
+  for (scan = s; *scan; scan++)
+    {
+
+      for (rej_scan = reject; *rej_scan; rej_scan++)
+        if (*scan == *rej_scan)
+          return count;
+
+      count++;
+    }
+
+  return count;
+}
+#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCSPN */
 
 // The following wcs*_emulation methods were created based on BSD code:
 /*-
@@ -747,7 +768,26 @@ ACE_OS_String::wcschr_emulation (const wchar_t *string, wint_t c)
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCHR */
 
+#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSNCMP)
+int 
+ACE_OS_String::wcsncmp_emulation (const wchar_t *s1, 
+                                  const wchar_t *s2, 
+                                  size_t len)
+{
+  if (len == 0)
+    return 0;
 
+  do 
+    {
+      if (*s1 != *s2++)
+        return (*s1 - *--s2);
+      if (*s1++ == 0)
+        break;
+    } while (--len != 0);
+
+  return 0;
+}
+#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSNCMP */
 
 
 
