@@ -21,7 +21,11 @@
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 
+#include "AddrServer.h"
 #include "TestConfig.h"
 #include "Consumer.h"
 #include "Supplier.h"
@@ -67,6 +71,8 @@ protected:
   // TODO USE DEFAULTS FOR ANY OF THESE?
 
   virtual void initEC (ACE_ENV_SINGLE_ARG_DECL);
+
+  void make_federated (ACE_ENV_SINGLE_ARG_DECL);
 
   void connect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -117,6 +123,16 @@ private:
   //a write lock, all TimeoutConsumers must've finished, so the test
   //is finished.
 
+  //These members are for multicast Federated EC support
+  AddrServer as_impl;
+  RtecUDPAdmin::AddrServer_var address_server;
+  TAO_ECG_UDP_Out_Endpoint endpoint;
+  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender;
+  TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver;
+
+  const char *udp_mcast_address;
+
+  //Flag indicates whether or not the back-end has been configured
   int configured; //boolean
 };
 

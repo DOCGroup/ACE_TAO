@@ -9,6 +9,7 @@ project(test_driver_lib): orbsvcslib, rtevent, rtsched, rtkokyuevent, kokyu, ace
     TestConfig.cpp
     Test_Handler.cpp
     ECConfig.cpp
+    AddrServer.cpp
   }
 
   Template_Files {
