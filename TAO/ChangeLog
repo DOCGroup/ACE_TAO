@@ -14,7 +14,9 @@ Sun Jun 13 14:12:25 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Disabled generation of implementation class for abstract
           interfaces, since there is no skeleton class to inherit from.
-
+	  Thanks to Jiang Wei <jiangwei_1976@yahoo.com.cn> for reporting
+	  this bug.  Fixes bugid 1849.
+  
 Sun Jun 13 17:23:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
