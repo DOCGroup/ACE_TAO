@@ -9,6 +9,9 @@ Mon May 04 08:49:09 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_OS::thr_setprio () calls to set LWP priority, now that ACE
           handles that internally.
 
+        * include/makeinclude/platform_*linux.GNU: added "s" to
+          ARFLAGS, so that ranlib is no longer necessary.
+
 Sun May 03 22:37:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Parse_Node.cpp (open_handle): WinCE doesn't support
