@@ -1,3 +1,8 @@
+Thu Aug 12 13:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Use LIBMODIFIER with bmake, not LIB_MODIFIER
+
 Thu Aug 12 07:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_hpux_gcc.GNU:
