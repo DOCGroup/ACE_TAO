@@ -177,43 +177,36 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << "this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()"
           << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
-          << "}" << be_uidt_nl;
+          << "}" << be_uidt;
     }
 
   const char *lname = node->local_name ()->get_string ();
   long opname_len = ACE_OS::strlen (lname);
   ACE_CString opname;
   int nargs = node->argument_count ();
-  idl_bool add_retval = I_FALSE;
-  idl_bool add_comma = I_FALSE;
+
+  *os << be_nl<< be_nl
+      << "TAO::Arg_Traits<";
+
+  this->gen_arg_template_param_name (bt,
+                                     os);
+
+  *os << ">::ret_val _tao_retval;";
 
   // Check if we are an attribute node in disguise.
   if (this->ctx_->attribute ())
     {
       // Declare return type helper class.
 
-      *os << be_nl
-          << "TAO::Arg_Traits<";
-
-      this->gen_arg_template_param_name (bt,
-                                         os);
-
-      *os << ">::ret_val _tao_retval;";
-
       // If we are a attribute node, add the length of the operation
       // name.
       opname_len += 5;
 
       // Count the return value.
-      nargs++;
-
-      add_retval = I_TRUE;
-
       // Now check if we are a "get" or "set" operation.
       if (node->nmembers () == 1)
         {
           opname = "_set_";
-          add_comma = I_TRUE;
         }
       else
         {
@@ -228,21 +221,10 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   *os << be_nl << be_nl
       << "TAO::Argument *_tao_signature [] =" << be_idt_nl
-      << "{" << be_idt;
-
-  if (add_retval)
-    {
-      *os << be_nl
-          << "&_tao_retval";
-    }
-
-  if (add_comma)
-    {
-      *os << ",";
-    }
+      << "{" << be_idt_nl
+      << "&_tao_retval";
 
   AST_Argument *arg = 0;
-  int args_left = node->argument_count ();
 
   for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
        ! arg_list_iter.is_done ();
@@ -253,17 +235,11 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       if (arg->direction () == AST_Argument::dir_OUT)
         {
           nargs--;
-          args_left--;
           continue;
         }
 
-      *os << be_nl
+      *os << "," << be_nl
           << "&_tao_" << arg->local_name ();
-
-      if (--args_left)
-        {
-          *os << ",";
-        }
     }
 
   *os << be_uidt_nl
@@ -275,7 +251,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       << "TAO::Asynch_Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "this," << be_nl
       << "_tao_signature," << be_nl
-      << nargs << "," << be_nl
+      << nargs + 1 << "," << be_nl
       << "\"" << opname.fast_rep () << "\"," << be_nl
       << opname_len << "," << be_nl
       << "this->the" << intf->base_proxy_broker_name () << "_"
