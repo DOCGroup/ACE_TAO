@@ -6,8 +6,7 @@ Wed Mar  1 18:01:37 2000  Carlos O'Ryan  <coryan@uci.edu>
           ORB uses those methods to marshal and demarshal exceptions
           polymorphically.  Notice that the methods use compiled
           marshaling, so this continues the quest to decouple the ORB from
-          compiled marshaling.
-
+          interpreted marshaling.
 
         * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
           The CDR extraction operator for Exceptions should not extract
