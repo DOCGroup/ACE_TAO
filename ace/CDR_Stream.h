@@ -117,6 +117,7 @@ public:
   // the IDL basic type sizes.
 
   static void mb_align (ACE_Message_Block *mb);
+  // Align the message block to an 8-byte boundary.
 
   static int grow (ACE_Message_Block *mb, size_t minsize);
   // Increase the capacity of mb to contain at least <minsize> bytes.
