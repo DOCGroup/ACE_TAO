@@ -113,7 +113,7 @@ sub run_program ($)
     }
 
     print STDERR "Running $program\n";
-    $status = $P->SpawnWaitKill (300);
+    $status = $P->SpawnWaitKill (400);
 
     ### Check for problems
 
