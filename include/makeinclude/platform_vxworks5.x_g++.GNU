@@ -1,4 +1,4 @@
-# platform_vxworks5.x_g++.GNU,v 4.83 2001/05/16 07:41:05 mk1 Exp
+# $Id$
 #
 # VxWorks 5.5.1 with GNU g++ that is distributed by Wind River.
 
