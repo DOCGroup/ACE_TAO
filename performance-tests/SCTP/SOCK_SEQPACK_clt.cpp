@@ -1,7 +1,15 @@
 // $Id$
 
-extern "C" {
+// On WIN32, math.h may contain template code, 
+// which cannot be wrapped by 'extern "C"'
+#ifdef WIN32
 #include <math.h>
+#endif /* WIN32 */
+
+extern "C" {
+#ifndef WIN32
+#include <math.h>
+#endif /* WIN32 */
 #include <stdio.h>
 };
 
@@ -251,7 +259,15 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_SEQPA
                        0);
 
     // compute the message latency in micro-seconds
-    messageLatency_usec = (endTime-startTime)/microsec_clock_scale_factor;
+    messageLatency_usec = 
+
+      (ACE_static_cast(double,
+                       ACE_UINT64_DBLCAST_ADAPTER(endTime)) - 
+       ACE_static_cast(double,
+                       ACE_UINT64_DBLCAST_ADAPTER(startTime)))
+
+      / microsec_clock_scale_factor;
+
 
     // record the message latency in the histogram
     record(messageLatency_usec, aceStream_hist);
