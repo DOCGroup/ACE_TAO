@@ -1,3 +1,9 @@
+Thu Sep  9 17:07:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL3/Events/Abstract/Abstract.idl:
+        
+          Uncommented IDL testing multiple inheritance of eventtypes.
+
 Thu Sep  9 10:30:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/ciao/Container_Base.cpp:
