@@ -1,8 +1,10 @@
-// @ (#)orbobj.cpp	1.8 95/09/24
+// $Id$
+
+// @ (#)orbobj.cpp      1.8 95/09/24
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
-// ORB:		CORBA::ORB operations
+// ORB:         CORBA::ORB operations
 //
 // XXX as with TAO, this has a strong coupling to the Internet ORB
 // (IIOP) code.  We should make it know less about that protocol
@@ -24,11 +26,11 @@ extern void __TC_init_standard_exceptions (CORBA::Environment &env);
 
 // {A201E4C6-F258-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_CORBA_ORB,
-	     0xa201e4c6, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
+             0xa201e4c6, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 // {A201E4C7-F258-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_STUB_Object,
-	     0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
+             0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 CORBA_ORB::CORBA_ORB (void)
   : refcount_ (1),
@@ -104,9 +106,9 @@ CORBA_ORB::Release (void)
 
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
-		 char *const *argv,
-		 const char * /* orb_name */,
-		 CORBA::Environment &env)
+                 char *const *argv,
+                 const char * /* orb_name */,
+                 CORBA::Environment &env)
 {
   // Using ACE_Static_Object_Lock::instance() precludes ORB_init from being called
   // within a static object CTOR.
@@ -130,15 +132,16 @@ CORBA::ORB_init (int &argc,
       || sizeof (CORBA::WChar) < 2
       || sizeof (void *) != SIZEOF_VOID_P)
     {
-      ACE_DEBUG ((LM_DEBUG, "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n",
-		  sizeof (CORBA::Short),
-		  sizeof (CORBA::Long),
-		  sizeof (CORBA::LongLong),
-		  sizeof (CORBA::Float),
-		  sizeof (CORBA::Double),
-		  sizeof (CORBA::LongDouble),
-		  sizeof (CORBA::WChar),
-		  sizeof (void *)));
+      ACE_DEBUG ((LM_DEBUG, "%s; ERROR: unexpected basic type size; "
+                            "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n",
+                  sizeof (CORBA::Short),
+                  sizeof (CORBA::Long),
+                  sizeof (CORBA::LongLong),
+                  sizeof (CORBA::Float),
+                  sizeof (CORBA::Double),
+                  sizeof (CORBA::LongDouble),
+                  sizeof (CORBA::WChar),
+                  sizeof (void *)));
 
       env.exception (new CORBA::INITIALIZE (CORBA::COMPLETED_NO));
       return 0;
@@ -178,7 +181,7 @@ CORBA_ORB::create_list (CORBA::Long count,
       retval->len_ = 0;
       retval->max_ = (CORBA::ULong) count;
       retval->values_ = (CORBA::NamedValue_ptr) ACE_OS::calloc ((u_int) count,
-								sizeof (CORBA::NamedValue));
+                                                                sizeof (CORBA::NamedValue));
       for (CORBA::Long i=0; i < count; i++)
         {
           // initilaize the NamedValue
@@ -191,7 +194,7 @@ int
 CORBA_ORB::perform_work (ACE_Time_Value *tv)
 {
   ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
-  
+
   // Set the owning thread of the Reactor to the one which we're
   // currently in.  This is necessary b/c it's possible that the
   // application is calling us from a thread other than that in which
@@ -223,19 +226,19 @@ CORBA_ORB::run (ACE_Time_Value *tv)
     {
       ACE_TIMEPROBE ("  -> CORBA_ORB::run handling events");
       switch (r->handle_events (tv))
-	{
-	case 0: // Timed out, so we return to caller.
-	  return 0;
-	  /* NOTREACHED */
-	case -1: // Something else has gone wrong, so return to caller.
-	  return -1;
-	  /* NOTREACHED */
-	default: // Some handlers were dispatched, so keep on processing
-	         // requests until we're told to shutdown .
-	  ACE_TIMEPROBE ("  -> CORBA_ORB::run events handled");
-	  break;
-	  /* NOTREACHED */
-	}
+        {
+        case 0: // Timed out, so we return to caller.
+          return 0;
+          /* NOTREACHED */
+        case -1: // Something else has gone wrong, so return to caller.
+          return -1;
+          /* NOTREACHED */
+        default: // Some handlers were dispatched, so keep on processing
+                 // requests until we're told to shutdown .
+          ACE_TIMEPROBE ("  -> CORBA_ORB::run events handled");
+          break;
+          /* NOTREACHED */
+        }
     }
   /* NOTREACHED */
   return 0;
@@ -274,7 +277,7 @@ CORBA_ORB::resolve_poa (void)
   if (env.exception () != 0)
     return CORBA_Object::_nil ();
   else
-    return result._retn ();  
+    return result._retn ();
 }
 
 CORBA_Object_ptr
@@ -288,7 +291,7 @@ CORBA_ORB::resolve_poa_current (void)
   if (env.exception () != 0)
     return CORBA_Object::_nil ();
   else
-    return result._retn ();  
+    return result._retn ();
 }
 
 
@@ -318,7 +321,7 @@ CORBA_ORB::resolve_name_service (void)
 
       // check for errors
       if (env.exception () != 0)
-	this->name_service_ = CORBA_Object::_nil ();
+        this->name_service_ = CORBA_Object::_nil ();
 
       // Return ior.
       return CORBA_Object::_duplicate (this->name_service_);
@@ -352,7 +355,7 @@ CORBA_ORB::resolve_name_service (void)
 
       // Subscribe to multicast address.
       if (multicast.subscribe (multicast_addr) == -1)
-	return CORBA_Object::_nil ();
+        return CORBA_Object::_nil ();
 
       // Prepare connection for the reply.
       ACE_INET_Addr response_addr;
@@ -381,12 +384,13 @@ CORBA_ORB::resolve_name_service (void)
 
       // check for errors
       if (n_bytes == -1)
-	return CORBA_Object::_nil ();
+        return CORBA_Object::_nil ();
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Sent multicast.  Reply port is %u.  # of bytes sent is %d.\n",
-		  response_addr.get_port_number (),
-		  n_bytes));
+                  "%s; Sent multicast.  Reply port is %u.  # of bytes sent is %d.\n",
+                  __FILE__,
+                  response_addr.get_port_number (),
+                  n_bytes));
 
       char buf[ACE_MAX_DGRAM_SIZE];
       // Wait for response until TAO_DEFAULT_NAME_SERVER_TIMEOUT.
@@ -394,10 +398,10 @@ CORBA_ORB::resolve_name_service (void)
 
       // receive response message
       n_bytes = response.recv (buf,
-			       BUFSIZ,
-			       remote_addr,
-			       0,
-			       &timeout);
+                               BUFSIZ,
+                               remote_addr,
+                               0,
+                               &timeout);
 
       // Close endpoint for response.
       int retval = response.close ();
@@ -410,16 +414,17 @@ CORBA_ORB::resolve_name_service (void)
       buf[n_bytes] = 0;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Naming service resolved to ior: '%s'\n",
+                  "%s; Naming service resolved to ior: '%s'\n",
+                  __FILE__,
                   buf));
 
       // convert ior to an object reference
       this->name_service_ =
-	this->string_to_object ((CORBA::String) buf, env);
+        this->string_to_object ((CORBA::String) buf, env);
 
       // check for errors
       if (env.exception () != 0)
-	this->name_service_ = CORBA_Object::_nil ();
+        this->name_service_ = CORBA_Object::_nil ();
 
       // Return ior.
       return CORBA_Object::_duplicate (this->name_service_);
@@ -479,14 +484,14 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
 
   // Return the CORBA::Object_ptr interface to this objref.
   CORBA::Object_ptr new_obj;
-  
+
   if (data->QueryInterface (IID_CORBA_Object,
                             (void **) &new_obj) != TAO_NOERROR)
     env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
-  
+
   data->Release ();
   return new_obj;
-  
+
   // return new CORBA::Object (data);
 }
 
