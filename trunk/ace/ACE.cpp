@@ -1076,7 +1076,7 @@ ssize_t
 ACE::recv (ACE_HANDLE handle, size_t n, ...)
 {
   va_list argp;
-  size_t total_tuples = n / 2;
+  int total_tuples = ACE_static_cast (int, (n / 2));
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -1088,10 +1088,10 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
 
   va_start (argp, n);
 
-  for (size_t i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; i++)
     {
       iovp[i].iov_base = va_arg (argp, char *);
-      iovp[i].iov_len = va_arg (argp, ssize_t);
+      iovp[i].iov_len = va_arg (argp, size_t);
     }
 
   ssize_t result = ACE_OS::recvv (handle, iovp, total_tuples);
@@ -1185,8 +1185,8 @@ ACE::recvv_n_i (ACE_HANDLE handle,
 
       if (n != 0)
         {
-          char *base = ACE_reinterpret_cast (char *,
-                                             iov[s].iov_base);
+          char *base = ACE_static_cast (char *,
+					iov[s].iov_base);
           iov[s].iov_base = base + n;
           iov[s].iov_len = iov[s].iov_len - n;
         }
@@ -1876,7 +1876,7 @@ ssize_t
 ACE::send (ACE_HANDLE handle, size_t n, ...)
 {
   va_list argp;
-  size_t total_tuples = n / 2;
+  int total_tuples = ACE_static_cast (int, (n / 2));
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -1891,7 +1891,7 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
   for (size_t i = 0; i < total_tuples; i++)
     {
       iovp[i].iov_base = va_arg (argp, char *);
-      iovp[i].iov_len = va_arg (argp, ssize_t);
+      iovp[i].iov_len = va_arg (argp, size_t);
     }
 
   ssize_t result = ACE_OS::sendv (handle, iovp, total_tuples);
@@ -2362,7 +2362,14 @@ ACE::handle_ready (ACE_HANDLE handle,
   handle_set.set_bit (handle);
 
   // Wait for data or for the timeout to elapse.
-  int result = ACE_OS::select (int (handle) + 1,
+#  if defined (ACE_WIN64)
+  // This arg is ignored on Windows and causes pointer truncation
+  // warnings on 64-bit compiles.
+  select_width = 0;
+#  else
+  select_width = int (handle) + 1;
+#  endif /* ACE_WIN64 */
+  int result = ACE_OS::select (select_width,
                                read_ready ? handle_set.fdset () : 0, // read_fds.
                                write_ready ? handle_set.fdset () : 0, // write_fds.
                                exception_ready ? handle_set.fdset () : 0, // exception_fds.
@@ -2684,7 +2691,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   int known_failure = 0;
 
 #if defined (ACE_WIN32)
-  int n = ACE_OS::select (int (h) + 1,
+  int n = ACE_OS::select (0,    // Ignored on Windows: int (h) + 1,
                           0,
                           wr_handles,
                           ex_handles,
@@ -2841,7 +2848,14 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
       int n = ACE_OS::poll (&fds, 1, timeout);
 
 #else
-      int n = ACE_OS::select (int (listener) + 1,
+#  if defined (ACE_WIN64)
+      // This arg is ignored on Windows and causes pointer truncation
+      // warnings on 64-bit compiles.
+      select_width = 0;
+#  else
+      select_width = int (listener) + 1;
+#  endif /* ACE_WIN64 */
+      int n = ACE_OS::select (select_width,
                               rd_handle, 0, 0,
                               timeout);
 #endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */

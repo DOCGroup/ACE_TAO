@@ -668,7 +668,11 @@ typedef unsigned char ACE_Byte;
 #endif
 
 #if !defined (ACE_HAS_SSIZE_T)
+#  if defined (ACE_WIN64)
+  typedef SSIZE_T ssize_t;
+#  else
   typedef int ssize_t;
+#  endif /* ACE_WIN64 */
 #endif /* ACE_HAS_SSIZE_T */
 
 # if defined (__ACE_INLINE__)
