@@ -43,6 +43,8 @@
 
 #include "mpeg_server/Video_Server.h"
 #include "mpeg_server/Audio_Server.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "vs.h"
 
 // Forward declaration.
 class AV_Svc_Handler;
@@ -153,6 +155,28 @@ private:
   ACE_Sig_Set sig_set;
 };
 
+
+class Video_Server_MMDevice 
+  :public virtual TAO_MMDevice
+{
+public:
+  Video_Server_MMDevice (CosNaming::NamingContext_ptr ns);
+  // constructor taking a pointer to the root naming context of the
+  // naming service
+
+  virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester, 
+                                                     AVStreams::VDev_out the_vdev, 
+                                                     AVStreams::streamQoS &the_qos, 
+                                                     CORBA::Boolean_out met_qos, 
+                                                     char *&named_vdev, 
+                                                     const AVStreams::flowSpec &the_spec,  
+                                                     CORBA::Environment &env);
+  // Called by StreamCtrl to create a "B" type streamandpoint and vdev
+private:
+  CosNaming::NamingContext_ptr naming_context_;
+  // The NamingService root naming context
+};
+
 typedef ACE_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR> AV_ACCEPTOR;
 
 class AV_Server
@@ -192,22 +216,16 @@ public:
   // Destructor
   //private:
 private:
-  // @@ Why are some of these data members pointers and others
-  // objects?  Shouldn't we be consistent here?
-
-  // TAO_Naming_Server naming_server_;
-  // the TAO naming server
+  int parse_args (int argcs,
+                  char **argv);
+  // Parse the arguments.
 
   TAO_ORB_Manager orb_manager_;
   // the TAO ORB manager.
 
-  // %% need to comment!!
-  //  typedef ACE_Strategy_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR> AV_ACCEPTOR;
-  //  typedef ACE_Thread_Strategy <AV_Svc_Handler> AV_THREAD_STRATEGY;
+  CosNaming::NamingContext_var naming_context_;
+  // The root naming context of the naming service
 
-  //  AV_THREAD_STRATEGY thread_strategy_;
-  // the strategy
-  
   AV_ACCEPTOR acceptor_;
   // the acceptor
 
@@ -216,10 +234,9 @@ private:
 
   ACE_INET_Addr server_control_addr_;
   // Control (TCP) Address of this server.
-
-  int parse_args (int argcs,
-                  char **argv);
-  // Parse the arguments.
+  
+  Video_Server_MMDevice *video_mmdevice_;
+  // The video mmdevice
 };
 
 typedef ACE_Singleton<AV_Server,ACE_Null_Mutex> AV_SERVER;

@@ -445,12 +445,104 @@ AV_Server_Sig_Handler::int_handler (int sig)
 AV_Server_Sig_Handler::~AV_Server_Sig_Handler (void)
 {
   TAO_ORB_Core_instance ()->reactor ()->remove_handler (this->sig_set);
+}
 
-//   if (TAO_ORB_Core_instance ()->reactor ()->remove_handler
-//       (this,ACE_Event_Handler::NULL_MASK) == -1)
-//     ACE_ERROR ((LM_ERROR,
-//                 "(%P|%t) remove_handler for sig_handler failed\n"));
+Video_Server_MMDevice::Video_Server_MMDevice (CosNaming::NamingContext_ptr ns)
+  :naming_context_ (ns)
+{
+}
 
+AVStreams::StreamEndPoint_B_ptr  
+Video_Server_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester, 
+                                 AVStreams::VDev_out the_vdev, 
+                                 AVStreams::streamQoS &the_qos, 
+                                 CORBA::Boolean_out met_qos, 
+                                 char *&named_vdev, 
+                                 const AVStreams::flowSpec &the_spec,  
+                                 CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_Server_MMDevice::create_B (..)\n"));
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Spawning the video server process\n"));
+        
+  // %% what does this do ?!!
+  if (Mpeg_Global::live_audio) LeaveLiveAudio ();
+
+  ACE_Process_Options video_process_options;
+  video_process_options.command_line ("./vs -ORBport 0");
+  // ORBport of 0 makes the video server pick a port for itself
+        
+  ACE_Process video_process;
+        
+  AV_Server::done_ = 0;
+
+  if ((AV_Server::current_pid_ = 
+       video_process.spawn (video_process_options)) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) ACE_Process:: spawn failed: %p\n",
+                       "spawn"),
+                      0);
+  // %% need to close down the orb fd's
+  // in the child process!!
+
+  char sem_str [BUFSIZ];
+
+  // create a unique semaphore name
+  ::sprintf (sem_str,"%s:%d","Video_Server_Semaphore",AV_Server::current_pid_);
+
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) semaphore is %s\n",sem_str));
+  // Create the semaphore
+  ACE_Process_Semaphore semaphore (0,sem_str);
+  // 0 means that
+  //  semaphore is locked initially 
+
+  // %% wait until the child finishes booting
+  while (AV_Server::done_ == 0)
+    {
+      if (semaphore.acquire () == -1)
+        {
+          if (errno != EINTR)
+            break;
+        }
+      else
+        break;
+    }
+
+  AV_Server::current_pid_ = -1;
+  if (semaphore.remove () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) semaphore remove failed: %p\n",
+                       "remove"),
+                      0);
+  // Find the vdev and stream endpoint from the Naming Service.
+
+  CosNaming::Name video_vdev_name;
+  video_vdev_name.length (1);
+  video_vdev_name [0].id = CORBA::string_dup ("video_vdev");
+  CORBA::Object_var video_vdev_obj =
+    this->naming_context_->resolve (video_vdev_name,
+                             env);
+  TAO_CHECK_ENV_RETURN (env,0);
+
+  the_vdev =
+    AVStreams::VDev::_narrow (video_vdev_obj.in (),
+                              env);
+  TAO_CHECK_ENV_RETURN (env,0);
+
+  CosNaming::Name video_streamendpoint_name;
+
+  video_streamendpoint_name.length (1);
+  video_streamendpoint_name [0].id = CORBA::string_dup ("video_streamendpoint");
+  CORBA::Object_var video_streamendpoint_obj =
+    this->naming_context_->resolve (video_streamendpoint_name,
+                             env);
+  TAO_CHECK_ENV_RETURN (env,0);
+
+  AVStreams::StreamEndPoint_B_var streamendpoint_ptr =
+    AVStreams::StreamEndPoint_B::_narrow (video_streamendpoint_obj.in (),
+                                          env);
+  TAO_CHECK_ENV_RETURN (env,0);
+
+  return streamendpoint_ptr;
 }
 
 // AV_Server routines
@@ -527,7 +619,7 @@ AV_Server::parse_args (int argc,
 // Initializes the mpeg server
 int
 AV_Server::init (int argc,
-                   char **argv,
+                 char **argv,
                  CORBA::Environment& env)
 {
   int result;
@@ -545,16 +637,58 @@ AV_Server::init (int argc,
 
   PortableServer::POA_var child_poa = 
     this->orb_manager_.child_poa ();
-  // Initialize the Naming Server
-  //   this->naming_server_.init (orb,       
-  //                              child_poa);
 
   result = this->parse_args (argc, argv);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Error parsing arguments"),
                       -1);
+  // Resolve the Naming service reference. 
+
+  CORBA::Object_var naming_obj = orb->resolve_initial_references ("NameService");
+  if (CORBA::is_nil (naming_obj.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       " (%P|%t) Unable to resolve the Name Service.\n"),
+                      -1);
+
+  this->naming_context_ =
+    CosNaming::NamingContext::_narrow (naming_obj.in (),
+                                       env);
+  TAO_CHECK_ENV_RETURN (env,-1);
+
+  // Register the video mmdevice object with the ORB
+
+  ACE_NEW_RETURN (this->video_mmdevice_,
+                  Video_Server_MMDevice (this->naming_context_.in ()),
+                  -1);
+  // create the video server mmdevice with the naming service pointer.
+  this->orb_manager_.activate_under_child_poa ("Video_MMDevice",
+                                               this->video_mmdevice_,
+                                               env);
+  TAO_CHECK_ENV_RETURN (env,-1);
+
+  // Register the video_mmdevice with the naming service.
+
+  CosNaming::Name video_server_mmdevice_name (1);
+  video_server_mmdevice_name.length (1);
+  video_server_mmdevice_name [0].id = CORBA::string_dup ("Video_Server_MMDevice");
   
+  // Register the video control object with the naming server.
+  this->naming_context_->bind (video_server_mmdevice_name,
+                        this->video_mmdevice_->_this (env),
+                        env);
+
+  if (env.exception () != 0)
+    {
+      env.clear ();
+      this->naming_context_->rebind (video_server_mmdevice_name,
+                              this->video_mmdevice_->_this (env),
+                              env);
+      TAO_CHECK_ENV_RETURN (env,-1);
+    }
+  
+
+
   // Register the various signal handlers with the reactor.
   result = this->signal_handler_.register_handler ();
 
@@ -608,7 +742,9 @@ AV_Server::~AV_Server (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) AV_Server: Removing handlers from the Reactor\n"));
-  
+
+  if (this->video_mmdevice_ != 0)
+    delete this->video_mmdevice_;
 //   if (TAO_ORB_Core_instance ()->reactor ()->handler (this->acceptor_.get_handle (),
 //                                                      ACE_Event_Handler::ACCEPT_MASK) == 0)
 //     if (TAO_ORB_Core_instance ()->reactor ()->remove_handler 

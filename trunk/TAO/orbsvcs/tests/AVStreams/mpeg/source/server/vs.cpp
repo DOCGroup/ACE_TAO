@@ -5,7 +5,7 @@
 int
 main (int argc, char **argv)
 {
-  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   Video_Server video_server; 
   
   TAO_TRY

@@ -194,7 +194,48 @@ Video_Data_Handler::handle_input (ACE_HANDLE handle)
 
 // Video_Control_Handler methods
 
+// Video_Server_StreamEndPoint methods.
 
+int
+Video_Server_StreamEndPoint::handle_open (void) 
+{
+  return 0;
+}
+
+int
+Video_Server_StreamEndPoint::handle_close (void) 
+{
+  // called when streamendpoint is being destructed
+  return 0;
+}
+
+int
+Video_Server_StreamEndPoint::handle_stop (const AVStreams::flowSpec &the_spec,
+                                          CORBA::Environment &env) 
+{
+  return 0;
+}
+  
+int
+Video_Server_StreamEndPoint::handle_start (const AVStreams::flowSpec &the_spec,  
+                                           CORBA::Environment &env) 
+{
+ return 0;
+}
+  
+int
+Video_Server_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &the_spec,  
+                                             CORBA::Environment &env) 
+{
+  return 0;
+}
+
+CORBA::Boolean 
+Video_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &the_spec,  
+                                                          CORBA::Environment &env) 
+{
+  return CORBA::B_TRUE;
+}
 
 // ----------------------------------------------------------------------
 // Video_Server methods
@@ -218,14 +259,24 @@ Video_Server::init (int argc,
                        "(%P|%t) Video_Server: orb initialization failed!"),
                       -1);
   
-  //  ACE_DEBUG ((LM_DEBUG,
-  //          "(%P|%t) Video_Server::init () ORB init success \n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Video_Server::init () ORB init success \n"));
+  
+  // Create the video vdev and video server stream endpoint 
+  
+  ACE_NEW_RETURN (this->video_vdev_,
+                  TAO_VDev,
+                  -1);
+
+  ACE_NEW_RETURN (this->video_streamendpoint_,
+                  Video_Server_StreamEndPoint,
+                  -1);
 
   // @@ Can you please change the use of "fd" to "handle" globally?
   // Set the global socket fd's from the arguments.
   int max_pkt_size = -INET_SOCKET_BUFFER_SIZE;
   VIDEO_SINGLETON::instance ()->serviceSocket = -1;
-
+    
   VIDEO_SINGLETON::instance ()->conn_tag = max_pkt_size;
   
   if (max_pkt_size > 0) 
@@ -254,6 +305,7 @@ Video_Server::init (int argc,
 
   VIDEO_SINGLETON::instance ()->lastRefPtr = 0;
 
+  
   return 0;
 }
 
@@ -270,9 +322,6 @@ Video_Server::initialize_orb (int argc,
 {
   //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   int result;
-
-
-
 
   // Initialize the orb_manager
   this->orb_manager_.init_child_poa (argc,
@@ -297,10 +346,23 @@ Video_Server::initialize_orb (int argc,
 
   VIDEO_CONTROL_I::instance ()-> create_handlers ();
 
+  // activate the videocontrol, video_vdev and
+  // video_server_streamendpoint objects under the child poa.
   this->orb_manager_.activate_under_child_poa ("Video_Control",
                                                VIDEO_CONTROL_I::instance (),
                                                env);
   TAO_CHECK_ENV_RETURN (env,-1);
+  
+  this->orb_manager_.activate_under_child_poa ("Video_VDev",
+                                               this->video_vdev_,
+                                               env);
+  TAO_CHECK_ENV_RETURN (env,-1);
+
+  this->orb_manager_.activate_under_child_poa ("Video_Server_StreamEndPoint",
+                                               this->video_streamendpoint_,
+                                               env);
+  TAO_CHECK_ENV_RETURN (env,-1);
+  
   //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   CORBA::Object_var naming_obj =
     this->orb_manager_.orb ()->resolve_initial_references ("NameService");
@@ -332,8 +394,44 @@ Video_Server::initialize_orb (int argc,
       naming_context->rebind (video_control_name,
                               VIDEO_CONTROL_I::instance ()->_this (env),
                               env);
-      TAO_CHECK_ENV_RETURN (env,
-                            -1);
+      TAO_CHECK_ENV_RETURN (env,-1);
+    }
+  
+  CosNaming::Name video_vdev_name (1);
+  video_vdev_name.length (1);
+  video_vdev_name [0].id = CORBA::string_dup ("Video_VDev");
+  
+  // Register the video control object with the naming server.
+  naming_context->bind (video_vdev_name,
+                        this->video_vdev_->_this (env),
+                        env);
+
+  if (env.exception () != 0)
+    {
+      env.clear ();
+      naming_context->rebind (video_control_name,
+                              this->video_vdev_->_this (env),
+                              env);
+      TAO_CHECK_ENV_RETURN (env,-1);
+    }
+  
+  
+  CosNaming::Name video_streamendpoint_name (1);
+  video_streamendpoint_name.length (1);
+  video_streamendpoint_name [0].id = CORBA::string_dup ("Video_StreamEndPoint");
+  
+  // Register the video control object with the naming server.
+  naming_context->bind (video_streamendpoint_name,
+                        this->video_streamendpoint_->_this (env),
+                        env);
+
+  if (env.exception () != 0)
+    {
+      env.clear ();
+      naming_context->rebind (video_control_name,
+                              this->video_streamendpoint_->_this (env),
+                              env);
+      TAO_CHECK_ENV_RETURN (env,-1);
     }
 
   //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
