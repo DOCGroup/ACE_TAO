@@ -75,17 +75,32 @@ ACE_FILE::truncate (off_t length)
 }
 
 off_t
+ACE_FILE::seek (long offset, int startpos)
+{
+  return ACE_OS::lseek (this->get_handle (),
+                        offset,
+                        startpos);
+}
+
+off_t
 ACE_FILE::position (long offset, int startpos)
 {
   ACE_TRACE ("ACE_FILE::position");
-  return ACE_OS::lseek (this->get_handle (), offset, startpos);
+  return this->seek (offset, startpos);
 }
+
+off_t
+ACE_FILE::tell (void)
+{
+  ACE_TRACE ("ACE_FILE::position");
+  return ACE_OS::lseek (this->get_handle (), 0, SEEK_CUR);
+} 
 
 off_t
 ACE_FILE::position (void)
 {
   ACE_TRACE ("ACE_FILE::position");
-  return ACE_OS::lseek (this->get_handle (), 0, SEEK_CUR);
+  return this->tell ();
 } 
 
 // Return the local endpoint address.
