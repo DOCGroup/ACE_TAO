@@ -133,14 +133,13 @@ Task_State::Task_State (int argc, char **argv)
                   " [-s] // makes client *NOT* use the name service"
                   "\n", argv [0]));
     }
-#if 0
+
   FILE *iorFile = fopen (ior_file_, "r");
   char buf[BUFSIZ];
   int i = 0, j=0;
   while (ACE_OS::fgets (buf, BUFSIZ, iorFile) != 0)
     { j=ACE_OS::strlen(buf); buf[j-1]=0;iors_[i] = ACE_OS::strdup (buf); printf("ior[%d]=\"%s\"\n",i,iors_[i]); i++;  }
   fclose (iorFile);
-#endif /* 0 */
 
   // thread_count_ + 1 because there is one utilization thread also
   // wanting to begin at the same time the clients begin..
