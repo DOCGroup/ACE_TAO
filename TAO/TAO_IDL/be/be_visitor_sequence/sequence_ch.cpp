@@ -93,8 +93,11 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
       break;
     }
 
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor_sequence_base_template_args visitor (&ctx,node);
+  be_visitor_context *ctx;
+  ACE_NEW_RETURN (ctx,
+                  be_visitor_context (*this->ctx_),
+                  0);
+  be_visitor_sequence_base_template_args visitor (ctx, node);
   //ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
   //be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
