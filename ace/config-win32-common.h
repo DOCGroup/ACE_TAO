@@ -177,6 +177,9 @@
 
 	#pragma warning(disable:4201)  /* winnt.h uses nameless structs */
 
+        #pragma warning(disable:4231)
+        // Disable warning of using Microsoft Extension.
+
 	// It seems that this works with MSVC 4.[1,2]
 	#if (1010 <= _MSC_VER) && (_MSC_VER <= 1020)
 		#define ACE_HAS_TEMPLATE_TYPEDEFS
