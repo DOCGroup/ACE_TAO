@@ -8,13 +8,12 @@ CFG=ACE static library - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "ACE static library.mak".
+!MESSAGE NMAKE /f "ace_lib.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ACE static library.mak"\
- CFG="ACE static library - Win32 Debug"
+!MESSAGE NMAKE /f "ace_lib.mak" CFG="ACE static library - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -46,7 +45,7 @@ CPP=cl.exe
 # PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
-# ADD CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "ACE_HAS_WINNT4" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_WINNT4=1 /YX /FD /c
+# ADD CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /YX /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -67,7 +66,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
-# ADD CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D ACE_HAS_WINNT4=1 /YX /FD /c
+# ADD CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /YX /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -88,7 +87,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir ".\LIB\Unicode_Debug"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
-# ADD CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_WINNT4=1 /YX /FD /c
+# ADD CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /YX /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -109,7 +108,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir ".\LIB\Unicode_Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
-# ADD CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D ACE_HAS_WINNT4=1 /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /YX /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
