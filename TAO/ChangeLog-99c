@@ -1,3 +1,8 @@
+1999-10-03  Yamuna Krishnamurthy  <yamuna@danzon.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Vic/Makefile: 
+	  Modified the Makefile so that it will include the libAVsvc library
+
 Sun Oct  3 16:16:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
