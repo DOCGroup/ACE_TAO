@@ -1,3 +1,8 @@
+Sun Oct 20 10:12:42 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Recursive_Condition_Test.cpp: Fix for single threaded
+	  builds. The ACE_HAS_THREADS were improperly placed. 
+
 Sun Oct 20 09:26:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/C++NPv1/Makefile: Added changes from "Fri Oct 18
