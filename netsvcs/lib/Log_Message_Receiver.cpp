@@ -68,29 +68,38 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::attach (Log_Message_Receiver_Impl<ACE_
   ACE_ASSERT (body != 0);
 
 #if defined (ACE_HAS_THREADS)
-  #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+#  if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   Guard guard (copy_lock_);
-  #else
+  if (guard.locked () == 0)
+    return 0;
+#  else
   // Use the "body"s print lock as copy lock.
-  ACE_Guard<ACE_SYNCH_MUTEX> guard (global_copy_lock_);
-  #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                    guard,
+                    global_copy_lock_,
+                    0);
+#  endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 #endif /* ACE_HAS_THREADS */
   ++body->count_;
   return body;
 }
 
 template<ACE_SYNCH_DECL> void
-Log_Message_Receiver_Impl<ACE_SYNCH_USE>::detach(Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body)
+Log_Message_Receiver_Impl<ACE_SYNCH_USE>::detach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body)
 {
   ACE_ASSERT (body != 0);
 
 #if defined (ACE_HAS_THREADS)
-  #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+#  if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   Guard guard (copy_lock_);
-  #else
+  if (guard.locked () == 0)
+    return;
+#  else
   // Use the "body"s print lock as copy lock.
-  ACE_Guard<ACE_SYNCH_MUTEX> guard (global_copy_lock_);
-  #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+  ACE_GUARD (ACE_SYNCH_MUTEX,
+             guard,
+             global_copy_lock_);
+#  endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 #endif /* ACE_HAS_THREADS */
   if (body->count_-- == 0)
     delete body;
