@@ -293,6 +293,7 @@ TAO_MProfile::policy_list (void)
       if (this->policy_list_ == 0)
         {
           this->create_policy_list ();
+          this->is_policy_list_initialized_ = 1;
           // Init Policy.
           this->get_current_profile ()->policies ();
           // Right now all the profile share the same
@@ -300,8 +301,6 @@ TAO_MProfile::policy_list (void)
           // to parse the policy.
           // So we pick the current profile, so that no
           // state is changed in the MProfile.
-
-          this->is_policy_list_initialized_ = 1;
         }
     }
   return this->policy_list_;

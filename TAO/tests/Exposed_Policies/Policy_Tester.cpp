@@ -11,7 +11,7 @@
 // -- TAO Include --
 #include "tao/RT_ORB.h"
 #include "tao/RT_Policy_i.h"
-#include "tao/PortableServer/POA.h"
+//#include "tao/PortableServer/POA.h"
 
 ACE_RCSID (tao, Policy_Tester, "$Id$");
 
@@ -286,11 +286,11 @@ void
 Policy_Tester::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
   this->orb_->shutdown (0, ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   this->child_poa_->destroy (1, 1, ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   this->poa_->destroy (1, 1, ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 }
