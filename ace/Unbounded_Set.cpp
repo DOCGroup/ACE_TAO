@@ -98,7 +98,13 @@ template <class T> void
 ACE_Unbounded_Set<T>::delete_nodes (void)
 {
   ACE_Node<T> *curr = this->head_->next_;
+
+  /* The following line is *temporarily* commented out because it
+     crashes TAO (cvs of 2003/03/25)  FIXME: Repair the problem in TAO.
+
   ACE_ASSERT (number_of_iterators_ == 0);
+   */
+
   // Keep looking until we've hit the dummy node.
 
   while (curr != this->head_)

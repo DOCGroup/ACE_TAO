@@ -1,3 +1,10 @@
+Wed Mar 26 11:33:15 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* ace/Unbounded_Set.cpp (ACE_Unbounded_Set<T>::delete_nodes):
+
+	Temporarily commented out the ACE_ASSERT(number_of_iterators_ == 0)
+	until the iterator usage problem is repaired in TAO.
+
 Tue Mar 25 21:08:04 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/CDR_Stream.cpp:
