@@ -1,3 +1,9 @@
+Fri Nov 10 12:49:51 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
+	  Added patch to implement get_all_filters supplied by
+	  Joachim Tremouroux <joachim.tremouroux@microresearch.be>
+
 Fri Nov 10 10:14:50 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
     	* TAO/tests/RTCORBA/server_protocol/run_test.pl
