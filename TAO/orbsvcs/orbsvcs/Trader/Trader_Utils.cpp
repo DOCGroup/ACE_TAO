@@ -284,7 +284,7 @@ TAO_Property_Evaluator::property_value (int index,
         CosTradingDynamic::DynamicPropEval::_duplicate (dp_struct->eval_if);
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 
-      if (CORBA::is_nil (dp_eval.ptr ()))
+      if (CORBA::is_nil (dp_eval.in ()))
         {
           TAO_THROW_RETURN (CosTradingDynamic::
                             DPEvalFailure (name,
@@ -319,10 +319,10 @@ TAO_Property_Evaluator::property_value (int index,
   return prop_val;
 }
 
-CORBA::TypeCode*
+CORBA::TypeCode_ptr
 TAO_Property_Evaluator::property_type (int index)
 {
-  CORBA::TypeCode* prop_type = CORBA::TypeCode::_nil();
+  CORBA::TypeCode_ptr prop_type = CORBA::TypeCode::_nil();
 
   // Determine if property is both defined and dynamic.
   if (this->is_dynamic_property (index))
@@ -415,12 +415,12 @@ TAO_Property_Evaluator_By_Name::property_value (const char* property_name,
   return prop_value;
 }
 
-CORBA::TypeCode*
+CORBA::TypeCode_ptr
 TAO_Property_Evaluator_By_Name::property_type (const char* property_name)
 {
   int index = 0;
   TAO_String_Hash_Key prop_name (property_name);
-  CORBA::TypeCode* prop_type = CORBA::TypeCode::_nil();
+  CORBA::TypeCode_ptr prop_type = CORBA::TypeCode::_nil();
 
   // If the property name is in the map, delegate evaluation to our
   // superclass. Otherwise, throw an exception.
