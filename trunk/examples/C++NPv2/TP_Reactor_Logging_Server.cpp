@@ -65,7 +65,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
                             (ACE_HAS_STANDARD_CPP_LIBRARY == 0))
   for (;;) {
     char user_input[80];
-    gets (user_input);
+    fgets (user_input, sizeof (user_input), stdin);
     if (ACE_OS::strcmp (user_input, "quit") == 0) {
       reactor->notify (quit_handler);
       break;
