@@ -5,7 +5,7 @@ Fri Jun  4 23:52:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* ace/CDR_Stream.cpp:
 	  Added support for codeset translators.
 	  Many thanks to Jim Rogers <jrogers@viasoft.com> for providing
-	  this fixes.
+	  these fixes.
 
 	* ace/Makefile:
 	* ace/Codeset_IBM1047.h:
