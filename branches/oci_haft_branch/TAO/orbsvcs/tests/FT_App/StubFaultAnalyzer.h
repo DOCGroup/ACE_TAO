@@ -24,7 +24,7 @@ class TAO_ORB_Manager;
 /**
  * A stub fault analyzer for use in unit testing.
  */
-class  StubFaultAnalyzer 
+class  StubFaultAnalyzer
 {
 public:
   /**

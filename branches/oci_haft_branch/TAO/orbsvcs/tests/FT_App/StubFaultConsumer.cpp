@@ -165,7 +165,7 @@ int StubFaultConsumer::self_register (TAO_ORB_Manager & orbManager,
   consumerId_ = notifier->connect_structured_fault_consumer(
     _this(),
     filter);
-                                                 
+
   return result;
 }
 
@@ -239,7 +239,7 @@ void StubFaultConsumer::offer_change (
   ACE_ERROR ((LM_ERROR,
     "StubFaultConsumer: offer_change call ignored.\n"
   ));
-}     
+}
 
 void StubFaultConsumer::disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_DECL)
   throw (CORBA::SystemException)
@@ -248,7 +248,7 @@ void StubFaultConsumer::disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_D
     "StubFaultConsumer:disconnect_structured_push_consumer interpreted as quit request.\n"
   ));
   quit_ = 1;
-}           
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 //  template instantiate ACE_Vector < const char * >;
