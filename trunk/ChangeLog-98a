@@ -1,3 +1,15 @@
+Thu Dec 18 09:59:33 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: on Digital Unix 4.0, only declare sigwait () with cxx,
+          not with g++.  Thanks to Erik Margraf <erik@asgard.gud.siemens.co.at>
+          for verifying this.
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-in{client,server}.cpp: tweaked
+          so that they build on VxWorks (spawn needs the (ACE_THR_FUNC)
+          cast), and without threads.
+
+        * tests/run_tests.vxworks: updated VxWorks test status.
+
 Thu Dec 18 00:15:02 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.6, released Thu Dec 18 00:15:02 1997.
