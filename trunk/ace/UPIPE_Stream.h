@@ -111,9 +111,6 @@ private:
   /// allowing subsequent reads from one ACE_Message_Block
   ACE_Message_Block *mb_last_;
 
-  /// Holds the number of bytes that are still available in mb_last_.
-  size_t remaining_;
-
   /// Address of who we are connected to.
   ACE_UPIPE_Addr remote_addr_;
 
