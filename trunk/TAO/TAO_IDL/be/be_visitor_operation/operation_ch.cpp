@@ -45,9 +45,6 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
      
-  const char *name = ScopeAsDecl (node->defined_in ())->full_name (); 
-  *os << "// " << name << be_nl << be_nl;
-
   // Every operation is declared virtual in the client code.
   *os << "virtual ";
 
