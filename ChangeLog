@@ -1,3 +1,12 @@
+Mon Apr  1 11:56:55 2002  Steve Totten  <totten_s@ociweb.com>
+
+        * ace/Process.h:
+        * ace/Process.cpp:
+
+        Applied change from Rich Seibel <seibel_r@ociweb.com> to add a
+        reset for the command_line_calculated_ flag (three places) and
+        rewrote the description of command_line_buf().
+
 Mon Apr  1 12:38:44 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_Acceptor.h: Corrected @arg to be @a for Doxygen.
