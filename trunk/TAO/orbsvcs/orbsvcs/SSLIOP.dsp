@@ -143,6 +143,10 @@ SOURCE=.\SSLIOP\SSLIOP_Endpoint.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSLIOP\SSLIOP_EVP_PKEY.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\SSLIOP_Factory.cpp
 # End Source File
 # Begin Source File
@@ -160,10 +164,6 @@ SOURCE=.\SSLIOP\SSLIOP_Profile.cpp
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_ReceivedCredentials.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SSLIOP\SSLIOP_RSA.cpp
 # End Source File
 # Begin Source File
 
@@ -243,6 +243,10 @@ SOURCE=.\SSLIOP\SSLIOP_Endpoint.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSLIOP\SSLIOP_EVP_PKEY.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\SSLIOP_Export.h
 # End Source File
 # Begin Source File
@@ -264,10 +268,6 @@ SOURCE=.\SSLIOP\SSLIOP_Profile.h
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_ReceivedCredentials.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SSLIOP\SSLIOP_RSA.h
 # End Source File
 # Begin Source File
 
@@ -416,11 +416,11 @@ SOURCE=.\SSLIOP\SSLIOP_Endpoint.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\SSLIOP\SSLIOP_Profile.i
+SOURCE=.\SSLIOP\SSLIOP_EVP_PKEY.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\SSLIOP\SSLIOP_RSA.inl
+SOURCE=.\SSLIOP\SSLIOP_Profile.i
 # End Source File
 # Begin Source File
 

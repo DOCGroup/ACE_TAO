@@ -612,43 +612,28 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
               if (::SSL_use_certificate (ssl, x509.in ()) != 1)
                 return TAO_SSLIOP_Credentials::_nil ();
 
-#ifndef NO_RSA
-              TAO_SSLIOP_RSA_var rsa = ssliop_credentials->rsa ();
-              if (rsa.in () != 0
-                  && ::SSL_use_RSAPrivateKey (ssl, rsa.in ()) != 1)
+              TAO_SSLIOP_EVP_PKEY_var evp = ssliop_credentials->evp ();
+              if (evp.in () != 0
+                  && ::SSL_use_PrivateKey (ssl, evp.in ()) != 1)
                 {
                   // Invalidate the certificate we just set.
                   (void) ::SSL_use_certificate (ssl, 0);
                   return TAO_SSLIOP_Credentials::_nil ();
                 }
-#endif  /* NO_RSA */
-
-// #ifndef NO_DSA
-//               TAO_SSLIOP_DSA_var dsa = ssliop_credentials->dsa ();
-//               if (dsa.in () != 0
-//                   && ::SSL_use_certificate (ssl, dsa.in ()) != 1)
-//                 {
-//                   // Invalidate the certificate we just set.
-//                   (void) ::SSL_use_certificate (ssl, 0);
-//                   return -1;
-//                 }
-// #endif  /* NO_DSA */
             }
         }
     }
   else
     {
-      // Use the default, i.e. the one set in the SSL_CTX that was
-      // used when creating the SSL data structure.
+      // Use the default certificate and private key, i.e. the one set
+      // in the SSL_CTX that was used when creating the SSL data
+      // structure.
       TAO_SSLIOP_Credentials_ptr c = ssliop_credentials.out ();
       ACE_NEW_THROW_EX (c,
-                        TAO_SSLIOP_Credentials (::SSL_get_certificate (ssl)),
+                        TAO_SSLIOP_Credentials (::SSL_get_certificate (ssl),
+                                                ::SSL_get_private_key (ssl)),
                         CORBA::NO_MEMORY ());
-
-      // @@ What about the private key?  OpenSSL does have a
-      //    ::SSL_get_privatekey() function, but it returns an EVP
-      //    structure.  We should probably switch to using that
-      //    instead of RSA/DSA-specific data structures.
+      ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
     }
 
   return ssliop_credentials._retn ();

@@ -42,17 +42,7 @@ class TAO_SSLIOP_ReceivedCredentials
 public:
 
   /// Constructor.
-  TAO_SSLIOP_ReceivedCredentials (X509 *cert);
-
-#ifndef NO_RSA
-  /// Constructor
-  TAO_SSLIOP_ReceivedCredentials (X509 *cert, RSA *rsa);
-#endif  /* !NO_RSA */
-
-// #ifndef NO_DSA
-//   /// Constructor
-//   TAO_SSLIOP_ReceivedCredentials (X509 *cert, DSA *dsa);
-// #endif  /* !NO_DSA */
+  TAO_SSLIOP_ReceivedCredentials (X509 *cert, EVP_PKEY *evp);
 
   /**
    * @name SecurityLevel2::Credentials Methods
