@@ -517,7 +517,7 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
         CORBA::ORB::RequestSeq, \
         TAO_Pseudo_Object_Manager< \
             CORBA::Request, \
-            CORBA::Request_var \ 
+            CORBA::Request_var \
           > \
       >
 # pragma instantiate \
