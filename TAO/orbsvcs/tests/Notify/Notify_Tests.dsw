@@ -102,6 +102,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Basic Sequence"=.\Basic\Sequence.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Basic Simple"=.\BASIC\Simple.dsp - Package Owner=<4>
 
 Package=<5>
@@ -132,7 +144,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RedGreen"=".\PERFORMANCE-TESTS\REDGREEN\RedGreen.dsp" - Package Owner=<4>
+Project: "Blocking Structured Consumer"=.\Blocking\Structured_Consumer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -144,7 +156,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Sequence_Consumer"=.\Sequence_Multi_ETCL_Filter\Sequence_Consumer.dsp - Package Owner=<4>
+Project: "Blocking Structured Supplier"=.\Blocking\Structured_Supplier.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -156,7 +168,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Sequence_Consumer"=.\Sequence_Multi_Filter\Sequence_Consumer.dsp - Package Owner=<4>
+Project: "Discarding Sequence Consumer"=.\Discarding\Sequence_Consumer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -168,7 +180,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Sequence_Consumer"=".\performance-tests\Filter\Sequence_Consumer.dsp" - Package Owner=<4>
+Project: "Discarding Sequence Supplier"=.\Discarding\Sequence_Supplier.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -180,7 +192,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Sequence_Consumer"=.\Ordering\Sequence_Consumer.dsp - Package Owner=<4>
+Project: "Discarding Structured Consumer"=.\Discarding\Structured_Consumer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -192,7 +204,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Sequence_Consumer"=.\Discarding\Sequence_Consumer.dsp - Package Owner=<4>
+Project: "Discarding Structured Supplier"=.\Discarding\Structured_Supplier.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -204,7 +216,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Sequence_Supplier"=.\Sequence_Multi_ETCL_Filter\Sequence_Supplier.dsp - Package Owner=<4>
+Project: "Filter Structured Consumer"=.\Structured_Filter\Structured_Filter_Consumer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -216,7 +228,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Sequence_Supplier"=.\Sequence_Multi_Filter\Sequence_Supplier.dsp - Package Owner=<4>
+Project: "Filter Structured Supplier"=.\Structured_Filter\Structured_Filter_Supplier.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -228,7 +240,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Sequence_Supplier"=".\performance-tests\Filter\Sequence_Supplier.dsp" - Package Owner=<4>
+Project: "MT_Dispatching Structured Consumer"=.\MT_Dispatching\Structured_Consumer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -240,7 +252,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Sequence_Supplier"=.\Ordering\Sequence_Supplier.dsp - Package Owner=<4>
+Project: "MT_Dispatching Structured Supplier"=.\MT_Dispatching\Structured_Supplier.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -252,7 +264,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Sequence_Supplier"=.\Discarding\Sequence_Supplier.dsp - Package Owner=<4>
+Project: "Multi ETCL Filter Sequence Consumer"=.\Sequence_Multi_ETCL_Filter\Sequence_Consumer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -264,7 +276,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Structured_Consumer"=".\performance-tests\Filter\Structured_Consumer.dsp" - Package Owner=<4>
+Project: "Multi ETCL Filter Sequence Supplier"=.\Sequence_Multi_ETCL_Filter\Sequence_Supplier.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -276,7 +288,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Structured_Consumer"=.\Ordering\Structured_Consumer.dsp - Package Owner=<4>
+Project: "Multi Filter Sequence Consumer"=.\Sequence_Multi_Filter\Sequence_Consumer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -288,7 +300,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Structured_Consumer"=.\MT_Dispatching\Structured_Consumer.dsp - Package Owner=<4>
+Project: "Multi Filter Sequence Supplier"=.\Sequence_Multi_Filter\Sequence_Supplier.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -300,7 +312,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Structured_Consumer"=.\Discarding\Structured_Consumer.dsp - Package Owner=<4>
+Project: "Multi Filter Structured Consumer"=.\Structured_Multi_Filter\Structured_Multi_Filter_Consumer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -312,7 +324,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Structured_Consumer"=.\Blocking\Structured_Consumer.dsp - Package Owner=<4>
+Project: "Multi Filter Structured Supplier"=.\Structured_Multi_Filter\Structured_Multi_Filter_Supplier.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -324,67 +336,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Structured_Filter_Consumer"=.\Structured_Filter\Structured_Filter_Consumer.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO_NotifyTests DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Structured_Filter_Supplier"=.\Structured_Filter\Structured_Filter_Supplier.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO_NotifyTests DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Structured_Multi_Filter_Consumer"=.\Structured_Multi_Filter\Structured_Multi_Filter_Consumer.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO_NotifyTests DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Structured_Multi_Filter_Supplier"=.\Structured_Multi_Filter\Structured_Multi_Filter_Supplier.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO_NotifyTests DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Structured_Supplier"=".\performance-tests\Filter\Structured_Supplier.dsp" - Package Owner=<4>
+Project: "Ordering Sequence Consumer"=.\Ordering\Sequence_Consumer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -396,7 +348,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Structured_Supplier"=.\Ordering\Structured_Supplier.dsp - Package Owner=<4>
+Project: "Ordering Sequence Supplier"=.\Ordering\Sequence_Supplier.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -408,7 +360,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Structured_Supplier"=.\MT_Dispatching\Structured_Supplier.dsp - Package Owner=<4>
+Project: "Ordering Structured Consumer"=.\Ordering\Structured_Consumer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -420,7 +372,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Structured_Supplier"=.\Discarding\Structured_Supplier.dsp - Package Owner=<4>
+Project: "Ordering Structured Supplier"=.\Ordering\Structured_Supplier.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -432,7 +384,67 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Structured_Supplier"=.\Blocking\Structured_Supplier.dsp - Package Owner=<4>
+Project: "Performance Filter Sequence Consumer"=".\performance-tests\Filter\Sequence_Consumer.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Performance Filter Sequence Supplier"=".\performance-tests\Filter\Sequence_Supplier.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Performance Filter Structured Consumer"=".\performance-tests\Filter\Structured_Consumer.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Performance Filter Structured Supplier"=".\performance-tests\Filter\Structured_Supplier.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Performance RedGreen"=".\PERFORMANCE-TESTS\REDGREEN\RedGreen.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Performance Throughput"=".\PERFORMANCE-TESTS\THROUGHPUT\Throughput.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -452,21 +464,6 @@ Package=<5>
 
 Package=<4>
 {{{
-}}}
-
-###############################################################################
-
-Project: "Throughput"=".\PERFORMANCE-TESTS\THROUGHPUT\Throughput.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO_NotifyTests
-    End Project Dependency
 }}}
 
 ###############################################################################

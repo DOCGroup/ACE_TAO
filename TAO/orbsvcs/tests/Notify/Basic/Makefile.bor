@@ -12,7 +12,8 @@ NAMES = \
         Simple \
         Updates \
 	MultiTypes \
-	Filter
+	Filter \
+	Sequence
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 

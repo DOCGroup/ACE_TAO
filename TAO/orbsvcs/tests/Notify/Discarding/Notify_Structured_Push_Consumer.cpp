@@ -7,10 +7,12 @@ Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
                                             const char* name,
                                             CORBA::Short policy,
                                             unsigned int expected,
+                                            CORBA::Long max_events_per_consumer,
                                             CORBA::Boolean& done)
  : name_ (name),
    discard_policy_ (policy),
    expected_ (expected),
+   max_events_per_consumer_ (max_events_per_consumer),
    count_ (0),
    done_ (done)
 {
@@ -44,7 +46,7 @@ Notify_Structured_Push_Consumer::connect (
   properties[0].name = CORBA::string_dup (CosNotification::DiscardPolicy);
   properties[0].value <<= this->discard_policy_;
   properties[1].name = CORBA::string_dup (CosNotification::MaxEventsPerConsumer);
-  properties[1].value <<= (CORBA::Long)this->expected_;
+  properties[1].value <<= this->max_events_per_consumer_;
 
   this->proxy_supplier_->set_qos (properties);
   this->proxy_supplier_->connect_structured_push_consumer (objref.in ()
@@ -87,9 +89,9 @@ Notify_Structured_Push_Consumer::push_structured_event (
       this->done_ = 1;
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too "
-                            "many events received.\n")));
+                            "many events received (%d).\n"), this->count_));
     }
-  else if (this->count_ == this->expected_)
+  else if (this->count_ == this->max_events_per_consumer_)
     {
       this->done_ = 1;
     }
