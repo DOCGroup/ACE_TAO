@@ -1,3 +1,13 @@
+Sun Sep 20 19:18:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
+
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
+          examples/Bounded_Packet_Relay/BPR_Drivers.{h,cpp}
+          examples/Bounded_Packet_Relay/README
+
+          Third checkin of bounded packet relay example,
+          addressed remaining coding style issues.
+          (very rough, still does not compile)
+
 Sun Sep 20 16:38:17 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.i (get_next): Changed to use static_cast.

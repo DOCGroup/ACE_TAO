@@ -19,11 +19,7 @@ the program, using selections from an interactive text-based menu.
 
 In addition, the example program can be run in batch mode, with the
 appropriate commands piped to the program in place of its standard
-input stream.  Commands sent in batch mode must be separated by new
-lines.  Menu prompts and error messages are directed to the standard
-error stream.  The results of the transmission run and statistics
-reporting commands are directed to the standard output stream, so the
-results can be isolated and directed to a file.
+input stream.  
 
 Transmission parameters are intialized to default values.
 Transmission parameter values persist until/unless they are

@@ -236,7 +236,7 @@ private:
 
 };
 
-class Send_Handler : public ACE_Event_Handler
+class Send_Handler : public BPR_Handler_Base
 {
   // = TITLE
   //     Event handler for message send timeout events.
@@ -265,6 +265,7 @@ public:
   // Cancellation hook.
 
 private:
+
   u_long send_count_;
   // Count of the number of messages to send from the
   // relay object to the output device object.
@@ -272,17 +273,9 @@ private:
   ACE_Time_Value duration_;
   // Stores the expected duration until expiration, and is used to 
   // re-register the handler if there are still sends to perform.
-
-  Bounded_Packet_Relay<ACE_Thread_Mutex> &relay_;
-  // Stores a reference to the relay object on which to invoke
-  // the appropritate calls when the timer expires.
-
-  Thread_Timer_Queue &queue_;
-  // Store a reference to the timer queue, in which to re-register
-  // the send timer and handler if there are still sends to perform.
 };
 
-class Termination_Handler : public ACE_Event_Handler
+class Termination_Handler : public BPR_Handler_Base
 {
   // = TITLE
   //     Event handler for end transmission timeout events.
@@ -305,14 +298,6 @@ public:
   virtual int cancelled (void);
   // Cancellation hook.
 
-private:
-  Bounded_Packet_Relay<ACE_Thread_Mutex> &relay_;
-  // Stores a reference to the relay object on which to invoke
-  // the end transmission call when the timer expires.
-
-  Thread_Timer_Queue &queue_;
-  // Stores a reference to the timer queue, which we'll clear of all
-  // timers when this one expires.
 };
 
 class Thread_Bounded_Packet_Relay_Driver : public Bounded_Packet_Relay_Driver <Thread_Timer_Queue>
@@ -327,6 +312,10 @@ class Thread_Bounded_Packet_Relay_Driver : public Bounded_Packet_Relay_Driver <T
   //    called from the base class to print a menu specific to the
   //    thread implementation of the timer queue.
 public:
+
+  // = Trait for commands issued from this driver
+
+  typedef Command<Input_Task, Input_Task::ACTION> COMMAND;
 
   // = Initialization and termination methods.
 

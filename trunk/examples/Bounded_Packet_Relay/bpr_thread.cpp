@@ -12,11 +12,13 @@
 //    Exercises drivers for a bounded packet relay, based on threaded timer queues.  
 //
 // = AUTHORS
-//    Chris Gill           <cdgill@cs.wustl.edu>
+//    Chris Gill           <cdgill@cs.wustl.edu>  and
+//    Douglas C. Schmidt   <schmidt@cs.wustl.edu>
 //
-//    Based on the Timer_Queue_Test example written by:
+//    Based on the Timer Queue Test example written by
 //
-//    Douglas Schmidt      <schmidt@cs.wustl.edu> &&
+//    Carlos O'Ryan        <coryan@cs.wustl.edu>  and
+//    Douglas C. Schmidt   <schmidt@cs.wustl.edu> and
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 //
 // ============================================================================

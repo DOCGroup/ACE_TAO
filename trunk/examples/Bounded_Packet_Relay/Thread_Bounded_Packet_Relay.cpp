@@ -28,6 +28,8 @@
 #include "ace/Timer_Queue_Adapters.h"
 #include "Thread_Bounded_Packet_Relay.h"
 
+typedef Thread_Bounded_Packet_Relay_Driver::COMMAND CMD;
+
 ACE_RCSID(Bounded_Packet_Relay, Thread_Bounded_Packet_Relay, "$Id$")
 
 // Constructor.
@@ -116,15 +118,15 @@ int
 Text_Output_Driver_Wrapper::write_output_message (void *message)
 {
   if (message)
-  {
-    if (logging_)
     {
+      if (logging_)
+        {
 // CDG - TBD - print (also fix other printfs to use ACE_DEBUG, ACE_ERROR)
 //      ACE_DEBUG ();
-    }
+        }
 
-    delete ACE_static_cast (ACE_Message_Block *, message);
-  }
+      delete ACE_static_cast (ACE_Message_Block *, message);
+    }
 
   ACE_ERROR_RETURN ((LM_ERROR,
                      "Text_Output_Driver_Wrapper::"
@@ -141,20 +143,16 @@ Text_Output_Driver_Wrapper::write_output_message (void *message)
 int 
 Text_Output_Driver_Wrapper::modify_device_settings (void *logging)
 {
-  // @@ Chris, your indentation throughout this file is not consistent
-  // with ACE coding guidelines.  Please make sure you use the
-  // indentation format that GNU emacs provide.  If you have any
-  // questions, please let me know.
   if (logging)
-  {
-    logging_ = *ACE_static_cast (int *, logging);
-  }
+    {
+      logging_ = *ACE_static_cast (int *, logging);
+    }
   else
-  {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "null logging level pointer"),
-                      -1);
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "null logging level pointer"),
+                        -1);
+    }
 }
 
 // Constructor.
@@ -193,10 +191,10 @@ int
 User_Input_Task::set_packet_count (void *argument)
 {
   if (argument)
-  {
-    packet_count_ = *ACE_static_cast (int *, argument);
-    return 0;
-  }
+    {
+      packet_count_ = *ACE_static_cast (int *, argument);
+      return 0;
+    }
 
   ACE_ERROR_RETURN ((LM_ERROR, 
                      "User_Input_Task::set_packet_count: null argument"), 
@@ -210,10 +208,10 @@ int
 User_Input_Task::set_arrival_period (void *argument)
 {
   if (argument)
-  {
-    arrival_period_ = *ACE_static_cast (int *, argument);
-    return 0;
-  }
+    {
+      arrival_period_ = *ACE_static_cast (int *, argument);
+      return 0;
+    }
 
   ACE_ERROR_RETURN ((LM_ERROR, 
                      "User_Input_Task::set_arrival_period: null argument"), 
@@ -227,10 +225,10 @@ int
 User_Input_Task::set_send_period (void *argument)
 {
   if (argument)
-  {
-    send_period_ = *ACE_static_cast (int *, argument);
-    return 0;
-  }
+    {
+      send_period_ = *ACE_static_cast (int *, argument);
+      return 0;
+    }
 
   ACE_ERROR_RETURN ((LM_ERROR, 
                      "User_Input_Task::set_send_period: null argument"), 
@@ -243,10 +241,10 @@ int
 User_Input_Task::set_duration_limit (void *argument)
 {
   if (argument)
-  {
-    duration_limit_ = *ACE_static_cast (int *, argument);
-    return 0;
-  }
+    {
+      duration_limit_ = *ACE_static_cast (int *, argument);
+      return 0;
+    }
 
   ACE_ERROR_RETURN ((LM_ERROR, 
                      "User_Input_Task::set_duration_limit: null argument"), 
@@ -260,10 +258,10 @@ int
 User_Input_Task::set_logging_level (void *argument)
 {
   if (argument)
-  {
-    logging_level_ = *ACE_static_cast (int *, argument);
-    return 0;
-  }
+    {
+      logging_level_ = *ACE_static_cast (int *, argument);
+      return 0;
+    }  
 
   ACE_ERROR_RETURN ((LM_ERROR, 
                      "User_Input_Task::set_logging_level: null argument"), 
@@ -279,72 +277,72 @@ User_Input_Task::run_transmission (void *argument)
   ACE_UNUSED_ARG (argument);
 
   if (relay_)
-  {
-    switch (relay_->start_transmission (packet_count_,
-                                        arrival_period_,
-                                        logging_level_))
     {
-      case 1:
-        // @@ Chris, please don't use ACE_OS::fprintf() for things
-        // like this, use ACE_DEBUG or ACE_ERROR instead.
-        ACE_OS::fprintf (ACE_STDERR, 
-                         "\nRun transmission: "
-                         "transmission already in progress\n");
-        return 0;
-        /* NOT REACHED */
-      case 0:
-      {
-        ACE_Time_Value now = ACE_OS::gettimeofday ();
-        ACE_Time_Value send_every (0, send_period_);
-        ACE_Time_Value send_at (send_every + now);
-
-        Send_Handler *send_handler;
-
-        ACE_NEW_RETURN (send_handler, 
-                        Send_Handler (packet_count_, 
-                                      send_every,
-                                      *relay_,
-                                      *queue_), 
-                        -1);
-
-        if (queue_->schedule (send_handler, 0, send_at) < 0)
+      switch (relay_->start_transmission (packet_count_,
+                                          arrival_period_,
+                                          logging_level_))
         {
-          ACE_ERROR_RETURN ((LM_ERROR, 
-                             "User_Input_Task::run_transmission: "
-                             "failed to schedule send handler"), 
-                            -1);
-        }
+          case 1:
+            ACE_DEBUG ((LM_DEBUG, 
+                       "\nRun transmission: "
+                       "transmission already in progress\n"));
+            return 0;
+            /* NOT REACHED */
+          case 0:
+            {
+              ACE_Time_Value now = ACE_OS::gettimeofday ();
+              ACE_Time_Value send_every (0, send_period_);
+              ACE_Time_Value send_at (send_every + now);
 
-        if (duration_limit_)
-        {
-          ACE_Time_Value terminate_at (0, duration_limit_);
-          terminate_at += now;
+              Send_Handler *send_handler;
 
-          Termination_Handler *termination_handler;
-
-          ACE_NEW_RETURN (termination_handler, 
-                          Termination_Handler (*relay_,
-                                               *queue_), 
-                          -1);
-
-          if (queue_->schedule (termination_handler, 0, terminate_at) < 0)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR, 
-                               "User_Input_Task::run_transmission: "
-                               "failed to schedule termination handler"), 
+              ACE_NEW_RETURN (send_handler, 
+                              Send_Handler (packet_count_, 
+                                            send_every,
+                                            *relay_,
+                                            *queue_), 
                               -1);
-          }
-        }
 
-        return 0;
-      }
-         /* not reached */
+              if (queue_->schedule (send_handler, 0, send_at) < 0)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR, 
+                                     "User_Input_Task::run_transmission: "
+                                     "failed to schedule send handler"), 
+                                    -1);
+                }
 
-      default:
-        return -1;
-         /* not reached */
-    }
-  }
+              if (duration_limit_)
+                {
+                  ACE_Time_Value terminate_at (0, duration_limit_);
+                  terminate_at += now;
+
+                  Termination_Handler *termination_handler;
+
+                  ACE_NEW_RETURN (termination_handler, 
+                                  Termination_Handler (*relay_,
+                                                       *queue_), 
+                                  -1);
+
+                  if (queue_->schedule (termination_handler, 
+                                        0, terminate_at) < 0)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR, 
+                                         "User_Input_Task::run_transmission: "
+                                         "failed to schedule termination "
+                                         "handler"), 
+                                        -1);
+                    }
+                }
+
+              return 0;
+            }
+            /* not reached */
+
+          default:
+            return -1;
+            /* not reached */
+        }  
+    } 
 
   ACE_ERROR_RETURN ((LM_ERROR, 
                      "User_Input_Task::run_transmission: "
@@ -361,46 +359,41 @@ User_Input_Task::end_transmission (void *argument)
   ACE_UNUSED_ARG (argument);
 
   if (relay_)
-  {
-    Bounded_Packet_Relay::Transmission_Status *status;
-
-    status = 
-      ACE_static_cast (Bounded_Packet_Relay::Transmission_Status *,
-                       argument);
-
-    if (status)
     {
-      switch (relay_->end_transmission (*status)
-      {
-        case 1:
-          ACE_OS::fprintf (ACE_STDERR, 
-                           "\nEnd transmission: "
-                           "no transmission in progress\n");
-         return 0;
-           /* not reached */
+      Bounded_Packet_Relay::Transmission_Status *status;
 
-        case 0: 
-          // Cancel any remaining timers.
+      status = 
+        ACE_static_cast (Bounded_Packet_Relay::Transmission_Status *,
+                         argument);
 
-          for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
-               (node = queue_->timer_queue ().get_first ()) != 0;
-               )
-            queue->cancel (node->get_timer_id (), 0);
+      if (status)
+        {
+          switch (relay_->end_transmission (*status)
+            {
+              case 1:
+                ACE_DEBUG ((LM_DEBUG, 
+                            "\nEnd transmission: "
+                            "no transmission in progress\n"));
+                return 0;
+                /* not reached */
 
-          return 0;
-           /* not reached */
+              case 0: 
+                // Cancel any remaining timers.
+                this->clear_all_timers ();
+                return 0;
+                /* not reached */
   
-        default:
-          return -1;
-           /* not reached */
+              default:
+                return -1;
+                /* not reached */
+            }
       }
-    }
 
-    ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR, 
                        "User_Input_Task::end_transmission: "
                        "null argument"), 
                       -1);
-  }
+    }
 
   ACE_ERROR_RETURN ((LM_ERROR, 
                      "User_Input_Task::end_transmission: "
@@ -418,24 +411,24 @@ User_Input_Task::report_stats (void *argument)
   ACE_UNUSED_ARG (argument);
 
   if (relay_)
-  {
-    switch (relay_->report_statistics ())
     {
-      case 1:
-        ACE_OS::fprintf (ACE_STDERR, 
-                         "\nRun transmission: "
-                         "\transmission already in progress\n");
-         /* fall through to next case */
+      switch (relay_->report_statistics ())
+        {
+          case 1:
+            ACE_DEBUG ((LM_DEBUG, 
+                        "\nRun transmission: "
+                        "\transmission already in progress\n"));
+             /* fall through to next case */
 
-      case 0:
-        return 0;
-         /* not reached */
+          case 0:
+            return 0;
+             /* not reached */
 
-      default:
-        return -1;
-         /* not reached */
+          default:
+            return -1;
+             /* not reached */
+        }
     }
-  }
 
   ACE_ERROR_RETURN ((LM_ERROR, 
                      "User_Input_Task::report_stats: "
@@ -471,10 +464,9 @@ Send_Handler::Send_Handler (u_long send_count,
                             const ACE_Time_Value &duration,
                             Bounded_Packet_Relay<ACE_Thread_Mutex> &relay,
                             Thread_Timer_Queue &queue)
-  : send_count_ (send_count),
+  : BPR_Handler_Base (relay, queue),
+    send_count_ (send_count),
     duration_ (duration),
-    relay_ (relay),
-    queue_ (queue)
 {
 }
 
@@ -492,43 +484,35 @@ Send_Handler::handle_timeout (const ACE_Time_Value &current_time,
 {
   switch (relay_->send_input ())
     {
-    case 0:
-      // Decrement count of packets to relay.
-      --send_count_;
-      /* Fall through to next case. */
-    case 1:
-      if (send_count_ > 0)
-        {
-          // Re-register the handler for a new timeout.
-          if (queue_->schedule (this, 0, 
-                                duration_ + ACE_OS::gettimeofday ()) < 0)
-            ACE_ERROR_RETURN ((LM_ERROR, 
-                               "Send_Handler::handle_timeout: "
-                               "failed to reschedule send handler"), 
-                              -1);
-          return 0;
-        }
-      else
-        {
-          // @@ Chris, I think you repeat this code a number of times.
-          // Can you please abstract it out into a helper method and
-          // call it, rather than writing it redundantly?
+      case 0:
+        // Decrement count of packets to relay.
+        --send_count_;
+        /* Fall through to next case. */
+      case 1:
+        if (send_count_ > 0)
+          {
+            // Re-register the handler for a new timeout.
+            if (queue_->schedule (this, 0, 
+                                  duration_ + ACE_OS::gettimeofday ()) < 0)
+              ACE_ERROR_RETURN ((LM_ERROR, 
+                                 "Send_Handler::handle_timeout: "
+                                 "failed to reschedule send handler"), 
+                                -1);
+            return 0;
+          }
+        else
+          {
+            // All packets are sent, time to cancel any other
+            // timers, end the transmission, and go away.
+            this->clear_all_timers ();
+            relay_->end_transmission (Bounded_Packet_Relay::COMPLETED);
+            delete this;
+            return 0;
+          }
+        /* NOT REACHED */
 
-          // All packets are sent, time to cancel any other
-          // timers, end the transmission, and go away.
-          for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
-               (node = queue_->timer_queue ().get_first ()) != 0;
-               )
-            queue->cancel (node->get_timer_id (), 0);
-
-          relay_->end_transmission (Bounded_Packet_Relay::COMPLETED);
-          delete this;
-          return 0;
-        }
-
-      /* NOT REACHED */
-    default:
-      return -1;
+      default:
+        return -1;
     }
 }
 
@@ -545,8 +529,7 @@ Send_Handler::cancelled (void)
 
 Termination_Handler::Termination_Handler (Bounded_Packet_Relay<ACE_Thread_Mutex> &relay,
                                           Thread_Timer_Queue &queue)
-  : relay_ (relay),
-    queue_ (queue)
+  : BPR_Handler_Base (relay, queue)
 {
 }
 
@@ -564,11 +547,7 @@ Termination_Handler::handle_timeout (const ACE_Time_Value &current_time,
 {
   // Transmission timed out, so cancel any other
   // timers, end the transmission, and go away.
-  for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
-       (node = queue_->timer_queue ().get_first ()) != 0;
-       )
-    queue->cancel (node->get_timer_id (), 0);
-
+  this->clear_all_timers ();
   relay_->end_transmission (Bounded_Packet_Relay::TIMED_OUT);
   delete this;
   return 0;
@@ -620,8 +599,7 @@ Thread_Bounded_Packet_Relay_Driver::display_menu (void)
     "  8 - report statistics from the most recent transmission\n"
     "  9 - quit the program\n";
 
-  // @@ Chris, don't use ACE_OS::printf...
-  ACE_OS::fprintf (ACE_STDERR, "%s", menu);
+  ACE_DEBUG ((LM_DEBUG, "%s", menu));
 
   return 0;
 }
@@ -631,10 +609,6 @@ Thread_Bounded_Packet_Relay_Driver::display_menu (void)
 int 
 Thread_Bounded_Packet_Relay_Driver::init (void);
 {
-  // @@ Chris, I suspect that putting a typedef here may break some
-  // compilers.  Can you please move it to outside of the method?
-  typedef Command<Input_Task, Input_Task::ACTION> CMD;
-
   // Initialize the <Command> objects with their corresponding
   // methods from <User_Input_Task>.
   ACE_NEW_RETURN (packet_count_cmd_,
