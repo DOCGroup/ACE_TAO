@@ -94,13 +94,13 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute (
   
 CORBA::ExtAttributeDef_ptr 
 TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
-    const char *id,
-    const char *name,
-    const char *version,
-    CORBA::IDLType_ptr type,
-    CORBA::AttributeMode mode,
-    const CORBA::ExceptionDefSeq &get_exceptions,
-    const CORBA::ExceptionDefSeq &set_exceptions
+    const char * /* id */,
+    const char * /* name */,
+    const char * /* version */,
+    CORBA::IDLType_ptr /* type */,
+    CORBA::AttributeMode /* mode */,
+    const CORBA::ExceptionDefSeq & /* get_exceptions */,
+    const CORBA::ExceptionDefSeq & /* set_exceptions */
     ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
