@@ -246,9 +246,6 @@ private:
   ACE_SYNCH_MUTEX lock_;
   // Serialize access to the reference count.
 
-#if defined(__ACE_INLINE__)
-  ACE_INLINE
-#endif /* __ACE_INLINE__ */  
   void replace (CORBA::TypeCode_ptr type,
 		const void *value,
 		CORBA::Boolean orb_owns_data);

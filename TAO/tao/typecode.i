@@ -1,15 +1,15 @@
-// just fetch the 'kind' field out of the typecode
-ACE_INLINE void *
-CORBA_TypeCode::operator new (size_t s)
-{ 
-  return ::operator new (s); 
-}
-
 ACE_INLINE CORBA::TCKind
 CORBA_TypeCode::kind (CORBA::Environment &env) const
 {
   env.clear ();
   return _kind;
+}
+
+// just fetch the 'kind' field out of the typecode
+ACE_INLINE void *
+CORBA_TypeCode::operator new (size_t s)
+{ 
+  return ::operator new (s); 
 }
 
 ACE_INLINE CORBA::TypeCode_ptr
@@ -35,18 +35,6 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
     _private_state (new TC_Private_State (kind)),
     non_aligned_buffer_ (0)
 {
-}
-
-// Returns true if the two typecodes are identical
-ACE_INLINE CORBA::Boolean 
-CORBA_TypeCode::equal (const CORBA::TypeCode_ptr tc,
-                       CORBA::Environment &env) const
-{
-  if (this->_kind != tc->kind (env))
-    // simple case
-    return CORBA::B_FALSE;
-  else
-    return this->private_equal (tc, env);
 }
 
 // returns the Repository ID
