@@ -5336,16 +5336,34 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                 NULL,
                                 NULL);
 
+      
+      if (result == SOCKET_ERROR)
+	  {
+		u_long dwErr = ::WSAGetLastError ();
+		
+		if (dwErr == WSAEWOULDBLOCK)
+		{
+			errno = dwErr;
+			return -1;	
+		}	
+		else
+			if (dwErr != WSAENOBUFS)
+			{
+				errno = dwErr;
+				return -1;
+			}
+	  }	
+      
+    char *qos_buf;
+	ACE_NEW_RETURN (qos_buf,
+					char [dwBufferLen],
+					-1);
 
-      if (::WSAGetLastError () != WSAENOBUFS)
-              errno = ::WSAGetLastError ();
-      else
-      {
-
-        QOS *qos = (QOS *) malloc (dwBufferLen);
-
-        result = ::WSAIoctl ((ACE_SOCKET) socket,
-                       io_control_code,
+	QOS *qos = ACE_reinterpret_cast (QOS*,
+									 qos_buf); 
+        
+		result = ::WSAIoctl ((ACE_SOCKET) socket,
+                io_control_code,
                        NULL,
                        0,
                        qos,
@@ -5396,7 +5414,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
               ace_qos.sending_flowspec (sending_flowspec);
               ace_qos.receiving_flowspec (receiving_flowspec);
               ace_qos.provider_specific (*((struct iovec *) (&qos->ProviderSpecific)));
-      }
+      
 
       return result;
     }
