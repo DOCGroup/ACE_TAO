@@ -1,0 +1,227 @@
+--- orig/DomainC.h	Tue Apr 24 23:48:52 2001
++++ DomainC.h	Tue Apr 24 13:44:40 2001
+@@ -19,8 +19,8 @@
+ // Information about TAO is available at:
+ //     http://www.cs.wustl.edu/~schmidt/TAO.html
+ 
+-#ifndef _TAO_IDL_DOMAINC_H_
+-#define _TAO_IDL_DOMAINC_H_
++#ifndef _TAO_IDL_CORBA_DOMAINC_H_
++#define _TAO_IDL_CORBA_DOMAINC_H_
+ 
+ #include "ace/pre.h"
+ #include "tao/corba.h"
+@@ -29,8 +29,8 @@
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+-#include "tao/corbafwd.h"
+-#include "PolicyC.h"
++#include "tao/TAO_Export.h"
++#include "tao/PolicyC.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
+@@ -55,91 +55,6 @@
+ #pragma option push -w-rvl -w-rch -w-ccc -w-inl
+ #endif /* __BORLANDC__ */
+ 
+-TAO_NAMESPACE  CORBA
+-{
+-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong SecConstruction;
+-
+-
+-}
+-TAO_NAMESPACE_CLOSE // module CORBA
+-
+-class CORBA_InterfaceDef;
+-
+-#if !defined (_CORBA_INTERFACEDEF___PTR_CH_)
+-#define _CORBA_INTERFACEDEF___PTR_CH_
+-
+-typedef CORBA_InterfaceDef *CORBA_InterfaceDef_ptr;
+-
+-#endif /* end #if !defined */
+-
+-
+-#if !defined (_CORBA_INTERFACEDEF___VAR_CH_)
+-#define _CORBA_INTERFACEDEF___VAR_CH_
+-
+-class TAO_Export CORBA_InterfaceDef_var : public TAO_Base_var
+-{
+-public:
+-  CORBA_InterfaceDef_var (void); // default constructor
+-  CORBA_InterfaceDef_var (CORBA_InterfaceDef_ptr p) : ptr_ (p) {} 
+-  CORBA_InterfaceDef_var (const CORBA_InterfaceDef_var &); // copy constructor
+-  ~CORBA_InterfaceDef_var (void); // destructor
+-  
+-  CORBA_InterfaceDef_var &operator= (CORBA_InterfaceDef_ptr);
+-  CORBA_InterfaceDef_var &operator= (const CORBA_InterfaceDef_var &);
+-  CORBA_InterfaceDef_ptr operator-> (void) const;
+-  
+-  operator const CORBA_InterfaceDef_ptr &() const;
+-  operator CORBA_InterfaceDef_ptr &();
+-  // in, inout, out, _retn 
+-  CORBA_InterfaceDef_ptr in (void) const;
+-  CORBA_InterfaceDef_ptr &inout (void);
+-  CORBA_InterfaceDef_ptr &out (void);
+-  CORBA_InterfaceDef_ptr _retn (void);
+-  CORBA_InterfaceDef_ptr ptr (void) const;
+-  
+-  // Hooks used by template sequence and object manager classes
+-  // for non-defined forward declared interfaces.
+-  static CORBA_InterfaceDef_ptr duplicate (CORBA_InterfaceDef_ptr);
+-  static void release (CORBA_InterfaceDef_ptr);
+-  static CORBA_InterfaceDef_ptr nil (void);
+-  static CORBA_InterfaceDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+-  static CORBA::Object * upcast (void *);
+-
+-private:
+-  CORBA_InterfaceDef_ptr ptr_;
+-  // Unimplemented - prevents widening assignment.
+-  CORBA_InterfaceDef_var (const TAO_Base_var &rhs);
+-  CORBA_InterfaceDef_var &operator= (const TAO_Base_var &rhs);
+-};
+-
+-
+-#endif /* end #if !defined */
+-
+-
+-#if !defined (_CORBA_INTERFACEDEF___OUT_CH_)
+-#define _CORBA_INTERFACEDEF___OUT_CH_
+-
+-class TAO_Export CORBA_InterfaceDef_out
+-{
+-public:
+-  CORBA_InterfaceDef_out (CORBA_InterfaceDef_ptr &);
+-  CORBA_InterfaceDef_out (CORBA_InterfaceDef_var &);
+-  CORBA_InterfaceDef_out (const CORBA_InterfaceDef_out &);
+-  CORBA_InterfaceDef_out &operator= (const CORBA_InterfaceDef_out &);
+-  CORBA_InterfaceDef_out &operator= (const CORBA_InterfaceDef_var &);
+-  CORBA_InterfaceDef_out &operator= (CORBA_InterfaceDef_ptr);
+-  operator CORBA_InterfaceDef_ptr &();
+-  CORBA_InterfaceDef_ptr &ptr (void);
+-  CORBA_InterfaceDef_ptr operator-> (void);
+-
+-private:
+-  CORBA_InterfaceDef_ptr &ptr_;
+-};
+-
+-
+-#endif /* end #if !defined */
+-
+-
+ #if !defined (_CORBA_DOMAINMANAGER___PTR_CH_)
+ #define _CORBA_DOMAINMANAGER___PTR_CH_
+ 
+@@ -252,7 +167,7 @@
+ 
+   static void _tao_any_destructor (void*);
+ 
+-  virtual CORBA_Policy_ptr get_domain_policy (
++  virtual CORBA::Policy_ptr get_domain_policy (
+       CORBA::PolicyType policy_type,
+       CORBA::Environment &ACE_TRY_ENV = 
+         TAO_default_environment ()
+@@ -312,7 +227,7 @@
+ public:
+   virtual ~_TAO_CORBA_DomainManager_Proxy_Impl (void) { }
+   
+-    virtual CORBA_Policy_ptr get_domain_policy (
++    virtual CORBA::Policy_ptr get_domain_policy (
+       CORBA_Object *_collocated_tao_target_,
+       CORBA::PolicyType policy_type,
+       CORBA::Environment &ACE_TRY_ENV
+@@ -343,7 +258,7 @@
+   
+   virtual ~_TAO_CORBA_DomainManager_Remote_Proxy_Impl (void) { }
+   
+-    virtual CORBA_Policy_ptr get_domain_policy (
++    virtual CORBA::Policy_ptr get_domain_policy (
+       CORBA_Object *_collocated_tao_target_,
+       CORBA::PolicyType policy_type,
+       CORBA::Environment &ACE_TRY_ENV
+@@ -511,7 +426,7 @@
+ class _TAO_CORBA_ConstructionPolicy_Proxy_Broker;
+ class _TAO_CORBA_ConstructionPolicy_Remote_Proxy_Broker;
+ 
+-class TAO_Export CORBA_ConstructionPolicy: public virtual CORBA_Policy
++class TAO_Export CORBA_ConstructionPolicy: public virtual CORBA::Policy
+ {
+ public:
+ #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+@@ -539,7 +454,7 @@
+   static void _tao_any_destructor (void*);
+ 
+   virtual void make_domain_manager (
+-      CORBA_InterfaceDef_ptr object_type,
++      CORBA::InterfaceDef_ptr object_type,
+       CORBA::Boolean constr_policy,
+       CORBA::Environment &ACE_TRY_ENV = 
+         TAO_default_environment ()
+@@ -602,7 +517,7 @@
+   
+     virtual void make_domain_manager (
+       CORBA_Object *_collocated_tao_target_,
+-      CORBA_InterfaceDef_ptr object_type,
++      CORBA::InterfaceDef_ptr object_type,
+       CORBA::Boolean constr_policy,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+@@ -636,7 +551,7 @@
+   
+     virtual void make_domain_manager (
+       CORBA_Object *_collocated_tao_target_,
+-      CORBA_InterfaceDef_ptr object_type,
++      CORBA::InterfaceDef_ptr object_type,
+       CORBA::Boolean constr_policy,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+@@ -883,38 +798,6 @@
+     CORBA::Object_ptr obj
+   );
+ 
+-// External declarations for undefined interface
+-// CORBA_InterfaceDef
+-TAO_Export
+-CORBA_InterfaceDef_ptr
+-tao_CORBA_InterfaceDef_duplicate (
+-    CORBA_InterfaceDef_ptr
+-  );
+-extern TAO_Export
+-void
+-tao_CORBA_InterfaceDef_release (
+-    CORBA_InterfaceDef_ptr
+-  );
+-extern TAO_Export
+-CORBA_InterfaceDef_ptr
+-tao_CORBA_InterfaceDef_nil (
+-    void
+-  );
+-extern TAO_Export
+-CORBA_InterfaceDef_ptr
+-tao_CORBA_InterfaceDef_narrow (
+-    CORBA::Object *,
+-    CORBA::Environment &
+-  );
+-extern TAO_Export
+-CORBA::Object *
+-tao_CORBA_InterfaceDef_upcast (
+-    void *
+-  );
+-
+-// Any operators for interface CORBA_InterfaceDef
+-TAO_Export void operator<<= (CORBA::Any &, CORBA_InterfaceDef_ptr);
+-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_InterfaceDef *&);
+ // Any operators for interface CORBA_DomainManager
+ TAO_Export void operator<<= (CORBA::Any &, CORBA_DomainManager_ptr);
+ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_DomainManager *&);
+@@ -928,8 +811,6 @@
+ 
+ #ifndef __ACE_INLINE__
+ 
+-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_InterfaceDef_ptr );
+-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_InterfaceDef_ptr &);
+ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_DomainManager_ptr );
+ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_DomainManager_ptr &);
+ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ConstructionPolicy_ptr );
