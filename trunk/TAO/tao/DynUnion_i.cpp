@@ -196,13 +196,13 @@ TAO_DynUnion_i::member_name (const char* member_name,
             return;
           else
             {
-              CORBA_TypeCode_ptr member_type = 
+              CORBA_TypeCode_var member_type = 
                 this->type_->member_type (i,
                                           ACE_TRY_ENV);
               ACE_CHECK;
 
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (member_type,
+                TAO_DynAny_i::create_dyn_any (member_type.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -226,11 +226,11 @@ TAO_DynUnion_i::member_name (const char* member_name,
 CORBA::TCKind
 TAO_DynUnion_i::member_kind (CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr tc = this->type_->member_type (this->current_index_,
+  CORBA_TypeCode_var tc = this->type_->member_type (this->current_index_,
                                                     ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::tk_null);
 
-  CORBA::TCKind retval = TAO_DynAny_i::unalias (tc,
+  CORBA::TCKind retval = TAO_DynAny_i::unalias (tc.in (),
                                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::tk_null);
 
@@ -415,12 +415,12 @@ TAO_DynUnion_i::next (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK_RETURN (0);
     }
 
-  CORBA_TypeCode_ptr tc = this->type_->member_type (this->current_index_,
+  CORBA_TypeCode_var tc = this->type_->member_type (this->current_index_,
                                                     ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   this->member_ =
-    TAO_DynAny_i::create_dyn_any (tc,
+    TAO_DynAny_i::create_dyn_any (tc.in (),
                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
@@ -447,12 +447,12 @@ TAO_DynUnion_i::seek (CORBA::Long slot,
       ACE_CHECK_RETURN (0);
     }
 
-  CORBA_TypeCode_ptr tc = this->type_->member_type (this->current_index_,
+  CORBA_TypeCode_var tc = this->type_->member_type (this->current_index_,
                                                     ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   this->member_ =
-    TAO_DynAny_i::create_dyn_any (tc,
+    TAO_DynAny_i::create_dyn_any (tc.in (),
                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
@@ -473,12 +473,12 @@ TAO_DynUnion_i::rewind (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK;
     }
 
-  CORBA_TypeCode_ptr tc = this->type_->member_type (this->current_index_,
+  CORBA_TypeCode_var tc = this->type_->member_type (this->current_index_,
                                                     ACE_TRY_ENV);
   ACE_CHECK;
 
   this->member_ =
-    TAO_DynAny_i::create_dyn_any (tc,
+    TAO_DynAny_i::create_dyn_any (tc.in (),
                                   ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -518,19 +518,19 @@ TAO_DynUnion_i::insert_boolean (CORBA::Boolean value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_boolean)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -560,10 +560,10 @@ void
 TAO_DynUnion_i::insert_octet (CORBA::Octet value,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->member_->type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->member_->type (ACE_TRY_ENV);
   ACE_CHECK;
 
-  CORBA::TCKind kind = TAO_DynAny_i::unalias (type,
+  CORBA::TCKind kind = TAO_DynAny_i::unalias (type.in (),
                                               ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -583,19 +583,19 @@ TAO_DynUnion_i::insert_octet (CORBA::Octet value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_octet)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -648,19 +648,19 @@ TAO_DynUnion_i::insert_char (CORBA::Char value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_char)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -713,19 +713,19 @@ TAO_DynUnion_i::insert_short (CORBA::Short value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_short)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -778,12 +778,12 @@ TAO_DynUnion_i::insert_long (CORBA::Long value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
@@ -843,19 +843,19 @@ TAO_DynUnion_i::insert_ushort (CORBA::UShort value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_ushort)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -908,12 +908,12 @@ TAO_DynUnion_i::insert_ulong (CORBA::ULong value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
@@ -973,19 +973,19 @@ TAO_DynUnion_i::insert_float (CORBA::Float value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_float)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -1038,19 +1038,19 @@ TAO_DynUnion_i::insert_double (CORBA::Double value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_double)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -1103,19 +1103,19 @@ TAO_DynUnion_i::insert_string (const char* value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_string)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -1168,19 +1168,19 @@ TAO_DynUnion_i::insert_reference (CORBA::Object_ptr value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_objref)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -1233,19 +1233,19 @@ TAO_DynUnion_i::insert_typecode (CORBA::TypeCode_ptr value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_TypeCode)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -1298,19 +1298,19 @@ TAO_DynUnion_i::insert_longlong (CORBA::LongLong value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_longlong)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -1363,19 +1363,19 @@ TAO_DynUnion_i::insert_ulonglong (CORBA::ULongLong value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_ulonglong)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -1428,19 +1428,19 @@ TAO_DynUnion_i::insert_wchar (CORBA::WChar value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_wchar)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -1493,19 +1493,19 @@ TAO_DynUnion_i::insert_any (const CORBA::Any& value,
            i < count;
            i++)
         {
-          CORBA::TypeCode_ptr tc =
+          CORBA::TypeCode_var tc =
             this->type_->member_type (i,
                                       ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc,
+          CORBA::TCKind try_kind = TAO_DynAny_i::unalias (tc.in (),
                                                           ACE_TRY_ENV);
           ACE_CHECK;
 
           if (try_kind == CORBA::tk_any)
             {
               this->member_ =
-                TAO_DynAny_i::create_dyn_any (tc,
+                TAO_DynAny_i::create_dyn_any (tc.in (),
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
@@ -2183,12 +2183,12 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
           this->current_index_ = default_index;
         }
 
-      CORBA::TypeCode_ptr member_tc =
+      CORBA::TypeCode_var member_tc =
         any.type ()->member_type (this->current_index_,
                                   ACE_TRY_ENV);
       ACE_CHECK;
 
-      CORBA_Any member_any (member_tc,
+      CORBA_Any member_any (member_tc.in (),
                             0,
                             cdr.start ());
 

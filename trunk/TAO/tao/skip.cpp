@@ -322,7 +322,7 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
-  CORBA::TypeCode_ptr param;
+  CORBA::TypeCode_var param;
 
   // Number of fields in the struct.
   int member_count = tc->member_count (ACE_TRY_ENV);
@@ -335,7 +335,7 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
       param = tc->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-      retval = stream->skip (param, ACE_TRY_ENV);
+      retval = stream->skip (param.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -362,8 +362,8 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
 
-  CORBA::TypeCode_ptr discrim_tc;
-  CORBA::TypeCode_ptr member_tc;
+  CORBA::TypeCode_var discrim_tc;
+  CORBA::TypeCode_var member_tc;
   CORBA::Any_ptr member_label;
   CORBA::ULongLong discrim_val;
   CORBA::ULong member_count;
@@ -378,7 +378,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   // decode the discriminator value
-  retval = stream->decode (discrim_tc, &discrim_val, 0, ACE_TRY_ENV);
+  retval = stream->decode (discrim_tc.in (), &discrim_val, 0, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -443,7 +443,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
               {
                 CORBA::ULong ul;
                 TAO_InputCDR stream (member_label->_tao_get_cdr ());
-                (void)stream.decode (discrim_tc, &ul, 0, ACE_TRY_ENV);
+                (void)stream.decode (discrim_tc.in (), &ul, 0, ACE_TRY_ENV);
                 if (ul == *(CORBA::ULong *) &discrim_val)
                   discrim_matched = 1;
               }
@@ -487,7 +487,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
           if (discrim_matched)
             {
               // marshal according to the matched typecode
-              return stream->skip (member_tc, ACE_TRY_ENV);
+              return stream->skip (member_tc.in (), ACE_TRY_ENV);
             }
         }
       if (default_tc != 0)
@@ -667,7 +667,7 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
-  CORBA::TypeCode_ptr param;
+  CORBA::TypeCode_var param;
 
   // skip the Repository ID
   if (!stream->skip_string ())
@@ -684,7 +684,7 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
       param = tc->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-      retval = stream->skip (param, ACE_TRY_ENV);
+      retval = stream->skip (param.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
     }
 

@@ -324,7 +324,7 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::Boolean continue_append = 1;
-  CORBA::TypeCode_ptr param;
+  CORBA::TypeCode_var param;
 
   // Number of fields in the struct.
   int member_count = tc->member_count (ACE_TRY_ENV);
@@ -339,7 +339,7 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
       param = tc->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-      retval = dest->append (param, src, ACE_TRY_ENV);
+      retval = dest->append (param.in (), src, ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -367,7 +367,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr  tc,
     CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   CORBA::TypeCode_ptr discrim_tc;
-  CORBA::TypeCode_ptr member_tc;
+  CORBA::TypeCode_var member_tc;
   CORBA::Any_ptr member_label;
   CORBA::ULongLong discrim_val;
   CORBA::ULong member_count;
@@ -492,7 +492,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr  tc,
               if (discrim_matched)
                 {
                   // marshal according to the matched typecode
-                  return dest->append (member_tc, src, ACE_TRY_ENV);
+                  return dest->append (member_tc.in (), src, ACE_TRY_ENV);
                 }
             } // end of for loop
           // we are here only if there was no match
@@ -691,7 +691,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::Boolean continue_append = 1;
-  CORBA::TypeCode_ptr param;
+  CORBA::TypeCode_var param;
 
   // first append the RepositoryID
   continue_append = dest->append_string (*src);
@@ -707,7 +707,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
       param = tc->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-      retval = dest->append (param, src, ACE_TRY_ENV);
+      retval = dest->append (param.in (), src, ACE_TRY_ENV);
     }
 
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
