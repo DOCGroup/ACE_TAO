@@ -1,3 +1,12 @@
+Tue Jun 01 11:18:03 1999    <alex@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_end_event_loop.cpp:
+	* tao/post_completions.cpp
+	* tao/test_end_event_loop.cpp
+	* tao/test_end_event_loop.dsp
+	* tao/test_proactor.dsw
+	Fixed the link problems.
+
 Tue Jun  1 09:57:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/TTY_IO.cpp (control),
