@@ -396,7 +396,43 @@ SOURCE=.\be\be_visitor_args.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_attribute.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_constant.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_context.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_decl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_enum.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_field.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_interface.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_interface_fwd.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_module.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_operation.cpp
 # End Source File
 # Begin Source File
 
@@ -404,7 +440,27 @@ SOURCE=.\be\be_visitor_root.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_scope.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_sequence.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_structure.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_typedef.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_union.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_union_branch.cpp
 # End Source File
 # Begin Source File
 
