@@ -18,12 +18,12 @@ LSRC = Filter.cpp main.cpp
 
 FILTER_OBJS = $(LSRC:.cpp=.o)
 
-BIN2 = filter
+BIN2 = Filter
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Notify,$(findstring Log,$(TAO_ORBSVCS)))
+ifeq (Notify,$(findstring Notify,$(TAO_ORBSVCS)))
   ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
     BIN = $(BIN2)
   endif # Naming
@@ -51,7 +51,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 override TAO_IDLFLAGS += -I$(TAO_ROOT)/orbsvcs -Ge 1
 
-filter : $(addprefix $(VDIR),$(FILTER_OBJS))
+Filter : $(addprefix $(VDIR),$(FILTER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
