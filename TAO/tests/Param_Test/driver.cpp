@@ -134,7 +134,20 @@ Driver::run (void)
         delete client;
       }
       break;
-    case Options::TEST_UNBOUNDED_STRING:
+    case Options::TEST_LONGLONG:
+      {
+        Param_Test_Client<Test_LongLong> *client = new
+          Param_Test_Client<Test_LongLong> (this->orb_.in (),
+					    this->objref_.in(),
+					    new Test_LongLong);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+    case Options::TEST_UB_STRING:
       {
         Param_Test_Client<Test_Unbounded_String> *client = new
           Param_Test_Client<Test_Unbounded_String> (this->orb_.in (),
@@ -147,7 +160,7 @@ Driver::run (void)
         delete client;
       }
       break;
-    case Options::TEST_BOUNDED_STRING:
+    case Options::TEST_BD_STRING:
       {
         Param_Test_Client<Test_Bounded_String> *client = new
           Param_Test_Client<Test_Bounded_String> (this->orb_.in (),
@@ -173,7 +186,7 @@ Driver::run (void)
         delete client;
       }
       break;
-    case Options::TEST_STRING_SEQUENCE:
+    case Options::TEST_UB_STRING_SEQUENCE:
       {
         Param_Test_Client<Test_String_Sequence> *client = new
           Param_Test_Client<Test_String_Sequence> (this->orb_.in (),
@@ -186,7 +199,7 @@ Driver::run (void)
         delete client;
       }
       break;
-    case Options::TEST_BOUNDED_STRING_SEQUENCE:
+    case Options::TEST_BD_STRING_SEQUENCE:
       {
         Param_Test_Client<Test_Bounded_String_Sequence> *client = new
           Param_Test_Client<Test_Bounded_String_Sequence> (this->orb_.in (),
@@ -225,7 +238,7 @@ Driver::run (void)
         delete client;
       }
       break;
-    case Options::TEST_STRUCT_SEQUENCE:
+    case Options::TEST_UB_STRUCT_SEQUENCE:
       {
         Param_Test_Client<Test_Struct_Sequence> *client = new
           Param_Test_Client<Test_Struct_Sequence> (this->orb_.in (),
@@ -238,7 +251,7 @@ Driver::run (void)
         delete client;
       }
       break;
-    case Options::TEST_BOUNDED_STRUCT_SEQUENCE:
+    case Options::TEST_BD_STRUCT_SEQUENCE:
       {
         Param_Test_Client<Test_Bounded_Struct_Sequence> *client = new
           Param_Test_Client<Test_Bounded_Struct_Sequence> (this->orb_.in (),
@@ -316,7 +329,7 @@ Driver::run (void)
         delete client;
       }
       break;
-    case Options::TEST_SHORTSEQ:
+    case Options::TEST_UB_SHORTSEQ:
       {
         Param_Test_Client<Test_Short_Sequence> *client = new
           Param_Test_Client<Test_Short_Sequence> (this->orb_.in (),
@@ -329,7 +342,7 @@ Driver::run (void)
         delete client;
       }
       break;
-    case Options::TEST_BOUNDED_SHORTSEQ:
+    case Options::TEST_BD_SHORTSEQ:
       {
         Param_Test_Client<Test_Bounded_Short_Sequence> *client = new
           Param_Test_Client<Test_Bounded_Short_Sequence> (this->orb_.in (),
@@ -342,7 +355,7 @@ Driver::run (void)
         delete client;
       }
       break;
-    case Options::TEST_LONGSEQ:
+    case Options::TEST_UB_LONGSEQ:
       {
         Param_Test_Client<Test_Long_Sequence> *client = new
           Param_Test_Client<Test_Long_Sequence> (this->orb_.in (),
@@ -355,7 +368,7 @@ Driver::run (void)
         delete client;
       }
       break;
-    case Options::TEST_BOUNDED_LONGSEQ:
+    case Options::TEST_BD_LONGSEQ:
       {
         Param_Test_Client<Test_Bounded_Long_Sequence> *client = new
           Param_Test_Client<Test_Bounded_Long_Sequence> (this->orb_.in (),
@@ -418,6 +431,7 @@ Driver::run (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class Param_Test_Client<Test_Short>;
+template class Param_Test_Client<Test_LongLong>;
 template class Param_Test_Client<Test_Unbounded_String>;
 template class Param_Test_Client<Test_Bounded_String>;
 template class Param_Test_Client<Test_Fixed_Struct>;
@@ -441,6 +455,7 @@ template class Param_Test_Client<Test_Var_Array>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate Param_Test_Client<Test_Short>
+#pragma instantiate Param_Test_Client<Test_LongLong>
 #pragma instantiate Param_Test_Client<Test_Unbounded_String>
 #pragma instantiate Param_Test_Client<Test_Bounded_String>
 #pragma instantiate Param_Test_Client<Test_Fixed_Struct>

@@ -16,18 +16,7 @@ module TimeBase {
   //   the standard types.
   //
 
-#if 1
-  // interim definition of type ulonglong pending the
-  // adoption of the type extension RFP.
-  // @@ We also need support for 64-bit integers in TAO IDL compiler.
-  struct ulonglong {
-    unsigned long low;
-    unsigned long high;
-  };
-  typedef ulonglong TimeT;
-#else
   typedef unsigned long long TimeT;
-#endif
   // As yet the IDL compiler does not support 64-bit quantities, we
   // resort to the original definition of TimeT before long long
   // numbers were added to IDL.

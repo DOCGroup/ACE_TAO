@@ -207,11 +207,11 @@ int ACE_Scheduler_Factory::dump_schedule
   // default format for printing RT_Info output
   if (rt_info_format == 0)
   {
-    rt_info_format = "{ \"%20s\", %10d, {%10d, %10d}, {%10d, %10d}, "
-                     "{%10d, %10d}, %10d, "
+    rt_info_format = "{ \"%20s\", %10d, %10d, %10d, "
+                     "%10d, %10d, "
                      "(RtecScheduler::Criticality) %d, "
                      "(RtecScheduler::Importance) %d, "
-                     "{%10d, %10d}, %10d, %10d, %10d, %10d, "
+                     "%10d, %10d, %10d, %10d, %10d, "
                      "(RtecScheduler::Info_Type) %d }";
   }
 
@@ -248,17 +248,13 @@ int ACE_Scheduler_Factory::dump_schedule
                        rt_info_format,
                        (const char*) info.entry_point,
                        info.handle,
-                       info.worst_case_execution_time.low,
-                       info.worst_case_execution_time.high,
-                       info.typical_execution_time.low,
-                       info.typical_execution_time.high,
-                       info.cached_execution_time.low,
-                       info.cached_execution_time.high,
+                       info.worst_case_execution_time,
+                       info.typical_execution_time,
+                       info.cached_execution_time,
                        info.period,
                        info.criticality,
                        info.importance,
-                       info.quantum.low,
-                       info.quantum.high,
+                       info.quantum,
                        info.threads,
                        info.priority,
                        info.preemption_subpriority,

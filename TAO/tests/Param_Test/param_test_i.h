@@ -64,6 +64,12 @@ public:
                                    CORBA::Environment &env);
   // test for shorts
 
+  virtual CORBA::LongLong test_longlong (CORBA::LongLong s1,
+					 CORBA::LongLong &s2,
+					 CORBA::LongLong_out s3,
+					 CORBA::Environment &env);
+  // test for long long
+
   virtual char *test_unbounded_string (const char *s1,
                                        char *&s2,
                                        CORBA::String_out s3,

@@ -494,12 +494,10 @@ Latency_Supplier::start_generating_events (void)
 
       ACE_DEBUG ((LM_DEBUG,
                   "start generating events: "
-                  "timeout.low = %d "
-                  "timeout.high = %d "
+                  "timeout = %d "
                   "interval = %d "
                   "tv.msec () = %d\n",
-                  timeout.low,
-                  timeout.high,
+                  timeout,
                   timeout_interval,
                   tv_timeout.msec ()));
 

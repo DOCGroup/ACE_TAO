@@ -1,3 +1,48 @@
+Thu Aug 13 09:14:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Param_Test/Makefile: 
+	* tests/Param_Test/README: 
+	* tests/Param_Test/driver.cpp: 
+	* tests/Param_Test/options.cpp: 
+	* tests/Param_Test/options.h: 
+	* tests/Param_Test/param_test.idl: 
+	* tests/Param_Test/param_test_i.cpp: 
+	* tests/Param_Test/param_test_i.h: 
+	* tests/Param_Test/run_test.pl: 
+	* tests/Param_Test/run_test.sh: 
+	* tests/Param_Test/tests.h: 
+	  Added a new test to check if <long long> works.
+
+	* orbsvcs/orbsvcs/CosTimeBase.idl: 
+	* orbsvcs/orbsvcs/Event_Service_Constants.h: 
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Runtime_Scheduler.h: 
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
+	* orbsvcs/orbsvcs/Time_Utilities.cpp: 
+	* orbsvcs/orbsvcs/Time_Utilities.h: 
+	* orbsvcs/orbsvcs/Time_Utilities.i: 
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.h: 
+	* orbsvcs/orbsvcs/Sched/DynSched.cpp: 
+	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp: 
+	* orbsvcs/orbsvcs/Sched/SchedEntry.i: 
+	* orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp: 
+	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h: 
+	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h: 
+	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	  Modified CosTimeBase.idl to use <long long> instead of a
+	  structure.
+
+	* TAO_IDL/fe/fe_init.cpp: 
+	  The IDL name for wchar_t is just wchar, ditto for wstring.
+
+	* docs/releasenotes/index.html: 
+	  Documented the fact that 64bit longs are working.
+
+	* docs/releasenotes/ec.html: 
+	  Fixed minor syntax error.
+
 Wed Aug 12 14:40:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp
