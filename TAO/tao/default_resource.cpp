@@ -2,7 +2,6 @@
 
 #include "tao/default_resource.h"
 
-#include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/IIOP_Factory.h"
 

@@ -105,7 +105,7 @@ namespace CORBA
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void);
+      virtual void _raise (void) const;
 
       virtual void _tao_encode (TAO_OutputCDR &
                                 ACE_ENV_ARG_DECL_NOT_USED) const;

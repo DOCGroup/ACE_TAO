@@ -74,7 +74,7 @@ namespace CORBA
     CORBA::Any& exception (void);
 
     /// To throw an UnknownUserException of this type.
-    virtual void _raise (void);
+    virtual void _raise (void) const;
 
     virtual CORBA::Exception *_tao_duplicate (void) const;
     virtual void _tao_encode (TAO_OutputCDR &cdr

@@ -91,7 +91,7 @@ TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->target_))
     {
-      
+
       TAO_Valuetype_Adapter *adapter =
         ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
             TAO_ORB_Core::valuetype_adapter_name ()

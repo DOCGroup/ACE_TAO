@@ -1,17 +1,19 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/Sync_Strategies.h"
 #include "tao/Buffering_Constraint_Policy.h"
 #include "tao/Stub.h"
-#include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Sync_Strategies.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Sync_Strategies, "$Id$")
+
+ACE_RCSID (tao,
+           Sync_Strategies,
+           "$Id$")
+
 
 TAO_Sync_Strategy::~TAO_Sync_Strategy (void)
 {
@@ -66,7 +68,7 @@ TAO_Eager_Buffering_Sync_Strategy::
   set_timer = 0;
 
   CORBA::Policy_var bcp_policy = stub->buffering_constraint ();
-  TAO::BufferingConstraintPolicy_var bcp = 
+  TAO::BufferingConstraintPolicy_var bcp =
     TAO::BufferingConstraintPolicy::_narrow (bcp_policy.in());
 
   TAO_Buffering_Constraint_Policy *buffering_constraint_policy =

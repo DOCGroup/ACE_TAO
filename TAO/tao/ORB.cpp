@@ -121,7 +121,7 @@ CORBA::ORB::InvalidName::_tao_duplicate (void) const
   return result;
 }
 
-void CORBA::ORB::InvalidName::_raise ()
+void CORBA::ORB::InvalidName::_raise (void) const
 {
   TAO_RAISE (*this);
 }

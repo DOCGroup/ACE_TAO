@@ -8,11 +8,11 @@
 #include "Environment.h"
 #include "Any.h"
 #include "CDR.h"
-#include "ORB.h"
-#include "ORB_Core.h"
 #include "Any_SystemException.h"
+#include "CORBA_String.h"
 
 #include "ace/Malloc.h"
+#include "ace/SString.h"
 #include "ace/streams.h"
 
 
@@ -1216,7 +1216,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \
-CORBA::name ::_raise (void) \
+CORBA::name ::_raise (void) const \
 { \
   TAO_RAISE (*this); \
 }

@@ -4,16 +4,18 @@
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-#include "tao/Environment.h"
 #include "tao/ORB_Core.h"
-
+#include "tao/Environment.h"
 #include "tao/Buffering_Constraint_Policy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Policy_Manager.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Policy_Manager, "$Id$")
+
+ACE_RCSID (tao,
+           Policy_Manager,
+           "$Id$")
 
 
 TAO_Policy_Current_Impl &
@@ -51,9 +53,3 @@ TAO_Policy_Current_Impl::get_policy_overrides (
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-
-
-
-
-

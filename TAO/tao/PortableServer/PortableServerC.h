@@ -213,7 +213,7 @@ TAO_NAMESPACE  PortableServer
 
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
-    virtual void _raise (void);
+    virtual void _raise (void) const;
 
     virtual void _tao_encode (
         TAO_OutputCDR &
@@ -272,7 +272,7 @@ TAO_NAMESPACE  PortableServer
 
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
-    virtual void _raise (void);
+    virtual void _raise (void) const;
 
     virtual void _tao_encode (
         TAO_OutputCDR &
@@ -1316,7 +1316,7 @@ TAO_NAMESPACE  PortableServer
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void);
+      virtual void _raise (void) const;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
@@ -1963,7 +1963,7 @@ TAO_NAMESPACE  PortableServer
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void);
+      virtual void _raise (void) const;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
@@ -2011,7 +2011,7 @@ TAO_NAMESPACE  PortableServer
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void);
+      virtual void _raise (void) const;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
@@ -2060,7 +2060,7 @@ TAO_NAMESPACE  PortableServer
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void);
+      virtual void _raise (void) const;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
@@ -2117,7 +2117,7 @@ TAO_NAMESPACE  PortableServer
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void);
+      virtual void _raise (void) const;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
@@ -2167,7 +2167,7 @@ TAO_NAMESPACE  PortableServer
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void);
+      virtual void _raise (void) const;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
@@ -2215,7 +2215,7 @@ TAO_NAMESPACE  PortableServer
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void);
+      virtual void _raise (void) const;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
@@ -2263,7 +2263,7 @@ TAO_NAMESPACE  PortableServer
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void);
+      virtual void _raise (void) const;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
@@ -2311,7 +2311,7 @@ TAO_NAMESPACE  PortableServer
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void);
+      virtual void _raise (void) const;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
@@ -2359,7 +2359,7 @@ TAO_NAMESPACE  PortableServer
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void);
+      virtual void _raise (void) const;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
@@ -2407,7 +2407,7 @@ TAO_NAMESPACE  PortableServer
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void);
+      virtual void _raise (void) const;
 
       virtual void _tao_encode (
           TAO_OutputCDR &
@@ -2993,7 +2993,7 @@ TAO_NAMESPACE  PortableServer
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void);
+      virtual void _raise (void) const;
 
       virtual void _tao_encode (
           TAO_OutputCDR &

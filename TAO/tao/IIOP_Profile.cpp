@@ -4,7 +4,6 @@
 #include "IIOP_Profile.h"
 #include "CDR.h"
 #include "Environment.h"
-#include "ORB.h"
 #include "ORB_Core.h"
 #include "debug.h"
 #include "iiop_endpoints.h"
