@@ -1,3 +1,75 @@
+Fri Mar 10 12:49:21 2000  Jeff Paraons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp 
+	* TAO_IDL/be/be_visitor_argument.cpp 
+	* TAO_IDL/be/be_visitor_factory.cpp 
+	* TAO_IDL/be/be_visitor_operation.cpp 
+	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp 
+	* TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp 
+	* TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp 
+	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp 
+	* TAO_IDL/be/be_visitor_operation/argument.cpp 
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp 
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp 
+	* TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp 
+	* TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp 
+	* TAO_IDL/be/be_visitor_operation/rettype_pre_invoke_cs.cpp 
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp 
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp 
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp 
+	* TAO_IDL/be_include/be_codegen.h 
+	* TAO_IDL/be_include/be_visitor_argument.h 
+	* TAO_IDL/be_include/be_visitor_factory.h 
+	* TAO_IDL/be_include/be_visitor_operation.h 
+	* TAO_IDL/be_include/be_visitor_argument/marshal_ss.h 
+	* TAO_IDL/be_include/be_visitor_argument/post_upcall_ss.h 
+	* TAO_IDL/be_include/be_visitor_argument/pre_invoke_cs.h 
+	* TAO_IDL/be_include/be_visitor_argument/vardecl_ss.h 
+	* TAO_IDL/be_include/be_visitor_operation/operation_cs.h 
+	* TAO_IDL/be_include/be_visitor_operation/operation_ss.h 
+	* TAO_IDL/be_include/be_visitor_operation/rettype_marshal_ss.h 
+	* TAO_IDL/be_include/be_visitor_operation/rettype_post_upcall_ss.h 
+	* TAO_IDL/be_include/be_visitor_operation/rettype_pre_invoke_cs.h 
+	* TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h 
+	* TAO_IDL/be_include/be_visitor_union/any_op_cs.h 
+	* TAO_IDL/driver/drv_args.cpp 
+	* TAO_IDL/include/idl_global.h 
+	* TAO_IDL/util/utl_global.cpp 
+	  Changes to remove the generation of code using interpretive
+	  marshaling.
+
+	* TAO_IDL/be/be_visitor_argument/invoke_cs.cpp 
+	* TAO_IDL/be/be_visitor_argument/post_invoke_cs.cpp 
+	* TAO_IDL/be/be_visitor_operation/rettype_post_invoke_cs.cpp 
+	* TAO_IDL/be_include/be_visitor_argument/invoke_cs.h 
+	* TAO_IDL/be_include/be_visitor_argument/post_invoke_cs.h 
+	* TAO_IDL/be_include/be_visitor_operation/rettype_post_invoke_cs.h 
+  	  Files added or renamed from other files removed below.
+
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp 
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp 
+	* TAO_IDL/be/be_visitor_argument/docall_cs.cpp 
+	* TAO_IDL/be/be_visitor_argument/post_docall_compiled_cs.cpp 
+	* TAO_IDL/be/be_visitor_argument/post_docall_cs.cpp 
+	* TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp 
+	* TAO_IDL/be/be_visitor_argument/pre_upcall_ss.cpp 
+	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp 
+	* TAO_IDL/be/be_visitor_operation/rettype_docall_cs.cpp 
+	* TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp 
+	* TAO_IDL/be/be_visitor_operation/rettype_pre_docall_cs.cpp 
+	* TAO_IDL/be_include/be_visitor_argument/compiled_marshal_cs.h 
+	* TAO_IDL/be_include/be_visitor_argument/compiled_marshal_ss.h 
+	* TAO_IDL/be_include/be_visitor_argument/docall_cs.h 
+	* TAO_IDL/be_include/be_visitor_argument/post_docall_compiled_cs.h 
+	* TAO_IDL/be_include/be_visitor_argument/post_docall_cs.h 
+	* TAO_IDL/be_include/be_visitor_argument/pre_docall_cs.h 
+	* TAO_IDL/be_include/be_visitor_argument/pre_upcall_ss.h 
+	* TAO_IDL/be_include/be_visitor_operation/compiled_marshal.h 
+	* TAO_IDL/be_include/be_visitor_operation/rettype_docall_cs.h 
+	* TAO_IDL/be_include/be_visitor_operation/rettype_post_docall_cs.h 
+	* TAO_IDL/be_include/be_visitor_operation/rettype_pre_docall_cs.h 
+	  Files removed.
+
 Fri Mar 10 09:49:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Any.h:
