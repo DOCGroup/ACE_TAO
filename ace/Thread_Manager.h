@@ -80,6 +80,9 @@ public:
   int operator!= (const ACE_Thread_Descriptor &rhs) const;
   // Inequality operator.
 
+  long flags (void) const;
+  // Get the thread creation flags.
+
 private:
   ACE_thread_t thr_id_;
   // Unique thread ID.
