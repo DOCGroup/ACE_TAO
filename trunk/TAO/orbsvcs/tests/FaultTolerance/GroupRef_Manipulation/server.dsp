@@ -91,6 +91,10 @@ LINK32=link.exe
 # PROP Default_Filter ".cpp"
 # Begin Source File
 
+SOURCE=..\..\..\orbsvcs\PortableGroup_Simple_DSC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
