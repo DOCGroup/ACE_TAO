@@ -1,3 +1,15 @@
+Wed Jan 13 02:17:57 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.cpp (writev): This function should use ACE::write_n
+ 	  instead of ACE::send_n.  Similarly, readv() should use
+ 	  ACE::read_n instead of ACE::recv_n.
+
+	* ace/ACE.cpp (send): This function should use ACE_OS::sendv
+ 	  instead of ACE_OS::writev.  Similarly, recv() should use
+	  ACE_OS::recvv instead of ACE_OS::readv.
+
+	* docs/tutorials:  Fixed all the NT project files.
+
 Tue Jan 12 22:41:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-freebsd.h: Uncommented ACE_HAS_SIGWAIT.  This is

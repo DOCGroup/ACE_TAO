@@ -1004,7 +1004,7 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
       iovp[i].iov_len = va_arg (argp, ssize_t);
     }
 
-  ssize_t result = ACE_OS::writev (handle, iovp, total_tuples);
+  ssize_t result = ACE_OS::sendv (handle, iovp, total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
@@ -1040,7 +1040,7 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
       iovp[i].iov_len = va_arg (argp, ssize_t);
     }
 
-  ssize_t result = ACE_OS::readv (handle, iovp, total_tuples);
+  ssize_t result = ACE_OS::recvv (handle, iovp, total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
