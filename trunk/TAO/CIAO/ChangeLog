@@ -1,3 +1,9 @@
+Mon Oct 11 10:08:48 2004  Gan Deng  <gan.deng@vanderbilt.edu>
+
+ 	* DAnCE/examples/BasicSP/Readme.html
+ 	
+ 	  Update the README file for running the example.
+
 Sun Oct 10 10:45:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
