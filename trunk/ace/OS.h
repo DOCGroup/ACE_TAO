@@ -26,6 +26,11 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if !defined (ACE_UINT64_FORMAT_SPECIFIER)
+// At least for Win32 - MSVC compiler (ver. 5)
+#define ACE_UINT64_FORMAT_SPECIFIER "%I64d"
+#endif /* ACE_UINT64_FORMAT_SPECIFIER */
+
 // Get OS.h to compile on some of the platforms without DIR info yet.
 # if !defined (ACE_HAS_DIRENT)
     typedef int DIR;

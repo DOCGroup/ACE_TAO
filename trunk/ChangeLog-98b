@@ -1,3 +1,23 @@
+Fri Nov  6 13:29:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log): Added support for a `%Q' format specifier
+ 	  to the log() method.  This prints out quad words, i.e.,
+ 	  ACE_UINT64's.  Thanks to Zoran Ivanovic <zorani@pathcom.com> for
+ 	  contributing this.
+
+	* ace/Process.cpp (spawn): Replaced the use of execve() with
+ 	  execvp() by copying the environment variables manually first.
+	  Thanks to Avi Nash for this fix.
+
+        * Updated the "site map" for ACE so that it doesn't use absolute
+ 	  links.  Thanks to Rainer Blome <rainer_blome@de.ibm.com> for
+ 	  contributing this.
+
+        * ace/Process.h: Clarified the behavior of ACE_Process and
+          ACE_Process_Options on UNIX because of the use of execve(),
+          which doesn't search the path.  Thanks to Avi Nash for reporting
+          this.
+
 Fri Nov 06 12:58:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp: Removed several superfluous parens so
@@ -15,17 +35,6 @@ Fri Nov 06 12:58:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
           Susan Liebeskind (susan.liebeskind@gtri.gatech.edu) discovered
           that you can't use the 'inherited' typedef to initialize a
           baseclass if you use the AIX C++ compiler.
-
-Fri Nov  6 10:12:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * Updated the "site map" for ACE so that it doesn't use absolute
- 	  links.  Thanks to Rainer Blome <rainer_blome@de.ibm.com> for
- 	  contributing this.
-
-        * ace/Process.h: Clarified the behavior of ACE_Process and
-          ACE_Process_Options on UNIX because of the use of execve(),
-          which doesn't search the path.  Thanks to Avi Nash for reporting
-          this.
 
 Fri Nov 06 08:57:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
