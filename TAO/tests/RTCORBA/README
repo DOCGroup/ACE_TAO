@@ -50,3 +50,7 @@ includes the following:
 
           Tests RTCORBA::PriorityBandedConnectionPolicy.
 
+        . Explicit_Binding
+
+          Tests <Object::_validate_connection>.
+

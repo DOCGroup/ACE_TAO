@@ -13,6 +13,7 @@
 DIRS  = Banded_Connections \
 	Client_Propagated \
 	Client_Protocol \
+	Explicit_Binding \
 	Server_Declared \
         Server_Protocol \
 	Private_Connection \

@@ -80,9 +80,15 @@ private:
   // necessary.   WARNING: TAO::Client_Pririority_Policy is
   // deprecated.  See TAO RTCORBA documentation for more details.
 
-  void init_state (TAO_GIOP_Invocation *invocation,
+  void init_client_protocol (TAO_GIOP_Invocation *invocation,
+                             CORBA::Environment &ACE_TRY_ENV);
+  // Initializes RTCORBA::ClientProtocolPolicy in the endpoint
+  // selection state. 
+
+  void init_bands (TAO_GIOP_Invocation *invocation,
                    CORBA::Environment &ACE_TRY_ENV);
-  // Initializes <invocation>'s endpoint selection state.
+  // Initializes RTCORBA::PriorityBandsPolicy in the endpoint
+  // selection state. 
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 };

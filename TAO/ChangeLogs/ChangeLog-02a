@@ -1,3 +1,38 @@
+Fri Dec 01 23:00:32 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/Explicit_Binding/Explicit_Binding.dsw
+	* tests/RTCORBA/Explicit_Binding/Makefile
+	* tests/RTCORBA/Explicit_Binding/Makefile.bor
+	* tests/RTCORBA/Explicit_Binding/README
+	* tests/RTCORBA/Explicit_Binding/client.bor
+	* tests/RTCORBA/Explicit_Binding/client.cpp
+	* tests/RTCORBA/Explicit_Binding/client.dsp
+	* tests/RTCORBA/Explicit_Binding/run_test.pl
+	* tests/RTCORBA/Explicit_Binding/server.bor
+	* tests/RTCORBA/Explicit_Binding/server.cpp
+	* tests/RTCORBA/Explicit_Binding/server.dsp
+	* tests/RTCORBA/Explicit_Binding/test.idl
+	* tests/RTCORBA/README
+	* tests/RTCORBA/Makefile
+	* tests/RTCORBA/Makefile.bor
+	* tests/RTCORBA/RTCORBA_tests.dsw:
+
+          Added a test for <Object::_validate_connection>.
+	
+	* tests/RTCORBA/Private_Connection/run_test.pl:
+
+	  Modified script to delete old ior files before starting.
+	  
+	* tao/Invocation.cpp
+	* tao/Invocation.i
+	* tao/Invocation.h
+	* tao/Invocation_Endpoint_Selectors.cpp
+	* tao/Invocation_Endpoint_Selectors.h
+	* tao/Stub.cpp (validate_connection):
+	  
+	  Modified <validate_connection> to work with RTCORBA policies and
+	  to populate <inconsistent_policies> parameter.
+	
 Fri Dec  1 19:05:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:

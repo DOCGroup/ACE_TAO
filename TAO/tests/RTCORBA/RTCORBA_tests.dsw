@@ -75,6 +75,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Explicit_Binding Client"=.\Explicit_Binding\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Explicit_Binding Server"=.\Explicit_Binding\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "MT_Client_Protocol_Priority Client"=.\MT_Client_Protocol_Priority\client.dsp - Package Owner=<4>
 
 Package=<5>

@@ -34,27 +34,41 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
   if (invocation->endpoint_selector_ != 0)
     return;
 
-  // Initialize Invocation's endpoint selection state.
-  this->init_state (invocation, ACE_TRY_ENV);
+  // Initialize selection state with all RTCORBA policies affecting
+  // endpoint selection.
+  TAO_Endpoint_Selection_State &state =
+    invocation->endpoint_selection_state_;
+
+  state.priority_model_policy_ =
+    invocation->stub_->exposed_priority_model ();
+  state.private_connection_ =
+    invocation->stub_->private_connection ();
+
+  this->init_client_protocol (invocation, ACE_TRY_ENV);
+  ACE_CHECK;
+  this->init_bands (invocation, ACE_TRY_ENV);
   ACE_CHECK;
 
   //
   // Look at RTCORBA policies to decide on appropriate selector.
   //
 
-  TAO_PriorityModelPolicy *priority_policy =
-    invocation->endpoint_selection_state_.priority_model_policy_;
-
   // CASE 2: No PriorityModelPolicy set.
-  if (priority_policy == 0)
+  if (state.priority_model_policy_ == 0)
     {
      // Bands without priority model do not make sense.
-      if (invocation->endpoint_selection_state_.bands_policy_
-          != 0)
-        ACE_THROW (CORBA::INV_POLICY ());
+      if (state.bands_policy_ != 0)
+        {
+          if (invocation->inconsistent_policies_.ptr ())
+            {
+              invocation->inconsistent_policies_->length (1);
+              invocation->inconsistent_policies_[0u] =
+                CORBA::Policy::_duplicate (state.bands_policy_);
+            }
+          ACE_THROW (CORBA::INV_POLICY ());
+        }
 
-      if (invocation->endpoint_selection_state_.client_protocol_policy_
-          == 0)
+      if (state.client_protocol_policy_ == 0)
         invocation->endpoint_selector_ =
           invocation->orb_core_->default_endpoint_selector ();
       else
@@ -65,41 +79,37 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
       return;
     }
 
-  if (priority_policy->get_priority_model ()
+  if (state.priority_model_policy_->get_priority_model ()
       == RTCORBA::CLIENT_PROPAGATED)
     {
       // Get client priority.
-      if (invocation->orb_core_->get_thread_priority
-          (invocation->endpoint_selection_state_.client_priority_)
+      if (invocation->orb_core_->get_thread_priority (state.client_priority_) 
           == -1)
         ACE_THROW (CORBA::DATA_CONVERSION (1,
                                            CORBA::COMPLETED_NO));
     }
 
   // CASE 3: PriorityBandedConnection Policy is set.
-  if (invocation->endpoint_selection_state_.bands_policy_
-      != 0)
+  if (state.bands_policy_ != 0)
     {
       // Figure out target priority.
       CORBA::Short p;
-      if (priority_policy->get_priority_model ()
+      if (state.priority_model_policy_->get_priority_model ()
           == RTCORBA::CLIENT_PROPAGATED)
-        p = invocation->endpoint_selection_state_.client_priority_;
+        p = state.client_priority_;
       else
-        p = priority_policy->server_priority ();
+        p = state.priority_model_policy_->server_priority ();
 
       // Find the band with the range covering our target priority.
       RTCORBA::PriorityBands &bands = 
-      invocation->endpoint_selection_state_.bands_policy_->priority_bands_rep ();
+        state.bands_policy_->priority_bands_rep ();
       
       int in_range = 0;
       for (CORBA::ULong i = 0; i < bands.length (); ++i)
         if (bands[i].low <= p && bands[i].high >= p)
           {
-            invocation->endpoint_selection_state_.min_priority_ =
-              bands[i].low;
-            invocation->endpoint_selection_state_.max_priority_ = 
-              bands[i].high;
+            state.min_priority_ = bands[i].low;
+            state.max_priority_ = bands[i].high;
 
             in_range = 1;
             break;
@@ -107,11 +117,20 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
      
       // If priority doesn't fall into any of the bands
       if (!in_range)
-        ACE_THROW (CORBA::INV_POLICY ());
+        {
+          if (invocation->inconsistent_policies_.ptr ())
+            {
+              invocation->inconsistent_policies_->length (2);
+              invocation->inconsistent_policies_[0u] =
+                CORBA::Policy::_duplicate (state.bands_policy_);
+              invocation->inconsistent_policies_[1u] =
+                CORBA::Policy::_duplicate (state.priority_model_policy_);
+            }
+          ACE_THROW (CORBA::INV_POLICY ());
+        }
 
       // Matching band found.  Instantiate appropriate selector.
-      if (invocation->endpoint_selection_state_.client_protocol_policy_
-          == 0)
+      if (state.client_protocol_policy_ == 0)
         invocation->endpoint_selector_ =
           invocation->orb_core_->bands_endpoint_selector ();
       else
@@ -122,11 +141,10 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
     }
 
   // CASE 4: CLIENT_PROPAGATED priority model, no bands.
-  if (priority_policy->get_priority_model ()
+  if (state.priority_model_policy_->get_priority_model ()
       == RTCORBA::CLIENT_PROPAGATED)
     {
-      if (invocation->endpoint_selection_state_.client_protocol_policy_
-          == 0)
+      if (state.client_protocol_policy_ == 0)
         invocation->endpoint_selector_ =
           invocation->orb_core_->priority_endpoint_selector ();
       else
@@ -136,8 +154,7 @@ TAO_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation
   else
     {
       // CASE 5: SERVER_DECLARED priority model, no bands.
-      if (invocation->endpoint_selection_state_.client_protocol_policy_
-          == 0)
+      if (state.client_protocol_policy_ == 0)
         invocation->endpoint_selector_ =
           invocation->orb_core_->default_endpoint_selector ();
       else
@@ -227,24 +244,51 @@ check_client_priority_policy (TAO_GIOP_Invocation *invocation,
 
 void
 TAO_Endpoint_Selector_Factory::
-init_state (TAO_GIOP_Invocation *invocation,
+init_client_protocol (TAO_GIOP_Invocation *invocation,
+                      CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_TRY
+    {
+      invocation->endpoint_selection_state_.client_protocol_policy_ =
+        invocation->stub_->effective_client_protocol (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::INV_POLICY, ex)
+    {
+      if (invocation->inconsistent_policies_.ptr ())
+        {
+          invocation->inconsistent_policies_->length (1);
+          invocation->inconsistent_policies_[0u] =
+            invocation->stub_->client_protocol ();
+        }
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+void
+TAO_Endpoint_Selector_Factory::
+init_bands (TAO_GIOP_Invocation *invocation,
             CORBA::Environment &ACE_TRY_ENV)
 {
-  // Initialize selection state with all RTCORBA policies affecting
-  // endpoint selection.
-
-  invocation->endpoint_selection_state_.priority_model_policy_ =
-    invocation->stub_->exposed_priority_model ();
-
-  invocation->endpoint_selection_state_.client_protocol_policy_ =
-    invocation->stub_->effective_client_protocol (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  invocation->endpoint_selection_state_.private_connection_ =
-    invocation->stub_->private_connection ();
-
-  invocation->endpoint_selection_state_.bands_policy_ =
-    invocation->stub_->effective_priority_banded_connection (ACE_TRY_ENV);
+  ACE_TRY
+    {
+      invocation->endpoint_selection_state_.bands_policy_ =
+        invocation->stub_->effective_priority_banded_connection (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::INV_POLICY, ex)
+    {
+      if (invocation->inconsistent_policies_.ptr ())
+        {
+          invocation->inconsistent_policies_->length (1);
+          invocation->inconsistent_policies_[0u] =
+            invocation->stub_->priority_banded_connection ();
+        }
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
   ACE_CHECK;
 }
 
@@ -415,7 +459,16 @@ TAO_Priority_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
             }
           else
             // case b
-            ACE_THROW (CORBA::INV_POLICY ());
+            {
+              if (invocation->inconsistent_policies_.ptr ())
+                {
+                  invocation->inconsistent_policies_->length (1);
+                  invocation->inconsistent_policies_[0u] =
+                    CORBA::Policy::_duplicate (invocation->
+                         endpoint_selection_state_.priority_model_policy_);
+                }
+              ACE_THROW (CORBA::INV_POLICY ());
+            }
         }
     }
 }
@@ -492,6 +545,13 @@ TAO_Bands_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
           // In both cases throw exception.  (We are throwing
           // exception for case 'a' because the current implementation of
           // bands is not interoperable.)
+          if (invocation->inconsistent_policies_.ptr ())
+            {
+              invocation->inconsistent_policies_->length (1);
+              invocation->inconsistent_policies_[0u] =
+                CORBA::Policy::_duplicate (invocation->
+                     endpoint_selection_state_.bands_policy_);
+            }
           ACE_THROW (CORBA::INV_POLICY ());
         }
     }
@@ -521,7 +581,16 @@ TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
     {
       // Figure out proper exception.
       if (!invocation->endpoint_selection_state_.valid_endpoint_found_)
-        ACE_THROW (CORBA::INV_POLICY ());
+        {
+          if (invocation->inconsistent_policies_.ptr ())
+            {
+              invocation->inconsistent_policies_->length (1);
+              invocation->inconsistent_policies_[0u] =
+                CORBA::Policy::_duplicate (invocation->
+                     endpoint_selection_state_.client_protocol_policy_);
+            }
+          ACE_THROW (CORBA::INV_POLICY ());
+        }
       else
         // At least one satisfactory endpoint was found, but
         // connection could not be established.
@@ -634,7 +703,17 @@ TAO_Client_Priority_Policy_Selector::select_endpoint (TAO_GIOP_Invocation
     {
       // Figure out proper exception.
       if (!invocation->endpoint_selection_state_.valid_endpoint_found_)
-        ACE_THROW (CORBA::INV_POLICY ());
+        {
+          if (invocation->inconsistent_policies_.ptr ())
+            {
+              invocation->inconsistent_policies_->length (1);
+              invocation->inconsistent_policies_[0u] =
+                invocation->stub_->get_client_policy
+                (TAO_CLIENT_PRIORITY_POLICY_TYPE,
+                 ACE_TRY_ENV);
+            }
+          ACE_THROW (CORBA::INV_POLICY ());
+        }
       else
         // At least one satisfactory endpoint was found, but
         // connection could not be established.
@@ -678,7 +757,17 @@ TAO_Client_Priority_Policy_Selector::select_endpoint (TAO_GIOP_Invocation
   if (invocation->endpoint_ == 0)
     // Figure out proper exception.
     if (!invocation->endpoint_selection_state_.valid_endpoint_found_)
-      ACE_THROW (CORBA::INV_POLICY ());
+      {
+        if (invocation->inconsistent_policies_.ptr ())
+          {
+            invocation->inconsistent_policies_->length (1);
+            invocation->inconsistent_policies_[0u] =
+              invocation->stub_->get_client_policy
+              (TAO_CLIENT_PRIORITY_POLICY_TYPE,
+               ACE_TRY_ENV);
+          }
+        ACE_THROW (CORBA::INV_POLICY ());
+      }
     else
       // At least one satisfactory endpoint was found, but
       // connection could not be established.
@@ -786,7 +875,16 @@ TAO_Priority_Protocol_Selector::endpoint (TAO_GIOP_Invocation *invocation,
             }
           else
             // case b
-            ACE_THROW (CORBA::INV_POLICY ());
+            {
+              if (invocation->inconsistent_policies_.ptr ())
+                {
+                  invocation->inconsistent_policies_->length (1);
+                  invocation->inconsistent_policies_[0u] =
+                    CORBA::Policy::_duplicate (invocation->
+                         endpoint_selection_state_.priority_model_policy_);
+                }
+              ACE_THROW (CORBA::INV_POLICY ());
+            }
         }
     }
 }
@@ -849,6 +947,13 @@ TAO_Bands_Protocol_Selector::endpoint (TAO_GIOP_Invocation *invocation,
       // In both cases throw exception.  (We are throwing
       // exception for case 'a' because the current implementation of
       // bands is not interoperable.)
+      if (invocation->inconsistent_policies_.ptr ())
+        {
+          invocation->inconsistent_policies_->length (1);
+          invocation->inconsistent_policies_[0u] =
+            CORBA::Policy::_duplicate (invocation->
+                 endpoint_selection_state_.bands_policy_);
+        }
       ACE_THROW (CORBA::INV_POLICY ());
     }
 }
