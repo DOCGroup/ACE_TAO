@@ -2,7 +2,7 @@
 // -*- C++ -*-
 // ===================================================================
 /**
- *  @file   GIOP_Message_Reactive_Handler.h
+ *  @file   GIOP_Message_NonReactive_Handler.h
  *
  *  $Id$
  *
