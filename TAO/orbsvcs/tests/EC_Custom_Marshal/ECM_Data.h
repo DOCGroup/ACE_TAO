@@ -28,10 +28,10 @@ struct ECM_Data
   Inventory inventory;
 };
 
-extern TAO_OutputCDR&
+extern CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr, ECM_Data& x);
 
-extern TAO_InputCDR&
+extern CORBA::Boolean
 operator>> (TAO_InputCDR& cdr, ECM_Data& x);
 
 #endif /* ECM_SUPPLIER_H */

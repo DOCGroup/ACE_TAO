@@ -189,17 +189,17 @@ typedef TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>
 
 extern CORBA::TypeCode_ptr TC_ServiceContextList;
 
-extern TAO_Export TAO_OutputCDR&
-operator<<(TAO_OutputCDR&, const TAO_GIOP_ServiceContext&);
+extern TAO_Export CORBA_Boolean
+operator<< (TAO_OutputCDR&, const TAO_GIOP_ServiceContext&);
 
-extern TAO_Export TAO_InputCDR&
-operator>>(TAO_InputCDR&, TAO_GIOP_ServiceContext&);
+extern TAO_Export CORBA_Boolean
+operator>> (TAO_InputCDR&, TAO_GIOP_ServiceContext&);
 
-extern TAO_Export TAO_OutputCDR&
-operator<<(TAO_OutputCDR&, const TAO_GIOP_ServiceContextList&);
+extern TAO_Export CORBA_Boolean
+operator<< (TAO_OutputCDR&, const TAO_GIOP_ServiceContextList&);
 
-extern TAO_Export TAO_InputCDR&
-operator>>(TAO_InputCDR&, TAO_GIOP_ServiceContextList&);
+extern TAO_Export CORBA_Boolean
+operator>> (TAO_InputCDR&, TAO_GIOP_ServiceContextList&);
 
 // = Reply headers
 

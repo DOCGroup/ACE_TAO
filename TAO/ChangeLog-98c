@@ -1,3 +1,21 @@
+Fri Aug 14 20:13:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.h: 
+	* tao/GIOP.h: 
+	* tao/GIOP.cpp: 
+	* tao/corba.h: 
+	* tao/ORB.cpp: 
+	* tao/Principal.h: 
+	* tao/Principal.cpp: 
+	  The operator<< and operator>> for marshaling and demarhaling
+	  return a CORBA_Boolean, this makes the detection of errors
+	  faster that returning a TAO_OutputCDR& or TAO_InputCDR&.
+
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Data.h: 
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Data.cpp: 
+	  The custom marshalling methods follow the same protocol as the
+	  (proposed) compiled marshalling ones.
+
 Fri Aug 14 14:44:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/IIOP_Interpreter.cpp: 

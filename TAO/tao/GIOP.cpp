@@ -123,39 +123,36 @@ TAO_GIOP::dump_msg (const char *label,
     }
 }
 
-TAO_OutputCDR&
+CORBA_Boolean
 operator<<(TAO_OutputCDR& cdr, const TAO_GIOP_ServiceContext& x)
 {
-  if (cdr.good_bit ())
-    {
-      cdr << x.context_id
-          << x.context_data;
-    }
-  return cdr;
+  if ( (cdr << x.context_id)
+       && (cdr << x.context_data) )
+    return CORBA::B_TRUE;
+  return CORBA::B_FALSE;
 }
 
-TAO_InputCDR&
+CORBA_Boolean
+
 operator>>(TAO_InputCDR& cdr, TAO_GIOP_ServiceContext& x)
 {
-  if (cdr.good_bit ())
-    {
-      cdr >> x.context_id
-          >> x.context_data;
-    }
-  return cdr;
+  if ( (cdr >> x.context_id)
+       && (cdr >> x.context_data) )
+    return CORBA::B_TRUE;
+  return CORBA::B_FALSE;
 }
 
-TAO_OutputCDR&
+CORBA_Boolean
 operator<<(TAO_OutputCDR& cdr, const TAO_GIOP_ServiceContextList& x)
 {
   CORBA::ULong length = x.length ();
   cdr.write_ulong (length);
   for (CORBA::ULong i = 0; i < length && cdr.good_bit (); ++i)
     cdr << x[i];
-  return cdr;
+  return cdr.good_bit ();
 }
 
-TAO_InputCDR&
+CORBA_Boolean
 operator>>(TAO_InputCDR& cdr, TAO_GIOP_ServiceContextList& x)
 {
   CORBA::ULong length;
@@ -166,7 +163,7 @@ operator>>(TAO_InputCDR& cdr, TAO_GIOP_ServiceContextList& x)
       for (CORBA::ULong i = 0; i < length && cdr.good_bit (); ++i)
         cdr >> x[i];
     }
-  return cdr;
+  return cdr.good_bit ();
 }
 
 // @@ TODO: this is a good candidate for an ACE routine, even more,
