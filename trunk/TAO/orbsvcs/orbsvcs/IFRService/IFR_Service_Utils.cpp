@@ -8,6 +8,7 @@
 #include "orbsvcs/IOR_Multicast.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/ORB_Core.h"
+#include "tao/reserved_ports.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFR_Service,

@@ -20,6 +20,7 @@
 
 #include "Persistent_Entries.h"
 #include "naming_export.h"
+#include "nsconf.h"
 #include "tao/PortableServer/PortableServer.h"
 
 class TAO_Naming_Export TAO_Persistent_Context_Index

@@ -23,7 +23,7 @@ ACE_RCSID (tao,
 #include "CDR.h"
 #include "MProfile.h"
 #include "Profile.h"
-
+#include "reserved_ports.h"
 #include "ORBInitInfo.h"
 #include "ORBInitializer_Registry.h"
 

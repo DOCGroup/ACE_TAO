@@ -3,6 +3,7 @@
 // $Id$
 
 #include "UIPMC_Profile.h"
+#include "miopconf.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
