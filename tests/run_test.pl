@@ -28,7 +28,9 @@ if (!getopts ('tc:') || $opt_h) {
 }
 
 if ($OSNAME eq 'MSWin32') {
-    $config = 'MSVC';
+  $config = 'MSVC';
+} else {
+  $config = 'UNIX';
 }
 
 if ($opt_c) {

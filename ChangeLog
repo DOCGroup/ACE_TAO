@@ -1,3 +1,9 @@
+Wed Sep 20 11:44:46 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/run_test.pl:
+	* tests/run_test.lst:
+	  Disable the ACE_Init_Test under UNIX, the test only works on NT.
+
 Wed Sep 20 12:55:16 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/High_Res_Timer.(h cpp i): Win32's scale factor (from
