@@ -4216,7 +4216,7 @@ ACE_OS::event_reset (ACE_event_t *event)
 # endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 
-ACE_INLINE 
+ACE_INLINE
 ACE_Flow_Spec::ACE_Flow_Spec (u_long token_rate,
                               u_long token_bucket_size,
                               u_long peak_bandwidth,
@@ -4250,7 +4250,7 @@ ACE_Flow_Spec::ACE_Flow_Spec (u_long token_rate,
 #endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 }
 
-ACE_INLINE 
+ACE_INLINE
 ACE_Flow_Spec::ACE_Flow_Spec (void)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -4448,7 +4448,7 @@ ACE_Flow_Spec::ttl (int t)
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
     defined (ACE_HAS_WINSOCK2_GQOS)
   ACE_UNUSED_ARG (t);
-  // TBD...      
+  // TBD...
 #else
   ACE_UNUSED_ARG (t);
 #endif /* ACE_HAS_WINSOCK2 */
@@ -5110,7 +5110,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
   ACE_UNUSED_ARG (overlapped);
   ACE_UNUSED_ARG (func);
   int bytes_sent;
-  
+
   if (number_of_bytes_sent == 0)
     number_of_bytes_sent = &bytes_sent;
 
@@ -5121,7 +5121,8 @@ ACE_OS::sendto (ACE_HANDLE handle,
   for (int i = 0; i < buffer_count; i++)
     {
        result = ACE_OS::sendto (handle,
-                                buffers[i].iov_base,
+                                ACE_reinterpret_cast(const char*,
+                                                     buffers[i].iov_base),
                                 buffers[i].iov_len,
                                 flags,
                                 addr,

@@ -1,3 +1,8 @@
+Tue Jun 29 09:21:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.i:
+	  Fixed ACE_OS::sendto() call...
+
 Tue Jun 29 07:07:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/check_build_logs: allow _ with -l and -m options, and
