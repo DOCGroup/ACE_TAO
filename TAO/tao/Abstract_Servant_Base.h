@@ -30,9 +30,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// -- Forward Class Definition --
-class ServerRequest;
-
 class TAO_Export TAO_Abstract_ServantBase
 {
 public:
@@ -95,12 +92,3 @@ protected:
 
 #include "ace/post.h"
 #endif /* TAO_ABSTRACT_SERVANT_BASE_H_ */
-
-
-
-
-
-
-
-
-
