@@ -131,7 +131,7 @@ Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri
     current = ACE_static_cast (TAO_RTScheduler_Current_i *,
                                tss->rtscheduler_current_impl_);
     if (current != 0)
-      current->scheduler ()->receive_reply (ri);
+      current->scheduler ()->send_poll (ri);
 
 }
 
@@ -405,7 +405,19 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
           current->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
+	  return;
         }
+      else ACE_DEBUG ((LM_DEBUG,
+		       "Thread Not Cancelled\n"));
+
+
+      // Inform scheduler that upcall is complete.
+      current->scheduler ()->send_reply (ri
+					 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      current->cleanup_DT ();
+      current->cleanup_current ();
 
       // Get the previous current if any.
       prev_current = ACE_static_cast (TAO_RTScheduler_Current_i *,
@@ -417,13 +429,9 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
       // Reset the previous current pointer.
       tss->rtscheduler_previous_current_impl_ = 0;
 
-      // Inform scheduler that upcall is complete.
-      current->scheduler ()->send_reply (ri);
-
-      current->cleanup_DT ();
-      current->cleanup_current ();
-
     }
+  else ACE_DEBUG ((LM_DEBUG,
+		   "Send Reply Current is 0\n"));
 }
 
 void
