@@ -3,6 +3,8 @@
 
 #include "tao/orbconf.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/RTCORBA/Multi_Priority_Mapping.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
@@ -228,3 +230,5 @@ TAO_Multi_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
 
   return 1;
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
