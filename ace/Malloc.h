@@ -110,10 +110,10 @@ public:
   // Change the protection of the pages of the mapped region to <prot>
   // starting at <addr> up to <len> bytes.
 
-#if defined (ACE_MALLOC_STATS)
+#if defined (ACE_HAS_MALLOC_STATS)
   virtual void print_stats (void) const = 0;
   // Dump statistics of how malloc is behaving.
-#endif /* ACE_MALLOC_STATS */ 
+#endif /* ACE_HAS_MALLOC_STATS */ 
 
   virtual void dump (void) const = 0;
   // Dump the state of the object.
@@ -126,7 +126,7 @@ private:
   // Must delete the <allocator_> if non-0.
 };
 
-#if defined (ACE_MALLOC_STATS)
+#if defined (ACE_HAS_MALLOC_STATS)
 #include "ace/Synch_T.h"
 #if defined (ACE_HAS_THREADS)
 #define ACE_PROCESS_MUTEX ACE_Process_Mutex
@@ -156,7 +156,7 @@ struct ACE_Export ACE_Malloc_Stats
 #define AMS(X) X
 #else
 #define AMS(X) 
-#endif /* ACE_MALLOC_STATS */
+#endif /* ACE_HAS_MALLOC_STATS */
 
 // ACE_MALLOC_ALIGN allows you to insure that allocated regions are at least
 // <ACE_MALLOC_ALIGN> bytes long.  It is especially useful when you want
@@ -234,7 +234,7 @@ public:
   char lock_name_[MAXNAMELEN];
   // Name of lock thats ensures mutual exclusion. 
 
-#if defined (ACE_MALLOC_STATS)
+#if defined (ACE_HAS_MALLOC_STATS)
   // Keep statistics about ACE_Malloc state and performance.
   ACE_Malloc_Stats malloc_stats_;
 #define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node *) \
@@ -245,7 +245,7 @@ public:
 #define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof(ACE_Name_Node *) \
 				      + sizeof (ACE_Malloc_Header *) \
 				      + MAXNAMELEN))
-#endif /* ACE_MALLOC_STATS */
+#endif /* ACE_HAS_MALLOC_STATS */
 
 // Notice the casting to int for sizeof() otherwise unsigned int
 // arithmetic is used and some awful things may happen.
@@ -291,9 +291,9 @@ public:
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR); 
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
-#if defined (ACE_MALLOC_STATS)
+#if defined (ACE_HAS_MALLOC_STATS)
   virtual void print_stats (void) const;
-#endif /* ACE_MALLOC_STATS */ 
+#endif /* ACE_HAS_MALLOC_STATS */ 
   virtual void dump (void) const;
 };
 

@@ -187,10 +187,10 @@ public:
   ALLOCATOR &alloc (void);
   // Returns the underlying allocator.
 
-#if defined (ACE_MALLOC_STATS)
+#if defined (ACE_HAS_MALLOC_STATS)
   virtual void print_stats (void) const;
   // Dump statistics of how malloc is behaving.
-#endif /* ACE_MALLOC_STATS */
+#endif /* ACE_HAS_MALLOC_STATS */
 
   virtual void dump (void) const;
   // Dump the state of the object.
@@ -335,10 +335,10 @@ public:
   // @return function returns the number of chunks of the given size
   //          that would fit in the currently allocated memory.
 
-#if defined (ACE_MALLOC_STATS)
+#if defined (ACE_HAS_MALLOC_STATS)
   void print_stats (void) const;
   // Dump statistics of how malloc is behaving.
-#endif /* ACE_MALLOC_STATS */
+#endif /* ACE_HAS_MALLOC_STATS */
 
   void dump (void) const;
   // Dump the state of an object.

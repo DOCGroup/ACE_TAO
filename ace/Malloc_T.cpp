@@ -47,14 +47,14 @@ ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter (void)
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter");
 }
 
-#if defined (ACE_MALLOC_STATS)
+#if defined (ACE_HAS_MALLOC_STATS)
 template <class MALLOC> void
 ACE_Allocator_Adapter<MALLOC>::print_stats (void) const
 {
   ACE_TRACE ("ACE_Malloc<MALLOC>::print_stats");
   this->allocator_.print_stats ();
 }
-#endif /* ACE_MALLOC_STATS */
+#endif /* ACE_HAS_MALLOC_STATS */
 
 template <class MALLOC> void
 ACE_Allocator_Adapter<MALLOC>::dump (void) const
@@ -72,13 +72,13 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
   this->memory_pool_.dump ();
   ACE_DEBUG ((LM_DEBUG, "cb_ptr_ = %x", this->cb_ptr_));
   ACE_DEBUG ((LM_DEBUG, "\n"));
-#if defined (ACE_MALLOC_STATS)
+#if defined (ACE_HAS_MALLOC_STATS)
   this->cp_ptr_->malloc_stats_.dump ();
-#endif /* ACE_MALLOC_STATS */
+#endif /* ACE_HAS_MALLOC_STATS */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-#if defined (ACE_MALLOC_STATS)
+#if defined (ACE_HAS_MALLOC_STATS)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> void
 ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::print_stats (void) const
@@ -101,7 +101,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::print_stats (void) const
 	break;
     }
 }
-#endif /* ACE_MALLOC_STATS */
+#endif /* ACE_HAS_MALLOC_STATS */
 
 // Put block AP in the free list (locked version). 
 
@@ -140,11 +140,11 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::open (void)
     {
       // ACE_DEBUG ((LM_DEBUG, "(%P|%t) first time in, control block = %u\n", this->cb_ptr_));
 
-#if defined (ACE_MALLOC_STATS)
+#if defined (ACE_HAS_MALLOC_STATS)
       // Call the constructor on the ACE_LOCK, using the placement
       // operator!
       new ((void *) &this->cb_ptr_->malloc_stats_) ACE_Malloc_Stats;
-#endif /* ACE_MALLOC_STATS */
+#endif /* ACE_HAS_MALLOC_STATS */
 
       // Initialize the freelist pointer to point to the dummy
       // ACE_Malloc_Header.
@@ -230,9 +230,9 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::remove (void)
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) destroying ACE_Malloc\n"));
   int result = 0;
 
-#if defined (ACE_MALLOC_STATS)
+#if defined (ACE_HAS_MALLOC_STATS)
   this->print_stats (); 
-#endif /* ACE_MALLOC_STATS */  
+#endif /* ACE_HAS_MALLOC_STATS */  
 
   // Remove the ACE_LOCK.
   this->lock_.remove ();

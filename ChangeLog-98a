@@ -1,8 +1,3 @@
-Sat Dec 20 15:39:00 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
-
-	* tests/IOStream_Test.cpp (spawn): Changed ACE_LACKS_EXEC to
-	  ACE_LACKS_FORK.
-
 Sat Dec 20 11:05:45 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/test_config.h (ACE_INIT_LOG): Added (%P|%t) to an
@@ -10,6 +5,28 @@ Sat Dec 20 11:05:45 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/IOStream_Test.cpp (spawn): Revised the test so that it
  	  prints data correctly to the child processes.
+
+	* examples/Shared_Malloc/test_multiple_mallocs.cpp (main): Moved
+ 	  the final print statement inside one of the if blocks so that it
+ 	  appears only every second invocation to remind people to rerun
+ 	  the program to remove the leaks.  Thanks to Tom Arbuckle
+ 	  <arbuckle@uran.informatik.uni-bonn.de> for suggesting this.
+
+	* ace/Malloc*: Changed ACE_MALLOC_STATS to ACE_HAS_MALLOC_STATS
+	  since this is more consistent with ACE conventions.  Also, 
+	  added ACE_HAS_MALLOC_STATS to the ace/README file.  Thanks
+	  to Tom Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for
+	  suggesting this.
+
+	* ace/Memory_Pool.cpp (ACE_Shared_Memory_Pool): Fixed the logic
+ 	  for naming the backing store if the sscanf() call fails.  Thanks
+ 	  to Tom Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for
+ 	  suggesting this.
+
+Sat Dec 20 15:39:00 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* tests/IOStream_Test.cpp (spawn): Changed ACE_LACKS_EXEC to
+	  ACE_LACKS_FORK.
 
 Sat Dec 20 09:42:06 1997  David L. Levine  <levine@cs.wustl.edu>
 

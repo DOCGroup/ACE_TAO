@@ -97,12 +97,12 @@ ACE_New_Allocator::protect (void *, size_t, int)
   return -1;
 }
   
-#if defined (ACE_MALLOC_STATS)
+#if defined (ACE_HAS_MALLOC_STATS)
 ACE_INLINE void
 ACE_New_Allocator::print_stats (void) const
 {
 }
-#endif /* ACE_MALLOC_STATS */
+#endif /* ACE_HAS_MALLOC_STATS */
 
 ACE_INLINE void 
 ACE_New_Allocator::dump (void) const
