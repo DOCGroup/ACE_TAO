@@ -85,6 +85,9 @@ public:
   const char *full_skel_name (void);
   // Retrieve the fully scoped skel class name. 
 
+  const char *ami_handler_full_skel_name (void);
+  // Retrieve the fully scoped skel AMI handler class name 
+
   //
   // Each interface (to fix names "T") also defines two help classes,
   // the "collocated" class inherits from T, but delegates on the
@@ -97,18 +100,26 @@ public:
   // @@ TODO currently the stub class is not implemented.
   //
   const char *full_coll_name (void);
-  // retrieve the fully qualified collocated class name
+  // Retrieve the fully qualified collocated class name
+
+  const char *ami_handler_full_coll_name (void);
+  // Retrieve the fully qualified collocated AMI handler class name
 
   const char *local_coll_name (void) const;
-  // retrieve the fully qualified collocated class name.
+  // Retrieve the fully qualified collocated class name.
+
+  const char *ami_handler_local_coll_name (void);
+  // Retrieve the fully qualified collocated AMI handler class name.
+
+  const char *ami_handler_local_name (void);
+  // Retrieve the local name of the AMI handler 
 
   int compute_coll_names (const char *local_name,
                           char *&coll_local_name,
                           char *&coll_full_name); 
-    // Generate collocated local and full names for the arbitrary local
+  // Generate collocated local and full names for the arbitrary local
   // name under the scope of this interface. Usefull to generate AMI
   // Handlers. 
-
 
   virtual int traverse_inheritance_graph (tao_code_emitter gen,
                                           TAO_OutStream *os);
@@ -245,14 +256,26 @@ private:
   char *full_skel_name_;
   // Fully scoped skeleton name.
 
+  char *ami_handler_full_skel_name_;
+  // Fully scoped AMI Handler skeleton name
+
   int skel_count_;
   // Number of static skeletons in the operation table.
 
   char *full_coll_name_;
-  // full collocated name
+  // Full collocated name
+
+  char *ami_handler_full_coll_name_;
+  // Full collocated name of the AMI handler
 
   char *local_coll_name_;
-  // local collocated name
+  // Local collocated name
+
+  char *ami_handler_local_coll_name_;
+  // Local collocated name of the AMI handler
+
+  char *ami_handler_local_name_;
+  // Local name of the AMI Handler
 
   int in_mult_inheritance_;
   // am I directly or indirectly involved in a multiple inheritance. If the

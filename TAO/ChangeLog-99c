@@ -1,3 +1,47 @@
+Tue Jul  6 22:10:00 1999  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tao/PollableS.cpp:
+    Replaced three ACE_BASE_CLASS macros with ACE_CORBA_1 macros
+    to get VC to compile it.
+
+	* TAO_IDL/be_include/be_decl.h
+	* TAO_IDL/be/be_decl.cpp
+  * TAO_IDL/be_include/be_interface.h
+  * TAO_IDL/be/be_interface.cpp:
+  * TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
+  * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp
+  * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp
+  * TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp
+  * TAO_IDL/be/be_visitor_argument/ami_handler_vardecl_cs.cpp:
+    Added code to generate ami_handler_ names. The generated names
+    are held in the corresponding classes, which is then also responsible 
+    for deleting it.
+
+  * TAO_IDL/be/be_visitor_operation/ami_handler_argument_marshal.cpp
+  * TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp
+  * TAO_IDL/be/be_visitor_argument/ami_handler_compiled_marshal_cs.cpp
+    Added these files for code generation of the AMI
+    Handler skeleton.
+
+  * TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
+  * TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
+  * TAO_IDL/be_include/be_visitor_operation/ami_handler_skeleton_cs.h
+  * TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp:
+    Made changes to generate skeleton code for the AMI handler.
+
+  * TAO_IDL/be_include/be_visitor_interface/ami_handler_servant_cs.h
+  * TAO_IDL/be/be_visitor_interface/ami_handler_servant_cs.cpp:
+    Added these files for code generation of the AMI
+    handler servant.
+
+  * TAO_IDL/be/be_codegen.h
+  * TAO_IDL/be/be_visitor_factory.cpp
+  * TAO_IDL/be/be_visitor_interface.cpp
+  * TAO_IDL/be_include/be_visitor_interface.h
+  * TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+    Made changes to generate servant code for the AMI handler.
+
+
 Tue Jul  6 09:55:42 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/Invocation.cpp
