@@ -29,6 +29,7 @@ class TAO_Export TAO_IIOP_Protocol_Factory : public TAO_Protocol_Factory
 {
 public:
   TAO_IIOP_Protocol_Factory (void);
+  
   virtual ~TAO_IIOP_Protocol_Factory (void);
 
   // = Service Configurator hooks.
