@@ -32,13 +32,14 @@ ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb)
 
 PortableServer::Servant
 ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
-                               PortableServer::POA_ptr poa,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               PortableServer::POA_ptr poa
+                               TAO_ENV_ARG_DECL)
 {
+  TAO_ENV_ARG_DEFN;
   // Convert ObjectId to String.
    CORBA::String_var s =
      PortableServer::ObjectId_to_string (oid);
- 
+
   // Activate and return the servant else exception.
   PortableServer::Servant servant =
     this->servant_manager_.obtain_servant (s.in (),
@@ -59,8 +60,8 @@ ServantActivator_i::etherealize (const PortableServer::ObjectId &oid,
                                  PortableServer::POA_ptr,
                                  PortableServer::Servant servant,
                                  CORBA::Boolean,
-                                 CORBA::Boolean remaining_activations,
-                                 CORBA::Environment &)
+                                 CORBA::Boolean remaining_activations
+                                 TAO_ENV_ARG_DECL_NOT_USED)
 {
   // If there are no remaining activations i.e ObjectIds associated
   // with MyFooServant object, deactivate it.  Etheralization happens
@@ -81,4 +82,3 @@ ServantActivator_i::create_dll_object_id (const char *dllname,
   return this->servant_manager_.create_dll_object_id (dllname,
                                                       factory_function);
 }
-

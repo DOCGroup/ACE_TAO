@@ -29,9 +29,10 @@ MyFooServantActivator::MyFooServantActivator (CORBA::ORB_ptr orb)
 
 PortableServer::Servant
 MyFooServantActivator::incarnate (const PortableServer::ObjectId &oid,
-                                  PortableServer::POA_ptr poa,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  PortableServer::POA_ptr poa
+                                  TAO_ENV_ARG_DECL)
 {
+  TAO_ENV_ARG_DEFN;
   // Convert ObjectId to String.
 
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
@@ -56,10 +57,9 @@ MyFooServantActivator::etherealize (const PortableServer::ObjectId &,
                                     PortableServer::POA_ptr ,
                                     PortableServer::Servant servant,
                                     CORBA::Boolean ,
-                                    CORBA::Boolean remaining_activations,
-                                    CORBA::Environment &)
+                                    CORBA::Boolean remaining_activations
+                                    TAO_ENV_ARG_DECL_NOT_USED)
 {
-  
   // If there are no remaining activations i.e ObjectIds associated
   // with MyFooServant delete it.
 

@@ -1,7 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-//=================================================================================
+// ================================================================
 //
 // = LIBRARY
 //     TAO/examples/POA/On_Demand_Loading
@@ -17,7 +17,7 @@
 // = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
 //
-//==================================================================================
+// ================================================================
 
 #ifndef SERVANT_ACTIVATOR_H
 #define SERVANT_ACTIVATOR_H
@@ -37,8 +37,8 @@ public:
   // Initialization.
 
   virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
-                                             PortableServer::POA_ptr poa,
-                                             CORBA::Environment &ACE_TRY_ENV);
+                                             PortableServer::POA_ptr poa
+                                             TAO_ENV_ARG_DECL);
   // This method is invoked by a POA with USE_SERVANT_MANAGER and
   // RETAIN policies, whenever it receives a request for a
   // MyFooServant object that is not currently active. When an servant
@@ -53,8 +53,8 @@ public:
                             PortableServer::POA_ptr adapter,
                             PortableServer::Servant servant,
                             CORBA::Boolean cleanup_in_progress,
-                            CORBA::Boolean remaining_activations,
-                            CORBA::Environment &ACE_TRY_ENV);
+                            CORBA::Boolean remaining_activations
+                            TAO_ENV_ARG_DECL);
   // This method is invoked whenever a MyFooServant for a MyFoo object
   // is deactivated. This occurs when the POA is destroyed or the
   // Object is deactivated. When the POA is getting destroyed, it

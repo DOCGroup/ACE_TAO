@@ -61,9 +61,11 @@ ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb,
 
 PortableServer::Servant
 ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
-                               PortableServer::POA_ptr poa,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               PortableServer::POA_ptr poa
+                               TAO_ENV_ARG_DECL)
 {
+  TAO_ENV_ARG_DEFN;
+
   // Obtain the servant else exception.
   PortableServer::Servant servant =
     (*servant_supplier_) (oid,
@@ -84,8 +86,8 @@ ServantActivator_i::etherealize (const PortableServer::ObjectId &oid,
                                  PortableServer::POA_ptr poa,
                                  PortableServer::Servant servant,
                                  CORBA::Boolean,
-                                 CORBA::Boolean remaining_activations,
-                                 CORBA::Environment &)
+                                 CORBA::Boolean remaining_activations
+                                 TAO_ENV_ARG_DECL_NOT_USED)
 {
   // If there are no remaining activations i.e ObjectIds associated
   // with MyFooServant object, deactivate it by calling the garbage_collection_function.
