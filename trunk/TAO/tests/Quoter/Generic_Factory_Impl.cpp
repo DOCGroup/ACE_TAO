@@ -172,7 +172,9 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
       ACE_DEBUG ((LM_DEBUG,
                   "Return a object reference to a new object.\n"));
 
-      return CORBA::Object::_duplicate (quoter_var.ptr());
+      CORBA::Object_ptr object_ptr = CORBA::Object::_duplicate ((CORBA::Object_ptr) quoter_var.ptr());
+
+      return object_ptr;
     }
 } 
 

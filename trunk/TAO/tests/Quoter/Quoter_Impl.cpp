@@ -136,69 +136,71 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
       Stock::Quoter_var quoter_var;
       
       for (u_int i = 0; i < factories_ptr->length (); i++)
+      {
+        // Get the first object reference to a factory.
+        CORBA::Object_ptr generic_FactoryObj_ptr = (*factories_ptr)[i];
+        
+        // Narrow it to a Quoter Factory.
+        CosLifeCycle::GenericFactory_var generic_Factory_var =
+          CosLifeCycle::GenericFactory::_narrow (generic_FactoryObj_ptr,
+                                          TAO_TRY_ENV);
+        TAO_CHECK_ENV;
+	  
+        if (CORBA::is_nil (generic_Factory_var.in ()))
+	      {
+	        ACE_ERROR ((LM_ERROR,
+	                    "Quoter::copy: Narrow failed. Generic Factory is not valid.\n"));
+          return CosLifeCycle::LifeCycleObject::_nil();
+	      }
+	  
+	      CosLifeCycle::Key genericFactoryName (1);  // max = 1 
+	      genericFactoryName.length(1);
+	      genericFactoryName[0].id = CORBA::string_dup ("Quoter_Factory");
+	  
+      	CosLifeCycle::Criteria criteria(1);
+	      criteria.length (1);
+	      criteria[0].name = CORBA::string_dup ("filter");
+	      criteria[0].value <<= CORBA::string_dup ("name=='Quoter_Generic_Factory'");
+	  
+	      CORBA::Object_var quoterObject_var = 
+	          generic_Factory_var->create_object (genericFactoryName,
+		  		                          		        criteria,
+			  			                                  TAO_TRY_ENV);
+	      TAO_CHECK_ENV;
+	  
+	      quoter_var = Stock::Quoter::_narrow (quoterObject_var.in(), TAO_TRY_ENV);     
+	      TAO_CHECK_ENV;
+	  
+        if (CORBA::is_nil (quoter_var.in ()))
         {
-          // Get the first object reference to a factory.
-          CORBA::Object_ptr generic_FactoryObj_ptr = (*factories_ptr)[i];
-	  
-          // Narrow it to a Quoter Factory.
-          CosLifeCycle::GenericFactory_var generic_Factory_var =
-            CosLifeCycle::GenericFactory::_narrow (generic_FactoryObj_ptr,
-                                            TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-	  
-          if (CORBA::is_nil (generic_Factory_var.in ()))
-	    {
-	      ACE_ERROR ((LM_ERROR,
-			  "Quoter::copy: Narrow failed. Generic Factory is not valid.\n"));
-	      return CosLifeCycle::LifeCycleObject::_nil();
-	    }
-	  
-	  CosLifeCycle::Key genericFactoryName (1);  // max = 1 
-	  genericFactoryName.length(1);
-	  genericFactoryName[0].id = CORBA::string_dup ("Quoter_Factory");
-	  
-	  CosLifeCycle::Criteria criteria(1);
-	  criteria.length (1);
-	  criteria[0].name = CORBA::string_dup ("filter");
-	  criteria[0].value <<= CORBA::string_dup ("name=='Quoter_Generic_Factory'");
-	  
-	  CORBA::Object_var quoterObject_var = 
-	    generic_Factory_var->create_object (genericFactoryName,
-						       criteria,
-						       TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	  
-	  Stock::Quoter_var quoter_var = Stock::Quoter::_narrow (quoterObject_var.in(), TAO_TRY_ENV);     
-	  TAO_CHECK_ENV;
-	  
-          if (CORBA::is_nil (quoter_var.in ()))
-            {
-              // If we had already our last chance, then give up.
-              if (i == factories_ptr->length ())
-                {
-                  _env_there.exception (new CosLifeCycle::NoFactory (factoryKey));
-		  ACE_ERROR ((LM_ERROR,
-			      "Quoter::copy: Last factory did not work. \n"
-			      "No more factories are available. I give up.\n"));
-		  return CosLifeCycle::LifeCycleObject::_nil();		  
-                }
-              else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "Quoter::copy: Factory did not create the Quoter properly.\n"));
-                  // Else tell what's wrong and try the next factory.
-                }
-            }
+          // If we had already our last chance, then give up.
+          if (i == factories_ptr->length ())
+          {
+            _env_there.exception (new CosLifeCycle::NoFactory (factoryKey));
+            ACE_ERROR ((LM_ERROR,
+                        "Quoter::copy: Last factory did not work. \n"
+                        "No more factories are available. I give up.\n"));
+            return CosLifeCycle::LifeCycleObject::_nil();		  
+          }
           else
-	    // if succeeded in creating a new Quoter over there, then stop trying
-            break;	  
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "Quoter::copy: Factory did not create the Quoter properly.\n"));
+            // Tell what's wrong and try the next factory.
+          }
         }
+        else
+          // if succeeded in creating a new Quoter over there, then stop trying
+          break;	  
+      }
       
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Quoter copied\n"));
 
+      CosLifeCycle::LifeCycleObject_ptr lifeCycleObject_ptr = 
+        CosLifeCycle::LifeCycleObject::_duplicate ((CosLifeCycle::LifeCycleObject_ptr) quoter_var.in());
       // Duplicate and eturn an object reference to the newly created Quoter.
-      return CosLifeCycle::LifeCycleObject::_duplicate ((CosLifeCycle::LifeCycleObject_ptr) quoter_var.ptr());
+      return lifeCycleObject_ptr;
     }
   TAO_CATCHANY
     {

@@ -84,11 +84,13 @@ Quoter_Client::run (void)
   ACE_DEBUG ((LM_DEBUG, "ACE Hardware = %i\n", q));
 
   // Copy the Quoter
+
   CosLifeCycle::Criteria criteria;
   CORBA::Object_var quoterObj_var =
     this->quoter_var_->copy (factory_Finder_var_.in (), 
 			     criteria,
 			     this->env_);
+
   if (this->env_.exception () != 0)
   {
     this->env_.print_exception ("with copy.");
@@ -96,18 +98,30 @@ Quoter_Client::run (void)
     return -1;
   }
 
+  if (CORBA::is_nil (quoterObj_var.in()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Quoter_Client::run: Copied Object pointer is nil!"),
+                      -1);
+
+  // Narrow it to the actual Quoter interface
+
   Stock::Quoter_var copied_quoter_var =
     Stock::Quoter::_narrow (quoterObj_var.in (),
 			    this->env_);
+
   if (this->env_.exception () != 0)
   {
     this->env_.print_exception ("with narrow.");
     this->env_.clear();
     return -1;
   }
+  if (CORBA::is_nil (copied_quoter_var.in()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Quoter_Client::run: Copied Quoter is nil!"),
+                      -1);
   
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Copied object\n"));
+    ACE_DEBUG ((LM_DEBUG, "Copied object.\n"));
 
   q = 0;
   q = copied_quoter_var->get_quote ("ACE Hardware", this->env_);
@@ -121,7 +135,6 @@ Quoter_Client::run (void)
   ACE_DEBUG ((LM_DEBUG, "Copied object: ACE Hardware = %i\n", q));
 
   // Move the Quoter
-/*
   this->quoter_var_->move (factory_Finder_var_.in (), 
 			     criteria,
 			     this->env_);
@@ -146,7 +159,7 @@ Quoter_Client::run (void)
     return -1;
   }
   
-  ACE_DEBUG ((LM_DEBUG, "Moved object: ACE Hardware = %i\n", q)); */
+  ACE_DEBUG ((LM_DEBUG, "Moved object: ACE Hardware = %i\n", q)); 
   return 0;  
 }
 
