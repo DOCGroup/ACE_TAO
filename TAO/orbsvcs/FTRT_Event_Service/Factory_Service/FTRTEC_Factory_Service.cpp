@@ -61,7 +61,7 @@ int main(int argc, ACE_TCHAR* argv[])
                                              ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-  
+
     if (parse_args(argc, argv) == -1)
       return -1;
 
@@ -74,13 +74,13 @@ int main(int argc, ACE_TCHAR* argv[])
       PortableServer::POA::_narrow(obj.in()
                                    ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     PortableServer::POAManager_var mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     EventChannelFactory_i servant("factory.cfg", orb.in());
 
     FT::GenericFactory_var event_channel_factory =
@@ -149,7 +149,7 @@ int main(int argc, ACE_TCHAR* argv[])
   }
   ACE_ENDTRY;
 
-  
+
   ACE_CHECK_RETURN(1);
 
   return 0;

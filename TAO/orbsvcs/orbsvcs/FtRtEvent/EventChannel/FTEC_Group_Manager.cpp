@@ -159,7 +159,7 @@ void TAO_FTEC_Group_Manager::add_member (
                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (impl_->my_position < impl_->info_list.length()-2) 
+  if (impl_->my_position < impl_->info_list.length()-2)
   {
     // I am not the last of replica, tell my successor that
     // a new member has joined in.
@@ -168,9 +168,9 @@ void TAO_FTEC_Group_Manager::add_member (
         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       return;
-    } 
+    }
     ACE_CATCHANY {
-      // Unable to send request to all the successors. 
+      // Unable to send request to all the successors.
       // Now this node become the last replica of the object group.
     }
     ACE_ENDTRY;
