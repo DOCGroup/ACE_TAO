@@ -39,6 +39,7 @@
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Get_Opt.h"
