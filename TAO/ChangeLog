@@ -18,15 +18,15 @@ Mon Nov 11 17:27:22 2002  Carlos O'Ryan  <coryan@atdesk.com>
 	* tao/Messaging/AMI_ClientRequestInfo_i.h:
 	* tao/Messaging/AMI_ClientRequestInfo_i.cpp:
 	* tao/Messaging/Makefile:
-	  Add implementation class for AMI ClientRequestInfos.
+	  Add implementation class for AMI ClientRequestInfos.  [Bug 286]
 
 	* TAO_IDL/be/be_codegen.cpp:
 	  Move some #includes to the .cpp file, include
 	  AMI_ClientRequestInfo_i.h when compiling with interceptors and
-	  AMI.
+	  AMI.    [Bug 286]
 
 	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
-	  Generate interceptor code for sendc_*** operations.
+	  Generate interceptor code for sendc_*** operations.  [Bug 286]
 
 	* tests/Portable_Interceptors/Makefile:
 	* tests/Portable_Interceptors/AMI/Makefile:
