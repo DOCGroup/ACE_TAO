@@ -1,3 +1,16 @@
+Fri Apr 23 06:18:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Pipe_Test.cpp:
+        * tests/Process_Manager_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+        * tests/Signal_Test.cpp:
+        * tests/Time_Service_Test.cpp:
+          These tests did check for ACE_LACKS_FORK but didn't use fork
+          at all, but ACE_Process::spawn() to spawn new processes.
+          This function has much more implementations, so removed the
+          check for fork. In case a platform doesn't support this test,
+          this should be solved in the run_tests.lst file.
+
 Fri Apr 23 06:15:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.inl:
