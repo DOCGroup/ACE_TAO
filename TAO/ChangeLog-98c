@@ -1,3 +1,10 @@
+Wed Aug  5 17:48:31 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tests/Param_Test/var_struct.{h,cpp}:
+	* tests?param_Test/nested_struct.{h,cpp}:
+	  DII now works, but is non-compliant (OUT arg
+	  has to be extracted to get correct value).
+
 Wed Aug  5 17:05:36 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* TAO-INSTALL.html: Added instruction for the addition of 

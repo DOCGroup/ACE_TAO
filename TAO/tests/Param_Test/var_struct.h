@@ -62,6 +62,12 @@ public:
   // print all the values
 
 private:
+  // private utility called by the 2 versions of check_validity () above
+  CORBA::Boolean check_validity_engine (Param_Test::Var_Struct the_in,
+                                        Param_Test::Var_Struct the_inout,
+                                        Param_Test::Var_Struct the_out,
+                                        Param_Test::Var_Struct the_ret);
+
   char *opname_;
   // operation name
 
@@ -79,6 +85,10 @@ private:
   // return value
 
   Param_Test::Var_Struct *dii_out_;
+  // DII out parameter
+
+  Param_Test::Var_Struct *dii_ret_;
+  // DII return value
 };
 
 #endif /* PARAM_TEST_VAR_STRUCT_H */
