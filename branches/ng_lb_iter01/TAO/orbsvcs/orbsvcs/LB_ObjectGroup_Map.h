@@ -25,6 +25,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "orbsvcs/LoadBalancingC.h"
 #include "tao/PortableServer/Key_Adapters.h"
+#include "tao/PortableServer/PortableServerC.h"
 
 #include "LB_ReplicaInfo.h"
 

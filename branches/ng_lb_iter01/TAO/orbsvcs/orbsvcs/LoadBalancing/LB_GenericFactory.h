@@ -98,8 +98,10 @@ private:
   /// Populate the object group being created.  Called when the
   /// infrastructure-controlled membership style is used for the
   /// object group being created.
-  void populate_object_group (TAO_LB_ObjectGroup_Map_Entry *entry,
-                              CORBA::Environment &ACE_TRY_ENV);
+  void populate_object_group (
+         TAO_LB_ObjectGroup_Map_Entry *entry,
+         const LoadBalancing::FactoryInfos &factory_infos,
+         CORBA::Environment &ACE_TRY_ENV);
 
   /// Get a new ObjectId to be used when creating a new ObjectGroup.
   /**
@@ -132,6 +134,10 @@ private:
    * Balancer.
    */
   CORBA::ULong next_fcid_;
+
+  /// Lock used to synchronize access to the factory creation id
+  /// index (i.e. next_fcid_).
+  TAO_SYNCH_MUTEX lock_;
 
 };
 

@@ -3,7 +3,7 @@
 ACE_INLINE int
 TAO_LB_Location_Equal_To::operator () (
   const LoadBalancing::Location &lhs,
-  const LoadBalancing::Location &rhs)
+  const LoadBalancing::Location &rhs) const
 {
   // @todo Interim implementation until we figure out what to do when a
   //       location has multiple components.

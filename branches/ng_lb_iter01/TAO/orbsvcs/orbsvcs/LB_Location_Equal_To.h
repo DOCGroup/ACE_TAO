@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "LoadbalancingC.h"
+#include "orbsvcs/LoadBalancingC.h"
 
 /**
  * @class TAO_LB_Location_Equal_To

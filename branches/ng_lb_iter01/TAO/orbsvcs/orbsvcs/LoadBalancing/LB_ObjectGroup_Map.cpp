@@ -33,7 +33,7 @@ TAO_LB_ObjectGroup_Map::unbind (const PortableServer::ObjectId &oid)
 }
 
 void
-TAO_LB_ObjectGroupManager::poa (PortableServer::POA_ptr poa)
+TAO_LB_ObjectGroup_Map::poa (PortableServer::POA_ptr poa)
 {
   this->poa_ = PortableServer::POA::_duplicate (poa);
 }
@@ -53,7 +53,7 @@ TAO_LB_ObjectGroup_Map::get_group_entry (
   ACE_CHECK_RETURN (0);
 
   TAO_LB_ObjectGroup_Map_Entry *group_entry = 0;
-  if (this->object_group_map_.find (oid.in (), group_entry) != 0)
+  if (this->table_.find (oid.in (), group_entry) != 0)
     ACE_THROW_RETURN (LoadBalancing::ObjectGroupNotFound (),
                       0);
 

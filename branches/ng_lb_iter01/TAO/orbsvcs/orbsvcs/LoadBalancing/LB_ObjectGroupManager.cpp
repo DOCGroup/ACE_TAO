@@ -38,15 +38,16 @@ TAO_LB_ObjectGroupManager::create_member (
 
 LoadBalancing::ObjectGroup_ptr
 TAO_LB_ObjectGroupManager::add_member (
-    LoadBalancing::ObjectGroup_ptr object_group,
-    const LoadBalancing::Location &the_location,
-    CORBA::Object_ptr member,
+    LoadBalancing::ObjectGroup_ptr /* object_group */,
+    const LoadBalancing::Location & /* the_location */,
+    CORBA::Object_ptr /* member */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::ObjectGroupNotFound,
                    LoadBalancing::MemberAlreadyPresent,
                    LoadBalancing::ObjectNotAdded))
 {
+#if 0
   TAO_LB_ObjectGroup_Map_Entry group_entry =
     this->object_group_map_.get_group_entry (object_group, ACE_TRY_ENV);
   ACE_CHECK_RETURN (LoadBalancing::ObjectGroup::_nil ());
@@ -74,9 +75,10 @@ TAO_LB_ObjectGroupManager::add_member (
 
   // Transfer ownership to the location map.
   (void) obj._retn ();
-
+#else
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     LoadBalancing::ObjectGroup::_nil ());
+#endif  /* 0 */
 }
 
 LoadBalancing::ObjectGroup_ptr
@@ -96,7 +98,7 @@ TAO_LB_ObjectGroupManager::remove_member (
 
 LoadBalancing::Locations *
 TAO_LB_ObjectGroupManager::locations_of_members (
-    LoadBalancing::ObjectGroup_ptr object_group,
+    LoadBalancing::ObjectGroup_ptr /* object_group */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::ObjectGroupNotFound))
@@ -143,7 +145,7 @@ TAO_LB_ObjectGroupManager::locations_of_members (
 
 LoadBalancing::ObjectGroupId
 TAO_LB_ObjectGroupManager::get_object_group_id (
-    LoadBalancing::ObjectGroup_ptr object_group,
+    LoadBalancing::ObjectGroup_ptr /* object_group */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::ObjectGroupNotFound))
