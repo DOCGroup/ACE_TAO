@@ -1,3 +1,11 @@
+Wed Mar 10 12:33:04 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* bin/fuzz.pl:
+	  Added support for checking of
+	  "#include <(ace)|(tao)|(ciao)\/.*>" to avoid conflict
+	  with Doxygen.
+	  Thanks Don Hinton for the idea.
+
 Wed Mar 10 11:39:41 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/INET_Addr.cpp (set (const sockaddr_in *addr, int len)): Check
