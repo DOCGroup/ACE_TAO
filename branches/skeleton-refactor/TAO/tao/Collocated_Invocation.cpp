@@ -59,7 +59,7 @@ namespace TAO
 
             dispatcher->dispatch (orb_core,
                                   request,
-                                  this->forwarded_to_.out ());
+                                  this->forwarded_to_.out ()
                                   ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
