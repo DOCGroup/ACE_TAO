@@ -72,9 +72,11 @@ do_priority_inversion_test (Task_State &ts)
                 "activate failed",
                 priority));
 
+  u_int i;
+
   // Drop the priority, so that the priority of clients will increase
   // with increasing client number.
-  for (int i = 0; i < ts.thread_count_; i++)
+  for (i = 0; i < ts.thread_count_; i++)
     priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                     priority,
                                                     ACE_SCOPE_THREAD);
@@ -124,24 +126,24 @@ do_priority_inversion_test (Task_State &ts)
   FILE *latency_file_handle = 0;
   char latency_file[BUFSIZ];
   char buffer[BUFSIZ];
-  
-  sprintf (latency_file, 
-	   "cb%d%s%d.txt", 
+
+  sprintf (latency_file,
+	   "cb%d%s%d.txt",
 	   ACE_OS::getpid (),
 	   ts.use_sysbench_ == 1? "SB": "__",
 	   ts.thread_count_);
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "--->Output file for latency data is \"%s\"\n",
               latency_file));
-  
+
   latency_file_handle = ACE_OS::fopen (latency_file, "w");
-  
+
   // @@ What does this loop do?
   for (u_int j = 0; j < ts.start_count_; j ++)
     {
       sprintf (buffer,
                "%s #%d",
-               j == 0 ? "High Priority": "Low Priority", 
+               j == 0 ? "High Priority": "Low Priority",
                j);
 
       for (u_int i = 0; i < ts.loop_count_; i ++)
@@ -153,9 +155,9 @@ do_priority_inversion_test (Task_State &ts)
 	  buffer[0] = 0;
 	}
     }
-  
+
   ACE_OS::fclose (latency_file_handle);
-  
+
 #else /* !defined (CHORUS) */
   ACE_DEBUG ((LM_DEBUG, "Test done.\n"
               "High priority client latency : %f msec, jitter: %f msec\n"
