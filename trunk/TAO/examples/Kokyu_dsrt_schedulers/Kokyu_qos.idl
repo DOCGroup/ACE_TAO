@@ -1,6 +1,6 @@
 
 /**
- * @file Kokyu_qos.pidl
+ * @file Kokyu_qos.idl
  *
  * $Id$
  *
@@ -16,7 +16,7 @@
  *     tao_idl -I $TAO_ROOT -Ge 1 Kokyu_qos.pidl
  *
  *   2. Then apply the patches in Kokyu_qosC.h.diff to the generated code.
- *   The patch will replace the inclusion of RTCORBAC.h and RTSchedulerC.h 
+ *   The patch will replace the inclusion of RTCORBAC.h and RTSchedulerC.h
  *   with RTCORBA.h and RTScheduler.h respectively.
  *
  * Apply patches using the following command:
