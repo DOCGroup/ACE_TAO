@@ -1,3 +1,10 @@
+Fri Jul 23 10:27:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Security/CSI_Utils.h (IOP::ServiceContext):
+
+	  Corrected IOP::ServiceContext forward declaration.  It is a
+	  struct, not a class.  Fixes compile-time warnings.
+
 Thu Jul 22 14:05:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/PolicyFactory/PI_PolicyFactory.mpc:
