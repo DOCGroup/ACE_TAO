@@ -65,14 +65,18 @@ sub create_array {
   my($length) = length($line);
   my($prev)   = 0;
   my($double) = 0;
+  my($single) = 0;
 
   for(my $i = 0; $i <= $length; $i++) {
     my($ch) = substr($line, $i, 1);
-    if (!$double && ($ch eq '' || $ch =~ /\s/)) {
+    if (!$double && !$single && ($ch eq '' || $ch =~ /\s/)) {
       my($val) = substr($line, $prev, $i - $prev);
       $val =~ s/^\s+//;
       $val =~ s/\s+$//;
       if ($val =~ /^\"(.*)\"$/) {
+        $val = $1;
+      }
+      elsif ($val =~ /^\'(.*)\'$/) {
         $val = $1;
       }
       push(@array, $val);
@@ -90,6 +94,9 @@ sub create_array {
     }
     elsif ($ch eq '"') {
       $double ^= 1;
+    }
+    elsif ($ch eq "'") {
+      $single ^= 1;
     }
   }
   return \@array;

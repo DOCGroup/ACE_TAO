@@ -1,3 +1,10 @@
+Fri Apr  4 10:49:29 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/StringProcessor.pm:
+
+          Treat single quotes as special characters when creating arrays.
+          They now work similarly to double quotes.
+
 Fri Apr  4 09:22:25 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
