@@ -1,3 +1,11 @@
+Tue Jan 11 17:39:10 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config.h: Updated the ACE_Service_Config::close()
+	  method documentation to reflect the fact that it no longer
+ 	  closes the singletons (these are closed by the
+ 	  ACE_Object_Manager now).  Thanks to Craig Perras
+ 	  <cperras@watchguard.com> for reporting this.
+
 Tue Jan 11 17:22:21 2000  bala  <bala@cs.wustl.edu>
 
         * ACE version 5.0.12 released.
