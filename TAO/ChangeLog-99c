@@ -1,3 +1,22 @@
+Fri Aug 27 08:40:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_type.cpp:
+	  Patch to nested_type_name().
+
+	* TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+	  Mods to generated code in order to utilize the 
+	  changes made to nested_type_name() above. Most of
+	  this was sent in by dbinder@globalmt.com (real name
+	  not included in the bugzilla entry) as bugzilla
+	  #268, intended to fix a crash by Dec Unix on an
+	  included IDL example. I've tested with MSVC 6.0 and
+	  SunCC 5.0 - we'll wait for the next Dec Unix build
+	  and see what happens.
+
 Thu Aug 26 21:12:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_string.cpp:
