@@ -60,9 +60,9 @@ ACE_RCSID(Misc, context_switch_time, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
-#if !defined (DEBUG)
-# define DEBUG 0
-#endif /* DEBUG */
+#if !defined (ACE_DEBUG_CST)
+# define ACE_DEBUG_CST 0
+#endif /* ACE_DEBUG_CST */
 
 static const u_int LOW_PRIORITY = ACE_THR_PRI_FIFO_DEF;
 static u_int HIGH_PRIORITY;
@@ -110,17 +110,17 @@ Low_Priority_Null_Task::Low_Priority_Null_Task() :
   initialized_ (0),  // initialize to locked, then unlock when ready
   blocked_semaphore_ (0)
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task ctor\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                       1, 0, LOW_PRIORITY))
     ACE_OS::perror (ACE_TEXT("activate"));
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task ctor, activated\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 }
 
 Low_Priority_Null_Task::~Low_Priority_Null_Task()
@@ -130,24 +130,24 @@ Low_Priority_Null_Task::~Low_Priority_Null_Task()
 int
 Low_Priority_Null_Task::svc ()
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task::svc (), entering"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   ACE_Thread_Manager::instance ()->thr_self (thread_id_);
   initialized_.release ();
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "; thread ID is %u\n", thread_id_));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   // This task must never actually execute, so just have it block
   // on a semaphore forever . . .
   blocked_semaphore_.acquire ();
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Task::svc, finishing\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   return 0;
 }
@@ -195,9 +195,9 @@ Suspend_Resume_Test::Suspend_Resume_Test (const ACE_UINT32 iterations) :
   low_ (),
   timer_ ()
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test ctor\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, HIGH_PRIORITY))
@@ -211,13 +211,13 @@ Suspend_Resume_Test::~Suspend_Resume_Test()
 int
 Suspend_Resume_Test::svc ()
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_hthread_t thread_id;
   ACE_Thread_Manager::instance ()->thr_self (thread_id);
 
   ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test::svc (), thread ID is %d\n",
               thread_id));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   low_.ready ();
 
@@ -229,11 +229,11 @@ Suspend_Resume_Test::svc ()
 
   for (ACE_UINT32 i = 0; i < iterations_; ++i)
     {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
         ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test::svc (), iteration %u\n",
                     i));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
       if (ACE_OS::thr_suspend (low_.thread_id ()) != 0)
         {
@@ -257,9 +257,9 @@ Suspend_Resume_Test::svc ()
 
   low_.done ();
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test::svc, finishing\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   return 0;
 }
@@ -305,17 +305,17 @@ High_Priority_Simple_Task::High_Priority_Simple_Task() :
   terminate_ (0),
   iterations_ (0)
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task ctor\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, HIGH_PRIORITY))
     ACE_OS::perror (ACE_TEXT("activate"));
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task ctor, activated\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 }
 
 High_Priority_Simple_Task::~High_Priority_Simple_Task()
@@ -325,23 +325,23 @@ High_Priority_Simple_Task::~High_Priority_Simple_Task()
 int
 High_Priority_Simple_Task::svc ()
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task::svc (), entering"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   ACE_Thread_Manager::instance ()->thr_self (thread_id_);
   initialized_.release ();
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "; thread ID is %u\n", thread_id_));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   for (ACE_UINT32 i = 0; ! terminate_; ++i)
     {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
       ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task::svc, suspend self ("
                             "%u)\n", thread_id_));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
       ++iterations_;
 
@@ -351,15 +351,15 @@ High_Priority_Simple_Task::svc ()
           ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "thr_suspend"), -1);
         }
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
       ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task::svc, resumed (%u)\n",
                             thread_id_));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
     }
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task::svc, finishing\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   return 0;
 }
@@ -410,9 +410,9 @@ Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (
   high_ (),
   timer_ ()
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test ctor\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, LOW_PRIORITY))
@@ -426,25 +426,25 @@ Ping_Suspend_Resume_Test::~Ping_Suspend_Resume_Test()
 int
 Ping_Suspend_Resume_Test::svc ()
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test::svc (), entering"));
 
   ACE_hthread_t thread_id;
   ACE_Thread_Manager::instance ()->thr_self (thread_id);
 
   ACE_DEBUG ((LM_DEBUG, "; thread ID is %u\n", thread_id));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   high_.ready ();
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   int priority, high_priority;
   ACE_OS::thr_getprio (thread_id, priority);
   ACE_OS::thr_getprio (high_.thread_id (), high_priority);
   ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test::svc (), priority is %d, "
                         ", high thread priority is %d\n",
               priority, high_priority));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   // For information:  the cost of the just the loop itself below,
   // without the suspend and resume calls, on a 166 MHz Ultrasparc
@@ -456,14 +456,14 @@ Ping_Suspend_Resume_Test::svc ()
 
   for (i = 0; i < iterations_; ++i)
     {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
         {
           ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test::svc (), iteration "
                                 "%d, continue high-priority thread %u\n",
                       i, high_.thread_id ()));
         }
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
       if (ACE_OS::thr_continue (high_.thread_id ()) != 0  &&
           errno != EINVAL)
         // EINVAL is OK:  it just means that the thread needs to be joined.
@@ -478,10 +478,10 @@ Ping_Suspend_Resume_Test::svc ()
   timer_.elapsed_microseconds (elapsed_time_);
 
   high_.done ();
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test::svc: told high priority "
                         "task to terminate\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   // Resume the thread until thr_continue fails, indicating that it has
   // finished.
@@ -495,9 +495,9 @@ Ping_Suspend_Resume_Test::svc ()
                 "executed only %u iterations!\n",
                 high_.iterations ()));
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test::svc, finishing\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   return 0;
 }
@@ -548,9 +548,9 @@ Yield_Test::Yield_Test (const ACE_UINT32 iterations) :
 #endif /* ! VXWORKS */
   timer_ ()
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Yield_Test ctor\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
 #if !defined (VXWORKS)
   timer_.start ();
@@ -575,7 +575,7 @@ Yield_Test::~Yield_Test()
 int
 Yield_Test::svc ()
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Yield_Test::svc (), entering"));
 
   ACE_hthread_t thread_id;
@@ -586,7 +586,7 @@ Yield_Test::svc ()
 
   ACE_DEBUG ((LM_DEBUG, "; thread ID is %u, priority is %u\n", thread_id,
               priority));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
 #if defined (VXWORKS)
   // Start the timer, if it hasn't already been started.
@@ -605,13 +605,13 @@ Yield_Test::svc ()
 
   for (ACE_UINT32 i = 0; i < iterations_; ++i)
     {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
         {
           ACE_DEBUG ((LM_DEBUG, "Yield_Test::svc () [%u], iteration %u\n",
                       thread_id, i));
         }
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
       ACE_OS::thr_yield ();
     }
@@ -638,9 +638,9 @@ Yield_Test::svc ()
   timer_barrier_.wait ();
 #endif /* ! VXWORKS */
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Yield_Test::svc, finishing\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   return 0;
 }
@@ -696,14 +696,14 @@ Mutex_Acquire_Release_Test::~Mutex_Acquire_Release_Test()
 int
 Mutex_Acquire_Release_Test::svc ()
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_hthread_t thread_id;
   ACE_Thread_Manager::instance ()->thr_self (thread_id);
 
   ACE_DEBUG ((LM_DEBUG,
               "Mutex_Acquire_Release_Test::svc (), thread ID is %d\n",
               thread_id));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   timer_.start ();
 
@@ -720,9 +720,9 @@ Mutex_Acquire_Release_Test::svc ()
   timer_.stop ();
   timer_.elapsed_time (elapsed_time_); /* nanoseconds */
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Mutex_Acquire_Release_Test::svc, finishing\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   return 0;
 }
@@ -792,17 +792,17 @@ High_Priority_Synchronized_Task::High_Priority_Synchronized_Task (
   timer_ (timer),
   total_time_ (0)
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Synchronized_Task ctor\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, HIGH_PRIORITY))
     ACE_OS::perror (ACE_TEXT("activate"));
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Synchronized_Task ctor, activated\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 }
 
 High_Priority_Synchronized_Task::~High_Priority_Synchronized_Task()
@@ -812,9 +812,9 @@ High_Priority_Synchronized_Task::~High_Priority_Synchronized_Task()
 int
 High_Priority_Synchronized_Task::svc ()
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Synchronized_Task::svc (), entering"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   ACE_Thread_Manager::instance ()->thr_self (thread_id_);
 
@@ -826,25 +826,25 @@ High_Priority_Synchronized_Task::svc ()
       ACE_static_cast (ACE_UINT32,
                        mutex_acquire_release_test.elapsed_time () /
                        num_iterations);
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
     ACE_DEBUG ((LM_DEBUG, "mutex_acquire_release: %u nsec\n",
                 mutex_acquire_release_time));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
   }
 
   initialized_.release ();
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "; thread ID is %u\n", thread_id_));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   for (ACE_UINT32 i = 0; ! terminate_; ++i)
     {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
       ACE_DEBUG ((LM_DEBUG,
                   "High_Priority_Synchronized_Task::svc, wait on sem ("
                   "%u)\n", thread_id_));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
       if (sem_.acquire () != 0)
         {
@@ -872,16 +872,16 @@ High_Priority_Synchronized_Task::svc ()
         // mutex.
       }
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
       ACE_DEBUG ((LM_DEBUG,
                   "High_Priority_Synchronized_Task::svc, resumed (%u)\n",
                   thread_id_));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
     }
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Synchronized_Task::svc, finishing\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   return 0;
 }
@@ -955,9 +955,9 @@ Synchronized_Suspend_Resume_Test::Synchronized_Suspend_Resume_Test (
   high_ (sem_, mutex_, timer_),
   mutex_acquire_release_time_ (0)
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Synchronized_Suspend_Resume_Test ctor\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   if (this->activate (THR_BOUND | THR_DETACHED | THR_SCHED_FIFO | new_lwp,
                   1, 0, LOW_PRIORITY))
@@ -971,14 +971,14 @@ Synchronized_Suspend_Resume_Test::~Synchronized_Suspend_Resume_Test()
 int
 Synchronized_Suspend_Resume_Test::svc ()
 {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Synchronized_Suspend_Resume_Test::svc (), entering"));
 
   ACE_hthread_t thread_id;
   ACE_Thread_Manager::instance ()->thr_self (thread_id);
 
   ACE_DEBUG ((LM_DEBUG, "; thread ID is %u\n", thread_id));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   {
     Mutex_Acquire_Release_Test mutex_acquire_release_test (num_iterations);
@@ -987,15 +987,15 @@ Synchronized_Suspend_Resume_Test::svc ()
       ACE_static_cast (ACE_UINT32,
                        mutex_acquire_release_test.elapsed_time () /
                        num_iterations);
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
     ACE_DEBUG ((LM_DEBUG, "mutex_acquire_release: %u nsec\n",
                 mutex_acquire_release_time_));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
   }
 
   high_.ready ();
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   int priority, high_priority;
   ACE_OS::thr_getprio (thread_id, priority);
   ACE_OS::thr_getprio (high_.thread_id (), high_priority);
@@ -1003,7 +1003,7 @@ Synchronized_Suspend_Resume_Test::svc ()
               "Synchronized_Suspend_Resume_Test::svc (), priority is %d, "
               ", high thread priority is %d\n",
               priority, high_priority));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   // For information:  the cost of the just the loop itself below,
   // without the suspend and resume calls, on a 166 MHz Ultrasparc
@@ -1013,7 +1013,7 @@ Synchronized_Suspend_Resume_Test::svc ()
 
   for (i = 0; i < iterations_; ++i)
     {
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -1021,7 +1021,7 @@ Synchronized_Suspend_Resume_Test::svc ()
                       "%d, continue high-priority thread %u\n",
                       i, high_.thread_id ()));
         }
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
       {
         // Acquire the mutex so that the high priority thread will
@@ -1048,20 +1048,20 @@ Synchronized_Suspend_Resume_Test::svc ()
   if (sem_.release () != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "sem_.release"), -1);
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG,
               "Synchronized_Suspend_Resume_Test::svc: told high priority "
               "task to terminate\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   // Resume the thread until thr_continue fails, indicating that it has
   // finished.
   for (i = 0; i < 10000  &&  ! ACE_OS::thr_continue (high_.thread_id ());
        ++i) /* null */;
 
-#if DEBUG > 0
+#if ACE_DEBUG_CST > 0
   ACE_DEBUG ((LM_DEBUG, "Synchronized_Suspend_Resume_Test::svc, finishing\n"));
-#endif /* DEBUG */
+#endif /* ACE_DEBUG_CST */
 
   return 0;
 }
