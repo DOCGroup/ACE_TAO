@@ -1,5 +1,5 @@
 // $Id$
-/* A Bison parser, made by GNU Bison 1.875b.  */
+/* A Bison parser, made by GNU Bison 1.875c.  */
 
 /* Skeleton parser for Yacc-like parsing with Bison,
    Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
@@ -335,18 +335,25 @@ typedef union TAO_YYSTYPE {
 
 #if ! defined (tao_yyoverflow) || TAO_YYERROR_VERBOSE
 
+# ifndef TAO_YYFREE
+#  define TAO_YYFREE free
+# endif
+# ifndef TAO_YYMALLOC
+#  define TAO_YYMALLOC malloc
+# endif
+
 /* The parser invokes alloca or malloc; define the necessary symbols.  */
 
-# if TAO_YYSTACK_USE_ALLOCA
-#  define TAO_YYSTACK_ALLOC alloca
+# ifdef TAO_YYSTACK_USE_ALLOCA
+#  if TAO_YYSTACK_USE_ALLOCA
+#   define TAO_YYSTACK_ALLOC alloca
+#  endif
 # else
-#  ifndef TAO_YYSTACK_USE_ALLOCA
-#   if defined (alloca) || defined (_ALLOCA_H)
-#    define TAO_YYSTACK_ALLOC alloca
-#   else
-#    ifdef __GNUC__
-#     define TAO_YYSTACK_ALLOC __builtin_alloca
-#    endif
+#  if defined (alloca) || defined (_ALLOCA_H)
+#   define TAO_YYSTACK_ALLOC alloca
+#  else
+#   ifdef __GNUC__
+#    define TAO_YYSTACK_ALLOC __builtin_alloca
 #   endif
 #  endif
 # endif
@@ -359,15 +366,15 @@ typedef union TAO_YYSTYPE {
 #   include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
 #   define TAO_YYSIZE_T size_t
 #  endif
-#  define TAO_YYSTACK_ALLOC malloc
-#  define TAO_YYSTACK_FREE free
+#  define TAO_YYSTACK_ALLOC TAO_YYMALLOC
+#  define TAO_YYSTACK_FREE TAO_YYFREE
 # endif
 #endif /* ! defined (tao_yyoverflow) || TAO_YYERROR_VERBOSE */
 
 
 #if (! defined (tao_yyoverflow) \
      && (! defined (__cplusplus) \
-	 || (TAO_YYSTYPE_IS_TRIVIAL)))
+         || (defined (TAO_YYSTYPE_IS_TRIVIAL) && TAO_YYSTYPE_IS_TRIVIAL)))
 
 /* A type that is properly aligned for any stack member.  */
 union tao_yyalloc
@@ -382,23 +389,23 @@ union tao_yyalloc
 /* The size of an array large to enough to hold all stacks, each with
    N elements.  */
 # define TAO_YYSTACK_BYTES(N) \
-     ((N) * (sizeof (short) + sizeof (TAO_YYSTYPE))				\
+     ((N) * (sizeof (short) + sizeof (TAO_YYSTYPE))                                \
       + TAO_YYSTACK_GAP_MAXIMUM)
 
 /* Copy COUNT objects from FROM to TO.  The source and destination do
    not overlap.  */
 # ifndef TAO_YYCOPY
-#  if 1 < __GNUC__
+#  if defined (__GNUC__) && 1 < __GNUC__
 #   define TAO_YYCOPY(To, From, Count) \
       __builtin_memcpy (To, From, (Count) * sizeof (*(From)))
 #  else
-#   define TAO_YYCOPY(To, From, Count)		\
-      do					\
-	{					\
-	  register TAO_YYSIZE_T tao_yyi;		\
-	  for (tao_yyi = 0; tao_yyi < (Count); tao_yyi++)	\
-	    (To)[tao_yyi] = (From)[tao_yyi];		\
-	}					\
+#   define TAO_YYCOPY(To, From, Count)                \
+      do                                        \
+        {                                        \
+          register TAO_YYSIZE_T tao_yyi;                \
+          for (tao_yyi = 0; tao_yyi < (Count); tao_yyi++)        \
+            (To)[tao_yyi] = (From)[tao_yyi];                \
+        }                                        \
       while (0)
 #  endif
 # endif
@@ -408,15 +415,15 @@ union tao_yyalloc
    elements in the stack, and TAO_YYPTR gives the new location of the
    stack.  Advance TAO_YYPTR to a properly aligned location for the next
    stack.  */
-# define TAO_YYSTACK_RELOCATE(Stack)					\
-    do									\
-      {									\
-	TAO_YYSIZE_T tao_yynewbytes;						\
-	TAO_YYCOPY (&tao_yyptr->Stack, Stack, tao_yysize);				\
-	Stack = &tao_yyptr->Stack;						\
-	tao_yynewbytes = tao_yystacksize * sizeof (*Stack) + TAO_YYSTACK_GAP_MAXIMUM; \
-	tao_yyptr += tao_yynewbytes / sizeof (*tao_yyptr);				\
-      }									\
+# define TAO_YYSTACK_RELOCATE(Stack)                                        \
+    do                                                                        \
+      {                                                                        \
+        TAO_YYSIZE_T tao_yynewbytes;                                                \
+        TAO_YYCOPY (&tao_yyptr->Stack, Stack, tao_yysize);                                \
+        Stack = &tao_yyptr->Stack;                                                \
+        tao_yynewbytes = tao_yystacksize * sizeof (*Stack) + TAO_YYSTACK_GAP_MAXIMUM; \
+        tao_yyptr += tao_yynewbytes / sizeof (*tao_yyptr);                                \
+      }                                                                        \
     while (0)
 
 #endif
@@ -445,7 +452,7 @@ union tao_yyalloc
 #define TAO_YYUNDEFTOK  2
 #define TAO_YYMAXUTOK   333
 
-#define TAO_YYTRANSLATE(TAO_YYX) 						\
+#define TAO_YYTRANSLATE(TAO_YYX)                                                 \
   ((unsigned int) (TAO_YYX) <= TAO_YYMAXUTOK ? tao_yytranslate[TAO_YYX] : TAO_YYUNDEFTOK)
 
 /* TAO_YYTRANSLATE[TAO_YYLEX] -- Bison symbol number corresponding to TAO_YYLEX.  */
@@ -676,49 +683,49 @@ static const unsigned short tao_yyrline[] =
      397,   408,   407,   418,   417,   428,   427,   438,   437,   451,
      456,   480,   485,   450,   501,   502,   507,   546,   551,   506,
      569,   568,   582,   611,   633,   658,   657,   669,   676,   677,
-     678,   679,   683,   694,   699,   738,   743,   698,   762,   801,
-     806,   760,   825,   823,   861,   860,   874,   880,   887,   894,
-     901,   923,   946,   960,   961,   965,   966,   967,   973,   972,
-     980,   979,   989,   990,   995,   994,  1005,  1004,  1015,  1014,
-    1025,  1024,  1035,  1034,  1045,  1044,  1055,  1054,  1065,  1064,
-    1078,  1091,  1089,  1119,  1126,  1137,  1136,  1162,  1160,  1181,
-    1192,  1214,  1238,  1265,  1270,  1275,  1280,  1264,  1329,  1330,
-    1331,  1332,  1333,  1334,  1335,  1347,  1352,  1423,  1425,  1427,
-    1428,  1442,  1443,  1457,  1458,  1471,  1472,  1482,  1495,  1496,
-    1506,  1519,  1520,  1530,  1540,  1553,  1554,  1564,  1574,  1587,
-    1617,  1618,  1627,  1632,  1639,  1644,  1649,  1654,  1660,  1665,
-    1671,  1680,  1752,  1751,  1761,  1766,  1771,  1776,  1799,  1808,
-    1807,  1860,  1861,  1865,  1873,  1874,  1902,  1903,  1904,  1905,
-    1906,  1907,  1908,  1909,  1913,  1914,  1915,  1919,  1920,  1921,
-    1925,  1926,  1930,  1943,  1941,  1971,  1978,  1979,  1983,  1996,
-    1994,  2024,  2031,  2048,  2067,  2068,  2072,  2077,  2082,  2090,
-    2095,  2100,  2108,  2113,  2118,  2126,  2140,  2145,  2153,  2161,
-    2169,  2177,  2186,  2185,  2201,  2231,  2236,  2200,  2255,  2258,
-    2259,  2263,  2263,  2273,  2278,  2272,  2337,  2336,  2351,  2350,
-    2365,  2370,  2375,  2380,  2422,  2427,  2364,  2451,  2459,  2473,
-    2483,  2491,  2492,  2589,  2592,  2593,  2598,  2603,  2597,  2633,
-    2632,  2646,  2657,  2679,  2687,  2686,  2702,  2707,  2701,  2724,
-    2723,  2770,  2790,  2811,  2816,  2845,  2850,  2810,  2876,  2881,
-    2879,  2886,  2890,  2925,  2930,  2923,  2987,  3039,  3049,  3038,
-    3064,  3069,  3062,  3101,  3124,  3134,  3139,  3132,  3169,  3191,
-    3200,  3199,  3229,  3240,  3262,  3270,  3275,  3269,  3303,  3304,
-    3309,  3314,  3319,  3324,  3308,  3385,  3390,  3395,  3400,  3384,
-    3466,  3471,  3497,  3502,  3465,  3520,  3525,  3578,  3583,  3518,
-    3620,  3626,  3633,  3640,  3641,  3653,  3659,  3696,  3652,  3718,
-    3717,  3728,  3727,  3740,  3745,  3743,  3750,  3755,  3760,  3754,
-    3797,  3796,  3807,  3806,  3819,  3824,  3822,  3829,  3834,  3839,
-    3833,  3889,  3897,  3898,  3899,  3941,  3946,  3951,  3960,  3965,
-    3959,  3977,  3985,  3990,  3984,  4002,  4010,  4015,  4009,  4027,
-    4035,  4040,  4034,  4052,  4059,  4072,  4070,  4098,  4105,  4126,
-    4156,  4157,  4161,  4187,  4227,  4232,  4186,  4251,  4256,  4249,
-    4282,  4281,  4292,  4299,  4300,  4305,  4304,  4315,  4314,  4325,
-    4324,  4335,  4334,  4345,  4344,  4355,  4354,  4367,  4403,  4421,
-    4446,  4482,  4488,  4495,  4529,  4563,  4598,  4597,  4647,  4652,
-    4657,  4662,  4667,  4672,  4646,  4699,  4698,  4709,  4716,  4723,
-    4731,  4736,  4730,  4748,  4749,  4753,  4755,  4754,  4765,  4764,
-    4779,  4814,  4777,  4848,  4883,  4846,  4915,  4916,  4917,  4921,
-    4922,  4926,  4950,  4977,  5018,  5023,  4975,  5040,  5050,  5069,
-    5081,  5080,  5113,  5154,  5159,  5111,  5176,  5181
+     678,   679,   683,   694,   699,   738,   743,   698,   772,   811,
+     816,   770,   835,   833,   871,   870,   884,   890,   897,   904,
+     911,   933,   956,   970,   971,   975,   976,   977,   983,   982,
+     990,   989,   999,  1000,  1005,  1004,  1015,  1014,  1025,  1024,
+    1035,  1034,  1045,  1044,  1055,  1054,  1065,  1064,  1075,  1074,
+    1088,  1101,  1099,  1129,  1136,  1147,  1146,  1172,  1170,  1191,
+    1202,  1239,  1263,  1290,  1295,  1300,  1305,  1289,  1354,  1355,
+    1356,  1357,  1358,  1359,  1360,  1372,  1377,  1448,  1450,  1452,
+    1453,  1467,  1468,  1482,  1483,  1496,  1497,  1507,  1520,  1521,
+    1531,  1544,  1545,  1555,  1565,  1578,  1579,  1589,  1599,  1612,
+    1642,  1643,  1652,  1657,  1664,  1669,  1674,  1679,  1685,  1690,
+    1696,  1705,  1779,  1778,  1788,  1793,  1798,  1803,  1826,  1835,
+    1834,  1887,  1888,  1892,  1900,  1901,  1929,  1930,  1931,  1932,
+    1933,  1934,  1935,  1936,  1940,  1941,  1942,  1946,  1947,  1948,
+    1952,  1953,  1957,  1970,  1968,  1998,  2005,  2006,  2010,  2023,
+    2021,  2051,  2058,  2075,  2094,  2095,  2099,  2104,  2109,  2117,
+    2122,  2127,  2135,  2140,  2145,  2153,  2167,  2172,  2180,  2188,
+    2196,  2204,  2213,  2212,  2228,  2258,  2263,  2227,  2282,  2285,
+    2286,  2290,  2290,  2300,  2305,  2299,  2364,  2363,  2378,  2377,
+    2392,  2397,  2402,  2407,  2450,  2455,  2391,  2479,  2487,  2501,
+    2511,  2519,  2520,  2617,  2620,  2621,  2626,  2631,  2625,  2661,
+    2660,  2674,  2685,  2707,  2715,  2714,  2730,  2735,  2729,  2752,
+    2751,  2800,  2820,  2841,  2846,  2875,  2880,  2840,  2906,  2911,
+    2909,  2916,  2920,  2955,  2960,  2953,  3017,  3072,  3082,  3071,
+    3097,  3102,  3095,  3134,  3158,  3168,  3173,  3166,  3203,  3226,
+    3235,  3234,  3264,  3275,  3297,  3305,  3310,  3304,  3338,  3339,
+    3344,  3349,  3354,  3359,  3343,  3420,  3425,  3430,  3435,  3419,
+    3501,  3506,  3532,  3537,  3500,  3555,  3560,  3613,  3618,  3553,
+    3655,  3661,  3668,  3675,  3676,  3688,  3694,  3731,  3687,  3753,
+    3752,  3763,  3762,  3775,  3780,  3778,  3785,  3790,  3795,  3789,
+    3832,  3831,  3842,  3841,  3854,  3859,  3857,  3864,  3869,  3874,
+    3868,  3917,  3925,  3926,  3927,  3970,  3975,  3980,  3989,  3994,
+    3988,  4006,  4014,  4019,  4013,  4031,  4039,  4044,  4038,  4056,
+    4064,  4069,  4063,  4081,  4088,  4101,  4099,  4127,  4134,  4155,
+    4185,  4186,  4190,  4216,  4256,  4261,  4215,  4280,  4285,  4278,
+    4311,  4310,  4321,  4328,  4329,  4334,  4333,  4344,  4343,  4354,
+    4353,  4364,  4363,  4374,  4373,  4384,  4383,  4396,  4437,  4455,
+    4480,  4530,  4536,  4543,  4577,  4611,  4646,  4645,  4695,  4700,
+    4705,  4710,  4715,  4720,  4694,  4747,  4746,  4757,  4764,  4771,
+    4779,  4784,  4778,  4796,  4797,  4801,  4803,  4802,  4813,  4812,
+    4827,  4862,  4825,  4896,  4931,  4894,  4963,  4964,  4965,  4969,
+    4970,  4974,  4998,  5025,  5066,  5071,  5023,  5088,  5098,  5117,
+    5129,  5128,  5161,  5202,  5207,  5159,  5224,  5229
 };
 #endif
 
@@ -741,18 +748,17 @@ static const char *const tao_yytname[] =
   "IDL_EMITS", "IDL_EVENTTYPE", "IDL_FINDER", "IDL_GETRAISES", "IDL_HOME",
   "IDL_IMPORT", "IDL_MULTIPLE", "IDL_PRIMARYKEY", "IDL_PROVIDES",
   "IDL_PUBLISHES", "IDL_SETRAISES", "IDL_TYPEID", "IDL_TYPEPREFIX",
-  "IDL_USES", "IDL_MANAGES", "IDL_INTEGER_LITERAL",
-  "IDL_UINTEGER_LITERAL", "IDL_STRING_LITERAL", "IDL_CHARACTER_LITERAL",
-  "IDL_FLOATING_PT_LITERAL", "IDL_TRUETOK", "IDL_FALSETOK",
-  "IDL_SCOPE_DELIMITOR", "IDL_LEFT_SHIFT", "IDL_RIGHT_SHIFT",
-  "IDL_WCHAR_LITERAL", "IDL_WSTRING_LITERAL", "';'", "'{'", "'}'", "':'",
-  "','", "'='", "'|'", "'^'", "'&'", "'+'", "'-'", "'*'", "'/'", "'%'",
-  "'~'", "'('", "')'", "'>'", "'<'", "'['", "']'", "$accept", "start",
-  "definitions", "definition", "@1", "@2", "@3", "@4", "@5", "@6", "@7",
-  "@8", "@9", "@10", "@11", "@12", "module", "@13", "@14", "@15", "@16",
-  "interface_def", "interface", "@17", "@18", "@19", "interface_decl",
-  "@20", "interface_header", "inheritance_spec", "@21", "value_def",
-  "valuetype", "value_concrete_decl", "@22", "@23", "@24",
+  "IDL_USES", "IDL_MANAGES", "IDL_INTEGER_LITERAL", "IDL_UINTEGER_LITERAL",
+  "IDL_STRING_LITERAL", "IDL_CHARACTER_LITERAL", "IDL_FLOATING_PT_LITERAL",
+  "IDL_TRUETOK", "IDL_FALSETOK", "IDL_SCOPE_DELIMITOR", "IDL_LEFT_SHIFT",
+  "IDL_RIGHT_SHIFT", "IDL_WCHAR_LITERAL", "IDL_WSTRING_LITERAL", "';'",
+  "'{'", "'}'", "':'", "','", "'='", "'|'", "'^'", "'&'", "'+'", "'-'",
+  "'*'", "'/'", "'%'", "'~'", "'('", "')'", "'>'", "'<'", "'['", "']'",
+  "$accept", "start", "definitions", "definition", "@1", "@2", "@3", "@4",
+  "@5", "@6", "@7", "@8", "@9", "@10", "@11", "@12", "module", "@13",
+  "@14", "@15", "@16", "interface_def", "interface", "@17", "@18", "@19",
+  "interface_decl", "@20", "interface_header", "inheritance_spec", "@21",
+  "value_def", "valuetype", "value_concrete_decl", "@22", "@23", "@24",
   "value_abs_decl", "@25", "@26", "@27", "value_header", "@28",
   "value_decl", "@29", "opt_truncatable", "supports_spec",
   "value_forward_decl", "value_box_decl", "value_elements",
@@ -789,10 +795,10 @@ static const char *const tao_yytname[] =
   "opt_op_attribute", "op_type_spec", "init_decl", "@105", "@106", "@107",
   "init_parameter_list", "@108", "@109", "at_least_one_in_parameter",
   "in_parameters", "@110", "in_parameter", "@111", "@112",
-  "parameter_list", "@113", "@114", "at_least_one_parameter",
-  "parameters", "@115", "parameter", "@116", "@117", "param_type_spec",
-  "direction", "opt_raises", "@118", "@119", "opt_getraises", "@120",
-  "@121", "opt_setraises", "@122", "@123", "opt_context", "@124", "@125",
+  "parameter_list", "@113", "@114", "at_least_one_parameter", "parameters",
+  "@115", "parameter", "@116", "@117", "param_type_spec", "direction",
+  "opt_raises", "@118", "@119", "opt_getraises", "@120", "@121",
+  "opt_setraises", "@122", "@123", "opt_context", "@124", "@125",
   "at_least_one_string_literal", "string_literals", "@126", "typeid_dcl",
   "typeprefix_dcl", "component", "component_forward_decl",
   "component_decl", "@127", "@128", "@129", "component_header", "@130",
@@ -801,9 +807,9 @@ static const char *const tao_yytname[] =
   "provides_decl", "interface_type", "uses_decl", "opt_multiple",
   "emits_decl", "publishes_decl", "consumes_decl", "home_decl", "@139",
   "home_header", "@140", "@141", "@142", "@143", "@144", "@145",
-  "home_inheritance_spec", "@146", "primary_key_spec", "home_body",
-  "@147", "@148", "home_exports", "home_export", "@149", "@150",
-  "factory_decl", "@151", "@152", "finder_decl", "@153", "@154", "event",
+  "home_inheritance_spec", "@146", "primary_key_spec", "home_body", "@147",
+  "@148", "home_exports", "home_export", "@149", "@150", "factory_decl",
+  "@151", "@152", "finder_decl", "@153", "@154", "event",
   "event_forward_decl", "event_concrete_forward_decl",
   "event_abs_forward_decl", "event_abs_decl", "@155", "@156", "@157",
   "event_abs_header", "event_custom_header", "event_plain_header",
@@ -1489,53 +1495,53 @@ static const unsigned short tao_yystos[] =
 # define TAO_YYSIZE_T unsigned int
 #endif
 
-#define tao_yyerrok		(tao_yyerrstatus = 0)
-#define tao_yyclearin	(tao_yychar = TAO_YYEMPTY)
-#define TAO_YYEMPTY		(-2)
-#define TAO_YYEOF		0
+#define tao_yyerrok                (tao_yyerrstatus = 0)
+#define tao_yyclearin        (tao_yychar = TAO_YYEMPTY)
+#define TAO_YYEMPTY                (-2)
+#define TAO_YYEOF                0
 
-#define TAO_YYACCEPT	goto tao_yyacceptlab
-#define TAO_YYABORT		goto tao_yyabortlab
-#define TAO_YYERROR		goto tao_yyerrlab1
+#define TAO_YYACCEPT        goto tao_yyacceptlab
+#define TAO_YYABORT                goto tao_yyabortlab
+#define TAO_YYERROR                goto tao_yyerrorlab
 
 
 /* Like TAO_YYERROR except do call tao_yyerror.  This remains here temporarily
    to ease the transition to the new meaning of TAO_YYERROR, for GCC.
    Once GCC version 2 has supplanted version 1, this can go.  */
 
-#define TAO_YYFAIL		goto tao_yyerrlab
+#define TAO_YYFAIL                goto tao_yyerrlab
 
 #define TAO_YYRECOVERING()  (!!tao_yyerrstatus)
 
-#define TAO_YYBACKUP(Token, Value)					\
-do								\
-  if (tao_yychar == TAO_YYEMPTY && tao_yylen == 1)				\
-    {								\
-      tao_yychar = (Token);						\
-      tao_yylval = (Value);						\
-      tao_yytoken = TAO_YYTRANSLATE (tao_yychar);				\
-      TAO_YYPOPSTACK;						\
-      goto tao_yybackup;						\
-    }								\
-  else								\
-    { 								\
+#define TAO_YYBACKUP(Token, Value)                                        \
+do                                                                \
+  if (tao_yychar == TAO_YYEMPTY && tao_yylen == 1)                                \
+    {                                                                \
+      tao_yychar = (Token);                                                \
+      tao_yylval = (Value);                                                \
+      tao_yytoken = TAO_YYTRANSLATE (tao_yychar);                                \
+      TAO_YYPOPSTACK;                                                \
+      goto tao_yybackup;                                                \
+    }                                                                \
+  else                                                                \
+    {                                                                 \
       tao_yyerror ("syntax error: cannot back up");\
-      TAO_YYERROR;							\
-    }								\
+      TAO_YYERROR;                                                        \
+    }                                                                \
 while (0)
 
-#define TAO_YYTERROR	1
-#define TAO_YYERRCODE	256
+#define TAO_YYTERROR        1
+#define TAO_YYERRCODE        256
 
 /* TAO_YYLLOC_DEFAULT -- Compute the default location (before the actions
    are run).  */
 
 #ifndef TAO_YYLLOC_DEFAULT
-# define TAO_YYLLOC_DEFAULT(Current, Rhs, N)         \
-  Current.first_line   = Rhs[1].first_line;      \
-  Current.first_column = Rhs[1].first_column;    \
-  Current.last_line    = Rhs[N].last_line;       \
-  Current.last_column  = Rhs[N].last_column;
+# define TAO_YYLLOC_DEFAULT(Current, Rhs, N)                \
+   ((Current).first_line   = (Rhs)[1].first_line,        \
+    (Current).first_column = (Rhs)[1].first_column,        \
+    (Current).last_line    = (Rhs)[N].last_line,        \
+    (Current).last_column  = (Rhs)[N].last_column)
 #endif
 
 /* TAO_YYLEX -- calling `tao_yylex' with the right arguments.  */
@@ -1554,32 +1560,32 @@ while (0)
 #  define TAO_YYFPRINTF fprintf
 # endif
 
-# define TAO_YYDPRINTF(Args)			\
-do {						\
-  if (tao_yydebug)					\
-    TAO_YYFPRINTF Args;				\
+# define TAO_YYDPRINTF(Args)                        \
+do {                                                \
+  if (tao_yydebug)                                        \
+    TAO_YYFPRINTF Args;                                \
 } while (0)
 
-# define TAO_YYDSYMPRINT(Args)			\
-do {						\
-  if (tao_yydebug)					\
-    tao_yysymprint Args;				\
+# define TAO_YYDSYMPRINT(Args)                        \
+do {                                                \
+  if (tao_yydebug)                                        \
+    tao_yysymprint Args;                                \
 } while (0)
 
-# define TAO_YYDSYMPRINTF(Title, Token, Value, Location)		\
-do {								\
-  if (tao_yydebug)							\
-    {								\
-      TAO_YYFPRINTF (stderr, "%s ", Title);				\
-      tao_yysymprint (stderr, 					\
-                  Token, Value);	\
-      TAO_YYFPRINTF (stderr, "\n");					\
-    }								\
+# define TAO_YYDSYMPRINTF(Title, Token, Value, Location)                \
+do {                                                                \
+  if (tao_yydebug)                                                        \
+    {                                                                \
+      TAO_YYFPRINTF (stderr, "%s ", Title);                                \
+      tao_yysymprint (stderr,                                         \
+                  Token, Value);        \
+      TAO_YYFPRINTF (stderr, "\n");                                        \
+    }                                                                \
 } while (0)
 
 /*------------------------------------------------------------------.
 | tao_yy_stack_print -- Print the state stack from its BOTTOM up to its |
-| TOP (cinluded).                                                   |
+| TOP (included).                                                   |
 `------------------------------------------------------------------*/
 
 #if defined (__STDC__) || defined (__cplusplus)
@@ -1598,10 +1604,10 @@ tao_yy_stack_print (bottom, top)
   TAO_YYFPRINTF (stderr, "\n");
 }
 
-# define TAO_YY_STACK_PRINT(Bottom, Top)				\
-do {								\
-  if (tao_yydebug)							\
-    tao_yy_stack_print ((Bottom), (Top));				\
+# define TAO_YY_STACK_PRINT(Bottom, Top)                                \
+do {                                                                \
+  if (tao_yydebug)                                                        \
+    tao_yy_stack_print ((Bottom), (Top));                                \
 } while (0)
 
 
@@ -1628,10 +1634,10 @@ tao_yy_reduce_print (tao_yyrule)
   TAO_YYFPRINTF (stderr, "-> %s\n", tao_yytname [tao_yyr1[tao_yyrule]]);
 }
 
-# define TAO_YY_REDUCE_PRINT(Rule)		\
-do {					\
-  if (tao_yydebug)				\
-    tao_yy_reduce_print (Rule);		\
+# define TAO_YY_REDUCE_PRINT(Rule)                \
+do {                                        \
+  if (tao_yydebug)                                \
+    tao_yy_reduce_print (Rule);                \
 } while (0)
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
@@ -1647,7 +1653,7 @@ int tao_yydebug;
 
 
 /* TAO_YYINITDEPTH -- initial size of the parser's stacks.  */
-#ifndef	TAO_YYINITDEPTH
+#ifndef        TAO_YYINITDEPTH
 # define TAO_YYINITDEPTH 200
 #endif
 
@@ -1658,7 +1664,7 @@ int tao_yydebug;
    SIZE_MAX < TAO_YYSTACK_BYTES (TAO_YYMAXDEPTH)
    evaluated with infinite-precision integer arithmetic.  */
 
-#if TAO_YYMAXDEPTH == 0
+#if defined (TAO_YYMAXDEPTH) && TAO_YYMAXDEPTH == 0
 # undef TAO_YYMAXDEPTH
 #endif
 
@@ -1846,7 +1852,7 @@ tao_yyparse ()
      to reallocate them elsewhere.  */
 
   /* The state stack.  */
-  short	tao_yyssa[TAO_YYINITDEPTH];
+  short        tao_yyssa[TAO_YYINITDEPTH];
   short *tao_yyss = tao_yyssa;
   register short *tao_yyssp;
 
@@ -1875,7 +1881,7 @@ tao_yyparse ()
   tao_yystate = 0;
   tao_yyerrstatus = 0;
   tao_yynerrs = 0;
-  tao_yychar = TAO_YYEMPTY;		/* Cause a token to be read.  */
+  tao_yychar = TAO_YYEMPTY;                /* Cause a token to be read.  */
 
   /* Initialize stack pointers.
      Waste one element of value and location stack
@@ -1906,25 +1912,25 @@ tao_yyparse ()
 
 #ifdef tao_yyoverflow
       {
-	/* Give user a chance to reallocate the stack. Use copies of
-	   these so that the &'s don't force the real ones into
-	   memory.  */
-	TAO_YYSTYPE *tao_yyvs1 = tao_yyvs;
-	short *tao_yyss1 = tao_yyss;
+        /* Give user a chance to reallocate the stack. Use copies of
+           these so that the &'s don't force the real ones into
+           memory.  */
+        TAO_YYSTYPE *tao_yyvs1 = tao_yyvs;
+        short *tao_yyss1 = tao_yyss;
 
 
-	/* Each stack pointer address is followed by the size of the
-	   data in use in that stack, in bytes.  This used to be a
-	   conditional around just the two extra args, but that might
-	   be undefined if tao_yyoverflow is a macro.  */
-	tao_yyoverflow ("parser stack overflow",
-		    &tao_yyss1, tao_yysize * sizeof (*tao_yyssp),
-		    &tao_yyvs1, tao_yysize * sizeof (*tao_yyvsp),
+        /* Each stack pointer address is followed by the size of the
+           data in use in that stack, in bytes.  This used to be a
+           conditional around just the two extra args, but that might
+           be undefined if tao_yyoverflow is a macro.  */
+        tao_yyoverflow ("parser stack overflow",
+                    &tao_yyss1, tao_yysize * sizeof (*tao_yyssp),
+                    &tao_yyvs1, tao_yysize * sizeof (*tao_yyvsp),
 
-		    &tao_yystacksize);
+                    &tao_yystacksize);
 
-	tao_yyss = tao_yyss1;
-	tao_yyvs = tao_yyvs1;
+        tao_yyss = tao_yyss1;
+        tao_yyvs = tao_yyvs1;
       }
 #else /* no tao_yyoverflow */
 # ifndef TAO_YYSTACK_RELOCATE
@@ -1932,23 +1938,23 @@ tao_yyparse ()
 # else
       /* Extend the stack our own way.  */
       if (TAO_YYMAXDEPTH <= tao_yystacksize)
-	goto tao_yyoverflowlab;
+        goto tao_yyoverflowlab;
       tao_yystacksize *= 2;
       if (TAO_YYMAXDEPTH < tao_yystacksize)
-	tao_yystacksize = TAO_YYMAXDEPTH;
+        tao_yystacksize = TAO_YYMAXDEPTH;
 
       {
-	short *tao_yyss1 = tao_yyss;
-	union tao_yyalloc *tao_yyptr =
-	  (union tao_yyalloc *) TAO_YYSTACK_ALLOC (TAO_YYSTACK_BYTES (tao_yystacksize));
-	if (! tao_yyptr)
-	  goto tao_yyoverflowlab;
-	TAO_YYSTACK_RELOCATE (tao_yyss);
-	TAO_YYSTACK_RELOCATE (tao_yyvs);
+        short *tao_yyss1 = tao_yyss;
+        union tao_yyalloc *tao_yyptr =
+          (union tao_yyalloc *) TAO_YYSTACK_ALLOC (TAO_YYSTACK_BYTES (tao_yystacksize));
+        if (! tao_yyptr)
+          goto tao_yyoverflowlab;
+        TAO_YYSTACK_RELOCATE (tao_yyss);
+        TAO_YYSTACK_RELOCATE (tao_yyvs);
 
 #  undef TAO_YYSTACK_RELOCATE
-	if (tao_yyss1 != tao_yyssa)
-	  TAO_YYSTACK_FREE (tao_yyss1);
+        if (tao_yyss1 != tao_yyssa)
+          TAO_YYSTACK_FREE (tao_yyss1);
       }
 # endif
 #endif /* no tao_yyoverflow */
@@ -1958,10 +1964,10 @@ tao_yyparse ()
 
 
       TAO_YYDPRINTF ((stderr, "Stack size increased to %lu\n",
-		  (unsigned long int) tao_yystacksize));
+                  (unsigned long int) tao_yystacksize));
 
       if (tao_yyss + tao_yystacksize - 1 <= tao_yyssp)
-	TAO_YYABORT;
+        TAO_YYABORT;
     }
 
   TAO_YYDPRINTF ((stderr, "Entering state %d\n", tao_yystate));
@@ -2012,7 +2018,7 @@ tao_yybackup:
   if (tao_yyn <= 0)
     {
       if (tao_yyn == 0 || tao_yyn == TAO_YYTABLE_NINF)
-	goto tao_yyerrlab;
+        goto tao_yyerrlab;
       tao_yyn = -tao_yyn;
       goto tao_yyreduce;
     }
@@ -2596,7 +2602,7 @@ tao_yyreduce:
 //      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeQsSeen);
 
-          AST_ValueType *vt = 
+          AST_ValueType *vt =
             AST_ValueType::narrow_from_scope (
                 idl_global->scopes ().top_non_null ()
               );
@@ -4808,9 +4814,9 @@ tao_yyreduce:
           if (tao_yyvsp[-2].dcval != 0
               && AST_illegal_recursive_type (tao_yyvsp[-2].dcval))
             {
-              idl_global->err ()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE,
-                                          tao_yyvsp[-2].dcval);
-                                          
+              idl_global->err()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE,
+                                         tao_yyvsp[-2].dcval);
+
               tao_yyval.ffval = 0;
             }
           /*
@@ -6662,9 +6668,9 @@ tao_yyreduce:
                 }
               else if (d->node_type () != AST_Decl::NT_interface)
                 {
-                  // Nothing else but CORBA::Object can have 
+                  // Nothing else but CORBA::Object can have
                   // this identifier.
-                  if (ACE_OS::strcmp (d->local_name ()->get_string (), 
+                  if (ACE_OS::strcmp (d->local_name ()->get_string (),
                                       "Object")
                         != 0)
                     {
@@ -6672,7 +6678,6 @@ tao_yyreduce:
                       break;
                     }
                 }
-                
               AST_Type *interface_type =
                 AST_Type::narrow_from_decl (d);
 
@@ -6745,7 +6750,7 @@ tao_yyreduce:
             }
           else if (d->node_type () != AST_Decl::NT_interface)
             {
-              if (ACE_OS::strcmp (d->local_name ()->get_string (), 
+              if (ACE_OS::strcmp (d->local_name ()->get_string (),
                                   "Object")
                     != 0)
                 {
@@ -6753,7 +6758,7 @@ tao_yyreduce:
                   break;
                 }
             }
-            
+
           AST_Type *interface_type = AST_Type::narrow_from_decl (d);
           AST_Component *c = AST_Component::narrow_from_scope (s);
 
@@ -6764,8 +6769,8 @@ tao_yyreduce:
               ud.impl = interface_type;
               ud.is_multiple = tao_yyvsp[-2].bval;
               c->uses ().enqueue_tail (ud);
-                  
-              if (ud.is_multiple == I_TRUE 
+
+              if (ud.is_multiple == I_TRUE
                   && !idl_global->using_ifr_backend ())
                 {
                   // These datatypes must be created in the
@@ -7535,7 +7540,7 @@ tao_yyreduce:
 
     }
 
-/* Line 999 of yacc.c.  */
+/* Line 1000 of yacc.c.  */
 
 
   tao_yyvsp -= tao_yylen;
@@ -7574,62 +7579,62 @@ tao_yyerrlab:
       tao_yyn = tao_yypact[tao_yystate];
 
       if (TAO_YYPACT_NINF < tao_yyn && tao_yyn < TAO_YYLAST)
-	{
-	  TAO_YYSIZE_T tao_yysize = 0;
-	  int tao_yytype = TAO_YYTRANSLATE (tao_yychar);
-	  const char* tao_yyprefix;
-	  char *tao_yymsg;
-	  int tao_yyx;
+        {
+          TAO_YYSIZE_T tao_yysize = 0;
+          int tao_yytype = TAO_YYTRANSLATE (tao_yychar);
+          const char* tao_yyprefix;
+          char *tao_yymsg;
+          int tao_yyx;
 
-	  /* Start TAO_YYX at -TAO_YYN if negative to avoid negative indexes in
-	     TAO_YYCHECK.  */
-	  int tao_yyxbegin = tao_yyn < 0 ? -tao_yyn : 0;
+          /* Start TAO_YYX at -TAO_YYN if negative to avoid negative indexes in
+             TAO_YYCHECK.  */
+          int tao_yyxbegin = tao_yyn < 0 ? -tao_yyn : 0;
 
-	  /* Stay within bounds of both tao_yycheck and tao_yytname.  */
-	  int tao_yychecklim = TAO_YYLAST - tao_yyn;
-	  int tao_yyxend = tao_yychecklim < TAO_YYNTOKENS ? tao_yychecklim : TAO_YYNTOKENS;
-	  int tao_yycount = 0;
+          /* Stay within bounds of both tao_yycheck and tao_yytname.  */
+          int tao_yychecklim = TAO_YYLAST - tao_yyn;
+          int tao_yyxend = tao_yychecklim < TAO_YYNTOKENS ? tao_yychecklim : TAO_YYNTOKENS;
+          int tao_yycount = 0;
 
-	  tao_yyprefix = ", expecting ";
-	  for (tao_yyx = tao_yyxbegin; tao_yyx < tao_yyxend; ++tao_yyx)
-	    if (tao_yycheck[tao_yyx + tao_yyn] == tao_yyx && tao_yyx != TAO_YYTERROR)
-	      {
-		tao_yysize += tao_yystrlen (tao_yyprefix) + tao_yystrlen (tao_yytname [tao_yyx]);
-		tao_yycount += 1;
-		if (tao_yycount == 5)
-		  {
-		    tao_yysize = 0;
-		    break;
-		  }
-	      }
-	  tao_yysize += (sizeof ("syntax error, unexpected ")
-		     + tao_yystrlen (tao_yytname[tao_yytype]));
-	  tao_yymsg = (char *) TAO_YYSTACK_ALLOC (tao_yysize);
-	  if (tao_yymsg != 0)
-	    {
-	      char *tao_yyp = tao_yystpcpy (tao_yymsg, "syntax error, unexpected ");
-	      tao_yyp = tao_yystpcpy (tao_yyp, tao_yytname[tao_yytype]);
+          tao_yyprefix = ", expecting ";
+          for (tao_yyx = tao_yyxbegin; tao_yyx < tao_yyxend; ++tao_yyx)
+            if (tao_yycheck[tao_yyx + tao_yyn] == tao_yyx && tao_yyx != TAO_YYTERROR)
+              {
+                tao_yysize += tao_yystrlen (tao_yyprefix) + tao_yystrlen (tao_yytname [tao_yyx]);
+                tao_yycount += 1;
+                if (tao_yycount == 5)
+                  {
+                    tao_yysize = 0;
+                    break;
+                  }
+              }
+          tao_yysize += (sizeof ("syntax error, unexpected ")
+                     + tao_yystrlen (tao_yytname[tao_yytype]));
+          tao_yymsg = (char *) TAO_YYSTACK_ALLOC (tao_yysize);
+          if (tao_yymsg != 0)
+            {
+              char *tao_yyp = tao_yystpcpy (tao_yymsg, "syntax error, unexpected ");
+              tao_yyp = tao_yystpcpy (tao_yyp, tao_yytname[tao_yytype]);
 
-	      if (tao_yycount < 5)
-		{
-		  tao_yyprefix = ", expecting ";
-		  for (tao_yyx = tao_yyxbegin; tao_yyx < tao_yyxend; ++tao_yyx)
-		    if (tao_yycheck[tao_yyx + tao_yyn] == tao_yyx && tao_yyx != TAO_YYTERROR)
-		      {
-			tao_yyp = tao_yystpcpy (tao_yyp, tao_yyprefix);
-			tao_yyp = tao_yystpcpy (tao_yyp, tao_yytname[tao_yyx]);
-			tao_yyprefix = " or ";
-		      }
-		}
-	      tao_yyerror (tao_yymsg);
-	      TAO_YYSTACK_FREE (tao_yymsg);
-	    }
-	  else
-	    tao_yyerror ("syntax error; also virtual memory exhausted");
-	}
+              if (tao_yycount < 5)
+                {
+                  tao_yyprefix = ", expecting ";
+                  for (tao_yyx = tao_yyxbegin; tao_yyx < tao_yyxend; ++tao_yyx)
+                    if (tao_yycheck[tao_yyx + tao_yyn] == tao_yyx && tao_yyx != TAO_YYTERROR)
+                      {
+                        tao_yyp = tao_yystpcpy (tao_yyp, tao_yyprefix);
+                        tao_yyp = tao_yystpcpy (tao_yyp, tao_yytname[tao_yyx]);
+                        tao_yyprefix = " or ";
+                      }
+                }
+              tao_yyerror (tao_yymsg);
+              TAO_YYSTACK_FREE (tao_yymsg);
+            }
+          else
+            tao_yyerror ("syntax error; also virtual memory exhausted");
+        }
       else
 #endif /* TAO_YYERROR_VERBOSE */
-	tao_yyerror ("syntax error");
+        tao_yyerror ("syntax error");
     }
 
 
@@ -7637,27 +7642,29 @@ tao_yyerrlab:
   if (tao_yyerrstatus == 3)
     {
       /* If just tried and failed to reuse lookahead token after an
-	 error, discard it.  */
+         error, discard it.  */
 
-      /* Return failure if at end of input.  */
-      if (tao_yychar == TAO_YYEOF)
+      if (tao_yychar <= TAO_YYEOF)
         {
-	  /* Pop the error token.  */
-          TAO_YYPOPSTACK;
-	  /* Pop the rest of the stack.  */
-	  while (tao_yyss < tao_yyssp)
-	    {
-	      TAO_YYDSYMPRINTF ("Error: popping", tao_yystos[*tao_yyssp], tao_yyvsp, tao_yylsp);
-	      tao_yydestruct (tao_yystos[*tao_yyssp], tao_yyvsp);
-	      TAO_YYPOPSTACK;
-	    }
-	  TAO_YYABORT;
+          /* If at end of input, pop the error token,
+             then the rest of the stack, then return failure.  */
+          if (tao_yychar == TAO_YYEOF)
+             for (;;)
+               {
+                 TAO_YYPOPSTACK;
+                 if (tao_yyssp == tao_yyss)
+                   TAO_YYABORT;
+                 TAO_YYDSYMPRINTF ("Error: popping", tao_yystos[*tao_yyssp], tao_yyvsp, tao_yylsp);
+                 tao_yydestruct (tao_yystos[*tao_yyssp], tao_yyvsp);
+               }
         }
+      else
+        {
+          TAO_YYDSYMPRINTF ("Error: discarding", tao_yytoken, &tao_yylval, &tao_yylloc);
+          tao_yydestruct (tao_yytoken, &tao_yylval);
+          tao_yychar = TAO_YYEMPTY;
 
-      TAO_YYDSYMPRINTF ("Error: discarding", tao_yytoken, &tao_yylval, &tao_yylloc);
-      tao_yydestruct (tao_yytoken, &tao_yylval);
-      tao_yychar = TAO_YYEMPTY;
-
+        }
     }
 
   /* Else will try to reuse lookahead token after shifting the error
@@ -7665,35 +7672,52 @@ tao_yyerrlab:
   goto tao_yyerrlab1;
 
 
-/*----------------------------------------------------.
-| tao_yyerrlab1 -- error raised explicitly by an action.  |
-`----------------------------------------------------*/
+/*---------------------------------------------------.
+| tao_yyerrorlab -- error raised explicitly by TAO_YYERROR.  |
+`---------------------------------------------------*/
+tao_yyerrorlab:
+
+#if defined (__GNUC__) || defined (WIN32) || defined (__HP_aCC)
+  /* Pacify GCC when the user code never invokes TAO_YYERROR and the label
+     tao_yyerrorlab therefore never appears in user code.  */
+  if (0)
+     goto tao_yyerrorlab;
+#endif
+
+  tao_yyvsp -= tao_yylen;
+  tao_yyssp -= tao_yylen;
+  tao_yystate = *tao_yyssp;
+  goto tao_yyerrlab1;
+
+
+/*-------------------------------------------------------------.
+| tao_yyerrlab1 -- common code for both syntax error and TAO_YYERROR.  |
+`-------------------------------------------------------------*/
 tao_yyerrlab1:
-  tao_yyerrstatus = 3;	/* Each real token shifted decrements this.  */
+  tao_yyerrstatus = 3;        /* Each real token shifted decrements this.  */
 
   for (;;)
     {
       tao_yyn = tao_yypact[tao_yystate];
       if (tao_yyn != TAO_YYPACT_NINF)
-	{
-	  tao_yyn += TAO_YYTERROR;
-	  if (0 <= tao_yyn && tao_yyn <= TAO_YYLAST && tao_yycheck[tao_yyn] == TAO_YYTERROR)
-	    {
-	      tao_yyn = tao_yytable[tao_yyn];
-	      if (0 < tao_yyn)
-		break;
-	    }
-	}
+        {
+          tao_yyn += TAO_YYTERROR;
+          if (0 <= tao_yyn && tao_yyn <= TAO_YYLAST && tao_yycheck[tao_yyn] == TAO_YYTERROR)
+            {
+              tao_yyn = tao_yytable[tao_yyn];
+              if (0 < tao_yyn)
+                break;
+            }
+        }
 
       /* Pop the current state because it cannot handle the error token.  */
       if (tao_yyssp == tao_yyss)
-	TAO_YYABORT;
+        TAO_YYABORT;
 
       TAO_YYDSYMPRINTF ("Error: popping", tao_yystos[*tao_yyssp], tao_yyvsp, tao_yylsp);
       tao_yydestruct (tao_yystos[tao_yystate], tao_yyvsp);
-      tao_yyvsp--;
-      tao_yystate = *--tao_yyssp;
-
+      TAO_YYPOPSTACK;
+      tao_yystate = *tao_yyssp;
       TAO_YY_STACK_PRINT (tao_yyss, tao_yyssp);
     }
 
@@ -7765,3 +7789,4 @@ tao_yyerror (const char *msg)
               "%s\n",
               msg));
 }
+
