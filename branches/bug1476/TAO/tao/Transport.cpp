@@ -1082,7 +1082,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
             {
               if (TAO_debug_level > 0)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ACE_ERROR ((LM_ERROR,
                               "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
                               "fatal error in "
                               "send_message_block_chain_i - %m\n",

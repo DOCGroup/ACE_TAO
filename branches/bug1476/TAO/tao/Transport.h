@@ -441,6 +441,8 @@ public:
    * adapter class (TAO_Transport_Event_Handler or something), this
    * will reduce footprint and simplify the process of implementing a
    * pluggable protocol.
+   *
+   * @todo This method has to be renamed to event_handler()
    */
   virtual ACE_Event_Handler * event_handler_i (void) = 0;
 

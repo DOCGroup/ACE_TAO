@@ -1,6 +1,14 @@
+Mon Aug  2 09:45:36 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.h:
+          Added a todo that event_handler_i has to be renamed to event_handler
+
+        * tao/Transport.cpp (send_message_shared_i):
+          Use ACE_ERROR for a fatal message instead of a debug
+
 Mon Aug  2 09:16:36 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tao/Transport_Connectoror.cpp (connect):
+        * tao/Transport_Connector.cpp (connect):
           Refactored this method so that checking for errors is easier, seems
           to me that part of this method can be factored out again and can
           then also be called from IIOP_Connector::make_connection(). Added
