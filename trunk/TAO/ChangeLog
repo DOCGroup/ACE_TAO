@@ -1,16 +1,48 @@
+Fri Dec  3 12:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_include.pidl:
+          New file that users of this library can include
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_includeC.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_includeS.h:
+          New files
+
+        * tao/ObjRefTemplate/Default_ORT.pidl:
+        * tao/IORInterceptor/IORInfo.pidl:
+          Include the ObjectReferenceTemplate_include file
+
+        * tao/ObjRefTemplate/Default_ORTC.{h,cpp,inl}:
+        * tao/IORInterceptor/IORInfoC.{h,cpp,inl}:
+        * tao/IORInterceptor/IORInterceptor.{h,cpp,inl}:
+          Regenerated
+
+        * tao/ObjRefTemplate/Default_ORTA.cpp:
+          New file containing typecodes and any operators
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate.{h,cpp,i}:
+          Removed empty inline file and updated cpp,h file
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.{h,cpp,inl}:
+          Regenerated
+
+        * tao/ObjRefTemplate/ORT_Adapter_Impl.h:
+        * tao/IORInterceptor/IORInfo.h:
+        * tao/IORInterceptor/ObjectReferenceTemplate_i.h:
+          Removed deprecated _msc_ver checks
+
 Fri Dec  3 05:19:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ObjRefTemplate/ObjectReferenceTemplate.h:
 
-	  New file that needs to be included by clients. 
+	  New file that needs to be included by clients.
 
 	* tao/ObjRefTemplate/Default_ORTC.h:
 	* tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
 	* tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
 	* tao/ObjRefTemplate/ObjectReferenceTemplateC.inl:
 
-	  Included the above file. 
-	
+	  Included the above file.
+
 	* tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
 
 	  Added a safe #define for including ObjectReferenceTemplateC.h.
@@ -26,7 +58,7 @@ Thu Dec  2 21:21:47 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDLbe/be_visitor_interface/interface_cs.cpp:
         * TAO_IDLbe/be_visitor_interface/interface_ss.cpp:
         * TAO_IDLbe/be_visitor_interface/remote_proxy_impl_cs.cpp:
-        
+
           Fixed mistake in generated code where we were instantiating
           an Abstract_Invocation_Adapter when regenerating an operation
           in a concrete interface or component which is from an
