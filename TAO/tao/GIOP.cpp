@@ -406,11 +406,11 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   // as the "duty factor" goes down because of either long calls or
   // bursty contention during numerous short calls to the same server.
 
-  CDR::mb_align (msg.start_);
-  if (CDR::grow (msg.start_, TAO_GIOP_HEADER_LEN) == -1)
+  CDR::mb_align (&msg.start_);
+  if (CDR::grow (&msg.start_, TAO_GIOP_HEADER_LEN) == -1)
     return TAO_GIOP::MessageError;
 
-  char *header = msg.start_->rd_ptr ();
+  char *header = msg.start_.rd_ptr ();
   ssize_t len = TAO_GIOP::read_buffer (connection,
                                        header,
                                        TAO_GIOP_HEADER_LEN);
@@ -481,7 +481,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   // Make sure byteswapping is done if needed, and then read the
   // message size (appropriately byteswapped).
 
-  msg.start_->rd_ptr (8);
+  msg.start_.rd_ptr (8);
   msg.read_ulong (message_size);
 
   // Make sure we have the full length in memory, growing the buffer
@@ -492,17 +492,17 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
   assert (message_size <= UINT_MAX);
 
-  if (CDR::grow (msg.start_, TAO_GIOP_HEADER_LEN + message_size) == -1)
+  if (CDR::grow (&msg.start_, TAO_GIOP_HEADER_LEN + message_size) == -1)
     return TAO_GIOP::MessageError;
 
   // Growing the buffer may have reset the rd_ptr(), but we want to
   // leave it just after the GIOP header (that was parsed already);
-  CDR::mb_align (msg.start_);
-  msg.start_->wr_ptr (TAO_GIOP_HEADER_LEN);
-  msg.start_->wr_ptr (message_size);
-  msg.start_->rd_ptr (TAO_GIOP_HEADER_LEN);
+  CDR::mb_align (&msg.start_);
+  msg.start_.wr_ptr (TAO_GIOP_HEADER_LEN);
+  msg.start_.wr_ptr (message_size);
+  msg.start_.rd_ptr (TAO_GIOP_HEADER_LEN);
 
-  char* payload = msg.start_->rd_ptr ();
+  char* payload = msg.start_.rd_ptr ();
 
   // Read the rest of this message into the buffer.
 

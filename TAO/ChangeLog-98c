@@ -1,3 +1,19 @@
+Tue May 26 20:22:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.h: 
+	* tao/CDR.i: 
+	* tao/CDR.cpp: 
+	* tao/GIOP.cpp: 
+	  I was able to remove a memory allocation on the client side by
+	  playing some tricks with the underlying Data_Block.
+
+	* tests/CDR/basic_types.cpp: 
+	  The ORB was destroyed before the test was run, hence all the
+	  Typecodes were invalid.
+
+	* tests/Param_Test/tests.cpp: 
+	  Disabled several DII tests because they will not compile.
+
 Tue May 26 19:08:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (new_context): Add a
