@@ -118,7 +118,7 @@ Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
 
       if (this->use_ir_ == 1)
         {
-          this->ir_helper_->change_object (server_obj, ACE_TRY_ENV);
+          this->ir_helper_->change_object (server_obj.inout (), ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
        
