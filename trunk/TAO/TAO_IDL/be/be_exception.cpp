@@ -71,8 +71,7 @@ be_exception::be_exception (UTL_ScopedName *n,
 
   if (!this->imported ())
     {
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.exception_seen_);
+      idl_global->exception_seen_ = true;
     }
 }
 

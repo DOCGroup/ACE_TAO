@@ -148,13 +148,11 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
   // Set the flag that says we have a valuetype in this IDL file.
   if (this->is_defined ())
     {
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.valuetype_seen_);
+      idl_global->valuetype_seen_ = true;
     }
   else
     {
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.fwd_valuetype_seen_);
+      idl_global->fwd_valuetype_seen_ = true;
     }
 }
 

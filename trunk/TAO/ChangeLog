@@ -1,3 +1,45 @@
+Tue Dec  7 13:14:17 2004  Greg Bostrom <greg.bostrom@hp.com>
+
+        * TAO_IDL/ast/ast_decl.cpp
+        * TAO_IDL/be/be_array.cpp
+        * TAO_IDL/be/be_attribute.cpp
+        * TAO_IDL/be/be_codegen.cpp
+        * TAO_IDL/be/be_decl.cpp
+        * TAO_IDL/be/be_enum.cpp
+        * TAO_IDL/be/be_exception.cpp
+        * TAO_IDL/be/be_home.cpp
+        * TAO_IDL/be/be_interface.cpp
+        * TAO_IDL/be/be_operation.cpp
+        * TAO_IDL/be/be_predefined_type.cpp
+        * TAO_IDL/be/be_sequence.cpp
+        * TAO_IDL/be/be_string.cpp
+        * TAO_IDL/be/be_structure.cpp
+        * TAO_IDL/be/be_union.cpp
+        * TAO_IDL/be/be_valuetype.cpp
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp
+        * TAO_IDL/be_include/be_codegen.h
+        * TAO_IDL/fe/y.tab.cpp
+        * TAO_IDL/include/idl_global.h
+        * TAO_IDL/tao_idl.cpp
+        * TAO_IDL/util/utl_global.cpp
+        * TAO_IDL/util/utl_scope.cpp
+
+          Replace the UINT64 bit masks and bit flags with the bool type.
+
+          old: ACE_UINT64 foo_seen_;
+          new: bool       foo_seen_;
+
+          old: ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.foo_seen_);
+          new: idl_global->foo_seen_ = true;
+
+          old: if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                             idl_global->decls_seen_masks.foo_seen_)
+          new: if (idl_global->foo_seen_)
+
+          This fix closes [BUGID:1665] by removing 'unsigned long long' usage.
+
 Tue Dec  7 16:39:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

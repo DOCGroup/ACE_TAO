@@ -500,14 +500,12 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
   // First check for string or wstring base type.
   if (nt == AST_Decl::NT_string)
     {
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.string_seq_seen_);
+      idl_global->string_seq_seen_ = true;
       return;
     }
   else if (nt == AST_Decl::NT_wstring)
     {
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.wstring_seq_seen_);
+      idl_global->wstring_seq_seen_ = true;
       return;
     }
   
@@ -521,60 +519,46 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
   switch (pdt->pt ())
     {
       case AST_PredefinedType::PT_long:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.long_seq_seen_);
+        idl_global->long_seq_seen_ = true;
         break;
       case AST_PredefinedType::PT_ulong:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.ulong_seq_seen_);
+        idl_global->ulong_seq_seen_ = true;
         break;
       case AST_PredefinedType::PT_longlong:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.longlong_seq_seen_);
+        idl_global->longlong_seq_seen_ = true;
         break;
       case AST_PredefinedType::PT_ulonglong:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.ulonglong_seq_seen_);
+        idl_global->ulonglong_seq_seen_ = true;
         break;
       case AST_PredefinedType::PT_short:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.short_seq_seen_);
+        idl_global->short_seq_seen_ = true;
         break;
       case AST_PredefinedType::PT_ushort:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.ushort_seq_seen_);
+        idl_global->ushort_seq_seen_ = true;
         break;
       case AST_PredefinedType::PT_float:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.float_seq_seen_);
+        idl_global->float_seq_seen_ = true;
         break;
       case AST_PredefinedType::PT_double:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.double_seq_seen_);
+        idl_global->double_seq_seen_ = true;
         break;
       case AST_PredefinedType::PT_longdouble:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.longdouble_seq_seen_);
+        idl_global->longdouble_seq_seen_ = true;
         break;
       case AST_PredefinedType::PT_char:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.char_seq_seen_);
+        idl_global->char_seq_seen_ = true;
         break;
       case AST_PredefinedType::PT_wchar:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.wchar_seq_seen_);
+        idl_global->wchar_seq_seen_ = true;
         break;
       case AST_PredefinedType::PT_boolean:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.boolean_seq_seen_);
+        idl_global->boolean_seq_seen_ = true;
         break;
       case AST_PredefinedType::PT_octet:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.octet_seq_seen_);
+        idl_global->octet_seq_seen_ = true;
         break;
       case AST_PredefinedType::PT_any:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.any_seq_seen_);
+        idl_global->any_seq_seen_ = true;
         break;
       default:
         break;
@@ -1408,18 +1392,15 @@ UTL_Scope::lookup_pseudo (Identifier *e)
                 {
                   // Generation of #includes for Typecode.h
                   // checks this bit, so we set it for TCKind as well.
-                  ACE_SET_BITS (idl_global->decls_seen_info_,
-                                idl_global->decls_seen_masks.typecode_seen_);
+                  idl_global->typecode_seen_ = true;
                 }
               else if (obj_lookup)
                 {
-                  ACE_SET_BITS (idl_global->decls_seen_info_,
-                                idl_global->decls_seen_masks.base_object_seen_);
+                  idl_global->base_object_seen_ = true;
                 }
               else if (vb_lookup)
                 {
-                  ACE_SET_BITS (idl_global->decls_seen_info_,
-                                idl_global->decls_seen_masks.valuebase_seen_);
+                  idl_global->valuebase_seen_ = true;
                 }
             }
 
@@ -1435,8 +1416,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
         {
           // Generation of #includes for Typecode.h
           // checks this bit, so we set it for TCKind as well.
-          ACE_SET_BITS (idl_global->decls_seen_info_,
-                        idl_global->decls_seen_masks.typecode_seen_);
+          idl_global->typecode_seen_ = true;
           delete i;
           return d;
         }
@@ -1554,14 +1534,10 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
                   switch (pdt)
                     {
                       case AST_PredefinedType::PT_any:
-                        ACE_SET_BITS (idl_global->decls_seen_info_,
-                                      idl_global->decls_seen_masks.any_seen_);
+                        idl_global->any_seen_ = true;
                         break;
                       case AST_PredefinedType::PT_object:
-                        ACE_SET_BITS (
-                            idl_global->decls_seen_info_,
-                            idl_global->decls_seen_masks.base_object_seen_
-                          );
+                        idl_global->base_object_seen_ = true;
                         break;
                       default:
                         break;
