@@ -1,3 +1,11 @@
+Wed Jun 27 11:24:03 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/Param_Test/anyop.dsp:
+        * tests/Param_Test/client.dsp:
+        * tests/Param_Test/server.dsp:
+
+          Removed unnecessary links to TAO_Strategies library.
+
 Tue Jun 26 14:47:59 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynAny_i.cpp (set_to_default_value):
