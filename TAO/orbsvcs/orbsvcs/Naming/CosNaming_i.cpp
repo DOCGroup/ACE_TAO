@@ -82,6 +82,7 @@ NS_NamingContext::bind (const CosNaming::Name& n,
 			CORBA::Object_ptr obj,
 			CORBA::Environment &_env)
 {
+  int result = 0;
   _env.clear ();
 
   // get the length of the name
@@ -114,12 +115,21 @@ NS_NamingContext::bind (const CosNaming::Name& n,
       NS_ExtId name (n[0].id, n[0].kind);
 
       // Try binding the name.
-      if (context_.bind (name, entry) == -1)
+      result = context_.bind (name, entry);
+      if (result == 1)
 	{
 	  _env.clear ();
 	  _env.exception (new CosNaming::NamingContext::AlreadyBound);
 	  return;
 	}
+      // Something went wrong with the internal structure
+      else if (result == -1)
+	{
+	  _env.clear ();
+	  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+	  return;
+	}
+
       ACE_DEBUG ((LM_DEBUG, "bound: <%s,%s>\n",
 		  n[0].id.in ()==0? "nil":n[0].id.in (),
 		  n[0].kind.in ()==0? "nil":n[0].kind.in ()
@@ -132,6 +142,7 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
 			  CORBA::Object_ptr obj,
 			  CORBA::Environment &_env)
 {
+  int result = 0;
   // get the length of the name
   CORBA::ULong len = n.length ();
 
@@ -163,9 +174,15 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
       NS_ExtId oldname;
 
       // Try rebinding the name.
-      if (context_.rebind (name, entry, oldname, oldentry) == -1)
-	;
-	// Deal with consequences.
+      result = context_.rebind (name, entry, oldname, oldentry);
+
+      // Something went wrong with the internal structure
+      if (result == -1)
+	{
+	  _env.clear ();
+	  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+	  return;
+	}
     }
 }
 
@@ -174,6 +191,7 @@ NS_NamingContext::bind_context (const CosNaming::Name &n,
 				CosNaming::NamingContext_ptr nc,
 				CORBA::Environment &_env)
 {
+  int result = 0;
   // Get the length of the name.
   CORBA::ULong len = n.length ();
 
@@ -205,14 +223,20 @@ NS_NamingContext::bind_context (const CosNaming::Name &n,
       NS_ExtId name (n[0].id, n[0].kind);
 
       // Try binding the name.
-      if (context_.bind (name, entry) == 1)
+      result = context_.bind (name, entry);
+      if ( result == 1)
 	{
 	  _env.clear ();
 	  _env.exception (new CosNaming::NamingContext::AlreadyBound);
 	  return;
 	}
-
-      // May need to add case dealing with -1. @@
+      // Something went wrong with the internal structure
+      else if (result == -1)
+	{
+	  _env.clear ();
+	  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+	  return;
+	}	
     }
 }
 
