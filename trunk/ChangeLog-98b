@@ -1,3 +1,8 @@
+Mon Jun 29 14:48:58 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (invoke): Added a return at the end to keep AIX
+ 	  happy.  Thanks to CLahey@cccis.com for reporting this.
+
 Mon Jun 29 11:37:28 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/ACE.cpp: Added a 'const' to initialized ASYS_TCHAR * - string
