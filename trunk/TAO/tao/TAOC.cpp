@@ -301,6 +301,8 @@ const char* TAO::BufferingConstraintPolicy::_interface_repository_id (void) cons
   return "IDL:TAO/BufferingConstraintPolicy:1.0";
 }
 
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
 static const CORBA::Long _oc_TAO_SyncScope[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
@@ -338,7 +340,10 @@ TAO_NAMESPACE_TYPE (const CORBA::Short)
 TAO_NAMESPACE_BEGIN (TAO)
 TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_DELAYED_BUFFERING, -1)
 TAO_NAMESPACE_END
-void operator<<= (CORBA::Any &_tao_any, const TAO::PrioritySpecification &_tao_elem) // copying
+
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
+
+ void operator<<= (CORBA::Any &_tao_any, const TAO::PrioritySpecification &_tao_elem) // copying
 {
   TAO_OutputCDR stream;
   stream << _tao_elem;
@@ -418,6 +423,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO::PrioritySpeci
   ACE_ENDTRY;
   return 0;
 }
+
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 void operator<<= (CORBA::Any &_tao_any, const TAO::BufferingConstraint &_tao_elem) // copying
 {

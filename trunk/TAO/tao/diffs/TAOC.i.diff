@@ -1,5 +1,5 @@
---- orig/TAOC.i	Fri Apr 28 18:04:26 2000
-+++ tmp/TAOC.i	Fri Apr 28 18:12:52 2000
+--- orig/TAOC.i	Mon May  1 09:12:20 2000
++++ TAOC.i	Mon May  1 09:10:57 2000
 @@ -11,6 +11,8 @@
  // Inline operations for class TAO::PrioritySpecification_var
  // *************************************************************
