@@ -360,7 +360,7 @@ ACE_HTTP_Addr::create_relative_address (LPCTSTR url) const
   if (url[0] == '/')
     {
       ACE_NEW_RETURN (addr, ACE_HTTP_Addr (this->get_hostname (),
-                                           url,
+                                           url + 1,
                                            0,
                                            this->get_port_number ()),
                       0);
