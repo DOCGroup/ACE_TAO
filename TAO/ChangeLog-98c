@@ -1,3 +1,12 @@
+Fri Jan  1 18:11:07 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/Time_Service/Clerk_i.cpp : Used _duplicate ()
+	on the server IORs. This overcomes the automatic deletion of memory.
+
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp : Used the advance () method
+	to iterate over the ACE_Array. The ACE_Unbounded_Set which was being
+	used earlier did not require this method to be used.
+
 Fri Jan 01 16:48:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time/TAO_UTO.cpp TAO_UTO): replaced cast
