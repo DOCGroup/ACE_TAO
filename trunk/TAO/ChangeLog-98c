@@ -1,10 +1,10 @@
 Tue Aug 25 14:32:41 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/RTI_IO.cpp (print_RtiPacket): Changed
- 	  code to use ACE_DEBUG instead of iostreams.
+        * tests/Cubit/TAO/IDL_Cubit/RTI_IO.cpp (print_RtiPacket): Changed
+          code to use ACE_DEBUG instead of iostreams.
 
-	* tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp: Added inclusion of
- 	  <ace/streams.h>.
+        * tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp: Added inclusion of
+          <ace/streams.h>.
 
 Tue Aug 25 11:11:54 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -16,9 +16,12 @@ Tue Aug 25 11:11:54 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/Simulator/Makefile,README: added DOVEBrowser
           module to top-level Simulator Makefile.
 
-        * orbsvcs/tests/Simulator/DOVEMIB}/AnyAnalyser.cpp (analyze):
+        * orbsvcs/tests/Simulator/DOVEMIB/AnyAnalyser.cpp (analyze):
           removed unused variable "size".  ghs complained that it
           was defined but not used.
+
+        * orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java:
+          initialize ulonglong with (0) instead of (0, 0) now.
 
 Tue Aug 25 11:03:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
