@@ -416,18 +416,6 @@ TAO_Abstract_Manager<T,T_var,T_life>::operator-> (void) const
 
 template<typename T, typename T_var, typename T_life>
 ACE_INLINE
-TAO_Abstract_Manager<T,T_var,T_life>::operator const T_var () const
-{
-  if (*this->ptr_ != 0)
-    {
-      (*this->ptr_)->_add_ref ();
-    }
-
-  return *this->ptr_;
-}
-
-template<typename T, typename T_var, typename T_life>
-ACE_INLINE
 TAO_Abstract_Manager<T,T_var,T_life>::operator const T * () const
 {
   return *this->ptr_;
@@ -461,7 +449,7 @@ ACE_INLINE
 T *
 TAO_Abstract_Manager<T,T_var,T_life>::_retn (void)
 {
-  T *temp = *this->ptr_;
+  T * temp = *this->ptr_;
   *this->ptr_ = 0;
   return temp;
 }
@@ -496,7 +484,7 @@ TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::operator[] (
   ) const
 {
   ACE_ASSERT (slot < this->maximum_);
-  T* * const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, 
+  T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, 
 					 this->buffer_);
   return 
     TAO_Object_Manager<T,T_var,T_life> (tmp + slot, this->release_);
@@ -849,19 +837,6 @@ TAO_Unbounded_Array_Sequence<T,T_life>::get_buffer (void) const
 // *************************************************************
 // class TAO_Bounded_Array_Sequence
 // *************************************************************
-
-template <typename T, typename T_life, size_t MAX> 
-ACE_INLINE 
-void
-TAO_Bounded_Array_Sequence<T,T_life,MAX>::freebuf (T *buffer)
-{
-  if (buffer == 0)
-    {
-      return;
-    }
-
-  delete [] buffer;
-}
 
 template <typename T, typename T_life, size_t MAX> 
 ACE_INLINE

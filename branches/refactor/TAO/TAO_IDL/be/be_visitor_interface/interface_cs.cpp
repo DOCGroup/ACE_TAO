@@ -58,130 +58,85 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // Initialize the static narrrowing helper variable.
-  *os << "int " << node->full_name () << "::_tao_class_id = 0;"
-      << be_nl << be_nl;
-
-  AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+  *os << be_nl << be_nl
+      << "int " << node->full_name () << "::_tao_class_id = 0;";
 
   // Helper functions generated in case this interface was
   // forward declared in some other IDL file and not defined there.
-  *os << node->full_name () << "_ptr" << be_nl;
-
-  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-    {
-      *os << parent->name () << "::";
-    }
-
-  *os << "tao_" << node->local_name () << "_life::"
+  *os << be_nl << be_nl
+      << node->full_name () << "_ptr" << be_nl
+      << node->fwd_helper_name () << "_life::"
       << "tao_duplicate (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return " << node->full_name ()
       << "::_duplicate (p);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
-  *os << "void" << be_nl;
-
-  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-    {
-      *os << parent->name () << "::";
-    }
-
-  *os << "tao_" << node->local_name () << "_life::"
+  *os << be_nl << be_nl
+      << "void" << be_nl
+      << node->fwd_helper_name () << "_life::"
       << "tao_release (" << be_idt << be_idt_nl
       << node->full_name () << "_ptr p" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "CORBA::release (p);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
-  *os << node->full_name () <<  "_ptr" << be_nl;
-
-  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-    {
-      *os << parent->name () << "::";
-    }
-
-  *os << "tao_" << node->local_name () << "_life::"
+  *os << be_nl << be_nl
+      << node->full_name () <<  "_ptr" << be_nl
+      << node->fwd_helper_name () << "_life::"
       << "tao_nil (" << be_idt << be_idt_nl
       << "void" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return " << node->full_name ()
       << "::_nil ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
-  *os << "CORBA::Boolean" << be_nl;
-
-  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-    {
-      *os << parent->name () << "::";
-    }
-
-  *os << "tao_" << node->local_name () << "_life::"
+  *os << be_nl << be_nl
+      << "CORBA::Boolean" << be_nl
+      << node->fwd_helper_name () << "_life::"
       << "tao_marshal (" << be_idt << be_idt_nl
       << node->name () << "_ptr p," << be_nl
       << "TAO_OutputCDR &cdr" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return p->marshal (cdr);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  *os << node->full_name () << "_ptr" << be_nl;
-
-  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-    {
-      *os << parent->name () << "::";
-    }
-
-  *os << "tao_" << node->local_name () << "_cast::"
-      << "tao_narrow (" << be_idt << be_idt_nl;
-
-  if (node->is_abstract ())
-    {
-      *os << "CORBA::AbstractBase *p" << be_nl;
-    }
-  else
-    {
-      *os << "CORBA::Object *p" << be_nl;
-    }
-
-  *os << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return " << node->full_name ()
-      << "::_narrow (p ACE_ENV_ARG_PARAMETER);"
-      << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  if (node->is_abstract ())
-    {
-      *os << "CORBA::AbstractBase *" << be_nl;
-    }
-  else
-    {
-      *os << "CORBA::Object *" << be_nl;
-    }
-
-  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-    {
-      *os << parent->name () << "::";
-    }
-
-  *os << "tao_" << node->local_name () << "_cast::"
-      << "tao_upcast (" << be_idt << be_idt_nl
-      << "void *src" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << node->full_name () << " **tmp =" << be_idt_nl
-      << "ACE_static_cast (" << node->full_name ()
-      << " **, src);" << be_uidt_nl
-      << "return *tmp;" << be_uidt_nl
       << "}";
+
+  if (! node->is_abstract ())
+    {
+      *os << be_nl << be_nl
+          << node->full_name () << "_ptr" << be_nl
+          << node->fwd_helper_name () << "_cast::"
+          << "tao_narrow (" << be_idt << be_idt_nl
+          << "CORBA::Object *p" << be_nl
+          << "ACE_ENV_ARG_DECL" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "return " << node->full_name ()
+          << "::_narrow (p ACE_ENV_ARG_PARAMETER);"
+          << be_uidt_nl
+          << "}";
+
+      *os << be_nl << be_nl
+          << "CORBA::Object *" << be_nl
+          << node->fwd_helper_name () << "_cast::"
+          << "tao_upcast (" << be_idt << be_idt_nl
+          << "void *src" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << node->full_name () << " **tmp =" << be_idt_nl
+          << "ACE_static_cast (" << node->full_name ()
+          << " **, src);" << be_uidt_nl
+          << "return *tmp;" << be_uidt_nl
+          << "}";
+    }
 
   if (node->has_mixed_parentage ())
     {
@@ -191,9 +146,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "CORBA::AbstractBase_ptr abs = p;" << be_nl
           << "CORBA::release (abs);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}";
 
-      *os << "CORBA::Boolean" << be_nl
+      *os << be_nl << be_nl
+          << "CORBA::Boolean" << be_nl
           << "CORBA::is_nil (" << node->name () << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "CORBA::Object_ptr obj = p;" << be_nl

@@ -133,12 +133,56 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
       break;
     case be_sequence::MNG_ABSTRACT:
-      if (node->unbounded ())
-        {
-        }
-      else
-        {
-        }
+      {
+        be_interface *elem = be_interface::narrow_from_decl (bt);
+
+        if (node->unbounded ())
+          {
+            *os << "typedef" << be_idt_nl
+                << "TAO_Unbounded_Abstract_Sequence<" << be_idt << be_idt_nl
+                << bt->name () << "," << be_nl
+                << bt->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life" << be_uidt_nl
+                << "> " << node->local_name () << ";" << be_uidt << be_uidt;
+          }
+        else
+          {
+            *os << "typedef" << be_idt_nl
+                << "TAO_Bounded_Object_Sequence<" << be_idt << be_idt_nl
+                << bt->name () << "," << be_nl
+                << bt->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life," << be_nl
+                << node->max_size ()->ev ()->u.ulval << be_uidt_nl
+                << "> " << node->local_name () << ";" << be_uidt << be_uidt;
+          }
+
+        // Generate the _var and _out types only if we are not anonymous.
+        if (this->ctx_->tdef () != 0)
+          {
+            *os << be_nl << be_nl
+                << "typedef" << be_idt_nl
+                << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
+                << node->local_name () << "," << be_nl
+                << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
+                << bt->name () << "," << be_nl
+                << bt->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life" << be_uidt_nl
+                << ">" << be_uidt << be_uidt_nl
+                << "> " << node->local_name () << "_var;" << be_uidt << be_uidt;
+
+            *os << be_nl << be_nl
+                << "typedef" << be_idt_nl
+                << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+                << node->local_name () << "," << be_nl
+                << node->local_name () << "_var," << be_nl
+                << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
+                << bt->name () << "," << be_nl
+                << bt->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life" << be_uidt_nl
+                << ">" << be_uidt << be_uidt_nl
+                << "> " << node->local_name () << "_out;" << be_uidt << be_uidt;
+          }
+      }
 
       break;
     case be_sequence::MNG_PSEUDO:
