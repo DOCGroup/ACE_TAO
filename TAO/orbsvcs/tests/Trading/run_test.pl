@@ -39,6 +39,7 @@ $E = Process::Create ($EXEPREFIX."export_test".$EXE_EXT,
 if (ACE::waitforfile_timed ($ready_file, 120) == -1) {
   print STDERR "ERROR: waiting for the export test to finish\n";
   $E->Kill (); $E->TimedWait (1);
+  $TS->Kill (); $TS->TimedWait (1);
   exit 1;
 }
 

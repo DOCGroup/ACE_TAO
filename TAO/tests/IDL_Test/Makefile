@@ -68,7 +68,7 @@ CPPFLAGS += -I$(TAO_ROOT)
 	$(TAO_ROOT)/TAO_IDL/tao_idl -w -Ge 1 reopened_modules.idl
 	@touch $@
 
-main:	$(addprefix $(VDIR),$(IDL_TEST_OBJS))
+main:	$(addprefix $(VDIR),main.o $(TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 $(addprefix $(VDIR),$(IDL_TEST_OBJS)): .reopened_modules_stamp
