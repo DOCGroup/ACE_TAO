@@ -12,7 +12,7 @@ $iorfile = "time.ior";
 
 $SV = Process::Create ("server$Process::EXE_EXT", "-o $iorfile ");
 
-waitforfile ($iorfile);
+ACE::waitforfile ($iorfile);
 
 $status  = system ("client$Process::EXE_EXT -f $iorfile -x");
 
