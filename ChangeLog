@@ -1,3 +1,11 @@
+Mon Nov 24 17:29:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * inlcude/makeinclude/rules.local.GNU:
+          Added a $(TAO_IDL_DEP) target that emits an error if the
+          $(TAO_IDL_DEP) doesn't exist.  Thanks to Carlos for
+          motivating this and suggesting the use of /bin/false to force
+          make to see the error.
+
 Mon Nov 24 16:59:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.inl:

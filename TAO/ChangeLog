@@ -1,3 +1,13 @@
+Mon Nov 24 17:29:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * rules.tao.GNU:
+          Uncommented out the dependency on $(TAO_IDL_DEP) for the %C.h
+          target, and instead added a $(TAO_IDL_DEP) target to
+          $(ACE_ROOT)/include/makeinclude/rules.local.GNU that emits an
+          error if the $(TAO_IDL_DEP) doesn't exist.  Thanks to Carlos for
+          motivating this and suggesting the use of /bin/false to force
+          make to see the error.
+
 Mon Nov 24 11:31:55 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/Makefile:
