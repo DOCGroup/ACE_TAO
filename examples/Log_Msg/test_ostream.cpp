@@ -46,8 +46,7 @@ main (int, char *[])
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   // Create a persistent store.
   const char *filename = "output";
-  int flags = ios::out | ios::trunc;
-  ofstream myostream (filename, flags);
+  ofstream myostream (filename, ios::out | ios::trunc);
 
   // Check for errors.
   if (myostream.bad ())
