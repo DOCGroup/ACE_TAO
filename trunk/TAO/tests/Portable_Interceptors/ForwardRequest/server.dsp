@@ -101,6 +101,10 @@ SOURCE=.\Server_Request_Interceptor.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServerRequestInterceptorC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\test_i.cpp
 # End Source File
 # Begin Source File
@@ -125,6 +129,10 @@ SOURCE=.\Server_Request_Interceptor.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServerRequestInterceptorC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\test_i.h
 # End Source File
 # Begin Source File
@@ -139,6 +147,89 @@ SOURCE=.\testS_T.h
 # Begin Group "IDL Files"
 
 # PROP Default_Filter ".idl"
+# Begin Source File
+
+SOURCE=.\ServerRequestInterceptor.idl
+
+!IF  "$(CFG)" == "ForwardRequest Server - Win32 Release"
+
+USERDEP__SERVE="..\..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build
+InputPath=.\ServerRequestInterceptor.idl
+InputName=ServerRequestInterceptor
+
+BuildCmds= \
+	..\..\..\..\bin\Release\tao_idl -Ge 1  -I ..\..\.. -DCORBA3 $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "ForwardRequest Server - Win32 Debug"
+
+USERDEP__SERVE="..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build
+InputPath=.\ServerRequestInterceptor.idl
+InputName=ServerRequestInterceptor
+
+BuildCmds= \
+	..\..\..\..\bin\tao_idl -Ge 1 -I ..\..\.. -DCORBA3 $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
 # Begin Source File
 
 SOURCE=.\test.idl
@@ -227,6 +318,10 @@ BuildCmds= \
 # Begin Group "Inline Files"
 
 # PROP Default_Filter ".i"
+# Begin Source File
+
+SOURCE=.\ServerRequestInterceptorC.i
+# End Source File
 # Begin Source File
 
 SOURCE=.\testC.i

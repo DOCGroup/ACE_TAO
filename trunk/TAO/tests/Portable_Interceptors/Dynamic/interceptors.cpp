@@ -42,6 +42,12 @@ Echo_Client_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
+Echo_Client_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+
+void
 Echo_Client_Request_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED
@@ -217,6 +223,12 @@ Echo_Server_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
+Echo_Server_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+
+void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED)
@@ -315,7 +327,7 @@ Echo_Server_Request_Interceptor::send_reply (
       (result_any.in ()) >>= result;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "The result of calculate  is %d + %d = %d\n",
+                  "The result of calculate is %d + %d = %d\n",
                   param1,
                   param2,
                   result));

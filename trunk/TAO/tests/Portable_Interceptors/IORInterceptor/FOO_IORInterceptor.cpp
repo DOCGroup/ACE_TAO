@@ -3,13 +3,21 @@
 #include "FOO_IORInterceptor.h"
 #include "testC.h"
 
-ACE_RCSID (IORInterceptor, FOO_IORInterceptor, "$Id$")
+ACE_RCSID (IORInterceptor,
+           FOO_IORInterceptor,
+           "$Id$")
 
 char *
 FOO_IORInterceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("FOO_IORInterceptor");
+}
+
+void
+FOO_IORInterceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
 }
 
 void

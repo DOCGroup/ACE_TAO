@@ -26,6 +26,12 @@ Client_Request_Interceptor::name (
 }
 
 void
+Client_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+
+void
 Client_Request_Interceptor::send_request (
       PortableInterceptor::ClientRequestInfo_ptr ri
       TAO_ENV_ARG_DECL)

@@ -57,8 +57,11 @@ public:
    * methods required for all client request interceptors.
    */
   //@{
-  /// Return the name of this ClientRequestinterceptor.
+  /// Return the name of this ClientRequestInterceptor.
   virtual char * name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_request (

@@ -75,7 +75,9 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA");
+        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -154,12 +156,23 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Set the forward references in the server request interceptor.
-      Server_Request_Interceptor *server_interceptor =
-        temp_initializer->server_interceptor ();
+      PortableInterceptor::ServerRequestInterceptor_var
+        server_interceptor = temp_initializer->server_interceptor ();
 
-      server_interceptor->forward_references (obj1.in (),
-                                              obj2.in (),
-                                              ACE_TRY_ENV);
+      ForwardRequestTest::ServerRequestInterceptor_var interceptor =
+        ForwardRequestTest::ServerRequestInterceptor::_narrow (
+           server_interceptor.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (interceptor.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) Could not obtain reference to "
+                           "server request interceptor.\n"),
+                          -1);
+
+      interceptor->forward_references (obj1.in (),
+                                       obj2.in (),
+                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Write each IOR to a file.
@@ -187,6 +200,12 @@ main (int argc, char *argv[])
 
       // Run the ORB event loop.
       orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
