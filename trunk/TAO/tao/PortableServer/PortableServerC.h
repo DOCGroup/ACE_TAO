@@ -2850,6 +2850,7 @@ virtual PortableServer::Servant reference_to_servant (
   ACE_THROW_SPEC ((
     CORBA::SystemException,
     PortableServer::POA::ObjectNotActive,
+    PortableServer::POA::WrongAdapter,
     PortableServer::POA::WrongPolicy
   )) = 0;
 

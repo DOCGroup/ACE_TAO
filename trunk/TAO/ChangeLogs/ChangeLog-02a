@@ -1,3 +1,15 @@
+Wed Oct 25 00:32:59 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer: POA::reference_to_servant() was missing the
+	  WrongAdapter exception in the throw spec.  Thanks to Marina (and
+	  the Borland compiler) for pointing this out.  Following files
+	  needed the change:
+
+	  - POA.cpp
+	  - POA.h
+	  - PortableServer.pidl
+	  - PortableServerC.h
+
 Tue Oct 24 23:40:33 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PortableServer/Object_Adapter.h (TAO_Object_Adapter): 
