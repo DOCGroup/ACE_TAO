@@ -16,6 +16,14 @@ how to run the following tests:
           runtime, without requiring any compile-time knowledge of the
           IDL. 
 
+	  IDL_Test
+
+	  A collection of the IDL examples that have caused problems
+	  in the past for the IDL compiler. Most files need only to
+	  build cleanly, except pragma.idl, which generates pragma
+	  prefixes. These prefixes are checked for correctness in
+	  main.cpp.
+
         . Multiple_Inheritance
 
           This test exercises IDL interfaces that inherit from
