@@ -1,3 +1,13 @@
+Sun Oct 19 15:46:42 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/RTCosScheduling_Static.dsp:
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client_Static.dsp:
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Server_Static.dsp:
+          Changed the configuration name from Debug and Release to
+          Static Debug and Static Release.
+
+        * TAOACE_Static.dsw : Added RTCosScheduling_Static.dsp.
+
 Sun Oct 19 07:34:16 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/lib/Peer_T.cpp: Fixed unused arg warning.
@@ -9,10 +19,10 @@ Sat Oct 18 21:18:55 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	  for MSVC release configuration.
 
 Sun Oct 19 02:02:27 UTC 2003 Kevin Bryan <bryank@cs.uri.edu>
-    
+
 	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
 	  Cast what ACE_Thread::self() returns to int to satisfy FreeBSD.
-    
+
 Sat Oct 18 17:02:49 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* TAOACE.dsw: Added RTCosScheduling.dsp.
@@ -21,7 +31,7 @@ Sat Oct 18 16:53:10 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/RTCosScheduling.dsp: Modified include and
 	  library paths.
-	
+
 Sat Oct 18 15:14:38 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/OBV/Supports/Supports_Test_impl.h:
@@ -31,10 +41,10 @@ Sat Oct 18 15:14:38 2003  George Edwards <g.edwards@vanderbilt.edu>
 
 Sat Oct 18 12:36:22 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp: 
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
 	  Changed constructor definition to match prototype. This was
 	  causing undefined symbol errors in SunCC.
-	
+
 Sat Oct 18 10:16:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	Added Stream Control Transmission Protocol (SCTP) to the AVStreams
@@ -42,20 +52,20 @@ Sat Oct 18 10:16:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	transport protocol to send and receive data. The SCTP protocol is
 	available only when the sctp flag is set.
 
-	* orbsvcs/orbsvcs/AV/SCTP_SEQ.h: 
-	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp: 
+	* orbsvcs/orbsvcs/AV/SCTP_SEQ.h:
+	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
 
 	Contains acceptors, connectors and flow handlers to setup SCTP
 	associations and send and receive data.
-	
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h: 
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: 
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.i: 	
+
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.i:
 
 	Changed the flow specification string format to accomodate the
-	specification of secondary addresses for SCTP. 
+	specification of secondary addresses for SCTP.
 	Initial format:
-	"Flowname/Direction/Format/Flow_Prtocol/Sender_Address/Receiver_Address". 
+	"Flowname/Direction/Format/Flow_Prtocol/Sender_Address/Receiver_Address".
 	Changed to:
 	"Flowname/Direction/Format/Flow_Prtocol/Sender_Primary_Address;
 	Sender_Secondary_Address1;Sender_Secondary_Address2.../Receiver_Primary_Address;
@@ -64,24 +74,24 @@ Sat Oct 18 10:16:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	Added accessor methods to set/get remote and local secondary
 	addresses.
 
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp: 
-	* orbsvcs/orbsvcs/AV/AV_Core.h: 
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
+	* orbsvcs/orbsvcs/AV/AV_Core.h:
 
 	Added support to load SCTP transport protocol.
-	
-	* orbsvcs/orbsvcs/Makefile.av: 
+
+	* orbsvcs/orbsvcs/Makefile.av:
 
 	Modified the Makefile to compile SCTP related files.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl: 	
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl:
 
 	Added a test to test with SCTP protocol.
-	
+
 Sat Oct 18 09:30:40 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc: 
+	* orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc:
 	* orbsvcs/tests/RTCosScheduling/Makefile: Fixed a build dependency
-	  problem. 
+	  problem.
 
 
 Sat Oct 18 08:52:15 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
