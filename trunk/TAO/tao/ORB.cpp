@@ -1781,7 +1781,7 @@ CORBA_ORB::_tao_add_to_IOR_table (const ACE_CString &object_id,
   CORBA::String_var string =
     this->object_to_string (obj);
 
-  if (string.in () == 0 || string[0] == '\0')
+  if (string.in () == 0 || string[0u] == '\0')
     return -1;
 
   ACE_CString ior (string.in ());
@@ -1802,7 +1802,7 @@ CORBA_ORB::_tao_find_in_IOR_table (const ACE_CString &object_id,
 {
   // @@ This debugging output should *NOT* be used since the
   //    object key string is not null terminated, nor can it
-  //    be null terminated without copying.  No copying should 
+  //    be null terminated without copying.  No copying should
   //    be done since performance is somewhat important here.
   //    So, just remove the debugging output entirely.
   //
@@ -1816,7 +1816,7 @@ CORBA_ORB::_tao_find_in_IOR_table (const ACE_CString &object_id,
     {
       // @@ This debugging output should *NOT* be used since the
       //    object key string is not null terminated, nor can it
-      //    be null terminated without copying.  No copying should 
+      //    be null terminated without copying.  No copying should
       //    be done since performance is somewhat important here.
       //    So, just remove the debugging output entirely.
       //
