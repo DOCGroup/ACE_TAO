@@ -85,20 +85,20 @@ ACE_CDR::LongDouble::operator!= (const ACE_CDR::LongDouble &rhs) const
 }
 #endif /* NONNATIVE_LONGDOUBLE */
 
-#if defined(_UNICOS)
+#if defined(_UNICOS) && !defined(_CRAYMPP)
 // placeholders to get things compiling
 ACE_CDR::Float::Float()
 {
 }
 
-ACE_CDR::Float::Float(const float & init))
+ACE_CDR::Float::Float(const float & init)
 {
 }
 
-float
-ACE_CDR::Float::operator= (const ACE_CDR::Float &rhs) const
+ACE_CDR::Float &
+ACE_CDR::Float::operator= (const float &rhs)
 {
-    return 0.0f;
+    return *this;
 }
 
 int

@@ -23,10 +23,10 @@
     _CRAYT3E  (defined specifically if compiling on a Cray T3E)
     _UNICOS   (defined if running UNICOS or UNICOS/mk)
 
-    Tested on UNICOS 10.0.0.2, UNICOS/mk 2.0.3.10
+    Tested on UNICOS 10.0.0.5, UNICOS/mk 2.0.4.57
     Compiles on UNICOS 9.0.2.8, but some tests deadlock
 
-    Contributed by Doug Anderson <doug@clark.net>
+    Contributed by Doug Anderson <dla@home.com>
 */
 
 #if defined (_UNICOS) && !defined (MAXPATHLEN)
@@ -78,7 +78,6 @@
 # define SCHED_OTHER 0
 # define SCHED_FIFO 1
 # define SCHED_RR 2
-# define pthread_sigmask sigprocmask
 #endif
 
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
@@ -118,7 +117,9 @@
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
-#define ACE_HAS_SIGWAIT
+#if _UNICOS > 9
+# define ACE_HAS_SIGWAIT
+#endif
 
 #define ACE_HAS_SIG_ATOMIC_T
 

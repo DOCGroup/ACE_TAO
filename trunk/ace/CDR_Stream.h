@@ -143,7 +143,7 @@ public:
   # if    (defined (_MSC_VER) && (_MSC_VER >= 900)) \
           || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530))
       typedef __int64 LongLong;
-  # elif ACE_SIZEOF_LONG == 8
+  # elif ACE_SIZEOF_LONG == 8 && !defined(_CRAYMPP)
       typedef long LongLong;
   # elif ACE_SIZEOF_LONG_LONG == 8 && !defined (ACE_LACKS_LONGLONG_T)
   #   if defined (sun) && !defined (ACE_LACKS_U_LONGLONG_T) && !defined (__KCC)
@@ -179,11 +179,11 @@ public:
   #     else  /* ACE_SIZEOF_INT != 4 */
           // Applications will probably have trouble with this.
           char f[4];
-  #       if defined(_UNICOS)
-        Float (void);
-        Float (const float &init);
-        float operator= (const Float &rhs) const;
-        int operator!= (const Float &rhs) const;
+  #       if defined(_UNICOS) && !defined(_CRAYMPP)
+            Float (void);
+            Float (const float &init);
+            Float & operator= (const float &rhs);
+            int operator!= (const Float &rhs) const;
   #       endif /* _UNICOS */
   #     endif /* ACE_SIZEOF_INT != 4 */
       };
