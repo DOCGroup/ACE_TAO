@@ -152,6 +152,9 @@ Test_ECG::run (int argc, char* argv[])
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (this->parse_args (argc, argv))
         return 1;
 
@@ -432,9 +435,6 @@ Test_ECG::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "waiting to start\n"));
 
       ACE_Time_Value tv (15, 0);
-
-      poa_manager->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       if (this->rmt_name_ != 0)
         {
