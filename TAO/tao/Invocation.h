@@ -70,7 +70,7 @@ public:
 
   void put_param (CORBA::TypeCode_ptr tc,
                   void *value,
-                  CORBA_Environment &TAO_IN_ENV =
+                  CORBA_Environment &ACE_TRY_ENV =
                         TAO_default_environment ());
   // Encodes the value into the undelying CDR stream based on the
   // TypeCode parameter
@@ -91,7 +91,7 @@ protected:
   // raises the CORBA::TRANSIENT exception.
 
   int invoke (CORBA::Boolean is_roundtrip,
-              CORBA_Environment &TAO_IN_ENV =
+              CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Sends the request, does not wait for the response.
@@ -106,7 +106,7 @@ protected:
   // (to the same server)
 
   int location_forward (TAO_InputCDR &inp_stream,
-                        CORBA_Environment &TAO_IN_ENV =
+                        CORBA_Environment &ACE_TRY_ENV =
                               TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Helper method, the response for a Request or LocateRequest was a
@@ -159,13 +159,13 @@ public:
                               const char *operation,
                               TAO_ORB_Core* orb_core);
 
-  void start (CORBA_Environment &TAO_IN_ENV =
+  void start (CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Calls TAO_GIOP_Invocation::start.
 
   int invoke (CORBA::ExceptionList &exceptions,
-              CORBA_Environment &TAO_IN_ENV =
+              CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException));
   // Send request, block until any reply comes back, and unmarshal
@@ -173,7 +173,7 @@ public:
 
   int invoke (TAO_Exception_Data *excepts,
               CORBA::ULong except_count,
-              CORBA_Environment &TAO_IN_ENV =
+              CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::Exception));
   // Special purpose invoke method used by the interpretive stubs. This
@@ -183,7 +183,7 @@ public:
 
   void get_value (CORBA::TypeCode_ptr tc,
                   void *value,
-                  CORBA_Environment &TAO_IN_ENV =
+                  CORBA_Environment &ACE_TRY_ENV =
                         TAO_default_environment ());
   // No CORBA::Context support (deprecated).
 
@@ -215,12 +215,12 @@ public:
                               const char *operation,
                               TAO_ORB_Core* orb_core);
 
-  void start (CORBA_Environment &TAO_IN_ENV =
+  void start (CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Call TAO_GIOP_Invocation::start()
 
-  int invoke (CORBA_Environment &TAO_IN_ENV =
+  int invoke (CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Send request, without blocking for any response.
@@ -237,12 +237,12 @@ public:
   TAO_GIOP_Locate_Request_Invocation (TAO_Stub *data,
                                       TAO_ORB_Core* orb_core);
 
-  void start (CORBA_Environment &TAO_IN_ENV =
+  void start (CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Calls TAO_GIOP_Invocation::start.
 
-  int invoke (CORBA_Environment &TAO_IN_ENV =
+  int invoke (CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Send request, without blocking for any response.

@@ -252,14 +252,14 @@ public:
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
                 CORBA::Boolean any_owns_data,
-                CORBA_Environment &TAO_IN_ENV =
+                CORBA_Environment &ACE_TRY_ENV =
                   TAO_default_environment ());
   // Replace the current typecode and data with the specified one -
   // unsafe.
 
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
-                CORBA_Environment &TAO_IN_ENV =
+                CORBA_Environment &ACE_TRY_ENV =
                   TAO_default_environment ());
   // Replace the current typecode and data with the specified one -
   // unsafe. This uses a default value for the "any_owns_data" parameter
@@ -268,7 +268,7 @@ public:
   // Return TypeCode of the element stored in the Any.
 
   void type (CORBA::TypeCode_ptr type,
-             CORBA_Environment &TAO_IN_ENV =
+             CORBA_Environment &ACE_TRY_ENV =
                TAO_default_environment ());
   // For use along with <<= of a value of aliased type when the alias must
   // be preserved.
@@ -298,7 +298,7 @@ public:
 
   void _tao_replace (CORBA::TypeCode_ptr,
                      const ACE_Message_Block *mb,
-                     CORBA::Environment &TAO_IN_ENV =
+                     CORBA::Environment &ACE_TRY_ENV =
                        TAO_default_environment ());
   // Replace via message block instead of <value_>.
 
@@ -306,14 +306,14 @@ public:
                      const ACE_Message_Block *mb,
                      CORBA::Boolean any_owns_data,
                      void* value,
-                     CORBA::Environment &TAO_IN_ENV =
+                     CORBA::Environment &ACE_TRY_ENV =
                        TAO_default_environment ());
   // Replace all the contents of the any, used in the <<= operators.
 
   void _tao_replace (CORBA::TypeCode_ptr type,
                      CORBA::Boolean any_owns_data,
                      void* value,
-                     CORBA::Environment &TAO_IN_ENV =
+                     CORBA::Environment &ACE_TRY_ENV =
                        TAO_default_environment ());
   // Replace the value of the Any, used in the >>= operators.
 
@@ -324,7 +324,7 @@ public:
   // Useful for template programming.
 
 protected:
-  void free_value (CORBA::Environment &TAO_IN_ENV);
+  void free_value (CORBA::Environment &ACE_TRY_ENV);
   // Release the <value_>.
 
 private:

@@ -63,10 +63,10 @@ public:
   CORBA_Environment (void);
   // The default constructor, the environment will hold no exceptions.
 
-  CORBA_Environment (const CORBA_Environment &env);
+  CORBA_Environment (const CORBA_Environment &ACE_TRY_ENV);
   // Copy constructor.
 
-  CORBA_Environment &operator=(const CORBA_Environment &env);
+  CORBA_Environment &operator=(const CORBA_Environment &ACE_TRY_ENV);
   // Assingment.
 
   ~CORBA_Environment (void);

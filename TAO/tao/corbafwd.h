@@ -343,7 +343,7 @@ typedef void (*TAO_Skeleton)(
     CORBA_ServerRequest &,
     void *,
     void *,
-    CORBA_Environment &TAO_IN_ENV
+    CORBA_Environment &ACE_TRY_ENV
   );
 
 // forward declare sequences.
@@ -887,7 +887,7 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_STORAGE_CLASS ORB_ptr ORB_init (int &argc,
                                                 char *argv[],
                                                 const char *orb_name,
-                                                CORBA_Environment &TAO_IN_ENV);
+                                                CORBA_Environment &ACE_TRY_ENV);
   // ORB initialisation
 
   // = TAO extensions...

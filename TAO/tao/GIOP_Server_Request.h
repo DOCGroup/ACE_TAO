@@ -53,18 +53,18 @@ public:
 
   // = General ServerRequest operations
   void arguments (CORBA::NVList_ptr &list,
-                  CORBA_Environment &TAO_IN_ENV =
+                  CORBA_Environment &ACE_TRY_ENV =
                       TAO_default_environment ());
 
   void set_result (const CORBA::Any &value,
-                   CORBA_Environment &TAO_IN_ENV =
+                   CORBA_Environment &ACE_TRY_ENV =
                        TAO_default_environment ());
 
   void set_exception (const CORBA::Any &value,
-                      CORBA_Environment &TAO_IN_ENV =
+                      CORBA_Environment &ACE_TRY_ENV =
                           TAO_default_environment ());
 
-  virtual void dsi_marshal (CORBA_Environment &TAO_IN_ENV =
+  virtual void dsi_marshal (CORBA_Environment &ACE_TRY_ENV =
                                 TAO_default_environment ());
   // does the marshaling of outgoing parameters and is used by the DSI
   // based scheme
@@ -95,20 +95,20 @@ public:
   // meant to be used internally.
   //
 
-  virtual void demarshal (CORBA_Environment &orb_env,
+  virtual void demarshal (CORBA_Environment &ACE_TRY_ENV,
                           const TAO_Call_Data_Skel *info,
                           ...);
   // demarshal incoming parameters. Used by the SII skeleton (i.e., the IDL
   // compiler generated skeleton)
 
-  virtual void marshal (CORBA_Environment &orb_env,
+  virtual void marshal (CORBA_Environment &ACE_TRY_ENV,
                         //                        CORBA_Environment &skel_env,
                         const TAO_Call_Data_Skel *info,
                         ...);
   // marshal outgoing parameters and return value. This is used by the SSI
   // i.e., by the IDL compiler generated skeletons.
 
-  virtual void init_reply (CORBA_Environment &TAO_IN_ENV =
+  virtual void init_reply (CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ());
   // start a Reply message
 
