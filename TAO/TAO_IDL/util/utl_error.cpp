@@ -155,7 +155,7 @@ error_string(UTL_Error::ErrorCode c)
 
 // Print out an error message header on cerr
 static void
-idl_error_header(UTL_Error::ErrorCode c, long lineno, String *s)
+idl_error_header(UTL_Error::ErrorCode c, long lineno, UTL_String *s)
 {
   cerr << idl_global->prog_name()
        << ": \""
@@ -722,7 +722,7 @@ UTL_Error::not_a_type(AST_Decl *d)
 }
 
 void
-UTL_Error::back_end(long lineno, String *s)
+UTL_Error::back_end(long lineno, UTL_String *s)
 {
   idl_error_header(EIDL_BACK_END, lineno, s);
   idl_global->set_err_count(idl_global->err_count() + 1);

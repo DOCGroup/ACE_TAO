@@ -37,7 +37,7 @@ public:
   be_expression (long l);
   be_expression (long l, AST_Expression::ExprType t);
   be_expression (unsigned long l);
-  be_expression (String *s);
+  be_expression (UTL_String *s);
   be_expression (char c);
   be_expression (double d);
 

@@ -145,7 +145,7 @@ public:
       char                cval;     // Contains char expression value
       ACE_CDR::WChar      wcval;    // Contains wchar expression value
       unsigned char       oval;     // Contains unsigned char expr value
-      String              *strval;  // Contains String * expr value
+      UTL_String          *strval;  // Contains String * expr value
       unsigned long       eval;     // Contains enumeration value
     } u;
     ExprType et;
@@ -168,7 +168,7 @@ public:
   AST_Expression(char           c);
   AST_Expression(ACE_CDR::WChar wc);
   AST_Expression(unsigned char  uc);
-  AST_Expression(String         *s);
+  AST_Expression(UTL_String     *s);
   AST_Expression(UTL_ScopedName *n);
   virtual ~AST_Expression () {}
 
@@ -177,8 +177,8 @@ public:
   void set_defined_in(UTL_Scope *d);
   long line();
   void set_line(long l);
-  String *file_name();
-  void set_file_name(String *f);
+  UTL_String *file_name();
+  void set_file_name(UTL_String *f);
   ExprComb ec();
   void set_ec(ExprComb new_ec);
   AST_ExprValue *ev();
@@ -217,7 +217,7 @@ private:
   // Data
   UTL_Scope                     *pd_defined_in; // Scope
   long                          pd_line;        // Line defined in
-  String                        *pd_file_name;  // What file defined in
+  UTL_String                    *pd_file_name;  // What file defined in
 
   ExprComb                      pd_ec;          // What combinator
   AST_ExprValue                 *pd_ev;         // computed value
@@ -235,5 +235,3 @@ private:
 };
 
 #endif           // _AST_EXPR_VAL_AST_EXPR_VAL_HH
-
-

@@ -146,8 +146,8 @@ public:
   NodeType node_type();
   long line();
   void set_line(long l);
-  String *file_name();
-  void set_file_name(String *s);
+  UTL_String *file_name();
+  void set_file_name(UTL_String *s);
   UTL_ScopedName *name();
   void set_name(UTL_ScopedName *n);
   Identifier *local_name();
@@ -175,7 +175,7 @@ private:
   UTL_Scope                     *pd_defined_in; // Scope
   NodeType                      pd_node_type;   // What kind of node
   long                          pd_line;        // Line defined in
-  String                        *pd_file_name;  // What file defined in
+  UTL_String                    *pd_file_name;  // What file defined in
   UTL_ScopedName                *pd_name;       // As given
   Identifier                    *pd_local_name; // Name in scope
   UTL_StrList                   *pd_pragmas;    // Pragmas

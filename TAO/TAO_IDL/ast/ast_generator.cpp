@@ -361,7 +361,7 @@ AST_Generator::create_expr(unsigned long v)
  * encapsulated as String)
  */
 AST_Expression  *
-AST_Generator::create_expr(String *s)
+AST_Generator::create_expr(UTL_String *s)
 {
   return new AST_Expression(s);
 }

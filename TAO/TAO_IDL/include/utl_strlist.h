@@ -95,7 +95,7 @@ public:
   // Operations
 
   // Constructor(s)
-  UTL_StrList(String *s, UTL_StrList *cdr);
+  UTL_StrList(UTL_String *s, UTL_StrList *cdr);
 
   // AST Dumping
   virtual void          dump(ostream &o);
@@ -106,17 +106,17 @@ public:
   virtual UTL_List      *copy();
 
   // Get list element
-  String                *head();
+  UTL_String                *head();
 
   // Set the list element
-  void                  set_head(String *);
+  void                  set_head(UTL_String *);
 
   // Get last element in this list
-  String                *last_component();
+  UTL_String                *last_component();
 
 private:
   // Data
-  String                *pd_car_data;   // The list item
+  UTL_String                *pd_car_data;   // The list item
 };
 
 // Active iterator for  UTL_StrList
@@ -129,7 +129,7 @@ public:
   UTL_StrlistActiveIterator(UTL_StrList *s);
 
   // Get current item
-  String                *item();
+  UTL_String                *item();
 };
 
 #endif           // _UTL_STRLIST_UTL_STRLIST_HH

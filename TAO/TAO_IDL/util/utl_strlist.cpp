@@ -89,7 +89,7 @@ ACE_RCSID(util, utl_strlist, "$Id$")
  * Constructor(s)
  */
 
-UTL_StrList::UTL_StrList(String *s, UTL_StrList *cdr)
+UTL_StrList::UTL_StrList(UTL_String *s, UTL_StrList *cdr)
 	   : UTL_List(cdr),
 	     pd_car_data(s)
 {
@@ -104,7 +104,7 @@ UTL_StrList::UTL_StrList(String *s, UTL_StrList *cdr)
  */
 
 // Get list item
-String *
+UTL_String *
 UTL_StrList::head()
 {
   return pd_car_data;
@@ -112,13 +112,13 @@ UTL_StrList::head()
 
 // Set list item
 void
-UTL_StrList::set_head(String *s)
+UTL_StrList::set_head(UTL_String *s)
 {
   pd_car_data = s;
 }
 
 // Get last item of this list
-String *
+UTL_String *
 UTL_StrList::last_component()
 {
   if (tail() == NULL)
@@ -185,7 +185,7 @@ UTL_StrlistActiveIterator::UTL_StrlistActiveIterator(UTL_StrList *s)
  */
 
 // Get current item
-String *
+UTL_String *
 UTL_StrlistActiveIterator::item()
 {
   if (source == NULL)

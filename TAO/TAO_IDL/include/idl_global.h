@@ -206,80 +206,80 @@ public:
   virtual ~IDL_GlobalData() {}
 
   // Operations
-  virtual UTL_ScopeStack        *scopes();              // Scopes stack
-  virtual void                  set_scopes(UTL_ScopeStack *);
-                                                        // Set it
-
-  virtual AST_Root              *root();                // Root of AST
-  virtual void                  set_root(AST_Root *);   // Set it
-
-  virtual AST_Generator         *gen();                 // Generator
-  virtual void                  set_gen(AST_Generator *);// Set it
-
-  virtual UTL_Error             *err();                 // Error reporter
-  virtual void                  set_err(UTL_Error *);   // Set it
-
-  virtual long                  err_count();            // How many errors?
-  virtual void                  set_err_count(long);    // Set it
-
-  virtual long                  lineno();               // Where in file?
-  virtual void                  set_lineno(long);       // Set it
-
-  virtual String                *filename();            // What file?
-  virtual void                  set_filename(const char *); // Set it
-
-  virtual String                *main_filename();       // What's the main
-                                                        // file name?
-  virtual void                  set_main_filename(const char *);
-                                                        // Set it
-
-  virtual String                *real_filename();       // What's the real
-                                                        // file name?
-  virtual void                  set_real_filename(const char *);
-                                                        // Set it
-
-  virtual String                *stripped_filename();   // Stripped filename
-  virtual void                  set_stripped_filename(const char *);  // Set it
-
-  virtual idl_bool              imported();             // Are we imported?
-  virtual idl_bool              import();               // Is import on?
-  virtual void                  set_import(idl_bool);   // Set it
-
-  virtual idl_bool              in_main_file();         // Are we?
-  virtual void                  set_in_main_file(idl_bool);     // Set it
-
-  virtual const char            *prog_name(void);           // Invoked as..
-  virtual void                  set_prog_name(const char *);  // Set it
-
-  virtual const char            *cpp_location(void);     // Where's CPP?
-  virtual void                  set_cpp_location(const char *);// Set it
-
-  virtual long                  compile_flags(void);   // What flags are on?
-  virtual void                  set_compile_flags(long);// Turn some on or off
-
-  virtual const char            *be(void);                  // Get BE to use
-  virtual void                  set_be(const char *);         // Set it
-
-  virtual char                  *local_escapes(void);       // Get local escapes
-  virtual void                  set_local_escapes(const char *);// Set it
-
-  virtual UTL_Indenter          *indent();              // Get indenter
-  virtual void                  set_indent(UTL_Indenter *);
-                                                        // Set it
-
-  virtual UTL_StrList           *pragmas();             // Get pragmas
-  virtual void                  set_pragmas(UTL_StrList *);// Set it
-
-  virtual idl_bool              read_from_stdin();      // Reading from stdin?
-  virtual void                  set_read_from_stdin(idl_bool); // Set it
-
-  virtual void                  store_include_file_name(String *);
-
-  virtual String              **include_file_names();   // Array of file names
-  virtual void                  set_include_file_names(String **); // Set it
-
-  virtual unsigned long         n_include_file_names(); // How many
-  virtual void                  set_n_include_file_names(unsigned long n);
+  virtual UTL_ScopeStack   *scopes();              // Scopes stack
+  virtual void             set_scopes(UTL_ScopeStack *);
+                                                   // Set it
+                           
+  virtual AST_Root         *root();                // Root of AST
+  virtual void             set_root(AST_Root *);   // Set it
+                           
+  virtual AST_Generator    *gen();                 // Generator
+  virtual void             set_gen(AST_Generator *);// Set it
+                           
+  virtual UTL_Error        *err();                 // Error reporter
+  virtual void             set_err(UTL_Error *);   // Set it
+                           
+  virtual long             err_count();            // How many errors?
+  virtual void             set_err_count(long);    // Set it
+                           
+  virtual long             lineno();               // Where in file?
+  virtual void             set_lineno(long);       // Set it
+                           
+  virtual UTL_String       *filename();            // What file?
+  virtual void             set_filename(UTL_String *); // Set it
+                           
+  virtual UTL_String       *main_filename();       // What's the main
+                                                   // file name?
+  virtual void             set_main_filename(UTL_String *);
+                                                   // Set it
+                           
+  virtual UTL_String       *real_filename();       // What's the real
+                                                   // file name?
+  virtual void             set_real_filename(UTL_String *);
+                                                   // Set it
+                           
+  virtual UTL_String       *stripped_filename();   // Stripped filename
+  virtual void             set_stripped_filename(UTL_String *);  // Set it
+                           
+  virtual idl_bool         imported();             // Are we imported?
+  virtual idl_bool         import();               // Is import on?
+  virtual void             set_import(idl_bool);   // Set it
+                           
+  virtual idl_bool         in_main_file();         // Are we?
+  virtual void             set_in_main_file(idl_bool);     // Set it
+                           
+  virtual const char       *prog_name(void);           // Invoked as..
+  virtual void             set_prog_name(const char *);  // Set it
+                           
+  virtual const char       *cpp_location(void);     // Where's CPP?
+  virtual void             set_cpp_location(const char *);// Set it
+                           
+  virtual long             compile_flags(void);   // What flags are on?
+  virtual void             set_compile_flags(long);// Turn some on or off
+                           
+  virtual const char       *be(void);                  // Get BE to use
+  virtual void             set_be(const char *);         // Set it
+                           
+  virtual char             *local_escapes(void);       // Get local escapes
+  virtual void             set_local_escapes(const char *);// Set it
+                           
+  virtual UTL_Indenter     *indent();              // Get indenter
+  virtual void             set_indent(UTL_Indenter *);
+                                                   // Set it
+                           
+  virtual UTL_StrList      *pragmas();             // Get pragmas
+  virtual void             set_pragmas(UTL_StrList *);// Set it
+                           
+  virtual idl_bool         read_from_stdin();      // Reading from stdin?
+  virtual void             set_read_from_stdin(idl_bool); // Set it
+                           
+  virtual void             store_include_file_name(UTL_String *);
+                           
+  virtual UTL_String       **include_file_names();   // Array of file names
+  virtual void             set_include_file_names(UTL_String **); // Set it
+                           
+  virtual unsigned long    n_include_file_names(); // How many
+  virtual void             set_n_include_file_names(unsigned long n);
 
   // = Access methods to deal with other IDL files included in the main
   //   IDL file. These IDL files are exactly the same strings that are
@@ -312,10 +312,10 @@ public:
   PredefinedTypeToExprType (AST_PredefinedType::PredefinedType);
 
   /**************** Added to serve the back end *************/
-  virtual String                *idl_src_file();
+  virtual UTL_String                *idl_src_file();
   // Returns the IDL source file being compiled.
 
-  virtual void                  idl_src_file(String *);
+  virtual void                  idl_src_file(UTL_String *);
   // Set the source IDL file that is being parsed.
 
   virtual void changing_standard_include_files (size_t changing);
@@ -349,25 +349,25 @@ public:
   // The parameter <base_name_only> set to 0 (no base name, but full
   // name with output dir path, is useful, when I just want just the
   // base name to use in #include's etc.
-  static const char *be_get_client_hdr (String *idl_file_name,
+  static const char *be_get_client_hdr (UTL_String *idl_file_name,
                                         int base_name_only = 0);
-  static const char *be_get_client_stub (String *idl_file_name);
-  static const char *be_get_client_inline (String *idl_file_name,
+  static const char *be_get_client_stub (UTL_String *idl_file_name);
+  static const char *be_get_client_inline (UTL_String *idl_file_name,
                                            int base_name_only = 0);
-  static const char *be_get_server_hdr (String *idl_file_name,
+  static const char *be_get_server_hdr (UTL_String *idl_file_name,
                                         int base_name_only = 0);
-  static const char *be_get_implementation_hdr (String *idl_file_name,
+  static const char *be_get_implementation_hdr (UTL_String *idl_file_name,
                                         int base_name_only = 0);
-  static const char *be_get_implementation_skel (String *idl_file_name,
+  static const char *be_get_implementation_skel (UTL_String *idl_file_name,
                                         int base_name_only = 0);
-  static const char *be_get_server_template_hdr (String *idl_file_name,
+  static const char *be_get_server_template_hdr (UTL_String *idl_file_name,
                                                  int base_name_only = 0);
-  static const char *be_get_server_skeleton (String *idl_file_name);
-  static const char *be_get_server_template_skeleton (String *idl_file_name,
+  static const char *be_get_server_skeleton (UTL_String *idl_file_name);
+  static const char *be_get_server_template_skeleton (UTL_String *idl_file_name,
                                                       int base_name_only = 0);
-  static const char *be_get_server_inline (String *idl_file_name,
+  static const char *be_get_server_inline (UTL_String *idl_file_name,
                                            int base_name_only = 0);
-  static const char *be_get_server_template_inline (String *idl_file_name,
+  static const char *be_get_server_template_inline (UTL_String *idl_file_name,
                                                     int base_name_only = 0);
 
   virtual const char* export_macro (void) const;
@@ -558,30 +558,30 @@ public:
 
 private:
   // Data
-  UTL_ScopeStack                *pd_scopes;             // Store scopes stack
-  AST_Root                      *pd_root;               // Store AST root
-  AST_Generator                 *pd_gen;                // Store generator
-  UTL_Error                     *pd_err;                // Error object
-  long                          pd_err_count;           // Count of errors
-  long                          pd_lineno;              // What line #
-  String                        *pd_filename;           // What file
-  String                        *pd_main_filename;      // What main filename
-  String                        *pd_real_filename;      // What real filename
-  String                        *pd_stripped_filename;  // Stripped filename
-  idl_bool                      pd_import;              // Is import on?
-  idl_bool                      pd_in_main_file;        // Are we in it?
-  const char                    *pd_prog_name;          // Argv[0]
-  const char                    *pd_cpp_location;       // Where to find CPP
-  long                          pd_compile_flags;       // Compile flags
-  const char                    *pd_be;                 // BE name to use
-  char                          *pd_local_escapes;      // Trapdoor argument
-  UTL_Indenter                  *pd_indent;             // Indent object
-  UTL_StrList                   *pd_pragmas;            // List of pragmas
-                                                        // as its being built
-  idl_bool                      pd_read_from_stdin;     // Reading from stdin?
-  String                        **pd_include_file_names;// Array of file names.
-  unsigned long                 pd_n_include_file_names;// How many.
-  unsigned long                 pd_n_alloced_file_names;// How many alloced.
+  UTL_ScopeStack             *pd_scopes;             // Store scopes stack
+  AST_Root                   *pd_root;               // Store AST root
+  AST_Generator              *pd_gen;                // Store generator
+  UTL_Error                  *pd_err;                // Error object
+  long                       pd_err_count;           // Count of errors
+  long                       pd_lineno;              // What line #
+  UTL_String                 *pd_filename;           // What file
+  UTL_String                 *pd_main_filename;      // What main filename
+  UTL_String                 *pd_real_filename;      // What real filename
+  UTL_String                 *pd_stripped_filename;  // Stripped filename
+  idl_bool                   pd_import;              // Is import on?
+  idl_bool                   pd_in_main_file;        // Are we in it?
+  const char                 *pd_prog_name;          // Argv[0]
+  const char                 *pd_cpp_location;       // Where to find CPP
+  long                       pd_compile_flags;       // Compile flags
+  const char                 *pd_be;                 // BE name to use
+  char                       *pd_local_escapes;      // Trapdoor argument
+  UTL_Indenter               *pd_indent;             // Indent object
+  UTL_StrList                *pd_pragmas;            // List of pragmas
+                                                     // as its being built
+  idl_bool                   pd_read_from_stdin;     // Reading from stdin?
+  UTL_String                 **pd_include_file_names;// Array of file names.
+  unsigned long              pd_n_include_file_names;// How many.
+  unsigned long              pd_n_alloced_file_names;// How many alloced.
 
   char** included_idl_files_;
   // IDL files that are "#include'd.
@@ -592,14 +592,14 @@ private:
   size_t n_allocated_idl_files_;
   // For char*'s have been allocated for this.
 
-  ParseState                    pd_parse_state;         // Parse state we're in.
-
-  // Operations
-  long                          seen_include_file_before(String *);
-                                                        // Seen this include
-                                                        // before?
-
-  String                        *pd_idl_src_file;       // IDL source file.
+  ParseState                pd_parse_state;         // Parse state we're in.
+                  
+  // Operations   
+  long                      seen_include_file_before(UTL_String *);
+                                                    // Seen this include
+                                                    // before?
+                  
+  UTL_String                *pd_idl_src_file;       // IDL source file.
 
   size_t  changing_standard_include_files_;
   // To switch between changing or non-changing standard include

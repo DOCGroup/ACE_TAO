@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -76,21 +76,21 @@ ACE_RCSID(util, utl_string, "$Id$")
  * Constructors
  */
 
-UTL_String::UTL_String (void) 
-  : p_str (NULL), 
-    len (0), 
-    alloced (0) 
+UTL_String::UTL_String (void)
+  : p_str (NULL),
+    len (0),
+    alloced (0)
 {
 }
 
 UTL_String::UTL_String (const char *str)
 {
-  if (str == NULL) 
+  if (str == NULL)
     {
       len = alloced = 0;
       p_str = c_str = NULL;
-    } 
-  else 
+    }
+  else
     {
       len = ACE_OS::strlen (str);
       alloced = len + 1;
@@ -115,20 +115,20 @@ UTL_String::UTL_String (UTL_String *s)
 {
   char	*b;
 
-  if (s == NULL) 
+  if (s == NULL)
     {
      p_str = c_str = NULL;
      alloced = len = 0;
-    } 
-  else 
+    }
+  else
     {
       b = s->get_string ();
-      if (b == NULL) 
+      if (b == NULL)
         {
           p_str = c_str = NULL;
           alloced = len = 0;
-        } 
-      else 
+        }
+      else
         {
           len = ACE_OS::strlen (b);
           alloced = len + 1;
@@ -205,7 +205,7 @@ UTL_String::get_string (void)
 char *
 UTL_String::get_canonical_rep (void)
 {
-  if (c_str == NULL) 
+  if (c_str == NULL)
     {
       c_str = new char [alloced];
       canonicalize ();
