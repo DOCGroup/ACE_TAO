@@ -21,8 +21,8 @@
 // ----------------------------------------------------------------------
 
 // Constructor
-TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl (CORBA::ORB_var orb)
-  : orb_ (orb)
+TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl (void)
+  : orb_ (TAO_ORB_Core_instance ()->orb ())
 {
 }
 
@@ -133,8 +133,7 @@ TAO_Basic_StreamCtrl::set_flow_connection (const char *flow_name,
 // TAO_StreamCtrl
 // ----------------------------------------------------------------------
 
-TAO_StreamCtrl::TAO_StreamCtrl (CORBA::ORB_var orb)
-  : TAO_Basic_StreamCtrl (orb)
+TAO_StreamCtrl::TAO_StreamCtrl (void)
 {
 }
 
@@ -276,7 +275,7 @@ TAO_StreamCtrl::unbind_party (AVStreams::StreamEndPoint_ptr the_ep,
 
 TAO_StreamEndPoint::TAO_StreamEndPoint (void)
 {
-  this->handle_open ();
+  //  this->handle_open ();
 }
 
 // Stop the physical flow of data on the stream
@@ -436,7 +435,7 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                     const AVStreams::flowSpec &the_spec,  
                                     CORBA::Environment &env)
 {
-  this->handle_preconnect ();
+  this->handle_preconnect (the_spec);
   
   // Use the base class implementation of connect
   TAO_StreamEndPoint::connect (responder, 
@@ -445,7 +444,7 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                env);
 
   // Make the upcall to the app
-  return this->handle_postconnect ();
+  return this->handle_postconnect (the_spec);
 
 
 }
@@ -525,8 +524,8 @@ TAO_Server_StreamEndPoint::~TAO_Server_StreamEndPoint (void)
 // TAO_VDev
 // ----------------------------------------------------------------------
 
-TAO_VDev::TAO_VDev (CORBA::ORB_ptr orb)
-  : orb_ (orb)
+TAO_VDev::TAO_VDev (void)
+  : orb_ (TAO_ORB_Core_instance ()->orb ())
 {
   ACE_DEBUG ((LM_DEBUG, 
               "\n(%P|%t) TAO_VDev::TAO_VDev: created"));
