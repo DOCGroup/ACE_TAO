@@ -1,3 +1,16 @@
+Tue Sep 19 17:38:38 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.h (~TAO_ORB_Core):
+
+	  Made the ORB Core destructor protected since the ORB Core should
+	  only be allocated on the heap.
+
+	  (open, destroy, shutdown, get_default_policy):
+
+	  Removed default value for the CORBA::Environment argument.
+	  These methods are only meant for TAO internal use so the
+	  CORBA::Environment should always be passed and checked.
+
 Tue Sep 19 16:49:23 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/CORBA_String.h:
