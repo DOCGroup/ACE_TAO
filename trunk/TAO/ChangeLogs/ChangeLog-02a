@@ -1,3 +1,13 @@
+Wed Jan 23 09:25:31 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+
+	  Corrected some documentation.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp (is_valid):
+
+	  Implemented this method.
+
 Wed Jan 23 11:05:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * examples/Quoter/Quoter.idl:

@@ -266,30 +266,47 @@ TAO_SSLIOP_Credentials::is_valid (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-#if 0
+  X509 *x = this->x509_.in ();
+
   // The pointer to the underlying X509 structure should only be zero
   // if destroy() was called on this Credentials object.
-  if (this->x509_.in () == 0)
+  if (x == 0)
     ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
 
-  const ASN1_UTCTIME *expiration = X509_get_notAfter (this->x509_.in ());
+  int before_status = ::X509_cmp_current_time (X509_get_notBefore (x));
+  int after_status  = ::X509_cmp_current_time (X509_get_notAfter (x));
 
-  // @todo Fill in expiry_time.
+  if (before_status == 0 || after_status == 0)
+    {
+      // Error in certificate's "not before" or "not after" field.
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (),  // @@ Correct exception?
+                        0);
+    }
 
-  // @todo Use of ACE_OS::time() may not be appropriate since it
-  //       represents a 32-bit value on some platforms.
+  ASN1_TIME *exp = X509_get_notAfter (x);
 
-  return (::ASN1_UTCTIME_cmp_time_t (expiration,
-                                     ACE_OS::time (0)) == -1 ? 0 : 1);
-#else
-  ACE_UNUSED_ARG (expiry_time);
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    0);
-#endif
+  if (exp->length > ACE_SIZEOF_LONG_LONG)
+    {
+      // @@ Will this ever happen?
+
+      // Overflow!
+      expiry_time.time = ACE_UINT64_LITERAL (0xffffffffffffffff);
+    }
+  else
+    {
+      expiry_time.time = 0;
+      for (int i = 0; i < exp->length; ++i)
+        {
+          expiry_time.time <<= 8;
+          expiry_time.time |= (unsigned char) exp->data[i];
+        }
+    }
+
+  if (before_status > 0     // Certificate is not yet valid.
+      || after_status < 0)  // Certificate is expired.
+    return 0;
+
+  return 1;
 }
 
 CORBA::Boolean
