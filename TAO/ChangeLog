@@ -1,3 +1,16 @@
+Fri Oct  1 19:48:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IIOP_Connection_Handler.cpp:
+
+	  Add env macros before invoking
+	  client_protocol_properties_at_orb_level and
+	  server_protocol_properties_at_orb_level.
+	
+	* tao/PortableServer/POA_Policy_Set.h:
+	* tao/PortableServer/POA_Policy_Set.i:
+
+	  Added env variables get_cached_policy ().
+
 Fri Oct  1 19:26:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.cpp:
