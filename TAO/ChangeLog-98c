@@ -1,62 +1,67 @@
+Sat Jul 18 10:19:37 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Logger/client.cpp (nesting_test): added return 0
+          at end. (init): removed unused local factory_ref2.
+
 Sat Jul 18 08:19:24 1998  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.cpp: Beefed up this test so
- 	  that it illustrates how to bind(), resolve(), and unbind() an
- 	  object reference to a remote Naming Context.  This is an
- 	  important test to make sure that things are working properly.
+        * orbsvcs/tests/Simple_Naming/client.cpp: Beefed up this test so
+          that it illustrates how to bind(), resolve(), and unbind() an
+          object reference to a remote Naming Context.  This is an
+          important test to make sure that things are working properly.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils: Added an init() method to
- 	  this class to begin to factor out common code for being a client
- 	  of a Naming Service.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils: Added an init() method to
+          this class to begin to factor out common code for being a client
+          of a Naming Service.
 
-	* TAO/orbsvcs/tests/Naming/ns_tree.cpp (main): Cleaned up the
-	  formatting for this test.
+        * TAO/orbsvcs/tests/Naming/ns_tree.cpp (main): Cleaned up the
+          formatting for this test.
 
-	* orbsvcs/tests/Simple_Naming: Renamed clnt.* to client.* to
-	  be more consistent.
+        * orbsvcs/tests/Simple_Naming: Renamed clnt.* to client.* to
+          be more consistent.
 
-	* tests/Cubit/TAO/IDL_Cubit/svc.conf: Changed the default ORB
-	  concurrency model from reactive to thread-per-connection since
-	  the latter is considerably faster.
+        * tests/Cubit/TAO/IDL_Cubit/svc.conf: Changed the default ORB
+          concurrency model from reactive to thread-per-connection since
+          the latter is considerably faster.
 
 Fri Jul 17 17:42:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * docs/Options.html: Added documentation for the TAO environment
-	  variables.
+          variables.
 
-	* tao/ORB.cpp (resolve_trading_service): Changed the environment
- 	  variable for NameService and TradingService to NameServiceIOR
- 	  and TradingServiceIOR to be more consistent.
+        * tao/ORB.cpp (resolve_trading_service): Changed the environment
+          variable for NameService and TradingService to NameServiceIOR
+          and TradingServiceIOR to be more consistent.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: Started adding the new
- 	  TAO_Naming_Client class, which will simplify the initialization
- 	  and access to a NamingContext.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h: Started adding the new
+          TAO_Naming_Client class, which will simplify the initialization
+          and access to a NamingContext.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Changed the
- 	  capitalization of GetNamingContext() to get_naming_context(),
- 	  which is consistent w/TAO programming style.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Changed the
+          capitalization of GetNamingContext() to get_naming_context(),
+          which is consistent w/TAO programming style.
 
-	* tao/skip.cpp: Replaced uses of old-style C casts with a
- 	  static_cast.
+        * tao/skip.cpp: Replaced uses of old-style C casts with a
+          static_cast.
 
 Fri Jul 17 19:34:11 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/ORB.cpp: The return value for acceptor ().enable () is no
-	  longer being checked for -1, since platforms that don't
-	  support it (like NT) will return -1.
+        * tao/ORB.cpp: The return value for acceptor ().enable () is no
+          longer being checked for -1, since platforms that don't
+          support it (like NT) will return -1.
 
 Fri Jul 17 18:46:17 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/Logger_i.h: Added new fields for verbosity
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp: Adjusted for new fields
-	* orbsvcs/tests/client.h: Added new methods- resolve_name () & 
-	  nesting_test () 
-	* orbsvcs/tests/client.cpp: Compacted code somewhat. Broke run () and 
-	  init () into smaller functions 
-	* orbsvcs/orbsvcs/Logger.idl: Adjusted TAO_MAXLOGMSGLEN
-	* orbsvcs/tests/server.cpp: Partialy incomplete incorporation of 
-	  name service
-	
+        * orbsvcs/orbsvcs/Log/Logger_i.h: Added new fields for verbosity
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp: Adjusted for new fields
+        * orbsvcs/tests/client.h: Added new methods- resolve_name () &
+          nesting_test ()
+        * orbsvcs/tests/client.cpp: Compacted code somewhat. Broke run () and
+          init () into smaller functions
+        * orbsvcs/orbsvcs/Logger.idl: Adjusted TAO_MAXLOGMSGLEN
+        * orbsvcs/tests/server.cpp: Partialy incomplete incorporation of
+          name service
+
 Fri Jul 17 17:58:37 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * docs/implrepo.html: Addressed some more comments.
