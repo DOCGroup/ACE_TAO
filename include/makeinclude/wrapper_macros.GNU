@@ -452,9 +452,6 @@ endif # xt_reactor
 
 ifneq ($(xt_reactor),)
   override ace_with_x11=1
-  CPPFLAGS += -DACE_HAS_XT $(PLATFORM_XT_CPPFLAGS)
-  LIBS += $(PLATFORM_XT_LIBS)
-  LDFLAGS += $(PLATFORM_XT_LDFLAGS)
   ACE_MAKE_OPTIONS += xt_reactor
 endif # xt_reactor
 
@@ -466,9 +463,6 @@ endif # fl_reactor
 ifneq ($(fl_reactor),)
   override ace_with_x11=1
   override ace_with_gl=1
-  CPPFLAGS += -DACE_HAS_FL $(PLATFORM_FL_CPPFLAGS)
-  LIBS += $(PLATFORM_FL_LIBS)
-  LDFLAGS += $(PLATFORM_FL_LDFLAGS)
   ACE_MAKE_OPTIONS += rl_reactor
 endif # fl_reactor
 
@@ -479,9 +473,6 @@ endif # tk_reactor
 
 ifneq ($(tk_reactor),)
   override ace_with_tk=1
-  CPPFLAGS += -DACE_HAS_TK $(PLATFORM_TK_CPPFLAGS)
-  LIBS += $(PLATFORM_TK_LIBS)
-  LDFLAGS += $(PLATFORM_TK_LDFLAGS)
   ACE_MAKE_OPTIONS += tk_reactor
 endif # tk_reactor
 
@@ -492,9 +483,6 @@ endif # qt_reactor
 
 ifneq ($(qt_reactor),)
   override ace_with_qt=1
-  CPPFLAGS += -DACE_HAS_QT $(PLATFORM_QT_CPPFLAGS)
-  LIBS += $(PLATFORM_QT_LIBS)
-  LDFLAGS += $(PLATFORM_QT_LDFLAGS)
   ACE_MAKE_OPTIONS += qt_reactor
 endif # qt_reactor
 
@@ -550,21 +538,12 @@ endif # ace_with_gl
 
 ifneq ($(ace_with_gl),)
   override ace_with_x11 = 1
-  CPPFLAGS += $(PLATFORM_GL_CPPFLAGS)
-  LIBS += $(PLATFORM_GL_LIBS)
-  LDFLAGS += $(PLATFORM_GL_LDFLAGS)
   ACE_MAKE_OPTIONS += ace_with_gl
 endif # ace_with_gl
 
 ace_with_x11 ?=
 ifeq ($(ace_with_x11),0)
   override ace_with_x11 =
-endif # ace_with_x11
-
-ifneq ($(ace_with_x11),)
-  CPPFLAGS += $(PLATFORM_X11_CPPFLAGS)
-  LIBS += $(PLATFORM_X11_LIBS)
-  LDFLAGS += $(PLATFORM_X11_LDFLAGS)
   ACE_MAKE_OPTIONS += ace_with_x11
 endif # ace_with_x11
 

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoexe, portableserver, ace_qt, qt_moc {
+project(*server): taoexe, portableserver, tao_qtreactor {
   requires += qt
 
   MOC_Files {
@@ -15,7 +15,7 @@ project(*server): taoexe, portableserver, ace_qt, qt_moc {
   }
 }
 
-project(*client): taoexe, ace_qt, qt_moc {
+project(*client): taoexe, tao_qtreactor {
   requires += qt
 
   MOC_Files {

@@ -1,0 +1,11 @@
+project(TAO_XtReactor) : acelib, taolib, taoversion, core, tao_output, taodefaults, ace_xt {
+  requires     += xt_reactor
+  sharedname   = TAO_XtReactor
+  dynamicflags = TAO_BUILD_DLL
+
+  Source_Files(TAO_COMPONENTS) {
+    Default_Resources {
+      xt_resource.cpp
+	}
+  }
+}

@@ -50,6 +50,14 @@ PLATFORM_BOOST_CPPFLAGS ?=
 PLATFORM_BOOST_LDLAGS ?=
 PLATFORM_BOOST_UTF_LIBS ?= -lboost_unit_test_framework
 
+PLATFORM_TCL_CPPFLAGS=-I/usr/include/tcl8.4
+PLATFORM_TCL_LIBS=-ltcl8.4
+PLATFORM_TCL_LDFLAGS=
+
+PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
+PLATFORM_TK_LIBS=$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_LIB_FLAG)
+PLATFORM_TK_LDFLAGS=
+
 PLATFORM_AIO_SUPPORT := \
        $(shell test "`ls -L /usr/lib/librt.so* /lib/librt.so*`" && echo -DACE_HAS_AIO_CALLS)
 
@@ -102,7 +110,7 @@ endif
 LIBS += $(shell test "`ls -L /usr/lib/librt.so* /lib/librt.so*`" && echo -lrt)
 
 PLATFORM_QT_CPPFLAGS=-I$(QTDIR)/include
-PLATFORM_QT_LIBS=-lqt
+PLATFORM_QT_LIBS=-lqt-mt
 PLATFORM_QT_LDFLAGS=-L$(QTDIR)/lib
 
 OCFLAGS ?= -O3

@@ -1,7 +1,7 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, svcconf, uuid, filecache {
+project(ACE) : acedefaults, aceversion, core, other, codecs, token, svcconf, uuid, filecache {
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE
   dynamicflags = ACE_BUILD_DLL
@@ -160,7 +160,6 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
 
     Demux {
       Event_Handler.cpp
-      FlReactor.cpp
       Msg_WFMO_Reactor.cpp
       POSIX_Proactor.cpp
       POSIX_CB_Proactor.cpp
@@ -173,10 +172,7 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       SUN_Proactor.cpp
       Dev_Poll_Reactor.cpp
       TP_Reactor.cpp
-      TkReactor.cpp
       WFMO_Reactor.cpp
-      XtReactor.cpp
-      QtReactor.cpp
     }
 
     Connection {

@@ -1,3 +1,34 @@
+Fri Dec  3 23:10:39 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* bin/MakeProjectCreator/config/tao_qtreactor.mpb (Added):
+	* bin/MakeProjectCreator/config/ace_xt.mpb (Added):
+	* bin/MakeProjectCreator/config/ace_x11.mpb (Added):
+	* bin/MakeProjectCreator/config/ace_tk.mpb (Added):
+	* bin/MakeProjectCreator/config/ace_qtreactor.mpb (Added):
+	* bin/MakeProjectCreator/config/ace_gtk.mpb (Added):
+	* bin/MakeProjectCreator/config/ace_gl.mpb (Added):
+	* bin/MakeProjectCreator/config/ace_fltk.mpb (Added):
+	* ace/ace_xtreactor.mpc (Added):
+	* ace/ace_tkreactor.mpc (Added):
+	* ace/ace_qtreactor.mpc (Added):
+	* ace/ace_flreactor.mpc (Added):
+
+	* tests/tests.mpc (Modified):
+	* include/makeinclude/wrapper_macros.GNU (Modified):
+	* include/makeinclude/platform_sunos5_sunc++.GNU (Modified):
+	* include/makeinclude/platform_sunos5_g++.GNU (Modified):
+	* include/makeinclude/platform_lynxos.GNU (Modified):
+	* include/makeinclude/platform_linux_pgi.GNU (Modified):
+	* include/makeinclude/platform_linux_icc.GNU (Modified):
+	* include/makeinclude/platform_linux_borland.GNU (Modified):
+	* include/makeinclude/platform_linux.GNU (Modified):
+	* bin/MakeProjectCreator/config/acedefaults.mpb (Modified):
+	* bin/MakeProjectCreator/config/ace_qt.mpb (Modified):
+	* ace/ace.mwc (Modified):
+	* ace/ace.mpc (Modified):
+	Initial changes related with the separation of reactors into distinct libraries.
+	Many thanks to Raphael Bossek <raphael.bossek@gmx.de> for this patch.
+
 Thu Dec  2 13:38:33 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/soreduce/Library.h:

@@ -1,3 +1,12 @@
+Fri Dec  3 23:15:18 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* tao/tao_xtreactor.mpc (Added):
+	* tao/tao_qtreactor.mpc (Added):
+	* tests/QtTests/QtTests.mpc (Modified):
+	* tao/tao.mpc (Modified):
+	Initial changes related with the separation of reactors into distinct libraries.
+	Many thanks to Raphael Bossek <raphael.bossek@gmx.de> for this patch.
+
 Thu Dec  2 13:11:22 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Topology_Object.h:
