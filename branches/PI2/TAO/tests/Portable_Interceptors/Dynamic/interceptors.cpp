@@ -43,7 +43,7 @@ Echo_Client_Request_Interceptor::name (CORBA::Environment &)
  
 void 
 Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                               CORBA::Environment &ACE_TRY_ENV)
+                                               CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
@@ -72,12 +72,12 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
  
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
-      /*      Dynamic::ParameterList_var paramlist = ri->arguments ();
+      Dynamic::ParameterList * paramlist = ri->arguments ();
       CORBA::Long param;
       (*paramlist)[0].argument >>= param;
       
-      cout << "the arg is " << param <<endl;*/
-      }
+      cout << "the arg is " << param <<endl;
+    }
 }
 
 void 
@@ -104,12 +104,12 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
               buf));
    if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
-      /*Dynamic::ParameterList_var paramlist = ri->arguments ();
+      Dynamic::ParameterList *paramlist = ri->arguments ();
       CORBA::Long param;
       (*paramlist)[0].argument >>= param;
       
       cout << "the arg is " << param <<endl;
-      */ }
+    }
 
 }
 
@@ -202,13 +202,13 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
   
   
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
-    {/*
-      Dynamic::ParameterList_var paramlist = ri->arguments ();
+    {
+      Dynamic::ParameterList *paramlist = ri->arguments ();
       CORBA::Long param;
       (*paramlist)[0].argument >>= param;
       
       cout << "the arg is " << param <<endl;
-     */ }
+     }
    
 }
 
@@ -238,12 +238,12 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
  
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
-      /* Dynamic::ParameterList_var paramlist = ri->arguments ();
+     Dynamic::ParameterList *paramlist = ri->arguments ();
       CORBA::Long param;
       (*paramlist)[0].argument >>= param;
       
       cout << "the arg is " << param <<endl;
-      */  }
+    }
 }
 
 void 
