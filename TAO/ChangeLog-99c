@@ -1,3 +1,10 @@
+Sat Jul 17 15:00:04 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/ORB.cpp (resolve_initial_references):
+
+	  Changed a return value from zero to CORBA::Object::_nil () since
+	  the return type is CORBA::Object_ptr.
+
 Sat Jul 17 14:27:57 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/IIOP_Profile.h:
