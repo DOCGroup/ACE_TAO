@@ -30,7 +30,7 @@ definition of macros discussed here.
       within try blocks.</a>)<p>
 
   <li>Use <code>TAO_TRY</code>, <code>TAO_CHECK_ENV</code>,
-      <code>TAO_CATCH</code>, <code>TAO_CATCHALL</code>, and
+      <code>TAO_CATCH</code>, <code>TAO_CATCHANY</code>, and
       <code>TAO_ENDTRY</code> macros. For example:<br>
 
 <pre>
@@ -171,22 +171,19 @@ definition of macros discussed here.
       and throw the specified exception when it fails to acquire the
       lock.<p>
 
-  <li>Be <em>VERY</em> wary of <code>TAO_CATCHANY</code>.  On
-      platforms that use simulated exceptions, it catches any CORBA
-      exceptions passed back by an operation.  However, on platforms
-      that support native c++ exceptions, <code>TAO_CATCHANY</code>
-      translates to <code>catch (...)</code> which catches
-      <em>any</em> c++ exception.  Under some circumstances (e.g., the
-      <code>CATCHANY</code> block only performs resource clean-up for
-      the current activation record,) this may be okay.  But for other
-      cases, <code>CATCHANY</code> may accidentally deal with the
-      wrong exception.  This is especially true if you are working on
-      the internal of TAO.  A reasonable alternative in this case will
-      be to catch "CORBA_Exception" class.  For this reason, when
-      building non-release version programs on
-      platforms that support c++ native exceptions,
-      <code>TAO_CATCHANY</code> is replaced with a catch clause to
-      catch an exception that'll never happen. <p>
+  <li>Notice that <code>TAO_CATCHANY</code> catches <em>any</em>
+      <code>CORBA_Exception</code> or its subclasses.  This limited
+      catch behavior makes TAO programs behave the same on platforms
+      with or without native exceptions.  If there're needs to catch
+      all native exceptions in your program, use
+      <code>TAO_CATCHALL</code> instead. <p>
+
+  <li>Be <em>VERY</em> wary of <code>TAO_CATCHALL</code>.  It catches
+      exceptions of any type.  If your program depends on it, then,
+      more often than not, there're something wrong with it.<p>
+
+  <li>Use <code>auto_prt</code> type mechanism to prevent memory leaks
+      from exceptions.<p>
 
   <li>Don't catch an exception just to rethrow it.  Exceptions cost
       you performance.<p>
