@@ -473,10 +473,10 @@ public:
 			     const OPTIONS *options = 0);
   // Initialize the pool.
 
-  int sync (ssize_t len = -1, int flags = MS_SYNC);
+  virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
   // Overwrite the default sync behavior with no-op
 
-  int sync (void *addr, size_t len, int flags = MS_SYNC);
+  virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
   // Overwrite the default sync behavior with no-op
 };
 
