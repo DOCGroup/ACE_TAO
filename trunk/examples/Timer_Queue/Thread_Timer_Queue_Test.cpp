@@ -19,6 +19,7 @@
 
 #include "ace/Task.h"
 #include "ace/Timer_Heap_T.h"
+#include "ace/Timer_Queue_Adapters.h"
 
 // These typedefs ensure that we use the minimal amount of locking
 // necessary.
@@ -32,7 +33,7 @@ typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
                                   ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>,
 				  ACE_Null_Mutex> 
         Timer_Heap_Iterator;
-typedef Thread_Timer_Queue_Adapter<Timer_Heap> 
+typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
         Thread_Timer_Queue;
 
 class Handler : public ACE_Event_Handler 
@@ -58,6 +59,9 @@ public:
   virtual int cancelled (void);
 
 private:
+  ACE_Time_Value expires_;
+  // @@ Please add comments.
+
   int id_;
   // Store an "id" for the Handler, which is only use to print better
   // messages.
@@ -79,6 +83,8 @@ public:
 
 private:
   // Some helper methods.
+  // @@ Please add comments.
+
   void usage (void) const;
   int add_timer (u_long seconds);
   void cancel_timer (int id);
@@ -86,41 +92,44 @@ private:
   void dump (void);
 
 private:
+  // @@ Please add comments.
   Thread_Timer_Queue *queue_;
 
   const int usecs_;
 };
 
 // Administrivia methods...
-Handler::Handler(const ACE_Time_Value& expiration_time)
-  :  expires(expiration_time),
-     id(0)
+Handler::Handler(const ACE_Time_Value &expiration_time)
+  :  expires_ (expiration_time),
+     id_ (0)
 {
 }
 
-Handler::~Handler()
+Handler::~Handler (void)
 {
 }
 
 void 
 Handler::set_id (int id)
 {
-  id_ = id;
+  this->id_ = id;
 }
 
 // This is the method invoked when the Timer expires.
 
 int 
-Handler::handle_timeout(const ACE_Time_Value &current_time,
- 			const void*)
+Handler::handle_timeout (const ACE_Time_Value &current_time,
+ 			const void *)
 {
-  ACE_Time_Value delay = current_time - expires;
+  ACE_Time_Value delay = current_time - this->expires_;
 
   // No need to protect this printf is always called from a Async safe
   // point.
   ACE_OS::printf ("\nexpiring timer %d at %u.%07.7u secs\n"
 		  "\tthere was a %u.%07.7u secs delay\n",
-		  id, current_time.sec (), current_time.usec (),
+		  this->id_, 
+		  current_time.sec (),
+		  current_time.usec (),
 		  delay.sec (), delay.usec ());
 
   // Notice this delete is protected.
@@ -150,6 +159,7 @@ Input_Task::svc (void)
     {
       char buf[BUFSIZ];
 
+      this->usage ();
       ACE_OS::printf ("please enter your choice: ");
       ACE_OS::fflush (stdout);
 
@@ -173,7 +183,7 @@ Input_Task::add_timer (u_long useconds)
 
   Handler *h;
 
-  ACE_NEW_RETURN (h, Handler (expire_at));
+  ACE_NEW_RETURN (h, Handler (expire_at), -1);
 
   int id = queue_->schedule (h, 0, expire_at);
   
@@ -300,7 +310,7 @@ main (int argc, char* argv[])
 // @@ Add template specializations.
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap>;
+template class ACE_Thread_Timer_Queue_Adapter<Timer_Heap>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap>
+#pragma instantiate ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

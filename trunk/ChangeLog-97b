@@ -1,4 +1,9 @@
-Sun Oct 12 12:17:50 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Sun Oct 12 14:18:12 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace: Created a new group of Timer_Queue_Adapters files and moved
+ 	  the Async and Thread adapters into this file. This reduces the
+ 	  amount of coupling in the ACE library and removes problems with
+ 	  circular includes.
 
 	* ace/Timer_Queue_T: Added a new ACE_Thread_Timer_Queue_Adapter,
  	  which makes it possible to use a timer queue in a thread
