@@ -36,7 +36,7 @@ Notify_Service::init_ORB  (int& argc, char *argv [],
                       -1);
 
   this->poa_ =
-    PortableServer::POA::_narrow (poa_obj,
+    PortableServer::POA::_narrow (poa_obj.in (),
                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 

@@ -16,7 +16,7 @@ IDL_SRCS = \
 	INSC.cpp \
 	INSS.cpp
 
-LDLIBS = -lTAO -lorbsvcs
+LDLIBS = -lTAO -lTAO_CosNaming
 
 PROG_SRCS = \
 	INS_test_client.cpp \
@@ -96,9 +96,6 @@ realclean: clean
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -379,7 +376,7 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  INSC.h INSC.i
 
@@ -388,9 +385,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -670,8 +664,8 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- INSC.i INSS_T.h INSS_T.i INSS_T.cpp INSS.i
+ $(TAO_ROOT)/tao/BoundsC.i INSC.i \
+ INSS_T.h INSS_T.i INSS_T.cpp INSS.i
 
 .obj/Server_i.o .obj/Server_i.so .shobj/Server_i.o .shobj/Server_i.so: Server_i.cpp Server_i.h \
  $(TAO_ROOT)/tao/TAO.h \
@@ -682,9 +676,6 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -964,7 +955,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
@@ -987,12 +978,11 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- INS_i.h INSS.h INSC.h INSC.i INSS_T.h INSS_T.i INSS_T.cpp INSS.i
+ $(ACE_ROOT)/ace/Read_Buffer.i INS_i.h \
+ INSS.h INSC.h INSC.i INSS_T.h INSS_T.i INSS_T.cpp INSS.i
 
 .obj/INS_test_server.o .obj/INS_test_server.so .shobj/INS_test_server.o .shobj/INS_test_server.so: INS_test_server.cpp Server_i.h \
  $(TAO_ROOT)/tao/TAO.h \
@@ -1003,9 +993,6 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1285,7 +1272,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
@@ -1308,21 +1295,17 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- INS_i.h INSS.h INSC.h INSC.i INSS_T.h INSS_T.i INSS_T.cpp INSS.i
+ $(ACE_ROOT)/ace/Read_Buffer.i INS_i.h \
+ INSS.h INSC.h INSC.i INSS_T.h INSS_T.i INSS_T.cpp INSS.i
 
 .obj/INSC.o .obj/INSC.so .shobj/INSC.o .shobj/INSC.so: INSC.cpp INSC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1602,17 +1585,13 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- INSC.i
+ $(TAO_ROOT)/tao/BoundsC.i INSC.i
 
 .obj/INSS.o .obj/INSS.so .shobj/INSS.o .shobj/INSS.so: INSS.cpp INSS.h INSC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -1892,7 +1871,7 @@ realclean: clean
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- INSC.i INSS_T.h INSS_T.i INSS_T.cpp INSS.i
+ $(TAO_ROOT)/tao/BoundsC.i INSC.i \
+ INSS_T.h INSS_T.i INSS_T.cpp INSS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

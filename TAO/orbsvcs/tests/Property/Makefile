@@ -13,7 +13,7 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS     = -lorbsvcs -lTAO
+LDLIBS = -lTAO_CosProperty -lTAO_CosNaming -lTAO
 
 CosProperty_SERVER_OBJS = server.o
 CosProperty_CLIENT_OBJS = client.o
@@ -65,9 +65,6 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -349,7 +346,6 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
@@ -357,6 +353,7 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
@@ -378,8 +375,7 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp client.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -387,9 +383,6 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -687,7 +680,6 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
@@ -695,6 +687,7 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
@@ -716,7 +709,6 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

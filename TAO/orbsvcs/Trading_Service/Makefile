@@ -1,7 +1,7 @@
 #--------------------------------------------------------------------------
 # $Id$
-# Build the TAO Trading Service
 #--------------------------------------------------------------------------
+
 #--------------------------------------------------------------------------
 #       Local macros
 #--------------------------------------------------------------------------
@@ -10,7 +10,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS  = -lorbsvcs -lTAO
+LDLIBS = -lTAO_CosTrading -lTAO_Svc_Utils -lTAO
 
 SRC = Trading_Server.cpp Trading_Service.cpp
 
@@ -55,9 +55,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -358,7 +355,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
@@ -384,9 +380,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -694,7 +687,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/trading_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \

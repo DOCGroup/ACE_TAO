@@ -29,7 +29,7 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 
 LDFLAGS += -L$(JAVA_ROOT)/jre/lib/sparc -L$(JAVA_ROOT)/jre/lib/sparc/native_threads -L$(MPEG_ROOT)/mpeg_shared
 
-LDLIBS = -lorbsvcs -lTAO -lACE -lmpeg_shared -lavdemo -ljava -ljvm
+LDLIBS = -lTAO_CosNaming -lTAO -lACE -lmpeg_shared -lavdemo -ljava -ljvm
 CPPFLAGS +=  -I$(JAVA_ROOT)/include-old -I$(JAVA_ROOT)/include-old/solaris \
 	    -I$(TAO_ROOT)/orbsvcs -I$(MPEG_ROOT) -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs/orbsvcs
 

@@ -1172,7 +1172,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                         fep_a->get_property_value ("Flow",
                                                    ACE_TRY_ENV);
                       ACE_TRY_CHECK_EX (flow_connect);
-                      char *flowname = 0;
+                      const char *flowname = 0;
                       flowname_any.in () >>= flowname;
                       ACE_TRY_EX (flow_connection)
                         {
@@ -1248,9 +1248,9 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                       ACE_ENDTRY;
                       ACE_CHECK_RETURN (0);
                       CORBA::String_var fep_a_name, fep_b_name;
-                      char *temp_name;
                       flowname_any = fep_a->get_property_value ("FlowName",
                                                                 ACE_TRY_ENV);
+                      const char *temp_name;
                       flowname_any.in () >>= temp_name;
                       fep_a_name = CORBA::string_dup (temp_name);
                       flowname_any = fep_b->get_property_value ("FlowName",
@@ -2126,7 +2126,9 @@ TAO_StreamEndPoint::add_fep_i (AVStreams::FlowEndPoint_ptr fep,
       CORBA::Any_var flow_name_any =
         fep->get_property_value ("FlowName", ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      flow_name_any >>= flow_name.out ();
+      const char *tmp;
+      flow_name_any >>= tmp;
+      flow_name = CORBA::string_dup (tmp);
     }
   ACE_CATCHANY
     {
@@ -2755,14 +2757,15 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
       this->peer_ = AVStreams::VDev::_duplicate (the_peer_dev);
 
       CORBA::Any_var anyptr;
-      char *media_ctrl_ior;
+      const char *media_ctrl_ior;
       anyptr = this->peer_->get_property_value ("Related_MediaCtrl",
                                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       anyptr.in () >>= media_ctrl_ior;
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "(%P|%t)The Media Control IOR is %s\n",
-                  media_ctrl_ior));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t)The Media Control IOR is %s\n",
+                    media_ctrl_ior));
       CORBA::Object_ptr media_ctrl_obj =
         TAO_ORB_Core_instance ()->orb ()->string_to_object
         (media_ctrl_ior, ACE_TRY_ENV);
@@ -3291,7 +3294,9 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj,
       ACE_TRY_CHECK_EX (flow_name);
       flow_name_any = fdev->get_property_value ("Flow", ACE_TRY_ENV);
       ACE_TRY_CHECK_EX (flow_name);
-      *flow_name_any >>= flow_name.out ();
+      const char *tmp;
+      *flow_name_any >>= tmp;
+      flow_name = CORBA::string_dup (tmp);
     }
   ACE_CATCHANY
     {
@@ -4217,12 +4222,13 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep,
       // get my format value
       CORBA::Any_var format_ptr;
       CORBA::String_var my_format, peer_format;
-      char *temp_format;
 
       exception_message = "TAO_FlowEndPoint::is_fep_compatible - Format";
       format_ptr = this->get_property_value ("Format",
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      const char *temp_format;
       format_ptr.in () >>= temp_format;
       my_format = CORBA::string_dup (temp_format);
       // get my peer's format value

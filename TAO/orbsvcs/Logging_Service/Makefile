@@ -6,7 +6,7 @@ LSRC = Logging_Service.cpp
 
 LOG_OBJS=$(LSRC:.cpp=.o)
 
-LDLIBS = -lorbsvcs -lTAO
+LDLIBS = -lTAO_DsLogAdmin -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
 
 BIN2 = Logging_Service
 
@@ -54,9 +54,6 @@ Logging_Service: $(addprefix $(VDIR),$(LOG_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.7.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -340,10 +337,12 @@ Logging_Service: $(addprefix $(VDIR),$(LOG_OBJS))
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Log/BasicLogFactory_i.h \
@@ -365,7 +364,6 @@ Logging_Service: $(addprefix $(VDIR),$(LOG_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogMgr_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Log/BasicLog_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
