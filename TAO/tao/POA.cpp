@@ -3489,7 +3489,7 @@ TAO_POA_Policies::TAO_POA_Policies (const TAO_POA_Policies &rhs)
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
-     client_exposed_fixed_policies_ ()
+     client_exposed_fixed_policies_ ( rhs.client_exposed_fixed_policies ())
 {
 
 #if (TAO_HAS_RT_CORBA == 1)
@@ -3985,7 +3985,7 @@ TAO_POA::client_exposed_policies (CORBA::Short object_priority,
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
-
+  
   client_exposed_policies->length (client_exposed_fixed_policies.length ());
 
   for (CORBA::ULong i = 0;
