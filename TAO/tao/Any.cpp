@@ -158,7 +158,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
 	  // seems to depend on the actual data type. Until we fix
 	  // this I'm afraid we will have to leave with a memory leak
 	  // (coryan).
-	  // delete this->value_;
+	  delete this->value_;
 	  this->value_ = 0;
         }
 
@@ -213,7 +213,7 @@ CORBA_Any::~CORBA_Any (void)
 	  // seems to depend on the actual data type. Until we fix
 	  // this I'm afraid we will have to leave with a memory leak
 	  // (coryan).
-	  // delete this->value_;
+	  delete this->value_;
           this->value_ = 0;
         }
     }
@@ -245,7 +245,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 	  // seems to depend on the actual data type. Until we fix
 	  // this I'm afraid we will have to leave with a memory leak
 	  // (coryan).
-	  // delete this->value_;
+	  delete this->value_;
 	  this->value_ = 0;
         }
     }

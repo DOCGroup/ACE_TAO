@@ -317,11 +317,6 @@ private:
   CORBA::ULong refcount_;
   // if refcount reaches 0, free this typecode
 
-  CORBA::Boolean delete_flag_;
-  // indicates if we are freeing ourselves. This flag serves as an indication
-  // to the children that they can delete themselves and their children if this
-  // flag is set.
-
   CORBA::Boolean orb_owns_;
   // TAO's approach differs from the SunSoft IIOP. Constant typecodes
   // are owned by the ORB and get freed only when the ORB dies.
