@@ -463,6 +463,13 @@ project(Multihomed INET Addr Test) : acetest {
   }
 }
 
+project(Network_Adapters_Test) : acetest {
+  exename = Network_Adapters_Test
+  Source_Files {
+    Network_Adapters_Test.cpp
+  }
+}
+
 project(New Fail Test) : acetest {
   exename = New_Fail_Test
   Source_Files {
