@@ -60,9 +60,6 @@ server:	$(addprefix $(VDIR),$(TTCP_SERVER_OBJS))
 client:	$(addprefix $(VDIR),$(TTCP_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
 
-clean:
-	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
-
 realclean: clean
 	-/bin/rm -rf ttcpC.* ttcpS.*
 # DO NOT DELETE THIS LINE -- g++dep uses it.

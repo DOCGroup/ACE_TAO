@@ -1,3 +1,12 @@
+Tue Feb 17 20:20:35 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/giop.cpp: Removed an extra explicit template instantiation
+ 	  of TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>.  Thanks to
+ 	  Ben Eng <ben@jetpen.com> for reporting this!
+
+	* tests/Thruput/TAO/Makefile: Removed the "clean" macro since it
+ 	  was conflicting with the TAO default.
+
 Tue Feb 17 21:47:41 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (shutdown): Renamed please_exit 
