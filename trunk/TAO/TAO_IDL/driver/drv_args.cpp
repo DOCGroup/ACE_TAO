@@ -278,7 +278,7 @@ DRV_parse_args (long ac, char **av)
                   // I expect 's' or 'i' after 'c'.
                   cerr << GTDEVEL("Incomplete Flag : ")
                        << av[i];
-                  exit(99);
+                  ACE_OS::exit (99);
                 }
               break;
 

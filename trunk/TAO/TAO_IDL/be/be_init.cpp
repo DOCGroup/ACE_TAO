@@ -66,9 +66,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // BE_init.cc - Initialization for dummy BE
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 #include        "../../tao/Version.h"
 
 ACE_RCSID(be, be_init, "$Id$")
@@ -84,11 +84,11 @@ AST_Generator *
 BE_init()
 {
   tao_cg = TAO_CODEGEN::instance ();
-  AST_Generator	*g = new be_generator();
+  AST_Generator *g = new be_generator();
 
   if (g == NULL) {
     cerr << GTDEVEL("IDL: BE init failed to create generator, exiting\n");
-    exit(99);
+    ACE_OS::exit (99);
   }
   return g;
 }
