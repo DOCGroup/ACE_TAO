@@ -11,6 +11,7 @@ ACE_RCSID (DynamicInterface,
 #include "tao/TSS_Resources.h"
 #include "tao/IFR_Client_Adapter.h"
 #include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Collocated_Object.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -36,11 +37,11 @@ TAO_DynamicImplementation::_this (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Create a object.
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
+  TAO_Collocated_Object *retval = 0;
   ACE_NEW_RETURN (retval,
-                  CORBA::Object (stub,
-                                 1,
-                                 this),
+                  TAO_Collocated_Object (stub,
+                                         1,
+                                         this),
                   CORBA::Object::_nil ());
 
   return retval;

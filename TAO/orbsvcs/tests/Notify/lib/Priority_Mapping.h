@@ -11,15 +11,15 @@
 
 #ifndef TAO_Notify_Tests_PRIORITY_MAPPING_H
 #define TAO_Notify_Tests_PRIORITY_MAPPING_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "notify_test_export.h"
-
-#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/corba.h"
 
 /**
  * @class TAO_Notify_Tests_Priority_Mapping
@@ -41,5 +41,5 @@ public:
                 CORBA::Short &corba_priority);
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_Notify_Tests_PRIORITY_MAPPING_H */

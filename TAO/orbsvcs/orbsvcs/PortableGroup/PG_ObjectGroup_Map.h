@@ -14,7 +14,7 @@
 #ifndef TAO_PG_OBJECTGROUP_MAP_H
 #define TAO_PG_OBJECTGROUP_MAP_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -46,13 +46,7 @@ public:
   CORBA::String_var type_id;
 
   /// This is the PortableGroup::ObjectGroupId.
-  /**
-   * The spec states that PortableGroup::ObjectGroupId is a
-   * CORBA::ULongLong.  However, the over 4 billion group IDs that can
-   * be represented by a CORBA::ULong should be plenty for any
-   * application.
-   */
-  CORBA::ULong group_id;
+  PortableGroup::ObjectGroupId group_id;
 
   /// Reference to the ObjectGroup.
   PortableGroup::ObjectGroup_var object_group;
@@ -69,13 +63,13 @@ public:
 
 /// ObjectId hash map typedef.
 typedef ACE_Hash_Map_Manager_Ex<
-  PortableServer::ObjectId,
+  PortableGroup::ObjectGroupId,
   TAO_PG_ObjectGroup_Map_Entry *,
-  TAO_ObjectId_Hash,
-  ACE_Equal_To<PortableServer::ObjectId>,
+  ACE_Hash<ACE_UINT64>,
+  ACE_Equal_To<ACE_UINT64>,
   ACE_Null_Mutex> TAO_PG_ObjectGroup_Map;
 
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif  /* TAO_PG_OBJECTGROUP_MAP_H */

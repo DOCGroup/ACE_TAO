@@ -2,9 +2,7 @@
 
 #include "Client_i.h"
 #include "Event_Types_impl.h"
-
 #include "tao/ORB_Core.h"
-
 #include "ace/Get_Opt.h"
 
 int

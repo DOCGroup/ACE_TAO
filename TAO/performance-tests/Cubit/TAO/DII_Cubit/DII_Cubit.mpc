@@ -1,8 +1,7 @@
 project(*client): taoserver, strategies, dynamicinterface {
   exename   = client
-  after    += IDL_Cubit_Server
+  after    += IDL_Cubit_Server_Exe 
   idlflags += -Gd
-  avoids   += minimum_corba
 
   Source_Files {
     cubitC.cpp

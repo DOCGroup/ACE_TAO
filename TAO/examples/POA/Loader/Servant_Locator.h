@@ -18,16 +18,14 @@
 //
 // ================================================================
 
+#include "ace/OS.h"
+
 #ifndef SERVANT_LOCATOR_H
 #define SERVANT_LOCATOR_H
 
+#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
-
-#include "tao/ORB.h"
-
 #include "ace/DLL.h"
-#include "ace/SString.h"
-#include "ace/Log_Msg.h"
 
 class ServantLocator : public PortableServer::ServantLocator
 {

@@ -20,10 +20,8 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
+#include "ace/OS.h"
 #include "ace/Reactor.h"
-#include "ace/OS_NS_string.h"
 
 // Constructor.
 

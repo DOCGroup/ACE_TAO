@@ -19,7 +19,6 @@
 
 // IDL generated header
 #include "simpleS.h"
-#include "ace/streams.h"
 
 
 // ------------------------------------------------------------

@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_METHOD_REQUEST_DISPATCH_T_H
 #define TAO_Notify_METHOD_REQUEST_DISPATCH_T_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -20,9 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-
-#include "ace/CORBA_macros.h"
+#include "tao/corba.h"
 
 /**
  * @class TAO_Notify_Method_Request_Dispatch_T
@@ -35,9 +32,7 @@ class TAO_Notify_Method_Request_Dispatch_T
 {
 public:
   /// Constuctor
-  TAO_Notify_Method_Request_Dispatch_T (EVENT_PARAM event, 
-                                        PROXY_PARAM proxy, 
-                                        CORBA::Boolean filtering);
+  TAO_Notify_Method_Request_Dispatch_T (EVENT_PARAM event, PROXY_PARAM proxy, CORBA::Boolean filtering);
 
   /// Destructor
   virtual ~TAO_Notify_Method_Request_Dispatch_T ();
@@ -69,5 +64,4 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_METHOD_REQUEST_DISPATCH_T_H */

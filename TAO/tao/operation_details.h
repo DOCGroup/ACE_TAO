@@ -9,34 +9,24 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_OPERATION_DETAILS_H
 #define TAO_OPERATION_DETAILS_H
 
 #include /**/ "ace/pre.h"
 
-#include "Exception.h"
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
 #include "Service_Context.h"
 #include "target_specification.h"
 
 
-/// Forward declarations
-namespace Dynamic
-{
-  class ParameterList;
-  class ExceptionList;
-}
-
-namespace TAO
-{
-  class Argument;
-  struct Exception_Data;
-}
-
+// @@ Bala: Why is this not part of the RequestHeader?!
 /**
  * @class TAO_Operation_Details
  *
@@ -46,9 +36,8 @@ namespace TAO
  * required by the invocation classes.  This class is in its
  * infancy now but I expect this one to grow as we come with
  * different varieties of use cases.
- *
- * @@TODO: Put this in namespace TAO.
  */
+
 class TAO_Export TAO_Operation_Details
 {
 public:
@@ -56,11 +45,7 @@ public:
   ///Constructor
   TAO_Operation_Details (const char *name,
                          CORBA::ULong len,
-                         CORBA::Boolean argument_flag,
-                         TAO::Argument **args = 0,
-                         CORBA::ULong num_args = 0,
-                         TAO::Exception_Data *ex_data = 0,
-                         CORBA::Long ex_count = 0);
+                         CORBA::Boolean argument_flag);
 
   /// Operation name
   const char* opname (void) const;
@@ -79,8 +64,7 @@ public:
   CORBA::Octet response_flags (void);
   CORBA::Octet response_flags (void) const;
 
-  /// Accessors for the service context list
-  /// @@ NOTE: When do these go ??
+  /// Get the service context list
   IOP::ServiceContextList &request_service_info (void);
   const IOP::ServiceContextList &request_service_info (void) const;
   IOP::ServiceContextList &reply_service_info (void);
@@ -92,59 +76,22 @@ public:
   TAO_Service_Context &reply_service_context (void);
   const TAO_Service_Context &reply_service_context (void) const;
 
-  ///Cache the request id.
   void request_id (CORBA::ULong id);
 
   /// Modify request id's for a BiDirectional setup
   void modify_request_id (int originator);
 
   /// Return the request ID associated with the operation
+  CORBA::ULong request_id (void);
   CORBA::ULong request_id (void) const;
 
   /// Accessor method for the addressing mode
   TAO_Target_Specification::TAO_Target_Address addressing_mode (void);
-  TAO_Target_Specification::TAO_Target_Address addressing_mode (void) const;
+  TAO_Target_Specification::TAO_Target_Address
+  addressing_mode (void)  const;
 
   /// Set method for the addressing mode
   void addressing_mode (CORBA::Short addr);
-
-  /// Creates and returns a CORBA::Exception object whose repository
-  /// id \a ex matches the exception list that this operation
-  /// specified.
-  /**
-   * This step is important to decode the exception that the client
-   * got from the server. If the exception received from the server
-   * is not found in the list of exceptions specified by the operation
-   * this call would raise an UNKNOWN exception.
-   */
-  CORBA::Exception *corba_exception (const char *ex
-                                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  /**
-   * @name Helper methods used by the Invocation classes.
-   */
-  //@{
-
-  /// Marshals the list of <this->arg_> into the \a cdr.
-  bool marshal_args (TAO_OutputCDR &cdr);
-
-  /// Demarshals the list of <this->arg_> into the \a cdr.
-  bool demarshal_args (TAO_InputCDR &cdr);
-
-  /**
-   * The following methods are used by client interceptors to extract
-   * the list of parameters passed by the operation, exceptions
-   * declared for the operation, and the result when available.
-   */
-  bool parameter_list (Dynamic::ParameterList &);
-  bool exception_list (Dynamic::ExceptionList &);
-  bool result (CORBA::Any *);
-  //@}
-
-  /// Accessors for the argumet list
-  TAO::Argument **args (void);
-  CORBA::ULong args_num (void) const ;
 
 private:
 
@@ -175,18 +122,14 @@ private:
   /// valid when sending a request.
   TAO_Service_Context reply_service_info_;
 
+  // The first element of header is service context list;
+  // transactional context would be acquired here using the
+  // transaction service APIs.  Other kinds of context are as yet
+  // undefined.
+  //
+
   /// Addressing  mode for this request.
   TAO_Target_Specification::TAO_Target_Address addressing_mode_;
-
-  TAO::Argument **args_;
-
-  CORBA::ULong num_args_;
-
-  /// The type of exceptions that the operations can throw.
-  TAO::Exception_Data *ex_data_;
-
-  /// Count of the exceptions that operations can throw.
-  CORBA::ULong ex_count_;
 };
 
 #if defined (__ACE_INLINE__)

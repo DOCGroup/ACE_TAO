@@ -16,7 +16,7 @@
 
 #ifndef CIAO_ASSEMBLY_VISITOR_H
 #define CIAO_ASSEMBLY_VISITOR_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -89,19 +89,8 @@ namespace CIAO
     virtual int visit_componentinstantiation (Assembly_Placement::componentinstantiation *ci
                                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    Components::Deployment::ComponentServer_ptr
-    get_current_componentserver (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-
-    /// Return a container with the specified @c rtpolicy set name.
-    /// This method doesn't necessary create a new container. It
-    /// always compare the rtpolicy name of the cached "current
-    /// container" and see if the cached container fits our needs.  If
-    /// it does, then no new container is created.  I.e., if there are
-    /// consecutive homeplacement elements with the same rtpolicy set
-    /// name, they will be installed into a single container.
     Components::Deployment::Container_ptr
-    get_container (const char *rtpolicy
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    get_current_container (void);
 
   protected:
     /// Registering a component using the info specified in @c i .
@@ -119,10 +108,6 @@ namespace CIAO
     /// yet, so we just install all home in a process into one single
     /// container.)
     Components::Deployment::Container_var container_;
-
-    /// The name of the RTPolicy_Set of the active (referenced by @c
-    /// container_) container.
-    ACE_CString rtpolicy_name_;
 
     /// Current Component Home.  We only support keyless home
     /// operations for now.
@@ -146,5 +131,5 @@ namespace CIAO
 # include "Assembly_Visitors.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* CIAO_ASSEMBLY_VISITOR_H */

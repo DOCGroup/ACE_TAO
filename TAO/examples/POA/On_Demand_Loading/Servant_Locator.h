@@ -21,8 +21,8 @@
 #ifndef SERVANT_LOCATOR_H
 #define SERVANT_LOCATOR_H
 
+#include "tao/corba.h"
 #include "ace/DLL.h"
-
 #include "Servant_Manager.h"
 
 class ServantLocator_i : public PortableServer::ServantLocator

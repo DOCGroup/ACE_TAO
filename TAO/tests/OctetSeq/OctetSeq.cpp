@@ -21,9 +21,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
-#include "tao/ORB.h"
+#include "tao/corba.h"
 #include "testC.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(OctetSeq, OctetSeq, "$Id$")
 

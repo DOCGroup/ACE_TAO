@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_PEER_H
 #define TAO_Notify_Tests_PEER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -21,7 +21,6 @@
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "ace/SString.h"
 
 class ACE_Arg_Shifter;
 
@@ -77,5 +76,5 @@ protected:
 #include "Peer.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_Notify_Tests_PEER_H */

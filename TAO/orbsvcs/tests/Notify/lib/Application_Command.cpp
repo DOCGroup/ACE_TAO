@@ -2,7 +2,7 @@
 
 #include "Application_Command.h"
 
-ACE_RCSID(lib, TAO_Application_Command, "$Id$")
+ACE_RCSID(lib, TAO_Application_Command, "$id$")
 
 #include "tao/PortableServer/PortableServer.h"
 #include "LookupManager.h"

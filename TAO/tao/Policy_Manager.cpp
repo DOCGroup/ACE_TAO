@@ -1,10 +1,12 @@
 // $Id$
 
-#include "Policy_Manager.h"
+#include "tao/Policy_Manager.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #include "tao/TSS_Resources.h"
+#include "tao/Environment.h"
+#include "tao/Buffering_Constraint_Policy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Policy_Manager.i"
@@ -35,24 +37,19 @@ TAO_Policy_Current::implementation (void) const
 
 void
 TAO_Policy_Current_Impl::set_policy_overrides (
-    const CORBA::PolicyList & policies,
-    CORBA::SetOverrideType set_add
-    ACE_ENV_ARG_DECL
-  )
+        const CORBA::PolicyList & policies,
+        CORBA::SetOverrideType set_add
+        ACE_ENV_ARG_DECL)
 {
-  this->manager_impl_.set_policy_overrides (policies, 
-                                            set_add 
-                                            ACE_ENV_ARG_PARAMETER);
+  this->manager_impl_.set_policy_overrides (policies, set_add ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::PolicyList *
 TAO_Policy_Current_Impl::get_policy_overrides (
-    const CORBA::PolicyTypeSeq & ts
-    ACE_ENV_ARG_DECL
-  )
+        const CORBA::PolicyTypeSeq & ts
+        ACE_ENV_ARG_DECL)
 {
-  return this->manager_impl_.get_policy_overrides (ts 
-                                                   ACE_ENV_ARG_PARAMETER);
+  return this->manager_impl_.get_policy_overrides (ts ACE_ENV_ARG_PARAMETER);
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

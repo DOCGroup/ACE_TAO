@@ -12,19 +12,16 @@
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================
-
 #ifndef TAO_ACCEPTOR_H
 #define TAO_ACCEPTOR_H
-
 #include /**/ "ace/pre.h"
+#include "tao/corbafwd.h"
 
-#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
 
 // Forward declarations.
 class ACE_Addr;
@@ -43,18 +40,6 @@ namespace TAO
 {
   class ObjectKey;
 }
-
-// ****************************************************************
-
-/// The TAO-specific OMG assigned value for the TAG_ORB_TYPE tagged
-/// component.
-/**
- * This number was assigned by the OMG.  Do *NOT* change.  The ASCII
- * representation is "TA\x00".  If necessary, we can request more ORB
- * types later.
- */
-const CORBA::ULong TAO_ORB_TYPE = 0x54414f00U;
-
 // ****************************************************************
 
 /**
@@ -69,6 +54,7 @@ const CORBA::ULong TAO_ORB_TYPE = 0x54414f00U;
 class TAO_Export TAO_Acceptor
 {
 public:
+
   TAO_Acceptor (CORBA::ULong tag);
 
   /// Destructor
@@ -130,8 +116,10 @@ public:
                           TAO::ObjectKey &key) = 0;
 
 private:
+
   /// IOP protocol tag.
   CORBA::ULong tag_;
+
 };
 
 #if defined (__ACE_INLINE__)

@@ -19,7 +19,6 @@
 #include "ace/Sched_Params.h"
 
 #include "Scheduler_Generic.h"
-#include "ace/OS_NS_stdio.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Scheduler_Generic.i"

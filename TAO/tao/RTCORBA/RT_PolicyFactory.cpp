@@ -6,10 +6,10 @@ ACE_RCSID (RTCORBA,
            RT_PolicyFactory,
            "$Id$")
 
-#include "RT_Policy_i.h"
 
 #include "tao/PolicyC.h"
-#include "tao/ORB_Constants.h"
+#include "RT_Policy_i.h"
+
 
 CORBA::Policy_ptr
 TAO_RT_PolicyFactory::create_policy (

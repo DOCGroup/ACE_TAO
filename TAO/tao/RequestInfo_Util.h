@@ -14,29 +14,14 @@
 #define TAO_REQUEST_INFO_UTIL_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-#include "tao/TAO_Export.h"
-
-namespace CORBA
-{
-  class StringSeq;
-  class Any;
-  class Environment;
-}
-
-namespace Dynamic
-{
-  class ParameterList;
-  class ExceptionList;
-  typedef CORBA::StringSeq ContextList;
-  typedef CORBA::StringSeq RequestContext;
-}
+#include "DynamicC.h"
 
 /**
  * @class TAO_RequestInfo_Util
@@ -73,6 +58,7 @@ public:
   static CORBA::Any * make_any (CORBA::Boolean tk_void_any
                                 ACE_ENV_ARG_DECL);
   //@}
+
 };
 
 #include /**/ "ace/post.h"

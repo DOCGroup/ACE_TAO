@@ -2,7 +2,6 @@
 
 #include "Memory_Growth.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (Hello,
            server,

@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_EVENT_MAP_ENTRY_T_H
 #define TAO_Notify_EVENT_MAP_ENTRY_T_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,6 +21,7 @@
 
 #include "ace/Copy_Disabled.h"
 #include "ace/Atomic_Op.h"
+#include "tao/corba.h"
 
 template <class PROXY, class ACE_LOCK> class TAO_Notify_Event_Map_T;
 template <class PROXY> class TAO_ESF_Proxy_Collection;
@@ -90,5 +90,4 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_EVENT_MAP_ENTRY_T_H */

@@ -45,7 +45,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DynamicInterface_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_DYNAMICINTERFACE_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_DYNAMICINTERFACE_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 TAO_PortableServer.lib TAO_Valuetype.lib TAO.lib ace.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_DynamicInterface.dll" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_PortableServer.lib TAO.lib ace.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_DynamicInterface.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "DynamicInterface - Win32 Debug"
 
@@ -72,7 +72,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DynamicInterface_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_DYNAMICINTERFACE_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_DYNAMICINTERFACE_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -83,8 +83,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_Messagingd.lib TAO_PortableServerd.lib TAO_Valuetyped.lib TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_DynamicInterfaced.dll" /pdbtype:sept /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# SUBTRACT LINK32 /pdb:none
+# ADD LINK32 TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_DynamicInterfaced.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "DynamicInterface - Win32 MFC Debug"
 
@@ -102,7 +101,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_EVENT_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D ACE_HAS_MFC=1 /D "WIN32" /D "_WINDOWS" /D "TAO_DYNAMICINTERFACE_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D ACE_HAS_MFC=1 /D "WIN32" /D "_WINDOWS" /D "TAO_DYNAMICINTERFACE_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -131,7 +130,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_EVENT_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "TAO_DYNAMICINTERFACE_BUILD_DLL" /D ACE_HAS_MFC=1 /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "TAO_DYNAMICINTERFACE_BUILD_DLL" /D ACE_HAS_MFC=1 /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -161,15 +160,11 @@ SOURCE=.\Context.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DII_Arguments.cpp
+SOURCE=.\DII_ClientRequestInfo.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\DII_Invocation.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DII_Invocation_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -209,15 +204,11 @@ SOURCE=.\Context.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\DII_Arguments.h
+SOURCE=.\DII_ClientRequestInfo.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\DII_Invocation.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DII_Invocation_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -258,10 +249,6 @@ SOURCE=.\Unknown_User_Exception.h
 # Begin Source File
 
 SOURCE=.\Context.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\DII_Arguments.inl
 # End Source File
 # Begin Source File
 

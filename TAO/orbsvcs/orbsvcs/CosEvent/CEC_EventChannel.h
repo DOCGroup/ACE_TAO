@@ -17,7 +17,6 @@
 
 #ifndef TAO_CEC_EVENTCHANNEL_H
 #define TAO_CEC_EVENTCHANNEL_H
-
 #include /**/ "ace/pre.h"
 
 #include "CEC_Factory.h"
@@ -27,7 +26,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosEventChannelAdminS.h"
-
 #include "CEC_Defaults.h"
 #include "event_export.h"
 
@@ -284,5 +282,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_CEC_EVENT_CHANNEL_H */

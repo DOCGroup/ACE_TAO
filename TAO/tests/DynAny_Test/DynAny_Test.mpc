@@ -4,7 +4,6 @@ project(*Basic): taoserver, dynamicany {
   Source_Files {
     data.cpp
     driver.cpp
-    analyzer.cpp
     test_dynany.cpp
     test_dynarray.cpp
     test_dynenum.cpp

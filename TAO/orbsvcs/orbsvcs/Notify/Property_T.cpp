@@ -9,9 +9,7 @@
 #include "Property_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify, 
-           TAO_Notify_Property_T, 
-           "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Property_T, "$Id$")
 
 #include "PropertySeq.h"
 

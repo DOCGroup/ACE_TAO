@@ -24,6 +24,9 @@
 #define TAO_BE_OUTSTRM_H
 
 #include "ace/CDR_Base.h"
+#include "ace/OS.h"
+
+#include <stdio.h>
 
 class Identifier;
 class UTL_IdList;

@@ -10,9 +10,9 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_TAGGED_COMPONENTS_H
 #define TAO_TAGGED_COMPONENTS_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/IOPC.h"
@@ -22,16 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/CONV_FRAMEC.h"
-
 class TAO_Profile;
-
-/// Tag for storing multiple endpoints within a single profile.
-/**
- * This is TAO-specific, and is mostly used by TAO's RTCORBA support.
- * The standard TAG_ALTERNATE_IIOP_ADDRESSES tagged component is the
- * portable alternative.
- */
-const CORBA::ULong TAO_TAG_ENDPOINTS =  0x54414f02U;
 
 /**
  * @class TAO_Tagged_Components
@@ -163,5 +154,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_TAGGED_COMPONENTS_H */

@@ -16,14 +16,11 @@
 //
 //===========================================================================
 
+#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/POA.h"
 
-#include "tao/ORB.h"
-
-ACE_RCSID (FindPOA, 
-           FindPOA, 
-           "$Id$")
+ACE_RCSID(FindPOA, FindPOA, "$Id$")
 
 void
 find_non_existant_POA (PortableServer::POA_ptr parent,

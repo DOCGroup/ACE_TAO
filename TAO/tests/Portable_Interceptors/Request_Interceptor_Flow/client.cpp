@@ -5,8 +5,6 @@
 #include "testC.h"
 #include "Client_ORBInitializer.h"
 
-#include "tao/ORBInitializer_Registry.h"
-
 ACE_RCSID (Request_Interceptor_Flow,
            client,
            "$Id$")

@@ -2,7 +2,6 @@
 
 #include "EC_Kokyu_Filter.h"
 #include "EC_QOS_Info.h"
-#include "ace/Log_Msg.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Kokyu_Filter.i"

@@ -9,9 +9,8 @@
 #include "Supplier.h"
 #include "orbsvcs/orbsvcs/NotifyExtC.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
-#include "ace/OS_NS_errno.h"
 
-ACE_RCSID (Notify, TAO_Notify_Lanes_Supplier_Client, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Lanes_Supplier_Client, "$id$")
 
 TAO_Notify_Lanes_Supplier_Client::TAO_Notify_Lanes_Supplier_Client (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)

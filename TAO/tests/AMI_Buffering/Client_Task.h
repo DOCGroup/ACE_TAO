@@ -4,9 +4,9 @@
 
 #ifndef AMI_BUFFERING_CLIENT_TASK_H
 #define AMI_BUFFERING_CLIENT_TASK_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
-#include "tao/ORB.h"
+#include "tao/corba.h"
 #include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -38,5 +38,5 @@ private:
   int terminate_loop_;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* AMI_BUFFERING_CLIENT_TASK_H */

@@ -1,26 +1,32 @@
 #include "ClientRequestInfo_i.h"
 
-#if (TAO_HAS_INTERCEPTORS == 1)
+#if TAO_HAS_INTERCEPTORS == 1
 
-#include "Invocation_Base.h"
+#include "Invocation.h"
 #include "Stub.h"
 #include "ORB_Core.h"
 #include "Profile.h"
+#include "Tagged_Components.h"
+#include "Valuetype_Adapter.h"
 #include "debug.h"
-#include "Service_Context.h"
 
-# if !defined (__ACE_INLINE__)
-#   include "ClientRequestInfo_i.inl"
-# endif /* !__ACE_INLINE__ */
+#include "ace/Dynamic_Service.h"
 
 ACE_RCSID (TAO,
            ClientRequestInfo_i,
            "$Id$")
 
-TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO::Invocation_Base *inv)
+# if !defined (__ACE_INLINE__)
+#   include "ClientRequestInfo_i.inl"
+# endif /* !__ACE_INLINE__ */
+
+TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *inv,
+                                                  CORBA::Object_ptr target)
   : invocation_ (inv),
+    target_ (target), // No need to duplicate.
     abstract_target_ (0),
     caught_exception_ (0),
+    response_expected_ (1),
     reply_status_ (-1),
     rs_pi_current_ ()
 {
@@ -28,13 +34,14 @@ TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO::Invocation_Base *inv)
 }
 
 TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (
-    TAO::Invocation_Base *inv,
-    CORBA::AbstractBase_ptr abstract_target,
-    CORBA::Boolean
+    TAO_GIOP_Invocation *inv,
+    CORBA::AbstractBase_ptr abstract_target
   )
   : invocation_ (inv),
+    target_ (CORBA::Object::_nil ()),
     abstract_target_ (abstract_target), // No need to duplicate.
     caught_exception_ (0),
+    response_expected_ (1),
     reply_status_ (-1),
     rs_pi_current_ ()
 {
@@ -60,11 +67,7 @@ TAO_ClientRequestInfo_i::setup_picurrent (void)
       TAO_PICurrent_Impl *tsc = pi_current->tsc ();
 
       // Copy the TSC to the RSC.
-      // this->rs_pi_current_.copy (*tsc, 0);  // Shallow copy
-      this->rs_pi_current_.copy (*tsc, 1);  // Deep copy since some
-                                            // users report problems
-                                            // they can't reproduce
-                                            // steadily.
+      this->rs_pi_current_.copy (*tsc, 0);  // Shallow copy
 
       // PICurrent will potentially have to call back on the request
       // scope current so that it can deep copy the contents of the
@@ -85,10 +88,10 @@ TAO_ClientRequestInfo_i::setup_picurrent (void)
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /*if (CORBA::is_nil (this->target_))
+  if (CORBA::is_nil (this->target_))
     {
 
       TAO_Valuetype_Adapter *adapter =
@@ -103,21 +106,21 @@ TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         }
 
       return adapter->abstractbase_to_object (this->abstract_target_);
-      }*/
+    }
 
-  return CORBA::Object::_duplicate (this->invocation_->target ());
+  return CORBA::Object::_duplicate (this->target_);
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /*if (this->reply_status_ == PortableInterceptor::LOCATION_FORWARD)
+  if (this->reply_status_ == PortableInterceptor::LOCATION_FORWARD)
     {
       // TAO_GIOP_Invocation::forward_reference() already duplicates
       // the reference before returning it so there is no need to
       // duplicate it here.
-      return this->invocation_->forwarded_reference ();
+      return this->invocation_->forward_reference ();
     }
 
   if (CORBA::is_nil (this->target_))
@@ -135,9 +138,8 @@ TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
       return adapter->abstractbase_to_object (this->abstract_target_);
     }
-  */
 
-  return CORBA::Object::_duplicate (this->invocation_->effective_target ());
+  return CORBA::Object::_duplicate (this->target_);
 }
 
 IOP::TaggedProfile *
@@ -156,11 +158,8 @@ TAO_ClientRequestInfo_i::effective_profile (ACE_ENV_SINGLE_ARG_DECL)
 
   IOP::TaggedProfile_var safe_tagged_profile = tagged_profile;
 
-  TAO_Stub *stub =
-    this->invocation_->effective_target ()->_stubobj ();
-
   IOP::TaggedProfile *ep =
-    stub->profile_in_use ()->create_tagged_profile ();
+    this->target_->_stubobj ()->profile_in_use ()->create_tagged_profile ();
 
   if (ep == 0)
     {
@@ -235,11 +234,8 @@ TAO_ClientRequestInfo_i::get_effective_component (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_Stub *stub =
-    this->invocation_->effective_target ()->_stubobj ();
-
   TAO_Tagged_Components &ecs =
-    stub->profile_in_use ()->tagged_components ();
+    this->target_->_stubobj ()->profile_in_use ()->tagged_components ();
 
   IOP::MultipleComponentProfile &components = ecs.components ();
 
@@ -283,11 +279,8 @@ TAO_ClientRequestInfo_i::get_effective_components (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_Stub *stub =
-    this->invocation_->target ()->_stubobj ();
-
   TAO_Tagged_Components &ecs =
-    stub->profile_in_use ()->tagged_components ();
+    this->target_->_stubobj ()->profile_in_use ()->tagged_components ();
 
   IOP::MultipleComponentProfile &components = ecs.components ();
 
@@ -343,8 +336,8 @@ TAO_ClientRequestInfo_i::get_request_policy (CORBA::PolicyType type
   // @@ Do we need to look anywhere else for the request policies?
 
 #if TAO_HAS_CORBA_MESSAGING == 1
-  return this->invocation_->target ()->_get_policy (type
-                                                    ACE_ENV_ARG_PARAMETER);
+  return this->target_->_get_policy (type
+                                      ACE_ENV_ARG_PARAMETER);
 #else
   ACE_UNUSED_ARG (type);
 
@@ -464,21 +457,25 @@ char *
 TAO_ClientRequestInfo_i::operation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CORBA::string_dup (this->invocation_->operation_name ());
+  return CORBA::string_dup (this->invocation_->operation ());
 }
 
 Dynamic::ParameterList *
 TAO_ClientRequestInfo_i::arguments (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->invocation_->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
+                                          CORBA::COMPLETED_NO),
+                    0);
 }
 
 Dynamic::ExceptionList *
 TAO_ClientRequestInfo_i::exceptions (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->invocation_->exceptions (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
+                                          CORBA::COMPLETED_NO),
+                    0);
 }
 
 Dynamic::ContextList *
@@ -503,21 +500,38 @@ CORBA::Any *
 TAO_ClientRequestInfo_i::result (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->invocation_->result (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
+                                          CORBA::COMPLETED_NO),
+                    0);
 }
 
 CORBA::Boolean
 TAO_ClientRequestInfo_i::response_expected (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->invocation_->response_expected ();
+  return this->response_expected_;
 }
 
 Messaging::SyncScope
-TAO_ClientRequestInfo_i::sync_scope (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ClientRequestInfo_i::sync_scope (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->invocation_->sync_scope ();
+  TAO_GIOP_Oneway_Invocation *inv =
+    ACE_dynamic_cast (TAO_GIOP_Oneway_Invocation *,
+                      this->invocation_);
+
+  // The response_expected_ check is a precautionary measure for
+  // platforms that do not support RTTI, i.e. where the dynamic_cast
+  // above would incorrectly work.  If the response_expected flag is
+  // not equal to zero then it is fairly safe to assume that the
+  // invocation is not a one-way, meaning that the sync_scope() method
+  // is not available.
+  if (inv != 0 && this->response_expected_ == 0)
+    return inv->sync_scope ();
+
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
+                                          CORBA::COMPLETED_NO),
+                    -1);
 }
 
 PortableInterceptor::ReplyStatus
@@ -549,7 +563,7 @@ TAO_ClientRequestInfo_i::forward_reference (ACE_ENV_SINGLE_ARG_DECL)
   // TAO_GIOP_Invocation::forward_reference() already duplicates the
   // reference before returning it so there is no need to duplicate it
   // here.
-  return this->invocation_->forwarded_reference ();
+  return this->invocation_->forward_reference ();
 }
 
 CORBA::Any *
@@ -617,34 +631,26 @@ TAO_ClientRequestInfo_i::get_service_context_i (
 }
 
 void
-TAO_ClientRequestInfo_i::reply_status (TAO::Invocation_Status invoke_status)
+TAO_ClientRequestInfo_i::reply_status (int invoke_status)
 {
   switch (invoke_status)
     {
-    case TAO::TAO_INVOKE_SUCCESS:
+    case TAO_INVOKE_OK:
       this->reply_status_ = PortableInterceptor::SUCCESSFUL;
       break;
-    case TAO::TAO_INVOKE_RESTART:
-      if (this->invocation_->is_forwarded ())
+    case TAO_INVOKE_RESTART:
+      if (this->invocation_->received_location_forward ())
         this->reply_status_ = PortableInterceptor::LOCATION_FORWARD;
       else
         this->reply_status_ = PortableInterceptor::TRANSPORT_RETRY;
       break;
-    case TAO::TAO_INVOKE_USER_EXCEPTION:
-      this->reply_status_ = PortableInterceptor::USER_EXCEPTION;
-      break;
-    case TAO::TAO_INVOKE_SYSTEM_EXCEPTION:
+    default:
+      // We should only get here if the invocation status is
+      // TAO_INVOKE_EXCEPTION, i.e. a CORBA::SystemException, so set
+      // the appropriate reply status.
       this->reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
       break;
-    default:
-      this->reply_status_ = PortableInterceptor::UNKNOWN;
-      break;
     }
-}
-
-void
-TAO_ClientRequestInfo_i::reply_status (int )
-{
 }
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */

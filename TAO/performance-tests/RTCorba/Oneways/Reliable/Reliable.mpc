@@ -1,13 +1,11 @@
-// $Id$
-
-project(*oneways server RT): rt_server, messaging {
+project(*oneways server): rt_server, messaging {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(*oneways client RT): rt_client, messaging {
+project(*oneways client): rt_client, messaging {
   Source_Files {
     testC.cpp
     client.cpp

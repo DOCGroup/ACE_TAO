@@ -1,5 +1,6 @@
 // $Id$
 
+#include "tao/corba.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 
 int main(int argc, char** argv)

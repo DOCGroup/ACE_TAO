@@ -4,9 +4,6 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Time_Service, Server_i, "$Id$")
 
@@ -240,8 +237,8 @@ Server_i::register_server (void)
       CosNaming::Name server_name (server_context_name);
 
       server_name.length (2);
-      ACE_OS::strcpy (server_mc_name, "Server:");
-      ACE_OS::strcat (server_mc_name, host_name);
+      strcpy (server_mc_name, "Server:");
+      strcat (server_mc_name, host_name);
       server_name[1].id = CORBA::string_dup (server_mc_name);
 
       // Bind the compound name (ServerContext(Server:<hostname>))

@@ -353,15 +353,20 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
 }
 
 CORBA::Boolean
-TAO_UIPMC_Profile::do_is_equivalent (const TAO_Profile *other_profile)
+TAO_UIPMC_Profile::is_equivalent (const TAO_Profile *other_profile)
 {
+
+  if (other_profile->tag () != TAO_TAG_UIPMC_PROFILE)
+    return 0;
+
   const TAO_UIPMC_Profile *op =
     ACE_dynamic_cast (const TAO_UIPMC_Profile *, other_profile);
 
-  if (op == 0)
+  if (!(this->version_ == op->version_
+        && this->endpoint_.is_equivalent (&op->endpoint_)))
     return 0;
 
-  return this->endpoint_.is_equivalent (&op->endpoint_);
+  return 1;
 }
 
 CORBA::ULong
@@ -390,7 +395,7 @@ TAO_UIPMC_Profile::encode_endpoints (void)
 }
 
 CORBA::ULong
-TAO_UIPMC_Profile::endpoint_count (void) const
+TAO_UIPMC_Profile::endpoint_count (void)
 {
   return 1;
 }
@@ -566,8 +571,8 @@ TAO_UIPMC_Profile::update_cached_group_component (void)
   PortableGroup::TagGroupTaggedComponent group;
 
   // Encode the data structure.
-  group.component_version.major = TAO_DEF_MIOP_MAJOR;
-  group.component_version.minor = TAO_DEF_MIOP_MINOR;
+  group.group_version.major = TAO_DEF_MIOP_MAJOR;
+  group.group_version.minor = TAO_DEF_MIOP_MINOR;
 
   group.group_domain_id = CORBA::string_dup (this->group_domain_id_.c_str ());
   group.object_group_id = this->group_id_;

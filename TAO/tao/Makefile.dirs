@@ -13,6 +13,7 @@ DIRS = \
   ObjRefTemplate \
   PortableServer \
   DynamicAny \
+  DynamicInterface \
   BiDir_GIOP \
   IORManipulation \
   IORTable \
@@ -34,7 +35,6 @@ include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(corba_messaging),1)
   DIRS += Messaging
-  DIRS += DynamicInterface
 endif # corba_messaging
 
 ifeq ($(rt_corba),1)

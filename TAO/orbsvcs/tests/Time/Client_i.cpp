@@ -6,8 +6,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_string.h"
+#include "ace/OS.h"
 
 ACE_RCSID(Time_Service, Client_i, "$Id$")
 
@@ -347,8 +346,8 @@ Client_i::obtain_initial_references (void)
       CosNaming::Name clerk_name;
       clerk_name.length (2);
       clerk_name[0].id = CORBA::string_dup ("ClerkContext");
-      ACE_OS::strcpy (name, "Clerk:");
-      ACE_OS::strcat (name, host_name);
+      strcpy (name, "Clerk:");
+      strcat (name, host_name);
       clerk_name[1].id = CORBA::string_dup (name);
 
       ACE_DEBUG ((LM_DEBUG,

@@ -12,7 +12,6 @@
 #define TAO_RT_COLLOCATION_RESOLVER_H
 
 #include /**/ "ace/pre.h"
-
 #include "tao/orbconf.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0

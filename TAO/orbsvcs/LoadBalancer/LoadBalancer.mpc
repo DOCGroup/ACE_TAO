@@ -1,4 +1,4 @@
-project(CosLoadManager): namingexe, server, core, loadbalancing {
+project(CosLoadManager): namingexe, server, core, iormanip, loadbalancing {
   requires += ami interceptors
   exename   = LoadManager
 

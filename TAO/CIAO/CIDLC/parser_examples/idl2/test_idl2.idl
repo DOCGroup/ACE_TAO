@@ -1,0 +1,103 @@
+// $Id$  -*- IDL -*-
+
+module outer
+{
+  const string<34> hello = "Goodbye";
+  const long foolong = -321;
+  
+  module inner
+  {
+    typedef unsigned long long fooulonglong;
+    typedef fooulonglong tdef2;
+    typedef sequence<tdef2> tdef2seq;
+    typedef long foolongarray[(3 * (-3 + 9 - 1) / 3 % 2) << 1];
+  
+    struct foostruct
+    {
+      short shmem;
+      any anymem;
+      Object objmem;
+      sequence<string<12>, 25> seqmem;
+      inner::tdef2 tdef2mem[6][5][3];
+    };
+    
+    enum fooenum
+    {
+      ONE,
+      TWO
+    };
+    
+    union foounion switch (fooenum)
+    {
+      case TWO: 
+      case ONE: long lmem;
+      default: string strmem;
+    };
+    
+    native foonative;
+    const double foodouble = 321.1416E-12f;
+    
+    exception fooemptyexcept {};
+    exception fooexcept
+    {
+      string message;
+    };
+    
+    abstract interface foofwd;
+    abstract interface foofwd {};
+    local interface foofulliface : fooemptyiface, foofwd
+    {
+      const short shconst = 5;
+      typedef foofwd footdef;
+      struct ifacestruct {string str;};
+      exception ifaceexcept {};
+      attribute long attr;
+      readonly attribute foounion foounionattr;
+      void emptyop ();
+      fooenum fullop (in string strinarg,
+                      in foofwd inobjarg,
+                      inout foounion inoutarg,
+                      out foostruct outarg)
+        raises (::outer::inner::fooexcept,
+                fooemptyexcept)
+        context ("fee", "fi", "fo", "fum");
+      oneway void onewayop (in inner::foonative inarg);
+    };
+    
+    abstract valuetype absval {};
+    valuetype vfwd;
+    valuetype vfwd 
+    {
+      const short vshconst = 5;
+      typedef foofwd vfootdef;
+      struct valstruct {string str;};
+      exception valexcept {};
+      attribute long vattr;
+      readonly attribute foounion vfoounionattr;
+      void vemptyop ();
+      fooenum fullop (in string strinarg,
+                      in foofwd inobjarg,
+                      inout foounion inoutarg,
+                      out foostruct outarg)
+        raises (::outer::inner::fooexcept,
+                fooemptyexcept)
+        context ("fee", "fi", "fo", "fum");
+    };
+    
+    valuetype child : vfwd, absval
+    {
+    };
+    
+    valuetype supporter supports fooemptyiface, foofwd
+    {
+    };
+    
+    custom valuetype child_supporter : vfwd, absval supports foofwd
+    {
+      private foostruct foostructmember;
+      public long longmember;
+      public outer::inner::vfwd valmember;
+      factory cs_factory (in long longarg, in string stringarg);
+    };
+  };
+};

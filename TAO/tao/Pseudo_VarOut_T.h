@@ -13,9 +13,8 @@
 
 #ifndef TAO_PSEUDO_VAROUT_T_H
 #define TAO_PSEUDO_VAROUT_T_H
-#include /**/ "ace/pre.h"
 
-#include "tao/CORBA_methods.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

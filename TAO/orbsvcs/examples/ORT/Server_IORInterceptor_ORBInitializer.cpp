@@ -2,7 +2,6 @@
 
 #include "Server_IORInterceptor_ORBInitializer.h"
 #include "Server_IORInterceptor.h"
-#include "tao/ORB_Constants.h"
 
 #include "GatewayC.h"
 

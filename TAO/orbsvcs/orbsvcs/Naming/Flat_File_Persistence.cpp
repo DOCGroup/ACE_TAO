@@ -5,9 +5,6 @@
 //-----------------------------------------------------------------------------
 #include "Flat_File_Persistence.h"
 
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_sys_stat.h"
-
 TAO_NS_FlatFileStream::TAO_NS_FlatFileStream (const ACE_CString & file,
                                               const char * mode)
   : fl_ (0)
@@ -128,7 +125,7 @@ TAO_NS_FlatFileStream::funlock (int whence, int start, int len)
 time_t
 TAO_NS_FlatFileStream::last_changed(void)
 {
-  ACE_TRACE("TAO_NS_FlatFileStream::last_changed");
+  ACE_TRACE("last_changed");
   ACE_stat st;
   ACE_OS::fstat(filelock_.handle_, &st);
   return st.st_mtime;
@@ -138,7 +135,7 @@ TAO_Storable_Base &
 TAO_NS_FlatFileStream::operator <<(
                                 const TAO_NS_Persistence_Header &header)
 {
-  ACE_TRACE("TAO_NS_FlatFileStream::operator <<");
+  ACE_TRACE("<<header");
   ACE_OS::rewind(this->fl_);
   ACE_OS::fprintf(this->fl_, "%d\n%d\n", header.size(), header.destroyed());
   ACE_OS::fflush(this->fl_);
@@ -150,7 +147,7 @@ TAO_Storable_Base &
 TAO_NS_FlatFileStream::operator >>(
                       TAO_NS_Persistence_Header &header)
 {
-  ACE_TRACE("TAO_NS_FlatFileStream::operator >>");
+  ACE_TRACE(">>header");
   unsigned int size;
   int destroyed;
 
@@ -169,7 +166,7 @@ TAO_Storable_Base &
 TAO_NS_FlatFileStream::operator <<(
                                 const TAO_NS_Persistence_Record &record)
 {
-  ACE_TRACE("TAO_NS_FlatFileStream::operator <<");
+  ACE_TRACE("<<record");
   TAO_NS_Persistence_Record::Record_Type type = record.type();
   ACE_OS::fprintf(this->fl_, "%d\n", type);
 
@@ -194,7 +191,7 @@ TAO_Storable_Base &
 TAO_NS_FlatFileStream::operator >>(
                        TAO_NS_Persistence_Record &record)
 {
-  ACE_TRACE("TAO_NS_FlatFileStream::operator >>");
+  ACE_TRACE(">>record");
   TAO_NS_Persistence_Record::Record_Type type;
   int temp_type_in;
   fscanf(fl_, "%d\n", &temp_type_in);
@@ -242,7 +239,7 @@ TAO_Storable_Base &
 TAO_NS_FlatFileStream::operator <<(
                                 const TAO_NS_Persistence_Global &global)
 {
-  ACE_TRACE("TAO_NS_FlatFileStream::operator <<");
+  ACE_TRACE("<<global");
   ACE_OS::rewind(this->fl_);
   ACE_OS::fprintf(this->fl_, "%d\n", global.counter());
   ACE_OS::fflush(this->fl_);
@@ -254,7 +251,7 @@ TAO_Storable_Base &
 TAO_NS_FlatFileStream::operator >>(
                       TAO_NS_Persistence_Global &global)
 {
-  ACE_TRACE("TAO_NS_FlatFileStream::operator >>");
+  ACE_TRACE(">>global");
   unsigned int counter = 0;
 
   ACE_OS::rewind(this->fl_);
@@ -270,7 +267,7 @@ TAO_Storable_Base *TAO_NS_FlatFileFactory::create_stream(
                                                        const ACE_CString & file,
                                                        const char * mode)
 {
-  ACE_TRACE("TAO_NS_FlatFileFactory::create_stream");
+  ACE_TRACE("create_stream");
   TAO_Storable_Base *stream = 0;
 
   ACE_NEW_RETURN (stream,

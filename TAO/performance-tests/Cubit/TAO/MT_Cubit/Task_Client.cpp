@@ -4,9 +4,6 @@
 #include "Timer.h"
 #include "ace/Stats.h"
 #include "tao/TAO_Internal.h"
-#include "ace/Barrier.h"
-#include "ace/Thread_Semaphore.h"
-#include "ace/OS_NS_unistd.h"
 
 #if defined (ACE_HAS_QUANTIFY)
 # include "quantify.h"

@@ -4,9 +4,9 @@
 
 #ifndef WORKER_THREAD_H
 #define WORKER_THREAD_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
-#include "tao/ORB.h"
+#include "tao/corba.h"
 #include "ace/Task.h"
 
 /// Implement the Test::Worker_Thread interface
@@ -23,5 +23,5 @@ private:
   CORBA::ORB_var orb_;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* WORKER_THREAD_H */

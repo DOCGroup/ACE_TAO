@@ -10,9 +10,7 @@
 #include "ESF_Proxy_Collection.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ESF, 
-           ESF_Proxy_Collection, 
-           "$Id$")
+ACE_RCSID(ESF, ESF_Proxy_Collection, "$Id$")
 
 // ****************************************************************
 

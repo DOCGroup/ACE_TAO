@@ -6,7 +6,6 @@
 
 #include "DIOP_Acceptor.h"
 #include "DIOP_Connector.h"
-#include "ace/OS_NS_strings.h"
 
 ACE_RCSID(TAO_Strategies, DIOP_Factory, "$Id$")
 

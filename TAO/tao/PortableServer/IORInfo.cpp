@@ -3,7 +3,6 @@
 
 #include "tao/PolicyC.h"
 #include "tao/IOPC.h"
-#include "tao/ORB_Constants.h"
 
 
 ACE_RCSID (PortableServer,

@@ -1,16 +1,13 @@
 // $Id$
 
 #include "tao/PortableServer/PortableServer.h"
-#include "tao/ORB_Constants.h"
-#include "tao/ORB.h"
+#include "tao/corba.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_errno.h"
 
 ACE_RCSID(Activation, server, "$Id$")
 

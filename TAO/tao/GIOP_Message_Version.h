@@ -16,17 +16,14 @@
 
 #ifndef TAO_GIOP_MESSAGE_VERSION_H
 #define TAO_GIOP_MESSAGE_VERSION_H
-
 #include /**/ "ace/pre.h"
-
-#include "tao/TAO_Export.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-#include "tao/orbconf.h"
+
 
 class TAO_ORB_Core;
 

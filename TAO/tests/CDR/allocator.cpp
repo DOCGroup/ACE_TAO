@@ -21,8 +21,8 @@
 //
 // ============================================================================
 
+#include "tao/corba.h"
 #include "tao/ORB_Core.h"
-#include "tao/ORB.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"

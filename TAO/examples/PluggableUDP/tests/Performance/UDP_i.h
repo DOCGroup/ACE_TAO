@@ -22,7 +22,6 @@
 
 #include "UDPS.h"
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/Null_Mutex.h"
 
 class UDP_i: public POA_UDP
 {

@@ -33,8 +33,7 @@ SUBDIRS = \
         Simulator \
         Time \
         Trading \
-	Log \
-    RTCosScheduling
+	Log
 
 noinst_SCRIPTS = start_services
 

@@ -19,9 +19,7 @@
 #include "helper.h"
 #include "small_union.h"
 
-ACE_RCSID (Param_Test,
-           small_union, 
-           "$Id$")
+ACE_RCSID(Param_Test, small_union, "$Id$")
 
 // ************************************************************************
 //               Test_Small_Union

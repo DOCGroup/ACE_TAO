@@ -13,18 +13,15 @@
 
 #ifndef TAO_ACTIVE_OBJECT_MAP_H
 #define TAO_ACTIVE_OBJECT_MAP_H
-
 #include /**/ "ace/pre.h"
 
 #include "Key_Adapters.h"
+#include "Servant_Base.h"
+#include "tao/Server_Strategy_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "Servant_Base.h"
-
-#include "tao/Server_Strategy_Factory.h"
 
 // Forward declarations.
 class TAO_Id_Uniqueness_Strategy;
@@ -647,5 +644,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_ACTIVE_OBJECT_MAP_H */

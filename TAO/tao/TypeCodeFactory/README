@@ -19,9 +19,9 @@ Since the TypeCodeFactory must deal with Interface
 Repository data types, it depends on the 
 TAO_IFR_Client library.
 
-Support has now been added for valuetypes, components,
-homes, eventtypes and recursive types. For an example 
-of how to create a typecode for a recursive type, see
-the OMG CORBA specification section on typecode creation
-(in version 3.0, section 4.11.3).
+Typecode creation methods for recursive structs and
+unions, valuetypes, and CORBA components have not
+yet been implemented.
 
+For more information about the TypeCodeFactory, see
+ACE_ROOT/TAO/docs/releasenotes/index.html.

@@ -1,26 +1,30 @@
-//=============================================================================
-/**
- *  @file    test_dynunion.cpp
- *
- *  $Id$
- *
- *  Implementation of the simple DynUnion test
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
+// -*- c++ -*-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/DynAny_Test
+//
+// = FILENAME
+//    test_dynunion.cpp
+//
+// = DESCRIPTION
+//    Implementation of the simple DynUnion test
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_dynunion.h"
 #include "da_testsC.h"
 #include "data.h"
 #include "tao/DynamicAny/DynamicAny.h"
-#include "analyzer.h"
 
-Test_DynUnion::Test_DynUnion (CORBA::ORB_var orb, int debug)
+Test_DynUnion::Test_DynUnion (CORBA::ORB_var orb)
   : orb_ (orb),
     test_name_ (CORBA::string_dup ("test_dynunion")),
-    error_count_ (0),
-    debug_ (debug)
+    error_count_ (0)
 {
 }
 
@@ -49,6 +53,9 @@ Test_DynUnion::run_test (void)
                  "\t*=*=*=*= %s =*=*=*=*\n",
                  data.labels[12]));
 
+      ACE_DEBUG ((LM_DEBUG,
+                 "testing: constructor(Any)/insert/get\n"));
+
       CORBA::Object_var factory_obj =
         this->orb_->resolve_initial_references ("DynAnyFactory"
                                                 ACE_ENV_ARG_PARAMETER);
@@ -65,39 +72,6 @@ Test_DynUnion::run_test (void)
                              "Nil dynamic any factory after narrow\n"),
                             -1);
         }
-
-      DynAnyAnalyzer analyzer(this->orb_.in(), dynany_factory.in(), debug_);
-
-      ACE_DEBUG ((LM_DEBUG,
-                 "testing: constructor(Any)/from_any/to_any with string\n"));
-
-      DynAnyTests::test_union tstring;
-      tstring._d (DynAnyTests::TE_THIRD);
-      tstring.str (CORBA::string_dup (data.m_string1));
-      CORBA::Any in_any4;
-      in_any4 <<= tstring;
-      DynamicAny::DynAny_var dp4 =
-        dynany_factory->create_dyn_any (in_any4
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      DynamicAny::DynUnion_var fa4 =
-        DynamicAny::DynUnion::_narrow (dp4.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      analyzer.analyze(fa4.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CORBA::Any_var out_any5 = fa4->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      DynamicAny::DynAny_var dp5 =
-        dynany_factory->create_dyn_any (out_any5.in()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG,
-                 "testing: constructor(Any)/insert/get\n"));
 
       tu._d (DynAnyTests::TE_SECOND);
       tu.tc (data.m_typecode2);
@@ -117,7 +91,6 @@ Test_DynUnion::run_test (void)
       fa1->insert_typecode (data.m_typecode1
                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
       CORBA::TypeCode_var s_out1 = fa1->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -133,9 +106,6 @@ Test_DynUnion::run_test (void)
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
-
-      analyzer.analyze(fa1.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Any_var out_any1 = fa1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -177,9 +147,6 @@ Test_DynUnion::run_test (void)
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode alias)/from_any/to_any\n"));
-
-      analyzer.analyze(fa1.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::Any_var out_any2 = fa1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -278,6 +245,7 @@ Test_DynUnion::run_test (void)
         {
           ++this->error_count_;
         }
+
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,

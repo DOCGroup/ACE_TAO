@@ -19,13 +19,11 @@
 
 #ifndef TAO_RT_POA_H
 #define TAO_RT_POA_H
-
 #include /**/ "ace/pre.h"
 
 #include "rtportableserver_export.h"
 
 #include "tao/PortableServer/POA.h"
-#include "tao/orbconf.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -332,5 +330,4 @@ protected:
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_POA_H */

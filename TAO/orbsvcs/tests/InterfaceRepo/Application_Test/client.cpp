@@ -3,9 +3,7 @@
 
 #include "ifr_dii_client.h"
 
-ACE_RCSID (Application_Test, 
-           client, 
-           "$Id$")
+ACE_RCSID(Application_Test, client, "$Id$")
 
 int
 main (int argc, char *argv[])

@@ -18,8 +18,7 @@
 
 #include "Consumer_Input_Handler.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS.h"
 
 Consumer_Input_Handler::Consumer_Input_Handler (Consumer_Handler *consumer_handler)
   {

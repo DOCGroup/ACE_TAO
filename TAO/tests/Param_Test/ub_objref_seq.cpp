@@ -19,9 +19,7 @@
 #include "helper.h"
 #include "ub_objref_seq.h"
 
-ACE_RCSID (Param_Test,
-           ub_objref_seq, 
-           "$Id$")
+ACE_RCSID(Param_Test, ub_objref_seq, "$Id$")
 
 // ************************************************************************
 //               Test_ObjRef_Sequence

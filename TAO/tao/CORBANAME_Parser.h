@@ -12,7 +12,6 @@
 
 #ifndef TAO_CORBANAME_PARSER_H
 #define TAO_CORBANAME_PARSER_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/IOR_Parser.h"

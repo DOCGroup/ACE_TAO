@@ -5,9 +5,7 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Synch_Reply_Dispatcher.h"
 
-ACE_RCSID (tao, 
-           Wait_On_Read, 
-           "$Id$")
+ACE_RCSID(tao, Wait_On_Read, "$Id$")
 
 // Constructor.
 TAO_Wait_On_Read::TAO_Wait_On_Read (TAO_Transport *transport)

@@ -6,8 +6,6 @@
 #include "Callback_i.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_time.h"
-
 ACE_RCSID(Callback, Callback_i, "$Id$")
 
 int

@@ -1,5 +1,4 @@
 project(IFRService) : orbsvcslib, core, typecodefactory, svc_utils, ifr_client, iortable, portableserver {
-  avoids      += minimum_corba
   sharedname   = TAO_IFRService
   dynamicflags = TAO_IFRSERVICE_BUILD_DLL
   tagchecks   += IFRService

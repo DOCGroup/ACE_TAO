@@ -1,17 +1,7 @@
-// file      : CCF/CompilerElements/Preprocessor.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef CCF_PREPROCESSOR_HPP
 #define CCF_PREPROCESSOR_HPP
 
-#include <locale>
-#include <deque>
-
 #include "CCF/CompilerElements/TokenStream.hpp"
-
-// tmp
-// #include <iostream>
 
 namespace CCF
 {
@@ -76,7 +66,6 @@ namespace CCF
         }
       case '#':
         {
-          // std::cerr << "see \'#\'; state is " << state << std::endl;
           if (state != PREPROCESSING) break;
           return handle_preprocessor_token ();
         }
@@ -98,7 +87,7 @@ namespace CCF
 
       char_type c = to_char_type (i);
 
-      //@@ '\n' won't work on MS
+      //@@ '\n' won't work on MShit
       switch (c)
       {
       case '\n': return underflow (); //skip it
@@ -130,7 +119,7 @@ namespace CCF
     int_type
     handle_preprocessor_token ()
     {
-      // std::cerr << "handle_preprocessor_token" << std::endl;
+      //std::cerr << "handle_preprocessor_token" << std::endl;
 
       skip_white_space ();
 

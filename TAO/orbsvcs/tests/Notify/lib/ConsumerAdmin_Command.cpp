@@ -2,7 +2,7 @@
 
 #include "ConsumerAdmin_Command.h"
 
-ACE_RCSID(lib, TAO_ConsumerAdmin_Command, "$Id$")
+ACE_RCSID(lib, TAO_ConsumerAdmin_Command, "$id$")
 
 #include "LookupManager.h"
 #include "Name.h"

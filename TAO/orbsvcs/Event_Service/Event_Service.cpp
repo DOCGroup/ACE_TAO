@@ -5,7 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Argv_Type_Converter.h"
-#include "ace/OS_main.h"
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event_Utilities.h"
@@ -17,7 +16,6 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
-#include "ace/OS_NS_strings.h"
 
 ACE_RCSID(Event_Service, Event_Service, "$Id$")
 
@@ -35,7 +33,7 @@ Event_Service::Event_Service (void)
   : module_factory_ (0),
     sched_impl_ (0),
     ec_impl_ (0),
-    scheduler_type_ (ES_SCHED_NONE),
+    scheduler_type_ (SCHED_NONE),
     event_service_type_ (ES_NEW),
     use_bidir_giop_ (0)
 {
@@ -108,8 +106,8 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 
       // The old EC always needs a scheduler. If none is
       // specified, we default to a local scheduler
-      if (this->scheduler_type_ == ES_SCHED_LOCAL ||
-          (this->scheduler_type_ == ES_SCHED_NONE &&
+      if (this->scheduler_type_ == SCHED_LOCAL ||
+          (this->scheduler_type_ == SCHED_NONE &&
            this->event_service_type_ != ES_NEW))
         {
           // Create a local scheduler instance
@@ -125,7 +123,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
                                   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-      else if (this->scheduler_type_ == ES_SCHED_GLOBAL)
+      else if (this->scheduler_type_ == SCHED_GLOBAL)
         {
           // Get reference to a scheduler from naming service
           CORBA::Object_var tmp =
@@ -149,7 +147,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
             TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
                                                   root_poa.in ());
 
-            if (this->scheduler_type_ != ES_SCHED_NONE)
+            if (this->scheduler_type_ != SCHED_NONE)
               {
                 attr.scheduler = scheduler.in ();
               }
@@ -389,15 +387,15 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
 
           if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("global")) == 0)
             {
-              this->scheduler_type_ = ES_SCHED_GLOBAL;
+              this->scheduler_type_ = SCHED_GLOBAL;
             }
           else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("local")) == 0)
             {
-              this->scheduler_type_ = ES_SCHED_LOCAL;
+              this->scheduler_type_ = SCHED_LOCAL;
             }
           else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("none")) == 0)
             {
-              this->scheduler_type_ = ES_SCHED_NONE;
+              this->scheduler_type_ = SCHED_NONE;
             }
           else
             {
@@ -405,7 +403,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
                           ACE_LIB_TEXT("Unknown scheduling type <%s> ")
                           ACE_LIB_TEXT("defaulting to none\n"),
                           get_opt.opt_arg ()));
-              this->scheduler_type_ = ES_SCHED_NONE;
+              this->scheduler_type_ = SCHED_NONE;
             }
           break;
 

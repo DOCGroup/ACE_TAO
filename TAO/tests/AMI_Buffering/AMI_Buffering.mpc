@@ -1,7 +1,6 @@
 project(*Server): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
-  requires += ami
 
   Source_Files {
     AMI_Buffering.cpp
@@ -13,7 +12,6 @@ project(*Client): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
   exename   = client
-  requires += ami
 
   Source_Files {
     Client_Task.cpp
@@ -26,7 +24,6 @@ project(*Admin): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
   exename   = admin
-  requires += ami
 
   Source_Files {
     AMI_Buffering_Admin.cpp

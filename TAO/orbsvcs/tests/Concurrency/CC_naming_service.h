@@ -18,6 +18,7 @@
 //
 // ============================================================================
 
+#include "tao/corba.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"

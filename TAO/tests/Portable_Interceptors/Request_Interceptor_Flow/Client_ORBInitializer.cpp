@@ -6,7 +6,6 @@ ACE_RCSID (Request_Interceptor_Flow,
 
 
 #include "tao/Exception.h"
-#include "tao/ORB_Constants.h"
 
 #include "Client_Request_Interceptor.h"
 

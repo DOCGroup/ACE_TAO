@@ -21,7 +21,7 @@
 #define UDP_CLIENT_I_H
 
 #include "ace/Task.h"
-#include "tao/ORB.h"
+#include "tao/corba.h"
 
 #include "UDPC.h"
 

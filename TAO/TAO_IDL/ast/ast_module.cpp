@@ -1072,10 +1072,10 @@ AST_Module::fe_add_exception (AST_Exception *t)
 AST_Union *
 AST_Module::fe_add_union (AST_Union *t)
 {
+  AST_Decl *predef = 0;
   AST_UnionFwd *fwd = 0;
-  AST_Decl *predef = this->lookup_for_add (t, I_FALSE);
 
-  if (predef != 0)
+  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
     {
       // Treat fwd declared interfaces specially
       if (predef->node_type () == AST_Decl::NT_union_fwd)
@@ -1641,6 +1641,28 @@ AST_Module::be_add_interface (AST_Interface *i,
 }
 
 void
+AST_Module::add_CORBA_members (void)
+{
+ UTL_ScopedName *sn = 0;
+  Identifier *id = 0;
+
+  ACE_NEW (id,
+           Identifier ("TypeCode"));
+
+  ACE_NEW (sn,
+           UTL_ScopedName (id,
+                           0));
+
+  AST_PredefinedType *pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            sn
+                          );
+
+  this->fe_add_predefined_type (pdt);
+}
+
+void
 AST_Module::add_to_previous (AST_Module *m)
 {
   // Here, we depend on the scope iterator in
@@ -1664,12 +1686,7 @@ AST_Module::add_to_previous (AST_Module *m)
       // of this one.
       if (d->node_type () == AST_Decl::NT_pre_defined)
         {
-          AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (d);
-
-          if (pdt->pt () != AST_PredefinedType::PT_pseudo)
-            {
-              continue;
-            }
+          continue;
         }
       else if (d->node_type () == AST_Decl::NT_interface_fwd)
         {

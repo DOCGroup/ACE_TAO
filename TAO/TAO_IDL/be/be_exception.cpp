@@ -23,8 +23,6 @@
 #include "be_exception.h"
 #include "be_visitor.h"
 
-#include "global_extern.h"
-
 ACE_RCSID (be, 
            be_exception, 
            "$Id$")
@@ -68,12 +66,6 @@ be_exception::be_exception (UTL_ScopedName *n,
 {
   // Always the case.
   this->size_type (AST_Type::VARIABLE);
-
-  if (!this->imported ())
-    {
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.exception_seen_);
-    }
 }
 
 void

@@ -21,13 +21,11 @@ DIRS = \
         Bug_1269_Regression \
         Bug_1270_Regression \
         Bug_1482_Regression \
-	Bug_1551_Regression \
 	CDR \
 	Client_Leaks \
 	Codec \
 	CodeSets \
 	Collocation \
-	Collocation_Opportunities \
 	Collocation_Tests \
 	Connect_Strategy_Test \
 	Connection_Purging \
@@ -85,7 +83,6 @@ DIRS = \
         Queued_Message_Test \
 	Reliable_Oneways \
 	RTCORBA \
-   RTScheduling \
 	Server_Leaks \
         Single_Read \
         Smart_Proxies \
@@ -93,7 +90,6 @@ DIRS = \
         Strategies \
 	Timed_Buffered_Oneways \
         Timeout \
-        Two_Objects \
-	UNKNOWN_Exception
+        Two_Objects
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 // ============================================================================
 //
@@ -22,8 +22,6 @@
 
 #include "LoggerS.h"
 #include "ace/Hash_Map_Manager.h"
-#include "ace/SString.h"
-#include "ace/Null_Mutex.h"
 
 class Logger_i : public virtual POA_Logger
 {

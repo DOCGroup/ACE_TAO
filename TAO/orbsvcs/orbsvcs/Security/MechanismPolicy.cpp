@@ -1,7 +1,6 @@
 // -*- C++ -*-
 
 #include "MechanismPolicy.h"
-#include "tao/ORB_Constants.h"
 
 ACE_RCSID (Security,
            MechanismPolicy,

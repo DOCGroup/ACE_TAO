@@ -4,11 +4,12 @@
 
 #include "tao/Stub.h"
 #include "tao/Profile.h"
-#include "tao/ORB_Constants.h"
+
 
 ACE_RCSID (PortableGroup,
            POA_Hooks,
            "$Id$")
+
 
 TAO_POA_Hooks::TAO_POA_Hooks (
   PortableGroup_Request_Dispatcher &request_dispatcher)

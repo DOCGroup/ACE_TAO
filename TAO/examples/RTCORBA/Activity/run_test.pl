@@ -4,8 +4,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 # $Id$
 # -*- perl -*-
-#
-#
+
 use lib "../../../../bin";
 use PerlACE::Run_Test;
 
@@ -16,7 +15,7 @@ $naming_ior = PerlACE::LocalFile ("naming.ior");
 $server_flag_file = PerlACE::LocalFile ("server.flag");
 $server_conf = PerlACE::LocalFile ("server.conf");
 $client_conf = PerlACE::LocalFile ("client.conf");
-
+ 
 $Naming = new PerlACE::Process ("../../../orbsvcs/Naming_Service/Naming_Service",
                                 "-o $naming_ior");
 

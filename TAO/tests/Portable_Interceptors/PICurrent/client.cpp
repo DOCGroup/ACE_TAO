@@ -5,8 +5,6 @@
 #include "testC.h"
 #include "ClientORBInitializer.h"
 
-#include "tao/ORBInitializer_Registry.h"
-
 ACE_RCSID (PICurrent,
            client,
            "$Id$")

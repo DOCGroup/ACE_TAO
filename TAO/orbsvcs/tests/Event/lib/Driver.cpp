@@ -3,19 +3,14 @@
 #include "Driver.h"
 #include "Consumer.h"
 #include "Supplier.h"
-
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
-
-#include "tao/ORB_Constants.h"
-
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
-#include "ace/OS_NS_errno.h"
 
 #if !defined(EC_DISABLE_OLD_EC)
 #include "EC_Scheduler_Info.h"
@@ -163,7 +158,7 @@ EC_Driver::run_cleanup (ACE_ENV_SINGLE_ARG_DECL)
   this->cleanup_consumers ();
   this->cleanup_ec ();
 
-  this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+  this->root_poa_->destroy (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   this->root_poa_ = PortableServer::POA::_nil ();
 

@@ -15,38 +15,26 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
-// and
-//       Institute for Software Integrated Systems
-//       Vanderbilt University
-//       Nashville, TN
-//       USA
-//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:150
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
 
 #ifndef _TAO_IDL_ORIG_BIDIRPOLICYC_H_
 #define _TAO_IDL_ORIG_BIDIRPOLICYC_H_
-
-#include /**/ "ace/pre.h"
-
-#include "bidirgiop_export.h"
 
 #ifndef TAO_BIDIRGIOP_SAFE_INCLUDE
 #error "You should not include BiDirPolicyC.h directly, use BiDirGIOP.h"
 #endif /* !TAO_BIDIRGIOP_SAFE_INCLUDE */
 
+#include /**/ "ace/pre.h"
+#include "bidirgiop_export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/CDR.h"
-#include "tao/Environment.h"
-#include "tao/Object.h"
-#include "tao/Objref_VarOut_T.h"
 
 #include "tao/PolicyC.h"
 
@@ -73,69 +61,86 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
-// be/be_visitor_root/root_ch.cpp:63
-
-namespace TAO
-{
-  class Collocation_Proxy_Broker;
-  
-  template<typename T> class Narrow_Utils;
-  template<typename T> class AbstractBase_Narrow_Utils;
-}
-
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:48
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
 
-namespace BiDirPolicy
+TAO_NAMESPACE  BiDirPolicy
 {
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typedef/typedef_ch.cpp:342
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
   
   typedef CORBA::UShort BidirectionalPolicyValue;
   typedef CORBA::UShort_out BidirectionalPolicyValue_out;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_BidirectionalPolicyValue;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
   const BiDirPolicy::BidirectionalPolicyValue NORMAL = 0U;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
   const BiDirPolicy::BidirectionalPolicyValue BOTH = 1U;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
   const CORBA::PolicyType BIDIRECTIONAL_POLICY_TYPE = 37U;
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:610
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY__VAR_OUT_CH_)
-#define _BIDIRPOLICY_BIDIRECTIONALPOLICY__VAR_OUT_CH_
+#if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY__ODDS_N_ENDS_CH_)
+#define _BIDIRPOLICY_BIDIRECTIONALPOLICY__ODDS_N_ENDS_CH_
   
   class BidirectionalPolicy;
   typedef BidirectionalPolicy *BidirectionalPolicy_ptr;
+  struct tao_BidirectionalPolicy_life;
   
   typedef
     TAO_Objref_Var_T<
-        BidirectionalPolicy
+        BidirectionalPolicy,
+        tao_BidirectionalPolicy_life
       >
     BidirectionalPolicy_var;
   
   typedef
     TAO_Objref_Out_T<
-        BidirectionalPolicy
+        BidirectionalPolicy,
+        tao_BidirectionalPolicy_life
       >
     BidirectionalPolicy_out;
+  
+  struct TAO_BiDirGIOP_Export tao_BidirectionalPolicy_life
+  {
+    static BidirectionalPolicy_ptr tao_duplicate (BidirectionalPolicy_ptr);
+    static void tao_release (BidirectionalPolicy_ptr);
+    static BidirectionalPolicy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        BidirectionalPolicy_ptr,
+        TAO_OutputCDR &
+      );
+  };
+  
+  struct TAO_BiDirGIOP_Export tao_BidirectionalPolicy_cast
+  {
+    static BidirectionalPolicy_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
+  };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:54
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY_CH_)
 #define _BIDIRPOLICY_BIDIRECTIONALPOLICY_CH_
@@ -146,6 +151,7 @@ namespace BiDirPolicy
   public:
     typedef BidirectionalPolicy_ptr _ptr_type;
     typedef BidirectionalPolicy_var _var_type;
+    static int _tao_class_id;
     
     // The static operations.
     static BidirectionalPolicy_ptr _duplicate (BidirectionalPolicy_ptr obj);
@@ -155,15 +161,20 @@ namespace BiDirPolicy
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
+    static BidirectionalPolicy_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static BidirectionalPolicy_ptr _nil (void)
-    {
-      return (BidirectionalPolicy_ptr)0;
-    }
+      {
+        return (BidirectionalPolicy_ptr)0;
+      }
     
     
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual BiDirPolicy::BidirectionalPolicyValue value (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -173,77 +184,47 @@ namespace BiDirPolicy
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
-    virtual CORBA::Boolean _is_a (
-        const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual void *_tao_QueryInterface (ptrdiff_t type);
     
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
-    // Abstract or local interface only.
     BidirectionalPolicy (void);
-    
     virtual ~BidirectionalPolicy (void);
   
   private:
-    // Private and unimplemented for concrete interfaces.
     BidirectionalPolicy (const BidirectionalPolicy &);
-    
     void operator= (const BidirectionalPolicy &);
   };
 
 #endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:66
-
-} // module BiDirPolicy
-
-// TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:48
-
-// Traits specializations.
-namespace TAO
-{
-
-#if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY__TRAITS_CH_)
-#define _BIDIRPOLICY_BIDIRECTIONALPOLICY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_BiDirGIOP_Export Objref_Traits<BiDirPolicy::BidirectionalPolicy>
-  {
-    static BiDirPolicy::BidirectionalPolicy_ptr tao_duplicate (
-        BiDirPolicy::BidirectionalPolicy_ptr
-      );
-    static void tao_release (
-        BiDirPolicy::BidirectionalPolicy_ptr
-      );
-    static BiDirPolicy::BidirectionalPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        BiDirPolicy::BidirectionalPolicy_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-};
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_BidirectionalPolicy;
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/cdr_op.cpp:48
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+
+}
+TAO_NAMESPACE_CLOSE // module BiDirPolicy
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/cdr_op.cpp:64
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:911
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "BiDirPolicyC.i"
@@ -258,6 +239,5 @@ namespace TAO
 #endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* ifndef */
 

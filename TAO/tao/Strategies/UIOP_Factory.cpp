@@ -7,7 +7,6 @@
 
 #include "UIOP_Acceptor.h"
 #include "UIOP_Connector.h"
-#include "ace/OS_NS_strings.h"
 
 ACE_RCSID(Strategies, UIOP_Factory, "$Id$")
 

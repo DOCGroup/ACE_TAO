@@ -13,33 +13,34 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_ACCEPTOR_REGISTRY_H
 #define TAO_ACCEPTOR_REGISTRY_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Unbounded_Set.h"
+
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "tao/Resource_Factory.h"
 #include "tao/Exception.h"
+
+#include "ace/SStringfwd.h"
 
 // Forward declarations.
 class ACE_Addr;
 class ACE_Reactor;
+
 class TAO_ORB_Core;
 class TAO_Acceptor;
 class TAO_Acceptor_Filter;
+
 class TAO_Stub;
 class TAO_Profile;
 class TAO_MProfile;
-class TAO_Protocol_Factory;
-class TAO_Protocol_Item;
-
-typedef ACE_Unbounded_Set_Iterator<TAO_Protocol_Item *>
-        TAO_ProtocolFactorySetItor;
 
 typedef TAO_Acceptor** TAO_AcceptorSetIterator;
 

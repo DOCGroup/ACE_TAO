@@ -5,7 +5,6 @@
 #include "CodecFactory_ORBInitializer.h"
 #include "CodecFactory.h"
 #include "ORBInitInfo.h"
-#include "ORB_Constants.h"
 
 ACE_RCSID (TAO_CodecFactory,
            CodecFactory_ORBInitializer,

@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_SEQUENCEPROXYPUSHCONSUMER_H
 #define TAO_Notify_SEQUENCEPROXYPUSHCONSUMER_H
-
 #include /**/ "ace/pre.h"
 
 #include "../notify_export.h"
@@ -21,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
-
 #include "../ProxyConsumer_T.h"
 
 #if defined(_MSC_VER)
@@ -37,8 +35,7 @@
  * @brief
  *
  */
-class TAO_Notify_Export TAO_Notify_SequenceProxyPushConsumer 
-  : public virtual TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>
+class TAO_Notify_Export TAO_Notify_SequenceProxyPushConsumer : public virtual TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>
 {
   friend class TAO_Notify_Builder;
 public:
@@ -97,5 +94,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_SEQUENCEPROXYPUSHCONSUMER_H */

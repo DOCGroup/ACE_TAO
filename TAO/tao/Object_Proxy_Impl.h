@@ -18,24 +18,19 @@
 #define TAO_OBJECT_PROXY_IMPL_H_
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
+#include "ace/CORBA_macros.h"
 
 namespace CORBA
 {
   class InterfaceDef;
   typedef InterfaceDef *InterfaceDef_ptr;
-
-  class Object;
-  typedef Object *Object_ptr;
-
-  class Environment;
 };
 
 /**

@@ -31,7 +31,6 @@ ACE_RCSID (PortableServer,
 #include "tao/debug.h"
 #include "tao/IORInterceptor/IORInterceptor_List.h"
 #include "Default_Acceptor_Filter.h"
-#include "ace/OS_NS_wchar.h"
 
 #include "PortableGroup_Hooks.h"
 
@@ -375,7 +374,6 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
   // Remove POA from the POAManager.
   int result = this->poa_manager_.remove_poa (this);
-
   if (result != 0)
     ACE_THROW (CORBA::OBJ_ADAPTER ());
 
@@ -782,7 +780,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
             this->server_object_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
-          tao_poa = poa->_tao_poa_downcast ();
+          tao_poa = poa->_tao_poa_downcast();
           PortableServer::ObjectId_var id =
             tao_poa->servant_to_id_i (this->server_object_
                                       ACE_ENV_ARG_PARAMETER);
@@ -1362,7 +1360,6 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   // same number of times.
   servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-
 
   return user_id._retn ();
 }

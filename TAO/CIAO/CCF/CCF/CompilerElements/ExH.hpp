@@ -5,6 +5,8 @@
 #ifndef CCF_RUNTIME_EX_H_H
 #define CCF_RUNTIME_EX_H_H
 
+#include "MSVC_Pragmas.hpp"
+
 #include "Utility/ExH/ExH.hpp"
 
 namespace ExH = Utility::ExH;

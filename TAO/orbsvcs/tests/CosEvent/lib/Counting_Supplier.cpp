@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Counting_Supplier.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(CEC_Tests, CEC_Count_Supplier, "$Id$")
 

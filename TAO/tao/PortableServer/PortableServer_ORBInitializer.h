@@ -10,17 +10,18 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_PORTABLESERVER_ORB_INITIALIZER_H
 #define TAO_PORTABLESERVER_ORB_INITIALIZER_H
 
 #include /**/ "ace/pre.h"
-
-#include "portableserver_export.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "portableserver_export.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 

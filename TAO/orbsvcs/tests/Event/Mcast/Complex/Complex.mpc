@@ -1,5 +1,5 @@
 project(*supplier): messaging, rteventexe, naming {
-  after  += ECMcastTests_lib
+  after  += ECMcastTests_Lib
   libs     += ECMcastTests
   includes += ../Common
   exename   = supplier
@@ -10,7 +10,7 @@ project(*supplier): messaging, rteventexe, naming {
 }
 
 project(*consumer): messaging, rteventexe, naming {
-  after  += ECMcastTests_lib
+  after  += ECMcastTests_Lib
   libs     += ECMcastTests
   includes += ../Common
   exename   = consumer
@@ -21,7 +21,7 @@ project(*consumer): messaging, rteventexe, naming {
 }
 
 project(*gateway-ec): messaging, rteventexe, naming {
-  after  += ECMcastTests_lib
+  after  += ECMcastTests_Lib
   libs     += ECMcastTests
   includes += ../Common
   exename   = gateway-ec

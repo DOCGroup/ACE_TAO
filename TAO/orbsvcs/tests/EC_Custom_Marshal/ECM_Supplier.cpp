@@ -3,7 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
-#include "ace/ACE.h"
 
 #include "tao/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
@@ -12,7 +11,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ECM_Supplier.h"
 #include "ECM_Data.h"
-#include "ace/OS_NS_errno.h"
 
 ACE_RCSID(EC_Custom_Marshal, ECM_Supplier, "$Id$")
 

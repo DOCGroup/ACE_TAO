@@ -5,7 +5,7 @@
 //   BiDirPolicy*.* The command used to generate code
 //   is:
 //
-//     tao_idl -o orig -Ge 1 -GT -Sa -St \
+//     tao_idl -o orig -Ge 1 -Sa -St \
 //          -Wb,export_macro=TAO_BiDirGIOP_Export \
 //          -Wb,export_include="bidirgiop_export.h" \
 //          -Wb,pre_include="ace/pre.h" \
@@ -29,8 +29,8 @@ module BiDirPolicy
   const BidirectionalPolicyValue BOTH = 1;
   const CORBA::PolicyType BIDIRECTIONAL_POLICY_TYPE = 37;
 
-  // @@ This has been made local. It was not so in the spec. Any reason
-  //    why this shouldn't be a local interface ?
+  // @@ This has ben made local. It was not so in the spec. Any reason
+  //    that this shouldn't be a local interface ?
   local interface BidirectionalPolicy : CORBA::Policy
   {
     readonly attribute BidirectionalPolicyValue value;

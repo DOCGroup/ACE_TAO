@@ -19,9 +19,7 @@
 #include "helper.h"
 #include "ub_struct_seq.h"
 
-ACE_RCSID (Param_Test,
-           ub_struct_seq, 
-           "$Id$")
+ACE_RCSID(Param_Test, ub_struct_seq, "$Id$")
 
 // ************************************************************************
 //               Test_Struct_Sequence

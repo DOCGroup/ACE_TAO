@@ -20,12 +20,10 @@
 #include "complex_any.h"
 #include "tao/debug.h"
 
-ACE_RCSID (Param_Test, 
-           complex_any, 
-           "$Id$")
-
 const int LEVEL_2_LENGTH = 5;
 const int LEVEL_3_LENGTH = 3;
+
+ACE_RCSID(Param_Test, complex_any, "$Id$")
 
 // ************************************************************************
 //               Test_Complex_Any
@@ -58,7 +56,7 @@ Test_Complex_Any::dii_req_invoke (CORBA::Request *req
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
-  req->add_out_arg ("s3") <<= this->out_.in ();
+  req->add_out_arg ("s3") <<= CORBA::Any (CORBA::_tc_any, 0);
 
   req->set_return_type (CORBA::_tc_any);
 

@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT___CI_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT___CI_
@@ -39,11 +39,20 @@ ImplementationRepository::ServerObject::ServerObject (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc),
-    the_TAO_ServerObject_Proxy_Broker_ (0)
-  
+  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc)
 {
   this->ImplementationRepository_ServerObject_setup_collocation (_tao_collocated);
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<ImplementationRepository::ServerObject>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 ACE_INLINE
@@ -51,16 +60,14 @@ ImplementationRepository::ServerObject::ServerObject (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
-    the_TAO_ServerObject_Proxy_Broker_ (0)
-  
+  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc)
 {
 }
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_
@@ -72,11 +79,20 @@ ImplementationRepository::Administration::Administration (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc),
-    the_TAO_Administration_Proxy_Broker_ (0)
-  
+  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc)
 {
   this->ImplementationRepository_Administration_setup_collocation (_tao_collocated);
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<ImplementationRepository::Administration>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 ACE_INLINE
@@ -84,16 +100,14 @@ ImplementationRepository::Administration::Administration (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
-    the_TAO_Administration_Proxy_Broker_ (0)
-  
+  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc)
 {
 }
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___CI_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___CI_
@@ -105,11 +119,20 @@ ImplementationRepository::ServerInformationIterator::ServerInformationIterator (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc),
-    the_TAO_ServerInformationIterator_Proxy_Broker_ (0)
-  
+  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc)
 {
   this->ImplementationRepository_ServerInformationIterator_setup_collocation (_tao_collocated);
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<ImplementationRepository::ServerInformationIterator>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 ACE_INLINE
@@ -117,16 +140,14 @@ ImplementationRepository::ServerInformationIterator::ServerInformationIterator (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
-    the_TAO_ServerInformationIterator_Proxy_Broker_ (0)
-  
+  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc)
 {
 }
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -139,7 +160,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:71
+// be/be_visitor_exception/cdr_op_ci.cpp:71
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -168,7 +189,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:71
+// be/be_visitor_exception/cdr_op_ci.cpp:71
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -217,7 +238,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:71
+// be/be_visitor_exception/cdr_op_ci.cpp:71
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -246,7 +267,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -271,7 +292,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_ImplementationRepository_EnvironmentList_I_
 #define _TAO_CDR_OP_ImplementationRepository_EnvironmentList_I_
@@ -289,7 +310,7 @@ CORBA::Boolean TAO_PortableServer_Export operator>> (
 #endif /* _TAO_CDR_OP_ImplementationRepository_EnvironmentList_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/cdr_op_ci.cpp:51
+// be/be_visitor_enum/cdr_op_ci.cpp:51
 
 ACE_INLINE
 CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationRepository::ActivationMode &_tao_enumval)
@@ -313,7 +334,7 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, ImplementationRepository::Activat
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -344,7 +365,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -373,7 +394,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_ImplementationRepository_ServerInformationList_I_
 #define _TAO_CDR_OP_ImplementationRepository_ServerInformationList_I_
@@ -391,7 +412,7 @@ CORBA::Boolean TAO_PortableServer_Export operator>> (
 #endif /* _TAO_CDR_OP_ImplementationRepository_ServerInformationList_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
+// be/be_visitor_interface_fwd/cdr_op_ci.cpp:59
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -404,7 +425,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,

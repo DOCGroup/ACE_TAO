@@ -21,7 +21,6 @@
 #include "be_array.h"
 #include "be_enum.h"
 #include "be_interface.h"
-#include "be_interface_fwd.h"
 #include "be_predefined_type.h"
 #include "be_sequence.h"
 #include "be_string.h"

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Server_i.h"
-#include "ace/OS_main.h"
 
 ACE_RCSID(TimeService, Time_Service_Server, "$Id$")
 

@@ -19,19 +19,12 @@
 #ifndef RESULTS_H
 #define RESULTS_H
 
-#include "tao/Basic_Types.h"
-
+#include "tao/corba.h"
 #include "ace/Profile_Timer.h"
-#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-namespace CORBA
-{
-  class Environment;
-}
 
 class Results
 {

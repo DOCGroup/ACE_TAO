@@ -5,7 +5,6 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(ImplRepo, nestea_server_i, "$Id$")
 

@@ -19,11 +19,9 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Object_Proxy_Impl.h"
+#include "tao/corbafwd.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "tao/Object_Proxy_Impl.h"
 
 /**
  * @class TAO_Remote_Object_Proxy_Impl

@@ -1,5 +1,8 @@
 //
 // $Id$
+
+//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -37,7 +40,7 @@ be_visitor_interface_cs::~be_visitor_interface_cs (void)
 int
 be_visitor_interface_cs::visit_interface (be_interface *node)
 {
-  if (node->imported () || node->cli_stub_gen ())
+  if (node->cli_stub_gen () || node->imported ())
     {
       return 0;
     }
@@ -59,62 +62,97 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  if (node->is_defined ())
+  // Initialize the static narrrowing helper variable.
+  *os << be_nl << be_nl
+      << "int " << node->full_name () << "::_tao_class_id = 0;";
+
+  const char *fhname = node->fwd_helper_name ();
+
+  // Helper functions generated in case this interface was
+  // forward declared in some other IDL file and not defined there.
+  *os << be_nl << be_nl
+      << node->full_name () << "_ptr" << be_nl
+      << fhname << "_life::"
+      << "tao_duplicate (" << be_idt << be_idt_nl
+      << node->nested_type_name (this->ctx_->scope ()) 
+      << "_ptr p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return " << node->nested_type_name (this->ctx_->scope ())
+      << "::_duplicate (p);" << be_uidt_nl
+      << "}";
+
+  *os << be_nl << be_nl
+      << "void" << be_nl
+      << fhname << "_life::"
+      << "tao_release (" << be_idt << be_idt_nl
+      << node->nested_type_name (this->ctx_->scope ()) 
+      << "_ptr p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::release (p);" << be_uidt_nl
+      << "}";
+
+  *os << be_nl << be_nl
+      << node->full_name () <<  "_ptr" << be_nl
+      << fhname << "_life::"
+      << "tao_nil (" << be_idt << be_idt_nl
+      << "void" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return " << node->nested_type_name (this->ctx_->scope ())
+      << "::_nil ();" << be_uidt_nl
+      << "}";
+
+  *os << be_nl << be_nl
+      << "CORBA::Boolean" << be_nl
+      << fhname << "_life::"
+      << "tao_marshal (" << be_idt << be_idt_nl
+      << node->nested_type_name (this->ctx_->scope ()) 
+      << "_ptr p," << be_nl
+      << "TAO_OutputCDR &cdr" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return p->marshal (cdr);" << be_uidt_nl
+      << "}";
+
+  if (! node->is_abstract ())
     {
       *os << be_nl << be_nl
-          << "// Traits specializations for " << node->name () << ".";
-
-      *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
-          << node->name () << "_ptr" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::tao_duplicate ("
-          << be_idt << be_idt_nl
-          << node->name () << "_ptr p" << be_uidt_nl
+          << node->full_name () << "_ptr" << be_nl
+          << fhname << "_cast::"
+          << "tao_narrow (" << be_idt << be_idt_nl
+          << "CORBA::Object *p" << be_nl
+          << "ACE_ENV_ARG_DECL" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "return " << node->name () << "::_duplicate (p);" << be_uidt_nl
+          << "return " << node->nested_type_name (this->ctx_->scope ())
+          << "::_narrow (p ACE_ENV_ARG_PARAMETER);"
+          << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
-          << "void" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::tao_release ("
-          << be_idt << be_idt_nl
-          << node->name () << "_ptr p" << be_uidt_nl
+          << "CORBA::Object *" << be_nl
+          << fhname << "_cast::"
+          << "tao_upcast (" << be_idt << be_idt_nl
+          << "void *src" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "CORBA::release (p);" << be_uidt_nl
-          << "}";
-
-      *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
-          << node->name () << "_ptr" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::tao_nil (void)"
-          << be_nl
-          << "{" << be_idt_nl
-          << "return " << node->name () << "::_nil ();" << be_uidt_nl
-          << "}";
-
-      *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
-          << "CORBA::Boolean" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
-          << be_idt << be_idt_nl
-          << node->name () << "_ptr p," << be_nl
-          << "TAO_OutputCDR & cdr" << be_uidt_nl
-          << ")" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "return p->marshal (cdr);" << be_uidt_nl
+          << node->nested_type_name (this->ctx_->scope ()) 
+          << " **tmp =" << be_idt_nl
+          << "ACE_static_cast (" 
+          << node->nested_type_name (this->ctx_->scope ())
+          << " **, src);" << be_uidt_nl
+          << "return *tmp;" << be_uidt_nl
           << "}";
     }
 
   if (node->has_mixed_parentage ())
     {
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << "void" << be_nl
-          << "CORBA::release ("
-          << node->name ()
+          << "CORBA::release (" 
+          << node->name () 
           << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "CORBA::AbstractBase_ptr abs = p;" << be_nl
@@ -122,10 +160,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << "CORBA::Boolean" << be_nl
-          << "CORBA::is_nil ("
-          << node->name ()
+          << "CORBA::is_nil (" 
+          << node->name () 
           << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "CORBA::Object_ptr obj = p;" << be_nl
@@ -133,27 +170,79 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
-  // Generate the proxy broker factory function pointer definition.
-  *os << be_nl << be_nl
-      << "// Function pointer for collocation factory initialization."
-      << be_nl
-      << "TAO::Collocation_Proxy_Broker * " << be_nl
-      << "(*" << node->flat_client_enclosing_scope ()
-      << node->base_proxy_broker_name ()
-      << "_Factory_function_pointer) ("
-      << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj" << be_uidt_nl
-      << ") = 0;" << be_uidt;
+  *os << be_nl
+      << "\n#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)" << be_idt_nl
+      << "template class" << be_idt_nl
+      << "TAO_Objref_Var_T<" << be_idt << be_idt_nl
+      << node->name () << "," << be_nl
+      << node->fwd_helper_name () << "_life" << be_uidt_nl
+      << ">;" << be_uidt << be_uidt_nl
+      << "template class" << be_idt_nl
+      << "TAO_Objref_Out_T<" << be_idt << be_idt_nl
+      << node->name () << "," << be_nl
+      << node->fwd_helper_name () << "_life" << be_uidt_nl
+      << ">;" << be_uidt << be_uidt << be_uidt_nl
+      << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
+      << "# pragma instantiate \\" << be_idt << be_idt_nl
+      << "TAO_Objref_Var_T< \\" << be_idt << be_idt_nl
+      << node->name () << ", \\" << be_nl
+      << node->fwd_helper_name () << "_life \\" << be_uidt_nl
+      << ">" << be_uidt << be_uidt << be_uidt_nl
+      << "# pragma instantiate \\" << be_idt << be_idt_nl
+      << "TAO_Objref_Out_T< \\" << be_idt << be_idt_nl
+      << node->name () << ", \\" << be_nl
+      << node->fwd_helper_name () << "_life \\" << be_uidt_nl
+      << ">" << be_uidt << be_uidt << be_uidt_nl
+      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 
-  // Generate code for the elements of the interface.
-  if (this->visit_scope (node) == -1)
+  be_visitor_context ctx = (*this->ctx_);
+
+  // Interceptor classes.  The interceptors helper classes must be
+  // defined before the interface operations because they are used in
+  // the implementation of said operations.
+
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS);
+  be_visitor_interface_interceptors_cs ii_visitor (&ctx);
+
+  if (node->accept (&ii_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
+                         "be_visitor_interface_cs::"
                          "visit_interface - "
-                         "codegen for scope failed\n"),
+                         "codegen for interceptors classes failed\n"),
                         -1);
     }
+
+  if (!node->is_local () && ! node->is_abstract ())
+    {
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS);
+      be_visitor_interface_remote_proxy_impl_cs irpi_visitor (&ctx);
+
+      if (node->accept (&irpi_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_cs::"
+                             "visit_interface - "
+                             "codegen for Base Proxy Broker class failed\n"),
+                            -1);
+        }
+
+      ctx = *this->ctx_;
+      be_visitor_interface_remote_proxy_broker_cs irpb_visitor (&ctx);
+
+      if (node->accept (&irpb_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_cs::"
+                             "visit_interface - "
+                             "codegen for Base Proxy Broker class failed\n"),
+                            -1);
+        }
+    }
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   if (node->is_local ())
     {
@@ -165,48 +254,38 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (! node->is_abstract () && ! node->is_local ())
     {
+       // Generate the destructor and default constructor.
       *os << be_nl << be_nl
           << node->name () << "::" << node->local_name ()
           << " (int collocated)" << be_nl
-          << " : the" << node->base_proxy_broker_name () << "_ (0)" << be_nl
           << "{" << be_idt_nl
           << "this->" << node->flat_name ()
           << "_setup_collocation (collocated);" << be_uidt_nl
           << be_uidt << "}";
-    }
 
-  if (! node->is_local ())
-    {
+      // Collocation setup method.
       *os << be_nl << be_nl
           << "void" << be_nl
           << node->name () << "::" << node->flat_name ()
           << "_setup_collocation (int collocated)" << be_nl
           << "{" << be_idt_nl
           << "if (collocated)" << be_idt_nl
-          << "{" << be_idt_nl
           << "this->the" << node->base_proxy_broker_name ()
           << "_ =" << be_idt_nl
           << "::" << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer (";
-
-       if (node->is_abstract ())
-          {
-            *os << be_idt << be_idt_nl
-                << "this->equivalent_objref ()" << be_uidt_nl
-                << ");" << be_uidt;
-          }
-        else
-          {
-            *os << "this);";
-          }
-
-      *os << be_uidt << be_uidt_nl
-          << "}" << be_uidt;
+          << "_Factory_function_pointer (this);"
+          << be_uidt << be_uidt_nl
+          << "else" << be_idt_nl
+          << "this->the" << node->base_proxy_broker_name ()
+          << "_ =" << be_idt_nl
+          << "::" << node->full_remote_proxy_broker_name ()
+          << "::the" << node->remote_proxy_broker_name ()
+          << " ();" << be_uidt << be_uidt;
 
       // Now we setup the immediate parents.
       int n_parents = node->n_inherits ();
-      int has_parent = 0;
+      int has_concrete_parent = 0;
 
       if (n_parents > 0)
         {
@@ -215,12 +294,17 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
               be_interface *inherited =
                 be_interface::narrow_from_decl (node->inherits ()[i]);
 
-              if (has_parent == 0)
+              if (inherited->is_abstract ())
+                {
+                  continue;
+                }
+
+              if (has_concrete_parent == 0)
                 {
                   *os << be_nl;
                 }
 
-              has_parent = 1;
+              has_concrete_parent = 1;
 
               *os << be_nl
                   << "this->" << inherited->flat_name ()
@@ -231,8 +315,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_uidt_nl << "}";
     }
 
-  *os << be_nl << be_nl
-      << node->name () << "::~" << node->local_name ()
+  *os << be_nl << be_nl << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
@@ -242,10 +325,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->name ()
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
-          << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
-          << "ACE_static_cast ("
-          << node->local_name () << " *, _tao_void_pointer);" << be_uidt_nl
-          << "CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
+          << node->local_name () << " *tmp = ACE_static_cast ("
+          << node->local_name () << " *, _tao_void_pointer);" << be_nl
+          << "CORBA::release (tmp);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
@@ -266,56 +348,73 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (node->is_abstract ())
     {
-      *os << "CORBA::AbstractBase_ptr";
+      *os << "CORBA::AbstractBase_ptr obj" << be_nl;
     }
   else
     {
-      *os << "CORBA::Object_ptr";
+      *os << "CORBA::Object_ptr obj" << be_nl;
     }
 
-  *os << " _tao_objref" << be_nl
-      << "ACE_ENV_ARG_DECL"
-      << (node->is_local () ? "_NOT_USED" : "")
-      << be_uidt_nl
+  *os << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  if (node->is_local ())
+  // Local interfaces have slightly different _narrow implementation.
+  if (! node->is_local ())
     {
-      *os << "if (CORBA::is_nil (_tao_objref))" << be_idt_nl
+      // Remote _narrow implementation.
+      *os << "if (CORBA::is_nil (obj))" << be_idt_nl
           << "{" << be_idt_nl
-          << "return " << node->local_name () << "::_nil ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << node->local_name () << "_ptr proxy =" << be_idt_nl
-          << "dynamic_cast<" << node->local_name () << "_ptr> (_tao_objref);"
-          << be_uidt_nl << be_nl
-          << "return " << node->local_name () << "::_duplicate (proxy);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
-    }
-  else
-    {
-      *os << "return" << be_idt_nl;
+          << "return " << bt->nested_type_name (this->ctx_->scope ())
+          << "::_nil ();" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
 
-      if (!node->is_abstract ())
+      if (! node->is_abstract ())
         {
-          *os << "TAO::Narrow_Utils<"
-              << node->local_name () << ">::narrow (";
+          *os << "if (! obj->_is_local ())" << be_idt_nl
+              << "{" << be_idt_nl;
+        }
+
+      *os << "CORBA::Boolean is_a =" << be_idt_nl
+          << "obj->_is_a (" << be_idt << be_idt_nl
+          << "\"" << node->repoID () << "\"" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
+          << "ACE_CHECK_RETURN (" << bt->nested_type_name (this->ctx_->scope ())
+          << "::_nil ());" << be_nl << be_nl
+          << "if (is_a == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "return " << bt->nested_type_name (this->ctx_->scope ())
+          << "::_nil ();" << be_uidt_nl;
+
+      if (node->is_abstract ())
+        {
+          *os << "}" << be_uidt_nl;
         }
       else
         {
-          *os << "TAO::AbstractBase_Narrow_Utils<"
-              << node->local_name () << ">::narrow (";
+          *os << "}" << be_uidt << be_uidt_nl;
+          *os << "}" << be_uidt_nl;
         }
 
-      *os << be_idt << be_idt_nl
-          << "_tao_objref," << be_nl
-          << "\"" << node->repoID () << "\"," << be_nl
-          << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer" << be_nl
-          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-          << ");" << be_uidt << be_uidt << be_uidt_nl
-          << "}" << be_nl << be_nl;
+      *os << be_nl;
+    }
+
+  *os << "return " << bt->nested_type_name (this->ctx_->scope ())
+      << "::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  if (node->is_abstract ())
+    {
+      this->gen_abstract_unchecked_narrow (node,
+                                           bt,
+                                           os);
+    }
+  else
+    {
+      this->gen_concrete_unchecked_narrow (node,
+                                           bt,
+                                           os);
     }
 
   if (node->is_abstract ())
@@ -382,7 +481,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   // The _duplicate method
   *os << node->full_name () << "_ptr" << be_nl
       << node->full_name () << "::_duplicate ("
-      << bt->local_name ()
+      << bt->nested_type_name (this->ctx_->scope ())
       << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
       << "if (! CORBA::is_nil (obj))" << be_idt_nl
@@ -392,85 +491,143 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return obj;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "CORBA::Boolean" << be_nl
-      << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
-      << "const char *value" << be_nl;
+  // Generate the is_a method (not supported on local objects).
+  if (! node->is_local ())
+    {
+      *os << "CORBA::Boolean" << be_nl
+          << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
+          << "const char *value" << be_nl
+          << "ACE_ENV_ARG_DECL";
 
-  if (node->is_local ())
-    *os << "ACE_ENV_ARG_DECL_NOT_USED";
-  else
-    *os << "ACE_ENV_ARG_DECL";
+      if (node->is_abstract ())
+        {
+          *os << "_NOT_USED";
+        }
 
-  *os << be_uidt_nl << ")" << be_uidt_nl
+      *os << be_uidt_nl << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "if (" << be_idt << be_idt_nl;
+
+      int status =
+        node->traverse_inheritance_graph (be_interface::is_a_helper,
+                                          os);
+
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_cs::"
+                             "visit_interface - "
+                             "_is_a method codegen failed\n"),
+                            -1);
+        }
+
+      if (node->is_abstract () || node->has_mixed_parentage ())
+        {
+          *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
+              << "(char *)value," << be_nl
+              << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
+              << ")";
+        }
+
+      if (node->has_mixed_parentage ())
+        {
+          *os << " ||" << be_uidt_nl;
+        }
+      else if (node->is_abstract ())
+        {
+          *os << be_uidt << be_uidt_nl;
+        }
+
+      if (! node->is_abstract ())
+        {
+          *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
+              << "(char *)value," << be_nl
+              << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
+              << ")" << be_uidt << be_uidt_nl;
+        }
+
+      *os << " )" << be_nl
+          << "{" << be_idt_nl
+          << "return 1; // success using local knowledge" << be_uidt_nl
+          << "}" << be_uidt_nl
+          << "else" << be_idt_nl
+          << "{" << be_idt_nl;
+
+      if (node->is_abstract ())
+        {
+          *os << "return 0;" << be_uidt_nl;
+        }
+      else
+        {
+          *os << "return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a ("
+              << be_idt << be_idt_nl
+              << "value" << be_nl
+              << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+              << ");" << be_uidt << be_uidt_nl;
+        }
+
+      *os << "}" << be_uidt << be_uidt_nl
+          << "}" << be_nl << be_nl;
+    }
+
+  // Generating _tao_QueryInterface method.
+  *os << "void *" << node->full_name ()
+      << "::_tao_QueryInterface (ptrdiff_t type)" << be_nl
       << "{" << be_idt_nl
-      << "if (" << be_idt << be_idt_nl;
+      << "void *retv = 0;" << be_nl << be_nl
+      << "if ";
 
-  int status =
-    node->traverse_inheritance_graph (be_interface::is_a_helper,
-                                      os);
-
-  if (status == -1)
+  if (node->traverse_inheritance_graph (
+          be_interface::queryinterface_helper,
+          os
+        ) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_cs::"
                          "visit_interface - "
-                         "_is_a method codegen failed\n"),
+                         "_tao_QueryInterface method codegen failed\n"),
                         -1);
     }
 
-  if (node->is_abstract () || node->has_mixed_parentage ())
-    {
-      *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "(char *)value," << be_nl
-          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
-          << ")";
-    }
-  else if (node->is_local ())
-    {
-      *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "(char *)value," << be_nl
-          << "\"IDL:omg.org/CORBA/LocalObject:1.0\"" << be_uidt_nl
-          << ")";
-    }
+  *os << "(type == ACE_reinterpret_cast ("
+      << be_idt << be_idt << be_idt << be_idt << be_idt << be_idt_nl
+      << " ptrdiff_t," << be_nl;
 
-  if (node->has_mixed_parentage () || node->is_local ())
+  if (node->is_abstract ())
     {
-      *os << " ||" << be_uidt_nl;
-    }
-  else if (node->is_abstract ())
-    {
-      *os << be_uidt << be_uidt_nl;
-    }
-
-  if (! node->is_abstract ())
-    {
-      *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "(char *)value," << be_nl
-          << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
-          << ")" << be_uidt << be_uidt_nl;
-    }
-
-  *os << " )" << be_nl
-      << "{" << be_idt_nl
-      << "return 1; // success using local knowledge" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl;
-
-  if (node->is_abstract () || node->is_local ())
-    {
-      *os << "return 0;" << be_uidt_nl;
+      *os << " &CORBA::AbstractBase";
     }
   else
     {
-      *os << "return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a ("
-          << be_idt << be_idt_nl
-          << "value" << be_nl
-          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl;
+      *os << " &CORBA::Object";
     }
 
-  *os << "}" << be_uidt << be_uidt_nl
+  *os << "::_tao_class_id)" << be_uidt_nl
+      << " )" << be_uidt << be_uidt << be_uidt << be_uidt_nl
+      << "{" << be_idt_nl
+      << "retv =" << be_idt_nl
+      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << "void *," << be_nl
+      << "ACE_static_cast (";
+
+  if (node->is_abstract ())
+    {
+      *os << "CORBA::AbstractBase_ptr";
+    }
+  else
+    {
+      *os << "CORBA::Object_ptr";
+    }
+
+  *os << ", this)" << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
+
+  *os << "if (retv != 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "this->_add_ref ();" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "return retv;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << "const char* " << node->full_name ()
@@ -499,6 +656,16 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
+  // Generate code for the elements of the interface.
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface_cs::"
+                         "visit_interface - "
+                         "codegen for scope failed\n"),
+                        -1);
+    }
+
   if (! node->is_abstract ())
     {
       // Smart Proxy classes.
@@ -522,7 +689,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (be_global->tc_support ())
     {
-      be_visitor_context ctx = *this->ctx_;
       ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
       be_visitor_typecode_defn tc_visitor (&ctx);
 
@@ -616,15 +782,16 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
       << "{" << be_idt_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
       << "{" << be_idt_nl
-      << "return " << bt->local_name () << "::_nil ();" << be_uidt_nl
+      << "return " << bt->nested_type_name (this->ctx_->scope ())
+      << "::_nil ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
   if (! node->is_local ())
     {
       // Declare the default proxy.
-      *os << bt->local_name ()
+      *os << bt->nested_type_name (this->ctx_->scope ())
           << "_ptr default_proxy = "
-          << bt->local_name ()
+          << bt->nested_type_name (this->ctx_->scope ())
           <<"::_nil ();" << be_nl << be_nl;
 
       // Code for lzay evaluation..
@@ -638,7 +805,7 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
           << " (" << be_idt << be_idt_nl
           << "obj->steal_ior ()," << be_nl
           << "obj->orb_core ()" << be_uidt_nl << ")," << be_uidt_nl
-          << bt->local_name ()
+          << bt->nested_type_name (this->ctx_->scope ())
           << "::_nil ()" << be_uidt_nl << ");" << be_uidt_nl << be_nl
           << "return default_proxy;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
@@ -652,7 +819,7 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
           << "stub->_incr_refcnt ();" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
-      // If the policy dictates that the proxy be collocated, use the
+      // If the policy didtates that the proxy be collocated, use the
       // function to create one.
       *os << "if (" << be_idt << be_idt_nl
           << "!CORBA::is_nil (stub->servant_orb_var ().ptr ()) &&" << be_nl
@@ -670,7 +837,7 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
           << "stub," << be_nl
           << "1," << be_nl
           << "obj->_servant ()" << be_uidt_nl << ")," << be_uidt_nl
-          <<  bt->local_name ()
+          <<  bt->nested_type_name (this->ctx_->scope ())
           << "::_nil ()" << be_uidt_nl << ");"
           << be_uidt << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
@@ -687,7 +854,7 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
           << "0," << be_nl
           << "obj->_servant ()" << be_uidt_nl
           << ")," << be_uidt_nl
-          << bt->local_name ()
+          << bt->nested_type_name (this->ctx_->scope ())
           << "::_nil ()" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
@@ -695,8 +862,7 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
       if (be_global->gen_smart_proxies ())
         {
           *os << "return TAO_" << node->flat_name ()
-              << "_PROXY_FACTORY_ADAPTER::instance ()->"
-              << "create_proxy (default_proxy);"
+              << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);"
               << be_uidt_nl;
         }
       else
@@ -712,16 +878,19 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
       *os << be_idt;
     }
 
-  *os << "{" << be_idt_nl
-      << "::" << node->name () << "_ptr p =" << be_idt_nl
-      << "dynamic_cast<::" << node->name () << "_ptr> (obj);"
-      << be_uidt_nl << be_nl
-      << "p->_add_ref ();" << be_nl << be_nl
-      << "return p;" << be_uidt_nl
-      << "}" << be_uidt << be_uidt;
+  // Local  & lazily evaluated _unchecked_narrow.
+  *os << "return" << be_idt_nl
+      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << node->local_name () << "_ptr," << be_nl
+      << "obj->_tao_QueryInterface (" << be_idt << be_idt_nl
+      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << "ptrdiff_t," << be_nl
+      << "&" << node->local_name () << "::_tao_class_id" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl;
 
-  *os << be_nl
-      << "}" << be_nl << be_nl;
+  *os << "}" << be_nl << be_nl;
 }
 
 void
@@ -743,9 +912,9 @@ be_visitor_interface_cs::gen_abstract_unchecked_narrow (be_interface *node,
       << "}" << be_uidt_nl << be_nl;
 
   // Declare the default proxy.
-  *os << bt->local_name ()
+  *os << bt->nested_type_name (this->ctx_->scope ())
       << "_ptr default_proxy = "
-      << bt->local_name ()
+      << bt->nested_type_name (this->ctx_->scope ())
       <<"::_nil ();" << be_nl << be_nl;
 
   *os << "if (obj->_is_objref ())" << be_idt_nl
@@ -758,7 +927,7 @@ be_visitor_interface_cs::gen_abstract_unchecked_narrow (be_interface *node,
       << "0," << be_nl
       << "obj->_servant ()" << be_uidt_nl
       << ")," << be_uidt_nl
-      << bt->local_name ()
+      << bt->nested_type_name (this->ctx_->scope ())
       << "::_nil ()" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl;

@@ -75,8 +75,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_array.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_Memory.h"
 
 ACE_RCSID (ast, 
            ast_root, 

@@ -1,43 +1,62 @@
 // $Id$
 
+
 #include "ORB_Core.h"
 #include "ORB_Table.h"
+
 #include "TAO_Internal.h"
+#include "default_client.h"
 #include "default_server.h"
+#include "default_resource.h"
+#include "debug.h"
+#include "MProfile.h"
 #include "Profile.h"
 #include "Stub.h"
-#include "LF_Follower.h"
 #include "Leader_Follower.h"
-#include "LF_Event_Loop_Thread_Helper.h"
 #include "Connector_Registry.h"
+
 #include "Sync_Strategies.h"
+
 #include "Object_Loader.h"
+
 #include "ObjectIdListC.h"
+
+#include "Services_Activate.h"
+#include "Invocation.h"
 #include "BiDir_Adapter.h"
+
+
 #include "Collocation_Resolver.h"
+#include "Endpoint_Selector_Factory.h"
 #include "Flushing_Strategy.h"
 #include "Request_Dispatcher.h"
 #include "Stub_Factory.h"
 #include "Thread_Lane_Resources.h"
 #include "Thread_Lane_Resources_Manager.h"
 #include "TSS_Resources.h"
+
 #include "Protocols_Hooks.h"
 #include "IORInterceptor_Adapter.h"
 #include "IORInterceptor_Adapter_Factory.h"
-#include "debug.h"
-#include "TAOC.h"
-#include "Endpoint_Selector_Factory.h"
-#include "Client_Strategy_Factory.h"
+#include "Valuetype_Adapter.h"
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+# include "Buffering_Constraint_Policy.h"
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+#include "tao/LF_Event_Loop_Thread_Helper.h"
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-# include "ClientRequestInfo.h"
+#include "tao/ClientRequestInfo.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
 
+#include "ace/Object_Manager.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/streams.h"
-#include "ace/OS_NS_strings.h"
+
+#include "Codeset_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ORB_Core.i"
@@ -955,9 +974,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
     {
       char ns_port_char[256];
 
-      ACE_OS::itoa (ns_port,
-                    ns_port_char,
-                    10);
+      ACE_OS_String::itoa (ns_port,
+                           ns_port_char,
+                           10);
 
       CORBA::String_var ns_port_ptr =
         CORBA::string_alloc (ACE_static_cast (CORBA::ULong,
@@ -1388,41 +1407,40 @@ TAO_ORB_Core::services_callbacks_init (void)
   // @@ Other service callbacks can be added here
 }
 
-TAO::Invocation_Status
-TAO_ORB_Core::service_raise_comm_failure (
-    IOP::ServiceContextList &clist,
-    TAO_Profile *profile
-    ACE_ENV_ARG_DECL)
+int
+TAO_ORB_Core::service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
+                                          TAO_Profile *profile
+                                          ACE_ENV_ARG_DECL)
 {
   if (this->ft_service_.service_callback ())
     {
       return this->ft_service_.service_callback ()->
-                 raise_comm_failure (clist,
+                 raise_comm_failure (invoke,
                                      profile
                                      ACE_ENV_ARG_PARAMETER);
     }
+
+  invoke->close_connection ();
 
   ACE_THROW_RETURN (CORBA::COMM_FAILURE (
       CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
           errno),
       CORBA::COMPLETED_MAYBE),
-      TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
+      TAO_INVOKE_EXCEPTION);
 }
 
-
-TAO::Invocation_Status
-TAO_ORB_Core::service_raise_transient_failure (
-    IOP::ServiceContextList &clist,
-    TAO_Profile *profile
-    ACE_ENV_ARG_DECL)
+int
+TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
+                                               TAO_Profile *profile
+                                               ACE_ENV_ARG_DECL)
 {
   if (this->ft_service_.service_callback ())
     {
-      return
-        this->ft_service_.service_callback ()->raise_transient_failure (clist,
-                                 profile
-                                 ACE_ENV_ARG_PARAMETER);
+      return this->ft_service_.service_callback ()->
+                 raise_transient_failure (invoke,
+                                          profile
+                                          ACE_ENV_ARG_PARAMETER);
     }
 
   ACE_THROW_RETURN (CORBA::TRANSIENT (
@@ -1430,8 +1448,9 @@ TAO_ORB_Core::service_raise_transient_failure (
           TAO_INVOCATION_SEND_REQUEST_MINOR_CODE,
           errno),
         CORBA::COMPLETED_MAYBE),
-        TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
+        TAO_INVOKE_EXCEPTION);
 }
+
 
 void
 TAO_ORB_Core::service_context_list (
@@ -2286,9 +2305,6 @@ ACE_Allocator*
 TAO_ORB_Core::output_cdr_dblock_allocator (void)
 {
 
-  return this->lane_resources ().output_cdr_dblock_allocator ();
-
-#if 0
   // Allocating memory here confuses purify a bit. We do delete this
   // memory when TSS delete
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
@@ -2304,20 +2320,43 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
       this->resource_factory ()->output_cdr_dblock_allocator ();
 
   return tss->output_cdr_dblock_allocator_;
-#endif /* if 0*/
 }
 
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_buffer_allocator (void)
 {
-  return this->lane_resources ().output_cdr_buffer_allocator ();
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  if (tss == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("(%P|%t) %p\n"),
+                       ACE_LIB_TEXT ("TAO_ORB_Core::input_cdr_buffer_allocator (); ")
+                       ACE_LIB_TEXT ("no more TSS keys")),
+                      0);
+
+  if (tss->output_cdr_buffer_allocator_ == 0)
+    tss->output_cdr_buffer_allocator_ =
+      this->resource_factory ()->output_cdr_buffer_allocator ();
+
+  return tss->output_cdr_buffer_allocator_;
 }
 
 
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_msgblock_allocator (void)
 {
-  return this->lane_resources ().output_cdr_msgblock_allocator ();
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  if (tss == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("(%P|%t) %p\n"),
+                       ACE_LIB_TEXT ("TAO_ORB_Core::output_cdr_msgblock_allocator (); ")
+                       ACE_LIB_TEXT ("no more TSS keys")),
+                      0);
+
+  if (tss->output_cdr_msgblock_allocator_ == 0)
+    tss->output_cdr_msgblock_allocator_ =
+      this->resource_factory ()->output_cdr_msgblock_allocator ();
+
+  return tss->output_cdr_msgblock_allocator_;
 }
 
 
@@ -2351,6 +2390,78 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
                                     dblock_allocator,
                                     lock_strategy);
 }
+
+#if 0
+// @@todo: This will go off after sometime. We may no longer need
+// this, since we could as well use the input_cdr* for use.
+
+ACE_Data_Block *
+TAO_ORB_Core::data_block_for_message_block (size_t size)
+{
+
+  ACE_Allocator *dblock_allocator;
+  ACE_Allocator *buffer_allocator;
+
+  dblock_allocator =
+    this->message_block_dblock_allocator ();
+  buffer_allocator =
+    this->message_block_buffer_allocator ();
+
+  ACE_Lock* lock_strategy = 0;
+  if (this->resource_factory ()->use_locked_data_blocks ())
+    {
+      lock_strategy = &this->data_block_lock_;
+    }
+
+  return this->create_data_block_i (size,
+                                    buffer_allocator,
+                                    dblock_allocator,
+                                    lock_strategy);
+}
+
+ACE_Allocator*
+TAO_ORB_Core::message_block_dblock_allocator (void)
+{
+  if (this->message_block_dblock_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->message_block_dblock_allocator_ == 0)
+        this->message_block_dblock_allocator_ =
+          this->resource_factory ()->input_cdr_dblock_allocator ();
+    }
+  return this->message_block_dblock_allocator_;
+}
+
+ACE_Allocator*
+TAO_ORB_Core::message_block_buffer_allocator (void)
+{
+  if (this->message_block_buffer_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->message_block_buffer_allocator_ == 0)
+        this->message_block_buffer_allocator_ =
+          this->resource_factory ()->input_cdr_buffer_allocator ();
+    }
+  return this->message_block_buffer_allocator_;
+}
+
+ACE_Allocator*
+TAO_ORB_Core::message_block_msgblock_allocator (void)
+{
+  if (this->message_block_msgblock_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->message_block_msgblock_allocator_ == 0)
+        this->message_block_msgblock_allocator_ =
+          this->resource_factory ()->input_cdr_buffer_allocator ();
+    }
+  return this->message_block_msgblock_allocator_;
+}
+
+#endif /*if 0*/
 
 ACE_Data_Block *
 TAO_ORB_Core::create_data_block_i (size_t size,
@@ -2424,7 +2535,7 @@ TAO_ORB_Core::implrepo_service (void)
 
 void
 TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
-                                    bool &has_synchronization,
+                                    int &has_synchronization,
                                     Messaging::SyncScope &scope)
 {
   Sync_Scope_Hook sync_scope_hook =
@@ -2432,7 +2543,7 @@ TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
 
   if (sync_scope_hook == 0)
     {
-      has_synchronization = false;
+      has_synchronization = 0;
       return;
     }
 
@@ -2447,22 +2558,16 @@ TAO_ORB_Core::get_sync_strategy (TAO_Stub *,
   if (scope == Messaging::SYNC_WITH_TRANSPORT
       || scope == Messaging::SYNC_WITH_SERVER
       || scope == Messaging::SYNC_WITH_TARGET)
-    {
-      return this->transport_sync_strategy ();
-    }
+    return this->transport_sync_strategy ();
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   if (scope == Messaging::SYNC_NONE
       || scope == TAO::SYNC_EAGER_BUFFERING)
-    {
-      return this->eager_buffering_sync_strategy ();
-    }
+    return this->eager_buffering_sync_strategy ();
 
   if (scope == TAO::SYNC_DELAYED_BUFFERING)
-    {
-      return this->delayed_buffering_sync_strategy ();
-    }
+    return this->delayed_buffering_sync_strategy ();
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
@@ -2510,7 +2615,7 @@ TAO_ORB_Core::stubless_sync_scope (void)
 
 void
 TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
-                                 bool &has_timeout,
+                                 int &has_timeout,
                                  ACE_Time_Value &time_value)
 {
   Timeout_Hook timeout_hook =
@@ -2518,7 +2623,7 @@ TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
 
   if (timeout_hook == 0)
     {
-      has_timeout = false;
+      has_timeout = 0;
       return;
     }
   (*timeout_hook) (this, stub, has_timeout, time_value);
@@ -2572,7 +2677,7 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
 void
 TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
-                                  bool &has_timeout,
+                                  int &has_timeout,
                                   ACE_Time_Value &time_value)
 {
   Timeout_Hook connection_timeout_hook =
@@ -2580,12 +2685,10 @@ TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
 
   if (connection_timeout_hook == 0)
     {
-      has_timeout = false;
+      has_timeout = 0;
       return;
     }
-
   (*connection_timeout_hook) (this, stub, has_timeout, time_value);
-  has_timeout = true;
 }
 
 void
@@ -2679,9 +2782,7 @@ TAO_ORB_Core::add_interceptor (
       ACE_CHECK;
     }
   else
-    {
-      ACE_THROW (CORBA::INTERNAL ());
-    }
+    ACE_THROW (CORBA::INTERNAL ());
 }
 
 TAO_IORInterceptor_List *
@@ -2704,7 +2805,6 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
                         ace_mon,
                         this->lock_,
                         0);
-
       if (this->ior_interceptor_adapter_ == 0)
         {
           ACE_DECLARE_NEW_CORBA_ENV;
@@ -2712,8 +2812,7 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
             {
               TAO_IORInterceptor_Adapter_Factory * ior_ap_factory =
                 ACE_Dynamic_Service<TAO_IORInterceptor_Adapter_Factory>::instance (
-                    TAO_ORB_Core::iorinterceptor_adapter_factory_name ()
-                  );
+                    TAO_ORB_Core::iorinterceptor_adapter_factory_name ());
 
               if (ior_ap_factory)
                 {
@@ -2725,24 +2824,25 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
           ACE_CATCHANY
             {
               ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                   "(%P|%t) Cannot initialize the "
-                                   "ior_interceptor_adapter \n");
+                                   "(%P|%t) Cannot initialize the ior_interceptor_adapter \n");
             }
           ACE_ENDTRY;
         }
     }
-
   return this->ior_interceptor_adapter_;
 }
 
 // ****************************************************************
 
 TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
-  : event_loop_thread_ (0)
-  , client_leader_thread_ (0)
-  , lane_ (0)
-  , ts_objects_ ()
-  , orb_core_ (0)
+  : output_cdr_dblock_allocator_ (0),
+    output_cdr_buffer_allocator_ (0),
+    output_cdr_msgblock_allocator_ (0),
+    event_loop_thread_ (0),
+    client_leader_thread_ (0),
+    lane_ (0),
+    ts_objects_ (),
+    orb_core_ (0)
 #if TAO_HAS_INTERCEPTORS == 1
     , pi_current_ ()
     , client_request_info_ (0)
@@ -2756,6 +2856,17 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
 
 TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 {
+  if (this->output_cdr_dblock_allocator_ != 0)
+    this->output_cdr_dblock_allocator_->remove ();
+  delete this->output_cdr_dblock_allocator_;
+
+  if (this->output_cdr_buffer_allocator_ != 0)
+    this->output_cdr_buffer_allocator_->remove ();
+  delete this->output_cdr_buffer_allocator_;
+
+  if (this->output_cdr_msgblock_allocator_ != 0)
+    this->output_cdr_msgblock_allocator_->remove ();
+  delete this->output_cdr_msgblock_allocator_;
 
 #if TAO_HAS_INTERCEPTORS == 1
   CORBA::release (this->client_request_info_);
@@ -2818,10 +2929,11 @@ TAO_ORB_Core_instance (void)
 }
 
 
-TAO::Collocation_Strategy
+int
 TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
                                     ACE_ENV_ARG_DECL)
 {
+
   TAO_Stub *stub = object->_stubobj ();
   if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
       stub->servant_orb_var ()->orb_core () != 0)
@@ -2832,14 +2944,14 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
       int collocated =
         orb_core->collocation_resolver ().is_collocated (object
                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO::TAO_CS_REMOTE_STRATEGY);
+      ACE_CHECK_RETURN (-1);
 
       if (collocated)
         {
           switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
             {
             case THRU_POA:
-              return TAO::TAO_CS_THRU_POA_STRATEGY;
+              return TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY;
 
             case DIRECT:
               {
@@ -2849,14 +2961,14 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
                 // using the DIRECT collocation strategy is just insane.
                 /////////////////////////////////////////////////////////////
                 ACE_ASSERT (object->_servant () != 0);
-                return TAO::TAO_CS_DIRECT_STRATEGY;
+                return TAO_Collocation_Strategies::CS_DIRECT_STRATEGY;
               }
             }
         }
     }
 
   // In this case the Object is a client.
-  return TAO::TAO_CS_REMOTE_STRATEGY;
+  return TAO_Collocation_Strategies::CS_REMOTE_STRATEGY;
 }
 
 TAO_ORB_Core::InitRefMap *

@@ -14,6 +14,7 @@
 
 ACE_RCSID(Messaging, Asynch_Reply_Dispatcher, "$Id$")
 
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
@@ -40,6 +41,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
   )
 {
   // AMI Timeout Handling Begin
+
   timeout_handler_.cancel ();
 
   // AMI Timeout Handling End
@@ -70,8 +72,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
   if (TAO_debug_level >= 4)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher::")
-                  ACE_TEXT ("dispatch_reply\n")));
+                  ACE_TEXT ("(%P | %t):TAO_Asynch_Reply_Dispatcher::")
+                  ACE_TEXT ("dispatch_reply:\n")));
     }
 
   CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
@@ -224,3 +226,7 @@ TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
                                                 request_id,
                                                 max_wait_time);
 }
+
+// AMI Timeout Handling End
+
+#endif /* TAO_HAS_AMI_CALLBACK == 1 */

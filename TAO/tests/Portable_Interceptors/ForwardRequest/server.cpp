@@ -1,13 +1,9 @@
 // -*- C++ -*-
 
 #include "ace/Get_Opt.h"
-
 #include "test_i.h"
 #include "Server_ORBInitializer.h"
 #include "Server_Request_Interceptor.h"
-
-#include "tao/ORBInitializer_Registry.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (ForwardRequest,
            server,

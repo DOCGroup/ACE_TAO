@@ -71,8 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers_T.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Null_Mutex.h"
+#include "ace/Synch_T.h"
 #include "idl_bool.h"
 #include "ast_expression.h"
 #include "ast_predefined_type.h"
@@ -272,46 +271,9 @@ public:
   {
     dsf (void);
 
-    ACE_UINT64 interface_seen_;
     ACE_UINT64 valuetype_seen_;
     ACE_UINT64 abstract_iface_seen_;
-    ACE_UINT64 local_iface_seen_;
-    ACE_UINT64 non_local_iface_seen_;
-    ACE_UINT64 fwd_iface_seen_;
-    ACE_UINT64 fwd_valuetype_seen_;
-    ACE_UINT64 basic_type_seen_;
-    ACE_UINT64 ambiguous_type_seen_;
-    ACE_UINT64 enum_seen_;
-    ACE_UINT64 string_seen_;
-    ACE_UINT64 array_seen_;
-    ACE_UINT64 aggregate_seen_;
-    ACE_UINT64 exception_seen_;
-    ACE_UINT64 operation_seen_;
-    ACE_UINT64 non_local_op_seen_;
-    ACE_UINT64 typecode_seen_;
-    ACE_UINT64 any_seen_;
-    ACE_UINT64 parametermode_seen_;
-    ACE_UINT64 base_object_seen_;
-    ACE_UINT64 valuefactory_seen_;
-
-    ACE_UINT64 seq_seen_;
     ACE_UINT64 iface_seq_seen_;
-    ACE_UINT64 vt_seq_seen_;
-    ACE_UINT64 array_seq_seen_;
-    ACE_UINT64 pseudo_seq_seen_;
-    ACE_UINT64 string_seq_seen_;
-    ACE_UINT64 wstring_seq_seen_;
-    ACE_UINT64 octet_seq_seen_;
-
-    ACE_UINT64 basic_arg_seen_;
-    ACE_UINT64 bd_string_arg_seen_;
-    ACE_UINT64 fixed_array_arg_seen_;
-    ACE_UINT64 fixed_size_arg_seen_;
-    ACE_UINT64 object_arg_seen_;
-    ACE_UINT64 special_basic_arg_seen_;
-    ACE_UINT64 ub_string_arg_seen_;
-    ACE_UINT64 var_array_arg_seen_;
-    ACE_UINT64 var_size_arg_seen_;
   } decls_seen_masks;
 
   // Constructor

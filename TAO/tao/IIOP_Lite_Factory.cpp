@@ -1,13 +1,11 @@
 // $Id$
-
 #include "tao/IIOP_Lite_Factory.h"
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Connector.h"
-#include "ace/OS_NS_strings.h"
+#include "ace/Dynamic_Service.h"
+#include "ace/Get_Opt.h"
 
-ACE_RCSID (tao, 
-           IIOP_Factory, 
-           "$Id$")
+ACE_RCSID(tao, IIOP_Factory, "$Id$")
 
 static const char prefix_[] = "iiop";
 

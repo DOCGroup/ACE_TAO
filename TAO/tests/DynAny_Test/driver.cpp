@@ -1,17 +1,21 @@
+// -*- c++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file    driver.cpp
- *
- *  $Id$
- *
- *  Implementation file for the driver program.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/DynAny_Test
+//
+// = FILENAME
+//    driver.cpp
+//
+// = DESCRIPTION
+//    Implementation file for the driver program.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "driver.h"
 #include "test_dynany.h"
@@ -23,7 +27,6 @@
 #include "test_wrapper.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_string.h"
 
 int main (int argc, char* argv[])
 {
@@ -47,8 +50,7 @@ int main (int argc, char* argv[])
 
 // constructor
 Driver::Driver (void)
-  : test_type_ (NO_TEST),
-    debug_ (0)
+  : test_type_ (NO_TEST)
 {
 }
 
@@ -106,7 +108,7 @@ Driver::parse_args (int argc, char* argv[])
                        argv [0]),
                       -1);
 
-  ACE_Get_Opt get_opts (argc, argv, "t:d");
+  ACE_Get_Opt get_opts (argc, argv, "t:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -127,16 +129,11 @@ Driver::parse_args (int argc, char* argv[])
           this->test_type_ = TEST_DYNUNION;
         break;
 
-      case 'd':
-        this->debug_ = 1;
-        break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " -t [dynany|dynarray|dynenum|dynsequence|dynstruct|dynunion]"
-                           " -d for debug"
                            "\n",
                            argv [0]),
                           -1);
@@ -156,7 +153,7 @@ Driver::run (void)
       case TEST_DYNANY:
         {
           Test_Wrapper<Test_DynAny>* wrapper =
-            new Test_Wrapper<Test_DynAny> (new Test_DynAny (this->orb_, debug_));
+            new Test_Wrapper<Test_DynAny> (new Test_DynAny (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
         }
@@ -164,7 +161,7 @@ Driver::run (void)
       case TEST_DYNARRAY:
         {
           Test_Wrapper<Test_DynArray>* wrapper =
-            new Test_Wrapper<Test_DynArray> (new Test_DynArray (this->orb_, debug_));
+            new Test_Wrapper<Test_DynArray> (new Test_DynArray (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
         }
@@ -172,7 +169,7 @@ Driver::run (void)
       case TEST_DYNENUM:
         {
           Test_Wrapper<Test_DynEnum>* wrapper =
-            new Test_Wrapper<Test_DynEnum> (new Test_DynEnum (this->orb_, debug_));
+            new Test_Wrapper<Test_DynEnum> (new Test_DynEnum (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
         }
@@ -180,7 +177,7 @@ Driver::run (void)
       case TEST_DYNSEQUENCE:
         {
           Test_Wrapper<Test_DynSequence>* wrapper =
-            new Test_Wrapper<Test_DynSequence> (new Test_DynSequence (this->orb_, debug_));
+            new Test_Wrapper<Test_DynSequence> (new Test_DynSequence (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
         }
@@ -188,7 +185,7 @@ Driver::run (void)
       case TEST_DYNSTRUCT:
         {
           Test_Wrapper<Test_DynStruct>* wrapper =
-            new Test_Wrapper<Test_DynStruct> (new Test_DynStruct (this->orb_, debug_));
+            new Test_Wrapper<Test_DynStruct> (new Test_DynStruct (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
         }
@@ -196,7 +193,7 @@ Driver::run (void)
       case TEST_DYNUNION:
         {
           Test_Wrapper<Test_DynUnion>* wrapper =
-            new Test_Wrapper<Test_DynUnion> (new Test_DynUnion (this->orb_, debug_));
+            new Test_Wrapper<Test_DynUnion> (new Test_DynUnion (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
         }

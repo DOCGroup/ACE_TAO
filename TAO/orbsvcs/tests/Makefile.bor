@@ -26,7 +26,6 @@ DIRS = \
         Redundant_Naming \
         Time \
 	Trading \
-	Log \
-    RTCosScheduling
+	Log
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

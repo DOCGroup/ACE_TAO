@@ -2,15 +2,11 @@
 
 #include "RT_Transport_Descriptor_Property.h"
 
-#include "ace/OS_Memory.h"
-
 #if ! defined (__ACE_INLINE__)
 #include "RT_Transport_Descriptor_Property.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (RTCORBA,
-           TAO_RT_Transport_Descriptor_Property,
-           "$Id$")
+ACE_RCSID(RTCORBA, TAO_RT_Transport_Descriptor_Property, "$Id$")
 
 TAO_RT_Transport_Descriptor_Property::~TAO_RT_Transport_Descriptor_Property (void)
 {

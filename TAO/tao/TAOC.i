@@ -15,27 +15,47 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
-// and
-//       Institute for Software Integrated Systems
-//       Vanderbilt University
-//       Nashville, TN
-//       USA
-//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY___CI_)
 #define _TAO_BUFFERINGCONSTRAINTPOLICY___CI_
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -43,11 +63,19 @@ CORBA::Boolean operator<< (
     const TAO::BufferingConstraint &_tao_aggregate
   )
 {
-  return
+  if (
     (strm << _tao_aggregate.mode) &&
     (strm << _tao_aggregate.timeout) &&
     (strm << _tao_aggregate.message_count) &&
-    (strm << _tao_aggregate.message_bytes);
+    (strm << _tao_aggregate.message_bytes)
+   )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE
@@ -56,10 +84,17 @@ CORBA::Boolean operator>> (
     TAO::BufferingConstraint &_tao_aggregate
   )
 {
-  return
+  if (
     (strm >> _tao_aggregate.mode) &&
     (strm >> _tao_aggregate.timeout) &&
     (strm >> _tao_aggregate.message_count) &&
-    (strm >> _tao_aggregate.message_bytes);
+    (strm >> _tao_aggregate.message_bytes)
+   )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
 }
-

@@ -4,16 +4,18 @@
 // All Rights Reserved
 // ORB:		Principal identifier pseudo-objref
 
-#include "Principal.h"
-#include "CDR.h"
+#include "tao/Principal.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Principal.i"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            Principal,
            "$Id$")
+
 
 CORBA::Principal::Principal (void)
   : refcount_ (1)

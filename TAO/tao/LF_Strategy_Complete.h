@@ -12,7 +12,6 @@
 
 #ifndef TAO_LF_STRATEGY_COMPLETE_H
 #define TAO_LF_STRATEGY_COMPLETE_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/LF_Strategy.h"
@@ -50,5 +49,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_LF_STRATEGY_COMPLETE_H */

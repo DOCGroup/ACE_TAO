@@ -4,9 +4,9 @@
 
 #ifndef SERVER_TASK_H
 #define SERVER_TASK_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
-#include "tao/ORB.h"
+#include "tao/corba.h"
 #include "ace/Task.h"
 
 /// Implement a simple ACE_Task to run the ORB event loop
@@ -27,5 +27,5 @@ private:
   CORBA::ORB_var orb_;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* SERVER_TASK_H */

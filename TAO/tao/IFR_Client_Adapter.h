@@ -13,35 +13,21 @@
 
 #ifndef TAO_IFR_CLIENT_ADAPTER_H
 #define TAO_IFR_CLIENT_ADAPTER_H
-
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
-
-#include "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
-
-class TAO_OutputCDR;
+#include "ace/CORBA_macros.h"
 
 namespace CORBA
 {
   class InterfaceDef;
   typedef InterfaceDef *InterfaceDef_ptr;
-
-  class Any;
-
-  class ORB;
-  typedef ORB *ORB_ptr;
-
-  class Object;
-  typedef Object *Object_ptr;
-
-  class Environment;
 };
 
 /**
@@ -79,7 +65,7 @@ public:
     ) = 0;
 
   virtual CORBA::InterfaceDef_ptr get_interface_remote (
-      CORBA::Object_ptr target
+      const CORBA::Object_ptr target
       ACE_ENV_ARG_DECL
     ) = 0;
 };

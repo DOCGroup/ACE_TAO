@@ -15,22 +15,20 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_CORBA_OBJECT_H
 #define TAO_CORBA_OBJECT_H
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IOP_IORC.h"
+#include "tao/Policy_ForwardC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CORBA_methods.h"
-#include "tao/Policy_ForwardC.h"
 #include "tao/Pseudo_VarOut_T.h"
-#include "tao/Object_Argument_T.h"
-#include "tao/Arg_Traits_T.h"
+#include "tao/IOP_IORC.h"
 
 #if defined (HPUX) && defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
@@ -40,6 +38,7 @@
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
+class TAO_Object_Proxy_Broker;
 class TAO_ORB_Core;
 
 class ACE_Lock;
@@ -47,41 +46,12 @@ class ACE_Lock;
 namespace TAO
 {
   class ObjectKey;
-  class Object_Proxy_Broker;
 }
 
 namespace CORBA
 {
   class InterfaceDef;
   typedef InterfaceDef *InterfaceDef_ptr;
-
-  class ImplementationDef;
-  typedef ImplementationDef *ImplementationDef_ptr;
-
-  class Context;
-  typedef Context *Context_ptr;
-
-  class Request;
-  typedef Request *Request_ptr;
-
-  class NVList;
-  typedef NVList *NVList_ptr;
-
-  class NamedValue;
-  typedef NamedValue * NamedValue_ptr;
-
-  typedef ULong Flags;
-
-  class ExceptionList;
-  typedef ExceptionList *ExceptionList_ptr;
-
-  class ContextList;
-  typedef ContextList *ContextList_ptr;
-
-  class Object;
-  typedef Object *Object_ptr;
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
 
   /**
    * @class Object
@@ -262,6 +232,13 @@ namespace CORBA
      * tao_. But we have deviated from that principle.
      */
 
+    //@{
+    /// Address of this variable used in _unchecked_narrow().
+    static int _tao_class_id;
+
+    static CORBA::Object_ptr _unchecked_narrow (Object_ptr obj
+                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
     /// Marshalling operator used by the stub code. A long story why
     /// the stub code uses this, let us keep it short here.
     static CORBA::Boolean marshal (Object_ptr obj,
@@ -288,6 +265,10 @@ namespace CORBA
     /// return value when finished with it.
     virtual TAO::ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
 
+    /// Downcasting this object pointer to some other derived class.
+    /// This QueryInterface stuff only work for local object.
+    virtual void * _tao_QueryInterface (ptrdiff_t type);
+
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
     CORBA::Policy_ptr _get_client_policy (CORBA::PolicyType type
@@ -308,11 +289,10 @@ namespace CORBA
     virtual TAO_Stub *_stubobj (void);
 
     /// Set the proxy broker.
-    virtual void _proxy_broker (TAO::Object_Proxy_Broker *proxy_broker);
+    virtual void _proxy_broker (TAO_Object_Proxy_Broker *proxy_broker);
 
-
-
-  public:
+    /// Get the proxy broker.
+    virtual TAO_Object_Proxy_Broker *_proxy_broker (void);
 
     /// Allows us to forbid marshaling of local interfaces.
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
@@ -369,13 +349,9 @@ namespace CORBA
     /// Specify whether this is a local object or not.
     CORBA::Boolean is_local_;
 
-    /// Pointer to the Proxy Broker
-    /**
-     * This cached pointer instance takes care of routing the call for
-     * standard calls in CORBA::Object like _is_a (), _get_component
-     * () etc.
-     */
-    TAO::Object_Proxy_Broker *proxy_broker_;
+    /// Pointer to the Proxy Broker i.e. the instance that takes care of
+    /// getting the right proxy for performing a given call.
+    TAO_Object_Proxy_Broker *proxy_broker_;
 
     /// Flag to indicate whether the IOP::IOR has been evaluated fully.
     Boolean is_evaluated_;
@@ -409,62 +385,12 @@ namespace CORBA
   };
 }   // End CORBA namespace.
 
-namespace TAO
-{
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_Export Arg_Traits<CORBA::Object>
-    : public Object_Arg_Traits_T<CORBA::Object_ptr,
-                                 CORBA::Object_var,
-                                 CORBA::Object_out,
-                                 TAO::Objref_Traits<CORBA::Object> >
-  {
-  };
-
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Export Objref_Traits<CORBA::Object>
-  {
-    static CORBA::Object_ptr tao_duplicate (CORBA::Object_ptr);
-    static void tao_release (CORBA::Object_ptr);
-    static CORBA::Object_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (CORBA::Object_ptr p,
-                                       TAO_OutputCDR & cdr);
-  };
-
-  /**
-   * @class Ret_Object_Argument_T
-   *
-   * @brief Specialization for CORBA::Object, necessitated since we
-   *  don't have an Any insertion operator for Object.
-   */
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_Export Ret_Object_Argument_T <CORBA::Object_ptr, CORBA::Object_var>
-    : public Argument
-  {
-  public:
-    Ret_Object_Argument_T (void);
-
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_result (CORBA::Any *);
-
-    CORBA::Object_ptr & arg (void);
-
-    CORBA::Object_ptr excp (void);
-    CORBA::Object_ptr retn (void);
-
-  private:
-    CORBA::Object_var x_;
-  };
-};
-
-
 /// This function pointer is set only when the Portable server
 /// library is present.
-extern
-  TAO_Export TAO::Object_Proxy_Broker *
-  (*_TAO_Object_Proxy_Broker_Factory_function_pointer) (
-      CORBA::Object_ptr obj
+extern TAO_Export TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
     );
+
 
 TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const CORBA::Object*);

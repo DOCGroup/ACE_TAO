@@ -14,13 +14,13 @@ OBJFILES = \
         $(OBJDIR)\MessagingS_T.obj \
         $(OBJDIR)\Asynch_Reply_Dispatcher.obj \
         $(OBJDIR)\Asynch_Timeout_Handler.obj \
-        $(OBJDIR)\Asynch_Invocation_Adapter.obj \
-        $(OBJDIR)\Asynch_Invocation.obj \
         $(OBJDIR)\Connection_Timeout_Policy_i.obj \
         $(OBJDIR)\Messaging_ORBInitializer.obj \
         $(OBJDIR)\Messaging_PolicyFactory.obj \
         $(OBJDIR)\Messaging_Policy_i.obj \
-        $(OBJDIR)\TAO_ExtC.obj
+        $(OBJDIR)\TAO_ExtC.obj \
+        $(OBJDIR)\Twoway_Asynch_Invocation.obj \
+        $(OBJDIR)\AMI_ClientRequestInfo_i.obj
 
 RESOURCE = $(OBJDIR)\TAO_Messaging.res
 

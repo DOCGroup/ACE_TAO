@@ -1,4 +1,3 @@
 project: taoexe, ifr_client {
-  avoids  += minimum_corba
   exename  = Persistence_Test
 }

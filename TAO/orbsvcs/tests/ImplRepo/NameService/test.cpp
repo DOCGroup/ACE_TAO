@@ -3,8 +3,7 @@
 //
 
 #include "orbsvcs/CosNamingC.h"
-
-#include "ace/Log_Msg.h"
+#include "tao/corba.h"
 
 int main (int argc, char *argv[])
 {

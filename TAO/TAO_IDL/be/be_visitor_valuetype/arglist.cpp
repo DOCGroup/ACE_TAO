@@ -41,27 +41,36 @@ be_visitor_obv_operation_arglist::~be_visitor_obv_operation_arglist (void)
 {
 }
 
-idl_bool
+int
 be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)
 {
   UTL_Scope *scope = node->defined_in ();
   be_interface *iface = be_interface::narrow_from_scope (scope);
 
+  int is_an_amh_exception_holder = 0;
+
   if (iface != 0)
     {
-      if (ACE_OS::strncmp (iface->local_name (), "AMH_", 4) == 0)
+      const char *amh_underbar = "AMH_";
+      const char *node_name = iface->local_name ();
+
+      if( amh_underbar[0] == node_name[0] &&
+          amh_underbar[1] == node_name[1] &&
+          amh_underbar[2] == node_name[2] &&
+          amh_underbar[3] == node_name[3]
+          ) // node name starts with "AMH_"
         {
           const char *last_E = ACE_OS::strrchr (iface->full_name (), 'E');
 
           if (last_E != 0
               && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
             {
-              return I_TRUE;
+              is_an_amh_exception_holder = 1;
             }
         }
     }
 
-  return I_FALSE;
+  return is_an_amh_exception_holder;
 }
 
 int
@@ -104,7 +113,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
           // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
           // whether the operation node has parameters.
           
-          if (node->argument_count () == 0)
+          if (node->argument_count() == 0)
             {
               *os << " ACE_ENV_SINGLE_ARG_DECL";
             }
@@ -119,17 +128,27 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
           switch (this->ctx_->state ())
             {
             case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
+            case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OBV_CH:
+            case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
               // Last argument - is always ACE_ENV_ARG_DECL.
-              *os << "_WITH_DEFAULTS";
+              *os << "_WITH_DEFAULTS" << be_uidt_nl;
+              break;
+            case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
+              // Last argument - is always ACE_ENV_ARG_DECL.
+              *os << be_uidt_nl;
               break;
             default:
+              *os << be_uidt_nl;
               break;
             }
         }
     }
+  else
+    {
+      *os << be_uidt_nl;
+    }
 
-  *os << be_uidt_nl
-      << ")";
+  *os << ")";
 
   be_visitor_context ctx = *this->ctx_;
   be_visitor_operation operation_visitor (&ctx);
@@ -158,6 +177,11 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
+      break;
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
+      *os << ";";
+      break;
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
     default:
        break;
     }
@@ -227,6 +251,7 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
         status = bt->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OTHERS:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_SH:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
@@ -266,6 +291,7 @@ be_visitor_obv_operation_arglist::post_process (be_decl *bd)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OTHERS:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_SH:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:

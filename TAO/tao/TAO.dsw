@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "BiDirGIOP"=.\BiDir_GIOP\TAO_BiDir_GIOP.dsp - Package Owner=<4>
+Project: "Valuetype"=Valuetype\Valuetype.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -12,13 +12,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO DLL
+    Project_Dep_Name TAO
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "BiDirGIOP_Static"=.\BiDir_GIOP\TAO_BiDir_GIOP_Static.dsp - Package Owner=<4>
+Project: "Utils"=Utils\Utils.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -27,13 +27,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO LIB
+    Project_Dep_Name TAO
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Domain"=.\Domain\TAO_Domain.dsp - Package Owner=<4>
+Project: "TypeCodeFactory"=TypeCodeFactory\TypeCodeFactory.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -44,11 +44,14 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name IFR_Client
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Domain_static"=.\Domain\TAO_Domain_Static.dsp - Package Owner=<4>
+Project: "TAO"=TAO.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -60,7 +63,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DynamicAny"=.\DynamicAny\TAO_DynamicAny.dsp - Package Owner=<4>
+Project: "Strategies"=Strategies\Strategies.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -69,13 +72,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO DLL
+    Project_Dep_Name TAO
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "DynamicAny_Static"=.\DynamicAny\TAO_DynamicAny_Static.dsp - Package Owner=<4>
+Project: "SmartProxies"=SmartProxies\SmartProxies.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -84,130 +87,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO LIB
+    Project_Dep_Name TAO
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "DynamicInterface"=.\DynamicInterface\TAO_DynamicInterface.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "DynamicInterface_Static"=.\DynamicInterface\TAO_DynamicInterface_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO LIB
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "IFR_Client"=.\IFR_Client\TAO_IFR_Client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "IFR_Client_Static"=.\IFR_Client\TAO_IFR_Client_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO LIB
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "IORManip"=.\IORManipulation\TAO_IORManip.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "IORManip_Static"=.\IORManipulation\TAO_IORManip_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO LIB
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "IORTable"=.\IORTable\TAO_IORTable.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "IORTable_Static"=.\IORTable\TAO_IORTable_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Messaging"=.\Messaging\TAO_Messaging.dsp - Package Owner=<4>
+Project: "RTScheduler"=RTScheduling\RTScheduler.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -219,127 +105,25 @@ Package=<4>
     Project_Dep_Name PortableServer
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Messaging_Static"=.\Messaging\TAO_Messaging_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "PortableServer"=.\PortableServer\TAO_PortableServer.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "PortableServer_Static"=.\PortableServer\TAO_PortableServer_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO LIB
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "RTCORBA"=.\RTCORBA\TAO_RTCORBA.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "RTCORBA_Static"=.\RTCORBA\TAO_RTCORBA_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "RTPortableServer"=.\RTPortableServer\TAO_RTPortableServer.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name PortableServer
+    Project_Dep_Name IORInterceptor
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name TAO DLL
+    Project_Dep_Name Valuetype
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RTCORBA
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "RTPortableServer_Static"=.\RTPortableServer\TAO_RTPortableServer_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "RTScheduler"=.\RTScheduling\TAO_RTScheduler.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "SmartProxies"=.\SmartProxies\SmartProxies.dsp - Package Owner=<4>
+Project: "RTPortableServer"=RTPortableServer\RTPortableServer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -348,37 +132,28 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO DLL
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORInterceptor
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Valuetype
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TAO DLL"=.\TAO.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "TAO LIB"=.\TAO_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "TAO_Strategies"=.\Strategies\TAO_Strategies.dsp - Package Owner=<4>
+Project: "RTCORBA"=RTCORBA\RTCORBA.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -387,13 +162,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO DLL
+    Project_Dep_Name TAO
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TAO_Strategies_Static"=.\Strategies\TAO_Strategies_Static.dsp - Package Owner=<4>
+Project: "PortableServer"=PortableServer\PortableServer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -402,13 +177,22 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO LIB
+    Project_Dep_Name IORInterceptor
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Valuetype
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TypeCodeFactory"=.\TypeCodeFactory\TypeCodeFactory.dsp - Package Owner=<4>
+Project: "ObjRefTemplate"=ObjRefTemplate\ObjRefTemplate.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -416,14 +200,176 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Valuetype
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Messaging"=Messaging\Messaging.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORInterceptor
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Valuetype
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IORTable"=IORTable\IORTable.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IORManipulation"=IORManipulation\IORManipulation.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IORInterceptor"=IORInterceptor\IORInterceptor.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IFR_Client"=IFR_Client\IFR_Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DynamicInterface"=DynamicInterface\DynamicInterface.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORInterceptor
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Valuetype
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DynamicAny"=DynamicAny\DynamicAny.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Domain"=Domain\Domain.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORInterceptor
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Valuetype
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate
+    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name IFR_Client
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TypeCodeFactory_Static"=.\TypeCodeFactory\TypeCodeFactory_Static.dsp - Package Owner=<4>
+Project: "BiDir_GIOP"=BiDir_GIOP\BiDir_GIOP.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -432,7 +378,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name IFR_Client_Static
+    Project_Dep_Name TAO
     End Project Dependency
 }}}
 

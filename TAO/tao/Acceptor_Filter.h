@@ -11,18 +11,24 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_ACCEPTOR_FILTER_H
 #define TAO_ACCEPTOR_FILTER_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
-#include "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 
 namespace TAO
 {
@@ -65,6 +71,10 @@ public:
 #if defined (__ACE_INLINE__)
 # include "Acceptor_Filter.i"
 #endif /* __ACE_INLINE__ */
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ACCEPTOR_FILTER_H */

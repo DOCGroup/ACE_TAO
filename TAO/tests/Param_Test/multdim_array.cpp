@@ -18,9 +18,7 @@
 #include "multdim_array.h"
 
 
-ACE_RCSID (Param_Test, 
-           multdim_array, 
-           "$Id$")
+ACE_RCSID(Param_Test, fixed_array, "$Id$")
 
 // ************************************************************************
 //               Test_Multdim_Array

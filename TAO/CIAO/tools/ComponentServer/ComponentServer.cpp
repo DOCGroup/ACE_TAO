@@ -105,11 +105,7 @@ main (int argc, char *argv[])
       // But it's not sure to me where exactly we can get the
       // ConfigValues needed by the init method at this moment.
 
-      Components::ConfigValues configs;
-
-      comserv_servant->init (configs
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      // comserv_servant->init (config ACE_ENV_ARG_PARAMETER);
 
       // Configuring ComponentServer.
       PortableServer::ObjectId_var cs_oid
@@ -131,7 +127,7 @@ main (int argc, char *argv[])
 
 
       Components::Deployment::ServerActivator_var activator;
-      Components::ConfigValues_var config = new Components::ConfigValues;
+      Components::ConfigValues_var config;
 
       if (use_callback)
         {
@@ -154,7 +150,7 @@ main (int argc, char *argv[])
         }
 
       comserv_servant->set_objref (activator.in (),
-                                   config,
+                                   config.in (),
                                    comserv_obj.in ()
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

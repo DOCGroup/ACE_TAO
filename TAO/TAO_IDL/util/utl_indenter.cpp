@@ -68,7 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //
 
 #include "utl_indenter.h"
-#include "ace/OS_NS_stdio.h"
+#include "ace/streams.h"
 
 ACE_RCSID (util, 
            utl_indenter, 

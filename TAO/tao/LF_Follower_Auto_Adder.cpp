@@ -7,9 +7,7 @@
 # include "tao/LF_Follower_Auto_Adder.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           LF_Follower_Auto_Adder, 
-           "$Id$")
+ACE_RCSID(tao, LF_Follower_Auto_Adder, "$Id$")
 
 TAO_LF_Follower_Auto_Adder::~TAO_LF_Follower_Auto_Adder (void)
 {

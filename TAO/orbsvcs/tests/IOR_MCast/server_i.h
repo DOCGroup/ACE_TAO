@@ -1,8 +1,6 @@
-// -*- C++ -*-
-//
 // $Id$
 
-#ifndef SERVER_I_H
+#if !defined (SERVER_I_H)
 #define SERVER_I_H
 
 #include "orbsvcs/orbsvcs/IOR_Multicast.h"
@@ -15,24 +13,23 @@ class Server_i
   // = DESCRIPTION
   //     Helper class for the server implementation.
 
-public:
+ public:
   // = Constructor and destructor.
   Server_i (void);
   ~Server_i (void);
 
-  int init (int &argc, char **&argv ACE_ENV_ARG_DECL);
+  int init (int &argc, char **&argv ACE_ENV_ARG_DECL_NOT_USED);
   // Initialize the server multicast.
 
-private:
+ private:
 
-  /// Sets the IOR_Multicast class to listen for multicast requests
+  int enable_multicast (const char *ior
+                        ACE_ENV_ARG_DECL);
+  // Sets the IOR_Multicast class to listen for multicast requests
   // for this server.
-  int enable_multicast (const char *ior);
 
-  /// Parse the command line arguments.
   int parse_args (int argc, char *argv[]);
-
-private:
+  // Parse the command line arguments.
 
   int argc_;
   // # of arguments on the command line.

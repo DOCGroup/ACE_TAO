@@ -20,8 +20,6 @@
 // -- Custom App. Include --
 #include "MultipleC.h"
 
-#include "ace/Log_Msg.h"
-
 struct Quote
 {
   static const char *top;

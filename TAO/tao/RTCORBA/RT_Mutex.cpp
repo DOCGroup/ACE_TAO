@@ -4,7 +4,6 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "RT_ORB.h"
-#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID(TAO, RT_Mutex, "$Id$")
 

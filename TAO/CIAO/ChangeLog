@@ -1,1332 +1,3 @@
-Wed Oct 29 16:39:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CIDLC/ServantSourceGenerator.cpp:
-        
-          Removed extra generated close brace.
-
-Wed Oct 29 15:56:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CCF/CCF/IDL2/Traversal/Interface.hpp:
-        * CCF/CCF/IDL2/Traversal/Struct.hpp:
-        
-          Cosmetic changes.
-          
-        * CIDLC/CIDLC.vcproj:
-        
-          Added SizeTypeCalculator.{h,cpp} to project.
-          
-        * CIDLC/Literals.hpp:
-        * CIDLC/ServantHeaderGenerator.cpp:
-        * CIDLC/ServantSourceGenerator.cpp:
-        
-          Fixed bugs in code generation - missing 'Consumer' appended
-          to eventtype name, and event typename used for concatenation
-          of operation name instead of event identifier name.
-          
-        * CIDLC/SizeTypeCalculator.cpp:
-        
-          Added support for wstrings, sequences and interfaces.
-          
-        * CIDLC/TypeNameEmitter.cpp:
-        * CIDLC/TypeNameEmitter.hpp:
-        
-          Added support for typedefs, structs, sequences and interfaces.
-          
-        * CIDLC/cidlc.cpp:
-        
-          Added instantiation and launch of SizeTypeCalculator.
-
-Wed Oct 29 15:19:07 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
-	* CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Interface.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Sequence.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Struct.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Typedef.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Component.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/EventType.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Home.hpp: added support for sharing
-	  context by typedef temporary and principal syntax tree node.
-
-Wed Oct 29 13:36:47 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CCF/IDL2/Traversal/Elements.cpp:
-	* CCF/CCF/IDL2/Traversal/Elements.hpp:
-	* CCF/CCF/IDL2/Traversal/Typedef.hpp: fixed bug in typedef
-	  traversal scheme.
-
-Fri Oct 24 19:16:21 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CCF/IDL2/Traversal/Elements.hpp:
-	* CCF/CCF/IDL2/Traversal/Typedef.hpp: Fixed inheritance ambiguity.
-
-	* CIDLC/Makefile.alt:
-	* CIDLC/ServantSourceGenerator.cpp:
-	* CIDLC/TypeNameEmitter.cpp:
-	* CIDLC/TypeNameEmitter.hpp: Added some functions for
-	  typedef testing.
-
-	* CIDLC/SizeTypeCalculator.cpp:
-	* CIDLC/SizeTypeCalculator.hpp: Added initial implementation
-	  of fixed/variable type size calculation.
-
-Fri Oct 24 18:17:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CCF/CCF/IDL2/IDL2.vcproj:
-
-          Added new front end files to the project.
-
-        * CCF/CCF/IDL2/SemanticAction.hpp:
-        * CCF/CCF/IDL2/Traversal.hpp:
-        * CCF/CCF/IDL2/SemanticAction/Impl/Member.hpp:
-        * CCF/CCF/IDL2/SemanticAction/Impl/TypeId.hpp:
-        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
-        * CCF/CCF/IDL2/SyntaxTree/ElementsCtor.cpp:
-        * CCF/CCF/IDL2/SyntaxTree/InterfaceCtor.cpp:
-        * CCF/CCF/IDL2/SyntaxTree/Struct.cpp:
-        * CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
-        * CCF/CCF/IDL2/SyntaxTree/ValueTypeCtor.cpp:
-
-          Fixed various minor errors, such as removal of unused argument
-          identifiers, and addition of 'using std".
-
-        * CIDLC/TypeNameEmitter.cpp:
-        * CIDLC/TypeNameEmitter.hpp:
-
-          Added case for sequences, and typedefs of string and wstring.
-
-Fri Oct 24 17:14:51 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CCF/IDL2/Traversal/Typedef.hpp: New implementation of
-	  typedef traverser.
-
-Fri Oct 24 11:31:34 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-
-        * CIAO version 0.3.5 released.
-
-Thu Oct 16 16:45:35 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL2/Makefile.archive:
-	* CCF/CCF/IDL2/Parser.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SemanticAction.hpp:
-	* CCF/CCF/IDL2/SyntaxTree.hpp:
-	* CCF/CCF/IDL2/Traversal.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Member.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Struct.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Member.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Struct.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Struct.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Makefile.alt:
-	* CCF/CCF/IDL2/SyntaxTree/Member.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Member.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Operation.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Struct.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Struct.hpp:
-	* CCF/CCF/IDL2/Traversal/Makefile.alt:
-	* CCF/CCF/IDL2/Traversal/Member.cpp:
-	* CCF/CCF/IDL2/Traversal/Member.hpp:
-	* CCF/CCF/IDL2/Traversal/Struct.cpp:
-	* CCF/CCF/IDL2/Traversal/Struct.hpp:
-	* CCF/CCF/IDL2/Traversal/Typedef.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Operation.hpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	  Added support for struct.
-
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
-	  Added a few structs for testing.
-
-	* CCF/Documentation/TODO: Marked some items as done or
-	  partially done.
-
-Thu Oct 16 12:55:06 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CCF/IDL2/SyntaxTree/ElementsCtor.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/InterfaceCtor.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/ValueTypeCtor.cpp: Added fake ctor
-	  definition for some compilers (like MSVC) that insist they
-	  should be defined (even though never used).
-
-Thu Oct 16 12:07:01 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.cpp.m4:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.m4:
-	* CCF/CCF/IDL2/SyntaxTree/Elements.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Interface.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Interface.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Sequence.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Typedef.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/ValueType.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/ValueType.hpp:
-	* CCF/CCF/IDL2/Traversal/BuiltIn.hpp:
-	* CCF/CCF/IDL2/Traversal/BuiltIn.hpp.m4:
-	* CCF/CCF/IDL2/Traversal/Elements.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Component.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Home.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Component.cpp:
-	* CCF/CCF/IDL3/SyntaxTree/Component.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/EventType.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Home.hpp:
-	* CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.hpp: Added the
-	  SyntaxTree::ForwardDeclarableTypeDecl base class and moved
-	  there {virtual bool defined () const;}. Added
-	  {virtual bool complete () const;} to TypeDecl to reflect type
-	  completeness. Also changed some type names for consistency.
-
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp: Minor changes to
-	  reflect above.
-
-	* CIDLC/ExecutorMappingGenerator.cpp:
-	* CIDLC/ServantSourceGenerator.cpp:
-	* CIDLC/TypeNameEmitter.cpp:
-	* CIDLC/TypeNameEmitter.hpp:
-	* CIDLC/cidlc.cpp: Minor changes to reflect above.
-
-Wed Oct 15 15:43:13 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL2/Makefile.archive:
-	* CCF/CCF/IDL2/Parser.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SyntaxTree.hpp:
-	* CCF/CCF/IDL2/Traversal.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Typedef.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Makefile.alt:
-	* CCF/CCF/IDL2/SyntaxTree/Sequence.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Sequence.hpp:
-	* CCF/CCF/IDL2/Traversal/Makefile.alt:
-	* CCF/CCF/IDL2/Traversal/Sequence.cpp:
-	* CCF/CCF/IDL2/Traversal/Sequence.hpp: Added support for
-	  unbounded sequence.
-
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
-	  Added a few sequences for testing.
-
-Wed Oct 15 13:59:33 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
-	* CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Interface.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Typedef.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/ValueType.hpp:
-	* CCF/CCF/IDL2/Traversal/Elements.cpp:
-	* CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Component.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Home.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Component.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/EventType.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Home.hpp:
-	* CCF/CCF/IDL3/Traversal/Operation.cpp: Second part of
-	  typedef-related infrastructure.
-
-	* CCF/Example/CIDL/LocalExecutorMapping/test-0.idl:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-0_exec.idl.orig:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-1.idl: Added a few
-	  typedef's for testing.
-
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/Makefile.alt:
-	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp: Some minor
-	  clean-up's.
-
-	* CCF/Documentation/TODO: Added a few more items.
-
-Tue Oct 14 22:44:43 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* examples/handcrafted/Hello/simple_client.cpp:
-	* examples/handcrafted/Hello/client.cpp: Added the missing streams
-	  header file.
-
-Tue Oct 14 17:18:43 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CIDLC/Makefile.alt: Added alternative (to mpc) means of
-	  building CIDL compiler.
-
-Tue Oct 14 16:57:54 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CIDLC/ExecutorMappingGenerator.cpp:
-	* CIDLC/RepositoryIdGenerator.cpp: Some minor clean-up's.
-
-Tue Oct 14 16:41:41 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/IDL2/Makefile.archive:
-	* CCF/IDL2/Parser.cpp:
-	* CCF/IDL2/Parser.hpp:
-	* CCF/IDL2/SemanticAction.hpp:
-	* CCF/IDL2/SyntaxTree.hpp:
-	* CCF/IDL2/Traversal.hpp:
-	* CCF/IDL2/SemanticAction/Factory.hpp:
-	* CCF/IDL2/SemanticAction/Typedef.hpp:
-	* CCF/IDL2/SemanticAction/Impl/Factory.hpp:
-	* CCF/IDL2/SemanticAction/Impl/Interface.hpp:
-	* CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
-	* CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
-	* CCF/IDL2/SyntaxTree/BuiltIn.hpp:
-	* CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
-	* CCF/IDL2/SyntaxTree/Elements.cpp:
-	* CCF/IDL2/SyntaxTree/Elements.hpp:
-	* CCF/IDL2/SyntaxTree/Elements.tpp:
-	* CCF/IDL2/SyntaxTree/Interface.hpp:
-	* CCF/IDL2/SyntaxTree/Makefile.alt:
-	* CCF/IDL2/SyntaxTree/Module.hpp:
-	* CCF/IDL2/SyntaxTree/Operation.hpp:
-	* CCF/IDL2/SyntaxTree/Translation.cpp:
-	* CCF/IDL2/SyntaxTree/Translation.hpp:
-	* CCF/IDL2/SyntaxTree/TypeId.cpp:
-	* CCF/IDL2/SyntaxTree/Typedef.cpp:
-	* CCF/IDL2/SyntaxTree/Typedef.hpp:
-	* CCF/IDL2/SyntaxTree/ValueType.hpp:
-	* CCF/IDL2/Traversal/BuiltIn.hpp:
-	* CCF/IDL2/Traversal/BuiltIn.hpp.m4:
-	* CCF/IDL2/Traversal/Elements.cpp:
-	* CCF/IDL2/Traversal/Elements.hpp:
-	* CCF/IDL2/Traversal/Interface.hpp:
-	* CCF/IDL2/Traversal/Module.hpp:
-	* CCF/IDL2/Traversal/Operation.hpp:
-	* CCF/IDL2/Traversal/Translation.hpp:
-	* CCF/IDL2/Traversal/TypeId.hpp:
-	* CCF/IDL2/Traversal/Typedef.cpp:
-	* CCF/IDL2/Traversal/Typedef.hpp:
-	* CCF/IDL3/SyntaxTree/Component.hpp:
-	* CCF/IDL3/SyntaxTree/EventType.hpp:
-	* CCF/IDL3/SyntaxTree/Home.hpp:
-	* CCF/IDL3/SyntaxTree/Operation.hpp:
-	* CCF/IDL3/Traversal/Component.hpp:
-	* CCF/IDL3/Traversal/EventType.hpp:
-	* CCF/IDL3/Traversal/Home.hpp:
-	* CCF/IDL3/Traversal/Operation.hpp:
-	* CCF/CIDL/SyntaxTree/Composition.hpp:
-	* CCF/CIDL/SyntaxTree/HomeExecutor.hpp:
-	* CCF/CIDL/Traversal/Composition.hpp:
-	* CCF/CIDL/Traversal/HomeExecutor.hpp: First part of
-	  typedef-related infrastructure.
-
-	* CCF/CodeGenerationKit/IndentationIDL.hpp:
-	* CCF/CompilerElements/Preprocessor.hpp:
-	* Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	* Example/CIDL/LocalExecutorMapping/cidlc.cpp:
-	* Example/CIDL/LocalExecutorMapping/test-0.idl: Some minor
-	  clean-up's.
-
-	* Documentation/TODO: Added a few more items.
-
-Tue Oct 14 00:54:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * performance-tests/Benchmark/RoundTrip/svc.conf:
-	  Changed to load Advanced_Resource_Factory dynamically.
-
-        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
-        * performance-tests/Benchmark/RoundTripServer/LatencyTest.h:
-        * performance-tests/Benchmark/RoundTripServer/server.cpp:
-	  Changed to implement the Benchmark::Latency_Test interface
-	  instead of the Latency_Test interface.  Otherwise, we won't be
-	  able to connect the interface to a receptacle expecting another
-	  interface type.
-
-Tue Oct 14 00:54:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
-	  Fixed a minor compilation problem.
-
-	* performance-tests/Benchmark/descriptors/Test-ior.cad:
-	* performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
-	* performance-tests/Benchmark/RoundTripServer/server.cpp:
-
-	  Changed to output IOR to a fixed file named "rtserver.ior" and
-	  refer to the object as file://rtserver.ior in the cad file
-
-Mon Oct 13 23:41:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* examples/handcrafted/Display/RateGen/controller.cpp:
-	* examples/handcrafted/Display/RateGen/client.cpp: Added inclusion
-	  of "ace/streams.h" to make them compile.
-
-Mon Oct 13 22:31:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.cpp:
-	  Fixed a fuzz warning.
-
-Mon Oct 13 16:49:00 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-
-	* tools/RTComponentServer/RTConfig_Manager.h:
-	* tools/RTComponentServer/ComponentServer_Task.h:
-	  Added /**/ to fix Fuzz errors.
-
-Sun Oct 12 20:44:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CIDLC/Collectors.hpp:
-        * CIDLC/DescriptorGenerator.cpp:
-        * CIDLC/DescriptorGenerator.hpp:
-        * CIDLC/ExecutorMappingGenerator.cpp:
-        * CIDLC/ExecutorMappingGenerator.hpp:
-        * CIDLC/Literals.hpp:
-        * CIDLC/ServantGenerator.cpp:
-        * CIDLC/ServantGenerator.hpp:
-        * CIDLC/ServantHeaderGenerator.cpp:
-        * CIDLC/ServantHeaderGenerator.hpp:
-        * CIDLC/ServantSourceGenerator.cpp:
-        * CIDLC/ServantSourceGenerator.hpp:
-	  Changed top of files to match the title/author/cvs id  format for
-	  all other CCF and CIDLC files.
-
-        * CIDLC/TypeNameEmitter.cpp:
-        * CIDLC/TypeNameEmitter.hpp:
-
-	  New files, adding support for all basic IDL types, and factoring
-	  out the typename emitter classes for operation return types and
-	  parameters into a separate translation unit, to eliminate the
-	  duplication in ServantHeaderGenerator.cpp and
-	  ServantSourceGenerator.cpp.
-
-        * CIDLC/cidlc.mpc:
-        * CIDLC/CIDLC.vcproj:
-
-	  Updated with the new files above.
-
-Sun Oct 12 18:36:16 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
-
-        * performance-tests/Benchmark/Benchmark.mpc:
-        * performance-tests/Benchmark/Benchmark.idl:
-        * performance-tests/Benchmark/server.cpp:
-        * performance-tests/Benchmark/svc.conf:
-        * performance-tests/Benchmark/LatencyTest.h:
-        * performance-tests/Benchmark/LatencyTest.cpp:
-        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.idl:
-        * performance-tests/Benchmark/RoundTripClient/client.cpp:
-        * performance-tests/Benchmark/RoundTrip/RoundTrip.idl:
-          Added test scenario in which a CORBA component interacts with
-          a CORBA server.
-
-Sat Oct 11 00:18:13 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* bin/generate_component_mpc.pl: My previous change didn't
-	  completely fix the script.  It was using the obsolet dependency
-	  MPC keyword "depends" instead of "after", and the dependencies
-	  was partially broken.
-
-Fri Oct 10 18:39:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CIDLC/CIDLC.vcproj:
-        * CIDLC/DescriptorGenerator.cpp:
-        * CIDLC/Literals.hpp:
-        * CIDLC/RepositoryIdGenerator.cpp:
-        * CIDLC/RepositoryIdGenerator.hpp:
-        * CIDLC/cidlc.cpp:
-
-          Added backend support for typeid and typeprefix, used in
-          computing the repository id string.
-
-Fri Oct 10 15:54:00 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CCF/IDL2/LexicalAnalyzer.hpp:
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuildIn.m4:
-	* CCF/CCF/IDL2/SyntaxTree/BuildIn.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuildIn.hpp.m4:
-	* CCF/CCF/IDL2/SyntaxTree/BuildIn.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuildIn.cpp.m4:
-	* CCF/CCF/IDL2/Traversal/BuildIn.hpp:
-	* CCF/CCF/IDL2/Traversal/BuildIn.hpp.m4:
-	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-1_exec.idl.orig:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
-	* CIDLC/cidlc.cpp: Added support for all built-in types (spec
-	 calls them 'base types') in CCF and in CIDL compiler driver.
-
-	* CCF/Documentation/TODO: marked corresponding item as done.
-
-Thu Oct 09 00:50:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* bin/generate_component_mpc.pl: Minor enhancement to the previous
-	  change.  This script now allows an optional project name prefix
-	  to be define via the [-u] flag.  If this flag is not used, the
-	  dependent component's name will be used as project name prefix.
-	  Since there are possibly many component depending on the same
-	  component, using the depending componant name may not help much.
-	  If neither -u and -p flag are used, no project name prefix will
-	  be added (the redundant leading underscore from the previous
-	  change has been removed.)
-
-Fri Oct  6 10:00:12 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/Documentation/TODO: merged items from my off-line TODO.
-
-Fri Oct 03 22:45:43 2003  Chris Cleeland  <cleeland@ociweb.com>
-
-        * CIAO version 0.3.4 released.
-
-Fri Oct 03 11:07:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* docs/releasenotes.html: Updated the release notes with more
-	  recent news.
-
-Fri Oct  3 08:14:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* examples/handcrafted/BasicSP_EC/EC/EC.mpc: Fixed a problem with
-	  the MPC file. Thanks to Johnny Willemsen for poitning this out.
-
-Thu Oct  2 15:02:10 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CCF/IDL2/Traversal/TypeId.hpp:
-	* CCF/CCF/IDL2/Traversal/TypeId.cpp:
-	* CCF/CCF/IDL2/Traversal.hpp:
-	* CCF/CCF/IDL2/SyntaxTree.hpp:
-	* CCF/CCF/IDL2/SemanticAction.hpp: Added missing pieces for
-	  typeid/typeprefix support.
-
-Wed Oct  1 14:26:09 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CCF/CompilerElements/Context.hpp: added count () member
-	  function.
-
-	* CIDLC/RepositoryIdGenerator.hpp:
-	* CIDLC/RepositoryIdGenerator.cpp: implemented first phase of
-	  repository id generation.
-
-Tue Sep 30 09:52:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* performance-tests/mico/mico-thrput-st/client.cc:
-	* performance-tests/mico/mico-thrput-st/server.cc:
-
-	  Fixed fuzz errors.
-
-
-Fri Sep 26 12:13:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
-	  Changed to deploy Test-IOR.cad instead of
-	  Test-Name-Service.cad.
-
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_stub_export.h:
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_svnt_export.h:
-	  Fixed some extra line-breaks that were causing compilation errors.
-
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
-	  Fixed a compilation error.
-
-	* performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
-	  Removed a redundant comma.
-
-	* tools/ComponentServer/ComponentServer.cpp:
-	  Fixed execution error in "debug mode."
-
-Wed Sep 24 20:59:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* examples/handcrafted/BasicSP_EC2/EC/EC.mpc: Fixed problems that
-	  missed my last checkiin "Sun Sep 21 17:07:45 2003  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>".
-
-Sun Sep 21 17:15:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* bin/generate_component_mpc.pl: Appended the value provided to
-	  the -p option to the project names.
-
-Sun Sep 21 17:07:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* examples/handcrafted/BasicSP_EC/BasicSP.mpc:
-	* examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED.mpc:
-	* examples/handcrafted/BasicSP_EC/BMDevice/BMDevice.mpc:
-	* examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay.mpc:
-	* examples/handcrafted/BasicSP_EC/EC/EC.mpc
-	* examples/handcrafted/BasicSP_EC2/BasicSP.mpc:
-	* examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED.mpc:
-	* examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice.mpc:
-	* examples/handcrafted/BasicSP_EC2/BMDisplay/BMDisplay.mpc:
-	  Changed the project file names so that they don't clash with the
-	  project names in examples/handcrafted/BasicSP. This shold get
-	  rid of warning in VC7 builds hosted by remedy.
-
-Fri Sep 19 14:27:57 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
-
-        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
-          Fixed to adhere to latest mpc changes. This also ensured proper
-          make files to be generated.
-
-Fri Sep 19 13:31:50 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
-
-        * performance-tests/Benchmark/descriptors/Test-IOR.cad:
-          cad file to test CORBA server with Component client
-        * performance-tests/Benchmark/RoundTripClient/run_test_ior.pl:
-          Perl script to run the benchmark
-        * performance-tests/Benchmark/RounTrip_server:
-        * performance-tests/Benchmark/RoundTripServer/LatencyTest.cpp:
-        * performance-tests/Benchmark/RoundTripServer/LatencyTest.h:
-        * performance-tests/Benchmark/RoundTripServer.mpc:
-        * performance-tests/Benchmark/RoundTripServer/server.cpp:
-        * performance-tests/Benchmark/RoundTripServer/Test.idl:
-          A server to communicate with CIAO client, implementing the same
-          interface needed.
-
-Tue Sep 16 14:04:06 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/Example/ComponentDeploymentDescriptor: Added small example
-	  that shows how syntax tree traversal mechanism can be used in
-	  different code generation tasks.
-
-Thu Aug 28 12:30:10 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CFF/IDL2/SyntaxTree/Elements.*: Made SyntaxTree::Node
-	  capable of holding arbitrary context information (see
-	  SyntaxTree::Node::context ()). Plus some minor architectural
-	  changes.
-
-	* CCF/CFF/IDL2/SyntaxTree/TypeId.*
-	* CCF/CFF/IDL2/SemanticAction/TypeId.*
-	* CCF/CFF/IDL2/SemanticAction/Impl/TypeId.*
-	* CCF/CFF/IDL2/LexicalAnalyzer.*
-	* CCF/CFF/IDL2/Parser.*: Added support for typeid and typeprefix.
-
-Tue Aug 26 16:59:49 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* tools/RTComponentServer/RTConfig_Manager.cpp:
-	* tools/RTComponentServer/RTConfig_Manager.inl:
-	* tools/RTComponentServer/RTServer_Impl.cpp:
-	* tools/RTComponentServer/RTServer_Impl.h:
-	* tools/XML_Helpers/RTConfig_Handlers.cpp: Fixed compilation
-	  problem on Linux.
-
-Tue Aug 26 10:14:03 2003  Diego Sevilla  <dsevilla@ditec.um.es>
-
-	* CIDLC/ServantSourceGenerator.cpp: Correctly generate get and set
-	  operations for attributes in the servant code.  An error in how
-	  I built the traverse was preventing that.
-
-Tue Aug 26 09:27:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CIDLC/ServantHeaderGenerator.cpp:
-        * CIDLC/ServantSourceGenerator.cpp:
-
-          Changed the constructor of SetAttributeEmitter to take
-          INArgTypeNameEmitter as a delegate instead of
-          ReturnTypeNameEmitter, which was previously the case, causing
-          the code generation to emit the return type char* instead
-          of the correct IN argument type const char*. Thanks to
-          Roland Schimmack <SC@ProCom.de> for reporting the bug.
-
-Mon Aug 25 09:47:19 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h: Fixed a
-	  compilation error by adding inclusion of "ace/Null_Mutex.h" and
-	  define QT_GENUINE_STR.
-
-Mon Aug 25 07:42:14 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* tools/RTComponentServer/ComponentServer_Task.cpp:
-	* tools/RTComponentServer/ComponentServer_Task.h:
-	* tools/RTComponentServer/RTConfig_Manager.h: Fixed merge errors
-	  by adding inclusion of "tao/ORB.h", "ace/Null_Mutex.h" and
-	  such.
-
-Sun Aug 24 22:03:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	  Merged the RTCIAO-0 branch into main trunk.
-
-	Sun Aug 24 21:45:33 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-		* tools/Assembly_Deployer/Assembly_Deployer.mpc:
-		* tools/Daemon/Daemon.mpc: Both CIAO_Daemon and Assembly_Manager
-		  depend on RTCORBA  library now because they both required to
-		  handle RTCORBA related types.
-
-		* tools/Assembly_Deployer/Assembly_Visitors.cpp:
-		* tools/Assembly_Deployer/Assembly_Visitors.h: Decoupled the
-		  container creation functionality from the creation of
-		  ComponentServer into a separate method.  This allows us to
-		  better manage the type of container and the associating policy
-		  sets.
-
-		* tools/Assembly_Deployer/Deployment_Configuration.cpp:
-		* tools/Assembly_Deployer/Deployment_Configuration.h: Changed the
-		  get_activator[_ior] functions to return default activator where
-		  there's no valid activator id available instead of throwing an
-		  exception.
-
-		* tools/ComponentServer/ComponentServer.cpp: Invoke the init
-		  method of ComponentServer servant.  This function is now
-		  supported.
-
-		* tools/RTComponentServer/ComponentServer_Task.cpp:
-		* tools/RTComponentServer/ComponentServer_Task.h:
-		* tools/RTComponentServer/RTComponentServer.cpp:
-		* tools/RTComponentServer/RTComponentServer.mpc:
-		* tools/RTComponentServer/RTConfig_Manager.cpp:
-		* tools/RTComponentServer/RTConfig_Manager.h:
-		* tools/RTComponentServer/RTServer_Impl.cpp:
-		* tools/RTComponentServer/RTServer_Impl.h:
-		* tools/RTComponentServer/RTServer_Impl.inl: Added/Changed to
-		  properly support the real-time ComponentServer implementation.
-
-		* tools/ServerActivator/ServerActivator.cpp: Fixed a fuzz error.
-
-		* tools/XML_Helpers/Assembly_Spec.inl: Changed to return 0 if
-		  rtcad_filename and rtpolicyset_ref is not specified in the
-		  original XML file.
-
-	Thu Aug 14 16:27:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-		* tools/XML_Helpers/RTCAD-example.rtd:
-		* tools/XML_Helpers/RTCAD-example.cad: Added new file to show some
-		  example cad and rtd files.
-
-		* tools/XML_Helpers/main.cpp:
-		* tools/XML_Helpers/XML_Utils.cpp: Extended to invoke the RTCAD
-		  handler.
-
-		* tools/XML_Helpers/RTConfig_Handlers.h:
-		* tools/XML_Helpers/RTConfig_Handlers.cpp: Fixed run-time errors.
-
-	Wed Aug 13 01:48:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-		* tools/RTComponentServer/RTComponentServer.mpc: Added dependency
-		  to XML_Helpers library.
-
-		* tools/XML_Helpers/XML_Utils.h: Added parse_rtcad_extension
-		  static method.  This is yet to be implemented.
-
-		* tools/XML_Helpers/RTConfig_Handlers.h:
-		* tools/XML_Helpers/RTConfig_Handlers.inl:
-		* tools/XML_Helpers/RTConfig_Handlers.cpp: Added new files for
-		  parsing RTConfig extention.
-
-		* tools/RTComponentServer/RTConfig_Manager.h:
-		* tools/RTComponentServer/RTConfig_Manager.cpp:
-		* tools/XML_Helpers/RTConfiguration.idl: Renamed
-		  RTORB_Resources_Info to RTORB_Resource_Info.
-
-		* tools/XML_Helpers/XMLHelper.mpc: Added rtcorba as a base
-		  project.  We now depend on RTCORBA.
-
-	Sun Aug 10 13:50:15 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-		* tools/RTComponentServer/RTConfiguration.idl:
-		* tools/RTComponentServer/RTConfigurationClient.cpp:
-		* tools/RTComponentServer/RTComponentServer.mpc: Removed
-		  RTConfiguration.idl and the stub wrapper
-		  RTConfigurationClient.cpp.  They have been moved to XML_Helpers
-		  library.
-
-		* tools/RTComponentServer/RTConfig_Manager.h:
-		* tools/RTComponentServer/RTConfig_Manager.cpp: Changed to include
-		  RTConfigurationC.h from XML_Helpers subdir and make sure
-		  RTCORBA.h is included before RTConfigurationC.h.
-
-		* tools/XML_Helpers/XMLHelpers.mpc:
-		* tools/XML_Helpers/RTConfiguration.idl:
-		* tools/XML_Helpers/RTConfiguration_Stubs.cpp: Added
-		  RTConfiguration info and its wrapper cpp file.  This wrapper cpp
-		  file is used to ensure that RTCORBA.h is included before
-		  RTConfigurationC.h.
-
-		* tools/XML_Helpers/Assembly_Handlers.cpp:
-		* tools/XML_Helpers/Assembly_Handlers.h:
-		* tools/XML_Helpers/Assembly_Handlers.inl:
-		* tools/XML_Helpers/Assembly_Spec.h:
-		* tools/XML_Helpers/Assembly_Spec.inl: Extended to parse and store
-		  <extension> information in <processcollocation> and
-		  <homeplacement>.
-
-	Wed Aug 06 17:02:02 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-		* tools/RTComponentServer/RTConfig_Manager.h:
-		* tools/RTComponentServer/RTConfig_Manager.cpp: Added support for
-		  keeping PriorityBands information.
-
-	Sun Aug  3 23:12:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-		* tools/RTComponentServer/RTConfig_Manager.cpp: Fixed mismatched
-		  throw specifications.  Added inclusion of "ace/SString.h" as ACE
-		  now only includes "ace/SStringfwd.h".
-
-	Sun Aug 03 00:45:59 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-		* tools/RTComponentServer/RTConfig_Manager.cpp: Fixed some
-		  accidental pastings of code.
-
-	Fri Aug 01 13:50:34 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-		* tools/RTComponentServer/RTComponentServer.mpc:
-		* tools/RTComponentServer/RTConfig_Manager.cpp:
-		* tools/RTComponentServer/RTConfig_Manager.h:
-		* tools/RTComponentServer/RTConfig_Manager.inl:
-		* tools/RTComponentServer/RTConfiguration.idl: Added code for
-		  managing named collection of RTCORBA related policies.
-
-	Sun Jul 06 21:37:22 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-		* tools/RTComponentServer/ComponentServer_Task.cpp (svc): Changed
-		  to take advantage of CIAO::Activator_Callback interface change
-		  for getting back our own ConfigValues.  We will need to use
-		  these configuration values in the future.
-
-	Sun Jul 06 11:50:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-		* tools/RTComponentServer/ComponentServer_Task.cpp:
-		* tools/RTComponentServer/ComponentServer_Task.h:
-		* tools/RTComponentServer/ComponentServer_Task.inl:
-		* tools/RTComponentServer/README:
-		* tools/RTComponentServer/RTComponentServer.cpp:
-		* tools/RTComponentServer/RTComponentServer.mpc: Added the
-		  skeleton of RTComponentServer.
-
-	Sun Jul 06 11:33:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-		* Added: this temporary ChangeLog file for changes within the
-		  RTComponentServer.
-
-
-Sun Aug 24 21:38:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* ciao/Container_Base.cpp:
-	* ciao/Container_Base.h: Added an extra argument of type
-	  CORBA::PolicyList to the init method which we can use to pass
-	  extra RTCORBA policies into the RT Container.
-
-	* ciao/Container_Impl.cpp:
-	* ciao/Container_Impl.h: Fixed memory management of cached
-	  ConfigValue valuetype.
-
-	* ciao/ServerActivator_Impl.h:
-	* ciao/ServerActivator_Impl.cpp: Extended the server activator to
-	  specify RTCAD filename when instantiating a RTComponentServer.
-
-	* examples/OEP/Display/descriptors/HUDisplay-rtcad.cad:
-	* examples/OEP/Display/descriptors/NOTE-win.txt:
-	* examples/OEP/Display/descriptors/RTsvc.conf:
-	* examples/OEP/Display/descriptors/test.rtd:
-	* examples/OEP/Display/descriptors/svcmap.dat: Added an RTCCM
-	  example.
-
-Wed Aug 20 17:44:29 2003  Diego Sevilla  <dsevilla@ditec.um.es>
-
-	* CIDLC/DescriptorGenerator.cpp: Small fix to make it compile
-	  under linux also.
-
-Wed Aug 20 17:36:02 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
-
-	* performance-tests/mico:
-	  Directory where mico specific tests will be added
-
-	* performance-tests/mico/mico-thrput-st:
-	  Single threaded throughput tests for the MICO ORB
-
-	* performance-tests/mico/mico-thrput-st/server.cc:
-	* performance-tests/mico/mico-thrput-st/client.cc:
-	* performance-tests/mico/mico-thrput-st/RoundTrip_impl.cc:
-	* performance-tests/mico/mico-thrput-st/RoundTrip_impl.h:
-	* performance-tests/mico/mico-thrput-st/Makefile:
-	* performance-tests/mico/mico-thrput-st/mico-env:
-	* performance-tests/mico/mico-thrput-st/RoundTrip.idl:
-	  Single threaded througput test for MICO ORB. This experiment
-	uses the same interface as the one used in TAO for generating
-	daily performance stats. Further, the test also uses ACE for
-	generating results.
-
-Wed Aug 20 17:19:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CIDLC/cidlc.mpc:
-
-          Added new and missing files.
-
-Wed Aug 20 17:09:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.vcproj:
-
-          Added missing header files to the project.
-
-        * CCF/CCF/CodeGenerationKit/Regex.hpp:
-
-          Boris Kolpackov's <boris@dre.vanderbilt.edu> change
-          to allow a choice of delimiters when passing a
-          regular expression string to the perl_s() method.
-
-        * CIDLC/ExecutorMappingGenerator.cpp:
-        * CIDLC/ServantGenerator.cpp:
-        * CIDLC/ServantHeaderGenerator.cpp:
-        * CIDLC/ServantSourceGenerator.cpp:
-
-          Minor cosmetic changes.
-
-        * CIDLC/DescriptorGenerator.cpp:
-        * CIDLC/DescriptorGenerator.hpp:
-
-          New files, containing code for an XML generator, the
-          CORBA Component Descriptor .ccd file.
-
-        * CIDLC/CIDLC.vcproj:
-        * CIDLC/cidlc.cpp:
-
-          Updated these files to recognize the new generator.
-          Also changed the output directory of the executable
-          to be CIAO_ROOT/bin.
-
-Wed Aug 20 14:48:15 2003  Diego Sevilla  <dsevilla@ditec.um.es>
-
-	* CCF/Example/CodeGenerationKit/Indentation/XML/Makefile.alt:
-	* CCF/Example/CodeGenerationKit/Indentation/XML/XML.mpc:
-	* CCF/Example/CodeGenerationKit/Indentation/XML/indent_xml.cpp:
-	  Added example of usage for the XML indenter.
-
-	* CCF/CCF/CodeGenerationKit/IndentationXML.hpp: Added XML
-	  indenter.
-
-Tue Aug 19 16:06:01 2003  Diego Sevilla  <dsevilla@ditec.um.es>
-
-	* CIDLC/cidlc.mpc: Some cleaning of the MPC file: Removed unneeded
-	  Instrocpection and added the CompilerElements library.
-
-Mon Aug 18 14:08:05 2003  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
-
-	* performance-tests/Benchmark/descriptors/test-multi-process.dat:
-	  This file contains host port locations for running components
-	  in multiple hosts/processes. Will be used as an example
-	  scenario for benchmarking experiments
-
-Mon Aug 18 12:11:55 2003  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
-
-	* performance-tests/Benchmar/Multi_Threaded/NOTE.txt:
-	  Updated information on pre-conditions necessary to run the
-	  experiment
-
-Mon Aug 18 12:01:37 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
-
-	* performance-tests/Benchmar/Multi_Threaded/Multi_Threaded.mpc:
-	* performance-tests/Benchmar/Multi_Threaded/client.cpp:
-	* performance-tests/Benchmar/Multi_Threaded/Client_Task.h:
-	* performance-tests/Benchmar/Multi_Threaded/Client_Task.cpp:
-	* performance-tests/Benchmar/Multi_Threaded/run_test.pl:
-	* performance-tests/Benchmar/Multi_Threaded/svc.conf:
-	* performance-tests/Benchmar/Multi_Threaded/NOTE.txt:
-	* performance-tests/Benchmar/Multi_Threaded/README:
-	  Test that measures round-trip latency behavior using a
-	multi-threaded client.
-
-	* performance-tests/Benchmark/descriptors/Multi_Threaded.cad:
-	* performance-tests/Benchmark/descriptors/CIAO_Installation_Data.ini:
-	  Appropriate CAD file to configure the above experiment
-
-Sun Aug 17 22:43:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* ciao/Container_Base.cpp:
-	* ciao/Container_Base.h:
-	* ciao/Container_Impl.cpp: Changed the signature of
-	  CIAO::Container to pass in a CORBA::PolicyList.  We will need
-	  this to initialize RT_Session_Container and the future
-	  unclassified container.
-
-	* docs/ConfigValues.html:
-	* docs/XML/ciao_rt_cad_ext.dtd:
-	* docs/XML/componentassembly.dtd: Updated documentation on
-	  extension element usage, RTCAD extension usage and recognizable
-	  ConfigValues names.
-
-	* examples/OEP/Display/RateGen/client.cpp:
-	* examples/OEP/Display/RateGen/controller.cpp:
-	* examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h:
-	* examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h:
-	* examples/OEP/Display/NavDisplayGUI_exec/UpdatePositionCmd.cpp:
-	  Reordered order of inclusion to make sure ACE headers are seen
-	  by the compiler first.
-
-Sun Aug 17 09:53:57 2003  Diego Sevilla  <dsevilla@ditec.um.es>
-
-	* CCF/CCF/CCF.mwc: Fixed a bug in the name of a file that was
-	  preventing the build in VC71.
-
-Fri Aug 15 16:26:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CIAO/CCF/CCF/CIDL/CIDL.vcproj:
-        * CIAO/CCF/CCF/CodeGenerationKit/CodeGenerationKit.vcproj:
-        * CIAO/CCF/CCF/CompilerElements/CompilerElements.vcproj:
-        * CIAO/CCF/CCF/IDL2/IDL2.vcproj:
-        * CIAO/CCF/CCF/IDL3/IDL3.vcproj:
-        * CIAO/CIDLC/CIDLC.vcproj:
-
-          Turned off detection of 64-bit portability issues in these
-          projects. There are places in the Boost library where they
-          play fast and loose with conversions in this area, which
-          leads to many warnings.
-
-Fri Aug 15 15:18:37 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-		* CCF:
-		* CIDLC:
-
-		Added VC7.1 Solutions and Projects.
-
-Wed Aug 13 17:37:30 2003  George Edwards <g.edwards@vanderbilt.edu>
-
-        * examples/handcrafted/BasicSP_EC/BasicSP.mpc:
-        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED.mpc:
-        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice.mpc:
-        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay.mpc:
-        * examples/handcrafted/BasicSP_EC/EC/EC.mpc:
-
-          Updated library linkage and library paths.
-
-        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedEDE.idl:
-        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.h:
-        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp:
-        * examples/handcrafted/BasicSP_EC/BMDevice/BMDeviceE.idl:
-        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.h:
-        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.cpp:
-        * examples/handcrafted/BasicSP_EC/EC/ECE.idl:
-        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.h:
-        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.cpp:
-        * examples/handcrafted/BasicSP_EC/EC/EC_exec.h:
-        * examples/handcrafted/BasicSP_EC/EC/controller.cpp:
-        * examples/handcrafted/BasicSP_EC/EC/client.cpp:
-
-          Added new Cookie implementation.
-          Use new method _ciao_the_ORB () to get container's ORB reference in
-          subscribe () and unsubscribe () methods.
-
-Wed Aug 13 16:23:02 2003  George Edwards <g.edwards@vanderbilt.edu>
-
-        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.h:
-        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.cpp:
-
-          Fixed memory management and added comments.
-
-Wed Aug 13 13:25:14 2003  Diego Sevilla  <dsevilla@ditec.um.es>
-
-	* CIDLC/cidlc.mpc: Reordered static library list to suit
-	  dependencies.
-
-Wed Aug 13 12:20:12 2003  George Edwards <g.edwards@vanderbilt.edu>
-
-        * tools/XML_Helpers/Cascadable_DocHandler.cpp:
-
-          Added #include ace/Log_Msg.h to fix compilation error.
-
-Wed Aug 13 10:49:14 2003  George Edwards <g.edwards@vanderbilt.edu>
-
-        * ciao/Container_Base.h:
-        * ciao/Container_Base.cpp:
-        * ciao/Container_Base.inl:
-
-          Added _ciao_the_ORB () method to CIAO::Container to access the
-          container's underlying ORB.
-          Changed the_POA () method to _ciao_the_POA ().
-
-Wed Aug 13 10:42:12 2003  George Edwards <g.edwards@vanderbilt.edu>
-
-        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.h:
-        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.h:
-        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.h:
-        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.h:
-        * examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED_svnt.h:
-        * examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice_svnt.h:
-        * examples/handcrafted/BasicSP_EC2/BMDisplay/BMDisplay_svnt.h:
-        * examples/handcrafted/BasicSP_EC2/EC/EC_svnt.h:
-        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_svnt.h:
-
-          Added /**/ to pre.h and post.h includes.
-
-Tue Aug 12 21:56:42 2003 Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
-
-        * tools/XML_Helper/Assembly_Spec.h:
-          Fixed compilation error from a missing
-          #include "ace/Null_Mutex.h".
-
-2003-08-12  Diego Sevilla  <dsevilla@ditec.um.es>
-
-	* CIAO.mwc: Removed CCF MPC files as they still don't work the way
-	  I expected it to.
-
-2003-08-11  Diego Sevilla  <dsevilla@ditec.um.es>
-
-	* CIDLC/ServantGenerator.cpp: Removed commented code.
-
-2003-08-07  Diego Sevilla  <dsevilla@ditec.um.es>
-
-	* CCF/Example/CodeGenerationKit/Indentation/IDL/IDL.mpc:
-	* CCF/Example/CodeGenerationKit/Indentation/Indentation.mwc:
-	* CCF/Example/CodeGenerationKit/CodeGenerationKit.mwc:
-	* CCF/Example/CIDL/LocalExecutorMapping/LocalExecutorMapping.mpc:
-	* CCF/Example/CIDL/CIDL.mwc:
-	* CCF/Example/Example.mwc:
-	* CCF/CCF/CompilerElements/CompilerElements.mpc:
-	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc:
-	* CCF/CCF/IDL3/IDL3.mpc:
-	* CCF/CCF/IDL2/IDL2.mpc:
-	* CCF/CCF/CIDL/CIDL.mpc:
-	* CCF/CCF/CCF.mwc:
-	* CCF/CCF.mwc:
-	CCF Makefiles to MPC.
-
-	* CIDLC/cidlc.mpc: Adapted to the new structure of the CIDL
-	compiler.
-
-	* CIDLC/README: Updated the information regarding the new
-	libraries and how to build the CIDL compiler now.
-
-	* CIDLC/parser_examples/*.*: Removed old parser examples code.
-
-Tue Aug 12 20:18:23 2003  George Edwards <g.edwards@vanderbilt.edu>
-
-        * examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED.idl:
-        * examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED_svnt.h:
-        * examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED_svnt.cpp:
-        * examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice.idl:
-        * examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice_svnt.h:
-        * examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice_svnt.cpp:
-        * examples/handcrafted/BasicSP_EC2/EC/EC.idl:
-        * examples/handcrafted/BasicSP_EC2/EC/EC_svnt.h:
-        * examples/handcrafted/BasicSP_EC2/EC/EC_svnt.cpp:
-        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService.idl:
-        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventServiceEI.idl:
-        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.cpp:
-        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.h:
-        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_svnt.cpp:
-        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_svnt.h:
-        * examples/handcrafted/BasicSP_EC2/BasicSP.idl:
-
-          Updated handcrafted event channel example; components now provide and use the
-          RtecEventChannelAdmin::EventChannel interface.
-
-2003-08-11  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
-
-	* performance-tests/Benchmark/RoundTrip/client.cpp:
-	* performance-tests/Benchmark/RoundTrip/svc.conf:
-	* performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
-	* performance-tests/Benchmark/RoundTrip/run_test.pl:
-	  The client was not using the proper svc conf file to run in
-	  "single-threaded" mode. Added proper svc.conf file and support
-	  code in the client. The .mpc file was modified to add client's
-	  dependency with TAO_Strategies library.
-
-Thu Aug 07 16:46:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
-	  Changed to use base project qt-min_moc as we don't need to use
-	  ACE_QtReactor.
-
-Wed Aug 06 17:00:05 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* docs/XML/ciao_rt_cad_ext.dtd: Added DTD for RT extension to cad
-	  file.
-
-2003-08-06  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
-
-	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
-	* performance-tests/Benchmark/RoundTrip/run_test.pl:
-	  Fixed problems relating to parsing arguments when the number of
-	  iterations is specified from the command line.
-
-Tue Aug 05 17:25:45 2003  George Edwards <g.edwards@vanderbilt.edu>
-
-        * examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED.mpc:
-        * examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice.mpc:
-        * examples/handcrafted/BasicSP_EC2/EC/EC.mpc:
-        * examples/handcrafted/BasicSP_EC2/BMDisplay/BMDisplay.mpc:
-        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService.mpc:
-        * examples/handcrafted/BasicSP_EC2/BasicSP.mpc:
-
-          Added library include paths and additional library to MPC
-	  files.
-
-          Removed file:
-        * examples/handcrafted/BasicSP_EC2/EC/config:
-
-          Removed unnecessary file.
-
-        * examples/handcrafted/BasicSP_EC2/EC/controller.cpp:
-        * examples/handcrafted/BasicSP_EC2/EC/client.cpp:
-
-          Included ace/Streams.h.
-
-Tue Aug 05 13:23:12 2003  George Edwards <g.edwards@vanderbilt.edu>
-
-        Added files:
-        * examples/handcrafted/BasicSP_EC2/*.*:
-        * examples/handcrafted/BasicSP_EC2/BMClosedED/*.*:
-        * examples/handcrafted/BasicSP_EC2/BMDevice/*.*:
-        * examples/handcrafted/BasicSP_EC2/EC/*.*:
-        * examples/handcrafted/BasicSP_EC2/descriptors/*.*:
-        * examples/handcrafted/BasicSP_EC2/BMDisplay/*.*:
-        * examples/handcrafted/BasicSP_EC2/RTEventService/*.*:
-
-          Added new event channel example. The event service is
-	  integrated as a separate component.
-
-2003-08-04  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
-
-	* performance-tests/Benchmark/RountTripClient/run_test.pl:
-	* performance-tests/Benchmark/RountTripClient/RoundTripClient_exec.cpp:
-	* performance-tests/Benchmark/RountTrip/RoundTrip_exec.cpp:
-	  Fixed errors in the perl file for running the example. Corrected
-	  the way in which throughput is measured within the client
-	  component. Also added code to enable tests to be run in the
-	  super user mode.
-
-2003-08-04  Diego Sevilla  <dsevilla@ditec.um.es>
-
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
-	* performance-tests/Benchmark/RoundTripClient/client.cpp:
-	* performance-tests/Benchmark/RoundTripClient/run_test.pl:
-	* performance-tests/Benchmark/descriptors/RoundTripClient.cad:
-	* performance-tests/Benchmark/descriptors/RoundTripClient.csd:
-	* performance-tests/Benchmark/descriptors/RoundTripClient.ssd:
-	  Made the test to run.  Fixed some problems with UUID.  Made the
-	  client to correctly expect a component instance instead of a
-	  home.
-
-Mon Jul  7 23:35:14 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* tools/RTComponentServer/ComponentServer_Task.inl:
-	* tools/Simple_Component_Server/Simple_Component_Server.cpp: Fixed
-	  compilation errors/warnings on Linux.
-
-Fri Aug 01 23:34:38 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* tools/Simple_Component_Server/sample_client.cpp:
-	* tools/Assembly_Deployer/Assembly_Deployer.cpp: Fixed compilation
-	  errors.  We need to include "ace/streams.h" explicitly if we
-	  want to use iostream stuff.
-
-2003-08-01  Diego Sevilla  <dsevilla@ditec.um.es>
-
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
-	Small bug fix.
-
-	* performance-tests/Benchmark/Benchmark.idl: Added missing
-	Controller interface.
-
-2003-07-31  Diego Sevilla  <dsevilla@ditec.um.es>
-
-        * performance-tests/Benchmark/Benchmark.idl:
-        * performance-tests/Benchmark/Benchmark.mpc:
-        * performance-tests/Benchmark/BenchmarkE.idl:
-        * performance-tests/Benchmark/Benchmark_stub_export.h:
-        * performance-tests/Benchmark/Benchmark_svnt_export.h:
-        * performance-tests/Benchmark/NOTE.txt:
-        * performance-tests/Benchmark/README:
-        * performance-tests/Benchmark/RoundTrip/README:
-        * performance-tests/Benchmark/RoundTrip/RoundTrip.cidl:
-        * performance-tests/Benchmark/RoundTrip/RoundTrip.idl:
-        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
-        * performance-tests/Benchmark/RoundTrip/RoundTripEI.idl:
-        * performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
-        * performance-tests/Benchmark/RoundTrip/RoundTrip_exec.h:
-        * performance-tests/Benchmark/RoundTrip/RoundTrip_exec_export.h:
-        * performance-tests/Benchmark/RoundTrip/RoundTrip_stub_export.h:
-        * performance-tests/Benchmark/RoundTrip/RoundTrip_svnt_export.h:
-        * performance-tests/Benchmark/RoundTrip/client.cpp:
-        * performance-tests/Benchmark/RoundTrip/run_test.pl:
-        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.cidl:
-        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.idl:
-        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc:
-        * performance-tests/Benchmark/RoundTripClient/RoundTripClientEI.idl:
-        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
-        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.h:
-        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec_export.h:
-        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_stub_export.h:
-        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_svnt_export.h:
-        * performance-tests/Benchmark/RoundTripClient/client.cpp:
-        * performance-tests/Benchmark/RoundTripClient/run_test.pl:
-        * performance-tests/Benchmark/descriptors/Benchmark.cad:
-        * performance-tests/Benchmark/descriptors/CIAO_Installation_Data.ini:
-        * performance-tests/Benchmark/descriptors/RoundTrip.csd:
-        * performance-tests/Benchmark/descriptors/RoundTrip.ssd:
-        * performance-tests/Benchmark/descriptors/RoundTripClient.cad:
-        * performance-tests/Benchmark/descriptors/RoundTripClient.csd:
-        * performance-tests/Benchmark/descriptors/RoundTripClient.ssd:
-        * performance-tests/Benchmark/descriptors/test.dat:
-	  Added files for the performance tests Arvind and I are
-	  developing.
-
-        * CIDLC/ServantHeaderGenerator.cpp: Removed usage of Traversal
-	  namespace to avoid name clashing.
-
-	* CIDLC/ExecutorMappingGenerator.cpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	  Generate SessionContext by now instead of CCMContext for local
-	  interfaces.
-
-Thu Jul 31 16:50:29 2003 George Edwards <g.edwards@vanderbilt.edu>
-
-        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.h:
-        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.cpp:
-        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.h:
-        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.cpp:
-        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.h:
-        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp:
-
-          Made modifications requested. Added @@ Bala comments  to
-	  indicate changes.
-
-2003-07-31  Diego Sevilla  <dsevilla@ditec.um.es>
-
-        * examples/OEP/BasicSP/EC/EC_exec.{cpp,h}: Changed the exception
-	  specification for the new_EC method (explicit home operations
-	  don't throw CCMException.)
-
-	* examples/OEP/Display/RateGen/RateGen_exec.{cpp,h}: Ditto.
-
-        * CIDLC/*: Adapted the CIDL compiler to work with the new CCF
-          library.  Basically the same code is generated with small bugs
-	  fixed.
-
-Wed Jul 30 07:26:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* examples/handcrafted/BasicSP_EC/EC/EC_svnt.h:
-	* examples/handcrafted/BasicSP_EC/EC/EC_svnt.cpp: Added @@ George
-	  comments for George. This is a code review. Same comments apply
-	  to other components.
-
-Tue Jul 29 15:36:20 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/*.*: Replaced old version with a new one.
-
-Thu Jul 24 16:22:27 2003  George Edwards <g.edwards@vanderbilt.edu>
-
-        Added new files:
-        * examples/handcrafted/BasicSP_EC/*.*:
-        * examples/handcrafted/BasicSP_EC/BMClosedED/*.*:
-        * examples/handcrafted/BasicSP_EC/BMDevice/*.*:
-        * examples/handcrafted/BasicSP_EC/BMDisplay/*.*:
-        * examples/handcrafted/BasicSP_EC/descriptors/*.*:
-        * examples/handcrafted/BasicSP_EC/EC/*.*:
-
-          Modified BasicSP example to use TAO's RT event channel for
-	  event propagation. This involved modifications to each
-	  component's servant header and source files, which are normally
-	  generated by the CIDL compiler.
-
-Sun Jul 13 20:14:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* README: Updated information on MPC tools.  ACE/TAO are in
-	  transition to use MPC based solution exclusively (like what CIAO
-	  is doing already.)  There are currently some mismatch between
-	  MPC genearted Makefile/project files and the stock ones.  Be
-	  caution.
-
-	  Once we switch to all MPC based approach, this will no longer be
-	  a problem.
-
 Wed Jul 09 21:06:12 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/ServerActivator/ServerActivator.cpp: Fixed compilation due
@@ -2072,7 +743,600 @@ Fri May 30 12:29:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/OEP/BasicSP/BasicSP.dsw:
         * examples/OEP/BasicSP/BasicSP.idl:
         * examples/OEP/BasicSP/BasicSP.mpc:
-        * examples/OEP/
+        * examples/OEP/BasicSP/BasicSP_stub.dsp:
+        * examples/OEP/BasicSP/BasicSP_stub_export.h:
+        * examples/OEP/BasicSP/BasicSP_svnt.dsp:
+        * examples/OEP/BasicSP/BasicSP_svnt_export.h:
+        * examples/OEP/BasicSP/NOTE.txt:
+        * examples/OEP/BasicSP/README:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED.cidl:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED.idl:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedEDEI.idl:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.h:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec_export.h:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_stub.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_stub_export.h:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt_export.h:
+        * examples/OEP/BasicSP/BMClosedED/config:
+        * examples/OEP/BasicSP/BMDevice/BMDevice.cidl:
+        * examples/OEP/BasicSP/BMDevice/BMDevice.idl:
+        * examples/OEP/BasicSP/BMDevice/BMDeviceEI.idl:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.h:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec_export.h:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_stub.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_stub_export.h:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_svnt.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_svnt_export.h:
+        * examples/OEP/BasicSP/BMDevice/config:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay.cidl:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay.idl:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplayEI.idl:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec_export.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_stub.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_stub_export.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt_export.h:
+        * examples/OEP/BasicSP/BMDisplay/config:
+        * examples/OEP/BasicSP/EC/EC.cidl:
+        * examples/OEP/BasicSP/EC/EC.idl:
+        * examples/OEP/BasicSP/EC/ECEI.idl:
+        * examples/OEP/BasicSP/EC/EC_client.dsp:
+        * examples/OEP/BasicSP/EC/EC_exec.cpp:
+        * examples/OEP/BasicSP/EC/EC_exec.dsp:
+        * examples/OEP/BasicSP/EC/EC_exec.h:
+        * examples/OEP/BasicSP/EC/EC_exec_export.h:
+        * examples/OEP/BasicSP/EC/EC_stub.dsp:
+        * examples/OEP/BasicSP/EC/EC_stub_export.h:
+        * examples/OEP/BasicSP/EC/EC_svnt.dsp:
+        * examples/OEP/BasicSP/EC/EC_svnt_export.h:
+        * examples/OEP/BasicSP/EC/README:
+        * examples/OEP/BasicSP/EC/client.cpp:
+        * examples/OEP/BasicSP/EC/config:
+        * examples/OEP/BasicSP/EC/controller.cpp:
+        * examples/OEP/BasicSP/EC/controller.dsp:
+        * examples/OEP/BasicSP/descriptors/BMClosedED.csd:
+        * examples/OEP/BasicSP/descriptors/BMClosedED.ssd:
+        * examples/OEP/BasicSP/descriptors/BMDevice.csd:
+        * examples/OEP/BasicSP/descriptors/BMDevice.ssd:
+        * examples/OEP/BasicSP/descriptors/BMDisplay.csd:
+        * examples/OEP/BasicSP/descriptors/BMDisplay.ssd:
+        * examples/OEP/BasicSP/descriptors/BasicSP.cad:
+        * examples/OEP/BasicSP/descriptors/CIAO_Installation_Data.ini:
+        * examples/OEP/BasicSP/descriptors/EC.csd:
+        * examples/OEP/BasicSP/descriptors/EC.ssd:
+        * examples/OEP/BasicSP/descriptors/daemon.ior:
+        * examples/OEP/BasicSP/descriptors/ec.ior:
+        * examples/OEP/BasicSP/descriptors/test.dat:
+
+          New example, same as the one in examples/handcrafted/BasicSP,
+          but using CIDL compiler generated code.
+
+Thu May 29 22:25:09 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * docs/XML/componentassembly.dtd:
+
+          Fixed an error in the DTD.
+
+        * examples/handcrafted/BasicSP/descriptors/BMClosedED.csd:
+        * examples/handcrafted/BasicSP/descriptors/BMClosedED.ssd:
+        * examples/handcrafted/BasicSP/descriptors/BMDevice.csd:
+        * examples/handcrafted/BasicSP/descriptors/BMDevice.ssd:
+        * examples/handcrafted/BasicSP/descriptors/BMDisplay.csd:
+        * examples/handcrafted/BasicSP/descriptors/BMDisplay.ssd:
+        * examples/handcrafted/BasicSP/descriptors/BasicSP.cad:
+        * examples/handcrafted/BasicSP/descriptors/EC.csd:
+        * examples/handcrafted/BasicSP/descriptors/EC.ssd:
+        * examples/handcrafted/Display/descriptors/DuelDisplay.cad:
+        * examples/handcrafted/Display/descriptors/GPS.csd:
+        * examples/handcrafted/Display/descriptors/GPS.ssd:
+        * examples/handcrafted/Display/descriptors/GPS_tracing.csd:
+        * examples/handcrafted/Display/descriptors/HUDisplay.cad:
+        * examples/handcrafted/Display/descriptors/HUDisplayGUI.cad:
+        * examples/handcrafted/Display/descriptors/NavDisplay.csd:
+        * examples/handcrafted/Display/descriptors/NavDisplay.ssd:
+        * examples/handcrafted/Display/descriptors/NavDisplayGUI.csd:
+        * examples/handcrafted/Display/descriptors/RateGen.csd:
+        * examples/handcrafted/Display/descriptors/RateGen.ssd:
+        * examples/handcrafted/Display/descriptors/RemoteDisplay.cad:
+        * examples/handcrafted/Display/descriptors/RemoteDisplayGUI.cad:
+        * examples/handcrafted/Hello/hello.csd:
+        * examples/handcrafted/Hello/hello.ssd:
+
+          Modified the files to point to the correct DTDs. Also added a
+          note to make sure that noone changes the path to the DTD by
+          mistake.
+
+        * tools/XML_Helpers/svc.conf.xml:
+
+          Fixed some errors in the file to allow parsing with the new
+          parser.
+
+
+Tue May 27 18:23:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED.cidl:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice.cidl:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay.cidl:
+        * examples/handcrafted/BasicSP/EC/EC.cidl:
+
+          New CIDL files added to the appropriate directory of the
+          BasicSP example.
+
+Tue May 27 17:44:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Components.idl:
+
+          New file that matches the name of the #included IDL file generated
+          by the CIDL compiler executor mapping. For now, this file just
+          includes CCM_Container.idl.
+
+Tue May 27 09:57:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/handcrafted/Display/NavDisplayGUI_exec/moc_DetailView.cpp:
+        * examples/handcrafted/Display/NavDisplayGUI_exec/moc_MapView.cpp:
+        * examples/handcrafted/Display/NavDisplayGUI_exec/moc_NodeItem.cpp:
+        * examples/handcrafted/Display/NavDisplayGUI_exec/moc_RootPanel.cpp:
+          Removed these Qt generated files.  Andrey fixed the mpc file for
+          this component so they will be generated on the fly.
+
+Mon May 26 21:34:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tools/Simple_Component_Server/Simple_Component_Server.cpp:
+          Change the IOR output logic to write the component IOR if one is
+          instatiated with the -c flag instead of the home IOR (when the
+          -c flag is not specified.)
+
+        * tools/Simple_Component_Server/README: Updated documentation for
+          simple component server.
+
+Mon May 26 21:13:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tools/Simple_Component_Server/Simple_Server.idl:
+          Changed to include "ciao/CCM_Component.idl".  Subdir name to is
+          now required.
+
+        * examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayEIC.cpp:
+          Removed.  This file should be generated from the IDL file.
+
+        * examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayEIC.mpc:
+          Added NavDisplayEIC.cpp into source file list.  Also documented
+          the necessary changes to generated win32 makefiles/projects for
+          compiling this component on win32.
+
+        * examples/handcrafted/Hello/run_test.pl: Added the use of the new
+          PerlACE::Process::Normalize_Executable_Name so we can test this
+          stuff with release builds.
+
+Fri May 23 22:17:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedEDE.idl:
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedEDEI.idl:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.cpp:Fixed
+          fuzz errors.
+
+Sat May 17 16:29:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/descriptors/test.dat
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec.cpp
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.cpp
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.h
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay_exec.cpp
+        * examples/handcrafted/BasicSP/EC/EC_exec.cpp
+        * examples/handcrafted/BasicSP/EC/EC_svnt.cpp
+        * examples/handcrafted/BasicSP/EC/controller.cpp: Now the demo
+          works! Fixed a few problems and made debug statements to be more
+          meaningful. Now that teh CIDL compiler is also ready, we are
+          ready to storm KSU :-)
+
+Sat May 17 12:40:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.cpp
+          (provide_facet): Added the implementation to resolve "data_read"
+          facet name.
+
+Sat May 17 12:19:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/descriptors/BasicSP.cad: Fixed yet
+          another typo. Thanks to Nanbor for pointing it out.
+
+Sat May 17 12:07:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/descriptors/BasicSP.cad: Fixed a
+          typo. Thanks to Nanbor for pointing it out.
+
+        * examples/handcrafted/BasicSP/BasicSP.idl: Added ciao/ to the
+          CM_Container.idl
+
+Sat May 17 11:18:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/*/config: Config files for
+          testing.
+
+Sat May 17 11:05:40 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/handcrafted/BasicSP/BasicSP.idl: Changed to include
+          "CCM_Components.idl" directly instead of
+          "ciao/CCM_Components.idl".
+
+        * examples/handcrafted/BasicSP/BasicSP.mpc: Removed BasicSPC.cpp
+          from the svnt library source file list since we are linking with
+          BasicSP stub library already.  Removed BasicSPES.cpp from the
+          source file list also because it's basically empty.
+
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc: The stub and
+          svnt libraries should depends on BasicSP_stub library instead of
+          themselves.
+
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.h: Fixed
+          incorrect usage of extern "C" and export macro.
+
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.h: Changed
+          the use of BMDEVICE_STUB_Export macro to BMDEVICE_SVNT_Export.
+
+        * examples/handcrafted/BasicSP/EC/EC_svnt.cpp: The start ()
+          operation should not return anything.
+
+Fri May 16 18:11:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay.idl (BasicSP):
+        * examples/handcrafted/BasicSP/BasicSP.mpc:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.h:
+        * examples/handcrafted/BasicSP/EC/EC.idl:
+        * examples/handcrafted/BasicSP/EC/ECE.idl:
+        * examples/handcrafted/BasicSP/EC/EC_exec.cpp:
+        * examples/handcrafted/BasicSP/EC/EC_svnt.cpp:
+        * examples/handcrafted/BasicSP/EC/EC_svnt.h:
+        * examples/handcrafted/BasicSP/EC/client.cpp:
+        * examples/handcrafted/BasicSP/EC/controller.cpp:
+        * examples/handcrafted/BasicSP/descriptors/BMClosedED.csd:
+        * examples/handcrafted/BasicSP/descriptors/BMClosedED.ssd:
+        * examples/handcrafted/BasicSP/descriptors/BMDevice.csd:
+        * examples/handcrafted/BasicSP/descriptors/BMDevice.ssd:
+        * examples/handcrafted/BasicSP/descriptors/BMDisplay.csd:
+        * examples/handcrafted/BasicSP/descriptors/BMDisplay.ssd:
+        * examples/handcrafted/BasicSP/descriptors/BasicSP.cad:
+        * examples/handcrafted/BasicSP/descriptors/CIAO_Installation_Data.ini:
+        * examples/handcrafted/BasicSP/descriptors/EC.csd:
+        * examples/handcrafted/BasicSP/descriptors/EC.ssd: Some more files
+          for the BasicSP example.
+
+Wed May 14 17:02:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/EC/EC.idl:
+        * examples/handcrafted/BasicSP/EC/EC.mpc:
+        * examples/handcrafted/BasicSP/EC/ECE.idl:
+        * examples/handcrafted/BasicSP/EC/ECEI.idl:
+        * examples/handcrafted/BasicSP/EC/EC_exec.cpp:
+        * examples/handcrafted/BasicSP/EC/EC_exec.h:
+        * examples/handcrafted/BasicSP/EC/EC_exec_export.h:
+        * examples/handcrafted/BasicSP/EC/EC_stub_export.h:
+        * examples/handcrafted/BasicSP/EC/EC_svnt.cpp:
+        * examples/handcrafted/BasicSP/EC/EC_svnt.h:
+        * examples/handcrafted/BasicSP/EC/EC_svnt_export.h:
+        * examples/handcrafted/BasicSP/EC/client.cpp:
+        * examples/handcrafted/BasicSP/EC/controller.cpp: Implementation
+          for the EC component.
+
+Wed May 14 15:50:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED.idl:
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedEDE.idl:
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedEDEI.idl:
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec.h:
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec_export.h:
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED_stub_export.h:
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED_svnt.cpp:
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED_svnt.h:
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED_svnt_export.h:
+        * examples/handcrafted/BasicSP/EC/EC.idl: Implementation for the
+          BMClosedED component.
+
+
+Tue May 13 23:26:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/BasicSP_svnt.cpp:
+        * examples/handcrafted/BasicSP/BasicSP_svnt.h:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice.idl:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/handcrafted/BasicSP/BMDevice/BMDeviceE.idl:
+        * examples/handcrafted/BasicSP/BMDevice/BMDeviceEI.idl:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.h:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.cpp:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.h:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay.idl:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplayE.idl:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplayEI.idl:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay_exec.h:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay_exec_export.h:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay_stub_export.h:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay_svnt.cpp:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay_svnt.h:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay_svnt_export.h:
+        * examples/handcrafted/BasicSP/EC/EC.idl: Hand code the BMDevice
+          and BMDisplay component in the Boeing OEP scenario.
+
+Mon May 12 16:53:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/BasicSP.idl:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice.idl:
+        * examples/handcrafted/BasicSP/BMDevice/BMDeviceE.idl:
+        * examples/handcrafted/BasicSP/BMDevice/BMDeviceEI.idl:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_exec_export.h:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_stub_export.h:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt_export.h:
+
+          Some standard files for thr BMDevice component
+
+Mon May 12 14:48:12 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/handcrafted/Hello/run_simple_test.pl:
+        * examples/handcrafted/Hello/simple_client.cpp:
+        * examples/handcrafted/Hello/hello.mpc: Added a test client
+          program and perl script to test the HelloWorld component using
+          Simple_Component_Server.
+
+Mon May 12 14:00:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/BasicSP.idl
+        * examples/handcrafted/BasicSP/BasicSP.mpc
+        * examples/handcrafted/BasicSP/BasicSPE.idl
+        * examples/handcrafted/BasicSP/BasicSP_stub_export.h
+        * examples/handcrafted/BasicSP/BasicSP_svnt_export.h
+        * examples/handcrafted/BasicSP/README
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED.idl
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice.idl
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay.idl
+        * examples/handcrafted/BasicSP/EC/EC.idl
+        * examples/handcrafted/BasicSP/EC/README
+
+          A framework on which the new BasicSP would be developed.
+
+Mon May 12 13:34:16 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * README: Updated the list of TAO librearies CIAO depends on.
+
+        * tools/Assembly_Deployer/Assembly_Service_Impl.h: Fixed
+          mismatched comments. :)
+
+        * tools/Simple_Component_Server/Simple_Component_Server.cpp:
+        * tools/Simple_Component_Server/Simple_Component_Server.mpc:
+        * tools/Simple_Component_Server/Simple_Server.idl:
+        * tools/Simple_Component_Server/Simple_Server_Stub_Export.h:
+        * tools/Simple_Component_Server/Simple_Server_i.cpp:
+        * tools/Simple_Component_Server/Simple_Server_i.h:
+        * tools/Simple_Component_Server/sample_client.cpp: Revamped the
+          simple_component_server to make debugging a single component
+          implementation a more direct process.  There's also a
+          sample_client that can be used as a blueprint to interfact with
+          the simple component server.
+
+Fri May 09 12:51:03 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * README: Updated the list of libraries that CIAO depends on,
+          based on the recent subsetting effort in TAO.
+
+        * ciao/CCM_Core.mpc: Fixed several problems.
+
+Fri May  9 10:57:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * ciao/Component_Base.idl: Removed references to the Notification
+          services. They are not needed with 1.1.
+
+Fri May  9 10:54:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * ciao/Container_Impl.cpp: Used .inout () while doing a deep copy
+          so that the right operator= on  TAO_Unbounded_Sequence is
+          invoked without any warning in g++.
+
+Wed May  7 17:24:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * examples/handcrafted/Display/RateGen/RateGen.mpc: Added new
+          libraries and paths to them. This was forced due to the recent
+          subestting in TAO.
+
+Wed May  7 17:09:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * ciao/ComponentServer_Impl.cpp (configuration): Used .inout ()
+          while doing a deep copy so that the right operator= on
+          TAO_Unbounded_Sequence is invoked without any warning in g++.
+
+Wed May  7 16:41:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * ciao/ComponentServer_Impl.cpp (remove_container): Fixed warnings
+          with g++ builds.
+
+Wed May  7 16:36:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * ciao/CCM_Core.mpc: Added missing libraries that were essential
+          due to the subsetting effort.
+
+Wed May  7 16:22:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * ciao/Container_Base.cpp: Fixed warnings with gcc.
+
+Tue May  6 12:47:26 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        * examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayEIC.cpp:
+
+          Changed all uses of ptr_arith_t to ptrdiff_t.  Addresses 64 bit
+          platform issues.  Thanks to Steve Huston <shuston@riverace.com>
+          for suggesting this change.
+
+Wed Apr 30 13:29:46 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * tests/temp/assembly/assembly.dsw:
+        * tests/temp/assembly/client.dsp:
+        * tests/temp/assembly/server.dsp:
+
+          Files removed to prevent errors in the msvc 6 builds.
+
+Tue Apr 29 16:53:17 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * README: Added XML_Helpers to the list of "tools" that need to
+          build to run CIAO.  Thanks to Diego Sevilla Ruiz
+          <dsevilla@ditec.um.es> for pointing this out.
+
+Tue Apr 29 16:38:18 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * tests/temp/assembly/client.dsp:
+        * tests/temp/assembly/client.dsp:
+          Fixed build VCpp6 Release error.
+
+Mon Apr 28 21:43:01 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/handcrafted/Display/RateGen/RateGen.mpc: Added missing
+          library path dependencies.  I'm not sure what has changed
+          because they used to work just fine. :)
+
+Mon Apr 28 21:33:19 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * docs/templates/CIAO_Glue_Session_Template.cpp:
+        * docs/templates/CIAO_Glue_Session_Template.h:
+        * docs/templates/CIAO_Glue_Session_Template.inl:
+        * examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+        * examples/handcrafted/Display/GPS/GPS_svnt.h:
+        * examples/handcrafted/Display/GPS/GPS_svnt.inl:
+        * examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.cpp:
+        * examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+        * examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+        * examples/handcrafted/Display/RateGen/RateGen_svnt.h:
+        * examples/handcrafted/Display/RateGen/RateGen_svnt.inl: Fixed
+          more misuses of "valuetype_ptr" bug.  Thanks to Tao Lu
+          <tao.lu@vanderbilt.edu> for reporting them.
+
+Mon Apr 28 20:50:09 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * docs/templates/CIAO_Glue_Session_Template.cpp:
+        * docs/templates/CIAO_Glue_Session_Template.h:
+        * docs/templates/CIAO_Glue_Session_Template.inl:
+        * examples/handcrafted/Display/GPS/GPS_exec.cpp:
+        * examples/handcrafted/Display/GPS/GPS_exec.h:
+        * examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+        * examples/handcrafted/Display/GPS/GPS_svnt.h:
+        * examples/handcrafted/Display/GPS/GPS_tracing_exec.cpp:
+        * examples/handcrafted/Display/GPS/GPS_tracing_exec.h:
+        * examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp:
+        * examples/handcrafted/Display/NavDisplay/NavDisplay_exec.h:
+        * examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+        * examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.inl:
+        * examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+        * examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+        * examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+        * examples/handcrafted/Display/RateGen/RateGen_svnt.h:
+        * tools/Assembly_Deployer/Assembly_Visitors.cpp:
+        * tools/ComponentServer/ComponentServer_test_client.cpp:
+        * tools/Daemon/Softpkg_Commands.cpp:
+        * tools/ServerActivator/ServerActivator_test_client.cpp: Changed
+          all "[event]_ptr ev" and "[key]_ptr k" to "[event] *ev" and
+          "[key] *k".  They all map to valuetypes and, according to the
+          spec, there should not be _ptr typedef defined.  TAO_IDL
+          recently removed the incorrect typedef so we need to remove
+          their useage.  Thanks to Jeff Parsons for pointing this out.
+
+        * ciao/CCMCore.dsw:
+        * ciao/CIAO_Client.dsp:
+        * ciao/CIAO_Container.dsp:
+        * ciao/CIAO_Server.dsp:
+        * examples/handcrafted/Hello/client.dsp:
+        * examples/handcrafted/Hello/hello.dsw:
+        * examples/handcrafted/Hello/hello_executors.dsp:
+        * examples/handcrafted/Hello/hello_servants.dsp:
+        * examples/handcrafted/Hello/hello_stub.dsp:
+        * tools/ComponentServer/ComponentServer.dsp:
+        * tools/ComponentServer/ComponentServer.dsw:
+        * tools/ComponentServer/ComponentServer_test_client.dsp:
+        * tools/ServerActivator/ServerActivator.dsp:
+        * tools/ServerActivator/ServerActivator.dsw:
+        * tools/ServerActivator/ServerActivator_test_client.dsp:
+        * tools/Simple_Component_Server/Simple_Component_Server.dsw:
+        * tools/Simple_Component_Server/Simple_Component_Server.dsp:
+          Removed all vc6 dsp files.  They confused the msvc nightly build
+          script.  The script doesn't seem to parse the mpc generated dsp
+          files correctly and their build order are all messed up.
+          Besides, we only maintain mpc files in CIAO now.
+
+Mon Apr 28 19:39:00 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * README: Added the root README file to provide some instructions
+          on how to play with CIAO.  Thanks to Diego Sevilla Ruiz
+          <dsevilla@ditec.um.es> for motivating me to update the old
+          README file and add it into the repo.
+
+Mon Apr 28 16:49:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tools/ComponentServer/ComponentServer.cpp (main): Fixed a gcc
+          compilation error.  Thanks to Tao Lu <tao.lu@dre.vanderbilt.edu>
+          for reporting this.
+
+Fri Apr 25 10:39:26 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/handcrafted/Display/NavDisplayGUI_exec/worldmap1.xpm:
+        * examples/handcrafted/Display/NavDisplayGUI_exec/MapView.cpp:
+          Andrey changed the implementation of MapView to embedded the
+          world map in the DLL as I was having some difficulty loading the
+          gif file at runtime.  Thanks to Andrey Nechypurenko for fixing
+          it and sending us the patch.
+
+Tue Apr 22 23:07:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/handcrafted/Display/RateGen/RateGen.cidl: Added this
+          cidl example.
+
+        * ciao/Client_init.h:
+        * ciao/Cookies.h:
+        * ciao/Server_init.h:
+        * examples/handcrafted/Display/NavDisplay/NavDisplay.idl:
+        * examples/handcrafted/Display/NavDisplay/NavDisplayE.idl:
+        * examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+        * examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+        * tools/Daemon/CIAO_Daemon.cpp:
+        * tools/Daemon/Daemon.idl:
+        * tools/ServerActivator/ServerActivator.cpp:
+        * tools/Simple_Component_Server/Simple_Component_Server.cpp:
+        * tools/XML_Helpers/Assembly_Handlers.h:
+        * tools/XML_Helpers/Assembly_Spec.h:
+        * tools/XML_Helpers/Softpkg_Handlers.h:
+        * tools/XML_Helpers/XML_Utils.h: Fixed fuzz errors.
+
+        * examples/handcrafted/Display/RateGen/RateGen_comp.idl: Removed
+          this unused file.
+
+Mon Apr 21 15:36:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * *: Merged with main trunk.
+
+Wed Apr 16 22:56:32 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+          The followings are fixes to make CIAO to compile and work on
+          Linux.
+
+        * bin/generate_component_mpc.pl:
+        * examples/handcrafted/Display/HUDisplay.mpc:
+        * examples/handcrafted/Display/GPS/GPS.mpc:
+        * examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+        * examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+        * examples/handcrafted/Display/RateGen/RateGen.mpc:
+        * examples/handcrafted/Hello/hello.mpc:
+        * tools/Assembly_Deployer/Assembly_Deployer.mpc: Reordered the
+          source file listing so that IDL files will always be compiled
+          before other files to avoid non-existing generated file
+          problem.  Also added missing library dependencies to some MPC
           files.
 
         * examples/handcrafted/Display/HUDisplay_svnt.cpp:

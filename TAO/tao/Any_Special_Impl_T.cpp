@@ -4,11 +4,8 @@
 #define TAO_ANY_SPECIAL_IMPL_T_C
 
 #include "tao/Any_Special_Impl_T.h"
-#include "tao/Any.h"
 #include "tao/Marshal.h"
 #include "tao/Environment.h"
-#include "tao/Typecode.h"
-
 #include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
@@ -140,6 +137,9 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
           return 1;
         }
 
+      CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       TAO::Any_Special_Impl_T<T, from_T, to_T> *replacement = 0;
       ACE_NEW_RETURN (replacement,
                       BOUNDED_TSTRING_ANY_IMPL (destructor,
@@ -157,14 +157,10 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
                         mb->rd_ptr () - mb->base (),
                         mb->wr_ptr () - mb->base (),
                         impl->_tao_byte_order (),
-                                                            TAO_DEF_GIOP_MAJOR,
-                                                            TAO_DEF_GIOP_MINOR);
+						            TAO_DEF_GIOP_MAJOR,
+						            TAO_DEF_GIOP_MINOR);
 
-      impl->assign_translator (tc,
-                               &cdr
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
+      impl->assign_translator (kind, &cdr);
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
       if (result == 1)

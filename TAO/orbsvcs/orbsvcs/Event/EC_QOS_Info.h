@@ -14,11 +14,9 @@
 
 #ifndef TAO_EC_QOS_INFO_H
 #define TAO_EC_QOS_INFO_H
-
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecBaseC.h"
-
 #include /**/ "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -61,5 +59,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_EC_EVENT_CHANNEL_H */

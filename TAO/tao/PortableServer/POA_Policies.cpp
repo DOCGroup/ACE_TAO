@@ -2,8 +2,6 @@
 
 #include "POA_Policies.h"
 
-#include "tao/ORB_Constants.h"
-
 #if !defined (__ACE_INLINE__)
 # include "POA_Policies.i"
 #endif /* ! __ACE_INLINE__ */
@@ -69,7 +67,7 @@ TAO_Thread_Policy::create (const CORBA::Any &val
 {
   PortableServer::ThreadPolicyValue value;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 
   TAO_Thread_Policy *tmp = 0;
@@ -142,7 +140,7 @@ TAO_Lifespan_Policy::create (const CORBA::Any &val
 {
   PortableServer::LifespanPolicyValue value;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 
   TAO_Lifespan_Policy *tmp = 0;
@@ -213,7 +211,7 @@ TAO_Id_Uniqueness_Policy::create (const CORBA::Any &val
 {
   PortableServer::IdUniquenessPolicyValue value;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 
   TAO_Id_Uniqueness_Policy *tmp = 0;
@@ -284,7 +282,7 @@ TAO_Id_Assignment_Policy::create (const CORBA::Any &val
 {
   PortableServer::IdAssignmentPolicyValue value;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 
   TAO_Id_Assignment_Policy *tmp = 0;
@@ -357,7 +355,7 @@ TAO_Implicit_Activation_Policy::create (const CORBA::Any &val
 {
   PortableServer::ImplicitActivationPolicyValue value;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 
   TAO_Implicit_Activation_Policy *tmp = 0;
@@ -428,7 +426,7 @@ TAO_Servant_Retention_Policy::create (const CORBA::Any &val
 {
   PortableServer::ServantRetentionPolicyValue value;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 
   TAO_Servant_Retention_Policy *tmp = 0;
@@ -499,7 +497,7 @@ TAO_Request_Processing_Policy::create (const CORBA::Any &val
 {
   PortableServer::RequestProcessingPolicyValue value;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 
   TAO_Request_Processing_Policy *tmp = 0;

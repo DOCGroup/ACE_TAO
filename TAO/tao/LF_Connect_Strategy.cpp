@@ -1,13 +1,17 @@
 #include "LF_Connect_Strategy.h"
 #include "Connection_Handler.h"
-#include "LF_Follower.h"
+#include "Transport.h"
+#include "ORB_Core.h"
+#include "LF_Event.h"
 #include "Leader_Follower.h"
-
+#include "debug.h"
 #include "ace/Synch_Options.h"
+
 
 ACE_RCSID(tao,
           LF_Connect_Strategy,
           "$Id$")
+
 
 TAO_LF_Connect_Strategy::TAO_LF_Connect_Strategy (
     TAO_ORB_Core *orb_core)
@@ -35,6 +39,7 @@ TAO_LF_Connect_Strategy::synch_options (ACE_Time_Value *timeout,
                    ACE_Time_Value::zero);
     }
 }
+
 
 int
 TAO_LF_Connect_Strategy::wait (TAO_Connection_Handler *ch,

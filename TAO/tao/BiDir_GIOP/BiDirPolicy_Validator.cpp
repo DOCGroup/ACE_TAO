@@ -3,9 +3,7 @@
 #include "tao/Policy_Set.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (TAO, 
-           BiDirPolicy_Validator, 
-           "$Id$")
+ACE_RCSID(TAO, BiDirPolicy_Validator, "$Id$")
 
 TAO_BiDirPolicy_Validator::TAO_BiDirPolicy_Validator (TAO_ORB_Core &orb_core)
   : TAO_Policy_Validator (orb_core)

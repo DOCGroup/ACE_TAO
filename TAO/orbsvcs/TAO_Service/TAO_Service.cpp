@@ -18,8 +18,7 @@
 //
 // ============================================================================
 
-#include "tao/ORB_Constants.h"
-#include "tao/ORB.h"
+#include "tao/corba.h"
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 

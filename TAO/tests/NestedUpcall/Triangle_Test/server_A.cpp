@@ -19,7 +19,6 @@
 
 #include "server_A.h"
 #include "tao/debug.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Triangle_Test, server_A, "$Id$")
 
@@ -86,6 +85,10 @@ Object_A_Server::init (int argc,
                                                  &this->object_A_i_
                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "The IOR is: <%s>\n",
+              str.in ()));
 
   if (this->ior_output_file_)
     {

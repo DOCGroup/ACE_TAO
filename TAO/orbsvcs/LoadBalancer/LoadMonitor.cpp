@@ -2,13 +2,10 @@
 #include "Monitor_Signal_Handler.h"
 
 #include "orbsvcs/LoadBalancing/LB_CPU_Monitor.h"
-#include "orbsvcs/LoadBalancing/LB_conf.h"
 
 #include "tao/ORB_Core.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/OS_main.h"
-#include "ace/OS_NS_strings.h"
 
 
 ACE_RCSID (LoadBalancer,
@@ -21,10 +18,7 @@ static const char * location_kind = 0;
 static const char * mtype = "CPU";
 static const char * mstyle = "PUSH";
 static const char * custom_monitor_ior = 0;
-
-// For the sake of consistency, make default push monitoring interval
-// the same as the pull monitoring interval.
-static long push_interval = TAO_LB_PULL_HANDLER_INTERVAL;
+static long push_interval = 15;
 
 void
 usage (const ACE_TCHAR * cmd)
@@ -40,6 +34,7 @@ usage (const ACE_TCHAR * cmd)
               ACE_TEXT (" and requires \"PUSH\" style monitoring)\n")
               ACE_TEXT ("    -m <custom_monitor_ior>")
               ACE_TEXT (" (overrides \"-t\", \"-l\" and \"-k\")\n")
+              ACE_TEXT ("    -o <ior_output_file>\n")
               ACE_TEXT ("    -h\n")
               ACE_TEXT ("\n"),
               cmd));
@@ -282,6 +277,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (obj.in ()
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
 
       CosLoadBalancing::LoadMonitor_var load_monitor =
         ::get_load_monitor (orb.in (),

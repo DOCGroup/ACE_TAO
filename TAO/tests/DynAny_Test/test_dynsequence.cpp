@@ -1,28 +1,30 @@
-//=============================================================================
-/**
- *  @file    test_dynsequence.cpp
- *
- *  $Id$
- *
- *  Implementation of the simple DynSequence test
- *
- *
- *  @author Jeff Parsons <jp4@cs.wustl.edu>
- */
-//=============================================================================
-
+// -*- c++ -*-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/DynAny_Test
+//
+// = FILENAME
+//    test_dynsequence.cpp
+//
+// = DESCRIPTION
+//    Implementation of the simple DynSequence test
+//
+// = AUTHOR
+//    Jeff Parsons <jp4@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_dynsequence.h"
 #include "da_testsC.h"
 #include "data.h"
 #include "tao/DynamicAny/DynamicAny.h"
-#include "analyzer.h"
 
-Test_DynSequence::Test_DynSequence (CORBA::ORB_var orb, int debug)
+Test_DynSequence::Test_DynSequence (CORBA::ORB_var orb)
   : orb_ (orb),
     test_name_ (CORBA::string_dup ("test_dynsequence")),
-    error_count_ (0),
-    debug_ (debug)
+    error_count_ (0)
 {
 }
 
@@ -42,6 +44,7 @@ int
 Test_DynSequence::run_test (void)
 {
   Data data (this->orb_);
+
   DynAnyTests::test_seq ts (2);
   ts.length (2);
 
@@ -71,28 +74,6 @@ Test_DynSequence::run_test (void)
                              "Nil dynamic any factory after narrow\n"),
                             -1);
         }
-
-      DynAnyAnalyzer analyzer(this->orb_.in(), dynany_factory.in(), debug_);
-
-      DynAnyTests::SeqShort shortseq1;
-
-      shortseq1.length(2);
-      shortseq1[0] = 2;
-      shortseq1[1] = -2;
-
-      CORBA::Any any;
-      any <<= shortseq1;
-
-      DynamicAny::DynAny_var shortdany =
-        dynany_factory->create_dyn_any(any ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      analyzer.analyze(shortdany.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CORBA::Any_var any3;
-      any3 = shortdany->to_any(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ts[0] = data.m_string2;
       ts[1] = data.m_string2;
@@ -175,9 +156,6 @@ Test_DynSequence::run_test (void)
           return -1;
         }
 
-      analyzer.analyze(fa1.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       CORBA::String_var out_str;
 
       for (i = 0; i < length; ++i)
@@ -235,10 +213,6 @@ Test_DynSequence::run_test (void)
       ftc1->from_any (in_any2
                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      analyzer.analyze(ftc1.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       CORBA::Any_var out_any1 = ftc1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       DynAnyTests::test_seq *ts_out;

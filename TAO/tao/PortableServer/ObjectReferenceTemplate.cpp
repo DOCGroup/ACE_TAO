@@ -1,10 +1,6 @@
 #include "ObjectReferenceTemplate.h"
 #include "POA.h"
 
-#include "tao/CORBA_String.h"
-#include "tao/ORB_Constants.h"
-
-
 ACE_RCSID (PortableServer,
            ObjectReferenceTemplate,
            "$Id$")

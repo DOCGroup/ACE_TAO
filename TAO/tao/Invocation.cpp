@@ -1,4 +1,7 @@
 // $Id$
+
+
+
 #include "Invocation.h"
 #include "Stub.h"
 #include "Profile.h"
@@ -201,7 +204,7 @@ TAO_GIOP_Invocation::start (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->max_wait_time_ == 0)
     {
-      bool has_timeout = false;
+      int has_timeout;
       this->orb_core_->call_timeout_hook (this->stub_,
                                           has_timeout,
                                           this->max_wait_time_value_);
@@ -258,7 +261,7 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
   ACE_Time_Value *max_wait_time = 0;
 
   ACE_Time_Value connection_timeout;
-  bool is_conn_timeout = false;
+  int is_conn_timeout = 0;
 
   // Check for the connection timout policy in the ORB
   this->orb_core ()->connection_timeout (this->stub (),
@@ -1025,7 +1028,7 @@ TAO_GIOP_Oneway_Invocation::TAO_GIOP_Oneway_Invocation (
                                byte_order),
     sync_scope_ (Messaging::SYNC_WITH_TRANSPORT)
 {
-  bool has_synchronization = 0;
+  int has_synchronization = 0;
   this->orb_core_->call_sync_scope_hook (this->stub_,
                                          has_synchronization,
                                          this->sync_scope_);

@@ -160,26 +160,13 @@ Sender::init (int argc,
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
 
-  // Set the address of the ftp client.
-  char buf [BUFSIZ];
-  ACE_OS::hostname (buf,
-		    BUFSIZ);
-  ACE_INET_Addr addr ("5000",
-		      buf);
-
   // Create the forward flow specification to describe the flow.
   TAO_Forward_FlowSpec_Entry entry ("Data_Receiver",
                                     "IN",
                                     "USER_DEFINED",
                                     "",
                                     this->protocol_.c_str (),
-                                    &addr);
-
-  ACE_OS::hostname (buf,
-		    BUFSIZ);
-  ACE_INET_Addr peer_addr ("5050",
-			   buf);
-  entry.set_peer_addr (&peer_addr);
+                                    0);
 
   AVStreams::flowSpec flow_spec (1);
   flow_spec.length (1);

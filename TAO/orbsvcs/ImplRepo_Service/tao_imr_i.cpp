@@ -7,9 +7,6 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_netdb.h"
-#include "ace/OS_NS_strings.h"
 
 // How many servers should we get at once?
 const size_t IR_LIST_CHUNK = 10;
@@ -367,7 +364,7 @@ TAO_IMR_Op_Add::parse (int argc, ACE_TCHAR **argv)
   ACE_Get_Opt get_opts (argc, argv, "hc:w:a:e:l:");
 
   this->server_name_ = argv[1];
-  if (ACE_OS::strlen(this->server_name_.c_str()) < 1)
+  if (ACE_OS_String::strlen(this->server_name_.c_str()) < 1)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Server name <%s> must be at least one character long!\n",

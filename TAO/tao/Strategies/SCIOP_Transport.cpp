@@ -19,7 +19,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
-// #include "tao/GIOP_Message_Lite.h"
+#include "tao/GIOP_Message_Lite.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Adapter.h"
 
@@ -35,14 +35,12 @@ ACE_RCSID (tao,
 
 TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean )
+                                        CORBA::Boolean flag)
   : TAO_Transport (TAO_TAG_SCIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-#if 0
-  // First step in deprecating this.
   if (flag)
     {
       // Use the lite version of the protocol
@@ -50,7 +48,6 @@ TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
                TAO_GIOP_Message_Lite (orb_core));
     }
   else
-#endif /*if 0*/
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
@@ -156,7 +153,7 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
 
           int result =
             tph->update_client_protocol_properties (stub,
-                                                    this,
+						    this,
                                                     "sciop");
 
           if (result == -1)
@@ -188,7 +185,7 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
 
   this->first_request_sent();
 
-  return 0;
+  return this->idle_after_send ();
 }
 
 int

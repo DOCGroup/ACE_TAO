@@ -12,7 +12,6 @@
 
 #ifndef TAO_CEC_PROXYPULLCONSUMER_H
 #define TAO_CEC_PROXYPULLCONSUMER_H
-
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEventChannelAdminS.h"
@@ -138,5 +137,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_CEC_PROXYPULLCONSUMER_H */

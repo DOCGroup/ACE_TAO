@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_CONSUMERADMIN_H
 #define TAO_Notify_CONSUMERADMIN_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -21,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/NotifyExtS.h"
-
 #include "Admin.h"
 
 #if defined(_MSC_VER)
@@ -229,5 +227,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_CONSUMERADMIN_H */

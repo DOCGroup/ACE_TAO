@@ -16,7 +16,7 @@
 
 #ifndef CIAO_DEPLOYMENT_CONFIGURATION_H
 #define CIAO_DEPLOYMENT_CONFIGURATION_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/Hash_Map_Manager_T.h"
 
@@ -75,8 +75,7 @@ namespace CIAO
     int init (const char *filename);
 
     /**
-     * @retval 0 if no valid name were found.  When @c name = 0, then
-     * this function behave exactly as get_default_activator_ior.
+     * @retval 0 if no valid name were found.
      */
     virtual const char *get_activator_ior (const char *name);
 
@@ -88,14 +87,13 @@ namespace CIAO
      *
      * @retval 0 if no valid daemon is configured.
      */
-    virtual const char *get_default_activator_ior ();
+    virtual const char *get_default_activator_ior (void);
 
     /**
      * @retval nil if no valid name were found.
      */
     virtual Components::Deployment::ServerActivator_ptr
-    get_activator (const char *name
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    get_activator (const char *name);
 
     /**
      * Return the reference to the default ServerActivator the
@@ -104,7 +102,7 @@ namespace CIAO
      * @retval nil if no valid daemon is configured.
      */
     virtual Components::Deployment::ServerActivator_ptr
-    get_default_activator (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    get_default_activator (void);
 
   protected:
     CORBA::ORB_var orb_;
@@ -124,5 +122,5 @@ namespace CIAO
 # include "Deployment_Configuration.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* CIAO_DEPLOYMENT_CONFIGURATION_H */

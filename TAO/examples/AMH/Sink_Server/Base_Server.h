@@ -17,12 +17,11 @@
 #ifndef BASE_SERVER_H
 #define BASE_SERVER_H
 
-#include /**/ "ace/pre.h"
-
+#include "ace/pre.h"
+#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 
-#include "tao/ORB.h"
 
 // Forward declaration of the kind of servant we are willing to handle
 // in this server
@@ -90,5 +89,5 @@ private:
 # include "Base_Server.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* BASE_SERVER_H */

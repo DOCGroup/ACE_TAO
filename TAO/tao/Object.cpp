@@ -6,18 +6,18 @@
 //
 // ORB:         CORBA::Object operations
 
-#include "Object.h"
-#include "Stub.h"
-#include "Profile.h"
-#include "ORB_Core.h"
-#include "Connector_Registry.h"
-#include "LocateRequest_Invocation_Adapter.h"
-#include "debug.h"
-#include "Dynamic_Adapter.h"
-#include "IFR_Client_Adapter.h"
-#include "Remote_Object_Proxy_Broker.h"
-
+#include "tao/Object.h"
+#include "tao/Stub.h"
+#include "tao/Profile.h"
+#include "tao/ORB_Core.h"
+#include "tao/Invocation.h"
+#include "tao/Connector_Registry.h"
+#include "tao/debug.h"
+#include "tao/Remote_Object_Proxy_Broker.h"
+#include "tao/Dynamic_Adapter.h"
+#include "tao/IFR_Client_Adapter.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Synch.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.i"
@@ -26,6 +26,8 @@
 ACE_RCSID (tao,
            Object,
            "$Id$")
+
+int CORBA::Object::_tao_class_id = 0;
 
 CORBA::Object::~Object (void)
 {
@@ -42,6 +44,7 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
   : servant_ (servant)
     , is_collocated_ (collocated)
     , is_local_ (0)
+    , proxy_broker_ (0)
     , is_evaluated_ (1)
     , ior_ (0)
     , orb_core_ (orb_core)
@@ -63,9 +66,9 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
   // If the object is collocated then set the broker using the
   // factory otherwise use the remote proxy broker.
   if (this->is_collocated_ &&
-      _TAO_Object_Proxy_Broker_Factory_function_pointer != 0)
+      _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer != 0)
     this->proxy_broker_ =
-      _TAO_Object_Proxy_Broker_Factory_function_pointer (this);
+      _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer (this);
   else
     this->proxy_broker_ =
       the_tao_remote_object_proxy_broker ();
@@ -104,6 +107,34 @@ if (!this->is_evaluated_) \
     if (!this->is_evaluated_) \
       CORBA::Object::tao_object_initialize (this); \
   }
+
+CORBA::Object_ptr
+CORBA::Object::_unchecked_narrow (CORBA::Object_ptr obj
+                                  ACE_ENV_ARG_DECL_NOT_USED)
+{
+  if (CORBA::is_nil (obj))
+    {
+      return CORBA::Object::_nil ();
+    }
+
+  if (obj->is_local_)
+    {
+    return
+      ACE_reinterpret_cast (
+          CORBA::Object_ptr,
+          obj->_tao_QueryInterface (
+                   ACE_reinterpret_cast (
+                       ptrdiff_t,
+                       &CORBA::Object::_tao_class_id
+                     )
+                 )
+        );
+    }
+  else
+    {
+      return CORBA::Object::_duplicate (obj);
+    }
+}
 
 void
 CORBA::Object::_add_ref (void)
@@ -207,9 +238,18 @@ CORBA::Object::_is_a (const char *type_id
                          this->_stubobj ()->type_id.in ()) == 0)
     return 1;
 
-  return this->proxy_broker_->_is_a (this,
-                                     type_id
-                                     ACE_ENV_ARG_PARAMETER);
+  CORBA::Boolean _tao_retval = 0;
+
+  // Get the right Proxy Implementation.
+  TAO_Object_Proxy_Impl &the_proxy =
+    this->proxy_broker_->select_proxy (this ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // Preform the Call.
+  _tao_retval = the_proxy._is_a (this, type_id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return _tao_retval;
 }
 
 const char*
@@ -301,10 +341,31 @@ CORBA::Object::_key (ACE_ENV_SINGLE_ARG_DECL)
                     0);
 }
 
+void *
+CORBA::Object::_tao_QueryInterface (ptrdiff_t type)
+{
+  void *retv = 0;
+
+  if (type == ACE_reinterpret_cast (ptrdiff_t,
+                                    &CORBA::Object::_tao_class_id))
+    retv = ACE_reinterpret_cast (void *, this);
+
+  if (retv)
+    this->_add_ref ();
+
+  return retv;
+}
+
 void
-CORBA::Object::_proxy_broker (TAO::Object_Proxy_Broker *proxy_broker)
+CORBA::Object::_proxy_broker (TAO_Object_Proxy_Broker *proxy_broker)
 {
   this->proxy_broker_ = proxy_broker;
+}
+
+TAO_Object_Proxy_Broker *
+CORBA::Object::_proxy_broker (void)
+{
+  return this->proxy_broker_;
 }
 
 CORBA::Boolean
@@ -442,8 +503,20 @@ CORBA::Object::_non_existent (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
-  return this->proxy_broker_->_non_existent (this
-                                             ACE_ENV_ARG_PARAMETER);
+  CORBA::Boolean _tao_retval = 0;
+
+  // Get the right Proxy.
+  TAO_Object_Proxy_Impl &the_proxy =
+    this->proxy_broker_->select_proxy (this
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // Perform the Call.
+  _tao_retval = the_proxy._non_existent (this
+                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return _tao_retval;
 }
 
 
@@ -451,8 +524,16 @@ CORBA::InterfaceDef_ptr
 CORBA::Object::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
-  return this->proxy_broker_->_get_interface (this
-                                              ACE_ENV_ARG_PARAMETER);
+
+  // Get the right Proxy.
+  TAO_Object_Proxy_Impl &the_proxy =
+    this->proxy_broker_->select_proxy (this
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // Perform the Call.
+  return the_proxy._get_interface (this
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::ImplementationDef_ptr
@@ -465,8 +546,16 @@ CORBA::Object_ptr
 CORBA::Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
-  return this->proxy_broker_->_get_component (this
-                                              ACE_ENV_ARG_PARAMETER);
+
+  // Get the right Proxy.
+  TAO_Object_Proxy_Impl &the_proxy =
+    this->proxy_broker_->select_proxy (this
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // Perform the Call.
+  return the_proxy._get_component (this
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -576,26 +665,10 @@ CORBA::Object::_validate_connection (
   if (this->is_collocated_)
       return !(this->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER));
 
-  TAO::LocateRequest_Invocation_Adapter tao_call (this);
-  ACE_TRY
-    {
-      tao_call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (CORBA::INV_POLICY, ex)
-    {
-      inconsistent_policies =
-        tao_call.get_inconsistent_policies ();
-      return false;
-    }
-  ACE_CATCHANY
-    {
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (false);
+  if (this->protocol_proxy_)
+    return this->protocol_proxy_->validate_connection (inconsistent_policies
+                                                       ACE_ENV_ARG_PARAMETER);
 
-  return true;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   return 0;
@@ -759,9 +832,9 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
   // If the object is collocated then set the broker using the
   // factory otherwise use the remote proxy broker.
   if (obj->is_collocated_ &&
-    _TAO_Object_Proxy_Broker_Factory_function_pointer != 0)
+    _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer != 0)
     obj->proxy_broker_ =
-      _TAO_Object_Proxy_Broker_Factory_function_pointer (obj);
+      _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer (obj);
     else
       obj->proxy_broker_ = the_tao_remote_object_proxy_broker ();
 
@@ -851,7 +924,6 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
               if (pfile != 0)
                 mp.give_profile (pfile);
             }
-
           // Make sure we got some profiles!
           if (mp.profile_count () != profile_count)
             {
@@ -861,7 +933,9 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
                                  ACE_LIB_TEXT ("TAO (%P|%t) ERROR: Could not create all ")
                                  ACE_LIB_TEXT ("profiles while extracting object\n")
                                  ACE_LIB_TEXT ("TAO (%P|%t) ERROR: reference from the ")
-                                 ACE_LIB_TEXT ("CDR stream.\n")),
+                                 ACE_LIB_TEXT ("CDR stream.[%u | %u]\n"),
+                                 ACE_static_cast (unsigned, mp.profile_count()),
+                                 ACE_static_cast (unsigned, profile_count) ),
                                 0);
             }
 
@@ -912,81 +986,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
   return (CORBA::Boolean) cdr.good_bit ();
 }
 
-
-// =========================================================
-// Traits specializations for CORBA::Object.
-namespace TAO
-{
-  CORBA::Object_ptr
-  Objref_Traits<CORBA::Object>::tao_duplicate (CORBA::Object_ptr p)
-  {
-    return CORBA::Object::_duplicate (p);
-  }
-
-  void
-  Objref_Traits<CORBA::Object>::tao_release (CORBA::Object_ptr p)
-  {
-    CORBA::release (p);
-  }
-
-  CORBA::Object_ptr
-  Objref_Traits<CORBA::Object>::tao_nil (void)
-  {
-    return CORBA::Object::_nil ();
-  }
-
-  CORBA::Boolean
-  Objref_Traits<CORBA::Object>::tao_marshal (CORBA::Object_ptr p,
-                                             TAO_OutputCDR & cdr)
-  {
-    return p->marshal (cdr);
-  }
-
-//============================================================================
-  using namespace CORBA;
-
-  CORBA::Boolean
-  Ret_Object_Argument_T<Object_ptr,Object_var>::demarshal (TAO_InputCDR &cdr)
-  {
-    return cdr >> this->x_.out ();
-  }
-
-  void
-  Ret_Object_Argument_T<Object_ptr,Object_var>::interceptor_result (CORBA::Any * )
-  {
-    if (TAO_debug_level > 2)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Cannot insert a vanilla CORBA Object"
-                    " into an Any for returning the return argument \n"));
-      }
-  }
-
-  Ret_Object_Argument_T<Object_ptr,Object_var>::Ret_Object_Argument_T (void)
-  {
-  }
-
-  Object_ptr &
-  Ret_Object_Argument_T<Object_ptr,Object_var>::arg (void)
-  {
-    return this->x_.out ();
-  }
-
-  Object_ptr
-  Ret_Object_Argument_T<Object_ptr,Object_var>::excp (void)
-  {
-    return this->x_.ptr ();
-  }
-
-  Object_ptr
-  Ret_Object_Argument_T<Object_ptr,Object_var>::retn (void)
-  {
-    return this->x_._retn ();
-  }
-} // close TAO namespace
-
-
-TAO::Object_Proxy_Broker * (*_TAO_Object_Proxy_Broker_Factory_function_pointer) (
+TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
     ) = 0;
 
@@ -994,74 +994,14 @@ TAO::Object_Proxy_Broker * (*_TAO_Object_Proxy_Broker_Factory_function_pointer) 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+// template class TAO_Object_Manager<CORBA::Object, CORBA::Object_var>;
 template class TAO_Pseudo_Var_T<CORBA::Object>;
 template class TAO_Pseudo_Out_T<CORBA::Object, CORBA::Object_var>;
 
-template class TAO::Arg_Traits<CORBA::Object>;
-template class
-  TAO::Object_Arg_Traits_T<CORBA::Object_ptr,
-                           CORBA::Object_var,
-                           CORBA::Object_out,
-                           TAO::Objref_Traits<CORBA::Object> >;
-template class TAO::In_Object_Argument_T<CORBA::Object_ptr>;
-template class
-  TAO::Inout_Object_Argument_T<CORBA::Object_ptr,
-                               TAO::Objref_Traits<CORBA::Object> >;
-template class TAO::Out_Object_Argument_T<CORBA::Object_ptr,
-                                          CORBA::Object_out>;
-template class TAO::Ret_Object_Argument_T<CORBA::Object_ptr,
-                                          CORBA::Object_var>;
-
-#if 0
-// Needed in the future
-template class TAO::SArg_Traits<CORBA::Object>;
-template class TAO::Object_SArg_Traits_T<CORBA::Object_ptr,
-                                         CORBA::Object_var,
-                                         CORBA::Object_out>;
-template class TAO::In_Object_SArgument_T<CORBA::Object_ptr,
-                                          CORBA::Object_var>;
-template class TAO::Inout_Object_SArgument_T<CORBA::Object_ptr,
-                                             CORBA::Object_var>;
-template class TAO::Out_Object_SArgument_T<CORBA::Object_ptr,
-                                           CORBA::Object_var,
-                                           CORBA::Object_out>;
-template class TAO::Ret_Object_SArgument_T<CORBA::Object_ptr,
-                                           CORBA::Object_var>;
-#endif /*if 0*/
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+// #pragma instantiate TAO_Object_Manager<CORBA::Object, CORBA::Object_var>
 #pragma instantiate TAO_Pseudo_Var_T<CORBA::Object>
 #pragma instantiate TAO_Pseudo_Out_T<CORBA::Object, CORBA::Object_var>
-
-#pragma instantiate TAO::Objref_Traits<CORBA::Object>
-#pragma instantiate TAO::Arg_Traits<CORBA::Object>
-#pragma instantiate \
-  TAO::Object_Arg_Traits_T<CORBA::Object_ptr, \
-                           CORBA::Object_var, \
-                           CORBA::Object_out, \
-                           TAO::Objref_Traits<CORBA::Object> >
-#pragma instantiate TAO::In_Object_Argument_T<CORBA::Object_ptr>
-#pragma instantiate \
-  TAO::Inout_Object_Argument_T<CORBA::Object_ptr, \
-                               TAO::Objref_Traits<CORBA::Object> >
-#pragma instantiate TAO::Out_Object_Argument_T<CORBA::Object_ptr, \
-                                               CORBA::Object_out>
-#pragma instantiate TAO::Ret_Object_Argument_T<CORBA::Object_ptr, \
-                                               CORBA::Object_var>
-
-#pragma instantiate TAO::SArg_Traits<CORBA::Object>
-#pragma instantiate TAO::Object_SArg_Traits_T<CORBA::Object_ptr, \
-                                              CORBA::Object_var, \
-                                              CORBA::Object_out>
-#pragma instantiate TAO::In_Object_SArgument_T<CORBA::Object_ptr, \
-                                               CORBA::Object_var>
-#pragma instantiate TAO::Inout_Object_SArgument_T<CORBA::Object_ptr, \
-                                                  CORBA::Object_var>
-#pragma instantiate TAO::Out_Object_SArgument_T<CORBA::Object_ptr, \
-                                                CORBA::Object_var, \
-                                                CORBA::Object_out>
-#pragma instantiate TAO::Ret_Object_SArgument_T<CORBA::Object_ptr, \
-                                                CORBA::Object_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

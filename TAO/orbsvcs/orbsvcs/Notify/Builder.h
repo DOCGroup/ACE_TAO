@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_BUILDER_H
 #define TAO_Notify_BUILDER_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -21,10 +20,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/PortableServer.h"
-
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/NotifyExtC.h"
-
 #include "AdminProperties.h"
 
 class TAO_Notify_EventChannelFactory;
@@ -54,9 +51,7 @@ public:
   build_event_channel_factory (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
 
   /// Build the Filter Factory.
-  virtual CosNotifyFilter::FilterFactory_ptr build_filter_factory (
-      ACE_ENV_SINGLE_ARG_DECL
-    );
+  virtual CosNotifyFilter::FilterFactory_ptr build_filter_factory (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Build EventChannel.
   virtual CosNotifyChannelAdmin::EventChannel_ptr
@@ -105,23 +100,13 @@ public:
   build_proxy (TAO_Notify_SupplierAdmin* sa ACE_ENV_ARG_DECL);
 
   /// Apply Reactive concurrency.
-  virtual void apply_reactive_concurrency (
-      TAO_Notify_Object& object ACE_ENV_ARG_DECL
-    );
+  virtual void apply_reactive_concurrency (TAO_Notify_Object& object ACE_ENV_ARG_DECL);
 
   /// Apply Thread Pools.
-  virtual void apply_thread_pool_concurrency (
-      TAO_Notify_Object& object, 
-      const NotifyExt::ThreadPoolParams& tp_params 
-      ACE_ENV_ARG_DECL
-    );
+  virtual void apply_thread_pool_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL);
 
   /// Apply Thread Pools with Lanes.
-  virtual void apply_lane_concurrency (
-      TAO_Notify_Object& object, 
-      const NotifyExt::ThreadPoolLanesParams& tpl_params 
-      ACE_ENV_ARG_DECL
-    );
+  virtual void apply_lane_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolLanesParams& tpl_params ACE_ENV_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)
@@ -129,5 +114,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_BUILDER_H */

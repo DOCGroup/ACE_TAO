@@ -6,7 +6,7 @@
 #include "Direct_Supplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Tests_Direct_Supplier, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Tests_Direct_Supplier, "$id$")
 
 #include "LookupManager.h"
 

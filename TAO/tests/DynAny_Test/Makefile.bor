@@ -9,7 +9,6 @@ TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -I..\.. -Ge 1
 OBJFILES = \
 	$(OBJDIR)\da_testsC.obj \
 	$(OBJDIR)\data.obj \
-   $(OBJDIR)\analyzer.obj \
 	$(OBJDIR)\driver.obj \
 	$(OBJDIR)\test_dynany.obj \
 	$(OBJDIR)\test_dynarray.obj \

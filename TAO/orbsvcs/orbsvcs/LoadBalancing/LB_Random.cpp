@@ -2,12 +2,11 @@
 
 #include "LB_Random.h"
 
-#include "tao/ORB_Constants.h"
-#include "ace/OS_NS_time.h"
 
 ACE_RCSID (LoadBalancing,
            LB_Random,
            "$Id$")
+
 
 #ifdef ACE_HAS_PTHREADS_STD
 static pthread_once_t tao_lb_once_control = PTHREAD_ONCE_INIT;
@@ -143,7 +142,7 @@ TAO_LB_Random::_tao_next_member (
   //       addition to the fact that the lower order bits should be as
   //       random as the higher order bits.
 
-  const CORBA::Float flen = len;  // Prevent integer arithmetic
+  const CORBA::Float flen = (CORBA::Float)len;  // Prevent integer arithmetic
                                   // overflow.
   const CORBA::ULong i =
     ACE_static_cast (CORBA::ULong,

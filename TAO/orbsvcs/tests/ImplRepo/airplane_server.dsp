@@ -1,26 +1,25 @@
-# Microsoft Developer Studio Project File - Name="airplane_server" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Airplane Server" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=airplane_server - Win32 Debug
+CFG=Airplane Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
-!MESSAGE run the tool that generated this project file and specify the
-!MESSAGE nmake output type.  You can then use the following command:
-!MESSAGE
+!MESSAGE use the Export Makefile command and run
+!MESSAGE 
 !MESSAGE NMAKE /f "airplane_server.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
-!MESSAGE NMAKE /f "airplane_server.mak" CFG="airplane_server - Win32 Debug"
-!MESSAGE
+!MESSAGE 
+!MESSAGE NMAKE /f "airplane_server.mak" CFG="Airplane Server - Win32 Debug"
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
-!MESSAGE "airplane_server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "airplane_server - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
+!MESSAGE "Airplane Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Airplane Server - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -29,178 +28,188 @@ CFG=airplane_server - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "airplane_server - Win32 Release"
+!IF  "$(CFG)" == "Airplane Server - Win32 Release"
 
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "Release"
+# PROP BASE Intermediate_Dir "Release"
+# PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release\airplane_server"
+# PROP Intermediate_Dir "Release"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD CPP /nologo /O2 /W3 /GX /MD /GR /I "..\..\..\orbsvcs" /I "..\..\.." /I "..\..\..\tao" /I "..\..\..\.." /D NDEBUG /D WIN32 /D _CONSOLE /FD /c
+# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
-# ADD RSC /l 0x409 /d NDEBUG /i "..\..\..\orbsvcs" /i "..\..\.." /i "..\..\..\tao" /i "..\..\..\.."
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
-# ADD BSC32 /nologo 
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
 LINK32=link.exe
-# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_IORTable.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_Valuetype.lib TAO_ObjRefTemplate.lib TAO.lib ACE.lib /libpath:"..\..\..\..\lib" /nologo /version:1.3.4 /subsystem:console /pdb:"Release\airplane_server.pdb"  /machine:I386 /out:"Release\airplane_server.exe"
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_IORTable.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao\IORTable" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "airplane_server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Airplane Server - Win32 Debug"
 
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Debug"
+# PROP BASE Intermediate_Dir "Debug"
+# PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "."
-# PROP Intermediate_Dir "Debug\airplane_server"
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "Debug"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD CPP /nologo /Ob0 /W3 /Gm /GX /Zi /MDd /GR /Gy /I "..\..\..\orbsvcs" /I "..\..\.." /I "..\..\..\tao" /I "..\..\..\.." /D _DEBUG /D WIN32 /D _CONSOLE /FD /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
-# ADD RSC /l 0x409 /d _DEBUG /i "..\..\..\orbsvcs" /i "..\..\.." /i "..\..\..\tao" /i "..\..\..\.."
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
-# ADD BSC32 /nologo 
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
 LINK32=link.exe
-# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_IORTabled.lib TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_Valuetyped.lib TAO_ObjRefTemplated.lib TAOd.lib ACEd.lib /libpath:"..\..\..\..\lib" /nologo /version:1.3.4 /subsystem:console /pdb:".\airplane_server.pdb" /debug /machine:I386 /out:".\airplane_server.exe"
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib TAO_IORTabled.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\tao\IORTable" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
-# Name "airplane_server - Win32 Release"
-# Name "airplane_server - Win32 Debug"
+# Name "Airplane Server - Win32 Release"
+# Name "Airplane Server - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp;cxx;c"
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=".\airplane_i.cpp"
+SOURCE=.\airplane_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=".\airplane_server.cpp"
+SOURCE=.\airplane_server.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=".\airplane_server_i.cpp"
-# End Source File
-# Begin Source File
-
-SOURCE=".\AirplaneC.cpp"
-# End Source File
-# Begin Source File
-
-SOURCE=".\AirplaneS.cpp"
+SOURCE=.\airplane_server_i.cpp
 # End Source File
 # End Group
-# Begin Group "Header Files"
-
-# PROP Default_Filter "h;hpp;hxx;hh"
-# Begin Source File
-
-SOURCE=".\airplane_i.h"
-# End Source File
-# Begin Source File
-
-SOURCE=".\airplane_server_i.h"
-# End Source File
-# Begin Source File
-
-SOURCE=".\AirplaneC.h"
-# End Source File
-# Begin Source File
-
-SOURCE=".\AirplaneS.h"
-# End Source File
-# End Group
-# Begin Group "Inline Files"
-
-# PROP Default_Filter "i;inl"
-# Begin Source File
-
-SOURCE=".\AirplaneC.i"
-# End Source File
-# Begin Source File
-
-SOURCE=".\AirplaneS.i"
-# End Source File
-# End Group
-# Begin Group "Documentation"
+# Begin Group "Generated Source Files"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=".\README"
+SOURCE=.\AirplaneC.cpp
+# ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\AirplaneS.cpp
+# End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\airplane_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\airplane_server_i.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
 
-# PROP Default_Filter "idl"
+# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=".\Airplane.idl"
+SOURCE=.\Airplane.idl
 
-!IF  "$(CFG)" == "airplane_server - Win32 Release"
+!IF  "$(CFG)" == "Airplane Server - Win32 Release"
 
-# PROP Ignore_Default_Tool 1
-# Begin Custom Build - Invoking IDL Compiler on $(InputPath)
+USERDEP__AIRPL="..\..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Airplane.idl
 InputName=Airplane
-InputDir=.
 
 BuildCmds= \
-	PATH=%PATH%;..\..\..\..\lib \
-	..\..\..\..\bin\tao_idl -o . -Gv -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath)
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
-".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-".\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-".\$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-".\$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-".\$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-".\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "airplane_server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Airplane Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-# Begin Custom Build - Invoking IDL Compiler on $(InputPath)
+USERDEP__AIRPL="..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Airplane.idl
 InputName=Airplane
-InputDir=.
 
 BuildCmds= \
-	PATH=%PATH%;..\..\..\..\lib \
-	..\..\..\..\bin\tao_idl -o . -Gv -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath)
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
-".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-".\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-".\$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-".\$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-".\$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-".\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group

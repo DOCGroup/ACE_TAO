@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_ADMINPROPERTIES_H
 #define TAO_Notify_ADMINPROPERTIES_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,10 +21,7 @@
 
 #include "ace/Atomic_Op.h"
 #include "ace/Refcounted_Auto_Ptr.h"
-#include "ace/Condition_Thread_Mutex.h"
-
 #include "tao/orbconf.h"
-
 #include "PropertySeq.h"
 #include "Property_T.h"
 #include "Property.h"
@@ -37,8 +33,7 @@
  * @brief The AdminProperties per EventChannel.
  *
  */
-class TAO_Notify_Export TAO_Notify_AdminProperties 
-  : public TAO_Notify_PropertySeq
+class TAO_Notify_Export TAO_Notify_AdminProperties : public TAO_Notify_PropertySeq
 {
 public:
   /// Constuctor
@@ -109,14 +104,11 @@ protected:
   TAO_Notify_Atomic_Property_Long suppliers_;
 };
 
-typedef ACE_Refcounted_Auto_Ptr<TAO_Notify_AdminProperties, 
-                                TAO_SYNCH_MUTEX> 
-  TAO_Notify_AdminProperties_var;
+typedef ACE_Refcounted_Auto_Ptr<TAO_Notify_AdminProperties, TAO_SYNCH_MUTEX> TAO_Notify_AdminProperties_var;
 
 #if defined (__ACE_INLINE__)
 #include "AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_ADMINPROPERTIES_H */

@@ -1,9 +1,8 @@
 // $Id$
 
+#include "tao/corba.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "tao/ORB.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
 
 int
 test_multiple_orbs (const char *test_name,

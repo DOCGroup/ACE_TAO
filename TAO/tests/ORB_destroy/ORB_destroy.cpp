@@ -16,10 +16,8 @@
 //
 //=========================================================================
 
-#include "tao/ORB.h"
+#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
-
-#include "ace/Log_Msg.h"
 
 ACE_RCSID(ORB_destroy, ORB_destroy, "$Id$")
 

@@ -19,6 +19,7 @@
 #define AIRPLANE_CLIENT_I_H
 
 #include "AirplaneC.h"
+#include "tao/corba.h"
 
 /**
  * @class Airplane_Client_i

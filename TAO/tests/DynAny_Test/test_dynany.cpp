@@ -1,26 +1,29 @@
-//=============================================================================
-/**
- *  @file    test_dynany.cpp
- *
- *  $Id$
- *
- *  Implementation of the basic test for simple DynAnys
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// -*- c++ -*-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/DynAny_Test
+//
+// = FILENAME
+//    test_dynany.cpp
+//
+// = DESCRIPTION
+//    Implementation of the basic test for simple DynAnys
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_dynany.h"
 #include "data.h"
 #include "tao/DynamicAny/DynamicAny.h"
-#include "analyzer.h"
 
-Test_DynAny::Test_DynAny (CORBA::ORB_var orb, int debug)
+Test_DynAny::Test_DynAny (CORBA::ORB_var orb)
   : orb_ (orb),
     test_name_ (CORBA::string_dup ("test_dynany")),
-    error_count_ (0),
-    debug_ (debug)
+    error_count_ (0)
 {
 }
 
@@ -67,10 +70,7 @@ Test_DynAny::run_test (void)
                             -1);
         }
 
-      DynAnyAnalyzer analyzer(this->orb_.in(), dynany_factory.in(), debug_);
-
-      CORBA::Any in1;
-      in1 <<= data.m_double2;
+      CORBA::Any in1 (CORBA::_tc_double, 0);
       DynamicAny::DynAny_var fa1 =
         dynany_factory->create_dyn_any (in1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -78,7 +78,6 @@ Test_DynAny::run_test (void)
       fa1->insert_double (data.m_double1
                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
       CORBA::Double d_out = fa1->get_double (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -104,8 +103,6 @@ Test_DynAny::run_test (void)
       in_any1 <<= data.m_double1;
       ftc1->from_any (in_any1
                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      analyzer.analyze(ftc1.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::Any_var out_any1 = ftc1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -133,8 +130,8 @@ Test_DynAny::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(Any)/insert/get\n"));
 
-      CORBA::Any in;
-      in <<= data.m_typecode2;
+      CORBA::Any in (CORBA::_tc_TypeCode, 
+                     0);
       DynamicAny::DynAny_var fa2 =
         dynany_factory->create_dyn_any (in
                                         ACE_ENV_ARG_PARAMETER);
@@ -169,8 +166,6 @@ Test_DynAny::run_test (void)
       in_any2 <<= data.m_typecode1;
       ftc2->from_any (in_any2
                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      analyzer.analyze(ftc2.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::Any_var out_any2 = ftc2->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

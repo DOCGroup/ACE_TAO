@@ -12,7 +12,6 @@
 #include "goC.h"
 
 #include "Notify_Test_Client.h"
-#include "ace/OS_NS_sys_stat.h"
 
 #if !defined (PATH_MAX)
 #define PATH_MAX 1024
@@ -196,10 +195,10 @@ int main (int argc, char* argv[])
               // before we start receiving events.
               ACE_stat buf;
               char ior_file[PATH_MAX];
-              const char* filepart = ACE_OS::strstr (ior, "file://");
+              const char* filepart = ACE_OS_String::strstr (ior, "file://");
               if (filepart != 0)
                 {
-                  ACE_OS::strcpy (ior_file, filepart + 7);
+                  ACE_OS_String::strcpy (ior_file, filepart + 7);
                   while (ACE_OS::stat (ior_file, &buf) == 0)
                     {
                       ACE_OS::sleep (1);

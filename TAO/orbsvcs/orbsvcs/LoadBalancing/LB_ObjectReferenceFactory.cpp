@@ -7,7 +7,6 @@ ACE_RCSID (LoadBalancing,
 
 
 #include "tao/debug.h"
-#include "ace/OS_NS_strings.h"
 
 
 // The number of different object groups to support.

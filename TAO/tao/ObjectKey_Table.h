@@ -9,10 +9,8 @@
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
-
 #ifndef TAO_OBJECTKEY_TABLE_H
 #define TAO_OBJECTKEY_TABLE_H
-
 #include /**/ "ace/pre.h"
 #include "ace/RB_Tree.h"
 
@@ -20,19 +18,21 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TAO_Export.h"
+#include "tao/Object_KeyC.h"
+#include "ace/Functor.h"
 #include "ace/Null_Mutex.h"
 
-#include "tao/Object_KeyC.h"
 
 // Forward declarations
 class TAO_ORB_Core;
+
 
 namespace TAO
 {
 
   // Forward declarations within the namespace..
   class Refcounted_ObjectKey;
-  class ObjectKey;
 
   /**
    * @class ObjectKey_Table
@@ -136,6 +136,6 @@ namespace TAO
   };
 }
 
-#include /**/ "ace/post.h"
 
+#include /**/ "ace/post.h"
 #endif /*TAO_OBJECT_KEY_TABLE_H*/

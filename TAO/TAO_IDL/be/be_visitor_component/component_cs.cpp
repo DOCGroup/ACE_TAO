@@ -58,60 +58,173 @@ be_visitor_component_cs::visit_component (be_component *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  if (node->is_defined ())
+  // Initialize the static narrrowing helper variable.
+  *os << "int " << node->full_name () << "::_tao_class_id = 0;"
+      << be_nl << be_nl;
+
+  AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+  // Helper functions generated in case this interface was
+  // forward declared in some other IDL file and not defined there.
+  *os << node->full_name () << "_ptr" << be_nl;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
     {
-      *os << be_nl << be_nl
-          << "// Traits specializations for " << node->name () << ".";
-
-      *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
-          << node->name () << "_ptr" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::tao_duplicate ("
-          << be_idt << be_idt_nl
-          << node->name () << "_ptr p" << be_uidt_nl
-          << ")" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "return " << node->name () << "::_duplicate (p);" << be_uidt_nl
-          << "}";
-
-      *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
-          << "void" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::tao_release ("
-          << be_idt << be_idt_nl
-          << node->name () << "_ptr p" << be_uidt_nl
-          << ")" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "CORBA::release (p);" << be_uidt_nl
-          << "}";
-
-      *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
-          << node->name () << "_ptr" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::tao_nil (void)"
-          << be_nl
-          << "{" << be_idt_nl
-          << "return " << node->name () << "::_nil ();" << be_uidt_nl
-          << "}";
-
-      *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
-          << "CORBA::Boolean" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
-          << be_idt << be_idt_nl
-          << node->name () << "_ptr p," << be_nl
-          << "TAO_OutputCDR & cdr" << be_uidt_nl
-          << ")" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "return p->marshal (cdr);" << be_uidt_nl
-          << "}";
+      *os << parent->name () << "::";
     }
 
+  *os << "tao_" << node->local_name () << "_life::"
+      << "tao_duplicate (" << be_idt << be_idt_nl
+      << node->full_name () << "_ptr p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return " << node->full_name ()
+      << "::_duplicate (p);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "void" << be_nl;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      *os << parent->name () << "::";
+    }
+
+  *os << "tao_" << node->local_name () << "_life::"
+      << "tao_release (" << be_idt << be_idt_nl
+      << node->full_name () << "_ptr p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::release (p);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << node->full_name () <<  "_ptr" << be_nl;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      *os << parent->name () << "::";
+    }
+
+  *os << "tao_" << node->local_name () << "_life::"
+      << "tao_nil (" << be_idt << be_idt_nl
+      << "void" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return " << node->full_name ()
+      << "::_nil ();" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "CORBA::Boolean" << be_nl;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      *os << parent->name () << "::";
+    }
+
+  *os << "tao_" << node->local_name () << "_life::"
+      << "tao_marshal (" << be_idt << be_idt_nl
+      << node->name () << "_ptr p," << be_nl
+      << "TAO_OutputCDR &cdr" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return p->marshal (cdr);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << node->full_name () << "_ptr" << be_nl;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      *os << parent->name () << "::";
+    }
+
+  *os << "tao_" << node->local_name () << "_cast::"
+      << "tao_narrow (" << be_idt << be_idt_nl
+      << "CORBA::Object_ptr p" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return " << node->full_name ()
+      << "::_narrow (p ACE_ENV_ARG_PARAMETER);"
+      << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "CORBA::Object_ptr" << be_nl;
+
+  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+    {
+      *os << parent->name () << "::";
+    }
+
+  *os << "tao_" << node->local_name () << "_cast::"
+      << "tao_upcast (" << be_idt << be_idt_nl
+      << "void *src" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << node->full_name () << " **tmp =" << be_idt_nl
+      << "ACE_static_cast (" << node->full_name ()
+      << " **, src);" << be_uidt_nl
+      << "return *tmp;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "CORBA::Boolean" << be_nl
+      << "tao_" << node->flat_name () << "_marshal (" << be_idt << be_idt_nl
+      << node->name () << "_ptr p," << be_nl
+      << "TAO_OutputCDR &strm" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return p->marshal (strm);" << be_uidt_nl
+      << "}";
+
+
+  be_visitor_context ctx (*this->ctx_);
+
+  // Interceptor classes.  The interceptors helper classes must be
+  // defined before the interface operations because they are used in
+  // the implementation of said operations.
+
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS);
+  be_visitor_interface_interceptors_cs ii_visitor (&ctx);
+
+  if (node->accept (&ii_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_component_cs::"
+                         "visit_component - "
+                         "codegen for interceptors classes failed\n"),
+                        -1);
+    }
+
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS);
+  be_visitor_interface_remote_proxy_impl_cs irpi_visitor (&ctx);
+
+  if (node->accept (&irpi_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_component_cs::"
+                         "visit_component - "
+                         "codegen for Base Proxy Broker class failed\n"),
+                        -1);
+    }
+
+  ctx = *this->ctx_;
+  be_visitor_interface_remote_proxy_broker_cs irpb_visitor (&ctx);
+
+  if (node->accept (&irpb_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_component_cs::"
+                         "visit_component - "
+                         "codegen for Base Proxy Broker class failed\n"),
+                        -1);
+    }
+
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
    // Generate the destructor and default constructor.
-  *os << be_nl << be_nl
-      << node->name () << "::~" << node->local_name ()
+  *os << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
@@ -158,9 +271,9 @@ be_visitor_component_cs::visit_component (be_component *node)
           << node->name ()
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
-          << node->local_name () << " *_tao_tmp_pointer = ACE_static_cast ("
+          << node->local_name () << " *tmp = ACE_static_cast ("
           << node->local_name () << " *, _tao_void_pointer);" << be_nl
-          << "CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
+          << "CORBA::release (tmp);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
@@ -332,8 +445,6 @@ be_visitor_component_cs::visit_component (be_component *node)
                          "codegen for scope failed\n"),
                         -1);
     }
-
-  be_visitor_context ctx (*this->ctx_);
 
   // Smart Proxy classes.
   if (be_global->gen_smart_proxies ())

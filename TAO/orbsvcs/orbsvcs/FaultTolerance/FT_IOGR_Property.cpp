@@ -7,7 +7,6 @@
 #include "tao/Tagged_Components.h"
 
 #include "ace/Auto_Ptr.h"
-#include "tao/debug.h"
 
 
 ACE_RCSID (FaultTolerance,
@@ -15,7 +14,7 @@ ACE_RCSID (FaultTolerance,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "FT_IOGR_Property.inl"
+# include "FT_IOGR_Property.i"
 #endif /* ! __ACE_INLINE__ */
 
 
@@ -273,11 +272,11 @@ TAO_FT_IOGR_Property::encode_properties (
 
   // the version info
   CORBA::Boolean status =
-    cdr << this->ft_group_tagged_component_->version;
+    cdr << this->ft_group_tagged_component_->group_version;
 
   // the domain id
   status = status &&
-    cdr << this->ft_group_tagged_component_->ft_domain_id.in ();
+    cdr << this->ft_group_tagged_component_->group_domain_id.in ();
 
   // Object group id
   status = status &&

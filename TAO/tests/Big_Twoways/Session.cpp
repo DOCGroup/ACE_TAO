@@ -114,7 +114,6 @@ Session::start (const Test::Session_List &other_sessions
           {
             this->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
-
             if (this->task_.activate (
                     THR_NEW_LWP | THR_JOINABLE, 1, 1) == -1)
               {

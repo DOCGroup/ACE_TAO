@@ -60,7 +60,7 @@ TAO_PriorityModelPolicy::create (const CORBA::Any &
    * been fixed such that a RTCORBA::PriorityModelPolicy can be
    * created by using the ORB::create_policy interface.
    */
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
 }
 
@@ -179,7 +179,7 @@ TAO_ThreadpoolPolicy::create (const CORBA::Any &val
 {
   RTCORBA::ThreadpoolId value;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 
   TAO_ThreadpoolPolicy *tmp = 0;
@@ -356,7 +356,7 @@ TAO_PriorityBandedConnectionPolicy::create (const CORBA::Any &val
 {
   RTCORBA::PriorityBands *value = 0;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 
   TAO_PriorityBandedConnectionPolicy *tmp = 0;
@@ -474,7 +474,7 @@ TAO_ServerProtocolPolicy::create (const CORBA::Any &val
 {
   RTCORBA::ProtocolList *value = 0;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 
   TAO_ServerProtocolPolicy *tmp = 0;
@@ -759,7 +759,7 @@ TAO_ClientProtocolPolicy::create (const CORBA::Any &val
 {
   RTCORBA::ProtocolList *value = 0;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 
   TAO_ClientProtocolPolicy *tmp = 0;

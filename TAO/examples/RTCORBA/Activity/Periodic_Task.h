@@ -16,7 +16,6 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "ace/Task.h"
-#include "ace/SString.h"
 #include "JobC.h"
 #include "activity_export.h"
 

@@ -18,11 +18,8 @@
 
 #include "helper.h"
 #include "bd_wstring.h"
-#include "ace/OS_NS_wchar.h"
 
-ACE_RCSID (Param_Test, 
-           bd_wstring, 
-           "$Id$")
+ACE_RCSID(Param_Test, bd_wstring, "$Id$")
 
 // ************************************************************************
 //               Test_Bounded_WString

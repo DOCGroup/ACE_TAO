@@ -1,36 +1,29 @@
 // $Id$
 #include "CCF/CompilerElements/FileSystem.hpp"
-#include "CCF/CompilerElements/TokenStream.hpp"
-#include "CCF/CompilerElements/Preprocessor.hpp"
-#include "CCF/CompilerElements/Diagnostic.hpp"
-#include "CCF/CompilerElements/Context.hpp"
 
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 #include "CCF/CodeGenerationKit/CommandLineParser.hpp"
 #include "CCF/CodeGenerationKit/CommandLineDescriptor.hpp"
 
-#include "CCF/CIDL/LexicalAnalyzer.hpp"
-#include "CCF/CIDL/Parser.hpp"
-#include "CCF/CIDL/SyntaxTree.hpp"
-#include "CCF/CIDL/SemanticAction/Impl/Factory.hpp"
+#include "CCF/CIDL/CIDL_LexicalAnalyzer.hpp"
+#include "CCF/CIDL/CIDL_Parser.hpp"
+#include "CCF/CIDL/CIDL_SyntaxTree.hpp"
+#include "CCF/CIDL/CIDL_SemanticActionImpl.hpp"
 
 #include "ExecutorMappingGenerator.hpp"
 #include "ServantGenerator.hpp"
-#include "RepositoryIdGenerator.hpp"
-#include "DescriptorGenerator.hpp"
-#include "SizeTypeCalculator.hpp"
+
+#include "CCF/CompilerElements/TokenStream.hpp"
+#include "CCF/CompilerElements/Preprocessor.hpp"
 
 #include <iostream>
 
 using std::cerr;
 using std::endl;
 
-using namespace CCF;
-using namespace CIDL;
-using namespace SyntaxTree;
-
 int main (int argc, char* argv[])
 {
+  using namespace IDL2::SyntaxTree;
 
   try
   {
@@ -47,23 +40,12 @@ int main (int argc, char* argv[])
     }
 
     ExecutorMappingGenerator lem_gen;
-    ServantGenerator svnt_gen (cl);
-    RepositoryIdGenerator repid_gen;
-    DescriptorGenerator desc_gen;
-    SizeTypeCalculator sizetype_calc;
 
     if (cl.get_value ("help", false) || cl.get_value ("help-html", false))
     {
       CL::Description d (argv[0]);
 
       lem_gen.options (d);
-      svnt_gen.options (d);
-      desc_gen.options (d);
-
-      d.add_option (CL::OptionDescription (
-                      "trace-semantic-actions",
-                      "Turn on semnatic actions tracing facility.",
-                      true));
 
       d.add_option (CL::OptionDescription (
                       "preprocess-only",
@@ -101,14 +83,14 @@ int main (int argc, char* argv[])
       try
       {
         file_path = fs::path (*i, fs::native);
-        ifs.open (file_path, std::ios_base::in);
+        ifs.open (file_path, std::ios_base::out);
       }
       catch (fs::filesystem_error const&)
       {
         cerr << *i << ": error: unable to open in read mode" << endl;
         return -1;
       }
-      catch (std::ios_base::failure const&)
+      catch (ios_base::failure const&)
       {
         cerr << *i << ": error: unable to open in read mode" << endl;
         return -1;
@@ -120,44 +102,41 @@ int main (int argc, char* argv[])
     //   get after eof.
     ifs.exceptions (ios_base::iostate (0));
 
-    std::istream& is =
-      ifs.is_open () ? static_cast<std::istream&> (ifs)
-                     : static_cast<std::istream&> (std::cin);
+    std::istream& is = ifs.is_open () 
+      ? static_cast<std::istream&> (ifs)
+      : static_cast<std::istream&> (std::cin);
 
-    InputStreamAdapter isa (is);
-    Preprocessor pp (isa);
+    CCF::InputStreamAdapter isa (is);
+    CCF::Preprocessor pp (isa);
 
     if (cl.get_value ("preprocess-only", false))
     {
       while (true)
       {
-        Preprocessor::int_type i = pp.next ();
+        CCF::Preprocessor::int_type i = pp.next ();
 
         if (pp.eos (i)) break;
 
-        Preprocessor::char_type c = pp.to_char_type (i);
+        CCF::Preprocessor::char_type c = pp.to_char_type (i);
 
         std::cout << c ;
       }
-
       return 0;
     }
 
 
-    Diagnostic::Stream diagnostic_stream;
-
-
-    LexicalAnalyzer lexer (pp);
-    TokenList token_stream;
+    CIDL::LexicalAnalyzer lexer (pp);
+    TokenStream token_stream;
 
     //@@ bad token comparison
-    for (TokenPtr token = lexer.next ();; token = lexer.next ())
+    for (TokenPtr token = lexer.next ();
+         token.in () != lexer.eos.in ();
+         token = lexer.next ())
     {
       token_stream.push_back (token);
-      if (ReferenceCounting::strict_cast<EndOfStream> (token) != 0) break;
     }
 
-    if (token_stream.size () == 1)
+    if (token_stream.size () == 0)
     {
       cerr << "no tokens produced so nothing to parse" << endl;
       return 0;
@@ -171,8 +150,7 @@ int main (int argc, char* argv[])
     //Create .builtin region
     {
       TranslationRegionPtr builtin (
-        new TranslationRegion (fs::path (".builtin"),
-                               unit->table (),
+        new TranslationRegion (unit->table (),
                                unit->create_order ()));
       unit->insert (builtin);
 
@@ -181,28 +159,17 @@ int main (int argc, char* argv[])
 
       ScopePtr s = builtin->scope ();
 
-      s->insert (BuiltInTypeDeclPtr (new ObjectDecl           (s)));
-      s->insert (BuiltInTypeDeclPtr (new ValueBaseDecl        (s)));
-      s->insert (BuiltInTypeDeclPtr (new AnyDecl              (s)));
-      s->insert (BuiltInTypeDeclPtr (new BooleanDecl          (s)));
-      s->insert (BuiltInTypeDeclPtr (new CharDecl             (s)));
-      s->insert (BuiltInTypeDeclPtr (new DoubleDecl           (s)));
-      s->insert (BuiltInTypeDeclPtr (new FloatDecl            (s)));
-      s->insert (BuiltInTypeDeclPtr (new LongDecl             (s)));
-      s->insert (BuiltInTypeDeclPtr (new LongDoubleDecl       (s)));
-      s->insert (BuiltInTypeDeclPtr (new LongLongDecl         (s)));
-      s->insert (BuiltInTypeDeclPtr (new OctetDecl            (s)));
-      s->insert (BuiltInTypeDeclPtr (new ShortDecl            (s)));
-      s->insert (BuiltInTypeDeclPtr (new StringDecl           (s)));
-      s->insert (BuiltInTypeDeclPtr (new UnsignedLongDecl     (s)));
-      s->insert (BuiltInTypeDeclPtr (new UnsignedLongLongDecl (s)));
-      s->insert (BuiltInTypeDeclPtr (new UnsignedShortDecl    (s)));
-      s->insert (BuiltInTypeDeclPtr (new VoidDecl             (s)));
-      s->insert (BuiltInTypeDeclPtr (new WcharDecl            (s)));
-      s->insert (BuiltInTypeDeclPtr (new WstringDecl          (s)));
+      // Note: I know what I am doing here (and if you don't then
+      //       read MExC++#17 again).
+
+      s->insert (BuiltInTypeDefPtr (new Void (s)));
+      s->insert (BuiltInTypeDefPtr (new Long (s)));
+      s->insert (BuiltInTypeDefPtr (new Boolean (s)));
+      s->insert (BuiltInTypeDefPtr (new String (s)));
     }
 
-    //Create implied #include <Components.idl>
+    //@@ This should be in IDL3 or even CIDL part I just need
+    //   a mechanism to create them in proper order.
     {
       TranslationRegionPtr builtin (
         new ImpliedIncludeTranslationRegion (fs::path ("Components.idl"),
@@ -211,7 +178,7 @@ int main (int argc, char* argv[])
       unit->insert (builtin);
 
       ScopePtr fs = builtin->scope ();
-      ModulePtr m (new Module (SimpleName("Components"), fs));
+      ModulePtr m (new SyntaxTree::Module (SimpleName("Components"), fs));
       fs->insert (m);
 
       LocalInterfaceDefPtr i (
@@ -228,54 +195,30 @@ int main (int argc, char* argv[])
                                       unit->create_order ()));
     unit->insert (tr);
 
-
-    CompilerElements::Context context;
-    context.set ("file-path", file_path);
-
-    bool trace = cl.get_value ("trace-semantic-actions", false);
-
-    context.set ("idl2::semantic-action::trace", trace);
-    context.set ("idl3::semantic-action::trace", trace);
-    context.set ("cidl::semantic-action::trace", trace);
-
-
-    SemanticAction::Impl::Factory actions (context, diagnostic_stream, tr);
+    CIDL::SemanticActionFactoryImpl action_factory (tr);
 
     //-----------------------------------------------------------------
 
-    Parser parser (context, diagnostic_stream, lexer, actions);
+    CIDL::Parser parser (lexer, action_factory);
 
-    IDL2::Parsing::parse (token_stream.begin (),
-                          token_stream.end (),
-                          parser.start ());
+    bool result = Details::parse (token_stream.begin (),
+                                  token_stream.end (),
+                                  parser.start ());
 
-    if (diagnostic_stream.error_count () != 0) return -1;
+    if (!result) return -1;
 
-    // Generate executor mapping.
+    // Generate executor mapping
+
     {
       lem_gen.generate (cl, unit);
     }
-    
-    // Calculate the size type of everything in the AST.
-    // This must be executed before the servant code generator.
+
+    // Generate servant code
     {
-      sizetype_calc.calculate (unit);
+      ServantGenerator gen (cl);
+      gen.generate (unit);
     }
 
-    // Generate servant code.
-    {
-      svnt_gen.generate (unit);
-    }
-
-    // Compute repository IDs in a separate pass.
-    {
-      repid_gen.generate (unit);
-    }
-
-    // Generate descriptor code.
-    {
-      desc_gen.generate (cl, unit);
-    }
   }
   catch (Declaration::NotInScope const&)
   {
@@ -283,6 +226,6 @@ int main (int argc, char* argv[])
   }
   catch (...)
   {
-    cerr << "exception: " << "unknown" << endl;
+    cerr << "exception: " << "unknow" << endl;
   }
 }

@@ -5,6 +5,7 @@
 
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
+#include "tao/corba.h"
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
@@ -72,8 +73,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 20 Hz low criticality supplier
                   { "low_20_S",             // entry point
@@ -89,8 +89,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 10 Hz high criticality supplier
                   { "high_10_S",            // entry point
@@ -106,8 +105,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 10 Hz low criticality supplier
                   { "low_10_S",         // entry point
@@ -123,8 +121,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 5 Hz high criticality supplier
                   { "high_05_S",         // entry point
@@ -140,8 +137,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 5 Hz low criticality supplier
                   { "low_05_S",         // entry point
@@ -157,8 +153,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler:: RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 1 Hz high criticality supplier (declares a rate but no threads)
                   { "high_01_S",            // entry point
@@ -174,8 +169,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 1 Hz low criticality supplier (remote dependant: scheduler should warn)
                   { "low_01_S",             // entry point
@@ -191,8 +185,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 20 Hz high criticality consumer
                   { "high_20_C",        // entry point
@@ -208,8 +201,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 20 Hz low criticality consumer
                   { "low_20_C",        // entry point
@@ -225,8 +217,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 10 Hz high criticality consumer
                   { "high_10_C",        // entry point
@@ -242,8 +233,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 10 Hz low criticality consumer
                   { "low_10_C",        // entry point
@@ -259,8 +249,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 5 Hz high criticality consumer
                   { "high_05_C",        // entry point
@@ -276,8 +265,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 5 Hz low criticality consumer
                   { "low_05_C",        // entry point
@@ -293,8 +281,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 1 Hz high criticality consumer
                   { "high_01_C",        // entry point
@@ -310,8 +297,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   },
                   // 1 Hz low criticality consumer
                   { "low_01_C",        // entry point
@@ -327,8 +313,7 @@ main (int argc, char *argv[])
                         0,                  // OS priority
                         0,                  // Preemption subpriority
                         0,                  // Preemption priority
-                        RtecScheduler::OPERATION,           // info type
-                        RtecScheduler::RT_INFO_ENABLED
+                        RtecScheduler::OPERATION           // info type
                   }
   };
 
@@ -418,7 +403,6 @@ main (int argc, char *argv[])
         }
 
       RtecScheduler::RT_Info_Set_var infos;
-      RtecScheduler::Dependency_Set_var deps;
       RtecScheduler::Config_Info_Set_var configs;
       RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
 
@@ -434,7 +418,6 @@ main (int argc, char *argv[])
       // not define instances of _out types.
 
       RtecScheduler::RT_Info_Set_out infos_out (infos);
-      RtecScheduler::Dependency_Set_out deps_out (deps);
       RtecScheduler::Config_Info_Set_out configs_out (configs);
       RtecScheduler::Scheduling_Anomaly_Set_out anomalies_out (anomalies);
       ACE_Scheduler_Factory::server ()->compute_scheduling
@@ -442,7 +425,7 @@ main (int argc, char *argv[])
                                          ACE_SCOPE_THREAD),
          ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
-         infos_out, deps_out, configs_out, anomalies_out
+         infos_out, configs_out, anomalies_out
          ACE_ENV_ARG_PARAMETER); // FUZZ: ignore check_for_ace_check
 #else  /* ! __SUNPRO_CC */
       ACE_Scheduler_Factory::server ()->compute_scheduling
@@ -450,14 +433,13 @@ main (int argc, char *argv[])
                                          ACE_SCOPE_THREAD),
          ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
-         infos.out (), deps.out (), configs.out (), anomalies.out ()
+         infos.out (), configs.out (), anomalies.out ()
          ACE_ENV_ARG_PARAMETER); // FUZZ: ignore check_for_ace_check
 #endif /* ! __SUNPRO_CC */
 
       ACE_TRY_CHECK;
 
       ACE_Scheduler_Factory::dump_schedule (infos.in (),
-                                            deps.in (),
                                             configs.in (),
                                             anomalies.in (),
                                             "Sched_Conf_Runtime.h",

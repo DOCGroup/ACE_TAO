@@ -45,7 +45,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "PortableServer_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /Zi /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "TAO_PORTABLESERVER_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "TAO_PORTABLESERVER_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -72,7 +72,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "PortableServer_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "TAO_PORTABLESERVER_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "TAO_PORTABLESERVER_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -100,7 +101,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_EVENT_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D ACE_HAS_MFC=1 /D "TAO_PORTABLESERVER_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D ACE_HAS_MFC=1 /D "TAO_PORTABLESERVER_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -129,7 +130,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_EVENT_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /W3 /GR /GX /Zi /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D ACE_HAS_MFC=1 /D "TAO_PORTABLESERVER_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D ACE_HAS_MFC=1 /D "TAO_PORTABLESERVER_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -163,7 +164,7 @@ SOURCE=.\AMH_Response_Handler.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Collocated_Object_Proxy_Broker.cpp
+SOURCE=.\Collocated_Object.cpp
 # End Source File
 # Begin Source File
 
@@ -195,6 +196,10 @@ SOURCE=.\Default_Policy_Validator.cpp
 # Begin Source File
 
 SOURCE=.\Default_Servant_Dispatcher.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Direct_Object_Proxy_Impl.cpp
 # End Source File
 # Begin Source File
 
@@ -326,6 +331,14 @@ SOURCE=.\ServerInterceptorAdapter.cpp
 
 SOURCE=.\ServerRequestInfo.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\Strategized_Object_Proxy_Broker.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ThruPOA_Object_Proxy_Impl.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -340,7 +353,7 @@ SOURCE=.\AMH_Response_Handler.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Collocated_Object_Proxy_Broker.h
+SOURCE=.\Collocated_Object.h
 # End Source File
 # Begin Source File
 
@@ -357,6 +370,10 @@ SOURCE=.\Default_Policy_Validator.h
 # Begin Source File
 
 SOURCE=.\Default_Servant_Dispatcher.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Direct_Object_Proxy_Impl.h
 # End Source File
 # Begin Source File
 
@@ -492,6 +509,14 @@ SOURCE=.\ServerRequestInfo.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Strategized_Object_Proxy_Broker.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ThruPOA_Object_Proxy_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Upcall_Wrapper.h
 # End Source File
 # End Group
@@ -501,6 +526,10 @@ SOURCE=.\Upcall_Wrapper.h
 # Begin Source File
 
 SOURCE=.\Active_Object_Map.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Collocated_Object.i
 # End Source File
 # Begin Source File
 

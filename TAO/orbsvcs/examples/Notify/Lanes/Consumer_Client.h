@@ -11,15 +11,12 @@
 
 #ifndef TAO_Notify_CONSUMER_CLIENT_H
 #define TAO_Notify_CONSUMER_CLIENT_H
-
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ORB_Objects.h"
-
-#include "tao/RTCORBA/RTCORBA.h"
-
-#include "ace/SString.h"
 #include "ace/Task.h"
+#include "tao/corba.h"
+#include "tao/RTCORBA/RTCORBA.h"
 
 class TAO_Notify_Lanes_Consumer;
 
@@ -73,5 +70,5 @@ protected:
   ACE_CString event_type_;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_Notify_CONSUMER_CLIENT_H */

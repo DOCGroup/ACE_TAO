@@ -152,48 +152,16 @@ int be_visitor_array_ci::visit_array (be_array *node)
         }
     }
 
+  // Generate _life struct static member definitions.
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  // Generate the array traits specialization definitions,
-  // guarded by #ifdef on unaliased array element type and length.
-
-  ACE_CString unique;
-
-  if (nt == AST_Decl::NT_typedef)
-    {
-      be_typedef *td = be_typedef::narrow_from_decl (bt);
-      unique = td->primitive_base_type ()->flat_name ();
-    }
-  else
-    {
-      unique = bt->flat_name ();
-    }
-
-  char buf[NAMEBUFSIZE];
-
-  for (unsigned long i = 0; i < node->n_dims (); ++i)
-    {
-      ACE_OS::memset (buf,
-                      '\0',
-                      NAMEBUFSIZE);
-      ACE_OS::sprintf (buf,
-                       "_%ld",
-                       node->dims ()[i]->ev ()->u.ulval);
-      unique += buf;
-    }
-
-  unique += "_traits";
-  os->gen_ifdef_macro (unique.fast_rep ());
-
   *os << be_nl << be_nl
-      << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << "TAO::Array_Traits<" << fname << ", " 
-      << fname << "_slice>::tao_free ("
+      << node->fwd_helper_name () << "_life::tao_free ("
       << be_idt << be_idt_nl
       << fname << "_slice * _tao_slice" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -202,11 +170,9 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "}";
 
   *os << be_nl << be_nl
-      << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
-      << "TAO::Array_Traits<" << fname << ", " 
-      << fname << "_slice>::tao_dup ("
+      << node->fwd_helper_name () << "_life::tao_dup ("
       << be_idt << be_idt_nl
       << "const " << fname << "_slice * _tao_slice" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -217,8 +183,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << "TAO::Array_Traits<" << fname << ", " 
-      << fname << "_slice>::tao_copy ("
+      << node->fwd_helper_name () << "_life::tao_copy ("
       << be_idt << be_idt_nl
       << fname << "_slice * _tao_to," << be_nl
       << "const " << fname << "_slice * _tao_from" << be_uidt_nl
@@ -230,15 +195,10 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
-      << "TAO::Array_Traits<" << fname << ", " 
-      << fname << "_slice>::tao_alloc (void)" << be_nl
+      << node->fwd_helper_name () << "_life::tao_alloc (void)" << be_nl
       << "{" << be_idt_nl
       << "return " << fname << "_alloc ();" << be_uidt_nl
       << "}";
-
-  os->gen_endif ();
-
-  *os << be_nl;
 
   node->cli_inline_gen (1);
   return 0;

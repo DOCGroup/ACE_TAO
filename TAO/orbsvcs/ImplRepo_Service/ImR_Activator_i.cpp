@@ -17,7 +17,6 @@
 #include "tao/default_ports.h"
 
 #include "ace/Auto_Ptr.h"
-#include "ace/OS_NS_netdb.h"
 
 
 ACE_RCSID (ImplRepo_Service,

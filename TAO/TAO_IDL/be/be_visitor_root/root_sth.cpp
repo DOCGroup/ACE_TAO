@@ -124,17 +124,17 @@ be_visitor_root_sth::visit_module (be_module *node)
 
   // Now generate the class definition. The prefix POA_ is prepended to our
   // name only if we are the outermost module.
-  *os << "namespace ";
+  *os << "TAO_NAMESPACE ";
 
   if (node->is_nested ())
     {
       // We are inside another module.
-      *os << node->local_name () << be_nl;
+      *os << " " << node->local_name () << be_nl;
     }
   else
     {
       // We are outermost module.
-      *os << "POA_" << node->local_name () << be_nl;
+      *os << " POA_" << node->local_name () << be_nl;
     }
 
   *os << "{" << be_idt;
@@ -148,7 +148,8 @@ be_visitor_root_sth::visit_module (be_module *node)
                          -1);
     }
 
-  *os << be_uidt_nl << "} // module " << node->name ();
+  *os << be_uidt_nl << "}" << be_nl << "TAO_NAMESPACE_CLOSE // module "
+      << node->name ();
 
   if (!node->is_nested ())
     {

@@ -5,6 +5,8 @@
 #ifndef CCF_RUNTIME_REFERENCE_COUNTING_H
 #define CCF_RUNTIME_REFERENCE_COUNTING_H
 
+#include "MSVC_Pragmas.hpp"
+
 #include "Utility/ReferenceCounting/ReferenceCounting.hpp"
 
 namespace ReferenceCounting = Utility::ReferenceCounting;

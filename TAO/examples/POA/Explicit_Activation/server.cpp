@@ -17,9 +17,7 @@
 // ================================================================
 
 #include "ace/Get_Opt.h"
-#include "ace/SString.h"
 #include "test_i.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Explicit_Activation, server, "$Id$")
 

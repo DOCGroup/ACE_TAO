@@ -19,11 +19,8 @@
 
 #include "Servant_Locator.h"
 #include "test_i.h"
-#include "ace/OS_NS_string.h"
 
-ACE_RCSID (On_Demand_Activation, 
-           Servant_Locator, 
-           "$Id$")
+ACE_RCSID(On_Demand_Activation, Servant_Locator, "$Id$")
 
 ServantLocator::ServantLocator (CORBA::ORB_ptr orb)
   : counter_ (0),

@@ -26,12 +26,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "QuoterC.h"
-
-#include "orbsvcs/CosLifeCycleC.h"
-
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
+#include "tao/corba.h"
+#include "QuoterC.h"
+#include "orbsvcs/CosLifeCycleC.h"
 
 class Quoter_Client
 {

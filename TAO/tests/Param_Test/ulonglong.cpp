@@ -19,9 +19,7 @@
 #include "helper.h"
 #include "ulonglong.h"
 
-ACE_RCSID (Param_Test,
-           ulonglong, 
-           "$Id$")
+ACE_RCSID(Param_Test, ulonglong, "$Id$")
 
 Test_ULongLong::Test_ULongLong (void)
   : opname_ (CORBA::string_dup ("test_ulonglong"))

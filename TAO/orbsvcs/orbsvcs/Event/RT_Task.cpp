@@ -6,14 +6,12 @@
 #include "Debug_Macros.h"
 #include "Event_Channel.h"
 #include "Memory_Pools.h"
-#include "ace/OS_NS_errno.h"
 
 #if !defined (__ACE_INLINE__)
 #include "RT_Task.i"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/Timeprobe.h"
-#include "ace/OS_NS_errno.h"
 
 ACE_RCSID(Event, RT_Task, "$Id$")
 

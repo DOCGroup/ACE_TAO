@@ -13,6 +13,7 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_POA_POLICY_SET_H
 #define TAO_POA_POLICY_SET_H
 #include /**/ "ace/pre.h"

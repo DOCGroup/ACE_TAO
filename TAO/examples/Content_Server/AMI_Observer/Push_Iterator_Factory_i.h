@@ -21,12 +21,11 @@
 #ifndef PUSH_ITERATOR_FACTORY_I_H
 #define PUSH_ITERATOR_FACTORY_I_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_IO.h"
 #include "Push_Web_ServerS.h"
-#include "ace/OS_NS_sys_stat.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -75,6 +74,6 @@ private:
   // of data to the client.
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif  /* PUSH_ITERATOR_FACTORY_I_H */

@@ -1,6 +1,7 @@
 #include "Transport_Connector.h"
 #include "Transport.h"
 #include "ORB_Core.h"
+#include "Invocation.h"
 #include "MProfile.h"
 #include "Profile.h"
 #include "Environment.h"
@@ -9,13 +10,16 @@
 #include "Connect_Strategy.h"
 #include "Client_Strategy_Factory.h"
 
+
 #if !defined (__ACE_INLINE__)
 # include "Transport_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            Connector,
            "$Id$")
+
 
 // Connector
 TAO_Connector::TAO_Connector (CORBA::ULong tag)
@@ -116,9 +120,7 @@ TAO_Connector::make_mprofile (const char *string,
   for (int i = ior_index; i < objkey_index; ++i)
     {
       if (ior[i] == endpoint_delimiter)
-        {
-          profile_count++;
-        }
+        profile_count++;
     }
 
   // Tell the MProfile object how many Profiles it should hold.
@@ -152,13 +154,9 @@ TAO_Connector::make_mprofile (const char *string,
       begin = end + 1;
 
       if (j < profile_count - 1)
-        {
-          end = ior.find (endpoint_delimiter, begin);
-        }
+        end = ior.find (endpoint_delimiter, begin);
       else
-        {
-          end = objkey_index;  // Handle last endpoint differently
-        }
+        end = objkey_index;  // Handle last endpoint differently
 
       if (end < ACE_static_cast (int, ior.length ()) && end != ior.npos)
         {
@@ -209,17 +207,26 @@ TAO_Connector::make_mprofile (const char *string,
   return 0;  // Success
 }
 
+int
+TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
+                        TAO_Transport_Descriptor_Interface *desc
+                        ACE_ENV_ARG_DECL)
+{
+  return this->connect (invocation,
+                        desc,
+                        0
+                        ACE_ENV_ARG_PARAMETER);
+}
 
-TAO_Transport*
-TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
+int
+TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
                         TAO_Transport_Descriptor_Interface *desc,
                         ACE_Time_Value *timeout
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if ((this->set_validate_endpoint (desc->endpoint ()) == -1) || desc == 0)
-    {
-      return 0;
-    }
+  if (this->set_validate_endpoint (desc->endpoint ()) == -1)
+    return -1;
+
 
   TAO_Transport *base_transport = 0;
 
@@ -232,24 +239,28 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
         base_transport) == 0)
     {
       if (TAO_debug_level > 2)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport_Connector::connect, "
-                      "got an existing Transport[%d]\n",
-                      base_transport->id ()));
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Transport_Connector::connect, "
+                    "got an existing Transport[%d]\n",
+                    base_transport->id ()));
 
-      // No need to _duplicate since things are taken care within the
-      // cache manager.
-      return base_transport;
+      TAO_Transport *&transport = invocation->transport ();
+
+      // No need to _duplicate and release since base_transport
+      // is going out of scope.  Transport now has control of
+      // base_transport.
+      transport = base_transport;
+
+      // Successful
+      return 0;
     }
 
   // @@TODO: This is not the right place for this!
   // Purge connections (if necessary)
   this->orb_core_->lane_resources ().transport_cache ().purge ();
 
-  return this->make_connection (r,
-                                *desc,
+  return this->make_connection (invocation,
+                                desc,
                                 timeout);
 }
 
@@ -265,9 +276,7 @@ TAO_Connector::create_connect_strategy (void)
     }
 
   if (this->active_connect_strategy_ == 0)
-    {
-      return -1;
-    }
+    return -1;
 
   return 0;
 }

@@ -1,7 +1,5 @@
 // $Id$
 
-#include "ace/Null_Mutex.h"
-
 ACE_INLINE
 TAO_ECG_CDR_Message_Sender::TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc)
   :  endpoint_rptr_ ()

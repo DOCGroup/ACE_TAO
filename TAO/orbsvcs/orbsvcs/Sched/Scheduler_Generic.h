@@ -23,8 +23,6 @@
 
 #include "Scheduler.h"
 #include "ace/Unbounded_Set.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Recursive_Thread_Mutex.h"
 
 class TAO_RTSched_Export Scheduler_Generic : public ACE_Scheduler
   // = TITLE

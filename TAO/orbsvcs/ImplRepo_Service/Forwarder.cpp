@@ -16,8 +16,6 @@
 
 #include "tao/ORB.h"
 #include "tao/Object_KeyC.h"
-#include "tao/ORB_Constants.h"
-
 #include "tao/PortableServer/Object_Adapter.h"
 
 /**

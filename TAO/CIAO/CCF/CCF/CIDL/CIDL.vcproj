@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="CIDL"
-	ProjectGUID="{ADCB8816-C2B5-46AE-AC73-0A2FE72386D6}"
+	ProjectGUID="{39A4243B-8D97-4C1A-BC6B-C49FE4D48D4D}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -13,24 +13,22 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(ProjectDir)"
-			IntermediateDirectory="$(ProjectDir)/Debug"
+			IntermediateDirectory="Debug"
 			ConfigurationType="4"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/wd4290 /wd4800 /wd4250 /wd4355"
 				Optimization="0"
-				AdditionalIncludeDirectories="../.."
+				AdditionalIncludeDirectories="../..;../../External/Utility"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="5"
-				DisableLanguageExtensions="FALSE"
 				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="FALSE"
+				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="4"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
@@ -58,22 +56,17 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(ProjectDir)"
-			IntermediateDirectory="$(ProjectDir)/Release"
+			OutputDirectory="Release"
+			IntermediateDirectory="Release"
 			ConfigurationType="4"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/wd4290 /wd4800 /wd4250 /wd4355"
-				AdditionalIncludeDirectories="../.."
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="4"
-				DisableLanguageExtensions="FALSE"
-				ForceConformanceInForLoopScope="TRUE"
-				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="FALSE"
+				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="3"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
@@ -108,10 +101,10 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\LexicalAnalyzer.cpp">
+				RelativePath=".\CIDL_SyntaxTree.cpp">
 			</File>
 			<File
-				RelativePath=".\Parser.cpp">
+				RelativePath=".\CIDL_Traversal.cpp">
 			</File>
 		</Filter>
 		<Filter
@@ -119,218 +112,38 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\LexicalAnalyzer.hpp">
+				RelativePath=".\CIDL_LexicalAnalyzer.hpp">
 			</File>
 			<File
-				RelativePath=".\Parser.hpp">
+				RelativePath=".\CIDL_Parser.hpp">
 			</File>
 			<File
-				RelativePath=".\SemanticAction.hpp">
+				RelativePath=".\CIDL_SemanticAction.hpp">
 			</File>
 			<File
-				RelativePath=".\SyntaxTree.hpp">
+				RelativePath=".\CIDL_SemanticActionImpl.hpp">
 			</File>
 			<File
-				RelativePath=".\Token.hpp">
+				RelativePath=".\CIDL_SyntaxTree.hpp">
 			</File>
 			<File
-				RelativePath=".\Traversal.hpp">
+				RelativePath=".\CIDL_SyntaxTreeFwd.hpp">
+			</File>
+			<File
+				RelativePath=".\CIDL_Traversal.hpp">
+			</File>
+			<File
+				RelativePath=".\MSVC_Pragmas.hpp">
 			</File>
 		</Filter>
 		<Filter
-			Name="SemanticAction"
-			Filter="">
-			<Filter
-				Name="Source Files"
-				Filter="">
-				<File
-					RelativePath=".\SemanticAction\Composition.cpp">
-				</File>
-			</Filter>
-			<Filter
-				Name="Header Files"
-				Filter="">
-				<File
-					RelativePath=".\SemanticAction\Composition.hpp">
-				</File>
-				<File
-					RelativePath=".\SemanticAction\Elements.hpp">
-				</File>
-				<File
-					RelativePath=".\SemanticAction\Factory.hpp">
-				</File>
-				<File
-					RelativePath=".\SemanticAction\HomeExecutor.hpp">
-				</File>
-			</Filter>
-			<Filter
-				Name="Impl"
-				Filter="">
-				<Filter
-					Name="Source Files"
-					Filter="">
-					<File
-						RelativePath=".\SemanticAction\Impl\Composition.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\SemanticAction\Impl\Factory.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\SemanticAction\Impl\HomeExecutor.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-					</File>
-				</Filter>
-				<Filter
-					Name="Header Files"
-					Filter="">
-					<File
-						RelativePath=".\SemanticAction\Impl\Composition.hpp">
-					</File>
-					<File
-						RelativePath=".\SemanticAction\Impl\Elements.hpp">
-					</File>
-					<File
-						RelativePath=".\SemanticAction\Impl\Factory.hpp">
-					</File>
-					<File
-						RelativePath=".\SemanticAction\Impl\HomeExecutor.hpp">
-					</File>
-				</Filter>
-			</Filter>
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 		</Filter>
-		<Filter
-			Name="SyntaxTree"
-			Filter="">
-			<Filter
-				Name="Source Files"
-				Filter="">
-				<File
-					RelativePath=".\SyntaxTree\Composition.cpp">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)2.obj"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)2.obj"/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\SyntaxTree\HomeExecutor.cpp">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-					</FileConfiguration>
-				</File>
-			</Filter>
-			<Filter
-				Name="Header Files"
-				Filter="">
-				<File
-					RelativePath=".\SyntaxTree\Composition.hpp">
-				</File>
-				<File
-					RelativePath=".\SyntaxTree\HomeExecutor.hpp">
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="Traversal"
-			Filter="">
-			<Filter
-				Name="Source Files"
-				Filter="">
-				<File
-					RelativePath=".\Traversal\Composition.cpp">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)3.obj"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)3.obj"/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\Traversal\HomeExecutor.cpp">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)2.obj"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)2.obj"/>
-					</FileConfiguration>
-				</File>
-			</Filter>
-			<Filter
-				Name="Header Files"
-				Filter="">
-				<File
-					RelativePath=".\Traversal\Composition.hpp">
-				</File>
-				<File
-					RelativePath=".\Traversal\HomeExecutor.hpp">
-				</File>
-			</Filter>
-		</Filter>
+		<File
+			RelativePath=".\ReadMe.txt">
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

@@ -1,7 +1,6 @@
 //$Id$
 
 #include "Time_Client_i.h"
-#include "ace/OS_NS_time.h"
 
 // This is the interface program that accesses the remote object
 

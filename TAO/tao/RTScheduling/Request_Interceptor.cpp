@@ -4,11 +4,7 @@
 #include "Current.h"
 #include "Distributable_Thread.h"
 #include "tao/TSS_Resources.h"
-#include "tao/debug.h"
-#include "tao/Any.h"
-#include "tao/Typecode.h"
-#include "tao/ORB_Constants.h"
-#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (RTScheduling,
            Request_Interceptor,
@@ -51,7 +47,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
           RTScheduling::Current::IdType guid;
           guid.length (sizeof(long));
 
-          long temp = ++TAO_RTScheduler_Current::guid_counter;
+          long temp = ++guid_counter;
           ACE_OS::memcpy (guid.get_buffer (),
                           &temp,
                           sizeof(long));
@@ -65,7 +61,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
             ACE_DEBUG ((LM_DEBUG,
                         "The Guid is %d %d\n",
                         id,
-                        TAO_RTScheduler_Current::guid_counter.value_i ()));
+                        guid_counter.value_i ()));
 
           // Create new DT.
           RTScheduling::DistributableThread_var dt =
@@ -135,7 +131,7 @@ Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri
     current = ACE_static_cast (TAO_RTScheduler_Current_i *,
                                tss->rtscheduler_current_impl_);
     if (current != 0)
-      current->scheduler ()->send_poll (ri);
+      current->scheduler ()->receive_reply (ri);
 
 }
 
@@ -179,11 +175,11 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
   if (current != 0)
     {
       if (ri == 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "ri = 0\n"));
-          return;
-        }
+	{
+	  ACE_ERROR ((LM_ERROR,
+		      "ri = 0\n"));
+	  return;
+	}
 
       CORBA::Any_var ex =
         ri->received_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -191,11 +187,11 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
       CORBA::TypeCode_var type = ex->type ();
 
       if (CORBA::is_nil (type.in ()))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "type = 0 \n"));
-          return;
-        }
+	{
+	  ACE_ERROR ((LM_ERROR,
+		      "type = 0 \n"));
+	  return;
+	}
       const char * id = type->id ();
 
       if (TAO_debug_level > 0)
@@ -207,7 +203,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
       // If the remote host threw a THREAD_CANCELLED
       // exception, make sure to take the appropriate
       // local action.
-      if (ACE_OS::strstr (id, "CORBA::THREAD_CANCELLED") == 0)
+      if (ACE_OS_String::strstr (id, "CORBA::THREAD_CANCELLED") == 0)
         {
           // Perform the necessary cleanup as the
           // thread was cancelled.
@@ -299,8 +295,8 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   ACE_CATCHANY
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Invalid Service Request\n"));
+	ACE_DEBUG ((LM_DEBUG,
+		    "Invalid Service Request\n"));
       return;
     }
   ACE_ENDTRY;
@@ -409,19 +405,7 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
           current->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
-          return;
         }
-      else ACE_DEBUG ((LM_DEBUG,
-                       "Thread Not Cancelled\n"));
-
-
-      // Inform scheduler that upcall is complete.
-      current->scheduler ()->send_reply (ri
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      current->cleanup_DT ();
-      current->cleanup_current ();
 
       // Get the previous current if any.
       prev_current = ACE_static_cast (TAO_RTScheduler_Current_i *,
@@ -433,9 +417,13 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
       // Reset the previous current pointer.
       tss->rtscheduler_previous_current_impl_ = 0;
 
+      // Inform scheduler that upcall is complete.
+      current->scheduler ()->send_reply (ri);
+
+      current->cleanup_DT ();
+      current->cleanup_current ();
+
     }
-  else ACE_DEBUG ((LM_DEBUG,
-                   "Send Reply Current is 0\n"));
 }
 
 void

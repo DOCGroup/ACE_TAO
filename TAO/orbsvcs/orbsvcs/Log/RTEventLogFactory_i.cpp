@@ -15,7 +15,6 @@
 #include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
-
 #include "ace/Auto_Ptr.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -25,6 +24,8 @@
 ACE_RCSID (Log,
            RTEventLogFactory_i,
            "$Id$")
+
+
 
 TAO_RTEventLogFactory_i::TAO_RTEventLogFactory_i (void)
 : poa_ (PortableServer::POA::_nil ()),

@@ -5,8 +5,6 @@
 #include "interceptors.h"
 #include "Client_ORBInitializer.h"
 
-#include "tao/ORBInitializer_Registry.h"
-
 ACE_RCSID(Interceptors, client, "$Id$")
 
 const char *ior = "file://test.ior";

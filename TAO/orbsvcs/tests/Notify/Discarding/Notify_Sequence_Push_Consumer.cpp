@@ -48,7 +48,7 @@ Notify_Sequence_Push_Consumer::_connect (
   properties[0].name = CORBA::string_dup (CosNotification::MaximumBatchSize);
   properties[0].value <<= (CORBA::Long)5;
   properties[1].name = CORBA::string_dup (CosNotification::PacingInterval);
-  properties[1].value <<= (TimeBase::TimeT)3;
+  properties[1].value <<= (TimeBase::TimeT)4;
   properties[2].name = CORBA::string_dup (CosNotification::DiscardPolicy);
   properties[2].value <<= this->discard_policy_;
   properties[3].name = CORBA::string_dup (CosNotification::MaxEventsPerConsumer);
@@ -56,12 +56,11 @@ Notify_Sequence_Push_Consumer::_connect (
 
   this->proxy_->set_qos (properties);
   this->proxy_->connect_sequence_push_consumer (objref.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // give ownership to POA
-  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->_remove_ref ();
 }
 
 

@@ -4,7 +4,6 @@
 
 #include "CodecFactory.h"
 #include "CDR_Encaps_Codec.h"
-#include "ORB_Constants.h"
 
 ACE_RCSID (TAO_CodecFactory,
            CodecFactory,

@@ -7,10 +7,8 @@
 
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/RtecSchedulerC.h"
-#include "tao/ORB_Constants.h"
 
 #include "ace/Sched_Params.h"
-#include "ace/Malloc_Allocator.h"
 
 #include "Kokyu/Kokyu.h"
 
@@ -20,21 +18,12 @@
 
 ACE_RCSID(Event, EC_Kokyu_Dispatching, "$Id$")
 
-TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec, int sched_policy, int sched_scope)
-  :allocator_ (0),
-   dispatcher_ (0),
-   lanes_setup_ (0),
-   disp_sched_policy_ (sched_policy),
-   disp_sched_scope_ (sched_scope)
+TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec)
+  :dispatcher_ (0),
+   lanes_setup_ (0)
 {
   CORBA::Object_var tmp = ec->scheduler ();
   this->scheduler_ = RtecScheduler::Scheduler::_narrow (tmp.in ());
-
-  //@@VS - need to revisit this - should be some other allocator
-  if (this->allocator_ == 0)
-    {
-      this->allocator_ = ACE_Allocator::instance ();
-    }
 }
 
 void
@@ -88,8 +77,6 @@ TAO_EC_Kokyu_Dispatching::setup_lanes (void)
 
   Kokyu::Dispatcher_Attributes attrs;
   attrs.config_info_set_ = kconfigs;
-  attrs.sched_policy (disp_sched_policy_);
-  attrs.sched_scope (disp_sched_scope_);
 
   // Create Kokyu::Dispatcher using factory
   Kokyu::Dispatcher_Auto_Ptr 
@@ -122,31 +109,15 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                        RtecEventComm::PushConsumer_ptr consumer,
                                        RtecEventComm::EventSet& event,
                                        TAO_EC_QOS_Info& qos_info
-                                       ACE_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL_NOT_USED)
 {
     if (this->dispatcher_.get () == 0)
         this->setup_lanes ();
-    
-    void* buf = 
-      this->allocator_->malloc (sizeof (TAO_EC_Kokyu_Push_Command ));
-
-    if (buf == 0)
-      ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                   CORBA::COMPLETED_NO));
-
+  
   // Create Dispatch_Command
   TAO_EC_Kokyu_Push_Command *cmd =
-    new (buf) TAO_EC_Kokyu_Push_Command (proxy,
-                                         consumer,
-                                         event, this->allocator_);
-    
-  /*    
-  TAO_EC_Kokyu_Push_Command *cmd =
-    new TAO_EC_Kokyu_Push_Command (proxy,
-                                   consumer,
-                                 event, 0);
-  */
-    
+    new TAO_EC_Kokyu_Push_Command(proxy,consumer,event);
+
   // Convert TAO_EC_QOS_Info to QoSDescriptor
   RtecScheduler::RT_Info *rt_info = 
     this->scheduler_->get(qos_info.rt_info);
@@ -156,7 +127,12 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
   qosd.deadline_ = rt_info->period;
   ORBSVCS_Time::TimeT_to_Time_Value (qosd.execution_time_,
                                      rt_info->worst_case_execution_time);
-  
+  /*
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%t) About to drop event into queue. "
+              "rt_info = %d, pre_prio = %d\n",
+              rt_info->handle, qosd.preemption_priority_));
+  */
   this->dispatcher_->dispatch(cmd,qosd);
 }
 

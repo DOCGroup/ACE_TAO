@@ -2,22 +2,4 @@ project : taolib, core, portableserver {
   sharedname   = TAO_Messaging
   dynamicflags = TAO_MESSAGING_BUILD_DLL
   include_dir  = tao/Messaging
-
-    Source_Files {
-      Asynch_Invocation_Adapter.cpp
-      Asynch_Invocation.cpp
-      Asynch_Reply_Dispatcher.cpp
-      Asynch_Timeout_Handler.cpp
-      Connection_Timeout_Policy_i.cpp
-      Messaging.cpp
-      MessagingC.cpp
-      MessagingS.cpp
-      Messaging_No_ImplC.cpp
-      Messaging_RT_PolicyC.cpp
-      Messaging_SyncScope_PolicyC.cpp
-      TAO_ExtC.cpp
-      Messaging_ORBInitializer.cpp
-      Messaging_PolicyFactory.cpp
-      Messaging_Policy_i.cpp
-    }
 }

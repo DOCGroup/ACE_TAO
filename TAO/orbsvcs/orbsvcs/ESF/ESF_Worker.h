@@ -12,18 +12,12 @@
 #ifndef TAO_ESF_WORKER_H
 #define TAO_ESF_WORKER_H
 
-#include "ace/CORBA_macros.h"
+#include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class Object;
-
-namespace CORBA
-{
-  class Environment;
-}
 /// Define the interface for the Worker objects
 /**
  * The Event Service Framework uses Worker classes to iterate over
@@ -38,10 +32,6 @@ class TAO_ESF_Worker
 {
 public:
   virtual ~TAO_ESF_Worker (void);
-
-  /// Used by the collection to inform the worker
-  /// the number of proxies in the collection.
-  virtual void set_size(size_t size);
 
   /// Callback interface.
   virtual void work (Object *object

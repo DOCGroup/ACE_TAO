@@ -54,10 +54,9 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   // (3) There is at least one operation and at least one initializer.
   //     In this case we need to generate abstract factory class.
 
-  be_valuetype::FactoryStyle factory_style =
-    node->determine_factory_style ();
+  FactoryStyle factory_style = determine_factory_style (node);
 
-  if (factory_style == be_valuetype::FS_NO_FACTORY)
+  if (factory_style == FS_NO_FACTORY)
     {
       // Nothing to do.
       return 0;
@@ -80,7 +79,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   os << "{" << be_nl
      << "public:" << be_idt_nl;
 
-  if (factory_style == be_valuetype::FS_CONCRETE_FACTORY)
+  if (factory_style == FS_CONCRETE_FACTORY)
     {
       // Public constructor.
       os << node->local_name () << "_init (void);" << be_nl;
@@ -100,7 +99,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
      << "static " << node->local_name () << "_init* "
      << "_downcast (CORBA::ValueFactoryBase *);";
 
-  if (factory_style == be_valuetype::FS_CONCRETE_FACTORY)
+  if (factory_style == FS_CONCRETE_FACTORY)
     {
       //@@ Boris: create_for_unmarshal is still public...
       // generate create_for_unmarshal
@@ -124,7 +123,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
      << "public:" << be_idt_nl;
   os << "virtual const char* tao_repository_id (void);";
 
-  if (factory_style == be_valuetype::FS_ABSTRACT_FACTORY)
+  if (factory_style == FS_ABSTRACT_FACTORY)
     {
       // Protected constructor.
       os << be_uidt_nl << be_nl

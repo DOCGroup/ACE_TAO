@@ -8,16 +8,13 @@
 # include "LocalObject.i"
 #endif /* ! __ACE_INLINE__ */
 
-#include "Exception.h"
+#include "PolicyC.h"
 #include "debug.h"
-#include "ORB_Constants.h"
-
-#include "ace/Log_Msg.h"
-#include "ace/Guard_T.h"
 
 ACE_RCSID (tao,
            LocalObject,
            "$Id$")
+
 
 CORBA::LocalObject::~LocalObject (void)
 {
@@ -47,9 +44,8 @@ CORBA::LocalObject::_hash (CORBA::ULong maximum
   // enough to hold an address to avoid compile-time warnings on some
   // 64-bit platforms.
 
-  CORBA::ULong hash =
-    ACE_static_cast (CORBA::ULong,
-                     ACE_reinterpret_cast (ptrdiff_t, this));
+  CORBA::ULong hash = ACE_static_cast (CORBA::ULong,
+                        ACE_reinterpret_cast (ptrdiff_t, this));
 
   return hash % maximum;
 }
@@ -80,6 +76,27 @@ CORBA::LocalObject::_key (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
+
+#if 0
+void *
+CORBA::LocalObject::_tao_QueryInterface (ptrdiff_t type)
+{
+  void *retv = 0;
+
+  if (type == ACE_reinterpret_cast (ptrdiff_t,
+                                    &CORBA::LocalObject::_narrow))
+    retv = ACE_reinterpret_cast (void *, this);
+  else if (type == ACE_reinterpret_cast (ptrdiff_t,
+                                         &CORBA::Object::_narrow))
+    retv = ACE_reinterpret_cast (void *,
+                                 ACE_static_cast (CORBA::Object_ptr,
+                                                  this));
+  if (retv)
+    this->_add_ref ();
+
+  return retv;
+}
+#endif /* 0 */
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -163,14 +180,15 @@ CORBA::Policy_ptr
 CORBA::LocalObject::_get_policy (CORBA::PolicyType
                                  ACE_ENV_ARG_DECL)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    CORBA::Policy::_nil ());
 }
 
 CORBA::Policy_ptr
 CORBA::LocalObject::_get_client_policy (CORBA::PolicyType
                                         ACE_ENV_ARG_DECL)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }
 
 CORBA::Object_ptr
@@ -178,7 +196,7 @@ CORBA::LocalObject::_set_policy_overrides (const CORBA::PolicyList &,
                                            CORBA::SetOverrideType
                                            ACE_ENV_ARG_DECL)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }
 
 CORBA::PolicyList *
@@ -231,3 +249,4 @@ TAO_Local_RefCounted_Object::_remove_ref (void)
 # pragma instantiate TAO_Pseudo_Out_T<CORBA::LocalObject, CORBA::LocalObject_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

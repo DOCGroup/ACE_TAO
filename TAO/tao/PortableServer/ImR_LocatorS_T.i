@@ -15,12 +15,6 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
-// and
-//       Institute for Software Integrated Systems
-//       Vanderbilt University
-//       Nashville, TN
-//       USA
-//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -119,6 +113,133 @@ POA_ImplementationRepository::Locator_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_D
     }
   
   return this->Locator::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_ImplementationRepository::Locator_tie<T>::activate_server_in_location  (
+    const char * server,
+    const char * location
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , ImplementationRepository::NotFound
+    , ImplementationRepository::CannotActivate
+  ))
+{
+  this->ptr_->activate_server_in_location (
+    server,
+    location
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_ImplementationRepository::Locator_tie<T>::remove_server_in_location  (
+    const char * server,
+    const char * location
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , ImplementationRepository::NotFound
+  ))
+{
+  this->ptr_->remove_server_in_location (
+    server,
+    location
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_ImplementationRepository::Locator_tie<T>::shutdown_server_in_location  (
+    const char * server,
+    const char * location
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , ImplementationRepository::NotFound
+  ))
+{
+  this->ptr_->shutdown_server_in_location (
+    server,
+    location
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_ImplementationRepository::Locator_tie<T>::server_is_shutting_down_in_location  (
+    const char * server,
+    const char * location
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , ImplementationRepository::NotFound
+  ))
+{
+  this->ptr_->server_is_shutting_down_in_location (
+    server,
+    location
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+CORBA::ULong POA_ImplementationRepository::Locator_tie<T>::register_activator  (
+    const char * location,
+    CORBA::Object_ptr object_ref
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , ImplementationRepository::AlreadyRegistered
+  ))
+{
+  return this->ptr_->register_activator (
+    location,
+    object_ref
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+CORBA::ULong POA_ImplementationRepository::Locator_tie<T>::unregister_activator  (
+    const char * location,
+    CORBA::Object_ptr object_ref
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , ImplementationRepository::NotFound
+  ))
+{
+  return this->ptr_->unregister_activator (
+    location,
+    object_ref
+    ACE_ENV_ARG_PARAMETER
+  );
 }
 
 // TAO_IDL - Generated from 
@@ -323,133 +444,6 @@ void POA_ImplementationRepository::Locator_tie<T>::list  (
     how_many,
     server_list,
     server_iterator
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-void POA_ImplementationRepository::Locator_tie<T>::activate_server_in_location  (
-    const char * server,
-    const char * location
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
-    , ImplementationRepository::CannotActivate
-  ))
-{
-  this->ptr_->activate_server_in_location (
-    server,
-    location
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-void POA_ImplementationRepository::Locator_tie<T>::remove_server_in_location  (
-    const char * server,
-    const char * location
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
-  ))
-{
-  this->ptr_->remove_server_in_location (
-    server,
-    location
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-void POA_ImplementationRepository::Locator_tie<T>::shutdown_server_in_location  (
-    const char * server,
-    const char * location
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
-  ))
-{
-  this->ptr_->shutdown_server_in_location (
-    server,
-    location
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-void POA_ImplementationRepository::Locator_tie<T>::server_is_shutting_down_in_location  (
-    const char * server,
-    const char * location
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
-  ))
-{
-  this->ptr_->server_is_shutting_down_in_location (
-    server,
-    location
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-CORBA::ULong POA_ImplementationRepository::Locator_tie<T>::register_activator  (
-    const char * location,
-    CORBA::Object_ptr object_ref
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::AlreadyRegistered
-  ))
-{
-  return this->ptr_->register_activator (
-    location,
-    object_ref
-    ACE_ENV_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-CORBA::ULong POA_ImplementationRepository::Locator_tie<T>::unregister_activator  (
-    const char * location,
-    CORBA::Object_ptr object_ref
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , ImplementationRepository::NotFound
-  ))
-{
-  return this->ptr_->unregister_activator (
-    location,
-    object_ref
     ACE_ENV_ARG_PARAMETER
   );
 }

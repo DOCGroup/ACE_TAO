@@ -25,6 +25,7 @@
 
 #include "ImR_ActivatorC.h"
 #include "tao/Stub.h"
+#include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"
 
 #if TAO_HAS_INTERCEPTORS == 1

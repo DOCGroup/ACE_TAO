@@ -47,7 +47,6 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
           *j = 0;
 
         j = proxies;
-
         ITERATOR end = this->collection_.end ();
         for (ITERATOR i = this->collection_.begin (); i != end; ++i)
           {
@@ -56,7 +55,7 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
             ++j;
           }
       }
-      worker->set_size(size);
+
       for (PROXY **j = proxies; j != proxies + size; ++j)
         {
           worker->work (*j ACE_ENV_ARG_PARAMETER);

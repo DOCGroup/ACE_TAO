@@ -1,7 +1,6 @@
 #include "RTEvent_Consumer.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "ace/OS_main.h"
 
 ACE_RCSID (RTEvent,
            RTEvent_Consumer,

@@ -11,9 +11,7 @@
 #include "tao/Asynch_Queued_Message.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
-#include "ace/ACE.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_time.h"
+
 
 ACE_RCSID (tests,
            Queued_Message_Test,

@@ -1,10 +1,7 @@
-// -*- C++ -*-
-
+// $Id$
 //=============================================================================
 /**
  *  @file     SCIOP_Profile.h
- *
- *  $Id$
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
@@ -16,7 +13,6 @@
 
 #ifndef TAO_SCIOP_PROFILE_H
 #define TAO_SCIOP_PROFILE_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/Profile.h"
@@ -75,7 +71,8 @@ public:
   virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
   virtual int encode_endpoints (void);
   virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void) const;
+  virtual CORBA::ULong endpoint_count (void);
+  virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);
   /**
@@ -93,7 +90,6 @@ protected:
   virtual void parse_string_i (const char *string
                                ACE_ENV_ARG_DECL);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
-  virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
 
 protected:
 
@@ -125,5 +121,4 @@ protected:
 #endif /* TAO_HAS_SCIOP == 1 */
 
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_SCIOP_PROFILE_H */

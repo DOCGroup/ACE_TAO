@@ -16,7 +16,6 @@
 
 #ifndef TAO_FT_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_FT_INVOCATION_ENDPOINT_SELECTOR_H
-
 #include /**/ "ace/pre.h"
 
 #include "fault_tol_export.h"
@@ -25,9 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
 #include "tao/Invocation_Endpoint_Selectors.h"
-#include "tao/Basic_Types.h"
-#include "tao/ORB_Constants.h"
 
 class TAO_GIOP_Invocation;
 class TAO_Profile;
@@ -57,35 +55,36 @@ public:
   /// Implementation for FT. Please refer to
   /// $TAO_ROOT/tao/Invocation_Endpoint_Selectors.h  for details of
   /// documentation.
-  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
-                                ACE_Time_Value *val
+  virtual void select_endpoint (TAO_GIOP_Invocation *invocation
                                 ACE_ENV_ARG_DECL);
 
-protected:
-  /// Select the primary and try connecting to it.
-  bool select_primary (TAO::Profile_Transport_Resolver *r,
-                       ACE_Time_Value *val
-                       ACE_ENV_ARG_DECL);
+  virtual void next (TAO_GIOP_Invocation *invocation
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual void forward (TAO_GIOP_Invocation *invocation,
+                        const TAO_MProfile &mprofile
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual void success (TAO_GIOP_Invocation *invocation);
+  virtual void close_connection (TAO_GIOP_Invocation *invocation);
 
-  /// Select the secondary and try connecting to it. Returns true if
-  /// successfull.
-  bool select_secondary (TAO::Profile_Transport_Resolver *r,
-                         ACE_Time_Value *val
+protected:
+
+  int select_endpoint_i (TAO_GIOP_Invocation *invoc
                          ACE_ENV_ARG_DECL);
 
-  /// Helper method that tries to establish connections with all the
-  /// endpoints in the profile.
-  bool try_connect (TAO::Profile_Transport_Resolver *r,
-                    TAO_Profile *profile,
-                    ACE_Time_Value *max_wait_time
-                    ACE_ENV_ARG_DECL);
+  int select_primary (TAO_GIOP_Invocation *invocation
+                      ACE_ENV_ARG_DECL);
 
-  /// Helper method that checks whether the profile is a primary or
-  /// not.
-  bool check_profile_for_primary (TAO_Profile *
-                                  ACE_ENV_ARG_DECL);
+  int check_profile_for_primary (TAO_GIOP_Invocation *,
+                                 TAO_Profile *
+                                 ACE_ENV_ARG_DECL);
 
+private:
 
+  /// Is the primary alive? The default is yes.
+  CORBA::Boolean is_primary_alive_;
+
+  /// Has the profile list been rewound
+  CORBA::Boolean is_rewound_;
 };
 
 #if defined (__ACE_INLINE__)
@@ -93,5 +92,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif  /* FT_TAO_INVOCATION_ENDPOINT_SELECTOR_H */

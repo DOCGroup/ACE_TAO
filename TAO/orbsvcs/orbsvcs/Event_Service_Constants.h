@@ -15,8 +15,8 @@
 
 #ifndef ACE_ES_CONSTANTS_H
 #define ACE_ES_CONSTANTS_H
-
 #include /**/ "ace/pre.h"
+
 #include "ace/Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -24,7 +24,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Synch.h"
-
 #include "orbsvcs/Time_Utilities.h"
 
 /// This is the number of events a consumer can subscribe to.
@@ -125,5 +124,4 @@ const int ACE_ES_EVENT_MEMORY_POOL = 1024;
 const int ACE_ES_DISPATCH_REQUEST_MEMORY_POOL = 1024;
 
 #include /**/ "ace/post.h"
-
 #endif /* ACE_ES_CONSTANTS_H */

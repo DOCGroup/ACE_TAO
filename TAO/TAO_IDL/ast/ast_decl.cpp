@@ -88,7 +88,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 #include "utl_scope.h"
 #include "utl_err.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (ast, 
            ast_decl, 
@@ -123,7 +122,6 @@ COMMON_Base::destroy (void)
 AST_Decl::AST_Decl (void)
   : COMMON_Base (),
     repoID_ (0),
-    flat_name_ (0),
     contains_wstring_ (-1),
     pd_imported (I_FALSE),
     pd_in_main_file (I_FALSE),
@@ -139,6 +137,7 @@ AST_Decl::AST_Decl (void)
     version_ (0),
     anonymous_ (I_FALSE),
     typeid_set_ (I_FALSE),
+    flat_name_ (0),
     last_referenced_as_ (0),
     prefix_scope_ (0)
 {
@@ -149,7 +148,6 @@ AST_Decl::AST_Decl (NodeType nt,
                     idl_bool anonymous)
   : COMMON_Base (),
     repoID_ (0),
-    flat_name_ (0),
     contains_wstring_ (-1),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
@@ -168,6 +166,7 @@ AST_Decl::AST_Decl (NodeType nt,
     version_ (0),
     anonymous_ (anonymous),
     typeid_set_ (I_FALSE),
+    flat_name_ (0),
     last_referenced_as_ (0),
     prefix_scope_ (0)
 {
@@ -1311,14 +1310,6 @@ void
 AST_Decl::last_referenced_as (UTL_ScopedName *n)
 {
   this->last_referenced_as_ = n;
-
-  if (idl_global->in_main_file ()
-      && ACE_OS::strcmp (n->last_component ()->get_string (),
-                         "ParameterMode") == 0)
-    {
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.parametermode_seen_);
-    }
 }
 
 UTL_Scope *

@@ -75,8 +75,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_strlist.h"
 #include "utl_string.h"
 #include "ace/streams.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID (util, 
            utl_strlist, 

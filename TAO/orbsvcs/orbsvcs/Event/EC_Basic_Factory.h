@@ -14,7 +14,6 @@
 
 #ifndef TAO_EC_BASIC_FACTORY_H
 #define TAO_EC_BASIC_FACTORY_H
-
 #include /**/ "ace/pre.h"
 
 #include "EC_Factory.h"
@@ -115,5 +114,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_EC_BASIC_FACTORY_H */

@@ -3,7 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(BiDirectional, server, "$Id$")
 

@@ -6,8 +6,6 @@
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_unistd.h"
-
 ACE_RCSID(Failure, test_i, "$Id$")
 
 void

@@ -3,7 +3,7 @@
 #include "EventChannel_Command.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(lib, TAO_EventChannel_Command, "$Id$")
+ACE_RCSID(lib, TAO_EventChannel_Command, "$id$")
 
 #include "LookupManager.h"
 #include "Name.h"

@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="CIDLC"
-	ProjectGUID="{8F2A74C0-C995-4BE2-8FD7-538F64BF98FD}"
+	ProjectGUID="{2AA9F186-AEB2-4B78-9783-322182479BBB}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -12,15 +12,14 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="../bin"
-			IntermediateDirectory="$(ProjectDir)/Debug"
+			OutputDirectory="$(ProjectDir)"
+			IntermediateDirectory="Debug"
 			ConfigurationType="1"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/wd4290 /wd4800 /wd4250 /wd4355"
 				Optimization="0"
-				AdditionalIncludeDirectories="../CCF"
+				AdditionalIncludeDirectories="../CCF;../CCF/External/Utility"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -29,16 +28,16 @@
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="FALSE"
+				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="4"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="CompilerElements.lib CodeGenerationKit.lib IDL2.lib IDL3.lib CIDL.lib libboost_filesystem_debug.lib libboost_regex_debug.lib"
-				OutputFile="$(OutDir)/cidlc.exe"
+				AdditionalDependencies="IDL2.lib IDL3.lib CIDL.lib CodeGenerationKit.lib libboost_regex_debug.lib libboost_filesystem_debug.lib"
+				OutputFile="$(CIAO_ROOT)\bin\cidlc.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="../CCF/CCF/CompilerElements;../CCF/CCF/CodeGenerationKit;../CCF/CCF/IDL2;../CCF/CCF/IDL3;../CCF/CCF/CIDL"
+				AdditionalLibraryDirectories="../CCF/CCF/IDL2;../CCF/CCF/IDL3;../CCF/CCF/CIDL;../CCF/CCF/CodeGenerationKit"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)/CIDLC.pdb"
 				SubSystem="1"
@@ -66,30 +65,24 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(ProjectDir)"
-			IntermediateDirectory="$(ProjectDir)/Release"
+			OutputDirectory="Release"
+			IntermediateDirectory="Release"
 			ConfigurationType="1"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/wd4290 /wd4800 /wd4250 /wd4355"
-				AdditionalIncludeDirectories="../CCF"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="4"
-				ForceConformanceInForLoopScope="TRUE"
-				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="FALSE"
+				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="3"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="CompilerElements.lib CodeGenerationKit.lib IDL2.lib IDL3.lib CIDL.lib"
 				OutputFile="$(OutDir)/CIDLC.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../CCF/CCF/CompilerElements;../CCF/CCF/CodeGenerationKit;../CCF/CCF/IDL2;../CCF/CCF/IDL3;../CCF/CCF/CIDL"
 				GenerateDebugInformation="TRUE"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -128,13 +121,7 @@
 				RelativePath=".\cidlc.cpp">
 			</File>
 			<File
-				RelativePath=".\DescriptorGenerator.cpp">
-			</File>
-			<File
 				RelativePath=".\ExecutorMappingGenerator.cpp">
-			</File>
-			<File
-				RelativePath=".\RepositoryIdGenerator.cpp">
 			</File>
 			<File
 				RelativePath=".\ServantGenerator.cpp">
@@ -145,31 +132,16 @@
 			<File
 				RelativePath=".\ServantSourceGenerator.cpp">
 			</File>
-			<File
-				RelativePath=".\SizeTypeCalculator.cpp">
-			</File>
-			<File
-				RelativePath=".\TypeNameEmitter.cpp">
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\Collectors.hpp">
-			</File>
-			<File
-				RelativePath=".\DescriptorGenerator.hpp">
-			</File>
-			<File
 				RelativePath=".\ExecutorMappingGenerator.hpp">
 			</File>
 			<File
 				RelativePath=".\Literals.hpp">
-			</File>
-			<File
-				RelativePath=".\RepositoryIdGenerator.hpp">
 			</File>
 			<File
 				RelativePath=".\ServantGenerator.hpp">
@@ -180,12 +152,11 @@
 			<File
 				RelativePath=".\ServantSourceGenerator.hpp">
 			</File>
-			<File
-				RelativePath=".\SizeTypeCalculator.hpp">
-			</File>
-			<File
-				RelativePath=".\TypeNameEmitter.hpp">
-			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 		</Filter>
 	</Files>
 	<Globals>

@@ -24,11 +24,9 @@
 #include "be_codegen.h"
 #include "be_helper.h"
 #include "be_extern.h"
-
 #include "ast_union_branch.h"
 #include "utl_identifier.h"
 #include "idl_defines.h"
-#include "global_extern.h"
 
 ACE_RCSID (be, 
            be_union, 
@@ -80,12 +78,6 @@ be_union::be_union (AST_ConcreteType *dt,
 {
   // Always the case.
   this->has_constructor (I_TRUE);
-
-  if (!this->imported ())
-    {
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.aggregate_seen_);
-    }
 }
 
 void

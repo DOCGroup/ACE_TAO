@@ -1,0 +1,98 @@
+# Makefile for building the activity library with Borland C++ Builder
+
+NAME = activity
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
+
+OBJFILES = \
+	$(OBJDIR)\Activity.obj \
+	$(OBJDIR)\Builder.obj \
+	$(OBJDIR)\JobC.obj \
+	$(OBJDIR)\JobS.obj \
+	$(OBJDIR)\Job_i.obj \
+	$(OBJDIR)\POA_Holder.obj \
+	$(OBJDIR)\Periodic_Task.obj \
+	$(OBJDIR)\Task_Stats.obj \
+	$(OBJDIR)\Thread_Task.obj
+
+EXTERNAL_LIBS = \
+ \
+
+LFLAGS = \
+	-j..\..\..\..\lib\$(CONFIG_SUBDIR) -j..\..\..\..\lib \
+	-L..\..\..\..\lib\$(CONFIG_SUBDIR) -L..\..\..\..\lib \
+  -j$(CORE_BINDIR) \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+	TAO_RTPortableServer$(LIB_DECORATOR).lib \
+	TAO_RTCORBA$(LIB_DECORATOR).lib \
+	TAO_CosNaming$(LIB_DECORATOR).lib \
+	TAO_Svc_Utils$(LIB_DECORATOR).lib \
+	TAO_PortableServer$(LIB_DECORATOR).lib \
+	TAO_IORInterceptor$(LIB_DECORATOR).lib \
+	TAO_Valuetype$(LIB_DECORATOR).lib \
+	TAO_ObjRefTemplate$(LIB_DECORATOR).lib \
+	TAO_IORTable$(LIB_DECORATOR).lib \
+	TAO$(LIB_DECORATOR).lib \
+	ACE$(LIB_DECORATOR).lib \
+	$(EXTERNAL_LIBS)
+
+IDLFILES = \
+	$(IDLDIR)\Job.idl
+
+!ifdef STATIC
+LIB_FLAGS = -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS = -DACTIVITY_BUILD_DLL
+!endif
+
+CFLAGS = \
+	-I..\..\..\orbsvcs \
+	-I..\..\.. \
+	-I..\..\..\tao \
+	-I..\..\..\.. \
+	$(LIB_FLAGS) \
+	$(DLL_FLAGS)
+
+CPPDIR = .
+
+IDLDIR = .
+
+INCLUDES = \
+	Activity.h \
+	Builder.h \
+	JobC.h \
+	JobS.h \
+	JobS_T.h \
+	Job_i.h \
+	POA_Holder.h \
+	Periodic_Task.h \
+	Task_Stats.h \
+	Thread_Task.h \
+	JobS_T.cpp \
+	JobC.i \
+	JobS.i \
+	JobS_T.i \
+	Task_Stats.inl \
+	Job.idl
+
+INCDIR_NAME = orbsvcs
+
+all: idl_src_files
+
+BASE_BINDIR = $(ACE_ROOT)\bin
+
+!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+# IDL File Directory: .
+$(IDLDIR)\JobS.cpp $(IDLDIR)\JobC.cpp: $(IDLDIR)\Job.idl
+	$(TAO_IDL) -Gv -I..\..\.. -I..\..\..\orbsvcs -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $**

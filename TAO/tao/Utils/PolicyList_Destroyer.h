@@ -11,7 +11,6 @@
 #ifndef TAO_UTILS_POLICYLIST_DESTROYER_H
 #define TAO_UTILS_POLICYLIST_DESTROYER_H
 #include /**/ "ace/pre.h"
-#include "utils_export.h"
 
 #include "tao/PolicyC.h"
 
@@ -30,7 +29,7 @@ namespace TAO
      * @brief Automatically destroy all the policies set in a PolicyList
      *
      */
-    class TAO_UTILS_Export PolicyList_Destroyer
+    class PolicyList_Destroyer
       : public CORBA::PolicyList
     {
     public:

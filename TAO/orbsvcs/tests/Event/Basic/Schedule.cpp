@@ -85,12 +85,10 @@ EC_Schedule::execute_test (ACE_ENV_SINGLE_ARG_DECL)
                 "EC_Schedule (%P|%t) computing schedule\n"));
 
   RtecScheduler::RT_Info_Set_var infos;
-  RtecScheduler::Dependency_Set_var deps;
   RtecScheduler::Config_Info_Set_var configs;
   RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
   this->scheduler_->compute_scheduling (min_priority, max_priority,
                                         infos.out (),
-                                        deps.out (),
                                         configs.out (),
                                         anomalies.out ()
                                         ACE_ENV_ARG_PARAMETER);
@@ -101,7 +99,6 @@ EC_Schedule::execute_test (ACE_ENV_SINGLE_ARG_DECL)
                 "EC_Schedule (%P|%t) schedule prepared\n"));
 
   ACE_Scheduler_Factory::dump_schedule (infos.in (),
-                                        deps.in (),
                                         configs.in (),
                                         anomalies.in ());
 

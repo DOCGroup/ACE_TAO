@@ -3,7 +3,6 @@
 //
 
 #include "Handler_i.h"
-#include "ace/streams.h"
 
 int main (int argc, char* argv[])
 {

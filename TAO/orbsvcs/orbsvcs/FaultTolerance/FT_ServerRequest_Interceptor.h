@@ -24,6 +24,7 @@
 #include "tao/LocalObject.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/ORB.h"
+#include <tao/IORManipulation/IORC.h>
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -36,6 +37,7 @@ namespace IOP
 {
   struct ServiceContext;
 }
+
 namespace TAO
 {
   /**
@@ -106,8 +108,7 @@ namespace TAO
 
     void check_iogr_version (const IOP::ServiceContext &svc
                              ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-		       PortableInterceptor::ForwardRequest));
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     bool is_primary (void);
 
@@ -120,11 +121,15 @@ namespace TAO
 
     CORBA::ULong object_group_ref_version_;
 
-    bool is_primary_;
+    CORBA::Boolean is_primary_;
 
     CORBA::Object_var iogr_;
 
     CORBA::ORB_var orb_;
+
+    // The ORB's IORManipulation object
+    TAO_IOP::TAO_IOR_Manipulation_var iorm_;
+
   };
 
 }

@@ -1,7 +1,6 @@
 #include "TAO_UTO.h"
 #include "TAO_TIO.h"
 #include "TAO_Time_Service_Server.h"
-#include "ace/OS_NS_sys_time.h"
 
 #include "tao/debug.h"
 

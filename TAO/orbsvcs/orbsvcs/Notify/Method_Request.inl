@@ -1,7 +1,5 @@
 // $Id$
 
-#include "ace/OS_NS_sys_time.h"
-
 ACE_INLINE void
 TAO_Notify_Method_Request::init (const TAO_Notify_Event_var& event)
 {

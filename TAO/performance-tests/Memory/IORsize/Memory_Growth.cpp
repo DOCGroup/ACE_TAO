@@ -2,7 +2,7 @@
 // $Id$
 //
 #include "Memory_Growth.h"
-#include "ace/Manual_Event.h"
+#include "ace/Synch.h"
 
 ACE_RCSID (IORSize,
            Memory_Growth,

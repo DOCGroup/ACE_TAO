@@ -6,9 +6,7 @@
 #include "tao/debug.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
-#include "ace/OS_NS_netdb.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_arpa_inet.h"
+#include "ace/OS.h"
 
 ACE_RCSID(Logger, Logging_Test_i, "$Id$")
 

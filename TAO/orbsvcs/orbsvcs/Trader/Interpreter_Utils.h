@@ -17,10 +17,7 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
-
-#include "tao/Typecode.h"
-#include "tao/CORBA_String.h"
-
+#include "tao/corba.h"
 #include "orbsvcs/Trader/trading_export.h"
 
 // =  Classes to deal with the ACE_Hash_Map_Manager.
@@ -55,18 +52,8 @@ public:
   // The function that computes a hash value.
 };
 
-typedef ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, 
-                                int, 
-                                ACE_Hash<TAO_String_Hash_Key>, 
-                                ACE_Equal_To<TAO_String_Hash_Key>, 
-                                ACE_Null_Mutex> 
-  TAO_Lookup_Table;
-typedef ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, 
-                                CORBA::TypeCode_ptr, 
-                                ACE_Hash<TAO_String_Hash_Key>, 
-                                ACE_Equal_To<TAO_String_Hash_Key>, 
-                                ACE_Null_Mutex> 
-  TAO_Typecode_Table;
+typedef ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex> TAO_Lookup_Table;
+typedef ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex> TAO_Typecode_Table;
 
 
 // *************************************************************

@@ -11,24 +11,20 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_SEQUENCE_H
 #define TAO_SEQUENCE_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Managed_Types.h"
-#include "tao/orbconf.h"
-#include "tao/default_environment.h"
-
-namespace CORBA
-{
-  class Object;
-}
+#include "ace/CORBA_macros.h"
 
 class ACE_Message_Block;
 

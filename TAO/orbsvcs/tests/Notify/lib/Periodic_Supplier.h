@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_PERIODIC_SUPPLIER_H
 #define TAO_Notify_Tests_PERIODIC_SUPPLIER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -19,11 +19,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Task.h"
 #include "Notify_StructuredPushSupplier.h"
 #include "Task_Stats.h"
 #include "StructuredEvent.h"
-#include "ace/Task.h"
-#include "ace/Barrier.h"
 
 class TAO_Notify_Tests_Task_Callback;
 class ACE_Barrier;
@@ -112,5 +111,5 @@ protected:
   TAO_Notify_Tests_Task_Callback* client_;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_Notify_Tests_PERIODIC_SUPPLIER_H */

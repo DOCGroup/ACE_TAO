@@ -1,19 +1,22 @@
-//=============================================================================
-/**
- *  @file    data.cpp
- *
- *  $Id$
- *
- *  Implementation file for the class containing test constants.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// -*- c++ -*-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/DynAny_Test
+//
+// = FILENAME
+//    data.cpp
+//
+// = DESCRIPTION
+//    Implementation file for the class containing test constants.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "data.h"
-#include "tao/Typecode.h"
 #include "tao/PortableServer/PortableServer.h"
 
 Data::Data (CORBA::ORB_var orb)
@@ -33,6 +36,7 @@ Data::Data (CORBA::ORB_var orb)
     m_typecode2 (CORBA::TypeCode::_duplicate (CORBA::_tc_null)),
 
     m_wchar1 (666),                             m_wchar2 (0),
+    m_any1 (CORBA::_tc_long, 0),
     orb_ (orb)
 {
   ACE_DECLARE_NEW_CORBA_ENV;

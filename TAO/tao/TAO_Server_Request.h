@@ -16,18 +16,23 @@
 */
 //=============================================================================
 
+
 #ifndef TAO_GIOP_SERVER_REQUEST_H
 #define TAO_GIOP_SERVER_REQUEST_H
-
 #include /**/ "ace/pre.h"
-#include "ace/SString.h"
+
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SString.h"
+
 #include "Tagged_Profile.h"
+#include "OctetSeqC.h"
 #include "Service_Context.h"
+#include "Object.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "PICurrent.h"
@@ -36,12 +41,6 @@
 class TAO_Pluggable_Messaging;
 class TAO_Transport;
 class TAO_AMH_Response_Handler;
-
-namespace CORBA
-{
-  class ORB;
-  typedef ORB *ORB_ptr;
-}
 
 /**
  * @class TAO_ServerRequest
@@ -140,7 +139,6 @@ public:
   void send_no_exception_reply (void);
 
   // CORBA::Principal_ptr principal (void) const;
-
   TAO::ObjectKey &object_key (void);
 
   /**
@@ -208,6 +206,17 @@ public:
   CORBA::Boolean argument_flag (void);
 
 #if TAO_HAS_INTERCEPTORS == 1
+  /// Send cached reply. Used in scenarios where the FTORB thinks that
+  /// this request is a duplicate
+  void send_cached_reply (CORBA::OctetSeq &ocs);
+
+  /// Return the octet sequence pointer through which the FTORB would
+  /// send the reply back.
+  void result_seq (CORBA::OctetSeq &ocs);
+
+  /// Check whether we got the result.
+  int got_result (void);
+
   /// Return a reference to the number of interceptors pushed on to
   /// the current interceptor flow stack.
   /**
@@ -298,6 +307,9 @@ private:
   /// The "Request Scope Current" (RSC) object, as required by
   /// Portable Interceptors.
   TAO_PICurrent_Impl rs_pi_current_;
+
+  /// Used by the FTORB
+  CORBA::OctetSeq_var result_seq_;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 };
 
@@ -306,5 +318,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_GIOP_SERVER_REQUEST_H */

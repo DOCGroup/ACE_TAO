@@ -16,23 +16,21 @@
 
 #ifndef TAO_PRINCIPAL_H
 #define TAO_PRINCIPAL_H
-
 #include /**/ "ace/pre.h"
-#include "ace/Thread_Mutex.h"
+
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "OctetSeqC.h"
+#include "ace/Thread_Mutex.h"
 #include "Pseudo_VarOut_T.h"
-#include "CORBA_methods.h"
 
 namespace CORBA
 {
   class Principal;
-  typedef Principal *Principal_ptr;
-
   typedef TAO_Pseudo_Var_T<Principal> Principal_var;
   typedef TAO_Pseudo_Out_T<Principal, Principal_var> Principal_out;
 
@@ -108,5 +106,4 @@ operator>> (TAO_InputCDR &, CORBA::Principal *&);
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_PRINCIPAL_H */

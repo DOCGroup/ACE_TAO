@@ -16,30 +16,16 @@
 
 #ifndef TAO_SYNC_STRATEGIES_H
 #define TAO_SYNC_STRATEGIES_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
-#include "tao/Basic_Types.h"
-
-class TAO_Stub;
-class ACE_Time_Value;
-
-namespace TAO
-{
-  struct BufferingConstraint;
-}
-
-namespace TimeBase
-{
-  typedef CORBA::ULongLong TimeT;
-}
+#include "tao/Transport.h"
+#include "tao/TAOC.h"
 
 /// Define the interface for the Queueing Strategy
 /**
@@ -75,14 +61,13 @@ public:
    * @param interval If set_timer returns 1, this parameter contains
    *        the timer interval
    */
-  virtual int buffering_constraints_reached (
-    TAO_Stub *stub,
-    size_t msg_count,
-    size_t total_bytes,
-    int &must_flush,
-    const ACE_Time_Value &current_deadline,
-    int &set_timer,
-    ACE_Time_Value &interval) = 0;
+  virtual int buffering_constraints_reached (TAO_Stub *stub,
+                                             size_t msg_count,
+                                             size_t total_bytes,
+                                             int &must_flush,
+                                             const ACE_Time_Value &current_deadline,
+                                             int &set_timer,
+                                             ACE_Time_Value &interval) = 0;
 };
 
 class TAO_Export TAO_Transport_Sync_Strategy : public TAO_Sync_Strategy
@@ -90,14 +75,13 @@ class TAO_Export TAO_Transport_Sync_Strategy : public TAO_Sync_Strategy
 public:
   virtual int must_queue (int queue_empty);
 
-  virtual int buffering_constraints_reached (
-    TAO_Stub *stub,
-    size_t msg_count,
-    size_t total_bytes,
-    int &must_flush,
-    const ACE_Time_Value &current_deadline,
-    int &set_timer,
-   ACE_Time_Value &interval);
+  virtual int buffering_constraints_reached (TAO_Stub *stub,
+                                             size_t msg_count,
+                                             size_t total_bytes,
+                                             int &must_flush,
+                                             const ACE_Time_Value &current_deadline,
+                                             int &set_timer,
+                                             ACE_Time_Value &interval);
 };
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
@@ -107,14 +91,13 @@ class TAO_Export TAO_Eager_Buffering_Sync_Strategy : public TAO_Sync_Strategy
 public:
   virtual int must_queue (int queue_empty);
 
-  virtual int buffering_constraints_reached (
-    TAO_Stub *stub,
-    size_t msg_count,
-    size_t total_bytes,
-    int &must_flush,
-    const ACE_Time_Value &current_deadline,
-    int &set_timer,
-    ACE_Time_Value &new_deadline);
+  virtual int buffering_constraints_reached (TAO_Stub *stub,
+                                             size_t msg_count,
+                                             size_t total_bytes,
+                                             int &must_flush,
+                                             const ACE_Time_Value &current_deadline,
+                                             int &set_timer,
+                                             ACE_Time_Value &new_deadline);
 
 private:
   /// Check if the buffering constraint includes any timeouts and
@@ -145,8 +128,7 @@ private:
 /**
  * If the queue is empty the transport will try to send immediately.
  */
-class TAO_Export TAO_Delayed_Buffering_Sync_Strategy 
-  : public TAO_Eager_Buffering_Sync_Strategy
+class TAO_Export TAO_Delayed_Buffering_Sync_Strategy : public TAO_Eager_Buffering_Sync_Strategy
 {
 public:
   virtual int must_queue (int queue_empty);
@@ -159,5 +141,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_SYNC_STRATEGIES_H */

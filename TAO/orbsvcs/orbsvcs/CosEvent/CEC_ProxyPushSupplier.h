@@ -13,15 +13,12 @@
 
 #ifndef TAO_CEC_PROXYPUSHSUPPLIER_H
 #define TAO_CEC_PROXYPUSHSUPPLIER_H
-
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEventChannelAdminS.h"
-
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
 #include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -198,5 +195,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_CEC_PROXYPUSHSUPPLIER_H */

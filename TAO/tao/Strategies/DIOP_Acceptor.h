@@ -15,10 +15,9 @@
 
 #ifndef TAO_DIOP_ACCEPTOR_H
 #define TAO_DIOP_ACCEPTOR_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "tao/corbafwd.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
@@ -191,5 +190,4 @@ private:
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_DIOP_ACCEPTOR_H */

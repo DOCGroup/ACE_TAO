@@ -11,7 +11,7 @@ project(CIAO_Daemon): ciao_server, iortable {
   }
 }
 
-project(DaemonController) : ciao_server, acexml, rtcorba {
+project(DaemonController) : ciao_server, acexml {
 
   libs += CIAO_XML_Helpers
   libpaths += ../XML_Helpers

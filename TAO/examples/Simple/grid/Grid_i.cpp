@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
-
 #include "Grid_i.h"
+#include "tao/corba.h"
 
 // Default constructor.
 
@@ -157,6 +157,14 @@ Grid_Factory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Constructor
 
 Grid_Factory_i::Grid_Factory_i (void)
+{
+  // no-op
+}
+
+// Copy Constructor
+
+Grid_Factory_i::Grid_Factory_i (Grid_Factory_i &grid)
+  :POA_Grid_Factory (grid)
 {
   // no-op
 }

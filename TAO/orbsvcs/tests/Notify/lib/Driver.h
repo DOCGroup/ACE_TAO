@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_DRIVER_H
 #define TAO_Notify_Tests_DRIVER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -21,9 +21,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
-
-#include "tao/ORB.h"
-
+#include "tao/corba.h"
 #include "Driver_Base.h"
 
 class TAO_Notify_Tests_Command_Builder;
@@ -142,10 +140,7 @@ protected:
 
   /// The file for input
   ACE_CString ior_input_file_;
-
-  /// Set to skip the check for multiple priority levels.
-  int skip_priority_levels_check_;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_Notify_Tests_DRIVER_H */

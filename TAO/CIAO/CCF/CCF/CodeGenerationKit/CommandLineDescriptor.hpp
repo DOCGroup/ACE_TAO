@@ -1,7 +1,4 @@
-// file      : CCF/CodeGenerationKit/CommandLineDescriptor.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
+// $Id$
 #ifndef COMMAND_LINE_DESCRIPTOR_H
 #define COMMAND_LINE_DESCRIPTOR_H
 
@@ -24,8 +21,8 @@ namespace CL
         description_ (description)
     {
     }
-
-
+    
+    
     OptionDescription (std::string name,
                        std::string value_synopsis,
                        std::string description,
@@ -42,32 +39,32 @@ namespace CL
     optional () const
     {
       return optional_;
-    }
-
+    }    
+    
     std::string
     name () const
     {
       return name_;
     }
-
+    
     std::string
     value_synopsis () const
     {
       return value_synopsis_;
     }
-
+    
     std::string
     description () const
     {
       return description_;
     }
-
+    
 
   private:
     bool optional_;
     std::string name_;
     std::string value_synopsis_;
-    std::string description_;
+    std::string description_;    
   };
 
 
@@ -77,7 +74,7 @@ namespace CL
     Description (std::string command)
         : command_ (command)
     {
-    }
+    }  
 
   private:
     typedef
@@ -91,13 +88,13 @@ namespace CL
     {
       return command_;
     }
-
-
+    
+    
   public:
     typedef
     OptionDescriptionList::const_iterator
     OptionIterator;
-
+    
     OptionIterator
     begin_option () const
     {
@@ -115,12 +112,12 @@ namespace CL
     {
       options_.push_back (od);
     }
-
+    
   private:
     typedef
     std::vector<std::string>
     ArgumentDescriptionList;
-
+    
   public:
     typedef
     ArgumentDescriptionList::const_iterator
@@ -143,14 +140,14 @@ namespace CL
     {
       arguments_.push_back (arg);
     }
-
+    
   private:
-
+    
     std::string command_;
     OptionDescriptionList options_;
     ArgumentDescriptionList arguments_;
   };
-
+  
   inline void
   print_text (std::ostream& os, Description const& d)
   {
@@ -160,7 +157,7 @@ namespace CL
     Description::OptionIterator oe = d.end_option ();
 
     if (ob != oe)
-    {
+    {    
       os << " { OPTIONS }";
     }
 
@@ -171,7 +168,7 @@ namespace CL
     {
       os << " <" << *ab << ">";
     }
-
+    
     os << endl << endl;
 
     for (; ob != oe; ob++)
@@ -185,7 +182,7 @@ namespace CL
 
       os << "\t\t" << ob->description () << endl;
     }
-
+    
   }
 
 
@@ -202,14 +199,14 @@ namespace CL
 
     os << "<p>" << endl
        << "<code>" << endl;
-
+    
     os << d.command ();
 
     Description::OptionIterator ob = d.begin_option ();
     Description::OptionIterator oe = d.end_option ();
 
     if (ob != oe)
-    {
+    {    
       os << " { OPTIONS }";
     }
 
@@ -225,9 +222,9 @@ namespace CL
        << "</code>" << endl
        << "</p>" << endl;
 
-
+    
     os << "<dl>" << endl;
-
+    
     for (; ob != oe; ob++)
     {
       os << "<dt>" << endl
@@ -248,14 +245,14 @@ namespace CL
     }
 
     os << "</dl>" << endl;
-
+    
     os << "</td>" << endl
        << "</tr>" << endl
        << "</table>" << endl
        << "</div>" << endl
        << "</body>" << endl
        << "</html>" << endl;
-
+    
   }
 }
 

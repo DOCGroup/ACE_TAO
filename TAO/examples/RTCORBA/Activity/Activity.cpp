@@ -2,14 +2,13 @@
 #include "Activity.h"
 
 #include "ace/High_Res_Timer.h"
-#include "ace/Barrier.h"
+#include "ace/Synch.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Service_Config.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "tao/ORB_Core.h"
-#include "tao/debug.h"
 
 #include "Thread_Task.h"
 #include "Job_i.h"

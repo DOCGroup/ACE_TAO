@@ -12,18 +12,23 @@
 
 #ifndef TAO_QUEUED_MESSAGE_H
 #define TAO_QUEUED_MESSAGE_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/LF_Invocation_Event.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/LF_Invocation_Event.h"
+
 struct iovec;
+
+struct iovec;
+
 class ACE_Message_Block;
 class ACE_Allocator;
+
 
 /**
  * @class TAO_Queued_Message
@@ -212,5 +217,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_QUEUED_MESSAGE_H */

@@ -12,6 +12,7 @@
 #ifndef STORABLE_H
 #define STORABLE_H
 
+#include "tao/corba.h"
 #include "ace/SString.h"
 
 const int szInt =  sizeof(int);

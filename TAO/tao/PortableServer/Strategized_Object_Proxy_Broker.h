@@ -13,6 +13,7 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_STRATEGIZED_OBJECT_PROXY_BROKER_H_
 #define TAO_STRATEGIZED_OBJECT_PROXY_BROKER_H_
 
@@ -24,6 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/corbafwd.h"
 #include "tao/Object_Proxy_Broker.h"
 
 #include "ace/Thread_Mutex.h"

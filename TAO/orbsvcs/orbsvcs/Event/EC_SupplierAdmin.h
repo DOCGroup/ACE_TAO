@@ -14,7 +14,6 @@
 
 #ifndef TAO_EC_SUPPLIERADMIN_H
 #define TAO_EC_SUPPLIERADMIN_H
-
 #include /**/ "ace/pre.h"
 
 #include "EC_ProxyConsumer.h"
@@ -24,7 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
-
 #include /**/ "event_export.h"
 
 class TAO_EC_Event_Channel_Base;
@@ -68,5 +66,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_EC_SUPPLIERADMIN_H */

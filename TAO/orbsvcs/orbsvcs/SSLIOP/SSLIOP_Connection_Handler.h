@@ -25,6 +25,7 @@
 
 #include "ace/Reactor.h"
 
+#include "tao/corbafwd.h"
 #include "tao/Connection_Handler.h"
 #include "tao/IIOPC.h"
 

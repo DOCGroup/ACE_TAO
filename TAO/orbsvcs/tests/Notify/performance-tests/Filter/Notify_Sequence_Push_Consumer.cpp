@@ -49,12 +49,11 @@ Notify_Sequence_Push_Consumer::_connect (
 
   proxy_->set_qos(properties);
   proxy_->connect_sequence_push_consumer (objref.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // give ownership to POA
-  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->_remove_ref ();
 }
 
 

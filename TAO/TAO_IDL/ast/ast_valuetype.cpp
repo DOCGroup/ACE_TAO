@@ -126,12 +126,6 @@ AST_ValueType::custom (void) const
   return this->pd_custom;
 }
 
-idl_bool
-AST_ValueType::will_have_factory (void)
-{
-  return I_FALSE;
-}
-
 void
 AST_ValueType::destroy (void)
 {

@@ -1,18 +1,20 @@
 // $Id$
 
 #include "FT_Service_Callbacks.h"
-#include "FT_ClientPolicy_i.h"
+#include "FT_Policy_i.h"
 
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
 #include "tao/Tagged_Components.h"
 #include "tao/Stub.h"
-#include "tao/Invocation_Utils.h"
+
+#include "tao/Invocation.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
+#include <iostream>
 
 #if !defined (__ACE_INLINE__)
-# include "FT_Service_Callbacks.inl"
+# include "FT_Service_Callbacks.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (FaultTolerance,
@@ -87,7 +89,6 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
   if ((this_comp.get_component (this_tc) == 1) &&
       (that_comp.get_component (that_tc) == 1))
     {
-
       TAO_InputCDR this_cdr (ACE_reinterpret_cast (const char*,
                                                    this_tc.component_data.get_buffer ()),
                              this_tc.component_data.length ());
@@ -99,12 +100,12 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
       CORBA::Boolean this_byte_order;
       CORBA::Boolean that_byte_order;
 
-      if (this_cdr >> ACE_InputCDR::to_boolean (this_byte_order) == 0 ||
-          that_cdr >> ACE_InputCDR::to_boolean (that_byte_order) == 0)
-        {
-          // return no equivalent
-          return 0;
-        }
+      if ((this_cdr >> ACE_InputCDR::to_boolean (this_byte_order) == 0) ||
+          (that_cdr >> ACE_InputCDR::to_boolean (that_byte_order) == 0))
+         {
+           // return no equivalent
+           return 0;
+         }
 
       this_cdr.reset_byte_order (ACE_static_cast (int, this_byte_order));
       that_cdr.reset_byte_order (ACE_static_cast (int, that_byte_order));
@@ -117,8 +118,8 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
       that_cdr >> that_group_component;
 
       // check if domain id and group id are the same
-      if ((ACE_OS::strcmp (this_group_component.ft_domain_id,
-                           that_group_component.ft_domain_id) == 0) &&
+      if ((ACE_OS::strcmp (this_group_component.group_domain_id,
+                           that_group_component.group_domain_id) == 0) &&
           (this_group_component.object_group_id ==
            that_group_component.object_group_id))
          {
@@ -132,7 +133,6 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
     {
       return 1;
     }
-
   return 0;
 }
 
@@ -168,39 +168,65 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p,
 
   cdr >> group_component;
 
-  return (CORBA::ULong) group_component.object_group_id % max;
+  return ((CORBA::ULong)group_component.object_group_id) % max;
 }
 
-TAO::Invocation_Status
+int
 TAO_FT_Service_Callbacks::raise_comm_failure (
-    IOP::ServiceContextList &context_list,
+    TAO_GIOP_Invocation *invoke,
     TAO_Profile *profile
     ACE_ENV_ARG_DECL)
 {
-  if (this->restart_policy_check (context_list,
-                                  profile))
-    return TAO::TAO_INVOKE_RESTART;
+  if (this->restart_policy_check (
+          invoke->request_service_context ().service_info (),
+          profile))
+    {
+      TAO_GIOP_Twoway_Invocation *invoc =
+        ACE_dynamic_cast (TAO_GIOP_Twoway_Invocation *,
+                          invoke);
+
+      if (invoc)
+        {
+          // Reset the states to start invocation on a different
+          // target
+          invoc->reset_states ();
+        }
+      return TAO_INVOKE_RESTART;
+    }
 
   // As the right tags are not found close the connection and throw an
   // exception
-  //   invoke->close_connection ();
+  invoke->close_connection ();
   ACE_THROW_RETURN (CORBA::COMM_FAILURE (
       CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
           errno),
       CORBA::COMPLETED_MAYBE),
-      TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
+      TAO_INVOKE_EXCEPTION);
 }
 
-TAO::Invocation_Status
+int
 TAO_FT_Service_Callbacks::raise_transient_failure (
-    IOP::ServiceContextList &service,
+    TAO_GIOP_Invocation *invoke,
     TAO_Profile *profile
     ACE_ENV_ARG_DECL)
 {
-  if (this->restart_policy_check (service,
-                                  profile))
-    return TAO::TAO_INVOKE_RESTART;
+  if (restart_policy_check (
+        invoke->request_service_context ().service_info (),
+        profile))
+    {
+      TAO_GIOP_Twoway_Invocation *invoc =
+        ACE_dynamic_cast (TAO_GIOP_Twoway_Invocation *,
+                          invoke);
+
+      if (invoc)
+        {
+          // Reset the states to start invocation on a different
+          // target
+          invoc->reset_states ();
+        }
+      return TAO_INVOKE_RESTART;
+    }
 
   // As the right tags are not found close the connection and throw an
   // exception
@@ -209,7 +235,7 @@ TAO_FT_Service_Callbacks::raise_transient_failure (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
           errno),
       CORBA::COMPLETED_MAYBE),
-      TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
+      TAO_INVOKE_EXCEPTION);
 }
 
 CORBA::Boolean

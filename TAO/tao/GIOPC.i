@@ -27,14 +27,14 @@
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union/union_ci.cpp:51
+// be/be_visitor_union/union_ci.cpp:51
 
 // *************************************************************
 // Inline operations for union GIOP::TargetAddress
 // *************************************************************
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union/discriminant_ci.cpp:164
+// be/be_visitor_union/discriminant_ci.cpp:164
 
 ACE_INLINE
 void 
@@ -60,7 +60,7 @@ GIOP::TargetAddress::_d (void) const
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union_branch/public_ci.cpp:890
+// be/be_visitor_union_branch/public_ci.cpp:906
 
 // Accessor to set the member.
 ACE_INLINE
@@ -93,7 +93,7 @@ GIOP::TargetAddress::object_key (void)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union_branch/public_ci.cpp:1199
+// be/be_visitor_union_branch/public_ci.cpp:1215
 
 // Accessor to set the member.
 ACE_INLINE
@@ -126,7 +126,7 @@ GIOP::TargetAddress::profile (void)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union_branch/public_ci.cpp:1199
+// be/be_visitor_union_branch/public_ci.cpp:1215
 
 // Accessor to set the member.
 ACE_INLINE
@@ -159,7 +159,7 @@ GIOP::TargetAddress::ior (void)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -168,8 +168,8 @@ CORBA::Boolean operator<< (
   )
 {
   return
-    (strm << ACE_OutputCDR::from_octet (_tao_aggregate.major)) &&
-    (strm << ACE_OutputCDR::from_octet (_tao_aggregate.minor));
+    (strm << CORBA::Any::from_octet (_tao_aggregate.major)) &&
+    (strm << CORBA::Any::from_octet (_tao_aggregate.minor));
 }
 
 ACE_INLINE
@@ -179,12 +179,12 @@ CORBA::Boolean operator>> (
   )
 {
   return
-    (strm >> ACE_InputCDR::to_octet (_tao_aggregate.major)) &&
-    (strm >> ACE_InputCDR::to_octet (_tao_aggregate.minor));
+    (strm >> CORBA::Any::to_octet (_tao_aggregate.major)) &&
+    (strm >> CORBA::Any::to_octet (_tao_aggregate.minor));
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -209,7 +209,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_union/cdr_op_ci.cpp:69
+// be/be_visitor_union/cdr_op_ci.cpp:69
 
 ACE_INLINE
 CORBA::Boolean operator<< (

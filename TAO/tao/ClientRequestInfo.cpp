@@ -1,15 +1,12 @@
 // -*- C++ -*-
 #include "ClientRequestInfo.h"
+#include "ClientRequestInfo_i.h"
+
 ACE_RCSID (TAO,
            ClientRequestInfo,
            "$Id$")
 
 #if TAO_HAS_INTERCEPTORS == 1
-
-#include "ClientRequestInfo_i.h"
-#include "Any.h"
-
-#include "ace/streams.h"
 
 # if !defined (__ACE_INLINE__)
 #   include "ClientRequestInfo.inl"

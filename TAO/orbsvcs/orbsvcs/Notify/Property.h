@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_PROPERTY_H
 #define TAO_Notify_PROPERTY_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -20,9 +19,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/corba.h"
 #include "tao/orbconf.h"
 #include "tao/TimeBaseC.h"
-
 #include "orbsvcs/NotifyExtC.h"
 
 template <class LOCK, class TYPE> class ACE_Atomic_Op;
@@ -37,5 +36,4 @@ typedef TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolParams> TAO_Notify_Prop
 typedef TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolLanesParams> TAO_Notify_Property_ThreadPoolLanes;
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_PROPERTY_H */

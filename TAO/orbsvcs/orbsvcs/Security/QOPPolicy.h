@@ -24,8 +24,6 @@
 
 #include "orbsvcs/SecurityLevel2C.h"
 
-#include "tao/LocalObject.h"
-
 /**
  * @class TAO_QOPPolicy
  *

@@ -15,7 +15,6 @@
 
 #include "Naming_Context_Interface.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
 
 TAO_Naming_Context::TAO_Naming_Context (TAO_Naming_Context_Impl *impl)
   : impl_ (impl)
@@ -411,7 +410,7 @@ TAO_Naming_Context::to_url_validate_and_compute_size (
     const char *sn
     ACE_ENV_ARG_DECL)
 {
-  size_t addr_len = ACE_OS::strlen (addr);
+  size_t addr_len = ACE_OS_String::strlen (addr);
 
   // Check for invalid address
   if (addr_len == 0)
@@ -473,7 +472,7 @@ TAO_Naming_Context::to_url (const char * addr,
 
   /// Concatenate the seperator between the addr and Name
   dest += ACE_OS::strlen(dest);
-  dest = ACE_OS::strcat (dest, "#");
+  dest = ACE_OS::strcat (dest, "/");
 
   /// move to end of dest string
   dest += ACE_OS::strlen(dest);

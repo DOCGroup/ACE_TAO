@@ -5,7 +5,6 @@
 
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/Marshal.h"
-#include "tao/ORB_Constants.h"
 
 #include "ace/Containers_T.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -23,15 +22,39 @@ TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i (void)
 }
 
 TAO_TypeCodeFactory_i *
-TAO_TypeCodeFactory_i::_narrow (CORBA::Object_ptr _tao_objref
+TAO_TypeCodeFactory_i::_narrow (CORBA::Object_ptr obj
                                 ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (CORBA::is_nil (_tao_objref))
+  if (CORBA::is_nil (obj))
     {
       return 0;
     }
-  
-  return dynamic_cast<TAO_TypeCodeFactory_i *> (_tao_objref);
+
+  return ACE_reinterpret_cast (
+             TAO_TypeCodeFactory_i *,
+             obj->_tao_QueryInterface (
+                      ACE_reinterpret_cast (
+                          ptrdiff_t,
+                          &TAO_TypeCodeFactory_i::_narrow
+                        )
+                    )
+           );
+}
+
+void *
+TAO_TypeCodeFactory_i::_tao_QueryInterface (ptrdiff_t type)
+{
+  ptrdiff_t mytype =
+    ACE_reinterpret_cast (ptrdiff_t,
+                          &TAO_TypeCodeFactory_i::_narrow);
+  if (type == mytype)
+    {
+      this->_add_ref ();
+      return this;
+    }
+
+  return 
+    this->ACE_NESTED_CLASS (CORBA, TypeCodeFactory::_tao_QueryInterface) (type);
 }
 
 CORBA::TypeCode_ptr
@@ -844,13 +867,13 @@ TAO_TypeCodeFactory_i::insert_label_value (
         TAO_InputCDR in (any._tao_get_cdr (),
                          any._tao_byte_order ());
 
-        TAO::traverse_status ts =
+        CORBA::TypeCode::traverse_status ts =
           TAO_Marshal_Object::perform_append (disc_tc,
                                               &in,
                                               &cdr
                                               ACE_ENV_ARG_PARAMETER);
 
-        return (ts == TAO::TRAVERSE_CONTINUE);
+        return (ts == CORBA::TypeCode::TRAVERSE_CONTINUE);
       }
     default:
       return 0;

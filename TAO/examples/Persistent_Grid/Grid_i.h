@@ -20,10 +20,6 @@
 #define GRID_I_H
 
 #include "GridS.h"
-#include "ace/OS.h"
-#include "ace/Memory_Pool.h"
-#include "ace/Null_Mutex.h"
-#include "ace/Malloc_T.h"
 
 typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> pool_t;
 // Memory pool for the persistent stuff
@@ -38,8 +34,12 @@ public:
   Grid_Factory_i (void);
   // Constructor.
 
+  Grid_Factory_i (Grid_Factory_i &);
+  // Copy constructor to fool g++
+
   ~Grid_Factory_i (void);
   // Destructor.
+
 
   virtual Grid_ptr make_grid (CORBA::Short,
                               CORBA::Short

@@ -8,7 +8,8 @@
  *
  *   Unix Domain Socket (UIOP) profile specific processing
  *
- *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
+ *
+ *  @author Ossama Othman <ossama@uci.edu>
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================
@@ -16,10 +17,9 @@
 
 #ifndef TAO_UIOP_PROFILE_H
 #define TAO_UIOP_PROFILE_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -78,7 +78,8 @@ public:
   virtual char *to_string (ACE_ENV_SINGLE_ARG_DECL);
   virtual int encode_endpoints (void);
   virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void) const;
+  virtual CORBA::ULong endpoint_count (void);
+  virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);
   /**
@@ -97,7 +98,6 @@ protected:
                                ACE_ENV_ARG_DECL);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
   virtual int decode_endpoints (void);
-  virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
 
 private:
   /**
@@ -128,5 +128,4 @@ private:
 # endif  /* TAO_HAS_UIOP == 1 */
 
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_UIOP_PROFILE_H */

@@ -15,10 +15,9 @@
 
 #ifndef TAO_SHMIOP_FACTORY_H
 #define TAO_SHMIOP_FACTORY_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -93,5 +92,4 @@ ACE_FACTORY_DECLARE (TAO_Strategies, TAO_SHMIOP_Protocol_Factory)
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_SHMIOP_FACTORY_H */

@@ -170,16 +170,13 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
 }
 
 CORBA::Boolean
-TAO_SSLIOP_Profile::do_is_equivalent (const TAO_Profile * other_profile)
+TAO_SSLIOP_Profile::is_equivalent (const TAO_Profile * other_profile)
 {
   const TAO_SSLIOP_Profile *op =
     ACE_dynamic_cast (const TAO_SSLIOP_Profile *, other_profile);
 
-  // Make sure we have a TAO_SSLIOP_Profile.
-  if (op == 0)
-    return 0;
 
-  // Now verify TAO_SSLIOP_Endpoint equivalence.
+  // Check endpoints equivalence.
   const TAO_SSLIOP_Endpoint *other_endp = &op->ssl_endpoint_;
   for (TAO_SSLIOP_Endpoint *endp = &this->ssl_endpoint_;
        endp != 0;

@@ -4,10 +4,9 @@
 
 #ifndef THROUGHPUT_RECEIVER_H
 #define THROUGHPUT_RECEIVER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "TestS.h"
-#include "ace/OS_NS_time.h"
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)
@@ -54,5 +53,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* THROUGHPUT_RECEIVER_H */

@@ -9,8 +9,6 @@
 #include "DynSequence_i.h"
 #include "DynStruct_i.h"
 #include "DynUnion_i.h"
-#include "tao/Any_Unknown_IDL_Type.h"
-#include "ace/OS_NS_wchar.h"
 
 ACE_RCSID (DynamicAny,
            DynCommon,
@@ -1269,7 +1267,7 @@ TAO_DynCommon::get_ulonglong (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var cc = 
         this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (retval);
 
@@ -1622,6 +1620,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
+        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_enum:
@@ -1639,6 +1638,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
+        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_sequence:
@@ -1656,6 +1656,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
+        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_struct:
@@ -1673,6 +1674,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
+        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_union:
@@ -1690,6 +1692,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
+        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_fixed:
@@ -1711,6 +1714,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
+        tmp->_remove_ref ();
         break;
       }
   }

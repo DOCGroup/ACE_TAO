@@ -38,9 +38,9 @@ static const char rcsid[] =
 */
 
 #include "media_timer.h"
-#include "ace/Time_Value.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/OS_NS_stdlib.h"
+// FUZZ: disable check_for_math_include
+#include <math.h>
+
 
 MediaTimer* MediaTimer::instance_;
 

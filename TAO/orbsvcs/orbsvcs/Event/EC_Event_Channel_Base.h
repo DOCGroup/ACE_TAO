@@ -16,7 +16,6 @@
 
 #ifndef TAO_EC_EVENT_CHANNEL_BASE_H
 #define TAO_EC_EVENT_CHANNEL_BASE_H
-
 #include /**/ "ace/pre.h"
 
 #include "EC_Factory.h"
@@ -26,7 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "EC_Defaults.h"
-
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
 template<class> class TAO_ESF_Worker;
@@ -369,5 +367,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_EC_EVENT_CHANNEL_BASE_H */

@@ -33,9 +33,9 @@
 #include "Interceptor_List.h"
 
 // Forward declarations
+class TAO_GIOP_Invocation;
 class TAO_ClientRequestInfo;
 class TAO_ClientRequestInfo_i;
-class TAO_GIOP_Invocation;
 
 /**
  * @class TAO_ClientRequestInterceptor_Adapter

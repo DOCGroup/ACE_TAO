@@ -19,15 +19,9 @@ CIAO::Container::~Container ()
 }
 
 PortableServer::POA_ptr
-CIAO::Container::_ciao_the_POA (void)
+CIAO::Container::the_POA (void)
 {
   return this->poa_.in ();
-}
-
-CORBA::ORB_ptr
-CIAO::Container::_ciao_the_ORB ()
-{
-  return this->orb_.in ();
 }
 
 ///////////////////////////////////////////////////////////////
@@ -46,8 +40,7 @@ CIAO::Session_Container::~Session_Container ()
 }
 
 int
-CIAO::Session_Container::init (const char *name,
-                               const CORBA::PolicyList *more_policies
+CIAO::Session_Container::init (const char *name
                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -75,14 +68,8 @@ CIAO::Session_Container::init (const char *name,
    ACE_CHECK_RETURN (-1);
 
    // Set up proper poa policies here.  Default policies seems to be
-   // fine for session container.  If you add some other default
-   // policies here, then you need to "add" more_policies below
-   // instead of simply assigning more_policies to the init policy
-   // list.
+   // fine for session container.
    CORBA::PolicyList policies (0);
-
-   if (more_policies != 0)
-     policies = *more_policies;
 
    this->poa_ = root_poa->create_POA (name,
                                       PortableServer::POAManager::_nil (),

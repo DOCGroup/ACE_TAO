@@ -1,8 +1,8 @@
 // $Id$
 
-#include "RootPanel.h"
 #include "UpdatePositionCmd.h"
 #include <qlcdnumber.h>
+#include "RootPanel.h"
 #include "NavUnit.h"
 
 

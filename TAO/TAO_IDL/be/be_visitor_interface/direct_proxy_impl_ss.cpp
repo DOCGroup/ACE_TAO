@@ -27,8 +27,9 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (
   TAO_OutStream *os = this->ctx_->stream ();
 
   this->ctx_->node (node);
+  os->indent ();
 
-  *os << be_nl << be_nl
+  *os << be_nl
       << "///////////////////////////////////////////////////////////////////////" 
       << be_nl
       << "//                 Direct Proxy  Implementation" << be_nl
@@ -48,10 +49,11 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (
                         -1);
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl
       << "//" << be_nl
       << "//           End Direct Proxy Implementation" << be_nl
-      << "///////////////////////////////////////////////////////////////////////";
+      << "///////////////////////////////////////////////////////////////////////"
+      << be_nl;
 
   return 0;
 }

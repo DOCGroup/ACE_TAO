@@ -1,14 +1,13 @@
 // $Id$
 
 #include "tao/Wait_On_Leader_Follower.h"
-#include "tao/LF_Follower.h"
+#include "tao/ORB_Core.h"
 #include "tao/Leader_Follower.h"
 #include "tao/Transport.h"
 #include "tao/Synch_Reply_Dispatcher.h"
+#include "tao/debug.h"
 
-ACE_RCSID (tao, 
-           Wait_On_Leader_Follower, 
-           "$Id$")
+ACE_RCSID(tao, Wait_On_Leader_Follower, "$Id$")
 
 TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower (TAO_Transport *transport)
   : TAO_Wait_Strategy (transport)
@@ -23,9 +22,7 @@ int
 TAO_Wait_On_Leader_Follower::register_handler (void)
 {
   if (this->is_registered_ == 0)
-    {
-      return this->transport_->register_handler ();
-    }
+    return this->transport_->register_handler ();
 
   return 1;
 }
@@ -42,9 +39,7 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
 {
   // Register the handler.
   if (this->is_registered_ == 0)
-    {
       this->transport_->register_handler ();
-    }
 
   // Send the request.
   return this->TAO_Wait_Strategy::sending_request (orb_core,

@@ -1,4 +1,4 @@
-project(TAO) : acelib, taoversion, core, tao_output, extra_core {
+project(TAO) : acelib, taoversion, core, tao_output {
   includes    += $(TAO_ROOT) $(TAO_ROOT)/tao
   sharedname   = TAO
   dynamicflags = TAO_BUILD_DLL
@@ -24,6 +24,7 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       Acceptor_Registry.cpp
       Protocol_Factory.cpp
       Acceptor_Filter.cpp
+      iiop_endpoints.cpp
       IIOP_Factory.cpp
       IIOP_Lite_Factory.cpp
       IIOP_Profile.cpp
@@ -32,7 +33,6 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       IIOP_Acceptor.cpp
       IIOP_Connection_Handler.cpp
       IIOP_Endpoint.cpp
-      IIOP_EndpointsC.cpp
       IIOPC.cpp
     }
 
@@ -70,9 +70,6 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
     }
     ORB_Core {
       Any.cpp
-      Any_Basic_Impl.cpp
-      Any_Impl.cpp
-      Any_Unknown_IDL_Type.cpp
       Any_SystemException.cpp
       CORBA_String.cpp
       CurrentC.cpp
@@ -83,6 +80,7 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       LocalObject.cpp
       ObjectIdListC.cpp
       ORB.cpp
+      corbafwd.cpp
       Policy_ForwardC.cpp
       PolicyC.cpp
       Policy_Validator.cpp
@@ -91,6 +89,7 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       Object_Proxy_Broker.cpp
       Remote_Object_Proxy_Broker.cpp
       Object_Proxy_Impl.cpp
+      Remote_Object_Proxy_Impl.cpp
       DomainC.cpp
       TimeBaseC.cpp
       Principal.cpp
@@ -105,33 +104,26 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       Protocols_Hooks.cpp
       Default_Protocols_Hooks.cpp
       Messaging_SyncScopeC.cpp
-      Invocation_Base.cpp
-      Invocation_Adapter.cpp
-      LocateRequest_Invocation_Adapter.cpp
-      Profile_Transport_Resolver.cpp
-      Remote_Invocation.cpp
-      Collocated_Invocation.cpp
-      Synch_Invocation.cpp
-      LocateRequest_Invocation.cpp
+      Invocation.cpp
       Invocation_Endpoint_Selectors.cpp
+      Asynch_Invocation.cpp
       operation_details.cpp
       ClientRequestInfo.cpp
       ClientRequestInfo_i.cpp
       RequestInfo_Util.cpp
-      ClientRequestInterceptor_Adapter.cpp
+      ClientInterceptorAdapter.cpp
       PI_ForwardC.cpp
       PortableInterceptorC.cpp
       PICurrent.cpp
       PICurrent_ORBInitializer.cpp
       DynamicC.cpp
-      Dynamic_ParameterC.cpp
-      ParameterMode.cpp
       OctetSeqC.cpp
       StringSeqC.cpp
       Codeset_Manager.cpp
       Codeset_Translator_Factory.cpp
       ORB_Core.cpp
       ORB_Core_Auto_Ptr.cpp
+      TSS_Resources.cpp
       Collocation_Resolver.cpp
       Default_Collocation_Resolver.cpp
       Stub_Factory.cpp
@@ -146,6 +138,7 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       LF_CH_Event.cpp
       LF_Event_Binder.cpp
       LF_Event_Loop_Thread_Helper.cpp
+      LF_CH_Event.cpp
       LF_Strategy.cpp
       LF_Strategy_Complete.cpp
       params.cpp
@@ -234,10 +227,12 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       Valuetype_Adapter.cpp
       ObjectKey_Table.cpp
       Refcounted_ObjectKey.cpp
-      TSS_Resources.cpp
-      Argument.cpp
-      Basic_Arguments.cpp
-      Special_Basic_Arguments.cpp
+      Policy_Manager.cpp
+      Buffering_Constraint_Policy.cpp
+      Messaging_PolicyValueC.cpp
+      ServicesC.cpp
+      NVList.cpp
+      Dynamic_Adapter.cpp
     }
   }
 }

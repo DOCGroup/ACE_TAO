@@ -14,7 +14,7 @@
 
 #ifndef TAO_CEC_TYPEDEVENTCHANNEL_H_
 #define TAO_CEC_TYPEDEVENTCHANNEL_H_
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "CEC_Factory.h"
 
@@ -26,9 +26,7 @@
 #include "event_export.h"
 
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
-
 #include "tao/IFR_Client/IFR_BasicC.h"
-
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
@@ -81,7 +79,7 @@ public:
   int disconnect_callbacks;
 
   /**
-   * If not zero the event channel will deactive its Impl and call
+   * If not zero the event channel will deactive its Impl and call 
    * orb->shutdown(0), when destoy is invoked.
    */
   int destroy_on_shutdown;
@@ -109,16 +107,17 @@ class TAO_Event_Export TAO_CEC_TypedEventChannel : public virtual POA_CosTypedEv
 public:
 
   /**
-   * Constructor
+   * constructor
    * If <own_factory> is not 0 it assumes ownership of the factory.
    * If the factory is <nil> it uses the Service_Configurator to load
    * the Factory, if not found it uses TAO_CEC_Default_Resource_Factory
    */
+  //Constructor 
   TAO_CEC_TypedEventChannel (const TAO_CEC_TypedEventChannel_Attributes& attributes,
                              TAO_CEC_Factory* factory = 0,
-                             int own_factory = 0);
+                             int own_factory = 0);  
 
-  /// Destructor
+  //Destructor 
   virtual ~TAO_CEC_TypedEventChannel (void);
 
   /// Start the internal threads (if any), etc.
@@ -204,9 +203,9 @@ public:
 
   // Hash map which will operate as a IFR cache for the Supported Interface's operations and parameters
   typedef ACE_Hash_Map_Manager_Ex<const char *, TAO_CEC_Operation_Params *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex> InterfaceDescription;
-  typedef InterfaceDescription::iterator Iterator;
+  typedef InterfaceDescription::iterator Iterator; 
 
-  /// Finds a operation/parameter from the IFR cache
+  // Finds a operation/parameter from the IFR cache
   TAO_CEC_Operation_Params * find_from_ifr_cache (const char *operation);
 
   /// Function allows consumer admin to register the uses interface
@@ -235,11 +234,11 @@ public:
                             ACE_ENV_ARG_DECL);
 
   // = The CosTypedEventChannelAdmin::TypedEventChannel methods...
-  virtual ::CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr
+  virtual ::CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr 
     for_consumers (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual ::CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
+  virtual ::CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr 
     for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -247,13 +246,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
-  /// Function caches the full interface description from the IFR
+  // Function caches the full interface description from the IFR
   int cache_interface_description (const char *interface ACE_ENV_ARG_DECL);
 
-  /// Insert a operation/parameter into the IFR cache
+  // Insert a operation/parameter into the IFR cache
   int insert_into_ifr_cache (const char *operation, TAO_CEC_Operation_Params *parameters);
 
-  /// Function clears the IFR cache
+  // Function clears the IFR cache
   int clear_ifr_cache (void);
 
 private:
@@ -322,10 +321,10 @@ private:
 class TAO_Event_Export TAO_CEC_Param
 {
 public:
-  /// Constructor
+  /// constructor
   TAO_CEC_Param (void);
 
-  /// Destructor
+  /// destructor
   ~TAO_CEC_Param (void);
 
 private:
@@ -358,6 +357,6 @@ private:
 #include "CEC_TypedEventChannel.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* TAO_CEC_TYPEDEVENTCHANNEL_H_ */

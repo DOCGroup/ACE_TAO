@@ -17,7 +17,6 @@
 
 #ifndef TAO_EC_DEFAULTS_H
 #define TAO_EC_DEFAULTS_H
-
 #include /**/ "ace/pre.h"
 
 #ifndef TAO_EC_ENABLE_DEBUG_MESSAGES
@@ -136,5 +135,4 @@
 #endif /* TAO_EC_DEFAULT_CONSUMER_VALIDATE_CONNECTION */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_EC_DEFAULTS_H */

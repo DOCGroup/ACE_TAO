@@ -8,9 +8,7 @@
 # include "tao/LF_Follower.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           LF_Follower, 
-           "$Id$")
+ACE_RCSID(tao, LF_Follower, "$Id$")
 
 TAO_LF_Follower::TAO_LF_Follower (TAO_Leader_Follower &leader_follower)
   : leader_follower_ (leader_follower)

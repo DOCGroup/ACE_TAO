@@ -16,6 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_With_Allocator_T.h"
+#include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
 #include "naming_export.h"
 

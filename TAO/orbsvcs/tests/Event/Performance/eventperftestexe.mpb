@@ -1,4 +1,4 @@
-project: messaging, rteventexe, naming, iortable, corba_messaging {
+project: messaging, rteventexe, naming, iortable {
   after    += Event_Test_Lib
   libs     += ECTests
   includes += ../lib

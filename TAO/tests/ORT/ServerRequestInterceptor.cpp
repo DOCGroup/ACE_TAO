@@ -2,8 +2,6 @@
 
 #include "ServerRequestInterceptor.h"
 
-#include "ace/Log_Msg.h"
-
 ACE_RCSID (ORT,
            ServerRequestInterceptor,
            "$Id$")

@@ -21,7 +21,6 @@
 #include "utl_string.h"
 #include "global_extern.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (be, 
            be_global, 
@@ -72,7 +71,6 @@ BE_GlobalData::BE_GlobalData (void)
     gen_tie_classes_ (I_TRUE),
     gen_smart_proxies_ (I_FALSE),
     gen_inline_constants_ (I_FALSE),
-    gen_tmplinst_ (I_FALSE),
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
     ccmobject_ (0)
@@ -812,18 +810,6 @@ idl_bool
 BE_GlobalData::gen_inline_constants (void) const
 {
   return this->gen_inline_constants_;
-}
-
-void
-BE_GlobalData::gen_tmplinst (idl_bool val)
-{
-  this->gen_tmplinst_ = val;
-}
-
-idl_bool
-BE_GlobalData::gen_tmplinst (void) const
-{
-  return this->gen_tmplinst_;
 }
 
 void

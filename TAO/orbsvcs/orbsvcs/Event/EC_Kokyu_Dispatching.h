@@ -55,9 +55,7 @@ class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Dispatching : public TAO_EC_Dispatchi
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
-  TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base* ec,
-                            int sched_policy,
-                            int sched_scope);
+  TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base* ec);
 
   // = The EC_Dispatching methods.
   virtual void activate (void);
@@ -74,8 +72,6 @@ public:
                             ACE_ENV_ARG_DECL);
 
 private:
-  ACE_Allocator *allocator_;
-
   void setup_lanes (void);
 
   /// The dispatcher
@@ -85,8 +81,6 @@ private:
   RtecScheduler::Scheduler_var scheduler_;
 
   int lanes_setup_;
-  int disp_sched_policy_;
-  int disp_sched_scope_;
 };
 
 // ****************************************************************
@@ -95,7 +89,7 @@ class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Shutdown_Command : public Kokyu::Disp
 {
 public:
   /// Constructor
-  TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
+  TAO_EC_Kokyu_Shutdown_Command (void);
 
   /// Command callback
   virtual int execute (void);
@@ -103,7 +97,6 @@ public:
 protected:
   //Protected so can't be put on stack; must be dynamically allocated
   virtual ~TAO_EC_Kokyu_Shutdown_Command (void);
-
 };
 
 // ****************************************************************
@@ -114,8 +107,7 @@ public:
   /// Constructor
   TAO_EC_Kokyu_Push_Command (TAO_EC_ProxyPushSupplier* proxy,
                              RtecEventComm::PushConsumer_ptr consumer,
-                             RtecEventComm::EventSet& event,
-                             ACE_Allocator* allocator);
+                             RtecEventComm::EventSet& event);
 
   /// Command callback
   virtual int execute (void);

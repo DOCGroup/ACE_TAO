@@ -11,7 +11,6 @@
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/debug.h"
-#include "tao/ORB_Constants.h"
 
 #include "ace/Reactor.h"
 
@@ -687,6 +686,20 @@ TAO_LB_LoadManager::get_object_group_ref (
                                                       ACE_ENV_ARG_PARAMETER);
 }
 
+PortableGroup::ObjectGroup_ptr
+TAO_LB_LoadManager::get_object_group_ref_from_id (
+        PortableGroup::ObjectGroupId group_id
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableGroup::ObjectGroupNotFound
+      ))
+{
+  return
+    this->object_group_manager_.get_object_group_ref_from_id (group_id
+                                                      ACE_ENV_ARG_PARAMETER);
+}
+
 CORBA::Object_ptr
 TAO_LB_LoadManager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -937,7 +950,7 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      this->object_group_manager_.poa (this->poa_.in ());
+      this->object_group_manager_.init (orb, this->poa_.in ());
       this->generic_factory_.poa (this->poa_.in ());
 
       // Activate the child POA.

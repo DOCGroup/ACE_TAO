@@ -14,28 +14,21 @@
 
 #ifndef TAO_PORTABLEGROUP_ACCEPTOR_REGISTRY_H
 #define TAO_PORTABLEGROUP_ACCEPTOR_REGISTRY_H
-
 #include /**/ "ace/pre.h"
 
-#include "ace/Unbounded_Queue.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
-
 #include "portablegroup_export.h"
 
 #include "tao/Transport_Acceptor.h"
+#include "ace/Unbounded_Queue.h"
 #include "tao/Resource_Factory.h"
 
 class TAO_Profile;
-
-namespace CORBA
-{
-  class Environment;
-}
 
 /**
  * @class TAO_PortableGroup_Acceptor_Registry
@@ -98,12 +91,8 @@ protected:
 
 private:
   // The acceptor registry should not be copied.
-  ACE_UNIMPLEMENTED_FUNC (TAO_PortableGroup_Acceptor_Registry (
-                              const TAO_PortableGroup_Acceptor_Registry&
-                            ))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (
-                              const TAO_PortableGroup_Acceptor_Registry&
-                            ))
+  ACE_UNIMPLEMENTED_FUNC (TAO_PortableGroup_Acceptor_Registry (const TAO_PortableGroup_Acceptor_Registry&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_PortableGroup_Acceptor_Registry&))
 
 private:
   /// List of acceptors that are currently open.
@@ -113,7 +102,6 @@ private:
 //#if defined(__ACE_INLINE__)
 //#include "tao/PortableGroup_Acceptor_Registry.i"
 //#endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PORTABLEGROUP_ACCEPTOR_REGISTRY_H */

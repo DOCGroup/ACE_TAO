@@ -14,17 +14,17 @@
 #define TAO_PI_CURRENT_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Array_Base.h"
+
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbconf.h"
-
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "Any.h"
+#include "ace/Array_Base.h"
+
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
 
@@ -235,6 +235,7 @@ private:
    *       current and a thread scope current.
    */
   CORBA::Boolean dirty_;
+
 };
 
 // ------------------------------------------------------------------

@@ -5,8 +5,6 @@
 #include "testC.h"
 #include "Client_ORBInitializer.h"
 
-#include "tao/ORBInitializer_Registry.h"
-
 ACE_RCSID (ForwardRequest,
            client,
            "$Id$")
@@ -154,9 +152,8 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
-  if (status != -1)
-    ACE_DEBUG ((LM_INFO,
-                "PortableInterceptor::ForwardRequest test passed.\n"));
+  ACE_DEBUG ((LM_INFO,
+              "PortableInterceptor::ForwardRequest test passed.\n"));
 
   return status;
 }

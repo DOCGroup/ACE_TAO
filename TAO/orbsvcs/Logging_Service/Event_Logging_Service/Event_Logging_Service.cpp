@@ -2,7 +2,6 @@
 #include "Event_Logging_Service.h"
 #include "orbsvcs/Log/EventLogFactory_i.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
-#include "ace/OS_main.h"
 
 ACE_RCSID (Event_Logging_Service,
            Event_Logging_Service,

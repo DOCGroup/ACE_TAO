@@ -11,14 +11,12 @@
 
 #ifndef TAO_Notify_SUPPLIER_H
 #define TAO_Notify_SUPPLIER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ORB_Objects.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/orbsvcs/CosNotifyCommC.h"
-#include "ace/SString.h"
-#include "ace/Condition_Thread_Mutex.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -116,5 +114,5 @@ protected:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_Notify_SUPPLIER_H */

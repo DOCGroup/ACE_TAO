@@ -2,9 +2,7 @@
 
 #include "airplane_server_i.h"
 
-ACE_RCSID (ImplRepo, 
-           airplane_server, 
-           "$Id$")
+ACE_RCSID(ImplRepo, airplane_server, "$Id$")
 
 int
 main (int argc, char *argv[])

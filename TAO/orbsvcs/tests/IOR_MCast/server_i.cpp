@@ -7,24 +7,18 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/IORTable/IORTable.h"
-#include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
+// Constructor
 Server_i::Server_i (void)
-  : argc_ (0),
-    argv_ (0),
-    orb_ (),
-    ior_multicast_ (0),
-    service_ior_ (),
-    mcast_address_ ()
 {
 }
 
+// Destructor
 Server_i::~Server_i (void)
 {
-  delete this->ior_multicast_;
 }
 
 int
@@ -97,14 +91,9 @@ Server_i::init (int &argc,
 
       // Enable such that the server can listen for multicast requests
       // at the specified address.
-      if (this->enable_multicast (ior.in ()) != 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "ERROR: Unable to enable multicast "
-                      "on specified address.\n"));
-
-          ACE_TRY_THROW (CORBA::INTERNAL ());
-        }
+      this->enable_multicast (ior.in ()
+                              ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       // Run the ORB
       this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -125,36 +114,46 @@ Server_i::init (int &argc,
 }
 
 int
-Server_i::enable_multicast (const char *ior)
+Server_i::enable_multicast (const char *ior
+                            ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (this->parse_args (this->argc_, this->argv_) != 0)
-    return -1;
 
-  // Get reactor instance from TAO.
-  ACE_Reactor *reactor =
-    this->orb_->orb_core ()->reactor ();
-
-  // Instantiate a handler which will handle client requests for the
-  // bootstrappable service, received on the multicast port.
-  ACE_NEW_RETURN (this->ior_multicast_,
-                  TAO_IOR_Multicast (),
-                  -1);
-
-  if (this->ior_multicast_->init (ior,
-                                  this->mcast_address_.in (),
-                                  TAO_SERVICEID_MCASTSERVER) == -1)
-    return -1;
-
-  // Register event handler for the ior multicast.
-  if (reactor->register_handler (this->ior_multicast_,
-                                 ACE_Event_Handler::READ_MASK) == -1)
+  ACE_TRY
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "MCast_Server: cannot register Event handler\n"));
-      return -1;
-    }
+      this->parse_args (this->argc_, this->argv_);
 
+      // Get reactor instance from TAO.
+      ACE_Reactor *reactor =
+        this->orb_->orb_core ()->reactor ();
+
+      // Instantiate a handler which will handle client requests for
+      // the bottstrappable service, received on the multicast port.
+      ACE_NEW_RETURN (this->ior_multicast_,
+                      TAO_IOR_Multicast (),
+                      -1);
+
+      if (this->ior_multicast_->init (ior,
+                                      this->mcast_address_.in (),
+                                      TAO_SERVICEID_MCASTSERVER) == -1)
+        return -1;
+
+      // Register event handler for the ior multicast.
+      if (reactor->register_handler (this->ior_multicast_,
+                                     ACE_Event_Handler::READ_MASK) == -1)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "MCast_Server: cannot register Event handler\n"));
+          return -1;
+        }
+
+    }
+  ACE_CATCH (CORBA::SystemException, ex)
+    {
+      //
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 

@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_ADMIN_H
 #define TAO_Notify_ADMIN_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -61,23 +60,19 @@ public:
   TAO_Notify_FilterAdmin& filter_admin (void);
 
   /// Set Filter operator
-  void filter_operator (
-      CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
-    );
+  void filter_operator (CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator);
 
   /// Access Filter operator
   CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator (void);
 
   /// Obtain the Admin's subscribed types.
-  void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types 
-                         ACE_ENV_ARG_DECL);
+  void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types ACE_ENV_ARG_DECL);
 
   /// Shutdown
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
-  typedef TAO_Notify_Container_T <TAO_Notify_Proxy> 
-    TAO_Notify_Proxy_Container;
+  typedef TAO_Notify_Container_T <TAO_Notify_Proxy> TAO_Notify_Proxy_Container;
 
   /// = Data Members
 
@@ -102,5 +97,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_ADMIN_H */

@@ -26,9 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-#include "tao/CORBA_String.h"
-#include "tao/orbconf.h"
+#include "tao/corba.h"
 
 class Options
 {

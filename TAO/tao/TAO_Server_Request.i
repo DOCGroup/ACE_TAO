@@ -32,13 +32,9 @@ TAO_ServerRequest::operation (const char *operation,
                               int release)
 {
   if (length == 0)
-    {
-      this->operation_.set (operation, release);
-    }
+    this->operation_.set (operation, release);
   else
-    {
-      this->operation_.set (operation, length, release);
-    }
+    this->operation_.set (operation, length, release);
 }
 
 ACE_INLINE size_t
@@ -76,6 +72,13 @@ TAO_ServerRequest::sync_with_server (CORBA::Boolean sync_flag)
 {
   this->sync_with_server_ = sync_flag;
 }
+
+/*ACE_INLINE CORBA::Principal_ptr
+TAO_ServerRequest::principal (void) const
+{
+return this->requesting_principal_.ptr ();
+}
+*/
 
 ACE_INLINE TAO::ObjectKey &
 TAO_ServerRequest::object_key (void)
@@ -197,5 +200,20 @@ ACE_INLINE TAO_PICurrent_Impl &
 TAO_ServerRequest::rs_pi_current (void)
 {
   return this->rs_pi_current_;
+}
+
+ACE_INLINE int
+TAO_ServerRequest::got_result (void)
+{
+  if (this->result_seq_.ptr () == 0)
+    return 0;
+
+  return 1;
+}
+
+ACE_INLINE void
+TAO_ServerRequest::result_seq (CORBA::OctetSeq &ocs)
+{
+  this->result_seq_ = ocs;
 }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

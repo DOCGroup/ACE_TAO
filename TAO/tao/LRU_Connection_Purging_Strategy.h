@@ -10,7 +10,6 @@
 
 #ifndef TAO_LRU_PURGING_STRATEGY_H
 #define TAO_LRU_PURGING_STRATEGY_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/Connection_Purging_Strategy.h"
@@ -32,8 +31,7 @@
  * first.
  */
 
-class TAO_Export TAO_LRU_Connection_Purging_Strategy 
-  : public TAO_Connection_Purging_Strategy
+class TAO_Export TAO_LRU_Connection_Purging_Strategy: public TAO_Connection_Purging_Strategy
 {
 public:
   /// The constructor
@@ -51,5 +49,4 @@ private:
 };
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_LRU_PURGING_STRATEGY_H */

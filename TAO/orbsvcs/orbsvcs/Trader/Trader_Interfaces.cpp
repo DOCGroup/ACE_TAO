@@ -7,8 +7,6 @@
 #include "Trader_T.h"
 #include "ace/INET_Addr.h"
 #include "Trader_Constraint_Visitors.h"
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Trader, Trader_Interfaces, "$Id$")
 

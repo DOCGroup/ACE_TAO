@@ -17,20 +17,17 @@
 
 #ifndef TAO_RT_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_RT_INVOCATION_ENDPOINT_SELECTOR_H
-
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_export.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/orbconf.h"
+#include "tao/corbafwd.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "RTCORBA.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Invocation_Endpoint_Selectors.h"
 
@@ -47,25 +44,19 @@ class TAO_Endpoint;
  *
  **/
 class TAO_RTCORBA_Export TAO_RT_Invocation_Endpoint_Selector :
-  public TAO_Invocation_Endpoint_Selector
+  public TAO_Default_Endpoint_Selector
 {
 public:
 
-  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
-                                ACE_Time_Value *val
-                                ACE_ENV_ARG_DECL);
+  void select_endpoint (TAO_GIOP_Invocation *invocation
+                        ACE_ENV_ARG_DECL);
 
-protected:
-  void select_endpoint_based_on_client_protocol_policy (
-      TAO::Profile_Transport_Resolver &r,
-      RTCORBA::ClientProtocolPolicy_ptr client_protocol_policy,
-      RTCORBA::ProtocolList &protocols,
-      ACE_Time_Value *v
-      ACE_ENV_ARG_DECL
-    );
+  void select_endpoint_based_on_client_protocol_policy (TAO_GIOP_Invocation *invocation,
+                                                        RTCORBA::ClientProtocolPolicy_ptr client_protocol_policy,
+                                                        RTCORBA::ProtocolList &protocols
+                                                        ACE_ENV_ARG_DECL);
 
-  int endpoint_from_profile (TAO::Profile_Transport_Resolver &r,
-                             ACE_Time_Value *v
+  int endpoint_from_profile (TAO_GIOP_Invocation *invocation
                              ACE_ENV_ARG_DECL);
 };
 
@@ -76,5 +67,4 @@ protected:
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_RT_INVOCATION_ENDPOINT_SELECTOR_H */

@@ -1,15 +1,15 @@
 #include "CORBALOC_Parser.h"
 #include "ORB_Core.h"
 #include "Stub.h"
+#include "MProfile.h"
 #include "Connector_Registry.h"
 #include "tao/debug.h"
-#include "ace/OS_NS_strings.h"
 
 #if !defined(__ACE_INLINE__)
 #include "CORBALOC_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
+ACE_RCSID (TAO,
            CORBALOC_Parser,
            "$Id$")
 
@@ -18,17 +18,11 @@ TAO_CORBALOC_Parser::~TAO_CORBALOC_Parser (void)
 }
 
 static const char corbaloc_prefix[] = "corbaloc:";
-
-static const char* protocol_prefixes[] = {
-  "iiop",
-  "miop",
-  "rir",
-#if TAO_HAS_SCIOP == 1
-  "sciop",
-#endif
-  "shmiop",
-  "uiop"
-};
+static const char iiop_prefix[] = "iiop:";
+static const char uiop_prefix[] = "uiop:";
+static const char shmiop_prefix[] = "shmiop:";
+static const char miop_prefix[] = "miop:";
+static const char rir_prefix[] = "rir:";
 
 int
 TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
@@ -248,7 +242,7 @@ TAO_CORBALOC_Parser::parse_string_assign_helper (
       ACE_CHECK;
 
       // Get the next token.
-      cloc_name_ptr = ACE_OS::strtok_r ((char*)NULL,
+      cloc_name_ptr = ACE_OS::strtok_r (NULL,
                                         ",",
                                         &last_addr);
     }
@@ -366,26 +360,30 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point
 
   const char *protocol[] = {"rir:"};
   size_t slot = ACE_OS::strchr (end_point, '/') - end_point;
-  const char* colon_pos = ACE_OS::strchr (end_point, ':');
-  size_t colon_slot = colon_pos ? colon_pos - end_point : 0;
+  size_t colon_slot = ACE_OS::strchr (end_point, ':') - end_point;
   size_t len0 = ACE_OS::strlen (protocol[0]);
 
   // Lets first check if it is a valid protocol:
-  if (colon_slot != 0)
-  {
-    size_t i;
-    const size_t protocol_prefixes_size =
-      sizeof(protocol_prefixes)/sizeof(protocol_prefixes[0]);
+  if (colon_slot != 0 &&
+      !((ACE_OS::strncmp (end_point,
+                         iiop_prefix,
+                         sizeof iiop_prefix - 1) == 0) ||
 
-    for (i = 0; i < protocol_prefixes_size ; ++i)
-    {
-      if (ACE_OS::strncmp (end_point,
-                         protocol_prefixes[i],
-                         colon_slot) == 0)
-         break;
-    }
+        (ACE_OS::strncmp (end_point,
+                          shmiop_prefix,
+                          sizeof shmiop_prefix - 1) == 0) ||
 
-    if (i == protocol_prefixes_size)
+        (ACE_OS::strncmp (end_point,
+                          uiop_prefix,
+                          sizeof uiop_prefix - 1) == 0) ||
+
+        (ACE_OS::strncmp (end_point,
+                          miop_prefix,
+                          sizeof miop_prefix - 1) == 0) ||
+
+        (ACE_OS::strncmp (end_point,
+                          rir_prefix,
+                          sizeof rir_prefix - 1) == 0)))
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
@@ -397,7 +395,6 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point
                                           CORBA::COMPLETED_NO),
                         -1);
     }
-  }
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.

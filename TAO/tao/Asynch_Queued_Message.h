@@ -12,10 +12,9 @@
 
 #ifndef TAO_ASYNCH_QUEUED_MESSAGE_H
 #define TAO_ASYNCH_QUEUED_MESSAGE_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/Queued_Message.h"
+#include "Queued_Message.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

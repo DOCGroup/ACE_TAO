@@ -13,11 +13,9 @@
 
 #ifndef TAO_CEC_DISPATCHING_H
 #define TAO_CEC_DISPATCHING_H
-
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEventCommC.h"
-
 #include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -115,5 +113,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_CEC_DISPATCHING_H */

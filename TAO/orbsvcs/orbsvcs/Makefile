@@ -85,10 +85,6 @@ ifndef TAO_ORBSVCS
 
   endif # minimum_corba
 
-  ifeq ($(interceptors),1)
-      TAO_ORBSVCS += RTCosScheduling
-     endif
-
   ifeq ($(ssl),1)
     ifeq ($(corba_messaging),1)
       ifeq ($(interceptors),1)
@@ -165,11 +161,6 @@ endif
 ifneq (,$(findstring  RTKokyuEvent, $(TAO_ORBSVCS)))
   ifeq (,$(findstring Makefile.RTKokyuEvent, $(MKLIST)))
     MKLIST += Makefile.RTKokyuEvent
-  endif
-endif
-ifneq (,$(findstring  RTCosScheduling, $(TAO_ORBSVCS)))
-  ifeq (,$(findstring Makefile.RTCosScheduling, $(MKLIST)))
-    MKLIST += Makefile.RTCosScheduling
   endif
 endif
 ifneq (,$(findstring  RTCORBAEvent, $(TAO_ORBSVCS)))

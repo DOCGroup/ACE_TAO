@@ -45,7 +45,7 @@ TAO_Buffering_Constraint_Policy::create (const CORBA::Any& val
 {
   TAO::BufferingConstraint *buffering_constraint;
   if ((val >>= buffering_constraint) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 
   TAO_Buffering_Constraint_Policy *servant = 0;

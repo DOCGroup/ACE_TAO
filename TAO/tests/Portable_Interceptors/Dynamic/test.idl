@@ -1,61 +1,50 @@
-// -*- IDL -*-
 // $Id$
 
-// ===================================================================
-/**
- *  @file   test.idl
- *
- *  $Id$
- *
- *  Simple IDL file to test portable interceptor support.
- *
- *  @author Nanbor Wang <nanbor@cs.wustl.edu>
- *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
- */
-// ===================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Interceptors
+//
+// = FILENAME
+//    test.idl
+//
+// = DESCRIPTION
+//   Simple IDL file to test portable interceptor support.
+//
+// = AUTHORS
+//   Nanbor Wang <nanbor@cs.wustl.edu>
+//
+// ============================================================================
 
 module Test_Interceptors
 {
-  exception Silly {};
+  exception Silly
+    {};
 
-  /**
-   * @class Visual
-   *
-   * @brief Test interface for checking interceptor visually.
-   *
-   * Test interface for checking interceptor visually.
-   */
   interface Visual
   {
-    /**
-     * @class VarLenStruct
-     *
-     * @brief Variable length structure
-     *
-     * This structure is designed to exercise memory management in the
-     * @c PortableInterceptor::RequestInfo::result() method.
-     */
-    struct VarLenStruct
-    {
-      octet  flag;
-      string message;
-    };
+    // = TITLE
+    //   A test idl for checking interceptor visually.
+    //
+    // = DESCRIPTION
+    //
 
-    /// Normal operation.
-    void normal (in long arg, out string msg);
+    void normal (in long arg);
+    // Normal operation.
 
-    /// Normal operation with a return val.
     long calculate (in long one, in long two);
-    
-    readonly attribute VarLenStruct the_structure;
+    // Normal operation with a return val.
 
-    /// Throws a user exception.
-    void user () raises (Silly);
+    void user ()
+      raises (Silly);
+    // throws a user exception.
 
-    /// Throws a system exception.
     void system ();
+    // thows a system exception.
 
-    /// Shutdown the ORB.
-    oneway void shutdown ();
+   oneway void shutdown ();
+    // shutdown the ORB
+
+
   };
 };

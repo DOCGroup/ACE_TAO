@@ -22,8 +22,6 @@
 #include "be_enum.h"
 #include "be_visitor.h"
 
-#include "global_extern.h"
-
 ACE_RCSID (be, 
            be_enum, 
            "$Id$")
@@ -62,11 +60,6 @@ be_enum::be_enum (UTL_ScopedName *n,
     be_type (AST_Decl::NT_enum,
              n)
 {
-  if (!this->imported ())
-    {
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.enum_seen_);
-    }
 }
 
 void

@@ -4,15 +4,15 @@
 /**
  *  @file   CEC_TypedEvent.h
  *
- *  @author Jon Astle (jon@astle45.fsnet.co.uk)
+ *  @author Jon Astle (jon@astle45.fsnet.co.uk) 
  */
 //=============================================================================
 
 #ifndef TAO_CEC_TYPEDEVENT_H_
 #define TAO_CEC_TYPEDEVENT_H_
-#include /**/ "ace/pre.h"
-
+#include "ace/pre.h"
 #include "event_export.h"
+#include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -54,6 +54,6 @@ private:
 #include "CEC_TypedEvent.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* TAO_CEC_TYPEDEVENT_H_ */

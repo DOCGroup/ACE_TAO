@@ -17,11 +17,9 @@
 // ================================================================
 
 #include "ace/Get_Opt.h"
-#include "ace/SString.h"
 #include "testS.h"
-#include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Explicit_Activation, server, "$Id$")
+ACE_RCSID(Explicit_Activation, server, "$Id: ")
 
 class test_i : public virtual PortableServer::RefCountServantBase,
                public virtual POA_test

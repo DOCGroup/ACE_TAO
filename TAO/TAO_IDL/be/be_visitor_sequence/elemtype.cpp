@@ -84,47 +84,36 @@ be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      *os << "TAO_Pseudo_Object_Manager<";
-
-      if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
-        {
-          *os << bt->nested_type_name (this->ctx_->scope ()) <<  ">";
-        }
-      else
-        {
-          *os << bt->name () << ">";
-        }
-
-      break;
     case AST_PredefinedType::PT_object:
-      *os << "TAO_Object_Manager<";
+      {
+        int is_pseudo_object =
+          ACE_OS::strcmp (node->local_name ()->get_string (),
+                          "Object") != 0;
 
-      if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
-        {
-          *os << bt->nested_type_name (this->ctx_->scope ()) << ",";
-          *os << bt->nested_type_name (this->ctx_->scope (), "_var") << ">";
-        }
-      else
-        {
-          *os << bt->name () << ","
-              << bt->name () <<"_var>";
-        }
+        if (is_pseudo_object)
+          {
+            *os << "TAO_Pseudo_Object_Manager<";
+          }
+        else if (node->is_abstract ())
+          {
+            *os << "TAO_Abstract_Manager<";
+          }
+        else
+          {
+            *os << "TAO_Object_Manager<";
+          }
 
-      break;
-    case AST_PredefinedType::PT_value:
-      *os << "TAO_Value_Manager<";
-
-      if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
-        {
-          *os << bt->nested_type_name (this->ctx_->scope ()) << ",";
-          *os << bt->nested_type_name (this->ctx_->scope (), "_var") << ">";
-        }
-      else
-        {
-          *os << bt->name () << ","
-              << bt->name () <<"_var>";
-        }
-
+        if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
+          {
+            *os << bt->nested_type_name (this->ctx_->scope ()) << ",";
+            *os << bt->nested_type_name (this->ctx_->scope (), "_var") << ">";
+          }
+        else
+          {
+            *os << bt->name () << ","
+                << bt->name () <<"_var>";
+          }
+      }
       break;
     default:
       if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)

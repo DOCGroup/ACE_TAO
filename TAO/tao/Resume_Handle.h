@@ -12,7 +12,6 @@
 
 #ifndef TAO_RESUME_HANDLE_H
 #define TAO_RESUME_HANDLE_H
-
 #include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
@@ -22,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_ORB_Core;
+
 
 /**
  * @class TAO_Resume_Handle
@@ -87,5 +87,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /*TAO_RESUME_HANDLE*/

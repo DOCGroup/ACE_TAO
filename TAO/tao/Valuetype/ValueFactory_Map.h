@@ -13,9 +13,9 @@
 
 #ifndef TAO_VALUEFACTORY_MAP_H
 #define TAO_VALUEFACTORY_MAP_H
-
 #include /**/ "ace/pre.h"
 
+#include "tao/corbafwd.h"
 #include "tao/TAO_Singleton.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -23,14 +23,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "valuetype_export.h"
-
 #include "ace/Hash_Map_Manager_T.h"
-
-namespace CORBA
-{
-  class ValueFactoryBase;
-  typedef ValueFactoryBase *ValueFactory;
-}
+//#include "ace/Synch.h"
 
 class TAO_Valuetype_Export TAO_ValueFactory_Map
 {

@@ -10,40 +10,19 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_OBJREF_VAROUT_T_H
 #define TAO_OBJREF_VAROUT_T_H
 
 #include /**/ "ace/pre.h"
 
-#include "ace/CORBA_macros.h"
+#include "tao/varbase.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-#include "tao/varbase.h"
-
-class TAO_OutputCDR;
-
-namespace TAO
-{
-  /**
-   * struct Objref_Traits
-   *
-   * @brief Specialized for each interface in generated code.
-   *
-   */
-  template<typename T>
-  struct Objref_Traits
-  {
-    static T * tao_duplicate (T *);
-    static void tao_release (T *);
-    static T * tao_nil (void);
-    static CORBA::Boolean tao_marshal (T *,
-                                       TAO_OutputCDR &);
-  };
-};
+#include "ace/CORBA_macros.h"
 
 /**
  * @class TAO_Objref_Var_T
@@ -52,18 +31,19 @@ namespace TAO
  *       references.
  *
  */
-template <typename T>
+
+template <typename T, typename T_life>
 class TAO_Objref_Var_T : private TAO_Base_var
 {
 public:
   TAO_Objref_Var_T (void);
   TAO_Objref_Var_T (T * p) : ptr_ (p) {}
-  TAO_Objref_Var_T (const TAO_Objref_Var_T<T> &);
+  TAO_Objref_Var_T (const TAO_Objref_Var_T<T, T_life> &);
   ~TAO_Objref_Var_T (void);
 
-  TAO_Objref_Var_T<T> & operator= (T *);
-  TAO_Objref_Var_T<T> & operator= (
-      const TAO_Objref_Var_T<T> &
+  TAO_Objref_Var_T<T, T_life> & operator= (T *);
+  TAO_Objref_Var_T<T, T_life> & operator= (
+      const TAO_Objref_Var_T<T, T_life> &
     );
   T * operator-> (void) const;
 
@@ -102,16 +82,16 @@ private:
  * @brief Parametrized implementation of _out class for object references.
  *
  */
-template <typename T>
+template <typename T, typename T_life>
 class TAO_Objref_Out_T
 {
 public:
   TAO_Objref_Out_T (T *&);
-  TAO_Objref_Out_T (TAO_Objref_Var_T<T> &);
-  TAO_Objref_Out_T (const TAO_Objref_Out_T<T> &);
+  TAO_Objref_Out_T (TAO_Objref_Var_T<T, T_life> &);
+  TAO_Objref_Out_T (const TAO_Objref_Out_T<T, T_life> &);
 
-  TAO_Objref_Out_T &operator= (const TAO_Objref_Out_T<T> &);
-  TAO_Objref_Out_T &operator= (const TAO_Objref_Var_T<T> &);
+  TAO_Objref_Out_T &operator= (const TAO_Objref_Out_T<T, T_life> &);
+  TAO_Objref_Out_T &operator= (const TAO_Objref_Var_T<T, T_life> &);
   TAO_Objref_Out_T &operator= (T *);
 
   // Cast operator.
@@ -121,7 +101,7 @@ public:
   T * operator-> (void);
 
 private:
-  typedef TAO_Objref_Out_T<T> THIS_OUT_TYPE;
+  typedef TAO_Objref_Out_T<T, T_life> THIS_OUT_TYPE;
   T *& ptr_;
 };
 

@@ -6,9 +6,9 @@
  *
  *  @author Bryan Thrall (thrall@cs.wustl.edu)
  *
- * Based on previous work by Carlos O'Ryan (coryan@cs.wustl.edu), Tim
- * Harrison (harrison@cs.wustl.edu), Chris Gill (cdgill@cs.wustl.edu)
- * and other members of the DOC group.  More details can be found in:
+ * Based on previous work by Carlos O'Ryan (coryan@cs.wustl.edu) and
+ * Tim Harrison (harrison@cs.wustl.edu) and other members of the DOC group.
+ * More details can be found in:
  *
  * http://doc.ece.uci.edu/~coryan/EC/index.html
  */
@@ -59,8 +59,6 @@ public:
       create_scheduling_strategy (TAO_EC_Event_Channel_Base*);
 
 private:
-  int disp_sched_policy_;
-  int disp_sched_scope_;
 };
 
 #if defined (__ACE_INLINE__)

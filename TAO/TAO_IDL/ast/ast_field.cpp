@@ -107,8 +107,7 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
                       AST_Type *ft,
                       UTL_ScopedName *n,
                       Visibility vis)
-  : COMMON_Base (),
-    AST_Decl (nt,
+  : AST_Decl (nt,
               n),
     pd_field_type (ft),
     pd_visibility (vis)

@@ -29,14 +29,12 @@
 #include "orbsvcs/Scheduler_Factory.h"
 
 #include "tao/ORB_Core.h"
-#include "tao/Typecode.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/Profile_Timer.h"
-#include "ace/streams.h"
 
-#include "ace/os_include/os_limits.h"
+#include <limits.h>
 
 ACE_RCSID(Event_Supplier, Event_Con, "$Id$")
 

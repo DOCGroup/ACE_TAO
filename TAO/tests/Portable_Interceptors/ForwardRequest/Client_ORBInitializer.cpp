@@ -11,8 +11,6 @@ ACE_RCSID (ForwardRequest,
 #include "Client_Request_Interceptor.h"
 
 #include "tao/StringSeqC.h"
-#include "tao/ORB_Constants.h"
-#include "ace/OS_NS_string.h"
 
 void
 Client_ORBInitializer::pre_init (
@@ -39,7 +37,7 @@ Client_ORBInitializer::post_init (
   // Extract the last forward reference from the argument list.
   CORBA::ULong args_len = args->length ();
   for (CORBA::ULong i = 0; i < args_len; ++i)
-    if (ACE_OS::strcmp ("-k", args[i].in ()) == 0
+    if (ACE_OS_String::strcmp ("-k", args[i].in ()) == 0
         && i < (args_len - 1))
       forward_str = args[i + 1];
 

@@ -11,11 +11,9 @@
 
 #ifndef TAO_Notify_PROXYCONSUMER_H
 #define TAO_Notify_PROXYCONSUMER_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
-
 #include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -23,7 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosEventChannelAdminC.h"
-
 #include "Refcountable_Guard_T.h"
 #include "Event.h"
 #include "Proxy.h"

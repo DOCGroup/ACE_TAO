@@ -50,7 +50,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_RTPortableServer.lib TAO_RTCORBA.lib ace.lib TAO.lib TAO_PortableServer.lib TAO_Svc_Utils.lib TAO_ETCL.lib TAO_RT_Notification.lib TAO_CosNotification.lib TAO_CosNaming.lib /nologo /subsystem:console /incremental:yes /pdb:"Lanes_Supplier.pdb" /map /debug /machine:I386 /out:"Lanes_Supplier.exe" /pdbtype:sept /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao\RTCORBA" /libpath:"..\..\..\..\tao\RTPortableServer"
+# ADD LINK32 TAO_RTPortableServer.lib TAO_RTCORBA.lib ace.lib TAO.lib TAO_PortableServer.lib TAO_Svc_Utils.lib TAO_ETCL.lib TAO_RT_Notification.lib TAO_CosNotification.lib TAO_CosNaming.lib /nologo /subsystem:console /incremental:yes /pdb:"Lanes_Supplier.pdb" /map /debug /machine:I386 /out:"Lanes_Supplier.exe" /pdbtype:sept /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao\RTCORBA" /libpath:"..\..\..\..\tao\RT_PortableServer"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "Lanes_Supplier - Win32 Debug"

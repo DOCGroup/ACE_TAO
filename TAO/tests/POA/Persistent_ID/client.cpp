@@ -16,7 +16,6 @@
 
 #include "ace/Get_Opt.h"
 #include "testC.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Generic_Servant, client, "$Id$")
 

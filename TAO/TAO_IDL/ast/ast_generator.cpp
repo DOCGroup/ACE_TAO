@@ -93,7 +93,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_factory.h"
 #include "utl_identifier.h"
 #include "nr_extern.h"
-#include "ace/OS_NS_wchar.h"
 
 #include "ast_generator.h"
 
@@ -179,6 +178,13 @@ AST_Generator::create_module (UTL_Scope *s,
               retval->add_to_previous (m);
             }
         }
+    }
+
+  // If we are opening module CORBA, we must add the predefined
+  // types TypeCode, TCKind and maybe ValueBase.
+  if (!ACE_OS::strcmp (retval->local_name ()->get_string (), "CORBA"))
+    {
+      retval->add_CORBA_members ();
     }
 
   return retval;

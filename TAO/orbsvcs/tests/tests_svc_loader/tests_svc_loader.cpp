@@ -22,15 +22,12 @@
 //
 // ============================================================================
 
+#include "tao/corba.h"
+
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
-#include "ace/CORBA_macros.h"
 
-#include "tao/ORB.h"
-
-ACE_RCSID (tests_svc_loader, 
-           tests_svc_loader, 
-           "$Id$")
+ACE_RCSID(tests_svc_loader, tests_svc_loader, "$Id$")
 
 int main (int argc, char *argv [])
 {

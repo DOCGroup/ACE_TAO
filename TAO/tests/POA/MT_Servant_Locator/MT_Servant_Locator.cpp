@@ -19,7 +19,7 @@
 
 #include "testS.h"
 #include "ace/Task.h"
-#include "ace/Auto_Event.h"
+#include "ace/Synch.h"
 
 class test_i : public virtual PortableServer::RefCountServantBase,
                public virtual POA_test

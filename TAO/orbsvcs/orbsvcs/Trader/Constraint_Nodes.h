@@ -16,9 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Constraint_Tokens.h"
-
-#include "tao/Basic_Types.h"
-
+#include "tao/corba.h"
 #include "orbsvcs/Trader/trading_export.h"
 
 #if defined(_MSC_VER)
@@ -30,17 +28,6 @@
 
 class TAO_Constraint_Visitor;
 typedef unsigned short TAO_Expression_Type;
-
-class TAO_String_Manager;
-
-namespace CORBA
-{
-  class Any;
-  typedef Any *Any_ptr;
-
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
-}
 
 /**
  * @class TAO_Constraint

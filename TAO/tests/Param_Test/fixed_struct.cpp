@@ -19,9 +19,7 @@
 #include "helper.h"
 #include "fixed_struct.h"
 
-ACE_RCSID (Param_Test, 
-           fixed_struct, 
-           "$Id$")
+ACE_RCSID(Param_Test, fixed_struct, "$Id$")
 
 // ************************************************************************
 //               Test_Fixed_Struct

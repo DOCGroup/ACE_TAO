@@ -4,11 +4,11 @@
 
 #ifndef ROUNDTRIP_H
 #define ROUNDTRIP_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "tao/ORB.h"
+#include "tao/corba.h"
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)
@@ -44,5 +44,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ROUNDTRIP_H */

@@ -2,9 +2,11 @@
 
 #include "TSS_Resources.h"
 
+
 ACE_RCSID (tao,
            TSS_Resources,
            "$Id$")
+
 
 TAO_TSS_Resources::TAO_TSS_Resources (void)
   :  poa_current_impl_ (0),
@@ -37,10 +39,7 @@ template class ACE_TSS<TAO_TSS_Resources>;
 #pragma instantiate TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_TSS_Resources>
 
-#elif defined (__GNUC__) && (defined (_AIX) \
-      || defined (__hpux) || defined (VXWORKS))
-template 
-  TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX> *
-  TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>::singleton_;
+#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux) || defined (VXWORKS))
+template TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX> * TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>::singleton_;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -8,7 +8,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-#include "ace/OS_NS_stdio.h"
+
 
 
 
@@ -22,7 +22,7 @@ CORBA::Object_var object_primary = 0;
 CORBA::Object_var object_secondary = 0;
 
 // Reference to the IOR manipulator
-TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
+TAO_IOP::TAO_IOR_Manipulation_ptr iorm = 0;
 
 int
 parse_args (int argc, char *argv[])
@@ -161,14 +161,14 @@ Manager::make_merged_iors (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (-1);
 
   // Get an object reference for the ORBs IORManipultion object!
-  CORBA::Object_var IORM =
+  CORBA::Object_ptr IORM =
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   iorm =
-    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in() ACE_ENV_ARG_PARAMETER);
+    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
 
@@ -194,12 +194,12 @@ Manager::set_properties (ACE_ENV_SINGLE_ARG_DECL)
   // Property values
 
   // Major and Minor revision numbers
-  ft_tag_component.version.major = (CORBA::Octet) 1;
-  ft_tag_component.version.minor = (CORBA::Octet) 0;
+  ft_tag_component.group_version.major = (CORBA::Octet) 1;
+  ft_tag_component.group_version.minor = (CORBA::Octet) 0;
 
   // Domain id
   const char *id = "iogr_testing";
-  ft_tag_component.ft_domain_id = id;
+  ft_tag_component.group_domain_id = id;
 
   // Object group id
   ft_tag_component.object_group_id =

@@ -3,10 +3,9 @@
 
 ACE_INLINE
 TAO_EC_Kokyu_Shutdown_Command::
-TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator* allocator)
+        TAO_EC_Kokyu_Shutdown_Command (void)
   :  Kokyu::Dispatch_Command ()
 {
-  ACE_UNUSED_ARG (allocator);
 }
 
 // ****************************************************************
@@ -15,11 +14,11 @@ ACE_INLINE
 TAO_EC_Kokyu_Push_Command::TAO_EC_Kokyu_Push_Command (
      TAO_EC_ProxyPushSupplier* proxy,
      RtecEventComm::PushConsumer_ptr consumer,
-     RtecEventComm::EventSet& event,
-     ACE_Allocator* allocator)
-  :  Kokyu::Dispatch_Command (0,allocator),
+     RtecEventComm::EventSet& event)
+  :  Kokyu::Dispatch_Command (),
      proxy_ (proxy),
      consumer_ (RtecEventComm::PushConsumer::_duplicate (consumer))
+
 {
   //
   // Efficient copy, steal the buffer from <event>

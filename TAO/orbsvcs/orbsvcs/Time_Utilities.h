@@ -20,7 +20,6 @@
 
 #include "orbsvcs/TimeBaseC.h"
 #include "orbsvcs/svc_utils_export.h"
-#include "ace/OS_NS_time.h"
 
 class TAO_Svc_Utils_Export ORBSVCS_Time
 {

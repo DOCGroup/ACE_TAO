@@ -14,15 +14,16 @@
 
 #ifndef TAO_DEFAULT_RESOURCE_H
 #define TAO_DEFAULT_RESOURCE_H
-
 #include /**/ "ace/pre.h"
-#include "ace/Service_Config.h"
+
+#include "tao/Resource_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Resource_Factory.h"
+#include "ace/Service_Config.h"
+#include "tao/CONV_FRAMEC.h"
 
 class TAO_Object_Adapter;
 class TAO_IOR_Parser;

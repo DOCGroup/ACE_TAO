@@ -1,32 +1,40 @@
 #include "IIOP_Transport.h"
+#include "IIOP_Connection_Handler.h"
 #include "IIOP_Acceptor.h"
-#include "tao/IIOPC.h"
+#include "IIOP_Profile.h"
 #include "Acceptor_Registry.h"
+#include "Thread_Lane_Resources.h"
 #include "operation_details.h"
+#include "Timeprobe.h"
+#include "CDR.h"
+#include "Transport_Mux_Strategy.h"
 #include "Wait_Strategy.h"
+#include "Sync_Strategies.h"
+#include "ORB_Core.h"
 #include "debug.h"
 #include "GIOP_Message_Base.h"
-// #include "GIOP_Message_Lite.h"
+#include "GIOP_Message_Lite.h"
 #include "Protocols_Hooks.h"
+#include "Adapter.h"
 
 #if !defined (__ACE_INLINE__)
 # include "IIOP_Transport.i"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            IIOP_Transport,
            "$Id$")
 
+
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean )
+                                        CORBA::Boolean flag)
   : TAO_Transport (IOP::TAG_INTERNET_IOP,
                    orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-#if 0
-  // First step in deprecating this. No one seems using it.
   if (flag)
     {
       // Use the lite version of the protocol
@@ -34,7 +42,6 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                TAO_GIOP_Message_Lite (orb_core));
     }
   else
-#endif /*if 0*/
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
@@ -171,7 +178,7 @@ TAO_IIOP_Transport::send_request (TAO_Stub *stub,
 
   this->first_request_sent();
 
-  return 0;
+  return this->idle_after_send ();
 }
 
 int

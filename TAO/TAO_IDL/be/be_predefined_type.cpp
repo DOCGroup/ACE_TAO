@@ -22,11 +22,8 @@
 #include "be_predefined_type.h"
 #include "be_visitor.h"
 #include "utl_identifier.h"
-#include "global_extern.h"
-
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (be, 
            be_predefined_type, 
@@ -76,27 +73,6 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
   else if (t == AST_PredefinedType::PT_value)
     {
       this->fwd_helper_name_ = "CORBA::tao_ValueBase";
-    }
-
-  switch (t)
-    {
-      case AST_PredefinedType::PT_char:
-      case AST_PredefinedType::PT_wchar:
-      case AST_PredefinedType::PT_boolean:
-      case AST_PredefinedType::PT_octet:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.ambiguous_type_seen_);
-        break;
-      case AST_PredefinedType::PT_any:
-      case AST_PredefinedType::PT_object:
-      case AST_PredefinedType::PT_value:
-      case AST_PredefinedType::PT_void:
-      case AST_PredefinedType::PT_pseudo:
-        break;
-      default:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.basic_type_seen_);
-        break;
     }
 }
 

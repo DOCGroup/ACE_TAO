@@ -12,6 +12,7 @@
 
 #include "ace/streams.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
+#include "tao/corba.h"
 #include "tao/debug.h"
 #include "Concurrency_Utils.h"
 

@@ -19,7 +19,6 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ace/SString.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

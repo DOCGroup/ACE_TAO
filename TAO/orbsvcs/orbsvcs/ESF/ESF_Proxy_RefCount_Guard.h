@@ -12,7 +12,7 @@
 #ifndef TAO_ESF_PROXY_REFCOUNT_GUARD_H
 #define TAO_ESF_PROXY_REFCOUNT_GUARD_H
 
-#include "tao/Basic_Types.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

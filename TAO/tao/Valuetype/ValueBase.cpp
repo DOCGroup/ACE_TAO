@@ -1,12 +1,24 @@
 // $Id$
 
-#include "ValueBase.h"
-#include "ValueFactory.h"
+// ============================================================================
+//
+// = LIBRARY
+//     TAO
+//
+// = FILENAME
+//     ValueBase.cpp
+//
+// = AUTHOR
+//     Torsten Kuepper <kuepper2@lfa.uni-wuppertal.de>
+//
+// ============================================================================
 
+#include "ValueBase.h"
+#include "tao/CDR.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
+#include "ValueFactory.h"
 #include "tao/debug.h"
-#include "tao/Typecode.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ValueBase.inl"
@@ -46,13 +58,23 @@ CORBA::remove_ref (CORBA::ValueBase *val)
     }
 }
 
+// ===========================================================
+
+void
+CORBA::tao_ValueBase_life::tao_add_ref (ValueBase *p)
+{
+  CORBA::add_ref (p);
+}
+
+void
+CORBA::tao_ValueBase_life::tao_remove_ref (ValueBase *p)
+{
+  CORBA::remove_ref (p);
+}
+
 // ***********************************************************************
 
 CORBA::ValueBase::ValueBase (void)
-{
-}
-
-CORBA::ValueBase::ValueBase (const ValueBase&)
 {
 }
 
@@ -356,8 +378,8 @@ CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase (void)
 void
 CORBA::DefaultValueRefCountBase::_tao_add_ref (void)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             guard,
+  ACE_GUARD (TAO_SYNCH_MUTEX, 
+             guard, 
              this->_tao_reference_count_lock_);
 
   ++this->_tao_reference_count_;
@@ -367,8 +389,8 @@ void
 CORBA::DefaultValueRefCountBase::_tao_remove_ref (void)
 {
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX,
-               guard,
+    ACE_GUARD (TAO_SYNCH_MUTEX, 
+               guard, 
                this->_tao_reference_count_lock_);
 
     --this->_tao_reference_count_;
@@ -430,27 +452,3 @@ operator>> (TAO_InputCDR &strm,
                                            _tao_valuetype);
 }
 
-// =============== Template Specializations =====================
-namespace TAO
-{
-  void
-  Value_Traits<CORBA::ValueBase>::tao_add_ref (
-      CORBA::ValueBase *p)
-  {
-    CORBA::add_ref (p);
-  }
-
-  void
-  Value_Traits<CORBA::ValueBase>::tao_remove_ref (
-      CORBA::ValueBase * p)
-  {
-    CORBA::remove_ref (p);
-  }
-
-  void
-  Value_Traits<CORBA::ValueBase>::tao_release (
-      CORBA::ValueBase * p)
-  {
-    CORBA::remove_ref (p);
-  }
-}

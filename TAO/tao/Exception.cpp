@@ -4,22 +4,21 @@
 // on all of these data structures.
 
 #include "Exception.h"
-#include "Environment.h"
-#include "Any_SystemException.h"
-#include "Any_Dual_Impl_T.h"
 #include "Typecode.h"
-#include "ORB_Constants.h"
-#include "TC_Constants_Forward.h"
+#include "Environment.h"
+#include "Any.h"
+#include "CDR.h"
+#include "Any_SystemException.h"
+#include "CORBA_String.h"
 
 #include "ace/Malloc.h"
 #include "ace/SString.h"
 #include "ace/streams.h"
 
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Exception.i"
 #endif /* __ACE_INLINE__ */
-
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (TAO,
            Exception,
@@ -35,37 +34,6 @@ int TAO_Exceptions::initialized_ = 0;
 
 // TAO specific typecode.
 extern CORBA::TypeCode_ptr TC_completion_status;
-
-
-/**
- * @name @c errno Encoding
- *
- * The @c errno encoding is located in the bottom 7 bits.
- */
-//@{
-const CORBA::ULong TAO_UNSPECIFIED_MINOR_CODE        = 0x0U;
-const CORBA::ULong TAO_ETIMEDOUT_MINOR_CODE          = 0x1U;
-const CORBA::ULong TAO_ENFILE_MINOR_CODE             = 0x2U;
-const CORBA::ULong TAO_EMFILE_MINOR_CODE             = 0x3U;
-const CORBA::ULong TAO_EPIPE_MINOR_CODE              = 0x4U;
-const CORBA::ULong TAO_ECONNREFUSED_MINOR_CODE       = 0x5U;
-const CORBA::ULong TAO_ENOENT_MINOR_CODE             = 0x6U;
-const CORBA::ULong TAO_EBADF_MINOR_CODE              = 0x7U;
-const CORBA::ULong TAO_ENOSYS_MINOR_CODE             = 0x8U;
-const CORBA::ULong TAO_EPERM_MINOR_CODE              = 0x9U;
-const CORBA::ULong TAO_EAFNOSUPPORT_MINOR_CODE       = 0xAU;
-const CORBA::ULong TAO_EAGAIN_MINOR_CODE             = 0xBU;
-const CORBA::ULong TAO_ENOMEM_MINOR_CODE             = 0xCU;
-const CORBA::ULong TAO_EACCES_MINOR_CODE             = 0xDU;
-const CORBA::ULong TAO_EFAULT_MINOR_CODE             = 0xEU;
-const CORBA::ULong TAO_EBUSY_MINOR_CODE              = 0xFU;
-const CORBA::ULong TAO_EEXIST_MINOR_CODE             = 0x10U;
-const CORBA::ULong TAO_EINVAL_MINOR_CODE             = 0x11U;
-const CORBA::ULong TAO_ECOMM_MINOR_CODE              = 0x12U;
-const CORBA::ULong TAO_ECONNRESET_MINOR_CODE         = 0x13U;
-const CORBA::ULong TAO_ENOTSUP_MINOR_CODE            = 0x14U;
-// *Don't* use TAO_<errno>_MINOR_CODE greater than 0x7FU!
-//@}
 
 // ****************************************************************
 
@@ -143,8 +111,8 @@ CORBA::Exception::_type (void) const
 int
 CORBA::Exception::_is_a (const char* repository_id) const
 {
-  return ACE_OS::strcmp (repository_id,
-                         "IDL:omg.org/CORBA/Exception:1.0") == 0;
+  return ACE_OS_String::strcmp (repository_id,
+                                "IDL:omg.org/CORBA/Exception:1.0") == 0;
 }
 
 
@@ -219,8 +187,8 @@ CORBA::UserException::operator= (const CORBA::UserException &src)
 int
 CORBA::UserException::_is_a (const char* interface_id) const
 {
-  return ACE_OS::strcmp (interface_id,
-                         "IDL:omg.org/CORBA/UserException:1.0") == 0
+  return ACE_OS_String::strcmp (interface_id,
+                                "IDL:omg.org/CORBA/UserException:1.0") == 0
     || this->Exception::_is_a (interface_id);
 }
 
@@ -263,10 +231,9 @@ CORBA::UserException::_info (void) const
 // ****************************************************************
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-namespace CORBA
-{
-  TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UnknownUserException, 0)
-}
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UnknownUserException, 0)
+TAO_NAMESPACE_END
 
 // ****************************************************************
 
@@ -319,9 +286,9 @@ CORBA::SystemException::operator= (const CORBA::SystemException &src)
 int
 CORBA::SystemException::_is_a (const char* interface_id) const
 {
-  return ((ACE_OS::strcmp (interface_id, this->_rep_id ()) == 0) ||
-          (ACE_OS::strcmp (interface_id,
-                           "IDL:omg.org/CORBA/SystemException:1.0") == 0)
+  return ((ACE_OS_String::strcmp (interface_id, this->_rep_id ()) == 0) ||
+          (ACE_OS_String::strcmp (interface_id,
+                                  "IDL:omg.org/CORBA/SystemException:1.0") == 0)
           || this->Exception::_is_a (interface_id));
 }
 
@@ -619,7 +586,7 @@ CORBA::SystemException::_info (void) const
             // 7 bits of some other errno.
             ACE_OS::sprintf (unknown_errno,
                              "low 7 bits of errno: %3u %s",
-                             minor_code, ACE_OS::strerror(minor_code));
+                             minor_code, ACE_OS_String::strerror(minor_code));
 
             errno_indication = unknown_errno;
           }
@@ -994,8 +961,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   // not scale as more native sets have to be supported
 
   ACE_IBM1047_ISO8859 translator;
-  TAO_OutputCDR stream (buffer,
-                        buflen,
+  TAO_OutputCDR stream (buffer, buflen,
                         ACE_CDR_BYTE_ORDER,
                         TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
@@ -1003,8 +969,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                         ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                         &translator);
 #else
-  TAO_OutputCDR stream (buffer,
-                        buflen,
+  TAO_OutputCDR stream (buffer, buflen,
                         ACE_CDR_BYTE_ORDER,
                         TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
@@ -1024,14 +989,14 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   char * full_id =
     CORBA::string_alloc (sizeof prefix
                          + ACE_static_cast (CORBA::ULong,
-                                            ACE_OS::strlen (name))
+                                            ACE_OS_String::strlen (name))
                          + sizeof suffix);
 
   CORBA::String_var safe_full_id = full_id;
 
-  ACE_OS::strcpy (full_id, prefix);
-  ACE_OS::strcat (full_id, name);
-  ACE_OS::strcat (full_id, suffix);
+  ACE_OS_String::strcpy (full_id, prefix);
+  ACE_OS_String::strcat (full_id, name);
+  ACE_OS_String::strcat (full_id, suffix);
 
   CORBA::Boolean result = stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
     || stream.write_string (full_id) == 0
@@ -1069,17 +1034,6 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   ACE_ASSERT (tcp->length_ <= buflen);
   return;
 }
-
-#if defined (__Lynx__)
-
-// LynxOS uses macro THREAD_CANCELLED internally, so it must
-// be undefined to avoid compilation errors
-#if defined (THREAD_CANCELLED)
-#undef THREAD_CANCELLED
-#endif /* THREAD_CANCELLED */
-
-#endif /*__Lynx__ */
-
 
 // List of standard/system exceptions ... used to create static
 // storage for their typecodes, then later to initialize that storage
@@ -1146,7 +1100,7 @@ static CORBA::Long tc_buf_CORBA[TAO_TC_BUF_LEN / sizeof (CORBA::Long)];
 
   static CORBA::TypeCode_ptr *type_code_array [] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
-      &CORBA::_tc_ ## name,
+                                            &CORBA::_tc_ ## name,
       STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
       &CORBA::_tc_null};
@@ -1180,9 +1134,7 @@ TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
   // Not thread safe.  Caller must provide synchronization.
 
   if (TAO_Exceptions::initialized_ != 0)
-    {
-      return;
-    }
+    return;
 
   // Initialize the start up allocator.
   ACE_NEW (TAO_Exceptions::global_allocator_,
@@ -1196,7 +1148,9 @@ TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
       0
   };
 
-  for (CORBA::ULong i = 0; i < array_sz; ++i)
+  for (CORBA::ULong i = 0;
+       i < array_sz;
+       ++i)
     {
       TAO_Exceptions::make_standard_typecode (*type_code_array[i],
                                               name_array[i],
@@ -1223,7 +1177,7 @@ TAO_Exceptions::create_system_exception (const char *id
        i < array_sz;
        ++i)
     {
-      if (ACE_OS::strcmp (id, repo_id_array[i]) == 0)
+      if (ACE_OS_String::strcmp (id, repo_id_array[i]) == 0)
         return (*(excp_array[i])) ();
     }
 
@@ -1328,7 +1282,7 @@ STANDARD_EXCEPTION_LIST
 CORBA::SystemException * \
 CORBA::name ::_tao_create (void) \
 { \
-  CORBA::name *result; \
+  CORBA::SystemException *result; \
   ACE_NEW_RETURN (result, CORBA::name (), 0); \
   return result; \
 }
@@ -1382,115 +1336,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &any, \
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
 TAO_DONT_CATCH::TAO_DONT_CATCH (void)
 {}
 #endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
-
-// Specializations for CORBA::Exception Any operators.
-
-ACE_TEMPLATE_SPECIALIZATION
-TAO::Any_Dual_Impl_T<CORBA::Exception>::Any_Dual_Impl_T (
-    _tao_destructor destructor,
-    CORBA::TypeCode_ptr tc,
-    const CORBA::Exception & val
-  )
-  : Any_Impl (destructor,
-              tc)
-{
-  this->value_ = val._tao_duplicate ();
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<CORBA::Exception>::marshal_value (TAO_OutputCDR &cdr)
-{
-  ACE_TRY_NEW_ENV
-    {
-      this->value_->_tao_encode (cdr
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      return 1;
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<CORBA::Exception>::demarshal_value (TAO_InputCDR &cdr)
-{
-  ACE_TRY_NEW_ENV
-    {
-      this->value_->_tao_decode (cdr
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      return 1;
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}
-
-// This should never get called since we don't have extraction operators
-// for CORBA::Exception, but it is here to sidestep the constructor call
-// in the unspecialized version that causes a problem with compilers that
-// require explicit instantiation
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<CORBA::Exception>::extract (
-    const CORBA::Any &,
-    _tao_destructor,
-    CORBA::TypeCode_ptr,
-    const CORBA::Exception *&
-  )
-{
-  return 0;
-}
-
-// =======================================================================
-
-// Insertion of CORBA::Exception - copying.
-void
-operator<<= (CORBA::Any &any, const CORBA::Exception &exception)
-{
-  TAO::Any_Dual_Impl_T<CORBA::Exception>::insert_copy (
-      any,
-      CORBA::Exception::_tao_any_destructor,
-      exception._type (),
-      exception
-    );
-}
-
-// Insertion of CORBA::Exception - non-copying.
-void
-operator<<= (CORBA::Any &any, CORBA::Exception *exception)
-{
-  TAO::Any_Dual_Impl_T<CORBA::Exception>::insert (
-      any,
-      CORBA::Exception::_tao_any_destructor,
-      exception->_type (),
-      exception
-    );
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO::Any_Dual_Impl_T<CORBA::Exception>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Exception>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -27,8 +27,7 @@ DIRS  = Callback_Quoter \
         PluggableUDP \
 	TypeCode_Creation \
 	ior_corbaloc \
-	RTCORBA \
-	RTScheduling
+	RTCORBA
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -48,11 +47,6 @@ DIRS += \
 	Buffered_Oneways
 
 endif # corba_messaging
-
-ifeq ($(rt_corba),1)
-DIRS += \
-	Kokyu_dsrt_schedulers 
-endif # rt_corba
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU

@@ -14,17 +14,16 @@
 
 #ifndef TAO_PORTABLEGROUP_LOADER_H
 #define TAO_PORTABLEGROUP_LOADER_H
-
 #include /**/ "ace/pre.h"
+
+#include "portablegroup_export.h"
+#include "tao/corbafwd.h"
 #include "ace/Service_Config.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Service_Object.h"
-
-#include "portablegroup_export.h"
 
 /**
  * @class TAO_PortableGroup_Adapter
@@ -65,11 +64,9 @@ TAO_Requires_PortableGroup_Initializer =
 #else
 
 static int
-TAO_Requires_PortableGroup_Initializer = 
-  TAO_PortableGroup_Loader::Initializer ();
+TAO_Requires_PortableGroup_Initializer = TAO_PortableGroup_Loader::Initializer ();
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_PORTABLEGROUP_LOADER_H */

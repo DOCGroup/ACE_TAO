@@ -7,7 +7,6 @@
  *
  */
 #include "Echo.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Bug_1269_Regression, Echo, "$Id$")
 

@@ -1,20 +1,16 @@
 // $Id$
 
-#include "Sequence.h"
+#include "tao/Sequence.h"
+#include "ace/Message_Block.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Sequence.i"
 #endif /* __ACE_INLINE__ */
 
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-# include "ace/Message_Block.h"
-#endif /* (TAO_NO_COPY_OCTET_SEQUENCES == 1) */
-
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
-
-ACE_RCSID (tao,
-           Sequence,
+ACE_RCSID (tao, 
+           Sequence, 
            "$Id$")
 
 // *************************************************************
@@ -52,11 +48,11 @@ check_bounds(
 {
   // TODO use hook
   if(tao_idx >= tao_max)
-    {
-      ACE_ERROR((LM_ERROR,
-                    "Access error in TAO_Sequence file=%s, line=%u, "
-                    "idx=%u, max=%u\n",
-                    filename, lineno, tao_idx, tao_max));
+  {
+    ACE_ERROR((LM_ERROR,
+                  "Access error in TAO_Sequence file=%s, line=%u, "
+                  "idx=%u, max=%u\n",
+                  filename, lineno, tao_idx, tao_max));
   }
 }
 
@@ -132,7 +128,7 @@ TAO_Unbounded_String_Sequence::operator= (
 
   if (this->release_)
     {
-      char ** tmp = ACE_reinterpret_cast (char **,
+      char ** tmp = ACE_reinterpret_cast (char **, 
                                           this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
@@ -231,7 +227,7 @@ TAO_Unbounded_String_Sequence::_tao_any_destructor (
     void * _tao_void_pointer
   )
 {
-  TAO_Unbounded_String_Sequence * tmp =
+  TAO_Unbounded_String_Sequence * tmp = 
     ACE_static_cast (TAO_Unbounded_String_Sequence *,
                      _tao_void_pointer);
   delete tmp;
@@ -276,7 +272,7 @@ TAO_Unbounded_String_Sequence::get_buffer (CORBA::Boolean orphan)
 const char **
 TAO_Unbounded_String_Sequence::get_buffer (void) const
 {
-  return ACE_reinterpret_cast (const char ** ACE_CAST_CONST,
+  return ACE_reinterpret_cast (const char ** ACE_CAST_CONST, 
                                this->buffer_);
 }
 
@@ -339,7 +335,7 @@ void
 TAO_Unbounded_String_Sequence::_shrink_buffer (CORBA::ULong nl,
                                                CORBA::ULong ol)
 {
-  char ** tmp = ACE_reinterpret_cast (char **,
+  char ** tmp = ACE_reinterpret_cast (char **, 
                                       this->buffer_);
 
   for (CORBA::ULong i = nl; i < ol; ++i)
@@ -357,7 +353,7 @@ TAO_Unbounded_String_Sequence::replace (CORBA::ULong maximum,
 {
   if (this->release_ == 1)
     {
-      char ** tmp = ACE_reinterpret_cast (char **,
+      char ** tmp = ACE_reinterpret_cast (char **, 
                                           this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
@@ -371,7 +367,7 @@ TAO_Unbounded_String_Sequence::replace (CORBA::ULong maximum,
   this->length_ = length;
 
   // If 'release' is 1, it is the caller's responsibility to allocate
-  // 'data' with CORBA::string_alloc.
+  // 'data' with CORBA::string_alloc. 
   this->buffer_ = data;
   this->release_ = release;
 }
@@ -466,7 +462,7 @@ TAO_Unbounded_WString_Sequence::operator= (
 
   CORBA::WChar ** tmp1 = ACE_reinterpret_cast (CORBA::WChar **,
                                                this->buffer_);
-  CORBA::WChar ** const tmp2 =
+  CORBA::WChar ** const tmp2 = 
     ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST,
                           rhs.buffer_);
 
@@ -533,7 +529,7 @@ TAO_Unbounded_WString_Sequence::_tao_any_destructor (
     void * _tao_void_pointer
   )
 {
-  TAO_Unbounded_WString_Sequence * tmp =
+  TAO_Unbounded_WString_Sequence * tmp = 
     ACE_static_cast (TAO_Unbounded_WString_Sequence *,
                      _tao_void_pointer);
   delete tmp;
@@ -662,7 +658,7 @@ TAO_Unbounded_WString_Sequence::replace (CORBA::ULong maximum,
 {
   if (this->release_ == 1)
     {
-      CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **,
+      CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **, 
                                                  this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
@@ -676,11 +672,10 @@ TAO_Unbounded_WString_Sequence::replace (CORBA::ULong maximum,
   this->length_ = length;
 
   // If 'release' is 1, it is the caller's responsibility to allocate
-  // 'data' with CORBA::wstring_alloc.
+  // 'data' with CORBA::wstring_alloc. 
   this->buffer_ = data;
   this->release_ = release;
 }
-
 // ****************************************************************
 
 TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (
@@ -723,7 +718,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (
         }
 #else /* (TAO_NO_COPY_OCTET_SEQUENCES == 0) */
       ACE_OS::memcpy (tmp1, tmp2, this->length_);
-#endif /* (TAO_NO_COPY_OCTET_SEQUENCES == 1) */
+#endif /* (TAO_NO_COPY_OCTET_SEQUENCES == 0) */
 
       this->buffer_ = tmp1;
     }
@@ -781,8 +776,8 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
   CORBA::Octet * tmp1 = ACE_reinterpret_cast (CORBA::Octet *, this->buffer_);
-  CORBA::Octet * const tmp2 =
-    ACE_reinterpret_cast (CORBA::Octet * ACE_CAST_CONST,
+  CORBA::Octet * const tmp2 = 
+    ACE_reinterpret_cast (CORBA::Octet * ACE_CAST_CONST, 
                           rhs.buffer_);
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -790,8 +785,8 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (
   // tmp1[i] = tmp2[i];
   if (rhs.mb_ == 0)
     {
-      ACE_OS::memcpy (tmp1,
-                      tmp2,
+      ACE_OS::memcpy (tmp1, 
+                      tmp2, 
                       this->length_);
     }
   else
@@ -800,8 +795,8 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (
 
       for (const ACE_Message_Block *i = rhs.mb_; i != 0; i = i->cont ())
         {
-          ACE_OS::memcpy (tmp1 + offset,
-                          i->rd_ptr (),
+          ACE_OS::memcpy (tmp1 + offset, 
+                          i->rd_ptr (), 
                           i->length ());
           offset += i->length ();
         }
@@ -879,10 +874,10 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
       if (this->buffer_ == 0)
         {
           // The buffer was not allocated, we must allocate it now.
-          result =
+          result = 
             TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (this->length_);
           this->buffer_ = result;
-          this->release_ = 1;
+	  this->release_ = 1;
         }
       else
         {
@@ -966,7 +961,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong length,
 
       // Get the base pointer of the incoming message block
       char * start = ACE_ptr_align_binary (mb->base (),
-                                           ACE_CDR::MAX_ALIGNMENT);
+                                          ACE_CDR::MAX_ALIGNMENT);
 
       // Get the read and write displacements in the incoming stream
       size_t rd_pos = mb->rd_ptr () - start;
@@ -988,7 +983,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong length,
 void
 TAO_Unbounded_Sequence<CORBA::Octet>::_tao_any_destructor (void * x)
 {
-  TAO_Unbounded_Sequence<CORBA::Octet> * tmp =
+  TAO_Unbounded_Sequence<CORBA::Octet> * tmp = 
     ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet> *,
                      x);
   delete tmp;
@@ -1001,7 +996,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::_allocate_buffer (CORBA::ULong length)
 
   if (this->buffer_ != 0)
     {
-      CORBA::Octet * old = ACE_reinterpret_cast (CORBA::Octet *,
+      CORBA::Octet * old = ACE_reinterpret_cast (CORBA::Octet *, 
                                                  this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
@@ -1068,7 +1063,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong max,
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
     if (this->buffer_ && this->release_ == 1)
     {
-      CORBA::Octet * tmp =
+      CORBA::Octet * tmp = 
         ACE_reinterpret_cast(CORBA::Octet *, this->buffer_);
       TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (tmp);
     }

@@ -16,8 +16,6 @@
 #include "XML_Helpers_Export.h"
 #include "Softpkg_Handlers.h"
 #include "Assembly_Spec.h"
-#include "RTCORBA/RTCORBA.h"
-#include "RTConfigurationC.h"
 
 namespace CIAO
 {
@@ -48,29 +46,8 @@ namespace CIAO
      */
     static int parse_softpkg (Softpkg_Handler::Softpkg_Info *info);
 
-    /**
-     * @brief Parse a component assembly descriptor and extract the
-     * assembly specification.
-     */
     static int parse_componentassembly (const char *filename,
                                         Assembly_Spec *spec);
-
-    /**
-     * @brief Parse a CIAO RT cad file extension descriptor and
-     * extract and prepare the information for RTComponentServer.
-     *
-     * A CIAO RT cad file extension, as defined in
-     * $CIAO_ROOT/doc/XML/ciao_rt_cad_ext.dtd, defines the RT
-     * resources and named policy sets that a RTComponentServer shall
-     * provides for the running components.
-     *
-     * This method assume that all the sequences, either those in
-     * RTORB_Resource_Info or the Policy_Sets, are empty initially and
-     * will add to them when parsing the RTCAD extension file.
-     */
-    static int parse_rtcad_extension (const char *filename,
-                                      RTConfiguration::RTORB_Resource_Info &rtr,
-                                      RTConfiguration::Policy_Sets &pset);
 
     static long get_id_and_cardinality (const char *&id,
                                         ACEXML_Attributes *atts

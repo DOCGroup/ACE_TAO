@@ -15,10 +15,8 @@
 
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
-#include "ace/SString.h"
 #include "Servant_Activator.h"
 #include "Servant_Locator.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(On_Demand_Activation, server, "$Id$")
 

@@ -1,6 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
-
 #include "SHMIOP_Profile.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
@@ -10,7 +9,7 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "tao/IIOP_EndpointsC.h"
+#include "tao/iiop_endpoints.h"
 
 ACE_RCSID (Strategies,
            SHMIOP_Profile,
@@ -19,8 +18,6 @@ ACE_RCSID (Strategies,
 #if !defined (__ACE_INLINE__)
 # include "SHMIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
-
-#include "ace/os_include/os_netdb.h"
 
 static const char prefix_[] = "shmiop";
 
@@ -92,7 +89,7 @@ TAO_SHMIOP_Profile::endpoint (void)
 }
 
 CORBA::ULong
-TAO_SHMIOP_Profile::endpoint_count (void) const
+TAO_SHMIOP_Profile::endpoint_count (void)
 {
   return this->count_;
 }
@@ -268,12 +265,19 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
 }
 
 CORBA::Boolean
-TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
+TAO_SHMIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 {
+
+  if (other_profile->tag () != TAO_TAG_SHMEM_PROFILE)
+    return 0;
+
   const TAO_SHMIOP_Profile *op =
     ACE_dynamic_cast (const TAO_SHMIOP_Profile *, other_profile);
 
-  if (op == 0)
+  if (!(this->ref_object_key_->object_key () ==
+        op->ref_object_key_->object_key ()
+        && this->version_ == op->version_
+        && this->count_ == op->count_))
     return 0;
 
   // Check endpoints equivalence.
@@ -287,6 +291,9 @@ TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
       else
         return 0;
     }
+
+  if (!this->is_profile_equivalent_i (other_profile))
+    return 0;
 
   return 1;
 }
@@ -412,7 +419,7 @@ TAO_SHMIOP_Profile::encode_endpoints (void)
   // together with other endpoints because even though its addressing
   // info is transmitted using standard ProfileBody components, its
   // priority is not!
-  TAO::IIOPEndpointSequence endpoints;
+  TAO_IIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
   TAO_SHMIOP_Endpoint *endpoint = &this->endpoint_;
@@ -480,7 +487,7 @@ TAO_SHMIOP_Profile::decode_endpoints (void)
       in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
 
       // Extract endpoints sequence.
-      TAO::IIOPEndpointSequence endpoints;
+      TAO_IIOPEndpointSequence endpoints;
 
       if ((in_cdr >> endpoints) == 0)
         return -1;

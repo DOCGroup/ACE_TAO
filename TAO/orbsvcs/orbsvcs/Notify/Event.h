@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_EVENT_H
 #define TAO_Notify_EVENT_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,11 +21,9 @@
 
 #include "ace/Copy_Disabled.h"
 #include "ace/Refcounted_Auto_Ptr.h"
-
 #include "orbsvcs/Event_ForwarderS.h"
 #include "orbsvcs/CosNotifyFilterC.h"
 #include "orbsvcs/CosNotificationC.h"
-
 #include "Property.h"
 #include "Property_T.h"
 
@@ -140,5 +137,4 @@ typedef ACE_Unbounded_Queue<TAO_Notify_Event_var> TAO_Notify_Event_Collection;
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_EVENT_H */

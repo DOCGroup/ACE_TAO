@@ -8,10 +8,7 @@
 #include "Method_Request_Dispatch_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify,
-           TAO_Notify_Method_Request_Dispatch_T,
-           "$Id$")
-
+ACE_RCSID (Notify, TAO_Notify_Method_Request_Dispatch_T, "$Id$")
 
 template <class EVENT, class PROXY, class EVENT_PARAM, class PROXY_PARAM>
 TAO_Notify_Method_Request_Dispatch_T<EVENT, PROXY, EVENT_PARAM, PROXY_PARAM>::TAO_Notify_Method_Request_Dispatch_T (EVENT_PARAM event, PROXY_PARAM proxy_supplier, CORBA::Boolean filtering)

@@ -24,22 +24,23 @@
 #include "DualEC_Sup.h"
 #include "NavWeapC.h"
 
+#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/corba.h"
+#include "tao/ORB_Core.h"
+
+#include "ace/Get_Opt.h"
+#include "ace/Sched_Params.h"
+//#include "ace/Profile_Timer.h"
+#include "ace/OS.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
-#include "tao/PortableServer/ORB_Manager.h"
-#include "tao/ORB_Core.h"
+#include <limits.h>
 
-#include "ace/Get_Opt.h"
-#include "ace/Sched_Params.h"
-#include "ace/OS_NS_errno.h"
-
-ACE_RCSID (Event_Supplier, 
-           DualEC_Sup, 
-           "$Id$")
+ACE_RCSID(Event_Supplier, DualEC_Sup, "$Id$")
 
 static const char usage [] =
 "[[-?]\n"
@@ -703,7 +704,6 @@ DualEC_Supplier::compute_schedules (void)
 
 
           RtecScheduler::RT_Info_Set_out infos_out_hi (this->infos_hi_);
-          RtecScheduler::Dependency_Set_out deps_out_hi (this->deps_hi_);
           RtecScheduler::Config_Info_Set_out configs_out_hi (this->configs_hi_);
           RtecScheduler::Scheduling_Anomaly_Set_out anomalies_out_hi (this->anomalies_hi_);
           sched_hi_->compute_scheduling
@@ -711,12 +711,10 @@ DualEC_Supplier::compute_schedules (void)
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             infos_out_hi, deps_out_hi, 
-             configs_out_hi, anomalies_out_hi ACE_ENV_ARG_PARAMETER);
+             infos_out_hi, configs_out_hi, anomalies_out_hi ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           RtecScheduler::RT_Info_Set_out infos_out_lo (this->infos_lo_);
-          RtecScheduler::Dependency_Set_out deps_out_lo (this->deps_lo_);
           RtecScheduler::Config_Info_Set_out configs_out_lo (this->configs_lo_);
           RtecScheduler::Scheduling_Anomaly_Set_out anomalies_out_lo (this->anomalies_lo_);
           sched_lo_->compute_scheduling
@@ -724,8 +722,7 @@ DualEC_Supplier::compute_schedules (void)
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             infos_out_lo, deps_out_lo, 
-             configs_out_lo, anomalies_out_lo ACE_ENV_ARG_PARAMETER);
+             infos_out_lo, configs_out_lo, anomalies_out_lo ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
 #else  /* ! __SUNPRO_CC */
@@ -735,9 +732,7 @@ DualEC_Supplier::compute_schedules (void)
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             this->infos_hi_.out (),
-             this->deps_hi_.out (),
-             this->configs_hi_.out (),
+             this->infos_hi_.out (), this->configs_hi_.out (),
              this->anomalies_hi_.out () ACE_ENV_ARG_PARAMETER);
            ACE_TRY_CHECK;
 
@@ -746,9 +741,7 @@ DualEC_Supplier::compute_schedules (void)
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             this->infos_lo_.out (), 
-             this->deps_hi_.out (),
-             this->configs_lo_.out (),
+             this->infos_lo_.out (), this->configs_lo_.out (),
              this->anomalies_lo_.out () ACE_ENV_ARG_PARAMETER);
            ACE_TRY_CHECK;
 
@@ -757,7 +750,6 @@ DualEC_Supplier::compute_schedules (void)
       if (dump_schedule_headers_ && (this->hi_schedule_file_name_ != 0))
         {
           ACE_Scheduler_Factory::dump_schedule (infos_hi_.in (),
-                                                deps_hi_.in (),
                                                 configs_hi_.in (),
                                                 anomalies_hi_.in (),
                                                 this->hi_schedule_file_name_);
@@ -767,7 +759,6 @@ DualEC_Supplier::compute_schedules (void)
       if (dump_schedule_headers_ && (this->lo_schedule_file_name_ != 0))
         {
           ACE_Scheduler_Factory::dump_schedule (infos_lo_.in (),
-                                                deps_lo_.in (),
                                                 configs_lo_.in (),
                                                 anomalies_lo_.in (),
                                                 this->lo_schedule_file_name_);

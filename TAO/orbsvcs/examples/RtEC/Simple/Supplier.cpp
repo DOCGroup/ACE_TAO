@@ -4,7 +4,6 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(EC_Examples, Supplier, "$Id$")
 

@@ -1,15 +1,14 @@
 // -*- C++ -*-
 
 #include "LB_RoundRobin.h"
-
 #include "orbsvcs/PortableGroup/PG_conf.h"
-
 #include "tao/debug.h"
-#include "tao/ORB_Constants.h"
+
 
 ACE_RCSID (LoadBalancing,
            LB_RoundRobin,
            "$Id$")
+
 
 TAO_LB_RoundRobin::TAO_LB_RoundRobin (PortableServer::POA_ptr poa)
   : poa_ (PortableServer::POA::_duplicate (poa)),

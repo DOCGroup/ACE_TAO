@@ -3,7 +3,6 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
-#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (Log,
            LogRecordStore,

@@ -1,11 +1,8 @@
 // $Id$
 
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/orbconf.h"
 
-ACE_RCSID (tao, 
-           Server_Strategy_Factory, 
-           "$Id$")
+ACE_RCSID(tao, Server_Strategy_Factory, "$Id$")
 
 TAO_Server_Strategy_Factory::TAO_Server_Strategy_Factory (void)
   : active_object_map_creation_parameters_ ()

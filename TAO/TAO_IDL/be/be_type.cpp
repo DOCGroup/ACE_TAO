@@ -39,9 +39,7 @@ be_type::be_type (void)
     be_decl (),
     tc_name_ (0),
     common_varout_gen_ (I_FALSE),
-    seq_elem_tmplinst_ (I_FALSE),
-    seen_in_sequence_ (I_FALSE),
-    seen_in_operation_ (I_FALSE)
+    seen_in_sequence_ (I_FALSE)
 {
 }
 
@@ -56,9 +54,7 @@ be_type::be_type (AST_Decl::NodeType nt,
              n),
     tc_name_ (0),
     common_varout_gen_ (I_FALSE),
-    seq_elem_tmplinst_ (I_FALSE),
-    seen_in_sequence_ (I_FALSE),
-    seen_in_operation_ (I_FALSE)
+    seen_in_sequence_ (I_FALSE)
 {
   if (n != 0)
     {
@@ -292,16 +288,67 @@ be_type::gen_common_varout (TAO_OutStream *os)
   this->common_varout_gen_ = 1;
 }
 
-idl_bool
-be_type::seq_elem_tmplinst (void) const
-{
-  return this->seq_elem_tmplinst_;
-}
-
 void
-be_type::seq_elem_tmplinst (idl_bool val)
+be_type::gen_common_tmplinst (TAO_OutStream *os)
 {
-  this->seq_elem_tmplinst_ = val;
+  AST_Type::SIZE_TYPE st = this->size_type ();
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  os->gen_ifdef_AHETI ();
+
+  *os << be_nl << be_nl
+      << "template class" << be_idt_nl
+      << (st == AST_Type::FIXED ? "TAO_Fixed_Var_T<"
+                                : "TAO_Var_Var_T<")
+      << be_idt << be_idt_nl
+      << this->name () << be_uidt_nl
+      << ">;" << be_uidt << be_uidt;
+
+  *os << be_nl << be_nl
+      << "template class TAO_Var_Base_T<"
+      << be_idt << be_idt_nl
+      << this->name () << be_uidt_nl
+      << ">;" << be_uidt << be_uidt;
+
+  if (st == AST_Type::VARIABLE)
+    {
+      *os << be_nl<< be_nl
+          << "template class" << be_idt_nl
+          << "TAO_Out_T<" << be_idt << be_idt_nl
+          << this->name () << "," << be_nl
+          << this->name () << "_var" << be_uidt_nl
+          << ">;" << be_uidt << be_uidt;
+    }
+
+  os->gen_elif_AHETI ();
+
+  *os << be_nl << be_nl
+      << "# pragma instantiate \\" << be_idt_nl
+      << (st == AST_Type::FIXED ? "TAO_Fixed_Var_T< \\"
+                                : "TAO_Var_Var_T< \\")
+      << be_idt << be_idt_nl
+      << this->name () << " \\" << be_uidt_nl
+      << ">" << be_uidt << be_uidt;
+
+  *os << be_nl << be_nl
+      << "#pragma instantiate TAO_Var_Base_T<"
+      << be_idt << be_idt_nl
+      << this->name () << be_uidt_nl
+      << ">" << be_uidt << be_uidt;
+
+  if (st == AST_Type::VARIABLE)
+    {
+      *os << be_nl << be_nl
+          << "# pragma instantiate \\" << be_idt_nl
+          << "TAO_Out_T< \\" << be_idt << be_idt_nl
+          << this->name () << ", \\" << be_nl
+          << this->name () << "_var \\" << be_uidt_nl
+          << ">" << be_uidt << be_uidt;
+    }
+
+  os->gen_endif_AHETI ();
 }
 
 idl_bool
@@ -314,18 +361,6 @@ void
 be_type::seen_in_sequence (idl_bool val)
 {
   this->seen_in_sequence_ = val;
-}
-
-idl_bool
-be_type::seen_in_operation (void) const
-{
-  return this->seen_in_operation_;
-}
-
-void
-be_type::seen_in_operation (idl_bool val)
-{
-  this->seen_in_operation_ = val;
 }
 
 AST_Decl::NodeType

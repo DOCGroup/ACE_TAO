@@ -227,9 +227,8 @@ endif # !def TAO_IDL_PREPROCESSOR
   be_include/TAO_IDL_BE_Export.h be_include/be_generator.h \
   include/ast_generator.h include/ast_operation.h include/ast_decl.h \
   include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
-  include/TAO_IDL_FE_Export.h include/idl_bool.h \
-  $(ACE_ROOT)/ace/streams.h \
-  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
+  include/TAO_IDL_FE_Export.h include/idl_bool.h include/idl_narrow.h \
+  include/utl_scope.h include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -285,8 +284,8 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Process.h \
   $(ACE_ROOT)/ace/Handle_Set.h \
   $(ACE_ROOT)/ace/Handle_Set.i \
-  $(ACE_ROOT)/ace/Process.i \
-  ../tao/Version.h
+  $(ACE_ROOT)/ace/Process.i ../tao/Version.h \
+  $(ACE_ROOT)/ace/streams.h
 
 .obj/drv_args.o .obj/drv_args.so .shobj/drv_args.o .shobj/drv_args.so: driver/drv_args.cpp include/idl_defines.h \
   include/global_extern.h include/TAO_IDL_FE_Export.h \
@@ -294,8 +293,7 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  include/idl_global.h \
-  $(ACE_ROOT)/ace/SString.h \
+  include/idl_global.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -475,8 +473,8 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Condition_T.cpp \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
-  include/idl_bool.h include/ast_expression.h \
+  $(ACE_ROOT)/ace/Synch_T.cpp include/idl_bool.h \
+  include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -487,7 +485,6 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
-  $(ACE_ROOT)/ace/streams.h \
   include/ast_predefined_type.h include/ast_concrete_type.h \
   include/ast_type.h include/ast_decl.h include/idl_narrow.h \
   include/utl_stack.h include/drv_extern.h be_include/be_global.h \
@@ -504,8 +501,7 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  include/idl_global.h \
-  $(ACE_ROOT)/ace/SString.h \
+  include/idl_global.h $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -697,12 +693,10 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
-  $(ACE_ROOT)/ace/streams.h \
   include/ast_predefined_type.h include/ast_concrete_type.h \
   include/ast_type.h include/ast_decl.h include/idl_narrow.h \
   include/utl_stack.h include/fe_extern.h include/drv_extern.h \
-  include/utl_string.h \
-  $(ACE_ROOT)/ace/Version.h \
+  include/utl_string.h $(ACE_ROOT)/ace/Version.h \
   $(ACE_ROOT)/ace/Process_Manager.h \
   $(ACE_ROOT)/ace/Reactor.h \
   $(ACE_ROOT)/ace/Handle_Set.h \
@@ -733,6 +727,7 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Env_Value_T.i \
   $(ACE_ROOT)/ace/Env_Value_T.cpp \
   $(ACE_ROOT)/ace/ARGV.h \
-  $(ACE_ROOT)/ace/ARGV.i
+  $(ACE_ROOT)/ace/ARGV.i \
+  $(ACE_ROOT)/ace/streams.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -1,19 +1,22 @@
-//=============================================================================
-/**
- *  @file    data.h
- *
- *  $Id$
- *
- *  Header file for the class containing test constants.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
+// -*- c++ -*-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/DynAny_Test
+//
+// = FILENAME
+//    data.h
+//
+// = DESCRIPTION
+//    Header file for the class containing test constants.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
-
-#include "tao/ORB.h"
-#include "tao/TC_Constants_Forward.h"
+#include "tao/corba.h"
 
 class Data
 {
@@ -35,6 +38,7 @@ public:
   char *                m_string2;
   CORBA::TypeCode_ptr   m_typecode1,  m_typecode2;
   CORBA::WChar          m_wchar1,     m_wchar2;
+  CORBA::Any            m_any1,       m_any2;
   CORBA::Object_var     m_objref1,    m_objref2;
 
 const char* labels[16];

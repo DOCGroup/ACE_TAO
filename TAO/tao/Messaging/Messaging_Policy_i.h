@@ -51,7 +51,7 @@ public:
   /// initialization time.
   static void hook (TAO_ORB_Core *orb_core,
                     TAO_Stub *stub,
-                    bool &has_timeout,
+                    int &has_timeout,
                     ACE_Time_Value &time_value);
 
   /// Helper method for the implementation of
@@ -116,7 +116,7 @@ public:
   /// initialization time.
   static void hook (TAO_ORB_Core *orb_core,
                     TAO_Stub *stub,
-                    bool &has_synchronization,
+                    int &has_synchronization,
                     Messaging::SyncScope &scope);
 
   /// Helper method for the implementation of

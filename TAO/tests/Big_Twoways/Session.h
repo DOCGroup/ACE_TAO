@@ -1,20 +1,13 @@
-// -*- C++ -*-
 //
 // $Id$
+//
 
-#ifndef BIG_TWOWAYS_SESSION_H
-#define BIG_TWOWAYS_SESSION_H
-
-#include /**/ "ace/pre.h"
+#ifndef BIG_ONEWAYS_SESSION_H
+#define BIG_ONEWAYS_SESSION_H
+#include "ace/pre.h"
 
 #include "TestS.h"
 #include "Session_Task.h"
-
-#if defined(ACE_HAS_THREADS)
-# include "ace/Barrier.h"
-#else
-# include "ace/Null_Barrier.h"
-#endif  /* ACE_HAS_THREADS */
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)
@@ -117,6 +110,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
-
-#endif /* BIG_TWOWAYS_SESSION_H */
+#include "ace/post.h"
+#endif /* BIG_ONEWAYS_SESSION_H */

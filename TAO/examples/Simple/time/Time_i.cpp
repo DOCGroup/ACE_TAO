@@ -1,12 +1,18 @@
 // $Id$
 
 #include "Time_i.h"
-#include "ace/OS_NS_time.h"
 
 ACE_RCSID(Time, Time_i, "$Id$")
 
 // Constructor
 Time_i::Time_i (void)
+{
+  // no-op
+}
+
+// Copy  Constructor
+Time_i::Time_i (Time_i &t)
+  : POA_Time (t)
 {
   // no-op
 }

@@ -23,7 +23,6 @@
 
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_Heap.h"
-#include "ace/Recursive_Thread_Mutex.h"
 
 /**
  * @class TAO_Notify_Timer_Queue

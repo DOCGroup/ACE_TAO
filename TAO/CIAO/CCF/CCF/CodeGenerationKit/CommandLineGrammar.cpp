@@ -1,5 +1,5 @@
-// file      : CCF/CodeGenerationKit/CommandLineGrammar.cpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
+// File   : CommandLineGrammar.cpp
+// Author : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// $Id$
 
 #include "CCF/CodeGenerationKit/CommandLineGrammar.hpp"

@@ -5,12 +5,9 @@
 #include "TestS.h"
 #include "Hello.h"
 
-#include "ace/Manual_Event.h"
-
 ACE_RCSID(Collocated_Test,
           Server_Task,
           "$Id$")
-
 
 Server_Task::Server_Task (const char *output,
                           CORBA::ORB_ptr sorb,

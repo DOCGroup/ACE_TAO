@@ -71,7 +71,6 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
   Read_Guard ace_mon (this->mutex_,
                       this->collection_);
 
-  worker->set_size(ace_mon.collection->collection.size());
   ITERATOR end = ace_mon.collection->collection.end ();
   for (ITERATOR i = ace_mon.collection->collection.begin (); i != end; ++i)
     {

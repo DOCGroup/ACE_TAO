@@ -20,8 +20,8 @@
 #ifndef _SERVANT_LOCATOR_H_
 #define _SERVANT_LOCATOR_H_
 
+#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "tao/ORB.h"
 
 class Servant_Locator : public PortableServer::ServantLocator
 {

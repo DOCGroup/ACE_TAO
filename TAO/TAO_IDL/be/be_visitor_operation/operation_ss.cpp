@@ -27,12 +27,14 @@ ACE_RCSID (be_visitor_operation,
 // ************************************************************
 
 be_visitor_operation_ss::be_visitor_operation_ss (be_visitor_context *ctx)
-  : be_visitor_operation (ctx)
+  : be_visitor_operation (ctx),
+    operation_name_ (0)
 {
 }
 
 be_visitor_operation_ss::~be_visitor_operation_ss (void)
 {
+  delete [] this->operation_name_;
 }
 
 // Processing to be done after every element in the scope is processed.
@@ -124,7 +126,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // Generate the actual code for the skeleton. However, if any of the
   // argument types is "native", we do not generate any skeleton
   // last argument - is always CORBA::Environment.
-  *os << "{" << be_idt_nl;
+  *os << "{\n" << be_idt;
 
   // Generate all the tables and other pre-skel info.
   if (this->gen_pre_skel_info (node) == -1)
@@ -135,6 +137,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                          "gen_pre_skel_info failed\n"),
                         -1);
     }
+
+  os->indent ();
 
   // Get the right object implementation.
   *os << intf->full_skel_name () << " *_tao_impl =" << be_idt_nl
@@ -194,15 +198,13 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // Fish out the interceptors.
-  *os << be_nl 
-      << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+  *os << "\n\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
 
   // Cast the Servant_Upcall pointer.
   *os << "TAO_Object_Adapter::Servant_Upcall *_tao_upcall =" << be_idt_nl
-      << "ACE_static_cast (" << be_idt << be_idt_nl
-      << "TAO_Object_Adapter::Servant_Upcall *," << be_nl
-      << "_tao_servant_upcall" << be_uidt_nl
-      << ");" << be_uidt_nl << be_uidt_nl;
+      << "ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, "
+      << "_tao_servant_upcall);"
+      << be_uidt_nl << be_nl;
 
   *os << "TAO_ServerRequestInterceptor_Adapter _tao_vfr ("
       << be_idt << be_idt_nl
@@ -288,7 +290,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // ServerRequestInterceptor::receive_request().
   *os << be_nl
       << "if (!_tao_vfr.location_forwarded ())" << be_idt_nl
-      << "{" << be_idt;
+      << "{" << be_idt_nl;
 
   *os << "\n#endif /* TAO_HAS_INTERCEPTORS */\n";
 
@@ -306,9 +308,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // Make the upcall.
-  *os << be_idt_nl
-      << "_tao_impl->" << node->local_name () << " (" << be_idt << be_idt;
-
+  *os << be_nl
+      << "_tao_impl->" << node->local_name () << " (" << be_idt << be_idt_nl;
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS);
   be_visitor_operation_argument oau_visitor (&ctx);
@@ -323,8 +324,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // End the upcall.
-  *os << be_uidt_nl << ");" 
-      << be_uidt << be_uidt_nl;
+  *os << be_uidt_nl << ");" << be_uidt_nl;
 
   if (!be_global->exception_support ())
     {
@@ -336,16 +336,16 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   if (!bt)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+          ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interceptors_ch::"
-                         "visit_operation - "
-                         "Bad return type\n"),
-                        -1);
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
     }
 
   // Invoke the send_reply() or send_other() interception point, and
   // check for exception.
-  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)";
+  *os << "\n\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
 
   // Close scope for "if (!_tao_vfr.location_forwarded ()"
   *os << be_uidt_nl
@@ -450,7 +450,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // Convert non-CORBA C++ exceptions to CORBA::UNKNOWN.
   *os << "\n# if defined (ACE_HAS_EXCEPTIONS) \\\n"
-      << "  && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)" << be_nl
+      << "     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)" << be_nl
       << "ACE_CATCHALL" << be_idt_nl
       << "{" << be_idt_nl
       << "CORBA::UNKNOWN ex;" << be_nl
@@ -487,11 +487,11 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << "(ex);"  << be_uidt << be_uidt_nl
       << "}" << be_uidt
       << "\n# endif  /* ACE_HAS_EXCEPTIONS"
-      << " && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */" << be_nl;
+      << " && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */" << be_nl << be_nl;
 
   *os << "ACE_ENDTRY;" << be_nl;
-  *os << "ACE_CHECK;"
-      << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl << be_nl;
+  *os << "ACE_CHECK;\n"
+      << "#endif /* TAO_HAS_INTERCEPTORS */" << be_nl << be_nl;
 
   // Check if we are oneway in which case, we are done.
   if (node->flags () == AST_Operation::OP_oneway)
@@ -515,8 +515,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << be_nl << be_nl 
-      << "// In case _tao_servant_upcall is not used in this function"
+  *os << be_nl << be_nl << "// In case _tao_servant_upcall is not used in this function"
       << be_nl
       << "ACE_UNUSED_ARG (_tao_servant_upcall);" << be_uidt_nl
       << "}";;
@@ -610,15 +609,15 @@ be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
                             -1);
         }
 
-      *os << be_nl << "))" << be_uidt_nl;
+      *os << be_nl << "))" << be_nl;
 
       // If marshaling fails, raise exception (codesetting has minor codes)
-      *os << "{" << be_idt_nl
-          << "TAO_InputCDR::throw_skel_exception "
-          << "(errno ACE_ENV_ARG_PARAMETER);"
-          << be_nl
+      *os << "{" << be_idt_nl << be_nl
+          << "TAO_InputCDR::throw_skel_exception (errno ACE_ENV_ARG_PARAMETER);" << be_nl
           << "ACE_CHECK;" << be_uidt_nl
-          << "}" << be_uidt;
+          << "}" << be_nl;
+
+      *os << be_uidt << be_uidt;
     };
 
   return 0;
@@ -681,7 +680,6 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
   *os << be_nl << be_nl
       << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
       << be_nl << be_nl;
-
   *os << "if (!(" << be_idt << be_idt;
 
   if (!this->void_return_type (bt))
@@ -727,15 +725,55 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
         }
     }
 
-  *os << be_nl << "))" << be_uidt_nl;
+  *os << be_nl << "))" << be_nl;
 
   // If marshaling fails, raise exception (codesetting has minor codes)
-  *os << "{" << be_idt_nl
-      << "TAO_OutputCDR::throw_skel_exception (errno ACE_ENV_ARG_PARAMETER);"
-      << be_nl
+  *os << "{" << be_idt_nl << be_nl
+      << "TAO_OutputCDR::throw_skel_exception (errno ACE_ENV_ARG_PARAMETER);" << be_nl
       << "ACE_CHECK;" << be_uidt_nl
-      << "}" << be_uidt;
+      << "}" << be_nl;
+
+  *os << be_uidt << be_uidt;
 
   return 0;
 }
 
+const char *
+be_visitor_operation_ss::compute_operation_name (be_operation *node)
+{
+  if (this->operation_name_ == 0)
+    {
+      size_t len = 3;           // The null termination char.
+
+      if (this->ctx_->attribute ())
+        {
+          len += 5;               // "Added length for "_set_" or "_get_".
+        }
+
+      len += ACE_OS::strlen (node->local_name ()->get_string ());
+
+      ACE_NEW_RETURN (this->operation_name_,
+                      char [len],
+                      0);
+
+      ACE_OS::strcpy (this->operation_name_, "\"");
+
+      if (this->ctx_->attribute ())
+        {
+          if (node->nmembers () == 1)
+            {
+              ACE_OS::strcat (this->operation_name_, "_set_");
+            }
+          else
+            {
+              ACE_OS::strcat (this->operation_name_, "_get_");
+            }
+        }
+
+      ACE_OS::strcat (this->operation_name_,
+                      node->local_name ()->get_string ());
+      ACE_OS::strcat (this->operation_name_, "\"");
+    }
+
+  return this->operation_name_;
+}

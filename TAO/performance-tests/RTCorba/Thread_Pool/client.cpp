@@ -8,13 +8,11 @@
 #include "ace/Array_Base.h"
 #include "ace/Task.h"
 #include "tao/ORB_Core.h"
-#include "tao/debug.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "testC.h"
 #include "tests/RTCORBA/common_args.cpp"
 #include "tests/RTCORBA/check_supported_priorities.cpp"
-#include "ace/Event.h"
 
 ACE_RCSID(Thread_Pool, client, "$Id$")
 

@@ -16,7 +16,7 @@
 
 #ifndef CIAO_CONTAINER_IMPL_H
 #define CIAO_CONTAINER_IMPL_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -134,7 +134,7 @@ protected:
     CIAO::Container *container_;
 
     /// Cached ConfigValues.
-    Components::ConfigValues config_;
+    Components::ConfigValues_var config_;
 
     /// Cached Container reference (of ourselves.)
     Components::Deployment::Container_var objref_;
@@ -157,5 +157,5 @@ protected:
 # include "Container_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* CIAO_CONTAINER_IMPL_H */

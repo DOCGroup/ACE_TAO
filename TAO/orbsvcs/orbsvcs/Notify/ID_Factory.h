@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_ID_FACTORY_H
 #define TAO_Notify_ID_FACTORY_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -21,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Atomic_Op.h"
-
 #include "Object.h"
 
 /**
@@ -51,5 +49,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_ID_FACTORY_H */

@@ -28,7 +28,7 @@
 
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
-#include "tao/ORB.h"
+#include "tao/corba.h"
 #include "MT_Client_TestC.h"
 
 class MT_Client

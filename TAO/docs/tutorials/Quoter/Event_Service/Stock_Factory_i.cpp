@@ -4,7 +4,6 @@
 
 #include "Stock_Factory_i.h"
 #include "Stock_i.h"
-#include "ace/streams.h"
 
 Quoter_Stock_Factory_i::Quoter_Stock_Factory_i ()
 {

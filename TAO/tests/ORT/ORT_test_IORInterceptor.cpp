@@ -1,7 +1,6 @@
 #include "ORT_test_IORInterceptor.h"
 #include "ObjectReferenceFactory.h"
 
-#include "tao/ORB_Constants.h"
 
 ACE_RCSID (ORT,
            ORT_test_IORInterceptor,

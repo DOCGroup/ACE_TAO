@@ -14,10 +14,10 @@
 
 #ifndef TAO_IORTABLE_H
 #define TAO_IORTABLE_H
-
 #include /**/ "ace/pre.h"
 
 #include "iortable_export.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,5 +49,4 @@ TAO_Requires_IORTable_Initializer = TAO_IORTable_Initializer::init ();
 #undef TAO_IORTABLE_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_IORTABLE_H */

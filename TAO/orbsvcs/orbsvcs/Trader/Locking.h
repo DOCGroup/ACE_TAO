@@ -14,8 +14,9 @@
 
 #ifndef TAO_LOCKING_H
 #define TAO_LOCKING_H
-
 #include /**/ "ace/pre.h"
+
+#include "tao/corba.h"
 
 // Macros for obtaining read/write locks that are
 // automatically released at the end of scope.
@@ -42,5 +43,4 @@ if (OBJ.locked () == 0) \
   TAO_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), RETURN);
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_LOCKING_H */

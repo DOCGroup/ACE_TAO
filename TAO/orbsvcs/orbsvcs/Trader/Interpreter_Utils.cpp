@@ -2,7 +2,6 @@
 
 #include "Interpreter_Utils.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
 
 // = Methods to deal with ACE_Hash_Map_Manager.
 

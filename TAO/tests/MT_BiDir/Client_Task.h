@@ -4,7 +4,7 @@
 
 #ifndef MT_BIDIR__CLIENT_TASK_H
 #define MT_BIDIR_CLIENT_TASK_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/Task.h"
 
@@ -12,7 +12,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ORB.h"
+#include "tao/corba.h"
 
 
 /// Implement a Task to run the experiments using multiple threads.
@@ -31,5 +31,5 @@ private:
   CORBA::ORB_var orb_;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* MT_BIDIR_CLIENT_TASK_H */

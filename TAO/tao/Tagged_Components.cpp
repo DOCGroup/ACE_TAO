@@ -1,16 +1,17 @@
 // $Id$
 
 #include "tao/Tagged_Components.h"
+#include "tao/Profile.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Tagged_Components.i"
 #endif /* ! __ACE_INLINE__ */
 
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID (tao,
            Tagged_Components,
            "$Id$")
+
 
 void
 TAO_Tagged_Components::set_orb_type (CORBA::ULong orb_type)
@@ -96,36 +97,22 @@ void
 TAO_Tagged_Components::set_component (const IOP::TaggedComponent& component)
 {
   if (this->known_tag (component.tag))
-    {
-      this->set_known_component_i (component);
-    }
-
+    this->set_known_component_i (component);
   if (this->unique_tag (component.tag))
-    {
-      this->set_component_i (component);
-    }
+    this->set_component_i (component);
   else
-    {
-      this->add_component_i (component);
-    }
+    this->add_component_i (component);
 }
 
 void
 TAO_Tagged_Components::set_component (IOP::TaggedComponent& component)
 {
   if (this->known_tag (component.tag))
-    {
-      this->set_known_component_i (component);
-    }
-
+    this->set_known_component_i (component);
   if (this->unique_tag (component.tag))
-    {
-      this->set_component_i (component);
-    }
+    this->set_component_i (component);
   else
-    {
-      this->add_component_i (component);
-    }
+    this->add_component_i (component);
 }
 
 void
@@ -136,22 +123,15 @@ TAO_Tagged_Components::set_known_component_i (
                                           component.component_data.get_buffer ()),
                     component.component_data.length ());
   CORBA::Boolean byte_order;
-
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    {
-      return;
-    }
-
+    return;
   cdr.reset_byte_order (ACE_static_cast(int,byte_order));
 
   if (component.tag == IOP::TAG_ORB_TYPE)
     {
       CORBA::ULong orb_type;
-
       if ((cdr >> orb_type) == 0)
-        {
-          return;
-        }
+        return;
 
       this->orb_type_ = orb_type;
       this->orb_type_set_ = 1;
@@ -159,11 +139,8 @@ TAO_Tagged_Components::set_known_component_i (
   else if (component.tag == IOP::TAG_CODE_SETS)
     {
       CONV_FRAME::CodeSetComponentInfo ci;
-
       if ((cdr >> ci) == 0)
-        {
-          return;
-        }
+        return;
 
       this->set_code_sets_i (this->code_sets_.ForCharData,
                              ci.ForCharData);
@@ -186,7 +163,6 @@ TAO_Tagged_Components::set_component_i (const IOP::TaggedComponent& component)
           return;
         }
     }
-
   this->add_component_i (component);
 }
 
@@ -204,7 +180,6 @@ TAO_Tagged_Components::set_component_i (IOP::TaggedComponent& component)
           return;
         }
     }
-
   this->add_component_i (component);
 }
 
@@ -236,13 +211,9 @@ int
 TAO_Tagged_Components::remove_component (IOP::ComponentId id)
 {
   if (this->known_tag (id))
-    {
-      return this->remove_known_component_i (id);
-    }
+    return this->remove_known_component_i (id);
   else
-    {
-      return this->remove_component_i (id);
-    }
+    return this->remove_component_i (id);
 }
 
 int
@@ -261,9 +232,7 @@ TAO_Tagged_Components::remove_known_component_i (
       return 1;
     }
   else
-    {
-      return 0;
-    }
+    return 0;
 }
 
 int
@@ -296,7 +265,6 @@ TAO_Tagged_Components::get_component (IOP::TaggedComponent& component) const
           return 1;
         }
     }
-
   return 0;
 }
 
@@ -316,23 +284,16 @@ TAO_Tagged_Components::decode (TAO_InputCDR& cdr)
   this->code_sets_set_ = 0;
 
   if ((cdr >> this->components_) == 0)
-    {
-      return 0;
-    }
+    return 0;
 
   CORBA::ULong l = this->components_.length ();
-
   for (CORBA::ULong i = 0; i != l; ++i)
     {
       const IOP::TaggedComponent &component =
         this->components_[i];
-
       if (this->known_tag (component.tag))
-        {
-          this->set_known_component_i (component);
-        }
+        this->set_known_component_i (component);
     }
-
   return 1;
 }
 

@@ -5,14 +5,10 @@
 #include "Builder.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify, 
-           Builder, 
-           "$Id$")
+ACE_RCSID(RT_Notify, TAO_Notify_Builder, "$Id$")
 
 #include "ace/Dynamic_Service.h"
-
 #include "tao/PortableServer/PortableServerC.h"
-
 #include "Factory.h"
 #include "Properties.h"
 #include "POA_Helper.h"
@@ -41,11 +37,7 @@ ACE_RCSID (Notify,
 #include "ETCL_FilterFactory.h"
 #include "Container_T.h"
 
-template <class PROXY_IMPL, 
-          class PROXY, 
-          class PROXY_PTR, 
-          class PROXY_VAR, 
-          class PARENT>
+template <class PROXY_IMPL, class PROXY, class PROXY_PTR, class PROXY_VAR, class PARENT>
 class TAO_Notify_Proxy_Builder_T
 {
 public:

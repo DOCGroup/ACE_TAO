@@ -45,7 +45,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RTCORBA_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /Zi /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "TAO_RTCORBA_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "TAO_RTCORBA_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -72,7 +72,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RTCORBA_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "TAO_RTCORBA_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR- /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "TAO_RTCORBA_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -101,7 +101,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_EVENT_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D ACE_HAS_MFC=1 /D "TAO_RTCORBA_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D ACE_HAS_MFC=1 /D "TAO_RTCORBA_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -130,7 +130,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_EVENT_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /W3 /GR /GX /Zi /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D ACE_HAS_MFC=1 /D "TAO_RTCORBA_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D ACE_HAS_MFC=1 /D "TAO_RTCORBA_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -185,6 +185,10 @@ SOURCE=.\Priority_Mapping.cpp
 # Begin Source File
 
 SOURCE=.\Priority_Mapping_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Private_Transport_Descriptor.cpp
 # End Source File
 # Begin Source File
 
@@ -244,14 +248,6 @@ SOURCE=.\RT_Thread_Lane_Resources_Manager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_Transport_Descriptor.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Transport_Descriptor_Property.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\RTCORBA.cpp
 # End Source File
 # Begin Source File
@@ -298,6 +294,10 @@ SOURCE=.\Priority_Mapping.h
 # Begin Source File
 
 SOURCE=.\Priority_Mapping_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Private_Transport_Descriptor.h
 # End Source File
 # Begin Source File
 
@@ -357,14 +357,6 @@ SOURCE=.\RT_Thread_Lane_Resources_Manager.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_Transport_Descriptor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Transport_Descriptor_Property.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\RTCORBA.h
 # End Source File
 # Begin Source File
@@ -417,6 +409,10 @@ SOURCE=.\Priority_Mapping_Manager.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Private_Transport_Descriptor.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Current.i
 # End Source File
 # Begin Source File
@@ -442,14 +438,6 @@ SOURCE=.\RT_Protocols_Hooks.i
 # Begin Source File
 
 SOURCE=.\RT_Thread_Lane_Resources_Manager.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Transport_Descriptor.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Transport_Descriptor_Property.inl
 # End Source File
 # Begin Source File
 

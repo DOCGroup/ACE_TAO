@@ -2,25 +2,6 @@
 //
 // $Id$
 
-ACE_INLINE
-void
-CORBA::release (CORBA::ServerRequest_ptr x)
-{
-  if (x != 0)
-    {
-      x->_decr_refcnt ();
-    }
-}
-
-ACE_INLINE
-CORBA::Boolean
-CORBA::is_nil (CORBA::ServerRequest_ptr x)
-{
-  return (CORBA::Boolean) (x == 0);
-}
-
-// ===================================================================
-
 ACE_INLINE CORBA::ServerRequest_ptr
 CORBA::ServerRequest::_duplicate (CORBA::ServerRequest_ptr x)
 {
@@ -57,7 +38,7 @@ CORBA::ServerRequest::operation (void) const
 }
 
 ACE_INLINE void
-CORBA::ServerRequest::_tao_lazy_evaluation (bool lazy_evaluation)
+CORBA::ServerRequest::_tao_lazy_evaluation (int lazy_evaluation)
 {
   this->lazy_evaluation_ = lazy_evaluation;
 }

@@ -21,16 +21,16 @@
 //
 // ============================================================================
 
-#include "ace/config-all.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Get_Opt.h"
+#include "ace/Synch_T.h"
 #include "ace/Sched_Params.h"
 #include "ace/Singleton.h"
-#include "ace/Condition_Thread_Mutex.h"
 
 #include "tao/orbconf.h"
 
@@ -103,8 +103,6 @@ argv = force_argv;
 #define UTIL_BOUND_CONSTANT 1000
 // A constant to avoid the utility thread blocking the machine and to
 // bound its  number of computations.
-
-class ACE_Barrier;
 
 class Globals
 {

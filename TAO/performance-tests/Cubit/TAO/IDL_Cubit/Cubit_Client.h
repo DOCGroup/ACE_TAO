@@ -28,7 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Profile_Timer.h"
-#include "tao/ORB_Constants.h"
+#include "tao/corba.h"
 #include "cubitC.h"
 
 class Cubit_Client

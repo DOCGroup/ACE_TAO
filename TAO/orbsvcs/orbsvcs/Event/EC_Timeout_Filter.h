@@ -14,7 +14,6 @@
 
 #ifndef TAO_EC_TIMEOUT_FILTER_H
 #define TAO_EC_TIMEOUT_FILTER_H
-
 #include /**/ "ace/pre.h"
 
 #include "EC_Filter.h"
@@ -113,5 +112,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_EC_TIMEOUT_FILTER_H */

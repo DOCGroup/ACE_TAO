@@ -1,10 +1,5 @@
 #include "RT_Invocation_Endpoint_Selectors.h"
 
-#if !defined (__ACE_INLINE__)
-#include "RT_Invocation_Endpoint_Selectors.i"
-#endif /* __ACE_INLINE__ */
-
-
 #include "RT_Policy_i.h"
 #include "RT_Stub.h"
 #include "RT_Transport_Descriptor.h"
@@ -13,13 +8,10 @@
 #include "RT_Protocols_Hooks.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
+#include "tao/Invocation.h"
 #include "tao/Profile.h"
 #include "tao/Endpoint.h"
 #include "tao/debug.h"
-#include "tao/Profile.h"
-#include "tao/Endpoint.h"
-#include "tao/Profile_Transport_Resolver.h"
-#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 #include "RT_Invocation_Endpoint_Selectors.i"
@@ -30,41 +22,23 @@ ACE_RCSID (RTCORBA,
            RT_Invocation_Endpoint_Selectors,
            "$Id$")
 
+
 void
 TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
-    TAO::Profile_Transport_Resolver *r,
-    ACE_Time_Value *val
-    ACE_ENV_ARG_DECL)
+  TAO_GIOP_Invocation *invocation
+  ACE_ENV_ARG_DECL)
 {
-  if (r == 0)
-    ACE_THROW (CORBA::INTERNAL ());
-
   CORBA::Policy_var client_protocol_policy_base =
-    TAO_RT_Endpoint_Utils::client_protocol_policy (*r
+    TAO_RT_Endpoint_Utils::client_protocol_policy (invocation
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (client_protocol_policy_base.ptr () == 0)
     {
-      do
-        {
-          r->profile (r->stub ()->profile_in_use ());
-
-          int status =
-            this->endpoint_from_profile (*r,
-                                         val
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-
-          if (status == 1)
-            return;
-        }
-      while (r->stub ()->next_profile_retry () != 0);
-
-      // If we get here, we completely failed to find an endpoint selector
-      // that we know how to use, so throw an exception.
-      ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
-                                   CORBA::COMPLETED_NO));
+      this->TAO_Default_Endpoint_Selector::select_endpoint (
+        invocation
+        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else
     {
@@ -84,10 +58,9 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
         tao_client_protocol_policy->protocols_rep ();
 
       this->select_endpoint_based_on_client_protocol_policy (
-        *r,
+        invocation,
         client_protocol_policy.in (),
-        client_protocols,
-        val
+        client_protocols
         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
@@ -95,11 +68,10 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
 
 void
 TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_policy (
-    TAO::Profile_Transport_Resolver &r,
-    RTCORBA::ClientProtocolPolicy_ptr client_protocol_policy,
-    RTCORBA::ProtocolList &client_protocols,
-    ACE_Time_Value *val
-    ACE_ENV_ARG_DECL)
+  TAO_GIOP_Invocation *invocation,
+  RTCORBA::ClientProtocolPolicy_ptr client_protocol_policy,
+  RTCORBA::ProtocolList &client_protocols
+  ACE_ENV_ARG_DECL)
 {
   CORBA::Boolean valid_profile_found = 0;
 
@@ -116,7 +88,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
     {
       // Find the profiles that match the current protocol.
       TAO_Profile *profile = 0;
-      TAO_MProfile &mprofile = r.stub ()->base_profiles ();
+      TAO_MProfile &mprofile = invocation->stub ()->base_profiles ();
 
       for (TAO_PHandle i = 0;
            i < mprofile.profile_count ();
@@ -128,11 +100,11 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
             {
               valid_profile_found = 1;
 
-              r.profile (profile);
+              invocation->profile (profile);
+              invocation->endpoint (invocation->profile ()->endpoint ());
 
               int status =
-                this->endpoint_from_profile (r,
-                                             val
+                this->endpoint_from_profile (invocation
                                              ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
 
@@ -147,13 +119,10 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
   // policy with no success.  Throw exception.
   if (!valid_profile_found)
     {
-      if (r.inconsistent_policies ())
+      if (invocation->inconsistent_policies ().ptr ())
         {
-          CORBA::PolicyList *p =
-            r.inconsistent_policies ();
-
-          p->length (1);
-          (*p)[0u] =
+          invocation->inconsistent_policies ()->length (1);
+          invocation->inconsistent_policies ()[0u] =
             CORBA::Policy::_duplicate (client_protocol_policy);
         }
       ACE_THROW (CORBA::INV_POLICY ());
@@ -168,13 +137,12 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
 
 int
 TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
-    TAO::Profile_Transport_Resolver &r,
-    ACE_Time_Value *val
-    ACE_ENV_ARG_DECL)
+  TAO_GIOP_Invocation *invocation
+  ACE_ENV_ARG_DECL)
 {
   // Narrow to the RT Stub.
   TAO_RT_Stub *rt_stub =
-    dynamic_cast <TAO_RT_Stub *> (r.stub ());
+    ACE_dynamic_cast (TAO_RT_Stub *, invocation->stub ());
 
   if (rt_stub == 0)
     {
@@ -195,7 +163,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
 
   // Get the bands policy.
   CORBA::Policy_var bands_policy =
-    TAO_RT_Endpoint_Utils::priority_bands_policy (r
+    TAO_RT_Endpoint_Utils::priority_bands_policy (invocation
                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -209,17 +177,13 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   // If the priority model policy is not set.
   if (priority_model_policy.ptr () == 0)
     {
-
       // Bands without priority model do not make sense.
       if (bands_policy.ptr () != 0)
         {
-          if (r.inconsistent_policies ())
+          if (invocation->inconsistent_policies ().ptr ())
             {
-              CORBA::PolicyList *p =
-                r.inconsistent_policies ();
-
-              p->length (1);
-              (*p)[0u] =
+              invocation->inconsistent_policies ()->length (1);
+              invocation->inconsistent_policies ()[0u] =
                 CORBA::Policy::_duplicate (bands_policy.in ());
             }
           // Indicate error.
@@ -235,7 +199,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
     {
       // Get the protocol hooks.
       TAO_Protocols_Hooks *protocol_hooks =
-        r.stub ()->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
+        invocation->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       CORBA::Short server_priority = 0;
@@ -271,7 +235,6 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
           // If there are no bands.
           if (bands_policy.ptr () == 0)
             {
-
               // Match the priority of the client thread with the
               // endpoint.
               match_priority = 1;
@@ -279,7 +242,6 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
           // There are bands.
           else
             {
-
               // Check which band range we fall in.
               int in_range = 0;
               protocol_hooks->get_selector_bands_policy_hook (
@@ -292,15 +254,12 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
               // If priority doesn't fall into any of the bands.
               if (!in_range)
                 {
-                  if (r.inconsistent_policies ())
+                  if (invocation->inconsistent_policies ().ptr ())
                     {
-
-                      CORBA::PolicyList *p =
-                        r.inconsistent_policies ();
-                      p->length (2);
-                      (*p)[0u] =
+                      invocation->inconsistent_policies ()->length (2);
+                      invocation->inconsistent_policies ()[0u] =
                         CORBA::Policy::_duplicate (bands_policy.in ());
-                      (*p)[1u] =
+                      invocation->inconsistent_policies ()[1u] =
                         CORBA::Policy::_duplicate (
                           priority_model_policy.in ());
                     }
@@ -316,14 +275,11 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
         }
     }
 
-  TAO_Endpoint *ep =
-    r.profile ()->endpoint ();
-
-  while (ep != 0)
+  while (invocation->endpoint () != 0)
     {
       // Get the priority of the endpoint.
       CORBA::Short endpoint_priority =
-        ep->priority ();
+        invocation->endpoint ()->priority ();
 
       // If <all_endpoints_are_valid> or match the priority of the
       // client thread or match the priority of the band or
@@ -341,7 +297,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
           (match_bands &&
            endpoint_priority <= max_priority &&
            endpoint_priority >= min_priority) ||
-          r.profile ()->endpoint_count () == 1 &&
+          invocation->profile ()->endpoint_count () == 1 &&
           endpoint_priority == TAO_INVALID_PRIORITY)
         {
           TAO_RT_Transport_Descriptor_Private_Connection_Property
@@ -351,14 +307,14 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
             banded_connection_descriptor_property;
 
           TAO_RT_Transport_Descriptor
-            rt_transport_descriptor (ep);
+            rt_transport_descriptor (invocation->endpoint ());
 
           if (rt_stub->private_connection ())
             {
               private_connection_descriptor_property.init
                 (ACE_static_cast (long,
                                   ACE_reinterpret_cast (ptrdiff_t,
-                                                        r.stub ())));
+                                                        invocation->stub ())));
               rt_transport_descriptor.insert
                 (&private_connection_descriptor_property);
             }
@@ -372,19 +328,16 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                 (&banded_connection_descriptor_property);
             }
 
-          bool status =
-            r.try_connect (&rt_transport_descriptor,
-                           val
-                           ACE_ENV_ARG_PARAMETER);
+          int status = invocation->perform_call (rt_transport_descriptor ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           // Check if the invocation has completed.
-          if (status == true)
+          if (status == 1)
             return 1;
         }
 
       // Go to the next endpoint in this profile.
-      ep = ep->next();
+      invocation->endpoint (invocation->endpoint()->next());
     }
 
   return 0;

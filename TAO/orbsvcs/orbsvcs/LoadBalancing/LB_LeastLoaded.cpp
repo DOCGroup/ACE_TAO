@@ -3,15 +3,14 @@
 #include "LB_LeastLoaded.h"
 #include "LB_LoadMap.h"
 #include "LB_Random.h"
-
 #include "orbsvcs/PortableGroup/PG_conf.h"
-
 #include "tao/debug.h"
-#include "tao/ORB_Constants.h"
+
 
 ACE_RCSID (LoadBalancing,
            LB_LeastLoaded,
            "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 #include "LB_LeastLoaded.inl"

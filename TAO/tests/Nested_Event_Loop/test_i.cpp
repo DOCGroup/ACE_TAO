@@ -1,7 +1,6 @@
 // $Id$
 
 #include "test_i.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Nested_Event_Loop, test_i, "$Id$")
 

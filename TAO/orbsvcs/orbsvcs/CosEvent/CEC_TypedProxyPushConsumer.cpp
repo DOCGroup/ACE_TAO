@@ -38,29 +38,17 @@ TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedEve
                                          this,
                                          this->typed_event_channel_);
 
-  ACE_TRY_NEW_ENV {
-    // tempporary fix, should put this into some init function.
-
-    this->oid_ =
-      this->default_POA_->activate_object (this->dsi_impl_
+  this->oid_ =
+    this->default_POA_->activate_object (this->dsi_impl_
                                          ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
-  }
-  ACE_CATCHALL {
-  }
-  ACE_ENDTRY;
 }
   
 // Implementation skeleton destructor
 TAO_CEC_TypedProxyPushConsumer::~TAO_CEC_TypedProxyPushConsumer (void)
 {
-  ACE_TRY_NEW_ENV {
-    this->default_POA_->deactivate_object (this->oid_ ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHALL {
-  }
-  ACE_ENDTRY;
+  this->default_POA_->deactivate_object (this->oid_);
+  ACE_TRY_CHECK;
 
   delete dsi_impl_;
 

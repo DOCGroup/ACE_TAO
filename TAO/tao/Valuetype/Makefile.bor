@@ -10,7 +10,6 @@ OBJFILES = \
 	$(OBJDIR)\ValueFactory.obj \
 	$(OBJDIR)\ValueFactory_Map.obj \
 	$(OBJDIR)\Valuetype_Adapter_Impl.obj \
-   $(OBJDIR)\AbstractBase_Invocation_Adapter.obj \
 	$(OBJDIR)\Seq_Tmplinst.obj
 
 RESOURCE = $(OBJDIR)\TAO_Valuetype.res

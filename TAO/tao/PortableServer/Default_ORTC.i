@@ -43,16 +43,29 @@ TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_static_repository_id ()
   return "IDL:TAO_Default_ORT/ObjectReferenceTemplate:1.0";
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<TAO_Default_ORT::ObjectReferenceTemplate>::to_value (
+    CORBA::ValueBase *&_tao_elem
+  ) const
+{
+  CORBA::add_ref (this->value_);
+  _tao_elem = this->value_;
+  return 1;
+}
+
 // TAO_IDL - Generated from
-// be/be_valuetype.cpp:463
+// be/be_valuetype.cpp:217
 
 #if defined (__ACE_INLINE__)
 
-namespace CORBA
+TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (TAO_Default_ORT::ObjectReferenceTemplate *);
 }
+TAO_NAMESPACE_CLOSE
 
 #endif /*__ACE_INLINE__*/
 

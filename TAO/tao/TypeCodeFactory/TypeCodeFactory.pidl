@@ -25,10 +25,10 @@
 //   declared in it as CORBA_foo, unalias the simple typedefs
 //   which don't have a CORBA_ analog in corbafwd.h.
 //
-//   2. Generate the code. The command used to generate code from this
+//   2. Generate the code. The command used to generate code from this 
 //   IDL file is:
 //
-//     tao_idl -o orig -Ge 1 -GT -I../.. -ci "C.inl" \
+//     tao_idl -o orig -Ge 1 -I../.. -ci "C.inl" \
 //          -Wb,export_macro=TAO_TypeCodeFactory_Export \
 //          -Wb,export_include=typecodefactory_export.h \
 //          -Wb,pre_include="ace/pre.h" \
@@ -38,7 +38,7 @@
 //   3. Copy the generated files to the current directory.
 //
 //   4. Patch the generated files, using
-//
+//      
 //      patch < diffs/TypeCodeFactoryC.h.diff
 //      patch < diffs/TypeCodeFactoryC.i.diff
 //      patch < diffs/TypeCodeFactoryC.cpp.diff

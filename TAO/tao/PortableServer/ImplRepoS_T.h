@@ -15,18 +15,12 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
-// and
-//       Institute for Software Integrated Systems
-//       Vanderbilt University
-//       Nashville, TN
-//       USA
-//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:553
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:604
 
 #ifndef _TAO_IDL_ORIG_IMPLREPOS_T_H_
 #define _TAO_IDL_ORIG_IMPLREPOS_T_H_
@@ -45,7 +39,7 @@
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
 
 #if defined (ACE_HAS_USING_KEYWORD)
-namespace POA_ImplementationRepository
+TAO_NAMESPACE  POA_ImplementationRepository
 {
   
   // TAO_IDL - Generated from
@@ -367,11 +361,12 @@ namespace POA_ImplementationRepository
     ServerInformationIterator_tie (const ServerInformationIterator_tie &);
     void operator= (const ServerInformationIterator_tie &);
   };
-} // module ImplementationRepository
+}
+TAO_NAMESPACE_CLOSE // module ImplementationRepository
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1058
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1141
 
 #if defined (__ACE_INLINE__)
 #include "ImplRepoS_T.i"

@@ -13,7 +13,6 @@
 
 #ifndef TAO_EXCLUSIVE_TMS_H
 #define TAO_EXCLUSIVE_TMS_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/Transport_Mux_Strategy.h"
@@ -59,8 +58,8 @@ public:
 
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
-  virtual bool idle_after_send (void);
-  virtual bool idle_after_reply (void);
+  virtual int idle_after_send (void);
+  virtual int idle_after_reply (void);
   virtual void connection_closed (void);
   //@}
 

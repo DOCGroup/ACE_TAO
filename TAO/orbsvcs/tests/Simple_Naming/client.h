@@ -20,6 +20,7 @@
 #include "test_objectS.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
+#include "tao/corba.h"
 #include "tao/PortableServer/ORB_Manager.h"
 #include "ace/Task.h"
 

@@ -5,7 +5,6 @@
 
 #include "tao/RTCORBA/Multi_Priority_Mapping.h"
 #include "tao/debug.h"
-#include "ace/Log_Msg.h"
 #include "ace/Sched_Params.h"
 
 #if !defined (__ACE_INLINE__)

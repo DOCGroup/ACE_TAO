@@ -5,14 +5,15 @@
 
 #ifndef TAO_CLIENT_ORB_INITIALIZER_H
 #define TAO_CLIENT_ORB_INITIALIZER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -50,5 +51,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_CLIENT_ORB_INITIALIZER_H */

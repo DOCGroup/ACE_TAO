@@ -828,15 +828,15 @@ template class ACE_RB_Tree_Node<const char *, TAO_RT_Info_Ex*>;
 template class ACE_RB_Tree_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
 template class ACE_RB_Tree_Iterator_Base<char const *, TAO_RT_Info_Ex*, ACE_Less_Than<char const *>, TAO_SYNCH_MUTEX>;
 template class ACE_RB_Tree_Reverse_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>;
-template class TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Dependency_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_DFS_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Priority_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_RSE_Reverse_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
-template class TAO_Tuple_Admission_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy>;
-template class TAO_RSE_SCC_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Dependency_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_DFS_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Priority_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_RSE_Reverse_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
+template class TAO_Tuple_Admission_Visitor<TAO_MUF_Reconfig_Sched_Strategy>;
+template class TAO_RSE_SCC_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>
 #pragma instantiate ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >
@@ -879,13 +879,13 @@ template class TAO_RSE_SCC_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYN
 #pragma instantiate ACE_RB_Tree_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_RB_Tree_Iterator_Base<char const *, TAO_RT_Info_Ex*, ACE_Less_Than<char const *>, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_RB_Tree_Reverse_Iterator<const char *, TAO_RT_Info_Ex*, ACE_Less_Than<const char *>, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Dependency_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_DFS_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Priority_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_RSE_Reverse_Propagation_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
-#pragma instantiate TAO_Tuple_Admission_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy>
-#pragma instantiate TAO_RSE_SCC_Visitor<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Dependency_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_DFS_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Priority_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Criticality_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Forward_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_RSE_Reverse_Propagation_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_Tuple_Admission_Visitor<TAO_MUF_Reconfig_Sched_Strategy>
+#pragma instantiate TAO_RSE_SCC_Visitor<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

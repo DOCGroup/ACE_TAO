@@ -6,20 +6,21 @@
 
 CFG=Trading_Service - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
-!MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE run the tool that generated this project file and specify the
+!MESSAGE nmake output type.  You can then use the following command:
+!MESSAGE
 !MESSAGE NMAKE /f "Trading_Service.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "Trading_Service.mak" CFG="Trading_Service - Win32 Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "Trading_Service - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "Trading_Service - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -30,55 +31,35 @@ RSC=rc.exe
 
 !IF  "$(CFG)" == "Trading_Service - Win32 Release"
 
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "Release"
-# PROP BASE Intermediate_Dir "Release"
-# PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
-# PROP Ignore_Export_Lib 0
+# PROP Intermediate_Dir "Release\Trading_Service"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I ".." /I "..\.." /I "..\..\.." /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D TAO_ORBSVCS_HAS_DLL=1 /D "TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG" /FD /c
+# ADD CPP /nologo /O2 /W3 /GX /MD /GR /I "..\..\orbsvcs" /I "..\.." /I "..\..\tao" /I "..\..\.." /D NDEBUG /D WIN32 /D _CONSOLE /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d NDEBUG /i "..\..\orbsvcs" /i "..\.." /i "..\..\tao" /i "..\..\.."
 BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
+# ADD BSC32 /nologo 
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_DynamicAny.lib TAO_CosNaming.lib TAO_CosTrading.lib TAO_Svc_Utils.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao\DynamicAny" /libpath:"..\orbsvcs" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_IORTable.lib TAO_CosTrading.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_Valuetype.lib TAO_ObjRefTemplate.lib TAO_DynamicAny.lib TAO.lib ACE.lib /libpath:"..\..\..\lib" /nologo /version:1.3.1 /subsystem:console /pdb:"Release\Trading_Service.pdb"  /machine:I386 /out:"Release\Trading_Service.exe"
 
 !ELSEIF  "$(CFG)" == "Trading_Service - Win32 Debug"
 
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Debug"
-# PROP BASE Intermediate_Dir "Debug"
-# PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Debug"
-# PROP Ignore_Export_Lib 0
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug\Trading_Service"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /I "..\.." /I "..\..\.." /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D TAO_ORBSVCS_HAS_DLL=1 /FD /c
+# ADD CPP /nologo /Ob0 /W3 /Gm /GX /Zi /MDd /GR /Gy /I "..\..\orbsvcs" /I "..\.." /I "..\..\tao" /I "..\..\.." /D _DEBUG /D WIN32 /D _CONSOLE /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d _DEBUG /i "..\..\orbsvcs" /i "..\.." /i "..\..\tao" /i "..\..\.."
 BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
+# ADD BSC32 /nologo 
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_DynamicAnyd.lib TAO_CosNamingd.lib TAO_CosTradingd.lib TAO_Svc_Utilsd.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\tao\DynamicAny" /libpath:"..\orbsvcs" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_CosNamingd.lib TAO_Svc_Utilsd.lib TAO_IORTabled.lib TAO_CosTradingd.lib TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_Valuetyped.lib TAO_ObjRefTemplated.lib TAO_DynamicAnyd.lib TAOd.lib ACEd.lib /libpath:"..\..\..\lib" /nologo /version:1.3.1 /subsystem:console /pdb:".\Trading_Service.pdb" /debug /machine:I386 /out:".\Trading_Service.exe"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -86,22 +67,30 @@ LINK32=link.exe
 # Name "Trading_Service - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter ""
+# PROP Default_Filter "cpp;cxx;c"
 # Begin Source File
 
-SOURCE=.\Trading_Server.cpp
+SOURCE=".\Trading_Server.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=.\Trading_Service.cpp
+SOURCE=".\Trading_Service.cpp"
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
+# PROP Default_Filter "h;hpp;hxx;hh"
+# Begin Source File
+
+SOURCE=".\Trading_Service.h"
+# End Source File
+# End Group
+# Begin Group "Documentation"
+
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Trading_Service.h
+SOURCE=".\README"
 # End Source File
 # End Group
 # End Target

@@ -19,25 +19,20 @@
 #define TAO_STUB_FACTORY_H_
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
+#include "ace/CORBA_macros.h"
 
-#include "tao/TAO_Export.h"
 
 // Forward references
 class TAO_MProfile;
 class TAO_ORB_Core;
 class TAO_Stub;
-
-namespace CORBA
-{
-  class Environment;
-}
 
 /**
  * @class TAO_Stub_Factory
@@ -49,7 +44,8 @@ namespace CORBA
  * plugged into the ORB_Core, and is used by the ORB_Core to create
  * Stub Objects.
  */
-class TAO_Export TAO_Stub_Factory : public ACE_Service_Object
+class TAO_Export TAO_Stub_Factory
+  : public ACE_Service_Object
 {
 public:
   // -- Ctor/Dtor --

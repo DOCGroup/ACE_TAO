@@ -7,7 +7,6 @@
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
-
 #include "Properties.h"
 #include "Factory.h"
 #include "POA_Helper.h"
@@ -16,9 +15,7 @@
 #include "Container_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify, 
-           Notify_Container_T, 
-           "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Container_T, "$Id$")
 
 template<class TYPE>
 TAO_Notify_Container_T<TYPE>::TAO_Notify_Container_T (void)

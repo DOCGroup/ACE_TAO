@@ -8,7 +8,6 @@
  */
 #include "Server_Timer.h"
 #include "ace/Reactor.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Bug_1270_Regression, Server_Timer, "$Id$")
 

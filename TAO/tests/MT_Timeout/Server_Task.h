@@ -4,9 +4,9 @@
 
 #ifndef SERVER_TASK_H
 #define SERVER_TASK_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
-#include "tao/ORB.h"
+#include "tao/corba.h"
 #include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -33,5 +33,5 @@ private:
   ACE_Time_Value running_time_;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* SERVER_TASK_H */

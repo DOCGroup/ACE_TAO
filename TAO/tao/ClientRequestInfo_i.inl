@@ -15,11 +15,10 @@ TAO_ClientRequestInfo_i::exception (CORBA::Exception *exception)
   this->caught_exception_ = exception;
 }
 
-// @@ Need to go!
 ACE_INLINE void
-TAO_ClientRequestInfo_i::response_expected (CORBA::Boolean /*flag*/)
+TAO_ClientRequestInfo_i::response_expected (CORBA::Boolean flag)
 {
-  //   this->response_expected_ = flag;
+  this->response_expected_ = flag;
 }
 
 ACE_INLINE void

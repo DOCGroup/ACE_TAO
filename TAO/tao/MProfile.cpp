@@ -1,18 +1,17 @@
 // -*- C++ -*-
 //
 // $Id$
+
 #include "tao/MProfile.h"
 #include "tao/Environment.h"
 #include "tao/Profile.h"
 #include "tao/PolicyC.h"
-#include "tao/ORB_Constants.h"
 
-#include "ace/Log_Msg.h"
-#include "ace/Guard_T.h"
 
 ACE_RCSID (tao,
            MProfile,
            "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/MProfile.i"
@@ -135,7 +134,8 @@ TAO_MProfile::set (const TAO_MProfile &mprofile)
   // this->forward_from_ = 0;
 
   // Now reference all profiles.
-  for (TAO_PHandle h = 0; h < this->last_; ++h)
+
+  for (TAO_PHandle h = 0; h < this->size_; ++h)
     {
       this->pfiles_[h] = mprofile.pfiles_[h];
       if (this->pfiles_[h] != 0)

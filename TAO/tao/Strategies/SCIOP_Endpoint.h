@@ -19,14 +19,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "tao/Endpoint.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if TAO_HAS_SCIOP == 1
-#include "tao/Endpoint.h"
+
 #include "strategies_export.h"
 #include "tao/CORBA_String.h"
 #include "ace/INET_Addr.h"

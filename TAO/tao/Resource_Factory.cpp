@@ -1,14 +1,18 @@
 // $Id$
 
-#include "Resource_Factory.h"
-#include "Protocol_Factory.h"
-#include "orbconf.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
+
+#include "tao/Resource_Factory.h"
+#include "tao/Protocol_Factory.h"
+#include "tao/Client_Strategy_Factory.h"
+
 
 ACE_RCSID (tao,
            Resource_Factory,
            "$Id$")
+
 
 // ****************************************************************
 
@@ -22,9 +26,7 @@ TAO_Protocol_Item::TAO_Protocol_Item (const ACE_CString &name)
 TAO_Protocol_Item::~TAO_Protocol_Item (void)
 {
   if (this->factory_owner_ == 1)
-    {
-      delete this->factory_;
-    }
+    delete this->factory_;
 }
 
 const ACE_CString &

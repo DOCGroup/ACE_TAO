@@ -221,21 +221,21 @@ public:
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  PortableServer::ImplicitActivationPolicy_ptr
+  PortableServer::ImplicitActivationPolicy_ptr 
   create_implicit_activation_policy (
       PortableServer::ImplicitActivationPolicyValue value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::ServantRetentionPolicy_ptr
+  PortableServer::ServantRetentionPolicy_ptr 
   create_servant_retention_policy (
       PortableServer::ServantRetentionPolicyValue value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::RequestProcessingPolicy_ptr
+  PortableServer::RequestProcessingPolicy_ptr 
   create_request_processing_policy (
       PortableServer::RequestProcessingPolicyValue value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -547,15 +547,9 @@ public:
 
   virtual CORBA::Policy *server_protocol (void);
 
-  CORBA::ULong outstanding_requests (void) const;
+protected:
 
   const ACE_CString &name (void) const;
-
-  TAO_Active_Object_Map &active_object_map (void) const;
-
-  CORBA::Boolean waiting_destruction (void) const;
-
-protected:
 
   /// Template method for creating new POA's of this type.
   virtual TAO_POA *new_POA (const String &name,
@@ -813,6 +807,8 @@ protected:
                      PortableServer::POA::ObjectNotActive,
                      PortableServer::POA::WrongPolicy));
 
+  TAO_Active_Object_Map &active_object_map (void) const;
+
   /// Call the IORInterceptor::establish_components() method on all
   /// registered IORInterceptors.
   /**
@@ -897,6 +893,8 @@ protected:
 
   static CORBA::ULong root_key_type_length (void);
 
+  CORBA::ULong outstanding_requests (void) const;
+
   void outstanding_requests (CORBA::ULong new_outstanding_requests);
 
   CORBA::ULong increment_outstanding_requests (void);
@@ -904,6 +902,8 @@ protected:
   CORBA::ULong decrement_outstanding_requests (void);
 
   TAO_SYNCH_RECURSIVE_MUTEX &single_threaded_lock (void) const;
+
+  CORBA::Boolean waiting_destruction (void) const;
 
   String name_;
 
@@ -964,11 +964,11 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  typedef
+  typedef 
     ACE_Hash_Map_Manager_Ex<
-        ACE_CString, TAO_POA *,
-        ACE_Hash<ACE_CString>,
-        ACE_Equal_To<ACE_CString>,
+        ACE_CString, TAO_POA *, 
+        ACE_Hash<ACE_CString>, 
+        ACE_Equal_To<ACE_CString>, 
         ACE_Null_Mutex
       >
     CHILDREN;
@@ -1045,7 +1045,7 @@ private:
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-class TAO_PortableServer_Export TAO_Adapter_Activator
+class TAO_PortableServer_Export TAO_Adapter_Activator 
   : public PortableServer::AdapterActivator
 {
 public:

@@ -23,10 +23,6 @@
 #include "tao/debug.h"
 
 #include "ace/Read_Buffer.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/os_include/os_ctype.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Concurrency, CC_client, "$Id$")
 
@@ -310,8 +306,8 @@ CC_Client::run_extended_tests (char *params)
   ACE_DEBUG((LM_DEBUG, "Number of arguments: %i\n", no_of_args));
 
   char *cmd  = ACE_OS::strtok (params, ";");
-  char *arg1 = ACE_OS::strtok (0, ";");
-  //  char *arg2 = ACE_OS::strtok (0, ";");
+  char *arg1 = ACE_OS::strtok (NULL, ";");
+  //  char *arg2 = ACE_OS::strtok (NULL, ";");
 
   // A possible scenario using test 1,2, and 3 Create and lock the
   // lock set with the name 'Name'

@@ -18,9 +18,7 @@
 
 #include "recursive_union.h"
 
-ACE_RCSID (Param_Test,
-           recursive_union, 
-           "$Id$")
+ACE_RCSID(Param_Test, recursive_union, "$Id$")
 
 const CORBA::ULong MAX_DEPTH = 3;
 const CORBA::ULong MAX_SEQ_LENGTH = 2;
@@ -54,7 +52,7 @@ Test_Recursive_Union::dii_req_invoke (CORBA::Request *req
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
-  req->add_out_arg ("s3") <<= this->out_.in ();
+  req->add_out_arg ("s3") = CORBA::Any (Param_Test::_tc_Recursive_Union, 0);
 
   req->set_return_type (Param_Test::_tc_Recursive_Union);
 

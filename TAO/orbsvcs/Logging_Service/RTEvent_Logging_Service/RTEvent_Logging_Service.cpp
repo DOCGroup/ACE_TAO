@@ -8,8 +8,6 @@
 #include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
-#include "ace/OS_main.h"
-#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (RTEvent_Logging_Service,
            RTEvent_Logging_Service,

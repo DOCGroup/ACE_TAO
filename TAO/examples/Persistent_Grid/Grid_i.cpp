@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
-
 #include "Grid_i.h"
+#include "tao/corba.h"
 
 // Default constructor.
 
@@ -153,6 +153,15 @@ Grid_i::set_pool (pool_t *pool)
 Grid_Factory_i::Grid_Factory_i (void)
   : orb_ (0),
     pool_name_ (0),
+    pool_t_ (0)
+{
+  // no-op
+}
+
+// Copy Constructor
+
+Grid_Factory_i::Grid_Factory_i (Grid_Factory_i &grid)
+  : POA_Grid_Factory (grid),
     pool_t_ (0)
 {
   // no-op

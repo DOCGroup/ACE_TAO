@@ -10,63 +10,41 @@
  *  for the CORBA Object.
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
- *  @author  Balachandran Natarajan (modified the implementation)
  */
 //=============================================================================
+
 
 #ifndef TAO_REMOTE_OBJECT_PROXY_BROKER_H
 #define TAO_REMOTE_OBJECT_PROXY_BROKER_H
 
 #include /**/ "ace/pre.h"
 
+#include "tao/corbafwd.h"
 #include "tao/Object_Proxy_Broker.h"
-#include "tao/orbconf.h"
+#include "tao/Remote_Object_Proxy_Impl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace TAO
+class TAO_Export TAO_Remote_Object_Proxy_Broker
+  : public TAO_Object_Proxy_Broker
 {
-  /**
-   * @class Remote_Object_Proxy_Broker
-   *
-   * @brief Remote_Object_Proxy_Broker
-   *
-   * A broker for standard CORBA::Object calls that needs to be made
-   * on remote objects.
-   */
+public:
 
-  class TAO_Export Remote_Object_Proxy_Broker : public Object_Proxy_Broker
-  {
-  public:
-    /// Please see the documentation in Object_Proxy_Broker.h for
-    /// details.
+  virtual TAO_Object_Proxy_Impl &select_proxy (CORBA::Object_ptr object
+                                               ACE_ENV_ARG_DECL);
 
-    virtual CORBA::Boolean _is_a (CORBA::Object_ptr target,
-                                  const char *logical_type_id
-                                  ACE_ENV_ARG_DECL);
+private:
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+  TAO_Remote_Object_Proxy_Impl remote_proxy_impl_;
 
-  virtual CORBA::Boolean _non_existent (CORBA::Object_ptr target
-                                        ACE_ENV_ARG_DECL);
-
-  virtual CORBA::InterfaceDef * _get_interface (
-      CORBA::Object_ptr target
-      ACE_ENV_ARG_DECL
-    );
-
-  virtual CORBA::Object_ptr _get_component (CORBA::Object_ptr target
-                                            ACE_ENV_ARG_DECL);
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-
-  };
-}
+};
 
 // -----------------------------------------------------
 
-TAO::Remote_Object_Proxy_Broker *the_tao_remote_object_proxy_broker (void);
+TAO_Remote_Object_Proxy_Broker *the_tao_remote_object_proxy_broker (void);
+
 
 #include /**/ "ace/post.h"
 

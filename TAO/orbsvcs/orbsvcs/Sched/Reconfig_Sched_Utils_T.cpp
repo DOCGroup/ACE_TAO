@@ -726,12 +726,10 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
       // @TODO - check for conjunction nodes here and perform conjunctive
       // function on existing rate tuples.
 
-#ifdef SCHEDULER_LOGGING
       ACE_DEBUG((LM_DEBUG, "Inserting new propagated tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n", 
                  successor.actual_rt_info ()->handle, 
                  &successor,
                  (*tuple_ptr_ptr)));
-#endif
       // Propagate tuples disjunctively. 
       successor.insert_tuple (**tuple_ptr_ptr,
                               TAO_Reconfig_Scheduler_Entry::PROPAGATED);
@@ -759,13 +757,10 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
       // @TODO - check for conjunction nodes here and perform conjunctive
       // function on existing rate tuples.
 
-#ifdef SCHEDULER_LOGGING
       ACE_DEBUG((LM_DEBUG, "Inserting new propagated tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n", 
                  successor.actual_rt_info ()->handle, 
                  &successor,
                  (*tuple_ptr_ptr)));
-#endif
-
       // Propagate tuples disjunctively. 
       successor.insert_tuple (**tuple_ptr_ptr,
                               TAO_Reconfig_Scheduler_Entry::PROPAGATED);
@@ -814,14 +809,13 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig_Scheduler_Entry &rse)
 {
   int result = 0;
-#ifdef SCHEDULER_LOGGING
+
   ACE_DEBUG ((LM_DEBUG, 
               "Priority_Visitor visiting %s[%d],crit=%d,period=%d\n",
               rse.actual_rt_info ()->entry_point.in(),
               rse.actual_rt_info ()->handle,
               rse.actual_rt_info ()->criticality,
               rse.actual_rt_info ()->period));
-#endif
 
   if (previous_entry_ == 0)
     {
@@ -835,14 +829,13 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig
     }
   else
     {
-#ifdef SCHEDULER_LOGGING
       ACE_DEBUG ((LM_DEBUG, 
                   "Previous entry %s[%d],crit=%d,period=%d\n",
                   previous_entry_->actual_rt_info ()->entry_point.in(),
                   previous_entry_->actual_rt_info ()->handle,
                   previous_entry_->actual_rt_info ()->criticality,
                   previous_entry_->actual_rt_info ()->period));
-#endif
+
       // Don't change priority levels on a disabled node.
       if (rse.enabled_state () == RtecScheduler::RT_INFO_DISABLED
           || RECONFIG_SCHED_STRATEGY::compare_priority (*previous_entry_, rse) == 0)
@@ -1055,14 +1048,12 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 {
   ACE_UNUSED_ARG (di);
 
-#ifdef SCHEDULER_LOGGING
   ACE_DEBUG ((LM_DEBUG, 
               "Crit Prop_Visitor visiting %s[%d], successor is %s[%d]\n",
               entry.actual_rt_info ()->entry_point.in(),
               entry.actual_rt_info ()->handle,
               successor.actual_rt_info ()->entry_point.in(),
               successor.actual_rt_info ()->handle));
-#endif
 
   if (successor.enabled_state () != RtecScheduler::RT_INFO_DISABLED)
     {
@@ -1077,11 +1068,9 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 
       successor.actual_rt_info ()->criticality = max_crit;
 
-#ifdef SCHEDULER_LOGGING
       ACE_DEBUG ((LM_DEBUG, 
                   "Successor's new criticality is %d\n",
                   successor.actual_rt_info ()->criticality));
-#endif
     }
 
   // Do not recurse on the successor node, just continue to the next successor.

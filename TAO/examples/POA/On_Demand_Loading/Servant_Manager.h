@@ -17,16 +17,17 @@
 //
 //==================================================================================
 
+#include "ace/OS.h"
+
 #ifndef SERVANT_MANAGER_H
 #define SERVANT_MANAGER_H
 
 #include "ace/DLL.h"
 #include "ace/Containers.h"
-
+#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/POA.h"
 
-#include "tao/ORB.h"
+#include "tao/PortableServer/POA.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

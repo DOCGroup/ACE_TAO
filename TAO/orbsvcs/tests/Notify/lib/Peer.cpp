@@ -6,7 +6,7 @@
 #include "Peer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(lib, TAO_Peer, "$Id$")
+ACE_RCSID(lib, TAO_Peer, "$id$")
 
 #include "ace/Arg_Shifter.h"
 #include "Name.h"

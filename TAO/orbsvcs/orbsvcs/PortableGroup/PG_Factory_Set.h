@@ -14,7 +14,7 @@
 #ifndef TAO_PG_FACTORY_SET_H
 #define TAO_PG_FACTORY_SET_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -43,6 +43,9 @@ struct TAO_PG_Factory_Node
   /// Member factory information.
   PortableGroup::FactoryInfo factory_info;
 
+  /// The ObjectGroupId to which this member belongs
+  PortableGroup::ObjectGroupId object_group_id;
+
   /// FactoryCreationId assigned to the member.
   PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
 
@@ -51,6 +54,6 @@ struct TAO_PG_Factory_Node
 typedef ACE_Array_Base<TAO_PG_Factory_Node> TAO_PG_Factory_Set;
 
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif  /* TAO_PG_FACTORY_SET_H */

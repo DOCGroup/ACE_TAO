@@ -2,8 +2,10 @@
 
 #include "GIOP_Message_Base.h"
 #include "operation_details.h"
+#include "GIOP_Utils.h"
 #include "debug.h"
 #include "ORB_Core.h"
+#include "Leader_Follower.h"
 #include "TAO_Server_Request.h"
 #include "GIOP_Message_Locate_Header.h"
 #include "Transport.h"
@@ -15,28 +17,16 @@
 # include "GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           GIOP_Message_Base, 
-           "$Id$")
+ACE_RCSID (tao, GIOP_Message_Base, "$Id$")
+
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               size_t /*input_cdr_size*/)
-  : orb_core_ (orb_core)
-    , message_state_ (orb_core,
-                      this)
-    , out_stream_ (this->buffer_,
-                   sizeof this->buffer_, /* ACE_CDR::DEFAULT_BUFSIZE */
-                   TAO_ENCAP_BYTE_ORDER,
-                   orb_core->output_cdr_buffer_allocator (),
-                   orb_core->output_cdr_dblock_allocator (),
-                   orb_core->output_cdr_msgblock_allocator (),
-                   orb_core->orb_params ()->cdr_memcpy_tradeoff (),
-                   TAO_DEF_GIOP_MAJOR,
-                   TAO_DEF_GIOP_MINOR)
+  : orb_core_ (orb_core),
+    message_state_ (orb_core,
+                    this)
 {
-#if defined (ACE_HAS_PURIFY)
-  ACE_OS::memset(buffer_, 0, sizeof (buffer_));
-#endif /* ACE_HAS_PURIFY */
+
 }
 
 
@@ -47,19 +37,13 @@ TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base (void)
 
 
 void
-TAO_GIOP_Message_Base::init (CORBA::Octet major,
-                             CORBA::Octet minor)
+TAO_GIOP_Message_Base::init (CORBA::Octet /*major*/,
+                             CORBA::Octet /*minor*/)
 {
-  // Set the giop version of the out stream
-  this->out_stream_.set_version (major,
-                                 minor);
+  // Set the state
+  // this->set_state (major, minor);
 }
 
-TAO_OutputCDR &
-TAO_GIOP_Message_Base::out_stream (void)
-{
-  return this->out_stream_;
-}
 
 void
 TAO_GIOP_Message_Base::reset (void)

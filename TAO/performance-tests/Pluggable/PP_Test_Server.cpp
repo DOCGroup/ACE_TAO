@@ -3,7 +3,6 @@
 #include "PP_Test_Server.h"
 #include "tao/TAO_Internal.h"
 #include "tao/debug.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(IDL_Cubit, Cubit_Server, "$Id$")
 
