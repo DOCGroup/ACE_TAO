@@ -442,6 +442,11 @@ public:
   // via the notify queue before breaking out of its
   // <ACE_Message_Queue::dequeue> loop.
 
+  virtual int purge_pending_notifications (ACE_Event_Handler * = 0);
+  // Purge any notifications pending in this reactor for the specified
+  // <ACE_Event_Handler> object. Returns the number of notifications
+  // purged. Returns -1 on error.
+
   // = Assorted helper methods.
   
   virtual int handler (ACE_HANDLE handle,

@@ -26,6 +26,8 @@ ACE_Event_Handler::ACE_Event_Handler (ACE_Reactor *r,
 ACE_Event_Handler::~ACE_Event_Handler (void) 
 {
   // ACE_TRACE ("ACE_Event_Handler::~ACE_Event_Handler");
+  if (this->reactor_ != 0)
+    this->reactor_->purge_pending_notifications (this);
 }
 
 // Gets the file descriptor associated with this I/O device. 

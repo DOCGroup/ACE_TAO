@@ -2299,6 +2299,80 @@ ACE_WFMO_Reactor_Notify::max_notify_iterations (void)
   return this->max_notify_iterations_;
 }
 
+int
+ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
+{
+  ACE_TRACE ("ACE_WFMO_Reactor_Notify::purge_pending_notifications");
+
+  // go over message queue and take out all the matching event handlers
+  // if eh = 0, purge all..
+
+  if (this->message_queue_.is_empty ())
+    return 0;
+
+  // Guard against new and/or delivered notifications while purging.
+  // WARNING!!! The use of the notification queue's lock object for this
+  // guard makes use of the knowledge that on Win32, the mutex protecting
+  // the queue is really a CriticalSection, which is recursive. This is
+  // how we can get away with locking it down here and still calling
+  // member functions on the queue object.
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->message_queue_.lock(), -1);
+
+  // first, copy all to our own local queue. Since we've locked everyone out
+  // of here, there's no need to use any synchronization on this queue.
+  ACE_Message_Queue<ACE_NULL_SYNCH> local_queue;
+
+  size_t queue_size  = this->message_queue_.message_count ();
+  int number_purged = 0;
+  for (size_t index = 0; index < queue_size; ++index)
+    {
+      ACE_Message_Block  *mb;
+      if (-1 == this->message_queue_.dequeue_head (mb))
+        return -1;        // This shouldn't happen...
+
+      ACE_Notification_Buffer *buffer =
+        ACE_reinterpret_cast (ACE_Notification_Buffer *, mb->base ());
+
+      if (eh && (eh != buffer->eh_))
+        { // remove it by not copying it to the new queue
+          if (-1 == local_queue.enqueue_head (mb))
+            return -1;
+        }
+      else
+        {
+          mb->release ();
+          ++number_purged;
+        }
+    }
+
+  if (this->message_queue_.message_count ())
+    { // Should be empty!
+      ACE_ASSERT (0);
+      return -1;
+    }
+
+  // Now copy back from the local queue to the class queue, taking care to
+  // preserve the original order...
+  queue_size  = local_queue.message_count ();
+  for (index = 0; index < queue_size; ++index)
+    {
+      ACE_Message_Block  *mb;
+      if (-1 == local_queue.dequeue_head (mb))
+        {
+          ACE_ASSERT (0);
+          return -1;
+        }
+
+      if (-1 == this->message_queue_.enqueue_head (mb))
+        {
+          ACE_ASSERT (0);
+          return -1;
+        }
+    }
+
+  return number_purged;
+}
+
 void
 ACE_WFMO_Reactor_Notify::dump (void) const
 {
@@ -2328,6 +2402,13 @@ ACE_WFMO_Reactor::max_notify_iterations (void)
   ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
 
   return this->notify_handler_->max_notify_iterations ();
+}
+
+int 
+ACE_WFMO_Reactor::purge_pending_notifications (ACE_Event_Handler *eh)
+{
+  ACE_TRACE ("ACE_WFMO_Reactor::purge_pending_notifications");
+  return this->notify_handler_->purge_pending_notifications (eh);
 }
 
 // No-op WinSOCK2 methods to help WFMO_Reactor compile
