@@ -41,6 +41,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 ifeq ($(SUPPRESS_DASH_G),1)
 #### Build this target without -g on some platforms.
+$(VDIR)Server_Logging_Handler.o $(VSHDIR)Server_Logging_Handler.$(SOEXT):
 	$(COMPILE-NO_DASH_G.cc) -o $@ $<
 endif # SUPPRESS_DASH_G
 
