@@ -10,19 +10,19 @@
 //
 // = DESCRIPTION
 //    This program illustrates how the <ACE_TP_Reactor> can be used to
-//    implement an application that does various  operations.  
+//    implement an application that does various  operations.
 //    usage: TP_Reactor_Test
 //           -n number threads in the TP_Reactor thread pool
 //           -d duplex mode 1 (full-duplex) vs. 0 (half-duplex)
-//           -p port to listen(Server)/connect(Client)             
-//           -h host to connect (Client mode)               
+//           -p port to listen(Server)/connect(Client)
+//           -h host to connect (Client mode)
 //           -s number of sender's instances ( Client mode)
 //           -b run client and server (both modes ) at the same time
-//           -v log level                            
-//              0 - log all messages                
+//           -v log level
+//              0 - log all messages
 //              1 - log only errors and unusual cases
-//           -i time to run in seconds               
-//           -u show this message                    
+//           -i time to run in seconds
+//           -u show this message
 //
 //     The main differences between Thread_Pool_Reactor_Test.cpp and
 //     this test are:
@@ -41,7 +41,7 @@
 //     thread pool is shared between client and server.
 //
 //     This test is a "twin" of the Proactor_Test.cpp, so it can help for
-//     developers to provide independent of Reactor/Proactor solutions. 
+//     developers to provide independent of Reactor/Proactor solutions.
 //
 // = AUTHOR
 //      Alexander Libman <alibman@ihug.com.au>,<alexl@rumblgroup.com>
@@ -93,7 +93,6 @@ static size_t threads = 1;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
 // Log options
-static int logflag  = 0; // 0 STDERR, 1 FILE
 static int loglevel = 0; // 0 full , 1 only errors
 
 static const size_t MIN_TIME = 1;    // min 1 sec
@@ -1097,7 +1096,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       port = ACE_DEFAULT_SERVER_PORT; // port to connect/listen
       threads = 3;            // size of Proactor thread pool
       senders = 20;           // number of senders
-      logflag = 1 ;           // log to : 0 STDERR / 1 FILE
       loglevel = 0;           // log level : 0 full/ 1 only errors
       seconds = 2;            // time to run in seconds
       return 0;
@@ -1256,4 +1254,3 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

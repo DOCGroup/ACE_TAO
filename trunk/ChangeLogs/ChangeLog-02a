@@ -1,3 +1,11 @@
+Tue Feb 12 16:18:59 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Proactor_Test.cpp (logflag): 
+	* tests/TP_Reactor_Test.cpp (logflag):
+
+	  Removed these unused global variables.  Fixes an unused variable
+	  warning.
+
 Tue Feb 12 11:50:18 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/pippen.pl: Applied a patch from "the source" to fix a
