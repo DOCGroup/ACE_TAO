@@ -22,6 +22,16 @@ environment variables or (2) strings passed on the command-line.  They
 are generally passed to component initialization methods for
 consumption.</P>
 
+<p>Both command-line options and environment variables are used to
+control the global ORB features like the IOR format or ORB's
+bootstraping methods.  Options in <code>svc.conf</code> file on the
+other hand provides a mechanism to fine-tune the internal components
+in TAO and they are specific to individual components.
+<code>svc.conf</code> files are not required to run TAO programs.
+However, if you know the behavior of your programs, you can tune-up
+your programs and use various optimization provided by TAO thru the
+use of svc.conf files.</p>
+
 <P><EM>Programmer's Note:</EM> the internal structure for options is
 the traditional <CODE>argc</CODE>/<CODE>argv</CODE> vector of strings
 style popularized by C and Unix.  By convention, an initialization
