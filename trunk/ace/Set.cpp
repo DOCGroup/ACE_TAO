@@ -340,7 +340,7 @@ friend class ACE_Unbounded_Set_Iterator<T>;
 public:
   // = Initialization methods
   ACE_Set_Node (const T &i, ACE_Set_Node<T> *n);
-  ACE_Set_Node (ACE_Set_Node<T> *n = 0);
+  ACE_Set_Node (ACE_Set_Node<T> *n = 0, int MS_SUCKS = 0);
   ACE_Set_Node (const ACE_Set_Node<T> &n);
 
 private:
@@ -360,7 +360,7 @@ ACE_Set_Node<T>::ACE_Set_Node (const T &i, ACE_Set_Node<T> *n)
 }
 
 template <class T>
-ACE_Set_Node<T>::ACE_Set_Node (ACE_Set_Node<T> *n)
+ACE_Set_Node<T>::ACE_Set_Node (ACE_Set_Node<T> *n, int MS_SUCKS)
   : next_ (n)
 {
 // ACE_TRACE ("ACE_Set_Node<T>::ACE_Set_Node");
