@@ -87,7 +87,7 @@ RB_Tree<KEY, T>::clear ()
 {
   delete root_;
   root_ = 0;
-};
+}
   // destroys all nodes and sets the root pointer null.
 
 
