@@ -21,6 +21,7 @@
 
 #include "IFR_ComponentsC.h"
 
+#include "tao/ClientRequestInfo.h"
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
@@ -32,181 +33,6 @@
 #if !defined (__ACE_INLINE__)
 #include "IFR_ComponentsC.i"
 #endif /* !defined INLINE */
-
-static const CORBA::Long _oc_IR_DefinitionKind[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f44), 
-  ACE_NTOHL (0x6566696e), 
-  ACE_NTOHL (0x6974696f), 
-  ACE_NTOHL (0x6e4b696e), 
-  ACE_NTOHL (0x643a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/DefinitionKind:1.0
-  15,
-  ACE_NTOHL (0x44656669), 
-  ACE_NTOHL (0x6e697469), 
-  ACE_NTOHL (0x6f6e4b69), 
-  ACE_NTOHL (0x6e640000),  // name = DefinitionKind
-  34, // member count
-  8,
-  ACE_NTOHL (0x646b5f6e), 
-  ACE_NTOHL (0x6f6e6500),  // name = dk_none
-  7,
-  ACE_NTOHL (0x646b5f61), 
-  ACE_NTOHL (0x6c6c0000),  // name = dk_all
-  13,
-  ACE_NTOHL (0x646b5f41), 
-  ACE_NTOHL (0x74747269), 
-  ACE_NTOHL (0x62757465), 
-  ACE_NTOHL (0x0),  // name = dk_Attribute
-  12,
-  ACE_NTOHL (0x646b5f43), 
-  ACE_NTOHL (0x6f6e7374), 
-  ACE_NTOHL (0x616e7400),  // name = dk_Constant
-  13,
-  ACE_NTOHL (0x646b5f45), 
-  ACE_NTOHL (0x78636570), 
-  ACE_NTOHL (0x74696f6e), 
-  ACE_NTOHL (0x0),  // name = dk_Exception
-  13,
-  ACE_NTOHL (0x646b5f49), 
-  ACE_NTOHL (0x6e746572), 
-  ACE_NTOHL (0x66616365), 
-  ACE_NTOHL (0x0),  // name = dk_Interface
-  10,
-  ACE_NTOHL (0x646b5f4d), 
-  ACE_NTOHL (0x6f64756c), 
-  ACE_NTOHL (0x65000000),  // name = dk_Module
-  13,
-  ACE_NTOHL (0x646b5f4f), 
-  ACE_NTOHL (0x70657261), 
-  ACE_NTOHL (0x74696f6e), 
-  ACE_NTOHL (0x0),  // name = dk_Operation
-  11,
-  ACE_NTOHL (0x646b5f54), 
-  ACE_NTOHL (0x79706564), 
-  ACE_NTOHL (0x65660000),  // name = dk_Typedef
-  9,
-  ACE_NTOHL (0x646b5f41), 
-  ACE_NTOHL (0x6c696173), 
-  ACE_NTOHL (0x0),  // name = dk_Alias
-  10,
-  ACE_NTOHL (0x646b5f53), 
-  ACE_NTOHL (0x74727563), 
-  ACE_NTOHL (0x74000000),  // name = dk_Struct
-  9,
-  ACE_NTOHL (0x646b5f55), 
-  ACE_NTOHL (0x6e696f6e), 
-  ACE_NTOHL (0x0),  // name = dk_Union
-  8,
-  ACE_NTOHL (0x646b5f45), 
-  ACE_NTOHL (0x6e756d00),  // name = dk_Enum
-  13,
-  ACE_NTOHL (0x646b5f50), 
-  ACE_NTOHL (0x72696d69), 
-  ACE_NTOHL (0x74697665), 
-  ACE_NTOHL (0x0),  // name = dk_Primitive
-  10,
-  ACE_NTOHL (0x646b5f53), 
-  ACE_NTOHL (0x7472696e), 
-  ACE_NTOHL (0x67000000),  // name = dk_String
-  12,
-  ACE_NTOHL (0x646b5f53), 
-  ACE_NTOHL (0x65717565), 
-  ACE_NTOHL (0x6e636500),  // name = dk_Sequence
-  9,
-  ACE_NTOHL (0x646b5f41), 
-  ACE_NTOHL (0x72726179), 
-  ACE_NTOHL (0x0),  // name = dk_Array
-  14,
-  ACE_NTOHL (0x646b5f52), 
-  ACE_NTOHL (0x65706f73), 
-  ACE_NTOHL (0x69746f72), 
-  ACE_NTOHL (0x79000000),  // name = dk_Repository
-  11,
-  ACE_NTOHL (0x646b5f57), 
-  ACE_NTOHL (0x73747269), 
-  ACE_NTOHL (0x6e670000),  // name = dk_Wstring
-  9,
-  ACE_NTOHL (0x646b5f46), 
-  ACE_NTOHL (0x69786564), 
-  ACE_NTOHL (0x0),  // name = dk_Fixed
-  9,
-  ACE_NTOHL (0x646b5f56), 
-  ACE_NTOHL (0x616c7565), 
-  ACE_NTOHL (0x0),  // name = dk_Value
-  12,
-  ACE_NTOHL (0x646b5f56), 
-  ACE_NTOHL (0x616c7565), 
-  ACE_NTOHL (0x426f7800),  // name = dk_ValueBox
-  15,
-  ACE_NTOHL (0x646b5f56), 
-  ACE_NTOHL (0x616c7565), 
-  ACE_NTOHL (0x4d656d62), 
-  ACE_NTOHL (0x65720000),  // name = dk_ValueMember
-  10,
-  ACE_NTOHL (0x646b5f4e), 
-  ACE_NTOHL (0x61746976), 
-  ACE_NTOHL (0x65000000),  // name = dk_Native
-  13,
-  ACE_NTOHL (0x646b5f43), 
-  ACE_NTOHL (0x6f6d706f), 
-  ACE_NTOHL (0x6e656e74), 
-  ACE_NTOHL (0x0),  // name = dk_Component
-  8,
-  ACE_NTOHL (0x646b5f48), 
-  ACE_NTOHL (0x6f6d6500),  // name = dk_Home
-  11,
-  ACE_NTOHL (0x646b5f46), 
-  ACE_NTOHL (0x6163746f), 
-  ACE_NTOHL (0x72790000),  // name = dk_Factory
-  10,
-  ACE_NTOHL (0x646b5f46), 
-  ACE_NTOHL (0x696e6465), 
-  ACE_NTOHL (0x72000000),  // name = dk_Finder
-  14,
-  ACE_NTOHL (0x646b5f50), 
-  ACE_NTOHL (0x72696d61), 
-  ACE_NTOHL (0x72794b65), 
-  ACE_NTOHL (0x79000000),  // name = dk_PrimaryKey
-  9,
-  ACE_NTOHL (0x646b5f45), 
-  ACE_NTOHL (0x6d697473), 
-  ACE_NTOHL (0x0),  // name = dk_Emits
-  13,
-  ACE_NTOHL (0x646b5f50), 
-  ACE_NTOHL (0x75626c69), 
-  ACE_NTOHL (0x73686573), 
-  ACE_NTOHL (0x0),  // name = dk_Publishes
-  12,
-  ACE_NTOHL (0x646b5f43), 
-  ACE_NTOHL (0x6f6e7375), 
-  ACE_NTOHL (0x6d657300),  // name = dk_Consumes
-  12,
-  ACE_NTOHL (0x646b5f50), 
-  ACE_NTOHL (0x726f7669), 
-  ACE_NTOHL (0x64657300),  // name = dk_Provides
-  8,
-  ACE_NTOHL (0x646b5f55), 
-  ACE_NTOHL (0x73657300),  // name = dk_Uses
-};
-
-static CORBA::TypeCode _tc_TAO_tc_IR_DefinitionKind (
-    CORBA::tk_enum,
-    sizeof (_oc_IR_DefinitionKind),
-    (char *) &_oc_IR_DefinitionKind,
-    0,
-    sizeof (IR::DefinitionKind)
-  );
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (IR)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_DefinitionKind, &_tc_TAO_tc_IR_DefinitionKind)
-TAO_NAMESPACE_END
 
 static const CORBA::Long _oc_IR_Identifier[] =
 {
@@ -464,14 +290,21 @@ TAO_NAMESPACE_END
     {
       IR::ComponentDef **old = ACE_reinterpret_cast (IR::ComponentDef**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-        if (!this->release_)
-          tmp[i] = IR::ComponentDef::_duplicate (old[i]);
-        else
-          tmp[i] = old[i];
-        
-      if (this->release_)
-        delete[] old;
+        {
+          if (!this->release_)
+            {
+              tmp[i] = IR::ComponentDef::_duplicate (old[i]);
+            }
+          else
+            {
+              tmp[i] = old[i];
+            }
+        }
       
+      if (this->release_)
+        {
+          delete[] old;
+        }
     }
     this->buffer_ = tmp;
   }
@@ -482,11 +315,13 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     IR::ComponentDef **tmp = ACE_reinterpret_cast (IR::ComponentDef**, this->buffer_);
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::ComponentDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::ComponentDef::_nil ();
+      }
+    
     _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::freebuf (tmp);
     this->buffer_ = 0;
   }
@@ -502,11 +337,12 @@ TAO_NAMESPACE_END
     IR::ComponentDef **tmp = ACE_reinterpret_cast (IR::ComponentDef**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::ComponentDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::ComponentDef::_nil ();
+      }
   }
+  
   void 
   IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_downcast (
       void* target,
@@ -651,14 +487,21 @@ TAO_NAMESPACE_END
     {
       IR::ProvidesDef **old = ACE_reinterpret_cast (IR::ProvidesDef**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-        if (!this->release_)
-          tmp[i] = IR::ProvidesDef::_duplicate (old[i]);
-        else
-          tmp[i] = old[i];
-        
-      if (this->release_)
-        delete[] old;
+        {
+          if (!this->release_)
+            {
+              tmp[i] = IR::ProvidesDef::_duplicate (old[i]);
+            }
+          else
+            {
+              tmp[i] = old[i];
+            }
+        }
       
+      if (this->release_)
+        {
+          delete[] old;
+        }
     }
     this->buffer_ = tmp;
   }
@@ -669,11 +512,13 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     IR::ProvidesDef **tmp = ACE_reinterpret_cast (IR::ProvidesDef**, this->buffer_);
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::ProvidesDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::ProvidesDef::_nil ();
+      }
+    
     _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::freebuf (tmp);
     this->buffer_ = 0;
   }
@@ -689,11 +534,12 @@ TAO_NAMESPACE_END
     IR::ProvidesDef **tmp = ACE_reinterpret_cast (IR::ProvidesDef**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::ProvidesDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::ProvidesDef::_nil ();
+      }
   }
+  
   void 
   IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_downcast (
       void* target,
@@ -837,14 +683,21 @@ TAO_NAMESPACE_END
     {
       IR::UsesDef **old = ACE_reinterpret_cast (IR::UsesDef**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-        if (!this->release_)
-          tmp[i] = IR::UsesDef::_duplicate (old[i]);
-        else
-          tmp[i] = old[i];
-        
-      if (this->release_)
-        delete[] old;
+        {
+          if (!this->release_)
+            {
+              tmp[i] = IR::UsesDef::_duplicate (old[i]);
+            }
+          else
+            {
+              tmp[i] = old[i];
+            }
+        }
       
+      if (this->release_)
+        {
+          delete[] old;
+        }
     }
     this->buffer_ = tmp;
   }
@@ -855,11 +708,13 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     IR::UsesDef **tmp = ACE_reinterpret_cast (IR::UsesDef**, this->buffer_);
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::UsesDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::UsesDef::_nil ();
+      }
+    
     _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::freebuf (tmp);
     this->buffer_ = 0;
   }
@@ -875,11 +730,12 @@ TAO_NAMESPACE_END
     IR::UsesDef **tmp = ACE_reinterpret_cast (IR::UsesDef**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::UsesDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::UsesDef::_nil ();
+      }
   }
+  
   void 
   IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_downcast (
       void* target,
@@ -1019,14 +875,21 @@ TAO_NAMESPACE_END
     {
       IR::HomeDef **old = ACE_reinterpret_cast (IR::HomeDef**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-        if (!this->release_)
-          tmp[i] = IR::HomeDef::_duplicate (old[i]);
-        else
-          tmp[i] = old[i];
-        
-      if (this->release_)
-        delete[] old;
+        {
+          if (!this->release_)
+            {
+              tmp[i] = IR::HomeDef::_duplicate (old[i]);
+            }
+          else
+            {
+              tmp[i] = old[i];
+            }
+        }
       
+      if (this->release_)
+        {
+          delete[] old;
+        }
     }
     this->buffer_ = tmp;
   }
@@ -1037,11 +900,13 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     IR::HomeDef **tmp = ACE_reinterpret_cast (IR::HomeDef**, this->buffer_);
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::HomeDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::HomeDef::_nil ();
+      }
+    
     _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::freebuf (tmp);
     this->buffer_ = 0;
   }
@@ -1057,11 +922,12 @@ TAO_NAMESPACE_END
     IR::HomeDef **tmp = ACE_reinterpret_cast (IR::HomeDef**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::HomeDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::HomeDef::_nil ();
+      }
   }
+  
   void 
   IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_downcast (
       void* target,
@@ -1201,14 +1067,21 @@ TAO_NAMESPACE_END
     {
       IR::EmitsDef **old = ACE_reinterpret_cast (IR::EmitsDef**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-        if (!this->release_)
-          tmp[i] = IR::EmitsDef::_duplicate (old[i]);
-        else
-          tmp[i] = old[i];
-        
-      if (this->release_)
-        delete[] old;
+        {
+          if (!this->release_)
+            {
+              tmp[i] = IR::EmitsDef::_duplicate (old[i]);
+            }
+          else
+            {
+              tmp[i] = old[i];
+            }
+        }
       
+      if (this->release_)
+        {
+          delete[] old;
+        }
     }
     this->buffer_ = tmp;
   }
@@ -1219,11 +1092,13 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     IR::EmitsDef **tmp = ACE_reinterpret_cast (IR::EmitsDef**, this->buffer_);
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::EmitsDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::EmitsDef::_nil ();
+      }
+    
     _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::freebuf (tmp);
     this->buffer_ = 0;
   }
@@ -1239,11 +1114,12 @@ TAO_NAMESPACE_END
     IR::EmitsDef **tmp = ACE_reinterpret_cast (IR::EmitsDef**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::EmitsDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::EmitsDef::_nil ();
+      }
   }
+  
   void 
   IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_downcast (
       void* target,
@@ -1384,14 +1260,21 @@ TAO_NAMESPACE_END
     {
       IR::PublishesDef **old = ACE_reinterpret_cast (IR::PublishesDef**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-        if (!this->release_)
-          tmp[i] = IR::PublishesDef::_duplicate (old[i]);
-        else
-          tmp[i] = old[i];
-        
-      if (this->release_)
-        delete[] old;
+        {
+          if (!this->release_)
+            {
+              tmp[i] = IR::PublishesDef::_duplicate (old[i]);
+            }
+          else
+            {
+              tmp[i] = old[i];
+            }
+        }
       
+      if (this->release_)
+        {
+          delete[] old;
+        }
     }
     this->buffer_ = tmp;
   }
@@ -1402,11 +1285,13 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     IR::PublishesDef **tmp = ACE_reinterpret_cast (IR::PublishesDef**, this->buffer_);
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::PublishesDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::PublishesDef::_nil ();
+      }
+    
     _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::freebuf (tmp);
     this->buffer_ = 0;
   }
@@ -1422,11 +1307,12 @@ TAO_NAMESPACE_END
     IR::PublishesDef **tmp = ACE_reinterpret_cast (IR::PublishesDef**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::PublishesDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::PublishesDef::_nil ();
+      }
   }
+  
   void 
   IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_downcast (
       void* target,
@@ -1571,14 +1457,21 @@ TAO_NAMESPACE_END
     {
       IR::ConsumesDef **old = ACE_reinterpret_cast (IR::ConsumesDef**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-        if (!this->release_)
-          tmp[i] = IR::ConsumesDef::_duplicate (old[i]);
-        else
-          tmp[i] = old[i];
-        
-      if (this->release_)
-        delete[] old;
+        {
+          if (!this->release_)
+            {
+              tmp[i] = IR::ConsumesDef::_duplicate (old[i]);
+            }
+          else
+            {
+              tmp[i] = old[i];
+            }
+        }
       
+      if (this->release_)
+        {
+          delete[] old;
+        }
     }
     this->buffer_ = tmp;
   }
@@ -1589,11 +1482,13 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     IR::ConsumesDef **tmp = ACE_reinterpret_cast (IR::ConsumesDef**, this->buffer_);
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::ConsumesDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::ConsumesDef::_nil ();
+      }
+    
     _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::freebuf (tmp);
     this->buffer_ = 0;
   }
@@ -1609,11 +1504,12 @@ TAO_NAMESPACE_END
     IR::ConsumesDef **tmp = ACE_reinterpret_cast (IR::ConsumesDef**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::ConsumesDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::ConsumesDef::_nil ();
+      }
   }
+  
   void 
   IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_downcast (
       void* target,
@@ -1757,14 +1653,21 @@ TAO_NAMESPACE_END
     {
       IR::FactoryDef **old = ACE_reinterpret_cast (IR::FactoryDef**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-        if (!this->release_)
-          tmp[i] = IR::FactoryDef::_duplicate (old[i]);
-        else
-          tmp[i] = old[i];
-        
-      if (this->release_)
-        delete[] old;
+        {
+          if (!this->release_)
+            {
+              tmp[i] = IR::FactoryDef::_duplicate (old[i]);
+            }
+          else
+            {
+              tmp[i] = old[i];
+            }
+        }
       
+      if (this->release_)
+        {
+          delete[] old;
+        }
     }
     this->buffer_ = tmp;
   }
@@ -1775,11 +1678,13 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     IR::FactoryDef **tmp = ACE_reinterpret_cast (IR::FactoryDef**, this->buffer_);
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::FactoryDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::FactoryDef::_nil ();
+      }
+    
     _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::freebuf (tmp);
     this->buffer_ = 0;
   }
@@ -1795,11 +1700,12 @@ TAO_NAMESPACE_END
     IR::FactoryDef **tmp = ACE_reinterpret_cast (IR::FactoryDef**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::FactoryDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::FactoryDef::_nil ();
+      }
   }
+  
   void 
   IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_downcast (
       void* target,
@@ -1943,14 +1849,21 @@ TAO_NAMESPACE_END
     {
       IR::FinderDef **old = ACE_reinterpret_cast (IR::FinderDef**, this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-        if (!this->release_)
-          tmp[i] = IR::FinderDef::_duplicate (old[i]);
-        else
-          tmp[i] = old[i];
-        
-      if (this->release_)
-        delete[] old;
+        {
+          if (!this->release_)
+            {
+              tmp[i] = IR::FinderDef::_duplicate (old[i]);
+            }
+          else
+            {
+              tmp[i] = old[i];
+            }
+        }
       
+      if (this->release_)
+        {
+          delete[] old;
+        }
     }
     this->buffer_ = tmp;
   }
@@ -1961,11 +1874,13 @@ TAO_NAMESPACE_END
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
     IR::FinderDef **tmp = ACE_reinterpret_cast (IR::FinderDef**, this->buffer_);
+    
     for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::FinderDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::FinderDef::_nil ();
+      }
+    
     _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::freebuf (tmp);
     this->buffer_ = 0;
   }
@@ -1981,11 +1896,12 @@ TAO_NAMESPACE_END
     IR::FinderDef **tmp = ACE_reinterpret_cast (IR::FinderDef**, this->buffer_);
     
     for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::release (tmp[i]);
-      tmp[i] = IR::FinderDef::_nil ();
-    }
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR::FinderDef::_nil ();
+      }
   }
+  
   void 
   IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_downcast (
       void* target,
@@ -2111,6 +2027,188 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_FinderDefSeq, &_tc_TAO_tc_IR_FinderDefSeq)
 TAO_NAMESPACE_END
 
+// *************************************************************
+// Operations for class IR::ComponentRepository_var
+// *************************************************************
+
+IR::ComponentRepository_var::ComponentRepository_var (void) // default constructor
+  : ptr_ (ComponentRepository::_nil ())
+{}
+
+::IR::ComponentRepository_ptr
+IR::ComponentRepository_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+IR::ComponentRepository_var::ComponentRepository_var (const ::IR::ComponentRepository_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (ComponentRepository::_duplicate (p.ptr ()))
+{}
+
+IR::ComponentRepository_var::~ComponentRepository_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+IR::ComponentRepository_var &
+IR::ComponentRepository_var::operator= (ComponentRepository_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::ComponentRepository_var &
+IR::ComponentRepository_var::operator= (const ::IR::ComponentRepository_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR::ComponentRepository::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+IR::ComponentRepository_var::operator const ::IR::ComponentRepository_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+IR::ComponentRepository_var::operator ::IR::ComponentRepository_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::IR::ComponentRepository_ptr
+IR::ComponentRepository_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::IR::ComponentRepository_ptr
+IR::ComponentRepository_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::IR::ComponentRepository_ptr &
+IR::ComponentRepository_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::IR::ComponentRepository_ptr &
+IR::ComponentRepository_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::ComponentRepository::_nil ();
+  return this->ptr_;
+}
+
+::IR::ComponentRepository_ptr
+IR::ComponentRepository_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR::ComponentRepository_ptr val = this->ptr_;
+  this->ptr_ = ::IR::ComponentRepository::_nil ();
+  return val;
+}
+
+::IR::ComponentRepository_ptr
+IR::ComponentRepository_var::duplicate (ComponentRepository_ptr p)
+{
+  return ::IR::ComponentRepository::_duplicate (p);
+}
+
+void
+IR::ComponentRepository_var::release (ComponentRepository_ptr p)
+{
+  CORBA::release (p);
+}
+
+::IR::ComponentRepository_ptr
+IR::ComponentRepository_var::nil (void)
+{
+  return ::IR::ComponentRepository::_nil ();
+}
+
+::IR::ComponentRepository_ptr
+IR::ComponentRepository_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::IR::ComponentRepository::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+IR::ComponentRepository_var::upcast (void *src)
+{
+  ComponentRepository **tmp =
+    ACE_static_cast (ComponentRepository **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class IR::ComponentRepository_out
+// *************************************************************
+
+IR::ComponentRepository_out::ComponentRepository_out (ComponentRepository_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR::ComponentRepository::_nil ();
+}
+
+IR::ComponentRepository_out::ComponentRepository_out (ComponentRepository_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::ComponentRepository::_nil ();
+}
+
+IR::ComponentRepository_out::ComponentRepository_out (const ::IR::ComponentRepository_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ComponentRepository_out &, p).ptr_)
+{}
+
+::IR::ComponentRepository_out &
+IR::ComponentRepository_out::operator= (const ::IR::ComponentRepository_out &p)
+{
+  this->ptr_ = ACE_const_cast (ComponentRepository_out&, p).ptr_;
+  return *this;
+}
+
+IR::ComponentRepository_out &
+IR::ComponentRepository_out::operator= (const ::IR::ComponentRepository_var &p)
+{
+  this->ptr_ = ::IR::ComponentRepository::_duplicate (p.ptr ());
+  return *this;
+}
+
+IR::ComponentRepository_out &
+IR::ComponentRepository_out::operator= (ComponentRepository_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::ComponentRepository_out::operator ::IR::ComponentRepository_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::IR::ComponentRepository_ptr &
+IR::ComponentRepository_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::IR::ComponentRepository_ptr
+IR::ComponentRepository_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 class TAO_ClientRequestInfo_IR_ComponentRepository_create_component : public TAO_ClientRequestInfo
@@ -2123,7 +2221,7 @@ public:
       const char * name,
       const char * version,
       IR::ComponentDef_ptr base_component,
-      const CORBA::InterfaceDefSeq & supports_interfaces,
+      const CORBA_InterfaceDefSeq & supports_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
@@ -2156,7 +2254,7 @@ private:
   const char * name_;
   const char * version_;
   IR::ComponentDef_ptr base_component_;
-  const CORBA::InterfaceDefSeq & supports_interfaces_;
+  const CORBA_InterfaceDefSeq & supports_interfaces_;
   IR::ComponentDef_ptr _result;
 };
 
@@ -2167,7 +2265,7 @@ TAO_ClientRequestInfo_IR_ComponentRepository_create_component::TAO_ClientRequest
     const char * name,
     const char * version,
     IR::ComponentDef_ptr base_component,
-    const CORBA::InterfaceDefSeq & supports_interfaces,
+    const CORBA_InterfaceDefSeq & supports_interfaces,
     CORBA::Environment &    
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
@@ -2266,7 +2364,7 @@ public:
       const char * version,
       IR::HomeDef_ptr base_home,
       IR::ComponentDef_ptr managed_component,
-      CORBA::ValueDef_ptr primary_key,
+      CORBA_ValueDef_ptr primary_key,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
@@ -2300,7 +2398,7 @@ private:
   const char * version_;
   IR::HomeDef_ptr base_home_;
   IR::ComponentDef_ptr managed_component_;
-  CORBA::ValueDef_ptr primary_key_;
+  CORBA_ValueDef_ptr primary_key_;
   IR::HomeDef_ptr _result;
 };
 
@@ -2312,7 +2410,7 @@ TAO_ClientRequestInfo_IR_ComponentRepository_create_home::TAO_ClientRequestInfo_
     const char * version,
     IR::HomeDef_ptr base_home,
     IR::ComponentDef_ptr managed_component,
-    CORBA::ValueDef_ptr primary_key,
+    CORBA_ValueDef_ptr primary_key,
     CORBA::Environment &    
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
@@ -2427,7 +2525,7 @@ IR::ComponentDef_ptr IR::_TAO_ComponentRepository_Remote_Proxy_Impl::create_comp
     const char * name,
     const char * version,
     IR::ComponentDef_ptr base_component,
-    const CORBA::InterfaceDefSeq & supports_interfaces,
+    const CORBA_InterfaceDefSeq & supports_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -2612,7 +2710,7 @@ IR::HomeDef_ptr IR::_TAO_ComponentRepository_Remote_Proxy_Impl::create_home (
     const char * version,
     IR::HomeDef_ptr base_home,
     IR::ComponentDef_ptr managed_component,
-    CORBA::ValueDef_ptr primary_key,
+    CORBA_ValueDef_ptr primary_key,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -2952,9 +3050,9 @@ CORBA::Boolean IR::ComponentRepository::_is_a (const CORBA::Char *value, CORBA::
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/ComponentRepository:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Repository:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Container:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Repository:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Container:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -2970,37 +3068,37 @@ void *IR::ComponentRepository::_tao_QueryInterface (ptr_arith_t type)
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Repository::_narrow))
+      &CORBA_Repository::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Repository_ptr,
+            CORBA_Repository_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Container::_narrow))
+      &CORBA_Container::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Container_ptr,
+            CORBA_Container_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IRObject::_narrow))
+      &CORBA_IRObject::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IRObject_ptr,
+            CORBA_IRObject_ptr,
             this
           )
       );
@@ -3023,7 +3121,7 @@ IR::ComponentDef_ptr IR::ComponentRepository::create_component (
     const char * name,
     const char * version,
     IR::ComponentDef_ptr base_component,
-    const CORBA::InterfaceDefSeq & supports_interfaces,
+    const CORBA_InterfaceDefSeq & supports_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -3051,7 +3149,7 @@ IR::HomeDef_ptr IR::ComponentRepository::create_home (
     const char * version,
     IR::HomeDef_ptr base_home,
     IR::ComponentDef_ptr managed_component,
-    CORBA::ValueDef_ptr primary_key,
+    CORBA_ValueDef_ptr primary_key,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -3073,7 +3171,6 @@ IR::HomeDef_ptr IR::ComponentRepository::create_home (
       ACE_TRY_ENV
     );
 }
-
 
 static const CORBA::Long _oc_IR_ComponentRepository[] =
 {
@@ -3110,6 +3207,188 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ComponentRepository, &_tc_TAO_tc_IR_ComponentRepository)
 TAO_NAMESPACE_END
 
+// *************************************************************
+// Operations for class IR::ProvidesDef_var
+// *************************************************************
+
+IR::ProvidesDef_var::ProvidesDef_var (void) // default constructor
+  : ptr_ (ProvidesDef::_nil ())
+{}
+
+::IR::ProvidesDef_ptr
+IR::ProvidesDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+IR::ProvidesDef_var::ProvidesDef_var (const ::IR::ProvidesDef_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (ProvidesDef::_duplicate (p.ptr ()))
+{}
+
+IR::ProvidesDef_var::~ProvidesDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+IR::ProvidesDef_var &
+IR::ProvidesDef_var::operator= (ProvidesDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::ProvidesDef_var &
+IR::ProvidesDef_var::operator= (const ::IR::ProvidesDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR::ProvidesDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+IR::ProvidesDef_var::operator const ::IR::ProvidesDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+IR::ProvidesDef_var::operator ::IR::ProvidesDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::IR::ProvidesDef_ptr
+IR::ProvidesDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::IR::ProvidesDef_ptr
+IR::ProvidesDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::IR::ProvidesDef_ptr &
+IR::ProvidesDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::IR::ProvidesDef_ptr &
+IR::ProvidesDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::ProvidesDef::_nil ();
+  return this->ptr_;
+}
+
+::IR::ProvidesDef_ptr
+IR::ProvidesDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR::ProvidesDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR::ProvidesDef::_nil ();
+  return val;
+}
+
+::IR::ProvidesDef_ptr
+IR::ProvidesDef_var::duplicate (ProvidesDef_ptr p)
+{
+  return ::IR::ProvidesDef::_duplicate (p);
+}
+
+void
+IR::ProvidesDef_var::release (ProvidesDef_ptr p)
+{
+  CORBA::release (p);
+}
+
+::IR::ProvidesDef_ptr
+IR::ProvidesDef_var::nil (void)
+{
+  return ::IR::ProvidesDef::_nil ();
+}
+
+::IR::ProvidesDef_ptr
+IR::ProvidesDef_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::IR::ProvidesDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+IR::ProvidesDef_var::upcast (void *src)
+{
+  ProvidesDef **tmp =
+    ACE_static_cast (ProvidesDef **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class IR::ProvidesDef_out
+// *************************************************************
+
+IR::ProvidesDef_out::ProvidesDef_out (ProvidesDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR::ProvidesDef::_nil ();
+}
+
+IR::ProvidesDef_out::ProvidesDef_out (ProvidesDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::ProvidesDef::_nil ();
+}
+
+IR::ProvidesDef_out::ProvidesDef_out (const ::IR::ProvidesDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ProvidesDef_out &, p).ptr_)
+{}
+
+::IR::ProvidesDef_out &
+IR::ProvidesDef_out::operator= (const ::IR::ProvidesDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (ProvidesDef_out&, p).ptr_;
+  return *this;
+}
+
+IR::ProvidesDef_out &
+IR::ProvidesDef_out::operator= (const ::IR::ProvidesDef_var &p)
+{
+  this->ptr_ = ::IR::ProvidesDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+IR::ProvidesDef_out &
+IR::ProvidesDef_out::operator= (ProvidesDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::ProvidesDef_out::operator ::IR::ProvidesDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::IR::ProvidesDef_ptr &
+IR::ProvidesDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::IR::ProvidesDef_ptr
+IR::ProvidesDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 class TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get : public TAO_ClientRequestInfo
@@ -3140,13 +3419,13 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void result (CORBA::InterfaceDef_ptr result);
+  void result (CORBA_InterfaceDef_ptr result);
 
 private:
   TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get (const TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get &);
   void operator= (const TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get &);
 
-  CORBA::InterfaceDef_ptr _result;
+  CORBA_InterfaceDef_ptr _result;
 };
 
 TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get::TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get (
@@ -3199,7 +3478,7 @@ TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get::result (CORBA::Environm
 }
 
 void 
-TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get::result (CORBA::InterfaceDef_ptr result)
+TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get::result (CORBA_InterfaceDef_ptr result)
 {
   // update the result 
   this->_result = result;
@@ -3219,7 +3498,7 @@ IR::_TAO_ProvidesDef_Remote_Proxy_Impl::_TAO_ProvidesDef_Remote_Proxy_Impl (void
 
 // Remote Implementation of the IDL interface methods
 
-CORBA::InterfaceDef_ptr IR::_TAO_ProvidesDef_Remote_Proxy_Impl::interface_type (
+CORBA_InterfaceDef_ptr IR::_TAO_ProvidesDef_Remote_Proxy_Impl::interface_type (
     CORBA_Object *_collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3228,8 +3507,8 @@ CORBA::InterfaceDef_ptr IR::_TAO_ProvidesDef_Remote_Proxy_Impl::interface_type (
   ))
 {
   
-  CORBA::InterfaceDef_ptr _tao_retval = CORBA::InterfaceDef::_nil ();
-  CORBA::InterfaceDef_var _tao_safe_retval (_tao_retval);
+  CORBA_InterfaceDef_ptr _tao_retval = CORBA_InterfaceDef::_nil ();
+  CORBA_InterfaceDef_var _tao_safe_retval (_tao_retval);
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -3313,7 +3592,7 @@ CORBA::InterfaceDef_ptr IR::_TAO_ProvidesDef_Remote_Proxy_Impl::interface_type (
             }
           
           TAO_INTERCEPTOR (
-              CORBA::InterfaceDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+              CORBA_InterfaceDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
               ri.result (_tao_retval_info);
               _tao_safe_retval = _tao_retval_info;
             );
@@ -3539,8 +3818,8 @@ CORBA::Boolean IR::ProvidesDef::_is_a (const CORBA::Char *value, CORBA::Environm
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/ProvidesDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -3556,25 +3835,25 @@ void *IR::ProvidesDef::_tao_QueryInterface (ptr_arith_t type)
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Contained::_narrow))
+      &CORBA_Contained::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Contained_ptr,
+            CORBA_Contained_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IRObject::_narrow))
+      &CORBA_IRObject::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IRObject_ptr,
+            CORBA_IRObject_ptr,
             this
           )
       );
@@ -3592,7 +3871,7 @@ const char* IR::ProvidesDef::_interface_repository_id (void) const
   return "IDL:omg.org/IR/ProvidesDef:1.0";
 }
 
-CORBA::InterfaceDef_ptr IR::ProvidesDef::interface_type (
+CORBA_InterfaceDef_ptr IR::ProvidesDef::interface_type (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -3608,7 +3887,6 @@ CORBA::InterfaceDef_ptr IR::ProvidesDef::interface_type (
       ACE_TRY_ENV
     );
 }
-
 
 static const CORBA::Long _oc_IR_ProvidesDef[] =
 {
@@ -3758,23 +4036,24 @@ static const CORBA::Long _oc_IR_ProvidesDescription[] =
   ACE_NTOHL (0x655f7479), 
   ACE_NTOHL (0x70650000),  // name = interface_type
   CORBA::tk_objref, // typecode kind
-  64, // encapsulation length
+  68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
     ACE_NTOHL (0x49444c3a), 
     ACE_NTOHL (0x6f6d672e), 
     ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f496e), 
+    ACE_NTOHL (0x415f496e), 
     ACE_NTOHL (0x74657266), 
     ACE_NTOHL (0x61636544), 
     ACE_NTOHL (0x65663a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/InterfaceDef:1.0
-    13,
-    ACE_NTOHL (0x496e7465), 
-    ACE_NTOHL (0x72666163), 
-    ACE_NTOHL (0x65446566), 
-    ACE_NTOHL (0x0),  // name = InterfaceDef
+    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_InterfaceDef:1.0
+    19,
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x415f496e), 
+    ACE_NTOHL (0x74657266), 
+    ACE_NTOHL (0x61636544), 
+    ACE_NTOHL (0x65660000),  // name = CORBA_InterfaceDef
 
 };
 
@@ -3795,6 +4074,188 @@ void IR::ProvidesDescription::_tao_any_destructor (void *x)
 {
   ProvidesDescription *tmp = ACE_static_cast (ProvidesDescription*,x);
   delete tmp;
+}
+
+// *************************************************************
+// Operations for class IR::UsesDef_var
+// *************************************************************
+
+IR::UsesDef_var::UsesDef_var (void) // default constructor
+  : ptr_ (UsesDef::_nil ())
+{}
+
+::IR::UsesDef_ptr
+IR::UsesDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+IR::UsesDef_var::UsesDef_var (const ::IR::UsesDef_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (UsesDef::_duplicate (p.ptr ()))
+{}
+
+IR::UsesDef_var::~UsesDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+IR::UsesDef_var &
+IR::UsesDef_var::operator= (UsesDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::UsesDef_var &
+IR::UsesDef_var::operator= (const ::IR::UsesDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR::UsesDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+IR::UsesDef_var::operator const ::IR::UsesDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+IR::UsesDef_var::operator ::IR::UsesDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::IR::UsesDef_ptr
+IR::UsesDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::IR::UsesDef_ptr
+IR::UsesDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::IR::UsesDef_ptr &
+IR::UsesDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::IR::UsesDef_ptr &
+IR::UsesDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::UsesDef::_nil ();
+  return this->ptr_;
+}
+
+::IR::UsesDef_ptr
+IR::UsesDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR::UsesDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR::UsesDef::_nil ();
+  return val;
+}
+
+::IR::UsesDef_ptr
+IR::UsesDef_var::duplicate (UsesDef_ptr p)
+{
+  return ::IR::UsesDef::_duplicate (p);
+}
+
+void
+IR::UsesDef_var::release (UsesDef_ptr p)
+{
+  CORBA::release (p);
+}
+
+::IR::UsesDef_ptr
+IR::UsesDef_var::nil (void)
+{
+  return ::IR::UsesDef::_nil ();
+}
+
+::IR::UsesDef_ptr
+IR::UsesDef_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::IR::UsesDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+IR::UsesDef_var::upcast (void *src)
+{
+  UsesDef **tmp =
+    ACE_static_cast (UsesDef **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class IR::UsesDef_out
+// *************************************************************
+
+IR::UsesDef_out::UsesDef_out (UsesDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR::UsesDef::_nil ();
+}
+
+IR::UsesDef_out::UsesDef_out (UsesDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::UsesDef::_nil ();
+}
+
+IR::UsesDef_out::UsesDef_out (const ::IR::UsesDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (UsesDef_out &, p).ptr_)
+{}
+
+::IR::UsesDef_out &
+IR::UsesDef_out::operator= (const ::IR::UsesDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (UsesDef_out&, p).ptr_;
+  return *this;
+}
+
+IR::UsesDef_out &
+IR::UsesDef_out::operator= (const ::IR::UsesDef_var &p)
+{
+  this->ptr_ = ::IR::UsesDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+IR::UsesDef_out &
+IR::UsesDef_out::operator= (UsesDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::UsesDef_out::operator ::IR::UsesDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::IR::UsesDef_ptr &
+IR::UsesDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::IR::UsesDef_ptr
+IR::UsesDef_out::operator-> (void)
+{
+  return this->ptr_;
 }
 
 
@@ -3827,13 +4288,13 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void result (CORBA::InterfaceDef_ptr result);
+  void result (CORBA_InterfaceDef_ptr result);
 
 private:
   TAO_ClientRequestInfo_IR_UsesDef_interface_type_get (const TAO_ClientRequestInfo_IR_UsesDef_interface_type_get &);
   void operator= (const TAO_ClientRequestInfo_IR_UsesDef_interface_type_get &);
 
-  CORBA::InterfaceDef_ptr _result;
+  CORBA_InterfaceDef_ptr _result;
 };
 
 TAO_ClientRequestInfo_IR_UsesDef_interface_type_get::TAO_ClientRequestInfo_IR_UsesDef_interface_type_get (
@@ -3886,7 +4347,7 @@ TAO_ClientRequestInfo_IR_UsesDef_interface_type_get::result (CORBA::Environment 
 }
 
 void 
-TAO_ClientRequestInfo_IR_UsesDef_interface_type_get::result (CORBA::InterfaceDef_ptr result)
+TAO_ClientRequestInfo_IR_UsesDef_interface_type_get::result (CORBA_InterfaceDef_ptr result)
 {
   // update the result 
   this->_result = result;
@@ -3999,7 +4460,7 @@ IR::_TAO_UsesDef_Remote_Proxy_Impl::_TAO_UsesDef_Remote_Proxy_Impl (void)
 
 // Remote Implementation of the IDL interface methods
 
-CORBA::InterfaceDef_ptr IR::_TAO_UsesDef_Remote_Proxy_Impl::interface_type (
+CORBA_InterfaceDef_ptr IR::_TAO_UsesDef_Remote_Proxy_Impl::interface_type (
     CORBA_Object *_collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -4008,8 +4469,8 @@ CORBA::InterfaceDef_ptr IR::_TAO_UsesDef_Remote_Proxy_Impl::interface_type (
   ))
 {
   
-  CORBA::InterfaceDef_ptr _tao_retval = CORBA::InterfaceDef::_nil ();
-  CORBA::InterfaceDef_var _tao_safe_retval (_tao_retval);
+  CORBA_InterfaceDef_ptr _tao_retval = CORBA_InterfaceDef::_nil ();
+  CORBA_InterfaceDef_var _tao_safe_retval (_tao_retval);
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -4093,7 +4554,7 @@ CORBA::InterfaceDef_ptr IR::_TAO_UsesDef_Remote_Proxy_Impl::interface_type (
             }
           
           TAO_INTERCEPTOR (
-              CORBA::InterfaceDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+              CORBA_InterfaceDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
               ri.result (_tao_retval_info);
               _tao_safe_retval = _tao_retval_info;
             );
@@ -4477,8 +4938,8 @@ CORBA::Boolean IR::UsesDef::_is_a (const CORBA::Char *value, CORBA::Environment 
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/UsesDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -4494,25 +4955,25 @@ void *IR::UsesDef::_tao_QueryInterface (ptr_arith_t type)
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Contained::_narrow))
+      &CORBA_Contained::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Contained_ptr,
+            CORBA_Contained_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IRObject::_narrow))
+      &CORBA_IRObject::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IRObject_ptr,
+            CORBA_IRObject_ptr,
             this
           )
       );
@@ -4530,7 +4991,7 @@ const char* IR::UsesDef::_interface_repository_id (void) const
   return "IDL:omg.org/IR/UsesDef:1.0";
 }
 
-CORBA::InterfaceDef_ptr IR::UsesDef::interface_type (
+CORBA_InterfaceDef_ptr IR::UsesDef::interface_type (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -4563,7 +5024,6 @@ CORBA::Boolean IR::UsesDef::is_multiple (
       ACE_TRY_ENV
     );
 }
-
 
 static const CORBA::Long _oc_IR_UsesDef[] =
 {
@@ -4709,23 +5169,24 @@ static const CORBA::Long _oc_IR_UsesDescription[] =
   ACE_NTOHL (0x655f7479), 
   ACE_NTOHL (0x70650000),  // name = interface_type
   CORBA::tk_objref, // typecode kind
-  64, // encapsulation length
+  68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
     ACE_NTOHL (0x49444c3a), 
     ACE_NTOHL (0x6f6d672e), 
     ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f496e), 
+    ACE_NTOHL (0x415f496e), 
     ACE_NTOHL (0x74657266), 
     ACE_NTOHL (0x61636544), 
     ACE_NTOHL (0x65663a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/InterfaceDef:1.0
-    13,
-    ACE_NTOHL (0x496e7465), 
-    ACE_NTOHL (0x72666163), 
-    ACE_NTOHL (0x65446566), 
-    ACE_NTOHL (0x0),  // name = InterfaceDef
+    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_InterfaceDef:1.0
+    19,
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x415f496e), 
+    ACE_NTOHL (0x74657266), 
+    ACE_NTOHL (0x61636544), 
+    ACE_NTOHL (0x65660000),  // name = CORBA_InterfaceDef
 
   12,
   ACE_NTOHL (0x69735f6d), 
@@ -4869,10 +5330,10 @@ static const CORBA::Long _oc_IR_ProvidesDescSeq[] =
   ACE_NTOHL (0x44657363), 
   ACE_NTOHL (0x53657100),  // name = ProvidesDescSeq
   CORBA::tk_sequence, // typecode kind
-  528, // encapsulation length
+  532, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
-    512, // encapsulation length
+    516, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       39,
       ACE_NTOHL (0x49444c3a), 
@@ -4988,23 +5449,24 @@ static const CORBA::Long _oc_IR_ProvidesDescSeq[] =
       ACE_NTOHL (0x655f7479), 
       ACE_NTOHL (0x70650000),  // name = interface_type
       CORBA::tk_objref, // typecode kind
-      64, // encapsulation length
+      68, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         35,
         ACE_NTOHL (0x49444c3a), 
         ACE_NTOHL (0x6f6d672e), 
         ACE_NTOHL (0x6f72672f), 
         ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f496e), 
+        ACE_NTOHL (0x415f496e), 
         ACE_NTOHL (0x74657266), 
         ACE_NTOHL (0x61636544), 
         ACE_NTOHL (0x65663a31), 
-        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/InterfaceDef:1.0
-        13,
-        ACE_NTOHL (0x496e7465), 
-        ACE_NTOHL (0x72666163), 
-        ACE_NTOHL (0x65446566), 
-        ACE_NTOHL (0x0),  // name = InterfaceDef
+        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_InterfaceDef:1.0
+        19,
+        ACE_NTOHL (0x434f5242), 
+        ACE_NTOHL (0x415f496e), 
+        ACE_NTOHL (0x74657266), 
+        ACE_NTOHL (0x61636544), 
+        ACE_NTOHL (0x65660000),  // name = CORBA_InterfaceDef
 
 
     0U,
@@ -5137,10 +5599,10 @@ static const CORBA::Long _oc_IR_UsesDescSeq[] =
   ACE_NTOHL (0x44657363), 
   ACE_NTOHL (0x53657100),  // name = UsesDescSeq
   CORBA::tk_sequence, // typecode kind
-  540, // encapsulation length
+  544, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
-    524, // encapsulation length
+    528, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       35,
       ACE_NTOHL (0x49444c3a), 
@@ -5254,23 +5716,24 @@ static const CORBA::Long _oc_IR_UsesDescSeq[] =
       ACE_NTOHL (0x655f7479), 
       ACE_NTOHL (0x70650000),  // name = interface_type
       CORBA::tk_objref, // typecode kind
-      64, // encapsulation length
+      68, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         35,
         ACE_NTOHL (0x49444c3a), 
         ACE_NTOHL (0x6f6d672e), 
         ACE_NTOHL (0x6f72672f), 
         ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f496e), 
+        ACE_NTOHL (0x415f496e), 
         ACE_NTOHL (0x74657266), 
         ACE_NTOHL (0x61636544), 
         ACE_NTOHL (0x65663a31), 
-        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/InterfaceDef:1.0
-        13,
-        ACE_NTOHL (0x496e7465), 
-        ACE_NTOHL (0x72666163), 
-        ACE_NTOHL (0x65446566), 
-        ACE_NTOHL (0x0),  // name = InterfaceDef
+        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_InterfaceDef:1.0
+        19,
+        ACE_NTOHL (0x434f5242), 
+        ACE_NTOHL (0x415f496e), 
+        ACE_NTOHL (0x74657266), 
+        ACE_NTOHL (0x61636544), 
+        ACE_NTOHL (0x65660000),  // name = CORBA_InterfaceDef
 
       12,
       ACE_NTOHL (0x69735f6d), 
@@ -5295,6 +5758,188 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UsesDescSeq, &_tc_TAO_tc_IR_UsesDescSeq)
 TAO_NAMESPACE_END
+
+// *************************************************************
+// Operations for class IR::EventDef_var
+// *************************************************************
+
+IR::EventDef_var::EventDef_var (void) // default constructor
+  : ptr_ (EventDef::_nil ())
+{}
+
+::IR::EventDef_ptr
+IR::EventDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+IR::EventDef_var::EventDef_var (const ::IR::EventDef_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (EventDef::_duplicate (p.ptr ()))
+{}
+
+IR::EventDef_var::~EventDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+IR::EventDef_var &
+IR::EventDef_var::operator= (EventDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::EventDef_var &
+IR::EventDef_var::operator= (const ::IR::EventDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR::EventDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+IR::EventDef_var::operator const ::IR::EventDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+IR::EventDef_var::operator ::IR::EventDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::IR::EventDef_ptr
+IR::EventDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::IR::EventDef_ptr
+IR::EventDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::IR::EventDef_ptr &
+IR::EventDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::IR::EventDef_ptr &
+IR::EventDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::EventDef::_nil ();
+  return this->ptr_;
+}
+
+::IR::EventDef_ptr
+IR::EventDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR::EventDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR::EventDef::_nil ();
+  return val;
+}
+
+::IR::EventDef_ptr
+IR::EventDef_var::duplicate (EventDef_ptr p)
+{
+  return ::IR::EventDef::_duplicate (p);
+}
+
+void
+IR::EventDef_var::release (EventDef_ptr p)
+{
+  CORBA::release (p);
+}
+
+::IR::EventDef_ptr
+IR::EventDef_var::nil (void)
+{
+  return ::IR::EventDef::_nil ();
+}
+
+::IR::EventDef_ptr
+IR::EventDef_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::IR::EventDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+IR::EventDef_var::upcast (void *src)
+{
+  EventDef **tmp =
+    ACE_static_cast (EventDef **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class IR::EventDef_out
+// *************************************************************
+
+IR::EventDef_out::EventDef_out (EventDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR::EventDef::_nil ();
+}
+
+IR::EventDef_out::EventDef_out (EventDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::EventDef::_nil ();
+}
+
+IR::EventDef_out::EventDef_out (const ::IR::EventDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (EventDef_out &, p).ptr_)
+{}
+
+::IR::EventDef_out &
+IR::EventDef_out::operator= (const ::IR::EventDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (EventDef_out&, p).ptr_;
+  return *this;
+}
+
+IR::EventDef_out &
+IR::EventDef_out::operator= (const ::IR::EventDef_var &p)
+{
+  this->ptr_ = ::IR::EventDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+IR::EventDef_out &
+IR::EventDef_out::operator= (EventDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::EventDef_out::operator ::IR::EventDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::IR::EventDef_ptr &
+IR::EventDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::IR::EventDef_ptr
+IR::EventDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -5430,13 +6075,13 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void result (CORBA::ValueDef_ptr result);
+  void result (CORBA_ValueDef_ptr result);
 
 private:
   TAO_ClientRequestInfo_IR_EventDef_event_get (const TAO_ClientRequestInfo_IR_EventDef_event_get &);
   void operator= (const TAO_ClientRequestInfo_IR_EventDef_event_get &);
 
-  CORBA::ValueDef_ptr _result;
+  CORBA_ValueDef_ptr _result;
 };
 
 TAO_ClientRequestInfo_IR_EventDef_event_get::TAO_ClientRequestInfo_IR_EventDef_event_get (
@@ -5489,7 +6134,7 @@ TAO_ClientRequestInfo_IR_EventDef_event_get::result (CORBA::Environment &ACE_TRY
 }
 
 void 
-TAO_ClientRequestInfo_IR_EventDef_event_get::result (CORBA::ValueDef_ptr result)
+TAO_ClientRequestInfo_IR_EventDef_event_get::result (CORBA_ValueDef_ptr result)
 {
   // update the result 
   this->_result = result;
@@ -5679,7 +6324,7 @@ CORBA::Boolean IR::_TAO_EventDef_Remote_Proxy_Impl::is_a (
   return _tao_retval;
 }
 
-CORBA::ValueDef_ptr IR::_TAO_EventDef_Remote_Proxy_Impl::event (
+CORBA_ValueDef_ptr IR::_TAO_EventDef_Remote_Proxy_Impl::event (
     CORBA_Object *_collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -5688,8 +6333,8 @@ CORBA::ValueDef_ptr IR::_TAO_EventDef_Remote_Proxy_Impl::event (
   ))
 {
   
-  CORBA::ValueDef_ptr _tao_retval = CORBA::ValueDef::_nil ();
-  CORBA::ValueDef_var _tao_safe_retval (_tao_retval);
+  CORBA_ValueDef_ptr _tao_retval = CORBA_ValueDef::_nil ();
+  CORBA_ValueDef_var _tao_safe_retval (_tao_retval);
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -5773,7 +6418,7 @@ CORBA::ValueDef_ptr IR::_TAO_EventDef_Remote_Proxy_Impl::event (
             }
           
           TAO_INTERCEPTOR (
-              CORBA::ValueDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+              CORBA_ValueDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
               ri.result (_tao_retval_info);
               _tao_safe_retval = _tao_retval_info;
             );
@@ -5999,8 +6644,8 @@ CORBA::Boolean IR::EventDef::_is_a (const CORBA::Char *value, CORBA::Environment
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/EventDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -6016,25 +6661,25 @@ void *IR::EventDef::_tao_QueryInterface (ptr_arith_t type)
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Contained::_narrow))
+      &CORBA_Contained::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Contained_ptr,
+            CORBA_Contained_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IRObject::_narrow))
+      &CORBA_IRObject::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IRObject_ptr,
+            CORBA_IRObject_ptr,
             this
           )
       );
@@ -6071,7 +6716,7 @@ CORBA::Boolean IR::EventDef::is_a (
     );
 }
 
-CORBA::ValueDef_ptr IR::EventDef::event (
+CORBA_ValueDef_ptr IR::EventDef::event (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -6087,7 +6732,6 @@ CORBA::ValueDef_ptr IR::EventDef::event (
       ACE_TRY_ENV
     );
 }
-
 
 static const CORBA::Long _oc_IR_EventDef[] =
 {
@@ -6233,21 +6877,22 @@ static const CORBA::Long _oc_IR_EventDescription[] =
   ACE_NTOHL (0x76616c75), 
   ACE_NTOHL (0x65000000),  // name = value
   CORBA::tk_objref, // typecode kind
-  56, // encapsulation length
+  60, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
     ACE_NTOHL (0x49444c3a), 
     ACE_NTOHL (0x6f6d672e), 
     ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f5661), 
+    ACE_NTOHL (0x415f5661), 
     ACE_NTOHL (0x6c756544), 
     ACE_NTOHL (0x65663a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ValueDef:1.0
-    9,
-    ACE_NTOHL (0x56616c75), 
-    ACE_NTOHL (0x65446566), 
-    ACE_NTOHL (0x0),  // name = ValueDef
+    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_ValueDef:1.0
+    15,
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x415f5661), 
+    ACE_NTOHL (0x6c756544), 
+    ACE_NTOHL (0x65660000),  // name = CORBA_ValueDef
 
 };
 
@@ -6270,6 +6915,191 @@ void IR::EventDescription::_tao_any_destructor (void *x)
   delete tmp;
 }
 
+// *************************************************************
+// Operations for class IR::EmitsDef_var
+// *************************************************************
+
+IR::EmitsDef_var::EmitsDef_var (void) // default constructor
+  : ptr_ (EmitsDef::_nil ())
+{}
+
+::IR::EmitsDef_ptr
+IR::EmitsDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+IR::EmitsDef_var::EmitsDef_var (const ::IR::EmitsDef_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (EmitsDef::_duplicate (p.ptr ()))
+{}
+
+IR::EmitsDef_var::~EmitsDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+IR::EmitsDef_var &
+IR::EmitsDef_var::operator= (EmitsDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::EmitsDef_var &
+IR::EmitsDef_var::operator= (const ::IR::EmitsDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR::EmitsDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+IR::EmitsDef_var::operator const ::IR::EmitsDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+IR::EmitsDef_var::operator ::IR::EmitsDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::IR::EmitsDef_ptr
+IR::EmitsDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::IR::EmitsDef_ptr
+IR::EmitsDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::IR::EmitsDef_ptr &
+IR::EmitsDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::IR::EmitsDef_ptr &
+IR::EmitsDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::EmitsDef::_nil ();
+  return this->ptr_;
+}
+
+::IR::EmitsDef_ptr
+IR::EmitsDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR::EmitsDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR::EmitsDef::_nil ();
+  return val;
+}
+
+::IR::EmitsDef_ptr
+IR::EmitsDef_var::duplicate (EmitsDef_ptr p)
+{
+  return ::IR::EmitsDef::_duplicate (p);
+}
+
+void
+IR::EmitsDef_var::release (EmitsDef_ptr p)
+{
+  CORBA::release (p);
+}
+
+::IR::EmitsDef_ptr
+IR::EmitsDef_var::nil (void)
+{
+  return ::IR::EmitsDef::_nil ();
+}
+
+::IR::EmitsDef_ptr
+IR::EmitsDef_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::IR::EmitsDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+IR::EmitsDef_var::upcast (void *src)
+{
+  EmitsDef **tmp =
+    ACE_static_cast (EmitsDef **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class IR::EmitsDef_out
+// *************************************************************
+
+IR::EmitsDef_out::EmitsDef_out (EmitsDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR::EmitsDef::_nil ();
+}
+
+IR::EmitsDef_out::EmitsDef_out (EmitsDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::EmitsDef::_nil ();
+}
+
+IR::EmitsDef_out::EmitsDef_out (const ::IR::EmitsDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (EmitsDef_out &, p).ptr_)
+{}
+
+::IR::EmitsDef_out &
+IR::EmitsDef_out::operator= (const ::IR::EmitsDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (EmitsDef_out&, p).ptr_;
+  return *this;
+}
+
+IR::EmitsDef_out &
+IR::EmitsDef_out::operator= (const ::IR::EmitsDef_var &p)
+{
+  this->ptr_ = ::IR::EmitsDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+IR::EmitsDef_out &
+IR::EmitsDef_out::operator= (EmitsDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::EmitsDef_out::operator ::IR::EmitsDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::IR::EmitsDef_ptr &
+IR::EmitsDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::IR::EmitsDef_ptr
+IR::EmitsDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+#endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
 //                Base & Remote Proxy  Implementation. 
@@ -6444,8 +7274,8 @@ CORBA::Boolean IR::EmitsDef::_is_a (const CORBA::Char *value, CORBA::Environment
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/EmitsDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/EventDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -6473,25 +7303,25 @@ void *IR::EmitsDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Contained::_narrow))
+      &CORBA_Contained::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Contained_ptr,
+            CORBA_Contained_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IRObject::_narrow))
+      &CORBA_IRObject::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IRObject_ptr,
+            CORBA_IRObject_ptr,
             this
           )
       );
@@ -6539,6 +7369,191 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_EmitsDef, &_tc_TAO_tc_IR_EmitsDef)
 TAO_NAMESPACE_END
 
+// *************************************************************
+// Operations for class IR::PublishesDef_var
+// *************************************************************
+
+IR::PublishesDef_var::PublishesDef_var (void) // default constructor
+  : ptr_ (PublishesDef::_nil ())
+{}
+
+::IR::PublishesDef_ptr
+IR::PublishesDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+IR::PublishesDef_var::PublishesDef_var (const ::IR::PublishesDef_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (PublishesDef::_duplicate (p.ptr ()))
+{}
+
+IR::PublishesDef_var::~PublishesDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+IR::PublishesDef_var &
+IR::PublishesDef_var::operator= (PublishesDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::PublishesDef_var &
+IR::PublishesDef_var::operator= (const ::IR::PublishesDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR::PublishesDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+IR::PublishesDef_var::operator const ::IR::PublishesDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+IR::PublishesDef_var::operator ::IR::PublishesDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::IR::PublishesDef_ptr
+IR::PublishesDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::IR::PublishesDef_ptr
+IR::PublishesDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::IR::PublishesDef_ptr &
+IR::PublishesDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::IR::PublishesDef_ptr &
+IR::PublishesDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::PublishesDef::_nil ();
+  return this->ptr_;
+}
+
+::IR::PublishesDef_ptr
+IR::PublishesDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR::PublishesDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR::PublishesDef::_nil ();
+  return val;
+}
+
+::IR::PublishesDef_ptr
+IR::PublishesDef_var::duplicate (PublishesDef_ptr p)
+{
+  return ::IR::PublishesDef::_duplicate (p);
+}
+
+void
+IR::PublishesDef_var::release (PublishesDef_ptr p)
+{
+  CORBA::release (p);
+}
+
+::IR::PublishesDef_ptr
+IR::PublishesDef_var::nil (void)
+{
+  return ::IR::PublishesDef::_nil ();
+}
+
+::IR::PublishesDef_ptr
+IR::PublishesDef_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::IR::PublishesDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+IR::PublishesDef_var::upcast (void *src)
+{
+  PublishesDef **tmp =
+    ACE_static_cast (PublishesDef **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class IR::PublishesDef_out
+// *************************************************************
+
+IR::PublishesDef_out::PublishesDef_out (PublishesDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR::PublishesDef::_nil ();
+}
+
+IR::PublishesDef_out::PublishesDef_out (PublishesDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::PublishesDef::_nil ();
+}
+
+IR::PublishesDef_out::PublishesDef_out (const ::IR::PublishesDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (PublishesDef_out &, p).ptr_)
+{}
+
+::IR::PublishesDef_out &
+IR::PublishesDef_out::operator= (const ::IR::PublishesDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (PublishesDef_out&, p).ptr_;
+  return *this;
+}
+
+IR::PublishesDef_out &
+IR::PublishesDef_out::operator= (const ::IR::PublishesDef_var &p)
+{
+  this->ptr_ = ::IR::PublishesDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+IR::PublishesDef_out &
+IR::PublishesDef_out::operator= (PublishesDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::PublishesDef_out::operator ::IR::PublishesDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::IR::PublishesDef_ptr &
+IR::PublishesDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::IR::PublishesDef_ptr
+IR::PublishesDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+#endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
 //                Base & Remote Proxy  Implementation. 
@@ -6713,8 +7728,8 @@ CORBA::Boolean IR::PublishesDef::_is_a (const CORBA::Char *value, CORBA::Environ
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/PublishesDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/EventDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -6742,25 +7757,25 @@ void *IR::PublishesDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Contained::_narrow))
+      &CORBA_Contained::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Contained_ptr,
+            CORBA_Contained_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IRObject::_narrow))
+      &CORBA_IRObject::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IRObject_ptr,
+            CORBA_IRObject_ptr,
             this
           )
       );
@@ -6810,6 +7825,191 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PublishesDef, &_tc_TAO_tc_IR_PublishesDef)
 TAO_NAMESPACE_END
 
+// *************************************************************
+// Operations for class IR::ConsumesDef_var
+// *************************************************************
+
+IR::ConsumesDef_var::ConsumesDef_var (void) // default constructor
+  : ptr_ (ConsumesDef::_nil ())
+{}
+
+::IR::ConsumesDef_ptr
+IR::ConsumesDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+IR::ConsumesDef_var::ConsumesDef_var (const ::IR::ConsumesDef_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (ConsumesDef::_duplicate (p.ptr ()))
+{}
+
+IR::ConsumesDef_var::~ConsumesDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+IR::ConsumesDef_var &
+IR::ConsumesDef_var::operator= (ConsumesDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::ConsumesDef_var &
+IR::ConsumesDef_var::operator= (const ::IR::ConsumesDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR::ConsumesDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+IR::ConsumesDef_var::operator const ::IR::ConsumesDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+IR::ConsumesDef_var::operator ::IR::ConsumesDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::IR::ConsumesDef_ptr
+IR::ConsumesDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::IR::ConsumesDef_ptr
+IR::ConsumesDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::IR::ConsumesDef_ptr &
+IR::ConsumesDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::IR::ConsumesDef_ptr &
+IR::ConsumesDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::ConsumesDef::_nil ();
+  return this->ptr_;
+}
+
+::IR::ConsumesDef_ptr
+IR::ConsumesDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR::ConsumesDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR::ConsumesDef::_nil ();
+  return val;
+}
+
+::IR::ConsumesDef_ptr
+IR::ConsumesDef_var::duplicate (ConsumesDef_ptr p)
+{
+  return ::IR::ConsumesDef::_duplicate (p);
+}
+
+void
+IR::ConsumesDef_var::release (ConsumesDef_ptr p)
+{
+  CORBA::release (p);
+}
+
+::IR::ConsumesDef_ptr
+IR::ConsumesDef_var::nil (void)
+{
+  return ::IR::ConsumesDef::_nil ();
+}
+
+::IR::ConsumesDef_ptr
+IR::ConsumesDef_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::IR::ConsumesDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+IR::ConsumesDef_var::upcast (void *src)
+{
+  ConsumesDef **tmp =
+    ACE_static_cast (ConsumesDef **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class IR::ConsumesDef_out
+// *************************************************************
+
+IR::ConsumesDef_out::ConsumesDef_out (ConsumesDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR::ConsumesDef::_nil ();
+}
+
+IR::ConsumesDef_out::ConsumesDef_out (ConsumesDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::ConsumesDef::_nil ();
+}
+
+IR::ConsumesDef_out::ConsumesDef_out (const ::IR::ConsumesDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ConsumesDef_out &, p).ptr_)
+{}
+
+::IR::ConsumesDef_out &
+IR::ConsumesDef_out::operator= (const ::IR::ConsumesDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (ConsumesDef_out&, p).ptr_;
+  return *this;
+}
+
+IR::ConsumesDef_out &
+IR::ConsumesDef_out::operator= (const ::IR::ConsumesDef_var &p)
+{
+  this->ptr_ = ::IR::ConsumesDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+IR::ConsumesDef_out &
+IR::ConsumesDef_out::operator= (ConsumesDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::ConsumesDef_out::operator ::IR::ConsumesDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::IR::ConsumesDef_ptr &
+IR::ConsumesDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::IR::ConsumesDef_ptr
+IR::ConsumesDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+#endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
 //                Base & Remote Proxy  Implementation. 
@@ -6984,8 +8184,8 @@ CORBA::Boolean IR::ConsumesDef::_is_a (const CORBA::Char *value, CORBA::Environm
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/ConsumesDef:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/EventDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -7013,25 +8213,25 @@ void *IR::ConsumesDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Contained::_narrow))
+      &CORBA_Contained::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Contained_ptr,
+            CORBA_Contained_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IRObject::_narrow))
+      &CORBA_IRObject::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IRObject_ptr,
+            CORBA_IRObject_ptr,
             this
           )
       );
@@ -7080,6 +8280,188 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ConsumesDef, &_tc_TAO_tc_IR_ConsumesDef)
 TAO_NAMESPACE_END
 
+// *************************************************************
+// Operations for class IR::ComponentDef_var
+// *************************************************************
+
+IR::ComponentDef_var::ComponentDef_var (void) // default constructor
+  : ptr_ (ComponentDef::_nil ())
+{}
+
+::IR::ComponentDef_ptr
+IR::ComponentDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+IR::ComponentDef_var::ComponentDef_var (const ::IR::ComponentDef_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (ComponentDef::_duplicate (p.ptr ()))
+{}
+
+IR::ComponentDef_var::~ComponentDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+IR::ComponentDef_var &
+IR::ComponentDef_var::operator= (ComponentDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::ComponentDef_var &
+IR::ComponentDef_var::operator= (const ::IR::ComponentDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR::ComponentDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+IR::ComponentDef_var::operator const ::IR::ComponentDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+IR::ComponentDef_var::operator ::IR::ComponentDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::IR::ComponentDef_ptr
+IR::ComponentDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::IR::ComponentDef_ptr
+IR::ComponentDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::IR::ComponentDef_ptr &
+IR::ComponentDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::IR::ComponentDef_ptr &
+IR::ComponentDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::ComponentDef::_nil ();
+  return this->ptr_;
+}
+
+::IR::ComponentDef_ptr
+IR::ComponentDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR::ComponentDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR::ComponentDef::_nil ();
+  return val;
+}
+
+::IR::ComponentDef_ptr
+IR::ComponentDef_var::duplicate (ComponentDef_ptr p)
+{
+  return ::IR::ComponentDef::_duplicate (p);
+}
+
+void
+IR::ComponentDef_var::release (ComponentDef_ptr p)
+{
+  CORBA::release (p);
+}
+
+::IR::ComponentDef_ptr
+IR::ComponentDef_var::nil (void)
+{
+  return ::IR::ComponentDef::_nil ();
+}
+
+::IR::ComponentDef_ptr
+IR::ComponentDef_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::IR::ComponentDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+IR::ComponentDef_var::upcast (void *src)
+{
+  ComponentDef **tmp =
+    ACE_static_cast (ComponentDef **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class IR::ComponentDef_out
+// *************************************************************
+
+IR::ComponentDef_out::ComponentDef_out (ComponentDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR::ComponentDef::_nil ();
+}
+
+IR::ComponentDef_out::ComponentDef_out (ComponentDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::ComponentDef::_nil ();
+}
+
+IR::ComponentDef_out::ComponentDef_out (const ::IR::ComponentDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ComponentDef_out &, p).ptr_)
+{}
+
+::IR::ComponentDef_out &
+IR::ComponentDef_out::operator= (const ::IR::ComponentDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (ComponentDef_out&, p).ptr_;
+  return *this;
+}
+
+IR::ComponentDef_out &
+IR::ComponentDef_out::operator= (const ::IR::ComponentDef_var &p)
+{
+  this->ptr_ = ::IR::ComponentDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+IR::ComponentDef_out &
+IR::ComponentDef_out::operator= (ComponentDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::ComponentDef_out::operator ::IR::ComponentDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::IR::ComponentDef_ptr &
+IR::ComponentDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::IR::ComponentDef_ptr
+IR::ComponentDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 class TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get : public TAO_ClientRequestInfo
@@ -7110,13 +8492,13 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void result (CORBA::InterfaceDefSeq * result);
+  void result (CORBA_InterfaceDefSeq * result);
 
 private:
   TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get (const TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get &);
   void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get &);
 
-  CORBA::InterfaceDefSeq * _result;
+  CORBA_InterfaceDefSeq * _result;
 };
 
 TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get::TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get (
@@ -7169,7 +8551,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get::result (CORBA::E
 }
 
 void 
-TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get::result (CORBA::InterfaceDefSeq * result)
+TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get::result (CORBA_InterfaceDefSeq * result)
 {
   // update the result 
   this->_result = result;
@@ -7181,7 +8563,7 @@ public:
   TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      const CORBA::InterfaceDefSeq & supported_interfaces,
+      const CORBA_InterfaceDefSeq & supported_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
@@ -7208,14 +8590,14 @@ private:
   TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set (const TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set &);
   void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set &);
 
-  const CORBA::InterfaceDefSeq & supported_interfaces_;
+  const CORBA_InterfaceDefSeq & supported_interfaces_;
   
 };
 
 TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set::TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA_InterfaceDefSeq & supported_interfaces,
     CORBA::Environment &    
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
@@ -7928,7 +9310,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::InterfaceDef_ptr interface_type,
+      CORBA_InterfaceDef_ptr interface_type,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
@@ -7960,7 +9342,7 @@ private:
   const char * id_;
   const char * name_;
   const char * version_;
-  CORBA::InterfaceDef_ptr interface_type_;
+  CORBA_InterfaceDef_ptr interface_type_;
   IR::ProvidesDef_ptr _result;
 };
 
@@ -7970,7 +9352,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_provides::TAO_ClientRequestInfo_IR_
     const char * id,
     const char * name,
     const char * version,
-    CORBA::InterfaceDef_ptr interface_type,
+    CORBA_InterfaceDef_ptr interface_type,
     CORBA::Environment &    
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
@@ -8060,7 +9442,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::InterfaceDef_ptr interface_type,
+      CORBA_InterfaceDef_ptr interface_type,
       const CORBA::Boolean & is_multiple,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -8093,7 +9475,7 @@ private:
   const char * id_;
   const char * name_;
   const char * version_;
-  CORBA::InterfaceDef_ptr interface_type_;
+  CORBA_InterfaceDef_ptr interface_type_;
   const CORBA::Boolean & is_multiple_;
   IR::UsesDef_ptr _result;
 };
@@ -8104,7 +9486,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_uses::TAO_ClientRequestInfo_IR_Comp
     const char * id,
     const char * name,
     const char * version,
-    CORBA::InterfaceDef_ptr interface_type,
+    CORBA_InterfaceDef_ptr interface_type,
     const CORBA::Boolean & is_multiple,
     CORBA::Environment &    
   )
@@ -8201,7 +9583,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr value,
+      CORBA_ValueDef_ptr value,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
@@ -8233,7 +9615,7 @@ private:
   const char * id_;
   const char * name_;
   const char * version_;
-  CORBA::ValueDef_ptr value_;
+  CORBA_ValueDef_ptr value_;
   IR::EmitsDef_ptr _result;
 };
 
@@ -8243,7 +9625,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_emits::TAO_ClientRequestInfo_IR_Com
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr value,
+    CORBA_ValueDef_ptr value,
     CORBA::Environment &    
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
@@ -8333,7 +9715,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr value,
+      CORBA_ValueDef_ptr value,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
@@ -8365,7 +9747,7 @@ private:
   const char * id_;
   const char * name_;
   const char * version_;
-  CORBA::ValueDef_ptr value_;
+  CORBA_ValueDef_ptr value_;
   IR::PublishesDef_ptr _result;
 };
 
@@ -8375,7 +9757,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_publishes::TAO_ClientRequestInfo_IR
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr value,
+    CORBA_ValueDef_ptr value,
     CORBA::Environment &    
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
@@ -8465,7 +9847,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr value,
+      CORBA_ValueDef_ptr value,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
@@ -8497,7 +9879,7 @@ private:
   const char * id_;
   const char * name_;
   const char * version_;
-  CORBA::ValueDef_ptr value_;
+  CORBA_ValueDef_ptr value_;
   IR::ConsumesDef_ptr _result;
 };
 
@@ -8507,7 +9889,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_consumes::TAO_ClientRequestInfo_IR_
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr value,
+    CORBA_ValueDef_ptr value,
     CORBA::Environment &    
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
@@ -8602,7 +9984,7 @@ IR::_TAO_ComponentDef_Remote_Proxy_Impl::_TAO_ComponentDef_Remote_Proxy_Impl (vo
 
 // Remote Implementation of the IDL interface methods
 
-CORBA::InterfaceDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_interfaces (
+CORBA_InterfaceDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_interfaces (
     CORBA_Object *_collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -8611,7 +9993,7 @@ CORBA::InterfaceDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_inte
   ))
 {
   
-  CORBA::InterfaceDefSeq *_tao_retval = 0;
+  CORBA_InterfaceDefSeq *_tao_retval = 0;
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -8619,8 +10001,8 @@ CORBA::InterfaceDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_inte
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
   
-  ACE_NEW_RETURN (_tao_retval, CORBA::InterfaceDefSeq, _tao_retval);
-  CORBA::InterfaceDefSeq_var _tao_safe_retval (_tao_retval);
+  ACE_NEW_RETURN (_tao_retval, CORBA_InterfaceDefSeq, _tao_retval);
+  CORBA_InterfaceDefSeq_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_supported_interfaces",
@@ -8697,7 +10079,7 @@ CORBA::InterfaceDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_inte
             }
           
           TAO_INTERCEPTOR (
-              CORBA::InterfaceDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
+              CORBA_InterfaceDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
               ri.result (_tao_retval_info);
               _tao_safe_retval = _tao_retval_info;
             );
@@ -8765,7 +10147,7 @@ CORBA::InterfaceDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_inte
 
 void IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_interfaces (
     CORBA_Object *_collocated_tao_target_,
-    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA_InterfaceDefSeq & supported_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -10043,7 +11425,7 @@ IR::ProvidesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_provides (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::InterfaceDef_ptr interface_type,
+    CORBA_InterfaceDef_ptr interface_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -10224,7 +11606,7 @@ IR::UsesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_uses (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::InterfaceDef_ptr interface_type,
+    CORBA_InterfaceDef_ptr interface_type,
     CORBA::Boolean is_multiple,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -10408,7 +11790,7 @@ IR::EmitsDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_emits (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr value,
+    CORBA_ValueDef_ptr value,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -10589,7 +11971,7 @@ IR::PublishesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_publishes (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr value,
+    CORBA_ValueDef_ptr value,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -10770,7 +12152,7 @@ IR::ConsumesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_consumes (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr value,
+    CORBA_ValueDef_ptr value,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -11106,11 +12488,11 @@ CORBA::Boolean IR::ComponentDef::_is_a (const CORBA::Char *value, CORBA::Environ
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/ComponentDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/InterfaceDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Container:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IDLType:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_InterfaceDef:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Container:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IDLType:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -11126,61 +12508,61 @@ void *IR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::InterfaceDef::_narrow))
+      &CORBA_InterfaceDef::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::InterfaceDef_ptr,
+            CORBA_InterfaceDef_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Container::_narrow))
+      &CORBA_Container::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Container_ptr,
+            CORBA_Container_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Contained::_narrow))
+      &CORBA_Contained::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Contained_ptr,
+            CORBA_Contained_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IDLType::_narrow))
+      &CORBA_IDLType::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IDLType_ptr,
+            CORBA_IDLType_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IRObject::_narrow))
+      &CORBA_IRObject::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IRObject_ptr,
+            CORBA_IRObject_ptr,
             this
           )
       );
@@ -11198,7 +12580,7 @@ const char* IR::ComponentDef::_interface_repository_id (void) const
   return "IDL:omg.org/IR/ComponentDef:1.0";
 }
 
-CORBA::InterfaceDefSeq * IR::ComponentDef::supported_interfaces (
+CORBA_InterfaceDefSeq * IR::ComponentDef::supported_interfaces (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -11216,7 +12598,7 @@ CORBA::InterfaceDefSeq * IR::ComponentDef::supported_interfaces (
 }
 
 void IR::ComponentDef::supported_interfaces (
-    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA_InterfaceDefSeq & supported_interfaces,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -11357,7 +12739,7 @@ IR::ProvidesDef_ptr IR::ComponentDef::create_provides (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::InterfaceDef_ptr interface_type,
+    CORBA_InterfaceDef_ptr interface_type,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -11382,7 +12764,7 @@ IR::UsesDef_ptr IR::ComponentDef::create_uses (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::InterfaceDef_ptr interface_type,
+    CORBA_InterfaceDef_ptr interface_type,
     CORBA::Boolean is_multiple,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -11409,7 +12791,7 @@ IR::EmitsDef_ptr IR::ComponentDef::create_emits (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr value,
+    CORBA_ValueDef_ptr value,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -11434,7 +12816,7 @@ IR::PublishesDef_ptr IR::ComponentDef::create_publishes (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr value,
+    CORBA_ValueDef_ptr value,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -11459,7 +12841,7 @@ IR::ConsumesDef_ptr IR::ComponentDef::create_consumes (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr value,
+    CORBA_ValueDef_ptr value,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -11479,7 +12861,6 @@ IR::ConsumesDef_ptr IR::ComponentDef::create_consumes (
       ACE_TRY_ENV
     );
 }
-
 
 static const CORBA::Long _oc_IR_ComponentDef[] =
 {
@@ -11794,146 +13175,75 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
   ACE_NTOHL (0x69627574), 
   ACE_NTOHL (0x65730000),  // name = attributes
   CORBA::tk_alias, // typecode kind for typedefs
-  684, // encapsulation length
+  420, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     41,
     ACE_NTOHL (0x49444c3a), 
     ACE_NTOHL (0x6f6d672e), 
     ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4174), 
+    ACE_NTOHL (0x415f4174), 
     ACE_NTOHL (0x74724465), 
     ACE_NTOHL (0x73637269), 
     ACE_NTOHL (0x7074696f), 
     ACE_NTOHL (0x6e536571), 
     ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/AttrDescriptionSeq:1.0
-    19,
-    ACE_NTOHL (0x41747472), 
-    ACE_NTOHL (0x44657363), 
-    ACE_NTOHL (0x72697074), 
-    ACE_NTOHL (0x696f6e53), 
-    ACE_NTOHL (0x65710000),  // name = AttrDescriptionSeq
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA_AttrDescriptionSeq:1.0
+    25,
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x415f4174), 
+    ACE_NTOHL (0x74724465), 
+    ACE_NTOHL (0x73637269), 
+    ACE_NTOHL (0x7074696f), 
+    ACE_NTOHL (0x6e536571), 
+    ACE_NTOHL (0x0),  // name = CORBA_AttrDescriptionSeq
     CORBA::tk_sequence, // typecode kind
-    600, // encapsulation length
+    328, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       CORBA::tk_struct, // typecode kind
-      584, // encapsulation length
+      312, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         43,
         ACE_NTOHL (0x49444c3a), 
         ACE_NTOHL (0x6f6d672e), 
         ACE_NTOHL (0x6f72672f), 
         ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f4174), 
+        ACE_NTOHL (0x415f4174), 
         ACE_NTOHL (0x74726962), 
         ACE_NTOHL (0x75746544), 
         ACE_NTOHL (0x65736372), 
         ACE_NTOHL (0x69707469), 
         ACE_NTOHL (0x6f6e3a31), 
-        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/AttributeDescription:1.0
-        21,
-        ACE_NTOHL (0x41747472), 
-        ACE_NTOHL (0x69627574), 
-        ACE_NTOHL (0x65446573), 
-        ACE_NTOHL (0x63726970), 
-        ACE_NTOHL (0x74696f6e), 
-        ACE_NTOHL (0x0),  // name = AttributeDescription
+        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_AttributeDescription:1.0
+        27,
+        ACE_NTOHL (0x434f5242), 
+        ACE_NTOHL (0x415f4174), 
+        ACE_NTOHL (0x74726962), 
+        ACE_NTOHL (0x75746544), 
+        ACE_NTOHL (0x65736372), 
+        ACE_NTOHL (0x69707469), 
+        ACE_NTOHL (0x6f6e0000),  // name = CORBA_AttributeDescription
         6, // member count
         5,
         ACE_NTOHL (0x6e616d65), 
         ACE_NTOHL (0x0),  // name = name
-        CORBA::tk_alias, // typecode kind for typedefs
-        68, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          33,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4964), 
-          ACE_NTOHL (0x656e7469), 
-          ACE_NTOHL (0x66696572), 
-          ACE_NTOHL (0x3a312e30), 
-          ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
-          11,
-          ACE_NTOHL (0x4964656e), 
-          ACE_NTOHL (0x74696669), 
-          ACE_NTOHL (0x65720000),  // name = Identifier
-          CORBA::tk_string, 
-          0U, // string length
-
+        CORBA::tk_string, 
+        0U, // string length
         3,
         ACE_NTOHL (0x69640000),  // name = id
-        CORBA::tk_alias, // typecode kind for typedefs
-        72, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          35,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5265), 
-          ACE_NTOHL (0x706f7369), 
-          ACE_NTOHL (0x746f7279), 
-          ACE_NTOHL (0x49643a31), 
-          ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-          13,
-          ACE_NTOHL (0x5265706f), 
-          ACE_NTOHL (0x7369746f), 
-          ACE_NTOHL (0x72794964), 
-          ACE_NTOHL (0x0),  // name = RepositoryId
-          CORBA::tk_string, 
-          0U, // string length
-
+        CORBA::tk_string, 
+        0U, // string length
         11,
         ACE_NTOHL (0x64656669), 
         ACE_NTOHL (0x6e65645f), 
         ACE_NTOHL (0x696e0000),  // name = defined_in
-        CORBA::tk_alias, // typecode kind for typedefs
-        72, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          35,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5265), 
-          ACE_NTOHL (0x706f7369), 
-          ACE_NTOHL (0x746f7279), 
-          ACE_NTOHL (0x49643a31), 
-          ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-          13,
-          ACE_NTOHL (0x5265706f), 
-          ACE_NTOHL (0x7369746f), 
-          ACE_NTOHL (0x72794964), 
-          ACE_NTOHL (0x0),  // name = RepositoryId
-          CORBA::tk_string, 
-          0U, // string length
-
+        CORBA::tk_string, 
+        0U, // string length
         8,
         ACE_NTOHL (0x76657273), 
         ACE_NTOHL (0x696f6e00),  // name = version
-        CORBA::tk_alias, // typecode kind for typedefs
-        68, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          34,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5665), 
-          ACE_NTOHL (0x7273696f), 
-          ACE_NTOHL (0x6e537065), 
-          ACE_NTOHL (0x633a312e), 
-          ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/VersionSpec:1.0
-          12,
-          ACE_NTOHL (0x56657273), 
-          ACE_NTOHL (0x696f6e53), 
-          ACE_NTOHL (0x70656300),  // name = VersionSpec
-          CORBA::tk_string, 
-          0U, // string length
-
+        CORBA::tk_string, 
+        0U, // string length
         5,
         ACE_NTOHL (0x74797065), 
         ACE_NTOHL (0x0),  // name = type
@@ -11943,23 +13253,24 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
         ACE_NTOHL (0x6d6f6465), 
         ACE_NTOHL (0x0),  // name = mode
         CORBA::tk_enum, // typecode kind
-        104, // encapsulation length
+        108, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           36,
           ACE_NTOHL (0x49444c3a), 
           ACE_NTOHL (0x6f6d672e), 
           ACE_NTOHL (0x6f72672f), 
           ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4174), 
+          ACE_NTOHL (0x415f4174), 
           ACE_NTOHL (0x74726962), 
           ACE_NTOHL (0x7574654d), 
           ACE_NTOHL (0x6f64653a), 
-          ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/AttributeMode:1.0
-          14,
-          ACE_NTOHL (0x41747472), 
-          ACE_NTOHL (0x69627574), 
-          ACE_NTOHL (0x654d6f64), 
-          ACE_NTOHL (0x65000000),  // name = AttributeMode
+          ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA_AttributeMode:1.0
+          20,
+          ACE_NTOHL (0x434f5242), 
+          ACE_NTOHL (0x415f4174), 
+          ACE_NTOHL (0x74726962), 
+          ACE_NTOHL (0x7574654d), 
+          ACE_NTOHL (0x6f646500),  // name = CORBA_AttributeMode
           2, // member count
           12,
           ACE_NTOHL (0x41545452), 
@@ -12139,6 +13450,188 @@ void IR::ComponentDescription::_tao_any_destructor (void *x)
   delete tmp;
 }
 
+// *************************************************************
+// Operations for class IR::PrimaryKeyDef_var
+// *************************************************************
+
+IR::PrimaryKeyDef_var::PrimaryKeyDef_var (void) // default constructor
+  : ptr_ (PrimaryKeyDef::_nil ())
+{}
+
+::IR::PrimaryKeyDef_ptr
+IR::PrimaryKeyDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+IR::PrimaryKeyDef_var::PrimaryKeyDef_var (const ::IR::PrimaryKeyDef_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (PrimaryKeyDef::_duplicate (p.ptr ()))
+{}
+
+IR::PrimaryKeyDef_var::~PrimaryKeyDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+IR::PrimaryKeyDef_var &
+IR::PrimaryKeyDef_var::operator= (PrimaryKeyDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::PrimaryKeyDef_var &
+IR::PrimaryKeyDef_var::operator= (const ::IR::PrimaryKeyDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR::PrimaryKeyDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+IR::PrimaryKeyDef_var::operator const ::IR::PrimaryKeyDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+IR::PrimaryKeyDef_var::operator ::IR::PrimaryKeyDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::IR::PrimaryKeyDef_ptr
+IR::PrimaryKeyDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::IR::PrimaryKeyDef_ptr
+IR::PrimaryKeyDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::IR::PrimaryKeyDef_ptr &
+IR::PrimaryKeyDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::IR::PrimaryKeyDef_ptr &
+IR::PrimaryKeyDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::PrimaryKeyDef::_nil ();
+  return this->ptr_;
+}
+
+::IR::PrimaryKeyDef_ptr
+IR::PrimaryKeyDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR::PrimaryKeyDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR::PrimaryKeyDef::_nil ();
+  return val;
+}
+
+::IR::PrimaryKeyDef_ptr
+IR::PrimaryKeyDef_var::duplicate (PrimaryKeyDef_ptr p)
+{
+  return ::IR::PrimaryKeyDef::_duplicate (p);
+}
+
+void
+IR::PrimaryKeyDef_var::release (PrimaryKeyDef_ptr p)
+{
+  CORBA::release (p);
+}
+
+::IR::PrimaryKeyDef_ptr
+IR::PrimaryKeyDef_var::nil (void)
+{
+  return ::IR::PrimaryKeyDef::_nil ();
+}
+
+::IR::PrimaryKeyDef_ptr
+IR::PrimaryKeyDef_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::IR::PrimaryKeyDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+IR::PrimaryKeyDef_var::upcast (void *src)
+{
+  PrimaryKeyDef **tmp =
+    ACE_static_cast (PrimaryKeyDef **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class IR::PrimaryKeyDef_out
+// *************************************************************
+
+IR::PrimaryKeyDef_out::PrimaryKeyDef_out (PrimaryKeyDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR::PrimaryKeyDef::_nil ();
+}
+
+IR::PrimaryKeyDef_out::PrimaryKeyDef_out (PrimaryKeyDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::PrimaryKeyDef::_nil ();
+}
+
+IR::PrimaryKeyDef_out::PrimaryKeyDef_out (const ::IR::PrimaryKeyDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (PrimaryKeyDef_out &, p).ptr_)
+{}
+
+::IR::PrimaryKeyDef_out &
+IR::PrimaryKeyDef_out::operator= (const ::IR::PrimaryKeyDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (PrimaryKeyDef_out&, p).ptr_;
+  return *this;
+}
+
+IR::PrimaryKeyDef_out &
+IR::PrimaryKeyDef_out::operator= (const ::IR::PrimaryKeyDef_var &p)
+{
+  this->ptr_ = ::IR::PrimaryKeyDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+IR::PrimaryKeyDef_out &
+IR::PrimaryKeyDef_out::operator= (PrimaryKeyDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::PrimaryKeyDef_out::operator ::IR::PrimaryKeyDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::IR::PrimaryKeyDef_ptr &
+IR::PrimaryKeyDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::IR::PrimaryKeyDef_ptr
+IR::PrimaryKeyDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 class TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a : public TAO_ClientRequestInfo
@@ -12273,13 +13766,13 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void result (CORBA::ValueDef_ptr result);
+  void result (CORBA_ValueDef_ptr result);
 
 private:
   TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get (const TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get &);
   void operator= (const TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get &);
 
-  CORBA::ValueDef_ptr _result;
+  CORBA_ValueDef_ptr _result;
 };
 
 TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get::TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get (
@@ -12332,7 +13825,7 @@ TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get::result (CORBA::Environme
 }
 
 void 
-TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get::result (CORBA::ValueDef_ptr result)
+TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get::result (CORBA_ValueDef_ptr result)
 {
   // update the result 
   this->_result = result;
@@ -12522,7 +14015,7 @@ CORBA::Boolean IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::is_a (
   return _tao_retval;
 }
 
-CORBA::ValueDef_ptr IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::primary_key (
+CORBA_ValueDef_ptr IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::primary_key (
     CORBA_Object *_collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -12531,8 +14024,8 @@ CORBA::ValueDef_ptr IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::primary_key (
   ))
 {
   
-  CORBA::ValueDef_ptr _tao_retval = CORBA::ValueDef::_nil ();
-  CORBA::ValueDef_var _tao_safe_retval (_tao_retval);
+  CORBA_ValueDef_ptr _tao_retval = CORBA_ValueDef::_nil ();
+  CORBA_ValueDef_var _tao_safe_retval (_tao_retval);
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -12616,7 +14109,7 @@ CORBA::ValueDef_ptr IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::primary_key (
             }
           
           TAO_INTERCEPTOR (
-              CORBA::ValueDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+              CORBA_ValueDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
               ri.result (_tao_retval_info);
               _tao_safe_retval = _tao_retval_info;
             );
@@ -12842,8 +14335,8 @@ CORBA::Boolean IR::PrimaryKeyDef::_is_a (const CORBA::Char *value, CORBA::Enviro
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/PrimaryKeyDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -12859,25 +14352,25 @@ void *IR::PrimaryKeyDef::_tao_QueryInterface (ptr_arith_t type)
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Contained::_narrow))
+      &CORBA_Contained::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Contained_ptr,
+            CORBA_Contained_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IRObject::_narrow))
+      &CORBA_IRObject::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IRObject_ptr,
+            CORBA_IRObject_ptr,
             this
           )
       );
@@ -12914,7 +14407,7 @@ CORBA::Boolean IR::PrimaryKeyDef::is_a (
     );
 }
 
-CORBA::ValueDef_ptr IR::PrimaryKeyDef::primary_key (
+CORBA_ValueDef_ptr IR::PrimaryKeyDef::primary_key (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -12930,7 +14423,6 @@ CORBA::ValueDef_ptr IR::PrimaryKeyDef::primary_key (
       ACE_TRY_ENV
     );
 }
-
 
 static const CORBA::Long _oc_IR_PrimaryKeyDef[] =
 {
@@ -13083,21 +14575,22 @@ static const CORBA::Long _oc_IR_PrimaryKeyDescription[] =
   ACE_NTOHL (0x6172795f), 
   ACE_NTOHL (0x6b657900),  // name = primary_key
   CORBA::tk_objref, // typecode kind
-  56, // encapsulation length
+  60, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
     ACE_NTOHL (0x49444c3a), 
     ACE_NTOHL (0x6f6d672e), 
     ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f5661), 
+    ACE_NTOHL (0x415f5661), 
     ACE_NTOHL (0x6c756544), 
     ACE_NTOHL (0x65663a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ValueDef:1.0
-    9,
-    ACE_NTOHL (0x56616c75), 
-    ACE_NTOHL (0x65446566), 
-    ACE_NTOHL (0x0),  // name = ValueDef
+    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_ValueDef:1.0
+    15,
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x415f5661), 
+    ACE_NTOHL (0x6c756544), 
+    ACE_NTOHL (0x65660000),  // name = CORBA_ValueDef
 
 };
 
@@ -13120,6 +14613,191 @@ void IR::PrimaryKeyDescription::_tao_any_destructor (void *x)
   delete tmp;
 }
 
+// *************************************************************
+// Operations for class IR::FactoryDef_var
+// *************************************************************
+
+IR::FactoryDef_var::FactoryDef_var (void) // default constructor
+  : ptr_ (FactoryDef::_nil ())
+{}
+
+::IR::FactoryDef_ptr
+IR::FactoryDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+IR::FactoryDef_var::FactoryDef_var (const ::IR::FactoryDef_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (FactoryDef::_duplicate (p.ptr ()))
+{}
+
+IR::FactoryDef_var::~FactoryDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+IR::FactoryDef_var &
+IR::FactoryDef_var::operator= (FactoryDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::FactoryDef_var &
+IR::FactoryDef_var::operator= (const ::IR::FactoryDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR::FactoryDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+IR::FactoryDef_var::operator const ::IR::FactoryDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+IR::FactoryDef_var::operator ::IR::FactoryDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::IR::FactoryDef_ptr
+IR::FactoryDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::IR::FactoryDef_ptr
+IR::FactoryDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::IR::FactoryDef_ptr &
+IR::FactoryDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::IR::FactoryDef_ptr &
+IR::FactoryDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::FactoryDef::_nil ();
+  return this->ptr_;
+}
+
+::IR::FactoryDef_ptr
+IR::FactoryDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR::FactoryDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR::FactoryDef::_nil ();
+  return val;
+}
+
+::IR::FactoryDef_ptr
+IR::FactoryDef_var::duplicate (FactoryDef_ptr p)
+{
+  return ::IR::FactoryDef::_duplicate (p);
+}
+
+void
+IR::FactoryDef_var::release (FactoryDef_ptr p)
+{
+  CORBA::release (p);
+}
+
+::IR::FactoryDef_ptr
+IR::FactoryDef_var::nil (void)
+{
+  return ::IR::FactoryDef::_nil ();
+}
+
+::IR::FactoryDef_ptr
+IR::FactoryDef_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::IR::FactoryDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+IR::FactoryDef_var::upcast (void *src)
+{
+  FactoryDef **tmp =
+    ACE_static_cast (FactoryDef **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class IR::FactoryDef_out
+// *************************************************************
+
+IR::FactoryDef_out::FactoryDef_out (FactoryDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR::FactoryDef::_nil ();
+}
+
+IR::FactoryDef_out::FactoryDef_out (FactoryDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::FactoryDef::_nil ();
+}
+
+IR::FactoryDef_out::FactoryDef_out (const ::IR::FactoryDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (FactoryDef_out &, p).ptr_)
+{}
+
+::IR::FactoryDef_out &
+IR::FactoryDef_out::operator= (const ::IR::FactoryDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (FactoryDef_out&, p).ptr_;
+  return *this;
+}
+
+IR::FactoryDef_out &
+IR::FactoryDef_out::operator= (const ::IR::FactoryDef_var &p)
+{
+  this->ptr_ = ::IR::FactoryDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+IR::FactoryDef_out &
+IR::FactoryDef_out::operator= (FactoryDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::FactoryDef_out::operator ::IR::FactoryDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::IR::FactoryDef_ptr &
+IR::FactoryDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::IR::FactoryDef_ptr
+IR::FactoryDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+#endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
 //                Base & Remote Proxy  Implementation. 
@@ -13293,9 +14971,9 @@ CORBA::Boolean IR::FactoryDef::_is_a (const CORBA::Char *value, CORBA::Environme
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/FactoryDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/OperationDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_OperationDef:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -13311,37 +14989,37 @@ void *IR::FactoryDef::_tao_QueryInterface (ptr_arith_t type)
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::OperationDef::_narrow))
+      &CORBA_OperationDef::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::OperationDef_ptr,
+            CORBA_OperationDef_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Contained::_narrow))
+      &CORBA_Contained::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Contained_ptr,
+            CORBA_Contained_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IRObject::_narrow))
+      &CORBA_IRObject::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IRObject_ptr,
+            CORBA_IRObject_ptr,
             this
           )
       );
@@ -13390,6 +15068,191 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_FactoryDef, &_tc_TAO_tc_IR_FactoryDef)
 TAO_NAMESPACE_END
 
+// *************************************************************
+// Operations for class IR::FinderDef_var
+// *************************************************************
+
+IR::FinderDef_var::FinderDef_var (void) // default constructor
+  : ptr_ (FinderDef::_nil ())
+{}
+
+::IR::FinderDef_ptr
+IR::FinderDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+IR::FinderDef_var::FinderDef_var (const ::IR::FinderDef_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (FinderDef::_duplicate (p.ptr ()))
+{}
+
+IR::FinderDef_var::~FinderDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+IR::FinderDef_var &
+IR::FinderDef_var::operator= (FinderDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::FinderDef_var &
+IR::FinderDef_var::operator= (const ::IR::FinderDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR::FinderDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+IR::FinderDef_var::operator const ::IR::FinderDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+IR::FinderDef_var::operator ::IR::FinderDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::IR::FinderDef_ptr
+IR::FinderDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::IR::FinderDef_ptr
+IR::FinderDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::IR::FinderDef_ptr &
+IR::FinderDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::IR::FinderDef_ptr &
+IR::FinderDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::FinderDef::_nil ();
+  return this->ptr_;
+}
+
+::IR::FinderDef_ptr
+IR::FinderDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR::FinderDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR::FinderDef::_nil ();
+  return val;
+}
+
+::IR::FinderDef_ptr
+IR::FinderDef_var::duplicate (FinderDef_ptr p)
+{
+  return ::IR::FinderDef::_duplicate (p);
+}
+
+void
+IR::FinderDef_var::release (FinderDef_ptr p)
+{
+  CORBA::release (p);
+}
+
+::IR::FinderDef_ptr
+IR::FinderDef_var::nil (void)
+{
+  return ::IR::FinderDef::_nil ();
+}
+
+::IR::FinderDef_ptr
+IR::FinderDef_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::IR::FinderDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+IR::FinderDef_var::upcast (void *src)
+{
+  FinderDef **tmp =
+    ACE_static_cast (FinderDef **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class IR::FinderDef_out
+// *************************************************************
+
+IR::FinderDef_out::FinderDef_out (FinderDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR::FinderDef::_nil ();
+}
+
+IR::FinderDef_out::FinderDef_out (FinderDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::FinderDef::_nil ();
+}
+
+IR::FinderDef_out::FinderDef_out (const ::IR::FinderDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (FinderDef_out &, p).ptr_)
+{}
+
+::IR::FinderDef_out &
+IR::FinderDef_out::operator= (const ::IR::FinderDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (FinderDef_out&, p).ptr_;
+  return *this;
+}
+
+IR::FinderDef_out &
+IR::FinderDef_out::operator= (const ::IR::FinderDef_var &p)
+{
+  this->ptr_ = ::IR::FinderDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+IR::FinderDef_out &
+IR::FinderDef_out::operator= (FinderDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::FinderDef_out::operator ::IR::FinderDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::IR::FinderDef_ptr &
+IR::FinderDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::IR::FinderDef_ptr
+IR::FinderDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+#endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
 //                Base & Remote Proxy  Implementation. 
@@ -13563,9 +15426,9 @@ CORBA::Boolean IR::FinderDef::_is_a (const CORBA::Char *value, CORBA::Environmen
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/FinderDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/OperationDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_OperationDef:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -13581,37 +15444,37 @@ void *IR::FinderDef::_tao_QueryInterface (ptr_arith_t type)
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::OperationDef::_narrow))
+      &CORBA_OperationDef::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::OperationDef_ptr,
+            CORBA_OperationDef_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Contained::_narrow))
+      &CORBA_Contained::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Contained_ptr,
+            CORBA_Contained_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IRObject::_narrow))
+      &CORBA_IRObject::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IRObject_ptr,
+            CORBA_IRObject_ptr,
             this
           )
       );
@@ -13659,6 +15522,188 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_FinderDef, &_tc_TAO_tc_IR_FinderDef)
 TAO_NAMESPACE_END
+
+// *************************************************************
+// Operations for class IR::HomeDef_var
+// *************************************************************
+
+IR::HomeDef_var::HomeDef_var (void) // default constructor
+  : ptr_ (HomeDef::_nil ())
+{}
+
+::IR::HomeDef_ptr
+IR::HomeDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+IR::HomeDef_var::HomeDef_var (const ::IR::HomeDef_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (HomeDef::_duplicate (p.ptr ()))
+{}
+
+IR::HomeDef_var::~HomeDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+IR::HomeDef_var &
+IR::HomeDef_var::operator= (HomeDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::HomeDef_var &
+IR::HomeDef_var::operator= (const ::IR::HomeDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR::HomeDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+IR::HomeDef_var::operator const ::IR::HomeDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+IR::HomeDef_var::operator ::IR::HomeDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::IR::HomeDef_ptr
+IR::HomeDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::IR::HomeDef_ptr
+IR::HomeDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::IR::HomeDef_ptr &
+IR::HomeDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::IR::HomeDef_ptr &
+IR::HomeDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::HomeDef::_nil ();
+  return this->ptr_;
+}
+
+::IR::HomeDef_ptr
+IR::HomeDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR::HomeDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR::HomeDef::_nil ();
+  return val;
+}
+
+::IR::HomeDef_ptr
+IR::HomeDef_var::duplicate (HomeDef_ptr p)
+{
+  return ::IR::HomeDef::_duplicate (p);
+}
+
+void
+IR::HomeDef_var::release (HomeDef_ptr p)
+{
+  CORBA::release (p);
+}
+
+::IR::HomeDef_ptr
+IR::HomeDef_var::nil (void)
+{
+  return ::IR::HomeDef::_nil ();
+}
+
+::IR::HomeDef_ptr
+IR::HomeDef_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::IR::HomeDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+IR::HomeDef_var::upcast (void *src)
+{
+  HomeDef **tmp =
+    ACE_static_cast (HomeDef **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class IR::HomeDef_out
+// *************************************************************
+
+IR::HomeDef_out::HomeDef_out (HomeDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR::HomeDef::_nil ();
+}
+
+IR::HomeDef_out::HomeDef_out (HomeDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR::HomeDef::_nil ();
+}
+
+IR::HomeDef_out::HomeDef_out (const ::IR::HomeDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (HomeDef_out &, p).ptr_)
+{}
+
+::IR::HomeDef_out &
+IR::HomeDef_out::operator= (const ::IR::HomeDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (HomeDef_out&, p).ptr_;
+  return *this;
+}
+
+IR::HomeDef_out &
+IR::HomeDef_out::operator= (const ::IR::HomeDef_var &p)
+{
+  this->ptr_ = ::IR::HomeDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+IR::HomeDef_out &
+IR::HomeDef_out::operator= (HomeDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+IR::HomeDef_out::operator ::IR::HomeDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::IR::HomeDef_ptr &
+IR::HomeDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::IR::HomeDef_ptr
+IR::HomeDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -14229,7 +16274,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr primary_key,
+      CORBA_ValueDef_ptr primary_key,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
@@ -14261,7 +16306,7 @@ private:
   const char * id_;
   const char * name_;
   const char * version_;
-  CORBA::ValueDef_ptr primary_key_;
+  CORBA_ValueDef_ptr primary_key_;
   IR::PrimaryKeyDef_ptr _result;
 };
 
@@ -14271,7 +16316,7 @@ TAO_ClientRequestInfo_IR_HomeDef_create_primary_key::TAO_ClientRequestInfo_IR_Ho
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr primary_key,
+    CORBA_ValueDef_ptr primary_key,
     CORBA::Environment &    
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
@@ -14361,8 +16406,8 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
@@ -14394,8 +16439,8 @@ private:
   const char * id_;
   const char * name_;
   const char * version_;
-  const CORBA::ParDescriptionSeq & params_;
-  const CORBA::ExceptionDefSeq & exceptions_;
+  const CORBA_ParDescriptionSeq & params_;
+  const CORBA_ExceptionDefSeq & exceptions_;
   IR::FactoryDef_ptr _result;
 };
 
@@ -14405,8 +16450,8 @@ TAO_ClientRequestInfo_IR_HomeDef_create_factory::TAO_ClientRequestInfo_IR_HomeDe
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::ParDescriptionSeq & params,
-    const CORBA::ExceptionDefSeq & exceptions,
+    const CORBA_ParDescriptionSeq & params,
+    const CORBA_ExceptionDefSeq & exceptions,
     CORBA::Environment &    
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
@@ -14503,8 +16548,8 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
@@ -14536,8 +16581,8 @@ private:
   const char * id_;
   const char * name_;
   const char * version_;
-  const CORBA::ParDescriptionSeq & params_;
-  const CORBA::ExceptionDefSeq & exceptions_;
+  const CORBA_ParDescriptionSeq & params_;
+  const CORBA_ExceptionDefSeq & exceptions_;
   IR::FinderDef_ptr _result;
 };
 
@@ -14547,8 +16592,8 @@ TAO_ClientRequestInfo_IR_HomeDef_create_finder::TAO_ClientRequestInfo_IR_HomeDef
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::ParDescriptionSeq & params,
-    const CORBA::ExceptionDefSeq & exceptions,
+    const CORBA_ParDescriptionSeq & params,
+    const CORBA_ExceptionDefSeq & exceptions,
     CORBA::Environment &    
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
@@ -15615,7 +17660,7 @@ IR::PrimaryKeyDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_primary_key (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr primary_key,
+    CORBA_ValueDef_ptr primary_key,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -15796,8 +17841,8 @@ IR::FactoryDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_factory (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::ParDescriptionSeq & params,
-    const CORBA::ExceptionDefSeq & exceptions,
+    const CORBA_ParDescriptionSeq & params,
+    const CORBA_ExceptionDefSeq & exceptions,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -15980,8 +18025,8 @@ IR::FinderDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_finder (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::ParDescriptionSeq & params,
-    const CORBA::ExceptionDefSeq & exceptions,
+    const CORBA_ParDescriptionSeq & params,
+    const CORBA_ExceptionDefSeq & exceptions,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -16319,11 +18364,11 @@ CORBA::Boolean IR::HomeDef::_is_a (const CORBA::Char *value, CORBA::Environment 
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/HomeDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/InterfaceDef:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Container:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IDLType:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_InterfaceDef:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Container:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IDLType:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
@@ -16339,61 +18384,61 @@ void *IR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::InterfaceDef::_narrow))
+      &CORBA_InterfaceDef::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::InterfaceDef_ptr,
+            CORBA_InterfaceDef_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Container::_narrow))
+      &CORBA_Container::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Container_ptr,
+            CORBA_Container_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Contained::_narrow))
+      &CORBA_Contained::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::Contained_ptr,
+            CORBA_Contained_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IDLType::_narrow))
+      &CORBA_IDLType::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IDLType_ptr,
+            CORBA_IDLType_ptr,
             this
           )
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::IRObject::_narrow))
+      &CORBA_IRObject::_narrow))
     retv = ACE_reinterpret_cast
       (
         void *,
         ACE_static_cast
           (
-            CORBA::IRObject_ptr,
+            CORBA_IRObject_ptr,
             this
           )
       );
@@ -16517,7 +18562,7 @@ IR::PrimaryKeyDef_ptr IR::HomeDef::create_primary_key (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::ValueDef_ptr primary_key,
+    CORBA_ValueDef_ptr primary_key,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -16542,8 +18587,8 @@ IR::FactoryDef_ptr IR::HomeDef::create_factory (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::ParDescriptionSeq & params,
-    const CORBA::ExceptionDefSeq & exceptions,
+    const CORBA_ParDescriptionSeq & params,
+    const CORBA_ExceptionDefSeq & exceptions,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -16569,8 +18614,8 @@ IR::FinderDef_ptr IR::HomeDef::create_finder (
     const char * id,
     const char * name,
     const char * version,
-    const CORBA::ParDescriptionSeq & params,
-    const CORBA::ExceptionDefSeq & exceptions,
+    const CORBA_ParDescriptionSeq & params,
+    const CORBA_ExceptionDefSeq & exceptions,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -16591,7 +18636,6 @@ IR::FinderDef_ptr IR::HomeDef::create_finder (
       ACE_TRY_ENV
     );
 }
-
 
 static const CORBA::Long _oc_IR_HomeDef[] =
 {
@@ -16898,145 +18942,73 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
   ACE_NTOHL (0x6174696f), 
   ACE_NTOHL (0x6e730000),  // name = operations
   CORBA::tk_alias, // typecode kind for typedefs
-  2036, // encapsulation length
+  1304, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     39,
     ACE_NTOHL (0x49444c3a), 
     ACE_NTOHL (0x6f6d672e), 
     ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4f70), 
+    ACE_NTOHL (0x415f4f70), 
     ACE_NTOHL (0x44657363), 
     ACE_NTOHL (0x72697074), 
     ACE_NTOHL (0x696f6e53), 
     ACE_NTOHL (0x65713a31), 
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OpDescriptionSeq:1.0
-    17,
-    ACE_NTOHL (0x4f704465), 
-    ACE_NTOHL (0x73637269), 
-    ACE_NTOHL (0x7074696f), 
-    ACE_NTOHL (0x6e536571), 
-    ACE_NTOHL (0x0),  // name = OpDescriptionSeq
+    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_OpDescriptionSeq:1.0
+    23,
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x415f4f70), 
+    ACE_NTOHL (0x44657363), 
+    ACE_NTOHL (0x72697074), 
+    ACE_NTOHL (0x696f6e53), 
+    ACE_NTOHL (0x65710000),  // name = CORBA_OpDescriptionSeq
     CORBA::tk_sequence, // typecode kind
-    1956, // encapsulation length
+    1220, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       CORBA::tk_struct, // typecode kind
-      1940, // encapsulation length
+      1204, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         43,
         ACE_NTOHL (0x49444c3a), 
         ACE_NTOHL (0x6f6d672e), 
         ACE_NTOHL (0x6f72672f), 
         ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f4f70), 
+        ACE_NTOHL (0x415f4f70), 
         ACE_NTOHL (0x65726174), 
         ACE_NTOHL (0x696f6e44), 
         ACE_NTOHL (0x65736372), 
         ACE_NTOHL (0x69707469), 
         ACE_NTOHL (0x6f6e3a31), 
-        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OperationDescription:1.0
-        21,
-        ACE_NTOHL (0x4f706572), 
-        ACE_NTOHL (0x6174696f), 
-        ACE_NTOHL (0x6e446573), 
-        ACE_NTOHL (0x63726970), 
-        ACE_NTOHL (0x74696f6e), 
-        ACE_NTOHL (0x0),  // name = OperationDescription
+        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_OperationDescription:1.0
+        27,
+        ACE_NTOHL (0x434f5242), 
+        ACE_NTOHL (0x415f4f70), 
+        ACE_NTOHL (0x65726174), 
+        ACE_NTOHL (0x696f6e44), 
+        ACE_NTOHL (0x65736372), 
+        ACE_NTOHL (0x69707469), 
+        ACE_NTOHL (0x6f6e0000),  // name = CORBA_OperationDescription
         9, // member count
         5,
         ACE_NTOHL (0x6e616d65), 
         ACE_NTOHL (0x0),  // name = name
-        CORBA::tk_alias, // typecode kind for typedefs
-        68, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          33,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4964), 
-          ACE_NTOHL (0x656e7469), 
-          ACE_NTOHL (0x66696572), 
-          ACE_NTOHL (0x3a312e30), 
-          ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
-          11,
-          ACE_NTOHL (0x4964656e), 
-          ACE_NTOHL (0x74696669), 
-          ACE_NTOHL (0x65720000),  // name = Identifier
-          CORBA::tk_string, 
-          0U, // string length
-
+        CORBA::tk_string, 
+        0U, // string length
         3,
         ACE_NTOHL (0x69640000),  // name = id
-        CORBA::tk_alias, // typecode kind for typedefs
-        72, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          35,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5265), 
-          ACE_NTOHL (0x706f7369), 
-          ACE_NTOHL (0x746f7279), 
-          ACE_NTOHL (0x49643a31), 
-          ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-          13,
-          ACE_NTOHL (0x5265706f), 
-          ACE_NTOHL (0x7369746f), 
-          ACE_NTOHL (0x72794964), 
-          ACE_NTOHL (0x0),  // name = RepositoryId
-          CORBA::tk_string, 
-          0U, // string length
-
+        CORBA::tk_string, 
+        0U, // string length
         11,
         ACE_NTOHL (0x64656669), 
         ACE_NTOHL (0x6e65645f), 
         ACE_NTOHL (0x696e0000),  // name = defined_in
-        CORBA::tk_alias, // typecode kind for typedefs
-        72, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          35,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5265), 
-          ACE_NTOHL (0x706f7369), 
-          ACE_NTOHL (0x746f7279), 
-          ACE_NTOHL (0x49643a31), 
-          ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-          13,
-          ACE_NTOHL (0x5265706f), 
-          ACE_NTOHL (0x7369746f), 
-          ACE_NTOHL (0x72794964), 
-          ACE_NTOHL (0x0),  // name = RepositoryId
-          CORBA::tk_string, 
-          0U, // string length
-
+        CORBA::tk_string, 
+        0U, // string length
         8,
         ACE_NTOHL (0x76657273), 
         ACE_NTOHL (0x696f6e00),  // name = version
-        CORBA::tk_alias, // typecode kind for typedefs
-        68, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          34,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5665), 
-          ACE_NTOHL (0x7273696f), 
-          ACE_NTOHL (0x6e537065), 
-          ACE_NTOHL (0x633a312e), 
-          ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/VersionSpec:1.0
-          12,
-          ACE_NTOHL (0x56657273), 
-          ACE_NTOHL (0x696f6e53), 
-          ACE_NTOHL (0x70656300),  // name = VersionSpec
-          CORBA::tk_string, 
-          0U, // string length
-
+        CORBA::tk_string, 
+        0U, // string length
         7,
         ACE_NTOHL (0x72657375), 
         ACE_NTOHL (0x6c740000),  // name = result
@@ -17046,23 +19018,24 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
         ACE_NTOHL (0x6d6f6465), 
         ACE_NTOHL (0x0),  // name = mode
         CORBA::tk_enum, // typecode kind
-        100, // encapsulation length
+        104, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           36,
           ACE_NTOHL (0x49444c3a), 
           ACE_NTOHL (0x6f6d672e), 
           ACE_NTOHL (0x6f72672f), 
           ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4f70), 
+          ACE_NTOHL (0x415f4f70), 
           ACE_NTOHL (0x65726174), 
           ACE_NTOHL (0x696f6e4d), 
           ACE_NTOHL (0x6f64653a), 
-          ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/OperationMode:1.0
-          14,
-          ACE_NTOHL (0x4f706572), 
-          ACE_NTOHL (0x6174696f), 
-          ACE_NTOHL (0x6e4d6f64), 
-          ACE_NTOHL (0x65000000),  // name = OperationMode
+          ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA_OperationMode:1.0
+          20,
+          ACE_NTOHL (0x434f5242), 
+          ACE_NTOHL (0x415f4f70), 
+          ACE_NTOHL (0x65726174), 
+          ACE_NTOHL (0x696f6e4d), 
+          ACE_NTOHL (0x6f646500),  // name = CORBA_OperationMode
           2, // member count
           10,
           ACE_NTOHL (0x4f505f4e), 
@@ -17078,67 +19051,29 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
         ACE_NTOHL (0x65787473), 
         ACE_NTOHL (0x0),  // name = contexts
         CORBA::tk_alias, // typecode kind for typedefs
-        236, // encapsulation length
+        92, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           35,
           ACE_NTOHL (0x49444c3a), 
           ACE_NTOHL (0x6f6d672e), 
           ACE_NTOHL (0x6f72672f), 
           ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f436f), 
+          ACE_NTOHL (0x415f436f), 
           ACE_NTOHL (0x6e746578), 
           ACE_NTOHL (0x74496453), 
           ACE_NTOHL (0x65713a31), 
-          ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ContextIdSeq:1.0
-          13,
-          ACE_NTOHL (0x436f6e74), 
-          ACE_NTOHL (0x65787449), 
-          ACE_NTOHL (0x64536571), 
-          ACE_NTOHL (0x0),  // name = ContextIdSeq
+          ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_ContextIdSeq:1.0
+          19,
+          ACE_NTOHL (0x434f5242), 
+          ACE_NTOHL (0x415f436f), 
+          ACE_NTOHL (0x6e746578), 
+          ACE_NTOHL (0x74496453), 
+          ACE_NTOHL (0x65710000),  // name = CORBA_ContextIdSeq
           CORBA::tk_sequence, // typecode kind
-          164, // encapsulation length
+          16, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
-            CORBA::tk_alias, // typecode kind for typedefs
-            148, // encapsulation length
-              TAO_ENCAP_BYTE_ORDER, // byte order
-              40,
-              ACE_NTOHL (0x49444c3a), 
-              ACE_NTOHL (0x6f6d672e), 
-              ACE_NTOHL (0x6f72672f), 
-              ACE_NTOHL (0x434f5242), 
-              ACE_NTOHL (0x412f436f), 
-              ACE_NTOHL (0x6e746578), 
-              ACE_NTOHL (0x74496465), 
-              ACE_NTOHL (0x6e746966), 
-              ACE_NTOHL (0x6965723a), 
-              ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ContextIdentifier:1.0
-              18,
-              ACE_NTOHL (0x436f6e74), 
-              ACE_NTOHL (0x65787449), 
-              ACE_NTOHL (0x64656e74), 
-              ACE_NTOHL (0x69666965), 
-              ACE_NTOHL (0x72000000),  // name = ContextIdentifier
-              CORBA::tk_alias, // typecode kind for typedefs
-              68, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
-                33,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f4964), 
-                ACE_NTOHL (0x656e7469), 
-                ACE_NTOHL (0x66696572), 
-                ACE_NTOHL (0x3a312e30), 
-                ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
-                11,
-                ACE_NTOHL (0x4964656e), 
-                ACE_NTOHL (0x74696669), 
-                ACE_NTOHL (0x65720000),  // name = Identifier
-                CORBA::tk_string, 
-                0U, // string length
-
-
+            CORBA::tk_string, 
+            0U, // string length
             0U,
 
 
@@ -17147,74 +19082,58 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
         ACE_NTOHL (0x6d657465), 
         ACE_NTOHL (0x72730000),  // name = parameters
         CORBA::tk_alias, // typecode kind for typedefs
-        496, // encapsulation length
+        448, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           40,
           ACE_NTOHL (0x49444c3a), 
           ACE_NTOHL (0x6f6d672e), 
           ACE_NTOHL (0x6f72672f), 
           ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5061), 
+          ACE_NTOHL (0x415f5061), 
           ACE_NTOHL (0x72446573), 
           ACE_NTOHL (0x63726970), 
           ACE_NTOHL (0x74696f6e), 
           ACE_NTOHL (0x5365713a), 
-          ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ParDescriptionSeq:1.0
-          18,
-          ACE_NTOHL (0x50617244), 
-          ACE_NTOHL (0x65736372), 
-          ACE_NTOHL (0x69707469), 
-          ACE_NTOHL (0x6f6e5365), 
-          ACE_NTOHL (0x71000000),  // name = ParDescriptionSeq
+          ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA_ParDescriptionSeq:1.0
+          24,
+          ACE_NTOHL (0x434f5242), 
+          ACE_NTOHL (0x415f5061), 
+          ACE_NTOHL (0x72446573), 
+          ACE_NTOHL (0x63726970), 
+          ACE_NTOHL (0x74696f6e), 
+          ACE_NTOHL (0x53657100),  // name = CORBA_ParDescriptionSeq
           CORBA::tk_sequence, // typecode kind
-          416, // encapsulation length
+          364, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             CORBA::tk_struct, // typecode kind
-            400, // encapsulation length
+            348, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
               43,
               ACE_NTOHL (0x49444c3a), 
               ACE_NTOHL (0x6f6d672e), 
               ACE_NTOHL (0x6f72672f), 
               ACE_NTOHL (0x434f5242), 
-              ACE_NTOHL (0x412f5061), 
+              ACE_NTOHL (0x415f5061), 
               ACE_NTOHL (0x72616d65), 
               ACE_NTOHL (0x74657244), 
               ACE_NTOHL (0x65736372), 
               ACE_NTOHL (0x69707469), 
               ACE_NTOHL (0x6f6e3a31), 
-              ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ParameterDescription:1.0
-              21,
-              ACE_NTOHL (0x50617261), 
-              ACE_NTOHL (0x6d657465), 
-              ACE_NTOHL (0x72446573), 
-              ACE_NTOHL (0x63726970), 
-              ACE_NTOHL (0x74696f6e), 
-              ACE_NTOHL (0x0),  // name = ParameterDescription
+              ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_ParameterDescription:1.0
+              27,
+              ACE_NTOHL (0x434f5242), 
+              ACE_NTOHL (0x415f5061), 
+              ACE_NTOHL (0x72616d65), 
+              ACE_NTOHL (0x74657244), 
+              ACE_NTOHL (0x65736372), 
+              ACE_NTOHL (0x69707469), 
+              ACE_NTOHL (0x6f6e0000),  // name = CORBA_ParameterDescription
               4, // member count
               5,
               ACE_NTOHL (0x6e616d65), 
               ACE_NTOHL (0x0),  // name = name
-              CORBA::tk_alias, // typecode kind for typedefs
-              68, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
-                33,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f4964), 
-                ACE_NTOHL (0x656e7469), 
-                ACE_NTOHL (0x66696572), 
-                ACE_NTOHL (0x3a312e30), 
-                ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
-                11,
-                ACE_NTOHL (0x4964656e), 
-                ACE_NTOHL (0x74696669), 
-                ACE_NTOHL (0x65720000),  // name = Identifier
-                CORBA::tk_string, 
-                0U, // string length
-
+              CORBA::tk_string, 
+              0U, // string length
               5,
               ACE_NTOHL (0x74797065), 
               ACE_NTOHL (0x0),  // name = type
@@ -17225,42 +19144,45 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
               ACE_NTOHL (0x5f646566), 
               ACE_NTOHL (0x0),  // name = type_def
               CORBA::tk_objref, // typecode kind
-              52, // encapsulation length
+              60, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 30,
                 ACE_NTOHL (0x49444c3a), 
                 ACE_NTOHL (0x6f6d672e), 
                 ACE_NTOHL (0x6f72672f), 
                 ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f4944), 
+                ACE_NTOHL (0x415f4944), 
                 ACE_NTOHL (0x4c547970), 
                 ACE_NTOHL (0x653a312e), 
-                ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/IDLType:1.0
-                8,
-                ACE_NTOHL (0x49444c54), 
-                ACE_NTOHL (0x79706500),  // name = IDLType
+                ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA_IDLType:1.0
+                14,
+                ACE_NTOHL (0x434f5242), 
+                ACE_NTOHL (0x415f4944), 
+                ACE_NTOHL (0x4c547970), 
+                ACE_NTOHL (0x65000000),  // name = CORBA_IDLType
 
               5,
               ACE_NTOHL (0x6d6f6465), 
               ACE_NTOHL (0x0),  // name = mode
               CORBA::tk_enum, // typecode kind
-              116, // encapsulation length
+              120, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 36,
                 ACE_NTOHL (0x49444c3a), 
                 ACE_NTOHL (0x6f6d672e), 
                 ACE_NTOHL (0x6f72672f), 
                 ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5061), 
+                ACE_NTOHL (0x415f5061), 
                 ACE_NTOHL (0x72616d65), 
                 ACE_NTOHL (0x7465724d), 
                 ACE_NTOHL (0x6f64653a), 
-                ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ParameterMode:1.0
-                14,
-                ACE_NTOHL (0x50617261), 
-                ACE_NTOHL (0x6d657465), 
-                ACE_NTOHL (0x724d6f64), 
-                ACE_NTOHL (0x65000000),  // name = ParameterMode
+                ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA_ParameterMode:1.0
+                20,
+                ACE_NTOHL (0x434f5242), 
+                ACE_NTOHL (0x415f5061), 
+                ACE_NTOHL (0x72616d65), 
+                ACE_NTOHL (0x7465724d), 
+                ACE_NTOHL (0x6f646500),  // name = CORBA_ParameterMode
                 3, // member count
                 9,
                 ACE_NTOHL (0x50415241), 
@@ -17284,145 +19206,73 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
         ACE_NTOHL (0x7074696f), 
         ACE_NTOHL (0x6e730000),  // name = exceptions
         CORBA::tk_alias, // typecode kind for typedefs
-        556, // encapsulation length
+        284, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           40,
           ACE_NTOHL (0x49444c3a), 
           ACE_NTOHL (0x6f6d672e), 
           ACE_NTOHL (0x6f72672f), 
           ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4578), 
+          ACE_NTOHL (0x415f4578), 
           ACE_NTOHL (0x63446573), 
           ACE_NTOHL (0x63726970), 
           ACE_NTOHL (0x74696f6e), 
           ACE_NTOHL (0x5365713a), 
-          ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ExcDescriptionSeq:1.0
-          18,
-          ACE_NTOHL (0x45786344), 
-          ACE_NTOHL (0x65736372), 
-          ACE_NTOHL (0x69707469), 
-          ACE_NTOHL (0x6f6e5365), 
-          ACE_NTOHL (0x71000000),  // name = ExcDescriptionSeq
+          ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA_ExcDescriptionSeq:1.0
+          24,
+          ACE_NTOHL (0x434f5242), 
+          ACE_NTOHL (0x415f4578), 
+          ACE_NTOHL (0x63446573), 
+          ACE_NTOHL (0x63726970), 
+          ACE_NTOHL (0x74696f6e), 
+          ACE_NTOHL (0x53657100),  // name = CORBA_ExcDescriptionSeq
           CORBA::tk_sequence, // typecode kind
-          476, // encapsulation length
+          200, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             CORBA::tk_struct, // typecode kind
-            460, // encapsulation length
+            184, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
               43,
               ACE_NTOHL (0x49444c3a), 
               ACE_NTOHL (0x6f6d672e), 
               ACE_NTOHL (0x6f72672f), 
               ACE_NTOHL (0x434f5242), 
-              ACE_NTOHL (0x412f4578), 
+              ACE_NTOHL (0x415f4578), 
               ACE_NTOHL (0x63657074), 
               ACE_NTOHL (0x696f6e44), 
               ACE_NTOHL (0x65736372), 
               ACE_NTOHL (0x69707469), 
               ACE_NTOHL (0x6f6e3a31), 
-              ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ExceptionDescription:1.0
-              21,
-              ACE_NTOHL (0x45786365), 
-              ACE_NTOHL (0x7074696f), 
-              ACE_NTOHL (0x6e446573), 
-              ACE_NTOHL (0x63726970), 
-              ACE_NTOHL (0x74696f6e), 
-              ACE_NTOHL (0x0),  // name = ExceptionDescription
+              ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_ExceptionDescription:1.0
+              27,
+              ACE_NTOHL (0x434f5242), 
+              ACE_NTOHL (0x415f4578), 
+              ACE_NTOHL (0x63657074), 
+              ACE_NTOHL (0x696f6e44), 
+              ACE_NTOHL (0x65736372), 
+              ACE_NTOHL (0x69707469), 
+              ACE_NTOHL (0x6f6e0000),  // name = CORBA_ExceptionDescription
               5, // member count
               5,
               ACE_NTOHL (0x6e616d65), 
               ACE_NTOHL (0x0),  // name = name
-              CORBA::tk_alias, // typecode kind for typedefs
-              68, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
-                33,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f4964), 
-                ACE_NTOHL (0x656e7469), 
-                ACE_NTOHL (0x66696572), 
-                ACE_NTOHL (0x3a312e30), 
-                ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
-                11,
-                ACE_NTOHL (0x4964656e), 
-                ACE_NTOHL (0x74696669), 
-                ACE_NTOHL (0x65720000),  // name = Identifier
-                CORBA::tk_string, 
-                0U, // string length
-
+              CORBA::tk_string, 
+              0U, // string length
               3,
               ACE_NTOHL (0x69640000),  // name = id
-              CORBA::tk_alias, // typecode kind for typedefs
-              72, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
-                35,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5265), 
-                ACE_NTOHL (0x706f7369), 
-                ACE_NTOHL (0x746f7279), 
-                ACE_NTOHL (0x49643a31), 
-                ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-                13,
-                ACE_NTOHL (0x5265706f), 
-                ACE_NTOHL (0x7369746f), 
-                ACE_NTOHL (0x72794964), 
-                ACE_NTOHL (0x0),  // name = RepositoryId
-                CORBA::tk_string, 
-                0U, // string length
-
+              CORBA::tk_string, 
+              0U, // string length
               11,
               ACE_NTOHL (0x64656669), 
               ACE_NTOHL (0x6e65645f), 
               ACE_NTOHL (0x696e0000),  // name = defined_in
-              CORBA::tk_alias, // typecode kind for typedefs
-              72, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
-                35,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5265), 
-                ACE_NTOHL (0x706f7369), 
-                ACE_NTOHL (0x746f7279), 
-                ACE_NTOHL (0x49643a31), 
-                ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-                13,
-                ACE_NTOHL (0x5265706f), 
-                ACE_NTOHL (0x7369746f), 
-                ACE_NTOHL (0x72794964), 
-                ACE_NTOHL (0x0),  // name = RepositoryId
-                CORBA::tk_string, 
-                0U, // string length
-
+              CORBA::tk_string, 
+              0U, // string length
               8,
               ACE_NTOHL (0x76657273), 
               ACE_NTOHL (0x696f6e00),  // name = version
-              CORBA::tk_alias, // typecode kind for typedefs
-              68, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
-                34,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5665), 
-                ACE_NTOHL (0x7273696f), 
-                ACE_NTOHL (0x6e537065), 
-                ACE_NTOHL (0x633a312e), 
-                ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/VersionSpec:1.0
-                12,
-                ACE_NTOHL (0x56657273), 
-                ACE_NTOHL (0x696f6e53), 
-                ACE_NTOHL (0x70656300),  // name = VersionSpec
-                CORBA::tk_string, 
-                0U, // string length
-
+              CORBA::tk_string, 
+              0U, // string length
               5,
               ACE_NTOHL (0x74797065), 
               ACE_NTOHL (0x0),  // name = type
@@ -17441,146 +19291,75 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
   ACE_NTOHL (0x69627574), 
   ACE_NTOHL (0x65730000),  // name = attributes
   CORBA::tk_alias, // typecode kind for typedefs
-  684, // encapsulation length
+  420, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     41,
     ACE_NTOHL (0x49444c3a), 
     ACE_NTOHL (0x6f6d672e), 
     ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4174), 
+    ACE_NTOHL (0x415f4174), 
     ACE_NTOHL (0x74724465), 
     ACE_NTOHL (0x73637269), 
     ACE_NTOHL (0x7074696f), 
     ACE_NTOHL (0x6e536571), 
     ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/AttrDescriptionSeq:1.0
-    19,
-    ACE_NTOHL (0x41747472), 
-    ACE_NTOHL (0x44657363), 
-    ACE_NTOHL (0x72697074), 
-    ACE_NTOHL (0x696f6e53), 
-    ACE_NTOHL (0x65710000),  // name = AttrDescriptionSeq
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA_AttrDescriptionSeq:1.0
+    25,
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x415f4174), 
+    ACE_NTOHL (0x74724465), 
+    ACE_NTOHL (0x73637269), 
+    ACE_NTOHL (0x7074696f), 
+    ACE_NTOHL (0x6e536571), 
+    ACE_NTOHL (0x0),  // name = CORBA_AttrDescriptionSeq
     CORBA::tk_sequence, // typecode kind
-    600, // encapsulation length
+    328, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       CORBA::tk_struct, // typecode kind
-      584, // encapsulation length
+      312, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         43,
         ACE_NTOHL (0x49444c3a), 
         ACE_NTOHL (0x6f6d672e), 
         ACE_NTOHL (0x6f72672f), 
         ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f4174), 
+        ACE_NTOHL (0x415f4174), 
         ACE_NTOHL (0x74726962), 
         ACE_NTOHL (0x75746544), 
         ACE_NTOHL (0x65736372), 
         ACE_NTOHL (0x69707469), 
         ACE_NTOHL (0x6f6e3a31), 
-        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/AttributeDescription:1.0
-        21,
-        ACE_NTOHL (0x41747472), 
-        ACE_NTOHL (0x69627574), 
-        ACE_NTOHL (0x65446573), 
-        ACE_NTOHL (0x63726970), 
-        ACE_NTOHL (0x74696f6e), 
-        ACE_NTOHL (0x0),  // name = AttributeDescription
+        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA_AttributeDescription:1.0
+        27,
+        ACE_NTOHL (0x434f5242), 
+        ACE_NTOHL (0x415f4174), 
+        ACE_NTOHL (0x74726962), 
+        ACE_NTOHL (0x75746544), 
+        ACE_NTOHL (0x65736372), 
+        ACE_NTOHL (0x69707469), 
+        ACE_NTOHL (0x6f6e0000),  // name = CORBA_AttributeDescription
         6, // member count
         5,
         ACE_NTOHL (0x6e616d65), 
         ACE_NTOHL (0x0),  // name = name
-        CORBA::tk_alias, // typecode kind for typedefs
-        68, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          33,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4964), 
-          ACE_NTOHL (0x656e7469), 
-          ACE_NTOHL (0x66696572), 
-          ACE_NTOHL (0x3a312e30), 
-          ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
-          11,
-          ACE_NTOHL (0x4964656e), 
-          ACE_NTOHL (0x74696669), 
-          ACE_NTOHL (0x65720000),  // name = Identifier
-          CORBA::tk_string, 
-          0U, // string length
-
+        CORBA::tk_string, 
+        0U, // string length
         3,
         ACE_NTOHL (0x69640000),  // name = id
-        CORBA::tk_alias, // typecode kind for typedefs
-        72, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          35,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5265), 
-          ACE_NTOHL (0x706f7369), 
-          ACE_NTOHL (0x746f7279), 
-          ACE_NTOHL (0x49643a31), 
-          ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-          13,
-          ACE_NTOHL (0x5265706f), 
-          ACE_NTOHL (0x7369746f), 
-          ACE_NTOHL (0x72794964), 
-          ACE_NTOHL (0x0),  // name = RepositoryId
-          CORBA::tk_string, 
-          0U, // string length
-
+        CORBA::tk_string, 
+        0U, // string length
         11,
         ACE_NTOHL (0x64656669), 
         ACE_NTOHL (0x6e65645f), 
         ACE_NTOHL (0x696e0000),  // name = defined_in
-        CORBA::tk_alias, // typecode kind for typedefs
-        72, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          35,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5265), 
-          ACE_NTOHL (0x706f7369), 
-          ACE_NTOHL (0x746f7279), 
-          ACE_NTOHL (0x49643a31), 
-          ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-          13,
-          ACE_NTOHL (0x5265706f), 
-          ACE_NTOHL (0x7369746f), 
-          ACE_NTOHL (0x72794964), 
-          ACE_NTOHL (0x0),  // name = RepositoryId
-          CORBA::tk_string, 
-          0U, // string length
-
+        CORBA::tk_string, 
+        0U, // string length
         8,
         ACE_NTOHL (0x76657273), 
         ACE_NTOHL (0x696f6e00),  // name = version
-        CORBA::tk_alias, // typecode kind for typedefs
-        68, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          34,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5665), 
-          ACE_NTOHL (0x7273696f), 
-          ACE_NTOHL (0x6e537065), 
-          ACE_NTOHL (0x633a312e), 
-          ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/VersionSpec:1.0
-          12,
-          ACE_NTOHL (0x56657273), 
-          ACE_NTOHL (0x696f6e53), 
-          ACE_NTOHL (0x70656300),  // name = VersionSpec
-          CORBA::tk_string, 
-          0U, // string length
-
+        CORBA::tk_string, 
+        0U, // string length
         5,
         ACE_NTOHL (0x74797065), 
         ACE_NTOHL (0x0),  // name = type
@@ -17590,23 +19369,24 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
         ACE_NTOHL (0x6d6f6465), 
         ACE_NTOHL (0x0),  // name = mode
         CORBA::tk_enum, // typecode kind
-        104, // encapsulation length
+        108, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           36,
           ACE_NTOHL (0x49444c3a), 
           ACE_NTOHL (0x6f6d672e), 
           ACE_NTOHL (0x6f72672f), 
           ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4174), 
+          ACE_NTOHL (0x415f4174), 
           ACE_NTOHL (0x74726962), 
           ACE_NTOHL (0x7574654d), 
           ACE_NTOHL (0x6f64653a), 
-          ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/AttributeMode:1.0
-          14,
-          ACE_NTOHL (0x41747472), 
-          ACE_NTOHL (0x69627574), 
-          ACE_NTOHL (0x654d6f64), 
-          ACE_NTOHL (0x65000000),  // name = AttributeMode
+          ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA_AttributeMode:1.0
+          20,
+          ACE_NTOHL (0x434f5242), 
+          ACE_NTOHL (0x415f4174), 
+          ACE_NTOHL (0x74726962), 
+          ACE_NTOHL (0x7574654d), 
+          ACE_NTOHL (0x6f646500),  // name = CORBA_AttributeMode
           2, // member count
           12,
           ACE_NTOHL (0x41545452), 
@@ -17647,46 +19427,6 @@ void IR::HomeDescription::_tao_any_destructor (void *x)
 {
   HomeDescription *tmp = ACE_static_cast (HomeDescription*,x);
   delete tmp;
-}
-
-void operator<<= (CORBA::Any &_tao_any, IR::DefinitionKind _tao_elem)
-{
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      IR::_tc_DefinitionKind,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR::DefinitionKind &_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean result = type->equivalent (IR::_tc_DefinitionKind, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-    
-    if (!result)
-      return 0; // not equivalent
-    
-    TAO_InputCDR stream (
-        _tao_any._tao_get_cdr (),
-        _tao_any._tao_byte_order ()
-      );
-    if (stream >> _tao_elem)
-    {
-      return 1;
-    }
-  }
-  ACE_CATCHANY
-  {
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
 }
 
 void operator<<= (
@@ -20433,6 +22173,114 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
+    const IR::ComponentRepository_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IR::ComponentRepository_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR::ComponentRepository::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IR::ProvidesDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IR::ProvidesDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR::ProvidesDef::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IR::UsesDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IR::UsesDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR::UsesDef::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
     const IR::ProvidesDescSeq &_tao_sequence
   )
 {
@@ -20513,5 +22361,329 @@ CORBA::Boolean operator>> (
     return _tao_marshal_flag;
   }
   return 0; // error
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IR::EventDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IR::EventDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR::EventDef::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IR::EmitsDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IR::EmitsDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR::EmitsDef::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IR::PublishesDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IR::PublishesDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR::PublishesDef::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IR::ConsumesDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IR::ConsumesDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR::ConsumesDef::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IR::ComponentDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IR::ComponentDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR::ComponentDef::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IR::PrimaryKeyDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IR::PrimaryKeyDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR::PrimaryKeyDef::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IR::FactoryDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IR::FactoryDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR::FactoryDef::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IR::FinderDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IR::FinderDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR::FinderDef::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IR::HomeDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IR::HomeDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR::HomeDef::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
 }
 

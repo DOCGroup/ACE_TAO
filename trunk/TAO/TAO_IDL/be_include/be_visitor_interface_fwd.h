@@ -29,4 +29,5 @@
 #include "be_visitor_interface_fwd/interface_fwd_ci.h"
 #include "be_visitor_interface_fwd/cdr_op_ch.h"
 #include "be_visitor_interface_fwd/cdr_op_ci.h"
+#include "be_visitor_interface_fwd/any_op_ch.h"
 #endif /* TAO_BE_VISITOR_INTERFACE_FWD_H */

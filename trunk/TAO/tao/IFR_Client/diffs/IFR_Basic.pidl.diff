@@ -1,0 +1,453 @@
+--- orig/IFR_Basic.pidl	Mon Apr 23 20:54:29 2001
++++ IFR_Basic.pidl	Thu Apr 19 15:41:50 2001
+@@ -71,6 +71,13 @@
+ 
+ module CORBA
+ {
++  interface PrimitiveDef;
++  interface StringDef;
++  interface SequenceDef;
++  interface ArrayDef;
++  interface WstringDef;
++  interface FixedDef;
++
+   enum PrimitiveKind 
+   {
+     pk_null, 
+@@ -97,282 +104,276 @@
+     pk_value_base
+   };
+ 
+-  enum AttributeMode 
+-  {
+-    ATTR_NORMAL, 
+-    ATTR_READONLY
+-  };
+-
+-  enum OperationMode 
+-  {
+-    OP_NORMAL, 
+-    OP_ONEWAY
+-  };
+-
+-  enum ParameterMode 
+-  {
+-    PARAM_IN, 
+-    PARAM_OUT, 
+-    PARAM_INOUT
+-  };
+-};
+-
+-  interface CORBA_PrimitiveDef;
+-  interface CORBA_StringDef;
+-  interface CORBA_SequenceDef;
+-  interface CORBA_ArrayDef;
+-  interface CORBA_WstringDef;
+-  interface CORBA_FixedDef;
+-
+-  interface CORBA_Repository : CORBA_Container 
++  interface Repository : Container 
+   {
+     // read interface
+-    CORBA_Contained lookup_id (
+-        in string search_id
++    Contained lookup_id (
++        in RepositoryId search_id
+       );
+-    CORBA::TypeCode get_canonical_typecode (
+-        in CORBA::TypeCode tc
++    TypeCode get_canonical_typecode (
++        in TypeCode tc
+       );
+-    CORBA_PrimitiveDef get_primitive (
+-        in CORBA::PrimitiveKind kind
++    PrimitiveDef get_primitive (
++        in PrimitiveKind kind
+       );
+     // write interface
+-    CORBA_StringDef create_string (
++    StringDef create_string (
+         in unsigned long bound
+       );
+-    CORBA_WstringDef create_wstring (
++    WstringDef create_wstring (
+         in unsigned long bound
+       );
+-    CORBA_SequenceDef create_sequence (
++    SequenceDef create_sequence (
+         in unsigned long bound,
+-        in CORBA_IDLType element_type
++        in IDLType element_type
+       );
+-    CORBA_ArrayDef create_array (
++    ArrayDef create_array (
+         in unsigned long length,
+-        in CORBA_IDLType element_type
++        in IDLType element_type
+       );
+-    CORBA_FixedDef create_fixed (
++    FixedDef create_fixed (
+         in unsigned short digits,
+         in short scale
+       );
+   };
+ 
+-  interface CORBA_ModuleDef : CORBA_Container, CORBA_Contained 
++  interface ModuleDef : Container, Contained 
+   {
+   };
+ 
+-  struct CORBA_ModuleDescription 
++  struct ModuleDescription 
+   {
+-    string name;
+-    string id;
+-    string defined_in;
+-    string version;
++    Identifier name;
++    RepositoryId id;
++    RepositoryId defined_in;
++    VersionSpec version;
+   };
+ 
+-  interface CORBA_ConstantDef : CORBA_Contained 
++  interface ConstantDef : Contained 
+   {
+-    readonly attribute CORBA::TypeCode type;
+-    attribute CORBA_IDLType type_def;
++    readonly attribute TypeCode type;
++    attribute IDLType type_def;
+     attribute any value;
+   };
+ 
+-  struct CORBA_ConstantDescription 
++  struct ConstantDescription 
+   {
+-    string name;
+-    string id;
+-    string defined_in;
+-    string version;
+-    CORBA::TypeCode type;
++    Identifier name;
++    RepositoryId id;
++    RepositoryId defined_in;
++    VersionSpec version;
++    TypeCode type;
+     any value;
+   };
+ 
+-  interface CORBA_StructDef : CORBA_TypedefDef, CORBA_Container 
++  interface StructDef : TypedefDef, Container 
+   {
+-    attribute CORBA_StructMemberSeq members;
++    attribute StructMemberSeq members;
+   };
+ 
+-  interface CORBA_UnionDef : CORBA_TypedefDef, CORBA_Container 
++  interface UnionDef : TypedefDef, Container 
+   {
+-    readonly attribute CORBA::TypeCode discriminator_type;
+-    attribute CORBA_IDLType discriminator_type_def;
+-    attribute CORBA_UnionMemberSeq members;
++    readonly attribute TypeCode discriminator_type;
++    attribute IDLType discriminator_type_def;
++    attribute UnionMemberSeq members;
+   };
+ 
+-  interface CORBA_EnumDef : CORBA_TypedefDef 
++  interface EnumDef : TypedefDef 
+   {
+-    attribute CORBA_EnumMemberSeq members;
++    attribute EnumMemberSeq members;
+   };
+ 
+-  interface CORBA_AliasDef : CORBA_TypedefDef 
++  interface AliasDef : TypedefDef 
+   {
+-    attribute CORBA_IDLType original_type_def;
++    attribute IDLType original_type_def;
+   };
+ 
+-  interface CORBA_NativeDef : CORBA_TypedefDef 
++  interface NativeDef : TypedefDef 
+   {
+   };
+ 
+-  interface CORBA_PrimitiveDef: CORBA_IDLType 
++  interface PrimitiveDef: IDLType 
+   {
+-    readonly attribute CORBA::PrimitiveKind kind;
++    readonly attribute PrimitiveKind kind;
+   };
+ 
+-  interface CORBA_StringDef : CORBA_IDLType 
++  interface StringDef : IDLType 
+   {
+     attribute unsigned long bound;
+   };
+ 
+-  interface CORBA_WstringDef : CORBA_IDLType 
++  interface WstringDef : IDLType 
+   {
+     attribute unsigned long bound;
+   };
+ 
+-  interface CORBA_SequenceDef : CORBA_IDLType 
++  interface SequenceDef : IDLType 
+   {
+     attribute unsigned long bound;
+-    readonly attribute CORBA::TypeCode element_type;
+-    attribute CORBA_IDLType element_type_def;
++    readonly attribute TypeCode element_type;
++    attribute IDLType element_type_def;
+   };
+ 
+-  interface CORBA_ArrayDef : CORBA_IDLType 
++  interface ArrayDef : IDLType 
+   {
+     attribute unsigned long length;
+-    readonly attribute CORBA::TypeCode element_type;
+-    attribute CORBA_IDLType element_type_def;
++  readonly attribute TypeCode element_type;
++  attribute IDLType element_type_def;
+   };
+ 
+-  interface CORBA_ExceptionDef : CORBA_Contained, CORBA_Container 
++  interface ExceptionDef : Contained, Container 
+   {
+-    readonly attribute CORBA::TypeCode type;
+-    attribute CORBA_StructMemberSeq members;
++    readonly attribute TypeCode type;
++    attribute StructMemberSeq members;
+   };
+ 
+-  struct CORBA_ExceptionDescription 
++  struct ExceptionDescription 
+   {
+-    string name;
+-    string id;
+-    string defined_in;
+-    string version;
+-    CORBA::TypeCode type;
++    Identifier name;
++    RepositoryId id;
++    RepositoryId defined_in;
++    VersionSpec version;
++    TypeCode type;
+   };
+ 
+-  typedef sequence <CORBA_ExceptionDef> CORBA_ExceptionDefSeq;
+-  typedef sequence <CORBA_ExceptionDescription> CORBA_ExcDescriptionSeq;
++  typedef sequence <ExceptionDef> ExceptionDefSeq;
++  typedef sequence <ExceptionDescription> ExcDescriptionSeq;
+ 
+-  interface CORBA_AttributeDef : CORBA_Contained 
++  enum AttributeMode 
+   {
+-    readonly attribute CORBA::TypeCode type;
+-    attribute CORBA_IDLType type_def;
+-    attribute CORBA::AttributeMode mode;
++    ATTR_NORMAL, 
++    ATTR_READONLY
+   };
+ 
+-  struct CORBA_AttributeDescription 
++  interface AttributeDef : Contained 
+   {
+-    string name;
+-    string id;
+-    string defined_in;
+-    string version;
+-    CORBA::TypeCode type;
+-    CORBA::AttributeMode mode;
++    readonly attribute TypeCode type;
++    attribute IDLType type_def;
++    attribute AttributeMode mode;
+   };
+ 
+-  struct CORBA_ParameterDescription 
++  struct AttributeDescription 
+   {
+-    string name;
+-    CORBA::TypeCode type;
+-    CORBA_IDLType type_def;
+-    CORBA::ParameterMode mode;
++    Identifier name;
++    RepositoryId id;
++    RepositoryId defined_in;
++    VersionSpec version;
++    TypeCode type;
++    AttributeMode mode;
+   };
+ 
+-  typedef sequence <CORBA_ParameterDescription> CORBA_ParDescriptionSeq;
+-  typedef sequence <string> CORBA_ContextIdSeq;
++  enum OperationMode 
++  {
++    OP_NORMAL, 
++    OP_ONEWAY
++  };
+ 
+-  interface CORBA_OperationDef : CORBA_Contained 
++  enum ParameterMode 
+   {
+-    readonly attribute CORBA::TypeCode result;
+-    attribute CORBA_IDLType result_def;
+-    attribute CORBA_ParDescriptionSeq params;
+-    attribute CORBA::OperationMode mode;
+-    attribute CORBA_ContextIdSeq contexts;
+-    attribute CORBA_ExceptionDefSeq exceptions;
++    PARAM_IN, 
++    PARAM_OUT, 
++    PARAM_INOUT
++  };
++
++  struct ParameterDescription 
++  {
++    Identifier name;
++    TypeCode type;
++    IDLType type_def;
++    ParameterMode mode;
+   };
+ 
+-  struct CORBA_OperationDescription 
++  typedef sequence <ParameterDescription> ParDescriptionSeq;
++  typedef Identifier ContextIdentifier;
++  typedef sequence <ContextIdentifier> ContextIdSeq;
++
++  interface OperationDef : Contained 
+   {
+-    string name;
+-    string id;
+-    string defined_in;
+-    string version;
+-    CORBA::TypeCode result;
+-    CORBA::OperationMode mode;
+-    CORBA_ContextIdSeq contexts;
+-    CORBA_ParDescriptionSeq parameters;
+-    CORBA_ExcDescriptionSeq exceptions;
++    readonly attribute TypeCode result;
++    attribute IDLType result_def;
++    attribute ParDescriptionSeq params;
++    attribute OperationMode mode;
++    attribute ContextIdSeq contexts;
++    attribute ExceptionDefSeq exceptions;
+   };
+ 
+-  typedef sequence <string> CORBA_RepositoryIdSeq;
+-  typedef sequence <CORBA_OperationDescription> CORBA_OpDescriptionSeq;
+-  typedef sequence <CORBA_AttributeDescription> CORBA_AttrDescriptionSeq;
++  struct OperationDescription 
++  {
++    Identifier name;
++    RepositoryId id;
++    RepositoryId defined_in;
++    VersionSpec version;
++    TypeCode result;
++    OperationMode mode;
++    ContextIdSeq contexts;
++    ParDescriptionSeq parameters;
++    ExcDescriptionSeq exceptions;
++  };
+ 
+-  interface CORBA_InterfaceDef : CORBA_Container, CORBA_Contained, CORBA_IDLType 
++  typedef sequence <RepositoryId> RepositoryIdSeq;
++  typedef sequence <OperationDescription> OpDescriptionSeq;
++  typedef sequence <AttributeDescription> AttrDescriptionSeq;
++
++  interface InterfaceDef : Container, Contained, IDLType 
+   {
+     // read/write interface
+-    attribute CORBA_InterfaceDefSeq base_interfaces;
++    attribute InterfaceDefSeq base_interfaces;
+     // read interface
+     boolean is_a (
+-        in string interface_id
++        in RepositoryId interface_id
+       );
+ 
+     struct FullInterfaceDescription 
+     {
+-      string name;
+-      string id;
+-      string defined_in;
+-      string version;
+-      CORBA_OpDescriptionSeq operations;
+-      CORBA_AttrDescriptionSeq attributes;
+-      CORBA_RepositoryIdSeq base_interfaces;
+-      CORBA::TypeCode type;
++      Identifier name;
++      RepositoryId id;
++      RepositoryId defined_in;
++      VersionSpec version;
++      OpDescriptionSeq operations;
++      AttrDescriptionSeq attributes;
++      RepositoryIdSeq base_interfaces;
++      TypeCode type;
+     };
+ 
+     FullInterfaceDescription describe_interface ();
+ 
+     // write interface
+-    CORBA_AttributeDef create_attribute (
+-        in string id,
+-        in string name,
+-        in string version,
+-        in CORBA_IDLType type,
+-        in CORBA::AttributeMode mode
++    AttributeDef create_attribute (
++        in RepositoryId id,
++        in Identifier name,
++        in VersionSpec version,
++        in IDLType type,
++        in AttributeMode mode
+       );
+-    CORBA_OperationDef create_operation (
+-        in string id,
+-        in string name,
+-        in string version,
+-        in CORBA_IDLType result,
+-        in CORBA::OperationMode mode,
+-        in CORBA_ParDescriptionSeq params,
+-        in CORBA_ExceptionDefSeq exceptions,
+-        in CORBA_ContextIdSeq contexts
++    OperationDef create_operation (
++        in RepositoryId id,
++        in Identifier name,
++        in VersionSpec version,
++        in IDLType result,
++        in OperationMode mode,
++        in ParDescriptionSeq params,
++        in ExceptionDefSeq exceptions,
++        in ContextIdSeq contexts
+       );
+   };
+ 
+-  struct CORBA_InterfaceDescription 
++  struct InterfaceDescription 
+   {
+-    string name;
+-    string id;
+-    string defined_in;
+-    string version;
+-    CORBA_RepositoryIdSeq base_interfaces;
++    Identifier name;
++    RepositoryId id;
++    RepositoryId defined_in;
++    VersionSpec version;
++    RepositoryIdSeq base_interfaces;
+   };
+ 
+-  interface CORBA_AbstractInterfaceDef : CORBA_InterfaceDef 
++  interface AbstractInterfaceDef : InterfaceDef 
+   {
+   };
+ 
+-  interface CORBA_LocalInterfaceDef : CORBA_InterfaceDef 
++  interface LocalInterfaceDef : InterfaceDef 
+   {
+   };
++};
+ 
+ #pragma prefix ""
+ 

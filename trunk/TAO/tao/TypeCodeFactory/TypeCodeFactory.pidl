@@ -17,42 +17,47 @@
 //   code in TypeCodeFactoryC.* by splitting Interface.idl into two
 //   parts.
 //
-//   The command used to generate code from this file is:
+//   1. Patch this pidl file with
 //
-//     tao_idl -o orig -Ge 1 -ci "C.inl" \
-//          -Wb,export_macro=TAO_TypeCodeFactory_Export \
-//          -Wb,export_include=typecodefactory_export.h \
+//      patch < diffs/TypeCodeFactory.pidl.diff
+//
+//   This will remove the CORBA module, rename most types foo
+//   declared in it as CORBA_foo, unalias the simple typedefs
+//   which don't have a CORBA_ analog in corbafwd.h.
+//
+//   2. Generate the code. The command used to generate code from this 
+//   IDL file is:
+//
+//     tao_idl -o orig -Ge 1 -I../.. -ci "C.inl" \
+//          -Wb,export_macro=TAO_IFR_Client_Export \
+//          -Wb,export_include=ifr_client_export.h \
 //          -Wb,pre_include="ace/pre.h" \
 //          -Wb,post_include="ace/post.h" \
 //          TypeCodeFactory.pidl
 //
-//   after the file is generated a patch must be applied.  The patch
-//   removes generated code for the typedefs appearing at the top of
-//   the IDL file below, since they are already included in the TAO
-//   library. Also the scoped names of the Interface Repository datatypes
-//   used in this file have been changed to their flat name counterparts
-//   (see the explanation in TAO/tao/IFR_Client/Interface.pidl).
+//   3. Copy the generated files to the current directory.
 //
-//   Apply patches using the following commands:
+//   4. Patch the generated files, using
+//      
+//      patch < diffs/TypeCodeFactoryC.h.diff
+//      patch < diffs/TypeCodeFactoryC.i.diff
+//      patch < diffs/TypeCodeFactoryC.cpp.diff
 //
-//   patch < diffs/TypeCodeFactoryC.h.diff
-//   patch < diffs/TypeCodeFactoryC.inl.diff
-//   patch < diffs/TypeCodeFactoryC.cpp.diff
+//   If this fails for some reason, the files must be patched
+//   by hand, and the diff files regenerated with
 //
-//   These patches are used to automate the above changes when the
-//   code, which is part of the TAO library, must be regenerated because
-//   of modifications to the output of the TAO IDL compiler.
+//      diff -wbu orig/TypeCodeFactoryC.h TypeCodeFactoryC.h > diffs/TypeCodeFactoryC.h.diff
+//      diff -wbu orig/TypeCodeFactoryC.i TypeCodeFactoryC.i > diffs/TypeCodeFactoryC.i.diff
+//      diff -wbu orig/TypeCodeFactoryC.cpp TypeCodeFactoryC.cpp > diffs/TypeCodeFactoryC.cpp.diff
 //
-//   Note: The diffs were generated with these commands:
-//
-//   diff -wbu orig/TypeCodeFactoryC.h TypeCodeFactoryC.h > diffs/TypeCodeFactoryC.h.diff
-//   diff -wbu orig/TypeCodeFactoryC.inl TypeCodeFactoryC.inl > diffs/TypeCodeFactoryC.inl.diff
-//   diff -wbu orig/TypeCodeFactoryC.cpp TypeCodeFactoryC.cpp > diffs/TypeCodeFactoryC.cpp.diff
+//   5. Restore TypeCodeFactory.pidl.
 //
 // ================================================================
 
 #ifndef _TYPECODEFACTORY_IDL_
 #define _TYPECODEFACTORY_IDL_
+
+#include "tao/IFR_Client/IFR_Extended.pidl"
 
 #pragma prefix "omg.org"
 
@@ -67,20 +72,20 @@ module CORBA
     TypeCode create_struct_tc (
         in RepositoryId id,
         in Identifier name,
-        in IR::StructMemberSeq members
+        in StructMemberSeq members
       );
 
     TypeCode create_union_tc (
         in RepositoryId id,
         in Identifier name,
         in TypeCode discriminator_type,
-        in IR::UnionMemberSeq members
+        in UnionMemberSeq members
       );
 
     TypeCode create_enum_tc (
         in RepositoryId id,
         in Identifier name,
-        in IR::EnumMemberSeq members
+        in EnumMemberSeq members
       );
 
     TypeCode create_alias_tc (
@@ -92,7 +97,7 @@ module CORBA
     TypeCode create_exception_tc (
         in RepositoryId id,
         in Identifier name,
-        in IR::StructMemberSeq members
+        in StructMemberSeq members
       );
 
     TypeCode create_interface_tc (
@@ -128,7 +133,7 @@ module CORBA
         in Identifier name,
         in ValueModifier type_modifier,
         in TypeCode concrete_base,
-        in IR::ValueMemberSeq members
+        in ValueMemberSeq members
       );
 
     TypeCode create_value_box_tc (

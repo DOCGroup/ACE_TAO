@@ -96,8 +96,18 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface (be_interface *node)
     bt = node;
 
   os->indent ();
-  *os << bt->name () << "_ptr _tao_retval = " 
-      << bt->name () << "::_nil ();" << be_nl;
+
+  if (node->is_defined ())
+    {
+      *os << bt->name () << "_ptr _tao_retval = "
+          << bt->name () << "::_nil ();" << be_nl;
+    }
+  else
+    {
+      *os << bt->name () << "_ptr _tao_retval = tao_" 
+          << node->flat_name () << "_nil ();" << be_nl;
+    }
+
   *os << bt->name () << "_var _tao_safe_retval (_tao_retval);";
 
   *os << be_nl << be_nl;
@@ -106,7 +116,9 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_operation_rettype_vardecl_cs::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_operation_rettype_vardecl_cs::visit_interface_fwd (
+    be_interface_fwd *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
@@ -117,8 +129,18 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface_fwd (be_interface_fwd *
     bt = node;
 
   os->indent ();
-  *os << bt->name () << "_ptr _tao_retval = " 
-      << bt->name () << "::_nil ();" << be_nl;
+
+  if (node->full_definition ()->is_defined ())
+    {
+      *os << bt->name () << "_ptr _tao_retval = "
+          << bt->name () << "::_nil ();" << be_nl;
+    }
+  else
+    {
+      *os << bt->name () << "_ptr _tao_retval = tao_" 
+          << node->flat_name () << "_nil ();" << be_nl;
+    }
+
   *os << bt->name () << "_var _tao_safe_retval (_tao_retval);";
 
   *os << be_nl << be_nl;

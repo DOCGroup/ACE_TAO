@@ -278,6 +278,14 @@ public:
   CORBA_Policy_ptr _retn (void);
   CORBA_Policy_ptr ptr (void) const;
 
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_Policy_ptr duplicate (CORBA_Policy_ptr);
+  static void release (CORBA_Policy_ptr);
+  static CORBA_Policy_ptr nil (void);
+  static CORBA_Policy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
+
 private:
   CORBA_Policy_ptr ptr_;
   // Unimplemented - prevents widening assignment.
@@ -910,6 +918,14 @@ public:
   CORBA_PolicyManager_ptr _retn (void);
   CORBA_PolicyManager_ptr ptr (void) const;
 
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_PolicyManager_ptr duplicate (CORBA_PolicyManager_ptr);
+  static void release (CORBA_PolicyManager_ptr);
+  static CORBA_PolicyManager_ptr nil (void);
+  static CORBA_PolicyManager_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
+
 private:
   CORBA_PolicyManager_ptr ptr_;
   // Unimplemented - prevents widening assignment.
@@ -1043,6 +1059,14 @@ public:
   CORBA_PolicyCurrent_ptr _retn (void);
   CORBA_PolicyCurrent_ptr ptr (void) const;
 
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_PolicyCurrent_ptr duplicate (CORBA_PolicyCurrent_ptr);
+  static void release (CORBA_PolicyCurrent_ptr);
+  static CORBA_PolicyCurrent_ptr nil (void);
+  static CORBA_PolicyCurrent_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
+
 private:
   CORBA_PolicyCurrent_ptr ptr_;
   // Unimplemented - prevents widening assignment.
@@ -1124,7 +1148,9 @@ private:
 
 // Proxy Broker Factory function pointer declarations.
 
-extern TAO_Export _TAO_CORBA_Policy_Proxy_Broker * (*_TAO_CORBA_Policy_Proxy_Broker_Factory_function_pointer) (
+extern TAO_Export
+_TAO_CORBA_Policy_Proxy_Broker *
+(*_TAO_CORBA_Policy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 

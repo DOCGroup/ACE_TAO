@@ -17,16 +17,13 @@
 //    Michael Kircher
 //
 //    Modifications by Aniruddha Gokhale
-//
 // ============================================================================
-
 
 #include	"be.h"
 
 #include "be_visitor_sequence.h"
 
 ACE_RCSID(be_visitor_sequence, gen_unbounded_obj_sequence_cs, "$Id$")
-
 
 int
 be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
@@ -37,6 +34,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   // retrieve the base type since we may need to do some code
   // generation for the base type.
   bt = be_type::narrow_from_decl (node->base_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -49,14 +47,32 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   be_type  *pt; // base types
 
   if (bt->node_type () == AST_Decl::NT_typedef)
-  {
-    // get the primitive base type of this typedef node
-    be_typedef *t = be_typedef::narrow_from_decl (bt);
-    pt = t->primitive_base_type ();
-  }
+    {
+      // get the primitive base type of this typedef node
+      be_typedef *t = be_typedef::narrow_from_decl (bt);
+      pt = t->primitive_base_type ();
+    }
   else
-    pt = bt;
+    {
+      pt = bt;
+    }
 
+  const char *name = 
+    be_decl::narrow_from_decl (pt)->full_name ();
+
+  idl_bool bt_is_defined;
+
+  // Special cases.
+  if (ACE_OS::strcmp (name, "CORBA::Object") == 0
+      || ACE_OS::strcmp (name, "CORBA::TypeCode") == 0)
+    {
+      bt_is_defined = 1;
+    }
+  else
+    {
+      AST_Interface *ibt = AST_Interface::narrow_from_decl (pt);
+      bt_is_defined = ibt->is_defined ();
+    }
 
   const char * class_name = node->instance_name ();
 
@@ -65,9 +81,13 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
   if (node->is_nested ())
     {
-      ACE_OS::sprintf (full_class_name, "%s::%s",
-                       be_scope::narrow_from_scope (node->defined_in ())->decl ()->full_name (),
-                       class_name);
+      be_scope *parent = be_scope::narrow_from_scope (node->defined_in ());
+
+      ACE_OS::sprintf (
+          full_class_name, "%s::%s",
+          parent->decl ()->full_name (),
+          class_name
+        );
     }
   else
     {
@@ -92,25 +112,50 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "void" << be_nl
       << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
       << "{" << be_idt_nl;
-  bt->accept(visitor);
+
+  bt->accept (visitor);
+
   *os <<" **tmp = 0;" << be_nl
       << "tmp = " << class_name << "::allocbuf (length);" << be_nl
       << be_nl
       << "if (this->buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
+
   bt->accept(visitor);
+
   *os <<" **old = ACE_reinterpret_cast (";
+
   bt->accept (visitor);
+
   *os << "**, this->buffer_);" << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
+      << "{" << be_idt_nl
       << "if (!this->release_)" << be_idt_nl
+      << "{" << be_idt_nl
       << "tmp[i] = ";
-  bt->accept (visitor);
-  *os << "::_duplicate (old[i]);" << be_uidt_nl
+
+  if (bt_is_defined)
+    {
+      bt->accept (visitor);
+
+      *os << "::_duplicate (old[i]);";
+    }
+  else
+    {
+      *os << "tao_" << pt->flat_name () << "_duplicate (old[i]);";
+    }
+
+  *os << be_uidt_nl
+      << "}" << be_uidt_nl
       << "else" << be_idt_nl
-      << "tmp[i] = old[i];" << be_uidt_nl << be_uidt_nl
+      << "{" << be_idt_nl
+      << "tmp[i] = old[i];" << be_uidt_nl 
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "if (this->release_)" << be_idt_nl
-      << "delete[] old;" << be_uidt_nl << be_uidt_nl
+      << "{" << be_idt_nl
+      << "delete[] old;" << be_uidt_nl 
+      << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl
       << "this->buffer_ = tmp;" << be_uidt_nl
       << "}" << be_nl
@@ -122,17 +167,35 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
       << "return;" << be_uidt_nl;
-  bt->accept(visitor);
+
+  bt->accept (visitor);
+
   *os <<" **tmp = ACE_reinterpret_cast (";
+
   bt->accept (visitor);
-  *os << "**, this->buffer_);" << be_nl
-      << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::release (tmp[i]);" << be_nl
-      << "tmp[i] = ";
-  bt->accept (visitor);
-  *os << "::_nil ();" << be_uidt_nl
-      << "}" << be_nl
+
+  *os << "**, this->buffer_);" << be_nl << be_nl
+      << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
+      << "{" << be_idt_nl;
+
+  if (bt_is_defined)
+    {
+      *os << "CORBA::release (tmp[i]);" << be_nl
+          << "tmp[i] = ";
+
+      bt->accept (visitor);
+
+      *os << "::_nil ();";
+    }
+  else
+    {
+      *os << "tao_" << pt->flat_name () << "_release (tmp[i]);" << be_nl
+          << "tmp[i] = "
+          << "tao_" << pt->flat_name () << "_nil ();";
+    }
+
+  *os << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << class_name << "::freebuf (tmp);" << be_nl
       << "this->buffer_ = 0;" << be_uidt_nl
       << "}" << be_nl
@@ -147,24 +210,43 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
   // shrink_buffer
   *os << "void" << be_nl
-      << full_class_name << "::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)" << be_nl
+      << full_class_name 
+      << "::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)" << be_nl
       << "{" << be_idt_nl;
-  bt->accept(visitor);
+
+  bt->accept (visitor);
+
   *os <<" **tmp = ACE_reinterpret_cast (";
+
   bt->accept (visitor);
-  *os << "**, this->buffer_);" << be_nl
-      << be_nl
-      << "for (CORBA::ULong i = nl; i < ol; ++i)" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::release (tmp[i]);" << be_nl
-      << "tmp[i] = ";
-  bt->accept (visitor);
-  *os << "::_nil ();" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "}" << be_nl;
+
+  *os << "**, this->buffer_);" << be_nl << be_nl
+      << "for (CORBA::ULong i = nl; i < ol; ++i)" << be_idt_nl
+      << "{" << be_idt_nl;
+
+  if (bt_is_defined)
+    {
+      *os << "CORBA::release (tmp[i]);" << be_nl
+          << "tmp[i] = ";
+
+      bt->accept (visitor);
+
+      *os << "::_nil ();";
+    }
+  else
+    {
+      *os << "tao_" << pt->flat_name () << "_release (tmp[i]);" << be_nl
+          << "tmp[i] = "
+          << "tao_" << pt->flat_name () << "_nil ();";
+    }
+
+  *os << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
 
   be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
+
   if ((pt->node_type () != AST_Decl::NT_pre_defined) ||
       (prim && (prim->pt () == AST_PredefinedType::PT_pseudo) &&
        (!ACE_OS::strcmp (prim->local_name ()->get_string (), "Object"))))
@@ -178,24 +260,52 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 	        << be_uidt_nl
 	        << ")" << be_uidt_nl
 	        << "{" << be_idt_nl;
+
       bt->accept (visitor);
+
       *os << " **tmp = ACE_static_cast (";
+
       bt->accept (visitor);
+
       *os << "**, target);" << be_nl
 	        << "*tmp = ";
-      bt->accept (visitor);
-      *os << "::_narrow (src, ACE_TRY_ENV);" << be_nl
+
+      if (bt_is_defined)
+        {
+          bt->accept (visitor);
+
+          *os << "::_narrow (src, ACE_TRY_ENV);";
+        }
+      else
+        {
+          *os << "tao_" << pt->flat_name () << "_narrow (src, ACE_TRY_ENV);";
+        }
+
+      *os << be_nl
           << "ACE_CHECK;" << be_uidt_nl
 	        << "}\n" << be_nl;
 
       *os << "CORBA_Object*" << be_nl
           << full_class_name << "::_upcast (void *src) const" <<  be_nl
 	        << "{" << be_idt_nl;
-      bt->accept (visitor);
-      *os << " **tmp = ACE_static_cast (";
-      bt->accept (visitor);
-      *os << "**, src);" << be_nl
-	        << "return *tmp;" << be_uidt_nl
+
+      if (bt_is_defined)
+        {
+          bt->accept (visitor);
+
+          *os << " **tmp = ACE_static_cast (";
+
+          bt->accept (visitor);
+
+          *os << "**, src);" << be_nl
+              << "return *tmp;";
+        }
+      else
+        {
+	        *os << "return tao_" << pt->flat_name () << "_upcast (src);";
+        }
+
+      *os << be_uidt_nl
 	        << "}" << be_nl;
     }
 

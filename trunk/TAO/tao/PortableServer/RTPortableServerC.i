@@ -20,170 +20,50 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-#if !defined (_RTPORTABLESERVER_POA___VAR_CI_)
-#define _RTPORTABLESERVER_POA___VAR_CI_
+#if !defined (_RTPORTABLESERVER_POA___CI_)
+#define _RTPORTABLESERVER_POA___CI_
 
-// *************************************************************
-// Inline operations for class RTPortableServer::POA_var
-// *************************************************************
-
-ACE_INLINE
-RTPortableServer::POA_var::POA_var (void) // default constructor
-  : ptr_ (POA::_nil ())
-{}
-
-ACE_INLINE ::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::ptr (void) const
+ACE_INLINE RTPortableServer::POA_ptr
+tao_RTPortableServer_POA_duplicate (
+    RTPortableServer::POA_ptr p
+  )
 {
-  return this->ptr_;
+  return RTPortableServer::POA::_duplicate (p);
 }
 
-ACE_INLINE
-RTPortableServer::POA_var::POA_var (const ::RTPortableServer::POA_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (POA::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-RTPortableServer::POA_var::~POA_var (void) // destructor
+ACE_INLINE void
+tao_RTPortableServer_POA_release (
+    RTPortableServer::POA_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  CORBA::release (p);
 }
 
-ACE_INLINE RTPortableServer::POA_var &
-RTPortableServer::POA_var::operator= (POA_ptr p)
+ACE_INLINE RTPortableServer::POA_ptr
+tao_RTPortableServer_POA_nil (
+    void
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  return RTPortableServer::POA::_nil ();
 }
 
-ACE_INLINE RTPortableServer::POA_var &
-RTPortableServer::POA_var::operator= (const ::RTPortableServer::POA_var &p)
+ACE_INLINE RTPortableServer::POA_ptr
+tao_RTPortableServer_POA_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTPortableServer::POA::_duplicate (p.ptr ());
-  }
-  return *this;
+  return RTPortableServer::POA::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE 
-RTPortableServer::POA_var::operator const ::RTPortableServer::POA_ptr &() const // cast
+ACE_INLINE CORBA::Object *
+tao_RTPortableServer_POA_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE 
-RTPortableServer::POA_var::operator ::RTPortableServer::POA_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTPortableServer::POA_ptr &
-RTPortableServer::POA_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTPortableServer::POA_ptr &
-RTPortableServer::POA_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTPortableServer::POA::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTPortableServer::POA_ptr val = this->ptr_;
-  this->ptr_ = ::RTPortableServer::POA::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_RTPORTABLESERVER_POA___OUT_CI_)
-#define _RTPORTABLESERVER_POA___OUT_CI_
-
-// *************************************************************
-// Inline operations for class RTPortableServer::POA_out
-// *************************************************************
-
-ACE_INLINE
-RTPortableServer::POA_out::POA_out (POA_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTPortableServer::POA::_nil ();
-}
-
-ACE_INLINE
-RTPortableServer::POA_out::POA_out (POA_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTPortableServer::POA::_nil ();
-}
-
-ACE_INLINE
-RTPortableServer::POA_out::POA_out (const ::RTPortableServer::POA_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (POA_out &, p).ptr_)
-{}
-
-ACE_INLINE ::RTPortableServer::POA_out &
-RTPortableServer::POA_out::operator= (const ::RTPortableServer::POA_out &p)
-{
-  this->ptr_ = ACE_const_cast (POA_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE RTPortableServer::POA_out &
-RTPortableServer::POA_out::operator= (const ::RTPortableServer::POA_var &p)
-{
-  this->ptr_ = ::RTPortableServer::POA::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE RTPortableServer::POA_out &
-RTPortableServer::POA_out::operator= (POA_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-RTPortableServer::POA_out::operator ::RTPortableServer::POA_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTPortableServer::POA_ptr &
-RTPortableServer::POA_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::RTPortableServer::POA_ptr
-RTPortableServer::POA_out::operator-> (void)
-{
-  return this->ptr_;
+  RTPortableServer::POA **tmp =
+    ACE_static_cast (RTPortableServer::POA **, src);
+  return *tmp;
 }
 
 

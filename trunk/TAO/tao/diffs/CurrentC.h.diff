@@ -1,15 +1,30 @@
---- CurrentC.h	Sat Jun 24 02:48:51 2000
-+++ CurrentC.h.mod	Sat Jun 24 02:47:49 2000
-@@ -11,7 +11,7 @@
+--- orig/CurrentC.h	Mon Apr 16 19:17:32 2001
++++ CurrentC.h	Mon Apr 16 19:16:18 2001
+@@ -1,4 +1,4 @@
+-// -*- C++ -*-
++// -*- C++ -*- $Id$ */
+ //
+ // $Id$
+ 
+@@ -23,7 +23,7 @@
  #define _TAO_IDL_CURRENTC_H_
  
  #include "ace/pre.h"
 -#include "tao/corba.h"
 +#include "tao/Object.h"
  
- #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
- #include "ace/streams.h"
-@@ -162,7 +162,7 @@
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+@@ -164,7 +164,7 @@
+   virtual const char* _interface_repository_id (void) const;
+ 
+ protected:
+-  CORBA_Current ();
++  CORBA_Current (void);
+   
+   virtual ~CORBA_Current (void);
+ private:
+@@ -183,7 +183,7 @@
  
  
  #if defined (__ACE_INLINE__)

@@ -20,7 +20,7 @@
 #ifndef TAO_IROBJECT_I_H
 #define TAO_IROBJECT_I_H
 
-#include "IFR_BaseS.h"
+#include "IFR_ExtendedS.h"
 #include "ace/Configuration.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -36,7 +36,7 @@
 
 class TAO_Repository_i;
 
-class TAO_IRObject_i : public POA_CORBA::IRObject
+class TAO_IRObject_i : public POA_CORBA_IRObject
 {
   // = TITLE
   //    TAO_IRObject_i

@@ -55,5 +55,6 @@ be_visitor_root_ch::init (void)
 
   // init the stream
   this->ctx_->stream (tao_cg->client_header ());
+
   return 0;
 }

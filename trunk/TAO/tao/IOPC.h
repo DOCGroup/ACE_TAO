@@ -19,11 +19,10 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_IOPC_H_
-#define _TAO_IDL_IOPC_H_
+#ifndef _TAO_IDL_ORIG_IOPC_H_
+#define _TAO_IDL_ORIG_IOPC_H_
 
 #include "ace/pre.h"
-
 #include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -128,76 +127,6 @@ TAO_NAMESPACE  IOP
 
     };
     
-#endif /* end #if !defined */
-
-
-#if !defined (_IOP_TAGGEDPROFILE__TAO_SEQ_OCTET___VAR_CH_)
-#define _IOP_TAGGEDPROFILE__TAO_SEQ_OCTET___VAR_CH_
-
-    // *************************************************************
-    // class IOP::TaggedProfile::_tao_seq_Octet_var
-    // *************************************************************
-
-    class TAO_Export _tao_seq_Octet_var
-    {
-    public:
-      _tao_seq_Octet_var (void); // default constructor
-      _tao_seq_Octet_var (_tao_seq_Octet *);
-      _tao_seq_Octet_var (const _tao_seq_Octet_var &); // copy constructor
-      _tao_seq_Octet_var (const _tao_seq_Octet &); // fixed-size base types only
-      ~_tao_seq_Octet_var (void); // destructor
-      
-      _tao_seq_Octet_var &operator= (_tao_seq_Octet *);
-      _tao_seq_Octet_var &operator= (const _tao_seq_Octet_var &);
-      _tao_seq_Octet_var &operator= (const _tao_seq_Octet &); // fixed-size base types only
-      _tao_seq_Octet *operator-> (void);
-      const _tao_seq_Octet *operator-> (void) const;
-      
-      operator const _tao_seq_Octet &() const;
-      operator _tao_seq_Octet &();
-      operator _tao_seq_Octet &() const;
-      
-      CORBA::Octet & operator[] (CORBA::ULong index);
-      const CORBA::Octet & operator[] (CORBA::ULong index) const;
-      
-      // in, inout, out, _retn 
-      const _tao_seq_Octet &in (void) const;
-      _tao_seq_Octet &inout (void);
-      _tao_seq_Octet *&out (void);
-      _tao_seq_Octet *_retn (void);
-      _tao_seq_Octet *ptr (void) const;
-
-    private:
-      _tao_seq_Octet *ptr_;
-    };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IOP_TAGGEDPROFILE__TAO_SEQ_OCTET___OUT_CH_)
-#define _IOP_TAGGEDPROFILE__TAO_SEQ_OCTET___OUT_CH_
-
-    class TAO_Export _tao_seq_Octet_out
-    {
-    public:
-      _tao_seq_Octet_out (_tao_seq_Octet *&);
-      _tao_seq_Octet_out (_tao_seq_Octet_var &);
-      _tao_seq_Octet_out (const _tao_seq_Octet_out &);
-      _tao_seq_Octet_out &operator= (const _tao_seq_Octet_out &);
-      _tao_seq_Octet_out &operator= (_tao_seq_Octet *);
-      operator _tao_seq_Octet *&();
-      _tao_seq_Octet *&ptr (void);
-      _tao_seq_Octet *operator-> (void);
-      CORBA::Octet & operator[] (CORBA::ULong index);
-      
-    private:
-      _tao_seq_Octet *&ptr_;
-      // assignment from T_var not allowed
-      void operator= (const _tao_seq_Octet_var &);
-    };
-
-
 #endif /* end #if !defined */
 
 #if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -350,75 +279,6 @@ TAO_NAMESPACE  IOP
     
 #endif /* end #if !defined */
 
-
-#if !defined (_IOP_IOR__TAO_SEQ_TAGGEDPROFILE___VAR_CH_)
-#define _IOP_IOR__TAO_SEQ_TAGGEDPROFILE___VAR_CH_
-
-    // *************************************************************
-    // class IOP::IOR::_tao_seq_TaggedProfile_var
-    // *************************************************************
-
-    class TAO_Export _tao_seq_TaggedProfile_var
-    {
-    public:
-      _tao_seq_TaggedProfile_var (void); // default constructor
-      _tao_seq_TaggedProfile_var (_tao_seq_TaggedProfile *);
-      _tao_seq_TaggedProfile_var (const _tao_seq_TaggedProfile_var &); // copy constructor
-      ~_tao_seq_TaggedProfile_var (void); // destructor
-      
-      _tao_seq_TaggedProfile_var &operator= (_tao_seq_TaggedProfile *);
-      _tao_seq_TaggedProfile_var &operator= (const _tao_seq_TaggedProfile_var &);
-      _tao_seq_TaggedProfile *operator-> (void);
-      const _tao_seq_TaggedProfile *operator-> (void) const;
-      
-      operator const _tao_seq_TaggedProfile &() const;
-      operator _tao_seq_TaggedProfile &();
-      operator _tao_seq_TaggedProfile &() const;
-      operator _tao_seq_TaggedProfile *&(); // variable-size base types only
-      
-      ACE_NESTED_CLASS (IOP, TaggedProfile) & operator[] (CORBA::ULong index);
-      const ACE_NESTED_CLASS (IOP, TaggedProfile) & operator[] (CORBA::ULong index) const;
-      
-      // in, inout, out, _retn 
-      const _tao_seq_TaggedProfile &in (void) const;
-      _tao_seq_TaggedProfile &inout (void);
-      _tao_seq_TaggedProfile *&out (void);
-      _tao_seq_TaggedProfile *_retn (void);
-      _tao_seq_TaggedProfile *ptr (void) const;
-
-    private:
-      _tao_seq_TaggedProfile *ptr_;
-    };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IOP_IOR__TAO_SEQ_TAGGEDPROFILE___OUT_CH_)
-#define _IOP_IOR__TAO_SEQ_TAGGEDPROFILE___OUT_CH_
-
-    class TAO_Export _tao_seq_TaggedProfile_out
-    {
-    public:
-      _tao_seq_TaggedProfile_out (_tao_seq_TaggedProfile *&);
-      _tao_seq_TaggedProfile_out (_tao_seq_TaggedProfile_var &);
-      _tao_seq_TaggedProfile_out (const _tao_seq_TaggedProfile_out &);
-      _tao_seq_TaggedProfile_out &operator= (const _tao_seq_TaggedProfile_out &);
-      _tao_seq_TaggedProfile_out &operator= (_tao_seq_TaggedProfile *);
-      operator _tao_seq_TaggedProfile *&();
-      _tao_seq_TaggedProfile *&ptr (void);
-      _tao_seq_TaggedProfile *operator-> (void);
-      ACE_NESTED_CLASS (IOP, TaggedProfile) & operator[] (CORBA::ULong index);
-      
-    private:
-      _tao_seq_TaggedProfile *&ptr_;
-      // assignment from T_var not allowed
-      void operator= (const _tao_seq_TaggedProfile_var &);
-    };
-
-
-#endif /* end #if !defined */
-
 #if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_TaggedProfile _profiles_seq;
   #endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
@@ -538,76 +398,6 @@ TAO_NAMESPACE  IOP
 
     };
     
-#endif /* end #if !defined */
-
-
-#if !defined (_IOP_TAGGEDCOMPONENT__TAO_SEQ_OCTET___VAR_CH_)
-#define _IOP_TAGGEDCOMPONENT__TAO_SEQ_OCTET___VAR_CH_
-
-    // *************************************************************
-    // class IOP::TaggedComponent::_tao_seq_Octet_var
-    // *************************************************************
-
-    class TAO_Export _tao_seq_Octet_var
-    {
-    public:
-      _tao_seq_Octet_var (void); // default constructor
-      _tao_seq_Octet_var (_tao_seq_Octet *);
-      _tao_seq_Octet_var (const _tao_seq_Octet_var &); // copy constructor
-      _tao_seq_Octet_var (const _tao_seq_Octet &); // fixed-size base types only
-      ~_tao_seq_Octet_var (void); // destructor
-      
-      _tao_seq_Octet_var &operator= (_tao_seq_Octet *);
-      _tao_seq_Octet_var &operator= (const _tao_seq_Octet_var &);
-      _tao_seq_Octet_var &operator= (const _tao_seq_Octet &); // fixed-size base types only
-      _tao_seq_Octet *operator-> (void);
-      const _tao_seq_Octet *operator-> (void) const;
-      
-      operator const _tao_seq_Octet &() const;
-      operator _tao_seq_Octet &();
-      operator _tao_seq_Octet &() const;
-      
-      CORBA::Octet & operator[] (CORBA::ULong index);
-      const CORBA::Octet & operator[] (CORBA::ULong index) const;
-      
-      // in, inout, out, _retn 
-      const _tao_seq_Octet &in (void) const;
-      _tao_seq_Octet &inout (void);
-      _tao_seq_Octet *&out (void);
-      _tao_seq_Octet *_retn (void);
-      _tao_seq_Octet *ptr (void) const;
-
-    private:
-      _tao_seq_Octet *ptr_;
-    };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IOP_TAGGEDCOMPONENT__TAO_SEQ_OCTET___OUT_CH_)
-#define _IOP_TAGGEDCOMPONENT__TAO_SEQ_OCTET___OUT_CH_
-
-    class TAO_Export _tao_seq_Octet_out
-    {
-    public:
-      _tao_seq_Octet_out (_tao_seq_Octet *&);
-      _tao_seq_Octet_out (_tao_seq_Octet_var &);
-      _tao_seq_Octet_out (const _tao_seq_Octet_out &);
-      _tao_seq_Octet_out &operator= (const _tao_seq_Octet_out &);
-      _tao_seq_Octet_out &operator= (_tao_seq_Octet *);
-      operator _tao_seq_Octet *&();
-      _tao_seq_Octet *&ptr (void);
-      _tao_seq_Octet *operator-> (void);
-      CORBA::Octet & operator[] (CORBA::ULong index);
-      
-    private:
-      _tao_seq_Octet *&ptr_;
-      // assignment from T_var not allowed
-      void operator= (const _tao_seq_Octet_var &);
-    };
-
-
 #endif /* end #if !defined */
 
 #if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1207,76 +997,6 @@ TAO_NAMESPACE  IOP
     
 #endif /* end #if !defined */
 
-
-#if !defined (_IOP_SERVICECONTEXT__TAO_SEQ_OCTET___VAR_CH_)
-#define _IOP_SERVICECONTEXT__TAO_SEQ_OCTET___VAR_CH_
-
-    // *************************************************************
-    // class IOP::ServiceContext::_tao_seq_Octet_var
-    // *************************************************************
-
-    class TAO_Export _tao_seq_Octet_var
-    {
-    public:
-      _tao_seq_Octet_var (void); // default constructor
-      _tao_seq_Octet_var (_tao_seq_Octet *);
-      _tao_seq_Octet_var (const _tao_seq_Octet_var &); // copy constructor
-      _tao_seq_Octet_var (const _tao_seq_Octet &); // fixed-size base types only
-      ~_tao_seq_Octet_var (void); // destructor
-      
-      _tao_seq_Octet_var &operator= (_tao_seq_Octet *);
-      _tao_seq_Octet_var &operator= (const _tao_seq_Octet_var &);
-      _tao_seq_Octet_var &operator= (const _tao_seq_Octet &); // fixed-size base types only
-      _tao_seq_Octet *operator-> (void);
-      const _tao_seq_Octet *operator-> (void) const;
-      
-      operator const _tao_seq_Octet &() const;
-      operator _tao_seq_Octet &();
-      operator _tao_seq_Octet &() const;
-      
-      CORBA::Octet & operator[] (CORBA::ULong index);
-      const CORBA::Octet & operator[] (CORBA::ULong index) const;
-      
-      // in, inout, out, _retn 
-      const _tao_seq_Octet &in (void) const;
-      _tao_seq_Octet &inout (void);
-      _tao_seq_Octet *&out (void);
-      _tao_seq_Octet *_retn (void);
-      _tao_seq_Octet *ptr (void) const;
-
-    private:
-      _tao_seq_Octet *ptr_;
-    };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IOP_SERVICECONTEXT__TAO_SEQ_OCTET___OUT_CH_)
-#define _IOP_SERVICECONTEXT__TAO_SEQ_OCTET___OUT_CH_
-
-    class TAO_Export _tao_seq_Octet_out
-    {
-    public:
-      _tao_seq_Octet_out (_tao_seq_Octet *&);
-      _tao_seq_Octet_out (_tao_seq_Octet_var &);
-      _tao_seq_Octet_out (const _tao_seq_Octet_out &);
-      _tao_seq_Octet_out &operator= (const _tao_seq_Octet_out &);
-      _tao_seq_Octet_out &operator= (_tao_seq_Octet *);
-      operator _tao_seq_Octet *&();
-      _tao_seq_Octet *&ptr (void);
-      _tao_seq_Octet *operator-> (void);
-      CORBA::Octet & operator[] (CORBA::ULong index);
-      
-    private:
-      _tao_seq_Octet *&ptr_;
-      // assignment from T_var not allowed
-      void operator= (const _tao_seq_Octet_var &);
-    };
-
-
-#endif /* end #if !defined */
-
 #if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_Octet _context_data_seq;
   #endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
@@ -1550,7 +1270,15 @@ TAO_NAMESPACE  IOP
     Codec_ptr &out (void);
     Codec_ptr _retn (void);
     Codec_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static Codec_ptr duplicate (Codec_ptr);
+    static void release (Codec_ptr);
+    static Codec_ptr nil (void);
+    static Codec_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     Codec_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1577,7 +1305,7 @@ TAO_NAMESPACE  IOP
     operator Codec_ptr &();
     Codec_ptr &ptr (void);
     Codec_ptr operator-> (void);
-    
+  
   private:
     Codec_ptr &ptr_;
   };
@@ -1885,7 +1613,15 @@ class TAO_Export Codec : public virtual CORBA_Object
     CodecFactory_ptr &out (void);
     CodecFactory_ptr _retn (void);
     CodecFactory_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static CodecFactory_ptr duplicate (CodecFactory_ptr);
+    static void release (CodecFactory_ptr);
+    static CodecFactory_ptr nil (void);
+    static CodecFactory_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     CodecFactory_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1912,7 +1648,7 @@ class TAO_Export Codec : public virtual CORBA_Object
     operator CodecFactory_ptr &();
     CodecFactory_ptr &ptr (void);
     CodecFactory_ptr operator-> (void);
-    
+  
   private:
     CodecFactory_ptr &ptr_;
   };
@@ -2019,8 +1755,6 @@ class TAO_Export CodecFactory : public virtual CORBA_Object
 
 }
 TAO_NAMESPACE_CLOSE // module IOP
-
-// Proxy Broker Factory function pointer declarations.
 
 TAO_Export void operator<<= (CORBA::Any &, const IOP::TaggedProfile &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, IOP::TaggedProfile*); // noncopying version

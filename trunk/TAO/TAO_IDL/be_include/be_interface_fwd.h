@@ -50,20 +50,6 @@ public:
   virtual ~be_interface_fwd (void);
   // Destructor.
 
-  virtual int gen_var_defn (char *local_name = 0);
-  // Generate the _var class definition.
-
-  virtual int gen_var_impl (char *local_name = 0,
-                            char *full_name = 0);
-  // Generate the implementation for the _var class.
-
-  virtual int gen_out_defn (char *local_name = 0);
-  // Generate the _out class definition.
-
-  virtual int gen_out_impl (char *local_name = 0,
-                            char *full_name = 0);
-  // Generate the _out implementation.
-
   virtual void destroy (void);
   // Cleanup function.
 

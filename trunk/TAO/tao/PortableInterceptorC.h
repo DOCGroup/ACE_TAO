@@ -94,6 +94,14 @@ TAO_NAMESPACE  PortableInterceptor
     Interceptor_ptr _retn (void);
     Interceptor_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static Interceptor_ptr duplicate (Interceptor_ptr);
+    static void release (Interceptor_ptr);
+    static Interceptor_ptr nil (void);
+    static Interceptor_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     Interceptor_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -339,6 +347,14 @@ class TAO_Export Interceptor : public virtual CORBA_Object
     Current_ptr _retn (void);
     Current_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static Current_ptr duplicate (Current_ptr);
+    static void release (Current_ptr);
+    static Current_ptr nil (void);
+    static Current_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     Current_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -473,6 +489,14 @@ class TAO_Export Current: public virtual CORBA::Current
     RequestInfo_ptr _retn (void);
     RequestInfo_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static RequestInfo_ptr duplicate (RequestInfo_ptr);
+    static void release (RequestInfo_ptr);
+    static RequestInfo_ptr nil (void);
+    static RequestInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     RequestInfo_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -706,6 +730,14 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
     ClientRequestInfo_ptr _retn (void);
     ClientRequestInfo_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ClientRequestInfo_ptr duplicate (ClientRequestInfo_ptr);
+    static void release (ClientRequestInfo_ptr);
+    static ClientRequestInfo_ptr nil (void);
+    static ClientRequestInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ClientRequestInfo_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -896,6 +928,14 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
     ServerRequestInfo_ptr _retn (void);
     ServerRequestInfo_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ServerRequestInfo_ptr duplicate (ServerRequestInfo_ptr);
+    static void release (ServerRequestInfo_ptr);
+    static ServerRequestInfo_ptr nil (void);
+    static ServerRequestInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ServerRequestInfo_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1080,6 +1120,14 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
     ClientRequestInterceptor_ptr _retn (void);
     ClientRequestInterceptor_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ClientRequestInterceptor_ptr duplicate (ClientRequestInterceptor_ptr);
+    static void release (ClientRequestInterceptor_ptr);
+    static ClientRequestInterceptor_ptr nil (void);
+    static ClientRequestInterceptor_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ClientRequestInterceptor_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1236,6 +1284,14 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
     ServerRequestInterceptor_ptr _retn (void);
     ServerRequestInterceptor_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ServerRequestInterceptor_ptr duplicate (ServerRequestInterceptor_ptr);
+    static void release (ServerRequestInterceptor_ptr);
+    static ServerRequestInterceptor_ptr nil (void);
+    static ServerRequestInterceptor_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ServerRequestInterceptor_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1393,6 +1449,14 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
     IORInfo_ptr _retn (void);
     IORInfo_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static IORInfo_ptr duplicate (IORInfo_ptr);
+    static void release (IORInfo_ptr);
+    static IORInfo_ptr nil (void);
+    static IORInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     IORInfo_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1534,6 +1598,14 @@ class TAO_Export IORInfo : public virtual CORBA_Object
     IORInterceptor_ptr _retn (void);
     IORInterceptor_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static IORInterceptor_ptr duplicate (IORInterceptor_ptr);
+    static void release (IORInterceptor_ptr);
+    static IORInterceptor_ptr nil (void);
+    static IORInterceptor_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     IORInterceptor_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1655,6 +1727,14 @@ class TAO_Export IORInterceptor: public virtual Interceptor
     PolicyFactory_ptr _retn (void);
     PolicyFactory_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static PolicyFactory_ptr duplicate (PolicyFactory_ptr);
+    static void release (PolicyFactory_ptr);
+    static PolicyFactory_ptr nil (void);
+    static PolicyFactory_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     PolicyFactory_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1778,6 +1858,14 @@ class TAO_Export PolicyFactory : public virtual CORBA_Object
     ORBInitInfo_ptr _retn (void);
     ORBInitInfo_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ORBInitInfo_ptr duplicate (ORBInitInfo_ptr);
+    static void release (ORBInitInfo_ptr);
+    static ORBInitInfo_ptr nil (void);
+    static ORBInitInfo_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ORBInitInfo_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2073,6 +2161,14 @@ class TAO_Export ORBInitInfo : public virtual CORBA_Object
     ORBInitializer_ptr _retn (void);
     ORBInitializer_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ORBInitializer_ptr duplicate (ORBInitializer_ptr);
+    static void release (ORBInitializer_ptr);
+    static ORBInitializer_ptr nil (void);
+    static ORBInitializer_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ORBInitializer_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2176,8 +2272,6 @@ TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
 
 }
 TAO_NAMESPACE_CLOSE // module PortableInterceptor
-
-// Proxy Broker Factory function pointer declarations.
 
 TAO_Export void operator<<= (CORBA::Any &, const PortableInterceptor::ForwardRequest &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, PortableInterceptor::ForwardRequest*); // noncopying version

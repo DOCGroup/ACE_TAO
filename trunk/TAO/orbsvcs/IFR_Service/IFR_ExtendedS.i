@@ -19,917 +19,917 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-ACE_INLINE void POA_CORBA::FixedDef::_get_type_skel (
+ACE_INLINE void POA_CORBA_FixedDef::_get_type_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::IDLType_ptr impl = (POA_CORBA::FixedDef_ptr) obj;
-  POA_CORBA::IDLType::_get_type_skel (
+  POA_CORBA_IDLType_ptr impl = (POA_CORBA_FixedDef_ptr) obj;
+  POA_CORBA_IDLType::_get_type_skel (
       req,
-      (POA_CORBA::IDLType_ptr) impl,
+      (POA_CORBA_IDLType_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::FixedDef::_get_def_kind_skel (
+ACE_INLINE void POA_CORBA_FixedDef::_get_def_kind_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::FixedDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_CORBA_FixedDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::FixedDef::destroy_skel (
+ACE_INLINE void POA_CORBA_FixedDef::destroy_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::FixedDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_CORBA_FixedDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueMemberDef::_get_id_skel (
+ACE_INLINE void POA_CORBA_ValueMemberDef::_get_id_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueMemberDef_ptr) obj;
-  POA_CORBA::Contained::_get_id_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueMemberDef_ptr) obj;
+  POA_CORBA_Contained::_get_id_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueMemberDef::_set_id_skel (
+ACE_INLINE void POA_CORBA_ValueMemberDef::_set_id_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueMemberDef_ptr) obj;
-  POA_CORBA::Contained::_set_id_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueMemberDef_ptr) obj;
+  POA_CORBA_Contained::_set_id_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueMemberDef::_get_name_skel (
+ACE_INLINE void POA_CORBA_ValueMemberDef::_get_name_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueMemberDef_ptr) obj;
-  POA_CORBA::Contained::_get_name_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueMemberDef_ptr) obj;
+  POA_CORBA_Contained::_get_name_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueMemberDef::_set_name_skel (
+ACE_INLINE void POA_CORBA_ValueMemberDef::_set_name_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueMemberDef_ptr) obj;
-  POA_CORBA::Contained::_set_name_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueMemberDef_ptr) obj;
+  POA_CORBA_Contained::_set_name_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueMemberDef::_get_version_skel (
+ACE_INLINE void POA_CORBA_ValueMemberDef::_get_version_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueMemberDef_ptr) obj;
-  POA_CORBA::Contained::_get_version_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueMemberDef_ptr) obj;
+  POA_CORBA_Contained::_get_version_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueMemberDef::_set_version_skel (
+ACE_INLINE void POA_CORBA_ValueMemberDef::_set_version_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueMemberDef_ptr) obj;
-  POA_CORBA::Contained::_set_version_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueMemberDef_ptr) obj;
+  POA_CORBA_Contained::_set_version_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueMemberDef::_get_defined_in_skel (
+ACE_INLINE void POA_CORBA_ValueMemberDef::_get_defined_in_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueMemberDef_ptr) obj;
-  POA_CORBA::Contained::_get_defined_in_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueMemberDef_ptr) obj;
+  POA_CORBA_Contained::_get_defined_in_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueMemberDef::_get_absolute_name_skel (
+ACE_INLINE void POA_CORBA_ValueMemberDef::_get_absolute_name_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueMemberDef_ptr) obj;
-  POA_CORBA::Contained::_get_absolute_name_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueMemberDef_ptr) obj;
+  POA_CORBA_Contained::_get_absolute_name_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueMemberDef::_get_containing_repository_skel (
+ACE_INLINE void POA_CORBA_ValueMemberDef::_get_containing_repository_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueMemberDef_ptr) obj;
-  POA_CORBA::Contained::_get_containing_repository_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueMemberDef_ptr) obj;
+  POA_CORBA_Contained::_get_containing_repository_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueMemberDef::describe_skel (
+ACE_INLINE void POA_CORBA_ValueMemberDef::describe_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueMemberDef_ptr) obj;
-  POA_CORBA::Contained::describe_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueMemberDef_ptr) obj;
+  POA_CORBA_Contained::describe_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueMemberDef::move_skel (
+ACE_INLINE void POA_CORBA_ValueMemberDef::move_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueMemberDef_ptr) obj;
-  POA_CORBA::Contained::move_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueMemberDef_ptr) obj;
+  POA_CORBA_Contained::move_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueMemberDef::_get_def_kind_skel (
+ACE_INLINE void POA_CORBA_ValueMemberDef::_get_def_kind_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ValueMemberDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_CORBA_ValueMemberDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueMemberDef::destroy_skel (
+ACE_INLINE void POA_CORBA_ValueMemberDef::destroy_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ValueMemberDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_CORBA_ValueMemberDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::lookup_skel (
+ACE_INLINE void POA_CORBA_ValueDef::lookup_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::lookup_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::lookup_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::contents_skel (
+ACE_INLINE void POA_CORBA_ValueDef::contents_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::contents_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::contents_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::lookup_name_skel (
+ACE_INLINE void POA_CORBA_ValueDef::lookup_name_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::lookup_name_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::lookup_name_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::describe_contents_skel (
+ACE_INLINE void POA_CORBA_ValueDef::describe_contents_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::describe_contents_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::describe_contents_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::create_module_skel (
+ACE_INLINE void POA_CORBA_ValueDef::create_module_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::create_module_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::create_module_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::create_constant_skel (
+ACE_INLINE void POA_CORBA_ValueDef::create_constant_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::create_constant_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::create_constant_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::create_struct_skel (
+ACE_INLINE void POA_CORBA_ValueDef::create_struct_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::create_struct_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::create_struct_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::create_union_skel (
+ACE_INLINE void POA_CORBA_ValueDef::create_union_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::create_union_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::create_union_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::create_enum_skel (
+ACE_INLINE void POA_CORBA_ValueDef::create_enum_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::create_enum_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::create_enum_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::create_alias_skel (
+ACE_INLINE void POA_CORBA_ValueDef::create_alias_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::create_alias_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::create_alias_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::create_interface_skel (
+ACE_INLINE void POA_CORBA_ValueDef::create_interface_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::create_interface_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::create_interface_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::create_value_skel (
+ACE_INLINE void POA_CORBA_ValueDef::create_value_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::create_value_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::create_value_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::create_value_box_skel (
+ACE_INLINE void POA_CORBA_ValueDef::create_value_box_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::create_value_box_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::create_value_box_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::create_exception_skel (
+ACE_INLINE void POA_CORBA_ValueDef::create_exception_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::create_exception_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::create_exception_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::create_native_skel (
+ACE_INLINE void POA_CORBA_ValueDef::create_native_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::create_native_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::create_native_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::create_abstract_interface_skel (
+ACE_INLINE void POA_CORBA_ValueDef::create_abstract_interface_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::create_abstract_interface_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::create_abstract_interface_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::create_local_interface_skel (
+ACE_INLINE void POA_CORBA_ValueDef::create_local_interface_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Container::create_local_interface_skel (
+  POA_CORBA_Container_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Container::create_local_interface_skel (
       req,
-      (POA_CORBA::Container_ptr) impl,
+      (POA_CORBA_Container_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::_get_id_skel (
+ACE_INLINE void POA_CORBA_ValueDef::_get_id_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Contained::_get_id_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Contained::_get_id_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::_set_id_skel (
+ACE_INLINE void POA_CORBA_ValueDef::_set_id_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Contained::_set_id_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Contained::_set_id_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::_get_name_skel (
+ACE_INLINE void POA_CORBA_ValueDef::_get_name_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Contained::_get_name_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Contained::_get_name_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::_set_name_skel (
+ACE_INLINE void POA_CORBA_ValueDef::_set_name_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Contained::_set_name_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Contained::_set_name_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::_get_version_skel (
+ACE_INLINE void POA_CORBA_ValueDef::_get_version_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Contained::_get_version_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Contained::_get_version_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::_set_version_skel (
+ACE_INLINE void POA_CORBA_ValueDef::_set_version_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Contained::_set_version_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Contained::_set_version_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::_get_defined_in_skel (
+ACE_INLINE void POA_CORBA_ValueDef::_get_defined_in_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Contained::_get_defined_in_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Contained::_get_defined_in_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::_get_absolute_name_skel (
+ACE_INLINE void POA_CORBA_ValueDef::_get_absolute_name_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Contained::_get_absolute_name_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Contained::_get_absolute_name_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::_get_containing_repository_skel (
+ACE_INLINE void POA_CORBA_ValueDef::_get_containing_repository_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Contained::_get_containing_repository_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Contained::_get_containing_repository_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::describe_skel (
+ACE_INLINE void POA_CORBA_ValueDef::describe_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Contained::describe_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Contained::describe_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::move_skel (
+ACE_INLINE void POA_CORBA_ValueDef::move_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::Contained::move_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_Contained::move_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::_get_type_skel (
+ACE_INLINE void POA_CORBA_ValueDef::_get_type_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::IDLType_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::IDLType::_get_type_skel (
+  POA_CORBA_IDLType_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_IDLType::_get_type_skel (
       req,
-      (POA_CORBA::IDLType_ptr) impl,
+      (POA_CORBA_IDLType_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::_get_def_kind_skel (
+ACE_INLINE void POA_CORBA_ValueDef::_get_def_kind_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueDef::destroy_skel (
+ACE_INLINE void POA_CORBA_ValueDef::destroy_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ValueDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_CORBA_ValueDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::_get_id_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::_get_id_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::Contained::_get_id_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_Contained::_get_id_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::_set_id_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::_set_id_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::Contained::_set_id_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_Contained::_set_id_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::_get_name_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::_get_name_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::Contained::_get_name_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_Contained::_get_name_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::_set_name_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::_set_name_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::Contained::_set_name_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_Contained::_set_name_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::_get_version_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::_get_version_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::Contained::_get_version_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_Contained::_get_version_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::_set_version_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::_set_version_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::Contained::_set_version_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_Contained::_set_version_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::_get_defined_in_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::_get_defined_in_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::Contained::_get_defined_in_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_Contained::_get_defined_in_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::_get_absolute_name_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::_get_absolute_name_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::Contained::_get_absolute_name_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_Contained::_get_absolute_name_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::_get_containing_repository_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::_get_containing_repository_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::Contained::_get_containing_repository_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_Contained::_get_containing_repository_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::describe_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::describe_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::Contained::describe_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_Contained::describe_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::move_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::move_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::Contained::move_skel (
+  POA_CORBA_Contained_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_Contained::move_skel (
       req,
-      (POA_CORBA::Contained_ptr) impl,
+      (POA_CORBA_Contained_ptr) impl,
       context,
        ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::_get_type_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::_get_type_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::IDLType_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::IDLType::_get_type_skel (
+  POA_CORBA_IDLType_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_IDLType::_get_type_skel (
       req,
-      (POA_CORBA::IDLType_ptr) impl,
+      (POA_CORBA_IDLType_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::_get_def_kind_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::_get_def_kind_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       ACE_TRY_ENV
     );
 }
-ACE_INLINE void POA_CORBA::ValueBoxDef::destroy_skel (
+ACE_INLINE void POA_CORBA_ValueBoxDef::destroy_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ValueBoxDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_CORBA_ValueBoxDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        ACE_TRY_ENV
     );

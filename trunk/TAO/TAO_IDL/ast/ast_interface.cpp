@@ -906,31 +906,42 @@ void
 AST_Interface::redefine (AST_Interface *from,
                          UTL_StrList *p)
 {
-  this->set_inherits (from->inherits ());
-  this->set_n_inherits (from->n_inherits ());
-  this->set_inherits_flat (from->inherits_flat ());
-  this->set_n_inherits_flat (from->n_inherits_flat ());
-
   // 'this' is the full_definition member of a forward
   // declared interface. 'from' is the actual full
   // definition, which may be in a different scope.
   // Since 'this' will replace 'from' upon returning
   // from here, we have to update the scope now.
-  this->set_defined_in (from->defined_in ());
+  this->set_inherits (from->inherits ());
+  this->set_n_inherits (from->n_inherits ());
+  this->set_inherits_flat (from->inherits_flat ());
+  this->set_n_inherits_flat (from->n_inherits_flat ());
 
+  // If we were forward declared in another file, then forward
+  // declared in this file, then fully defined, there's a
+  // possibility of a cycle in the list of pragma strings. We
+  // want only those pragmas associated with the full definition
+  // anyway, so we just replace the list in this case.
+  if (this->imported ())
+    {
+      this->pragmas (p);
+    }
+  else
+    {
+      // If we are being defined from a forward declaration in 
+      // the same scope (i.e., the same opening of the enclosing
+      // module), the two pragma lists will share the same pointer.
+      // In this case, addition would lead to infinite recursion.
+      if (this->pragmas () != p)
+        {
+          this->add_pragmas (p);
+        }
+    }
+
+  this->set_defined_in (from->defined_in ());
   this->set_imported (idl_global->imported ());
   this->set_in_main_file (idl_global->in_main_file ());
   this->set_line (idl_global->lineno ());
   this->set_file_name (idl_global->filename ());
-
-  // If we are being defined from a forward declaration in 
-  // the same scope (i.e., the same opening of the enclosing
-  // module), the two pragma lists will share the same pointer.
-  // In this case, addition would lead to infinite recursion.
-  if (this->pragmas () != p)
-    {
-      this->add_pragmas (p);
-    }
 }
 
 AST_Interface **
