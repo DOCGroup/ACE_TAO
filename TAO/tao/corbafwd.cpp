@@ -6,6 +6,8 @@
 # include "tao/corbafwd.i"
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/OS.h"
+
 
 ACE_RCSID (tao, 
            corbafwd, 
