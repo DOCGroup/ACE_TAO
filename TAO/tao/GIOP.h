@@ -395,8 +395,7 @@ public:
                                       TAO_InputCDR &input,
                                       TAO_OutputCDR &output,
                                       CORBA::Boolean &response_required,
-                                      CORBA::ULong &request_id,
-                                      CORBA::Environment &ACE_TRY_ENV);
+                                      CORBA::ULong &request_id);
   // A request was received on the server side.
   // <transport> is the source of the message (and thus where the
   // replies should be sent).
@@ -411,8 +410,7 @@ public:
                                      TAO_InputCDR &input,
                                      TAO_OutputCDR &output,
                                      CORBA::Boolean &response_required,
-                                     CORBA::ULong &request_id,
-                                     CORBA::Environment &ACE_TRY_ENV);
+                                     CORBA::ULong &request_id);
   // A LocateRequest was received on the server side.
   // <transport> is the source of the message (and thus where the
   // replies should be sent).

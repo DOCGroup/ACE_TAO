@@ -150,8 +150,8 @@ public:
   TAO_POA_Current_Impl (void);
   // Convenience constructor combining construction & initialization.
 
-  ~TAO_POA_Current_Impl (void);
-  // Destructor
+  void teardown (void);
+  // Teardown the current for this request.
 
   void setup (TAO_POA *impl,
               const TAO_ObjectKey &key,
@@ -600,6 +600,7 @@ public:
     {
       INITIAL_STAGE,
       OBJECT_ADAPTER_LOCK_ACQUIRED,
+      POA_CURRENT_SETUP,
       OBJECT_ADAPTER_LOCK_RELEASED,
       SERVANT_LOCK_ACQUIRED
     };
