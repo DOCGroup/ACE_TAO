@@ -31,6 +31,8 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
+static u_int errors = 0;
+
 #if defined (ACE_HAS_THREADS)
 
 #if defined (ACE_DEFAULT_THREAD_KEYS)
@@ -143,6 +145,22 @@ worker (void *c)
         ACE_ASSERT ((*tss_error)->flags () == ITERATIONS);
       }
 
+      // Demonstrate use of ACE_TSS_Type_Adapter to wrap built-in
+      // types when used with ACE_TSS.  See DESCRIPTION of template
+      // class ACE_TSS_Type_Adapter in ace/Synch_T.h for what this
+      // should look like.  Unfortunately, some compilers have trouble
+      // with the implicit type conversions.
+      ACE_TSS<ACE_TSS_Type_Adapter<u_int> > u;
+      u->operator u_int & () = 37;
+      if (u->operator u_int () != 37)
+        {
+          // Use the guard to serialize access to errors.
+          ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock, 0));
+          ACE_DEBUG ((LM_ERROR, "use of ACE_TSS_Type_Adapter failed, value "
+                      "is %u, it should be 37!\n", u->operator u_int ()));
+          ++errors;
+        }
+
 #if !defined (__Lynx__) && !defined (ACE_HAS_TSS_EMULATION)
       key = ACE_OS::NULL_key;
 
@@ -191,8 +209,12 @@ handler (int signum)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_TSS<Errno>;
+template class ACE_TSS_Type_Adapter<u_int>;
+template class ACE_TSS<ACE_TSS_Type_Adapter<u_int> >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_TSS<Errno>
+#pragma instantiate ACE_TSS_Type_Adapter<u_int>
+#pragma instantiate ACE_TSS<ACE_TSS_Type_Adapter<u_int> >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
@@ -242,5 +264,5 @@ main (int, ASYS_TCHAR *[])
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
-  return 0;
+  return errors ? -1 : 0;
 }
