@@ -1528,6 +1528,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         this_len = ACE_OS::snprintf (bp, bspace, format, id);
                       else
                         this_len = ACE_OS::sprintf (bp, format, id);
+                  }
 #else
                   ACE_hthread_t t_id;
                   ACE_Thread::self (t_id);
