@@ -1,3 +1,9 @@
+Wed Mar  8 15:59:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-hpux-10.x.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
+	  to 2.  The alignment computing macros didn't work in this case.
+	  Thanks to Steve H. for reporting this.
+
 Wed Mar 08 14:46:52 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h:
@@ -10,18 +16,18 @@ Wed Mar  8 11:13:04 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* ace/Log_Msg.cpp (log): Reverted this change.
 	  Tue Mar  7 14:21:12 CST 2000  Loren Rittle
 	  <rittle@rsch.comm.mot.com>. The change gave compile errors on
-	  EGCS. 
-		
-Wed Mar  8 01:33:21 2000  Christopher Kohlhoff <chris@kohlhoff.com> 
+	  EGCS.
+
+Wed Mar  8 01:33:21 2000  Christopher Kohlhoff <chris@kohlhoff.com>
 
 	* tests/Makefile.bor: Added new test Process_Manager_Test.
-  
+
         * include/makeinclude/compiler.bor, make_flags.bor: Added support
 	  for BCB's codeguard memory checking tool.
 
         * include/makeinclude/outputdir.bor: Allow a different directory
 	  creation tool to be substituted for "mkdir" on Win9x.
-	
+
 Tue Mar 07 18:37:26 2000  Tom Ziomek <tomz@cc701.comm.mot.com>
 
         * ace/Singleton.h: added comment to ACE_Unmanaged_Singleton
