@@ -62,49 +62,43 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_ROOT_AST_ROOT_HH
 #define _AST_ROOT_AST_ROOT_HH
 
-// Representation of root of AST
-
-/*
-** DEPENDENCIES: ast_module.hh, utl_scoped_name.hh, utl_strlist.hh
-**
-** USE: Included from ast.hh
-*/
+// Representation of root of AST.
 
 class TAO_IDL_FE_Export AST_Root : public virtual AST_Module
 {
 public:
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_Root ();
+  // Constructor(s) and destructor.
+  AST_Root (void);
 
   AST_Root (UTL_ScopedName *n, 
             UTL_StrList *p);
 
   virtual ~AST_Root (void);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS1(AST_Root, AST_Module);
   DEF_NARROW_FROM_DECL(AST_Root);
   DEF_NARROW_FROM_SCOPE(AST_Root);
 
-  // AST Dumping
-  virtual void                  dump(ostream &o);
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
 private:
   friend class FE_Declarator;
-  friend int tao_yyparse();
-  // Add protocol
+  friend int tao_yyparse (void);
 
-  virtual AST_Sequence          *fe_add_sequence(AST_Sequence           *s);
-  virtual AST_String            *fe_add_string(AST_String               *s);
-  virtual AST_Array             *fe_add_array(AST_Array                 *a);
+  // Add protocol.
 
+  virtual AST_Sequence *fe_add_sequence (AST_Sequence *s);
+  virtual AST_String *fe_add_string (AST_String *s);
+  virtual AST_Array *fe_add_array (AST_Array *a);
 };
 
 #endif           // _AST_ROOT_AST_ROOT_HH

@@ -62,29 +62,21 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_UNION_BRANCH_AST_UNION_BRAN_HH
 #define _AST_UNION_BRANCH_AST_UNION_BRAN_HH
 
-// Representation of union branch declaration:
-//
-// A branch of a union is a field with a label
-
-/*
-** DEPEndencies: ast_field.hh, ast_union_label.hh, ast_type.hh,
-**               utl_scoped_name.hh, utl_strlist.h, ast_decl.h
-**
-** USE: Included from ast.hh
-*/
+// Representation of union branch declaration.
+// A branch of a union is a field with a label.
 
 class TAO_IDL_FE_Export AST_UnionBranch : public virtual AST_Field
 {
 public:
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_UnionBranch ();
+  // Constructor(s) and destructor.
+  AST_UnionBranch (void);
 
   AST_UnionBranch (UTL_LabelList *ll,
                    AST_Type *ft,
@@ -93,22 +85,23 @@ public:
 
   virtual ~AST_UnionBranch (void);
 
-  // Data Accessors
+  // Data Accessors.
   AST_UnionLabel *label (unsigned long index = 0);
   
   unsigned long label_list_length (void);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS1(AST_UnionBranch, AST_Field);
   DEF_NARROW_FROM_DECL(AST_UnionBranch);
 
-  // AST Dumping
-  virtual void                  dump(ostream &o);
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
 private:
-  // Data
-  UTL_LabelList                 *pd_ll;   // list of labels
+  // Data.
 
+  UTL_LabelList *pd_ll;
+  // list of labels.
 };
 
 #endif           // _AST_UNION_BRANCH_AST_UNION_BRAN_HH

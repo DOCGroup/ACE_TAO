@@ -62,28 +62,21 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_STRING_AST_STRING_HH
 #define _AST_STRING_AST_STRING_HH
 
-// Representation of string declaration
-//
-// A string type is represented by a maximum size
-
-/*
-** DEPENDENCIES: ast_concrete_type.hh, ast_decl.hh, ast_expression.hh
-**
-** USE: Included from ast.hh
-*/
+// Representation of string declaration.
+// A string type is represented by a maximum size.
 
 class TAO_IDL_FE_Export AST_String : public virtual AST_ConcreteType
 {
 public:
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_String ();
+  // Constructor(s) and destructor
+  AST_String (void);
 
   AST_String (AST_Expression *max_size);
 
@@ -92,21 +85,25 @@ public:
 
   virtual ~AST_String (void);
 
-  // Data Accessors
-  AST_Expression *max_size();
-  long           width();
+  // Data Accessors.
+  AST_Expression *max_size (void);
+  long width (void);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS1(AST_String, AST_ConcreteType);
   DEF_NARROW_FROM_DECL(AST_String);
 
-  // AST Dumping
-  virtual void                  dump(ostream &o);
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
 private:
-  // Data
-  AST_Expression                *pd_max_size;   // String maximum size
-  long                          pd_width;       // Width of string
+  // Data.
+
+  AST_Expression *pd_max_size;
+  // String maximum size.
+
+  long pd_width;
+  // Width of string.
 };
 
 #endif           // _AST_STRING_AST_STRING_HH

@@ -62,81 +62,68 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
+// AST_UnionLabel denotes the label of a branch in an IDL union
+// declaration.
+// AST_UnionLabel nodes have a label kind (the values come from the
+// enum AST_UnionLabel::LabelKind) and a label value (which is a
+// subclass of AST_Expression).
 
-/*
- * ast_union_label.cc - Implementation of class AST_UnionLabel
- *
- * AST_UnionLabel denotes the label of a branch in an IDL union
- * declaration.
- * AST_UnionLabel nodes have a label kind (the values come from the
- * enum AST_UnionLabel::LabelKind) and a label value (which is a
- * subclass of AST_Expression).
- */
-
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_union_label, "$Id$")
 
-/*
- * Constructor(s)
- */
-AST_UnionLabel::AST_UnionLabel ()
- : pd_label_kind (UL_default),
-	pd_label_val (NULL)
+// Constructor(s) and destructor.
+
+AST_UnionLabel::AST_UnionLabel (void)
+  : pd_label_kind (UL_default),
+	  pd_label_val (0)
 {
 }
 
 AST_UnionLabel::AST_UnionLabel (UnionLabel lk, 
                                 AST_Expression *lv)
- : pd_label_kind (lk),
-	pd_label_val (lv)
+  : pd_label_kind (lk),
+	  pd_label_val (lv)
 {
-    if (lv != NULL)
-      lv->evaluate (AST_Expression::EK_const);
+    if (lv != 0)
+      {
+        lv->evaluate (AST_Expression::EK_const);
+      }
 }
 
 AST_UnionLabel::~AST_UnionLabel (void)
 {
 }
 
-/*
- * Private operations
- */
+// Redefinition of inherited virtual operations.
 
-/*
- * Public operations
- */
+// Dump this AST_UnionLabel node to the ostream o.
+void
+AST_UnionLabel::dump (ostream &o)
+{
+  if (this->pd_label_kind == UL_default)
+    {
+      o << "default";
+    }
+  else
+    {
+      this->pd_label_val->dump (o);
+    }
+}
 
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Data accessors
- */
+// Data accessors.
 
 AST_UnionLabel::UnionLabel
-AST_UnionLabel::label_kind()
+AST_UnionLabel::label_kind (void)
 {
-  return pd_label_kind;
+  return this->pd_label_kind;
 }
 
 AST_Expression *
-AST_UnionLabel::label_val()
+AST_UnionLabel::label_val (void)
 {
-  return pd_label_val;
+  return this->pd_label_val;
 }
 
-/*
- * Dump this AST_UnionLabel node to the ostream o
- */
-void
-AST_UnionLabel::dump(ostream &o)
-{
-  if (pd_label_kind == UL_default)
-    o << "default";
-  else
-    pd_label_val->dump(o);
-}

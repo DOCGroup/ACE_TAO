@@ -62,135 +62,111 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_interface_fwd.cc - Implementation of class AST_InterfaceFwd
- *
- * AST_InterfaceFwd nodes denote forward declarations of IDL interfaces
- * AST_InterfaceFwd nodes have a field containing the full declaration
- * of the interface, which is initialized when that declaration is
- * encountered.
- */
+// AST_InterfaceFwd nodes denote forward declarations of IDL interfaces
+// AST_InterfaceFwd nodes have a field containing the full declaration
+// of the interface, which is initialized when that declaration is
+// encountered.
 
-#include        "idl.h"
-#include        "idl_extern.h"
+#include "idl.h"
+#include  "idl_extern.h"
 
 ACE_RCSID(ast, ast_interface_fwd, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
-AST_InterfaceFwd::AST_InterfaceFwd ()
-  : pd_full_definition (NULL)
+// Constructor(s) and destructor.
+AST_InterfaceFwd::AST_InterfaceFwd (void)
+  : pd_full_definition (0)
 {
 }
 
-AST_InterfaceFwd::AST_InterfaceFwd( AST_Interface *dummy,
+AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n,
                                     UTL_StrList *p)
-  : AST_Decl (AST_Decl::NT_interface_fwd, n, p)
+  : AST_Decl (AST_Decl::NT_interface_fwd, 
+              n, 
+              p)
 {
-  /*
-   * Create a dummy placeholder for the forward declared interface. This
-   * interface node is not yet defined (n_inherits < 0), so some operations
-   * will fail
-   */
+  // Create a dummy placeholder for the forward declared interface. This
+  // interface node is not yet defined (n_inherits < 0), so some operations
+  // will fail.
   pd_full_definition = dummy;
-
-  // The requirement that forward declared interfaces must be defined in the
-  // same 'translation unit' was removed in CORBA 2.3.1 (99-10-07).
-  /*
-   * Record the node in a list to be checked after the entire AST has been
-   * parsed. All nodes in the list must have n_inherits >= 0, else this
-   * indicates that a full definition was not seen for this forward
-   * delcared interface
-   */
-//  AST_record_fwd_interface(this);
 }
 
 AST_InterfaceFwd::~AST_InterfaceFwd (void)
 {
 }
 
-/*
- * Private operations
- */
+// Private operations.
 
-idl_bool AST_InterfaceFwd::is_local ()
+idl_bool AST_InterfaceFwd::is_local (void)
 {
-  return this->full_definition()->is_local ();
+  return this->full_definition ()->is_local ();
 }
 
-
-idl_bool AST_InterfaceFwd::is_valuetype ()
+idl_bool AST_InterfaceFwd::is_valuetype (void)
 {
-  return this->full_definition()->is_valuetype();
+  return this->full_definition ()->is_valuetype ();
 }
 
-
-idl_bool AST_InterfaceFwd::is_abstract_valuetype ()
+idl_bool AST_InterfaceFwd::is_abstract_valuetype (void)
 {
-  return this->full_definition()->is_abstract_valuetype();
+  return this->full_definition ()->is_abstract_valuetype ();
 }
 
-void AST_InterfaceFwd::set_abstract_valuetype ()
+void AST_InterfaceFwd::set_abstract_valuetype (void)
 {
   // Don't forget about dummy placeholder ! (see constructor)
-  // (only if the be class isn't used)
+  // (only if the be class isn't used).
   ACE_ASSERT (0);
 }
 
+// Redefinition of inherited virtual operations.
 
-/*
- * Public operations
- */
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Dump this AST_InterfaceFwd node to the ostream o
- */
+// Dump this AST_InterfaceFwd node to the ostream o.
 void
-AST_InterfaceFwd::dump(ostream &o)
+AST_InterfaceFwd::dump (ostream &o)
 {
   if (this->is_valuetype ())
     {
       if (this->is_abstract_valuetype ())
-        o << "abstract ";
+        {
+          o << "abstract ";
+        }
+
       o << "valuetype ";
     }
   else
     {
       if (this->is_abstract ())
-        o << "abstract ";
+        {
+          o << "abstract ";
+        }
       else if (this->is_local ())
-        o << "local ";
+        {
+          o << "local ";
+        }
+
       o << "interface ";
     }
-  local_name()->dump(o);
+
+  this->local_name ()->dump (o);
 }
 
-/*
- * Data accessors
- */
+// Data accessors.
 
 AST_Interface   *
-AST_InterfaceFwd::full_definition()
+AST_InterfaceFwd::full_definition (void)
 {
-  return pd_full_definition;
+  return this->pd_full_definition;
 }
 
 void
-AST_InterfaceFwd::set_full_definition(AST_Interface *nfd)
+AST_InterfaceFwd::set_full_definition (AST_Interface *nfd)
 {
-  pd_full_definition = nfd;
+  this->pd_full_definition = nfd;
 }
 
-/*
- * Narrowing methods
- */
+// Narrowing methods.
 IMPL_NARROW_METHODS1 (AST_InterfaceFwd, AST_Type)
 IMPL_NARROW_FROM_DECL (AST_InterfaceFwd)
