@@ -44,7 +44,7 @@ class ACE_Allocator;
  * ACE_String_Base is not guaranteed to be '\0' terminated.
  */
 template <class CHAR>
-class ACE_Export ACE_String_Base : public ACE_String_Base_Const
+class ACE_String_Base : public ACE_String_Base_Const
 {
 public:
   /// Default constructor.
