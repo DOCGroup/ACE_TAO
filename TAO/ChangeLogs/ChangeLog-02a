@@ -1,3 +1,9 @@
+Tue May 01 11:56:58 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Etherealization/Makefile: This test should only be
+	  complied for non-minimum CORBA cases since it uses Servant
+	  Managers.
+
 Tue May 01 08:50:11 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/GIOP_Message_Generator_Parser.h (write_reply_header):
