@@ -794,7 +794,7 @@ ACE_RMS_Scheduler_Strategy::~ACE_RMS_Scheduler_Strategy ()
 
 long
 ACE_RMS_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
-                                                 u_long current_time)
+                                                  u_long current_time)
 {
   return 0;
 }
@@ -1137,13 +1137,13 @@ ACE_RMS_Dyn_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
   if (entry.task_entry ().rt_info ()->criticality <
       RtecScheduler::HIGH_CRITICALITY)
   {
-  long laxity =
-    entry.deadline ().low - current_time -
-    entry.task_entry ().rt_info ()->worst_case_execution_time.low;
+    long laxity =
+      entry.deadline ().low - current_time -
+      entry.task_entry ().rt_info ()->worst_case_execution_time.low;
 
-  return (laxity > 0) ? LONG_MAX - laxity : laxity;
+     return (laxity > 0) ? LONG_MAX - laxity : laxity;
   }
-
+ 
   return 0;
 }
   // = returns a dynamic subpriority value for the given entry and the
@@ -1215,118 +1215,6 @@ ACE_RMS_Dyn_Scheduler_Strategy::minimum_critical_priority ()
 }
   // = returns 0 for minimum critical priority number
 
-
-/////////////////////////////////////////////
-// Runtime Dispatch Subpriority Strategies //
-/////////////////////////////////////////////
-
-ACE_Dispatch_Subpriority_Strategy::ACE_Dispatch_Subpriority_Strategy (long frame_size)
-  : frame_size_ (frame_size)
-  , dynamic_max_ (LONG_MAX)
-  , static_max_ (0)
-  , static_bits_ (0)
-{
-  // some platforms don't support floating point numbers, so compute delimiters
-  // for static and dynamic subpriority representations the long way (once)
-  long doubler = 1;
-  while ((dynamic_max_ / 2) > frame_size)
-  {
-    dynamic_max_ /= 2; 
-    doubler *= 2; 
-    static_max_ = doubler - 1; 
-    ++static_bits_;
-  }
-
-  max_time_.set (0, dynamic_max_);
-  min_time_.set (0, - dynamic_max_ - 1);
-}
-
-
-RtecScheduler::Preemption_Subpriority 
-ACE_Dispatch_Subpriority_Strategy::response_function (
-  const ACE_Time_Value &time_metric,
-  RtecScheduler::Preemption_Subpriority static_subpriority)
-{
-  RtecScheduler::Preemption_Subpriority dynamic_subpriority;
-
-  if (time_metric < min_time_)
-  {
-    dynamic_subpriority = - dynamic_max_ - 1;
-    static_subpriority = static_max_;
-  }
-  else if (time_metric > max_time_)
-  {
-    dynamic_subpriority = dynamic_max_;
-    static_subpriority = static_max_;
-  }
-  else
-  {
-    dynamic_subpriority = time_metric.usec () + 
-                          time_metric.sec () * ACE_ONE_SECOND_IN_USECS;
-
-    if (static_subpriority > static_max_) 
-    {
-      static_subpriority = static_max_;
-    }
-  } 
-
-  return (dynamic_subpriority > 0)
-          ? (LONG_MAX - 
-             (dynamic_subpriority << static_bits_) - 
-             static_subpriority)
-          : (LONG_MIN +
-             ((-dynamic_subpriority) << static_bits_) +
-             static_subpriority);
-}
-
-
-ACE_Deadline_Subpriority_Strategy::ACE_Deadline_Subpriority_Strategy (long frame_size)
-  : ACE_Dispatch_Subpriority_Strategy (frame_size)
-{
-}
-
-RtecScheduler::Preemption_Subpriority 
-ACE_Deadline_Subpriority_Strategy::runtime_subpriority (
-  const ACE_Time_Value &current_time,
-  const ACE_Time_Value &deadline_time,
-  const ACE_Time_Value &execution_time,
-  RtecScheduler::Preemption_Subpriority static_subpriority)
-{
-  ACE_Time_Value time_to_deadline (deadline_time);
-  time_to_deadline -= current_time;
-
-  return response_function (time_to_deadline, static_subpriority);
-}
-
-ACE_Laxity_Subpriority_Strategy::ACE_Laxity_Subpriority_Strategy (long frame_size)
-  : ACE_Dispatch_Subpriority_Strategy (frame_size)
-{
-}
-
-RtecScheduler::Preemption_Subpriority 
-ACE_Laxity_Subpriority_Strategy::runtime_subpriority (
-  const ACE_Time_Value &current_time,
-  const ACE_Time_Value &deadline_time,
-  const ACE_Time_Value &execution_time,
-  RtecScheduler::Preemption_Subpriority static_subpriority)
-{
-  ACE_Time_Value laxity (deadline_time);
-  laxity -= current_time;
-  laxity -= execution_time;
-
-  return response_function (laxity, static_subpriority);
-}
-
-RtecScheduler::Preemption_Subpriority 
-ACE_Static_Subpriority_Strategy::runtime_subpriority (
-  const ACE_Time_Value &current_time,
-  const ACE_Time_Value &deadline_time,
-  const ACE_Time_Value &execution_time,
-  RtecScheduler::Preemption_Subpriority static_subpriority)
-{
-  // map passed static subpriority directly to dispatch subpriority
-  return static_subpriority;
-}
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
