@@ -212,8 +212,8 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
         }
 
       ACE_DEBUG ((LM_DEBUG,
-		  "The inventory contains (%d) elements\n",
-		  other.inventory.current_size ()));
+                  "The inventory contains (%d) elements\n",
+                  other.inventory.current_size ()));
 
       // We have to make it big enough so we get a contiguous block,
       // otherwise the octet sequence will not work correctly.
@@ -235,14 +235,14 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
       cdr << other;
 
       if (!cdr.good_bit ())
-	ACE_ERROR ((LM_ERROR, "Problem marshalling C++ data\n"));
+        ACE_ERROR ((LM_ERROR, "Problem marshalling C++ data\n"));
 
       const ACE_Message_Block* mb = cdr.begin ();
       // NOTE: total_length () return the length of the complete
-      // chain. 
+      // chain.
       CORBA::ULong mblen = cdr.total_length ();
 
-      for (CORBA::ULong i = 0; i < this->event_count_; ++i)
+      for (CORBA::Long i = 0; i < this->event_count_; ++i)
         {
           RtecEventComm::EventSet event (1);
           event.length (1);
@@ -254,7 +254,7 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
           event[0].ec_recv_time_ = ORBSVCS_Time::zero;
           event[0].ec_send_time_ = ORBSVCS_Time::zero;
 
-          if (i == ACE_static_cast (CORBA::ULong, this->event_count_) - 1)
+          if (i == ACE_static_cast (CORBA::Long, this->event_count_) - 1)
             event[0].type_ = ACE_ES_EVENT_SHUTDOWN;
           else if (i % 2 == 0)
             event[0].type_ = this->event_a_;
@@ -350,9 +350,9 @@ ECMS_Driver::parse_args (int argc, char *argv [])
           this->event_period_ = ACE_OS::atoi (get_opt.optarg);
           break;
 
-	case 'b':
-	  this->event_size_ = ACE_OS::atoi (get_opt.optarg);
-	  break;
+        case 'b':
+          this->event_size_ = ACE_OS::atoi (get_opt.optarg);
+          break;
 
         case 'h':
           {
