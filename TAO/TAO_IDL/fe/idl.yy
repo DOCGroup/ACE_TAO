@@ -84,9 +84,9 @@ int yylex (void);
 extern "C" int yywrap (void);
 extern char yytext[];
 extern int yyleng;
-#define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext) 
+#define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
 // Force the pretty debugging code to compile.
-#define YYDEBUG 1 
+#define YYDEBUG 1
 %}
 
 /*
@@ -885,7 +885,7 @@ type_declarator :
 	  AST_Decl		*v = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
 
-          ACE_UNUSED_ARG (v);
+      ACE_UNUSED_ARG (v);
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DeclaratorsSeen);
 	  /*
@@ -897,10 +897,10 @@ type_declarator :
 	    for (;!(l->is_done()); l->next()) {
 	      d = l->item();
 	      if (d == NULL)
-		continue;
-              AST_Type * tp = d->compose($1);
-              if (tp == NULL)
-		continue;
+		      continue;
+          AST_Type * tp = d->compose($1);
+          if (tp == NULL)
+		     continue;
 	      t = idl_global->gen()->create_typedef(tp, d->name(), p);
 	      (void) s->fe_add_typedef(t);
 	    }
