@@ -302,6 +302,8 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::dispatch_commands (void)
         cmd->execute ();
         delete cmd;
       }
+
+  return 0;
 }
 
 # endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
