@@ -194,7 +194,7 @@ main (int argc, char *argv[])
                       ni));
                     
           ami_test_var->sendc_foo (the_handler_var.in (),
-                                   13,
+                                   0,
                                    "Let's talk AMI.",
                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
@@ -236,7 +236,7 @@ main (int argc, char *argv[])
    
       CORBA::Long number = ami_test_var->foo (l,
                                               l,
-                                              "Let's talk AMI.",
+                                              "Let's talk SMI.",
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
