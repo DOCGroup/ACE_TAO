@@ -176,8 +176,11 @@ public:
 
   enum Preallocated_Array
     {
-      ACE_FILECACHE_FILE_LOCK,
-      ACE_FILECACHE_HASH_LOCK,
+      // There currently are no preallocated arrays in the ACE
+      // library.  If the application doesn't have any, make sure
+      // the the preallocated_array size is at least one by declaring
+      // this dummy . . .
+      ACE_EMPTY_PREALLOCATED_ARRAY,
 
       // Hook for preallocated arrays provided by application.
       ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS
