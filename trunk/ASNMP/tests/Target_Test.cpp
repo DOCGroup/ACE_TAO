@@ -81,7 +81,7 @@ ACE_RCSID(tests, Target_Test, "$Id$")
     void set_version( const snmp_version v);
 
     UdpTarget& operator=( const UdpTarget& target);
-    friend int operator==( const UdpTarget &lhs, const UdpTarget &rhs);
+    friend bool operator==( const UdpTarget &lhs, const UdpTarget &rhs);
 
  */
 
