@@ -1,3 +1,29 @@
+Tue Oct 12 11:48:00 1999  Ruibiao Qiu  <ruibiao@cs.wustl.edu>
+	* ace/ATM_Addr.{h,cpp,i}: 
+	* ace/ATM_Stream.{h,cpp,i}: 
+	* ace/ATM_Connector.{h,cpp,i}: 
+	* ace/ATM_Acceptor.{h,cpp,i}: 
+	* ace/ATM_QoS.{h,cpp,i}: 
+	* ace/ATM_Params.{h,cpp,i}: Added support for Fore ATM on Windows 
+	  platform.  Enabled when ACE_HAS_ATM and ACE_HAS_FORE_ATM_WS2 
+	  are defined. 
+
+	* ace/config-win32-common.h: Added needed header include when 
+	  ACE_HAS_FORE_ATM_WS2 is defined.
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Included ATM_* classes files in the porject files.
+
+	* examples/IPC_SAP/ATM_SAP/CPP-client.cpp
+	* examples/IPC_SAP/ATM_SAP/CPP-server.cpp: Changed example codes 
+	  so that they can be run on Windows.  They are now non-interactive,
+	  and show data rates at each end.
+
+	* examples/IPC_SAP/ATM_SAP/CPP_client.dsp
+	* examples/IPC_SAP/ATM_SAP/CPP_server.dsp
+	* examples/IPC_SAP/ATM_SAP/ATM_SAP.dsw: Created MSVC project files 
+	  and workspace file for these examples.
+
 Tue Oct 12 11:37:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.sh: export ACE_ROOT if setting it.
