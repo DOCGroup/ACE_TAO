@@ -49,7 +49,8 @@ void
 TAO_Repository_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::BAD_INV_ORDER (2, CORBA::COMPLETED_NO));
+  ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 2,
+                                   CORBA::COMPLETED_NO));
 }
 
 CORBA::Contained_ptr

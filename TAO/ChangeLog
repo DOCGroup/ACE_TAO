@@ -1,3 +1,19 @@
+Fri Aug 27 10:07:17 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/PrimitiveDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+        
+          Added logical ORs of CORBA::OMGVMCID to the minor codes
+          in raised exceptions. Thanks to Ossama Othman 
+          <ossama@dre.vanderbilt.edu> for pointing out this
+          oversight.
+
 Fri Aug 27 14:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/ORT/ORT.mpc:

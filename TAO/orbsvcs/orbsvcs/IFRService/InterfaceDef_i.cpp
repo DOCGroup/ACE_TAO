@@ -281,7 +281,7 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interf
 
           if (def_kind != CORBA::dk_AbstractInterface)
             {
-              ACE_THROW (CORBA::BAD_PARAM (11,
+              ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 11,
                                            CORBA::COMPLETED_NO));
             }
         }
@@ -763,7 +763,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
   // Oneway operations cannot have a non-void return type.
   if (mode == CORBA::OP_ONEWAY && kind != CORBA::tk_void)
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (31,
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 31,
                                           CORBA::COMPLETED_NO),
                         CORBA::OperationDef::_nil ());
     }
@@ -838,7 +838,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
       // Oneway operations cannot throw any user exceptions.
       if (mode == CORBA::OP_ONEWAY)
         {
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (31,
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 31,
                                               CORBA::COMPLETED_NO),
                             CORBA::OperationDef::_nil ());
         }
@@ -1250,7 +1250,7 @@ TAO_InterfaceDef_i::check_inherited (const char *name,
 
       if (inherited_name == name)
         {
-          ACE_THROW (CORBA::BAD_PARAM (5,
+          ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 5,
                                        CORBA::COMPLETED_NO));
         }
     }
