@@ -56,7 +56,7 @@ public:
 // ----------------------------------------------------------------------
 
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy
-  : public virtual TAO_AV_Endpoint_Strategy
+  : public TAO_AV_Endpoint_Strategy
 // = DESCRIPTION
 //    Process-based strategy for creating endpoints
 //    Abstract base class.
@@ -95,7 +95,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy
 // ----------------------------------------------------------------------
 
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_A
-  : public virtual TAO_AV_Endpoint_Process_Strategy
+  : public TAO_AV_Endpoint_Process_Strategy
 // = DESCRIPTION
 //    Process-based strategy to create "A" type endpoints
 {
@@ -117,7 +117,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_A
 // ----------------------------------------------------------------------
 
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_B
-  : public virtual TAO_AV_Endpoint_Process_Strategy
+  : public TAO_AV_Endpoint_Process_Strategy
 // = DESCRIPTION
 //    Process-based strategy to create "B" type endpoints
 {
@@ -138,7 +138,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_B
 // ----------------------------------------------------------------------
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
-  : public virtual TAO_AV_Endpoint_Strategy
+  : public TAO_AV_Endpoint_Strategy
 // = DESCRIPTION
 //    Reactive strategy
 {
@@ -148,7 +148,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
 
   virtual int activate (void);
   
-  virtual int activate_stream_endpoint (CORBA::Environment &env);
+  virtual int activate_stream_endpoint (CORBA::Environment &env) = 0;
   
   virtual int activate_vdev (CORBA::Environment &env);
 
@@ -173,7 +173,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_A
-  : public virtual TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev , T_MediaCtrl>
+  : public TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev , T_MediaCtrl>
 // = DESCRIPTION
 //    Reactive strategy
 {
@@ -193,7 +193,7 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_A
 // ----------------------------------------------------------------------
 template <class T_StreamEndpoint, class T_Vdev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_B
-  : public virtual TAO_AV_Endpoint_Reactive_Strategy
+  : public TAO_AV_Endpoint_Reactive_Strategy
 // = DESCRIPTION
 //    Reactive strategy
 {
@@ -216,6 +216,8 @@ class TAO_ORBSVCS_Export TAO_AV_Child_Process
 {
 public:
   TAO_AV_Child_Process ();
+  ~TAO_AV_Child_Process ();
+
   int init (int argc, char **argv);
   int run (ACE_Time_Value *tv = 0);
 
@@ -238,13 +240,13 @@ public:
   CosNaming::NamingContext_var naming_context_;
   // The root Naming Context of the TAO naming service
 
-  T_StreamEndpoint stream_endpoint_;
+  T_StreamEndpoint *stream_endpoint_;
   // The stream endpoint member
 
-  T_VDev vdev_;
+  T_VDev *vdev_;
   // The virtual device
 
-  T_MediaCtrl media_control_;
+  T_MediaCtrl *media_ctrl_;
   // Media controller
 };
 
@@ -252,7 +254,7 @@ public:
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Child_Process_A
-  : public virtual TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
+  : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
 // = DESCRIPTION
 //    Helper class for the child process created in TAO_AV_Child_Process
 {
@@ -265,7 +267,7 @@ public:
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Child_Process_B
-  : public virtual TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
+  : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
 // = DESCRIPTION
 //    Helper class for the child process created in TAO_AV_Child_Process
 {

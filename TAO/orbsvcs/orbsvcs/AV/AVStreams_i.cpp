@@ -17,6 +17,14 @@
 #include "orbsvcs/AV/AVStreams_i.h"
 
 // ----------------------------------------------------------------------
+// AV_Null_MediaCtrl
+// ----------------------------------------------------------------------
+AV_Null_MediaCtrl::AV_Null_MediaCtrl (void)
+{
+}
+
+
+// ----------------------------------------------------------------------
 // TAO_Basic_StreamCtrl
 // ----------------------------------------------------------------------
 
@@ -434,7 +442,7 @@ TAO_StreamEndPoint::~TAO_StreamEndPoint (void)
 TAO_Client_StreamEndPoint::TAO_Client_StreamEndPoint (void)
 {
   ACE_DEBUG ((LM_DEBUG, 
-              "\n(%P|%t) TAO_Client_StreamEndPoint::TAO_Client_StreamEndPoint: created"));
+              "(%P|%t) TAO_Client_StreamEndPoint::TAO_Client_StreamEndPoint: created\n"));
 }
 
 CORBA::Boolean 
@@ -542,7 +550,7 @@ TAO_Server_StreamEndPoint::~TAO_Server_StreamEndPoint (void)
 TAO_VDev::TAO_VDev (void)
 {
   ACE_DEBUG ((LM_DEBUG, 
-              "\n(%P|%t) TAO_VDev::TAO_VDev: created"));
+              "(%P|%t) TAO_VDev::TAO_VDev: created\n"));
 }
 
 // StreamCtrl will call this to give us a reference to itself, and to
