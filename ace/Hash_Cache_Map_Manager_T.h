@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Hash_Cache_Map_Manager.h
+ *  @file    Hash_Cache_Map_Manager_T.h
  *
  *  $Id$
  *

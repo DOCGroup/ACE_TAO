@@ -1,12 +1,11 @@
 
 //=============================================================================
 /**
- *  @file   ACE_Flag_Manip.h
+ *  @file   Flag_Manip.h
  *
  *  $Id$
  *
- * This class includes the functions used for the Flag Manipulation.
- *
+ *  This class includes the functions used for the Flag Manipulation.
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
