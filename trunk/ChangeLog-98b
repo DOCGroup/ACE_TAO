@@ -1,3 +1,9 @@
+Sun Nov 22 22:58:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SPIPE_Addr.h: Replaced the use of an anonymous struct so
+ 	  that class2man will be happy.  Thanks to David Levine for
+ 	  reporting this.
+
 Sun Nov 22 22:07:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Functor*: removed trailing // EOF because class2man choked

@@ -38,13 +38,15 @@ public:
   // Copy constructor.
 
   ACE_SPIPE_Addr (LPCTSTR rendezvous_point, gid_t = 0, uid_t = 0);
-  // Create a ACE_SPIPE_Addr from a rendezvous point in the file system.
+  // Create a ACE_SPIPE_Addr from a rendezvous point in the file
+  // system.
 
   int set (const ACE_SPIPE_Addr &sa);
   // Acts like a copy constructor...
 
   int set (LPCTSTR rendezvous_point, gid_t = 0, uid_t = 0);
-  // Create a ACE_SPIPE_Addr from a rendezvous point in the file system.
+  // Create a ACE_SPIPE_Addr from a rendezvous point in the file
+  // system.
 
   virtual void *get_addr (void) const;
   // Return a pointer to the address.
@@ -94,9 +96,11 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  // = This struct contains security attributes.
-  struct
+  struct SPIPE_Addr
   {
+    // = TITLE
+    //     Contains security attributes.
+
     gid_t gid_;
     // Group id.
 
