@@ -34,7 +34,7 @@ sub locateFile {
   my($self) = shift;
   my($file) = shift;
 
-  if (defined $self->{'ifound'}->{$file}) {
+  if (exists $self->{'ifound'}->{$file}) {
     return $self->{'ifound'}->{$file};
   }
   else {
@@ -45,24 +45,9 @@ sub locateFile {
       }
     }
   }
+
+  $self->{'ifound'}->{$file} = undef;
   return undef;
-}
-
-
-sub getFiles {
-  my($self)   = $_[0];
-  my(@files)  = ($_[1]);
-  my(%ifiles) = ();
-
-  for(my $i = 0; $i <= $#files; ++$i) {
-    foreach my $inc (@{$self->{'files'}->{$files[$i]}}) {
-      if (!defined $ifiles{$inc}) {
-        $ifiles{$inc} = 1;
-        push(@files, $inc);
-      }
-    }
-  }
-  $self->{'ifiles'} = \%ifiles;
 }
 
 
@@ -90,8 +75,8 @@ sub process {
         ## This saves about 5% off of processing the ace directory
         ## and we only need to strip comments if we are actually
         ## going to look at the string.
-        $_ =~ s/\/\/.*//;
-        $_ =~ s/\/\*.*\*\///;
+        $_ =~ s/\/\/.*//o;
+        $_ =~ s/\/\*.*\*\///o;
 
         if (/#\s*endif/) {
           --$ifcount;
@@ -107,12 +92,12 @@ sub process {
           ++$ifcount;
         }
         elsif (!defined $zero[0] &&
-               /#\s*include\s+[<"]([^">]+)[">]/) {
+               /#\s*include\s+[<"]([^">]+)[">]/o) {
           my($inc) = $self->locateFile($1);
           if (defined $inc) {
-            $inc =~ s/\\/\//g;
+            $inc =~ s/\\/\//go;
             if (!$noinline ||
-                ($recurse == 1 || $inc !~ /\.i(nl)?$/)) {
+                ($recurse == 1 || $inc !~ /\.i(nl)?$/o)) {
               push(@{$$files{$file}}, $inc);
               if (!defined $$files{$inc}) {
                 ## Process this file, but do not return the include files
@@ -132,9 +117,19 @@ sub process {
   ## If the last file to be processed isn't accessable then
   ## we still need to return the array reference of includes.
   if (!$noincs) {
-    $self->getFiles($file);
-    my(@incs) = keys %{$self->{'ifiles'}};
-    return \@incs;
+    my(@files)  = ($file);
+    my(%ifiles) = ();
+
+    for(my $i = 0; $i <= $#files; ++$i) {
+      foreach my $inc (@{$self->{'files'}->{$files[$i]}}) {
+        if (!defined $ifiles{$inc}) {
+          $ifiles{$inc} = 1;
+          push(@files, $inc);
+        }
+      }
+    }
+    shift(@files);
+    return \@files;
   }
 }
 

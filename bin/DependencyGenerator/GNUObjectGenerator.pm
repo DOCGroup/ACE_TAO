@@ -25,7 +25,7 @@ sub process {
   my(@objects) = ();
   my(@exts)    = ('o');
   my(@dirs)    = (defined $ENV{VDIR} ? $ENV{VDIR} : '');
-  $noext =~ s/\.[^\.]+$//;
+  $noext =~ s/\.[^\.]+$//o;
 
   if (defined $ENV{SOEXT}) {
     push(@exts, $ENV{SOEXT});
