@@ -253,6 +253,7 @@ main (int argc, char *argv[])
           //
           // stop the timer on the server side
           ttcp_seq->stop_timer (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           // stop our timer
           (void) read_timer (stats, sizeof (stats));
@@ -271,6 +272,7 @@ main (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

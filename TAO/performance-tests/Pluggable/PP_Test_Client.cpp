@@ -169,21 +169,15 @@ PP_Test_Client::send_oneway (void)
 
   ACE_TRY
     {
-      {
-        ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_ONEWAY_START);
-
-        this->objref_->send_oneway (ACE_TRY_ENV);
-      }
-
+      ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_ONEWAY_START);
+      this->objref_->send_oneway (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
       this->call_count_++;
-
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                            "from send_oneway");
+                           "from send_oneway");
 
       this->error_count_++;
     }
@@ -200,16 +194,10 @@ PP_Test_Client::send_void (void)
 
   ACE_TRY
     {
-      {
-        ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_VOID_START);
-
-        this->objref_->send_void (ACE_TRY_ENV);
-      }
-
+      ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_VOID_START);
+      this->objref_->send_void (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
       this->call_count_++;
-
     }
   ACE_CATCHANY
     {
@@ -454,12 +442,9 @@ PP_Test_Client::init (int argc, char **argv)
                   "Factory received OK\n"));
 
       // Now retrieve the Pluggable_Test obj ref corresponding to the key.
-      {
-        ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_MAKE_PLUGGABLE_START);
+      ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_MAKE_PLUGGABLE_START);
 
-        this->objref_ =
-          this->factory_->make_pluggable_test (ACE_TRY_ENV);
-      }
+      this->objref_ = this->factory_->make_pluggable_test (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->objref_.in ()))
@@ -476,5 +461,6 @@ PP_Test_Client::init (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
