@@ -2,8 +2,6 @@
 //
 // $Id$
 
-// SSL_SOCK_Stream.i
-
 ASYS_INLINE void
 ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
 {
@@ -91,7 +89,6 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
 
           // On some platforms (e.g. MS Windows) OpenSSL does not
           // store the last error in errno so explicitly do so.
-
           ACE_OS::set_errno_to_last_error ();
 
         default:
@@ -102,7 +99,8 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
     }
   while (::SSL_pending (this->ssl_));
 
-  // If we get this far then we would have blocked.
+  // Completed flushing the SSL buffer, but send() is still pending
+  // completion.
   errno = EWOULDBLOCK;
 
   return bytes_sent;
@@ -140,11 +138,11 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
                                            val);
 
   // The SSL_read() and SSL_peek() calls are wrapped in a
-  // do/while(SSL_pending()) loop to force a full SSL record (SSL is a
-  // record-oriented protocol, not a stream-oriented one) to be read
-  // prior to returning to the Reactor.  This is necessary to avoid
-  // some subtle problems where data from another record is
-  // potentially handled before the current record is fully handled.
+  // do/while(SSL_pending()) loop to force the internal OpenSSL buffer
+  // to be flushed prior to returning to the Reactor.  This is
+  // necessary to avoid some subtle problems where data from another
+  // record is potentially handled before the current record is fully
+  // handled.
   do
     {
       if (flags)
@@ -172,10 +170,10 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
 
         case SSL_ERROR_WANT_READ:
         case SSL_ERROR_WANT_WRITE:
-          // Only block on select() with a timeout if no SSL record is
-          // pending read completion for the same reasons stated
-          // above, i.e. a full record must be read before blocking on
-          // select().
+          // Only block on select() with a timeout if no data in the
+          // internal OpenSSL buffer is pending read completion for
+          // the same reasons stated above, i.e. all data must be read
+          // before blocking on select().
           if (timeout != 0
               && !SSL_pending (this->ssl_))
             {
@@ -223,7 +221,8 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
     }
   while (::SSL_pending (this->ssl_) || ssl_read);
 
-  // If we get this far then we would have blocked.
+  // Completed flushing the SSL buffer, but recv() is still pending
+  // completion.
   errno = EWOULDBLOCK;
 
   return bytes_read;
@@ -312,11 +311,10 @@ ACE_SSL_SOCK_Stream::close (void)
   int status = 0;
 
   // The SSL_close() call is wrapped in a do/while(SSL_pending())
-  // loop to force a full SSL record (SSL is a record-oriented
-  // protocol, not a stream-oriented one) to be read prior to
-  // returning to the Reactor.  This is necessary to avoid some subtle
-  // problems where data from another record is potentially handled
-  // before the current record is fully handled.
+  // loop to force the SSL buffer to be flushed prior to returning to
+  // the Reactor.  This is necessary to avoid some subtle problems
+  // where data from another record is potentially handled before the
+  // current record is fully handled.
   do
     {
       // SSL_shutdown() returns 1 on successful shutdown of the SSL
@@ -324,34 +322,34 @@ ACE_SSL_SOCK_Stream::close (void)
       status = ::SSL_shutdown (this->ssl_);
 
       switch (::SSL_get_error (this->ssl_, status))
-      {
-      case SSL_ERROR_NONE:
-      case SSL_ERROR_SYSCALL:  // Ignore this error condition.
+        {
+        case SSL_ERROR_NONE:
+        case SSL_ERROR_SYSCALL:  // Ignore this error condition.
 
-        // Don't set the handle in OpenSSL; only in the
-        // SSL_SOCK_Stream.  We do this to avoid any potential side
-        // effects.  Invoking ACE_SSL_SOCK::set_handle() bypasses the
-        // OpenSSL SSL_set_fd() call ACE_SSL_SOCK_Stream::set_handle()
-        // does.
-        this->ACE_SSL_SOCK::set_handle (ACE_INVALID_HANDLE);
+          // Don't set the handle in OpenSSL; only in the
+          // SSL_SOCK_Stream.  We do this to avoid any potential side
+          // effects.  Invoking ACE_SSL_SOCK::set_handle() bypasses
+          // the OpenSSL SSL_set_fd() call
+          // ACE_SSL_SOCK_Stream::set_handle() does.
+          this->ACE_SSL_SOCK::set_handle (ACE_INVALID_HANDLE);
 
-        return this->stream_.close ();
+          return this->stream_.close ();
 
-      case SSL_ERROR_WANT_READ:
-      case SSL_ERROR_WANT_WRITE:
-        break;
+        case SSL_ERROR_WANT_READ:
+        case SSL_ERROR_WANT_WRITE:
+          break;
 
-      default:
-        ACE_Errno_Guard error (errno);   // Save/restore errno
-        (void) this->stream_.close ();
+        default:
+          ACE_Errno_Guard error (errno);   // Save/restore errno
+          (void) this->stream_.close ();
 
-        return -1;
-      }
+          return -1;
+        }
     }
   while (::SSL_pending (this->ssl_));
 
-  // @@ Would this ever happen?
-  // If we get this far then we would have blocked.
+  // Completed flushing the SSL buffer, but connection is not closed
+  // yet.
   errno = EWOULDBLOCK;
 
   return -1;

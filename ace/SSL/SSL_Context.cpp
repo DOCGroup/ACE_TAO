@@ -99,11 +99,12 @@ ACE_SSL_Context::ssl_library_init (void)
         {
           // rwlock_init(&(ACE_SSL_Context::lock_[i]), USYNC_THREAD,
           // 0);
-          if (ACE_OS::mutex_init(&(ACE_SSL_Context::lock_[i]),
-                                 USYNC_THREAD) != 0)
+          if (ACE_OS::mutex_init (&(ACE_SSL_Context::lock_[i]),
+                                  USYNC_THREAD) != 0)
             ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) ACE_SSL_Context::ssl_library_init - %p\n",
-                        "mutex_init"));
+                        ACE_TEXT ("(%P|%t) ACE_SSL_Context::ssl_library_init ")
+                        ACE_TEXT ("- %p\n"),
+                        ACE_TEXT ("mutex_init")));
         }
 
 # if !defined (WIN32)
@@ -200,11 +201,7 @@ ACE_SSL_Context::set_mode (int mode)
 
   this->context_ = ::SSL_CTX_new (method);
   if (this->context_ == 0)
-    {
-
-
-      return -1;
-    }
+    return -1;
 
   this->mode_ = mode;
 
@@ -330,7 +327,7 @@ ACE_SSL_Context::report_error (unsigned long error_code)
   if (error_code == 0)
     return;
 
-  ACE_TCHAR error_string[256];
+  char error_string[256];
 
   (void) ::ERR_error_string (error_code, error_string);
 

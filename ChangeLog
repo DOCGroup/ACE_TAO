@@ -1,3 +1,50 @@
+Fri Sep 28 23:38:07 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
+
+	  Cleaned up the code.
+
+	  Do not attempt to verify the X.509 certificate.  Only the
+	  application knows how best to do that.
+
+	* ace/SSL/SSL_Context.cpp (ssl_library_init):
+
+	  Fixed some Unicode problems.  Wrap strings within an ACE_TEXT
+	  macro.
+
+	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
+	* ace/SSL/SSL_SOCK_Stream.i:
+
+	  Corrected some comments.
+
+	* ace/SSL/SSL_SOCK_Connector.cpp (connect):
+
+	  If errno == EWOULDBLOCK, make sure the SSL_SOCK_Stream's handle
+	  is set to a valid handle before returning to the caller.  This
+	  allows connection completion to be done using the
+	  SSL_SOCK_Stream.
+
+	* ace/SSL/SSL_SOCK_Stream.h (send_n, recv_n):
+
+	  Added a "bytes transferred" pointer parameter.  This allows the
+	  amount of bytes transferred to returned via this parameter, thus
+	  matching the semantics of their ACE_SOCK_Stream counterparts.
+	
+	* ace/SSL/SSL_SOCK_Stream.cpp (send):
+
+	  Do not block attempt a timed send() if data is available in
+	  OpenSSL's internal buffer.  This prevents a condition where
+	  needlessly blocking on select() would occur.  A similar fix for
+	  recv() was made earlier.  See Fri Aug 24 16:54:02 2001  Ossama
+	  Othman  <ossama@uci.edu> for details.
+
+	  (send_n, recv_n):
+
+	  If the "bytes transferred" pointer parameter is non-zero then
+	  return the amounts of bytes transferred through it.  This makes
+	  these methods better match the semantics of their
+	  ACE_SOCK_Stream counterparts.
+
 Fri Sep 28 19:24:51 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-11.00.h: Moved the definitions for ACE_HAS_WCHAR
