@@ -1,3 +1,61 @@
+Fri Dec 19 11:33:51 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	
+	* tests/Thruput/CORBAplus/Makefile:
+	* tests/Thruput/CORBAplus/README:
+	* tests/Thruput/CORBAplus/client.cpp:
+	* tests/Thruput/CORBAplus/extract:
+	* tests/Thruput/CORBAplus/run:
+	* tests/Thruput/CORBAplus/run_client:
+	* tests/Thruput/CORBAplus/run_server:
+	* tests/Thruput/CORBAplus/run_test:
+	* tests/Thruput/CORBAplus/run_tests:
+	* tests/Thruput/CORBAplus/server.cpp:
+	* tests/Thruput/CORBAplus/ttcp.idl:
+	* tests/Thruput/CORBAplus/ttcp_decl.h:
+	* tests/Thruput/CORBAplus/ttcp_i.cpp:
+	* tests/Thruput/CORBAplus/ttcp_i.h:
+	* tests/Thruput/CORBAplus/utils.cpp: Ported the Thruput example to
+ 	CORBAplus for C++ by Expersoft.  Try running the "run_tests"
+ 	script for the client side.
+
+	* tests/Thruput/Orbix/Client.cpp:
+	* tests/Thruput/Orbix/Makefile:
+	* tests/Thruput/Orbix/README:
+	* tests/Thruput/Orbix/Srv_Main.cpp:
+	* tests/Thruput/Orbix/extract:
+	* tests/Thruput/Orbix/loop64:
+	* tests/Thruput/Orbix/orbixsol2s4.mk:
+	* tests/Thruput/Orbix/run:
+	* tests/Thruput/Orbix/run_client:
+	* tests/Thruput/Orbix/run_server:
+	* tests/Thruput/Orbix/run_test:
+	* tests/Thruput/Orbix/run_tests:
+	* tests/Thruput/Orbix/ttcp.idl:
+	* tests/Thruput/Orbix/ttcp_decl.h:
+	* tests/Thruput/Orbix/ttcp_i.cpp:
+	* tests/Thruput/Orbix/ttcp_i.h:	
+	* tests/Thruput/Orbix/utils.cpp: Included the Thruput example for
+ 	IONAs Orbix ORB in the tests directory.
+
+	* tests/Thruput/TAO/Makefile:
+	* tests/Thruput/TAO/README:
+	* tests/Thruput/TAO/client.cpp:
+	* tests/Thruput/TAO/run:
+	* tests/Thruput/TAO/run_client:
+	* tests/Thruput/TAO/run_server:
+	* tests/Thruput/TAO/run_test:
+	* tests/Thruput/TAO/server.cpp:
+	* tests/Thruput/TAO/svc.conf:
+	* tests/Thruput/TAO/ttcp.idl:
+	* tests/Thruput/TAO/ttcp_decl.h:
+	* tests/Thruput/TAO/ttcp_i.cpp:
+	* tests/Thruput/TAO/ttcp_i.h:	
+	* tests/Thruput/TAO/utils.cpp: Moved the TAO version of the
+ 	Thruput example to a "TAO" directory in the Thruput directory.
+	
+	* tests/Thruput_test: Renamed this directory to Thruput.
+
 Fri Dec 19 00:28:24 1997    <nw1@JIG>
 
 	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp (main): Removed some
