@@ -1,10 +1,23 @@
+Sun Sep 17 17:07:07 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo.bor:
+        * orbsvcs/Notify_Service/Makefile.bor:
+        * orbsvcs/orbsvcs/CosNaming.bor:
+        * orbsvcs/orbsvcs/CosNotification.bor:
+        * tests/InterOp-Naming/server.bor:
+          Update Borland makefiles to include the IORTable builds.
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+          Add @@ comments for Darrell, the exceptions thrown and the
+          exception specs don't match.
+
 Sun Sep 17 15:16:36 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/DynamicAny/Makefile:
-	* tao/IORManipulation/Makefile:
-	* tao/IORTable/Makefile:
-	* tao/PortableServer/Makefile: Updated dependencies.
+        * tao/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/PortableServer/Makefile: Updated dependencies.
 
 Sun Sep 17 11:52:23 2000  Carlos O'Ryan  <coryan@uci.edu>
 
