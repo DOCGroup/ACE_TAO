@@ -987,7 +987,8 @@ STANDARD_EXCEPTION_LIST
 #define TAO_SYSTEM_EXCEPTION(name) \
 void operator<<= (CORBA::Any &any, const CORBA_##name &ex) \
 { \
-  ACE_TRY_NEW_ENV \
+  ACE_DECLARE_NEW_CORBA_ENV; \
+  ACE_TRY \
     { \
       TAO_OutputCDR stream; \
       ex._tao_encode (stream, ACE_TRY_ENV); \
@@ -1012,7 +1013,8 @@ STANDARD_EXCEPTION_LIST
 #define TAO_SYSTEM_EXCEPTION(name) \
 void operator<<= (CORBA::Any &any, CORBA_##name *ex) \
 { \
-  ACE_TRY_NEW_ENV \
+  ACE_DECLARE_NEW_CORBA_ENV; \
+  ACE_TRY \
     { \
       TAO_OutputCDR stream; \
       ex->_tao_encode (stream, ACE_TRY_ENV); \
@@ -1042,7 +1044,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &any, \
                             const CORBA_##name *&ex) \
 { \
   ex = 0; \
-  ACE_TRY_NEW_ENV \
+  ACE_DECLARE_NEW_CORBA_ENV; \
+  ACE_TRY \
     { \
       CORBA::TypeCode_var type = any.type (); \
       CORBA::Boolean equiv = \
