@@ -24,7 +24,7 @@ module FT
   interface FaultNotifier;
 
   /// Useful typedefs.
-  typedef CORBA::RepositoryId TypeId;
+  typedef CORBA::RepositoryId _TypeId;
   typedef Object ObjectGroup;
 
   typedef CosNaming::Name Name;
@@ -110,7 +110,7 @@ module FT
 
   exception NoFactory {
     Location the_location;
-    TypeId type_id; };
+    _TypeId type_id; };
 
   exception InvalidCriteria {
     Criteria invalid_criteria; };
@@ -130,13 +130,13 @@ module FT
     void remove_default_properties(in Properties props)
       raises (InvalidProperty, UnsupportedProperty);
 
-    void set_type_properties(in TypeId type_id,
+    void set_type_properties(in _TypeId type_id,
                              in Properties overrides)
       raises (InvalidProperty, UnsupportedProperty);
 
-    Properties get_type_properties(in TypeId type_id);
+    Properties get_type_properties(in _TypeId type_id);
 
-    void remove_type_properties(in TypeId type_id,
+    void remove_type_properties(in _TypeId type_id,
                                 in Properties props)
       raises (InvalidProperty, UnsupportedProperty);
 
@@ -152,7 +152,7 @@ module FT
   interface ObjectGroupManager {
     ObjectGroup create_member(in ObjectGroup object_group,
                               in Location the_location,
-                              in TypeId type_id,
+                              in _TypeId type_id,
                               in Criteria the_criteria)
       raises(ObjectGroupNotFound,
              MemberAlreadyPresent,
@@ -198,7 +198,7 @@ module FT
   // which ReplicationManager Inherits and Application Objects Implement
   interface GenericFactory {
     typedef any FactoryCreationId;
-    Object create_object(in TypeId type_id,
+    Object create_object(in _TypeId type_id,
                          in Criteria the_criteria,
                          out FactoryCreationId factory_creation_id)
       raises (NoFactory,
