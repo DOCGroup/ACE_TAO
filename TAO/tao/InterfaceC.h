@@ -8,9 +8,9 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_INTERFACEC_H_
+#ifndef TAO_IDL_INTERFACEC_H
 #include "ace/pre.h"
-#define _TAO_IDL_INTERFACEC_H_
+#define TAO_IDL_INTERFACEC_H
 
 #include "tao/corbafwd.h"
 #include "tao/Object.h"
