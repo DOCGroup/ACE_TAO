@@ -1,3 +1,13 @@
+Thu Aug 26 12:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.cpp:
+          Tru64 also provides sysconf functionality to retrieve number
+          of cpu's. Implemented ACE_OS::num_processors() and
+          ACE_OS::num_processors_online() for Tru64 (Digital Unix)
+
+        * tests/OS_Test.cpp:
+          Corrected copy/paste error
+
 Thu Aug 26 11:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OS_Test.cpp:
