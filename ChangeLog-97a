@@ -1,5 +1,9 @@
 Sat Mar 22 12:06:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/OS.h: The include statement for config.h was too low.  Some
+ 	  defines for key_t, needed for NT, didn't work.  Thanks to Alan
+ 	  Cabrera <Alan_Cabrera@fp.cibc.com> for these fixes.
+
 	* examples/Reactor/Multicast: Improved the multicast client and
  	  server programs to work better.
 
