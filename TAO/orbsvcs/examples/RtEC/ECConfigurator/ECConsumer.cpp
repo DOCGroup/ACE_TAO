@@ -16,10 +16,8 @@
 
 ACE_RCSID(EC_Examples, ECConsumer, "$Id$")
 
-ECConsumer::ECConsumer (EventTypeVector &sub_types,
-                        ECSupplier *fwddest, Service_Handler * handler)
+ECConsumer::ECConsumer (EventTypeVector &sub_types, Service_Handler * handler)
   : worktime_(0,0)
-  , fwddest_(fwddest)
   , handler_(handler)
   , sub_types_(sub_types)
 {
@@ -27,9 +25,8 @@ ECConsumer::ECConsumer (EventTypeVector &sub_types,
 
 ECConsumer::ECConsumer (EventTypeVector &sub_types,
                         ACE_Time_Value& worktime,
-                        ECSupplier *fwddest, Service_Handler *handler)
+                        Service_Handler *handler)
   : worktime_(worktime)
-  , fwddest_(fwddest)
   , handler_(handler)
   , sub_types_(sub_types)
 {
@@ -108,11 +105,12 @@ ECConsumer::push (const RtecEventComm::EventSet& events
 //               prio, exec_duration, elapsed_time.msec ()));
 
   //now, trigger the next subtask if any
-  if (this->fwddest_ != 0)
+  ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) triggering next subtasks\n"));
+  SupplierVector::iterator siter = this->dependants_.begin();
+  for(; siter != this->dependants_.end(); ++siter)
     {
-      //trigger next subtask; we assume we are the only ones who set the ECSupplier's mode!
-      ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) triggering next subtask\n"));
-      this->fwddest_->timeout_occured(ACE_ENV_SINGLE_ARG_PARAMETER);
+      SupplierVector::value_type supplier = *siter;
+      supplier->timeout_occured(ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 
   if (this->handler_ != 0)
@@ -157,6 +155,12 @@ Service_Handler *
 ECConsumer::handler(void) const
 {
   return this->handler_;
+}
+
+void
+ECConsumer::pushDependant(ECSupplier *dep)
+{
+  this->dependants_.push_back(dep);
 }
 
 // ****************************************************************

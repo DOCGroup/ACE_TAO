@@ -6,6 +6,8 @@
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/DefaultHandler.h"
 
+#include "tao/ORB.h"
+
 #include "Configurator_ParseHandler.h"
 #include "Configurator_SyntaxHandler.h"
 
@@ -32,7 +34,7 @@ main (int argc, char *argv[])
         {
           return 1;
         }
-      /*
+
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
@@ -49,7 +51,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      */
+
       ACEXML_FileCharStream *fcs = new ACEXML_FileCharStream();
       if ((retval = fcs->open(args.filename_.c_str())) != 0) {
         //ACE_DEBUG ((LM_DEBUG, "Could not open file %s\n",args.filename_.c_str()));
@@ -77,7 +79,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished parsing\n")));
 
       Configurator_SyntaxHandler cfgtor;
-      //cfgtor.init(orb,poa);
+      cfgtor.init(orb.in(),poa.in());
       cfgtor.setRootNode(xmlhandler.getRootNode());
       cfgtor.setNameTable(xmlhandler.getNameTable());
       cfgtor.parse();

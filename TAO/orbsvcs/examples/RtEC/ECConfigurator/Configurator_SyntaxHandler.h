@@ -20,10 +20,17 @@
 
 #include "ACEXML/common/SAXExceptions.h"
 
+#include "tao/ORB.h"
+#include "tao/PortableServer/PortableServer.h"
+
 #include <vector>
 
 // Forward decls
-class ECTestDriver;
+class ECDriver;
+class Kokyu_EC;
+class Gateway_Initializer;
+class ECSupplier;
+class ECConsumer;
 
 /**
  * @class Configurator_SyntaxHandler
@@ -41,7 +48,7 @@ public:
    */
   Configurator_SyntaxHandler (void);
 
-  //int init(CORBA::ORB_var orb, PortableServer::POA_var poa);
+  int init(CORBA::ORB_var orb, PortableServer::POA_var poa);
 
   /*
    * Default destructor.
@@ -114,7 +121,7 @@ public:
   virtual void parse (void)
     ACE_THROW_SPEC ((ACEXML_SAXException));
 
-  ECTestDriver *getTestDriver (void);
+  ECDriver *getDriver (void);
 
   void setNameTable(NameTable &nt);
 
@@ -122,7 +129,11 @@ public:
   typedef std::vector<RtEventChannelAdmin::SchedInfo> QoSVector;
 
   typedef std::vector<RtEventChannelAdmin::RtSchedEventChannel_var> ECVector;
-  //typedef std::vector<GatewayInitializer> GatewayInitVector;
+  typedef std::vector<Kokyu_EC*> KokyuECVector;
+  typedef std::vector<Gateway_Initializer*> GatewayInitVector;
+
+  typedef ACE_Hash_Map_Manager<ACE_CString,ECSupplier*,ACE_Null_Mutex> SupplierMap;
+  typedef ACE_Hash_Map_Manager<ACE_CString,ECConsumer*,ACE_Null_Mutex> ConsumerMap;
 private:
 
   NameTable nametable;
@@ -131,15 +142,21 @@ private:
 
   VisitableSyntax *root;
 
-  ECTestDriver *testdriver;
+  ECDriver *driver;
 
   // ORB stuff
-  //CORBA::ORB_var orb;
-  //PortableServer::POA_var poa;
+  CORBA::ORB_var orb;
+  PortableServer::POA_var poa;
+
+  // EC stuff
+  KokyuECVector kokyuECs; // for convenience
   ECVector localECs;
   ECVector remoteECs;
-  //GatewayInitVector ginitv;
+  GatewayInitVector ginitv;
 
+  // Consumer/Supplier stuff
+  SupplierMap suppliermap;
+  ConsumerMap consumermap;
 };
 
 #endif /* CONFIGURATOR_SYNTAXHANDLER_H */

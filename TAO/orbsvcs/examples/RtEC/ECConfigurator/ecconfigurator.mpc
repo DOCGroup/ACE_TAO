@@ -12,6 +12,7 @@ project(configurable_ec): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyueve
     Kokyu_EC.cpp
     ECConsumer.cpp
     ECSupplier.cpp
+    ECDriver.cpp
   }
 
   Header_Files {
@@ -23,6 +24,7 @@ project(configurable_ec): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyueve
     ECConsumer.h
     ECSupplier.h
     Service_Handler.h
+    ECDriver.h
   }
 
   IDL_Files {

@@ -38,7 +38,6 @@ class ECConsumer : public POA_RtecEventComm::PushConsumer
   //
   // = DESCRIPTION
   //   This class is a consumer of events.
-  //   It simply register for two event typesone event type
   //   The class is just a helper to simplify common tasks in EC
   //   tests, such as subscribing for a range of events, disconnecting
   //   from the EC, informing the driver of shutdown messages, etc.
@@ -51,14 +50,13 @@ public:
   typedef RtecEventComm::EventType EventType;
   typedef std::vector<EventType> EventTypeVector;
   typedef RtecScheduler::handle_t InfoHandle;
+  typedef std::vector<ECSupplier*> SupplierVector;
 
   ECConsumer (EventTypeVector &sub_types,
-              ACE_Time_Value& worktime,
-              ECSupplier *fwddest = 0, Service_Handler *handler = 0);
+              ACE_Time_Value& worktime, Service_Handler *handler = 0);
   // Constructor
 
-  ECConsumer (EventTypeVector &sub_types,
-              ECSupplier *fwddest = 0, Service_Handler *handler = 0);
+  ECConsumer (EventTypeVector &sub_types, Service_Handler *handler = 0);
   // Constructor
 
   virtual ~ECConsumer(void);
@@ -81,10 +79,12 @@ public:
 
   Service_Handler * handler(void) const;
 
+  void pushDependant (ECSupplier *dep);
+
 protected:
   ACE_Time_Value worktime_;
 
-  ECSupplier *fwddest_;
+  SupplierVector dependants_;
   InfoHandle rt_info_;
 
   Service_Handler * handler_;

@@ -76,6 +76,8 @@ public:
 
   Service_Handler * handler(void) const;
 
+  const EventTypeVector &getPublishedTypes (void) const;
+
 protected:
   SourceID id_;
   EventTypeVector pub_types_;
@@ -86,7 +88,7 @@ protected:
 
   Service_Handler *handler_;
 }; //class ECSupplier
-
+/*
 class ECTimeout_Consumer : public POA_RtecEventComm::PushConsumer
 {
   // = TITLE
@@ -113,7 +115,7 @@ public:
 private:
   ECSupplier *supplier_impl_;
 }; //class ECTimeout_Consumer
-
+*/
 class ECSupplier_Timeout_Handler : public ACE_Event_Handler
 {
   // = TITLE

@@ -15,6 +15,7 @@
 #define SYNTAXTREE_H
 
 #include "SyntaxVisitor.h"
+#include "RtSchedEventChannelC.h" // Event_Type,SourceId
 
 #include "RtecSchedulerC.h"
 #include "ace/OS_String.h"
@@ -203,6 +204,7 @@ public:
 
   // Attributes
   ACE_CString name;
+  RtEventChannelAdmin::Event_Type type; // TODO: handle Event::type
 };
 
 class Criticality : public VisitableSyntax
@@ -438,6 +440,7 @@ public:
 
   // Attributes
   ACE_CString name;
+  RtEventChannelAdmin::EventSourceID id; // TODO: handle Supplier::id
 };
 
 class Publications : public VisitableSyntax
@@ -479,7 +482,6 @@ public:
   }
 
   // Children
-  EventNameVector eventnames;
   TimeoutNameVector timeoutnames;
 };
 
