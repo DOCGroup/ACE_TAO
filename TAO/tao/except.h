@@ -29,6 +29,10 @@
 #undef minor
 #endif /* minor */
 
+#if defined (major)
+#undef major
+#endif /* major*/
+
 class ACE_Svc_Export CORBA_Exception : public IUnknown
 {
   // = TITLE
