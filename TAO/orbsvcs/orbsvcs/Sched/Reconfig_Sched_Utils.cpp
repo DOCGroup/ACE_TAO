@@ -283,7 +283,7 @@ remove_tuples (u_long tuple_flags)
         {
           if (orig_tuple_iter.next (tuple_ptr_ptr) == 0
               || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
-	    {
+            {
               ACE_ERROR ((LM_ERROR,
                           "Failed to access tuple under iterator"));
               return;
@@ -333,17 +333,17 @@ insert_tuple (TAO_RT_Info_Tuple &tuple,
       // Get a pointer to the tuple under the iterator.
       if (tuple_iter.next (tuple_ptr_ptr) == 0
           || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
-	{
+        {
           ACE_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
-	}
+        }
 
       // Update existing tuples
       if ((*tuple_ptr_ptr)->period > tuple.period)
-	{
+        {
           // Move the tuple's rate index higher than any in the set
           // with lower rates.
           ++tuple.rate_index;
-	}
+        }
       else if (replace && (*tuple_ptr_ptr)->period == tuple.period)
         {
           // If the replace flag is set, and there is already a tuple
@@ -353,11 +353,11 @@ insert_tuple (TAO_RT_Info_Tuple &tuple,
           return 1;
         }
       else
-	{
+        {
           // Otherwise, just update the rate index of the subsequent
           // tuples, which have the same or higher rates.
           ++(*tuple_ptr_ptr)->rate_index;
-	}
+        }
 
       tuple_iter.advance ();
     }
@@ -398,15 +398,15 @@ update_tuple (TAO_RT_Info_Ex &info,
       // Get a pointer to the tuple under the iterator.
       if (tuple_iter.next (tuple_ptr_ptr) == 0
           || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
-	{
+        {
           ACE_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
-	}
+        }
       else if ((*tuple_ptr_ptr)->period < info.period)
-	{
+        {
           // If we've hit a tuple with a shorter period (higher rate),
           // then we're done.
           break;
-	}
+        }
       else if ((*tuple_ptr_ptr)->period == info.period)
         {
           // If the replace flag is set, and there is already a tuple
@@ -439,14 +439,14 @@ register_tuples (TAO_RT_Info_Tuple ** tuple_ptr_array,
       // Get a pointer to the tuple under the iterator.
       if (tuple_iter.next (tuple_ptr_ptr) == 0
           || tuple_ptr_ptr == 0 || *tuple_ptr_ptr == 0)
-	{
+        {
           ACE_ERROR_RETURN ((LM_ERROR, "Failed to access tuple under iterator"), -1);
-	}
+        }
       else
-	{
+        {
           tuple_ptr_array [tuple_count] = *tuple_ptr_ptr;
           ++tuple_count;
-	}
+        }
 
       tuple_iter.advance ();
     }
