@@ -19,9 +19,10 @@
 // 
 // ============================================================================
 
-#include "ace/Proactor.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
+#include "ace/Proactor.h"
+#include "ace/WIn32_Proactor.h"
 
 ACE_RCSID(Proactor, test_multiple_loops, "$Id$")
 
@@ -95,9 +96,10 @@ int
 main (int, char *[])
 {
   Timeout_Handler handler;
-  ACE_Proactor proactor (0, 0, 1);
+  ACE_WIN32_Proactor win32_proactor (0, 1);
+  ACE_Proactor proactor (&win32_proactor, 0, 0);
   
-  ACE_Reactor::instance ()->register_handler (&proactor);
+  ACE_Reactor::instance ()->register_handler (proactor.implementation ());
   
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
