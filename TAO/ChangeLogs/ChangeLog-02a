@@ -1,3 +1,8 @@
+Fri Dec 15 15:17:12 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/LoadBalancing/Makefile:
+          Fixed definition of SERVER_OBJS, my last "fix" broke this one.
+
 Fri Dec 15 11:36:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/*.h:

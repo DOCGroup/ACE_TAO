@@ -21,7 +21,7 @@ BIN_UNCHECKED = client server
 SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) Hash_ReplicaControl Hash_Replica_i) $(IDL_SRC)
 
 CLIENT_OBJS = client.o Hash_ReplicaC.o
-SERVER_OBJS = server.o Hash_ReplicaControl.o Hash_Replica_i.o $(addsuffix .o, $(IDLFILES))
+SERVER_OBJS = server.o Hash_ReplicaControl.o Hash_Replica_i.o $(IDL_SRC)
 
 TAO_IDLFLAGS += -Ge 1
 
