@@ -1,3 +1,8 @@
+Wed Jun 24 12:02:40 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tests/POA/RootPOA/RootPOA.cpp (main): Replaced the exception
+	checking/printing code by TAO_CHECK_ENV_PRINT_RETURN.
+
 Wed Jun 24 11:52:12 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/corba.h: Added the exception macros
