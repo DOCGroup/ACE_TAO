@@ -9,7 +9,7 @@
 //    DynUnion_i_T.cpp
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ========================================================================
 
@@ -29,8 +29,8 @@ DU_Extractor<Type>::~DU_Extractor (void)
 
 template <class Type>
 CORBA::Boolean
-DU_Extractor<Type>::check_match (CORBA_Any& inside_any,
-                                 CORBA_Any& outside_any)
+DU_Extractor<Type>::check_match (const CORBA_Any &inside_any,
+                                 const CORBA_Any &outside_any)
 {
   inside_any >>= this->member_index_;
   outside_any >>= this->arg_index_;
