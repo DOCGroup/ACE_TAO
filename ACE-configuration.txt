@@ -6,26 +6,19 @@ Configuring ACE Using the `configure' Script
 
 QuickStart
 ----------
-Since autoconf support in ACE is still under development, to enable
-support for autoconf in ACE, run the script `bootstrap' in the `bin'
-directory found in the top-level ACE source directory from the
-top-level source directory.  For example, the following set of
-commands will set up ACE's autoconf support, and cause ACE to be
-configured and built:
+GNU Autoconf support in ACE is still under development.  However it is
+a small subset of Autoconf support in ACE has been made available for
+testing and feedback purposes.  To use Autoconf support in ACE, do
+something like the following:
 
-
-    bin/bootstrap
+    cd ACE_wrappers
     mkdir objdir
     cd objdir
-    ../configure --enable-maintainer-mode.
-    make
 
-Note that this bootstrapping procedure requires that GNU Autoconf (>=
-2.13), GNU Automake (>= 1.4) and GNU libtool (>= 1.3.3) are installed
-and available in your path in order for the procedure to be
-successful.  Once autoconf support in ACE is fully integrated, these
-requirements will not be necessary.  You will be able to simply run
-the configure script without any options.
+Then:
+    Bourne Shell:   CXX=c++ ../configure
+    C Shell:        env CXX=c++ ../configure
+make
 
 Description
 -----------
@@ -138,42 +131,51 @@ Features and packages:
   --with-orbix[=DIR]      compile ACE with Orbix          [default=no]
   --with-tli-device[=DEV] device for TCP on TLI           [default=/dev/tcp]
 
-To enable debugging and disable code inlining, for example, just enter the
-following on the command line:
+To enable debugging and disable code inlining, for example, just enter
+the following on the command line:
 
 	./configure --enable-debug --disable-inline
 
-This will generate a configuration header file `ace/config.h' to be used when
-compiling ACE that will enable ACE debugging macros and disable code inlining
-during compilation of ACE.
+This will generate a configuration header file `ace/config.h' to be
+used when compiling ACE that will enable ACE debugging macros and
+disable code inlining during compilation of ACE.
 
-Once the `ace/config.h' header has been created you will have to select a
-platform macros file.  Please read the ACE installation documents for more
-information about this.
+Once the `ace/config.h' header has been created you will have to
+select a platform macros file.  Please read the ACE installation
+documents for more information about this.
 
 ----------------------------------------------------------------
 Caveats
 ----------------------------------------------------------------
-Much of the power of the `configure' script will not be useful until the
-automatically generated makefiles are enabled in ACE.  Configuration options
-such as "--prefix" will not be useful for this reason.
+The `configure' script will check for libraries that contain certain
+functions. If it finds a library that isn't listed in your
+platform_macros.GNU file you will have to add that library to the list
+of libraries to link against.
 
-The `configure' script will check for libraries that contain certain functions.
-If it finds a library that isn't listed in your platform_macros.GNU file you
-will have to add that library to the list of libraries to link against.
+Shared library generation when using ACE Autoconf support is different
+from the stock ACE shared library generation mechanism.  The Autoconf
+supported shared library mechanism does not yet fully support all of
+the platforms ACE's stock shared library mechanism supports.  As such,
+you may encounter problems if an attempt is made to build a shared
+library when using ACE's autoconf support.
+
+Remember that the stock ACE build procedure is always available.  If
+your attempts to use ACE's Autoconf support are unsuccessful then
+contact the parties listed below, and use ACE stock build procedure as
+described in ACE-INSTALL.html.
 
 ----------------------------------------------------------------
 Contacts
 ----------------------------------------------------------------
-If you do have problems please e-mail the ACE Configuration Project maintainer
-at:
+If you do have problems please e-mail the ACE Configuration Project
+maintainer at:
 
 	Ossama Othman <othman@cs.wustl.edu>
 
 or send mail to the ACE mailing list.
 
-For more information take at a look at the ACE Configuration Project web page
-at:
+For more information take at a look at the ACE Configuration Project
+web page at:
 
 	http://www.cs.wustl.edu/~othman/aceconf
 
