@@ -299,7 +299,7 @@ ACE_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
       ACE_REACTOR_HANDLE (index) = ACE_INVALID_HANDLE;
       ACE_REACTOR_EVENT_HANDLER (this, index) = 0;
 
-      if (this->max_handlep1_ == index + 1)
+      if (this->max_handlep1_ == (int) index + 1)
 	{	      
 	  // We've deleted the last entry (i.e., i + 1 == the current
 	  // size of the array), so we need to figure out the last
