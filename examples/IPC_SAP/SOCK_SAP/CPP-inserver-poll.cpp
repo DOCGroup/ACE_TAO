@@ -55,7 +55,7 @@ init_buffer (size_t index)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
                        "recv_n failed"),
-                      0);
+                      -1);
   else
     {
       len = ntohl (len);
@@ -69,6 +69,7 @@ init_buffer (size_t index)
                             -1);
       buffer_array[index].len_ = len;
     }
+  return 0;
 }
 
 static void
