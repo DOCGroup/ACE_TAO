@@ -1,9 +1,54 @@
-nMicrosoft Developer Studio Workspace File, Format Version 6.00
+Microsoft Developer Studio Workspace File, Format Version 6.00
 # WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
 
 ###############################################################################
 
+Project: "Atomic_Reconnect"=.\Basic\Atomic_Reconnect.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ECTest
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "BCast"=.\Basic\BCast.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ECTest
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Bitmask"=.\Basic\Bitmask.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ECTest
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Complex"=.\Basic\Complex.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -33,6 +78,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Disconnect"=.\Basic\Disconnect.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ECTest
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "ECTest"=.\lib\ECTest.dsp - Package Owner=<4>
 
 Package=<5>
@@ -41,6 +101,36 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "MT_Disconnect"=.\Basic\MT_Disconnect.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ECTest
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Negation"=.\Basic\Negation.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ECTest
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -135,52 +225,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Disconnect"=.\Basic\Disconnect.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ECTest
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "MT_Disconnect"=.\Basic\MT_Disconnect.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ECTest
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Atomic_Reconnect"=.\Basic\Atomic_Reconnect.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ECTest
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Bitmask"=.\Basic\Bitmask.dsp - Package Owner=<4>
+Project: "Wildcard"=.\Basic\Wildcard.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

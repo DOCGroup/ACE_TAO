@@ -1,4 +1,4 @@
-# Microsoft Developer Studio Project File - Name="CEC Disconnect" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Disconnect" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
