@@ -1,3 +1,17 @@
+Tue Nov  5 11:24:03 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process.h: 
+	* ace/Process.i: Added a new method <return_value> which returns
+	  the actual value returned or <exit>'ed by the child process.
+	  The <exit_code> accessor returns the raw exit status returned by
+	  the system APIs and the value is OS dependent.  Changed the
+	  <exit_code> mutator to be a proctected method and declare
+	  ACE_Process_Manager a fried of ACE_Process as <exit_code>
+	  mutator should only be used by ACE_Process_Manager.
+
+	  Thanks to Stephen Blake <sblake@speakeasy.net> for reporting the
+	  problem.
+
 Tue Nov  5 05:12:16 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Acceptor.h:

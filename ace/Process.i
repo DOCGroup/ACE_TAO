@@ -67,6 +67,16 @@ ACE_Process::terminate (void)
     return -1;
 }
 
+ACE_INLINE int
+ACE_Process::return_value (void) const
+{
+#if defined (ACE_WIN32)
+  return this->exit_code_;
+#else
+  return WEXITSTATUS (this->exit_code_);
+#endif /* ACE_WIN32 */
+}
+
 ACE_INLINE ACE_exitcode
 ACE_Process::exit_code (void) const
 {
