@@ -16,9 +16,9 @@ LDLIBS = -lTAO
 
 IDL_FILES = Test
 IDL_SRC = TestC.cpp TestS.cpp
-BIN = server client
+BIN_UNCHECKED = server client
 
-SRC = $(addsuffix .cpp, $(BIN) Client_Task Payload_Receiver) $(IDL_SRC)
+SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) Client_Task Payload_Receiver) $(IDL_SRC)
 
 CLIENT_OBJS = client.o TestC.o Client_Task.o
 SERVER_OBJS = server.o TestC.o TestS.o Payload_Receiver.o
@@ -31,6 +31,11 @@ TAO_IDLFLAGS += -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(corba_messaging),1)
+BIN=$(BIN_UNCHECKED)
+endif # corba_messaging
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
