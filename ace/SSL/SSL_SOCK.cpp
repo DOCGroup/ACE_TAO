@@ -5,9 +5,9 @@
 
 #include "SSL_SOCK.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "SSL_SOCK.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_errno.h"
 #include "ace/os_include/os_signal.h"

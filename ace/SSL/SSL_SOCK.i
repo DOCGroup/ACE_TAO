@@ -3,13 +3,13 @@
 
 #include "ace/OS_NS_sys_socket.h"
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE_SSL_SOCK::set_handle (ACE_HANDLE fd)
 {
   this->ACE_SOCK::set_handle (fd);
 }
 
-ASYS_INLINE ACE_HANDLE
+ACE_INLINE ACE_HANDLE
 ACE_SSL_SOCK::get_handle (void) const
 {
   // return this->ssl_ ? (ACE_HANDLE) ::SSL_get_fd (this->ssl_) : ACE_INVALID_HANDLE;
@@ -17,16 +17,16 @@ ACE_SSL_SOCK::get_handle (void) const
 }
 
 
-ASYS_INLINE int 
+ACE_INLINE int
 ACE_SSL_SOCK::control (int cmd, void *arg) const
 {
   return ACE_OS::ioctl (this->get_handle (), cmd, arg);
 }
 
-ASYS_INLINE int 
-ACE_SSL_SOCK::set_option (int level, 
-		     int option, 
-		     void *optval, 
+ACE_INLINE int
+ACE_SSL_SOCK::set_option (int level,
+		     int option,
+		     void *optval,
 		     int optlen) const
 {
 //   switch (option)
@@ -37,7 +37,7 @@ ACE_SSL_SOCK::set_option (int level,
 //       return ::BIO_set_read_buffer_size (this->io_bio_, *((int *) optval));
 //     default:
       return ACE_OS::setsockopt (this->get_handle (),
-				 level, 
+				 level,
 				 option, (char *) optval,
 				 optlen);
 //    }
@@ -45,10 +45,10 @@ ACE_SSL_SOCK::set_option (int level,
 
 // Provides access to the ACE_OS::getsockopt system call.
 
-ASYS_INLINE int 
-ACE_SSL_SOCK::get_option (int level, 
-		     int option, 
-		     void *optval, 
+ACE_INLINE int
+ACE_SSL_SOCK::get_option (int level,
+		     int option,
+		     void *optval,
 		     int *optlen) const
 {
 //  switch (option)
@@ -59,7 +59,7 @@ ACE_SSL_SOCK::get_option (int level,
 //       return ::BIO_get_read_buffer_size (this->io_bio_, *((int *) optval));
 //    default:
       return ACE_OS::getsockopt (this->get_handle (),
-				 level, 
+				 level,
 				 option, (char *) optval,
 				 optlen);
 //    }
