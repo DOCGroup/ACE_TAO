@@ -424,6 +424,30 @@ HTTP_Request::cgi (char *uri_string)
 
   ACE_OS::free (cgi_path);
 
+  if (this->cgi_ == 0)
+    {
+      // Nothing found searching through paths, what about CGI extension?
+      extra_path_info = ACE_OS::strstr (uri_string, ".cgi");
+      while (extra_path_info != 0)
+        {
+          extra_path_info += 4;
+          switch (*extra_path_info)
+            {
+            case '\0':
+              extra_path_info = 0;
+              break;
+            case '/':
+            case '?':
+              break;
+            default:
+              extra_path_info = ACE_OS::strstr (extra_path_info, ".cgi");
+              continue;
+            }
+          this->cgi_ = 1;
+          break;
+        }
+    }
+
   char *cgi_question = 0;
   if (extra_path_info)
     cgi_question = ACE_OS::strchr (extra_path_info, '?');
