@@ -223,9 +223,6 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
                                          reactor_mask |
                                          ACE_Event_Handler::DONT_CALL);
 
-
-  ACE_DEBUG ((LM_DEBUG, "(%t) SSL accept completed.\n"));
-
   // Transfer control of the Reactor to the previous owner.
   return this->reactor_->owner (old_owner);
 }
