@@ -105,44 +105,62 @@ int
 IIOP::Profile::set (const ACE_INET_Addr &addr,
                     const char *key)
 {
-  // Set up an IIOP object to hold the host name.
-#if 0
-  const size_t ADDRLEN = 4*3 /* octets */ + 3*1 /* dots */ + 1 /* nul */;
-  char tempaddr[ADDRLEN];
-#else
-  const char* tempaddr = 0;
-#endif
+  // Set up an IIOP Profile to hold the host name.
   
-  // Retrieve the host name.
-  if ((tempaddr = addr.get_host_addr ()) == 0)
-    return -1;
+  if (addr.get_ip_address () == INADDR_ANY)
+    {
+      // Special case
+      char temphost[MAXHOSTNAMELEN + 1];
+      if (addr.get_host_name (temphost, sizeof(temphost)) != 0)
+        return -1;
+      else
+        return this->set (temphost,
+                          addr.get_port_number (),
+                          key,
+                          &addr);
+    }
   else
-    return this->set (tempaddr,
-                      addr.get_port_number (),
-                      key,
-                      &addr);
+    {
+      const char* tempaddr = 0;
+      if ((tempaddr = addr.get_host_addr ()) == 0)
+        return -1;
+      else
+        return this->set (tempaddr,
+                          addr.get_port_number (),
+                          key,
+                          &addr);
+    }
 }
 
 int
 IIOP::Profile::set (const ACE_INET_Addr &addr,
                     const TAO_opaque &key)
 {
-  // Set up an IIOP object to hold the host name.
-#if 0
-  const size_t ADDRLEN = 4*3 /* octets */ + 3*1 /* dots */ + 1 /* nul */;
-  char tempaddr[ADDRLEN];
-#else
-  const char* tempaddr = 0;
-#endif
-
-  // Retrieve the host name.
-  if ((tempaddr = addr.get_host_addr ()) == 0)
-    return -1;
+  // Set up an IIOP Profile to hold the host name.
+  
+  if (addr.get_ip_address () == INADDR_ANY)
+    {
+      // Special case
+      char temphost[MAXHOSTNAMELEN + 1];
+      if (addr.get_host_name (temphost, sizeof(temphost)) != 0)
+        return -1;
+      else
+        return this->set (temphost,
+                          addr.get_port_number (),
+                          key,
+                          &addr);
+    }
   else
-    return this->set (tempaddr,
-                      addr.get_port_number (),
-                      key,
-                      &addr);
+    {
+      const char* tempaddr = 0;
+      if ((tempaddr = addr.get_host_addr ()) == 0)
+        return -1;
+      else
+        return this->set (tempaddr,
+                          addr.get_port_number (),
+                          key,
+                          &addr);
+    }
 }
 
 IIOP::Profile::Profile (const char *h,
