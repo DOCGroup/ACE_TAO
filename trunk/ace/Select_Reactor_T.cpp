@@ -1155,21 +1155,23 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events_i
 {
   int result = -1;
 
-  ACE_SEH_TRY {
-    ACE_Select_Reactor_Handle_Set dispatch_set;
+  ACE_SEH_TRY 
+    {
+      ACE_Select_Reactor_Handle_Set dispatch_set;
 
-    int number_of_active_handles =
-      this->wait_for_multiple_events (dispatch_set,
-                                      max_wait_time);
+      int number_of_active_handles =
+        this->wait_for_multiple_events (dispatch_set,
+                                        max_wait_time);
 
-    result = this->dispatch (number_of_active_handles,
-                             dispatch_set);
-  }
-  ACE_SEH_EXCEPT (this->release_token ()) {
-    // As it stands now, we catch and then rethrow all Win32
-    // structured exceptions so that we can make sure to release the
-    // <token_> lock correctly.
-  }
+      result = this->dispatch (number_of_active_handles,
+                               dispatch_set);
+    }
+  ACE_SEH_EXCEPT (this->release_token ()) 
+    {
+      // As it stands now, we catch and then rethrow all Win32
+      // structured exceptions so that we can make sure to release the
+      // <token_> lock correctly.
+    }
 
   this->state_changed_ = 1;
 
