@@ -66,7 +66,7 @@ TAO_Asynch_Reply_Dispatcher_Base::reply_timed_out (void)
 }
 
 void
-TAO_Asynch_Reply_Dispatcher_Base::timeout_handler (TAO_Asynch_Timeout_Handler *timeout_handler)
+TAO_Asynch_Reply_Dispatcher_Base::timeout_handler (TAO_Asynch_Timeout_Handler *)
 {
 }
 
