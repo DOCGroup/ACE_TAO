@@ -1,3 +1,9 @@
+Sat Nov  9 21:48:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Test.cpp: When disabling Nagle's, use IPPROTO_TCP,
+          not SOL_SOCKET, for the setsockopt level. Fixes set_option errors
+          in this test log.
+
 Sat Nov  9 18:49:11 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/POSIX_Proactor.{h cpp i} (create_asynch_read_stream,
