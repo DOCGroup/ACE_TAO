@@ -33,12 +33,14 @@ TAO::TypeCode::Base_Attributes<STRING_TYPE>::name (void) const
 // conversions.
 // -----------------------------------------------------------------
 
+template<>
 ACE_INLINE char const *
 TAO::TypeCode::Base_Attributes<CORBA::String_var>::id (void) const
 {
   return this->id_.in ();
 }
 
+template<>
 ACE_INLINE char const *
 TAO::TypeCode::Base_Attributes<CORBA::String_var>::name (void) const
 {

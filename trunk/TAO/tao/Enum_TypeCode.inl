@@ -37,6 +37,7 @@ TAO::TypeCode::Enum<
 // Member specializations
 // -------------------------------------------------------------
 
+template<>
 ACE_INLINE TAO::TypeCode::Enumerator<CORBA::String_var> const *
 TAO::TypeCode::Enum<
   CORBA::String_var,

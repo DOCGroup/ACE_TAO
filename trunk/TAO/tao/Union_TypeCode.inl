@@ -47,6 +47,7 @@ TAO::TypeCode::Union<StringType,
 // Member specializations
 // -------------------------------------------------------------
 
+// template<>
 // ACE_INLINE TAO::TypeCode::Union<CORBA::String_var,
 //                                 ACE_Auto_Ptr_Array<Case const>,
 //                                 TAO::True_RefCount_Policy>::case_type const *
