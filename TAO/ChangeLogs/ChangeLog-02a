@@ -1,3 +1,13 @@
+Mon Nov 20 06:26:10 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connector.h: 
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Connector.cpp: Changed the
+	  ACE_NOOP_Concurrency strategy to ACE_Concurrency_Strategy. 
+
 Mon Nov 20 05:34:07 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/Private_Connection/Makefile:

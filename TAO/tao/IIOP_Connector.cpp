@@ -552,7 +552,6 @@ template class ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>;
 template class ACE_Hash<ARHR<ACE_INET_Addr> >;
 template class ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >;
 
-template class ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>;
 template class ACE_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>;
 template class ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>;
 template class ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
@@ -576,7 +575,6 @@ template class ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Client_Connection_Handler*>;
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>
 #pragma instantiate ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >
 
-#pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
 #pragma instantiate ACE_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
 #pragma instantiate ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>

@@ -119,8 +119,8 @@ protected:
 
 public:
 
-  typedef ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
-          TAO_NULL_ACTIVATION_STRATEGY;
+  typedef ACE_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
+          TAO_ACTIVATION_STRATEGY;
 
   typedef ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler,
                                ACE_SOCK_CONNECTOR>
@@ -141,7 +141,7 @@ protected:
 
 private:
 
-  TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
+  TAO_ACTIVATION_STRATEGY null_activation_strategy_;
   // Our activation strategy
 
   TAO_CONNECT_STRATEGY connect_strategy_;
