@@ -7,7 +7,7 @@ package gjt;
  * @version 1.0, Apr 1 1996
  * @author  David Geary
  */
-class Assert {
+public class Assert {
     static public void notFalse(boolean b) 
                        throws IllegalArgumentException {
         if(b == false) 
