@@ -31,81 +31,73 @@ preparePlan (const Deployment::DeploymentPlan &plan,
                    Deployment::StartError
                    ))
 {
-  //@@ Make sure that this call will only called once before destroymanager
-  //   being called!!!!
+  // As DAnCE currently supports only one domain for now, we return the same
+  // DomainApplicationManager for multiple calls to prepare plan
 
-  // Create a new DomainApplicationMananager servant
-  ACE_NEW_THROW_EX (this->dam_servant_,
-                    CIAO::DomainApplicationManager_Impl
-                    (this->orb_.in (),
-                     this->poa_.in (),
-                     Deployment::TargetManager::_nil (),
-                     plan,
-                     this->init_file_.c_str ()),
-                    CORBA::NO_MEMORY ());
+  if (this->dam_servant_ == 0)
+    {
+      // Create a new DomainApplicationMananager servant
+      ACE_NEW_THROW_EX (this->dam_servant_,
+                        CIAO::DomainApplicationManager_Impl
+                        (this->orb_.in (),
+                         this->poa_.in (),
+                         Deployment::TargetManager::_nil (),
+                         plan,
+                         this->init_file_.c_str ()),
+                        CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil());
+      ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil());
 
+      /**
+       *===================================================================
+       * MAIN STEP: This call parses the deployment plan, generates the Node
+       * specific plan and starts the deployment process
+       *===================================================================
+       */
+      this->dam_servant_->init (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil());
 
-  // @@ (OO) If this method is ever called twice in a row, you're
-  //         going to leak the previous instance since you don't
-  //         decrease the reference count.  You may want to consider
-  //         caching this->dam_servant_ into a
-  //         TAO::Utils::Servant_Var<> to ease memory management,
-  //         e.g. automatically decreasing reference counts, etc.
+      this->dam_servant_->set_uuid (plan.UUID.in ());
 
-  /**
-   *===================================================================
-   * MAIN STEP: This call parses the deployment plan, generates the Node
-   * specific plan and starts the deployment process
-   *===================================================================
-   */
-  this->dam_servant_->init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  // @@ (OO) You're missing an
-  //           ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil())
-  //         here.  Emulated exceptions won't function correctly
-  //         without it.
+      // Register with our POA and activate the object.
+      PortableServer::ObjectId_var oid
+        = this->poa_->activate_object (this->dam_servant_.in ()
+                                       ACE_ENV_ARG_PARAMETER);
 
-  this->dam_servant_->set_uuid (plan.UUID.in ());
+      ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil ());
 
-  // Register with our POA and activate the object.
-  PortableServer::ObjectId_var oid
-    = this->poa_->activate_object (this->dam_servant_
-                                   ACE_ENV_ARG_PARAMETER);
+      // Get the reference of the object.
+      CORBA::Object_var objref
+        = this->poa_->id_to_reference (oid.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil ());
 
-  ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil ());
-
-  // Get the reference of the object.
-  CORBA::Object_var objref
-    = this->poa_->id_to_reference (oid.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil ());
-
-  this->dam_ =
-    Deployment::DomainApplicationManager::_narrow (objref.in ()
+      this->dam_ =
+        Deployment::DomainApplicationManager::_narrow (objref.in ()
                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil ());
+      ACE_CHECK_RETURN (Deployment::DomainApplicationManager::_nil ());
+    }
 
   // Return the ApplicationManager instance
   return Deployment::DomainApplicationManager::_duplicate (this->dam_.in ());
 }
 
-
 Deployment::DomainApplicationManagers *
 CIAO::ExecutionManager_Impl::getManagers (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ (OO) Since you're not doing anything with the allocated
-  //         sequence, there is no need to store in a "_var".  Simply
-  //         return the pointer.
-
   // Initialize the list of DomainApplication Managers
   Deployment::DomainApplicationManagers_var list;
-  /*ACE_NEW_THROW_EX (list,
+  ACE_NEW_THROW_EX (list,
                     Deployment::DomainApplicationManagers,
                     CORBA::NO_MEMORY());
-  ACE_CHECK_RETURN (0)
-  */
+  ACE_CHECK_RETURN (0);
+
+  // Add the manager to the list
+  CORBA::ULong index = list->length ();
+  list->length (index + 1);
+  list [index] =
+    Deployment::DomainApplicationManager::_duplicate (this->dam_.in ());
   return list._retn ();
 }
 
@@ -132,11 +124,9 @@ CIAO::ExecutionManager_Impl::destroyManager (Deployment::DomainApplicationManage
     this->poa_->deactivate_object (oid.in ()
                                    ACE_ENV_ARG_PARAMETER);
 
-    // @@ (OO) Will this this->dam_servant_ ever be used again after
-    //         the reference count is decreased?  If not, you may want
-    //         to set it to zero to force it to be in a consistent
-    //         state.
-    this->dam_servant_->_remove_ref ();
+    // set it to zero to force it to be in a consistent
+    // state.
+    this->dam_servant_ = 0;
     this->dam_ = Deployment::DomainApplicationManager::_nil ();
 
     ACE_TRY_CHECK;
@@ -160,5 +150,5 @@ CIAO::ExecutionManager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   //         Please use ACE_ENV_ARG_PARAMETER instead.
 
   // Shutdown the ORB on which it is runing
-  this->orb_->shutdown (0 ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
