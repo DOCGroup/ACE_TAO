@@ -36,7 +36,7 @@
  * This functor simply does a string comparison of each of the
  * elements in the given TAO_PortableGroup::Location name sequences.
  */
-class TAO_PG_Location_Equal_To
+class TAO_PortableGroup_Export TAO_PG_Location_Equal_To
 {
 public:
 

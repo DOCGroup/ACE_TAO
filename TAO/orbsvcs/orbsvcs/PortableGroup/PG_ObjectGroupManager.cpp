@@ -13,11 +13,10 @@ ACE_RCSID (PortableGroup,
            "$Id$")
 
 
-TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager (
-  PortableServer::POA_ptr poa)
-  : poa_ (PortableServer::POA::_duplicate (poa)),
-    object_group_map_ (TAO_PG_MAX_NUMBER_OF_OBJECT_GROUPS),
-    location_map_ (TAO_PG_MAX_NUMBER_OF_LOCATIONS),
+TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager (void)
+  : poa_ (),
+    object_group_map_ (TAO_PG_MAX_OBJECT_GROUPS),
+    location_map_ (TAO_PG_MAX_LOCATIONS),
     lock_ ()
 {
 }
@@ -397,6 +396,32 @@ TAO_PG_ObjectGroupManager::type_id (
 
   return CORBA::string_dup (group_entry->type_id.in ());
 }
+
+PortableGroup::ObjectGroup_ptr
+TAO_PG_ObjectGroupManager::object_group (const PortableServer::ObjectId & oid)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    guard,
+                    this->lock_,
+                    PortableGroup::ObjectGroup::_nil ());
+
+  TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
+  if (this->object_group_map_.find (oid, group_entry) == 0)
+    return
+      PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
+  else
+    return PortableGroup::ObjectGroup::_nil ();
+}
+
+void
+TAO_PG_ObjectGroupManager::poa (PortableServer::POA_ptr p)
+{
+  ACE_ASSERT (CORBA::is_nil (this->poa_.in ())
+              && !CORBA::is_nil (p));
+
+  this->poa_ = PortableServer::POA::_duplicate (p);
+}
+
 
 PortableGroup::Properties *
 TAO_PG_ObjectGroupManager::get_properties (

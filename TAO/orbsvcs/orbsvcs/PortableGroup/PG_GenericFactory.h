@@ -45,7 +45,7 @@ struct TAO_PG_ObjectGroup_Map_Entry;
  * of replicas.  Those replicas will be created by this GenericFactory
  * if the "infrastructure-controlled" membership style is configured.
  */
-class TAO_PG_GenericFactory
+class TAO_PortableGroup_Export TAO_PG_GenericFactory
   : public virtual PortableGroup::GenericFactory
 {
 public:

@@ -37,13 +37,13 @@
  * The ObjectGroupManager provides the interface necessary to
  * facilitate application-controlled object group membership.
  */
-class TAO_PG_ObjectGroupManager
+class TAO_PortableGroup_Export TAO_PG_ObjectGroupManager
   : public virtual POA_PortableGroup::ObjectGroupManager
 {
 public:
 
   /// Constructor.
-  TAO_PG_ObjectGroupManager (PortableServer::POA_ptr poa);
+  TAO_PG_ObjectGroupManager (void);
 
   /// Destructor.
   ~TAO_PG_ObjectGroupManager (void);
@@ -163,6 +163,18 @@ public:
   /// Return the type_id for the given object group.
   char * type_id (PortableGroup::ObjectGroup_ptr object_group
                   ACE_ENV_ARG_DECL);
+
+  /// Return the object group associated with the given ObjectId.
+  /**
+   * @return Returns PortableGroup::ObjectGroup::_nil() if no object
+   *         group corresponding to the given ObjectId exists.
+   */
+  PortableGroup::ObjectGroup_ptr object_group (
+    const PortableServer::ObjectId & oid);
+
+  /// Set the POA to use when converting object group references to
+  /// ObjectIds.
+  void poa (PortableServer::POA_ptr p);
 
 protected:
 

@@ -173,6 +173,10 @@ SOURCE=.\miopC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableGroup\PG_Default_Property_Validator.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableGroup\PG_Factory_Map.cpp
 # End Source File
 # Begin Source File
@@ -198,6 +202,10 @@ SOURCE=.\PortableGroup\PG_Location_Map.cpp
 # Begin Source File
 
 SOURCE=.\PortableGroup\PG_MemberInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Null_Property_Validator.cpp
 # End Source File
 # Begin Source File
 
@@ -474,6 +482,10 @@ SOURCE=.\PortableGroup\PG_conf.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableGroup\PG_Default_Property_Validator.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableGroup\PG_Factory_Map.h
 # End Source File
 # Begin Source File
@@ -499,6 +511,10 @@ SOURCE=.\PortableGroup\PG_Location_Map.h
 # Begin Source File
 
 SOURCE=.\PortableGroup\PG_MemberInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Null_Property_Validator.h
 # End Source File
 # Begin Source File
 
