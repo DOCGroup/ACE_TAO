@@ -115,7 +115,6 @@ public:
   // Simply returns t
 };
 
-
 // @@ ADD HASHES FOR ACE TYPES
 
 ACE_TEMPLATE_SPECIALIZATION

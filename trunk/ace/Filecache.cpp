@@ -124,7 +124,6 @@ ACE_Filecache_Handle::size (void) const
     return this->file_->size ();
 }
 
-
 // ------------------
 // ACE_Filecache_Hash
 // ------------------

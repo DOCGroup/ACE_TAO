@@ -831,7 +831,11 @@ ACE_OS::fopen (const char *filename, const char *mode)
       int fd = _open_osfhandle ((long) handle, hmode);
       if (fd != -1)
         {
+#   if defined(__BORLANDC__)
+          FILE *fp = _fdopen (fd, ACE_const_cast (char *, mode));
+#   else /* defined(__BORLANDC__) */
           FILE *fp = _fdopen (fd, mode);
+#   endif /* defined(__BORLANDC__) */
           if (fp != NULL)
             return fp;
           _close (fd);
@@ -862,7 +866,11 @@ ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
       int fd = _open_osfhandle ((long) handle, hmode);
       if (fd != -1)
         {
+#   if defined(__BORLANDC__)
+          FILE *fp = _wfdopen (fd, ACE_const_cast (wchar_t *, mode));
+#   else /* defined(__BORLANDC__) */
           FILE *fp = _wfdopen (fd, mode);
+#   endif /* defined(__BORLANDC__) */
           if (fp != NULL)
             return fp;
           _close (fd);

@@ -752,7 +752,7 @@ ACE_OS::umask (mode_t cmask)
 
 // Perform a mapping of Win32 error numbers into POSIX errnos.
 # define ACE_FAIL_RETURN(RESULT) do { \
-  switch (errno = ::GetLastError ()) { \
+  switch (ACE_OS::set_errno_to_last_error ()) { \
   case ERROR_NOT_ENOUGH_MEMORY: errno = ENOMEM; break; \
   case ERROR_FILE_EXISTS:       errno = EEXIST; break; \
   case ERROR_SHARING_VIOLATION: errno = EACCES; break; \
@@ -887,7 +887,7 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 
   if (::GetFileInformationByHandle (handle, &fdata) == FALSE)
     {
-      errno = ::GetLastError ();
+      ACE_OS::set_errno_to_last_error ();
       return -1;
     }
   else if (fdata.nFileSizeHigh != 0)
@@ -1927,7 +1927,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
           return 0;
         default:
           // This is a hack, we need to find an appropriate mapping...
-          errno = ::GetLastError ();
+          ACE_OS::set_errno_to_last_error ();
           return -1;
         }
     case USYNC_THREAD:
@@ -1969,7 +1969,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
           return 0;  // something goofed, but we hold the lock ...
         default:
           // This is a hack, we need to find an appropriate mapping...
-          errno = ::GetLastError ();
+          ACE_OS::set_errno_to_last_error ();
           return -1;
         }
     case USYNC_THREAD:
@@ -2026,7 +2026,7 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
             errno = EBUSY;
             return -1;
           default:
-            errno = ::GetLastError ();
+            ACE_OS::set_errno_to_last_error ();
             return -1;
           }
       }
@@ -2091,7 +2091,7 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m, int &abandoned)
             errno = EBUSY;
             return -1;
           default:
-            errno = ::GetLastError ();
+            ACE_OS::set_errno_to_last_error ();
             return -1;
           }
       }
@@ -3142,7 +3142,10 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
     return 0;
   else
     {
-      errno = result == WAIT_TIMEOUT ? EBUSY : ::GetLastError ();
+      if (result == WAIT_TIMEOUT)
+        errno = EBUSY;
+      else
+        ACE_OS::set_errno_to_last_error ();
       // This is a hack, we need to find an appropriate mapping...
       return -1;
     }
@@ -3174,7 +3177,10 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
     }
 
   // Translate error message to errno used by ACE.
-  errno = result == WAIT_TIMEOUT ? EBUSY : ::GetLastError ();
+  if (result == WAIT_TIMEOUT)
+    errno = EBUSY;
+  else
+    ACE_OS::set_errno_to_last_error ();
   // This is taken from the hack above. ;)
   return -1;
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
@@ -3260,7 +3266,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
       return 0;
     default:
       // This is a hack, we need to find an appropriate mapping...
-      errno = ::GetLastError ();
+      ACE_OS::set_errno_to_last_error ();
       return -1;
     }
   /* NOTREACHED */
@@ -3298,7 +3304,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
       default:
         // Since we wait indefinitely, anything other than
         // WAIT_OBJECT_O indicates an error.
-        errno = ::GetLastError ();
+        ACE_OS::set_errno_to_last_error ();
         // This is taken from the hack above. ;)
         return -1;
       }
@@ -3403,7 +3409,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       return -1;
     default:
       // This is a hack, we need to find an appropriate mapping...
-      errno = ::GetLastError ();
+      ACE_OS::set_errno_to_last_error ();
       return -1;
     }
   /* NOTREACHED */
@@ -3456,7 +3462,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
           // What?
         default:
-          errno = ::GetLastError ();
+          ACE_OS::set_errno_to_last_error ();
           // This is taken from the hack above. ;)
           return -1;
         };
@@ -3899,7 +3905,7 @@ ACE_OS::event_wait (ACE_event_t *event)
     case WAIT_OBJECT_0:
       return 0;
     default:
-      errno = ::GetLastError ();
+      ACE_OS::set_errno_to_last_error ();
       return -1;
     }
 #elif defined (ACE_HAS_THREADS)
@@ -3987,7 +3993,7 @@ ACE_OS::event_timedwait (ACE_event_t *event,
       return -1;
     default:
       // This is a hack, we need to find an appropriate mapping...
-      errno = ::GetLastError ();
+      ACE_OS::set_errno_to_last_error ();
       return -1;
     }
 #elif defined (ACE_HAS_THREADS)
@@ -4901,7 +4907,7 @@ ACE_OS::recvfrom (ACE_HANDLE handle, char *buf, int len,
                            (ACE_SOCKET_LEN *) addrlen);
   if (result == SOCKET_ERROR)
     {
-      errno = ::WSAGetLastError ();
+      ACE_OS::set_errno_to_wsa_last_error ();
       if (errno == WSAEMSGSIZE &&
           ACE_BIT_ENABLED (flags, MSG_PEEK))
         return len;
@@ -5216,7 +5222,7 @@ ACE_OS::recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags)
 
   if (result != 0)
     {
-      errno = ::GetLastError ();
+      ACE_OS::set_errno_to_last_error ();
       return -1;
     }
   else
@@ -5254,7 +5260,7 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
 
   if (result != 0)
     {
-      errno = ::GetLastError ();
+      ACE_OS::set_errno_to_last_error ();
       return -1;
     }
   else
@@ -5331,7 +5337,7 @@ ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
 
   if (::ReadFile (fp, ptr, tlen, &len, NULL) == FALSE)
     {
-      errno = ::GetLastError ();
+      ACE_OS::set_errno_to_last_error ();
       return -1;
     }
   else if (tlen != len)
@@ -5359,7 +5365,7 @@ ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
 
   if (::WriteFile (fp, ptr, tlen, &len, NULL) == FALSE)
     {
-      errno = ::GetLastError ();
+      ACE_OS::set_errno_to_last_error ();
       return -1;
     }
   else if (tlen != len)
@@ -5854,7 +5860,9 @@ ACE_OS::last_error (void)
   // ACE_TRACE ("ACE_OS::last_error");
 
 #if defined (ACE_WIN32)
-  return errno == 0 ? ::GetLastError () : errno;
+  int lerror = ::GetLastError ();
+  int lerrno = errno;
+  return lerrno == 0 ? last_error : lerrno;
 #else
   return errno;
 #endif /* ACE_HAS_WIN32 */
@@ -6981,7 +6989,7 @@ ACE_OS::recvv (ACE_HANDLE handle,
 
   if (result == SOCKET_ERROR)
     {
-      errno = ::WSAGetLastError ();
+      ACE_OS::set_errno_to_wsa_last_error ();
       return -1;
     }
   else
@@ -7024,7 +7032,7 @@ ACE_OS::sendv (ACE_HANDLE handle,
 
   if (result == SOCKET_ERROR)
     {
-      errno = ::WSAGetLastError ();
+      ACE_OS::set_errno_to_wsa_last_error ();
       return -1;
     }
   else
@@ -7752,7 +7760,7 @@ ACE_OS::dlerror (void)
   static char buf[128];
   FormatMessageA (FORMAT_MESSAGE_FROM_SYSTEM,
                   NULL,
-                  GetLastError (),
+                  ::GetLastError (),
                   0,
                   buf,
                   sizeof buf,
@@ -8066,7 +8074,8 @@ ACE_OS::getrusage (int who, struct rusage *ru)
 # if defined (ACE_WIN32)
   ACE_UNUSED_ARG (who);
 
-  FILETIME dummy_1, dummy_2;
+  FILETIME dummy_1;
+  FILETIME dummy_2;
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetProcessTimes (::GetCurrentProcess(),
                                                              &dummy_1,   // start
                                                              &dummy_2,     // exited
@@ -10652,7 +10661,7 @@ ACE_OS::fdopen (ACE_HANDLE handle, const wchar_t *mode)
   if (crt_handle != -1)
     {
 #     if defined(__BORLANDC__)
-      file = ::_wfdopen (crt_handle, (wchar_t*) mode);
+      file = ::_wfdopen (crt_handle, ACE_const_cast (wchar_t *, mode));
 #     else
       file = ::_wfdopen (crt_handle, mode);
 #     endif /* defined(__BORLANDC__) */
@@ -10688,7 +10697,7 @@ ACE_OS::stat (const wchar_t *file, struct stat *stp)
   fhandle = ::FindFirstFile (file, &fdata);
   if (fhandle == INVALID_HANDLE_VALUE)
     {
-      errno = ::GetLastError ();
+      ACE_OS::set_errno_to_last_error ();
       return -1;
     }
   else if (fdata.nFileSizeHigh != 0)

@@ -76,9 +76,13 @@ class ACE_Future_Rep
 private:
   friend class ACE_Future<T>;
 
-  // Create, attach, detach and assign encapsulates the reference
-  // count handling and the object lifetime of ACE_Future_Rep<T>
-  // instances.
+#if defined (__BORLANDC__) && (__BORLANDC__ == 0x540)
+  static void unimplemented_method_inserted_to_get_around_bcb_4_bug();
+#endif /* (__BORLANDC__) && (__BORLANDC__ == 0x540) */
+
+  // <create>, <attach>, <detach>, and <assign> encapsulates the
+  // reference count handling and the object lifetime of
+  // ACE_Future_Rep<T> instances.
 
   static ACE_Future_Rep<T> *create (void);
   // Create a ACE_Future_Rep<T> and initialize the reference count.
