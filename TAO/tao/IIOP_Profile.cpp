@@ -1,6 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
+
 #include "tao/IIOP_Profile.h"
 #include "tao/IIOP_Connect.h"
 #include "tao/GIOP.h"
@@ -21,150 +23,41 @@ static const char *prefix_ = "iiop:";
 
 const char TAO_IIOP_Profile::object_key_delimiter = '/';
 
-TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
-                                    const char *object_key)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
-    host_ (0),
-    port_ (0),
-    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
-    object_key_ (),
-    object_addr_ (addr),
-    hint_ (0)
-{
-  this->set (addr);
-  int l = ACE_OS::strlen (object_key);
-  this->object_key_.length (l);
-
-  for (int i = 0; i < l; ++i)
-    this->object_key_[i] = object_key[i];
-
-}
-
-TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
-                                    const TAO_ObjectKey& object_key)
+TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
+                                    const TAO_ObjectKey &object_key,
+                                    TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (0),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (addr),
-    hint_ (0)
-{
-  this->set (addr);
-}
-
-TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
-                                    const TAO_IOP_Version& version,
-                                    const char *object_key)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
-    host_ (0),
-    port_ (0),
-    version_ (version),
-    object_key_ (),
-    object_addr_ (addr),
-    hint_ (0)
-{
-  this->set (addr);
-  int l = ACE_OS::strlen (object_key);
-  this->object_key_.length (l);
-
-  for (int i = 0; i < l; ++i)
-    this->object_key_[i] = object_key[i];
-
-}
-
-TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
-                                    const TAO_IOP_Version& version,
-                                    const TAO_ObjectKey& object_key)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
-    host_ (0),
-    port_ (0),
-    version_ (version),
-    object_key_ (object_key),
-    object_addr_ (addr),
-    hint_ (0)
+    hint_ (0),
+    orb_core_ (orb_core)
 {
   this->set (addr);
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     CORBA::UShort port,
-                                    const TAO_ObjectKey& object_key)
+                                    const TAO_ObjectKey &object_key,
+                                    const ACE_INET_Addr &addr,
+                                    TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (port),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (object_key),
-    object_addr_ (port, host),
-    hint_ (0)
+    object_addr_ (addr),
+    hint_ (0),
+    orb_core_ (orb_core)
 {
-
   if (host)
-  {
-    ACE_NEW (this->host_,
-             char[ACE_OS::strlen (host) + 1]);
-    ACE_OS::strcpy (this->host_, host);
-  }
-
-}
-
-TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
-                                    CORBA::UShort port,
-                                    const TAO_ObjectKey& object_key,
-                                    const ACE_INET_Addr& addr)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
-    host_ (0),
-    port_ (port),
-    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
-    object_key_ (object_key),
-    object_addr_ (addr),
-    hint_ (0)
-{
-
-  if (host)
-  {
-    ACE_NEW (this->host_,
-             char[ACE_OS::strlen (host) + 1]);
-    ACE_OS::strcpy (this->host_, host);
-  }
-
-}
-
-TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
-                                    CORBA::UShort port,
-                                    const TAO_IOP_Version& version,
-                                    const TAO_ObjectKey& object_key)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
-    host_ (0),
-    port_ (port),
-    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
-    object_key_ (object_key),
-    object_addr_ (port, host),
-    hint_ (0)
-{
-  ACE_UNUSED_ARG (version);
-
-  ACE_NEW (this->host_,
-           char[ACE_OS::strlen (host) + 1]);
-  ACE_OS::strcpy (this->host_, host);
-
-}
-
-TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile *pfile)
-  : TAO_Profile (pfile->tag ()),
-    host_(0),
-    port_(pfile->port_),
-    version_(pfile->version_),
-    object_key_(pfile->object_key_),
-    object_addr_(pfile->object_addr_),
-    hint_(0)
-{
-
-  ACE_NEW (this->host_,
-           char[ACE_OS::strlen (pfile->host_) + 1]);
-  ACE_OS::strcpy (this->host_, pfile->host_);
-  hint_ = pfile->hint_;
-
+    {
+      ACE_NEW (this->host_,
+               char[ACE_OS::strlen (host) + 1]);
+      ACE_OS::strcpy (this->host_, host);
+    }
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
@@ -174,28 +67,17 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
     version_(pfile.version_),
     object_key_(pfile.object_key_),
     object_addr_(pfile.object_addr_),
-    hint_(0)
+    hint_(0),
+    orb_core_ (pfile.orb_core_)
 {
-
   ACE_NEW (this->host_,
            char[ACE_OS::strlen (pfile.host_) + 1]);
   ACE_OS::strcpy (this->host_, pfile.host_);
   hint_ = pfile.hint_;
-
-}
-
-TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IOP_Version &version)
-  : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
-    host_ (0),
-    port_ (0),
-    version_ (version),
-    object_key_ (),
-    object_addr_ (),
-    hint_ (0)
-{
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
+                                    TAO_ORB_Core *orb_core,
                                     CORBA::Environment &env)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
@@ -203,33 +85,33 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0)
+    hint_ (0),
+    orb_core_ (orb_core)
 {
   parse_string (string, env);
 }
 
-TAO_IIOP_Profile::TAO_IIOP_Profile (void)
+TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (0),
     version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0)
+    hint_ (0),
+    orb_core_ (orb_core)
 {
 }
 
 int
-TAO_IIOP_Profile::set (const ACE_INET_Addr& addr)
+TAO_IIOP_Profile::set (const ACE_INET_Addr &addr)
 {
   char temphost[MAXHOSTNAMELEN + 1];
   const char *temphost2 = 0;
 
   this->port_ = addr.get_port_number();
 
-  // @@ We really should be passing in TAO_ORB_Core as a parameter,
-  // instead of using the ORB_Core singleton.
-  if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
+  if (this->orb_core_->orb_params ()->use_dotted_decimal_addresses ())
     {
       temphost2 = addr.get_host_addr ();
       if (temphost2 == 0)

@@ -90,6 +90,9 @@ private:
   //    endpoint. For example it the IP address is INADDR_ANY
   //    (0.0.0.0) then there will be possibly a different hostname for
   //    each interface.
+
+  TAO_ORB_Core *orb_core_;
+  // ORB Core.
 };
 
 #if defined(__ACE_INLINE__)

@@ -57,54 +57,26 @@ public:
   // Return the char string prefix.
 
   TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
-                    const char *object_key);
-  // Profile constructor, the rendezvous_point field derived derived from
-  // addr.
-
-  TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
-                    const TAO_ObjectKey &object_key);
+                    const TAO_ObjectKey &object_key,
+                    TAO_ORB_Core *orb_core);
   // Profile constructor, same as above except the object_key has
   // already been marshaled.  (actually, no marshalling for this protocol)
 
-  TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
-                    const TAO_IOP_Version &version,
-                    const char *object_key);
-  // Profile constructor, explicitly define the protocol version.
-
-  TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
-                    const TAO_IOP_Version &version,
-                    const TAO_ObjectKey &object_key);
-  // Profile constructor, explicitly define the protocol version.
-
   TAO_UIOP_Profile (const char *rendezvous_point,
                     const TAO_ObjectKey &object_key,
-                    const ACE_UNIX_Addr &addr);
+                    const ACE_UNIX_Addr &addr,
+                    TAO_ORB_Core *orb_core);
   // Profile constructor
-
-  TAO_UIOP_Profile (const char *rendevous_point,
-                    const TAO_ObjectKey &object_key);
-  // Profile constructor
-
-  TAO_UIOP_Profile (const char *rendezvous_point,
-                    const TAO_IOP_Version &version,
-                    const TAO_ObjectKey &object_key);
-  // Profile constructor, explicitly define the protocol version
-  // FIXME:  What do we do about versions?
 
   TAO_UIOP_Profile (const char *string,
+                    TAO_ORB_Core *orb_core,
                     CORBA::Environment &env);
   // Create object using a string ior.
-
-  TAO_UIOP_Profile (const TAO_UIOP_Profile *pfile);
-  // Profile copy constructor
 
   TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile);
   // Profile copy constructor
 
-  TAO_UIOP_Profile (const TAO_IOP_Version &version);
-  // Profile constructor, explicitly define the version.
-
-  TAO_UIOP_Profile (void);
+  TAO_UIOP_Profile (TAO_ORB_Core *orb_core);
   // Profile constructor, default.
 
   ~TAO_UIOP_Profile (void);
@@ -204,6 +176,9 @@ private:
 
   TAO_MProfile *forward_to_;
   // list of profiles which we should try forwarding on.
+
+  TAO_ORB_Core *orb_core_;
+  // ORB Core.
 };
 
 #if defined (__ACE_INLINE__)

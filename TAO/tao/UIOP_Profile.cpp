@@ -18,144 +18,42 @@ ACE_RCSID(tao, UIOP_Profile, "$Id$")
 # include "tao/UIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-
 static const char *prefix_ = "uiop:";
 
 const char TAO_UIOP_Profile::object_key_delimiter = '|';
 
-TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
-                                    const char *object_key)
-  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
-    rendezvous_point_ (0),
-    version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
-    object_key_ (),
-    object_addr_ (addr),
-    hint_ (0)
-{
-  this->set (addr);
-  int l = ACE_OS::strlen (object_key);
-  this->object_key_.length (l);
-
-  for (int i = 0; i < l; ++i)
-    this->object_key_[i] = object_key[i];
-
-}
-
-TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
-                                    const TAO_ObjectKey& object_key)
+TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
+                                    const TAO_ObjectKey &object_key,
+                                    TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
     object_addr_ (addr),
-    hint_ (0)
+    hint_ (0),
+    orb_core_ (orb_core)
 {
   this->set (addr);
 }
 
-TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
-                                    const TAO_IOP_Version& version,
-                                    const char *object_key)
-  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
-    rendezvous_point_ (0),
-    version_ (version),
-    object_key_ (),
-    object_addr_ (addr),
-    hint_ (0)
-{
-  this->set (addr);
-  int l = ACE_OS::strlen (object_key);
-  this->object_key_.length (l);
-
-  for (int i = 0; i < l; ++i)
-    this->object_key_[i] = object_key[i];
-
-}
-
-TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
-                                    const TAO_IOP_Version& version,
-                                    const TAO_ObjectKey& object_key)
-  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
-    rendezvous_point_ (0),
-    version_ (version),
-    object_key_ (object_key),
-    object_addr_ (addr),
-    hint_ (0)
-{
-  this->set (addr);
-}
-
-TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
-                                    const TAO_ObjectKey& object_key)
+TAO_UIOP_Profile::TAO_UIOP_Profile (const char *rendezvous_point,
+                                    const TAO_ObjectKey &object_key,
+                                    const ACE_UNIX_Addr &addr,
+                                    TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (object_key),
-    object_addr_ (rendezvous_point),
-    hint_ (0)
+    object_addr_ (addr),
+    hint_ (0),
+    orb_core_ (orb_core)
 {
-
   if (rendezvous_point)
-  {
-    ACE_NEW (this->rendezvous_point_,
-             char[ACE_OS::strlen (rendezvous_point) + 1]);
-    ACE_OS::strcpy (this->rendezvous_point_, rendezvous_point);
-  }
-
-}
-
-TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
-                                    const TAO_ObjectKey& object_key,
-                                    const ACE_UNIX_Addr& addr)
-  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
-    rendezvous_point_ (0),
-    version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
-    object_key_ (object_key),
-    object_addr_ (addr),
-    hint_ (0)
-{
-
-  if (rendezvous_point)
-  {
-    ACE_NEW (this->rendezvous_point_,
-             char[ACE_OS::strlen (rendezvous_point) + 1]);
-    ACE_OS::strcpy (this->rendezvous_point_, rendezvous_point);
-  }
-
-}
-
-TAO_UIOP_Profile::TAO_UIOP_Profile (const char* rendezvous_point,
-                                    const TAO_IOP_Version& version,
-                                    const TAO_ObjectKey& object_key)
-  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
-    rendezvous_point_ (0),
-    version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
-    object_key_ (object_key),
-    object_addr_ (rendezvous_point),
-    hint_ (0)
-{
-  ACE_UNUSED_ARG (version);
-
-  ACE_NEW (this->rendezvous_point_,
-           char[ACE_OS::strlen (rendezvous_point) + 1]);
-  ACE_OS::strcpy (this->rendezvous_point_, rendezvous_point);
-
-}
-
-TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile *pfile)
-  : TAO_Profile (pfile->tag ()),
-    rendezvous_point_(0),
-    version_(pfile->version_),
-    object_key_(pfile->object_key_),
-    object_addr_(pfile->object_addr_),
-    hint_(0)
-{
-
-  ACE_NEW (this->rendezvous_point_,
-           char[ACE_OS::strlen (pfile->rendezvous_point_) + 1]);
-  ACE_OS::strcpy (this->rendezvous_point_, pfile->rendezvous_point_);
-  hint_ = pfile->hint_;
-
+    {
+      ACE_NEW (this->rendezvous_point_,
+               char[ACE_OS::strlen (rendezvous_point) + 1]);
+      ACE_OS::strcpy (this->rendezvous_point_, rendezvous_point);
+    }
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile)
@@ -164,45 +62,37 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_UIOP_Profile &pfile)
     version_(pfile.version_),
     object_key_(pfile.object_key_),
     object_addr_(pfile.object_addr_),
-    hint_(0)
+    hint_(0),
+    orb_core_ (pfile.orb_core_)
 {
-
   ACE_NEW (this->rendezvous_point_,
            char[ACE_OS::strlen (pfile.rendezvous_point_) + 1]);
   ACE_OS::strcpy (this->rendezvous_point_, pfile.rendezvous_point_);
   hint_ = pfile.hint_;
-
-}
-
-TAO_UIOP_Profile::TAO_UIOP_Profile (const TAO_IOP_Version &version)
-  : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
-    rendezvous_point_ (0),
-    version_ (version),
-    object_key_ (),
-    object_addr_ (),
-    hint_ (0)
-{
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
+                                    TAO_ORB_Core *orb_core,
                                     CORBA::Environment &env)
   : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0)
+    hint_ (0),
+    orb_core_ (orb_core)
 {
   parse_string (string, env);
 }
 
-TAO_UIOP_Profile::TAO_UIOP_Profile (void)
+TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_UNIX_IOP),
     rendezvous_point_ (0),
     version_ (DEF_UIOP_MAJOR, DEF_UIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0)
+    hint_ (0),
+    orb_core_ (orb_core)
 {
 }
 
@@ -219,14 +109,7 @@ TAO_UIOP_Profile::set (const ACE_UNIX_Addr& addr)
 
   ACE_OS::strcpy (this->rendezvous_point_, temp_rendezvous_point);
 
-//   ACE_DEBUG ((LM_DEBUG,
-//               "UIOP_Profile::set -- \n"
-//               "   temp_rendezvous_point: <%s>\n"
-//               "   rendezvous_point:      <%s>\n",
-//               temp_rendezvous_point,
-//               this->rendezvous_point_));
-
-  return 0;  // Success
+  return 0;
 }
 
 TAO_UIOP_Profile::~TAO_UIOP_Profile (void)

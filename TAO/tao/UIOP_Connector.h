@@ -105,6 +105,9 @@ private:
 
   TAO_UIOP_BASE_CONNECTOR base_connector_;
   // The connector initiating connection requests for UIOP.
+
+  TAO_ORB_Core *orb_core_;
+  // ORB Core.
 };
 
 # endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
