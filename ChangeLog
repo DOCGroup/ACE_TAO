@@ -1,3 +1,15 @@
+Mon Nov  8 11:34:34 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/DependencyGenerator/DependencyEditor.pm:
+        * bin/DependencyGenerator/DependencyGenerator.pm:
+
+          Slight performance modifications.
+
+        * bin/generate_export_file.pl:
+
+          Print debug messages to STDERR to allow clean redirection with the
+          use of the -d option.
+
 Mon Nov  8 07:53:46 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/msvc_mpc_auto_compile.pl:
