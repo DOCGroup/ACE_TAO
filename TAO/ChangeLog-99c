@@ -1,7 +1,12 @@
+Mon Aug 30 12:05:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.i: Fixed old g++ errors/warings.  Thanks to David for
+	  reporting this.
+
 Mon Aug 30 11:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_operation.cpp
-	  TAO_IDL/be/be_visitor_factory.cpp	
+	  TAO_IDL/be/be_visitor_factory.cpp
 	  TAO_IDL/be/be_visitor_scope.cpp
 	  TAO_IDL/be/be_visitor_attribute/attribute.cpp
 	  TAO_IDL/be/be_visitor_interface/interface.cpp
@@ -31,8 +36,8 @@ Mon Aug 30 11:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  TAO_IDL/be_include/be_visitor_interface/tie_sh.h
 	  TAO_IDL/be_include/be_visitor_operation/ami_handler_thru_poa_collocated_ss.h:
 	  Renamed the Code Generation enums to make it more clear what
-	  is actually meant. I also added support for attributes, though still work needs 
-	  to be done in that area. Besides that I fixed bugs in the code generation. 
+	  is actually meant. I also added support for attributes, though still work needs
+	  to be done in that area. Besides that I fixed bugs in the code generation.
 
 	* tao/Transport_Mux_Strategy.cpp:
 	  Fixed a bug concerning an uninitialized message state.
