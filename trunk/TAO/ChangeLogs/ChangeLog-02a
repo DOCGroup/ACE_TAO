@@ -1,3 +1,36 @@
+Tue Feb 27 12:17:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Any.cpp:
+
+          Modified value() method to return 'this' if the Any
+          contains some value, 0 otherwise. It is possible that
+          the Any's void* value_ member could be 0 but the Any
+          contains some value in its message block member. The
+          'this' pointer is returned to enforce the OMG warnings
+          that the method will soon disappear from the spec and
+          that its return value cannot be guaranteed to yield
+          any useful value by casting.
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence.cpp:
+
+          In the operator= methods in each sequence class, modified
+          the case where the release_ member is 0 to set the 
+          buffer to 0 if rhs.maximum_ is 0. Otherwise allocbuf (0)
+          is called, which may lead to problems. Thanks to Virgilijus Globis 
+          <virgis@megagis.lt> for reporting this bug.
+
+        * tao/MessagingC.h:
+
+          Removed two instances of a typedef of _tao_seq_Octet to
+          _marshaled_exception_seq, in Messaging::ExceptionHolder and
+          in OBV_Messaging::ExceptionHolder. These typedefs are no
+          longer used or needed anywhere.
+
+        * tao/Stub.cpp:
+
+          Removed some extra parentheses in parse_policies.
+
 Tue Feb 27 11:34:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Invocation.cpp:
