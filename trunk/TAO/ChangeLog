@@ -1,3 +1,14 @@
+Wed Aug 25 07:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+          Instead of including sys/loadavg.h, include
+          ace/os_include/os_loadavg.h
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
+          Instead of including sys/loadavg.h, include
+          ace/os_include/os_loadavg.h. Added include of os_pstat.h to fix
+          compile error on HPUX on Itanium
+
 Tue Aug 24 20:33:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tests/RTCORBA/RTMutex/server.cpp:
