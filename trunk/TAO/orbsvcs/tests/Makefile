@@ -12,6 +12,7 @@ DIRS  =	Simple_Naming \
 	Logger \
 	Event_Latency \
 	EC_Multiple \
+	Concurrency
 
 ifdef av
 ## Add the implementation files 
