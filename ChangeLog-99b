@@ -1,8 +1,15 @@
+Tue Jun 22 15:20:53 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Thread_Manager_Test.cpp (main): removed THR_DETACHED.
+          That seems to solve the libthread panic problem on Solaris,
+          even with group signalling enabled.  Thanks to Carlos for
+          suggesting this.
+
 Tue Jun 22 15:11:34 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* ace/Containers_T.h,i
-	  Added new next(T *&) methods to the ACE_DLList_Iterator
-	  classes and marked the old versions as DEPRECATED
+        * ace/Containers_T.h,i
+          Added new next(T *&) methods to the ACE_DLList_Iterator
+          classes and marked the old versions as DEPRECATED.
 
 Tue Jun 22 13:40:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
