@@ -1,3 +1,22 @@
+Thu May 10 09:19:24 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+          Add IFR_Client_Adapter to the build, even under minimum CORBA.
+          Without it the ACE_Dynamic_Service<TAO_IFR_Client_Adapter>
+          template is undefined when we compile without inlining.
+
+        * performance-tests/DII_Latency/Makefile:
+        * performance-tests/DSI_Latency/Makefile:
+        * performance-tests/Deferred_Latency/Makefile:
+          Disable these directories when compiling with minimum CORBA.
+
+        * performance-tests/DSI_Latency/client.cpp:
+          Fix ACE_RCSID() macro
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+          Use the blocking flushing strategy for slightly better
+          performance.
+
 Thu May 11 01:56:45 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/GIOP_Message_Base.cpp
@@ -17,24 +36,24 @@ Thu May 10 10:56:33 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Thu May 10 08:46:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/IIOP_Connection_Handler.cpp:
-	  A debugging message was confusing it said 'connection from
-	  client', but it was used for both passive and actively
-	  established connections.  IMHO 'connection to peer' is less
-	  confusing.
+        * tao/IIOP_Connection_Handler.cpp:
+          A debugging message was confusing it said 'connection from
+          client', but it was used for both passive and actively
+          established connections.  IMHO 'connection to peer' is less
+          confusing.
 
         * tests/Big_Oneways/Session.cpp:
         * tests/Big_Twoways/Session.cpp:
         * tests/Blocking_Sync_None/client.cpp:
         * tests/MT_Timeout/Client_Task.cpp:
         * tests/MT_Timeout/Server_Task.cpp:
-	  Several tests were too verbose for the nightly regression tests,
-	  eliminate a lot of output.
+          Several tests were too verbose for the nightly regression tests,
+          eliminate a lot of output.
 
 Thu May 10 07:11:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/DSI_Latency/Roundtrip.h: Added exception
-	  specification.  
+        * performance-tests/DSI_Latency/Roundtrip.h: Added exception
+          specification.
 
 Thu May 10 08:06:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -46,8 +65,8 @@ Thu May 10 08:06:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Wed May 09 19:37:34 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp
-	  (child_poa_testing): Updated and extended this test.
+        * performance-tests/POA/Object_Creation_And_Registration/registration.cpp
+          (child_poa_testing): Updated and extended this test.
 
 Wed May  9 15:36:46 2001  Carlos O'Ryan  <coryan@uci.edu>
 
