@@ -44,7 +44,7 @@ FILES	 = $(OTHERS_SRCS) $(CORBA_SRCS)
 COMPATDIR = ./compat
 COMPATFILES = objbase.h initguid.h
 
-BIN = t-xdr t-sizes
+BIN = # t-xdr t-sizes
 
 TEMPLATE_FILES = 
 
