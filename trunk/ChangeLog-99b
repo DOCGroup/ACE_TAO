@@ -1,3 +1,10 @@
+Tue Oct 12 12:20:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-subsets.html: updated status, and added some
+          missing motivation sections.  Thanks to Wei Chiang
+          <wei.chiang@nokia.com> for reporting that the document
+          was out-of-date.
+
 Tue Oct 12 11:57:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.6-sunc++-4.x.h: removed because it
