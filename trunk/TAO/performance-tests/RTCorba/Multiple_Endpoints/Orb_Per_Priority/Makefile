@@ -12,8 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lRTCORBA_Common
-
 BIN_UNCHECKED = server client
 
 CLIENT_OBJS = 	client.o
@@ -24,6 +22,7 @@ VBIN = $(BIN:%=%$(VAR))
 SRC=$(CLIENT_OBJS:.o=.cpp) $(SERVER_OBJS:.o=.cpp)
 CPPFLAGS += -I../Common
 
+TAO_IDL_FLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -47,8 +46,8 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-RT_TAO_SRVR_LIBS := -lTAO_Strategies $(RT_TAO_SRVR_LIBS)
-RT_TAO_CLNT_LIBS := -lTAO_Strategies $(RT_TAO_CLNT_LIBS)
+RT_TAO_SRVR_LIBS := -lRTCORBA_Common -lTAO_Strategies $(RT_TAO_SRVR_LIBS)
+RT_TAO_CLNT_LIBS := -lRTCORBA_Common -lTAO_Strategies $(RT_TAO_CLNT_LIBS)
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_SRVR_LIBS) $(LDLIBS) $(POSTLINK)
@@ -57,6 +56,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(LDLIBS) $(POSTLINK)
 
 realclean: clean
+	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

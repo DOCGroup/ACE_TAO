@@ -1,3 +1,10 @@
+Mon Sep 10 12:17:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+	  Moved the libraries around to get proper link line. It was
+	  busted. Further added a realclean so that we remove strange
+	  generated files out of the directory.
+
 Mon Sep 10 07:41:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Xt_Stopwatch/Makefile: Updated dependencies.
