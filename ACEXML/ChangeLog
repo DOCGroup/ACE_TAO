@@ -1,3 +1,9 @@
+Fri Jan 24 20:28:22 2003  Krishnakumar B  <kitty@insanely.long.id.truncated>
+
+        * parser/parser/Parser.cpp (pop_context): Bail out if there is
+          only one element on the context stack. Bad things [TM] will happen
+          if we pop the only context available.
+
 Mon Nov 25 04:25:15 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * parser/parser/Parser.cpp (reset):
