@@ -4161,17 +4161,17 @@ typedef fd_set ACE_FD_SET_TYPE;
 
 #if defined (ACE_HAS_IPV6)
 
-#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-#define ACE_ADDRESS_FAMILY_INET ACE_INET_Addr::address_family()
-#define ACE_PROTOCOL_FAMILY_INET ACE_INET_Addr::protocol_family()
-#else
-#define ACE_ADDRESS_FAMILY_INET AF_INET6
-#define ACE_PROTOCOL_FAMILY_INET PF_INET6
-#endif /* ACE_USES_IPV4_IPV6_MIGRATION */
+#  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
+#    define ACE_ADDRESS_FAMILY_INET  AF_UNSPEC
+#    define ACE_PROTOCOL_FAMILY_INET PF_UNSPEC
+#  else
+#    define ACE_ADDRESS_FAMILY_INET AF_INET6
+#    define ACE_PROTOCOL_FAMILY_INET PF_INET6
+#  endif /* ACE_USES_IPV4_IPV6_MIGRATION */
 
 #else
-#define ACE_ADDRESS_FAMILY_INET AF_INET
-#define ACE_PROTOCOL_FAMILY_INET PF_INET
+#  define ACE_ADDRESS_FAMILY_INET AF_INET
+#  define ACE_PROTOCOL_FAMILY_INET PF_INET
 #endif
 
 # if defined (ACE_LACKS_SIGSET)
@@ -6260,7 +6260,10 @@ public:
                                         int length,
                                         int type);
   static struct hostent *gethostbyname (const char *name);
-  static struct hostent *gethostbyname2 (const char *name, int type);
+  static struct hostent *getipnodebyname (const char *name, int family,
+                                          int flags = 0);
+  static struct hostent *getipnodebyaddr (const void *src, size_t len,
+                                          int family);
   static struct hostent *gethostbyaddr_r (const char *addr,
                                           int length,
                                           int type,

@@ -48,9 +48,10 @@ public:
   ACE_INET_Addr (const sockaddr_in *, int len);
 
   /// Creates an <ACE_INET_Addr> from a <port_number> and the remote
-  /// <host_name>.
+  /// <host_name>. Can use address_family to select IPv6 vs. IPv4.
   ACE_INET_Addr (u_short port_number,
-                 const char host_name[]);
+                 const char host_name[],
+                 int address_family = PF_UNSPEC);
 
   /**
    * Initializes an <ACE_INET_Addr> from the <address>, which can be
@@ -86,7 +87,8 @@ public:
 
 #if defined (ACE_HAS_WCHAR)
   ACE_INET_Addr (u_short port_number,
-                 const wchar_t host_name[]);
+                 const wchar_t host_name[],
+                 int address_family = PF_UNSPEC);
 
   ACE_EXPLICIT ACE_INET_Addr (const wchar_t address[]);
 
@@ -114,22 +116,14 @@ public:
    * remote <host_name>.  If <encode> is enabled then <port_number> is
    * converted into network byte order, otherwise it is assumed to be
    * in network byte order already and are passed straight through.
+   * address_family can be used to select IPv4/IPv6 if the OS has
+   * IPv6 capability (ACE_HAS_IPV6 is defined). To specify IPv6, use
+   * the value AF_INET6. To specify IPv4, use AF_INET.
    */
   int set (u_short port_number,
            const char host_name[],
-           int encode = 1);
-
-#if defined ACE_HAS_IPV6
-  /**
-   * I think PF_UNSPEC is really a typo in the RFC and it really should
-   * be AF_UNSPEC.  They are both usually defined to the same thing, so
-   * it shouldn't really matter.
-   */
-  int set_usinggetaddrinfo (u_short port_number,
-                            const char host_name[],
-                            int address_family = PF_UNSPEC,
-                            int encode = 1);
-#endif
+           int encode = 1,
+           int address_family = PF_UNSPEC);
 
   /**
    * Initializes an <ACE_INET_Addr> from a <port_number> and an
@@ -173,7 +167,8 @@ public:
 #if defined (ACE_HAS_WCHAR)
   int set (u_short port_number,
            const wchar_t host_name[],
-           int encode = 1);
+           int encode = 1,
+           int address_family = PF_UNSPEC);
 
   int set (const wchar_t port_name[],
            const wchar_t host_name[],
@@ -292,11 +287,6 @@ public:
   /// Computes and returns hash value.
   virtual u_long hash (void) const;
 
-#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-  static int protocol_family(void);
-  static int address_family(void);
-#endif
-
   /// Dump the state of an object.
   void dump (void) const;
 
@@ -309,21 +299,16 @@ private:
   void *ip_addr_pointer(void) const;
   size_t ip_addr_size(void) const;
 
-  // Initialize the underlying internet address structure.
-  // This sets the structure to zeros and sets the address
-  // family.
-  void initialize(void);
-
   /// Underlying representation.
+  /// This union uses the knowledge that the two structures share the
+  /// first member, sa_family (as all sockaddr structures do).
+  union
+  {
+    sockaddr_in  in4_;
 #if defined (ACE_HAS_IPV6)
-  sockaddr_in6 inet_addr6_;
-#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-  sockaddr_in inet_addr4_;
-  static int protocol_family_;
-#endif
-#else
-  sockaddr_in inet_addr4_;
-#endif
+    sockaddr_in6 in6_;
+#endif /* ACE_HAS_IPV6 */
+  } inet_addr_;
 
 #if defined (VXWORKS)
   char buf_[INET_ADDR_LEN];

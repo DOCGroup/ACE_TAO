@@ -5880,24 +5880,35 @@ ACE_OS::gethostbyname (const char *name)
 }
 
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyname2 (const char *name, int family)
+ACE_OS::getipnodebyname (const char *name, int family, int flags)
 {
-  ACE_OS_TRACE ("ACE_OS::gethostbyname2");
+  ACE_OS_TRACE ("ACE_OS::getipnodebyname");
 # if defined (ACE_PSOS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (family);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_IPV6)
-#   if defined (ACE_HAS_NONCONST_GETBY)
+#   if defined (whatever_doesnt_have_getipnodebyname)
+  ACE_UNUSED_ARG (flags)
+#     if defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::gethostbyname2 (ACE_const_cast (char *, name),
                                          family),
                        struct hostent *,
                        0);
-#   else
+#     else
   ACE_SOCKCALL_RETURN (::gethostbyname2 (name, family),
                        struct hostent *,
                        0);
-#   endif /* ACE_HAS_NONCONST_GETBY */
+#     endif /* ACE_HAS_NONCONST_GETBY */
+#   else
+  struct hostent *hptr;
+  int errnum;
+  if ((hptr = ::getipnodebyname (name, family, flags, &errnum)) == 0)
+    {
+      errno = errnum;
+    }
+  return hptr;
+#   endif /* whatever_doesnt_have_getipnodebyname */
 # else
   // IPv4-only implementation
   if (family == AF_INET)
@@ -5906,6 +5917,37 @@ ACE_OS::gethostbyname2 (const char *name, int family)
   ACE_NOTSUP_RETURN (0);
 # endif /* ACE_PSOS */
 }
+
+
+ACE_INLINE struct hostent *
+ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
+{
+#if defined (ACE_HAS_IPV6)
+#  if defined (whatever_doesnt_have_getipnodebyaddr)
+  ACE_UNUSED_ARG (src);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (family);
+  ACE_NOTSUP_RETURN (0);
+#  else
+  struct hostent *hptr;
+  int errnum;
+  if ((hptr = ::getipnodebyaddr (src, len, family, &errnum)) == 0)
+    {
+      errno = errnum;
+    }
+  return hptr;
+#  endif /* whatever_doesnt_have_getipnodebyname */
+#else
+  // IPv4-only implementation
+  if (family == AF_INET)
+    return ACE_OS::gethostbyaddr (ACE_static_cast (const char *, src),
+                                  len,
+                                  family);
+
+  ACE_NOTSUP_RETURN (0);
+# endif /* ACE_PSOS */
+}
+
 
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyaddr (const char *addr, int length, int type)

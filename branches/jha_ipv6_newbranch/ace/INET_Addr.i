@@ -13,14 +13,12 @@ ACE_INLINE void *
 ACE_INET_Addr::ip_addr_pointer(void) const
 {
 #if defined (ACE_HAS_IPV6)
-#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-  if(ACE_INET_Addr::protocol_family() == PF_INET)
-    return (void*)&this->inet_addr4_.sin_addr;
+  if (this->inet_addr_.in4_.sin_family == PF_INET)
+    return (void*)&this->inet_addr_.in4_.sin_addr;
   else
-#endif
-    return (void*)&this->inet_addr6_.sin6_addr;
+    return (void*)&this->inet_addr_.in6_.sin6_addr;
 #else
-  return (void*)&this->inet_addr4_.sin_addr;
+  return (void*)&this->inet_addr_.in4_.sin_addr;
 #endif
 }
 
@@ -28,17 +26,13 @@ ACE_INLINE size_t
 ACE_INET_Addr::ip_addr_size(void) const
 {
 #if defined (ACE_HAS_IPV6)
-
-#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-  if(ACE_INET_Addr::protocol_family() == PF_INET)
-    return sizeof this->inet_addr4_.sin_addr;
+  if (this->inet_addr_.in4_.sin_family == PF_INET)
+    return sizeof this->inet_addr_.in4_.sin_addr;
   else
-#endif
-    return sizeof this->inet_addr6_.sin6_addr;
-
+    return sizeof this->inet_addr_.in6_.sin6_addr;
 #else
-  return sizeof this->inet_addr4_.sin_addr;
-#endif
+  return sizeof this->inet_addr_.in4_.sin_addr;
+#endif /* ACE_HAS_IPV6 */
 }
 
 // Return the port number, converting it into host byte order...
@@ -48,16 +42,13 @@ ACE_INET_Addr::get_port_number (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_port_number");
 #if defined (ACE_HAS_IPV6)
-
-#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-  if(ACE_INET_Addr::protocol_family() == PF_INET)
-    return ntohs (this->inet_addr4_.sin_port);
-   else
-#endif
-    return ntohs (this->inet_addr6_.sin6_port);
+  if (this->inet_addr_.in4_.sin_family == PF_INET)
+    return ntohs (this->inet_addr_.in4_.sin_port);
+  else
+    return ntohs (this->inet_addr_.in6_.sin6_port);
 #else
-  return ntohs (this->inet_addr4_.sin_port);
-#endif
+  return ntohs (this->inet_addr_.in4_.sin_port);
+#endif /* ACE_HAS_IPV6 */
 }
 
 // Return the address.
@@ -66,17 +57,7 @@ ACE_INLINE void *
 ACE_INET_Addr::get_addr (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_addr");
-#if defined (ACE_HAS_IPV6)
-
-#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-  if(ACE_INET_Addr::protocol_family() == PF_INET)
-    return (void*)&this->inet_addr4_;
-  else
-#endif
-    return (void*)&this->inet_addr6_;
-#else
-  return (void *) &this->inet_addr4_;
-#endif
+  return (void*)&this->inet_addr_;
 }
 
 ACE_INLINE int
@@ -84,16 +65,13 @@ ACE_INET_Addr::get_addr_size (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_addr_size");
 #if defined (ACE_HAS_IPV6)
-
-#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-  if(ACE_INET_Addr::protocol_family() == PF_INET)
-    return sizeof this->inet_addr4_;
+  if (this->inet_addr_.in4_.sin_family == PF_INET)
+    return sizeof this->inet_addr_.in4_;
   else
-#endif
-    return sizeof this->inet_addr6_;
+    return sizeof this->inet_addr_.in6_;
 #else
-  return sizeof this->inet_addr4_;
-#endif
+  return sizeof this->inet_addr_.in4_;
+#endif /* ACE_HAS_IPV6 */
 }
 
 
@@ -101,12 +79,14 @@ ACE_INLINE u_long
 ACE_INET_Addr::hash (void) const
 {
 #if defined (ACE_HAS_IPV6)
-  // XXX do migration code
-  const unsigned int *addr = (const unsigned int*)this->ip_addr_pointer();
-  return addr[0] + addr[1] + addr[2] + addr[3] + this->get_port_number();
-#else
+  if (this->inet_addr_.in6_.sin6_family == PF_INET6)
+    {
+      const unsigned int *addr = (const unsigned int*)this->ip_addr_pointer();
+      return addr[0] + addr[1] + addr[2] + addr[3] + this->get_port_number();
+    }
+  else
+#endif /* ACE_HAS_IPV6 */
   return this->get_ip_address () + this->get_port_number ();
-#endif
 }
 
 ACE_INLINE int
