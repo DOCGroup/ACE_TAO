@@ -15,9 +15,9 @@ Fri Mar 19 10:29:17 1999  David L. Levine  <levine@cs.wustl.edu>
           creation during construction of static objects.  Timeprobes
           can do that, when they're enabled.
 
-        * ace/OS.cpp (fini): added ACE_FINI_HOOK support.  Applications
-          can #define ACE_FINI_HOOK to any executable code, and it
-          will be executed on program termination.
+        * ace/OS.cpp (fini), README: added ACE_FINI_HOOK support.
+          Applications can #define ACE_FINI_HOOK to any executable code,
+          and it will be executed on program termination.
 
         * ace/config-linux-lxpthreads.h: with ACE_HAS_TSS_EMULATION,
           #define ACE_FINI_HOOK to insert a one-second sleep at
@@ -25,7 +25,13 @@ Fri Mar 19 10:29:17 1999  David L. Levine  <levine@cs.wustl.edu>
           segfaults of unknown origin, but they appear to be in the
           LinuxThreads library.
 
-        * bin/ace_components: added.
+        * bin/ace_components: added.  It is used to record/access
+          which components were built into the ACE library.  See next
+          entry for files that have been updated to use it.
+
+        * ace/Makefile,tests/Makefile,tests/run_tests.sh: use
+          ace_components to record which components are in the ACE library.
+          Suppress build/run of tests that use Token and Other.
 
 Fri Mar 19 03:24:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
