@@ -40,13 +40,14 @@ namespace TAO
         ServantRetentionStrategy* servant_retention_strategy) = 0;
 
       /*
-       * Validate if the  servant may be activated
+       * Validate if the servant may be activated
        * @retval true This servant may be activated
        * @retval false This servant may not be activated
        */
-      virtual bool validate (PortableServer::Servant servant,
-                             int &wait_occurred_restart_call
-                             ACE_ENV_ARG_DECL) = 0;
+      virtual
+      bool is_servant_activation_allowed (
+        PortableServer::Servant servant,
+        int &wait_occurred_restart_call) = 0;
     };
   }
 }

@@ -23,10 +23,9 @@ namespace TAO
     }
 
     bool
-    Multiple_Id_Uniqueness_Strategy::validate (
+    Multiple_Id_Uniqueness_Strategy::is_servant_activation_allowed (
       PortableServer::Servant servant,
-      int &wait_occurred_restart_call
-      ACE_ENV_ARG_DECL_NOT_USED)
+      int &wait_occurred_restart_call)
     {
       ACE_UNUSED_ARG (servant);
       ACE_UNUSED_ARG (wait_occurred_restart_call);

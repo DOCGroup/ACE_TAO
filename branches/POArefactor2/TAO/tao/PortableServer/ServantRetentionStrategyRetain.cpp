@@ -873,12 +873,19 @@ namespace TAO
         }
 
       bool may_activate =
-        this->poa_->active_policy_strategies().id_uniqueness_strategy()->validate (servant, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+        this->poa_->active_policy_strategies().id_uniqueness_strategy()->is_servant_activation_allowed (servant, wait_occurred_restart_call);
 
       if (!may_activate)
         {
-          return 0;
+          if (wait_occurred_restart_call)
+            {
+              return 0;
+            }
+          else
+            {
+              ACE_THROW_RETURN (PortableServer::POA::ServantAlreadyActive (),
+                                0);
+            }
         }
 
       // Otherwise, the activate_object operation generates an Object Id
@@ -983,12 +990,18 @@ namespace TAO
         }
 
       bool may_activate =
-        this->poa_->active_policy_strategies().id_uniqueness_strategy()->validate (servant, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        this->poa_->active_policy_strategies().id_uniqueness_strategy()->is_servant_activation_allowed (servant, wait_occurred_restart_call);
 
       if (!may_activate)
         {
-          return;
+          if (wait_occurred_restart_call)
+            {
+              return;
+            }
+          else
+            {
+              ACE_THROW (PortableServer::POA::ServantAlreadyActive ());
+            }
         }
 
       // Otherwise, the activate_object_with_id operation enters an

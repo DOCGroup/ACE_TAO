@@ -15,7 +15,7 @@ namespace TAO
   namespace Portable_Server
   {
     Unique_Id_Uniqueness_Strategy::Unique_Id_Uniqueness_Strategy (void) :
-      strategy_ (0)
+      servant_retention_strategy_ (0)
     {
     }
 
@@ -27,35 +27,28 @@ namespace TAO
     Unique_Id_Uniqueness_Strategy::strategy_init (
       ServantRetentionStrategy* servant_retention_strategy)
     {
-      strategy_ = servant_retention_strategy;
+      servant_retention_strategy_ = servant_retention_strategy;
     }
 
     bool
-    Unique_Id_Uniqueness_Strategy::validate (
+    Unique_Id_Uniqueness_Strategy::is_servant_activation_allowed (
       PortableServer::Servant servant,
-      int &wait_occurred_restart_call
-      ACE_ENV_ARG_DECL)
+      int &wait_occurred_restart_call)
     {
       // If the specified servant is already in the Active Object Map, the
       // ServantAlreadyActive exception is raised.
       int result =
-        this->strategy_->is_servant_in_map (servant,
-                                            wait_occurred_restart_call);
+        this->servant_retention_strategy_->is_servant_in_map (servant,
+                                                              wait_occurred_restart_call);
 
-      if (result)
+      if (result || wait_occurred_restart_call)
         {
-          ACE_THROW_RETURN (PortableServer::POA::ServantAlreadyActive (),
-                            false);
-        }
-      else if (wait_occurred_restart_call)
-        {
-          // We ended up waiting on a condition variable, the POA
-          // state may have changed while we are waiting.  Therefore,
-          // we need to restart this call.
           return false;
         }
-
-      return true;
+      else
+        {
+          return true;
+        }
     }
   }
 }
