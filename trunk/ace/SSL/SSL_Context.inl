@@ -75,6 +75,18 @@ ACE_SSL_Context::certificate_file_name (void) const
   return this->certificate_.file_name ();
 }
 
+ACE_INLINE int
+ACE_SSL_Context::dh_params_file_type (void) const
+{
+  return this->dh_params_.type ();
+}
+
+ACE_INLINE const char*
+ACE_SSL_Context::dh_params_file_name (void) const
+{
+  return this->dh_params_.file_name ();
+}
+
 ACE_INLINE void
 ACE_SSL_Context::default_verify_mode (int mode)
 {
