@@ -1,364 +1,381 @@
 Mon Jul 20 15:35:59 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-	
-	* Wrapped all the files with "#if defined (ACE_HAS_GPERF)" so that
-	it compiles on appropriate platforms.
+
+        * Wrapped all the files with "#if defined (ACE_HAS_GPERF)" so that
+        it compiles on appropriate platforms.
+
+Sun Jul 19 22:21:17 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * apps/gperf/src/new.cpp (new): wrapped assignment with
+          parens where used as a conditional.
+
+        * apps/gperf/src/Iterator.cpp (Iterator),
+          List_Node.cpp (List_Node), Hash_Table.cpp (Hash_Table):
+          reordered initializers to match declaration order.
+
+        * apps/gperf/src/Hash_Table.cpp (~Hash_Table),
+        * apps/gperf/src/Bool_Array.cpp (init): cast sizeof
+          to int to avoid compiler (g++/Linux alpha) warning about
+          mismatch with %d format specifier.
+
+        * apps/gperf/src/new.cpp (new): use ACE_THROW_SPEC instead of
+          _RWSTD_THROW_SPEC.
 
 Sun Jul 19 13:11:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* src/new.cpp: Added support for the _RWSTD_THROW_SPEC macro for
- 	  DEC UNIX.  Thanks to David Levine for reporting this.
+        * src/new.cpp: Added support for the _RWSTD_THROW_SPEC macro for
+          DEC UNIX.  Thanks to David Levine for reporting this.
 
-	* src/Key_List.cpp: Fixed one of those nasty "for loop counter
- 	  scoping glitches.  Again, thanks to David Levine and DEC C++ for
- 	  catching this.  * src/Key_List.cpp (reorder): Clarified the code
- 	  so that we don't write horrible C-style hacks.  Thanks to David
- 	  Levine and the DEC C++ compiler for finding this one!
+        * src/Key_List.cpp: Fixed one of those nasty "for loop counter
+          scoping glitches.  Again, thanks to David Levine and DEC C++ for
+          catching this.  * src/Key_List.cpp (reorder): Clarified the code
+          so that we don't write horrible C-style hacks.  Thanks to David
+          Levine and the DEC C++ compiler for finding this one!
 
 Tue Jun 30 15:43:16 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* src/Options.h		:
-	* src/Options.cpp	:
-	* src/Key_List.cpp	: Added the following options to gperf.
-		- 	"-m" To mute warnings. (If -D option is enabled,
-			gperf doesnt say anything about duplicate hash
-			values etc.
-		- 	"-M" To skip class definition while in C++ mode.
-		-	"-J" To skip the line "#include <string.h>" in the
-			output.
+        * src/Options.h         :
+        * src/Options.cpp       :
+        * src/Key_List.cpp      : Added the following options to gperf.
+                -       "-m" To mute warnings. (If -D option is enabled,
+                        gperf doesnt say anything about duplicate hash
+                        values etc.
+                -       "-M" To skip class definition while in C++ mode.
+                -       "-J" To skip the line "#include <string.h>" in the
+                        output.
 
 Thu May 14 16:37:39 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* src: ACE'ifed most of the gperf source code, yow!
+        * src: ACE'ifed most of the gperf source code, yow!
 
 Sun Apr 14 14:31:10 1996  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
 
-	* src: Changed things so that there's no longer any use of the
-	  Read_Line and Std_Err code.  All of this has been pushed into
-	  the ACE components, which is where it belongs...
+        * src: Changed things so that there's no longer any use of the
+          Read_Line and Std_Err code.  All of this has been pushed into
+          the ACE components, which is where it belongs...
 
-	* src: Changed things so that there's no longer any use of the
-	  pointless inheritance in the code.  This was a result of my not
-	  understanding inheritance back in 1989... ;-)
+        * src: Changed things so that there's no longer any use of the
+          pointless inheritance in the code.  This was a result of my not
+          understanding inheritance back in 1989... ;-)
 
-	* Began to integrate GNU gperf into the ACE release.  Started off
-	  by bringing the standard GNU version up to date wrt to the
-	  changes I made back in 1991!
+        * Began to integrate GNU gperf into the ACE release.  Started off
+          by bringing the standard GNU version up to date wrt to the
+          changes I made back in 1991!
 
 Tue Oct 10 16:37:28 1995  Mike Stump  <mrs@cygnus.com>
 
-	* src/new.cc: Since malloc/delete are not paired, we cannot call
-	free.
+        * src/new.cc: Since malloc/delete are not paired, we cannot call
+        free.
 
 Wed Jan  4 12:40:14 1995  Per Bothner  <bothner@kalessin.cygnus.com>
 
-	* src/Makefile.in ($(TARGETPROG)):  Link with $(LDFLAGS).
-	Patch from John Interrante <interran@uluru.stanford.edu>.
+        * src/Makefile.in ($(TARGETPROG)):  Link with $(LDFLAGS).
+        Patch from John Interrante <interran@uluru.stanford.edu>.
 
 Sat Nov  5 19:12:48 1994  Jason Merrill  (jason@phydeaux.cygnus.com)
 
-	* src/Makefile.in (LIBS): Remove.
+        * src/Makefile.in (LIBS): Remove.
 
 Tue Oct 18 17:51:14 1994  Per Bothner  <bothner@kalessin.cygnus.com>
 
-	* src/std-err.cc:  Use stderror, instead of the non-standard
-	sys_nerr and sys_errlist.
+        * src/std-err.cc:  Use stderror, instead of the non-standard
+        sys_nerr and sys_errlist.
 
 Sat Sep 17 22:02:13 1994  Per Bothner  (bothner@kalessin.cygnus.com)
 
-	* src/key-list.cc (output_hash_function):
-	Patch from William Bader <wbader@CSEE.Lehigh.Edu>.
+        * src/key-list.cc (output_hash_function):
+        Patch from William Bader <wbader@CSEE.Lehigh.Edu>.
 
 Fri Jul 15 09:38:11 1994  Per Bothner  (bothner@cygnus.com)
 
-	* src/std-err.cc:  #include <errno.h>, and only declare
-	extern int errno if errno is not a macro.
+        * src/std-err.cc:  #include <errno.h>, and only declare
+        extern int errno if errno is not a macro.
 
 Mon May 30 17:29:34 1994  Per Bothner  (bothner@kalessin.cygnus.com)
 
-	* Makefile.in (src_all, install):  Make sure to add '/' after
-	`pwd` in $rootme, as expected by FLAGS_TO_PASS.
+        * Makefile.in (src_all, install):  Make sure to add '/' after
+        `pwd` in $rootme, as expected by FLAGS_TO_PASS.
 
 Wed May 11 00:47:22 1994  Jason Merrill  (jason@deneb.cygnus.com)
 
-	Make libg++ build with gcc -ansi -pedantic-errors
-	* src/options.h: Lose commas at end of enumerator lists.
+        Make libg++ build with gcc -ansi -pedantic-errors
+        * src/options.h: Lose commas at end of enumerator lists.
 
 Sun Dec  5 19:16:40 1993  Brendan Kehoe  (brendan@lisa.cygnus.com)
 
-	* src/hash-table.cc (Hash_Table::~Hash_Table): Don't pass an
-	argument to fprintf, since it's not expecting one.
+        * src/hash-table.cc (Hash_Table::~Hash_Table): Don't pass an
+        argument to fprintf, since it's not expecting one.
 
 Fri Nov 26 19:03:18 1993  Per Bothner  (bothner@kalessin.cygnus.com)
 
-	* src/list-node.cc:  #undef index, for the sake of broken NeXT,
+        * src/list-node.cc:  #undef index, for the sake of broken NeXT,
 
 Thu Nov  4 11:16:03 1993  Per Bothner  (bothner@kalessin.cygnus.com)
 
-	* Makefile.in (install):  Use INSTALL_DATA for gperf.1.
+        * Makefile.in (install):  Use INSTALL_DATA for gperf.1.
 
 Mon Oct 25 18:40:51 1993  Per Bothner  (bothner@kalessin.cygnus.com)
 
-	* src/key-list.cc (Key_List::read_keys):  Use POW macro
-	to increase hash table size to power of 2.
+        * src/key-list.cc (Key_List::read_keys):  Use POW macro
+        to increase hash table size to power of 2.
 
-	* options.h (LARGE_STACK_ARRAYS):  New flag.  Defaults to zero.
-	* gen-perf.cc, key-list.cc, read-line.cc:
-	Only stack-allocate large arrays if LARGE_STACK_ARRAYS is set.
-	* main.cc (main):  Only call setrlimit (RLIMIT_STACK, ...)
-	if LARGE_STACK_ARRAYS.
+        * options.h (LARGE_STACK_ARRAYS):  New flag.  Defaults to zero.
+        * gen-perf.cc, key-list.cc, read-line.cc:
+        Only stack-allocate large arrays if LARGE_STACK_ARRAYS is set.
+        * main.cc (main):  Only call setrlimit (RLIMIT_STACK, ...)
+        if LARGE_STACK_ARRAYS.
 
 Mon Oct  4 17:45:08 1993  Per Bothner  (bothner@kalessin.cygnus.com)
 
-	* src/gen-perf.cc:  Always use ANSI rand/srand instead of BSDisms.
+        * src/gen-perf.cc:  Always use ANSI rand/srand instead of BSDisms.
 
 Wed Aug 18 12:19:53 1993  Per Bothner  (bothner@kalessin.cygnus.com)
 
-	* Makefile.in (src_all):  Make less verbose output.
+        * Makefile.in (src_all):  Make less verbose output.
 
 Fri May 28 14:01:18 1993  Per Bothner  (bothner@rtl.cygnus.com)
 
-	* src/gen-perf.cc (Gen_Perf::change):  Don't use gcc-specific
-	2-operand conditional expression.
-	* src/key-list.cc (Key_List::output_lookup_array):
-	Don't use variable-size stack arrays, unless compiled by g++.
+        * src/gen-perf.cc (Gen_Perf::change):  Don't use gcc-specific
+        2-operand conditional expression.
+        * src/key-list.cc (Key_List::output_lookup_array):
+        Don't use variable-size stack arrays, unless compiled by g++.
 
 Tue May  4 14:08:44 1993  Per Bothner  (bothner@cygnus.com)
 
-	Changes (mostly from Peter Schauer) to permit compilation
-	using cfront 3.0 and otherwise be ARM-conforming.
-	* src/key-list.h:  class Key_List must use public derivation
-	of base class Std_Err (because Gen_Perf::operator() in gen-perf.cc
-	calls Std_Err::report_error).
-	* src/gen-perf.cc (Gen_Perf::affects_prev), src/hash-table.cc
-	(Hash_Table::operator()):  Don't use gcc-specific 2-operand
-	conditional expression.
-	* src/iterator.cc (Iterator::operator()):  Don't use gcc-specific
-	range construct in case label.
-	* key-list.cc (Key_List::output_lookup_array, Key_List::read_keys),
-	src/gen-perf.cc (Gen_Perf::operator(), src/read-line.cc
-	(Read_Line::readln_aux):  If not gcc, don't allocate
-	variable-sized arrays on stack.
-	* src/new.cc (operator new):  Argument type should be size_t.
-	* key-list.cc (Key_List::output_lookup_array, Key_List::read_keys),
-	new/cc (::operator new): Don't use non-standard >?= operator.
+        Changes (mostly from Peter Schauer) to permit compilation
+        using cfront 3.0 and otherwise be ARM-conforming.
+        * src/key-list.h:  class Key_List must use public derivation
+        of base class Std_Err (because Gen_Perf::operator() in gen-perf.cc
+        calls Std_Err::report_error).
+        * src/gen-perf.cc (Gen_Perf::affects_prev), src/hash-table.cc
+        (Hash_Table::operator()):  Don't use gcc-specific 2-operand
+        conditional expression.
+        * src/iterator.cc (Iterator::operator()):  Don't use gcc-specific
+        range construct in case label.
+        * key-list.cc (Key_List::output_lookup_array, Key_List::read_keys),
+        src/gen-perf.cc (Gen_Perf::operator(), src/read-line.cc
+        (Read_Line::readln_aux):  If not gcc, don't allocate
+        variable-sized arrays on stack.
+        * src/new.cc (operator new):  Argument type should be size_t.
+        * key-list.cc (Key_List::output_lookup_array, Key_List::read_keys),
+        new/cc (::operator new): Don't use non-standard >?= operator.
 
 Tue Apr 27 20:11:30 1993  Per Bothner  (bothner@cygnus.com)
 
-	* src/Makefile.in:  Define TARGETPROG, and use it.
+        * src/Makefile.in:  Define TARGETPROG, and use it.
 
 Mon Apr 19 00:29:18 1993  Per Bothner  (bothner@cygnus.com)
 
-	* Makefile.in, configure.in:  Re-vamped configure scheme.
-	* gperf.texinfo:  Renamed to gperf.texi.
-	* src/bool-array.{h,cc}:  ANSIfy bzero->memset.
+        * Makefile.in, configure.in:  Re-vamped configure scheme.
+        * gperf.texinfo:  Renamed to gperf.texi.
+        * src/bool-array.{h,cc}:  ANSIfy bzero->memset.
 
 Sat Jan 30 20:21:28 1993  Brendan Kehoe  (brendan@lisa.cygnus.com)
 
-	* tests/Makefile.in (mostlyclean): Also delete aout, cout, m3out,
-	pout, and preout.
+        * tests/Makefile.in (mostlyclean): Also delete aout, cout, m3out,
+        pout, and preout.
 
 Tue Dec 29 08:58:17 1992  Ian Lance Taylor  (ian@cygnus.com)
 
-	* Makefile.in: pass $(FLAGS_TO_PASS) to all calls to make.
-	(FLAGS_TO_PASS): added INSTALL, INSTALL_DATA, INSTALL_PROGRAM.
+        * Makefile.in: pass $(FLAGS_TO_PASS) to all calls to make.
+        (FLAGS_TO_PASS): added INSTALL, INSTALL_DATA, INSTALL_PROGRAM.
 
 Mon Dec 21 18:46:46 1992  Per Bothner  (bothner@rtl.cygnus.com)
 
-	* tests/expected.* renamed to *.exp to fit in 14 chars.
-	* tests/Makefile.in:  Update accordingly.
-	Also rename output.* to *.out.
-	* src/Makefile.in (clean):  Remove gperf program.
+        * tests/expected.* renamed to *.exp to fit in 14 chars.
+        * tests/Makefile.in:  Update accordingly.
+        Also rename output.* to *.out.
+        * src/Makefile.in (clean):  Remove gperf program.
 
 Wed Dec  9 14:33:34 1992  Per Bothner  (bothner@cygnus.com)
 
-	* src/hash-table.cc, src/bool-array.h: ANSIfy bzero->memset.
+        * src/hash-table.cc, src/bool-array.h: ANSIfy bzero->memset.
 
 Thu Dec  3 19:34:12 1992  Per Bothner  (bothner@cygnus.com)
 
-	* Makefile.in (distclean, realclean): Don't delete
-	Makefile before recursing.
+        * Makefile.in (distclean, realclean): Don't delete
+        Makefile before recursing.
 
 Fri Nov  6 13:41:49 1992  Per Bothner  (bothner@rtl.cygnus.com)
 
-	* key-list.{h,cc}:  Remove MAX_INT (and similar) constant
-	fields from Key_List class, and use INT_MAX (etc) from limits.h.
-	* key-list.{h,cc}, options.{h,cc}, vectors.h:  Removed all
-	uses of initialized const fields, as they are non-standard
-	- and their use was easy to do away with.  Mostly, just
-	made the constants static non-fields in the .cc file.
+        * key-list.{h,cc}:  Remove MAX_INT (and similar) constant
+        fields from Key_List class, and use INT_MAX (etc) from limits.h.
+        * key-list.{h,cc}, options.{h,cc}, vectors.h:  Removed all
+        uses of initialized const fields, as they are non-standard
+        - and their use was easy to do away with.  Mostly, just
+        made the constants static non-fields in the .cc file.
 
 Mon Nov  2 13:10:11 1992  Per Bothner  (bothner@cygnus.com)
 
-	* tests/Makefile.in:  When generating cinset.c, don't pass -C,
-	since -C assumes an ANSI compiler.  Add the -C flag (with -a)
-	when generating test.out.3 instead.
-	* tests/expected.out.3:  Update accordingly.
+        * tests/Makefile.in:  When generating cinset.c, don't pass -C,
+        since -C assumes an ANSI compiler.  Add the -C flag (with -a)
+        when generating test.out.3 instead.
+        * tests/expected.out.3:  Update accordingly.
 
 Wed Aug 12 11:47:54 1992  Per Bothner  (bothner@cygnus.com)
 
-	* Makefile.in:  Factor out common flags into $(FLAGS_TO_PASS).
-	* Makefile.in:  'install-info' depends on gperf.info.
+        * Makefile.in:  Factor out common flags into $(FLAGS_TO_PASS).
+        * Makefile.in:  'install-info' depends on gperf.info.
 
 Mon Aug 10 11:39:52 1992  Ian Lance Taylor  (ian@dumbest.cygnus.com)
 
-	* Makefile.in, src/Makefile.in: always create installation
-	directories.
+        * Makefile.in, src/Makefile.in: always create installation
+        directories.
 
 Mon Jul 20 15:33:21 1992  Mike Stump  (mrs@cygnus.com)
 
-	* src/new.cc (operator new):  Add cast from void * to char *,
-	since it is not a standard conversion.
+        * src/new.cc (operator new):  Add cast from void * to char *,
+        since it is not a standard conversion.
 
 Wed Jun 17 16:25:30 1992  Per Bothner  (bothner@rtl.cygnus.com)
 
-	* src/gen-perf.cc:  #include <_G_config.h> for _G_SYSV.
-	* src/key-list.cc:  alloca() hair.
-	* src/main.cc (main):  Only call getrlimit if _G_HAVE_SYS_RESOURCE.
-	* Makefile,in, {src,test}/Makefile.in:  Fix *clean rules.
+        * src/gen-perf.cc:  #include <_G_config.h> for _G_SYSV.
+        * src/key-list.cc:  alloca() hair.
+        * src/main.cc (main):  Only call getrlimit if _G_HAVE_SYS_RESOURCE.
+        * Makefile,in, {src,test}/Makefile.in:  Fix *clean rules.
 
 Fri May 29 13:21:13 1992  Per Bothner  (bothner@rtl.cygnus.com)
 
-	* src/gen-perf.cc:  Replace USG -> _G_SYSV.
+        * src/gen-perf.cc:  Replace USG -> _G_SYSV.
 
 Thu May 14 13:58:36 1992  Per Bothner  (bothner@rtl.cygnus.com)
 
-	* src/Makefile.in:  Don't pass obsolete flag -DUNLIMIT_STACK.
-	* tests/Makefile.in (clean): Fix.
+        * src/Makefile.in:  Don't pass obsolete flag -DUNLIMIT_STACK.
+        * tests/Makefile.in (clean): Fix.
 
 Sat Mar  7 00:03:56 1992  K. Richard Pixley  (rich@rtl.cygnus.com)
 
-	* gperf.texinfo: added menu item hook.
+        * gperf.texinfo: added menu item hook.
 
 Wed Feb 26 18:04:40 1992  K. Richard Pixley  (rich@cygnus.com)
 
-	* Makefile.in, configure.in: removed traces of namesubdir,
-	  -subdirs, $(subdir), $(unsubdir), some rcs triggers.  Forced
-	  copyrights to '92, changed some from Cygnus to FSF.
+        * Makefile.in, configure.in: removed traces of namesubdir,
+          -subdirs, $(subdir), $(unsubdir), some rcs triggers.  Forced
+          copyrights to '92, changed some from Cygnus to FSF.
 
 Sun Jan 26 19:21:58 1992  Per Bothner  (bothner at cygnus.com)
 
-	* tests/Makefile.in:  Use re-directed stdin instead of file
-	name in argv.  This allows us to remove the filename
-	from the output, the expected output, and hence the diffs.
-	(Note that the input file is in $(srcdir), which we cannot
-	place in the expected out files.)
-	* tests/expected.out.[1235]:  Edit out input filename,
-	to match new output.
+        * tests/Makefile.in:  Use re-directed stdin instead of file
+        name in argv.  This allows us to remove the filename
+        from the output, the expected output, and hence the diffs.
+        (Note that the input file is in $(srcdir), which we cannot
+        place in the expected out files.)
+        * tests/expected.out.[1235]:  Edit out input filename,
+        to match new output.
 
 Mon Nov  4 15:04:41 1991  Douglas C. Schmidt  (schmidt at bastille.ics.uci.edu)
 
         * Need to do something about the end-of-line marker being
-	  hard-coded to '\n'...
+          hard-coded to '\n'...
 
-	* Need to do something about the comment character being
-	  hard-coded to '#'...
+        * Need to do something about the comment character being
+          hard-coded to '#'...
 
 Fri Sep 27 09:30:15 1991  Douglas C. Schmidt  (schmidt at net4.ics.uci.edu)
 
-	* Fixed a stupid problem with printout out a local enum with the
-	  -E option (I forgot to check for the case of 0 duplicates, so it
-	  was saying 1 duplicate instead!).
+        * Fixed a stupid problem with printout out a local enum with the
+          -E option (I forgot to check for the case of 0 duplicates, so it
+          was saying 1 duplicate instead!).
 
 Mon Aug 19 00:39:40 1991  Douglas C. Schmidt  (schmidt at javel.ics.uci.edu)
 
-	* Yow, all finished making gperf run with cfront/Saber C++.  Not
-	  really all that hard, actually, though did need to remove some
-	  GNU specific hacks, like dynamically sized arrays and
-	  initializing class data members in their declarations, etc.
+        * Yow, all finished making gperf run with cfront/Saber C++.  Not
+          really all that hard, actually, though did need to remove some
+          GNU specific hacks, like dynamically sized arrays and
+          initializing class data members in their declarations, etc.
 
-	* Bumped up the version # to reflect the recent changes.
+        * Bumped up the version # to reflect the recent changes.
 
 Sun Aug 18 22:25:32 1991  Douglas C. Schmidt  (schmidt at javel.ics.uci.edu)
 
-	* Changed passage of Options::usage function in Options.C to have
-	  a leading `&' so that Saber C++ wouldn't complain...
+        * Changed passage of Options::usage function in Options.C to have
+          a leading `&' so that Saber C++ wouldn't complain...
 
-	* Added a new header file called gperf.h that includes system-wide
+        * Added a new header file called gperf.h that includes system-wide
           info.
 
-	* Hacked up the release to work with Saber C++!  Changed all *.cc
-	  files to *.C.
+        * Hacked up the release to work with Saber C++!  Changed all *.cc
+          files to *.C.
 
 Mon Aug  5 21:18:47 1991  Douglas C. Schmidt  (schmidt at net1.ics.uci.edu)
 
-	* Yow, hacked in the nifty changes to the Std_Err error handling
-	  abstraction.  This now adds format string support for printing
-	  out signals and the name of the function when things go wrong.
-	  Make changes throughout the source to make use of the new
-	  facilities and also to make sure all previous uses of
-	  Std_Err::report_error are now prefixed by the name of the class.
+        * Yow, hacked in the nifty changes to the Std_Err error handling
+          abstraction.  This now adds format string support for printing
+          out signals and the name of the function when things go wrong.
+          Make changes throughout the source to make use of the new
+          facilities and also to make sure all previous uses of
+          Std_Err::report_error are now prefixed by the name of the class.
 
 Tue Jul 30 00:02:39 1991  Douglas C. Schmidt  (schmidt at net4.ics.uci.edu)
 
-	* Make sure to add 1 to the Key_List::total_duplicates value when
-	  printing it out since any time we have more than zero duplicates
-	  we really have two or more duplicates!
+        * Make sure to add 1 to the Key_List::total_duplicates value when
+          printing it out since any time we have more than zero duplicates
+          we really have two or more duplicates!
 
-	* Added support for the -O (optimize option).  This option
-	  optimizes the generated lookup function by assuming that all
-	  input keywords are members of the keyset from the keyfile.
+        * Added support for the -O (optimize option).  This option
+          optimizes the generated lookup function by assuming that all
+          input keywords are members of the keyset from the keyfile.
 
-	* Added #define DUPLICATES and #define HASH_VALUE_RANGE (and of
-	  course the enum equivalent) to the generated output.  Don't know
-	  how useful this will be, but it allows us to determine at a
-	  glance whether we've got a minimal perfect hash function (in
-	  which case TOTAL_KEYWORDS = HASH_VALUE_RANGE, and DUPLICATES =
-	  0).
+        * Added #define DUPLICATES and #define HASH_VALUE_RANGE (and of
+          course the enum equivalent) to the generated output.  Don't know
+          how useful this will be, but it allows us to determine at a
+          glance whether we've got a minimal perfect hash function (in
+          which case TOTAL_KEYWORDS = HASH_VALUE_RANGE, and DUPLICATES =
+          0).
 
-	* Fixed a small bug in the Key_List::output_keyword_table routine
-	  that caused an extra newline to be printed if there where no
-	  leading blank entries... (who cares, right?!)
+        * Fixed a small bug in the Key_List::output_keyword_table routine
+          that caused an extra newline to be printed if there where no
+          leading blank entries... (who cares, right?!)
 
 Mon Jul 29 22:05:40 1991  Douglas C. Schmidt  (schmidt at net4.ics.uci.edu)
 
-	* Modified the handling of the -E (emit enums rather than
-	  #defines) option in conjunction with the -G option.  Now, if -G
-	  and -E are given the enums are generated outside the lookup
-	  function, rather than within it!
+        * Modified the handling of the -E (emit enums rather than
+          #defines) option in conjunction with the -G option.  Now, if -G
+          and -E are given the enums are generated outside the lookup
+          function, rather than within it!
 
-	* Yow, as part of my Software Practice and Experience submission
-	  writeup I realized I needed to make the # comment character work
-	  correctly.  Now if you put a backslash character ('\') in front
-	  of the # it treats the first character as a #.  Naturally, to
-	  put a '\' character on the front of the line you need to escape
-	  it also, i.e.,
-	  \\I'm a line that starts with only one \
-	  # I'm a comment line
-	  \#define I'm walking a fine line... ;-)
+        * Yow, as part of my Software Practice and Experience submission
+          writeup I realized I needed to make the # comment character work
+          correctly.  Now if you put a backslash character ('\') in front
+          of the # it treats the first character as a #.  Naturally, to
+          put a '\' character on the front of the line you need to escape
+          it also, i.e.,
+          \\I'm a line that starts with only one \
+          # I'm a comment line
+          \#define I'm walking a fine line... ;-)
 
 Wed Jun 26 11:21:02 1991  Douglas C. Schmidt  (schmidt at bastille.ics.uci.edu)
 
-	* Changed all uses of the identifier `iteration_number' to
-	`generation_number' (also updated the paper!).
+        * Changed all uses of the identifier `iteration_number' to
+        `generation_number' (also updated the paper!).
 
 Tue Apr  9 07:59:42 1991  Doug Schmidt  (schmidt at net4.ics.uci.edu)
 
-	* Had to change a whole bunch of little thangs in key-list.cc and
-	  list-node.cc to make the -I option work.
+        * Had to change a whole bunch of little thangs in key-list.cc and
+          list-node.cc to make the -I option work.
 
-	* Changed an alloca statement in key-list.cc to reflect the
-	  strncasecmp modification (i.e., we now need to be able to
-	  allocate a longer buffer if the -I option is used).
+        * Changed an alloca statement in key-list.cc to reflect the
+          strncasecmp modification (i.e., we now need to be able to
+          allocate a longer buffer if the -I option is used).
 
 Mon Apr  8 18:17:04 1991  Doug Schmidt  (schmidt at net4.ics.uci.edu)
 
-	* Yucko, there was a bug in the handling of -c (and of course the
-	  new -I command in key-list.cc).  Apparently when I added the
-	  super-duper hack that provided support for duplicate keys I
-	  forgot to update the strcmp output...
+        * Yucko, there was a bug in the handling of -c (and of course the
+          new -I command in key-list.cc).  Apparently when I added the
+          super-duper hack that provided support for duplicate keys I
+          forgot to update the strcmp output...
 
-	* Boy, it has been a *long* time since I hacked this puppy.  Let's
-	  see, I'm about to add long-overdue support for case-insensitive
-	  string comparisons to gperf's generated output code.  We are
-	  going to employ the hitherto unused option -I to indicte this!
+        * Boy, it has been a *long* time since I hacked this puppy.  Let's
+          see, I'm about to add long-overdue support for case-insensitive
+          string comparisons to gperf's generated output code.  We are
+          going to employ the hitherto unused option -I to indicte this!
 
 Thu Jun 28 16:17:27 1990  Doug Schmidt  (schmidt at brilliant)
 
-	* Wow, first fix on the new job!  There was a dumb error
-	  in Key_List::output_lookup_function, where I printed the
-	  string "&wordlist[key]" instead of the correct "&wordlist[index]".
+        * Wow, first fix on the new job!  There was a dumb error
+          in Key_List::output_lookup_function, where I printed the
+          string "&wordlist[key]" instead of the correct "&wordlist[index]".
 
-	* Added a couple of #ifdefs for USG support.
+        * Added a couple of #ifdefs for USG support.
 
 Sun Jun  3 17:16:36 1990  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
 
