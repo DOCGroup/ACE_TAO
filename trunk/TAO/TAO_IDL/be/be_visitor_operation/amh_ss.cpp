@@ -320,7 +320,9 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
   intf->compute_full_name ("AMH_", "", buf);
   ACE_CString amh_skel_name ("POA_");
   amh_skel_name += buf;
-  delete [] buf;
+  // buf was allocated by ACE_OS::strdup, so we need to use free instead
+  // of delete.
+  ACE_OS::free (buf);
   buf = 0;
 
   *os << "void" << be_nl
@@ -360,7 +362,9 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
   intf->compute_full_name ("TAO_AMH_", "ResponseHandler", buf);
   ACE_CString response_handler_implementation_name ("POA_");
   response_handler_implementation_name += buf;
-  delete [] buf;
+  // buf was allocated by ACE_OS::strdup, so we need to use free instead
+  // of delete.
+  ACE_OS::free (buf);
   buf = 0;
 
   *os << be_nl

@@ -95,7 +95,9 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
       char *buf = 0;
       ancestor->compute_full_name ("AMH_", "", buf);
       ancestor_name += buf;
-      delete [] buf;
+      // buf was allocated by ACE_OS::strdup, so we need to use free instead
+      // of delete.
+      ACE_OS::free (buf);
       buf = 0;
 
       const char *ancestor_amh_name = ancestor_name.fast_rep ();
@@ -103,7 +105,9 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
       ACE_CString derived_name ("POA_");
       derived->compute_full_name ("AMH_", "", buf);
       derived_name += buf;
-      delete [] buf;
+      // buf was allocated by ACE_OS::strdup, so we need to use free instead
+      // of delete.
+      ACE_OS::free (buf);
       buf = 0;
 
       const char *derived_amh_name = derived_name.fast_rep ();

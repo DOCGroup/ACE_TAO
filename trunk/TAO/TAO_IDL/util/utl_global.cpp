@@ -730,8 +730,8 @@ IDL_GlobalData::validate_included_idl_files (void)
   size_t n_post_preproc_includes = idl_global->n_include_file_names ();
   UTL_String **post_preproc_includes = idl_global->include_file_names ();
 
-  char pre_abspath[MAXPATHLEN];
-  char post_abspath[MAXPATHLEN];
+  char pre_abspath[MAXPATHLEN] = "";
+  char post_abspath[MAXPATHLEN] = "";
   char **path_tmp = 0;
   char *post_tmp = 0;
   char *full_path = 0;
@@ -818,7 +818,7 @@ IDL_GlobalData::validate_included_idl_files (void)
       // Remove the file, if it is not valid.
       if (valid_file == 0)
         {
-          delete pre_preproc_includes[j];
+          delete [] pre_preproc_includes[j];
           pre_preproc_includes[j] = 0;
         }
       else

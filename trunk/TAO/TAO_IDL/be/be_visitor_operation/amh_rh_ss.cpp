@@ -60,7 +60,9 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   intf->compute_full_name ("TAO_", "", buf);
   ACE_CString response_handler_implementation_name ("POA_");
   response_handler_implementation_name += buf;
-  delete [] buf;
+  // buf was allocated by ACE_OS::strdup, so we need to use free instead
+  // of delete.
+  ACE_OS::free (buf);
   buf = 0;
 
   // Step 1 : Generate return type: always void

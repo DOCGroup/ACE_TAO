@@ -203,7 +203,9 @@ emit (be_interface * /* derived */,
   char *buf = 0;
   base->compute_full_name ("AMH_", "", buf);
   amh_name += buf;
-  delete[] buf;
+  // buf was allocated using ACE_OS::strdup, so we must use free instead
+  // of delete.
+  ACE_OS::free (buf);
 
   *os << "if (ACE_OS::strcmp (logical_type_id, \""
       << base->repoID () << "\") == 0)" << be_idt_nl
@@ -285,7 +287,9 @@ emit (be_interface *derived,
       char *buf = 0;
       base->compute_full_name ("AMH_", "", buf);
       amh_name += buf;
-      delete[] buf;
+      // buf was allocated by ACE_OS::strdup, so we need to use free
+      // instead of delete.
+      ACE_OS::free (buf);
 
       *os << amh_name.c_str () << " (rhs)";
     }
@@ -330,7 +334,9 @@ be_visitor_amh_interface_ss::generate_flat_name (be_interface *node)
   // ACE_CString to compute_flat_name, after all it uses that
   // internally.
   ACE_CString result (buf);
-  delete[] buf;
+  // buf was allocated using ACE_OS::strdup, so we must use free instead
+  // of delete.
+  ACE_OS::free (buf);
 
   return result;
 }
@@ -355,7 +361,9 @@ be_visitor_amh_interface_ss::generate_full_skel_name (be_interface *node)
   char *buf = 0;
   node->compute_full_name ("AMH_", "", buf);
   result += buf;
-  delete[] buf;
+  // buf was allocated using ACE_OS::strdup, so we must use free instead
+  // of delete.
+  ACE_OS::free (buf);
 
   return result;
 }
