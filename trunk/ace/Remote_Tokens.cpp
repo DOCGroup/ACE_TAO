@@ -17,8 +17,7 @@ ACE_RCSID(ace, Remote_Tokens, "$Id$")
 #endif /* ACE_MT_SAFE */
 
 // Make a typedef to simplify access to the Singleton below.
-typedef ACE_Singleton<ACE_TSS_Connection, ACE_TSS_CONNECTION_MUTEX>
-	ACE_Token_Connections;
+typedef ACE_Singleton<ACE_TSS_Connection, ACE_TSS_CONNECTION_MUTEX> ACE_Token_Connections;
 
 // Initialize the statics from ACE_TSS_Connection;
 ACE_INET_Addr ACE_TSS_Connection::server_address_;
