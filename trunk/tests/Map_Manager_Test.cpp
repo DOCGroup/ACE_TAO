@@ -37,7 +37,7 @@ USELIB("..\ace\aced.lib");
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 typedef ACE_Null_Mutex MUTEX;
-typedef size_t TYPE;
+typedef ACE_UINT32 TYPE;
 typedef ACE_Active_Map_Manager_Key
         ACTIVE_KEY;
 typedef ACE_Hash<TYPE>
