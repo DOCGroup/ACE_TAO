@@ -1,3 +1,17 @@
+Thu Mar 17 19:45:10 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Acknowledge.cpp:
+	* protocols/ace/RMCast/Acknowledge.h:
+	* protocols/ace/RMCast/Link.cpp:
+	* protocols/ace/RMCast/Link.h:
+	* protocols/ace/RMCast/Retransmit.cpp:
+	* protocols/ace/RMCast/Retransmit.h: Implemented manual thread
+	stopping instead of SUS thread cancellation.
+
+	* protocols/ace/RMCast/Bits.h:
+	* protocols/ace/RMCast/Socket.cpp: Some cleanups.
+
+
 Thu Mar 17 07:34:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
