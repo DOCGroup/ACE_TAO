@@ -65,4 +65,5 @@ TAO_Requires_IORManip_Initializer = TAO_IORManip_Loader::Initializer ();
 #include "IORC.h"
 #undef TAO_IORManip_SAFE_INCLUDE
 
+#include "ace/post.h"
 #endif /* TAO_IORManip_H */

@@ -329,8 +329,11 @@ TAO_IOR_Manipulation_impl::get_primary (
 {
   // make sure we have some profiles in IOR
   if (ior->_stubobj ()->base_profiles ().profile_count () == 0)
-    ACE_THROW_RETURN (TAO_IOP::Invalid_IOR (),
-                      0);
+    ACE_THROW_RETURN (TAO_IOP::NotFound (), 0);
+  // @@ Bala: this was throwing TAO_IOP::Invalid_IOR, but it was not
+  // in the throw spec, that will result in a CORBA::UNKNOWN at
+  // run-time (if it does not crash).  Any idea about what is going on
+  // here?
 
   return prop->get_primary (ior,
                             ACE_TRY_ENV);

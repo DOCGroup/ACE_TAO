@@ -247,7 +247,7 @@ const char* CORBA_DomainManager::_interface_repository_id (void) const
 #if (TAO_HAS_INTERCEPTORS == 1)
 CORBA_DomainManager::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy::TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy (const char *_tao_operation,
 IOP::ServiceContextList &_tao_service_context_list,
-CORBA::Object *_tao_target,CORBA::PolicyType policy_type,
+CORBA::Object *_tao_target,CORBA::PolicyType& policy_type,
 CORBA::Environment &)
   : TAO_ClientRequest_Info (_tao_operation, _tao_service_context_list, _tao_target),policy_type_ (policy_type)
 {}
