@@ -6,6 +6,11 @@ Wed Oct 29 11:01:11 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	generating fully scoped names for types that were defined in some
 	ancestor of the scope in which that type is being used.
 
+	* Makefiles under TAO_IDL: Fixed a bug in the Makefiles under all
+	the subdirectories. This bug was reported by "ARTURO MONTES"
+	<mitosys@colomsat.net.co>. The bug was causing circular
+	dependencies on the libraru that was getting compiled.
+
 Wed Oct 29 06:17:36 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* tao/default_server.cpp (parse_args): Must increase the loop
