@@ -1,3 +1,15 @@
+Mon Dec  6 13:16:21 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP1_2.pidl (GIOP ): 
+	* tao/GIOPC.h:
+	* tao/GIOPC.cpp:
+	* tao/GIOPC.i: Some new data types that have been added to GIOP
+	  1.2. They have their own name space GIOP and should not create a
+	  problem for the CORBA namespace.
+
+	* tao/Makefile: Added GIOPC.cpp to the list of files and also
+	  updated the dependencies. 
+
 Sun Dec  5 14:43:42 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
