@@ -360,13 +360,12 @@ ace_get_module (ACE_Static_Node *str_rec,
   type = sv->type ();
   ACE_Module_Type *mt = (ACE_Module_Type *) type;
   const char *module_type_name = svc_type->name ();
-  const ASYS_TCHAR *wname = ASYS_WIDE_STRING (module_type_name);
 
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ASYS_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
-                  wname,
+                  ASYS_WIDE_STRING (module_type_name),
                   ASYS_WIDE_STRING (str_rec->name ())));
       yyerrno++;
     }
@@ -379,7 +378,7 @@ ace_get_module (ACE_Static_Node *str_rec,
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
-                  wname,
+                  ASYS_WIDE_STRING (module_type_name),
                   mp->name ()));
       mp->name (wname);
     }
@@ -411,12 +410,12 @@ ace_create_service_type (const ASYS_TCHAR *name,
       break;
     case ACE_MODULE_T:
       ACE_NEW_RETURN (stp,
-                      ACE_Module_Type (symbol, ASYS_WIDE_STRING (name), flags),
+                      ACE_Module_Type (symbol, name, flags),
                       0);
       break;
     case ACE_STREAM_T:
       ACE_NEW_RETURN (stp,
-                      ACE_Stream_Type (symbol, ASYS_WIDE_STRING (name), flags),
+                      ACE_Stream_Type (symbol, name, flags),
                       0);
       break;
     default:
