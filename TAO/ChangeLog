@@ -1,3 +1,15 @@
+Sun Sep 15 09:29:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1269_Regression/Echo.h:
+        * tests/Bug_1269_Regression/Echo_Caller.h:
+        * tests/Bug_1269_Regression/ORB_Task.h:
+        * tests/Bug_1269_Regression/Server_Timer.h:
+        * tests/Bug_1270_Regression/Echo_Caller.cpp:
+        * tests/Bug_1270_Regression/ORB_Task.cpp:
+        * tests/Bug_1270_Regression/Server_Timer.cpp:
+        * tests/Bug_1269_Regression/Echo.cpp:
+          Fixed fuzz errors
+
 Sat Sep 14 18:17:43 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/EC_Multiple/Makefile.bor:

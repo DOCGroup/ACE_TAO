@@ -1,5 +1,5 @@
 /**
- * @file Echo.pp
+ * @file Echo.cpp
  *
  * $Id$
  *
