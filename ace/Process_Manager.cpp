@@ -298,7 +298,7 @@ ACE_Process_Manager::handle_input (ACE_HANDLE proc)
 }
 
 int
-ACE_Process_Manager::handle_signal (int signum, siginfo_t *, ucontext_t *)
+ACE_Process_Manager::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   return reactor ()->ready_ops
     (this->dummy_handle_,
@@ -337,13 +337,13 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh, pid_t pid)
 
 int
 ACE_Process_Manager::handle_close (ACE_HANDLE handle,
-                                   ACE_Reactor_Mask close_mask)
+                                   ACE_Reactor_Mask)
 {
   ACE_TRACE ("ACE_Process_Manager::handle_close");
 
-  ACE_ASSERT (handle==this->dummy_handle_ );
+  ACE_ASSERT (handle == this->dummy_handle_);
 
-  ACE_OS::close ( dummy_handle_ );
+  ACE_OS::close (dummy_handle_);
 
   return 0;
 }
@@ -693,7 +693,7 @@ ACE_Process_Manager::reap (pid_t pid,
 int
 ACE_Process_Manager::notify_proc_handler (ACE_HANDLE h,
                                           pid_t pid,
-                                          int status)
+                                          int)
 {
   int i = this->find_proc (pid);
 
