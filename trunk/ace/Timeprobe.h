@@ -30,13 +30,19 @@ class ACE_Timeprobe
   //     
   //     The recorded time probes can then be printed by calling
   //     print_times().  If you have used unsigned longs as event
-  //     descriptions in any of your time probes, you must provide an
-  //     event description table that maps the unsigned longs to
-  //     readable strings.  This map is a simple array of strings, and
-  //     the event number is used as the index into the array when
-  //     looking for the event description.  If you have only used
-  //     strings for the event description, this map is not necessary.
+  //     descriptions in any of your time probes, you must have
+  //     provided an event description table that maps the unsigned
+  //     longs to readable strings.  This map is a simple array of
+  //     strings, and the event number is used as the index into the
+  //     array when looking for the event description.  If you have
+  //     only used strings for the event description, this map is not
+  //     necessary.
   //
+  //     Multiple maps can also be used to chunk up the time probes.
+  //     Each one can be added by calling event_descriptions().
+  //     Different tables are used internally by consulting the
+  //     minimum_id for each table.  It is up to the user to make sure
+  //     that multiple tables do not share the same event id range.
 public:
 
   enum
@@ -59,17 +65,50 @@ public:
   void timeprobe (const char *id);
   // Record a time. <id> is used to describe this time probe.
 
-  void print_times (const char *event_description[] = 0) const;
-  // Print the time probes.  Use <event_description> as a map for
-  // converting unsigned long events to strings.
+  void event_descriptions (const char **descriptions,
+                           u_long minimum_id);
+  // Record event descriptions.
+
+  void print_times (void);
+  // Print the time probes. 
 
   void reset (void);
   // Reset the slots.  All old time probes will be lost.
 
 protected:
 
+  typedef ACE_Timeprobe<ACE_LOCK> SELF;
+  // Self
+
+  // = Event Descriptions
+  struct Event_Descriptions
+  {  
+    const char **descriptions_;
+    // Event descriptions
+
+    u_long minimum_id_;
+    // Minimum id of this description set
+
+    int operator== (const Event_Descriptions &rhs) const
+    {
+      return 
+        this->minimum_id_ == rhs.minimum_id_ &&
+        this->descriptions_ == rhs.descriptions_;
+    }
+    // Comparison
+  };
+
+  typedef ACE_Unbounded_Set<Event_Descriptions> EVENT_DESCRIPTIONS;
+  // We can hold multiple event description tables
+
+  EVENT_DESCRIPTIONS event_descriptions_;
+  // Event Descriptions
+
   ACE_Timeprobe (const ACE_Timeprobe &);
   // Not implemented.
+
+  const char *find_description (u_long i);
+  // Find description of event <i>
 
   // = Time probe record
   struct timeprobe_t
@@ -120,6 +159,11 @@ protected:
 template <class Timeprobe> 
 class ACE_Function_Timeprobe 
 {
+  // = TITLE
+  //
+  //     Auto pointer like time probes. It will record <event> on
+  //     construction and <event + 1> on destruction.
+  //
 public:
   ACE_Function_Timeprobe (Timeprobe &timeprobe, 
                           u_long event);
@@ -177,7 +221,7 @@ typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_Thread_Mutex> ACE_TIMEPROB
 #  define ACE_TIMEPROBE_RESET ACE_TIMEPROBE_SINGLETON::instance ()->reset ()
 #  define ACE_TIMEPROBE(id) ACE_TIMEPROBE_SINGLETON::instance ()->timeprobe (id)
 #  define ACE_TIMEPROBE_PRINT ACE_TIMEPROBE_SINGLETON::instance ()->print_times ()
-#  define ACE_TIMEPROBE_PRINT_USING_TABLE(table) ACE_TIMEPROBE_SINGLETON::instance ()->print_times (table)
+#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) ACE_TIMEPROBE_SINGLETON::instance ()->event_descriptions (descriptions, minimum_id)
 #  define ACE_FUNCTION_TIMEPROBE(X) ACE_Function_Timeprobe<ACE_TIMEPROBE_WITH_LOCKING> function_timeprobe (*ACE_TIMEPROBE_SINGLETON::instance (), X)
 
 #else /* ACE_ENABLE_TIMEPROBES */
@@ -185,8 +229,8 @@ typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_Thread_Mutex> ACE_TIMEPROB
 #  define ACE_TIMEPROBE_RESET
 #  define ACE_TIMEPROBE(id)
 #  define ACE_TIMEPROBE_PRINT
-#  define ACE_TIMEPROBE_PRINT_USING_TABLE(table)
-#  define ACE_FUNCTION_TIMEPROBE(X) 
+#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id)
+#  define ACE_FUNCTION_TIMEPROBE(X)
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
