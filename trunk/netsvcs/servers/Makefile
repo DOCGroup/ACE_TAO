@@ -1,41 +1,50 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Makefile 
+#       Makefile
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
-BIN   	= main 
-LSRC   	= $(addsuffix .cpp,$(BIN))
-
-LDLIBS 	= -lnetsvcs
- 
+LDLIBS  = -lnetsvcs
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD 	= $(VBIN)
-
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
-include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If ACE_COMPONENTS was set and doesn't contain Other and Token, don't
+#### try to build the server.
+ifdef ACE_COMPONENTS
+  ifeq (Other,$(findstring Other,$(ACE_COMPONENTS)))
+    ifeq (Token,$(findstring Token,$(ACE_COMPONENTS)))
+      BIN = main
+      LSRC = $(addsuffix .cpp,$(BIN))
+    endif # Token
+  endif # Other
+else  # ! ACE_COMPONENTS
+  BIN = main
+  LSRC = $(addsuffix .cpp,$(BIN))
+endif # ! ACE_COMPONENTS
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
 
 #----------------------------------------------------------------------------
-#	Dependencies
+#       Dependencies
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
