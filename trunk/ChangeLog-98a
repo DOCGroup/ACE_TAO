@@ -227,7 +227,7 @@ Mon Feb 02 14:40:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * tests/Makefile : added OrdMultiSet_Test
 
-Fri Jan 30 02:42:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Feb 02 02:42:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.h (ACE_NOTSUP_RETURN): Moved its definition to the end of
           this file where __TEXT has already been defined.  WinCE needs to
