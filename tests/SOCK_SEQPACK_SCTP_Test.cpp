@@ -166,7 +166,7 @@ Server (void *arg)
                 ACE_TEXT ("AcceptorSocket.close")));
   }
 
-  return NULL;
+  return 0;
 }
 
 void *
@@ -230,7 +230,7 @@ Client(void *arg)
                 ACE_TEXT (".recv_n succeeded after abort()\n")));
   }
 
-  return NULL;
+  return 0;
 }
 
 //

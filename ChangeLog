@@ -1,9 +1,20 @@
+Wed Oct 13 06:53:55 2004  Olli Savia  <ops@iki.fi>
+
+        * tests/DLL_Test_Impl.cpp:
+        * tests/Message_Block_Test.cpp:
+        * tests/SOCK_Connector_Test.cpp:
+        * tests/SOCK_SEQPACK_SCTP_Test.cpp:
+        * tests/Timer_Queue_Test.cpp:
+        * tests/TkReactor_Test.cpp:
+        * tests/XtReactor_Test.cpp:
+          Replaced NULL with 0.
+
 Tue Oct 12 17:33:51 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Local_Memory_Pool.{h cpp}:
-	* ace/MMAP_Memory_Pool.cpp:
-	* ace/Sbrk_Memory_Pool.cpp:
-	* ace/Shared_Memory_Pool.cpp: Add missing includes to fix AIX builds.
+        * ace/Local_Memory_Pool.{h cpp}:
+        * ace/MMAP_Memory_Pool.cpp:
+        * ace/Sbrk_Memory_Pool.cpp:
+        * ace/Shared_Memory_Pool.cpp: Add missing includes to fix AIX builds.
 
 Tue Oct 12 17:58:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
@@ -23,17 +34,17 @@ Tue Oct 12 06:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct 11 19:43:22 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/Local_Memory_Pool.cpp (acquire):
+        * ace/Local_Memory_Pool.cpp (acquire):
 
-	  Added ace/OS_Memory.h.
+          Added ace/OS_Memory.h.
 
-	* ace/MMAP_Memory_Pool.cpp:
+        * ace/MMAP_Memory_Pool.cpp:
 
-	  Added ace/OS_NS_string.h and ace/OS_NS_sys_stat.h.
+          Added ace/OS_NS_string.h and ace/OS_NS_sys_stat.h.
 
-	* ace/Pagefile_Memory_Pool.h:
+        * ace/Pagefile_Memory_Pool.h:
 
-	  Added ace/os_include/sys/os_mman.h.
+          Added ace/os_include/sys/os_mman.h.
 
 Mon Oct 11 09:52:40 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
