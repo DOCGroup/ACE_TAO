@@ -41,8 +41,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Transport_Timeprobe_Description,
 
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Handler_Base* handler)
-  : handler_(handler),
-    tag_(TAO_IOP_TAG_INTERNET_IOP)
+  : TAO_Transport (TAO_IOP_TAG_INTERNET_IOP),
+    handler_(handler)
 {
 }
 
@@ -70,12 +70,6 @@ TAO_IIOP_Server_Transport::~TAO_IIOP_Server_Transport (void)
 
 TAO_IIOP_Client_Transport::~TAO_IIOP_Client_Transport (void)
 {
-}
-
-CORBA::ULong
-TAO_IIOP_Transport::tag (void)
-{
-  return this->tag_;
 }
 
 TAO_Client_Connection_Handler *
@@ -159,8 +153,6 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
   // For the most part this was copied from GIOP::send_request and
   // friends.
 
-  // @@ Fred, this should NOT be a local constant...  It should use a
-  // macro defined in OS.h...
   iovec iov[IOV_MAX];
   int iovcnt = 0;
   ssize_t n = 0;

@@ -26,12 +26,8 @@
 #include "ace/Acceptor.h"
 #include "ace/LSOCK_Acceptor.h"
 #include "tao/Pluggable.h"
-#include "tao/Connect.h"
-
-typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
-                              ACE_LSOCK_ACCEPTOR>
-        TAO_UIOP_BASE_ACCEPTOR;
-// was defined in Connect.h
+#include "tao/UIOP_Connect.h"
+#include "tao/Acceptor_Impl.h"
 
 // TAO UIOP_Acceptor concrete call defination
 
@@ -41,7 +37,7 @@ class TAO_Export TAO_UIOP_Acceptor : public TAO_Acceptor
   //   The UIOP-specific bridge class for the concrete acceptor.
   //
   // = DESCRIPTION
-  //   
+  //
 public:
   // TAO_UIOP_Acceptor (ACE_UNIX_Addr &addr);
   // Create Acceptor object using addr.
@@ -49,22 +45,38 @@ public:
   TAO_UIOP_Acceptor (void);
   // Create Acceptor object using addr.
 
-  CORBA::ULong tag (void);
-  // The tag, each concrete class will have a specific tag value.
+  int open (TAO_ORB_Core *orb_core, ACE_CString &address);
+  // initialize acceptor for this address.
 
-  virtual TAO_Profile *create_profile (TAO_ObjectKey& object_key);
-  // create profile object for this Acceptor using the SAP
-  // (service access point, Host and Port) and object_key.
+  virtual int close (void);
+  // Closes the acceptor
+
+  virtual int open_default (TAO_ORB_Core *orb_core);
+  // Open an acceptor on the default endpoint for this protocol
+
+  int create_mprofile (const TAO_ObjectKey &object_key,
+                       TAO_MProfile &mprofile);
+  // create profile objects for this Acceptor using the SAP
+  // (service access point) and object_key.
+
+  // = See TAO_Acceptor
+  virtual int is_collocated (const TAO_Profile*);
 
   virtual ACE_Event_Handler *acceptor (void);
   // Return the underlying acceptor object, ACE_Acceptor
 
+  CORBA::ULong endpoint_count (void);
+  // return the number of profiles this will generate
+
+  typedef TAO_Acceptor_Impl<TAO_UIOP_Server_Connection_Handler,ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
+
+private:
+  int open_i (TAO_ORB_Core* orb_core, const ACE_UNIX_Addr& addr);
+  // Implement the common part of the open*() methods
+
 private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to its base class.
-
-  CORBA::ULong tag_;
-  //  the IOP specific tag.
 };
 
 # endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

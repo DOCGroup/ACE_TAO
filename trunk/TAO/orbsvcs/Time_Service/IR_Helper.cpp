@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "tao/IIOP_Profile.h"
+#include "tao/IIOP_Acceptor.h"
 #include "orbsvcs/PingS.h"
 
 class Ping_i: public POA_Ping_Object
@@ -159,28 +160,42 @@ IR_Helper::read_ir_ior (CORBA_Environment &_env)
 
 
 void
-IR_Helper::notify_startup (CORBA_Environment &TAO_IN_ENV)
+IR_Helper::notify_startup (CORBA_Environment &ACE_TRY_ENV)
 {
+  // @@ Don't use the ORB_Core_instance() keep a pointer to the ORB
+  //    and use the orb_core() accessor
+  TAO_Acceptor_Registry* registry =
+    TAO_ORB_Core_instance ()->acceptor_registry ();
+
+  TAO_Acceptor *acceptor = 0;
+  TAO_AcceptorSetItor end = registry->end ();
+  for (TAO_AcceptorSetItor i = registry->begin (); i != end; ++i)
+    {
+      if ((*i)->tag () == TAO_IOP_TAG_INTERNET_IOP)
+        {
+          acceptor = (*i);
+          break;
+        }
+    }
+  if (acceptor == 0)
+    ACE_THROW (CORBA::NO_IMPLEMENT());
+
+  TAO_IIOP_Acceptor* iiop_acceptor =
+    ACE_dynamic_cast (TAO_IIOP_Acceptor*,acceptor);
+
   // Get our host and port and convert it to something we can use.
-  ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
+  const ACE_INET_Addr& my_addr  = iiop_acceptor->address ();
+
   Implementation_Repository::INET_Addr my_ir_addr;
   my_ir_addr.port_ = my_addr.get_port_number ();
   my_ir_addr.host_ = CORBA::string_dup (my_addr.get_host_name ());
 
-  TAO_TRY
-    {
-      delete this->ir_addr_;
-      this->ir_addr_ = this->implrepo_->server_is_running (this->name_,
-                                                           my_ir_addr,
-                                                           this->ping_ptr_,
-                                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-    }
-  TAO_CATCHANY
-    {
-      TAO_RETHROW;
-    }
-  TAO_ENDTRY;
+  // @@ Shouldn't we use a T_var for this?
+  delete this->ir_addr_;
+  this->ir_addr_ = this->implrepo_->server_is_running (this->name_,
+                                                       my_ir_addr,
+                                                       this->ping_ptr_,
+                                                       ACE_TRY_ENV);
 }
 
 
@@ -204,20 +219,20 @@ IR_Helper::notify_shutdown (CORBA_Environment &TAO_IN_ENV)
 void
 IR_Helper::change_object (CORBA::Object_ptr obj, CORBA_Environment &)
 {
-  if ( obj 
-    && obj->_stubobj () 
+  if ( obj
+    && obj->_stubobj ()
     && obj->_stubobj ()->profile_in_use ()
-    && this->implrepo_ 
-    && this->implrepo_->_stubobj () 
+    && this->implrepo_
+    && this->implrepo_->_stubobj ()
     && this->implrepo_->_stubobj ()->profile_in_use ()  )
     {
       TAO_IIOP_Profile *implrepo_pfile =
-          ACE_dynamic_cast (TAO_IIOP_Profile *, 
+          ACE_dynamic_cast (TAO_IIOP_Profile *,
                             this->implrepo_->_stubobj ()->profile_in_use ());
       TAO_IIOP_Profile *iiop_pfile =
-          ACE_dynamic_cast (TAO_IIOP_Profile *, 
+          ACE_dynamic_cast (TAO_IIOP_Profile *,
                             obj->_stubobj ()->profile_in_use ());
-    
+
       // @@ Only same host for now
       iiop_pfile->port (implrepo_pfile->port ());
     }

@@ -45,6 +45,8 @@ public:
       DEF_IIOP_MINOR = 0
     };
 
+  static const char object_key_delimiter;
+
   static const char *prefix (void);
   // Return the char string prefix.
 
@@ -72,7 +74,7 @@ public:
   TAO_IIOP_Profile (const char *host,
                     CORBA::UShort port,
                     const TAO_ObjectKey &object_key,
-		    const ACE_INET_Addr &addr);
+                    const ACE_INET_Addr &addr);
   //  Profile constructor, this is the most efficient since it
   // doesn't require any address resolution processing.
 
@@ -108,15 +110,6 @@ public:
   ~TAO_IIOP_Profile (void);
   // Destructor is to be called only through <_decr_refcnt>.
 
-  CORBA::ULong tag (void) const;
-  // The tag, each concrete class will have a specific tag value.  for
-  // example we are TAO_IOP_TAG_INTERNET_IOP.
-
-  int parse (TAO_InputCDR& cdr,
-             CORBA::Boolean& continue_decoding,
-             CORBA::Environment &env);
-  // Initialize this object using the given CDR octet string.
-
   int parse_string (const char *string,
                     CORBA::Environment &env);
   // Initialize this object using the given input string.
@@ -128,6 +121,9 @@ public:
   const TAO_opaque& body (void) const;
   // Create IIOP_Profile Object from marshalled data.
 
+  int decode (TAO_InputCDR& cdr);
+  // Initialize this object using the given CDR octet string.
+
   virtual int encode (TAO_OutputCDR &stream) const;
   // Encode this profile in a stream, i.e. marshal it.
 
@@ -137,7 +133,7 @@ public:
   TAO_ObjectKey &object_key (TAO_ObjectKey& objkey);
   // @@ deprecated. set the Object Key.
 
-  TAO_ObjectKey *_key (CORBA::Environment &env);
+  TAO_ObjectKey *_key (CORBA::Environment &env) const;
   //  Return a pointer to the Object Key.
 
   CORBA::Boolean is_equivalent (TAO_Profile *other_profile,
@@ -190,13 +186,6 @@ public:
   TAO_IIOP_Profile &operator= (const TAO_IIOP_Profile &src);
   // Copy operator.
 
-  virtual CORBA::ULong _incr_refcnt (void);
-  // Increase the reference count by one on this object.
-
-  virtual CORBA::ULong _decr_refcnt (void);
-  // Decrement the object's reference count.  When this count goes to
-  // 0 this object will be deleted.
-
 private:
   int set (const ACE_INET_Addr &addr);
   // helper method to set the INET_Addr.
@@ -211,9 +200,6 @@ private:
 
   CORBA::UShort port_;
   // TCP port number
-
-  CORBA::ULong tag_;
-  // The tag.
 
   TAO_opaque body_;
   // Marshaled profile (CDR).
@@ -231,12 +217,6 @@ private:
   TAO_Client_Connection_Handler *hint_;
   // Pointer to a connection handler which we successfully used
   // already.
-
-  ACE_SYNCH_MUTEX refcount_lock_;
-  // Mutex to protect reference count.
-
-  CORBA::ULong refcount_;
-  // Number of outstanding references to this object.
 };
 
 #if defined (__ACE_INLINE__)

@@ -39,23 +39,28 @@ public:
   ~IR_Helper ();
   // Destructor
 
-  void notify_startup (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  void notify_startup (CORBA_Environment &_env =
+                           CORBA::default_environment ());
   // Notify the IR that the server is  now running.
 
-  void notify_shutdown (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  void notify_shutdown (CORBA_Environment &_env =
+                            CORBA::default_environment ());
   // Notify the IR that the server has been shut down.
 
   int register_server (const char *comm_line,
                        const char *environment = "",
                        const char *working_dir = "",
-                       CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                       CORBA_Environment &_env =
+                           CORBA::default_environment ());
   // Tell the IR how to start yourself up.
 
   void change_object (CORBA::Object_ptr obj,
-                      CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                      CORBA_Environment &_env =
+                          CORBA::default_environment ());
   // Convert an object into a IR controlled object.
 private:
-  int read_ir_ior (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  int read_ir_ior (CORBA_Environment &_env =
+                       CORBA::default_environment ());
 
   char *name_;
   char *ir_key_;

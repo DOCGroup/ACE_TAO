@@ -180,14 +180,18 @@ realclean:
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -212,10 +216,6 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
@@ -271,6 +271,46 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/MessagingS.h \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/iopfwd.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/MessagingS.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.i \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
@@ -307,35 +347,6 @@ realclean:
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POA.i \
- $(TAO_ROOT)/tao/Stub.h \
- $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
- $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/ORB_Core.h \
- $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Resource_Factory.h \
- $(TAO_ROOT)/tao/IIOP_Connector.h \
- $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
@@ -351,8 +362,6 @@ realclean:
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
@@ -369,11 +378,6 @@ realclean:
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
@@ -551,14 +555,18 @@ realclean:
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -583,10 +591,6 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
@@ -642,6 +646,46 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/MessagingS.h \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/iopfwd.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/MessagingS.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.i \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
@@ -678,35 +722,6 @@ realclean:
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POA.i \
- $(TAO_ROOT)/tao/Stub.h \
- $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
- $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/ORB_Core.h \
- $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Resource_Factory.h \
- $(TAO_ROOT)/tao/IIOP_Connector.h \
- $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
@@ -722,8 +737,6 @@ realclean:
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
@@ -740,11 +753,6 @@ realclean:
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.h \
- $(TAO_ROOT)/tao/TimeBaseS_T.i \
- $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
@@ -911,14 +919,18 @@ realclean:
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -943,10 +955,6 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
@@ -1002,6 +1010,46 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/MessagingS.h \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/iopfwd.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/MessagingS.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.i \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
@@ -1038,35 +1086,6 @@ realclean:
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POA.i \
- $(TAO_ROOT)/tao/Stub.h \
- $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
- $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/ORB_Core.h \
- $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Resource_Factory.h \
- $(TAO_ROOT)/tao/IIOP_Connector.h \
- $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
@@ -1189,14 +1208,18 @@ realclean:
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -1221,10 +1244,6 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
@@ -1280,6 +1299,46 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/MessagingS.h \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/iopfwd.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/MessagingS.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.i \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
@@ -1316,35 +1375,6 @@ realclean:
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POA.i \
- $(TAO_ROOT)/tao/Stub.h \
- $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
- $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/ORB_Core.h \
- $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Resource_Factory.h \
- $(TAO_ROOT)/tao/IIOP_Connector.h \
- $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
@@ -1431,8 +1461,7 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- dataC.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h dataC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -1471,14 +1500,18 @@ realclean:
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -1503,10 +1536,6 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
@@ -1559,6 +1588,46 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
+ $(TAO_ROOT)/tao/POAManager.h \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/POAManager.i \
+ $(TAO_ROOT)/tao/Object_Adapter.h \
+ $(TAO_ROOT)/tao/Object_Adapter.i \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/MessagingS.h \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/iopfwd.h \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/MessagingS.i \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/Policy_Manager.h \
+ $(TAO_ROOT)/tao/Policy_Manager.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.h \
+ $(TAO_ROOT)/tao/Acceptor_Registry.i \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
@@ -1595,35 +1664,6 @@ realclean:
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/Active_Object_Map.i \
- $(TAO_ROOT)/tao/POAManager.h \
- $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/Object_Adapter.h \
- $(TAO_ROOT)/tao/Object_Adapter.i \
- $(TAO_ROOT)/tao/POA.i \
- $(TAO_ROOT)/tao/Stub.h \
- $(TAO_ROOT)/tao/Pluggable.h \
- $(TAO_ROOT)/tao/Pluggable.i \
- $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/ORB_Core.h \
- $(TAO_ROOT)/tao/Policy_Manager.h \
- $(TAO_ROOT)/tao/Resource_Factory.h \
- $(TAO_ROOT)/tao/IIOP_Connector.h \
- $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/Operation_Table.h \
- $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
