@@ -294,8 +294,7 @@ main (int argc, char* argv[])
 
   //@BT
   //DSTRM_EVENT(MAIN_GROUP_FAM, START,1,0,NULL);
-  ACE_Time_Value tv = ACE_OS::gettimeofday();
-  ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t START at %u\n",tv.msec()));
+  ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t START at %u\n",ACE_OS::gettimeofday().msec()));
 #ifdef ACE_HAS_DSUI
   //  ACE_Object_Counter::object_id oid = ACE_OBJECT_COUNTER->increment();
   //  DSTRM_EVENT(MAIN_GROUP_FAM, START, 1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
@@ -379,8 +378,7 @@ main (int argc, char* argv[])
 #ifdef ACE_HAS_DSUI
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
       //DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
-      tv = ACE_OS::gettimeofday();
-      ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t WORKER_ACTIVATED at %u\n",tv.msec()));
+      ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t WORKER_ACTIVATED at %u\n",ACE_OS::gettimeofday().msec()));
       DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
 #endif //ACE_HAS_DSUI
 
