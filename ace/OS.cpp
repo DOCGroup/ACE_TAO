@@ -3548,7 +3548,7 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
       ptr += iov[i].iov_len;
     }
 
-  ssize_t result = ACE::send_n (handle, buf, length);
+  ssize_t result = ACE::write_n (handle, buf, length);
 #   if !defined (ACE_HAS_ALLOCA)
   delete [] buf;
 #   endif /* !defined (ACE_HAS_ALLOCA) */
@@ -3584,7 +3584,7 @@ readv (ACE_HANDLE handle,
   ACE_NEW_RETURN (buf, char[length], -1);
 #   endif /* !defined (ACE_HAS_ALLOCA) */
 
-  length = ACE::recv_n (handle, buf, length);
+  length = ACE::read_n (handle, buf, length);
 
   if (length != -1)
     {
