@@ -29,7 +29,7 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
 }
 
 TAO_Profile *
-TAO_IIOP_Acceptor::create_profile (TAO_ObjectKey& object_key)
+TAO_IIOP_Acceptor::create_profile (TAO_ObjectKey &)
 {
   return 0;
 }

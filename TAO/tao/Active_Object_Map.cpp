@@ -56,8 +56,8 @@ TAO_Active_Object_Map_Impl::find (const PortableServer::Servant servant,
 }
 
 PortableServer::ObjectId *
-TAO_Dynamic_Hash_Active_Object_Map::create_object_id (PortableServer::Servant servant,
-                                                      CORBA::Environment &env)
+TAO_Dynamic_Hash_Active_Object_Map::create_object_id (PortableServer::Servant,
+                                                      CORBA::Environment &)
 {
   // This method assumes that locks are held when it is called
   PortableServer::ObjectId *id;
@@ -179,8 +179,8 @@ TAO_Linear_Active_Object_Map::resize (void)
 }
 
 PortableServer::ObjectId *
-TAO_Linear_Active_Object_Map::create_object_id (PortableServer::Servant servant,
-                                                CORBA::Environment &env)
+TAO_Linear_Active_Object_Map::create_object_id (PortableServer::Servant,
+                                                CORBA::Environment &)
 {
   PortableServer::ObjectId *id;
   CORBA::ULong size = sizeof (CORBA::ULong);
@@ -259,7 +259,7 @@ TAO_Active_Demux_Active_Object_Map::unbind (const PortableServer::ObjectId &id,
 
 PortableServer::ObjectId *
 TAO_Active_Demux_Active_Object_Map::create_object_id (PortableServer::Servant servant,
-                                                      CORBA::Environment &env)
+                                                      CORBA::Environment &)
 {
   // This method assumes that locks are held when it is called
   CORBA::ULong id_data[2];
