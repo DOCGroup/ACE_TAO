@@ -356,6 +356,10 @@ SOURCE=.\be\be_visitor_args.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_array.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_attribute.cpp
 # End Source File
 # Begin Source File
@@ -817,6 +821,10 @@ SOURCE=.\be_include\be_visitor.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_args.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_array.h
 # End Source File
 # Begin Source File
 
