@@ -1,3 +1,9 @@
+Tue Jan 20 03:36:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager.cpp (open): We should call close_i () to
+ 	  ensure previously allocated memory gets release before we
+ 	  allocate new one.
+
 Mon Jan 19 22:21:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Env_Value_Test.cpp (main): Added test codes for unsigned
