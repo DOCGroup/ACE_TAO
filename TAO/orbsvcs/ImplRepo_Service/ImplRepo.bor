@@ -13,7 +13,7 @@ OBJFILES = \
 	$(OBJDIR)\Locator.obj \
 	$(OBJDIR)\NT_Service.obj \
 	$(OBJDIR)\Options.obj
-	$(OBJDIR)\Repository.obj \
+	$(OBJDIR)\Repository.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
