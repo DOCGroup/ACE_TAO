@@ -241,20 +241,20 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 
   {
     ACE_Guard<ACE_SYNCH_MUTEX> g (TAO_ORB_Core_instance ()->leader_follower_lock ());
-
+    
     while (TAO_ORB_Core_instance ()->leader_available ())
-    {
-      if (TAO_ORB_Core_instance ()->add_follower (this->cond_become_leader_) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) ORB::run: Failed to add a follower thread\n"));
-      this->cond_become_leader_->wait ();     
-    }
+      {
+	if (TAO_ORB_Core_instance ()->add_follower (this->cond_become_leader_) == -1)
+	  ACE_ERROR ((LM_ERROR,
+		      "(%P|%t) ORB::run: Failed to add a follower thread\n"));
+	this->cond_become_leader_->wait ();     
+      }
     TAO_ORB_Core_instance ()->set_leader_thread ();
   }
-
+  
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) CORBA_ORB::run: is the leader.\n"));
-
+  
   if (this->shutdown_lock_ == 0)
     this->shutdown_lock_ =
       TAO_ORB_Core_instance ()->server_factory ()->create_event_loop_lock ();
@@ -288,27 +288,27 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 
   int result = 1;
   // 1 to detect that nothing went wrong
-
+  
   // Loop "forever" handling client requests.
   while (this->should_shutdown_ == 0)
-  {
+    {
       if (monitor.release () == -1)
         return -1;
-
+      
 #if 0
       counter++;
       if (counter == max_iterations)
-      {
+	{
           ACE_TIMEPROBE_PRINT;
           ACE_TIMEPROBE_RESET;
           counter = 0;
-      }
-
+	}
+      
       ACE_FUNCTION_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
 #endif /* 0 */
-
+      
       switch (r->handle_events (tv))
-      {
+	{
         case 0: // Timed out, so we return to caller.
           result = 0;
           break;
@@ -318,26 +318,26 @@ CORBA_ORB::run (ACE_Time_Value *tv)
           break;
           /* NOTREACHED */
         default: // Some handlers were dispatched, so keep on processing
-                 // requests until we're told to shutdown .
+	  // requests until we're told to shutdown .
           break;
           /* NOTREACHED */
-      }
+	}
       if (result == 0 || result == -1)
         break;
-
+      
       if (monitor.acquire () == -1)
         return -1;
-  }
-
+    }
+  
   if (result != -1)
-  {
-    if (TAO_ORB_Core_instance ()->unset_leader_wake_up_follower () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t) ORB::run: Failed to add a follower thread\n"),
-                        -1);
-    return 0;
-    // nothing went wrong
-  }
+    {
+      if (TAO_ORB_Core_instance ()->unset_leader_wake_up_follower () == -1)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "(%P|%t) ORB::run: Failed to add a follower thread\n"),
+			  -1);
+      return 0;
+      // nothing went wrong
+    }
   else
     return result;
 }

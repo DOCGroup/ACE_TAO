@@ -67,19 +67,19 @@ public:
 private:
   typedef TAO_SVC_HANDLER BASECLASS;
   // Trait indicating the base class.
-
+  
   int expecting_response_;
   // State flag which, if non-zero, indicates that this handler is
   // looking to get input.  Otherwise, any input received is
   // unexpected.
-
+  
   int input_available_;
   // Flag indicating whether or not input is available.  Only valid
   // when <expecting_response_> is non-zero.
-
+  
   ACE_thread_t calling_thread_;
   // the thread ID of the thread we were running in.
-
+  
   ACE_SYNCH_CONDITION* cond_response_available_;
   // wait on reponse if the leader-follower model is active
 };
