@@ -23,27 +23,33 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TypeCode.h"
+#include "tao/TypeCode/TypeCode.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TypeCodeFactory_Adapter.h"
+
+#include "tao/TypeCode/TypeCode_Base_Attributes.h"
+
+
 namespace TAO
 {
   namespace TypeCode
   {
-    template <CORBA::TCKind KIND> Objref_Traits;
+    template <CORBA::TCKind KIND> struct Objref_Traits;
 
     template <>
     struct Objref_Traits<CORBA::tk_abstract_interface>
     {
       enum { kind = CORBA::tk_abstract_interface };
 
+      static
       CORBA::TypeCode_ptr
-      create_compact_typcode (TAO_TypeCodeFactory_Adapter * factory
-                              char const * id
-                              ACE_ENV_ARG_DECL) const
+      create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
+                               char const * id
+                               ACE_ENV_ARG_DECL)
       {
         return factory->create_abstract_interface_tc (id,
                                                       ""  /* empty name */
@@ -56,10 +62,11 @@ namespace TAO
     {
       enum { kind = CORBA::tk_component };
 
+      static
       CORBA::TypeCode_ptr
-      create_compact_typcode (TAO_TypeCodeFactory_Adapter * factory
-                              char const * id
-                              ACE_ENV_ARG_DECL) const
+      create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
+                               char const * id
+                               ACE_ENV_ARG_DECL)
       {
         return factory->create_component_tc (id,
                                              ""  /* empty name */
@@ -73,10 +80,11 @@ namespace TAO
     {
       enum { kind = CORBA::tk_home };
 
+      static
       CORBA::TypeCode_ptr
-      create_compact_typcode (TAO_TypeCodeFactory_Adapter * factory
-                              char const * id
-                              ACE_ENV_ARG_DECL) const
+      create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
+                               char const * id
+                               ACE_ENV_ARG_DECL)
       {
         return factory->create_home_tc (id,
                                        ""  /* empty name */
@@ -89,10 +97,11 @@ namespace TAO
     {
       enum { kind = CORBA::tk_local_interface };
 
+      static
       CORBA::TypeCode_ptr
-      create_compact_typcode (TAO_TypeCodeFactory_Adapter * factory
-                              char const * id
-                              ACE_ENV_ARG_DECL) const
+      create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
+                               char const * id
+                               ACE_ENV_ARG_DECL)
       {
         return factory->create_local_interface_tc (id,
                                                    ""  /* empty name */
@@ -105,10 +114,10 @@ namespace TAO
     {
       enum { kind = CORBA::tk_native };
 
-      CORBA::TypeCode_ptr
-      create_compact_typcode (TAO_TypeCodeFactory_Adapter * factory
-                              char const * id
-                              ACE_ENV_ARG_DECL) const
+      static CORBA::TypeCode_ptr
+      create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
+                               char const * id
+                               ACE_ENV_ARG_DECL)
       {
         return factory->create_native_tc (id,
                                           ""  /* empty name */
@@ -121,10 +130,11 @@ namespace TAO
     {
       enum { kind = CORBA::tk_objref };
 
+      static
       CORBA::TypeCode_ptr
-      create_compact_typcode (TAO_TypeCodeFactory_Adapter * factory
-                              char const * id
-                              ACE_ENV_ARG_DECL) const
+      create_compact_typecode (TAO_TypeCodeFactory_Adapter * factory,
+                               char const * id
+                               ACE_ENV_ARG_DECL)
       {
         return factory->create_interface_tc (id,
                                              ""  /* empty name */
@@ -142,7 +152,7 @@ namespace TAO
      * @c object (interface) and object-like types (abstract
      * interface, component, local interface and native).
      */
-    template <typename StringType, class RefCountPolicy>
+    template <typename StringType, CORBA::TCKind Kind, class RefCountPolicy>
     class Objref
       : public CORBA::TypeCode,
         private RefCountPolicy
@@ -201,11 +211,11 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/Objref_TypeCode.inl"
+# include "tao/TypeCode/Objref_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/Objref_TypeCode.cpp"
+# include "tao/TypeCode/Objref_TypeCode.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #ifdef ACE_TEMPLATES_REQUIRE_PRAGMA

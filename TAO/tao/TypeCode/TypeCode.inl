@@ -3,6 +3,9 @@
 // $Id$
 
 
+#include "tao/CORBA_methods.h"
+
+
 ACE_INLINE CORBA::Boolean
 CORBA::is_nil (CORBA::TypeCode_ptr obj)
 {
@@ -17,6 +20,11 @@ CORBA::release (CORBA::TypeCode_ptr obj)
 }
 
 // --------------------------------------------------------------
+
+ACE_INLINE
+CORBA::TypeCode::TypeCode (void)
+{
+}
 
 ACE_INLINE CORBA::TypeCode_ptr
 CORBA::TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
@@ -125,7 +133,7 @@ CORBA::TypeCode::content_type (ACE_ENV_SINGLE_ARG_DECL) const
 ACE_INLINE CORBA::UShort
 CORBA::TypeCode::fixed_digits (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  return this->fixed_digitis_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->fixed_digits_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::UShort

@@ -3,7 +3,7 @@
 #include "Empty_Param_TypeCode.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/Empty_Param_TypeCode.inl"
+# include "Empty_Param_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 
@@ -78,5 +78,11 @@ TAO::TypeCode::Empty_Param::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   // Already compact since parameter list is empty.
-  return CORBA::TypeCode::_duplicate (this);
+
+  // Since empty parameter TypeCodes are never created
+  // dynamically, there is no need to manipulate a reference count.
+
+  static TAO::TypeCode::Empty_Param compact_typecode (this->kind_);
+
+  return &compact_typecode;
 }

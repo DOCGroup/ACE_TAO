@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/CORBA_string.h"
+#include "tao/CORBA_String.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -68,11 +68,11 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/TypeCode_Base_Attributes.inl"
+# include "tao/TypeCode/TypeCode_Base_Attributes.inl"
 #endif /* __ACE_INLINE__ */
 
 #ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/TypeCode_Base_Attributes.cpp"
+# include "tao/TypeCode/TypeCode_Base_Attributes.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #ifdef ACE_TEMPLATES_REQUIRE_PRAGMA

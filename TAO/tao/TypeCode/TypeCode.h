@@ -19,12 +19,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Basic_Types.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/UserException.h"
+#include "tao/Basic_Types.h"
 #include "tao/OBV_Constants.h"
 
 
@@ -456,12 +458,15 @@ namespace CORBA
     virtual bool tao_marshal (TAO_OutputCDR & cdr) const = 0;
 
     /// Increase the reference count on this @c TypeCode.
-    virtual bool tao_duplicate (void) = 0;
+    virtual void tao_duplicate (void) = 0;
 
     /// Decrease the reference count on this object.
-    virtual bool tao_release (void) = 0;
+    virtual void tao_release (void) = 0;
 
   protected:
+
+    /// Constructor.
+    TypeCode (void);
 
     /**
      * @name @c TypeCode Template Methods
@@ -528,13 +533,13 @@ namespace TAO
                                      CORBA::TypeCode const * x);
 
   /// Return the unaliased @c TCKind of the given @c TypeCode.
-  TCKind unaliased_kind (CORBA::TypeCode_ptr tc
-                         ACE_ENV_ARG_DECL);
+  CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc
+                                ACE_ENV_ARG_DECL);
 }
 
 
 #if defined (__ACE_INLINE__)
-# include "tao/TypeCode.inl"
+# include "tao/TypeCode/TypeCode.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
