@@ -365,7 +365,7 @@ TAO_ServerRequestInfo::adapter_name (TAO_ENV_SINGLE_ARG_DECL)
     {
       CORBA::StringSeq *adapter_name = 0;
       adapter_name =
-        this->servant_upcall_->poa ().adapter_name (TAO_ENV_SINGLE_ARG_DECL);
+        this->servant_upcall_->poa ().adapter_name (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return adapter_name;

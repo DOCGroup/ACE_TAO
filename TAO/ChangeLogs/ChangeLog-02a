@@ -1,3 +1,20 @@
+Tue Jan 15 15:01:48 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableServer/ServerRequestInfo.cpp : 
+	* tao/PortableServer/POA.i : 
+	* tao/PortableServer/ObjectReferenceTemplate.h : 
+	* tao/PortableServer/ObjectReferenceFactory.cpp : 
+	* tao/PortableServer/ObjectReferenceTemplate.cpp : 
+	* tao/PortableServer/IORInfo.cpp : 
+	  Corrected the usage of TAO_ENV_ARG_DECL and
+	  TAO_ENV_ARG_PARAMETER
+
+	* tao/PortableServer/POA.h : 
+	* tao/PortableServer/POA.cpp : 
+	  In addition to correcting the usage of TAO_ENV_ARG_DECL, added a
+	  new protected method so that there is only a single ACE_TRY
+	  block in TAO_POA::establish_components method.
+
 Tue Jan 15 14:28:50 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/PortableInterceptorC.h: 

@@ -398,7 +398,7 @@ ACE_INLINE CORBA::StringSeq *
 TAO_POA::adapter_name (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->adapter_name_i (TAO_ENV_SINGLE_ARG_DECL);
+  return this->adapter_name_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceTemplate *
@@ -631,7 +631,7 @@ TAO_POA::thread_policy (void) const
 }
 
 ACE_INLINE PortableInterceptor::AdapterState
-TAO_POA::get_adapter_state (TAO_ENV_SINGLE_ARG_DECL)
+TAO_POA::get_adapter_state (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->adapter_state_;
 }

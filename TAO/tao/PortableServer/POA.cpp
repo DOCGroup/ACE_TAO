@@ -345,20 +345,20 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     ACE_NEW_THROW_EX (ort_template,
                       TAO_ObjectReferenceTemplate (server_id.in (),
                                                    orb_id.in (),
-                                                   this->adapter_name (),
+                                                   this->adapter_name (TAO_ENV_SINGLE_ARG_PARAMETER),
                                                    this),
                     CORBA::NO_MEMORY ());
 
   this->ort_template_ = ort_template;
 
   this->set_obj_ref_factory (this->ort_template_
-                             TAO_ENV_ARG_DECL);
+                             TAO_ENV_ARG_PARAMETER);
 
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
   // for this servant.
   this->tao_establish_components (TAO_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK;
 
 }
 
@@ -895,8 +895,8 @@ TAO_POA::adapter_name_i (TAO_ENV_SINGLE_ARG_DECL)
   CORBA::StringSeq_var safe_args (name_seq);
 
   CORBA::String_var current_poa_name =
-    this->the_name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  ACE_CHECK_RETURN (-1);
+    this->the_name (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   CORBA::ULong name_seq_length = 0;
 
@@ -919,12 +919,12 @@ TAO_POA::adapter_name_i (TAO_ENV_SINGLE_ARG_DECL)
       /// Make the parent name as the current_poa_name
       /// Go up the ladder by one parent ;-)
       PortableServer::POA_var current_poa_name_parent =
-        current_poa->the_parent (TAO_ENV_SINGLE_ARG_DECL);
-      ACE_CHECK_RETURN (-1);
+        current_poa->the_parent (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       current_poa_name =
-        current_poa_name_parent->the_name (TAO_ENV_SINGLE_ARG_DECL);
-      ACE_CHECK_RETURN (-1);
+        current_poa_name_parent->the_name (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       current_poa =
         PortableServer::POA::_duplicate (current_poa_name_parent.in ());
@@ -958,7 +958,7 @@ TAO_POA::tao_add_ior_component (const IOP::TaggedComponent &component
     {
       TAO_Profile *profile = this->mprofile_->get_profile (i);
 
-      profile->add_tagged_component (component TAO_ENV_ARG_DECL);
+      profile->add_tagged_component (component TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
     }
@@ -983,7 +983,7 @@ TAO_POA::tao_add_ior_component_to_profile (
 
       if (profile->tag () == profile_id)
         {
-          profile->add_tagged_component (component TAO_ENV_ARG_DECL);
+          profile->add_tagged_component (component TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           found_profile = 1;
@@ -1016,7 +1016,6 @@ adapter_state_changed (const PortableInterceptor::ObjectReferenceTemplateSeq *se
     {
       interceptors[i]->adapter_state_changed ((*seq_obj_ref_template),
                                               state);
-      ACE_CHECK;
     }
 }
 
@@ -1825,7 +1824,7 @@ TAO_POA::create_reference_i (const char *intf
   CORBA::Object_var object =
     this->obj_ref_factory_->make_object (intf,
                                          *obj_id
-                                         TAO_ENV_ARG_DECL);
+                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object._retn ();
@@ -1863,7 +1862,7 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   CORBA::Object_var obj_ptr =
     this->obj_ref_factory_->make_object (intf,
                                          *obj_id
-                                         TAO_ENV_ARG_DECL);
+                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return obj_ptr._retn ();
@@ -2102,7 +2101,7 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant
   CORBA::Object_var object =
     this->obj_ref_factory_->make_object (servant->_interface_repository_id (),
                                          *obj_id
-                                         TAO_ENV_ARG_DECL);
+                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object._retn ();
@@ -3400,7 +3399,7 @@ TAO_POA::invoke_key_to_object (const char *intf,
                                     servant,
                                     1,
                                     priority
-                                    TAO_ENV_ARG_DECL);
+                                    TAO_ENV_ARG_PARAMETER);
     }
   else
     {
@@ -3410,7 +3409,7 @@ TAO_POA::invoke_key_to_object (const char *intf,
                                     0,
                                     1,
                                     priority
-                                    TAO_ENV_ARG_DECL);
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
 
@@ -3570,7 +3569,7 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
   ACE_CHECK_RETURN (0);
 
   /// Set the endpoints
-  (void) this->orb_core_.open (TAO_ENV_SINGLE_ARG_DECL);
+  (void) this->orb_core_.open (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   TAO_Default_Acceptor_Filter filter;
@@ -3587,7 +3586,7 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
 }
 
 void
-TAO_POA::tao_establish_components (TAO_ENV_SINGLE_ARG_PARAMETER)
+TAO_POA::tao_establish_components (TAO_ENV_SINGLE_ARG_DECL)
 {
   PortableInterceptor::IORInfo_ptr info_temp;
   ACE_NEW_THROW_EX (info_temp,
@@ -3602,7 +3601,7 @@ TAO_POA::tao_establish_components (TAO_ENV_SINGLE_ARG_PARAMETER)
   PortableInterceptor::IORInfo_var info = info_temp;
 
   this->establish_components (info.in ()
-                              TAO_ENV_ARG_DECL);
+                              TAO_ENV_ARG_PARAMETER);
 
 }
 
@@ -3659,6 +3658,26 @@ TAO_POA::establish_components (PortableInterceptor::IORInfo *info
       ACE_CHECK;
     }
 
+  this->components_established_i (info
+                                  TAO_ENV_ARG_PARAMETER);
+
+  return;
+}
+
+void
+TAO_POA::components_established_i (PortableInterceptor::IORInfo *info
+                                   TAO_ENV_ARG_DECL)
+{
+  // Iterate over the registered IOR interceptors so that they may be
+  // given the opportunity to add tagged components to the profiles
+  // for this servant.
+  TAO_IORInterceptor_List::TYPE &interceptors =
+    this->orb_core_.ior_interceptors ();
+
+  size_t interceptor_count = interceptors.size ();
+  if (interceptor_count == 0)
+    return;
+
   /// All the establish_components methods are invoked. Now, call the
   /// components_established method on all the IOR Interceptors.
   for (size_t j = 0; j < interceptor_count; ++j)
@@ -3694,7 +3713,7 @@ TAO_POA::get_policy_list ()
 
 void
 TAO_POA::save_ior_component (const IOP::TaggedComponent &component
-                             TAO_ENV_ARG_DECL)
+                             TAO_ENV_ARG_DECL_NOT_USED)
 {
   this->tagged_component_ = component;
   this->add_component_support_ = 1;
@@ -3704,7 +3723,7 @@ void
 TAO_POA::
 save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
                                    IOP::ProfileId profile_id
-                                   TAO_ENV_ARG_DECL)
+                                   TAO_ENV_ARG_DECL_NOT_USED)
 {
   this->tagged_component_ = component;
   this->profile_id_ = profile_id;
@@ -3789,7 +3808,7 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
         {
           // Get the ith profile
           profile = mprofile.get_profile (i);
-          profile->policies (policy_list TAO_ENV_ARG_DECL);
+          profile->policies (policy_list TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
     }
@@ -3805,14 +3824,14 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
       if (this->profile_id_ == 0)
         {
           this->tao_add_ior_component (this->tagged_component_
-                                       TAO_ENV_ARG_DECL);
+                                       TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
       else
         {
           this->tao_add_ior_component_to_profile (this->tagged_component_,
                                                   this->profile_id_
-                                                  TAO_ENV_ARG_DECL);
+                                                  TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
     }
