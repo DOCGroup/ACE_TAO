@@ -156,7 +156,7 @@ main (int argc, char **argv)
       CORBA::String_var first_ior =
         orb->object_to_string (a.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       // Stringyfy all the object references and print them out.
       CORBA::String_var second_ior =
         orb->object_to_string (b.in (), ACE_TRY_ENV);
@@ -167,12 +167,39 @@ main (int argc, char **argv)
         orb->object_to_string (c.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-
       // Stringyfy all the object references and print them out.
       CORBA::String_var forth_ior =
         orb->object_to_string (a_tie.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      FILE *output_file_1 = ACE_OS::fopen ("ior_1", "w");
+      FILE *output_file_2 = ACE_OS::fopen ("ior_2", "w");
+      FILE *output_file_3 = ACE_OS::fopen ("ior_3", "w");
+      FILE *output_file_4 = ACE_OS::fopen ("ior_4", "w");
+
+      if (output_file_1)
+        {
+          cout << "I am here " << endl;
+        ACE_OS::fprintf (output_file_1, 
+                         "%s",
+                         first_ior.in ());}
+      if (output_file_2)
+        ACE_OS::fprintf (output_file_2, 
+                         "%s",
+                         second_ior.in ());
+      if (output_file_3)
+        ACE_OS::fprintf (output_file_3, 
+                         "%s",
+                         third_ior.in ());
+      if (output_file_4)
+        ACE_OS::fprintf (output_file_4, 
+                         "%s",
+                         forth_ior.in ());
+      
+      ACE_OS::fclose (output_file_1);      
+      ACE_OS::fclose (output_file_2);
+      ACE_OS::fclose (output_file_3);
+      ACE_OS::fclose (output_file_4);
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
@@ -186,6 +213,21 @@ main (int argc, char **argv)
       CORBA::String_var sixth_ior =
         orb->object_to_string (c_tie.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      FILE *output_file_5 = ACE_OS::fopen ("ior_5", "w");
+      FILE *output_file_6 = ACE_OS::fopen ("ior_6", "w");
+      
+      if (output_file_5)
+        ACE_OS::fprintf (output_file_1, 
+                         "%s",
+                         fifth_ior.in ());
+      if (output_file_6)
+        ACE_OS::fprintf (output_file_1, 
+                         "%s",
+                         sixth_ior.in ());
+
+      ACE_OS::fclose (output_file_5);      
+      ACE_OS::fclose (output_file_6);
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
