@@ -51,12 +51,12 @@ TAO/tests/RTCORBA/Server_Declared/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Thread_Pool/run_test.pl: !MINIMUM !ST
 TAO/tests/RTScheduling/VoidData/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/tests/RTScheduling/Thread_Cancel/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/RTScheduling/Thread_Cancel/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !ST
 TAO/tests/RTScheduling/DT_Spawn/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/tests/RTScheduling/Current/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/RTScheduling/Current/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !ST
 TAO/tests/RTScheduling/Scheduling_Interceptor/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !STATIC
 TAO/tests/OBV/Any/run_test.pl
-TAO/tests/OBV/Collocated/Forward/run_test.pl
+TAO/tests/OBV/Collocated/Forward/run_test.pl: !ST
 TAO/tests/OBV/Factory/run_test.pl
 TAO/tests/OBV/Forward/run_test.pl
 TAO/tests/OBV/TC_Alignment/run_test.pl
@@ -73,7 +73,7 @@ TAO/tests/Connect_Strategy_Test/run_test.pl
 # DISABLED TAO/tests/Client_Leaks/run_test.pl: !ST !Tru64
 TAO/tests/Server_Leaks/run_test.pl
 TAO/tests/Stack_Recursion/run_test.pl: !ST
-TAO/tests/Faults/run_test.pl: !MINIMUM
+TAO/tests/Faults/run_test.pl: !MINIMUM !ST
 TAO/tests/Crashed_Callback/run_test.pl: !MINIMUM
 TAO/tests/Crash_On_Write/run_test.pl: !ST
 TAO/tests/Nested_Upcall_Crash/run_test.pl: !MINIMUM
@@ -135,8 +135,8 @@ TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM
 TAO/tests/Multiple/run_test.pl: !SUNCC5_1
 TAO/tests/Exposed_Policies/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/Portable_Interceptors/Bug_1559/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !ST
+TAO/tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !ST
 TAO/tests/Portable_Interceptors/Dynamic/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/IORInterceptor/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !GIOP10
 TAO/tests/Portable_Interceptors/ForwardRequest/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
@@ -149,4 +149,4 @@ TAO/tests/Object_Loader/run_test.pl: !STATIC
 TAO/tests/Two_Objects/run_test.pl: !ST
 TAO/tests/UNKNOWN_Exception/run_test.pl: Exceptions
 TAO/tests/Native_Exceptions/run_test.pl: Exceptions
-TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM
+TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM !ST
