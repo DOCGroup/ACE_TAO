@@ -1588,12 +1588,13 @@ ACE_OS::cleanup_tss (const u_int main_thread)
 
   if (main_thread)
     {
-#if ! (defined (ACE_HAS_TSS_EMULATION) || defined (ACE_WIN32))
-  // Just close the ACE_Log_Msg for the current (which should be main) thread.
-  // We don't have TSS emulation; if there's native TSS, it should call its
-  // destructors when the main thread exits.
+#if ! defined (ACE_HAS_TSS_EMULATION)
+      // Just close the ACE_Log_Msg for the current (which should be
+      // main) thread.  We don't have TSS emulation; if there's native
+      // TSS, it should call its destructors when the main thread
+      // exits.
       ACE_Log_Msg::close ();
-#endif /* ! ACE_HAS_TSS_EMULATION || ACE_WIN32 */
+#endif /* ! ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
       // Remove all TSS_Info table entries.
