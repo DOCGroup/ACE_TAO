@@ -277,9 +277,11 @@ CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &env)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Node<CORBA::NamedValue_ptr>;
 template class ACE_Unbounded_Queue<CORBA::NamedValue_ptr>;
 template class ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Node<CORBA::NamedValue_ptr>
 #pragma instantiate ACE_Unbounded_Queue<CORBA::NamedValue_ptr>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
