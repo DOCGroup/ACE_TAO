@@ -1,3 +1,18 @@
+Thu Nov 1 15:49:04  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/platform_osf1_4.x_cxx.GNU: Moved the
+	  CXX_VERSION definition to the global scope. 
+	
+	* include/makeinclude/platform_tru64_cxx.GNU: Added
+	  -D_PTHREAD_ENV_DECCXX flag to the CPPFLAGS. This is done only
+	  for v5.1, 1885. The pthreads.h in 1885 is messed up. The
+	  conditional include of c_asm.h is busted for DECCXX and
+	  v1885. Hence the change. We need to do this to protect ACE and
+	  TAO applications on this platform and compiler
+	  combinations. Thanks to  Don Hinton <dhinton@gmx.net> for
+	  reporting the problem. 
+	
+
 Thu Nov  1 14:25:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/config-win32-borland.h:
