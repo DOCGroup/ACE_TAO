@@ -4,6 +4,20 @@ Fri Sep 29 11:14:52 2000 Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/TAO_Static.dsp: Added the new files in to the MSVC project
 	  file.
 
+Fri Sep 29 11:11:40 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+
+	  Added call to base class user exception constructor for
+	  local exceptions (since the call no longer takes a 
+	  typecode argument). Thanks to Irfan for reporting this.
+
+	  Also took the usual opportunity to cosmetize the source
+	  code and the generated code for exceptions.
+
 Fri Sep 29 10:14:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
