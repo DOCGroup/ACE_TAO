@@ -70,7 +70,7 @@ int
 parse_args (int argc,char **argv)
 {
   ACE_Get_Opt opts (argc,argv,"fa:");
-  char c;
+  int c;
   while ((c = opts ()) != -1)
     {	
       switch (c)
