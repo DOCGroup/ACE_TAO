@@ -1,3 +1,17 @@
+Fri Aug 23 16:25:47 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/OS.i:
+        * ace/OS.h:
+
+          Removed the wrappers for functions that are known to be
+          overloaded by macros. #undef will break user code for these
+          functions. This includes feof(), ferror() and ungetc(). The
+          other functions seem to only have a function implementation.
+
+        * ACEXML/common/FileCharStream.cpp:
+
+          Removed the use of ACE_OS wrappers for the above functions.
+
 Fri Aug 23 08:40:38 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/config-qnx-rtp.h: Added some new #defines so ACE will
