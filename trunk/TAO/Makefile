@@ -16,7 +16,6 @@ DIRS	= tao \
 	  orbsvcs \
 	  tests \
 
-
 CLONE	= Makefile \
 	  tao \
 	  TAO_IDL \
