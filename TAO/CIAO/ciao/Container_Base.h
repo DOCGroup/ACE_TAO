@@ -20,15 +20,12 @@
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "ciao/CCM_ContainerC.h"
-#include "ciao/CCM_DeploymentC.h"
+#include "CCM_ContainerC.h"
+#include "CCM_DeploymentC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-
-#include "CIAO_SERVER_export.h"
 
 namespace CIAO
 {

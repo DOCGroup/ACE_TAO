@@ -4,6 +4,7 @@
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
+#include "ciao/CIAO_HomeRegistrar_i.h"
 
 char *ior_file_name_ = 0;
 char *component_list_ = 0;
@@ -96,7 +97,7 @@ install_homes (CIAO::Session_Container &container,
                                10,
                                items);
 
-          if (len < 4)
+          if (len < 7)
             continue;
 
           // len should be at least such and such long so we have all
@@ -121,6 +122,9 @@ install_homes (CIAO::Session_Container &container,
                                           items[3]
                                           ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
+
+          if (CORBA::is_nil (home))
+            continue;
 
           // Register with the HomeFinder now.
           CORBA::String_var str = orb->object_to_string (home.in ()
@@ -168,6 +172,15 @@ main (int argc, char *argv[])
 
       mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Configuring HomeRegistrar.
+      obj = orb->resolve_initial_references ("NameService");
+      CosNaming::NamingContext_var ns = CosNaming::NamingContext::_narrow (obj);
+      if (CORBA::is_nil (ns))
+        return -1;
+
+      PortableServer::Servant hr_svt = new CIAO::HomeRegistrar_Impl (ns);
+
 
       // Start Deployment part
 

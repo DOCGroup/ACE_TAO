@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib tao.lib TAO_IFR_Client.lib CIAO_Client.lib CIAO_Container.lib TAO_Security.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\CIAO_Server.dll" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\tao\PortableServer"
+# ADD LINK32 ace.lib tao.lib TAO_IFR_Client.lib CIAO_Client.lib CIAO_Container.lib TAO_Security.lib TAO_PortableServer.lib TAO_CosNaming.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\CIAO_Server.dll" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\tao\PortableServer"
 
 !ELSEIF  "$(CFG)" == "CIAO_Server - Win32 Debug"
 
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib TAO_IFR_Clientd.lib CIAO_Clientd.lib CIAO_Containerd.lib TAO_Securityd.lib TAO_PortableServerd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\CIAO_Serverd.dll" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\tao\PortableServer"
+# ADD LINK32 aced.lib taod.lib TAO_IFR_Clientd.lib CIAO_Clientd.lib CIAO_Containerd.lib TAO_Securityd.lib TAO_PortableServerd.lib TAO_CosNamingd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\CIAO_Serverd.dll" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\tao\PortableServer"
 
 !ENDIF 
 
@@ -96,6 +96,22 @@ SOURCE=.\CCM_DeploymentC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CCM_DeploymentS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_HomeRegistrar_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_HomeRegistrarC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_HomeRegistrarS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Container_Base.cpp
 # End Source File
 # End Group
@@ -105,6 +121,22 @@ SOURCE=.\Container_Base.cpp
 # Begin Source File
 
 SOURCE=.\CCM_DeploymentC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CCM_DeploymentS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_HomeRegistrar_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_HomeRegistrarC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_HomeRegistrarS.h
 # End Source File
 # Begin Source File
 
@@ -130,9 +162,7 @@ InputPath=.\CCM_Deployment.idl
 InputName=CCM_Deployment
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
-	del $(InputName)S.* \
-	
+	..\..\..\bin\release\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -141,6 +171,15 @@ BuildCmds= \
    $(BuildCmds)
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
@@ -152,9 +191,7 @@ InputPath=.\CCM_Deployment.idl
 InputName=CCM_Deployment
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
-	del $(InputName)S.* \
-	
+	..\..\..\bin\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -163,6 +200,80 @@ BuildCmds= \
    $(BuildCmds)
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_HomeRegistrar.idl
+
+!IF  "$(CFG)" == "CIAO_Server - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_HomeRegistrar.idl
+InputName=CIAO_HomeRegistrar
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CIAO_Server - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_HomeRegistrar.idl
+InputName=CIAO_HomeRegistrar
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
@@ -176,6 +287,22 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\CCM_DeploymentC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CCM_DeploymentS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_HomeRegistrar_i.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_HomeRegistrarC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_HomeRegistrarS.i
 # End Source File
 # End Group
 # End Target

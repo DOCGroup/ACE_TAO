@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ciao/Container_Base.h"
+#include "Container_Base.h"
 #include "ace/DLL.h"
 
 ////////////////////////////////////////////////////////////////
@@ -8,7 +8,6 @@
 CIAO::Container::Container (CORBA::ORB_ptr o)
   : orb_ (CORBA::ORB::_duplicate (o))
 {
-
 }
 
 CIAO::Container::~Container ()
