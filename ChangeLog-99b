@@ -1,3 +1,10 @@
+Wed Aug  4 15:56:51 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ace/Task.h (ACE_Task_Base): Changed the parameter name 
+	  <thread_names> to <thread_ids>, which is more descriptive.
+	  Thanks to John Forest <forestj@res.raytheon.com> for 
+	  motivating this.
+
 Wed Aug  4 15:54:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* netsvcs/clients/Naming/Client/Makefile:
