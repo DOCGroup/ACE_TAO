@@ -891,11 +891,11 @@ Param_Test_i::test_exception (CORBA::ULong s1,
       return s1 * 4;
     }
   else if (d == 1)
-      ACE_THROW_RETURN (Param_Test::Ooops (CORBA::string_dup (" % 3 == 1"), s1), 0);
+      ACE_THROW_RETURN (Param_Test::Ooops (" % 3 == 1", s1), 0);
 
   // This will avoid the compiler
   // warning that test_exception is throwing an exception
-  // not in its THROW_SPEC, but still test TAO's 
+  // not in its THROW_SPEC, but still test TAO's
   // conversion of such an exception to UNKNOWN.
   this->throw_badboy (ACE_TRY_ENV);
 
