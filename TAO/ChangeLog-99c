@@ -1,3 +1,39 @@
+Wed May 19 15:25:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tao/corbafwd.i:
+	* tao/ORB.h:
+	* tao/ORB.i:
+	* tao/ORB.cpp:
+	* tao/CDR_Interpreter.cpp:
+	* tao/Managed_Types.cpp:
+	* tao/Managed_Types.h:
+	* tao/Managed_Types.i:
+	* tao/Marshal.i:
+	* tao/POA.cpp:
+	* tao/POA.h:
+	* tao/Request.cpp:
+	* tao/Typecode_Constants.cpp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+	* orbsvcs/tests/Logger/Logging_Test_i.cpp:
+	* orbsvcs/tests/Logger/client_i.cpp:
+	* orbsvcs/tests/Property/client.cpp:
+	* orbsvcs/tests/Property/main.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+	* tests/Param_Test/options.cpp:
+	  Added support for CORBA::WString_var and CORBA::WString_out,
+	  also did a quick cleanup for the WString_Manager classes.
+	  Thanks to Lothar Werzinger <lwerzinger@krones.de> for providing
+	  this fixes.
+	  Also removed all uses of string_copy which is a non-standard TAO 
+	  extension.
+
+	* docs/releasenotes/TODO.html:
+	  More EC updates
+
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+	  Added copy-on-read to avoid dead-locks during dispatch.
+
 Wed May 19 15:12:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:

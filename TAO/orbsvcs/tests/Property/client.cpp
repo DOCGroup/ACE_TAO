@@ -51,7 +51,7 @@ Client::init (int argc,
   propsetdef_name.length (1);
   propsetdef_name [0].id = CORBA::string_dup ("PropertySetDef");
   CORBA::Object_var propsetdef_obj = my_name_client_->resolve (propsetdef_name,
-							       ACE_TRY_ENV);
+                                                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (1);
 
   ACE_DEBUG ((LM_DEBUG, "Naming resolve done\n"));
@@ -64,7 +64,7 @@ Client::init (int argc,
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Couldnot resolve propsetdef in Naming server"),
                       -1);
-  
+
   return 0;
 }
 
@@ -128,7 +128,7 @@ Client::property_tester (CORBA::Environment &ACE_TRY_ENV)
   // Testing define_property_with_mode.
   this->test_define_property_with_mode (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
+
   return 0;
 }
 
@@ -152,8 +152,8 @@ Client::test_define_property (CORBA::Environment &ACE_TRY_ENV)
               "Main : Char ch = %c\n",
               ch));
   this->propsetdef_->define_property ("char_property",
-				      anyval,
-				      ACE_TRY_ENV);
+                                      anyval,
+                                      ACE_TRY_ENV);
 
   // Check if that is an user exception, if so, print it out.
   if ((ACE_TRY_ENV.exception () != 0) &&
@@ -173,8 +173,8 @@ Client::test_define_property (CORBA::Environment &ACE_TRY_ENV)
               "Main : Short s = %d\n",
               s));
   propsetdef_->define_property ("short_property",
-				anyval,
-				ACE_TRY_ENV);
+                                anyval,
+                                ACE_TRY_ENV);
 
   // Check if that is an user exception, if so, print it out.
   if ((ACE_TRY_ENV.exception () != 0) &&
@@ -194,8 +194,8 @@ Client::test_define_property (CORBA::Environment &ACE_TRY_ENV)
               l));
   CORBA::Any newany(anyval);
   propsetdef_->define_property ("long_property",
-				anyval,
-				ACE_TRY_ENV);
+                                anyval,
+                                ACE_TRY_ENV);
 
   // Check if that is an user exception, if so, print it out.
   if ((ACE_TRY_ENV.exception () != 0) &&
@@ -214,8 +214,8 @@ Client::test_define_property (CORBA::Environment &ACE_TRY_ENV)
               "Main : Float f = %f\n",
               f));
   propsetdef_->define_property ("float_property",
-				anyval,
-				ACE_TRY_ENV);
+                                anyval,
+                                ACE_TRY_ENV);
 
   // Check if that is an user exception, if so, print it out.
   if ((ACE_TRY_ENV.exception () != 0) &&
@@ -237,8 +237,8 @@ Client::test_define_property (CORBA::Environment &ACE_TRY_ENV)
               strvar.in (),
               newstr));
   propsetdef_->define_property ("string_property",
-				anyval,
-				ACE_TRY_ENV);
+                                anyval,
+                                ACE_TRY_ENV);
 
   // Check if that is an user exception, if so, print it out.
   if ((ACE_TRY_ENV.exception () != 0) &&
@@ -266,27 +266,27 @@ Client::test_get_all_property_names (CORBA::Environment &ACE_TRY_ENV)
 
   // Get half on the names and half of on the iterator.
   CORBA::ULong how_many = num_of_properties / 2;
-  
+
   // The extra ptr's and out's required to avoind SunnCC's warning
   // when foo.out () is passed to a funtion.
   CosPropertyService::PropertyNames_var names_var;
   CosPropertyService::PropertyNames_ptr names_ptr = 0;
   CosPropertyService::PropertyNames_out names_out (names_ptr);
-  
+
   CosPropertyService::PropertyNamesIterator_var iterator_var;
   CosPropertyService::PropertyNamesIterator_ptr iterator_ptr;
   CosPropertyService::PropertyNamesIterator_out iterator_out (iterator_ptr);
-  
+
   propsetdef_->get_all_property_names (how_many,
                                        names_out,
                                        iterator_out,
                                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
+
   // Get the values back to var.
   names_var = names_out.ptr ();
   iterator_var = iterator_out.ptr ();
-  
+
   // Print out the names in the names-sequence.
   if (names_var.ptr () != 0)
     {
@@ -302,31 +302,31 @@ Client::test_get_all_property_names (CORBA::Environment &ACE_TRY_ENV)
   if (iterator_var.ptr () != 0)
     {
       // Helper variables to stop the SunCC warnings on on foo.out
-      // (). 
+      // ().
       CosPropertyService::PropertyName  name_ptr = 0;
       CosPropertyService::PropertyName_out name_out (name_ptr);
-      
+
       // Call the function.
       CORBA::Boolean next_one_result = iterator_var->next_one (name_out, ACE_TRY_ENV);
-      
+
       // Get the values back on a _var variable.
       CosPropertyService::PropertyName_var name_var = name_out.ptr ();
-      
+
       while (next_one_result == 1)
         {
           ACE_CHECK_RETURN (-1);
           ACE_DEBUG ((LM_DEBUG, "%s\n", name_var.in ()));
-          
+
           // Call the function to iterate again.
           next_one_result = iterator_var->next_one (name_out, ACE_TRY_ENV);
-          
+
           // Get the values back on a _var variable.
           name_var = name_out.ptr ();
         }
 
       ACE_CHECK_RETURN (-1);
     }
-  
+
   return 0;
 }
 
@@ -365,10 +365,10 @@ Client::test_get_properties (CORBA::Environment &ACE_TRY_ENV)
                                                            ACE_TRY_ENV);
   ACE_UNUSED_ARG (return_val);
   ACE_CHECK_RETURN (-1);
-  
+
   // Get the value to the _var.
   CosPropertyService::Properties_var properties = properties_out.ptr ();
-  
+
   if (properties.ptr () != 0)
     {
       // Go thru the properties and print them out, if they are not
@@ -454,7 +454,7 @@ Client::test_delete_properties (CORBA::Environment &ACE_TRY_ENV)
               prop_names.length (),
               prop_names.maximum ()));
   this->propsetdef_->delete_properties (prop_names,
-					ACE_TRY_ENV);
+                                        ACE_TRY_ENV);
   ACE_CHECK_RETURN ( 0);
 
   return 0;
@@ -476,7 +476,7 @@ Client::test_define_properties (CORBA::Environment &ACE_TRY_ENV)
   anyval <<= CORBA::Any::from_char (ch);
   ch = '*';
   anyval >>= CORBA::Any::to_char (ch);
-  nproperties[0].property_name  = CORBA::string_copy ("char_property");
+  nproperties[0].property_name  = CORBA::string_dup ("char_property");
   nproperties[0].property_value <<= CORBA::Any::from_char (ch);
 
   // Prepare a Short and "define" that in the PropertySet.
@@ -484,7 +484,7 @@ Client::test_define_properties (CORBA::Environment &ACE_TRY_ENV)
   anyval <<= s;
   s = 7;
   anyval >>= s;
-  nproperties[1].property_name  = CORBA::string_copy ("short_property");
+  nproperties[1].property_name  = CORBA::string_dup ("short_property");
   nproperties[1].property_value <<= s;
 
   // Prepare a Long and "define" that in the PropertySet.
@@ -492,7 +492,7 @@ Client::test_define_properties (CORBA::Environment &ACE_TRY_ENV)
   anyval <<= l;
   l = 931233;
   anyval >>= l;
-  nproperties[2].property_name  = CORBA::string_copy ("long_property");
+  nproperties[2].property_name  = CORBA::string_dup ("long_property");
   nproperties[2].property_value <<= l;
 
   // Prepare a Float and "define" that in the PropertySet.
@@ -500,7 +500,7 @@ Client::test_define_properties (CORBA::Environment &ACE_TRY_ENV)
   anyval <<= f;
   f = 4.14F;
   anyval >>= f;
-  nproperties[3].property_name  = CORBA::string_copy ("float_property");
+  nproperties[3].property_name  = CORBA::string_dup ("float_property");
   nproperties[3].property_value <<= f;
 
   // Define this sequence of properties now.
@@ -531,17 +531,17 @@ Client::test_get_all_properties (CORBA::Environment &ACE_TRY_ENV)
   CosPropertyService::Properties_out properties_out (properties_ptr);
   CosPropertyService::PropertiesIterator_ptr iterator_ptr = 0;
   CosPropertyService::PropertiesIterator_out iterator_out (iterator_ptr);
-  
+
   propsetdef_->get_all_properties (how_many,
                                    properties_out,
                                    iterator_out,
                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN ( -1);
-  
+
   // Get these values to the _var's.
   CosPropertyService::Properties_var properties = properties_out.ptr ();
   CosPropertyService::PropertiesIterator_var iterator = iterator_out.ptr ();
-  
+
   // Print out the properties now.
   if (properties.ptr () != 0)
     {
@@ -587,11 +587,11 @@ Client::test_get_all_properties (CORBA::Environment &ACE_TRY_ENV)
       // Helper variables to avoid warnings with .out () in SunCC.
       CosPropertyService::Property* property_ptr = 0;
       CosPropertyService::Property_out property_out (property_ptr);
-      
+
       // Call the funtion.
       CORBA::Boolean next_one_result = iterator->next_one (property_out,
-                                                           ACE_TRY_ENV); 
-      
+                                                           ACE_TRY_ENV);
+
       // Get the value to the _var variable.
       CosPropertyService::Property_var property = property_out.ptr ();
 
@@ -638,11 +638,11 @@ Client::test_get_all_properties (CORBA::Environment &ACE_TRY_ENV)
               property->property_value >>= l;
               ACE_DEBUG ((LM_DEBUG,"%d\n", l));
             }
-          
+
           // Call the function for the next iteraton.
           next_one_result = iterator->next_one (property_out,
-                                                ACE_TRY_ENV); 
-      
+                                                ACE_TRY_ENV);
+
           // Get the value to the _var variable.
           property = property_out.ptr ();
         }
@@ -716,9 +716,9 @@ Client::test_define_property_with_mode (CORBA::Environment &ACE_TRY_ENV)
               l));
   CORBA::Any newany(anyval);
   propsetdef_->define_property_with_mode ("long_property",
-					  anyval,
-					  CosPropertyService::fixed_normal,
-					  ACE_TRY_ENV);
+                                          anyval,
+                                          CosPropertyService::fixed_normal,
+                                          ACE_TRY_ENV);
   ACE_CHECK_RETURN ( -1);
 
 
@@ -731,9 +731,9 @@ Client::test_define_property_with_mode (CORBA::Environment &ACE_TRY_ENV)
               "Main : Float f = %f\n",
               f));
   propsetdef_->define_property_with_mode ("float_property",
-					  anyval,
-					  CosPropertyService::fixed_readonly,
-					  ACE_TRY_ENV);
+                                          anyval,
+                                          CosPropertyService::fixed_readonly,
+                                          ACE_TRY_ENV);
   ACE_CHECK_RETURN ( -1);
 
   // Prepare a String and "define" that in the PropertySet.
@@ -752,7 +752,7 @@ Client::test_define_property_with_mode (CORBA::Environment &ACE_TRY_ENV)
                                  anyval,
                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN ( -1);
-  
+
   return 0;
 }
 
@@ -769,13 +769,13 @@ Client::test_get_property_value (CORBA::Environment &ACE_TRY_ENV)
       CORBA::Any_ptr any_ptr = this->propsetdef_->get_property_value ("PropertySetDef_IOR",
                                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       ACE_DEBUG ((LM_DEBUG, "Property value received successfully\n"));
 
       // Check whether the IOR is fine.
       CORBA::Object_var propsetdef_object;
       (*any_ptr) >>= CORBA::Any::to_object (propsetdef_object.out ());
-      
+
       CosPropertyService::PropertySetDef_var propsetdef =
         CosPropertyService::PropertySetDef::_narrow (propsetdef_object.in (),
                                                      ACE_TRY_ENV);
@@ -828,6 +828,6 @@ main (int argc, char **argv)
       return -1;
     }
  ACE_ENDTRY;
- 
+
   return 0;
 }

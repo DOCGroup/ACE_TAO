@@ -19,7 +19,7 @@
 // default CTOR initializes to empty string
 ACE_INLINE
 TAO_String_Manager::TAO_String_Manager (void)
-  :  ptr_ (CORBA::string_dup (""))
+  :  ptr_ (0) // @@ CORBA::string_dup (L""))
 {
 }
 
@@ -192,13 +192,12 @@ TAO_SeqElem_String_Manager::_retn (void)
   return temp;
 }
 
-#if 0 /* To be included once we have support for WString_var */
 // ****************************************************************
 
 // default CTOR initializes to empty string
 ACE_INLINE
 TAO_WString_Manager::TAO_WString_Manager (void)
-  :  ptr_ (CORBA::wstring_dup (""))
+  :  ptr_ (0) // @@ TODO CORBA::wstring_dup (""))
 {
 }
 
@@ -225,15 +224,6 @@ TAO_WString_Manager::operator= (const TAO_WString_Manager &rhs)
 
   CORBA::wstring_free (this->ptr_);
   this->ptr_ = CORBA::wstring_dup (rhs.ptr_);
-  return *this;
-}
-
-// assignment from CORBA::String_var makes a copy
-ACE_INLINE TAO_WString_Manager&
-TAO_WString_Manager::operator= (const CORBA::String_var &var)
-{
-  CORBA::string_free (this->ptr_);
-  this->ptr_ = CORBA::wstring_dup (var.in ());
   return *this;
 }
 
@@ -292,8 +282,9 @@ TAO_WString_Manager::_retn (void)
 // ****************************************************************
 
 ACE_INLINE
-TAO_SeqElem_WString_Manager::TAO_SeqElem_WString_Manager (CORBA::WChar **buffer,
-                                                          CORBA::Boolean release)
+TAO_SeqElem_WString_Manager::
+    TAO_SeqElem_WString_Manager (CORBA::WChar **buffer,
+                                 CORBA::Boolean release)
   :  ptr_ (buffer),
      release_ (release)
 {
@@ -314,16 +305,6 @@ TAO_SeqElem_WString_Manager::operator= (const TAO_SeqElem_WString_Manager &rhs)
   if (this->release_)
     CORBA::wstring_free (*this->ptr_);
   *this->ptr_ = CORBA::wstring_dup (*rhs.ptr_);
-  return *this;
-}
-
-// assignment from String_var
-ACE_INLINE TAO_SeqElem_WString_Manager&
-TAO_SeqElem_WString_Manager::operator= (const CORBA::wstring_var &var)
-{
-  if (this->release_)
-    CORBA::wstring_free (*this->ptr_);
-  *this->ptr_ = CORBA::wstring_dup (var.in ());
   return *this;
 }
 
@@ -380,5 +361,3 @@ TAO_SeqElem_WString_Manager::_retn (void)
   *this->ptr_ = 0;
   return temp;
 }
-
-#endif /* 0 */

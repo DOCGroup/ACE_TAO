@@ -258,6 +258,8 @@ class CORBA_DefaultValueRefCountBase;
 
 class CORBA_String_var;
 class CORBA_String_out;
+class CORBA_WString_var;
+class CORBA_WString_out;
 
 class CORBA_ExceptionList;
 
@@ -336,9 +338,6 @@ typedef void (*TAO_Skeleton)(
 template <class T> class TAO_Unbounded_Sequence;
 template <class T> class TAO_Unbounded_Object_Sequence;
 
-class CORBA_String_var;
-class CORBA_String_out;
-
 class TAO_Export CORBA
 {
   // = TITLE
@@ -390,30 +389,30 @@ public:
   typedef Char *String;
 
   // = String memory management.
-  static String string_alloc (ULong len);
-  static String string_copy (const Char *);
-  static String string_dup (const Char *);
+  static Char* string_alloc (ULong len);
+  static Char* string_dup (const Char *);
   static void string_free (Char *);
-
-  typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
+  // This is a TAO extension and must go away....
+  static Char* string_copy (const Char *);
 
   typedef CORBA_String_var String_var;
   typedef CORBA_String_out String_out;
 
-  // WChar is an IDL extension, not yet standard.  We use 32 bits
-  // because that's what many platforms use for their native wchar_t.
+  // WChar was standarized in CORBA 2.2, but is still a bit unstable.
 
   typedef ACE_CDR::WChar WChar;
-  typedef WChar *WString;
-
   typedef WChar &WChar_out;
   // Out type for WChar.
 
   // = String memory management routines.
-  static WString wstring_alloc (ULong len);
-  static WString wstring_copy (const WChar *const);
-  static WString wstring_dup (const WChar *const);
+  static WChar* wstring_alloc (ULong len);
+  static WChar* wstring_dup (const WChar *const);
   static void wstring_free (WChar *const);
+
+  typedef CORBA_WString_var WString_var;
+  typedef CORBA_WString_out WString_out;
+
+  typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
 
   // = various CORBA defined classes.
   typedef CORBA_Any Any;
@@ -442,7 +441,7 @@ public:
   typedef NamedValue *NamedValue_ptr;
   typedef CORBA_NamedValue_var NamedValue_var;
   typedef CORBA_NamedValue_out NamedValue_out;
-   
+
   typedef CORBA_NVList NVList;
   typedef NVList *NVList_ptr;
   typedef CORBA_NVList_var NVList_var;
