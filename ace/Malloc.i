@@ -6,9 +6,10 @@
 ACE_INLINE void *
 ACE_New_Allocator::malloc (size_t nbytes) 
 {
-  char *ptr;
+  char *ptr = 0;
 
-  ACE_NEW_RETURN (ptr, char[nbytes], 0);
+  if (nbytes > 0)
+    ACE_NEW_RETURN (ptr, char[nbytes], 0);
   return (void *) ptr;
 }
   
