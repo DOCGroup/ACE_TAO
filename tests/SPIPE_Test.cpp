@@ -27,6 +27,7 @@
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
 #include "ace/SPIPE_Acceptor.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(tests, SPIPE_Test, "SPIPE_Test.cpp,v 4.36 2002/03/06 21:48:03 nanbor Exp")
 

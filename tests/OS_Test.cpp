@@ -21,6 +21,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_errno.h"
 #include "test_config.h"
 
 ACE_RCSID(tests, OS_Test, "$Id$")

@@ -38,6 +38,7 @@ const int SHMSZ = 27;
 static ACE_TCHAR *shm_key;
 
 #if defined (ACE_LACKS_FORK)
+#include "ace/Thread_Semaphore.h"
 typedef ACE_Thread_Semaphore SYNCHRONIZER;
 #elif defined (ACE_HAS_POSIX_SEM) && defined(ACE_HAS_SYSV_IPC)
 class SYNCHRONIZER : public ACE_SV_Semaphore_Simple
