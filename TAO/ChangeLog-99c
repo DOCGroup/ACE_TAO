@@ -1,7 +1,8 @@
 Mon Apr 05 09:59:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * tao/Makefile: removed enabling of fakesvcconf with
-          static libraries, so that we can use -ORBsvcconf with them.
+        * tao/Makefile,docs/configurations.html: removed enabling of
+          fakesvcconf with static libraries, so that we can use
+          -ORBsvcconf with them.
 
         * tao/POA.cpp (create_object_key): don't declare local
           creation_time_length with POA_NO_TIMESTAMP, to avoid
