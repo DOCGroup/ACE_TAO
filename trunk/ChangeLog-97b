@@ -1,3 +1,10 @@
+Thu Oct 23 22:52:17 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* ace/Timer_Queue_Adapters.cpp (svc): Added some POSIX thread 
+	cancellation points to make sure the mutex that the condition 
+	variable uses is unlocked before the thread is cancelled.
+	
+
 Thu Oct 23 19:05:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (find_hthread): Replaced the call
