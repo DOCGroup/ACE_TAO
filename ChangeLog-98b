@@ -1,3 +1,42 @@
+1998-12-11  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Message_Queue.{h,i,cpp} (ACE_Message_Queue_Base): Added a
+	  bunch of pure virture functions in the class to define the
+	  common interface functions of a message queue.  This allows up
+	  to experiment different message queue implementations easily.
+	  Most significantly, all queueing operations are simplified into
+	  <enqueue> and <dequeue> method in ACE_Message_Queue_Base as
+	  "standard" queueing operations.  Inherited class, of course, can
+	  add fancier queueing operations (as in ACE_Message_Queue.)
+
+	  (ACE_Message_Queue_NT):  A new adapter class inherited from
+	  ACE_Message_Queue_Base that implement a message queue using NT's
+	  IO completion ports.  As it's name implies, this is a
+	  specialized version for NT.  It is not as versatile as ACE's
+	  general MQ implementation.  However, this implementation
+	  consumes less NT handles which in some circumstances may be a
+	  big win (because ACE_Message_Queue uses cv and on NT, cv is
+	  simulated and consumes 4 handles per cv.  ACE_Message_Queue_NT
+	  only uses one handle and one critical section.)
+
+	  Several features inherited from IO completion port are, the
+	  waiting threads are release in LIFO order, and you can control
+	  (at initialization time,) the max number of threads that can be
+	  release by the message queue to run concurrently.
+
+	  Notice that the constructor and the <open> method have different
+	  signature compared with those of ACE_Message_Queue.  You should
+	  use ACE_Message_Queue_Factory to create a message queue on the
+	  fly if so desired.
+
+	  Thanks to Mark Lucovsky <markl@microsoft.com> and Karlheinz Dorn
+	  <Karlheinz.Dorn@med.siemens.de> for providing the idea.
+
+	* ace/Message_Queue_T.h (dequeue): Added the new method to match
+	  with the changes in ACE_Message_Queue_Base.
+	  (create_NT_message_queue): A wrapper function to manufacture an
+	  ACE_Message_Queue_NT.
+
 Thu Dec 10 09:08:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-chorus.h: added ACE_LACKS_FSYNC.
