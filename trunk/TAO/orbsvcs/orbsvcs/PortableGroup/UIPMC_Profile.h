@@ -73,84 +73,26 @@ public:
   /// Destructor is to be called only through <_decr_refcnt>.
   ~TAO_UIPMC_Profile (void);
 
-  /// Initialize this object using the given input string.
-  /// Url-style string contain only one endpoint.
+  /// Template methods. Please see tao/Profile.h for documentation.
   virtual void parse_string (const char *string
                              ACE_ENV_ARG_DECL);
-
-  /**
-   * Return a string representation for this profile.
-   * client must deallocate memory.
-   * This is used to create url-style reference.  Only one
-   * endpoint is included into the string.
-   */
   virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Initialize this object using the given CDR octet string.
-  virtual int decode (TAO_InputCDR& cdr);
-
-  /// Encode this profile in a stream, i.e. marshal it.
-  virtual int encode (TAO_OutputCDR &stream) const;
-
-  /**
-   * Encodes this profile's endpoints into a tagged component.
-   * This is done only if RTCORBA is enabled, since currently this is
-   * the only case when we have more than one endpoint per profile.
-   * Returns 0 on success and -1 on failure.
-   *
-   * Endpoints are transmitted using TAO-proprietory tagged component.
-   * Component tag is TAO_TAG_ENDPOINTS and component data is an
-   * encapsulation of a sequence of structs, each representing a
-   * single endpoint.  Data format is specified in iiop_endpoins.pidl.
-   *
-   * Multiple TAG_ALTERNATE_UIPMC_ADDRESS components can be used
-   * instead of a single proprietory component to transmit multiple
-   * endpoints.  This is somewhat slower and less convenient.  Also,
-   * TAG_ALTERNATE_UIPMC_ADDRESS does not provide for transmission of
-   * endpoint priorities.
-   *
-   */
   virtual int encode_endpoints (void);
-
-  /// @@ deprecated. return a reference to the Object Key.
   virtual const TAO::ObjectKey &object_key (void) const;
-
-  /// Return a pointer to the Object Key.  The caller owns the memory
-  /// allocated for the returned key.
   virtual TAO::ObjectKey *_key (void) const;
-
-  /// Return pointer to the head of this profile's endpoints list.
   virtual TAO_Endpoint *endpoint (void);
-
-  /// Return how many endpoints this profile contains.
   virtual size_t endpoint_count (void);
-
-  /**
-   * Return true if this profile is equivalent to other_profile.  Two
-   * profiles are equivalent iff their tag, object_key, version and
-   * all endpoints are the same.
-   */
   virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
-
-  /// Return a hash value for this object.
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-  /// Please refer to Profile.h for the documentation of this
-  /// function.
   virtual IOP::TaggedProfile &create_tagged_profile (void);
-
-
-  /// Set the request target specifier to point to a tagged profile
-  /// containing the GroupId associated with this profile.
   virtual void request_target_specifier (
                       TAO_Target_Specification &target_spec,
-                      TAO_Target_Specification::TAO_Target_Address required_type
+                      TAO_Target_Specification::TAO_Target_Address r
                       ACE_ENV_ARG_DECL);
-
-  /// Returns true since this profile can specify multicast endpoints.
   virtual int supports_multicast (void) const;
-
+  virtual void addressing_mode (CORBA::Short addr_mode
+                                ACE_ENV_ARG_DECL);
   static int extract_group_component (const IOP::TaggedProfile &profile,
                                       PortableGroup::TagGroupTaggedComponent &group);
 
@@ -159,20 +101,15 @@ public:
                        PortableGroup::ObjectGroupId group_id,
                        PortableGroup::ObjectGroupRefVersion ref_version);
 
-  /// Set and validate the addressing mode if the remote ORB returns an
-  /// exception.
-  virtual void addressing_mode (CORBA::Short addr_mode
-                                ACE_ENV_ARG_DECL);
 
-private:
-
-  /// Creates an encapsulation of the ProfileBody struct in the <cdr>
-  void create_profile_body (TAO_OutputCDR &cdr) const;
-
-  /// Update the group component in the cached list of tagged
-  /// components.  This needs to be called whenever the group_domain_id,
-  /// group_id, or ref_version changes.
-  void update_cached_group_component (void);
+protected:
+  /// Template methods, please see documentation in tao/Profile.h
+  virtual int decode_profile (TAO_InputCDR& cdr);
+  virtual int decode_endpoints (void);
+  virtual void parse_string_i (const char *
+                               ACE_ENV_ARG_DECL);
+  virtual void create_profile_body (TAO_OutputCDR &cdr) const;
+  virtual void update_cached_group_component (void);
 
 protected:
 
