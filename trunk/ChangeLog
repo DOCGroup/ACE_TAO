@@ -1,3 +1,9 @@
+Wed Apr  2 11:51:52 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* tests/Unbounded_Set_Test.cpp, tests/Unbounded_Set_Test_Ex.cpp:
+
+	  Zap extraneous trailing semicolons on #pragma instantiates.
+
 Wed Apr  2 11:44:41 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* tests/Unbounded_Set_Test.cpp, tests/Unbounded_Set_Test_Ex.cpp:

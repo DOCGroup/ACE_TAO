@@ -160,10 +160,10 @@ template class auto_ptr<ACE_CString>;
 
 #pragma instantiate ACE_Node<MyNode>
 #pragma instantiate ACE_Unbounded_Set<MyNode>
-#pragma instantiate ACE_Unbounded_Set_Iterator<MyNode>;
-#pragma instantiate ACE_Unbounded_Set_Const_Iterator<MyNode>;
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_CString>;
-#pragma instantiate auto_ptr<ACE_CString>;
+#pragma instantiate ACE_Unbounded_Set_Iterator<MyNode>
+#pragma instantiate ACE_Unbounded_Set_Const_Iterator<MyNode>
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_CString>
+#pragma instantiate auto_ptr<ACE_CString>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
