@@ -5,6 +5,9 @@ Mon Apr 15 07:39:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
         * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp:
           Added include of OS.h to get ACE_TMAIN macro
 
+        * apps/JAWS/server/HTTP_Server.h:
+	  Added include of svc_export.h.
+
 Sun Apr 14 20:33:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Connector.h:
