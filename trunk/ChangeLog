@@ -1,3 +1,9 @@
+Wed Jan 21 20:17:34 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Message_Queue.i: Fixed ACE_Message_Queue_NT::is_empty()
+	  so that it returns the right result.  Thanks to Ariel Peltz
+ 	  <Arielp@bigbandnet.com> for contributing this fix.
+
 Wed Jan 21 13:28:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac:
