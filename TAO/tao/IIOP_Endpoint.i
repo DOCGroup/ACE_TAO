@@ -16,20 +16,27 @@ TAO_IIOP_Endpoint::object_addr (void) const
     ACE_const_cast (TAO_IIOP_Endpoint *,
                     this);
 
-  if (this->object_addr_.get_type () != AF_INET
-      && endpoint->object_addr_.set (this->port_,
-                                     this->host_.in ()) == -1)
-    {
-      // If this call fails, it most likely due a hostname lookup
-      // failure caused by a DNS misconfiguration.  If a request is
-      // made to the object at the given host and port, then a
-      // CORBA::TRANSIENT() exception should be thrown.
+  // Begin a dummy scope for the lock
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      endpoint->addr_lookup_lock_,
+                      this->object_addr_ );
 
-      // Invalidate the ACE_INET_Addr.  This is used as a flag to
-      // denote that ACE_INET_Addr initialization failed.
-      endpoint->object_addr_.set_type (-1);
-    }
+    if (this->object_addr_.get_type () != AF_INET
+        && endpoint->object_addr_.set (this->port_,
+                                       this->host_.in ()) == -1)
+      {
+        // If this call fails, it most likely due a hostname lookup
+        // failure caused by a DNS misconfiguration.  If a request is
+        // made to the object at the given host and port, then a
+        // CORBA::TRANSIENT() exception should be thrown.
 
+        // Invalidate the ACE_INET_Addr.  This is used as a flag to
+        // denote that ACE_INET_Addr initialization failed.
+        endpoint->object_addr_.set_type (-1);
+      }
+  }
   return this->object_addr_;
 }
 

@@ -1,3 +1,53 @@
+Wed Sep  5 12:35:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Endpoint.h: Added a lock that is used to lock when a thread
+	  does remote object address lookups. Theoretically speaking we
+	  shouldnt be putting the lock in the TAO_Endpoint class. But as
+	  the lock is required for most of the protocols supported in TAO
+	  we have pushed it here. We also believe that other protocols may
+	  need a lock during lookups.
+
+	* tao/IIOP_Enpoint.i: Hold a lock in object_addr (). There was a
+	  subtle race condition in that method. In object_addr (void) the
+	  code first checks for object_addr_.get_type() != AF_INET and, if
+	  so, it calls ACE_INET_Addr::set(). ACE_INET_Addr::set() sets
+	  type type field to type field to AF_INET, zeros the inet_addr
+	  structure and then does a hostname lookup. 
+
+	  If two threads enter the object_addr() method the first may end
+	  up blocked for a while in the hostname lookup.  The second
+	  thread will see that AF_INET is set and return an (zero'ed)
+	  ACE_INET_Addr structure. 
+	  
+	  The race can happen from TAO_IIOP_Connector::connect() when
+	  multiple threads attempt to talk to the same object.  You will
+	  sometimes see transient exceptions as one of the threads tries
+	  to connect to the (invalid) inet_addr. This could potentially
+	  fix #189, but it hasnt been tested out properly. Thanks to
+	  <pphillip@opentext.com> for nailining the probelm and suggesting
+	  this fix. This should fix #1017.
+
+	* tao/Strategies/DIOP_Endpoint.i:
+	* tao/Strategies/SHMIOP_Endpoint.i: Applied the same fix.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i: Just added a comment
+	  telling that we shouldnt be holding the lock as the lock is being
+	  held in the IIOP class.
+		
+	* tao/IIOP_Transport.cpp:
+	* tao/Strategies/DIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Do not print out
+	  error messages if the recv () returns from a timeout. This extra
+	  print statements in a thread-per-connection case, when a thread
+	  timedout, was causing more confusion than it tried addressing.
+
+Wed Sep  5 11:39:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ta/IIOP_
+	* tao/Strategies/DIOP_Endpoint.i:
+
 Wed  Sep  5 7:20:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Multicast/ftp.dsp:

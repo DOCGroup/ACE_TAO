@@ -118,7 +118,9 @@ TAO_SSLIOP_Transport::recv_i (char *buf,
 
   // Most of the errors handling is common for
   // Now the message has been read
-  if (n == -1 && TAO_debug_level > 4)
+  if (n == -1 &&
+      TAO_debug_level > 4 &&
+      errno != ETIME)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - %p \n"),
