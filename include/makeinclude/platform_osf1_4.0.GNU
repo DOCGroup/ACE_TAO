@@ -19,7 +19,6 @@ endif # CXX_VERSION
 
 CXX_1016 =
 CXX_1136 =
-CXX_1180 =
 
 ifneq (,$(optimize))
   CXX_1016 = ,1016
@@ -33,8 +32,6 @@ ifeq (6.1-,$(findstring 6.1-,$(CXX_VERSION)))
   endif # 6.1-029
 else  # 6.2 or later
   CXX_1136 = ,1136
-  #### 6.2-009 has 1180, but 6.2-007 doesn't.
-  CXX_1180 = ,1180
 endif # 6.2 or later
 endif # ! 6.0
 
@@ -53,11 +50,10 @@ endif # ! 6.0
 #  839: no_corresponding_delete (until this is fixed in libTAO)
 # 1016: expected type is incompatible with declared type of int (in bzero ())
 # 1136: conversion to integral type of smaller size could lose data
-# 1180: statement causes unreachable return
 ifneq ($(CXX_VER),CXX_5)
   WARNING_FLAGS += -w0 -msg_display_number
   WARNING_FLAGS += \
-    -msg_disable 9,174,193,236,401,610,835,839$(CXX_1016)$(CXX_1136)$(CXX_1180)
+    -msg_disable 9,174,193,236,401,610,835,839$(CXX_1016)$(CXX_1136)
 endif # 6.0 or later
 
 CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
