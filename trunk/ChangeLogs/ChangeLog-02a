@@ -1,3 +1,16 @@
+Tue Nov 21 07:24:54 2000  Chris Kohlhoff  <chris@kohlhoff.com>
+
+	* ace/SSL/Makefile.bor:
+	* include/makeinclude/build_dll.bor:
+	* include/makeinclude/build_exe.bor:
+	* include/makeinclude/build_lib.bor:
+
+	  Prevent SSL libraries from being built unless SSL_ROOT is defined.
+
+	* include/makeinclude/build_example.bor:
+
+	  Add missing libraries required for statically linking TAO examples.
+
 Mon Nov 20 21:52:57 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Makefile.am:
