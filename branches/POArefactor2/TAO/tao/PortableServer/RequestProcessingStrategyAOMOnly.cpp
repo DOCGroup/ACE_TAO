@@ -151,6 +151,12 @@ namespace TAO
           ACE_THROW (CORBA::OBJ_ADAPTER ());
         }
     }
+
+    void
+    AOM_Only_Request_Processing_Strategy::etherealize_objects (
+      CORBA::Boolean /*etherealize_objects*/)
+    {
+    }
   }
 }
 

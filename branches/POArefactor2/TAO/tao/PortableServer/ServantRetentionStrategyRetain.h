@@ -112,8 +112,7 @@ namespace TAO
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl
         ACE_ENV_ARG_DECL);
 
-      virtual void deactivate_all_objects (CORBA::Boolean etherealize_objects
-                                           ACE_ENV_ARG_DECL)
+      virtual void deactivate_all_objects (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
@@ -187,7 +186,6 @@ namespace TAO
     private:
       TAO_Active_Object_Map *active_object_map_;
       CORBA::ULong waiting_servant_deactivation_;
-      CORBA::Boolean etherealize_objects_;
     };
   }
 }

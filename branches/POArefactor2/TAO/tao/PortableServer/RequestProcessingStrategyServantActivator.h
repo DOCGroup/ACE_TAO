@@ -86,6 +86,8 @@ namespace TAO
         CORBA::Boolean cleanup_in_progress
         ACE_ENV_ARG_DECL);
 
+     virtual void etherealize_objects (CORBA::Boolean etherealize_objects);
+
     private:
       PortableServer::ServantActivator_var servant_activator_;
       CORBA::Boolean etherealize_objects_;

@@ -101,6 +101,8 @@ namespace TAO
         CORBA::Object_ptr reference,
         PortableServer::ObjectId system_id
         ACE_ENV_ARG_DECL) = 0;
+
+     virtual void etherealize_objects (CORBA::Boolean etherealize_objects) = 0;
     };
   }
 }

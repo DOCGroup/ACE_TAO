@@ -201,6 +201,11 @@ namespace TAO
         }
     }
 
+    void
+    Servant_Locator_Request_Processing_Strategy::etherealize_objects (
+      CORBA::Boolean /*etherealize_objects*/)
+    {
+    }
   }
 }
 

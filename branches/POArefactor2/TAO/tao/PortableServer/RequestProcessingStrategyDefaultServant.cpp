@@ -231,6 +231,12 @@ namespace TAO
         }
     }
 
+    void
+    Default_Servant_Request_Processing_Strategy::etherealize_objects (
+      CORBA::Boolean /*etherealize_objects*/)
+    {
+    }
+
   }
 }
 

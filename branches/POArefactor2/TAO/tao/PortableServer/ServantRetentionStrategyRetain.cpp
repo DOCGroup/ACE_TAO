@@ -33,8 +33,7 @@ namespace TAO
     Retain_Servant_Retention_Strategy::Retain_Servant_Retention_Strategy (void) :
       Non_Retain_Servant_Retention_Strategy (),
       active_object_map_ (0),
-      waiting_servant_deactivation_ (0),
-      etherealize_objects_ (1)
+      waiting_servant_deactivation_ (0)
     {
     }
 
@@ -447,12 +446,10 @@ namespace TAO
 
     void
     Retain_Servant_Retention_Strategy::deactivate_all_objects (
-      CORBA::Boolean etherealize_objects
-      ACE_ENV_ARG_DECL)
+      ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {
-      this->etherealize_objects_ = etherealize_objects;
       // If the etherealize_objects parameter is TRUE, the POA has the
       // RETAIN policy, and a servant manager is registered with the POA,
       // the etherealize operation on the servant manager will be called

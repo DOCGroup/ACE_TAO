@@ -1,3 +1,15 @@
+Mon Nov 22 15:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategy*.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategy*.{h,cpp}:
+          Instead of passing the etherealize_objects with the
+          deactivate_all_objects call, call etherealize_objects on the request
+          processing strategy, and then just call deactivate_all_objects on
+          the servant_retention strategy. In case servants than need to be
+          deactivated, this will be done by the request processing strategy
+          which will have the correct value at that moment
+
 Mon Nov 22 14:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:

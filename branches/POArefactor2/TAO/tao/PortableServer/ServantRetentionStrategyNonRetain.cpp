@@ -189,8 +189,7 @@ namespace TAO
 
     void
     Non_Retain_Servant_Retention_Strategy::deactivate_all_objects (
-      CORBA::Boolean /*etherealize_objects*/
-      ACE_ENV_ARG_DECL_NOT_USED)
+      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {

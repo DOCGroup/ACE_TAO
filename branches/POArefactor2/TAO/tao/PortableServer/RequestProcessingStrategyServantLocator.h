@@ -77,6 +77,8 @@ namespace TAO
         PortableServer::Servant servant,
         PortableServer::ObjectId user_id
         ACE_ENV_ARG_DECL);
+
+     virtual void etherealize_objects (CORBA::Boolean etherealize_objects);
     private:
       PortableServer::ServantLocator_var servant_locator_;
     };
