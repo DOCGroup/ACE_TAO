@@ -78,9 +78,6 @@ private:
   char *data_filename_;
   // The name of the file to store the data in.
 
-  int shutdown_;
-  // Shutdown flag.
-
   ACE_UINT32 cans_;
   // Number of cans in the bookshelf.
 };
