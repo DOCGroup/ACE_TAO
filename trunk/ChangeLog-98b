@@ -1,8 +1,9 @@
-Mon Sep  7 00:02:56 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+Mon Sep  7 01:02:58 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/OS.h: 
-	  Added a no-op type define for DIR and struct dirent so 
-	  compilation can continue on NT.
+	* ace/ACE.i: Changed ACE_INLINE to ASYS_INLINE.
+
+	* ace/OS.h: Added a no-op type define for DIR and struct 
+	  dirent so compilation can continue on NT.
 
 	* ace/ace_dll.dsp:
 	* ace/ace_lib.dsp:
