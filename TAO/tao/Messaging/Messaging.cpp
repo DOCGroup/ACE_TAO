@@ -4,6 +4,7 @@
 #include "Messaging.h"
 #include "Messaging_ORBInitializer.h"
 
+#include "ace/Auto_Ptr.h"
 #include "tao/Stub.h"
 #include "tao/debug.h"
 
@@ -109,6 +110,9 @@ exception_holder_raise (TAO_Exception_Data *exception_data,
       exception->completed (CORBA::CompletionStatus (completion));
 
       // Raise the exception.
+#if defined (TAO_HAS_EXCEPTIONS)
+      ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(exception);
+#endif
       ACE_ENV_RAISE (exception);
 
       return;
@@ -131,6 +135,9 @@ exception_holder_raise (TAO_Exception_Data *exception_data,
       ACE_CHECK;
 
       // Raise the exception.
+#if defined (TAO_HAS_EXCEPTIONS)
+      ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr(exception);
+#endif
       ACE_ENV_RAISE (exception);
 
       return;
