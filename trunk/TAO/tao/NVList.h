@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Any.h"
+#include "tao/Environment.h"
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"
