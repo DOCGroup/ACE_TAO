@@ -1033,8 +1033,11 @@ how they are implemented in TAO.  <P>
 Implementation of the CORBA Naming Service spec is complete.  TAO's
 Naming Service provides an optional persistence capability.</li>
 <li>
-Implementation of the CORBA InterOperable Naming Service is in
-progress. </li>
+The following features of CORBA InterOperable Naming Service are not
+    yet implemented <br>
+    - iiopname format. <br>
+    - NamingServiceExt interface. <br>
+</li>
 </ul>
 Recently completed work:
 <ul>
@@ -1073,18 +1076,6 @@ conjunction with the current TAO examples.
 
 </ul>
 
-Work in progress:
-<ul>
-
-<LI> Support for the iiopname format and conversions
-to and from URL-style IORs.
-</LI>
-
-<LI>
-A detailed InterOperable Naming Service test.
-</LI>
-
-</ul>
 Future work:
 <ul>
 <li>
@@ -1095,6 +1086,10 @@ It will be possible to bind a group of objects under a single name, and when a c
 Support for the Naming Service to handle the IIOP
 LocateRequest messages and respond with LocateReply messages with a
 LOCATION_FORWARD/OBJECT_NOT_EXIST status.
+</li>
+<li>
+Support for iiopname and NamingServiceExt interface.
+</li>
 </ul>
 
 <p>
