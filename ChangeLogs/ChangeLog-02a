@@ -1,3 +1,10 @@
+Sun Jan 13 08:20:05 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/config-all.h: Make sure that ACE_bad_alloc
+	  is defined as std::bad_alloc if 
+	  ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB macro is set.
+	  Fixes gcc 3.0.3 compilation problem.
+
 Fri Jan 11 22:54:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/config-lynxos.h: Added #define ACE_HAS_USING_KEYWORD to teh
