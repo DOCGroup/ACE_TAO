@@ -38,7 +38,7 @@ class TAO_Export TAO_Smart_Proxy_Base
   //   Contains the _var pointer to the real proxy
 	
 public:
-  ~TAO_Smart_Proxy_Base(void);
+  virtual ~TAO_Smart_Proxy_Base(void);
   // Destructor
   
 protected:
