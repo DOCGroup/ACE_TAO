@@ -26,6 +26,7 @@
 #include "tao/Priority_Mapping_Manager.h"
 #include "tao/RT_Current.h"
 
+#include "ace/Object_Manager.h"
 #include "ace/Env_Value_T.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
