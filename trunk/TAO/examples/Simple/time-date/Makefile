@@ -19,7 +19,7 @@ SHLIB   = $(LIBNAME).$(SOEXT)
 FILES   = Time_Date Time_Date_i Time_DateS Time_DateC
 LSRC    = $(addsuffix .cpp,$(FILES))
 
-LDLIBS  = $(TAO_ROOT)/orbsvcs/orbsvcs/libTAO_CosNaming.so $(TAO_ROOT)/orbsvcs/orbsvcs/libTAO_Svc_Utils.so $(TAO_ROOT)/tao/IORTable/libTAO_IORTable.so $(TAO_ROOT)/tao/PortableServer/libTAO_PortableServer.so -lTAO
+LDLIBS  = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 ACE_SHLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO -lACE
 
 IDL_FILES = Time_Date
