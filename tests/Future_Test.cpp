@@ -205,8 +205,7 @@ class Method_Request_end : public ACE_Method_Request
   // = TITLE
   //     Reification of the <end> method.
 public:
-  Method_Request_end (Prime_Scheduler *new_Prime_Scheduler)
-    : scheduler_ (new_Prime_Scheduler);
+  Method_Request_end (Prime_Scheduler *new_Prime_Scheduler);
   virtual ~Method_Request_end (void);
   virtual int call (void);
 
