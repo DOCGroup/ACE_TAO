@@ -1,3 +1,16 @@
+Fri Jan 16 14:16:49 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Advanced/ch_8_and_10/icp.cpp:
+	  Also msvc doesn't have lrand48
+
+	* examples/Advanced/ch_8_and_10/server.h:
+	  Use ::strcmp instead of strcmp. Because of the subsetting just using
+	  strcmp directly gives compile problems with Borland. This fixes
+	  the problems with Borland and it didn't break the environments I have
+	  access to. If other environments break, the solution would be to use
+	  ACE_OS::strcmp but these examples doesn't use anything of ACE_OS
+	  at this moment.
+
 Fri Jan 16 14:10:09 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Advanced/ch_8_and_10/server.cpp:
