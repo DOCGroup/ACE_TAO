@@ -27,7 +27,7 @@ TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
   delete this->ior_lookup_table_;
 }
 
-int 
+int
 TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
                                      TAO_EndpointSet &endpoints_list)
 {
@@ -57,11 +57,9 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
     {
       int endpoints_count = 1;
 
-      for (int i = 0;
-           i < length;
-           ++i)
+      for (int j = 0; j != length; ++j)
         {
-          if (endpoints[i] == endpoints_delimiter)
+          if (endpoints[j] == endpoints_delimiter)
             endpoints_count++;
         }
 

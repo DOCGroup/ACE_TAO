@@ -281,11 +281,9 @@ TAO_Connector::make_mprofile (const char *string,
   CORBA::ULong profile_count = 1;
   // Number of endpoints in the IOR  (initialized to 1)
 
-  for (size_t i = 0;
-       i < ior.length ();
-       ++i)
+  for (size_t j = 0; j != ior.length (); ++j)
     {
-      if (ior[i] == endpoint_delimiter)
+      if (ior[j] == endpoint_delimiter)
         profile_count++;
     }
 
