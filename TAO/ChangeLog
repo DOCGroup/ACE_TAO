@@ -1,8 +1,31 @@
+Fri Jan 24 08:23:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/AV/MCast.cpp:
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+        * orbsvcs/orbsvcs/AV/TCP.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+          Use ACE_IOV_MAX instead of IOV_MAX. IOV_MAX is defined as
+          MAX_INT-1 with Cygwn and this gives compiles errors because
+          an array as struct member of this size is too large.
+
+        * orbsvcs/orbsvcs/ESF/ESF_Worker.h:
+          Fixed type in comment
+
+        * orbsvcs/PSS/Makefile.datastore:
+        * orbsvcs/PSS/Makefile:
+        * orbsvcs/orbsvcs/Makefile.RTEventLogAdmin:
+        * orbsvcs/orbsvcs/Makefile.DsNotifyLogAdmin:
+        * orbsvcs/orbsvcs/Makefile.DsLogAdmin:
+        * orbsvcs/orbsvcs/Makefile.DsEventLogAdmin:
+          Set the correct x_BUILD_DLL defines. These are needed for the
+          Cygwin/MingW and Kylix compiler.
+
 Thu Jan 23 18:29:03 2003  Heather Drury  <drury_h@ociweb.com>
 
-        * tests/MT_Timeout/client.cpp: Modified ACE_DEBUG to 
-          print a warning instead of an error when "Too many 
-          calls have too big differences..." 
+        * tests/MT_Timeout/client.cpp: Modified ACE_DEBUG to
+          print a warning instead of an error when "Too many
+          calls have too big differences..."
 
 Thu Jan 23 16:31:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
