@@ -31,6 +31,12 @@ class ACE_Time_Value;
 class ACE_Message_Block;
 class ACE_Handle_Set;
 
+// When log2 is defined as macro redefine it as acelog2
+#if defined (log2)
+# define acelog2 log2
+# undef log2
+#endif /* log2 */
+
 /**
  * @class ACE
  *
@@ -494,7 +500,7 @@ public:
   /// buffer (the length is included in the CRC).
   static u_long crc32 (const char *buf, ACE_UINT32 len);
 
-  /// Computes the ISO 8802-3 standard 32 bits CRC for the 
+  /// Computes the ISO 8802-3 standard 32 bits CRC for the
   /// @ len iovec buffers.
   static u_long crc32 (iovec *iov, int len);
 
@@ -760,6 +766,10 @@ private:
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/ACE.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
+#if defined (acelog2)
+# define log2 acelog2
+#endif /* acelog2 */
 
 #include "ace/post.h"
 #endif  /* ACE_ACE_H */
