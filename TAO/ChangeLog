@@ -1,3 +1,17 @@
+Tue Dec  7 15:36:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/asts/ast_root.cpp:
+        
+          Reverted the quickfix below in
+          
+          Tue Dec  7 14:57:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          Fixed error in populating the scope member that holds pointers
+          to the nodes referenced in the scope. In many cases the
+          referenced nodes were getting added twice for each call.
+
 Tue Dec  7 14:57:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_root.cpp:
