@@ -309,9 +309,6 @@ ifeq ($(findstring g++,$(CXX)),g++)
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # g++
 
-# We dont want to hard code. Looks like the contents of VDIR should
-# have the right contents in any type of builds. If not, folks please
-# feel to revert it to the way things were in rev 4.114.
 ifndef OBJDIRS
   OBJDIRS = $(VDIR)
 endif # OBJDIRS
@@ -565,13 +562,8 @@ ifdef shared_libs
       #### Don't build static libs.
       BUILD         = $(VSHLIB) $(SHLIBA) $(VBIN)
       LIB           =
-#      OBJEXT        = so
       ifndef VXWORKS
         VDIR        = $(VSHDIR)
-        ifeq ($(BIN),)
-          #### No executables are being built, so don't create .obj/.
-          OBJDIRS     = $(VSHDIR)
-        endif # BIN
       endif # ! VXWORKS
     endif # ! SHLIB
   endif # ! static_libs
@@ -584,7 +576,6 @@ else # ! shared_libs
   ifdef static_libs
     #### Don't build shared libs.
     BUILD           = $(VLIB) $(VBIN)
-    OBJDIRS         = $(VDIR)
     PIC             =
     SHLIB           =
     SOEXT           = o
