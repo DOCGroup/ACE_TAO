@@ -39,8 +39,6 @@ Legend:
 [  00  ] 	POA/On_Demand_Activation runs
 [  01  ] POA/Explicit_Activation compiles
 [  00  ] 	POA/Explicit_Activation runs
-[xxxxxx] POA/On_Demand_Activation_POA_Ids compiles
-[xxxxxx] 	POA/On_Demand_Activation_POA_Ids runs
 [xxxxxx] POA/Default_Servant compiles
 [xxxxxx] 	POA/Default_Servant runs
      
