@@ -57,8 +57,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 .obj/tests_svc_loader.o .obj/tests_svc_loader.so .shobj/tests_svc_loader.o .shobj/tests_svc_loader.so: tests_svc_loader.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \

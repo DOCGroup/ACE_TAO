@@ -74,12 +74,9 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Updates.o .obj/Updates.so .shobj/Updates.o .shobj/Updates.so: Updates.cpp \
- $(ACE_ROOT)/ace/Arg_Shifter.h \
+.obj/Updates.o .obj/Updates.so .shobj/Updates.o .shobj/Updates.so: Updates.cpp $(ACE_ROOT)/ace/Arg_Shifter.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
