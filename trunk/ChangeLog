@@ -1,3 +1,9 @@
+Thu Apr 22 07:12:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added TAO/tests/Bug_1495_Regression.pl to the list of test
+          that must be run.
+
 Thu Apr 22 06:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/QoS/qos.mpc:
