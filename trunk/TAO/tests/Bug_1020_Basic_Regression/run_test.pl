@@ -12,9 +12,7 @@ $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 
 $SV = new PerlACE::Process ("server", "-o $iorfile");
-$CL1 = new PerlACE::Process ("client", "-k file://$iorfile");
-$CL2 = new PerlACE::Process ("client", "-k file://$iorfile");
-$CL3 = new PerlACE::Process ("client", "-k file://$iorfile");
+$CL = new PerlACE::Process ("client", "-k file://$iorfile");
 
 $SV->Spawn ();
 
@@ -28,17 +26,15 @@ local $start_time = time();
 local $max_running_time = 300; # 5 minutes
 local $elapsed = time() - $start_time;
 
+    print STDERR "elaped is $elapsed\n";
 while($elapsed < $max_running_time) {
+    print STDERR "**************************** \n";
   # Start all clients in parallel
-  $client1 = $CL1->Spawn ();
-  $client2 = $CL2->Spawn ();
-  $client3 = $CL3->Spawn ();
+  $client = $CL->Spawn ();
 
   # ... wait for the clients to die unless they did not startup,
   # ignore errors because they intentionally crash themselves!
-  $CL3->WaitKill(30) unless $client3 < 0;
-  $CL2->WaitKill(30) unless $client2 < 0;
-  $CL1->WaitKill(30) unless $client1 < 0;
+  $CL->WaitKill(30) unless $client < 0;
 
   $elapsed = time() - $start_time;
 }
@@ -51,6 +47,5 @@ if ($server != 0) {
 }
 
 unlink $iorfile;
-
 
 exit $status;

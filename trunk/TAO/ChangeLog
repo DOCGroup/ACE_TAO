@@ -1,3 +1,10 @@
+Tue Nov 26 16:03:52 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1020_Basic_Regression/run_test.pl:
+	* tests/Bug_1020_Regression/run_test.pl: Fixed these scripts to
+	  work for 5 minutes instead of 7. They tend to get timedout
+	  creating noise in the builds.
+
 Tue Nov 26 15:01:40 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AbstractBase.cpp:
