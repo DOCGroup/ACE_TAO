@@ -1,52 +1,47 @@
-/* -*- C++ -*- $Id$ */
-
 #include "orbsvcs/Log/BasicLogFactory_i.h"
-#include "ace/Auto_Ptr.h"
+
+
+ACE_RCSID (Log,
+           BasicLogFactory_i,
+           "$Id$")
+
 
 BasicLogFactory_i::BasicLogFactory_i (void)
 {
-  //No-Op
 }
 
-BasicLogFactory_i::~BasicLogFactory_i()
+BasicLogFactory_i::~BasicLogFactory_i (void)
 {
-  // No-Op.
 }
 
 DsLogAdmin::BasicLogFactory_ptr
 BasicLogFactory_i::activate (PortableServer::POA_ptr poa
-                           ACE_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
-  DsLogAdmin::BasicLogFactory_var v_return;
-
   PortableServer::ObjectId_var oid =
     poa->activate_object (this
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (v_return._retn ());
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
 
   CORBA::Object_var obj =
     poa->id_to_reference (oid.in ()
                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (v_return._retn ());
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
 
   // narrow and store the result..
   this->log_mgr_ =
     DsLogAdmin::LogMgr::_narrow (obj.in ()
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (v_return._retn ());
-
-  v_return =
-    DsLogAdmin::BasicLogFactory::_narrow (obj.in ()
-                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
 
-  return v_return._retn ();
+  return DsLogAdmin::BasicLogFactory::_narrow (obj.in ()
+                                               ACE_ENV_ARG_PARAMETER);
 }
 
 DsLogAdmin::BasicLog_ptr
 BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
                            CORBA::ULongLong max_rec_size,
-                           DsLogAdmin::LogId_out id//,
+                           DsLogAdmin::LogId_out id
                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidLogFullAction
@@ -58,7 +53,7 @@ BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
   DsLogAdmin::BasicLog_ptr basiclog =
     this->create_with_id (this->max_id_,
                           full_action,
-                          max_rec_size//,
+                          max_rec_size
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
@@ -66,8 +61,8 @@ BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
   id = this->max_id_;
 
   // Store the id in the LogIdList.
-  CORBA::ULong len = logid_list_.length();
-  logid_list_.length(len+1);
+  CORBA::ULong len = logid_list_.length ();
+  logid_list_.length (len + 1);
   logid_list_[len] = id;
 
   return basiclog;
@@ -102,10 +97,10 @@ BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
                                 max_size
                                 ),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (basic_log._retn ());
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
-  auto_ptr<BasicLog_i> basic_log_auto (basic_log_i);
-  // just in case the activation fails.
+  PortableServer::ServantBase_var safe_basic_log_i = basic_log_i;
+  // Transfer ownership to the POA.
 
   basic_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (basic_log._retn ());
@@ -114,32 +109,13 @@ BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
   basic_log = basic_log_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (basic_log._retn ());
 
-  basic_log_i->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
-
   // widening a BasicLog_var to a Log_var
-  DsLogAdmin::Log_var log = DsLogAdmin::BasicLog::_duplicate(basic_log.in ());
+  DsLogAdmin::Log_var log = DsLogAdmin::BasicLog::_duplicate (basic_log.in ());
 
   // Add to the Hash table..
   if (hash_map_.bind (id, log) == -1)
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       DsLogAdmin::BasicLog::_nil ());
 
-  // All is well, release the reference.
-  basic_log_auto.release ();
-
   return basic_log._retn ();
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class auto_ptr <BasicLog_i>;
-template class ACE_Auto_Basic_Ptr<BasicLog_i>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr <BasicLog_i>
-#pragma instantiate ACE_Auto_Basic_Ptr <BasicLog_i>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
