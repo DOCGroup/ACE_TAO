@@ -78,21 +78,27 @@ class CORBA_Any_out;
 typedef class CORBA_Any *CORBA_Any_ptr;
 
 class CORBA_DynAny;
+class CORBA_DynAny_var;
 typedef class CORBA_DynAny *CORBA_DynAny_ptr;
 
 class CORBA_DynStruct;
+class CORBA_DynStruct_var;
 typedef CORBA_DynStruct *CORBA_DynStruct_ptr;
 
 class CORBA_DynSequence;
+class CORBA_DynSequence_var;
 typedef CORBA_DynSequence *CORBA_DynSequence_ptr;
 
 class CORBA_DynArray;
+class CORBA_DynArray_var;
 typedef CORBA_DynArray *CORBA_DynArray_ptr;
 
 class CORBA_DynUnion;
+class CORBA_DynUnion_var;
 typedef CORBA_DynUnion *CORBA_DynUnion_ptr;
 
 class CORBA_DynEnum;
+class CORBA_DynEnum_var;
 typedef CORBA_DynEnum *CORBA_DynEnum_ptr;
 
 class CORBA_TypeCode;
@@ -729,6 +735,30 @@ TAO_NAMESPACE CORBA
   typedef CORBA_UserException  UserException;
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  typedef CORBA_DynAny DynAny;
+  typedef DynAny *DynAny_ptr;
+  typedef CORBA_DynAny_var DynAny_var;
+
+  typedef CORBA_DynArray DynArray;
+  typedef DynAny *DynArray_ptr;
+  typedef CORBA_DynArray_var DynArray_var;
+
+  typedef CORBA_DynEnum DynEnum;
+  typedef DynAny *DynEnum_ptr;
+  typedef CORBA_DynEnum_var DynEnum_var;
+
+  typedef CORBA_DynSequence DynSequence;
+  typedef DynAny *DynSequence_ptr;
+  typedef CORBA_DynSequence_var DynSequence_var;
+
+  typedef CORBA_DynStruct DynStruct;
+  typedef DynAny *DynStruct_ptr;
+  typedef CORBA_DynStruct_var DynStruct_var;
+
+  typedef CORBA_DynUnion DynUnion;
+  typedef DynAny *DynUnion_ptr;
+  typedef CORBA_DynUnion_var DynUnion_var;
 
   typedef CORBA_Request Request;
   typedef Request *Request_ptr;
