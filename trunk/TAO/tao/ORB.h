@@ -557,12 +557,6 @@ namespace CORBA
     void _use_omg_ior_format (CORBA::Boolean ior);
     CORBA::Boolean _use_omg_ior_format (void);
 
-    /// Set collocation optimization status.
-    /// Get collocation optimization status.
-    /// @todo Who is calling this?
-    void _optimize_collocation_objects (CORBA::Boolean opt);
-    CORBA::Boolean _optimize_collocation_objects (void) const;
-
     /// Get the ORB core.
     TAO_ORB_Core *orb_core (void) const;
 
