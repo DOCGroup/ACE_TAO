@@ -12,16 +12,16 @@ use Getopt::Std;
 
 $flags = join (" ", @ARGV);
 
-if (!getopts ('dcnf:h') || $opt_h) {
+if (!getopts ('dcnp:h') || $opt_h) {
     print "generate_component_mpc.pl [-d] [-h] component_name\n";
     print "\n";
     print "    -d         Turn on debug mode\n";
-    print "    -f         Currently not used\n";
+    print "    -p         Dependent component name\n";
     print "    -n         Supress component make/project\n";
     print "    -c         Create a client makefile\n";
     print "\n";
-    print "generate_component_mpc creates the minimum mpc file that\n";
-    print "is needed for a single component implementation\n";
+    print "generate_component_mpc creates and save a minimum mpc file\n";
+    print "called $com_name.mpc that is needed for a single component implementation\n";
     exit (1);
 }
 
@@ -44,6 +44,12 @@ $UCOM_NAME = uc $com_name;
 
 ##############################################################################
 # Prologue
+
+if (defined $opt_p) {
+    $stub_depend = "depends += $opt_p".'_stub';
+    $svnt_depend = "$opt_p".'_svnt';
+    $lib_depend = "$opt_t".'_stub';
+}
 
 if (defined $opt_c) {
     $client_def =
@@ -68,7 +74,7 @@ if (! defined $opt_n) {
 project('."$com_name".'_exec) : ciao_server {
   depends   += '."$com_name".'_svnt
   sharedname = '."$com_name".'_exec
-  libs      += '."$com_name".'_stub '."$com_name".'_svnt
+  libs      += '."$com_name".'_stub '."$lib_depend $com_name".'_svnt
   dllflags   = '."$UCOM_NAME".'_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -82,10 +88,9 @@ project('."$com_name".'_exec) : ciao_server {
 }
 
 $mpc_template = '
-project('."$com_name".'_stub): ciao_client {
+project('."$com_name".'_stub): ciao_client {'."
+  $stub_depend".'
   sharedname = '."$com_name".'_stub
-  idlflags += -I $(TAO_ROOT)/CIAO -I $(TAO_ROOT) -I $(TAO_ROOT)/orbsvcs/orbsvcs
-  idlflags +=  -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
   idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_STUB_Export -Wb,stub_export_include='."$com_name".'_stub_export.h -Wb,skel_export_macro='."$UCOM_NAME".'_SVNT_Export -Wb,skel_export_include='."$com_name".'_svnt_export.h
   dllflags   = '."$UCOM_NAME".'_STUB_BUILD_DLL
 
@@ -99,10 +104,10 @@ project('."$com_name".'_stub): ciao_client {
 }
 
 project('."$com_name".'_svnt) : ciao_server {
-  depends += '."$com_name".'_stub
+  depends += '."$svnt_depend $com_name".'_stub
   sharedname  = '."$com_name".'_svnt
-  libs    += '."$com_name".'_stub
-  idlflags  +=  -I $(TAO_ROOT)/CIAO -I $(TAO_ROOT) -I $(TAO_ROOT)orbsvcs/orbsvcs -Wb,export_macro='."$UCOM_NAME".'_SVNT_Export -Wb,export_include='."$com_name".'_svnt_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+  libs    += '."$com_name".'_stub'." $lib_depend".'
+  idlflags  +=  -Wb,export_macro='."$UCOM_NAME".'_SVNT_Export -Wb,export_include='."$com_name".'_svnt_export.h
   dllflags = '."$UCOM_NAME".'_SVNT_BUILD_DLL
 
   IDL_Files {
@@ -128,4 +133,13 @@ $client_def
 # Print the stuff out
 
 
-print $mpc_template;
+# MPC files
+open (MPCFILE, ">", "$com_name".".mpc");
+print MPCFILE $mpc_template;
+
+print "Run the following command also:\n\n";
+print "\tgenerate_export_file.pl $UCOM_NAME".'_STUB > '."$com_name".'_stub_export.h'."\n";
+print "\tgenerate_export_file.pl $UCOM_NAME".'_SVNT > '."$com_name".'_svnt_export.h'."\n";
+if (! defined $opt_n) {
+    print "\tgenerate_export_file.pl $UCOM_NAME".'_EXEC > '."$com_name".'_exec_export.h'."\n";
+}

@@ -12,6 +12,18 @@
 
 module HUDisplay
 {
+  /**
+   * @brief interface opmode defines the "operation mode" interface.
+   */
+  interface opmode
+  {
+    void start ();
+
+    void stop ();
+
+    boolean active ();
+  };
+
   component RateGen supports opmode
     {
       publishes tick Pulse;
