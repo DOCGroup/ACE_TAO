@@ -3346,6 +3346,127 @@ CORBA::Any * PortableInterceptor::ClientRequestInfo::received_exception (
   return _tao_safe_retval._retn ();
 }
 
+// TAO specific added because there is currently no way to extract an
+// exception from an Any in a safe way.
+
+CORBA::Exception * PortableInterceptor::ClientRequestInfo::_received_exception (
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  
+  CORBA::Exception *_tao_retval = 0;
+  
+  
+  TAO_Stub *istub = this->_stubobj ();
+  if (istub == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
+  
+  //  ACE_NEW_RETURN (_tao_retval, CORBA::Exception *, _tao_retval);
+  //CORBA::Exception_var _tao_safe_retval (_tao_retval);
+  TAO_GIOP_Twoway_Invocation _tao_call (
+      istub,
+      "_get_received_exception",
+      23,
+      istub->orb_core ()
+    );
+
+/* #if (TAO_HAS_INTERCEPTORS == 1)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
+      /* for (;;)
+      {
+        _tao_call.start (ACE_TRY_ENV);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_received_exception",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
+        
+        _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        int _invoke_status =
+          _tao_call.invoke (0, 0, ACE_TRY_ENV);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        if (_invoke_status == TAO_INVOKE_RESTART)
+          continue;
+        if (_invoke_status != TAO_INVOKE_OK)
+        {
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        }
+        TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+        if (!(
+              (_tao_in >> _tao_safe_retval.inout ())
+          ))
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_received_exception",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
+        break;
+        
+      }
+#if (TAO_HAS_INTERCEPTORS == 1)
+      
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_received_exception",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RETHROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
+  return _tao_retval;
+}
+
 char * PortableInterceptor::ClientRequestInfo::received_exception_id (
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -4072,6 +4193,126 @@ CORBA::Any * PortableInterceptor::ServerRequestInfo::sending_exception (
   ACE_CHECK_RETURN (0);
 #endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
+}
+
+// TAO specific added because there is currently no way to extract an
+// exception from an Any in a safe way.
+CORBA::Exception * PortableInterceptor::ServerRequestInfo::_sending_exception (
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  
+  CORBA::Exception *_tao_retval = 0;
+  
+  
+  TAO_Stub *istub = this->_stubobj ();
+  if (istub == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
+  
+  //  ACE_NEW_RETURN (_tao_retval, CORBA::Any, _tao_retval);
+  // CORBA::Any_var _tao_safe_retval (_tao_retval);
+  TAO_GIOP_Twoway_Invocation _tao_call (
+      istub,
+      "_get_sending_exception",
+      22,
+      istub->orb_core ()
+    );
+
+/* #if (TAO_HAS_INTERCEPTORS == 1)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
+      /* for (;;)
+      {
+        _tao_call.start (ACE_TRY_ENV);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_sending_exception",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
+        CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
+        
+        _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        int _invoke_status =
+          _tao_call.invoke (0, 0, ACE_TRY_ENV);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        if (_invoke_status == TAO_INVOKE_RESTART)
+          continue;
+        if (_invoke_status != TAO_INVOKE_OK)
+        {
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        }
+        TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+        if (!(
+              (_tao_in >> _tao_safe_retval.inout ())
+          ))
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_sending_exception",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
+        break;
+        
+      }
+#if (TAO_HAS_INTERCEPTORS == 1)
+      
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_sending_exception",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RETHROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
+  return _tao_retval;
 }
 
 PortableInterceptor::OctetSeq * PortableInterceptor::ServerRequestInfo::object_id (
