@@ -140,13 +140,14 @@ sub find_changelogs () {
                     "$pwd/[C]hangeLog-97b " .  #### ACE_wrappers
                     "$pwd/ChangeLog-9[89]* " .
                     "$pwd/ChangeLog-0*"))) {
-      if ($pwd =~ m%^${dir_sep}%) {
-        $pwd = &basename ($pwd);
-      } else {
+      if ($pwd !~ m%^${dir_sep}%) {
         #### We're starting with a relative path.  Get the
         #### absolute path.
         chomp ($pwd = `pwd`);
+        $pwd .= "/$file";
       }
+
+      $pwd = &basename ($pwd);
 
       if ($pwd eq '') {
         warn "$0: ChangeLog NOT FOUND for '$file'!!!!\n";
