@@ -1,0 +1,8 @@
+For some strange reason, when you type "make", the Java compiler
+freaks out and prints several error messages. 
+
+Ignore these messages and just type "make" again. Everything should
+compile fine.
+
+In case you can find a solution to fix this problem, please let me
+know at pjain@cs.wustl.edu
