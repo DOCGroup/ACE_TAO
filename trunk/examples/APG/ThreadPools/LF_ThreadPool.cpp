@@ -1,5 +1,8 @@
 // $Id$
 
+#include "ace/config-lite.h"
+#if defined (ACE_HAS_THREADS)
+
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Task.h"
@@ -247,3 +250,15 @@ template class ACE_Unbounded_Queue_Iterator<Follower*>;
 #pragma instantiate ACE_Unbounded_Queue<Follower*>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<Follower*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#else
+#include "ace/OS_main.h"
+#include "ace/OS_NS_stdio.h"
+
+int ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  ACE_OS::puts (ACE_TEXT ("This example requires threads."));
+  return 0;
+}
+
+#endif /* ACE_HAS_THREADS */
