@@ -1,6 +1,6 @@
 Tue Nov 12 12:54:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/LF_Invocation_Event.inl: Fixed a compile error with g++.
+	* tao/LF_Invocation_Event.inl: Fixed a typo.
 
 Tue Nov 12 12:47:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
