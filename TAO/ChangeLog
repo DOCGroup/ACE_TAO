@@ -1,3 +1,8 @@
+Mon Feb  9 17:20:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/MT_BiDir/MT_BiDir.mpc:
+	  Moved the Receiver files up so that the idl file is compiled first.
+
 Mon Feb  9 16:03:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/FTORB.mpc:
