@@ -81,7 +81,7 @@ protected:
   int test_get_all_properties (CORBA::Environment &ACE_TRY_ENV);
   // Testing get_all_properties.
 
-  int test_delete_property (CORBA::String property_name,
+  int test_delete_property (const char *property_name,
                             CORBA::Environment &ACE_TRY_ENV);
   // Testing delete_property.
 
