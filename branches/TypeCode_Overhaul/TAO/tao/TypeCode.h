@@ -36,7 +36,6 @@ namespace CORBA
    typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
    typedef TAO_Pseudo_Out_T<TypeCode, TypeCode_var> TypeCode_out;
 
-
   /**
    * @enum TCKind
    *
@@ -105,9 +104,11 @@ namespace CORBA
   /**
    * @class TypeCode
    *
-   * @brief
+   * @brief A representation of the structure of a given OMG
+   *        IDL-declared type.
    *
-   *
+   * @c TypeCodes are primarily used by @c CORBA::Anys, the CORBA
+   * Interface Repository and the CORBA Dynamic Invocation Interface.
    */
   class TAO_Export TypeCode
   {

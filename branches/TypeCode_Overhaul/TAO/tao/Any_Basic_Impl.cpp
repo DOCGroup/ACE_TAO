@@ -156,7 +156,7 @@ namespace TAO
           {
             Any_Basic_Impl::assign_value (_tao_elem,
                                           replacement,
-					  tck);
+                                          tck);
             const_cast<CORBA::Any &> (any).replace (replacement);
             replacement_safety.release ();
             return 1;
