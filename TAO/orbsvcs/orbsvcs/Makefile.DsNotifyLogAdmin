@@ -72,13 +72,13 @@ realclean: clean
 
 
 .obj/NotifyLogFactory_i.o .obj/NotifyLogFactory_i.so .shobj/NotifyLogFactory_i.o .shobj/NotifyLogFactory_i.so: Log/NotifyLogFactory_i.cpp \
- Log/NotifyLogFactory_i.h \
- DsNotifyLogAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS.h \
  $(ACE_ROOT)/ace/pre.h \
- DsEventLogAdminS.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -107,7 +107,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -259,8 +260,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Notify/notify_export.h \
- CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -277,18 +278,18 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
- DsLogAdminS.h \
- TimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
@@ -309,65 +310,66 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- TimeBaseC.h \
- svc_utils_export.h \
- TimeBaseC.i \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- DsLogAdminC.h \
- Log/log_export.h \
- DsLogAdminC.i \
- DsLogAdminS_T.h \
- DsLogAdminS_T.i \
- DsLogAdminS_T.cpp \
- DsLogAdminS.i \
- DsEventLogAdminC.h \
- Log/eventlog_export.h \
- DsEventLogAdminC.i \
- DsEventLogAdminS_T.h \
- DsEventLogAdminS_T.i \
- DsEventLogAdminS_T.cpp \
- DsEventLogAdminS.i \
- CosNotifyChannelAdminS.h \
- CosNotificationS.h \
- CosNotificationC.h \
- CosNotificationC.i \
- CosNotificationS_T.h \
- CosNotificationS_T.i \
- CosNotificationS_T.cpp \
- CosNotificationS.i \
- CosNotifyFilterS.h \
- CosNotifyCommS.h \
- CosNotifyCommC.h \
- CosNotifyCommC.i \
- CosNotifyCommS_T.h \
- CosNotifyCommS_T.i \
- CosNotifyCommS_T.cpp \
- CosNotifyCommS.i \
- CosNotifyFilterC.h \
- CosNotifyFilterC.i \
- CosNotifyFilterS_T.h \
- CosNotifyFilterS_T.i \
- CosNotifyFilterS_T.cpp \
- CosNotifyFilterS.i \
- CosNotifyChannelAdminC.h \
- CosNotifyChannelAdminC.i \
- CosNotifyChannelAdminS_T.h \
- CosNotifyChannelAdminS_T.i \
- CosNotifyChannelAdminS_T.cpp \
- CosNotifyChannelAdminS.i \
- DsNotifyLogAdminC.h \
- Log/notifylog_export.h \
- DsNotifyLogAdminC.i \
- DsNotifyLogAdminS_T.h \
- DsNotifyLogAdminS_T.i \
- DsNotifyLogAdminS_T.cpp \
- DsNotifyLogAdminS.i \
- Log/LogMgr_i.h \
- Log/Log_i.h \
- Log/LogRecordStore.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/eventlog_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/notifylog_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogMgr_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -408,26 +410,26 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Log/LogNotification.h \
- DsLogNotificationS.h \
- DsLogNotificationC.h \
- DsLogNotificationC.i \
- DsLogNotificationS_T.h \
- DsLogNotificationS_T.i \
- DsLogNotificationS_T.cpp \
- DsLogNotificationS.i \
- Notify/Notify_EventChannelFactory_i.h \
- Log/NotifyLog_i.h \
- Log/NotifyLogNotification.h \
- CosNamingC.h \
- Naming/naming_export.h \
- CosNamingC.i
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogNotification.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/NotifyLog_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/NotifyLogNotification.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
 
 .obj/NotifyLog_i.o .obj/NotifyLog_i.so .shobj/NotifyLog_i.o .shobj/NotifyLog_i.so: Log/NotifyLog_i.cpp \
- Log/NotifyLog_i.h \
- DsLogAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/NotifyLog_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
  $(ACE_ROOT)/ace/pre.h \
- TimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -457,7 +459,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -574,7 +577,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -629,8 +632,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- svc_utils_export.h \
- TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -647,78 +650,79 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- DsLogAdminC.h \
- Log/log_export.h \
- DsLogAdminC.i \
- DsLogAdminS_T.h \
- DsLogAdminS_T.i \
- DsLogAdminS_T.cpp \
- DsLogAdminS.i \
- DsNotifyLogAdminS.h \
- DsEventLogAdminS.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
- Notify/notify_export.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
- DsEventLogAdminC.h \
- Log/eventlog_export.h \
- DsEventLogAdminC.i \
- DsEventLogAdminS_T.h \
- DsEventLogAdminS_T.i \
- DsEventLogAdminS_T.cpp \
- DsEventLogAdminS.i \
- CosNotifyChannelAdminS.h \
- CosNotificationS.h \
- CosNotificationC.h \
- CosNotificationC.i \
- CosNotificationS_T.h \
- CosNotificationS_T.i \
- CosNotificationS_T.cpp \
- CosNotificationS.i \
- CosNotifyFilterS.h \
- CosNotifyCommS.h \
- CosNotifyCommC.h \
- CosNotifyCommC.i \
- CosNotifyCommS_T.h \
- CosNotifyCommS_T.i \
- CosNotifyCommS_T.cpp \
- CosNotifyCommS.i \
- CosNotifyFilterC.h \
- CosNotifyFilterC.i \
- CosNotifyFilterS_T.h \
- CosNotifyFilterS_T.i \
- CosNotifyFilterS_T.cpp \
- CosNotifyFilterS.i \
- CosNotifyChannelAdminC.h \
- CosNotifyChannelAdminC.i \
- CosNotifyChannelAdminS_T.h \
- CosNotifyChannelAdminS_T.i \
- CosNotifyChannelAdminS_T.cpp \
- CosNotifyChannelAdminS.i \
- DsNotifyLogAdminC.h \
- Log/notifylog_export.h \
- DsNotifyLogAdminC.i \
- DsNotifyLogAdminS_T.h \
- DsNotifyLogAdminS_T.i \
- DsNotifyLogAdminS_T.cpp \
- DsNotifyLogAdminS.i \
- Log/Log_i.h \
- Log/LogRecordStore.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/eventlog_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/notifylog_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/Log_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogRecordStore.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -759,21 +763,21 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Log/LogNotification.h \
- DsLogNotificationS.h \
- DsLogNotificationC.h \
- DsLogNotificationC.i \
- DsLogNotificationS_T.h \
- DsLogNotificationS_T.i \
- DsLogNotificationS_T.cpp \
- DsLogNotificationS.i \
- Log/LogMgr_i.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogNotification.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogMgr_i.h
 
 .obj/NotifyLogNotification.o .obj/NotifyLogNotification.so .shobj/NotifyLogNotification.o .shobj/NotifyLogNotification.so: Log/NotifyLogNotification.cpp \
- Log/LogNotification.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/LogNotification.h \
  $(ACE_ROOT)/ace/pre.h \
- DsLogAdminS.h \
- TimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -803,7 +807,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -920,7 +925,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -975,8 +980,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- svc_utils_export.h \
- TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -993,95 +998,97 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- DsLogAdminC.h \
- Log/log_export.h \
- DsLogAdminC.i \
- DsLogAdminS_T.h \
- DsLogAdminS_T.i \
- DsLogAdminS_T.cpp \
- DsLogAdminS.i \
- DsLogNotificationS.h \
- DsLogNotificationC.h \
- DsLogNotificationC.i \
- DsLogNotificationS_T.h \
- DsLogNotificationS_T.i \
- DsLogNotificationS_T.cpp \
- DsLogNotificationS.i \
- Log/NotifyLogNotification.h \
- DsNotifyLogAdminS.h \
- DsEventLogAdminS.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
- Notify/notify_export.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
- DsEventLogAdminC.h \
- Log/eventlog_export.h \
- DsEventLogAdminC.i \
- DsEventLogAdminS_T.h \
- DsEventLogAdminS_T.i \
- DsEventLogAdminS_T.cpp \
- DsEventLogAdminS.i \
- CosNotifyChannelAdminS.h \
- CosNotificationS.h \
- CosNotificationC.h \
- CosNotificationC.i \
- CosNotificationS_T.h \
- CosNotificationS_T.i \
- CosNotificationS_T.cpp \
- CosNotificationS.i \
- CosNotifyFilterS.h \
- CosNotifyCommS.h \
- CosNotifyCommC.h \
- CosNotifyCommC.i \
- CosNotifyCommS_T.h \
- CosNotifyCommS_T.i \
- CosNotifyCommS_T.cpp \
- CosNotifyCommS.i \
- CosNotifyFilterC.h \
- CosNotifyFilterC.i \
- CosNotifyFilterS_T.h \
- CosNotifyFilterS_T.i \
- CosNotifyFilterS_T.cpp \
- CosNotifyFilterS.i \
- CosNotifyChannelAdminC.h \
- CosNotifyChannelAdminC.i \
- CosNotifyChannelAdminS_T.h \
- CosNotifyChannelAdminS_T.i \
- CosNotifyChannelAdminS_T.cpp \
- CosNotifyChannelAdminS.i \
- DsNotifyLogAdminC.h \
- Log/notifylog_export.h \
- DsNotifyLogAdminC.i \
- DsNotifyLogAdminS_T.h \
- DsNotifyLogAdminS_T.i \
- DsNotifyLogAdminS_T.cpp \
- DsNotifyLogAdminS.i \
- Notify/Notify_EventChannelFactory_i.h \
- CosNamingC.h \
- Naming/naming_export.h \
- CosNamingC.i \
- Time_Utilities.h \
- Time_Utilities.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogNotificationS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/NotifyLogNotification.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/eventlog_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/notifylog_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  $(TAO_ROOT)/tao/debug.h
 
 .obj/DsNotifyLogAdminS.o .obj/DsNotifyLogAdminS.so .shobj/DsNotifyLogAdminS.o .shobj/DsNotifyLogAdminS.so: DsNotifyLogAdminS.cpp DsNotifyLogAdminS.h \
- $(ACE_ROOT)/ace/pre.h DsEventLogAdminS.h \
- CosEventChannelAdminS.h CosEventCommS.h CosEventCommC.h \
+ $(ACE_ROOT)/ace/pre.h \
+ DsEventLogAdminS.h CosEventChannelAdminS.h CosEventCommS.h \
+ CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1110,7 +1117,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1262,7 +1270,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Notify/notify_export.h CosEventCommC.i \
+ CosEvent/event_export.h CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1283,7 +1291,8 @@ realclean: clean
  CosEventCommS.i CosEventChannelAdminC.h CosEventChannelAdminC.i \
  CosEventChannelAdminS_T.h CosEventChannelAdminS_T.i \
  CosEventChannelAdminS_T.cpp CosEventChannelAdminS.i DsLogAdminS.h \
- TimeBaseS.h $(TAO_ROOT)/tao/TimeBaseS.h \
+ TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1302,21 +1311,21 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
- svc_utils_export.h TimeBaseC.i TimeBaseS_T.h TimeBaseS_T.i \
- TimeBaseS_T.cpp TimeBaseS.i DsLogAdminC.h Log/log_export.h \
- DsLogAdminC.i DsLogAdminS_T.h DsLogAdminS_T.i DsLogAdminS_T.cpp \
- DsLogAdminS.i DsEventLogAdminC.h Log/eventlog_export.h \
- DsEventLogAdminC.i DsEventLogAdminS_T.h DsEventLogAdminS_T.i \
- DsEventLogAdminS_T.cpp DsEventLogAdminS.i CosNotifyChannelAdminS.h \
- CosNotificationS.h CosNotificationC.h CosNotificationC.i \
- CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
- CosNotificationS.i CosNotifyFilterS.h CosNotifyCommS.h \
- CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h \
- CosNotifyCommS_T.i CosNotifyCommS_T.cpp CosNotifyCommS.i \
- CosNotifyFilterC.h CosNotifyFilterC.i CosNotifyFilterS_T.h \
- CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp CosNotifyFilterS.i \
- CosNotifyChannelAdminC.h CosNotifyChannelAdminC.i \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ TimeBaseC.h svc_utils_export.h TimeBaseC.i TimeBaseS_T.h \
+ TimeBaseS_T.i TimeBaseS_T.cpp TimeBaseS.i DsLogAdminC.h \
+ Log/log_export.h DsLogAdminC.i DsLogAdminS_T.h DsLogAdminS_T.i \
+ DsLogAdminS_T.cpp DsLogAdminS.i DsEventLogAdminC.h \
+ Log/eventlog_export.h DsEventLogAdminC.i DsEventLogAdminS_T.h \
+ DsEventLogAdminS_T.i DsEventLogAdminS_T.cpp DsEventLogAdminS.i \
+ CosNotifyChannelAdminS.h CosNotificationS.h CosNotificationC.h \
+ Notify/notify_export.h CosNotificationC.i CosNotificationS_T.h \
+ CosNotificationS_T.i CosNotificationS_T.cpp CosNotificationS.i \
+ CosNotifyFilterS.h CosNotifyCommS.h CosNotifyCommC.h CosNotifyCommC.i \
+ CosNotifyCommS_T.h CosNotifyCommS_T.i CosNotifyCommS_T.cpp \
+ CosNotifyCommS.i CosNotifyFilterC.h CosNotifyFilterC.i \
+ CosNotifyFilterS_T.h CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp \
+ CosNotifyFilterS.i CosNotifyChannelAdminC.h CosNotifyChannelAdminC.i \
  CosNotifyChannelAdminS_T.h CosNotifyChannelAdminS_T.i \
  CosNotifyChannelAdminS_T.cpp CosNotifyChannelAdminS.i \
  DsNotifyLogAdminC.h Log/notifylog_export.h DsNotifyLogAdminC.i \
@@ -1484,7 +1493,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1637,7 +1647,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Log/notifylog_export.h DsEventLogAdminC.h Log/eventlog_export.h \
- CosEventChannelAdminC.h Notify/notify_export.h CosEventCommC.h \
+ CosEventChannelAdminC.h CosEvent/event_export.h CosEventCommC.h \
  CosEventCommC.i CosEventChannelAdminC.i DsLogAdminC.h \
  Log/log_export.h TimeBaseC.h svc_utils_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -1654,11 +1664,12 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i DsLogAdminC.i \
- DsEventLogAdminC.i CosNotifyChannelAdminC.h CosNotificationC.h \
- CosNotificationC.i CosNotifyFilterC.h CosNotifyCommC.h \
- CosNotifyCommC.i CosNotifyFilterC.i CosNotifyChannelAdminC.i \
- DsNotifyLogAdminC.i $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ TimeBaseC.i DsLogAdminC.i DsEventLogAdminC.i CosNotifyChannelAdminC.h \
+ Notify/notify_export.h CosNotificationC.h CosNotificationC.i \
+ CosNotifyFilterC.h CosNotifyCommC.h CosNotifyCommC.i \
+ CosNotifyFilterC.i CosNotifyChannelAdminC.i DsNotifyLogAdminC.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1747,8 +1758,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Invocation_Event.h \
  $(TAO_ROOT)/tao/LF_Event.h \
  $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/LF_Invocation_Event.inl \
  $(TAO_ROOT)/tao/GIOP_Message_Version.h \
  $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  $(TAO_ROOT)/tao/operation_details.h \
