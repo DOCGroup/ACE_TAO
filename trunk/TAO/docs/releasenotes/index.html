@@ -13,7 +13,7 @@
 <h3>
 Release Information for The ACE ORB (TAO)</h3></center>
 This document contains information on the following topics related to the <a href="../../VERSION">current
-release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
+release</a> of <a href="http:Imp//www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 
 <TABLE cellpadding=10 cellspacing=0 border=0>
 
@@ -102,6 +102,8 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <li>
 <a href="#miop">Multicast InterORB Protocol (MIOP)</a></li>
 
+<li><a href="#loadbalancer">Load Balancer</a></li>
+
 <li>
 <a href="ec.html">TAO's Real-time Event Service</a></li>
 
@@ -110,8 +112,6 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 
 <li>
 <a href="#logging">TAO's Logging Service</a></li>
-
-<li><a href="#loadbalancer">TAO's Load Balancer</a></li>
 
 </UL>
 </TD>
@@ -1935,70 +1935,58 @@ document.
 </ul>
 <hr>
 
-<h3><a NAME="loadbalancer"></a>TAO's Load Balancer</h3>
+<h3><a NAME="loadbalancer"></a>Load Balancer</h3>
 
 <p>
 Point of contact: <a href="mailto:ossama@uci.edu">Ossama Othman</a>
 
 <h4>Current Status:</h4>
-<p>TAO's <A HREF="http://www.cs.wustl.edu/~schmidt/PDF/load_balancing.pdf">Load Balancer</a> currently implements the following load
-balancing algorithms:
+<p>TAO's
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/load_balancing.pdf">
+Load Balancer</a> currently implements the latest revision of the
+OMG <I>Load Balancing and Monitoring</I> specification.
+<p>
+It provides many features and advantages over the previous
+non-standards based prototype.  Those features and advantages include:
 <ul>
-<li><FONT COLOR=BLUE>Round Robin</FONT>
-  <ul>
-  <li>Simply forwards requests to the next registered replica in a
-      circular list.</li>
-  </ul>
-</li>
-<li><FONT COLOR=BLUE>Minimum Dispersion</FONT>
-  <ul>
-  <li>Basically tries to keep the load on each registered replica
-      close to the average.  If the load on a given server is much
-      higher than the average load it is deemed too loaded, at which
-      point the load balancer informs the replica of this condition,
-      which in turn causes it to stop accepting requests until its
-      load is close to the average.</li>
-  </ul>
-</li>
+ <li>Multiple object group support</li>
+ <li>Extensible load balancing strategies through IDL interfaces</li>
+ <li>Extensible load monitoring</li>
+ <li>Both "push" and "pull" style monitoring are supported</li>
+ <li>Support for infrastructure and application controlled object
+	    group membership</li>
+ <li>Improved server-side transparency</li>
 </ul>
+
+The current <I>Load Balancing and Monitoring</I> specification defines
+three built-in load balancing strategies.  They are:
+<ol>
+ <li><CODE>RoundRobin</CODE> <FONT COLOR=BLUE>(non-adaptive)</FONT></li>
+ <li><CODE>Random</CODE> <FONT COLOR=BLUE>(non-adaptive)</FONT></li>
+ <li><CODE>LeastLoaded</CODE> <FONT COLOR=BLUE>(adaptive)</FONT></li>
+</ol>
+
+TAO currently implements the <CODE>Random</CODE> and the
+<CODE>LeastLoaded</CODE> load balancing strategies.
 
 <h4>Known Issues:</h4>
 <ul>
-<li>Factory must be implemented to allow applications to create load
-balancers at run-time, rather than at application start up time.</li>
+<li><CODE>RoundRobin</CODE> load balancing strategy is currently
+    unimplemented.</li>
+<li>New group members are not automatically created if possible and
+    when necessary.  This is only a problem for the <I>infrastructure
+    controlled</I> object group membership style.</li>
 </ul>
 
 <h4>Recent Work:</h4>
 <ul>
-<li>Replaced use of DSI for forwarding requests in favor of a
-    ServantLocator.  The ServantLocator implementation provides a more
-    robust way of forwarding requests.  The DSI implementation was a
-    bit of a hack since ForwardRequest exceptions are only supposed to
-    be thrown from ServantManagers, such as ServantLocators.</li>
-<li>All code is now thread-safe and exception-safe.</li>
+<li>It's all recent.  :-)</li>
 </ul>
 
 <h4>Future Work:</h4>
 <ul>
-<li>Implement a load balancing algorithm strategy factory.</li>
-<li>Implement load balancing via Interceptors.</li>
-<li>Implement cooperative load balancing support.</li>
-<li>Implement additional load balancing strategies:
-  <ul>
-  <li>load based on power consumption</li>
-  <li>load based on the number of requests currently serviced
-      (maybe)</li>
-  <li>adaptive load balancing strategy that utilizes load history to
-      attempt to predict future load conditions</li>
-  </ul>
-</li>
-<li>Active load balancing:
-  <ul>
-  <li>Actively poll replicas for current load, as opposed to the
-      currently implemented passive load balancing where the load
-      balancer listens for load reports from the replicas.
-  </ul>
-</li>
+<li>Implement cooperative (distributed) load balancing support</li>
+<li>Integrate multicast support</li>
 </ul>
 
 <hr>
@@ -2243,15 +2231,15 @@ Points of contact: <a href="mailto:alex@cs.wustl.edu">Alexander Arulanthu</a>
 <p>Status:
 <ul>
 
-We've implemented the callback model of the <A
-HREF="http://www.cs.wustl.edu/~schmidt/CORBA-docs/98-05-05.pdf.gz">Messaging
+We've implemented the callback model of the
+<A HREF="http://www.omg.org/cgi-bin/doc?formal/01-12-60">CORBA Messaging
 specification</a>.  To activate the AMI for TAO and the TAO IDL
-compiler define <tt>TAO_HAS_CORBA_MESSAGING</tt>,
+compiler define <CODE>TAO_HAS_CORBA_MESSAGING</CODE>>,
 <tt>TAO_HAS_AMI_CALLBACK</tt> in your config.h file.  The TAO IDL
-compiler can generate the AMI stubs, ReplyHandler und reply stubs
-using the -GC switch.
+compiler can generate the AMI "callback" stubs, ReplyHandler und reply
+stubs using the <CODE>-GC</CODE> switch.
 <p>
-For an example see <tt>$TAO_ROOT\tests\AMI</tt> and <tt>$TAO_ROOT\examples\AMI</tt>.
+For an example see <tt>$TAO_ROOT/tests/AMI</tt> and <tt>$TAO_ROOT/examples/AMI</tt>.
 
 </ul>
 
