@@ -1,8 +1,9 @@
 Thu Aug 31 15:31:30 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* include/makeinclude/outputdir.bor: Fixed a typo with the
-	  OBJDIR macro when the -DPASCAL option is used.  Thanks to Marcel
- 	  Van Der Weert <mvdweert@aweta.nl> for reporting this.
+	* include/makeinclude/outputdir.bor: Added a comment to explain
+	  how the OBJDIR macro works when the -DPASCAL option is used.
+  	  Thanks to Marcel Van Der Weert <mvdweert@aweta.nl> and
+ 	  Christopher Kohlhoff <chris@kohlhoff.com> for reporting this.
 
 Thu Aug 31 08:32:11 2000  Albert Wijnja <Albert.Wijnja@meco.nl>
 
