@@ -25,6 +25,12 @@ Thu Mar 26 08:31:02 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_sequence.cpp: Minor correction to get the
 	formatting right.
 
+	* TAO_IDL/be/be_decl.cpp: Simplified the logic of converting a
+	name into a padded long array. The original logic caused problems
+	on NT/PC because of its "little-endian" nature. This was causing
+	the repoIDs and names (represented as longs) undergo byte
+	swapping.
+
 Thu Mar 26 06:29:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Marshal.{h,cpp},ORB.*,Object.{h,cpp},corba.h:
