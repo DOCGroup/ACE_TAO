@@ -27,20 +27,19 @@
 #define HPUX_VERS 1020
 #endif
 
-#  if (HPUX_VERS < 1020)		// 10.10
-#    define ACE_LACKS_TIMESPEC_T
-#  elif (HPUX_VERS < 1030)		// 10.20
+#if (HPUX_VERS < 1020)			// 10.10
+#  define ACE_LACKS_TIMESPEC_T
+#elif (HPUX_VERS < 1030)		// 10.20
 
-     // Platform supports reentrant functions (all the POSIX *_r functions).
-#    define ACE_HAS_REENTRANT_FUNCTIONS
-     // But this one is not like other platforms
-#    define ACE_CTIME_R_RETURNS_INT
+   // Platform supports reentrant functions (all the POSIX *_r functions).
+#  define ACE_HAS_REENTRANT_FUNCTIONS
+   // But this one is not like other platforms
+#  define ACE_CTIME_R_RETURNS_INT
 
-#  else					// 10.30
+#else					// 10.30
 // Don't know yet... probably will be 10.20 but with some different thread
 // settings.
-#  endif /* HPUX_VERS tests */
-#endif /* defined HPUX_VERS */
+#endif /* HPUX_VERS tests */
 
 #include /**/ <sys/stdsyms.h>
 #include /**/ <sched.h>		/*  pthread.h doesn't include this */
