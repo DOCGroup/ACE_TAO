@@ -29,10 +29,10 @@ static const CORBA::Long _oc_PortableServer__tao_seq_Octet[] =
 
   0,
 };
-static CORBA::TypeCode _tc__tc_PortableServer__tao_seq_Octet
+static CORBA::TypeCode _tc_TAO_tc_PortableServer__tao_seq_Octet
 (CORBA::tk_sequence, sizeof (_oc_PortableServer__tao_seq_Octet), (char *)
  &_oc_PortableServer__tao_seq_Octet, 0, sizeof (PortableServer::_tao_seq_Octet));
-CORBA::TypeCode_ptr PortableServer::_tc__tao_seq_Octet = &_tc__tc_PortableServer__tao_seq_Octet;
+CORBA::TypeCode_ptr PortableServer::_tc__tao_seq_Octet = &_tc_TAO_tc_PortableServer__tao_seq_Octet;
 
 
 #endif /* end #if !defined */
@@ -49,10 +49,10 @@ static const CORBA::Long _oc_PortableServer_ObjectId[] =
 
   0,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ObjectId (CORBA::tk_alias, sizeof
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_ObjectId (CORBA::tk_alias, sizeof
                                                         (_oc_PortableServer_ObjectId), (char *) &_oc_PortableServer_ObjectId, 
                                                         0, sizeof (PortableServer::ObjectId));
-CORBA::TypeCode_ptr PortableServer::_tc_ObjectId = &_tc__tc_PortableServer_ObjectId;
+CORBA::TypeCode_ptr PortableServer::_tc_ObjectId = &_tc_TAO_tc_PortableServer_ObjectId;
 
 // default constructor
 PortableServer::ForwardRequest::ForwardRequest (void)
@@ -160,13 +160,13 @@ static const CORBA::Long _oc_PortableServer_ForwardRequest[] =
   21, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4f62), ACE_NTOHL (0x6a656374), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0xfdfdfd),  // repository ID = IDL:CORBA/Object:1.0
   7, ACE_NTOHL (0x4f626a65), ACE_NTOHL (0x637400fd),  // name = Object,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ForwardRequest (CORBA::tk_except,
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_ForwardRequest (CORBA::tk_except,
                                                               sizeof
                                                               (_oc_PortableServer_ForwardRequest), 
                                                               (char *)
                                                               &_oc_PortableServer_ForwardRequest, 0, 
                                                               sizeof (PortableServer::ForwardRequest)); 
-CORBA::TypeCode_ptr PortableServer::_tc_ForwardRequest = &_tc__tc_PortableServer_ForwardRequest;
+CORBA::TypeCode_ptr PortableServer::_tc_ForwardRequest = &_tc_TAO_tc_PortableServer_ForwardRequest;
 
 
 static const CORBA::Long _oc_PortableServer_ThreadPolicyValue[] =
@@ -178,11 +178,11 @@ static const CORBA::Long _oc_PortableServer_ThreadPolicyValue[] =
   15, ACE_NTOHL (0x4f52425f), ACE_NTOHL (0x4354524c), ACE_NTOHL (0x5f4d4f44), ACE_NTOHL (0x454c00fd),  // name = ORB_CTRL_MODEL
   20, ACE_NTOHL (0x53494e47), ACE_NTOHL (0x4c455f54), ACE_NTOHL (0x48524541), ACE_NTOHL (0x445f4d4f), ACE_NTOHL (0x44454c00),  // name = SINGLE_THREAD_MODEL
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ThreadPolicyValue
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_ThreadPolicyValue
 (CORBA::tk_enum, sizeof (_oc_PortableServer_ThreadPolicyValue), (char *)
  &_oc_PortableServer_ThreadPolicyValue, 0,
  sizeof (PortableServer::ThreadPolicyValue));
-CORBA::TypeCode_ptr PortableServer::_tc_ThreadPolicyValue = &_tc__tc_PortableServer_ThreadPolicyValue;
+CORBA::TypeCode_ptr PortableServer::_tc_ThreadPolicyValue = &_tc_TAO_tc_PortableServer_ThreadPolicyValue;
 
 PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_duplicate (PortableServer::ThreadPolicy_ptr obj)
 {
@@ -253,13 +253,13 @@ static const CORBA::Long _oc_PortableServer_ThreadPolicy[] =
   36, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f54), ACE_NTOHL (0x68726561), ACE_NTOHL (0x64506f6c), ACE_NTOHL (0x6963793a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:PortableServer/ThreadPolicy:1.0
   13, ACE_NTOHL (0x54687265), ACE_NTOHL (0x6164506f), ACE_NTOHL (0x6c696379), ACE_NTOHL (0xfdfdfd),  // name = ThreadPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ThreadPolicy (CORBA::tk_objref,
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_ThreadPolicy (CORBA::tk_objref,
                                                             sizeof
                                                             (_oc_PortableServer_ThreadPolicy), 
                                                             (char *)
                                                             &_oc_PortableServer_ThreadPolicy, 0,
                                                             sizeof (PortableServer::ThreadPolicy));
-CORBA::TypeCode_ptr PortableServer::_tc_ThreadPolicy = &_tc__tc_PortableServer_ThreadPolicy;
+CORBA::TypeCode_ptr PortableServer::_tc_ThreadPolicy = &_tc_TAO_tc_PortableServer_ThreadPolicy;
 
 
 static const CORBA::Long _oc_PortableServer_LifespanPolicyValue[] =
@@ -271,11 +271,11 @@ static const CORBA::Long _oc_PortableServer_LifespanPolicyValue[] =
   10, ACE_NTOHL (0x5452414e), ACE_NTOHL (0x5349454e), ACE_NTOHL (0x5400fdfd),  // name = TRANSIENT
   11, ACE_NTOHL (0x50455253), ACE_NTOHL (0x49535445), ACE_NTOHL (0x4e5400fd),  // name = PERSISTENT
 };
-static CORBA::TypeCode _tc__tc_PortableServer_LifespanPolicyValue
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_LifespanPolicyValue
 (CORBA::tk_enum, sizeof (_oc_PortableServer_LifespanPolicyValue), (char *)
  &_oc_PortableServer_LifespanPolicyValue, 0, 
 sizeof (PortableServer::LifespanPolicyValue));
-CORBA::TypeCode_ptr PortableServer::_tc_LifespanPolicyValue = &_tc__tc_PortableServer_LifespanPolicyValue;
+CORBA::TypeCode_ptr PortableServer::_tc_LifespanPolicyValue = &_tc_TAO_tc_PortableServer_LifespanPolicyValue;
 
 PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_duplicate (PortableServer::LifespanPolicy_ptr obj)
 {
@@ -347,14 +347,14 @@ static const CORBA::Long _oc_PortableServer_LifespanPolicy[] =
   38, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f4c), ACE_NTOHL (0x69666573), ACE_NTOHL (0x70616e50), ACE_NTOHL (0x6f6c6963), ACE_NTOHL (0x793a312e), ACE_NTOHL (0x3000fdfd),  // repository ID = IDL:PortableServer/LifespanPolicy:1.0
   15, ACE_NTOHL (0x4c696665), ACE_NTOHL (0x7370616e), ACE_NTOHL (0x506f6c69), ACE_NTOHL (0x637900fd),  // name = LifespanPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_LifespanPolicy (CORBA::tk_objref,
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_LifespanPolicy (CORBA::tk_objref,
                                                               sizeof
                                                               (_oc_PortableServer_LifespanPolicy), 
                                                               (char *)
                                                               &_oc_PortableServer_LifespanPolicy, 
                                                               0,
                                                               sizeof (PortableServer::LifespanPolicy));
-CORBA::TypeCode_ptr PortableServer::_tc_LifespanPolicy = &_tc__tc_PortableServer_LifespanPolicy;
+CORBA::TypeCode_ptr PortableServer::_tc_LifespanPolicy = &_tc_TAO_tc_PortableServer_LifespanPolicy;
 
 
 static const CORBA::Long _oc_PortableServer_IdUniquenessPolicyValue[] =
@@ -366,11 +366,11 @@ static const CORBA::Long _oc_PortableServer_IdUniquenessPolicyValue[] =
   10, ACE_NTOHL (0x554e4951), ACE_NTOHL (0x55455f49), ACE_NTOHL (0x4400fdfd),  // name = UNIQUE_ID
   12, ACE_NTOHL (0x4d554c54), ACE_NTOHL (0x49504c45), ACE_NTOHL (0x5f494400),  // name = MULTIPLE_ID
 };
-static CORBA::TypeCode _tc__tc_PortableServer_IdUniquenessPolicyValue
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdUniquenessPolicyValue
 (CORBA::tk_enum, sizeof (_oc_PortableServer_IdUniquenessPolicyValue), (char *)
  &_oc_PortableServer_IdUniquenessPolicyValue, 0, sizeof
  (PortableServer::IdUniquenessPolicyValue));
-CORBA::TypeCode_ptr PortableServer::_tc_IdUniquenessPolicyValue = &_tc__tc_PortableServer_IdUniquenessPolicyValue;
+CORBA::TypeCode_ptr PortableServer::_tc_IdUniquenessPolicyValue = &_tc_TAO_tc_PortableServer_IdUniquenessPolicyValue;
 
 PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_duplicate (PortableServer::IdUniquenessPolicy_ptr obj)
 {
@@ -440,11 +440,11 @@ static const CORBA::Long _oc_PortableServer_IdUniquenessPolicy[] =
   42, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f49), ACE_NTOHL (0x64556e69), ACE_NTOHL (0x7175656e), ACE_NTOHL (0x65737350), ACE_NTOHL (0x6f6c6963), ACE_NTOHL (0x793a312e), ACE_NTOHL (0x3000fdfd),  // repository ID = IDL:PortableServer/IdUniquenessPolicy:1.0
   19, ACE_NTOHL (0x4964556e), ACE_NTOHL (0x69717565), ACE_NTOHL (0x6e657373), ACE_NTOHL (0x506f6c69), ACE_NTOHL (0x637900fd),  // name = IdUniquenessPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_IdUniquenessPolicy
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdUniquenessPolicy
 (CORBA::tk_objref, sizeof (_oc_PortableServer_IdUniquenessPolicy), (char *)
  &_oc_PortableServer_IdUniquenessPolicy, 0, 
  sizeof (PortableServer::IdUniquenessPolicy));
-CORBA::TypeCode_ptr PortableServer::_tc_IdUniquenessPolicy = &_tc__tc_PortableServer_IdUniquenessPolicy;
+CORBA::TypeCode_ptr PortableServer::_tc_IdUniquenessPolicy = &_tc_TAO_tc_PortableServer_IdUniquenessPolicy;
 
 
 static const CORBA::Long _oc_PortableServer_IdAssignmentPolicyValue[] =
@@ -456,11 +456,11 @@ static const CORBA::Long _oc_PortableServer_IdAssignmentPolicyValue[] =
   8, ACE_NTOHL (0x55534552), ACE_NTOHL (0x5f494400),  // name = USER_ID
   10, ACE_NTOHL (0x53595354), ACE_NTOHL (0x454d5f49), ACE_NTOHL (0x4400fdfd),  // name = SYSTEM_ID
 };
-static CORBA::TypeCode _tc__tc_PortableServer_IdAssignmentPolicyValue
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdAssignmentPolicyValue
 (CORBA::tk_enum, sizeof (_oc_PortableServer_IdAssignmentPolicyValue), (char *)
  &_oc_PortableServer_IdAssignmentPolicyValue, 0,
  sizeof (PortableServer::IdAssignmentPolicyValue));
-CORBA::TypeCode_ptr PortableServer::_tc_IdAssignmentPolicyValue = &_tc__tc_PortableServer_IdAssignmentPolicyValue;
+CORBA::TypeCode_ptr PortableServer::_tc_IdAssignmentPolicyValue = &_tc_TAO_tc_PortableServer_IdAssignmentPolicyValue;
 
 PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_duplicate (PortableServer::IdAssignmentPolicy_ptr obj)
 {
@@ -530,12 +530,12 @@ static const CORBA::Long _oc_PortableServer_IdAssignmentPolicy[] =
   42, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f49), ACE_NTOHL (0x64417373), ACE_NTOHL (0x69676e6d), ACE_NTOHL (0x656e7450), ACE_NTOHL (0x6f6c6963), ACE_NTOHL (0x793a312e), ACE_NTOHL (0x3000fdfd),  // repository ID = IDL:PortableServer/IdAssignmentPolicy:1.0
   19, ACE_NTOHL (0x49644173), ACE_NTOHL (0x7369676e), ACE_NTOHL (0x6d656e74), ACE_NTOHL (0x506f6c69), ACE_NTOHL (0x637900fd),  // name = IdAssignmentPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_IdAssignmentPolicy
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdAssignmentPolicy
 (CORBA::tk_objref, sizeof (_oc_PortableServer_IdAssignmentPolicy), (char *)
  &_oc_PortableServer_IdAssignmentPolicy, 
  0,
  sizeof (PortableServer::IdAssignmentPolicy));
-CORBA::TypeCode_ptr PortableServer::_tc_IdAssignmentPolicy = &_tc__tc_PortableServer_IdAssignmentPolicy;
+CORBA::TypeCode_ptr PortableServer::_tc_IdAssignmentPolicy = &_tc_TAO_tc_PortableServer_IdAssignmentPolicy;
 
 
 static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicyValue[] =
@@ -547,11 +547,11 @@ static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicyValue[] =
   20, ACE_NTOHL (0x494d504c), ACE_NTOHL (0x49434954), ACE_NTOHL (0x5f414354), ACE_NTOHL (0x49564154), ACE_NTOHL (0x494f4e00),  // name = IMPLICIT_ACTIVATION
   23, ACE_NTOHL (0x4e4f5f49), ACE_NTOHL (0x4d504c49), ACE_NTOHL (0x4349545f), ACE_NTOHL (0x41435449), ACE_NTOHL (0x56415449), ACE_NTOHL (0x4f4e00fd),  // name = NO_IMPLICIT_ACTIVATION
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ImplicitActivationPolicyValue
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_ImplicitActivationPolicyValue
 (CORBA::tk_enum, sizeof (_oc_PortableServer_ImplicitActivationPolicyValue),
  (char *) &_oc_PortableServer_ImplicitActivationPolicyValue, 0, 
  sizeof (PortableServer::ImplicitActivationPolicyValue));
-CORBA::TypeCode_ptr PortableServer::_tc_ImplicitActivationPolicyValue = &_tc__tc_PortableServer_ImplicitActivationPolicyValue;
+CORBA::TypeCode_ptr PortableServer::_tc_ImplicitActivationPolicyValue = &_tc_TAO_tc_PortableServer_ImplicitActivationPolicyValue;
 
 PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_duplicate (PortableServer::ImplicitActivationPolicy_ptr obj)
 {
@@ -621,11 +621,11 @@ static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicy[] =
   48, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f49), ACE_NTOHL (0x6d706c69), ACE_NTOHL (0x63697441), ACE_NTOHL (0x63746976), ACE_NTOHL (0x6174696f), ACE_NTOHL (0x6e506f6c), ACE_NTOHL (0x6963793a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:PortableServer/ImplicitActivationPolicy:1.0
   25, ACE_NTOHL (0x496d706c), ACE_NTOHL (0x69636974), ACE_NTOHL (0x41637469), ACE_NTOHL (0x76617469), ACE_NTOHL (0x6f6e506f), ACE_NTOHL (0x6c696379), ACE_NTOHL (0xfdfdfd),  // name = ImplicitActivationPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ImplicitActivationPolicy
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_ImplicitActivationPolicy
 (CORBA::tk_objref, sizeof (_oc_PortableServer_ImplicitActivationPolicy), 
  (char *)&_oc_PortableServer_ImplicitActivationPolicy, 0, 
  sizeof (PortableServer::ImplicitActivationPolicy));
-CORBA::TypeCode_ptr PortableServer::_tc_ImplicitActivationPolicy = &_tc__tc_PortableServer_ImplicitActivationPolicy;
+CORBA::TypeCode_ptr PortableServer::_tc_ImplicitActivationPolicy = &_tc_TAO_tc_PortableServer_ImplicitActivationPolicy;
 
 
 static const CORBA::Long _oc_PortableServer_ServantRetentionPolicyValue[] =
@@ -637,11 +637,11 @@ static const CORBA::Long _oc_PortableServer_ServantRetentionPolicyValue[] =
   7, ACE_NTOHL (0x52455441), ACE_NTOHL (0x494e00fd),  // name = RETAIN
   11, ACE_NTOHL (0x4e4f4e5f), ACE_NTOHL (0x52455441), ACE_NTOHL (0x494e00fd),  // name = NON_RETAIN
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ServantRetentionPolicyValue
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantRetentionPolicyValue
 (CORBA::tk_enum, sizeof (_oc_PortableServer_ServantRetentionPolicyValue), 
  (char *) &_oc_PortableServer_ServantRetentionPolicyValue, 0, 
  sizeof (PortableServer::ServantRetentionPolicyValue));
-CORBA::TypeCode_ptr PortableServer::_tc_ServantRetentionPolicyValue = &_tc__tc_PortableServer_ServantRetentionPolicyValue;
+CORBA::TypeCode_ptr PortableServer::_tc_ServantRetentionPolicyValue = &_tc_TAO_tc_PortableServer_ServantRetentionPolicyValue;
 
 PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_duplicate (PortableServer::ServantRetentionPolicy_ptr obj)
 {
@@ -711,11 +711,11 @@ static const CORBA::Long _oc_PortableServer_ServantRetentionPolicy[] =
   46, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f53), ACE_NTOHL (0x65727661), ACE_NTOHL (0x6e745265), ACE_NTOHL (0x74656e74), ACE_NTOHL (0x696f6e50), ACE_NTOHL (0x6f6c6963), ACE_NTOHL (0x793a312e), ACE_NTOHL (0x3000fdfd),  // repository ID = IDL:PortableServer/ServantRetentionPolicy:1.0
   23, ACE_NTOHL (0x53657276), ACE_NTOHL (0x616e7452), ACE_NTOHL (0x6574656e), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x506f6c69), ACE_NTOHL (0x637900fd),  // name = ServantRetentionPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ServantRetentionPolicy
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantRetentionPolicy
 (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantRetentionPolicy), (char *)
  &_oc_PortableServer_ServantRetentionPolicy, 0, sizeof
  (PortableServer::ServantRetentionPolicy));
-CORBA::TypeCode_ptr PortableServer::_tc_ServantRetentionPolicy = &_tc__tc_PortableServer_ServantRetentionPolicy;
+CORBA::TypeCode_ptr PortableServer::_tc_ServantRetentionPolicy = &_tc_TAO_tc_PortableServer_ServantRetentionPolicy;
 
 
 static const CORBA::Long _oc_PortableServer_RequestProcessingPolicyValue[] =
@@ -728,11 +728,11 @@ static const CORBA::Long _oc_PortableServer_RequestProcessingPolicyValue[] =
   20, ACE_NTOHL (0x5553455f), ACE_NTOHL (0x44454641), ACE_NTOHL (0x554c545f), ACE_NTOHL (0x53455256), ACE_NTOHL (0x414e5400),  // name = USE_DEFAULT_SERVANT
   20, ACE_NTOHL (0x5553455f), ACE_NTOHL (0x53455256), ACE_NTOHL (0x414e545f), ACE_NTOHL (0x4d414e41), ACE_NTOHL (0x47455200),  // name = USE_SERVANT_MANAGER
 };
-static CORBA::TypeCode _tc__tc_PortableServer_RequestProcessingPolicyValue
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_RequestProcessingPolicyValue
 (CORBA::tk_enum, sizeof (_oc_PortableServer_RequestProcessingPolicyValue),
  (char *) &_oc_PortableServer_RequestProcessingPolicyValue, 0, sizeof
  (PortableServer::RequestProcessingPolicyValue));
-CORBA::TypeCode_ptr PortableServer::_tc_RequestProcessingPolicyValue = &_tc__tc_PortableServer_RequestProcessingPolicyValue;
+CORBA::TypeCode_ptr PortableServer::_tc_RequestProcessingPolicyValue = &_tc_TAO_tc_PortableServer_RequestProcessingPolicyValue;
 
 PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_duplicate (PortableServer::RequestProcessingPolicy_ptr obj)
 {
@@ -802,11 +802,11 @@ static const CORBA::Long _oc_PortableServer_RequestProcessingPolicy[] =
   47, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f52), ACE_NTOHL (0x65717565), ACE_NTOHL (0x73745072), ACE_NTOHL (0x6f636573), ACE_NTOHL (0x73696e67), ACE_NTOHL (0x506f6c69), ACE_NTOHL (0x63793a31), ACE_NTOHL (0x2e3000fd),  // repository ID = IDL:PortableServer/RequestProcessingPolicy:1.0
   24, ACE_NTOHL (0x52657175), ACE_NTOHL (0x65737450), ACE_NTOHL (0x726f6365), ACE_NTOHL (0x7373696e), ACE_NTOHL (0x67506f6c), ACE_NTOHL (0x69637900),  // name = RequestProcessingPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_RequestProcessingPolicy
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_RequestProcessingPolicy
 (CORBA::tk_objref, sizeof (_oc_PortableServer_RequestProcessingPolicy), 
  (char *) &_oc_PortableServer_RequestProcessingPolicy, 0, sizeof
  (PortableServer::RequestProcessingPolicy));
-CORBA::TypeCode_ptr PortableServer::_tc_RequestProcessingPolicy = &_tc__tc_PortableServer_RequestProcessingPolicy;
+CORBA::TypeCode_ptr PortableServer::_tc_RequestProcessingPolicy = &_tc_TAO_tc_PortableServer_RequestProcessingPolicy;
 
 // **************************************************
 //
@@ -824,11 +824,11 @@ static const CORBA::Long _oc_PortableServer_SynchronizationPolicyValue[] =
     10, ACE_NTOHL (0x4e554c4c), ACE_NTOHL (0x5f4c4f43), ACE_NTOHL (0x4b00fdfd),  // name = NULL_LOCK
     12, ACE_NTOHL (0x54485245), ACE_NTOHL (0x41445f4c), ACE_NTOHL (0x4f434b00),  // name = THREAD_LOCK
 };
-static CORBA::TypeCode _tc__tc_PortableServer_SynchronizationPolicyValue
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_SynchronizationPolicyValue
 (CORBA::tk_enum, sizeof (_oc_PortableServer_SynchronizationPolicyValue), 
  (char *) &_oc_PortableServer_SynchronizationPolicyValue, 0, sizeof
  (PortableServer::SynchronizationPolicyValue));
-CORBA::TypeCode_ptr PortableServer::_tc_SynchronizationPolicyValue = &_tc__tc_PortableServer_SynchronizationPolicyValue;
+CORBA::TypeCode_ptr PortableServer::_tc_SynchronizationPolicyValue = &_tc_TAO_tc_PortableServer_SynchronizationPolicyValue;
 
 PortableServer::SynchronizationPolicy_ptr PortableServer::SynchronizationPolicy::_duplicate (PortableServer::SynchronizationPolicy_ptr obj)
 {
@@ -898,11 +898,11 @@ static const CORBA::Long _oc_PortableServer_SynchronizationPolicy[] =
   45, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f53), ACE_NTOHL (0x796e6368), ACE_NTOHL (0x726f6e69), ACE_NTOHL (0x7a617469), ACE_NTOHL (0x6f6e506f), ACE_NTOHL (0x6c696379), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0xfdfdfd),  // repository ID = IDL:PortableServer/SynchronizationPolicy:1.0
   22, ACE_NTOHL (0x53796e63), ACE_NTOHL (0x68726f6e), ACE_NTOHL (0x697a6174), ACE_NTOHL (0x696f6e50), ACE_NTOHL (0x6f6c6963), ACE_NTOHL (0x7900fdfd),  // name = SynchronizationPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_SynchronizationPolicy
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_SynchronizationPolicy
 (CORBA::tk_objref, sizeof (_oc_PortableServer_SynchronizationPolicy), (char *)
  &_oc_PortableServer_SynchronizationPolicy, 0, sizeof
  (PortableServer::SynchronizationPolicy));
-CORBA::TypeCode_ptr PortableServer::_tc_SynchronizationPolicy = &_tc__tc_PortableServer_SynchronizationPolicy;
+CORBA::TypeCode_ptr PortableServer::_tc_SynchronizationPolicy = &_tc_TAO_tc_PortableServer_SynchronizationPolicy;
 
 PortableServer::POAManager_ptr PortableServer::POAManager::_duplicate (PortableServer::POAManager_ptr obj)
 {
@@ -1028,11 +1028,11 @@ static const CORBA::Long _oc_PortableServer_POAManager_AdapterInactive[] =
   16, ACE_NTOHL (0x41646170), ACE_NTOHL (0x74657249), ACE_NTOHL (0x6e616374), ACE_NTOHL (0x69766500),  // name = AdapterInactive
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POAManager_AdapterInactive
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager_AdapterInactive
 (CORBA::tk_except, sizeof (_oc_PortableServer_POAManager_AdapterInactive),
  (char *) &_oc_PortableServer_POAManager_AdapterInactive, 0, sizeof
  (PortableServer::POAManager::AdapterInactive));
-CORBA::TypeCode_ptr PortableServer::POAManager::_tc_AdapterInactive = &_tc__tc_PortableServer_POAManager_AdapterInactive;
+CORBA::TypeCode_ptr PortableServer::POAManager::_tc_AdapterInactive = &_tc_TAO_tc_PortableServer_POAManager_AdapterInactive;
 
 CORBA::Boolean PortableServer::POAManager::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
@@ -1050,13 +1050,13 @@ static const CORBA::Long _oc_PortableServer_POAManager[] =
   34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f50), ACE_NTOHL (0x4f414d61), ACE_NTOHL (0x6e616765), ACE_NTOHL (0x723a312e), ACE_NTOHL (0x3000fdfd),  // repository ID = IDL:PortableServer/POAManager:1.0
   11, ACE_NTOHL (0x504f414d), ACE_NTOHL (0x616e6167), ACE_NTOHL (0x657200fd),  // name = POAManager,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POAManager (CORBA::tk_objref,
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager (CORBA::tk_objref,
                                                           sizeof
                                                           (_oc_PortableServer_POAManager), 
                                                           (char *)
                                                           &_oc_PortableServer_POAManager, 0, 
                                                           sizeof (PortableServer::POAManager));
-CORBA::TypeCode_ptr PortableServer::_tc_POAManager = &_tc__tc_PortableServer_POAManager;
+CORBA::TypeCode_ptr PortableServer::_tc_POAManager = &_tc_TAO_tc_PortableServer_POAManager;
 
 PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_duplicate (PortableServer::AdapterActivator_ptr obj)
 {
@@ -1107,11 +1107,11 @@ static const CORBA::Long _oc_PortableServer_AdapterActivator[] =
   40, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f41), ACE_NTOHL (0x64617074), ACE_NTOHL (0x65724163), ACE_NTOHL (0x74697661), ACE_NTOHL (0x746f723a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:PortableServer/AdapterActivator:1.0
   17, ACE_NTOHL (0x41646170), ACE_NTOHL (0x74657241), ACE_NTOHL (0x63746976), ACE_NTOHL (0x61746f72), ACE_NTOHL (0xfdfdfd),  // name = AdapterActivator,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_AdapterActivator
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_AdapterActivator
 (CORBA::tk_objref, sizeof (_oc_PortableServer_AdapterActivator), (char *)
  &_oc_PortableServer_AdapterActivator, 0, sizeof
  (PortableServer::AdapterActivator));
-CORBA::TypeCode_ptr PortableServer::_tc_AdapterActivator = &_tc__tc_PortableServer_AdapterActivator;
+CORBA::TypeCode_ptr PortableServer::_tc_AdapterActivator = &_tc_TAO_tc_PortableServer_AdapterActivator;
 
 PortableServer::ServantManager_ptr PortableServer::ServantManager::_duplicate (PortableServer::ServantManager_ptr obj)
 {
@@ -1162,14 +1162,14 @@ static const CORBA::Long _oc_PortableServer_ServantManager[] =
   38, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f53), ACE_NTOHL (0x65727661), ACE_NTOHL (0x6e744d61), ACE_NTOHL (0x6e616765), ACE_NTOHL (0x723a312e), ACE_NTOHL (0x3000fdfd),  // repository ID = IDL:PortableServer/ServantManager:1.0
   15, ACE_NTOHL (0x53657276), ACE_NTOHL (0x616e744d), ACE_NTOHL (0x616e6167), ACE_NTOHL (0x657200fd),  // name = ServantManager,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ServantManager (CORBA::tk_objref,
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantManager (CORBA::tk_objref,
                                                               sizeof
                                                               (_oc_PortableServer_ServantManager), 
                                                               (char *)
                                                               &_oc_PortableServer_ServantManager, 
                                                               0,
                                                               sizeof (PortableServer::ServantManager));
-CORBA::TypeCode_ptr PortableServer::_tc_ServantManager = &_tc__tc_PortableServer_ServantManager;
+CORBA::TypeCode_ptr PortableServer::_tc_ServantManager = &_tc_TAO_tc_PortableServer_ServantManager;
 
 PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_duplicate (PortableServer::ServantActivator_ptr obj)
 {
@@ -1221,11 +1221,11 @@ static const CORBA::Long _oc_PortableServer_ServantActivator[] =
   40, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f53), ACE_NTOHL (0x65727661), ACE_NTOHL (0x6e744163), ACE_NTOHL (0x74697661), ACE_NTOHL (0x746f723a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:PortableServer/ServantActivator:1.0
   17, ACE_NTOHL (0x53657276), ACE_NTOHL (0x616e7441), ACE_NTOHL (0x63746976), ACE_NTOHL (0x61746f72), ACE_NTOHL (0xfdfdfd),  // name = ServantActivator,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ServantActivator
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantActivator
 (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantActivator), (char *)
  &_oc_PortableServer_ServantActivator, 0, sizeof
  (PortableServer::ServantActivator));
-CORBA::TypeCode_ptr PortableServer::_tc_ServantActivator = &_tc__tc_PortableServer_ServantActivator;
+CORBA::TypeCode_ptr PortableServer::_tc_ServantActivator = &_tc_TAO_tc_PortableServer_ServantActivator;
 
 PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_duplicate (PortableServer::ServantLocator_ptr obj)
 {
@@ -1277,14 +1277,14 @@ static const CORBA::Long _oc_PortableServer_ServantLocator[] =
   38, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f53), ACE_NTOHL (0x65727661), ACE_NTOHL (0x6e744c6f), ACE_NTOHL (0x6361746f), ACE_NTOHL (0x723a312e), ACE_NTOHL (0x3000fdfd),  // repository ID = IDL:PortableServer/ServantLocator:1.0
   15, ACE_NTOHL (0x53657276), ACE_NTOHL (0x616e744c), ACE_NTOHL (0x6f636174), ACE_NTOHL (0x6f7200fd),  // name = ServantLocator,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_ServantLocator (CORBA::tk_objref,
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantLocator (CORBA::tk_objref,
                                                               sizeof
                                                               (_oc_PortableServer_ServantLocator), 
                                                               (char *)
                                                               &_oc_PortableServer_ServantLocator,
                                                               0,
                                                               sizeof (PortableServer::ServantLocator)); 
-CORBA::TypeCode_ptr PortableServer::_tc_ServantLocator = &_tc__tc_PortableServer_ServantLocator;
+CORBA::TypeCode_ptr PortableServer::_tc_ServantLocator = &_tc_TAO_tc_PortableServer_ServantLocator;
 
 PortableServer::POA_ptr PortableServer::POA::_duplicate (PortableServer::POA_ptr obj)
 {
@@ -1409,11 +1409,11 @@ static const CORBA::Long _oc_PortableServer_POA_AdapterAlreadyExists[] =
   48, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f50), ACE_NTOHL (0x4f412f41), ACE_NTOHL (0x64617074), ACE_NTOHL (0x6572416c), ACE_NTOHL (0x72656164), ACE_NTOHL (0x79457869), ACE_NTOHL (0x7374733a), ACE_NTOHL (0x312e3000),  // repository ID = IDL:PortableServer/POA/AdapterAlreadyExists:1.0
   21, ACE_NTOHL (0x41646170), ACE_NTOHL (0x74657241), ACE_NTOHL (0x6c726561), ACE_NTOHL (0x64794578), ACE_NTOHL (0x69737473), ACE_NTOHL (0xfdfdfd),  // name = AdapterAlreadyExists
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_AdapterAlreadyExists
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists
 (CORBA::tk_except, sizeof (_oc_PortableServer_POA_AdapterAlreadyExists), 
  (char *) &_oc_PortableServer_POA_AdapterAlreadyExists, 0, sizeof
  (PortableServer::POA::AdapterAlreadyExists));
-CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterAlreadyExists = &_tc__tc_PortableServer_POA_AdapterAlreadyExists;
+CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterAlreadyExists = &_tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists;
 
 // default constructor
 PortableServer::POA::AdapterInactive::AdapterInactive (void)
@@ -1505,11 +1505,11 @@ static const CORBA::Long _oc_PortableServer_POA_AdapterInactive[] =
   43, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f50), ACE_NTOHL (0x4f412f41), ACE_NTOHL (0x64617074), ACE_NTOHL (0x6572496e), ACE_NTOHL (0x61637469), ACE_NTOHL (0x76653a31), ACE_NTOHL (0x2e3000fd),  // repository ID = IDL:PortableServer/POA/AdapterInactive:1.0
   16, ACE_NTOHL (0x41646170), ACE_NTOHL (0x74657249), ACE_NTOHL (0x6e616374), ACE_NTOHL (0x69766500),  // name = AdapterInactive
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_AdapterInactive
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterInactive
 (CORBA::tk_except, sizeof (_oc_PortableServer_POA_AdapterInactive), (char *)
  &_oc_PortableServer_POA_AdapterInactive, 0, sizeof
  (PortableServer::POA::AdapterInactive));
-CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterInactive = &_tc__tc_PortableServer_POA_AdapterInactive;
+CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterInactive = &_tc_TAO_tc_PortableServer_POA_AdapterInactive;
 
 // default constructor
 PortableServer::POA::AdapterNonExistent::AdapterNonExistent (void)
@@ -1602,11 +1602,11 @@ static const CORBA::Long _oc_PortableServer_POA_AdapterNonExistent[] =
   19, ACE_NTOHL (0x41646170), ACE_NTOHL (0x7465724e), ACE_NTOHL (0x6f6e4578), ACE_NTOHL (0x69737465), ACE_NTOHL (0x6e7400fd),  // name = AdapterNonExistent
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_AdapterNonExistent
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterNonExistent
 (CORBA::tk_except, sizeof (_oc_PortableServer_POA_AdapterNonExistent), (char *)
  &_oc_PortableServer_POA_AdapterNonExistent, 0, sizeof
  (PortableServer::POA::AdapterNonExistent));
-CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterNonExistent = &_tc__tc_PortableServer_POA_AdapterNonExistent;
+CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterNonExistent = &_tc_TAO_tc_PortableServer_POA_AdapterNonExistent;
 
 // default constructor
 PortableServer::POA::InvalidPolicy::InvalidPolicy (void)
@@ -1710,11 +1710,11 @@ static const CORBA::Long _oc_PortableServer_POA_InvalidPolicy[] =
   6, ACE_NTOHL (0x696e6465), ACE_NTOHL (0x7800fdfd),  // name = index
   CORBA::tk_ushort,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_InvalidPolicy
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_InvalidPolicy
 (CORBA::tk_except, sizeof (_oc_PortableServer_POA_InvalidPolicy), (char *)
  &_oc_PortableServer_POA_InvalidPolicy, 0, sizeof
  (PortableServer::POA::InvalidPolicy));
-CORBA::TypeCode_ptr PortableServer::POA::_tc_InvalidPolicy = &_tc__tc_PortableServer_POA_InvalidPolicy;
+CORBA::TypeCode_ptr PortableServer::POA::_tc_InvalidPolicy = &_tc_TAO_tc_PortableServer_POA_InvalidPolicy;
 
 // default constructor
 PortableServer::POA::NoServant::NoServant (void)
@@ -1807,13 +1807,13 @@ static const CORBA::Long _oc_PortableServer_POA_NoServant[] =
   10, ACE_NTOHL (0x4e6f5365), ACE_NTOHL (0x7276616e), ACE_NTOHL (0x7400fdfd),  // name = NoServant
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_NoServant (CORBA::tk_except,
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_NoServant (CORBA::tk_except,
                                                              sizeof
                                                              (_oc_PortableServer_POA_NoServant), 
                                                              (char *)
                                                              &_oc_PortableServer_POA_NoServant, 0,
                                                              sizeof (PortableServer::POA::NoServant));
-CORBA::TypeCode_ptr PortableServer::POA::_tc_NoServant = &_tc__tc_PortableServer_POA_NoServant;
+CORBA::TypeCode_ptr PortableServer::POA::_tc_NoServant = &_tc_TAO_tc_PortableServer_POA_NoServant;
 
 // default constructor
 PortableServer::POA::ObjectAlreadyActive::ObjectAlreadyActive (void)
@@ -1906,11 +1906,11 @@ static const CORBA::Long _oc_PortableServer_POA_ObjectAlreadyActive[] =
   20, ACE_NTOHL (0x4f626a65), ACE_NTOHL (0x6374416c), ACE_NTOHL (0x72656164), ACE_NTOHL (0x79416374), ACE_NTOHL (0x69766500),  // name = ObjectAlreadyActive
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_ObjectAlreadyActive
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ObjectAlreadyActive
 (CORBA::tk_except, sizeof (_oc_PortableServer_POA_ObjectAlreadyActive), 
  (char *) &_oc_PortableServer_POA_ObjectAlreadyActive, 0, sizeof
  (PortableServer::POA::ObjectAlreadyActive));
-CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectAlreadyActive = &_tc__tc_PortableServer_POA_ObjectAlreadyActive;
+CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectAlreadyActive = &_tc_TAO_tc_PortableServer_POA_ObjectAlreadyActive;
 
 // default constructor
 PortableServer::POA::ObjectNotActive::ObjectNotActive (void)
@@ -2003,11 +2003,11 @@ static const CORBA::Long _oc_PortableServer_POA_ObjectNotActive[] =
   16, ACE_NTOHL (0x4f626a65), ACE_NTOHL (0x63744e6f), ACE_NTOHL (0x74416374), ACE_NTOHL (0x69766500),  // name = ObjectNotActive
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_ObjectNotActive
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ObjectNotActive
 (CORBA::tk_except, sizeof (_oc_PortableServer_POA_ObjectNotActive), (char *)
  &_oc_PortableServer_POA_ObjectNotActive, 0, sizeof
  (PortableServer::POA::ObjectNotActive));
-CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectNotActive = &_tc__tc_PortableServer_POA_ObjectNotActive;
+CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectNotActive = &_tc_TAO_tc_PortableServer_POA_ObjectNotActive;
 
 // default constructor
 PortableServer::POA::ServantAlreadyActive::ServantAlreadyActive (void)
@@ -2100,11 +2100,11 @@ static const CORBA::Long _oc_PortableServer_POA_ServantAlreadyActive[] =
   21, ACE_NTOHL (0x53657276), ACE_NTOHL (0x616e7441), ACE_NTOHL (0x6c726561), ACE_NTOHL (0x64794163), ACE_NTOHL (0x74697665), ACE_NTOHL (0xfdfdfd),  // name = ServantAlreadyActive
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_ServantAlreadyActive
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ServantAlreadyActive
 (CORBA::tk_except, sizeof (_oc_PortableServer_POA_ServantAlreadyActive), 
  (char *) &_oc_PortableServer_POA_ServantAlreadyActive, 0, sizeof
  (PortableServer::POA::ServantAlreadyActive));
-CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantAlreadyActive = &_tc__tc_PortableServer_POA_ServantAlreadyActive;
+CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantAlreadyActive = &_tc_TAO_tc_PortableServer_POA_ServantAlreadyActive;
 
 // default constructor
 PortableServer::POA::ServantNotActive::ServantNotActive (void)
@@ -2197,11 +2197,11 @@ static const CORBA::Long _oc_PortableServer_POA_ServantNotActive[] =
   17, ACE_NTOHL (0x53657276), ACE_NTOHL (0x616e744e), ACE_NTOHL (0x6f744163), ACE_NTOHL (0x74697665), ACE_NTOHL (0xfdfdfd),  // name = ServantNotActive
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_ServantNotActive
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ServantNotActive
 (CORBA::tk_except, sizeof (_oc_PortableServer_POA_ServantNotActive), (char *)
  &_oc_PortableServer_POA_ServantNotActive, 0, sizeof
  (PortableServer::POA::ServantNotActive));
-CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantNotActive = &_tc__tc_PortableServer_POA_ServantNotActive;
+CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantNotActive = &_tc_TAO_tc_PortableServer_POA_ServantNotActive;
 
 // default constructor
 PortableServer::POA::WrongAdapter::WrongAdapter (void)
@@ -2294,11 +2294,11 @@ static const CORBA::Long _oc_PortableServer_POA_WrongAdapter[] =
   13, ACE_NTOHL (0x57726f6e), ACE_NTOHL (0x67416461), ACE_NTOHL (0x70746572), ACE_NTOHL (0xfdfdfd),  // name = WrongAdapter
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_WrongAdapter
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_WrongAdapter
 (CORBA::tk_except, sizeof (_oc_PortableServer_POA_WrongAdapter), (char *)
  &_oc_PortableServer_POA_WrongAdapter, 0, sizeof
  (PortableServer::POA::WrongAdapter));
-CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongAdapter = &_tc__tc_PortableServer_POA_WrongAdapter;
+CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongAdapter = &_tc_TAO_tc_PortableServer_POA_WrongAdapter;
 
 // default constructor
 PortableServer::POA::WrongPolicy::WrongPolicy (void)
@@ -2391,11 +2391,11 @@ static const CORBA::Long _oc_PortableServer_POA_WrongPolicy[] =
   12, ACE_NTOHL (0x57726f6e), ACE_NTOHL (0x67506f6c), ACE_NTOHL (0x69637900),  // name = WrongPolicy
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA_WrongPolicy
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_WrongPolicy
 (CORBA::tk_except, sizeof (_oc_PortableServer_POA_WrongPolicy), (char *)
  &_oc_PortableServer_POA_WrongPolicy, 0, sizeof
  (PortableServer::POA::WrongPolicy));
-CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongPolicy = &_tc__tc_PortableServer_POA_WrongPolicy;
+CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongPolicy = &_tc_TAO_tc_PortableServer_POA_WrongPolicy;
 
 CORBA::Boolean PortableServer::POA::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
@@ -2413,14 +2413,14 @@ static const CORBA::Long _oc_PortableServer_POA[] =
   27, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f50), ACE_NTOHL (0x4f413a31), ACE_NTOHL (0x2e3000fd),  // repository ID = IDL:PortableServer/POA:1.0
   4, ACE_NTOHL (0x504f4100),  // name = POA,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_POA (CORBA::tk_objref, sizeof
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA (CORBA::tk_objref, sizeof
                                                    (_oc_PortableServer_POA),
                                                    (char *)
                                                    &_oc_PortableServer_POA,
                                                    0,
                                                    sizeof
                                                    (PortableServer::POA));
-CORBA::TypeCode_ptr PortableServer::_tc_POA = &_tc__tc_PortableServer_POA;
+CORBA::TypeCode_ptr PortableServer::_tc_POA = &_tc_TAO_tc_PortableServer_POA;
 
 PortableServer::Current_ptr PortableServer::Current::_duplicate (PortableServer::Current_ptr obj)
 {
@@ -2545,11 +2545,11 @@ static const CORBA::Long _oc_PortableServer_Current_NoContext[] =
   10, ACE_NTOHL (0x4e6f436f), ACE_NTOHL (0x6e746578), ACE_NTOHL (0x7400fdfd),  // name = NoContext
   0, // member count
 };
-static CORBA::TypeCode _tc__tc_PortableServer_Current_NoContext
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_Current_NoContext
 (CORBA::tk_except, sizeof (_oc_PortableServer_Current_NoContext), (char *)
  &_oc_PortableServer_Current_NoContext, 0, sizeof
  (PortableServer::Current::NoContext));
-CORBA::TypeCode_ptr PortableServer::Current::_tc_NoContext = &_tc__tc_PortableServer_Current_NoContext;
+CORBA::TypeCode_ptr PortableServer::Current::_tc_NoContext = &_tc_TAO_tc_PortableServer_Current_NoContext;
 
 PortableServer::POA_ptr  PortableServer::Current::get_POA (CORBA::Environment &env)
 {
@@ -2594,11 +2594,11 @@ static const CORBA::Long _oc_PortableServer_Current[] =
   31, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f43), ACE_NTOHL (0x75727265), ACE_NTOHL (0x6e743a31), ACE_NTOHL (0x2e3000fd),  // repository ID = IDL:PortableServer/Current:1.0
   8, ACE_NTOHL (0x43757272), ACE_NTOHL (0x656e7400),  // name = Current,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_Current (CORBA::tk_objref, sizeof
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_Current (CORBA::tk_objref, sizeof
                                                        (_oc_PortableServer_Current), (char *) &_oc_PortableServer_Current, 
                                                        0,
                                                        sizeof (PortableServer::Current));
-CORBA::TypeCode_ptr PortableServer::_tc_Current = &_tc__tc_PortableServer_Current;
+CORBA::TypeCode_ptr PortableServer::_tc_Current = &_tc_TAO_tc_PortableServer_Current;
 
 char *
 PortableServer::ObjectId_to_string (const PortableServer::ObjectId &id)

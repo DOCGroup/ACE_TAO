@@ -132,7 +132,7 @@ static const CORBA::Long _oc_CORBA_DynAny_Invalid[] =
   ACE_NTOHL (0x6c696400),   // name = Invalid
   0,                        // member count
 };
-static CORBA::TypeCode _tc__tc_CORBA_DynAny_Invalid (
+static CORBA::TypeCode _tc_TAO_tc_CORBA_DynAny_Invalid (
     CORBA::tk_except,
     sizeof (_oc_CORBA_DynAny_Invalid),
     (char *) &_oc_CORBA_DynAny_Invalid,
@@ -141,7 +141,7 @@ static CORBA::TypeCode _tc__tc_CORBA_DynAny_Invalid (
   );
 
 CORBA::TypeCode_ptr CORBA_DynAny::_tc_Invalid =
-  &_tc__tc_CORBA_DynAny_Invalid;
+  &_tc_TAO_tc_CORBA_DynAny_Invalid;
 
 // default constructor
 CORBA_DynAny::InvalidValue::InvalidValue (void)
@@ -216,7 +216,7 @@ static const CORBA::Long _oc_CORBA_DynAny_InvalidValue[] =
   ACE_NTOHL (0xfdfdfd),   // name = InvalidValue
   0,                      // member count
 };
-static CORBA::TypeCode _tc__tc_CORBA_DynAny_InvalidValue (
+static CORBA::TypeCode _tc_TAO_tc_CORBA_DynAny_InvalidValue (
     CORBA::tk_except,
     sizeof (_oc_CORBA_DynAny_InvalidValue),
     (char *) &_oc_CORBA_DynAny_InvalidValue,
@@ -225,7 +225,7 @@ static CORBA::TypeCode _tc__tc_CORBA_DynAny_InvalidValue (
   );
 
 CORBA::TypeCode_ptr CORBA_DynAny::_tc_InvalidValue =
-  &_tc__tc_CORBA_DynAny_InvalidValue;
+  &_tc_TAO_tc_CORBA_DynAny_InvalidValue;
 
 // default constructor
 CORBA_DynAny::TypeMismatch::TypeMismatch (void)
@@ -299,7 +299,7 @@ static const CORBA::Long _oc_CORBA_DynAny_TypeMismatch[] =
   ACE_NTOHL (0xfdfdfd),     // name = TypeMismatch
   0,                        // member count
 };
-static CORBA::TypeCode _tc__tc_CORBA_DynAny_TypeMismatch (
+static CORBA::TypeCode _tc_TAO_tc_CORBA_DynAny_TypeMismatch (
     CORBA::tk_except,
     sizeof (_oc_CORBA_DynAny_TypeMismatch),
     (char *) &_oc_CORBA_DynAny_TypeMismatch,
@@ -308,7 +308,7 @@ static CORBA::TypeCode _tc__tc_CORBA_DynAny_TypeMismatch (
   );
 
 CORBA::TypeCode_ptr CORBA_DynAny::_tc_TypeMismatch =
-  &_tc__tc_CORBA_DynAny_TypeMismatch;
+  &_tc_TAO_tc_CORBA_DynAny_TypeMismatch;
 
 // default constructor
 CORBA_DynAny::InvalidSeq::InvalidSeq (void)
@@ -381,7 +381,7 @@ static const CORBA::Long _oc_CORBA_DynAny_InvalidSeq[] =
   ACE_NTOHL (0x657100fd),   // name = InvalidSeq
   0,                        // member count
 };
-static CORBA::TypeCode _tc__tc_CORBA_DynAny_InvalidSeq (
+static CORBA::TypeCode _tc_TAO_tc_CORBA_DynAny_InvalidSeq (
     CORBA::tk_except,
     sizeof (_oc_CORBA_DynAny_InvalidSeq),
     (char *) &_oc_CORBA_DynAny_InvalidSeq,
@@ -390,7 +390,7 @@ static CORBA::TypeCode _tc__tc_CORBA_DynAny_InvalidSeq (
   );
 
 CORBA::TypeCode_ptr CORBA_DynAny::_tc_InvalidSeq =
-  &_tc__tc_CORBA_DynAny_InvalidSeq;
+  &_tc_TAO_tc_CORBA_DynAny_InvalidSeq;
 
 CORBA::TypeCode_ptr
 CORBA_DynAny::type (CORBA::Environment &)
@@ -678,7 +678,7 @@ static const CORBA::Long _oc_CORBA_DynAny[] =
   ACE_NTOHL (0x44796e41),
   ACE_NTOHL (0x6e7900fd),   // name = CORBA_DynAny,
 };
-static CORBA::TypeCode _tc__tc_CORBA_DynAny (
+static CORBA::TypeCode _tc_TAO_tc_CORBA_DynAny (
     CORBA::tk_objref,
     sizeof (_oc_CORBA_DynAny),
     (char *) &_oc_CORBA_DynAny,
@@ -686,7 +686,7 @@ static CORBA::TypeCode _tc__tc_CORBA_DynAny (
     sizeof (CORBA_DynAny)
   );
 
-CORBA::TypeCode_ptr _tc_CORBA_DynAny = &_tc__tc_CORBA_DynAny;
+CORBA::TypeCode_ptr _tc_CORBA_DynAny = &_tc_TAO_tc_CORBA_DynAny;
 
 CORBA_DynEnum_ptr CORBA_DynEnum::_duplicate (CORBA_DynEnum_ptr obj)
 {
@@ -784,13 +784,13 @@ static const CORBA::Long _oc_CORBA_DynEnum[] =
   ACE_NTOHL (0x44796e45),
   ACE_NTOHL (0x6e756d00),   // name = CORBA_DynEnum,
 };
-static CORBA::TypeCode _tc__tc_CORBA_DynEnum (CORBA::tk_objref,
+static CORBA::TypeCode _tc_TAO_tc_CORBA_DynEnum (CORBA::tk_objref,
                                               sizeof (_oc_CORBA_DynEnum),
                                               (char *) &_oc_CORBA_DynEnum,
                                               0,
                                               sizeof (CORBA_DynEnum));
 
-CORBA::TypeCode_ptr _tc_CORBA_DynEnum = &_tc__tc_CORBA_DynEnum;
+CORBA::TypeCode_ptr _tc_CORBA_DynEnum = &_tc_TAO_tc_CORBA_DynEnum;
 
 static const CORBA::Long _oc_FieldName[] =
 {
@@ -808,13 +808,13 @@ static const CORBA::Long _oc_FieldName[] =
   CORBA::tk_string,
   0,                        // string length
 };
-static CORBA::TypeCode _tc__tc_FieldName (CORBA::tk_alias,
+static CORBA::TypeCode _tc_TAO_tc_FieldName (CORBA::tk_alias,
                                           sizeof (_oc_FieldName),
                                           (char *) &_oc_FieldName,
                                           0,
                                           sizeof (FieldName));
 
-CORBA::TypeCode_ptr _tc_FieldName = &_tc__tc_FieldName;
+CORBA::TypeCode_ptr _tc_FieldName = &_tc_TAO_tc_FieldName;
 
 static const CORBA::Long _oc_NameValuePair[] =
 {
@@ -855,13 +855,13 @@ static const CORBA::Long _oc_NameValuePair[] =
   CORBA::tk_any,
 };
 
-static CORBA::TypeCode _tc__tc_NameValuePair (CORBA::tk_struct,
+static CORBA::TypeCode _tc_TAO_tc_NameValuePair (CORBA::tk_struct,
                                               sizeof (_oc_NameValuePair),
                                               (char *) &_oc_NameValuePair,
                                               0,
                                               sizeof (NameValuePair));
 
-CORBA::TypeCode_ptr _tc_NameValuePair = &_tc__tc_NameValuePair;
+CORBA::TypeCode_ptr _tc_NameValuePair = &_tc_TAO_tc_NameValuePair;
 
 
 #if !defined (_NAMEVALUEPAIRSEQ_CS_)
@@ -974,14 +974,14 @@ static const CORBA::Long _oc_NameValuePairSeq[] =
   0,
 };
 
-static CORBA::TypeCode _tc__tc_NameValuePairSeq (
+static CORBA::TypeCode _tc_TAO_tc_NameValuePairSeq (
     CORBA::tk_alias,
     sizeof (_oc_NameValuePairSeq),
     (char *) &_oc_NameValuePairSeq,
     0,
     sizeof (NameValuePairSeq));
 
-CORBA::TypeCode_ptr _tc_NameValuePairSeq = &_tc__tc_NameValuePairSeq;
+CORBA::TypeCode_ptr _tc_NameValuePairSeq = &_tc_TAO_tc_NameValuePairSeq;
 
 CORBA_DynStruct_ptr CORBA_DynStruct::_duplicate (CORBA_DynStruct_ptr obj)
 {
@@ -1082,14 +1082,14 @@ static const CORBA::Long _oc_CORBA_DynStruct[] =
   ACE_NTOHL (0x7400fdfd),   // name = CORBA_DynStruct,
 };
 
-static CORBA::TypeCode _tc__tc_CORBA_DynStruct (
+static CORBA::TypeCode _tc_TAO_tc_CORBA_DynStruct (
     CORBA::tk_objref,
     sizeof (_oc_CORBA_DynStruct),
     (char *) &_oc_CORBA_DynStruct,
     0,
     sizeof (CORBA_DynStruct));
 
-CORBA::TypeCode_ptr _tc_CORBA_DynStruct = &_tc__tc_CORBA_DynStruct;
+CORBA::TypeCode_ptr _tc_CORBA_DynStruct = &_tc_TAO_tc_CORBA_DynStruct;
 
 CORBA_DynUnion_ptr CORBA_DynUnion::_duplicate (CORBA_DynUnion_ptr obj)
 {
@@ -1215,14 +1215,14 @@ static const CORBA::Long _oc_CORBA_DynUnion[] =
   ACE_NTOHL (0xfdfdfd),     // name = CORBA_DynUnion,
 };
 
-static CORBA::TypeCode _tc__tc_CORBA_DynUnion (
+static CORBA::TypeCode _tc_TAO_tc_CORBA_DynUnion (
     CORBA::tk_objref,
     sizeof (_oc_CORBA_DynUnion),
     (char *) &_oc_CORBA_DynUnion,
     0,
     sizeof (CORBA_DynUnion));
 
-CORBA::TypeCode_ptr _tc_CORBA_DynUnion = &_tc__tc_CORBA_DynUnion;
+CORBA::TypeCode_ptr _tc_CORBA_DynUnion = &_tc_TAO_tc_CORBA_DynUnion;
 
 
 #if !defined (_ANYSEQ_CS_)
@@ -1291,13 +1291,13 @@ static const CORBA::Long _oc_AnySeq[] =
   0,
 };
 
-static CORBA::TypeCode _tc__tc_AnySeq (CORBA::tk_alias,
+static CORBA::TypeCode _tc_TAO_tc_AnySeq (CORBA::tk_alias,
                                        sizeof (_oc_AnySeq),
                                        (char *) &_oc_AnySeq,
                                        0,
                                        sizeof (AnySeq));
 
-CORBA::TypeCode_ptr _tc_AnySeq = &_tc__tc_AnySeq;
+CORBA::TypeCode_ptr _tc_AnySeq = &_tc_TAO_tc_AnySeq;
 
 CORBA_DynSequence_ptr CORBA_DynSequence::_duplicate (
     CORBA_DynSequence_ptr obj
@@ -1400,7 +1400,7 @@ static const CORBA::Long _oc_CORBA_DynSequence[] =
   ACE_NTOHL (0x6e636500),  // name = CORBA_DynSequence,
 };
 
-static CORBA::TypeCode _tc__tc_CORBA_DynSequence (
+static CORBA::TypeCode _tc_TAO_tc_CORBA_DynSequence (
     CORBA::tk_objref,
     sizeof (_oc_CORBA_DynSequence),
     (char *) &_oc_CORBA_DynSequence,
@@ -1408,7 +1408,7 @@ static CORBA::TypeCode _tc__tc_CORBA_DynSequence (
     sizeof (CORBA_DynSequence));
 
 CORBA::TypeCode_ptr _tc_CORBA_DynSequence =
-  &_tc__tc_CORBA_DynSequence;
+  &_tc_TAO_tc_CORBA_DynSequence;
 
 CORBA_DynArray_ptr CORBA_DynArray::_duplicate (CORBA_DynArray_ptr obj)
 {
@@ -1496,7 +1496,7 @@ static const CORBA::Long _oc_CORBA_DynArray[] =
   ACE_NTOHL (0xfdfdfd),     // name = CORBA_DynArray,
 };
 
-static CORBA::TypeCode _tc__tc_CORBA_DynArray (
+static CORBA::TypeCode _tc_TAO_tc_CORBA_DynArray (
     CORBA::tk_objref,
     sizeof (_oc_CORBA_DynArray),
     (char *) &_oc_CORBA_DynArray,
@@ -1504,7 +1504,7 @@ static CORBA::TypeCode _tc__tc_CORBA_DynArray (
     sizeof (CORBA_DynArray));
 
 CORBA::TypeCode_ptr _tc_CORBA_DynArray =
-    &_tc__tc_CORBA_DynArray;
+    &_tc_TAO_tc_CORBA_DynArray;
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

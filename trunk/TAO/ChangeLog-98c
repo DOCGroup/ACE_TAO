@@ -1,3 +1,21 @@
+Tue Dec 29 14:29:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/try_macros.h: 
+	  Changed the definition of the TAO_TRY_ENV macro from __env to
+	  _tao_try_environment.
+
+	* tao/decode.cpp: 
+	  Removed another __ in a variable name.
+
+	* tao/ORB.cpp: 
+	* tao/DynAnyC.cpp: 
+	* tao/Object_KeyC.cpp: 
+	* tao/POAC.cpp: 
+	  Changed _tc__tc for _tc_TAO_tc
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Removed explicit use of __env.
+
 Tue Dec 29 15:18:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.46 released.

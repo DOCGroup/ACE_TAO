@@ -2124,16 +2124,22 @@ ACE_ES_Consumer_Rep_Timeout::execute (void* arg)
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_CONSUMER_REP_TIMEOUT_EXECUTE);
   if (this->receiving_events ())
     {
-      CORBA::Environment __env;
-      ACE_Time_Value tv = ACE_OS::gettimeofday ();
-      ORBSVCS_Time::Time_Value_to_TimeT (this->timeout_event_.header ().creation_time, tv);
-      correlation_->correlation_module_->push (this,
-                                               this->timeout_event_,
-                                               __env);
-      if (__env.exception () != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ACE_ES_Consumer_Rep_Timeout::execute: "
-                           "unexpected exception.\n"), -1);
+      TAO_TRY
+        {
+          ACE_Time_Value tv = ACE_OS::gettimeofday ();
+          ORBSVCS_Time::Time_Value_to_TimeT (this->timeout_event_.header ().creation_time, tv);
+          correlation_->correlation_module_->push (this,
+                                                   this->timeout_event_,
+                                                   TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
+      TAO_CATCH (CORBA::Exception, ex)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ACE_ES_Consumer_Rep_Timeout::execute: "
+                             "unexpected exception.\n"), -1);
+        }
+      TAO_ENDTRY;
     }
   return 0;
 }
