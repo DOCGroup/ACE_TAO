@@ -62,28 +62,21 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_TYPEDEF_AST_TYPEDEF_HH
 #define _AST_TYPEDEF_AST_TYPEDEF_HH
 
-// Representation of typedef declaration
-//
-// A typedef declaration is a renaming of a base type
-
-/*
-** DEPENDENCIES: ast_decl.hh, ast_type.hh, utl_scoped_name.hh, utl_strlist.hh
-**
-** USE: Included from ast.hh
-*/
+// Representation of typedef declaration.
+// A typedef declaration is a renaming of a base type.
 
 class TAO_IDL_FE_Export AST_Typedef : public virtual AST_Type
 {
 public:
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_Typedef ();
+  // Constructor(s) and destructor.
+  AST_Typedef (void);
 
   AST_Typedef (AST_Type *base_type,
                UTL_ScopedName *n,
@@ -93,19 +86,21 @@ public:
 
   virtual ~AST_Typedef (void);
 
-  // Data Accessors
-  AST_Type *base_type();
+  // Data Accessors.
+  AST_Type *base_type (void);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS1(AST_Typedef, AST_Type);
   DEF_NARROW_FROM_DECL(AST_Typedef);
 
-  // AST Dumping
-  virtual void          dump(ostream &o);
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
 private:
-  // Data
-  AST_Type              *pd_base_type;  // typedef base type
+  // Data.
+
+  AST_Type *pd_base_type;
+  // Typedef base type.
 };
 
 #endif           // _AST_TYPEDEF_AST_TYPEDEF_HH

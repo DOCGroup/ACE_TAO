@@ -166,7 +166,7 @@ AST_Module::fe_add_module (AST_Module *t)
         // flagged as an error.
 
 #ifndef ACE_HAS_USING_KEYWORD
-      if (referenced (d, t->local_name ())
+      if (this->referenced (d, t->local_name ())
           && !d->imported ()
           && !ACE_BIT_ENABLED (idl_global->compile_flags (), 
                                IDL_CF_NOWARNINGS))
@@ -230,7 +230,7 @@ AST_Module::fe_add_interface (AST_Interface *t)
   if ((predef = lookup_for_add (t, I_FALSE)) != 0) 
     {
       // Treat fwd declared interfaces specially
-      if (predef->node_type() == AST_Decl::NT_interface) 
+      if (predef->node_type () == AST_Decl::NT_interface) 
         {
           fwd = AST_Interface::narrow_from_decl (predef);
 
@@ -254,7 +254,7 @@ AST_Module::fe_add_interface (AST_Interface *t)
             }
           // OK, not illegal redef of forward declaration. Now check whether.
           // it has been referenced already.
-          else if (referenced (predef, t->local_name ())) 
+          else if (this->referenced (predef, t->local_name ())) 
             {
               idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
                                           t, 
@@ -382,7 +382,7 @@ AST_Module::fe_add_constant (AST_Constant *t)
           return 0;
         }
 
-      if (referenced (d, t->local_name ())) 
+      if (this->referenced (d, t->local_name ())) 
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
                                       t, 
@@ -428,7 +428,7 @@ AST_Module::fe_add_exception (AST_Exception *t)
           return 0;
         }
 
-      if (referenced  (d, t->local_name ())) 
+      if (this->referenced  (d, t->local_name ())) 
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
                                       t, 
@@ -566,7 +566,7 @@ AST_Module::fe_add_enum (AST_Enum *t)
           return 0;
         }
 
-      if (referenced(d, t->local_name ())) 
+      if (this->referenced (d, t->local_name ())) 
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
                                       t, 
@@ -606,7 +606,7 @@ AST_Module::fe_add_enum_val (AST_EnumVal *t)
   // Already defined and cannot be redefined? Or already used?
   if ((d = lookup_for_add(t, I_FALSE)) != 0) 
     {
-      if (!can_be_redefined(d)) 
+      if (!can_be_redefined (d)) 
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
                                       t, 
@@ -615,7 +615,7 @@ AST_Module::fe_add_enum_val (AST_EnumVal *t)
           return 0;
         }
 
-      if (this->referenced(d, t->local_name ())) 
+      if (this->referenced (d, t->local_name ())) 
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
                                       t, 
@@ -624,7 +624,7 @@ AST_Module::fe_add_enum_val (AST_EnumVal *t)
           return 0;
         }
 
-      if (t->has_ancestor(d)) 
+      if (t->has_ancestor (d)) 
         {
           idl_global->err ()->redefinition_in_scope (t, 
                                                      d);
@@ -670,7 +670,7 @@ AST_Module::fe_add_typedef (AST_Typedef *t)
           return 0;
         }
 
-      if (t->has_ancestor(d)) 
+      if (t->has_ancestor (d)) 
         {
           idl_global->err ()->redefinition_in_scope (t, 
                                                      d);
@@ -781,9 +781,9 @@ AST_Module::be_add_interface (AST_Interface *i,
 {
   // Add it to scope.
   this->add_to_scope (i, 
-                     ix);
+                      ix);
 
-  // Add it to set of locally referenced symbols
+  // Add it to set of locally referenced symbols.
   this->add_to_referenced (i, 
                            I_FALSE, 
                            i->local_name (), 

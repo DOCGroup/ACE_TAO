@@ -62,28 +62,22 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_typedef.cc - Implementation of class AST_Typedef
- *
- * AST_Typedef nodes represent an IDL typedef statement.
- * AST_Typedef is a subclass of AST_Decl (it is not a type,
- * but instead is a type renaming).
- * AST_Typedef nodes have a base type (a subclass of AST_Type)
- * and a name (an UTL_ScopedName).
- */
+// AST_Typedef nodes represent an IDL typedef statement.
+// AST_Typedef is a subclass of AST_Decl (it is not a type,
+// but instead is a type renaming).
+// AST_Typedef nodes have a base type (a subclass of AST_Type)
+// and a name (an UTL_ScopedName).
 
-#include        "idl.h"
-#include        "idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_typedef, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
-AST_Typedef::AST_Typedef ()
- : pd_base_type(NULL)
+// Constructor(s) and destructor.
+AST_Typedef::AST_Typedef (void)
+ : pd_base_type (0)
 {
 }
 
@@ -92,9 +86,12 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
                           UTL_StrList *p,
                           idl_bool local,
                           idl_bool abstract)
- : AST_Decl (AST_Decl::NT_typedef, n, p),
-   COMMON_Base (bt->is_local () || local, abstract),
-         pd_base_type(bt)
+ : AST_Decl (AST_Decl::NT_typedef, 
+             n, 
+             p),
+   COMMON_Base (bt->is_local () || local, 
+                abstract),
+   pd_base_type (bt)
 {
 }
 
@@ -102,46 +99,35 @@ AST_Typedef::~AST_Typedef (void)
 {
 }
 
-/*
- * Private operations
- */
+// Redefinition of inherited virtual operations.
 
-/*
- * Public operations
- */
-
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Dump this AST_Typedef node to the ostream o
- */
+// Dump this AST_Typedef node to the ostream o.
 void
-AST_Typedef::dump(ostream &o)
+AST_Typedef::dump (ostream &o)
 {
   if (this->is_local ())
-    o << "(local) ";
+    {
+      o << "(local) ";
+    }
   else
-    o << "(abstract) ";
+    {
+      o << "(abstract) ";
+    }
 
   o << "typedef ";
-  pd_base_type->dump(o);
+  this->pd_base_type->dump (o);
   o << " ";
-  local_name()->dump(o);
+  this->local_name ()->dump (o);
 }
 
-/*
- * Data accessors
- */
+// Data accessors.
 
 AST_Type *
-AST_Typedef::base_type()
+AST_Typedef::base_type (void)
 {
-  return pd_base_type;
+  return this->pd_base_type;
 }
 
-// Narrowing
+// Narrowing.
 IMPL_NARROW_METHODS1(AST_Typedef, AST_Type)
 IMPL_NARROW_FROM_DECL(AST_Typedef)
