@@ -5,6 +5,8 @@
 
 ACE_RCSID(ace, MEM_Connector, "$Id$")
 
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_Connector.i"
 #endif
@@ -104,3 +106,5 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
 
   return 0;
 }
+
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

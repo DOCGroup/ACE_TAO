@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+
 #include "ace/INET_Addr.h"
 
 class ACE_MEM_Acceptor;
@@ -133,6 +135,8 @@ public:
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_Stream.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 #include "ace/post.h"
 #endif /* ACE_MEM_STREAM_H */

@@ -3,6 +3,7 @@
 
 #include "ace/MEM_Stream.h"
 
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_Stream.i"
 #endif
@@ -32,3 +33,5 @@ ACE_MEM_Stream::close (void)
   // Close down the socket.
   return ACE_SOCK::close ();
 }
+
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
