@@ -422,7 +422,10 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
               // structures).
               if (pdp->value_size == 0)
                 {
-                  call.get_value (pdp->tc, ptr, ACE_TRY_ENV);
+                  (void) call.inp_stream ().decode (pdp->tc,
+                                                    ptr,
+                                                    0,
+                                                    ACE_TRY_ENV);
                   ACE_CHECK;
                 }
               else
@@ -435,7 +438,10 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
                   // assert (value_size == tc->size());
                   ACE_NEW (*(void **)ptr,
                            CORBA::Octet [pdp->value_size]);
-                  call.get_value (pdp->tc, *(void **)ptr, ACE_TRY_ENV);
+                  (void) call.inp_stream ().decode (pdp->tc,
+                                                    *(void**)ptr,
+                                                    0,
+                                                    ACE_TRY_ENV);
                   ACE_CHECK;
                 }
             }
@@ -478,9 +484,9 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
 
 void
 TAO_Stub::put_params (CORBA::Environment &ACE_TRY_ENV,
-                         const TAO_Call_Data *info,
-                         TAO_GIOP_Invocation &call,
-                         void** args)
+                      const TAO_Call_Data *info,
+                      TAO_GIOP_Invocation &call,
+                      void** args)
 {
   // Now, put all "in" and "inout" parameters into the request
   // message body.
@@ -491,6 +497,8 @@ TAO_Stub::put_params (CORBA::Environment &ACE_TRY_ENV,
   // needed later for allocating "out" memory, otherwise there's
   // just one indirection.
 
+  TAO_OutputCDR &cdr = call.out_stream ();
+
   const TAO_Param_Data *pdp = info->params;
   for (void** i = args;
        i != args + info->param_count;
@@ -500,14 +508,14 @@ TAO_Stub::put_params (CORBA::Environment &ACE_TRY_ENV,
 
       if (pdp->mode == PARAM_IN)
         {
-          call.put_param (pdp->tc, ptr, ACE_TRY_ENV);
+          (void) cdr.encode (pdp->tc, ptr, 0, ACE_TRY_ENV);
         }
       else if (pdp->mode == PARAM_INOUT)
         {
           if (pdp->value_size == 0)
-            call.put_param (pdp->tc, ptr, ACE_TRY_ENV);
+            (void) cdr.encode (pdp->tc, ptr, 0, ACE_TRY_ENV);
           else
-            call.put_param (pdp->tc, *(void **)ptr, ACE_TRY_ENV);
+            (void) cdr.encode (pdp->tc, *(void**)ptr, 0, ACE_TRY_ENV);
         }
       ACE_CHECK;
     }
@@ -519,12 +527,12 @@ TAO_Stub::put_params (CORBA::Environment &ACE_TRY_ENV,
 
 void
 TAO_Stub::do_dynamic_call (const char *opname,
-                              CORBA::Boolean is_roundtrip,
-                              CORBA::NVList_ptr args,
-                              CORBA::NamedValue_ptr result,
-                              CORBA::Flags,
-                              CORBA::ExceptionList &exceptions,
-                              CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::Boolean is_roundtrip,
+                           CORBA::NVList_ptr args,
+                           CORBA::NamedValue_ptr result,
+                           CORBA::Flags,
+                           CORBA::ExceptionList &exceptions,
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Synchronous_Cancellation_Required NOT_USED;
 
@@ -601,25 +609,28 @@ TAO_Stub::do_dynamic_call (const char *opname,
               // that contained this parameter, The
               // application should use the appropriate >>=
               // operator to retrieve the value
-              char *begin, *end;
+
               TAO_InputCDR temp (call.inp_stream ());
-              CORBA::TypeCode::traverse_status retval;
               CORBA::Any *any = result->value ();
 
-              begin = call.inp_stream ().rd_ptr ();
+              // @@ Again, this code does not work if the input CDR
+              //    stream is not a single message block.
+              char *begin = call.inp_stream ().rd_ptr ();
               // skip the parameter to get the ending position
-              retval = temp.skip (any->type_, ACE_TRY_ENV);
+              CORBA::TypeCode::traverse_status retval =
+                temp.skip (any->type_, ACE_TRY_ENV);
               ACE_CHECK;
 
               if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                 {
-                  end = temp.rd_ptr ();
+                  char *end = temp.rd_ptr ();
                   ACE_NEW (any->cdr_,
                            ACE_Message_Block (end - begin));
                   any->cdr_->wr_ptr (end - begin);
                   TAO_OutputCDR out (any->cdr_);
                   retval = out.append (any->type_,
-                                       &call.inp_stream (), ACE_TRY_ENV);
+                                       &call.inp_stream (),
+                                       ACE_TRY_ENV);
                   ACE_CHECK;
 
                   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -633,94 +644,16 @@ TAO_Stub::do_dynamic_call (const char *opname,
             {
               // the application had allocated the top level
               // storage. We simply retrieve the data
-              call.get_value (result->value ()->type_,
-                              result->value ()->value_, ACE_TRY_ENV);
+              (void) call.inp_stream ().decode (result->value ()->type_,
+                                                result->value ()->value_,
+                                                0,
+                                                ACE_TRY_ENV);
               ACE_CHECK;
             }
         }
 
-      for (u_int i = 0; i < args->count (); i++)
-        {
-          CORBA::NamedValue_ptr value = args->item (i, ACE_TRY_ENV);
-          ACE_CHECK;
-
-          CORBA::Any *any = value->value ();
-
-          if (value->flags () == CORBA::ARG_OUT
-              || value->flags () == CORBA::ARG_INOUT)
-            {
-              if (!any->value_)
-                {
-                  // storage was not allocated. In this case,
-                  // we simply grab the portion of the CDR
-                  // stream that contained this parameter, The
-                  // application should use the appropriate
-                  // >>= operator to retrieve the value
-                  char *begin, *end;
-                  TAO_InputCDR temp (call.inp_stream ());
-                  CORBA::TypeCode::traverse_status retval;
-
-                  begin = call.inp_stream ().rd_ptr ();
-                  // skip the parameter to get the ending position
-                  retval = temp.skip (any->type_,
-                                      ACE_TRY_ENV);
-                  ACE_CHECK;
-
-                  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                    {
-                      end = temp.rd_ptr ();
-                      ACE_NEW (any->cdr_,
-                               ACE_Message_Block (end - begin));
-                      any->cdr_->wr_ptr (end - begin);
-                      TAO_OutputCDR out (any->cdr_);
-
-                      retval = out.append (any->type_,
-                                           &call.inp_stream (),
-                                           ACE_TRY_ENV);
-                      ACE_CHECK;
-
-                      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                        {
-                          any->value_ = 0;
-                          any->any_owns_data_ = 0;
-                        }
-                    }
-                }
-              else
-                {
-                  // the application had allocated the top level
-                  // storage. We simply retrieve the data.
-                  // But first we must gracefully release the 'in'
-                  // part if our parameter is INOUT. As with the
-                  // SII counterpart above, this test is incomplete.
-                  if (value->flags () == CORBA::ARG_INOUT)
-                    {
-                      switch (any->type_->kind_)
-                        {
-                          case CORBA::tk_string:
-                            CORBA::string_free (*(char **) any->value_);
-                            break;
-                          case CORBA::tk_objref:
-                            break;
-                          case CORBA::tk_any:
-                            {
-                              CORBA_Any_ptr inside_any = (CORBA_Any *) any->value_;
-                              inside_any->free_value (ACE_TRY_ENV);
-                              ACE_CHECK;
-                            }
-                            break;
-                          default:
-                            break;
-                        }
-                    }
-
-                  call.get_value (any->type_,
-                                  (void *) any->value_,
-                                  ACE_TRY_ENV);
-                  ACE_CHECK;
-                }
-            }
-        }
+      args->_tao_incoming_cdr (call.inp_stream (),
+                               CORBA::ARG_OUT | CORBA::ARG_INOUT);
     }
   else
     {
@@ -747,7 +680,8 @@ TAO_Stub::do_dynamic_call (const char *opname,
             return; // Shouldn't happen
 
           if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+                                       CORBA::COMPLETED_MAYBE));
 
           break;
         }
@@ -759,35 +693,10 @@ TAO_Stub::put_params (TAO_GIOP_Invocation &call,
                       CORBA::NVList_ptr args,
                       CORBA::Environment &ACE_TRY_ENV)
 {
-  // Now, put all "in" and "inout" parameters into the request
-  // message body.
+  TAO_OutputCDR &cdr = call.out_stream ();
 
-  for (u_int i = 0; i < args->count (); i++)
-    {
-      CORBA::NamedValue_ptr value = args->item (i, ACE_TRY_ENV);
-      ACE_CHECK;
-
-      if (value->flags () == CORBA::ARG_IN
-          || value->flags () == CORBA::ARG_INOUT)
-        {
-          // If the Any owns the data, then we have allocated space.
-          if (value->value ()->any_owns_data_)
-            {
-              call.put_param (value->value ()->type_,
-                              value->value ()->value_, ACE_TRY_ENV);
-              ACE_CHECK;
-            }
-          else
-            {
-              TAO_OutputCDR &cdr = call.out_stream ();
-              TAO_InputCDR in (value->value ()->cdr_,
-                               TAO_ENCAP_BYTE_ORDER,
-                               this->orb_core_);
-              cdr.append (value->value ()->type_, &in, ACE_TRY_ENV);
-              ACE_CHECK;
-            }
-        }
-    }
+  // First try to use the optimized marshaling
+  args->_tao_encode (cdr, this->orb_core_, ACE_TRY_ENV);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

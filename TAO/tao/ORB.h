@@ -516,8 +516,8 @@ public:
                                        CORBA_StructMemberSeq &members,
                                        CORBA::Environment &ACE_TRY_ENV =
                                        TAO_default_environment ());
-                                      
-  
+
+
 #endif /*TAO_HAS_INTERFACE_REPOSITORY */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -867,19 +867,19 @@ operator>> (TAO_InputCDR &, CORBA::ORB::InvalidName &);
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
-extern TAO_Export ostream & 
+extern TAO_Export ostream &
 operator<< (ostream &, const CORBA::String_var &);
 extern TAO_Export istream &
 operator>> (istream &, CORBA::String_var &);
-extern TAO_Export ostream & 
+extern TAO_Export ostream &
 operator<< (ostream &, CORBA::String_out &);
 extern TAO_Export istream &
 operator>> (istream &, CORBA::String_out &);
-extern TAO_Export ostream & 
+extern TAO_Export ostream &
 operator<< (ostream &, const CORBA::WString_var &);
 extern TAO_Export istream &
 operator>> (istream &, CORBA::WString_var &);
-extern TAO_Export ostream & 
+extern TAO_Export ostream &
 operator<< (ostream &, CORBA::WString_out &);
 extern TAO_Export istream &
 operator>> (istream &, CORBA::WString_out &);

@@ -130,7 +130,7 @@ TAO_OutputCDR::encode (CORBA::TypeCode_ptr tc,
                        CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object 
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object
     (tc, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
@@ -251,7 +251,7 @@ TAO_InputCDR::decode (CORBA::TypeCode_ptr tc,
                       CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object 
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object
     (tc, ACE_TRY_ENV);
 
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
@@ -271,7 +271,7 @@ TAO_InputCDR::skip (CORBA::TypeCode_ptr tc,
                     CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Marshal_Object *mobj =
-    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object 
+    TAO_MARSHAL_FACTORY::instance ()->make_marshal_object
     (tc, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 

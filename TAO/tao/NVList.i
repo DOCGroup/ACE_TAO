@@ -240,13 +240,18 @@ CORBA_NamedValue_out::operator-> (void)
 ACE_INLINE
 CORBA_NVList::CORBA_NVList (void)
   : max_ (0),
-    refcount_ (1)
+    refcount_ (1),
+    incoming_ (0),
+    incoming_flag_ (0)
 {
 }
 
 ACE_INLINE CORBA::ULong
-CORBA_NVList::count (void) const
+CORBA_NVList::count (CORBA_Environment &ACE_TRY_ENV) const
 {
+  (ACE_const_cast(CORBA_NVList*,this))->compute_list (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   return this->max_;
 }
 

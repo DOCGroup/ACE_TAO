@@ -82,13 +82,6 @@ public:
   // they want to. All the synchronous invocations <idle> the
   // Transport, but asynchronous invocations do not do that.
 
-  void put_param (CORBA::TypeCode_ptr tc,
-                  void *value,
-                  CORBA_Environment &ACE_TRY_ENV =
-                        TAO_default_environment ());
-  // Encodes the value into the undelying CDR stream based on the
-  // TypeCode parameter.
-
   void prepare_header (CORBA::Boolean is_roundtrip,
               CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ())
@@ -231,12 +224,6 @@ public:
   // accomplishes the same task as the normal invoke except that
   // Exceptions are allocated and decoded here. This reduces the
   // footprint of the generated stubs.
-
-  void get_value (CORBA::TypeCode_ptr tc,
-                  void *value,
-                  CORBA_Environment &ACE_TRY_ENV =
-                        TAO_default_environment ());
-  // No CORBA::Context support (deprecated).
 
   TAO_InputCDR &inp_stream (void);
   // return the underlying input stream

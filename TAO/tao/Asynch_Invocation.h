@@ -27,7 +27,7 @@
 #  pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (TAO_HAS_CORBA_MESSAGING) 
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
 #  if defined (TAO_HAS_AMI_CALLBACK) || (TAO_HAS_AMI_POLLER)
 
@@ -66,11 +66,6 @@ public:
   //   TAO_InputCDR &inp_stream (void);
   //   // Return the underlying input stream.
   //
-  //   void get_value (CORBA::TypeCode_ptr tc,
-  //                   void *value,
-  //                   CORBA_Environment &TAO_IN_ENV =
-  //                         TAO_default_environment ());
-  //   // No CORBA::Context support (deprecated).
 
   const IOP::ServiceContextList& reply_service_info (void) const;
   // Accessor to the reply ServiceContextList.
