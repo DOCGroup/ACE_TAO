@@ -690,12 +690,14 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
             }
 	    break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS:
-          case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
           case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
           case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
           case TAO_CodeGen::TAO_OPERATION_RESULT_SS:
             break;
+          case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
+	    *os << "return 0;\n";
+	    break;
           case TAO_CodeGen::TAO_OPERATION_CH:
             {
               // to keep MSVC++ happy
