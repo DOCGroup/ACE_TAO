@@ -1017,7 +1017,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << be_nl
       << "CORBA::release (_tao_obj);" << be_nl
       << "if (_tao_env.exception ()) return 0; // narrow failed" << be_uidt_nl
-      << "}" << be_uidt_nl
+      << "}" << be_nl
+      << "return 1;" << be_uidt_nl
       << "}\n\n";
 
   os->indent ();
