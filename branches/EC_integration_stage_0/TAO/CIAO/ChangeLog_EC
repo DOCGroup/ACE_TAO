@@ -1,10 +1,23 @@
+Mon Oct 20 12:21:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/CIAO_CosNotify.cpp:
+	* ciao/CIAO_CosNotify.h
+	* ciao/CIAO_DirectEvent.cpp:
+	* ciao/CIAO_DirectEvent.h:
+	* ciao/CIAO_EventServiceBase.h: //@@ comments for George. 
+
+	  There is also one comment in the changelog
+
 Sat Oct 18 14:19:56 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         Added files:
-        * CIAO_CosNotify.cpp
-        * CIAO_CosNotify.h
-        * CIAO_CosNotify.idl 
-        * CIAO_DirectEvent.cpp
+
+        * ciao/CIAO_CosNotify.cpp
+        * ciao/CIAO_CosNotify.h
+        * ciao/CIAO_CosNotify.idl 
+        * ciao/CIAO_DirectEvent.cpp
+
+//@@ George, could you please add the path to the following files? 	
         * CIAO_DirectEvent.h
         * CIAO_DirectEvent.idl 
         * CIAO_EventServiceBase.h
@@ -34,10 +47,11 @@ Sat Oct 18 14:19:56 2003  George Edwards <g.edwards@vanderbilt.edu>
         * Container_Impl.inl 
         * Cookies.h
 
-          Changed container to dynamically link event service libraries. Added new
-          CIAO_Events project. Added method to CIAO::Container that provides an object
-          reference to the events interface. Removed map of EventServiceInfo structs from
-          CIAO::Container. Added a UUID attribute to CCM_Object.
+          Changed container to dynamically link event service
+          libraries. Added new CIAO_Events project. Added method to
+          CIAO::Container that provides an object reference to the
+          events interface. Removed map of EventServiceInfo structs
+          from CIAO::Container. Added a UUID attribute to CCM_Object.
 
         * Assembly_Deployer/Assembly_Impl.cpp 
         * Assembly_Deployer/Assembly_Impl.h 
@@ -47,8 +61,9 @@ Sat Oct 18 14:19:56 2003  George Edwards <g.edwards@vanderbilt.edu>
         * XML_Helpers/Assembly_Spec.h 
         * XML_Helpers/Assembly_Spec.inl
 
-          Moved glue code that establishes events connections into the Deployer.
-          Added a map of container references to CIAO::Assembly_Context.
+          Moved glue code that establishes events connections into the
+          Deployer. Added a map of container references to
+          CIAO::Assembly_Context. 
 
         * handcrafted/BasicSP_EC/BMClosedED/BMClosedEDE.idl 
         * handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp 
@@ -63,9 +78,10 @@ Sat Oct 18 14:19:56 2003  George Edwards <g.edwards@vanderbilt.edu>
         * handcrafted/BasicSP_EC/EC/EC_svnt.cpp 
         * handcrafted/BasicSP_EC/EC/EC_svnt.h 
 
-          Added a UUID attribute to CCM_Object. Moved glue code that establishes
-          events connections into the Deployer. Changed push_event to use the
-          component UUID with port name appended.
+          Added a UUID attribute to CCM_Object. Moved glue code that
+          establishes events connections into the Deployer. Changed
+          push_event to use the component UUID with port name
+          appended. 
 
         Removed files:
         * CIAO_Events.cpp

@@ -14,11 +14,13 @@
 #define CIAO_EVENTSERVICEBASE_H
 #include /**/ "ace/pre.h"
 
+#include "CIAO_EventsS.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CIAO_EventsS.h"
+
 
 namespace CIAO
 {
@@ -42,7 +44,7 @@ namespace CIAO
 
     /**
      * @fn void connect_event_supplier (Supplier_Config_ptr supplier_config)
-     * 
+     *
      * Connects an event supplier using the options specified by
      * @c supplier_config.
      */
@@ -54,7 +56,7 @@ namespace CIAO
 
     /**
      * @fn void connect_event_consumer (Consumer_Config_ptr consumer_config)
-     * 
+     *
      * Connects an event consumer using the options specified by
      * @c consumer_config.
      */
@@ -66,7 +68,7 @@ namespace CIAO
 
     /**
      * @fn void disconnect_event_supplier ()
-     * 
+     *
      * Disconnects the event supplier associated with this object.
      */
     virtual void disconnect_event_supplier (
@@ -78,7 +80,7 @@ namespace CIAO
 
     /**
      * @fn void disconnect_event_consumer (CONNECTION_ID consumer_id)
-     * 
+     *
      * Disconnects the event consumer with UUID @c consumer_id.
      */
     virtual void disconnect_event_consumer (
@@ -91,7 +93,7 @@ namespace CIAO
 
     /**
      * @fn void push_event (Components::EventBase * ev)
-     * 
+     *
      * Pushes event @c ev to all consumers.
      */
     virtual void push_event (
