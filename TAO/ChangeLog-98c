@@ -1,3 +1,10 @@
+1998-10-20  Seth Widoff  <swidoff@cs.cmu.edu>
+
+	* orbsvcs/Trading_Service/Trading_Service.{h,cpp}:
+	* docs/releasenotes/trader.html:
+	Added a command line argument -TSdumpior to dump the trader's ior
+	to a file. 
+
 Tue Oct 20 11:07:18 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
         * tests/Param_Test/param_test_i.cpp: A re-check in...
