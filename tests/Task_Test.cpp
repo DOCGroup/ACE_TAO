@@ -11,17 +11,18 @@
 // = DESCRIPTION
 //      This test program illustrates how the ACE barrier
 //      synchronization mechanisms work in conjunction with the
-//      <ACE_Task> and the <ACE_Thread_Manager>.  This also illustrates 
+//      <ACE_Task> and the <ACE_Thread_Manager>.  This also illustrates
 //      how the <ACE_Thread_Hook> mechanism works.
 //
 // = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and 
+//    Prashant Jain <pjain@cs.wustl.edu> and
 //    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
 #include "test_config.h"
 #include "ace/Task.h"
+#include "ace/Thread_Hook.h"
 
 ACE_RCSID(tests, Task_Test, "$Id$")
 

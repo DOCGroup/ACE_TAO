@@ -97,6 +97,10 @@ OBJFILES = \
         $(OBJDIR)\OS_Memory.obj \
         $(OBJDIR)\OS_String.obj \
         $(OBJDIR)\OS_TLI.obj \
+        $(OBJDIR)\Thread_Hook.obj \
+        $(OBJDIR)\Thread_Adapter.obj \
+        $(OBJDIR)\Thread_Exit.obj \
+        $(OBJDIR)\Thread_Control.obj \
 	$(OBJDIR)\Pair.obj \
 	$(OBJDIR)\Parse_Node.obj \
 	$(OBJDIR)\Pipe.obj \
