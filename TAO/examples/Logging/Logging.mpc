@@ -1,7 +1,4 @@
-project(*Service): namingexe {
-  exename = Logging_Service
-  comps  += LifeCycle
-
+project(*Service): namingexe, lifecycle {
   Source_Files {
     Logger_i.cpp
     Logging_Service.cpp
@@ -9,10 +6,7 @@ project(*Service): namingexe {
   }
 }
 
-project(*Test): namingexe {
-  exename = Logging_Test
-  comps  += LifeCycle
-
+project(*Test): namingexe, lifecycle {
   Source_Files {
     Logging_Test.cpp
     Logging_Test_i.cpp

@@ -1,4 +1,4 @@
-project(*Server): taoserver {
+project(*Server): taoexe, portableserver {
   requires += interceptors
   Source_Files {
     test_i.cpp
@@ -9,7 +9,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoclient {
+project(*Client): taoexe {
   requires += interceptors
   Source_Files {
     testC.cpp

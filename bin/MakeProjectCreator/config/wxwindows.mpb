@@ -1,0 +1,4 @@
+project {
+  requires += wxwindows
+  macros   += __WXMSW__
+}

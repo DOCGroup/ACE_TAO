@@ -1,4 +1,4 @@
-project(*Server): taoserver {
+project(*Server): taoexe, portableserver {
   Source_Files {
     Coordinator.cpp
     Session_Control.cpp
@@ -6,8 +6,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoserver {
-  exename = client
+project(*Client): taoexe, portableserver {
   Source_Files {
     Peer.cpp
     Session.cpp

@@ -1,8 +1,4 @@
-project(*st_server): taoserver, strategies, valuetype {
-  idlflags += -GH
-  exename   = st_server
-  requires += ami
-
+project(*st_server): taoexe, strategies, valuetype, amh, portableserver {
   Source_Files {
     st_server.cpp
     Base_Server.cpp
@@ -11,11 +7,7 @@ project(*st_server): taoserver, strategies, valuetype {
   }
 }
 
-project(*mt_server): taoserver, strategies, valuetype  {
-  idlflags += -GH
-  exename   = mt_server
-  requires += ami
-
+project(*mt_server): taoexe, strategies, valuetype, amh, portableserver  {
   Source_Files {
     mt_server.cpp
     MT_AMH_Server.cpp
@@ -25,10 +17,7 @@ project(*mt_server): taoserver, strategies, valuetype  {
   }
 }
 
-project(*client): taoclient, strategies, valuetype  {
-  idlflags += -GH
-  requires += ami
-
+project(*client): taoexe, strategies, valuetype, amh, portableserver  {
   Source_Files {
     Client_Task.cpp
     TestC.cpp

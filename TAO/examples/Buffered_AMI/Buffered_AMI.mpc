@@ -1,0 +1,12 @@
+project(*Server): messaging, taoexe, portableserver, ami {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }  
+}
+ 
+project(*Client): messaging, taoexe, portableserver, ami {
+  Source_Files {
+    client.cpp
+  }  
+}

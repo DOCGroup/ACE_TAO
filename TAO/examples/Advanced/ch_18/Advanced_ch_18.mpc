@@ -1,0 +1,12 @@
+project(*client) : orbsvcsexe, naming {
+  source_files {
+    client.cpp
+  }
+}
+
+project(*server) : orbsvcsexe, portableserver, naming {
+  source_files {
+    server.cpp
+    icp.cpp
+  }
+}

@@ -1,0 +1,4 @@
+project(*Lib) : taoexe, portableserver, event, naming  {
+  dynamicflags += QUOTER_COMMON_BUILD_DLL
+  idlflags     += -Wb,export_macro=QUOTER_COMMON_Export -Wb,export_include=quoter_common_export.h 
+}

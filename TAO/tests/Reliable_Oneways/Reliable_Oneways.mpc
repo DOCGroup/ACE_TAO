@@ -1,4 +1,4 @@
-project(*Server): messaging, taoserver, corba_messaging {
+project(*Server): messaging, taoexe, portableserver {
   Source_Files {
     Oneway_Receiver.cpp
     Shutdown_Helper.cpp
@@ -6,9 +6,7 @@ project(*Server): messaging, taoserver, corba_messaging {
   }
 }
 
-project(*Client): messaging, taoserver, corba_messaging {
-  exename = client
-
+project(*Client): messaging, taoexe, portableserver {
   Source_Files {
     TestC.cpp
     client.cpp

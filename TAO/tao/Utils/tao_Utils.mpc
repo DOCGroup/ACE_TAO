@@ -1,0 +1,8 @@
+project : taolib, portableserver {
+  sharedname = TAO_Utils
+  source_files {
+   ORB_Destroyer.cpp
+   Implicit_Deactivator.cpp
+   PolicyList_Destroyer.cpp
+  }
+}

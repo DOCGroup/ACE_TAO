@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- *  @file    Options.cpp
+ *  @file    Activator_Options.cpp
  *
  *  $Id$
  *
@@ -13,7 +13,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/ARGV.h"
 #include "ace/OS_NS_strings.h"
-
+#include "ace/Mutex.h"
 
 ACE_RCSID (ImplRepo_Service,
            Options,
@@ -617,7 +617,7 @@ Options::load_registry_options (char*& cmdline, ACE_ARGV& argv)
     // If there aren't any saved parameters, then that's ok.
     return 0;
   }
-  TCHAR tmpstr[4096];
+  ACE_TCHAR tmpstr[4096];
   DWORD sz = sizeof(tmpstr);
   DWORD type = 0;
   err = ACE_TEXT_RegQueryValueEx(key, "ORBInitOptions", 0, &type, 

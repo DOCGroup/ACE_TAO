@@ -1,4 +1,4 @@
-project(*balancer): taoserver {
+project(*balancer): taoexe, portableserver {
   avoids += minimum_corba repo
   exename = load_balancer
 
@@ -26,7 +26,7 @@ project(*server): taoserver {
   }
 }
 
-project(*client): taoserver {
+project(*client): taoclient, portableserver {
   avoids += minimum_corba repo
   exename = client
 

@@ -1,20 +1,22 @@
 project(*receiver) : aceexe, qos {
   exename = receiver
+  requires += qos
   Source_Files {
-    Fill_ACE_Qos.cpp
-    Qos_Signal_Handler.cpp
-    Qos_Util.cpp
+    Fill_ACE_QoS.cpp
+    QoS_Signal_Handler.cpp
+    QoS_Util.cpp
     receiver.cpp
-    Receiver_Qos_Event_Handler.cpp
+    Receiver_QoS_Event_Handler.cpp
   }
 }
 project(*sender) : aceexe, qos {
   exename = sender
+  requires += qos
   Source_Files {
-    Fill_ACE_Qos.cpp
-    Qos_Signal_Handler.cpp
-    Qos_Util.cpp
+    Fill_ACE_QoS.cpp
+    QoS_Signal_Handler.cpp
+    QoS_Util.cpp
     sender.cpp
-    Sender_Qos_Event_Handler.cpp
+    Sender_QoS_Event_Handler.cpp
   }
 }

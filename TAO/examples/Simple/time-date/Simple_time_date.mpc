@@ -1,0 +1,35 @@
+project(*lib): orbsvcslib, naming, portableserver {
+  sharedname    = Time_Date
+  // The svc conf files assume that the dll is in the current directory
+  libout        = .
+  idlflags     += -Wb,export_macro=ACE_Svc_Export -Wb,export_include=ace/svc_export.h
+  dynamicflags += ACE_BUILD_SVC_DLL Alt_Resource_Factory_BUILD_DLL 
+  Source_Files {
+    Time_Date.cpp
+    Time_Date_i.cpp
+  }
+  Header_Files {
+    Alt_Resource_Factory.h
+  }
+}
+
+project(*server): namingexe {
+  IDL_Files {
+  }
+  Source_Files {
+    server.cpp
+  }
+  header_files {
+  }
+}
+
+project(*client): namingexe {
+  after += *lib
+  libs  += Time_Date
+  Source_Files {
+    client.cpp
+    Time_Date_Client_i.cpp
+  }
+  idl_files {
+  }
+}

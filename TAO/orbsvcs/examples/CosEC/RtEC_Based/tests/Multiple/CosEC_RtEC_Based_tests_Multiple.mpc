@@ -1,0 +1,21 @@
+project(*Consumer) : orbsvcsexe, event, rtevent, rtsched {
+  after += CosEC_RtEC_Based_lib
+  includes += ../../lib
+  libs += CosEC_RtEC_Based
+  libpaths += ../../lib
+  source_files {
+    Consumer.cpp
+    Multiple.cpp
+  }
+}
+
+project(*Supplier) : orbsvcsexe, event, rtevent, rtsched {
+  after += CosEC_RtEC_Based_lib
+  includes += ../../lib
+  libs += CosEC_RtEC_Based
+  libpaths += ../../lib
+  source_files {
+    Supplier.cpp
+    Multiple.cpp
+  }
+}

@@ -1,0 +1,13 @@
+project(*client) : taoexe {
+  source_files {
+    client.cpp
+  }
+}
+
+project(*server) : taoexe, portableserver {
+  source_files {
+    server.cpp
+    Stock_Factory_i.cpp
+    Stock_i.cpp
+  }
+}

@@ -1,0 +1,4 @@
+project {
+  requires += mfc
+  macros   += _AFX_DLL ACE_HAS_MFC
+}

@@ -1,6 +1,4 @@
 project(*notifier): namingexe {
-  exename = notifier
-
   Source_Files {
     Event_Comm_i.cpp
     Notifier_Server.cpp
@@ -9,8 +7,6 @@ project(*notifier): namingexe {
 }
 
 project(*consumer): namingexe {
-  exename = consumer
-
   Source_Files {
     Consumer_Input_Handler.cpp
     Consumer_Handler.cpp
@@ -20,8 +16,6 @@ project(*consumer): namingexe {
 }
 
 project(*supplier): namingexe {
-  exename = supplier
-
   Source_Files {
     Event_Comm_i.cpp
     Supplier_Input_Handler.cpp

@@ -1,4 +1,4 @@
-project(*Server): messaging, taoserver, corba_messaging {
+project(*Server): messaging, taoexe, portableserver {
   Source_Files {
     Clock_Ticks.cpp
     Server_Peer.cpp
@@ -6,17 +6,13 @@ project(*Server): messaging, taoserver, corba_messaging {
   }
 }
 
-project(*Scavenger): messaging, taoserver, corba_messaging {
-  exename = scavenger
-
+project(*Scavenger): messaging, taoexe, portableserver {
   Source_Files {
     scavenger.cpp
   }
 }
 
-project(*Client): messaging, taoserver, corba_messaging {
-  exename = client
-
+project(*Client): messaging, taoexe, portableserver {
   Source_Files {
     Clock_Ticks.cpp
     Client_Peer.cpp

@@ -1,8 +1,14 @@
-project(CosNotification) : orbsvcslib, core, etcl, dynamicany, event {
+project(CosNotification) : orbsvcslib, core, etcl, dynamicany, portableserver {
   sharedname   = TAO_CosNotification
-  idlflags    += -Wb,export_macro=TAO_Notify_Export -Wb,export_include=Notify/notify_export.h
+  // Warning : The idlflags must match exactly those used in CosEvent, because
+  //           we don't know which project will actually generate the IDL. 
+  //           For this reason we also just use the event_export.h and macros for 
+  //           both services.
+  idlflags    += -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h
+
   // Set both DLL flags because of the shared idl files
   dynamicflags = TAO_NOTIFY_BUILD_DLL TAO_EVENT_BUILD_DLL
+
   tagchecks   += Notify
   // Add this include path for precompiled headers
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs

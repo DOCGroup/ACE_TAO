@@ -1,3 +1,4 @@
+// $Id$
 project(ImR_Locator) : orbsvcsexe, core, acexml, minimum_corba, svc_utils, iortable, strategies {
   exename  = ImplRepo_Service
   Source_Files {

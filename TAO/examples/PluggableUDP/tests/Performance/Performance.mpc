@@ -1,4 +1,4 @@
-project(*server): taoserver, strategies {
+project(*server): taoexe, portableserver, strategies {
   idlflags += -Sd -Sp
 
   Source_Files {
@@ -7,9 +7,8 @@ project(*server): taoserver, strategies {
   }
 }
 
-project(*client): taoserver, strategies {
+project(*client): taoexe, portableserver, strategies {
   idlflags += -Sd -Sp
-  exename   = client
 
   Source_Files {
     client.cpp

@@ -1,0 +1,15 @@
+project(*Client) : taoexe, portableserver {
+  idlflags -= -Sc
+  source_files {
+    client.cpp
+    testC.cpp
+  }
+}
+
+project(*Server) : taoexe, portableserver {
+  idlflags -= -Sc
+  source_files {
+    test_i.cpp
+    server.cpp
+  }
+}
