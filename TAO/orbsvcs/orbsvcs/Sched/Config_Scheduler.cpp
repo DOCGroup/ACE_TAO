@@ -50,12 +50,15 @@ ACE_Config_Scheduler::create (const char * entry_point,
   rt_info[0]->typical_execution_time = ORBSVCS_Time::zero ();
   rt_info[0]->cached_execution_time = ORBSVCS_Time::zero ();
   rt_info[0]->period = 0;
+  rt_info[0]->criticality = RtecScheduler::VERY_LOW_CRITICALITY;
   rt_info[0]->importance = RtecScheduler::VERY_LOW_IMPORTANCE;
   rt_info[0]->quantum = ORBSVCS_Time::zero ();
   rt_info[0]->threads = 0;
   rt_info[0]->priority = 0;
   rt_info[0]->preemption_subpriority = 0;
   rt_info[0]->preemption_priority = 0;
+  rt_info[0]->info_type = RtecScheduler::OPERATION;
+  rt_info[0]->volatile_token = 0;
 
   RtecScheduler::handle_t handle = -1;
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
