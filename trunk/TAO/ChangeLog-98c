@@ -1,3 +1,8 @@
+Sun Mar 22 13:05:15 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao: Added comments, made some modifications, and refined some
+	class definitions. Changes were made to a large number of files.
+
 Sun Mar 22 08:00:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Naming_Service.h: Renamed tao_util.h to TAO.h.

@@ -19,18 +19,18 @@ CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc)
   : type_ (tc),
     refcount_ (0)
 {
-  if (type_)
-    type_->AddRef ();
-  assert (type_ != 0);
+  if (this->type_)
+    this->type_->AddRef ();
+  assert (this->type_ != 0);
 }
 
 CORBA_Exception::CORBA_Exception (const CORBA_Exception &src)
   : type_ (src.type_),
     refcount_ (0)
 {
-  if (type_)
-    type_->AddRef ();
-  assert (type_ != 0);
+  if (this->type_)
+    this->type_->AddRef ();
+  assert (this->type_ != 0);
 }
 
 // NOTE:  It's this code, not anything defined in a subclass, which
@@ -39,8 +39,8 @@ CORBA_Exception::CORBA_Exception (const CORBA_Exception &src)
 
 CORBA_Exception::~CORBA_Exception (void)
 {
-  assert (refcount_ == 0);
-  assert (type_ != 0);
+  assert (this->refcount_ == 0);
+  assert (this->type_ != 0);
 
   assert (1 == 2);
 }
@@ -48,12 +48,12 @@ CORBA_Exception::~CORBA_Exception (void)
 CORBA_Exception &
 CORBA_Exception::operator = (const CORBA_Exception &src)
 {
-  if (type_)
-    type_->Release ();
-  type_ = src.type_;
-  if (type_)
-    type_->AddRef ();
-  assert (type_ != 0);
+  if (this->type_)
+    this->type_->Release ();
+  this->type_ = src.type_;
+  if (this->type_)
+    this->type_->AddRef ();
+  assert (this->type_ != 0);
 
   return *this;
 }
@@ -63,8 +63,8 @@ CORBA_Exception::_id (void) const
 {
   CORBA::Environment env;
 
-  if (type_)
-    return type_->id (env);
+  if (this->type_)
+    return this->type_->id (env);
   else
     return 0;
 }
@@ -72,7 +72,7 @@ CORBA_Exception::_id (void) const
 TAO_CONST CORBA::TypeCode_ptr
 CORBA_Exception::_type (void) const
 {
-  return type_;
+  return this->type_;
 }
 
 int
@@ -84,19 +84,19 @@ CORBA_Exception::_is_a (const char* repository_id) const
 CORBA::ULong
 CORBA_Exception::AddRef (void)
 {
-  return ++refcount_;
+  return ++this->refcount_;
 }
 
 CORBA::ULong
 CORBA_Exception::Release (void)
 {
-  refcount_--;
-  if (refcount_ != 0)
-    return refcount_;
+  this->refcount_--;
+  if (this->refcount_ != 0)
+    return this->refcount_;
 
   // CORBA::TypeCode_ptr                tc = type_->_duplicate ();
 
-  CORBA::Any free_it_all (type_, this, CORBA::B_TRUE);
+  CORBA::Any free_it_all (this->type_, this, CORBA::B_TRUE);
 
   // tc->Release ();
 
@@ -134,8 +134,8 @@ CORBA_SystemException::CORBA_SystemException (CORBA::TypeCode_ptr tc,
                                               CORBA::ULong code,
                                               CORBA::CompletionStatus completed)
   : CORBA_Exception (tc),
-    _minor (code),
-    _completed (completed)
+    minor_ (code),
+    completed_ (completed)
 {
 }
 
@@ -287,7 +287,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr tcp,
 // Declare static storage for these ... the buffer is "naturally"
 // aligned and overwritten.
 //
-// XXX this actually doesn't guarantee "natural" alignment, but
+// XXXTAO this actually doesn't guarantee "natural" alignment, but
 // it works that way in most systems.
 
 #define TAO_SYSTEM_EXCEPTION(name) \
@@ -303,9 +303,9 @@ TAO_Exceptions::init_standard_exceptions (CORBA::Environment &env)
   // Initialize the list of system exceptions, used when
   // unmarshaling.
   TAO_Exceptions::system_exceptions.length = 0;
-  TAO_Exceptions::system_exceptions.maximum = 
+  TAO_Exceptions::system_exceptions.maximum =
     TAO_Exceptions::NUM_SYS_EXCEPTIONS;
-  TAO_Exceptions::system_exceptions.buffer = 
+  TAO_Exceptions::system_exceptions.buffer =
     &TAO_Exceptions::sys_exceptions [0];
 
   // Initialize the typecodes.
@@ -399,14 +399,14 @@ CORBA::Environment::exception_type (void) const
   static char sysex_prefix [] = "IDL:omg.org/CORBA/";
   static char typecode_extra [] = "TypeCode/";
 
-  if (!_exception)
+  if (!this->exception_)
     return CORBA::NO_EXCEPTION;
 
   // All exceptions currently (CORBA 2.0) defined in the CORBA
   // scope are system exceptions ... except for a couple that
   // are related to TypeCodes.
 
-  const char *id = _exception->_id ();
+  const char *id = this->exception_->_id ();
 
   if (ACE_OS::strncmp (id, sysex_prefix, sizeof sysex_prefix - 1) == 0
       && ACE_OS::strncmp (id + sizeof sysex_prefix - 1,
@@ -423,21 +423,21 @@ void
 CORBA::Environment::print_exception (const char *info,
                                      FILE *) const
 {
-  const char *id = this->_exception->_id ();
+  const char *id = this->exception_->_id ();
 
   ACE_DEBUG ((LM_ERROR, "(%P|%t) EXCEPTION, %s\n", info));
 
-  // XXX get rid of this logic, and rely on some member function on
+  // XXXTAO get rid of this logic, and rely on some member function on
   // Exception to say if it's user or system exception.
 
   if (ACE_OS::strncmp ((char *) id, "IDL:omg.org/CORBA/", 10) == 0
       && ACE_OS::strncmp ((char *) id, "IDL:omg.org/CORBA/TypeCode/", 19) != 0)
     {
-      // XXX this should be a QueryInterface call instead.
+      // XXXTAO this should be a QueryInterface call instead.
       CORBA::SystemException *x2 =
-        (CORBA::SystemException *) this->_exception;
+        (CORBA::SystemException *) this->exception_;
 
-      // XXX there are a other few "user exceptions" in the CORBA
+      // XXXTAO there are a other few "user exceptions" in the CORBA
       // scope, they're not all standard/system exceptions ... really
       // need to either compare exhaustively against all those IDs
       // (yeech) or (preferably) to represent the exception type
@@ -455,7 +455,7 @@ CORBA::Environment::print_exception (const char *info,
                   "garbage"));
     }
   else
-    // XXX we can use the exception's typecode to dump all the data
+    // XXXTAO we can use the exception's typecode to dump all the data
     // held within it ...
 
     ACE_DEBUG ((LM_ERROR,

@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    Marshal.h
 //
@@ -13,7 +13,7 @@
 //
 // = AUTHOR
 //     Aniruddha S. Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_MARSHAL_H)
@@ -67,28 +67,12 @@ public:
 private:
   struct TAO_Marshal_Object_Entry
   {
-    TAO_Marshal_Object *obj_;  
+    TAO_Marshal_Object *obj_;
   };
 
   TAO_Marshal_Object_Entry mobj_table_[CORBA::TC_KIND_COUNT];
   // A table of specialized marshal objects indexed by the kind_ field
 
-#if 0
-  // define data members that are instances of various Marshal_Object classes
-  TAO_Marshal_Primitive *m_primitive_;
-  TAO_Marshal_Any       *m_any_;
-  TAO_Marshal_TypeCode  *m_typecode_;
-  TAO_Marshal_Principal *m_principal_;
-  TAO_Marshal_ObjRef    *m_objref_;
-  TAO_Marshal_Struct    *m_struct_;
-  TAO_Marshal_Union     *m_union_;
-  TAO_Marshal_String    *m_string_;
-  TAO_Marshal_Sequence  *m_sequence_;
-  TAO_Marshal_Array     *m_array_;
-  TAO_Marshal_Alias     *m_alias_;
-  TAO_Marshal_Except    *m_except_;
-  TAO_Marshal_WString   *m_wstring_;
-#endif /* 0 */
 };
 
 class TAO_Export TAO_Marshal
@@ -105,10 +89,11 @@ public:
 class TAO_Export TAO_Marshal_Object
 {
   // = TITLE
+  //   TAO_Marshal_Object
+  // = DESCRIPTION
   //    The Marshaling object that provides a common interface to the
   //    CDR object for marshaling different IDL data types
   //
-  // = DESCRIPTION
   //    Provides a set of virtual methods for encoding, decoding,
   //    deep_copying, and deep_freeing.
 public:
@@ -135,9 +120,10 @@ public:
 
 class TAO_Export TAO_Marshal_Primitive: public TAO_Marshal_Object
 {
-  // @@ (ANDY) Please fill in here and add comments to this class.
   // = TITLE
+  //   TAO_Marshal_Primitive
   // = DESCRIPTION
+  //   marshaling primitives
 public:
   TAO_Marshal_Primitive (void);
 
@@ -166,7 +152,9 @@ public:
 class TAO_Export TAO_Marshal_Any: public TAO_Marshal_Object
 {
   // = TITLE
+  //   TAO_Marshal_Any
   // = DESCRIPTION
+  //   Marshal an Any
 public:
   TAO_Marshal_Any (void);
 
@@ -195,7 +183,9 @@ public:
 class TAO_Export TAO_Marshal_TypeCode: public TAO_Marshal_Object
 {
   // = TITLE
+  //   TAO_Marshal_TypeCode
   // = DESCRIPTION
+  //   marshal a typecode
 public:
   TAO_Marshal_TypeCode (void);
 
@@ -224,7 +214,9 @@ public:
 class TAO_Export TAO_Marshal_Principal: public TAO_Marshal_Object
 {
   // = TITLE
+  //   TAO_Marshal_Principal
   // = DESCRIPTION
+  //   marshal a principal
 public:
   TAO_Marshal_Principal (void);
 
@@ -253,7 +245,9 @@ public:
 class TAO_Export TAO_Marshal_ObjRef: public TAO_Marshal_Object
 {
   // = TITLE
+  //   TAO_Marshal_ObjRef
   // = DESCRIPTION
+  //   marshal an object reference
 public:
   TAO_Marshal_ObjRef (void);
 
@@ -282,7 +276,9 @@ public:
 class TAO_Export TAO_Marshal_Struct: public TAO_Marshal_Object
 {
   // = TITLE
+  //   TAO_Marshal_Struct
   // = DESCRIPTION
+  //   marshal a struct
 public:
   TAO_Marshal_Struct (void);
 
@@ -311,7 +307,9 @@ public:
 class TAO_Export TAO_Marshal_Union: public TAO_Marshal_Object
 {
   // = TITLE
+  //   TAO_Marshal_Union
   // = DESCRIPTION
+  //   marshal a union
 public:
   TAO_Marshal_Union (void);
 
@@ -340,7 +338,9 @@ public:
 class TAO_Export TAO_Marshal_String: public TAO_Marshal_Object
 {
   // = TITLE
+  //   TAO_Marshal_String
   // = DESCRIPTION
+  //   marshal a string
 public:
   TAO_Marshal_String (void);
 
@@ -369,7 +369,9 @@ public:
 class TAO_Export TAO_Marshal_Sequence: public TAO_Marshal_Object
 {
   // = TITLE
+  //   TAO_Marshal_Sequence
   // = DESCRIPTION
+  //   marshal a sequence
 public:
   TAO_Marshal_Sequence (void);
 
@@ -398,7 +400,9 @@ public:
 class TAO_Export TAO_Marshal_Array: public TAO_Marshal_Object
 {
   // = TITLE
+  //   TAO_Marshal_Array
   // = DESCRIPTION
+  //   marshal an array
 public:
   TAO_Marshal_Array (void);
 
@@ -427,7 +431,9 @@ public:
 class TAO_Export TAO_Marshal_Alias: public TAO_Marshal_Object
 {
   // = TITLE
+  //   TAO_Marshal_Alias
   // = DESCRIPTION
+  //   marshal an alias
 public:
   TAO_Marshal_Alias (void);
 
@@ -456,7 +462,9 @@ public:
 class TAO_Export TAO_Marshal_Except: public TAO_Marshal_Object
 {
   // = TITLE
+  //   TAO_Marshal_Except
   // = DESCRIPTION
+  //   marshal an exception
 public:
   TAO_Marshal_Except (void);
   ~TAO_Marshal_Except (void);
@@ -484,7 +492,9 @@ public:
 class TAO_Export TAO_Marshal_WString : public TAO_Marshal_Object
 {
   // = TITLE
+  //   TAO_Marshal_WString
   // = DESCRIPTION
+  //   marshal a wide string
 public:
   TAO_Marshal_WString (void);
   ~TAO_Marshal_WString (void);

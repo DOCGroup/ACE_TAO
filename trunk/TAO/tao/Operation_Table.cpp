@@ -33,7 +33,7 @@ TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry
   // bind the operation name to its corresponding skeleton
   for (CORBA::ULong i=0; i < dbsize; i++)
     {
-      // XXXASG: what happens if bind fails ???
+      // XXXTAO (ASG): what happens if bind fails ???
       (void)this->bind (db[i].opname_, db[i].skel_ptr_);
     }
 }
@@ -84,7 +84,7 @@ TAO_Linear_OpTable::TAO_Linear_OpTable (const TAO_operation_db_entry *db,
   // skeleton.
 
   for (CORBA::ULong i=0; i < dbsize; i++)
-    // XXXASG: what happens if bind fails ???
+    // XXXTAO (ASG): what happens if bind fails ???
     (void)this->bind (db[i].opname_, db[i].skel_ptr_);
 }
 
@@ -156,7 +156,7 @@ TAO_Active_Demux_OpTable::TAO_Active_Demux_OpTable (const
   // database and bind the operation name to its corresponding
   // skeleton.
   for (CORBA::ULong i=0; i < dbsize; i++)
-    // XXXASG: what happens if bind fails ???
+    // XXXTAO (ASG): what happens if bind fails ???
     (void) this->bind (db[i].opname_, db[i].skel_ptr_);
 }
 

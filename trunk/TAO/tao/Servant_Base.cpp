@@ -62,7 +62,7 @@ TAO_ServantBase::_dispatch (CORBA::ServerRequest &req,
                             void *context,
                             CORBA::Environment &env)
 {
-  // XXXASG - we should check here if the call was for _non_existant, else
+  // XXXTAO (ASG) - we should check here if the call was for _non_existant, else
   // issue an error. For the time being we issue an error
   CORBA::String opname = req.op_name ();
   ACE_UNUSED_ARG (context);

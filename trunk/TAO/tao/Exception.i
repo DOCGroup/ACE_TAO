@@ -3,81 +3,80 @@
 ACE_INLINE void *
 CORBA_Exception::operator new (size_t,
                                const void *p)
-{ 
-  return (void *) p; 
+{
+  return (void *) p;
 }
 
 ACE_INLINE void *
-CORBA_Exception::operator new (size_t s) 
-{ 
-  return ::operator new (s); 
-}
-
-ACE_INLINE void 
-CORBA_Exception::operator delete (void *p) 
-{ 
-  ::operator delete (p); 
-}
-
-ACE_INLINE CORBA::ULong 
-CORBA_SystemException::minor (void) const 
-{ 
-  return _minor; 
-}
-
-ACE_INLINE void 
-CORBA_SystemException::minor (CORBA::ULong m) 
-{ 
-  _minor = m; 
-}
-
-ACE_INLINE CORBA::CompletionStatus 
-CORBA_SystemException::completion (void) const 
-{ 
-  return _completed; 
+CORBA_Exception::operator new (size_t s)
+{
+  return ::operator new (s);
 }
 
 ACE_INLINE void
-CORBA_SystemException::completion (CORBA::CompletionStatus c) 
-{ 
-  _completed = c; 
+CORBA_Exception::operator delete (void *p)
+{
+  ::operator delete (p);
 }
 
-ACE_INLINE 
+ACE_INLINE CORBA::ULong
+CORBA_SystemException::minor (void) const
+{
+  return this->minor_;
+}
+
+ACE_INLINE void
+CORBA_SystemException::minor (CORBA::ULong m)
+{
+  this->minor_ = m;
+}
+
+ACE_INLINE CORBA::CompletionStatus
+CORBA_SystemException::completion (void) const
+{
+  return this->completed_;
+}
+
+ACE_INLINE void
+CORBA_SystemException::completion (CORBA::CompletionStatus c)
+{
+  this->completed_ = c;
+}
+
+ACE_INLINE
 CORBA_Environment::CORBA_Environment (void)
-  : _exception (0) 
+  : exception_ (0)
 {
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 CORBA_Environment::clear (void)
 {
-  if (_exception)
+  if (this->exception_)
     {
-      _exception->Release ();
-      _exception = 0;	// XXX
+      this->exception_->Release ();
     }
 }
 
-ACE_INLINE 
-CORBA_Environment::~CORBA_Environment (void) 
-{ 
-  this->clear (); 
+ACE_INLINE
+CORBA_Environment::~CORBA_Environment (void)
+{
+  this->clear ();
 }
 
-ACE_INLINE 
-CORBA::Exception_ptr CORBA_Environment::exception (void) const 
-{ 
-  return _exception; 
+ACE_INLINE
+CORBA::Exception_ptr CORBA_Environment::exception (void) const
+{
+  return this->exception_;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 CORBA_Environment::exception (CORBA::Exception *ex)
 {
-  if (ex != _exception)
+  if (ex != this->exception_)
     {
       this->clear ();
-      _exception = ex;
-      _exception->AddRef ();
+      this->exception_ = ex;
+      this->exception_->AddRef ();
     }
 }

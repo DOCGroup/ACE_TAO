@@ -34,9 +34,11 @@
 // Descriptions of parameters.
 
 enum TAO_Param_Type
-  // = TITLE
-  // Parameter mode of a given parameter.
 {
+  // = TITLE
+  //   TAO_Param_Type
+  // =DESCRIPTION
+  // Parameter mode of a given parameter.
   PARAM_IN,
   PARAM_OUT,
   PARAM_INOUT,
@@ -44,10 +46,12 @@ enum TAO_Param_Type
 };
 
 struct TAO_Param_Data
+{
   // = TITLE
-  //   Description of a single parameter.
+  //   TAO_Param_Data
   //
   // = DESCRIPTION
+  //   Description of a single parameter.
   //
   //   If value_size is nonzero for OUT, INOUT, or RETURN parameters,
   //   it's (a) an indicator that the ORB returns a pointer-to-value
@@ -65,30 +69,33 @@ struct TAO_Param_Data
   //   is nonzero, the value passed to do_static_call() must be the address
   //   of a pointer.
 
-{
   CORBA::TypeCode_ptr tc;
-  // Type of param.
+  // TypeCode for the parameter
 
   TAO_Param_Type mode;
   // Its mode.
 
   size_t value_size;
-  // zero or tc->size ().
+  // zero or tc->size (). For SII, we always know its size since it is the IDL
+  // compiler which generates the stub code.
 };
 
 struct TAO_Call_Data
+{
   // = TITLE
+  //   TAO_Call_Data
+  //
+  // = DESCRIPTION
   //   Descriptions of operations, as used by the stub interpreter.
   //   Only interpretive marshaling/unmarshaling is used, and the
   //   stubs don't know what particular on-the-wire protocol is being
   //   used.
   //
-  // = DESCRIPTION
   //   When using C++ exceptions, many C++ compilers will require the
   //   use of compiled code throw the exception.  As binary standards
   //   for exception throwing evolve, it may become practical to
   //   interpretively throw exceptions.
-{
+
   const char *opname;
   // Operation name.
 
@@ -120,12 +127,15 @@ struct TAO_Call_Data
 };
 
 struct TAO_Skel_Entry
+{
   // = TITLE
+  //   TAO_Skel_Entry
+  //
+  // = DESCRIPTION
   //   Skeletons map "ServerRequest" generic signatures to the static
   //   call signature required by the implementation's methods.  table
   //   of these per implementation
   //
-  // = DESCRIPTION
   //   There are several optimizations that'd be desirable for use by
   //   "static skeletons", notably (a) passing of per-object data held
   //   by the OA so that the method doesn't need to look it up itself,
@@ -134,13 +144,21 @@ struct TAO_Skel_Entry
   //   "get_implementation".  This code is currently set up only for
   //   Dynamic Skeletons and bridging, for which none of those are
   //   real issues.
-{
+
   const TAO_Call_Data *op_descriptor;
+  // pointer to the calldata structure that holds information about all the
+  // parameters
+
   TAO_Skeleton impl_skeleton;
+  // skeleton corresponding to the operation
 };
 
 class TAO_Export STUB_Object : public TAO_IUnknown
+{
   // = TITLE
+  //   STUB_Object
+  //
+  // = DESCRIPTION
   //   Per-objref data includes the (protocol-specific) Profile, which
   //   is handled by placing it into a subclass of this type along
   //   with data that may be used in protocol-specific caching
@@ -152,11 +170,10 @@ class TAO_Export STUB_Object : public TAO_IUnknown
   //
   //   The stub and DII interpreter APIs are member functions of this
   //   type.
-{
 public:
   virtual void do_static_call (CORBA::Environment &env,
-                        const TAO_Call_Data *info,
-                        ...) = 0;
+                               const TAO_Call_Data *info,
+                               ...) = 0;
   // The "stub interpreter" method parameters are:
   //
   //    - env ... used for exception reporting
@@ -212,7 +229,7 @@ public:
 
   virtual CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
                                         CORBA::Environment &env) = 0;
-  // @@ (ANDY) Please comment me.
+  // check for equivalence
 
   STUB_Object (CORBA::String p = 0);
   // XXX All objref representations should know how to marshal

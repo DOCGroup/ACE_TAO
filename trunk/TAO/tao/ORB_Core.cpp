@@ -8,7 +8,7 @@
 #include "tao/TAO_Internal.h"
 #include "tao/Arg_Shifter.h"
 
-typedef ACE_TSS_Singleton<TAO_ORB_Core, ACE_SYNCH_MUTEX> 
+typedef ACE_TSS_Singleton<TAO_ORB_Core, ACE_SYNCH_MUTEX>
         TAO_ORB_CORE;
 
 TAO_ORB_Core::TAO_ORB_Core (void)
@@ -70,8 +70,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
   // as the ACE_Service_Config or the RootPOA.
 
   // Prepare a copy of the argument vector
-  // XXXASG - compiler doesn't like this
-  char **svc_config_argv; // @@ Should this be a data member?
+  char **svc_config_argv; // XXXTAO Should this be a data member?
   // Probably, but there's no object in which to scope it.
 
   int svc_config_argc = 0;
@@ -91,16 +90,16 @@ TAO_ORB_Core::init (int& argc, char** argv)
   // template sometime.
 
   // Name Service IOR string.
-  char *ns_ior = 0;             
+  char *ns_ior = 0;
 
   // Name Service port #.
-  u_short ns_port = 0;   
+  u_short ns_port = 0;
 
   // Trading Service IOR string.
-  char *ts_ior = 0;             
+  char *ts_ior = 0;
 
   // Trading Service port #.
-  u_short ts_port = 0;   
+  u_short ts_port = 0;
 
   // Buffer sizes for kernel socket buffers
   size_t rcv_sock_size = 0;
@@ -392,7 +391,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
     this->orb_params ()->trading_service_ior (ts_ior);
   if (ts_port != 0)
     this->orb_params ()->trading_service_port (ts_port);
-  if (rcv_sock_size != 0)    
+  if (rcv_sock_size != 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
   if (snd_sock_size != 0)
     this->orb_params ()->sock_rcvbuf_size (snd_sock_size);
@@ -731,8 +730,8 @@ TAO_Resource_Factory::parse_args (int argc, char **argv)
   ACE_TRACE ("TAO_Default_Server_Strategy_Factory::parse_args");
   // This table shows the arguments that are parsed with their valid
   // combinations.
-  // 
-  //   ORB      POA    comments        
+  //
+  //   ORB      POA    comments
   // +-------+-------+-----------------+
   // | TSS   | TSS   | if ORB==TSS     |
   // |       |       | then POA=TSS    |
@@ -783,23 +782,23 @@ TAO_Resource_Factory::parse_args (int argc, char **argv)
        (local_poa_source == TAO_TSS) )
     return -1;
 
-  // make poa=tss the default, if ORB is tss and the user didn't 
+  // make poa=tss the default, if ORB is tss and the user didn't
   // specify a value.
   if ( (local_resource_source == TAO_TSS) &&
        (local_poa_source      == -1) )
     local_poa_source = TAO_TSS;
 
   // update the object data members.
-  if (local_resource_source != -1) 
+  if (local_resource_source != -1)
     this->resource_source_ = local_resource_source;
-  if (local_poa_source != -1) 
-    this->poa_source_      = local_poa_source; 
+  if (local_poa_source != -1)
+    this->poa_source_      = local_poa_source;
 
   // Don't allow a global ORB and a tss POA.
   if ( (this->resource_source_ == TAO_GLOBAL) &&
        (this->poa_source_      == TAO_TSS) )
-    return -1;  
-  
+    return -1;
+
   return 0;
 }
 

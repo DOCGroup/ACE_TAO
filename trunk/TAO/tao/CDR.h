@@ -37,7 +37,7 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems, Inc.
-//     Many enhancements added by Andy Gokhake and Carlos O'Ryan.
+//     Many enhancements added by Aniruddha Gokhale and Carlos O'Ryan.
 //
 // ============================================================================
 

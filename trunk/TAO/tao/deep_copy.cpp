@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    deep_copy.cpp
 //
@@ -20,9 +20,9 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
-//     and 
+//     and
 //     Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include "tao/corba.h"
@@ -124,19 +124,14 @@ TAO_Marshal_Primitive::deep_copy (CORBA::TypeCode_ptr  tc,
                                   const void *dest,
                                   CORBA::Environment &env)
 {
-  if (tc) 
+  if (tc)
     {
       CORBA::TCKind mykind_ = tc->kind (env);
 
       if (env.exception () == 0)
         {
-          switch (mykind_) 
+          switch (mykind_)
             {
-            case CORBA::tk_null:
-            case CORBA::tk_void:
-	      // @@ I assume this should be an error...
-              break;
-      
             case CORBA::tk_char:
             case CORBA::tk_octet:
               *(CORBA::Octet *) dest = *(CORBA::Octet *) source;
@@ -206,14 +201,14 @@ TAO_Marshal_Principal::deep_copy (CORBA::TypeCode_ptr  tc,
                       CORBA::TypeCode::TRAVERSE_STOP);
 
       CORBA::Principal_ptr dst = *(CORBA::Principal_ptr *) dest;
-        
+
       if (dst)
         {
           // Principals are just opaque IDs ... copy them
           assert (src->id.length <= UINT_MAX);
           dst->id.length = dst->id.maximum = src->id.length;
 
-          if (dst->id.length > 0) 
+          if (dst->id.length > 0)
             {
               ACE_NEW_RETURN (dst->id.buffer,
                               CORBA::Octet [(u_int) dst->id.length],
@@ -231,7 +226,7 @@ TAO_Marshal_Principal::deep_copy (CORBA::TypeCode_ptr  tc,
                   dmsg ("TAO_Marshal_Principal::deep_copy detected error");
                   return CORBA::TypeCode::TRAVERSE_STOP;
                 }
-            } 
+            }
           else
             {
               dst->id.buffer = 0;
@@ -245,7 +240,7 @@ TAO_Marshal_Principal::deep_copy (CORBA::TypeCode_ptr  tc,
           return CORBA::TypeCode::TRAVERSE_STOP;
         }
     }
-  else 
+  else
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE) );
       dmsg ("TAO_Marshal_Primitive::deep_copy detected error");
@@ -371,19 +366,19 @@ TAO_Marshal_Struct::deep_copy (CORBA::TypeCode_ptr  tc,
                             } // end of switch
                           source = (char *) source + size;
                           dest = (char *) dest + size;
-                        }  
-                      else  // exception computing alignment 
+                        }
+                      else  // exception computing alignment
                         {
                           dmsg ("TAO_Marshal_Struct::deep_copy detected error");
                           return CORBA::TypeCode::TRAVERSE_STOP;
                         }
-                    } 
-                  else  // exception computing size 
+                    }
+                  else  // exception computing size
                     {
                       dmsg ("TAO_Marshal_Struct::deep_copy detected error");
                       return CORBA::TypeCode::TRAVERSE_STOP;
                     }
-                } 
+                }
               else  // exception computing typecode
                 {
                   dmsg ("TAO_Marshal_Struct::deep_copy detected error");
@@ -398,8 +393,8 @@ TAO_Marshal_Struct::deep_copy (CORBA::TypeCode_ptr  tc,
               dmsg ("TAO_Marshal_Struct::deep_copy detected error");
               return CORBA::TypeCode::TRAVERSE_STOP;
             }
-        } 
-      else // exception getting member count 
+        }
+      else // exception getting member count
         {
           dmsg ("TAO_Marshal_Struct::deep_copy detected error");
           return CORBA::TypeCode::TRAVERSE_STOP;
@@ -440,7 +435,7 @@ TAO_Marshal_Union::deep_copy (CORBA::TypeCode_ptr tc,
 	      CORBA::TypeCode_ptr default_tc = 0;
 
               // Save the pointer to the discriminator.
-	      const void *discrim_val = data; 
+	      const void *discrim_val = data;
 
 	      // value
               // move the pointer to point to the actual value
@@ -462,7 +457,7 @@ TAO_Marshal_Union::deep_copy (CORBA::TypeCode_ptr tc,
                       // accordingly. Otherwise it is an error.
                       for (int i = 0; member_count-- != 0; i++)
 			{
-			  CORBA::Any_ptr member_label = 
+			  CORBA::Any_ptr member_label =
                             tc->member_label (i, env);
 			  if (env.exception () == 0)
 			    {
@@ -529,7 +524,7 @@ TAO_Marshal_Union::deep_copy (CORBA::TypeCode_ptr tc,
 			      return CORBA::TypeCode::TRAVERSE_STOP;
 			    }
 			} // end of while
-		      
+
 		      // we are here only if there was no match
 		      if (default_tc)
 			return DEEP_COPY (default_tc, data, data2, env);
@@ -577,13 +572,13 @@ TAO_Marshal_Sequence::deep_copy (CORBA::TypeCode_ptr  tc,
 {
   // Return status.
   CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;  
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   // Typecode of the element.
-  CORBA::TypeCode_ptr tc2;  
+  CORBA::TypeCode_ptr tc2;
 
   // Size of element.
-  size_t size; 
+  size_t size;
   CORBA::ULong bounds;
   char *value1;
   char *value2;
@@ -591,7 +586,7 @@ TAO_Marshal_Sequence::deep_copy (CORBA::TypeCode_ptr  tc,
   CORBA::OctetSeq *dst;
 
   // Used only to access the marshal_object factory.
-  CDR stream;  
+  CDR stream;
 
   // Rely on binary format of sequences -- all are the same except for
   // the type pointed to by "buffer."
@@ -605,7 +600,7 @@ TAO_Marshal_Sequence::deep_copy (CORBA::TypeCode_ptr  tc,
       dst->length = dst->maximum = src->length;
 
       // Get element typecode.
-      tc2 = tc->content_type (env);  
+      tc2 = tc->content_type (env);
       if (env.exception () == 0)
         {
           // Get the size of the element.
@@ -651,7 +646,7 @@ TAO_Marshal_Sequence::deep_copy (CORBA::TypeCode_ptr  tc,
                     case CORBA::tk_any:
                       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                         {
-                          retval = 
+                          retval =
                             TAO_Marshal_Any::deep_copy (tc2, source, dest, env);
                           value1 = (char *) value1 + size;
                           value2 = (char *) value2 + size;
@@ -773,7 +768,7 @@ TAO_Marshal_Sequence::deep_copy (CORBA::TypeCode_ptr  tc,
                       return CORBA::TypeCode::TRAVERSE_STOP;
                     }
                 }
-              else 
+              else
                 {
                   // error exit
                   // CORBA::release (tc2);
@@ -781,14 +776,14 @@ TAO_Marshal_Sequence::deep_copy (CORBA::TypeCode_ptr  tc,
                   dmsg ("marshaling TAO_Marshal_Sequence::deep_copy detected error");
                   return CORBA::TypeCode::TRAVERSE_STOP;
                 }
-            } 
+            }
           else // exception computing size
             {
               // CORBA::release (tc2);
               dmsg ("marshaling TAO_Marshal_Sequence::deep_copy detected error");
               return CORBA::TypeCode::TRAVERSE_STOP;
             }
-        } 
+        }
       else // exception computing content type
         {
           dmsg ("marshaling TAO_Marshal_Sequence::deep_copy detected error");
@@ -813,17 +808,17 @@ TAO_Marshal_Array::deep_copy (CORBA::TypeCode_ptr  tc,
 {
   // Return status.
   CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;  
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   // Typecode of the element.
-  CORBA::TypeCode_ptr tc2;  
+  CORBA::TypeCode_ptr tc2;
 
   // Size of element.
-  size_t size; 
+  size_t size;
   CORBA::ULong  bounds;
 
   // Used only to access the marshal_object factory.
-  CDR stream;  
+  CDR stream;
 
   // Rely on binary format of sequences -- all are the same except for
   // the type pointed to by "buffer".
@@ -834,7 +829,7 @@ TAO_Marshal_Array::deep_copy (CORBA::TypeCode_ptr  tc,
       if (env.exception () == 0)
         {
           // get element typecode
-          tc2 = tc->content_type (env);  
+          tc2 = tc->content_type (env);
           if (env.exception () == 0)
             {
               // Get the size of the element type.
@@ -931,7 +926,7 @@ TAO_Marshal_Array::deep_copy (CORBA::TypeCode_ptr  tc,
                           source = (char *) source + size;
                           dest = (char *) dest + size;
                         }
-                      retval = 
+                      retval =
                         TAO_Marshal_String::deep_copy (tc2, source, dest, env);
                       break;
                     case CORBA::tk_sequence:
@@ -1020,12 +1015,12 @@ TAO_Marshal_Alias::deep_copy (CORBA::TypeCode_ptr  tc,
                               CORBA::Environment &env)
 {
   // Typecode of the aliased type.
-  CORBA::TypeCode_ptr tc2;  
+  CORBA::TypeCode_ptr tc2;
   // To access the marshal object.
-  CDR stream;  
+  CDR stream;
   // Status of deep_copy operation.
   CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE; 
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   if (tc)
     {
@@ -1117,9 +1112,9 @@ TAO_Marshal_Alias::deep_copy (CORBA::TypeCode_ptr  tc,
               retval = CORBA::TypeCode::TRAVERSE_STOP;
             }
           // CORBA::release (tc2);
-          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE) 
+          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
 	    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-          else 
+          else
             {
               env.exception (new CORBA::MARSHAL  (CORBA::COMPLETED_MAYBE));
               dmsg ("TAO_Marshal_Alias::decode detected error");
@@ -1147,7 +1142,7 @@ TAO_Marshal_Except::deep_copy (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::TypeCode_ptr param;
   CORBA::Long size;
-  
+
   CDR stream;
 
   if (tc)
@@ -1164,7 +1159,7 @@ TAO_Marshal_Except::deep_copy (CORBA::TypeCode_ptr  tc,
       if (env.exception () == 0)
         {
           for (int i = 0;
-	       i < member_count 
+	       i < member_count
 		 && retval == CORBA::TypeCode::TRAVERSE_CONTINUE;
 	       i++)
             {
@@ -1251,12 +1246,12 @@ TAO_Marshal_Except::deep_copy (CORBA::TypeCode_ptr  tc,
                       source = (char *) source + size;
                       dest = (char *) dest + size;
                     }
-                  else  // exception computing size 
+                  else  // exception computing size
                     {
                       dmsg ("TAO_Marshal_Struct::deep_copy detected error");
                       return CORBA::TypeCode::TRAVERSE_STOP;
                     }
-                } 
+                }
               else  // exception computing typecode
                 {
                   dmsg ("TAO_Marshal_Struct::deep_copy detected error");
@@ -1271,8 +1266,8 @@ TAO_Marshal_Except::deep_copy (CORBA::TypeCode_ptr  tc,
               dmsg ("TAO_Marshal_Struct::deep_copy detected error");
               return CORBA::TypeCode::TRAVERSE_STOP;
             }
-        } 
-      else // exception getting member count 
+        }
+      else // exception getting member count
         {
           dmsg ("TAO_Marshal_Struct::deep_copy detected error");
           return CORBA::TypeCode::TRAVERSE_STOP;

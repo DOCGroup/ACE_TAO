@@ -38,7 +38,7 @@
 // ORB client is not allowed to rely on semantic implications of such
 // a model.
 //
-// XXX there is lots of unverified I/O here.  In all cases, if an
+// XXXTAO there is lots of unverified I/O here.  In all cases, if an
 // error is detected when marshaling or unmarshaling, it should be
 // reported.
 
@@ -107,7 +107,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
   // versions seem to need it though.  Leaving it costs little.
 
   TAO_GIOP::dump_msg ("send",
-                      ACE_reinterpret_cast (u_char *, buf), 
+                      ACE_reinterpret_cast (u_char *, buf),
                       buflen);
 
   ACE_SOCK_Stream &peer = handler->peer ();
@@ -137,7 +137,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
       // On error or EOF, report the fault, close the connection, and
       // mark it as unusable/defunct.
       //
-      // XXX on client side write errors, we may hit the case that the
+      // XXXTAO on client side write errors, we may hit the case that the
       // server did a clean shutdown but we've not yet read the
       // GIOP::CloseConnection message.  If we get an error, we need
       // to see if there is such a message waiting for us, and if so
@@ -197,8 +197,8 @@ static const char
 close_message [TAO_GIOP_HEADER_LEN] =
 {
   'G', 'I', 'O', 'P',
-  MY_MAJOR,
-  MY_MINOR,
+  TAO_GIOP_MessageHeader::MY_MAJOR,
+  TAO_GIOP_MessageHeader::MY_MINOR,
   TAO_ENCAP_BYTE_ORDER,
   TAO_GIOP::CloseConnection,
   0, 0, 0, 0
@@ -211,7 +211,7 @@ TAO_GIOP::close_connection (TAO_Client_Connection_Handler *&handler,
   // It's important that we use a reliable shutdown after we send this
   // message, so we know it's received.
   //
-  // XXX should recv and discard queued data for portability; note
+  // XXXTAO should recv and discard queued data for portability; note
   // that this won't block (long) since we never set SO_LINGER
 
   TAO_GIOP::dump_msg ("send",
@@ -237,8 +237,8 @@ static const char
 error_message [TAO_GIOP_HEADER_LEN] =
 {
   'G', 'I', 'O', 'P',
-  MY_MAJOR,
-  MY_MINOR,
+  TAO_GIOP_MessageHeader::MY_MAJOR,
+  TAO_GIOP_MessageHeader::MY_MINOR,
   TAO_ENCAP_BYTE_ORDER,
   TAO_GIOP::MessageError,
   0, 0, 0, 0
@@ -247,7 +247,7 @@ error_message [TAO_GIOP_HEADER_LEN] =
 void
 TAO_GIOP::send_error (TAO_Client_Connection_Handler *&handler)
 {
-  TAO_GIOP::dump_msg ("send", 
+  TAO_GIOP::dump_msg ("send",
                       (const u_char *) error_message,
                       TAO_GIOP_HEADER_LEN);
   handler->peer ().send_n (error_message, TAO_GIOP_HEADER_LEN);
@@ -342,7 +342,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
                       connection.get_handle ()));
           ACE_TIMEPROBE ("  -> GIOP::recv_request - EOF");
           return TAO_GIOP::EndOfFile;
-          // XXX should probably find some way to report this without
+          // XXXTAO should probably find some way to report this without
           // an exception, since for most servers it's not an error.
           // Is it _never_ an error?  Not sure ...
           /* NOTREACHED */
@@ -389,7 +389,8 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   // Then make sure the major version is ours, and the minor version
   // is one that we understand.
 
-  if (!(bufptr [4] == MY_MAJOR && bufptr [5] <= MY_MINOR))
+  if (!(bufptr [4] == TAO_GIOP_MessageHeader::MY_MAJOR
+        && bufptr [5] <= TAO_GIOP_MessageHeader::MY_MINOR))
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));      // header
       ACE_DEBUG ((LM_DEBUG, "bad header, version\n"));
@@ -535,7 +536,7 @@ TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 // CDR typecode octets.
 
 static const CORBA::Long _oc_opaque [] =
-{       
+{
 
   TAO_ENCAP_BYTE_ORDER,    // native endian + padding; "tricky"
   10,                      // ... (sequence of) octets
@@ -776,7 +777,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
 const char *
 TAO_GIOP::message_name (TAO_GIOP::Message_Type which)
 {
-  static const char *msgnames[] = 
+  static const char *msgnames[] =
   {
     "EndOfFile (nonstd)",
     "Request (client)",
@@ -814,13 +815,13 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       this->handler_ = 0;
 
       //
-      // XXX highly desirable to know whether we wrote _any_ data; if
+      // XXXTAO highly desirable to know whether we wrote _any_ data; if
       // we wrote none, then there's no chance the call completed and
       // applications don't have to deal with those nasty
       // indeterminate states where they can't immediatly tell if
       // what's safe to do.
       //
-      // XXX also, there might have been a GIOP::CloseConnection
+      // XXXTAO also, there might have been a GIOP::CloseConnection
       // message in the input queue.  If so, this request should be
       // treated as a (full) "rebind" case.  Can't do that from this
       // point in the code however!  Some minor restructuring needs to
@@ -851,7 +852,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
   // evidence that locking at the level of requests loses on at least
   // some platforms.
   //
-  // XXX In all MT environments, there's a cancellation point lurking
+  // XXXTAO In all MT environments, there's a cancellation point lurking
   // here; need to investigate.  Client threads would frequently be
   // canceled sometime during recv_request ... the correct action to
   // take on being canceled is to issue a CancelRequest message to the
@@ -1113,7 +1114,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
         // reusing memory where practical.  Then delete the forwarded
         // objref, retaining only its profile.
         //
-        // XXX add and use a "forward count", to prevent loss of data
+        // XXXTAO add and use a "forward count", to prevent loss of data
         // in forwarding chains during concurrent calls -- only a
         // forward that's a response to the current fwd_profile should
         // be recorded here. (This is just an optimization, and is not
@@ -1132,7 +1133,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
         // Make sure a new connection is used next time.
         this->handler_->close ();
-        this->handler_ = 0; // @@ not sure this is correct!
+        this->handler_ = 0; // XXXTAO not sure this is correct!
         // We may not need to do this since TAO_GIOP_Invocations
         // get created on a per-call basis. For now we'll play it safe.
       }
@@ -1224,8 +1225,8 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type, CDR &msg)
   next [2] = 'O';
   next [3] = 'P';
 
-  next [4] = MY_MAJOR;
-  next [5] = MY_MINOR;
+  next [4] = TAO_GIOP_MessageHeader::MY_MAJOR;
+  next [5] = TAO_GIOP_MessageHeader::MY_MINOR;
   next [6] = TAO_ENCAP_BYTE_ORDER;
   next [7] = (u_char) type;
 
