@@ -120,15 +120,14 @@ TAO_UIOP_Client_Transport::client_handler (void)
 }
 
 void
-TAO_UIOP_Client_Transport::
-    start_request (TAO_ORB_Core *orb_core,
-                   const TAO_Profile* pfile,
-                   const char* opname,
-                   CORBA::ULong request_id,
-                   CORBA::Boolean is_roundtrip,
-                   TAO_OutputCDR &output,
-                   CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_UIOP_Client_Transport::start_request (TAO_ORB_Core *orb_core,
+                                          const TAO_Profile* pfile,
+                                          const char* opname,
+                                          CORBA::ULong request_id,
+                                          CORBA::Boolean is_roundtrip,
+                                          TAO_OutputCDR &output,
+                                          CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const TAO_UIOP_Profile* profile =
     ACE_dynamic_cast(const TAO_UIOP_Profile*, pfile);
@@ -170,13 +169,12 @@ TAO_UIOP_Client_Transport::
 }
 
 void
-TAO_UIOP_Client_Transport::
-    start_locate (TAO_ORB_Core *orb_core,
-                  const TAO_Profile* pfile,
-                  CORBA::ULong request_id,
-                  TAO_OutputCDR &output,
-                  CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_UIOP_Client_Transport::start_locate (TAO_ORB_Core *orb_core,
+                                         const TAO_Profile* pfile,
+                                         CORBA::ULong request_id,
+                                         TAO_OutputCDR &output,
+                                         CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const TAO_UIOP_Profile* profile =
     ACE_dynamic_cast(const TAO_UIOP_Profile*, pfile);

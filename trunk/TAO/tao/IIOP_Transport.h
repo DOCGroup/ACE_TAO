@@ -37,7 +37,7 @@ class TAO_Export TAO_IIOP_Transport : public TAO_Transport
   //
   // = DESCRIPTION
   //   Specialization of the base TAO_Transport class to handle the IIOP
-  //   protocol.  This class in turn will be further speciialized for
+  //   protocol.  This class in turn will be further specialized for
   //   the client and server side.
 public:
   TAO_IIOP_Transport (TAO_IIOP_Handler_Base *handler,
