@@ -1,6 +1,7 @@
 Thu Nov 25 18:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * websvcs/tests/Test_URL_Addr.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_Association_Test.cpp:
           Use ACE_TMAIN instead of main to fix link errors in the unicode
           builds.
 
