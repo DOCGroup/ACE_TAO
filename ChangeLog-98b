@@ -1,26 +1,34 @@
+Sat Oct 03 09:04:44 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/ACE.cpp (set_handle_limit): wrapped the final
+          return statement with #ifdef __sgi.  Irix complains without
+          this return statement.  DEC cxx (correctly) says that it's not
+          reachable.  ACE_NOTREACHED won't work here, because it handles
+          both platforms the same.
+
 Fri Oct  2 23:43:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix6.x-g++.h: 
-	* ace/config-irix6.x-sgic++-nothreads.h: 
-	* ace/OS.h: 
-	  IRIX puts <xti.h> in <sys/xti.h> header of IRIX, it is only
-	  relevant for the autoconf project.
+        * ace/config-irix6.x-g++.h:
+        * ace/config-irix6.x-sgic++-nothreads.h:
+        * ace/OS.h:
+          IRIX puts <xti.h> in <sys/xti.h> header of IRIX, it is only
+          relevant for the autoconf project.
 
-	* ace/ACE.cpp: 
-	  Added an extra return to make IRIX compiler happy.
+        * ace/ACE.cpp:
+          Added an extra return to make IRIX compiler happy.
 
 Fri Oct  2 21:48:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Thread_Pool_Reactor_Test.cpp: Send the message length
-	  before each message so we don't need to use time delay to
-	  separate consecutive requests.
+        * tests/Thread_Pool_Reactor_Test.cpp: Send the message length
+          before each message so we don't need to use time delay to
+          separate consecutive requests.
 
 Fri Oct 02 16:27:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp: ACEified some code.
-	  (terminate): Do not register a thread as being terminated if it
-	  is being joined by another thread.  Just remove it from
-	  Thread_Manager's thr_list_.
+        * ace/Thread_Manager.cpp: ACEified some code.
+          (terminate): Do not register a thread as being terminated if it
+          is being joined by another thread.  Just remove it from
+          Thread_Manager's thr_list_.
 
 Fri Oct  2 00:19:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -41,7 +49,7 @@ Thu Oct 01 12:04:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 Thu Oct  1 08:51:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tests/Thread_Pool_Reactor_Test.cpp: Reformatted the
-	  code a bit.
+          code a bit.
 
         * ace/ACE.cpp (max_handles): Added yet another fix for AIX.
           Thanks to Chris Lahey for this.
