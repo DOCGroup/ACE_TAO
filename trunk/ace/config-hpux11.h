@@ -223,6 +223,7 @@
 #endif /* ACE_HAS_THREADS */
 
 #define ACE_HAS_POSIX_SEM
+#define ACE_HAS_AIO_CALLS
 
 // Turns off the tracing feature.
 // To build with tracing enabled, make sure ACE_NTRACE is not defined
