@@ -7,6 +7,11 @@ Fri Sep 22 14:21:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  added (persistence test and ImR NT service test).
 	  Also added documentation on the NT service test.
 
+	* orbsvcs/tests/ImplRepo/ImplRepo.dsw:
+
+	  Added NT_ImplRepo_Service project (from
+	  orbsvcs/ImplRepo_Service) to test workspace.
+
 	* docs/implrepo/userguide.html:
 
 	  Added section on running the Implementation 
