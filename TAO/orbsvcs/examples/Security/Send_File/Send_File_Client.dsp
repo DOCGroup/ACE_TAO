@@ -120,7 +120,7 @@ InputPath=.\test.idl
 InputName=test
 
 BuildCmds= \
-	../../../../../bin/Release/tao_idl.exe -Ge 1 $(InputName).idl
+	..\..\..\..\..\bin\Release\tao_idl.exe -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
