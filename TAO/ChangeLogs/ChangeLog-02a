@@ -1,3 +1,29 @@
+Fri Oct 19 13:35:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Added -w-sig to the #pragma options for the Borland compiler
+          in generated stub source code. This removes a warning when
+          setting the byte order of an AMI exception holder, which
+          involves an implicit conversion from an int to a 
+          CORBA::Boolean, which other compilers seem to have no
+          problem with. Thanks to Albert Wijnja <Albert.Wijnja@meco.nl>
+          for finding the problem and the fix.
+
+        * tao/append.cpp (TAO_Marshal_Sequence::append):
+
+          Modified method to return immediately after writing the sequence
+          length, if it is 0. The corresponding skip method does this,
+          and the discrepancy was causing a problem in the case where
+          we have an Any containing a struct containing a sequence of
+          an 8-byte type, and then other members. The demarshaling of
+          the subsequent members failed because, when marshaling the 
+          sequence, the stream had been 8-byte aligned, but not when
+          demarshaling. Of course, this will work sometimes, if the
+          4-byte and 8-byte boundary happen to be the same. Thanks to
+          Greg Hall <Greg.Hall@Australia.Boeing.com> for reporting
+          the CORBA::MARSHAL exception, and for sending in an example.
+
 Fri Oct 19 12:14:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/tao_ifr.cpp:
