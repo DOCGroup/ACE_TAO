@@ -1,9 +1,17 @@
+Mon Jun 21 10:18:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Makefile: moved FlReactor, Msg_WFMO_Reactor, TkReactor,
+          and XtReactor from OTHER to DEMUX_FILES because TAO uses
+          them in some configurations.  They add negligible size
+          overhead when not used.  Thanks to Nanbor for pointing this
+          out.
+
 Mon Jun 21 10:11:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Makefile:
-	  The TP_Reactor is used by TAO, but was listed in the OTHER
-	  component. Moved to the DEMUX component to make it always
-	  available.  Thanks to David Levine for pointing this out.
+        * ace/Makefile:
+          The TP_Reactor is used by TAO, but was listed in the OTHER
+          component. Moved to the DEMUX component to make it always
+          available.  Thanks to David Levine for pointing this out.
 
 Mon Jun 21 09:58:42 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -29,33 +37,33 @@ Mon Jun 21 08:40:14 1999  Steve Huston  <shuston@riverace.com>
 
 Sat Jun 19 22:28:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile:
-	  Updated the list of tests run every night.
+        * bin/auto_compile:
+          Updated the list of tests run every night.
 
 Sat Jun 19 18:15:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/CORBA_macros.h:
-	  The ACE_GUARD macros needed some blanks to work with a template
-	  as the lock type parameter.
+        * ace/OS.h:
+        * ace/CORBA_macros.h:
+          The ACE_GUARD macros needed some blanks to work with a template
+          as the lock type parameter.
 
 Sat Jun 19 10:34:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Acceptor.cpp,
-	  ace/Connector.cpp: Modified the make_svc_handler() hook method
- 	  in these classes to set the Reactor of the newly created
- 	  SVC_HANDLER to the same reactor that the Acceptor or Connector
- 	  is using.  Thanks to John Aughey <jha@FreeBSD.ORG> for
- 	  this suggestion.
+        * ace/Acceptor.cpp,
+          ace/Connector.cpp: Modified the make_svc_handler() hook method
+          in these classes to set the Reactor of the newly created
+          SVC_HANDLER to the same reactor that the Acceptor or Connector
+          is using.  Thanks to John Aughey <jha@FreeBSD.ORG> for
+          this suggestion.
 
-	* man/{html,man3}: Zapped the Ace_Export.* files since
-	  they don't belong here.  Thanks to Zoran Ivanovic
+        * man/{html,man3}: Zapped the Ace_Export.* files since
+          they don't belong here.  Thanks to Zoran Ivanovic
           <zorani@pathcom.com> for reporting this.
 
 Fri Jun 18 20:49:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Synch.cpp: Added template instantiations for
-	  ACE_Write_Guard<ACE_Thread_Mutex>.
+        * ace/Synch.cpp: Added template instantiations for
+          ACE_Write_Guard<ACE_Thread_Mutex>.
 
 Fri Jun 18 19:30:09 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -63,110 +71,110 @@ Fri Jun 18 19:30:09 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Jun 18 18:49:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Makefile:
-	* tests/run_tests.psosim:
-	* tests/run_tests.sh:
-	* tests/run_tests.vxworks:
-	  Disabled Map_Manager_Test, it does not work with too many
-	  platforms and the features it tests are not used (yet).
+        * tests/Makefile:
+        * tests/run_tests.psosim:
+        * tests/run_tests.sh:
+        * tests/run_tests.vxworks:
+          Disabled Map_Manager_Test, it does not work with too many
+          platforms and the features it tests are not used (yet).
 
 Fri Jun 18 16:54:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Message_Queue_Test.cpp:
-	* tests/Message_Block_Test.cpp:
-	  Removed template instantiations for ACE_Message_Queue_Iterator
-	  and ACE_Message_Queue_Reverse_Iterator.  They are already
-	  available in the ace library.
+        * tests/Message_Queue_Test.cpp:
+        * tests/Message_Block_Test.cpp:
+          Removed template instantiations for ACE_Message_Queue_Iterator
+          and ACE_Message_Queue_Reverse_Iterator.  They are already
+          available in the ace library.
 
-	* ace/Service_Types.cpp: Added explicit instantiations for
- 	  ACE_Message_Queue_Reverse_Iterator.  ACE_Message_Queue and
- 	  ACE_Message_Queue_Iterator were already there.  This addition
- 	  will complete the set.
+        * ace/Service_Types.cpp: Added explicit instantiations for
+          ACE_Message_Queue_Reverse_Iterator.  ACE_Message_Queue and
+          ACE_Message_Queue_Iterator were already there.  This addition
+          will complete the set.
 
 Fri Jun 18 12:12:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK_Dgram: Added the first set of hooks to support
- 	  QoS-enabled data grams for Win2K GQoS.
+        * ace/SOCK_Dgram: Added the first set of hooks to support
+          QoS-enabled data grams for Win2K GQoS.
 
 Fri Jun 18 11:37:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* *.{mdp,mak}: Removed all MSVC++ 4.x workspaces and makefiles.
-  	  We are no longer supporting this version of MSVC++.  If you need
- 	  support for MSVC++ 4.x please contact Steve Huston
- 	  <shuston@riverace.com> of Riverace to arrange a support
- 	  contract.
+        * *.{mdp,mak}: Removed all MSVC++ 4.x workspaces and makefiles.
+          We are no longer supporting this version of MSVC++.  If you need
+          support for MSVC++ 4.x please contact Steve Huston
+          <shuston@riverace.com> of Riverace to arrange a support
+          contract.
 
 Fri Jun 18 12:19:42 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* tests/DLList_Test.cpp: Removeed unnecessary explicit template
- 	  instantiation that mirrored ones in ace/Containers.cpp to fix
- 	  compile errors on VxWorks. Why this _ever_ worked, I don't
- 	  know...
+        * tests/DLList_Test.cpp: Removeed unnecessary explicit template
+          instantiation that mirrored ones in ace/Containers.cpp to fix
+          compile errors on VxWorks. Why this _ever_ worked, I don't
+          know...
 
 Fri Jun 18 11:37:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Config.h (class ACE_Static_Svc_Descriptor): Changed
-	  the type of <name_> from LPTCSTR to 'const ASYS_TCHAR*'.
+        * ace/Service_Config.h (class ACE_Static_Svc_Descriptor): Changed
+          the type of <name_> from LPTCSTR to 'const ASYS_TCHAR*'.
 
 Thu Jun 17 12:46:30 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Conn_Test.cpp: Fixed a problem with explicit template
- 	  instantiations so that this test will compile even if ACE isn't
- 	  built with threads.
+        * tests/Conn_Test.cpp: Fixed a problem with explicit template
+          instantiations so that this test will compile even if ACE isn't
+          built with threads.
 
-	* netsvcs/lib/Server_Logging_Handler.cpp: Fixed the explicit
- 	  template instantiations so hopefully they'll work when ACE is
- 	  compiled without threads.  Thanks to Carlos for reporting this.
+        * netsvcs/lib/Server_Logging_Handler.cpp: Fixed the explicit
+          template instantiations so hopefully they'll work when ACE is
+          compiled without threads.  Thanks to Carlos for reporting this.
 
-	* ace/SOCK_Dgram_Mcast.cpp: We needed to modify the return values
- 	  of subscribe_i() so that we'd have the ability to differentiate
- 	  a "short-circuit" return on NT.  Thanks to Marina for reporting
- 	  this.
+        * ace/SOCK_Dgram_Mcast.cpp: We needed to modify the return values
+          of subscribe_i() so that we'd have the ability to differentiate
+          a "short-circuit" return on NT.  Thanks to Marina for reporting
+          this.
 
-	* ace/OS.h: Added an automatic test to check if we're running on
- 	  an EBCDIC character set, and if so, set
- 	  ACE_STANDARD_CHARACTER_SET_SIZE to 256 rather than 128.  Thanks
- 	  to Jim Rogers for this suggestion.
+        * ace/OS.h: Added an automatic test to check if we're running on
+          an EBCDIC character set, and if so, set
+          ACE_STANDARD_CHARACTER_SET_SIZE to 256 rather than 128.  Thanks
+          to Jim Rogers for this suggestion.
 
-	* performance-tests/TTCP/Makefile: Zapped the Orbix and ORBeline
- 	  directories from the Makefile.  These are *way* out of date and
- 	  have been superceeded by the versions in
- 	  $TAO_ROOT/performance-tests/Thruput/.  Thanks to Youzhong Liu
- 	  <yoliu@cise.ufl.edu> for reporting this.
+        * performance-tests/TTCP/Makefile: Zapped the Orbix and ORBeline
+          directories from the Makefile.  These are *way* out of date and
+          have been superceeded by the versions in
+          $TAO_ROOT/performance-tests/Thruput/.  Thanks to Youzhong Liu
+          <yoliu@cise.ufl.edu> for reporting this.
 
 Thu Jun 17 12:59:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CDR_Stream.h:
-	* ace/CDR_Stream.i:
-	  Added accessors for the codeset translators.
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+          Added accessors for the codeset translators.
 
 Thu Jun 17 00:33:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/platform_freebsd.GNU (VERSION): Applied the
- 	  patch to automatically detect FreeBSD version.  Thanks to
- 	  Goldshtain Dmitry <goldshtain@bank.gov.ua> for providing the
- 	  patch.
+        * include/makeinclude/platform_freebsd.GNU (VERSION): Applied the
+          patch to automatically detect FreeBSD version.  Thanks to
+          Goldshtain Dmitry <goldshtain@bank.gov.ua> for providing the
+          patch.
 
-	* bin/Process_Win32.pm (TimedWait):
-	  Get and return the exit status from the waited process.
+        * bin/Process_Win32.pm (TimedWait):
+          Get and return the exit status from the waited process.
 
 Wed Jun 16 22:03:29 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.h (ACE_OS): Removed ACE_WIDE_DL_TYPE and the wide char
-	  versions of dlopen(), dlsym(), and dlerror().  Even Win32
-	  doesn't support them.
+        * ace/OS.h (ACE_OS): Removed ACE_WIDE_DL_TYPE and the wide char
+          versions of dlopen(), dlsym(), and dlerror().  Even Win32
+          doesn't support them.
 
-	  Also changed the argument type of ACE_OS::dlopen(),
-	  ACE_OS::dlsym(), ACE_DLL::ACE_DLL(), ACE_DLL::open(), and
-	  ACE_DLL::symbol() from ACE_DL_TYPE to const char *.  Now the
-	  ACE_OS wrappers do the correct const cast before calling the OS
-	  function.  Note that since this change is only adding constness
-	  to the argument, the change is backward compatible.
+          Also changed the argument type of ACE_OS::dlopen(),
+          ACE_OS::dlsym(), ACE_DLL::ACE_DLL(), ACE_DLL::open(), and
+          ACE_DLL::symbol() from ACE_DL_TYPE to const char *.  Now the
+          ACE_OS wrappers do the correct const cast before calling the OS
+          function.  Note that since this change is only adding constness
+          to the argument, the change is backward compatible.
 
 Wed Jun 16 20:47:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/Process_Win32.pm:
-	  The wait time for a process seems to be in milliseconds.
+        * bin/Process_Win32.pm:
+          The wait time for a process seems to be in milliseconds.
 
 Wed Jun 16 20:03:41 1999  Steve Huston  <shuston@riverace.com>
 
@@ -180,48 +188,48 @@ Wed Jun 16 20:03:41 1999  Steve Huston  <shuston@riverace.com>
 
 Wed Jun 16 18:50:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.i:
-	  Fixed typos in single threaded code.
+        * ace/OS.i:
+          Fixed typos in single threaded code.
 
 Wed Jun 16 18:14:45 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added ATTRIBUTES to
-	  the template list for the Cached_Connect_Strategy_Ex class to
-	  ward off g++ compiler errors.
+        * ace/Cached_Connect_Strategy_T.{h, cpp}: Added ATTRIBUTES to
+          the template list for the Cached_Connect_Strategy_Ex class to
+          ward off g++ compiler errors.
 
 Mon Jun 14 22:52:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Map_Manager_Test.cpp: Removed template instantiation
-	  regarding ACE_Read_Mutex<Thread_Mutex>. Added template
-	  instantiations for ACE_Pair<VALUE, int> and
-	  ACE_Reference_Pair<TYPE, VALUE> to make sunc++5.0 happy.
+        * tests/Map_Manager_Test.cpp: Removed template instantiation
+          regarding ACE_Read_Mutex<Thread_Mutex>. Added template
+          instantiations for ACE_Pair<VALUE, int> and
+          ACE_Reference_Pair<TYPE, VALUE> to make sunc++5.0 happy.
 
-	* ace/Caching_Strategy_Utility_T.{h.cpp}: Removed math.h from the
-	  include list since it caused problems when native exceptions were
-	  enabled.
+        * ace/Caching_Strategy_Utility_T.{h.cpp}: Removed math.h from the
+          include list since it caused problems when native exceptions were
+          enabled.
 
 Mon Jun 14 21:41:40 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* ace/Connector.h: Added a comment to clarify that if
- 	  Connector::connect() fails the close() hook of the Svc_Handler
- 	  is called to prevent resource leaks.  Thanks to V. Lakshmanan
- 	  <lakshman@doplight.nssl.noaa.gov> for motivating this.
+        * ace/Connector.h: Added a comment to clarify that if
+          Connector::connect() fails the close() hook of the Svc_Handler
+          is called to prevent resource leaks.  Thanks to V. Lakshmanan
+          <lakshman@doplight.nssl.noaa.gov> for motivating this.
 
 Mon Jun 14 20:54:09 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Synch.cpp: Declared template definitions for
-	  ACE_Read_Mutex<ACE_Thread_Mutex> to get around compiler errors
-	  while building $ACE_ROOT/tests. Thanks to Dr.Schmidt for
-	  suggesting this.
+        * ace/Synch.cpp: Declared template definitions for
+          ACE_Read_Mutex<ACE_Thread_Mutex> to get around compiler errors
+          while building $ACE_ROOT/tests. Thanks to Dr.Schmidt for
+          suggesting this.
 
 Mon Jun 14 19:33:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK_Acceptor.cpp (accept): Fixed a bizarre problem with
- 	  Win32 where it's imperative that the third parameter to <accept>
- 	  must be a NULL pointer if we want to ignore the client address.
+        * ace/SOCK_Acceptor.cpp (accept): Fixed a bizarre problem with
+          Win32 where it's imperative that the third parameter to <accept>
+          must be a NULL pointer if we want to ignore the client address.
 
-	* ace/OS.i: Cleaned up warnings in join_leaf() and ioctl() due to
- 	  unused args.  Thanks to Marina for reporting this.
+        * ace/OS.i: Cleaned up warnings in join_leaf() and ioctl() due to
+          unused args.  Thanks to Marina for reporting this.
 
 Mon Jun 14 15:56:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
