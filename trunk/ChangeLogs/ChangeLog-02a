@@ -1,3 +1,8 @@
+Thu Apr  4 13:17:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Added a new test to the list of tests
+	  that need to be run. 
+
 Thu Apr  4 11:52:45 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* ace/SOCK_Dgram.cpp:
@@ -16,7 +21,7 @@ Thu Apr  4 11:52:45 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 Thu Apr  4 10:30:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/RMCast:
+	* ace/RMCast/Makefile:
 	* ace/SSL/Makefile:
 	* ace/Makefile: Updated dependency. Other directories need this
 	  too. Will get to them before the beta. 
