@@ -68,11 +68,7 @@ TAO_SHMIOP_Transport::~TAO_SHMIOP_Transport (void)
 {
 }
 
-void
-TAO_SHMIOP_Transport::close_connection (void)
-{
-  this->service_handler ()->handle_close ();
-}
+
 
 ACE_HANDLE
 TAO_SHMIOP_Transport::handle (void)
@@ -112,6 +108,13 @@ TAO_SHMIOP_SVC_HANDLER *
 TAO_SHMIOP_Server_Transport::service_handler (void)
 {
   return this->handler_;
+}
+
+void
+TAO_SHMIOP_Server_Transport::close_connection (void)
+{
+  this->handler_->purge_entry ();
+  this->service_handler ()->handle_close ();
 }
 
 // ****************************************************************
@@ -386,6 +389,13 @@ TAO_SHMIOP_SVC_HANDLER *
 TAO_SHMIOP_Client_Transport::service_handler (void)
 {
   return this->handler_;
+}
+
+void
+TAO_SHMIOP_Client_Transport::close_connection (void)
+{
+  this->handler_->purge_entry ();
+  this->service_handler ()->handle_close ();
 }
 
 // *********************************************************************

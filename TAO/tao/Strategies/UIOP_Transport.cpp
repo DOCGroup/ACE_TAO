@@ -68,11 +68,7 @@ TAO_UIOP_Transport::~TAO_UIOP_Transport (void)
 {
 }
 
-void
-TAO_UIOP_Transport::close_connection (void)
-{
-  this->service_handler ()->handle_close ();
-}
+
 
 ACE_HANDLE
 TAO_UIOP_Transport::handle (void)
@@ -111,6 +107,14 @@ TAO_UIOP_SVC_HANDLER *
 TAO_UIOP_Server_Transport::service_handler (void)
 {
   return this->handler_;
+}
+
+void
+TAO_UIOP_Server_Transport::close_connection (void)
+{
+  // Purge the handler entry from the Connection Cache
+  this->handler_->purge_entry ();
+  this->handler_->handle_close ();
 }
 
 // ****************************************************************
@@ -382,6 +386,14 @@ TAO_UIOP_Client_Transport::send_request_header (TAO_Operation_Details &opdetails
                                                       spec,
                                                       msg);
   return retval;
+}
+
+void
+TAO_UIOP_Client_Transport::close_connection (void)
+{
+  // Purge the handler entry from the Connection Cache
+  this->handler_->purge_entry ();
+  this->handler_->handle_close ();
 }
 
 // ****************************************************************
