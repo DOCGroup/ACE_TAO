@@ -55,6 +55,7 @@
 
 ACE_RCSID(tests, Dynamic_Priority_Test, "$Id$")
 
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
 enum Test_Type {BEST, WORST, RANDOM};
 
 class ArgStruct
@@ -107,7 +108,6 @@ const int vx_max_queue = INT_MAX;
 const int vx_msg_size = 32;
 #endif /* defined (VXWORKS) */
 
-#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
 // Loading parameters (number of messages to push through queues) for
 // performance tests.
 static int MIN_LOAD = 20;
