@@ -64,6 +64,8 @@
 # define ACE_HAS_EXPLICIT_KEYWORD
 # define ACE_HAS_MUTABLE_KEYWORD
 
+#define ACE_HAS_ITOA
+
 // VC5 doesn't support operator placement delete
 # if defined (_MSC_VER) && (_MSC_VER < 1200)  
 #  define ACE_LACKS_PLACEMENT_OPERATOR_DELETE

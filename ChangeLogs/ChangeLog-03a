@@ -1,3 +1,11 @@
+Sat Aug  5 11:19:23 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/config-win32-common.h:
+        * ace/config-win32-msvc.h:
+
+          Moved ACE_HAS_ITOA to msvc.h, since it is compiler dependent (and
+          Borland doesn't have it).
+
 Sat Aug 05 11:26:08 2000  Ossama Othman  <ossama@uci.edu>
 
 	* bin/generate_export_file.pl:
