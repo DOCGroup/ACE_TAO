@@ -43,7 +43,6 @@ EXTRA_DIST = \
         ACE-install.sh \
         ACE.DSW \
         BIBLIOGRAPHY \
-        BUG-REPORT-FORM \
         ChangeLog-93 \
         ChangeLog-94 \
         ChangeLog-95 \
@@ -54,6 +53,7 @@ EXTRA_DIST = \
         ChangeLog-98a \
         ChangeLog-98b \
         FAQ \
+        PROBLEM-REPORT-FORM \
         README.aceconf \
         VERSION \
         acconfig.h \

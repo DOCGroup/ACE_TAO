@@ -62,7 +62,6 @@ CONTROLLED_FILES = ChangeLog \
 		   TAO-inheritance.pdf.gz \
 		   TAO-inheritance.ps.gz \
                    TAOACE.dsw \
-                   BUG-REPORT-FORM \
 		   COPYING \
 		   COPYING.sun \
 		   release.chk \
@@ -71,6 +70,7 @@ CONTROLLED_FILES = ChangeLog \
 		   docs \
 		   LICENSE.sun \
 		   Makefile \
+                   PROBLEM-REPORT-FORM \
 		   README \
 		   README.sun \
 		   tao \
