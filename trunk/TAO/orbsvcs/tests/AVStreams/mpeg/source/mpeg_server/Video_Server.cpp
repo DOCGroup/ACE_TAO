@@ -200,8 +200,8 @@ Video_Server::init (int argc,
                        "(%P|%t) Video_Server: orb initialization failed!"),
                       -1);
   
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Video_Server::init () ORB init success \n"));
+  //  ACE_DEBUG ((LM_DEBUG,
+  //          "(%P|%t) Video_Server::init () ORB init success \n"));
 
   // @@ Can you please change the use of "fd" to "handle" globally?
   // Set the global socket fd's from the arguments.
@@ -250,7 +250,7 @@ Video_Server::initialize_orb (int argc,
                               char **argv,
                               CORBA::Environment &env)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   int result;
 
 
@@ -275,7 +275,7 @@ Video_Server::initialize_orb (int argc,
                         "run"),
                        -1);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
 
   VIDEO_CONTROL_I::instance ()-> create_handlers ();
 
@@ -283,21 +283,21 @@ Video_Server::initialize_orb (int argc,
                                                VIDEO_CONTROL_I::instance (),
                                                env);
   TAO_CHECK_ENV_RETURN (env,-1);
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   CORBA::Object_var naming_obj =
     this->orb_manager_.orb ()->resolve_initial_references ("NameService");
   if (CORBA::is_nil (naming_obj.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to resolve the Name Service.\n"),
                       -1);
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   CosNaming::NamingContext_var naming_context =
     CosNaming::NamingContext::_narrow (naming_obj.in (),
                                        env);
   TAO_CHECK_ENV_RETURN (env,
                         -1);
   
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   // Create a name for the video control object
   CosNaming::Name video_control_name (1);
   video_control_name.length (1);
@@ -318,9 +318,9 @@ Video_Server::initialize_orb (int argc,
                             -1);
     }
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   VIDEO_CONTROL_I::instance ()->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   return 0;
 }
 
