@@ -92,7 +92,7 @@ EC_Counting_Supplier::connect (
     this->_this (ACE_TRY_ENV);
   ACE_CHECK;
 
-  if (CORBA::is_nil (this->supplier_proxy_.in ()))
+  if (CORBA::is_nil (this->consumer_proxy_.in ()))
     {
       this->consumer_proxy_ =
         supplier_admin->obtain_push_consumer (ACE_TRY_ENV);

@@ -1,189 +1,195 @@
+Wed Feb  9 13:48:30 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/lib/Counting_Supplier.cpp:
+          Fixed connect() call, it was using the wrong variable to check
+          if it was connected already.
+
 Tue Feb 08 15:17:13 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Nested_Event_Loop: I was using a ulong to hold the value
-	  of a pointer.  This is problematic on platforms where the
-	  pointer is 64 bits and the ulong takes 32 bits.  Therefore, the
-	  new scheme uses an octet sequence to solve this size disparity.
-	  Thanks to Nanbor for the suggestion.
+        * tests/Nested_Event_Loop: I was using a ulong to hold the value
+          of a pointer.  This is problematic on platforms where the
+          pointer is 64 bits and the ulong takes 32 bits.  Therefore, the
+          new scheme uses an octet sequence to solve this size disparity.
+          Thanks to Nanbor for the suggestion.
 
 Tue Feb  8 01:26:29 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.{h.cpp}:
-	  Added missing implementation for administrative methods.
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.{h.cpp}:
+          Added missing implementation for administrative methods.
 
 Mon Feb  7 15:31:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_union.h:
-	* TAO_IDL/be/be_union.cpp:
-	* TAO_IDL/be_include/be_union_branch.h:
-	* TAO_IDL/be/be_union_branch.cpp:
-	* TAO_IDL/be_visitor_union/union_ch.cpp:
-	* TAO_IDL/be_visitor_union/union_ci.cpp:
-	* TAO_IDL/be_visitor_union/union_cs.cpp:
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	  The IDL compiler has been generating a
-	  separate member typecode inside the union for each
-	  duplicate case label, but the TypeCode class
-	  contains no state (and therefore no methods using
-	  such state) containing info about multiple case
-	  labels - only about members. Typecode generation was changed
-	  to generate just one typecode for each member with
-	  the value of the first case label encountered for
-	  that member. The private union function _discriminant()
-	  (called by (de)marshaling code) was modified to
-	  return this value no matter what the actual current
-	  discriminant value may be. Thanks to
-	  Christopher Kohlhoff <chris@kohlhoff.com> for sending
-	  in yet another IDL file/test code example that got to
-	  the crux of this matter.
+        * TAO_IDL/be_include/be_union.h:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be_include/be_union_branch.h:
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          The IDL compiler has been generating a
+          separate member typecode inside the union for each
+          duplicate case label, but the TypeCode class
+          contains no state (and therefore no methods using
+          such state) containing info about multiple case
+          labels - only about members. Typecode generation was changed
+          to generate just one typecode for each member with
+          the value of the first case label encountered for
+          that member. The private union function _discriminant()
+          (called by (de)marshaling code) was modified to
+          return this value no matter what the actual current
+          discriminant value may be. Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> for sending
+          in yet another IDL file/test code example that got to
+          the crux of this matter.
 
-	* tests/IDL_Test/union.idl:
-	* tests/IDL_Test/main.cpp:
-	  Added an expanded version of Chris Kohlhoff's example
-	  to IDL_Test.
+        * tests/IDL_Test/union.idl:
+        * tests/IDL_Test/main.cpp:
+          Added an expanded version of Chris Kohlhoff's example
+          to IDL_Test.
 
 Mon Feb 07 12:15:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI/run_test.pl: Set the "-x" switch on the client,
-	  this will cause it to shut down properly.
+        * tests/AMI/run_test.pl: Set the "-x" switch on the client,
+          this will cause it to shut down properly.
 
-	* tests/AMI/simple_client.cpp: Activated the "-x" switch behavior
-	  to shut down the ORB, also added a more descriptive debugging
-	  output for exception handling.
+        * tests/AMI/simple_client.cpp: Activated the "-x" switch behavior
+          to shut down the ORB, also added a more descriptive debugging
+          output for exception handling.
 
 Sat Feb 05 04:24:09 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Leader_Follower: The leader followers class did not support
-	  nested calls to the event loop, i.e., calling perform_work() or
-	  run() from the servant code.  In order to accommodate this
-	  feature the following changes were made:
+        * tao/Leader_Follower: The leader followers class did not support
+          nested calls to the event loop, i.e., calling perform_work() or
+          run() from the servant code.  In order to accommodate this
+          feature the following changes were made:
 
-	  - server_threads* was renamed to event_loop_threads* since this
-	    name was more appropriate.
+          - server_threads* was renamed to event_loop_threads* since this
+            name was more appropriate.
 
-	  - In set_event_loop_thread(), if we are the client thread
-	    running the show, then it is ok and we down have to wait.
+          - In set_event_loop_thread(), if we are the client thread
+            running the show, then it is ok and we down have to wait.
 
-	  - Changes to <leader_> are made more carefully now.  Both the
-	    values of <event_loop_thread_> and <client_leader_thread_> are
-	    taken into account since they may signify that we are already
-	    a leader.
+          - Changes to <leader_> are made more carefully now.  Both the
+            values of <event_loop_thread_> and <client_leader_thread_> are
+            taken into account since they may signify that we are already
+            a leader.
 
-	    Since set_client_thread() and reset_client_thread() both
-	    became more careful, set_client_leader_thread() and
-	    reset_client_leader_thread() became easier.  Also, code in the
-	    wait strategies became a bit easier.
+            Since set_client_thread() and reset_client_thread() both
+            became more careful, set_client_leader_thread() and
+            reset_client_leader_thread() became easier.  Also, code in the
+            wait strategies became a bit easier.
 
-	  - <is_event_loop_thread_> was changed from a flag to
-	    <event_loop_thread_>, a counter that keeps track of how many
-	    nested event loop call we have made.
+          - <is_event_loop_thread_> was changed from a flag to
+            <event_loop_thread_>, a counter that keeps track of how many
+            nested event loop call we have made.
 
-	  Thanks to Dave Meyer <dmeyer@lima.alex.std.saic.com> for
-	  suggesting the addition of this missing feature!
+          Thanks to Dave Meyer <dmeyer@lima.alex.std.saic.com> for
+          suggesting the addition of this missing feature!
 
-	* tests/Nested_Event_Loop: A new test for invoking nested event
-	  loop calls from user code, i.e., a call to perform_work() or
-	  run() from the implementation of the servant.
+        * tests/Nested_Event_Loop: A new test for invoking nested event
+          loop calls from user code, i.e., a call to perform_work() or
+          run() from the implementation of the servant.
 
 Fri Feb 04 22:28:16 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/GIOP_Server_Request.cpp (parse_header_lite): Recent auto
-	  compile failures to MT_Cubit were caused by the following
-	  change:
+        * tao/GIOP_Server_Request.cpp (parse_header_lite): Recent auto
+          compile failures to MT_Cubit were caused by the following
+          change:
 
-	  Mon Jan 10 12:53:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+          Mon Jan 10 12:53:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	  Jeff changed TAO_GIOP_ServerRequest::parse_header_std but not
-	  TAO_GIOP_ServerRequest::parse_header_lite.  Why this bug which
-	  was there since Jan 10 only surfaced after the following change:
+          Jeff changed TAO_GIOP_ServerRequest::parse_header_std but not
+          TAO_GIOP_ServerRequest::parse_header_lite.  Why this bug which
+          was there since Jan 10 only surfaced after the following change:
 
-	  Thu Feb  3 17:47:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+          Thu Feb  3 17:47:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	  is left as an exercise to the reader ;-)
+          is left as an exercise to the reader ;-)
 
 Fri Feb  4 00:22:51 2000  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
 
-	* docs/releasenotes/index.html:
-	  added a section for the Notification Service.
+        * docs/releasenotes/index.html:
+          added a section for the Notification Service.
 
 Thu Feb  3 19:06:58 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tests/DSI_Gateway/test_dsi.cpp (invoke):
+        * tests/DSI_Gateway/test_dsi.cpp (invoke):
 
-	  Added missing ACE_CHECK after call to ORB::shutdown().
+          Added missing ACE_CHECK after call to ORB::shutdown().
 
 Thu Feb  3 20:55:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
-	  Added code generation to initialize the union's
-	  discriminant in the default constructor. This ensures
-	  that, if an uninitialized union is inserted into an
-	  Any, whether by itself or contained in some constructed
-	  type, the Any destructor's call to deep_free() will
-	  execute properly. The discriminator must be set to the
-	  first case label value of the first member declared in
-	  the union. Thanks to Christopher Kohlhoff <chris@kohlhoff.com>
-	  for sending in the example that uncovered this bug.
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Added code generation to initialize the union's
+          discriminant in the default constructor. This ensures
+          that, if an uninitialized union is inserted into an
+          Any, whether by itself or contained in some constructed
+          type, the Any destructor's call to deep_free() will
+          execute properly. The discriminator must be set to the
+          first case label value of the first member declared in
+          the union. Thanks to Christopher Kohlhoff <chris@kohlhoff.com>
+          for sending in the example that uncovered this bug.
 
 Thu Feb  3 17:47:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DomainC.cpp:
-	* tao/GIOP.cpp:
-	* tao/ImplRepoC.cpp:
-	* tao/InterfaceC.cpp:
-	* tao/MessagingC.cpp:
-	* tao/Object.cpp:
-	* tao/POAC.cpp:
-	* tao/PolicyC.cpp:
-	* tao/PollableC.cpp:
-	* tao/Stub.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	  Another temporary workaround to enable the coexistence of
-	  reliable oneways requests and regular twoway requests until
-	  we have GIOP 1.2 fully in place. There were compatibility
-	  problems with Java servers. Thanks to Lothar Werzinger
-	  <werzinger.lothar@krones.de> for reporting this problem.
+        * tao/DomainC.cpp:
+        * tao/GIOP.cpp:
+        * tao/ImplRepoC.cpp:
+        * tao/InterfaceC.cpp:
+        * tao/MessagingC.cpp:
+        * tao/Object.cpp:
+        * tao/POAC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.cpp:
+        * tao/Stub.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+          Another temporary workaround to enable the coexistence of
+          reliable oneways requests and regular twoway requests until
+          we have GIOP 1.2 fully in place. There were compatibility
+          problems with Java servers. Thanks to Lothar Werzinger
+          <werzinger.lothar@krones.de> for reporting this problem.
 
 Thu Feb 03 16:12:01 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Leader_Follower.i (~TAO_LF_Server_Thread_Helper): The
-	  charanga (Linux box) Exceptions auto build caught the type
-	  problem described in bug 416.  In this case, a client thread
-	  completed its twoway call and while giving up leadership, it
-	  noticed that there were server threads waiting to become the
-	  leaders. Hence it sent a broadcast to the server threads and did
-	  not wake any of the followers.  In the meantime, however, the
-	  server threads had timed out, and therefore did not select a new
-	  leader.
+        * tao/Leader_Follower.i (~TAO_LF_Server_Thread_Helper): The
+          charanga (Linux box) Exceptions auto build caught the type
+          problem described in bug 416.  In this case, a client thread
+          completed its twoway call and while giving up leadership, it
+          noticed that there were server threads waiting to become the
+          leaders. Hence it sent a broadcast to the server threads and did
+          not wake any of the followers.  In the meantime, however, the
+          server threads had timed out, and therefore did not select a new
+          leader.
 
-	  So the fix is for the server thread to always select a new
-	  leader if needed, irrespective of whether a server thread was
-	  able to become a leader or it had timed out.
-	  reset_server_thread() was removed and
-	  ~TAO_LF_Server_Thread_Helper was given the responsibility.
+          So the fix is for the server thread to always select a new
+          leader if needed, irrespective of whether a server thread was
+          able to become a leader or it had timed out.
+          reset_server_thread() was removed and
+          ~TAO_LF_Server_Thread_Helper was given the responsibility.
 
-	* tao/ORB_Core.cpp (run): No need to call
-	  server_thread_helper.reset_server_thread() explicitly anymore.
-	  ~TAO_LF_Server_Thread_Helper will take care of it.
+        * tao/ORB_Core.cpp (run): No need to call
+          server_thread_helper.reset_server_thread() explicitly anymore.
+          ~TAO_LF_Server_Thread_Helper will take care of it.
 
 Thu Feb  3 13:40:42 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.{h,cpp}:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.{h,cpp}:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.{h,cpp}:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.{h,cpp}:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.{h,cpp}:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.{h,cpp}:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
 
-	  Fixed all the TAO_ exception macros to ACE_ exception macros.
+          Fixed all the TAO_ exception macros to ACE_ exception macros.
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Makefile:
 
-	  Added libAVSvc to the LDLIBS and -DTAO_ORBSVCS_HAS_Trader to the
-	  Makefile so that the TAO_String_Hash_Key class doesn't get defined
-	  twice.
+          Added libAVSvc to the LDLIBS and -DTAO_ORBSVCS_HAS_Trader to the
+          Makefile so that the TAO_String_Hash_Key class doesn't get defined
+          twice.
 
         Thanks to Alex Luk <fluk7@ie.cuhk.edu.hk> and Kenneth Osenbroch
         <kennetho@stud.cs.uit.no> for reporting this.
