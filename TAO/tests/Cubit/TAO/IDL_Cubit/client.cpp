@@ -17,8 +17,8 @@ Cubit_Client::Cubit_Client (void)
     call_count_ (0),
     error_count_ (0),
     cubit_factory_ior_file_ (0),
-    use_naming_service_ (1),
-    f_handle_ (ACE_INVALID_HANDLE)
+    f_handle_ (ACE_INVALID_HANDLE),
+    use_naming_service_ (1)
 {
 }
 
