@@ -50,7 +50,7 @@ public:
 
   /// Default constructor.
   TAO_GIOP_Message_Version (CORBA::Octet maj = TAO_DEF_GIOP_MAJOR,
-			    CORBA::Octet min = TAO_DEF_GIOP_MINOR);
+                            CORBA::Octet min = TAO_DEF_GIOP_MINOR);
 
   /// Destructor.
   ~TAO_GIOP_Message_Version (void);
