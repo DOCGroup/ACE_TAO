@@ -80,19 +80,19 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
     return 1;
 
   // Grab the cached policies from the POA.
-  TAO_POA_Cached_Policies &cached_policies =
+  TAO::Portable_Server::Cached_Policies &cached_policies =
     poa->cached_policies ();
 
   // Grab the priority model used by the POA.  Note that this cannot
   // be NOT_SPECIFIED because NOT_SPECIFIED is not allowed with thread
   // pool with lanes.
-  TAO_POA_Cached_Policies::PriorityModel priority_model =
+  TAO::Portable_Server::Cached_Policies::PriorityModel priority_model =
     cached_policies.priority_model ();
 
   // If the policy is CLIENT_PROPAGATED, then we are collocated
   // because the current thread is of the correct priority :-) and
   // we'll simple use the current thread to run the upcall.
-  if (priority_model == TAO_POA_Cached_Policies::CLIENT_PROPAGATED)
+  if (priority_model == TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
     return 1;
 
   // Locate the target servant.  We are really not interested in the

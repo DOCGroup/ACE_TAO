@@ -130,7 +130,7 @@ TAO_Object_Adapter::set_transient_poa_name_size (const TAO_Server_Strategy_Facto
         case TAO_ACTIVE_DEMUX:
         default:
           TAO_Object_Adapter::transient_poa_name_size_ =
-            ACE_static_cast (CORBA::ULong,
+            static_cast <CORBA::ULong>(
                              ACE_Active_Map_Manager_Key::size ());
           break;
         }
@@ -1195,8 +1195,8 @@ TAO_Object_Adapter::poa_name_iterator::operator* () const
     - this->last_separator_
     - TAO_POA::name_separator_length ();
 
-  return ACE_CString (ACE_reinterpret_cast (const char *,
-                                            &this->folded_buffer_[start_at]),
+  return ACE_CString (reinterpret_cast <const char *>
+                                       (&this->folded_buffer_[start_at]),
                       how_many);
 }
 
@@ -1331,7 +1331,7 @@ TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_ORB_Core *oc)
 {
   TAO_Adapter *adapter = oc->poa_adapter ();
   TAO_Object_Adapter *object_adapter =
-    ACE_dynamic_cast(TAO_Object_Adapter *, adapter);
+    dynamic_cast<TAO_Object_Adapter *>(adapter);
   this->object_adapter_ = object_adapter;
 }
 
@@ -1833,8 +1833,8 @@ TAO_POA_Current_Impl::setup (TAO_POA *p,
   this->tss_resources_ = TAO_TSS_RESOURCES::instance ();
 
   this->previous_current_impl_ =
-    ACE_static_cast (TAO_POA_Current_Impl *,
-                     this->tss_resources_->poa_current_impl_);
+    static_cast <TAO_POA_Current_Impl *>
+                     (this->tss_resources_->poa_current_impl_);
   this->tss_resources_->poa_current_impl_ = this;
 
   // Setup is complete.
@@ -1915,8 +1915,8 @@ TAO_POA_Current::get_object_id (ACE_ENV_SINGLE_ARG_DECL)
 TAO_POA_Current_Impl *
 TAO_POA_Current::implementation (void)
 {
-  return ACE_static_cast (TAO_POA_Current_Impl *,
-                          TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+  return static_cast <TAO_POA_Current_Impl *>
+                          (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 }
 
 TAO_POA_Current_Impl *
@@ -1926,8 +1926,8 @@ TAO_POA_Current::implementation (TAO_POA_Current_Impl *new_current)
     TAO_TSS_RESOURCES::instance ();
 
   TAO_POA_Current_Impl *old =
-    ACE_static_cast (TAO_POA_Current_Impl *,
-                     tss->poa_current_impl_);
+    static_cast <TAO_POA_Current_Impl *>
+                     (tss->poa_current_impl_);
   tss->poa_current_impl_ = new_current;
   return old;
 }

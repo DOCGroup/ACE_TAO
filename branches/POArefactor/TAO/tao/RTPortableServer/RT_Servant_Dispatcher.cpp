@@ -97,19 +97,19 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
   const char *priority_model;
   RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
-  TAO_POA_Cached_Policies &cached_policies =
+  TAO::Portable_Server::Cached_Policies &cached_policies =
     poa.cached_policies ();
 
   // NOT_SPECIFIED PriorityModel processing.
   if (cached_policies.priority_model () ==
-      TAO_POA_Cached_Policies::NOT_SPECIFIED)
+      TAO::Portable_Server::Cached_Policies::NOT_SPECIFIED)
     {
       priority_model = "RTCORBA::NOT_SPECIFIED";
     }
 
   // CLIENT_PROPAGATED PriorityModel processing.
   else if (cached_policies.priority_model () ==
-      TAO_POA_Cached_Policies::CLIENT_PROPAGATED)
+      TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
     {
       priority_model = "RTCORBA::CLIENT_PROPAGATED";
 
@@ -286,11 +286,11 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_POA &poa,
       return;
     }
 
-  TAO_POA_Cached_Policies &cached_policies =
+  TAO::Portable_Server::Cached_Policies &cached_policies =
     poa.cached_policies ();
 
   if (cached_policies.priority_model () !=
-      TAO_POA_Cached_Policies::SERVER_DECLARED ||
+      TAO::Portable_Server::Cached_Policies::SERVER_DECLARED ||
       servant_priority == TAO_INVALID_PRIORITY)
     {
       //
