@@ -717,9 +717,13 @@ TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_functio
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_Object_Manager<CORBA::Object, CORBA::Object_var>;
+template class TAO_Pseudo_Var_T<CORBA::Object>;
+template class TAO_Pseudo_Out_T<CORBA::Object, CORBA::Object_var>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Object_Manager<CORBA::Object, CORBA::Object_var>
+#pragma instantiate TAO_Pseudo_Var_T<CORBA::Object>
+#pragma instantiate TAO_Pseudo_Out_T<CORBA::Object, CORBA::Object_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

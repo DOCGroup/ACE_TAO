@@ -19,17 +19,29 @@
 #include "ace/pre.h"
 
 #include "dynamicinterface_export.h"
-#include "tao/corbafwd.h"
-#include "ace/Unbounded_Queue.h"
-#include "ace/Atomic_Op.h"
-#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/corbafwd.h"
+#include "tao/Pseudo_VarOut_T.h"
+
+#include "ace/Unbounded_Queue.h"
+#include "ace/Atomic_Op.h"
+#include "ace/CORBA_macros.h"
+
 namespace CORBA
 {
+  TAO_DynamicInterface_Export void release (ContextList_ptr);
+  TAO_DynamicInterface_Export Boolean is_nil (ContextList_ptr);
+
+  typedef TAO_Pseudo_Var_T<Context> Context_var;
+  typedef TAO_Pseudo_Out_T<Context, Context_var> Context_out;
+
+  typedef TAO_Pseudo_Var_T<ContextList> ContextList_var;
+  typedef TAO_Pseudo_Out_T<ContextList, ContextList_var> ContextList_out;
+
   /**
    * @class Context
    *
@@ -97,62 +109,6 @@ namespace CORBA
     TAO_SYNCH_MUTEX refcount_lock_;
   };
 
-  /**
-   * @class Context_var
-   *
-   * @brief The T_var class for Context.
-   *
-   * As any other pseudo object Context must have a T_var class, the
-   * interface an semantics are specified in the CORBA spec.
-   */
-  class TAO_DynamicInterface_Export Context_var
-  {
-  public:
-    Context_var (void);
-    Context_var (CORBA::Context_ptr);
-    Context_var (const Context_var &);
-    ~Context_var (void);
-
-    Context_var &operator= (CORBA::Context_ptr);
-    Context_var &operator= (const Context_var &);
-    Context_ptr operator-> (void) const;
-
-    operator const CORBA::Context_ptr &() const;
-    operator CORBA::Context_ptr &();
-    // in, inout, out, _retn
-    Context_ptr in (void) const;
-    Context_ptr &inout (void);
-    Context_ptr &out (void);
-    Context_ptr _retn (void);
-    Context_ptr ptr (void) const;
-
-  private:
-    Context_ptr ptr_;
-  };
-
-  class TAO_DynamicInterface_Export Context_out
-  {
-    // = TITLE
-    //    The T_out class for Context
-    //
-    // = DESCRIPTION
-    //    As any other pseudo object Context must have a T_out class,
-    //    the interface an semantics are specified in the CORBA spec.
-  public:
-    Context_out (Context_ptr &);
-    Context_out (Context_var &);
-    Context_out (Context_out &);
-    Context_out &operator= (Context_out &);
-    Context_out &operator= (const Context_var &);
-    Context_out &operator= (Context_ptr);
-    operator Context_ptr &();
-    Context_ptr &ptr (void);
-    Context_ptr operator-> (void);
-
-  private:
-    CORBA::Context_ptr &ptr_;
-  };
-
   class TAO_DynamicInterface_Export ContextList
   {
     // = TITLE
@@ -205,12 +161,9 @@ namespace CORBA
     void  _decr_refcnt (void);
     // Increment and decrement ref counts.
 
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     // Useful for template programming.
     typedef CORBA::ContextList_ptr _ptr_type;
     typedef CORBA::ContextList_var _var_type;
-#endif /* __GNUC__ */
-
 
   private:
   // Not allowed.
@@ -222,60 +175,6 @@ namespace CORBA
 
     ACE_Unbounded_Queue<char *> ctx_list_;
     // Internal list of typecodes.
-  };
-
-  class TAO_DynamicInterface_Export ContextList_var
-  {
-  public:
-    ContextList_var (void); // default constructor
-    ContextList_var (ContextList_ptr);
-    ContextList_var (const ContextList_var &); // copy constructor
-    ~ContextList_var (void); // destructor
-
-    ContextList_var &operator= (ContextList_ptr);
-    ContextList_var &operator= (const ContextList_var &);
-    ContextList_ptr operator-> (void) const;
-
-    operator const ContextList_ptr &() const;
-    operator ContextList_ptr &();
-    // in, inout, out, _retn
-    ContextList_ptr in (void) const;
-    ContextList_ptr &inout (void);
-    ContextList_ptr &out (void);
-    ContextList_ptr _retn (void);
-    ContextList_ptr ptr (void) const;
-
-  private:
-    ContextList_ptr ptr_;
-  };
-
-  class TAO_DynamicInterface_Export ContextList_out
-  {
-    // = TITLE
-    //    The T_out class for ContextList
-    //
-    // = DESCRIPTION
-    //    As any other pseudo object ContextList must have a T_out class,
-    //    the interface an semantics are specified in the CORBA spec.
-    //
-    // = NOTE
-    //    We use ContextList_ptr as the _ptr type instead of
-    //    CORBA::ContextList_ptr, this is an attempt to reduced the cyclic
-    //    dependencies in TAO.
-    //
-  public:
-    ContextList_out (ContextList_ptr &);
-    ContextList_out (ContextList_var &);
-    ContextList_out (ContextList_out &);
-    ContextList_out &operator= (ContextList_out &);
-    ContextList_out &operator= (const ContextList_var &);
-    ContextList_out &operator= (ContextList_ptr);
-    operator ContextList_ptr &();
-    ContextList_ptr &ptr (void);
-    ContextList_ptr operator-> (void);
-
-  private:
-    ContextList_ptr &ptr_;
   };
 } // End CORBA namespace.
 

@@ -25,7 +25,8 @@
  *
  * @brief Parametrized implementation of _var class for
  * TypeCode, Object, AbstractBase, NamedValue, NVList,
- * Principal, Request, Context, and Environment.
+ * Principal, Request, Context, ORB, LocalObject,
+ * and Environment.
  *
  */
 template <typename T>
@@ -63,7 +64,8 @@ private:
  *
  * @brief Parametrized implementation of _out class for
  * TypeCode, Object, AbstractBase, NamedValue, NVList,
- * Principal, Request, Context, and Environment.
+ * Principal, Request, Context, ORB, LocalObject,
+ * and Environment.
  *
  */
 template <typename T, typename T_var>

@@ -350,3 +350,15 @@ operator>> (TAO_InputCDR &strm,
                                            _tao_valuetype);
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class TAO_Pseudo_Value_Var_T<CORBA::ValueBase>;
+  template class TAO_Pseudo_Value_Out_T<CORBA::ValueBase, CORBA::ValueBase_var>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate TAO_Pseudo_Value_Var_T<CORBA::ValueBase>
+# pragma instantiate TAO_Pseudo_Value_Out_T<CORBA::ValueBase, CORBA::ValueBase_var>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -1,3 +1,36 @@
+Fri Mar 28 17:09:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * AbstractBase.cpp:
+        * Environment.cpp:
+        * LocalObject.cpp:
+        * NVList.cpp:
+        * ORB.cpp:
+        * ORB.h:
+        * ORB.i:
+        * Object.cpp:
+        * Principal.cpp:
+        * Pseudo_VarOut_T.h:
+        * TAO.dsp:
+        * Typecode.cpp:
+        * ValueBase.cpp:
+        * ValueFactory.cpp:
+        * corbafwd.h:
+        * DynamicInterface/Context.cpp:
+        * DynamicInterface/Context.h:
+        * DynamicInterface/Context.inl:
+        * DynamicInterface/ExceptionList.h:
+        * DynamicInterface/ExceptionList.inl:
+        * DynamicInterface/Request.cpp:
+        * DynamicInterface/Request.h:
+        * DynamicInterface/Request.inl:
+        * DynamicInterface/Server_Request.cpp:
+        * DynamicInterface/Server_Request.h:
+
+	  Templatized _var and _out classes in
+	  DynamicInterface, added conditional explicit
+	  template instantiations, and update project
+	  settings.
+
 Fri Mar 28 000:58:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AbstractBase.h:

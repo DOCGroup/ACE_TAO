@@ -25,7 +25,10 @@
 #include "ace/pre.h"
 
 #include "dynamicinterface_export.h"
+
 #include "tao/corbafwd.h"
+#include "tao/Pseudo_VarOut_T.h"
+
 #include "ace/Unbounded_Queue.h"
 #include "ace/Atomic_Op.h"
 #include "ace/CORBA_macros.h"
@@ -37,8 +40,11 @@
 
 namespace CORBA
 {
-  class ExceptionList;
-  typedef ExceptionList *ExceptionList_ptr;
+  TAO_DynamicInterface_Export void release (ExceptionList_ptr);
+  TAO_DynamicInterface_Export Boolean is_nil (ExceptionList_ptr);
+
+  typedef TAO_Pseudo_Var_T<ExceptionList> ExceptionList_var;
+  typedef TAO_Pseudo_Out_T<ExceptionList, ExceptionList_var> ExceptionList_out;
 
   class TAO_DynamicInterface_Export ExceptionList
   {
@@ -54,7 +60,7 @@ namespace CORBA
     // Constructor.
     
     ExceptionList (CORBA::ULong len,
-                         CORBA::TypeCode_ptr *tc_list);
+                   CORBA::TypeCode_ptr *tc_list);
     // Constructor - initialize given a length and an array of
     // TypeCodes.
     
@@ -88,14 +94,12 @@ namespace CORBA
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
     // Remove the typecode at slot i. Raises the "Bounds" exception.
     
-    void  _incr_refcnt (void);
-    void  _decr_refcnt (void);
+    void _incr_refcnt (void);
+    void _decr_refcnt (void);
     // Increment and decrement ref counts.
     
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     typedef CORBA::ExceptionList_ptr _ptr_type;
     typedef CORBA::ExceptionList_var _var_type;
-#endif /* __GNUC__ */
     // Useful for template programming.
     
   private:
@@ -108,43 +112,6 @@ namespace CORBA
     
     ACE_Unbounded_Queue<CORBA::TypeCode_ptr> tc_list_;
     // Internal list of typecodes.
-  };
-  
-  class TAO_DynamicInterface_Export ExceptionList_var
-  {
-    // = TITLE
-    //    ExceptionList_var
-    //
-    // = DESCRIPTION
-    //    Lifecycle management helper class for ExceptionList objects.
-  public:
-    ExceptionList_var (void);
-    // Default constructor.
-    
-    ExceptionList_var (ExceptionList_ptr);
-    
-    ExceptionList_var (const ExceptionList_var &);
-    // Copy constructor.
-    
-    ~ExceptionList_var (void);
-    // Destructor.
-    
-    ExceptionList_var &operator= (ExceptionList_ptr);
-    ExceptionList_var &operator= (const ExceptionList_var &);
-    ExceptionList_ptr operator-> (void) const;
-    
-    operator const ExceptionList_ptr &() const;
-    operator ExceptionList_ptr &();
-    
-    // in, inout, out, _retn.
-    ExceptionList_ptr in (void) const;
-    ExceptionList_ptr &inout (void);
-    ExceptionList_ptr &out (void);
-    ExceptionList_ptr _retn (void);
-    ExceptionList_ptr ptr (void) const;
-    
-  private:
-    ExceptionList_ptr ptr_;
   };
 }  // End CORBA namespace
 
