@@ -88,7 +88,7 @@ ACE_Tokenizer::is_preserve_designator (char start, char &stop, int &strip)
   return 0;
 }
 
-const char *
+char *
 ACE_Tokenizer::next (void)
 {
   // Check if the previous pass was the last one in the buffer.
@@ -555,7 +555,8 @@ ACE_Process_Options::ACE_Process_Options (int ie,
 #endif /* ACE_WIN32 */
     environment_buf_index_ (0),
     environment_argv_index_ (0),
-    cl_options_buf_ (0)
+    cl_options_buf_ (0),
+    cl_options_argv_calculated_ (0)
 {
   ACE_NEW (cl_options_, char[cobl]);
   cl_options_[0] = '\0';
@@ -748,25 +749,36 @@ ACE_Process_Options::cl_options (const char *format, ...)
   va_end (argp);
 }
 
-char **
+char * const *
 ACE_Process_Options::cl_options_argv (void)
 {
-  // This tokenizer will replace all spaces with end-of-string
-  // characters and will preserve text between "" and '' pairs.
-  ACE_Tokenizer parser (cl_options_);
-  parser.delimiter_replace (' ', '\0');
-  parser.preserve_designators ('\"', '\"');
-  parser.preserve_designators ('\'', '\'');
-
-  int x = 0;
-  do
+  if (cl_options_argv_calculated_ == 0)
     {
-      cl_options_argv_[x] = parser.next ();
+      cl_options_argv_calculated_ = 1;
+
+      // This tokenizer will replace all spaces with end-of-string
+      // characters and will preserve text between "" and '' pairs.
+      ACE_Tokenizer parser (cl_options_);
+      parser.delimiter_replace (' ', '\0');
+      parser.preserve_designators ('\"', '\"');
+      parser.preserve_designators ('\'', '\'');
+
+      // argv[0] is the program name.
+      cl_options_argv_[0] = path_;
+
+      int x = 1;
+      do
+	{
+	  cl_options_argv_[x] = parser.next ();
+	}
+      while (cl_options_argv_[x] != 0 &&
+	     // substract one for the ending zero.
+	     ++x < MAX_COMMAND_LINE_OPTIONS-1);
+
+      cl_options_argv_[x] = 0;
     }
-  while (cl_options_argv_[x] != 0 && 
-	 ++x < MAX_COMMAND_LINE_OPTIONS);
 			
-  return 0;
+  return cl_options_argv_;
 }
 
 char **

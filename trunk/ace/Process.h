@@ -68,7 +68,8 @@ public:
   // Set the path to the application.  This can either be a full path,
   // relative path, or just an executable name.  If an executable name
   // is used, we rely on the platforms support for searching paths.
-  // strlen of <p> must be <= MAXPATHLEN.
+  // strlen of <p> must be <= MAXPATHLEN.  Since we need a path to run
+  // a process, this method *must* be called!
 
   void cl_options (const char *format, ...);
   // Set the command-line arguments.  <format> can use any printf
@@ -90,7 +91,7 @@ public:
   // Buffer of command-line options.  Returns exactly what was passed
   // to this->cl_options.
 
-  char **cl_options_argv (void);
+  char * const *cl_options_argv (void);
   // argv-style command-line options.  Parses and modifies the string
   // created from this->cl_options.  All spaces not in quotes ("" or
   // '') are replaced with null (\0) bytes.  An argv array is built
@@ -213,8 +214,11 @@ protected:
   char *cl_options_;
   // Buffer containing command line options.
 
-  const char *cl_options_argv_[MAX_COMMAND_LINE_OPTIONS];
+  char *cl_options_argv_[MAX_COMMAND_LINE_OPTIONS];
   // Are 64 command-line arguments enough?
+
+  int cl_options_argv_calculated_;
+  // Ensures cl_options_argv is only calculated once.
 
   TCHAR working_directory_[MAXPATHLEN + 1];
   // The current working directory.
@@ -389,7 +393,7 @@ public:
   // if there is no memory left.  If <strip> == 1, then the preserve
   // designators will be stripped from the tokens returned by next.
 
-  const char *next (void);
+  char *next (void);
   // Returns the next token.
 
   enum { 
