@@ -162,10 +162,22 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
    *solaris2*)
      case "$CXX" in
        CC)
+         dnl Some flags only work with Sun C++ 4.2
+         if (CC -V 2>&1 | egrep 'Compilers 4\.2' > /dev/null); then
+           CXXFLAGS="$CXXFLAGS -features=castop"
+           if test "$ace_user_enable_rtti" = yes; then
+             CXXFLAGS="$CXXFLAGS -features=rtti"
+           fi 
+         fi
+
+         if test "$ace_user_enable_exceptions" != yes; then
+           CXXFLAGS="$CXXFLAGS -noex"
+         fi
+
          CXXFLAGS="$CXXFLAGS"
          ACE_CXXFLAGS="$ACE_CXXFLAGS"
-         DCXXFLAGS="$DCXXFLAGS"
-         OCXXFLAGS="$OCXXFLAGS"
+         DCXXFLAGS="$DCXXFLAGS -g"
+         OCXXFLAGS="$OCXXFLAGS -O"
          LDFLAGS="$LDFLAGS -xildoff"
          ;;
      esac
