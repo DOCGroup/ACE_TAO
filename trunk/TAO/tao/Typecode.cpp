@@ -485,8 +485,10 @@ TC_Private_State::~TC_Private_State (void)
               this->tc_member_name_list_ [i] = 0; // not owned by us
 
             delete [] this->tc_member_name_list_;
+	    this->tc_member_name_list_ = 0;
           }
         break;
+
     case CORBA::tk_struct:
     case CORBA::tk_except:
       {
@@ -499,6 +501,7 @@ TC_Private_State::~TC_Private_State (void)
               this->tc_member_name_list_ [i] = 0; // not owned by us
 
             delete [] this->tc_member_name_list_;
+	    this->tc_member_name_list_ = 0;
           }
 
         // free up member type list
@@ -513,20 +516,25 @@ TC_Private_State::~TC_Private_State (void)
 
             // Now free up the array.
             delete [] this->tc_member_type_list_;
+	    this->tc_member_type_list_ = 0;
           }
         this->tc_member_count_ = 0;
       }
       break;
+
     case CORBA::tk_sequence:
     case CORBA::tk_array:
     case CORBA::tk_alias:
       // Delete the content type only if it has a parent i.e., if it
       // is not acquired from the pool of constant or predefined
       // typecodes.
-      if (this->tc_content_type_known_
-          && this->tc_content_type_->parent_)
-        delete this->tc_content_type_;
+      if (this->tc_content_type_known_ && this->tc_content_type_ != 0)
+	{
+	  CORBA::release (this->tc_content_type_);
+	  this->tc_content_type_ = 0;
+	}
       break;
+
     case CORBA::tk_union:
       {
         // free up the member name list
@@ -553,6 +561,7 @@ TC_Private_State::~TC_Private_State (void)
 
             // Now free up the array.
             delete [] this->tc_member_type_list_;
+	    this->tc_member_type_list_ = 0;
           }
         if (this->tc_member_label_list_known_)
           {
@@ -563,13 +572,16 @@ TC_Private_State::~TC_Private_State (void)
               delete this->tc_member_label_list_[i];
 
             delete [] this->tc_member_label_list_;
+	    this->tc_member_label_list_ = 0;
           }
         this->tc_member_count_ = 0;
         // Discriminator must come last b/c it will be inside the Any
         // in each element of the label list.
         delete this->tc_discriminator_type_;
+	this->tc_discriminator_type_ = 0;
       }
       break;
+
     default:
       // nothing to do
       break;

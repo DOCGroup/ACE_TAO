@@ -1,3 +1,9 @@
+Tue May 19 12:19:42 1998  Carlos O'Ryan  <coryan@JIG>
+
+	* tao/Typecode.cpp: 
+	  Fixed crash at shutdown, TypeCode is a reference counted type,
+	  but in some points they were removed by a simple "delete".
+
 Mon May 18 16:46:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp (parse_key): Changed the processing of IORs so that
