@@ -238,10 +238,10 @@ ACE_Reactor::end_event_loop (void)
 
   ACE_Reactor::end_event_loop_ = 1;
 
-  // Send a notification, but don't block if there's no one to receive
-  // it.
-  return ACE_Reactor::instance ()->notify
-    (0, ACE_Event_Handler::NULL_MASK, (ACE_Time_Value *) &ACE_Time_Value::zero);
+  // Wakeup all threads waiting in the Reactor.
+  ACE_Reactor::instance ()->wakeup_all_threads ();
+
+  return 0;
 }
 
 int

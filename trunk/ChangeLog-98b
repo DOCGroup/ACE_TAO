@@ -1,3 +1,12 @@
+Wed Aug 05 23:57:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Reactor.cpp (end_event_loop): Changed the code so that *all*
+ 	  threads are woken up.  Thanks to Olivier Lau
+ 	  <olivier_lau@srtelecom.com> for pointing this bug out.
+
+	* examples/Reactor/ReactorEx/test_multithreading.cpp (main):
+ 	  Changed Reactor->close() to Reactor::end_event_loop().
+
 Wed Aug  5 23:12:54 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU: Changed

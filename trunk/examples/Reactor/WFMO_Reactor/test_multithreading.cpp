@@ -229,14 +229,18 @@ main (int argc, char **argv)
   // Sleep for a while
   ACE_OS::sleep (interval);
 
-  // Close Reactor
-  ACE_Reactor::instance ()->close ();
+  // End the Reactor event loop
+  ACE_Reactor::end_event_loop ();
 
   // Wait for all threads to exit 
   ACE_Thread_Manager::instance ()->wait ();
 
-  // Delete dynamic resources
+  // Delete dynamic resources; this is necessary since it will destroy
+  // the Reactor instance.  If we wait for the Object Manager to do
+  // this, it will be too late since Task_Handler instance would have
+  // disappeared.
   ACE_Service_Config::close_singletons ();
 
   return 0;
 }
+
