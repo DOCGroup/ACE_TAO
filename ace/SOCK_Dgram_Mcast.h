@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SOCK_DGRAM_MCAST_H
 #define ACE_SOCK_DGRAM_MCAST_H
 #include "ace/pre.h"
@@ -38,7 +37,8 @@
 class ACE_Export ACE_SOCK_Dgram_Mcast : 
     public ACE_SOCK_Dgram_Mcast_Ex <ACE_SDM_DEFOPT_LOCK>
 {
-
+public:
+  ACE_SOCK_Dgram_Mcast (void) {}
 };
 
 #include "ace/post.h"

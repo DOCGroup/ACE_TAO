@@ -25,56 +25,18 @@
 
 ACE_RCSID(tests, Config_Test, "$Id$")
 
-static int 
-test_subkey_path (void)
-{
-  ACE_Configuration_Win32Registry config (HKEY_LOCAL_MACHINE);
-
-  ACE_Configuration_Section_Key root = config.root_section ();
-
-  ACE_Configuration_Section_Key testsection;
-
-  if (config.open_section (root,
-                           ACE_TEXT ("Software\\ACE\\test"),
-                           1,
-                           testsection))
-    return -26;
-
-  if (config.open_section (root,
-                           ACE_TEXT ("Software"),
-                           0,
-                           testsection))
-    return -27;
-
-  if (config.remove_section (testsection,
-                             ACE_TEXT ("ACE"),
-                             1))
-    return -28;
-
-  return 0;
-}
-
 static int
-test (ACE_Configuration *config)
+test (ACE_Configuration *config,
+      ACE_Configuration_Section_Key &testsection)
 {
   ACE_TString stvalue;
-
-  ACE_Configuration_Section_Key root =
+  const ACE_Configuration_Section_Key &root =
     config->root_section ();
 
-  // Add a section.
-  ACE_Configuration_Section_Key testsection;
-
-  if (config->open_section (root,
-                            ACE_TEXT ("test"),
-                            1,
-                            testsection))
-    return -2;
-
   // Set some values.
-  else if (config->set_string_value (testsection,
-                                     ACE_TEXT ("stvalue"),
-                                     ACE_TEXT ("stvaluetest")))
+  if (config->set_string_value (testsection,
+                                ACE_TEXT ("stvalue"),
+                                ACE_TEXT ("stvaluetest")))
     return -3;
 
   else if (config->remove_value (testsection,
@@ -265,6 +227,27 @@ test (ACE_Configuration *config)
                                0))
     return -21;
 
+  return 0;
+}
+
+static int
+test (ACE_Configuration *config)
+{
+  const ACE_Configuration_Section_Key& root =
+    config->root_section ();
+
+  ACE_Configuration_Section_Key testsection;
+
+  if (config->open_section (root,
+                            ACE_TEXT ("test"),
+                            1,
+                            testsection))
+    return -2;
+
+  int ret_val = test (config, testsection);
+  if (ret_val)
+	  return ret_val;
+
   // Try to remove the testsection root, it should fail since it still
   // has subkeys
   if (!config->remove_section (root,
@@ -298,23 +281,55 @@ test (ACE_Configuration *config)
 }
 
 static int
+test_subkey_path (ACE_Configuration* config)
+{
+  ACE_Configuration_Section_Key root =
+    config->root_section ();
+
+  ACE_Configuration_Section_Key testsection;
+
+  if (config->open_section (root,
+                            ACE_TEXT ("Software\\ACE\\test"),
+                            1,
+                            testsection))
+    return -26;
+
+  int ret_val = test (config, testsection);
+  if (ret_val)
+	  return ret_val;
+
+  if (config->open_section (root,
+                            ACE_TEXT ("Software"),
+                            0,
+                            testsection))
+    return -27;
+
+  if (config->remove_section (testsection,
+                              ACE_TEXT ("ACE"),
+                              1))
+    return -28;
+
+  return 0;
+}
+
+static int
 run_tests (void)
 {
 #if defined (ACE_WIN32)
   {
-    int result = test_subkey_path ();
+    ACE_Configuration_Win32Registry RegConfig (HKEY_LOCAL_MACHINE);
+    int result = test_subkey_path (&RegConfig);
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Win32 registry test failed (%d)\n", result),
                         -1);
   }
-
-  // Test win32 registry implementation.
+  // test win32 registry implementation.
   HKEY root =
     ACE_Configuration_Win32Registry::resolve_key (HKEY_LOCAL_MACHINE,
                                                   ACE_TEXT ("Software\\ACE\\test"));
   if (!root)
-    ACE_ERROR_RETURN((LM_ERROR,
+    ACE_ERROR_RETURN ((LM_ERROR,
                       "resolve_key is broken\n"),-2);
 
   // test resolving of forward slashes
@@ -322,7 +337,7 @@ run_tests (void)
     ACE_Configuration_Win32Registry::resolve_key (HKEY_LOCAL_MACHINE,
                                                   ACE_TEXT ("Software/ACE/test"), 0);
   if (!root_fs)
-    ACE_ERROR_RETURN((LM_ERROR,
+    ACE_ERROR_RETURN ((LM_ERROR,
                       "resolve_key is broken\n"),-2);
 
   ACE_Configuration_Win32Registry RegConfig (root);
@@ -341,6 +356,14 @@ run_tests (void)
 
   if (heap_config.open ())
     return 0;
+  {
+    int result = test_subkey_path (&heap_config);
+    if (result)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Heap Configuration test failed (%d)\n", result),
+                        -1);
+  }
+
   {
     int result = test (&heap_config);
     if (result)
@@ -653,7 +676,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 
   // loop through each section in the fromFile object
   while ((rc) &&
-         (!fromFile.enumerate_sections (fromFileRoot,
+ (!fromFile.enumerate_sections (fromFileRoot,
                                         sectionIndex,
                                         sectionName)) )
     {
@@ -680,7 +703,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 
           // Enumerate each value in the fromFile section
           while ((rc) &&
-                 (!fromFile.enumerate_values (fromFileSection,
+ (!fromFile.enumerate_values (fromFileSection,
                                               valueIndex,
                                               valueName,
                                               valueType)))
@@ -783,7 +806,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
           // for values in the original section
           valueIndex = 0;
           while ((rc) &&
-                 (!original.enumerate_values (originalSection,
+ (!original.enumerate_values (originalSection,
                                                valueIndex,
                                                valueName,
                                                originalType)))
@@ -807,7 +830,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
   // Finally, if the original has any sections, then we're not equal
   sectionIndex = 0;
   while ((rc) &&
-         (!original.enumerate_sections (originalRoot,
+ (!original.enumerate_sections (originalRoot,
                                          sectionIndex,
                                          sectionName)))
     sectionIndex++;
