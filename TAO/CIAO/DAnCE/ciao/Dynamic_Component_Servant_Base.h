@@ -26,14 +26,20 @@
 
 namespace CIAO
 {
+  class Session_Container;
   class CIAO_SERVER_Export Dynamic_Component_Servant_Base
   {
   public:
     explicit Dynamic_Component_Servant_Base (void);
 
+    Dynamic_Component_Servant_Base (Session_Container *c);
+
     virtual ~Dynamic_Component_Servant_Base (void);
 
     virtual PortableServer::Servant create (void) = 0;
+
+  protected:
+    Session_Container *container_;
   };
 
 }

@@ -11,6 +11,13 @@ namespace CIAO
 {
   Dynamic_Component_Servant_Base::Dynamic_Component_Servant_Base (void)
   {
+    ACE_ASSERT (0);
+  }
+
+  Dynamic_Component_Servant_Base::Dynamic_Component_Servant_Base
+    (Session_Container * c)
+    : container_ (c)
+  {
   }
 
   Dynamic_Component_Servant_Base::~Dynamic_Component_Servant_Base (void)

@@ -215,7 +215,7 @@ namespace CIAO
     Dynamic_Component_Servant_Base *svt =
       new Dynamic_Component_Servant
        <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, COMP>
-          (this->executor_, home.in ());
+          (this->executor_, home.in (), this->container_);
 
     this->container_.update_map (oid.in (), svt);
 
