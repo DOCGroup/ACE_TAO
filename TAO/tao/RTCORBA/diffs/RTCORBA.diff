@@ -1,5 +1,6 @@
---- orig/RTCORBAC.h	2004-09-16 12:52:02.885009600 +0200
-+++ RTCORBAC.h	2004-09-16 12:36:01.362408000 +0200
+// -*- C++ -*-
+--- orig/RTCORBAC.h     2004-09-16 12:52:02.885009600 +0200
++++ RTCORBAC.h  2004-09-16 12:36:01.362408000 +0200
 @@ -36,12 +36,18 @@
  
  #include "ace/config-all.h"
@@ -46,10 +47,10 @@
    protected:
      // Abstract or local interface only.
      ProtocolProperties (void);
---- orig/RTCORBAC.cpp	2004-09-16 12:52:02.885009600 +0200
-+++ RTCORBAC.cpp	2004-09-16 12:36:36.643139200 +0200
+--- orig/RTCORBAC.cpp   2004-09-16 12:52:02.885009600 +0200
++++ RTCORBAC.cpp        2004-09-16 12:36:36.643139200 +0200
 @@ -29,7 +29,7 @@
- // be\be_codegen.cpp:303
+ // be/be_codegen.cpp:303
  
  
 -#include "RTCORBAC.h"
@@ -57,9 +58,9 @@
  #include "tao/CDR.h"
  #include "tao/Typecode.h"
  #include "tao/Any_Impl_T.h"
-@@ -57,7 +57,23 @@
+@@ -56,6 +56,22 @@
+ {
  }
- 
  
 +//////////////////////////////////////////////////////
 +// CDR Encoding Support hand crafted
@@ -69,7 +70,7 @@
 +{
 +  return 1;
 +}
- // TAO_IDL - Generated from
++// TAO_IDL - Generated from
 +// be/be_visitor_arg_traits.cpp:60
 +
 +CORBA::Boolean
@@ -77,7 +78,6 @@
 +{
 +  return 1;
 +}
-+
- // be\be_visitor_typecode/typecode_defn.cpp:290
  
- static const CORBA::Long _oc_RTCORBA_NativePriority[] =
+ // TAO_IDL - Generated from
+ // be/be_visitor_typecode/typecode_defn.cpp:290

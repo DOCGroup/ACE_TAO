@@ -237,9 +237,6 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (this->init_tcp_properties () != 0)
-    return -1;
-
   if (this->hosts_ != 0)
     {
       // The hostname cache has already been set!
@@ -351,9 +348,6 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  if (this->init_tcp_properties () != 0)
-    return -1;
-
   if (this->hosts_ != 0)
     {
       // The hostname cache has already been set!
@@ -399,8 +393,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
 {
   ACE_NEW_RETURN (this->connection_handler_,
                   TAO_DIOP_Connection_Handler (this->orb_core_,
-                                               this->lite_flag_,
-                                               0 /* TAO_DIOP_Properties */),
+                                               this->lite_flag_),
                   -1);
 
   this->connection_handler_->local_addr (addr);
@@ -741,13 +734,6 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
                               -1);
         }
     }
-  return 0;
-}
-
-int
-TAO_DIOP_Acceptor::init_tcp_properties (void)
-{
-  // @@ Michael: We use UDP, so we do not set TCP settings.
   return 0;
 }
 

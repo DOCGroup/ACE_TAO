@@ -50,12 +50,9 @@ public:
   /// Constructor.
   TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
-  /// Constructor. <arg> parameter is used by the Acceptor to pass the
-  /// protocol configuration properties for this connection.
+  /// Constructor. 
   TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                               CORBA::Boolean flag,
-                               void *arg);
-
+                                 CORBA::Boolean flag);
 
   /// Destructor.
   ~TAO_SHMIOP_Connection_Handler (void);
@@ -89,6 +86,9 @@ public:
 
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
+
+  /// No-op since this is a local protocol.
+  int set_dscp_codepoint (CORBA::Boolean set_network_priority);
 
 protected:
 

@@ -260,6 +260,7 @@ TAO_DIOP_Transport::send_request (TAO_Stub *stub,
                           max_wait_time) == -1)
 
     return -1;
+
   this->first_request_sent();
 
   return 0;
@@ -299,7 +300,29 @@ TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
   return 1;
 }
 
+int
+TAO_DIOP_Transport::send_message_shared (TAO_Stub *stub,
+                                         int message_semantics,
+                                         const ACE_Message_Block *message_block,
+                                         ACE_Time_Value *max_wait_time)
+{
+  int result;
 
+  {
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
+
+    result =
+      this->send_message_shared_i (stub, message_semantics,
+                                   message_block, max_wait_time);
+  }
+
+  if (result == -1)
+    {
+      this->close_connection ();
+    }
+
+  return result;
+}
 
 int
 TAO_DIOP_Transport::messaging_init (CORBA::Octet major,

@@ -660,8 +660,7 @@ TAO_Object_Adapter::set_default_server_protocol_policy (ACE_ENV_SINGLE_ARG_DECL)
     default_lane_resources.acceptor_registry ();
 
   TAO_Protocols_Hooks *protocols_hooks =
-    this->orb_core_.get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_core_.get_protocols_hooks ();
 
   protocols_hooks->set_default_server_protocol_policy (acceptor_registry
                                                        ACE_ENV_ARG_PARAMETER);

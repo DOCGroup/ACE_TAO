@@ -144,37 +144,6 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
                                   int message_semantics,
                                   ACE_Time_Value *max_wait_time)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      TAO_Protocols_Hooks *tph =
-        this->orb_core_->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (tph != 0)
-        {
-
-          int result =
-            tph->update_client_protocol_properties (stub,
-                                                    this,
-                                                    "sciop");
-
-          if (result == -1)
-            return -1;
-        }
-    }
-  ACE_CATCHANY
-    {
-      if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "TAO (%P|%t) - TAO_SCIOP_Transport::send_request - "
-                             "get_protocol_hooks");
-
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-
   if (this->ws_->sending_request (orb_core,
                                   message_semantics) == -1)
 
@@ -230,16 +199,6 @@ TAO_SCIOP_Transport::send_message_shared (TAO_Stub *stub,
 
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-
-    if (TAO_debug_level > 6)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - ")
-                  ACE_TEXT ("SCIOP_Transport::send_message_shared, ")
-                  ACE_TEXT ("enable_network_priority = %d\n"),
-                  this->connection_handler_->enable_network_priority ()));
-
-    if (this->connection_handler_ != 0)
-      this->connection_handler_->set_dscp_codepoint ();
 
     r = this->send_message_shared_i (stub, message_semantics,
                                      message_block, max_wait_time);

@@ -341,13 +341,6 @@ public:
   void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  static int hook (TAO_ORB_Core *orb_core,
-                   int &send_buffer_size,
-                   int &recv_buffer_size,
-                   int &no_delay,
-                   int &enable_network_priority,
-                   const char *protocol_type);
-
   // Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
@@ -409,13 +402,6 @@ public:
   CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  static int hook (TAO_ORB_Core *orb_core,
-                   int &send_buffer_size,
-                   int &recv_buffer_size,
-                   int &no_delay,
-                   int &enable_network_priority,
-                   const char* protocol_type);
-
   void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -458,26 +444,24 @@ private:
 //*************************************************************************
 
 /**
- * @class TAO_TCP_Properties
+ * @class TAO_TCP_Protocol_Properties
  *
  * @brief RTCORBA::TCPProtocolProperties implementation
  *
  * Stores TCP Protocol configuration properties.
  */
-class TAO_RTCORBA_Export TAO_TCP_Properties
+class TAO_RTCORBA_Export TAO_TCP_Protocol_Properties
   : public RTCORBA::TCPProtocolProperties,
     public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor.
-  TAO_TCP_Properties (CORBA::Long send_buffer_size =
-                      ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
-                      CORBA::Long recv_buffer_size =
-                      ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
-                      CORBA::Boolean keep_alive = 1,
-                      CORBA::Boolean dont_route = 0,
-                      CORBA::Boolean no_delay = 1,
-                      CORBA::Boolean enable_network_priority = 0);
+  TAO_TCP_Protocol_Properties (CORBA::Long send_buffer_size,
+                               CORBA::Long recv_buffer_size,
+                               CORBA::Boolean keep_alive,
+                               CORBA::Boolean dont_route,
+                               CORBA::Boolean no_delay,
+                               CORBA::Boolean enable_network_priority);
 
   CORBA::Long send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -514,13 +498,6 @@ public:
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-
-  /// This method writes a CDR representation of TCPProtocolProperties.
-  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-
-  /// This method reads the object state from a CDR representation.
-  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-
   CORBA::Boolean enable_network_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -528,11 +505,17 @@ public:
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// This method writes a CDR representation of TCPProtocolProperties.
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+
+  /// This method reads the object state from a CDR representation.
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+
 protected:
 
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_TCP_Properties (void);
+  virtual ~TAO_TCP_Protocol_Properties (void);
 
 private:
   // = Attributes.
@@ -548,22 +531,22 @@ private:
 //*************************************************************************
 
 /**
- * @class TAO_Unix_Domain_Properties
+ * @class TAO_UnixDomain_Protocol_Properties
  *
  * @brief RTCORBA::UnixDomainProtocolProperties implementation.
  *
  * Stores Unix Domain Sockets (Local IPC) Protocol configuration
  * properties.
  */
-class TAO_RTCORBA_Export TAO_Unix_Domain_Properties
+class TAO_RTCORBA_Export TAO_UnixDomain_Protocol_Properties
   : public RTCORBA::UnixDomainProtocolProperties,
     public TAO_Local_RefCounted_Object
 {
 public:
 
   /// Constructor
-  TAO_Unix_Domain_Properties (CORBA::Long send_buffer_size = ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
-                              CORBA::Long recv_buffer_size = ACE_DEFAULT_MAX_SOCKET_BUFSIZ);
+  TAO_UnixDomain_Protocol_Properties (CORBA::Long send_buffer_size,
+                                      CORBA::Long recv_buffer_size);
 
   CORBA::Long send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -602,7 +585,7 @@ protected:
 
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_Unix_Domain_Properties (void);
+  virtual ~TAO_UnixDomain_Protocol_Properties (void);
 
 private:
 
@@ -614,22 +597,67 @@ private:
 //*************************************************************************
 
 /**
- * @class TAO_SMEM_Properties
+ * @class TAO_SharedMemory_Protocol_Properties
  *
  * @brief RTCORBA::SharedMemoryProtocolProperties implementation.
  *
  * Stores Shared Memory Protocol configuration
  * properties.
  */
-class TAO_RTCORBA_Export TAO_SMEM_Properties
+class TAO_RTCORBA_Export TAO_SharedMemory_Protocol_Properties
   : public RTCORBA::SharedMemoryProtocolProperties,
     public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor.
-  TAO_SMEM_Properties (void);
+  TAO_SharedMemory_Protocol_Properties (CORBA::Long send_buffer_size,
+                                        CORBA::Long recv_buffer_size,
+                                        CORBA::Boolean keep_alive,
+                                        CORBA::Boolean dont_route,
+                                        CORBA::Boolean no_delay,
+                                        CORBA::Long preallocate_buffer_size,
+                                        const char *mmap_filename,
+                                        const char *mmap_lockname);
 
   // = IDL interface methods.
+
+  CORBA::Long send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void send_buffer_size (CORBA::Long send_buffer_size
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Long recv_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void recv_buffer_size (CORBA::Long recv_buffer_size
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Boolean keep_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void keep_alive (CORBA::Boolean keep_alive
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Boolean dont_route (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void dont_route (CORBA::Boolean dont_route
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Boolean no_delay (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void no_delay (CORBA::Boolean no_delay
+                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Boolean enable_network_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Long preallocate_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -654,7 +682,7 @@ public:
 
   /**
    * This method writes the CDR encapsulation of an instance of
-   * SMEMProperties. This Protocol Property in TAO specific,
+   * SharedMemoryProperties. This Protocol Property in TAO specific,
    * so there is no order of encapsulation specified in the
    * RT CORBA Spec. The current implementation encodes the field
    * according to the order of declaration.
@@ -662,7 +690,7 @@ public:
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
 
   /**
-   * This method reads an instance of SMEMProperties from
+   * This method reads an instance of SharedMemoryProperties from
    * a CDR encapsulation. This Protocol Property in TAO specific,
    * so there is no order of encapsulation specified in the
    * RT CORBA Spec. The current implementation expect the field
@@ -674,11 +702,16 @@ protected:
 
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_SMEM_Properties (void);
+  virtual ~TAO_SharedMemory_Protocol_Properties (void);
 
 private:
 
   // = Attributes.
+  CORBA::Long send_buffer_size_;
+  CORBA::Long recv_buffer_size_;
+  CORBA::Boolean keep_alive_;
+  CORBA::Boolean dont_route_;
+  CORBA::Boolean no_delay_;
   CORBA::Long preallocate_buffer_size_;
   ACE_CString mmap_filename_;
   ACE_CString mmap_lockname_;
@@ -686,7 +719,136 @@ private:
 
 //*************************************************************************
 
-class TAO_RTCORBA_Export TAO_GIOP_Properties
+/**
+ * @class TAO_UserDatagram_Protocol_Properties
+ *
+ * @brief RTCORBA::UserDatagramProtocolProperties implementation
+ *
+ * Stores UserDatagram Protocol configuration properties.
+ */
+class TAO_RTCORBA_Export TAO_UserDatagram_Protocol_Properties
+  : public RTCORBA::UserDatagramProtocolProperties,
+    public TAO_Local_RefCounted_Object
+{
+public:
+  /// Constructor.
+  TAO_UserDatagram_Protocol_Properties (CORBA::Boolean enable_network_priority);
+
+  CORBA::Boolean enable_network_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void enable_network_priority (CORBA::Boolean enable
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// This method writes a CDR representation of UserDatagramProtocolProperties.
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+
+  /// This method reads the object state from a CDR representation.
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+
+protected:
+
+  /// Protected destructor to enforce proper memory management of this
+  /// reference counted object.
+  virtual ~TAO_UserDatagram_Protocol_Properties (void);
+
+private:
+  // = Attributes.
+
+  CORBA::Boolean enable_network_priority_;
+};
+
+//*************************************************************************
+
+/**
+ * @class TAO_StreamControl_Protocol_Properties
+ *
+ * @brief RTCORBA::StreamControlProtocolProperties implementation
+ *
+ * Stores StreamControl Protocol configuration properties.
+ */
+class TAO_RTCORBA_Export TAO_StreamControl_Protocol_Properties
+  : public RTCORBA::StreamControlProtocolProperties,
+    public TAO_Local_RefCounted_Object
+{
+public:
+  /// Constructor.
+  TAO_StreamControl_Protocol_Properties (CORBA::Long send_buffer_size,
+                                         CORBA::Long recv_buffer_size,
+                                         CORBA::Boolean keep_alive,
+                                         CORBA::Boolean dont_route,
+                                         CORBA::Boolean no_delay,
+                                         CORBA::Boolean enable_network_priority);
+
+  CORBA::Long send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void send_buffer_size (CORBA::Long send_buffer_size
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Long recv_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void recv_buffer_size (CORBA::Long recv_buffer_size
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Boolean keep_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void keep_alive (CORBA::Boolean keep_alive
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Boolean dont_route (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void dont_route (CORBA::Boolean dont_route
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Boolean no_delay (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void no_delay (CORBA::Boolean no_delay
+                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Boolean enable_network_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void enable_network_priority (CORBA::Boolean enable
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// This method writes a CDR representation of StreamControlProtocolProperties.
+  CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+
+  /// This method reads the object state from a CDR representation.
+  CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+
+protected:
+
+  /// Protected destructor to enforce proper memory management of this
+  /// reference counted object.
+  virtual ~TAO_StreamControl_Protocol_Properties (void);
+
+private:
+  // = Attributes.
+
+  CORBA::Long send_buffer_size_;
+  CORBA::Long recv_buffer_size_;
+  CORBA::Boolean keep_alive_;
+  CORBA::Boolean dont_route_;
+  CORBA::Boolean no_delay_;
+  CORBA::Boolean enable_network_priority_;
+};
+
+//*************************************************************************
+
+class TAO_RTCORBA_Export TAO_GIOP_Protocol_Properties
   : public RTCORBA::GIOPProtocolProperties,
     public TAO_Local_RefCounted_Object
 {
@@ -700,10 +862,10 @@ protected:
 
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_GIOP_Properties ();
+  virtual ~TAO_GIOP_Protocol_Properties ();
 
   friend class TAO_Protocol_Properties_Factory;
-  TAO_GIOP_Properties (void);
+  TAO_GIOP_Protocol_Properties (void);
 };
 
 //*************************************************************************
@@ -719,7 +881,8 @@ public:
    * properties: one describes the transport protocol and the other
    * describes the ORB messaging protocol.
    */
-  static RTCORBA::ProtocolProperties *create_transport_protocol_property (IOP::ProfileId id);
+  static RTCORBA::ProtocolProperties *create_transport_protocol_property (IOP::ProfileId id,
+                                                                          TAO_ORB_Core *orb_core);
 
   /**
    * Creates the proper orb ProtocolProperties subclass for
@@ -728,7 +891,7 @@ public:
    * properties: one describes the transport protocol and the other
    * describes the ORB messaging protocol.
    */
-  static RTCORBA::ProtocolProperties*create_orb_protocol_property (IOP::ProfileId id);
+  static RTCORBA::ProtocolProperties *create_orb_protocol_property (IOP::ProfileId id);
 
 protected:
   TAO_Protocol_Properties_Factory (void);

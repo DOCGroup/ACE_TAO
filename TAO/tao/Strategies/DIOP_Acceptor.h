@@ -127,10 +127,6 @@ protected:
   /// Parse protocol specific options.
   virtual int parse_options (const char *options);
 
-  /// Obtain tcp properties that must be used by this acceptor, i.e.,
-  /// initialize <tcp_properties_>.
-  int init_tcp_properties (void);
-
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
   int create_new_profile (const TAO::ObjectKey &object_key,
@@ -170,10 +166,6 @@ protected:
 
   /// ORB Core.
   TAO_ORB_Core *orb_core_;
-
-  /// TCP configuration properties to be used for all
-  /// connections opened by this acceptor.
-  TAO_DIOP_Properties tcp_properties_;
 
   /// Should we use GIOP lite??
   CORBA::Boolean lite_flag_;

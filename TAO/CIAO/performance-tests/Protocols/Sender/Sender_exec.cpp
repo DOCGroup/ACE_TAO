@@ -15,6 +15,7 @@
 #include "ace/Array.h"
 #include "ace/Sample_History.h"
 #include "Custom_Network_Priority_Mapping.h"
+#include "Custom_Network_Priority_Mapping.cpp"
 #include "Sender_exec.h"
 
 static ACE_UINT32 gsf = 0;
@@ -45,7 +46,8 @@ to_hrtime (double seconds,
 class Worker
 {
 public:
-  Worker (RTCORBA::RTORB_ptr rtorb,
+  Worker (CORBA::ORB_ptr orb,
+          RTCORBA::RTORB_ptr rtorb,
           CORBA::PolicyManager_ptr policy_manager,
           Protocols::test_ptr test,
           ::CORBA::ULong iterations,
@@ -102,7 +104,8 @@ private:
   ::Protocols::Sender_Controller::Test_Type test_type_;
 };
 
-Worker::Worker (RTCORBA::RTORB_ptr rtorb,
+Worker::Worker (CORBA::ORB_ptr orb,
+                RTCORBA::RTORB_ptr rtorb,
                 CORBA::PolicyManager_ptr policy_manager,
                 Protocols::test_ptr test,
                 ::CORBA::ULong iterations,
@@ -151,9 +154,13 @@ Worker::Worker (RTCORBA::RTORB_ptr rtorb,
   this->test_protocol_policy_.length (1);
 
   RTCORBA::ProtocolProperties_var base_transport_protocol_properties =
-    TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::TAG_INTERNET_IOP);
+    TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::TAG_INTERNET_IOP,
+                                                                         orb->orb_core ());
 
-  base_transport_protocol_properties->set_network_priority (this->enable_diffserv_code_points_);
+  RTCORBA::TCPProtocolProperties_var tcp_base_transport_protocol_properties =
+    RTCORBA::TCPProtocolProperties::_narrow (base_transport_protocol_properties.in ());
+
+  tcp_base_transport_protocol_properties->enable_network_priority (this->enable_diffserv_code_points_);
   ACE_CHECK;
 
   RTCORBA::ProtocolList protocols;
@@ -173,10 +180,33 @@ Worker::Worker (RTCORBA::RTORB_ptr rtorb,
   protocols[0].protocol_type = test_protocol_tag;
 
   RTCORBA::ProtocolProperties_var test_transport_protocol_properties =
-    TAO_Protocol_Properties_Factory::create_transport_protocol_property (protocols[0].protocol_type);
+    TAO_Protocol_Properties_Factory::create_transport_protocol_property (protocols[0].protocol_type,
+                                                                         orb->orb_core ());
 
-  test_transport_protocol_properties->set_network_priority (enable_diffserv_code_points);
-  ACE_CHECK;
+  if (protocols[0].protocol_type == TAO_TAG_UDP_PROFILE)
+    {
+      RTCORBA::UserDatagramProtocolProperties_var udp_test_transport_protocol_properties =
+        RTCORBA::UserDatagramProtocolProperties::_narrow (test_transport_protocol_properties.in ());
+
+      udp_test_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
+      ACE_CHECK;
+    }
+  else if (protocols[0].protocol_type == TAO_TAG_SCIOP_PROFILE)
+    {
+      RTCORBA::StreamControlProtocolProperties_var sctp_test_transport_protocol_properties =
+        RTCORBA::StreamControlProtocolProperties::_narrow (test_transport_protocol_properties.in ());
+
+      sctp_test_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
+      ACE_CHECK;
+    }
+  else if (protocols[0].protocol_type == IOP::TAG_INTERNET_IOP)
+    {
+      RTCORBA::TCPProtocolProperties_var tcp_test_transport_protocol_properties =
+        RTCORBA::TCPProtocolProperties::_narrow (test_transport_protocol_properties.in ());
+
+      tcp_test_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
+      ACE_CHECK;
+    }
 
   protocols[0].transport_protocol_properties =
     test_transport_protocol_properties;
@@ -332,7 +362,7 @@ Worker::setup (void)
 
   // Since the network maybe unavailable temporarily, make sure to try
   // for a few times before giving up.
-  for (int j = 0;;)
+  for (CORBA::ULong j = 0;;)
     {
       try
         {
@@ -374,7 +404,7 @@ Worker::setup (void)
 
   // Since the network maybe unavailable temporarily, make sure to try
   // for a few times before giving up.
-  for (int k = 0;;)
+  for (CORBA::ULong k = 0;;)
     {
       try
         {
@@ -588,7 +618,8 @@ SenderImpl::SenderExec_i::start (::CORBA::ULong iterations,
   Protocols::test_var test =
     this->context_->get_connection_reader ();
 
-  Worker worker (rtorb.in (),
+  Worker worker (this->orb_.in (),
+                 rtorb.in (),
                  policy_manager.in (),
                  test.in (),
                  iterations,

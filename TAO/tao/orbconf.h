@@ -717,26 +717,10 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # define TAO_HAS_EXTENDED_FT_INTERCEPTORS 0
 #endif  /* !TAO_HAS_EXTENEDED_FT_INTERCEPTORS */
 
-// Define the policy types as literals, so they can be used in switch
-// statements
-
-#define TAO_CLIENT_PRIORITY_POLICY_TYPE 0x54410000
-#define TAO_BUFFERING_CONSTRAINT_POLICY_TYPE 0x54410001
-#define TAO_CONNECTION_TIMEOUT_POLICY_TYPE 0x54410008
-
-//  #define TAO_RT_PRIORITY_MODEL_POLICY_TYPE 0x54410002
-//  #define TAO_RT_THREADPOOL_POLICY_TYPE 0x54410003
-//  #define TAO_RT_PRIVATE_CONNECTION_POLICY_TYPE 0x54410006
-//  #define TAO_RT_PRIORITY_BANDED_CONNECTION_POLICY_TYPE 0x54410007
-//  #define TAO_RT_SERVER_PROTOCOL_POLICY_TYPE 0x54410004
-//  #define TAO_RT_CLIENT_PROTOCOL_POLICY_TYPE 0x54410005
-
-#define TAO_RT_PRIORITY_MODEL_POLICY_TYPE 40
-#define TAO_RT_THREADPOOL_POLICY_TYPE 41
+// This is needed for a check in the Policy Set; Should really not be
+// here though; We should find a different way to handle the check in
+// the Policy Set.
 #define TAO_RT_SERVER_PROTOCOL_POLICY_TYPE 42
-#define TAO_RT_CLIENT_PROTOCOL_POLICY_TYPE 43
-#define TAO_RT_PRIVATE_CONNECTION_POLICY_TYPE 44
-#define TAO_RT_PRIORITY_BANDED_CONNECTION_POLICY_TYPE 45
 
 /// Policies that are accessed on the critical path and need to be
 /// incur minimal retrieval overhead.

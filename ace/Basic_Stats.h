@@ -56,7 +56,6 @@ public:
   void dump_results (const ACE_TCHAR *msg,
                      ACE_UINT32 scale_factor) const;
 
-private:
   /// The number of samples
   ACE_UINT32 samples_count_;
 
@@ -74,9 +73,6 @@ private:
 
   /// The sum of all the values
   ACE_UINT64 sum_;
-
-  /// The sum of the square of all the values
-  ACE_UINT64 sum2_;
 };
 
 #if defined (__ACE_INLINE__)

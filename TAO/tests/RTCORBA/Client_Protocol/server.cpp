@@ -198,7 +198,7 @@ main (int argc, char *argv[])
         (protocol_type);
       protocols[0].transport_protocol_properties =
         TAO_Protocol_Properties_Factory::create_transport_protocol_property
-        (protocol_type);
+        (protocol_type, orb->orb_core ());
 
       CORBA::PolicyList poa_policy_list;
       poa_policy_list.length (1);

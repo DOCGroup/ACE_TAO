@@ -213,7 +213,8 @@ namespace CORBA
     CORBA::Policy_ptr _get_policy (CORBA::PolicyType type
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-
+    CORBA::Policy_ptr _get_cached_policy (TAO_Cached_Policy_Type type
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::Object_ptr _set_policy_overrides (
       const CORBA::PolicyList & policies,
@@ -286,12 +287,6 @@ namespace CORBA
     /// Return the object key as an out parameter.  Caller should release
     /// return value when finished with it.
     virtual TAO::ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-    CORBA::Policy_ptr _get_client_policy (CORBA::PolicyType type
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-#endif /*TAO_HAS_CORBA_MESSAGING*/
 
     /// Constructor
     Object (TAO_Stub *p,

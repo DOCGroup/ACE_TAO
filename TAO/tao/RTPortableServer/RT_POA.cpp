@@ -923,25 +923,6 @@ TAO_RT_POA::id (ACE_ENV_SINGLE_ARG_DECL)
   return this->TAO_POA::id (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA::Policy *
-TAO_RT_POA::server_protocol (void)
-{
-  CORBA::Policy *result =
-    this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
-
-  if (result == 0)
-    {
-      TAO_Policy_Manager *policy_manager =
-        this->orb_core_.policy_manager ();
-
-      if (policy_manager != 0)
-        result =
-          policy_manager->get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
-    }
-
-  return result;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

@@ -44,7 +44,6 @@ project(Protocols_Receiver_svnt) : ciao_servant {
 project(Protocols_Receiver_exec) : ciao_component {
   after   += Protocols_Receiver_svnt
   sharedname = Protocols_Receiver_exec
-  requires += dummy
   libs      += Protocols_Receiver_stub Protocols_Receiver_svnt Protocols_stub Protocols_svnt
   
   idlflags  +=  -Wb,export_macro=RECEIVER_EXEC_Export -Wb,export_include=Receiver_exec_export.h

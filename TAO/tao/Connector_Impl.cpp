@@ -19,11 +19,9 @@ template <class SVC_HANDLER>
 TAO_Connect_Creation_Strategy<SVC_HANDLER>::
     TAO_Connect_Creation_Strategy (ACE_Thread_Manager* t,
                                    TAO_ORB_Core *orb_core,
-                                   void *arg,
                                    CORBA::Boolean flag)
     : ACE_Creation_Strategy <SVC_HANDLER> (t),
       orb_core_ (orb_core),
-      arg_ (arg),
       lite_flag_ (flag)
 {
 
@@ -35,8 +33,7 @@ TAO_Connect_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
   if (sh == 0)
     ACE_NEW_RETURN (sh,
                     SVC_HANDLER (this->orb_core_,
-                                 this->lite_flag_,
-                                 this->arg_),
+                                 this->lite_flag_),
                     -1);
 
   // We add to the #REFCOUNT# since the Connector needs this. See
