@@ -37,16 +37,16 @@ class be_visitor_union_any_op_ch : public be_visitor_union
 
 public:
   be_visitor_union_any_op_ch (be_visitor_context *ctx);
-  // constructor
 
   ~be_visitor_union_any_op_ch (void);
-  // destructor
 
   virtual int visit_union (be_union *node);
-  // visit union
 
   virtual int visit_union_branch (be_union_branch *node);
-  // visit union_branch
+
+  virtual int visit_enum (be_enum *node);
+
+  virtual int visit_structure (be_structure *node);
 };
 
 #endif /* _BE_VISITOR_UNION_ANY_OP_CH_H_ */
