@@ -1,3 +1,8 @@
+Wed Mar 25 10:10:04 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_{chorus,vxworks5.x}_ghs.GNU:
+          change OFLAGS to OCFLAGS.
+
 Tue Mar 24 19:48:44 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Proactor.cpp (timeout): Changed comparison from || to
