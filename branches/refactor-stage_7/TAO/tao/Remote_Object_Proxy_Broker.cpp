@@ -19,19 +19,17 @@ namespace TAO
                                      ACE_ENV_ARG_DECL)
   {
     TAO::Arg_Traits<ACE_InputCDR::to_boolean>::ret_val _tao_retval;
-    TAO::Arg_Traits<CORBA::Object>::in_arg_val _tao_target (target);
     TAO::Arg_Traits<char *>::in_arg_val _tao_id (type_id);
 
     TAO::Argument *_tao_signature [] =
       {
         &_tao_retval,
-        &_tao_target,
         &_tao_id
       };
 
     TAO::Invocation_Adapter tao_call (target,
                                       _tao_signature,
-                                      3,
+                                      2,
                                       "_is_a",
                                       5,
                                       0);
@@ -49,17 +47,15 @@ namespace TAO
                                              ACE_ENV_ARG_DECL)
   {
     TAO::Arg_Traits<ACE_InputCDR::to_boolean>::ret_val _tao_retval;
-    TAO::Arg_Traits<CORBA::Object>::in_arg_val _tao_target (target);
 
     TAO::Argument *_tao_signature [] =
       {
-        &_tao_retval,
-        &_tao_target
+        &_tao_retval
       };
 
     TAO::Invocation_Adapter _tao_call (target,
                                        _tao_signature,
-                                       2,
+                                       1,
                                        "_non_existent",
                                        13,
                                        0);
@@ -75,17 +71,15 @@ namespace TAO
                                               ACE_ENV_ARG_DECL)
   {
     TAO::Arg_Traits<CORBA::Object>::ret_val _tao_retval;
-    TAO::Arg_Traits<CORBA::Object>::in_arg_val _tao_target (target);
 
     TAO::Argument *_tao_signature [] =
       {
-        &_tao_retval,
-        &_tao_target
+        &_tao_retval
       };
 
     TAO::Invocation_Adapter _tao_call (target,
                                        _tao_signature,
-                                       2,
+                                       1,
                                        "_component",
                                        10,
                                        0);

@@ -44,24 +44,21 @@ namespace TAO
 
     // Register a reply dispatcher for this invocation. Use the
     // preallocated reply dispatcher.
-    TAO_Bind_Dispatcher_Guard dispatch_guard (this->details_.request_id (),
-                                              &rd,
-                                              this->resolver_.transport ()->tms ());
-
+    TAO_Bind_Dispatcher_Guard dispatch_guard (
+        this->details_.request_id (),
+        &rd,
+        this->resolver_.transport ()->tms ());
 
     if (dispatch_guard.status () != 0)
       {
-        // @@ What is the right way to handle this error? Do we need
-        // to call the interceptors in this case?
+        // @@ What is the right way to handle this error? Why should
+        // we close the connection?
         this->resolver_.transport ()->close_connection ();
 
         ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
                                            CORBA::COMPLETED_NO),
                           TAO_INVOKE_FAILURE);
       }
-
-
-
 
     TAO_Target_Specification tspec;
     this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
@@ -113,9 +110,12 @@ namespace TAO
         // before we leave.
         if (s == TAO_INVOKE_RESTART)
           {
-            s =
+            Invocation_Status tmp =
               this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
+
+            if (tmp != TAO_INVOKE_SUCCESS)
+              s = tmp;
           }
 #endif /*TAO_HAS_INTERCEPTORS */
 
@@ -154,16 +154,20 @@ namespace TAO
                                 ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
+        if (s != TAO_INVOKE_SUCCESS)
+          return s;
 
         s = this->check_reply_status (rd
                                       ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         // For some strategies one may want to release the transport
-        // back to  cache after receiving the reply. If the idling is
-        // successfull let the resolver about that.
+        // back to  cache after receiving the reply.
         if (this->resolver_.transport ()->idle_after_reply ())
           this->resolver_.transport_released ();
+
+        if (s != TAO_INVOKE_SUCCESS)
+          return s;
 
 #if TAO_HAS_INTERCEPTORS == 1
         if (s == TAO_INVOKE_SUCCESS)
@@ -251,6 +255,11 @@ namespace TAO
                       "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply , "
                       "recovering after an error \n"));
 
+        // You the smarty, don't try to moving the unbind_dispatcher
+        // () call since it looks like it is repeated twice. That
+        // could land you in trouble. If you don't believe this
+        // warning go ahead and try. Try running tests to see what is
+        // going on ;)
         if (errno == ETIME)
           {
             // If the unbind succeeds then thrown an exception to the
@@ -275,16 +284,19 @@ namespace TAO
                                   TAO_INVOKE_FAILURE);
               }
           }
+        else
+          {
+            (void) bd.unbind_dispatcher ();
+            this->resolver_.transport ()->close_connection ();
+            this->resolver_.stub ()->reset_profiles ();
 
-        this->resolver_.transport ()->close_connection ();
-        this->resolver_.stub ()->reset_profiles ();
-
-        ACE_THROW_RETURN (CORBA::COMM_FAILURE (
-            CORBA::SystemException::_tao_minor_code (
+            ACE_THROW_RETURN (CORBA::COMM_FAILURE (
+              CORBA::SystemException::_tao_minor_code (
                 TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
                 errno),
-            CORBA::COMPLETED_MAYBE),
-                          TAO_INVOKE_FAILURE);
+              CORBA::COMPLETED_MAYBE),
+                              TAO_INVOKE_FAILURE);
+          }
       }
 
     return TAO_INVOKE_SUCCESS;

@@ -22,7 +22,7 @@ namespace TAO
   bool
   LocateRequest_Invocation_Adapter::invoke (ACE_ENV_SINGLE_ARG_DECL)
   {
-    CORBA::Object *effective_target = 0;
+    CORBA::Object *effective_target = this->target_;
 
     TAO_Stub *stub =
       this->target_->_stubobj ();
