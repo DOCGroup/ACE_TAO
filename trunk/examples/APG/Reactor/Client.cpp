@@ -31,7 +31,7 @@ int Client::handle_input (ACE_HANDLE)
   ssize_t recv_cnt = this->peer ().recv (buf, sizeof (buf) - 1);
   if (recv_cnt > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%*C"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%.*C"),
                   ACE_static_cast (int, recv_cnt),
                   buf));
       return 0;
@@ -56,11 +56,11 @@ int Client::handle_timeout(const ACE_Time_Value &, const void *)
     }
 
   ACE_Message_Block *mb;
-  char msg[128];
-  ACE_OS::sprintf (msg, "Iteration %d\n", this->iterations_);
-  ACE_NEW_RETURN
-    (mb, ACE_Message_Block (ACE_OS::strlen (msg) + 1), -1);
-  mb->copy (msg);
+  ACE_NEW_RETURN (mb, ACE_Message_Block (128), -1);
+  int nbytes = ACE_OS::sprintf
+    (mb->wr_ptr (), "Iteration %d\n", this->iterations_);
+  ACE_ASSERT (nbytes > 0);
+  mb->wr_ptr (ACE_static_cast (size_t, nbytes));
   this->putq (mb);
   return 0;
 }
