@@ -6,16 +6,114 @@ Mpeg_Svc_Handler::Mpeg_Svc_Handler (ACE_Reactor *r)
 
 }
 
+// Client connected to our control port
 int
 Mpeg_Svc_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t)Mpeg_Svc_Handler::open called\n"));
+  this->activate ();
   return 0;
+}
+
+
+int
+Mpeg_Svc_Handler::svc (void *)
+{
+  return this->handle_input ();
 }
 
 int
 Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
-{
+{  
+  int junk;
+  u_short port;
+  ACE_UINT32 ip;
+  // Client is sending us JUNK
+  this->peer ().recv_n (&junk, sizeof junk);
+  
+  // Client is sending us it's port number
+  this->peer ().recv_n (&port, sizeof port);
+  
+  // Client is sending us it's IP addr
+  this->peer ().recv_n (&ip, sizeof ip);
+  
+  this->client_data_addr_.set (port,
+                               ip,
+                               0);
+
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) Client IP == %s, Client Port == %d\n",
+              client_data_addr_.get_host_name (),
+              client_data_addr_.get_port_number ()));
+
+  this->server_data_addr_.set ((unsigned short)0);
+
+  // "Connect" our dgram to the client endpoint.
+  if (this->dgram_.open (client_data_addr_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "(%P|%t) UDP open failed: %p\n"),
+                      -1);
+  
+  if (this->dgram_.get_local_addr (this->server_data_addr_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "(%P|%t) UDP get_local_addr failed: %p\n"),
+                      -1);
+
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) UDP IP address is %s, and the port number is %d\n",
+              this->server_data_addr_.get_host_addr (),
+              this->server_data_addr_.get_port_number ()));
+
+  port = this->server_data_addr_.get_port_number ();
+
+  // XXX this is a hack to get my IP address set correctly! By default,
+  // get_ip_address is returning 0.0.0.0, even after calling
+  // get_local_addr () !!
+  this->server_data_addr_.set (port,
+                               this->server_data_addr_.get_host_name ());
+
+  ip = this->server_data_addr_.get_ip_address ();
+
+  port = htons (port);
+  ip = htonl (ip);
+  // Client wants us to send the port number first
+  this->peer ().send_n (&port,
+                        (int) sizeof (u_short));
+
+  // Client wants us to send it the IP address
+  this->peer ().send_n (&ip,
+                        (int) sizeof (ACE_UINT32));
+
+  // Client is sending us a command
+  u_char cmd;
+  if (this->peer ().recv_n (&cmd,
+                            1) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%P|%t, Command recieve failed: %p"),
+                       -1);
+  switch (cmd)
+    {
+    case CmdINITvideo:
+      if (Mpeg_Global::live_audio) LeaveLiveAudio();
+      VideoServer (this->peer ().get_handle (), 
+                   this->dgram_.get_handle (), 
+                   Mpeg_Global::rttag, 
+                   -INET_SOCKET_BUFFER_SIZE);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t): video server returned.\n"),
+                        -1);
+      break;
+    default:
+      if (Mpeg_Global::live_audio) LeaveLiveAudio();
+      AudioServer (this->peer ().get_handle (), 
+                   this->dgram_.get_handle (), 
+                   Mpeg_Global::rttag, 
+                   -INET_SOCKET_BUFFER_SIZE);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t): video server returned.\n"),
+                        -1);
+    }
+
   return 0;
 }
 
@@ -114,7 +212,7 @@ Mpeg_Server::parse_args (int argc,
     switch (c)
       {
       case 'r': // real time flag
-        this->rttag_ = 1;
+        Mpeg_Global::rttag = 1;
         break;
       case 'd': // clock drift in ppm
         Mpeg_Global::drift_ppm = ACE_OS::atoi (get_opts.optarg);
@@ -205,11 +303,11 @@ Mpeg_Server::init (int argc,
 int
 Mpeg_Server::run ()
 {
-  this->server_addr_.set (VCR_TCP_PORT);
+  this->server_control_addr_.set (VCR_TCP_PORT);
 
-  this->server_addr_.dump ();
+  this->server_control_addr_.dump ();
   // "listen" on the socket
-  if (this->acceptor_.open (this->server_addr_) == -1)
+  if (this->acceptor_.open (this->server_control_addr_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
   // enter the reactor event loop
@@ -259,7 +357,7 @@ Mpeg_Server::run ()
           exit(1);
         }
       if (val == 0) {
-	fprintf(stderr, "Remote client has closed connection.\n");
+	fprintf(stderr, "Client has closed connection.\n");
 	ComCloseConn(cfd);
 	ComCloseConn(dfd);
 	/* continue; -- I don't know why I wrote this line? scen 5-12-96 */
@@ -272,7 +370,7 @@ Mpeg_Server::run ()
 	fprintf(stderr, "Server forked a VideoServer process.\n");
 	*/
 	if (Mpeg_Global::live_audio) LeaveLiveAudio();
-	VideoServer(cfd, dfd, this->rttag_, max_pkt_size);
+	VideoServer(cfd, dfd, Mpeg_Global::rttag, max_pkt_size);
 	fprintf(stderr, "Weird: video server returned.\n");
       }
       else
@@ -285,10 +383,12 @@ Mpeg_Server::run ()
 
         AudioServer (cfd, 
                      dfd, 
-                     this->rttag_, 
+                     Mpeg_Global::rttag, 
                      max_pkt_size);
+
 	fprintf (stderr, 
                  "Weird: audio server returned.\n");
+
       }
       exit(1);
     }
