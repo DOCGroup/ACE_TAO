@@ -1,6 +1,6 @@
+@echo off
 rem $Id$
 
-@echo off
 rem    To use this either give it no arguments to run all the tests or
 rem    pass it the test name (without the extention) to run only one
 rem    test
