@@ -70,7 +70,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/BCU.o .obj/BCU.so .shobj/BCU.o .shobj/BCU.so: Event/BCU.cpp $(ACE_ROOT)/ace/ACE.h \
+.obj/BCU.o .obj/BCU.so .shobj/BCU.o .shobj/BCU.so: Event/BCU.cpp \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -105,8 +106,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Init_ACE.i \
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i Event/BCU.h \
- Event/old_event_export.h
+ $(ACE_ROOT)/ace/ACE.i \
+ Event/BCU.h Event/old_event_export.h
 
 .obj/Dispatching_Modules.o .obj/Dispatching_Modules.so .shobj/Dispatching_Modules.o .shobj/Dispatching_Modules.so: Event/Dispatching_Modules.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
@@ -135,8 +136,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Sched_Params.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ Scheduler_Factory.h \
+ CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -433,26 +434,26 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
+ Naming/naming_export.h \
+ CosNamingC.i \
+ RtecSchedulerC.h \
+ Sched/sched_export.h \
+ TimeBaseC.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
+ RtecSchedulerC.i \
+ Scheduler_Factory.i \
+ Time_Utilities.h \
+ Time_Utilities.i \
  Event/Memory_Pools.h Event/Event_Channel.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ Event/Local_ESTypes.h \
+ Event_Service_Constants.h \
+ RtecSchedulerS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
@@ -467,44 +468,44 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
+ RtecSchedulerS_T.h \
+ RtecSchedulerS_T.i \
+ RtecSchedulerS_T.cpp \
+ RtecSchedulerS.i \
+ RtecEventCommC.h \
+ Event/event_export.h \
+ RtecDefaultEventDataC.h \
+ RtecDefaultEventDataC.i \
+ RtecEventCommC.i \
+ RtecEventCommS.h \
+ RtecDefaultEventDataS.h \
+ RtecDefaultEventDataS_T.h \
+ RtecDefaultEventDataS_T.i \
+ RtecDefaultEventDataS_T.cpp \
+ RtecDefaultEventDataS.i \
+ RtecEventCommS_T.h \
+ RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp \
+ RtecEventCommS.i \
+ RtecEventChannelAdminC.h \
+ RtecEventChannelAdminC.i \
+ RtecEventChannelAdminS.h \
+ RtecEventChannelAdminS_T.h \
+ RtecEventChannelAdminS_T.i \
+ RtecEventChannelAdminS_T.cpp \
+ RtecEventChannelAdminS.i \
+ Event/Local_ESTypes.i \
+ Event/Timer_Module.h \
+ Event/RT_Task.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -515,11 +516,11 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/old_event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ReactorTask.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Fast_Reactor.h \
+ Event/old_event_export.h \
+ Event/RT_Task.i \
+ Event/Timer_Module.i \
+ Event/ReactorTask.h \
+ Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor_T.h \
  $(ACE_ROOT)/ace/Select_Reactor_Base.h \
@@ -536,10 +537,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
+ Event/Event_Manip.h \
+ Event/Event_Manip.i \
  Event/Event_Channel.i Event/Dispatching_Modules.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.h \
+ Event/Event_Channel.h \
  Event/Dispatching_Modules.i Event/Memory_Pools.i
 
 .obj/Event_Channel.o .obj/Event_Channel.so .shobj/Event_Channel.o .shobj/Event_Channel.so: Event/Event_Channel.cpp \
@@ -649,8 +650,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ Scheduler_Factory.h \
+ CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -868,34 +869,34 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Dispatching_Modules.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
+ RtecSchedulerC.h \
+ Sched/sched_export.h \
+ TimeBaseC.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
+ RtecSchedulerC.i \
+ Scheduler_Factory.i \
+ Event_Utilities.h \
+ RtecEventChannelAdminC.h \
+ Event/event_export.h \
+ RtecEventCommC.h \
+ RtecDefaultEventDataC.h \
+ RtecDefaultEventDataC.i \
+ RtecEventCommC.i \
+ RtecEventChannelAdminC.i \
+ Event_Service_Constants.h \
+ Time_Utilities.h \
+ Time_Utilities.i \
+ Event_Utilities.i \
+ Event/Dispatching_Modules.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ReactorTask.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Fast_Reactor.h \
+ Event/ReactorTask.h \
+ Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor_T.h \
  $(ACE_ROOT)/ace/Select_Reactor_Base.h \
@@ -909,13 +910,13 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Select_Reactor_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/old_event_export.h \
+ Event/old_event_export.h \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ Event/Local_ESTypes.h \
+ RtecSchedulerS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
@@ -930,36 +931,36 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
+ RtecSchedulerS_T.h \
+ RtecSchedulerS_T.i \
+ RtecSchedulerS_T.cpp \
+ RtecSchedulerS.i \
+ RtecEventCommS.h \
+ RtecDefaultEventDataS.h \
+ RtecDefaultEventDataS_T.h \
+ RtecDefaultEventDataS_T.i \
+ RtecDefaultEventDataS_T.cpp \
+ RtecDefaultEventDataS.i \
+ RtecEventCommS_T.h \
+ RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp \
+ RtecEventCommS.i \
+ RtecEventChannelAdminS.h \
+ RtecEventChannelAdminS_T.h \
+ RtecEventChannelAdminS_T.i \
+ RtecEventChannelAdminS_T.cpp \
+ RtecEventChannelAdminS.i \
+ Event/Local_ESTypes.i \
+ Event/RT_Task.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -970,27 +971,27 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Dispatching_Modules.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Memory_Pools.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Memory_Pools.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Gateway.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Module_Factory.h
+ Event/RT_Task.i \
+ Event/Event_Manip.h \
+ Event/Event_Manip.i \
+ Event/Event_Channel.h \
+ Event/Timer_Module.h \
+ Event/Timer_Module.i \
+ Event/Event_Channel.i \
+ Event/Dispatching_Modules.i \
+ Event/Memory_Pools.h \
+ Event/Memory_Pools.i \
+ Event/EC_Gateway.h \
+ Channel_Clients.h \
+ Channel_Clients_T.h \
+ Channel_Clients_T.i \
+ Channel_Clients_T.cpp \
+ Event/Module_Factory.h
 
 .obj/Event_Manip.o .obj/Event_Manip.so .shobj/Event_Manip.o .shobj/Event_Manip.so: Event/Event_Manip.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.h \
+ Event/Event_Manip.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1310,15 +1311,15 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/old_event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i
+ Event/event_export.h \
+ TimeBaseC.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ RtecDefaultEventDataC.h \
+ RtecDefaultEventDataC.i \
+ RtecEventCommC.i \
+ Event/old_event_export.h \
+ Event/Event_Manip.i
 
 .obj/Local_ESTypes.o .obj/Local_ESTypes.so .shobj/Local_ESTypes.o .shobj/Local_ESTypes.so: Event/Local_ESTypes.cpp Event/Local_ESTypes.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1641,22 +1642,22 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ Event_Service_Constants.h \
+ Time_Utilities.h \
+ TimeBaseC.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ Time_Utilities.i \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
+ RtecSchedulerC.h \
+ Sched/sched_export.h \
+ RtecBaseC.h \
+ RtecBaseC.i \
+ RtecSchedulerC.i \
+ RtecSchedulerS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
@@ -1671,41 +1672,41 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
+ RtecSchedulerS_T.h \
+ RtecSchedulerS_T.i \
+ RtecSchedulerS_T.cpp \
+ RtecSchedulerS.i \
+ RtecEventCommC.h \
+ Event/event_export.h \
+ RtecDefaultEventDataC.h \
+ RtecDefaultEventDataC.i \
+ RtecEventCommC.i \
+ RtecEventCommS.h \
+ RtecDefaultEventDataS.h \
+ RtecDefaultEventDataS_T.h \
+ RtecDefaultEventDataS_T.i \
+ RtecDefaultEventDataS_T.cpp \
+ RtecDefaultEventDataS.i \
+ RtecEventCommS_T.h \
+ RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp \
+ RtecEventCommS.i \
+ RtecEventChannelAdminC.h \
+ RtecEventChannelAdminC.i \
+ RtecEventChannelAdminS.h \
+ RtecEventChannelAdminS_T.h \
+ RtecEventChannelAdminS_T.i \
+ RtecEventChannelAdminS_T.cpp \
+ RtecEventChannelAdminS.i \
  Event/Local_ESTypes.i
 
 .obj/Memory_Pools.o .obj/Memory_Pools.so .shobj/Memory_Pools.o .shobj/Memory_Pools.so: Event/Memory_Pools.cpp Event/Memory_Pools.h \
@@ -1823,8 +1824,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ Scheduler_Factory.h \
+ CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2034,23 +2035,23 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
+ RtecSchedulerC.h \
+ Sched/sched_export.h \
+ TimeBaseC.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
+ RtecSchedulerC.i \
+ Scheduler_Factory.i \
+ Event/Local_ESTypes.h \
+ Event_Service_Constants.h \
+ Time_Utilities.h \
+ Time_Utilities.i \
+ RtecSchedulerS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
@@ -2065,44 +2066,44 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
+ RtecSchedulerS_T.h \
+ RtecSchedulerS_T.i \
+ RtecSchedulerS_T.cpp \
+ RtecSchedulerS.i \
+ RtecEventCommC.h \
+ Event/event_export.h \
+ RtecDefaultEventDataC.h \
+ RtecDefaultEventDataC.i \
+ RtecEventCommC.i \
+ RtecEventCommS.h \
+ RtecDefaultEventDataS.h \
+ RtecDefaultEventDataS_T.h \
+ RtecDefaultEventDataS_T.i \
+ RtecDefaultEventDataS_T.cpp \
+ RtecDefaultEventDataS.i \
+ RtecEventCommS_T.h \
+ RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp \
+ RtecEventCommS.i \
+ RtecEventChannelAdminC.h \
+ RtecEventChannelAdminC.i \
+ RtecEventChannelAdminS.h \
+ RtecEventChannelAdminS_T.h \
+ RtecEventChannelAdminS_T.i \
+ RtecEventChannelAdminS_T.cpp \
+ RtecEventChannelAdminS.i \
+ Event/Local_ESTypes.i \
+ Event/Timer_Module.h \
+ Event/RT_Task.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -2113,11 +2114,11 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/old_event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ReactorTask.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Fast_Reactor.h \
+ Event/old_event_export.h \
+ Event/RT_Task.i \
+ Event/Timer_Module.i \
+ Event/ReactorTask.h \
+ Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor_T.h \
  $(ACE_ROOT)/ace/Select_Reactor_Base.h \
@@ -2134,10 +2135,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
+ Event/Event_Manip.h \
+ Event/Event_Manip.i \
  Event/Event_Channel.i Event/Dispatching_Modules.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.h \
+ Event/Event_Channel.h \
  Event/Dispatching_Modules.i Event/Memory_Pools.i
 
 .obj/RT_Task.o .obj/RT_Task.so .shobj/RT_Task.o .shobj/RT_Task.so: Event/RT_Task.cpp \
@@ -2167,8 +2168,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Sched_Params.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ Scheduler_Factory.h \
+ CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2465,18 +2466,19 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
- Event/RT_Task.h $(ACE_ROOT)/ace/Task.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
+ RtecSchedulerC.h \
+ Sched/sched_export.h \
+ TimeBaseC.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
+ RtecSchedulerC.i \
+ Scheduler_Factory.i \
+ Event/RT_Task.h \
+ $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
@@ -2490,12 +2492,12 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  Event/Event_Channel.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ Event/Local_ESTypes.h \
+ Event_Service_Constants.h \
+ Time_Utilities.h \
+ Time_Utilities.i \
+ RtecSchedulerS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
@@ -2510,47 +2512,47 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ReactorTask.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Fast_Reactor.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
+ RtecSchedulerS_T.h \
+ RtecSchedulerS_T.i \
+ RtecSchedulerS_T.cpp \
+ RtecSchedulerS.i \
+ RtecEventCommC.h \
+ Event/event_export.h \
+ RtecDefaultEventDataC.h \
+ RtecDefaultEventDataC.i \
+ RtecEventCommC.i \
+ RtecEventCommS.h \
+ RtecDefaultEventDataS.h \
+ RtecDefaultEventDataS_T.h \
+ RtecDefaultEventDataS_T.i \
+ RtecDefaultEventDataS_T.cpp \
+ RtecDefaultEventDataS.i \
+ RtecEventCommS_T.h \
+ RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp \
+ RtecEventCommS.i \
+ RtecEventChannelAdminC.h \
+ RtecEventChannelAdminC.i \
+ RtecEventChannelAdminS.h \
+ RtecEventChannelAdminS_T.h \
+ RtecEventChannelAdminS_T.i \
+ RtecEventChannelAdminS_T.cpp \
+ RtecEventChannelAdminS.i \
+ Event/Local_ESTypes.i \
+ Event/Timer_Module.h \
+ Event/RT_Task.h \
+ Event/Timer_Module.i \
+ Event/ReactorTask.h \
+ Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor_T.h \
  $(ACE_ROOT)/ace/Select_Reactor_Base.h \
@@ -2564,15 +2566,15 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Select_Reactor_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/old_event_export.h \
+ Event/old_event_export.h \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
+ Event/Event_Manip.h \
+ Event/Event_Manip.i \
  Event/Event_Channel.i Event/Memory_Pools.h \
  Event/Dispatching_Modules.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.h \
+ Event/Event_Channel.h \
  Event/Dispatching_Modules.i Event/Memory_Pools.i
 
 .obj/ReactorTask.o .obj/ReactorTask.so .shobj/ReactorTask.o .shobj/ReactorTask.so: Event/ReactorTask.cpp \
@@ -2616,8 +2618,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ Scheduler_Factory.h \
+ CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2902,17 +2904,17 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
+ Naming/naming_export.h \
+ CosNamingC.i \
+ RtecSchedulerC.h \
+ Sched/sched_export.h \
+ TimeBaseC.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
+ RtecSchedulerC.i \
+ Scheduler_Factory.i \
  Event/ReactorTask.h Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor_T.h \
@@ -2932,11 +2934,11 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_List_T.cpp \
  Event/Local_ESTypes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ Event_Service_Constants.h \
+ Time_Utilities.h \
+ Time_Utilities.i \
+ RtecSchedulerS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
@@ -2951,41 +2953,41 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
+ RtecSchedulerS_T.h \
+ RtecSchedulerS_T.i \
+ RtecSchedulerS_T.cpp \
+ RtecSchedulerS.i \
+ RtecEventCommC.h \
+ Event/event_export.h \
+ RtecDefaultEventDataC.h \
+ RtecDefaultEventDataC.i \
+ RtecEventCommC.i \
+ RtecEventCommS.h \
+ RtecDefaultEventDataS.h \
+ RtecDefaultEventDataS_T.h \
+ RtecDefaultEventDataS_T.i \
+ RtecDefaultEventDataS_T.cpp \
+ RtecDefaultEventDataS.i \
+ RtecEventCommS_T.h \
+ RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp \
+ RtecEventCommS.i \
+ RtecEventChannelAdminC.h \
+ RtecEventChannelAdminC.i \
+ RtecEventChannelAdminS.h \
+ RtecEventChannelAdminS_T.h \
+ RtecEventChannelAdminS_T.i \
+ RtecEventChannelAdminS_T.cpp \
+ RtecEventChannelAdminS.i \
  Event/Local_ESTypes.i Event/RT_Task.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
@@ -3041,8 +3043,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Functor_T.h \
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ Scheduler_Factory.h \
+ CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3322,17 +3324,17 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
+ Naming/naming_export.h \
+ CosNamingC.i \
+ RtecSchedulerC.h \
+ Sched/sched_export.h \
+ TimeBaseC.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ RtecBaseC.h \
+ RtecBaseC.i \
+ RtecSchedulerC.i \
+ Scheduler_Factory.i \
  Event/ReactorTask.h Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor_T.h \
@@ -3352,11 +3354,11 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_List_T.cpp \
  Event/Local_ESTypes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ Event_Service_Constants.h \
+ Time_Utilities.h \
+ Time_Utilities.i \
+ RtecSchedulerS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
@@ -3371,41 +3373,41 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
+ RtecSchedulerS_T.h \
+ RtecSchedulerS_T.i \
+ RtecSchedulerS_T.cpp \
+ RtecSchedulerS.i \
+ RtecEventCommC.h \
+ Event/event_export.h \
+ RtecDefaultEventDataC.h \
+ RtecDefaultEventDataC.i \
+ RtecEventCommC.i \
+ RtecEventCommS.h \
+ RtecDefaultEventDataS.h \
+ RtecDefaultEventDataS_T.h \
+ RtecDefaultEventDataS_T.i \
+ RtecDefaultEventDataS_T.cpp \
+ RtecDefaultEventDataS.i \
+ RtecEventCommS_T.h \
+ RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp \
+ RtecEventCommS.i \
+ RtecEventChannelAdminC.h \
+ RtecEventChannelAdminC.i \
+ RtecEventChannelAdminS.h \
+ RtecEventChannelAdminS_T.h \
+ RtecEventChannelAdminS_T.i \
+ RtecEventChannelAdminS_T.cpp \
+ RtecEventChannelAdminS.i \
  Event/Local_ESTypes.i Event/RT_Task.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
@@ -3418,13 +3420,13 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  Event/RT_Task.i Event/Timer_Module.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.h \
+ Event/RT_Task.h \
  Event/Timer_Module.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 
 .obj/Module_Factory.o .obj/Module_Factory.so .shobj/Module_Factory.o .shobj/Module_Factory.so: Event/Module_Factory.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Dispatching_Modules.h \
+ Event/Dispatching_Modules.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/post.h \
@@ -3451,8 +3453,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ReactorTask.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Fast_Reactor.h \
+ Event/ReactorTask.h \
+ Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor_T.h \
  $(ACE_ROOT)/ace/Select_Reactor_Base.h \
@@ -3536,11 +3538,11 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Select_Reactor_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/old_event_export.h \
+ Event/old_event_export.h \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.h \
+ Event/Local_ESTypes.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3767,22 +3769,22 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ Event_Service_Constants.h \
+ Time_Utilities.h \
+ TimeBaseC.h \
+ svc_utils_export.h \
+ TimeBaseC.i \
+ Time_Utilities.i \
+ CosNamingC.h \
+ Naming/naming_export.h \
+ CosNamingC.i \
+ RtecSchedulerC.h \
+ Sched/sched_export.h \
+ RtecBaseC.h \
+ RtecBaseC.i \
+ RtecSchedulerC.i \
+ RtecSchedulerS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
@@ -3797,43 +3799,43 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ RtecBaseS.h \
+ RtecBaseS_T.h \
+ RtecBaseS_T.i \
+ RtecBaseS_T.cpp \
+ RtecBaseS.i \
+ RtecSchedulerS_T.h \
+ RtecSchedulerS_T.i \
+ RtecSchedulerS_T.cpp \
+ RtecSchedulerS.i \
+ RtecEventCommC.h \
+ Event/event_export.h \
+ RtecDefaultEventDataC.h \
+ RtecDefaultEventDataC.i \
+ RtecEventCommC.i \
+ RtecEventCommS.h \
+ RtecDefaultEventDataS.h \
+ RtecDefaultEventDataS_T.h \
+ RtecDefaultEventDataS_T.i \
+ RtecDefaultEventDataS_T.cpp \
+ RtecDefaultEventDataS.i \
+ RtecEventCommS_T.h \
+ RtecEventCommS_T.i \
+ RtecEventCommS_T.cpp \
+ RtecEventCommS.i \
+ RtecEventChannelAdminC.h \
+ RtecEventChannelAdminC.i \
+ RtecEventChannelAdminS.h \
+ RtecEventChannelAdminS_T.h \
+ RtecEventChannelAdminS_T.i \
+ RtecEventChannelAdminS_T.cpp \
+ RtecEventChannelAdminS.i \
+ Event/Local_ESTypes.i \
+ Event/RT_Task.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -3844,16 +3846,16 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Dispatching_Modules.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Module_Factory.h
+ Event/RT_Task.i \
+ Event/Event_Manip.h \
+ Event/Event_Manip.i \
+ Event/Event_Channel.h \
+ Scheduler_Factory.h \
+ Scheduler_Factory.i \
+ Event/Timer_Module.h \
+ Event/Timer_Module.i \
+ Event/Event_Channel.i \
+ Event/Dispatching_Modules.i \
+ Event/Module_Factory.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

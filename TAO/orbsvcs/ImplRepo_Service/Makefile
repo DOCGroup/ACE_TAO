@@ -575,7 +575,8 @@ tao_imr: $(addprefix $(VDIR),$(tao_imr_OBJS))
  $(ACE_ROOT)/ace/Process_Manager.h \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
- $(ACE_ROOT)/ace/Process_Manager.i Options.h \
+ $(ACE_ROOT)/ace/Process_Manager.i \
+ Options.h \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
@@ -2168,7 +2169,8 @@ tao_imr: $(addprefix $(VDIR),$(tao_imr_OBJS))
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- NT_Service.h $(ACE_ROOT)/ace/Arg_Shifter.h \
+ NT_Service.h \
+ $(ACE_ROOT)/ace/Arg_Shifter.h \
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Configuration.h \

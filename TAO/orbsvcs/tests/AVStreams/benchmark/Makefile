@@ -943,10 +943,12 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
- client.h $(ACE_ROOT)/ace/ARGV.h \
+ client.h \
+ $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i child.h \
+ $(ACE_ROOT)/ace/High_Res_Timer.i \
+ child.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 
@@ -1392,7 +1394,8 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
- client.h $(ACE_ROOT)/ace/ARGV.h \
+ client.h \
+ $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i
@@ -1839,7 +1842,8 @@ child_process:$(addprefix $(VDIR),$(CHILD_PROCESS_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
- client.h $(ACE_ROOT)/ace/ARGV.h \
+ client.h \
+ $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i

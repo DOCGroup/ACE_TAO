@@ -789,7 +789,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
- $(ACE_ROOT)/ace/OS_Errno.inl server.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ server.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1133,8 +1134,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Profile_Timer.i Globals.h \
- Timer.h Util_Thread.h Cubit_Task.h
+ $(ACE_ROOT)/ace/Profile_Timer.i \
+ Globals.h Timer.h Util_Thread.h Cubit_Task.h
 
 .obj/cubit_i.o .obj/cubit_i.so .shobj/cubit_i.o .shobj/cubit_i.so: cubit_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
@@ -1488,8 +1489,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i Globals.h \
- Timer.h
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ Globals.h Timer.h
 
 .obj/Task_Client.o .obj/Task_Client.so .shobj/Task_Client.o .shobj/Task_Client.so: Task_Client.cpp Task_Client.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1660,7 +1661,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i cubitC.h \
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ cubitC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1876,7 +1878,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Sched_Params.i server.h \
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -2203,8 +2206,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Profile_Timer.i Globals.h \
- Timer.h Util_Thread.h Cubit_Task.h client.h
+ $(ACE_ROOT)/ace/Profile_Timer.i \
+ Globals.h Timer.h Util_Thread.h Cubit_Task.h client.h
 
 .obj/Util_Thread.o .obj/Util_Thread.so .shobj/Util_Thread.o .shobj/Util_Thread.so: Util_Thread.cpp Util_Thread.h Task_Client.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2375,7 +2378,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i cubitC.h \
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ cubitC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2909,7 +2913,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Sched_Params.i Globals.h \
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ Globals.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -2950,7 +2955,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Cubit_Task.h $(ACE_ROOT)/ace/Task.h \
+ Cubit_Task.h \
+ $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -3104,8 +3110,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i cubit_i.h cubitS.h \
- cubitC.h $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ cubit_i.h cubitS.h cubitC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -3341,7 +3348,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- Task_Client.h $(ACE_ROOT)/ace/Synch.h \
+ Task_Client.h \
+ $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -3471,7 +3479,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i cubitC.h \
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ cubitC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \

@@ -369,7 +369,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h
 
-.obj/tc.o .obj/tc.so .shobj/tc.o .shobj/tc.so: tc.cpp $(TAO_ROOT)/tao/corba.h \
+.obj/tc.o .obj/tc.so .shobj/tc.o .shobj/tc.so: tc.cpp \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \

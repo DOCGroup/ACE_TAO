@@ -290,7 +290,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
- Web_ServerC.h $(TAO_ROOT)/tao/corba.h \
+ Web_ServerC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
@@ -488,7 +489,8 @@ realclean: clean
  $(ACE_ROOT)/ace/IO_SAP.h \
  $(ACE_ROOT)/ace/IO_SAP.i \
  $(ACE_ROOT)/ace/FILE.i \
- $(ACE_ROOT)/ace/FILE_IO.i Web_ServerS.h \
+ $(ACE_ROOT)/ace/FILE_IO.i \
+ Web_ServerS.h \
  $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -647,7 +649,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
- Web_ServerC.h $(TAO_ROOT)/tao/corba.h \
+ Web_ServerC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
@@ -1376,7 +1379,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
- Web_ServerC.h $(TAO_ROOT)/tao/corba.h \
+ Web_ServerC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
@@ -1856,7 +1860,8 @@ realclean: clean
  $(ACE_ROOT)/ace/IO_SAP.h \
  $(ACE_ROOT)/ace/IO_SAP.i \
  $(ACE_ROOT)/ace/FILE.i \
- $(ACE_ROOT)/ace/FILE_IO.i Web_ServerS.h \
+ $(ACE_ROOT)/ace/FILE_IO.i \
+ Web_ServerS.h \
  $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \

@@ -402,7 +402,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/PortableServer/POAManager.h \
  $(TAO_ROOT)/tao/PortableServer/POAManager.i \
  $(TAO_ROOT)/tao/PortableServer/POA.i \
- Servant_Locator.h $(ACE_ROOT)/ace/Get_Opt.h \
+ Servant_Locator.h \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/Servant_Manager.o .obj/Servant_Manager.so .shobj/Servant_Manager.o .shobj/Servant_Manager.so: Servant_Manager.cpp Servant_Manager.h \
@@ -760,7 +761,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/PortableServer/POA.i
 
 .obj/Servant_Activator.o .obj/Servant_Activator.so .shobj/Servant_Activator.o .shobj/Servant_Activator.so: Servant_Activator.cpp Servant_Activator.h \
- Servant_Manager.h $(ACE_ROOT)/ace/OS.h \
+ Servant_Manager.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1434,7 +1436,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/DLL.h Servant_Manager.h \
+ $(ACE_ROOT)/ace/DLL.h \
+ Servant_Manager.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \

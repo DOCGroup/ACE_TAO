@@ -267,7 +267,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
- testC.h $(TAO_ROOT)/tao/corba.h \
+ testC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
@@ -424,7 +425,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Module.i \
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.cpp Peer_i.i
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
+ Peer_i.i
 
 .obj/Progress_i.o .obj/Progress_i.so .shobj/Progress_i.o .shobj/Progress_i.so: Progress_i.cpp Progress_i.h testS.h \
  $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
@@ -624,7 +626,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
- testC.h $(TAO_ROOT)/tao/corba.h \
+ testC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
@@ -1298,7 +1301,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
- testC.h $(TAO_ROOT)/tao/corba.h \
+ testC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \

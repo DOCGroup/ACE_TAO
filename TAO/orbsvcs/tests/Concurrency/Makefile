@@ -195,7 +195,8 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Read_Buffer.i CC_client.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ CC_client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/corba.h \
@@ -1869,7 +1870,8 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i CC_command.h \
+ $(ACE_ROOT)/ace/OS.i \
+ CC_command.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \

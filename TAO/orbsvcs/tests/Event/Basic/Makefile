@@ -454,8 +454,8 @@ endif # RTEvent
  $(ACE_ROOT)/ace/Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.inl \
- $(ACE_ROOT)/ace/Stats.i ../lib/Driver.i \
- ../lib/Consumer.h ../lib/Supplier.h \
+ $(ACE_ROOT)/ace/Stats.i \
+ ../lib/Driver.i ../lib/Consumer.h ../lib/Supplier.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -852,8 +852,8 @@ endif # RTEvent
  $(ACE_ROOT)/ace/Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.inl \
- $(ACE_ROOT)/ace/Stats.i ../lib/Driver.i \
- ../lib/Consumer.h ../lib/Supplier.h \
+ $(ACE_ROOT)/ace/Stats.i \
+ ../lib/Driver.i ../lib/Consumer.h ../lib/Supplier.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -1241,7 +1241,8 @@ endif # RTEvent
  $(ACE_ROOT)/ace/Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.inl \
- $(ACE_ROOT)/ace/Stats.i ../lib/Driver.i \
+ $(ACE_ROOT)/ace/Stats.i \
+ ../lib/Driver.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Gateway.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.h \
@@ -1644,7 +1645,8 @@ endif # RTEvent
  $(ACE_ROOT)/ace/Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.inl \
- $(ACE_ROOT)/ace/Stats.i ../lib/Driver.i \
+ $(ACE_ROOT)/ace/Stats.i \
+ ../lib/Driver.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminC.i \
@@ -6472,7 +6474,8 @@ endif # RTEvent
  $(ACE_ROOT)/ace/Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.h \
  $(ACE_ROOT)/ace/Basic_Stats.inl \
- $(ACE_ROOT)/ace/Stats.i ../lib/Driver.i \
+ $(ACE_ROOT)/ace/Stats.i \
+ ../lib/Driver.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
