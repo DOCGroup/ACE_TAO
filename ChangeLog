@@ -1,3 +1,9 @@
+Sat Feb 19 00:54:22 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Select_Reactor_T.inl (deactivate):
+
+	  Fixed a potential race when trying to update deactivated_ flag. 
+
 Fri Feb 18 20:05:53 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Signal.{h,inl}: Make the destructor of ACE_Sig_Handler virtual
@@ -40,7 +46,7 @@ Fri Feb 18 13:48:33 2005  Martin Corino  <mcorino@remedy.nl>
 Fri Feb 18 07:21:33 2005  Boris Kolpackov  <boris@kolpackov.net>
 
         * protocols/ace/RMCast/Socket.cpp: Qualified call to
-        base's send(). Hopefully it will make VC6 happy.
+          base's send(). Hopefully it will make VC6 happy.
 
 Thu Feb 17 18:23:33 2005  Steve Huston  <shuston@riverace.com>
 
