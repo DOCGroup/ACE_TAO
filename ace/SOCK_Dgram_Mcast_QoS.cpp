@@ -151,7 +151,8 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
             if (this->subscribe (mcast_addr,
                                  qos_params,
                                  reuse_addr,
-                                 if_addrs[if_cnt].get_host_addr(),
+                                 ACE_TEXT_CHAR_TO_TCHAR 
+                                   (if_addrs[if_cnt].get_host_addr()),
                                  protocol_family,
                                  protocol,
                                  protocolinfo) == 0)

@@ -5645,36 +5645,36 @@ public:
   // <qos_params> are ignored and the BSD-style <connect> is called.
 
   static int closesocket (ACE_HANDLE s);
-  static struct hostent *gethostbyaddr (const ACE_TCHAR *addr,
+  static struct hostent *gethostbyaddr (const char *addr,
                                         int length,
                                         int type);
-  static struct hostent *gethostbyname (const ACE_TCHAR *name);
-  static struct hostent *gethostbyname2 (const ACE_TCHAR *name, int type);
-  static struct hostent *gethostbyaddr_r (const ACE_TCHAR *addr,
+  static struct hostent *gethostbyname (const char *name);
+  static struct hostent *gethostbyname2 (const char *name, int type);
+  static struct hostent *gethostbyaddr_r (const char *addr,
                                           int length,
                                           int type,
                                           struct hostent *result,
                                           ACE_HOSTENT_DATA buffer,
                                           int *h_errnop);
-  static struct hostent *gethostbyname_r (const ACE_TCHAR *name,
+  static struct hostent *gethostbyname_r (const char *name,
                                           struct hostent *result,
                                           ACE_HOSTENT_DATA buffer,
                                           int *h_errnop);
   static int getpeername (ACE_HANDLE handle,
                           struct sockaddr *addr,
                           int *addrlen);
-  static struct protoent *getprotobyname (const ACE_TCHAR *name);
-  static struct protoent *getprotobyname_r (const ACE_TCHAR *name,
+  static struct protoent *getprotobyname (const char *name);
+  static struct protoent *getprotobyname_r (const char *name,
                                             struct protoent *result,
                                             ACE_PROTOENT_DATA buffer);
   static struct protoent *getprotobynumber (int proto);
   static struct protoent *getprotobynumber_r (int proto,
                                               struct protoent *result,
                                               ACE_PROTOENT_DATA buffer);
-  static struct servent *getservbyname (const ACE_TCHAR *svc,
-                                        const ACE_TCHAR *proto);
-  static struct servent *getservbyname_r (const ACE_TCHAR *svc,
-                                          const ACE_TCHAR *proto,
+  static struct servent *getservbyname (const char *svc,
+                                        const char *proto);
+  static struct servent *getservbyname_r (const char *svc,
+                                          const char *proto,
                                           struct servent *result,
                                           ACE_SERVENT_DATA buf);
   static int getsockname (ACE_HANDLE handle,
@@ -5685,16 +5685,16 @@ public:
                          int optname,
                          char *optval,
                          int *optlen);
-  static long inet_addr (const ACE_TCHAR *name);
-  static ACE_TCHAR *inet_ntoa (const struct in_addr addr);
-  static int inet_aton (const ACE_TCHAR *strptr,
+  static long inet_addr (const char *name);
+  static char *inet_ntoa (const struct in_addr addr);
+  static int inet_aton (const char *strptr,
                         struct in_addr *addr);
-  static const ACE_TCHAR *inet_ntop (int family,
-                                     const void *addrptr,
-                                     ACE_TCHAR *strptr,
-                                     size_t len);
+  static const char *inet_ntop (int family,
+                                const void *addrptr,
+                                char *strptr,
+                                 size_t len);
   static int inet_pton (int family,
-                        const ACE_TCHAR *strptr,
+                        const char *strptr,
                         void *addrptr);
   static int enum_protocols (int *protocols,
                              ACE_Protocol_Info *protocol_buffer,

@@ -47,7 +47,7 @@ ACE_MEM_Addr::get_port_number (void) const
 
 // Return the dotted Internet address.
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE const char *
 ACE_MEM_Addr::get_host_addr (void) const
 {
   ACE_TRACE ("ACE_MEM_Addr::get_host_addr");

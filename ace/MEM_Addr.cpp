@@ -124,7 +124,7 @@ ACE_MEM_Addr::get_host_name (ACE_TCHAR hostname[],
 
 // Return the character representation of the hostname.
 
-const ACE_TCHAR *
+const char *
 ACE_MEM_Addr::get_host_name (void) const
 {
   ACE_TRACE ("ACE_MEM_Addr::get_host_name");

@@ -1,3 +1,53 @@
+Mon Oct 30 18:56:33 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.cpp:
+        * ace/OS.h:
+        * ace/OS.i:
+
+          Changed several of the socket calls to use char instead
+          of ACE_TCHAR, seeing that no OS supports anything but char.
+          But I am keeping the ACE_TCHAR or dual char/wchar_t 
+          interfaces on classes higher up the stream.
+
+          methods changed are:
+
+          - gethostbyaddr
+          - gethostbyname
+          - gethostbyname2
+          - gethostbyaddr_r
+          - gethostbyname_r
+          - getprotobyname
+          - getprotobyname_r
+          - getservbyname
+          - getservbyname_r
+          - inet_addr
+          - inet_ntoa
+          - inet_aton
+          - inet_ntop
+          - inet_pton
+
+        * ace/INET_Addr.cpp:
+        * ace/INET_Addr.h:
+        * ace/INET_Addr.i:
+
+          Fixed references to interface changes and added dual
+          char/wchar_t interfaces to replace some ACE_TCHAR ones.  
+
+        * ace/MEM_Addr.cpp:
+        * ace/MEM_Addr.h:
+        * ace/MEM_Addr.i:
+          
+          Changed get_host_name and get_host_name to return char *
+
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SOCK_Dgram_Mcast_QoS.cpp:
+
+          Fixed all the references to the interface changes.
+
+        * ace/Object_Manager.cpp:
+
+          Added ERROR to the output for AV's and Unhandled Exceptions.      
+    
 Mon Oct 30 18:51:40 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/IPC_SAP/SSL_SAP/SSL-client.dsp:

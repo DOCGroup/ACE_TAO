@@ -194,9 +194,9 @@ LONG _stdcall ACE_UnhandledExceptionFilter (PEXCEPTION_POINTERS pExceptionInfo)
   DWORD dwExceptionCode = pExceptionInfo->ExceptionRecord->ExceptionCode;
 
   if (dwExceptionCode == EXCEPTION_ACCESS_VIOLATION)
-    ACE_ERROR ((LM_ERROR, "\nERROR: ACCESS VIOLATION\n"));
+    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("\nERROR: ACCESS VIOLATION\n")));
   else
-    ACE_ERROR ((LM_ERROR, "\nERROR: UNHANDLED EXCEPTION\n"));
+    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("\nERROR: UNHANDLED EXCEPTION\n")));
 
   return EXCEPTION_EXECUTE_HANDLER;
 }
