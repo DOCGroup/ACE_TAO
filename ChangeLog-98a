@@ -1,3 +1,16 @@
+Thu Apr  2 15:36:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Added
+
+	  #define ACE_HAS_STL_QUEUE_CONFLICT
+
+	  to the config files which had ACE_HAS_STL_MAP_CONFLICT defined, i.e.,:
+	  config-sunos5.5-g++.h
+	  config-sunos5.5-sunc++-4.x.h
+
+  	  Thanks to Russ Noseworthy <rnosewor@objectsciences.com> for
+ 	  reporting this.
+
 Thu Apr  2 15:14:35 1998  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* ace/WFMO_Reactor.h (dump): Renamed HANDLE to ACE_HANDLE.
