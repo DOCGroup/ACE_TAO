@@ -166,6 +166,59 @@ ACE_ARGV::string_to_argv (void)
  return 0;
 }
 
+int
+ACE_ARGV::argv_to_string (ASYS_TCHAR **argv,char *&buf)
+{
+  if (argv == 0 || argv[0] == 0)
+    return 0;
+
+  int buf_len = 0;
+  
+  // Determine the length of the buffer.
+
+  for (int i = 0; argv[i] != 0; i++)
+    {
+      ASYS_TCHAR *temp;
+
+      // Account for environment variables.
+      if (this->substitute_env_args_
+	  && (argv[i][0] == '$'
+	  && (temp = ACE_OS::getenv (&argv[i][1])) != 0))
+	buf_len += ACE_OS::strlen (temp);	
+      else
+	buf_len += ACE_OS::strlen (argv[i]);
+
+      // Add one for the extra space between each string.
+      buf_len++;
+    }
+
+  // Step through all argv params and copy each one into buf; separate
+  // each param with white space.
+
+  ACE_NEW_RETURN (buf, ASYS_TCHAR[buf_len + 1],0);
+
+  ASYS_TCHAR *end = buf;
+  int j;
+
+  for (j = 0; argv[j] != 0; j++)
+    {
+      ASYS_TCHAR *temp;
+
+      // Account for environment variables.
+      if (this->substitute_env_args_
+	  && (argv[j][0] == '$'
+	  && (temp = ACE_OS::getenv (&argv[j][1])) != 0))
+	end = ACE::strecpy (end, temp);
+      else
+	end = ACE::strecpy (end, argv[j]);
+
+      // Add white space and advance the pointer.
+      *end++ = ' ';
+    }
+  // Null terminate the string.
+  *end = '\0';
+  return j;// the number of arguments.
+}
 
 ACE_ARGV::ACE_ARGV (const ASYS_TCHAR buf[],
 		    int substitute_env_args)
@@ -257,6 +310,52 @@ ACE_ARGV::ACE_ARGV (ASYS_TCHAR *argv[],
   // Null terminate the string.
   *end = '\0';
 }
+
+ACE_ARGV::ACE_ARGV (ASYS_TCHAR *first_argv[], 
+                    ASYS_TCHAR *second_argv[],
+                    int substitute_env_args)
+  : substitute_env_args_ (substitute_env_args),
+    state_ (TO_STRING),
+    argc_ (0),
+    argv_ (0),
+    buf_ (0),
+    length_ (0)
+{
+  ACE_TRACE ("ACE_ARGV::ACE_ARGV ASYS_TCHAR*[] + ASYS_TCHAR *[] to ASYS_TCHAR[]");
+
+  int first_argc;
+  int second_argc;
+
+  char *first_buf;
+  char *second_buf;
+
+  // convert the first argv to a string
+  first_argc = this->argv_to_string (first_argv,first_buf);
+
+  // convert the second argv to a string
+  second_argc = this->argv_to_string (second_argv,second_buf);
+
+  // Add the number of arguments in both the argvs.
+  this->argc_ = first_argc + second_argc;
+
+  int buf_len = strlen (first_buf) + strlen (second_buf) + 1;
+
+  // Allocate memory to the lenght of the combined argv string.
+  ACE_NEW (this->buf_, ASYS_TCHAR[buf_len + 1]);
+
+  // copy the first argv string to the buffer
+  ACE_OS::strcpy (this->buf_,first_buf);
+
+  // concatenate the second argv string to the buffer
+  ACE_OS::strcat (this->buf_,second_buf);
+
+  //   Delete the first and second buffers
+
+  delete [] first_buf;
+
+  delete [] second_buf;
+}
+
 
 ACE_ARGV::ACE_ARGV (int substitute_env_args)
   : substitute_env_args_ (substitute_env_args),

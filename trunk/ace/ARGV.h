@@ -43,6 +43,10 @@ public:
   // The buf() operation is not allowed on an ACE_ARGV created
   // this way.
 
+  ACE_ARGV (ASYS_TCHAR *first_argv[], ASYS_TCHAR *second_argv[], int substitute_env_args =1);
+  // Creates an ACE_ARGV which is the concatenation of the first_argv
+  // and the second argv. The argv arguments should be null pointer terminated.
+
   ACE_ARGV (int substitute_env_args = 1);
   // Entry point for creating an ASYS_TCHAR *[] command line iteratively
   // via the add() method.  The argv() and buf() method calls are
@@ -99,6 +103,10 @@ private:
 
   int string_to_argv (void);
   // Converts buf_ into the ASYS_TCHAR *argv[] format.
+
+  int argv_to_string (ASYS_TCHAR **argv, char *&buf);
+  // Returns the string created from argv in buf and 
+  // returns the number of arguments.
 
   int substitute_env_args_;
   // Replace args with environment variable values?
