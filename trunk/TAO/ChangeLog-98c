@@ -9,11 +9,10 @@ Mon Oct 27 15:22:24 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 	* tao/optable.cpp:
 	* tao/optable.h:
 	* tao/singletons.h:
-	The ACE_Singleton lock type needs to be changed from 
-	ACE_SYNCH_MUTEX (or ACE_SYNCH_RW_MUTEX) ACE_SYNCH_RECURSIVE_MUTEX.  
-	ACE handles those more efficiently for its singletons.
-	Change suggested by David Levine.
-
+	The ACE_Singleton lock type needs to be changed from
+ 	ACE_SYNCH_MUTEX (or ACE_SYNCH_RW_MUTEX) ACE_SYNCH_RECURSIVE_MUTEX.
+  	ACE handles those more efficiently for its singletons.  Change
+ 	suggested by David Levine.
 
 Mon Oct 27 11:59:51 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
