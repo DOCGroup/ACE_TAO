@@ -2,8 +2,7 @@
 //
 // $Id$
 
-project(*Server): aceexe {
-  libs += ACE_HTBP
+project(*Server): aceexe, htbp {
   exename = server
 
   Source_Files {
@@ -12,8 +11,7 @@ project(*Server): aceexe {
   }
 }
 
-project(*Client): aceexe {
-  libs += ACE_HTBP
+project(*Client): aceexe, htbp {
   exename = client
 
   Source_Files {
