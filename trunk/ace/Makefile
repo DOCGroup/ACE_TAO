@@ -217,7 +217,8 @@ TEMPLATE_FILES = \
            Timer_Queue_T \
            Timer_Wheel_T \
            Typed_SV_Message \
-           Typed_SV_Message_Queue
+           Typed_SV_Message_Queue \
+	   Vector
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -545,6 +546,9 @@ endif # GHS
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Version.h
 .obj/Active_Map_Manager.o .obj/Active_Map_Manager.so .shobj/Active_Map_Manager.o .shobj/Active_Map_Manager.so: Active_Map_Manager.cpp \
  $(ACE_ROOT)/ace/Active_Map_Manager.h \
@@ -640,7 +644,8 @@ endif # GHS
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Arg_Shifter.h
-.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp $(ACE_ROOT)/ace/ARGV.h \
+.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
+ $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1801,20 +1806,21 @@ endif # GHS
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/SPIPE_Connector.h \
- $(ACE_ROOT)/ace/SPIPE_Stream.h \
- $(ACE_ROOT)/ace/SPIPE.h \
- $(ACE_ROOT)/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SPIPE_Addr.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/SPIPE_Addr.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/SPIPE.i \
- $(ACE_ROOT)/ace/SPIPE_Stream.i \
- $(ACE_ROOT)/ace/SPIPE_Connector.i
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i
 .obj/Log_Record.o .obj/Log_Record.so .shobj/Log_Record.o .shobj/Log_Record.so: Log_Record.cpp \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -3250,7 +3256,8 @@ endif # GHS
  $(ACE_ROOT)/ace/LSOCK.h \
  $(ACE_ROOT)/ace/LSOCK.i \
  $(ACE_ROOT)/ace/LSOCK_Stream.i
-.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp $(ACE_ROOT)/ace/SOCK.h \
+.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp \
+ $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -3507,7 +3514,8 @@ endif # GHS
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i
-.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp $(ACE_ROOT)/ace/Addr.h \
+.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp \
+ $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -3641,7 +3649,8 @@ endif # GHS
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/DEV.i \
  $(ACE_ROOT)/ace/DEV_IO.i
-.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp $(ACE_ROOT)/ace/FIFO.h \
+.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp \
+ $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3763,7 +3772,8 @@ endif # GHS
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h
-.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp $(ACE_ROOT)/ace/FILE.h \
+.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp \
+ $(ACE_ROOT)/ace/FILE.h \
  $(ACE_ROOT)/ace/IO_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -4218,8 +4228,7 @@ endif # GHS
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i
+ $(ACE_ROOT)/ace/Addr.i
 .obj/TLI_Acceptor.o .obj/TLI_Acceptor.so .shobj/TLI_Acceptor.o .shobj/TLI_Acceptor.so: TLI_Acceptor.cpp \
  $(ACE_ROOT)/ace/TLI_Acceptor.h \
  $(ACE_ROOT)/ace/TLI.h \
@@ -4240,13 +4249,10 @@ endif # GHS
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Acceptor.i
+ $(ACE_ROOT)/ace/INET_Addr.i
 .obj/TLI_Connector.o .obj/TLI_Connector.so .shobj/TLI_Connector.o .shobj/TLI_Connector.so: TLI_Connector.cpp \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -4270,11 +4276,8 @@ endif # GHS
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Connector.i
+ $(ACE_ROOT)/ace/INET_Addr.i
 .obj/TLI_Stream.o .obj/TLI_Stream.so .shobj/TLI_Stream.o .shobj/TLI_Stream.so: TLI_Stream.cpp \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/TLI.h \
@@ -4295,10 +4298,8 @@ endif # GHS
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i
+ $(ACE_ROOT)/ace/INET_Addr.i
 .obj/TTY_IO.o .obj/TTY_IO.so .shobj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp \
  $(ACE_ROOT)/ace/TTY_IO.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -5770,7 +5771,8 @@ endif # GHS
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i
-.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp $(ACE_ROOT)/ace/Task.h \
+.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp \
+ $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
