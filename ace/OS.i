@@ -3083,6 +3083,7 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
   ACE_UNUSED_ARG (buflen);
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_REENTRANT_FUNCTIONS */
+#else
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (pwent);
   ACE_UNUSED_ARG (buffer);

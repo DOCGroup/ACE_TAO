@@ -1,3 +1,18 @@
+Thu Apr 24 07:24:19 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Process_Strategy_Test.cpp (handle_input): We were
+ 	  comparing EOF to a char, which gets complaints on platforms
+ 	  where char is unsigned by default.  I added a cast of EOF to
+ 	  char to fix this.  Thanks to Amos Shapira <amos@dsi.co.il> for
+ 	  reporting this.
+
+	* apps/JAWS/server/HTTP_Helpers.cpp (instance): Changed the
+	  return type from const char * to const char **.  Thanks to
+	  Amos Shapira <amos@dsi.co.il> for reporting this.
+
+	* ace/OS.i (getpwnam_r): Added a missing #else.  Thanks to
+	  Amos Shapira <amos@dsi.co.il> for reporting this.
+
 Thu Apr 24 01:44:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Timer_Heap: Made many minor enhancements to ACE_Timer_Heap
