@@ -276,9 +276,8 @@ main (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("TC");
-      return 0;
-
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Basic_Types");
+      return 1;
     }
   ACE_ENDTRY;
 

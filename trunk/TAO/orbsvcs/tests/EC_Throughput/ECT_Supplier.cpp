@@ -34,7 +34,7 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
                         int type_start,
                         int type_count,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
-                        CORBA::Environment &TAO_IN_ENV)
+                        CORBA::Environment &ACE_TRY_ENV)
 {
   this->burst_count_ = burst_count;
   this->burst_size_ = burst_size;
@@ -44,8 +44,8 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
   this->type_count_ = type_count;
 
   RtecScheduler::handle_t rt_info =
-    scheduler->create (name, TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+    scheduler->create (name, ACE_TRY_ENV);
+  ACE_CHECK;
 
   ACE_Time_Value tv (0, burst_pause);
   RtecScheduler::Period_t rate = tv.usec () * 10;
@@ -65,8 +65,8 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
                   time,
                   1,
                   RtecScheduler::OPERATION,
-                  TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+                  ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->supplier_id_ = ACE::crc32 (name);
   ACE_DEBUG ((LM_DEBUG, "ID for <%s> is %04.4x\n", name,
@@ -84,51 +84,51 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
               rt_info, 1);
 
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    ec->for_suppliers (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+    ec->for_suppliers (ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+    supplier_admin->obtain_push_consumer (ACE_TRY_ENV);
+  ACE_CHECK;
 
   RtecEventComm::PushSupplier_var objref =
-    this->supplier_._this (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+    this->supplier_._this (ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->consumer_proxy_->connect_push_supplier (objref.in (),
                                                 qos.get_SupplierQOS (),
-                                                TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+                                                ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
-Test_Supplier::disconnect (CORBA::Environment &TAO_IN_ENV)
+Test_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+  this->consumer_proxy_->disconnect_push_consumer (ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 
   // Deactivate the servant
   PortableServer::POA_var poa =
-    this->supplier_._default_POA (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+    this->supplier_._default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (&this->supplier_, TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
-  poa->deactivate_object (id.in (), TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
-    RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
+    poa->servant_to_id (&this->supplier_, ACE_TRY_ENV);
+  ACE_CHECK;
+  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 int
 Test_Supplier::svc ()
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       // Initialize a time value to pace the test
       ACE_Time_Value tv (0, this->burst_pause_);
@@ -167,9 +167,9 @@ Test_Supplier::svc ()
               ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                              now);
               // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
-              this->consumer_proxy ()->push (event, TAO_TRY_ENV);
+              this->consumer_proxy ()->push (event, ACE_TRY_ENV);
 
-              TAO_CHECK_ENV;
+              ACE_TRY_CHECK;
             }
           this->throughput_.sample ();
 
@@ -189,21 +189,21 @@ Test_Supplier::svc ()
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      now);
-      this->consumer_proxy ()->push(event, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->consumer_proxy ()->push(event, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       this->throughput_.sample ();
       this->throughput_.stop ();
 
     }
-  TAO_CATCH (CORBA::SystemException, sys_ex)
+  ACE_CATCH (CORBA::SystemException, sys_ex)
     {
-      TAO_TRY_ENV.print_exception ("SYS_EX");
+      ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX");
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("NON SYS EX");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NON SYS EX");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "Supplier %4.4x completed\n",

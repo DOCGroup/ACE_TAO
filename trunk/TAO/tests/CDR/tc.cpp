@@ -32,7 +32,7 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             0,
-					    ACE_TRY_ENV);
+                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       static const CORBA::TypeCode_ptr tcs[]=
@@ -100,54 +100,55 @@ main (int argc, char *argv[])
       for (const CORBA::TypeCode_ptr *i = tcs;
            i != tcs + n;
            ++i)
-	{
-	  CORBA::TypeCode_ptr tc = *i;
+        {
+          CORBA::TypeCode_ptr tc = *i;
 
-	  CORBA::TCKind k = tc->kind (ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
+          CORBA::TCKind k = tc->kind (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-	  switch (k)
-	    {
-	    case CORBA::tk_objref:
-	    case CORBA::tk_struct:
-	    case CORBA::tk_union:
-	    case CORBA::tk_enum:
-	    case CORBA::tk_alias:
-	    case CORBA::tk_except:
-	      {
-		const char *id = tc->id (ACE_TRY_ENV);
-		ACE_TRY_CHECK;
+          switch (k)
+            {
+            case CORBA::tk_objref:
+            case CORBA::tk_struct:
+            case CORBA::tk_union:
+            case CORBA::tk_enum:
+            case CORBA::tk_alias:
+            case CORBA::tk_except:
+              {
+                const char *id = tc->id (ACE_TRY_ENV);
+                ACE_TRY_CHECK;
 
-		const char *name = tc->name (ACE_TRY_ENV);
-		ACE_TRY_CHECK;
+                const char *name = tc->name (ACE_TRY_ENV);
+                ACE_TRY_CHECK;
 
-		CORBA::ULong length = 0;
+                CORBA::ULong length = 0;
                 // tc->length (TAO_TRY_ENV);
-		            // ACE_TRY_CHECK;
+                            // ACE_TRY_CHECK;
 
-		ACE_DEBUG ((LM_DEBUG,
-			    "ID = '%s'\n"
-			    "%{%{ NAME = %s%$"
-			    " KIND = %d%$"
-			    " LENGTH = %d"
-			    "%}%}\n",
-			    (id?id:"empty ID"),
+                ACE_DEBUG ((LM_DEBUG,
+                            "ID = '%s'\n"
+                            "%{%{ NAME = %s%$"
+                            " KIND = %d%$"
+                            " LENGTH = %d"
+                            "%}%}\n",
+                            (id?id:"empty ID"),
                             (name?name:"empty name"),
                             k,
                             length));
                 break;
-	      }
-	    default:
+              }
+            default:
               ACE_DEBUG ((LM_DEBUG,
                           "basic type: %d\n",
                           k));
               break;
-	    }
-	}
+            }
+        }
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("TC");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TC");
+      return 1;
     }
   ACE_ENDTRY;
 

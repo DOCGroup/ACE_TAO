@@ -36,25 +36,25 @@ Initiator_i::~Initiator_i (void)
 }
 
 void
-Initiator_i::foo_object_B (CORBA::Environment &)
+Initiator_i::foo_object_B (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Initiator_i::foo_object_B ()\n"));
 
-  TAO_TRY
+  ACE_TRY
     {
       this->object_B_var_->foo (this->object_A_var_.in (),
-                                TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Initiator_i::foo_object_B: Returned from call.\n"));
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("calling the server_");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "calling the server");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) END Initiator_i::foo_object_B ()\n"));

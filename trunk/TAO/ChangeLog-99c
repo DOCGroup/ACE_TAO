@@ -1,3 +1,39 @@
+Fri Jun 25 14:06:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Event_Service/Event_Service.cpp:
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Event/Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
+	* orbsvcs/orbsvcs/Event/ReactorTask.cpp:
+	* orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	* orbsvcs/tests/Event/Basic/Reconnect.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+	* tests/CDR/basic_types.cpp:
+	* tests/CDR/tc.cpp:
+	* tests/NestedUpcall/MT_Client_Test/client.cpp:
+	* tests/NestedUpcall/MT_Client_Test/local_server.cpp:
+	* tests/NestedUpcall/MT_Client_Test/server.cpp:
+	* tests/NestedUpcall/Reactor/reactor_i.cpp:
+	* tests/NestedUpcall/Triangle_Test/Initiator_i.cpp:
+	* tests/NestedUpcall/Triangle_Test/Object_A_i.cpp:
+	* tests/NestedUpcall/Triangle_Test/Object_B_i.cpp:
+	* tests/NestedUpcall/Triangle_Test/initiator.cpp:
+	* tests/NestedUpcall/Triangle_Test/server_A.cpp:
+	* tests/NestedUpcall/Triangle_Test/server_B.cpp:
+	* utils/catior/catior.cpp:
+	  More exception handling fixes, changed these files to use the
+	  new exception handling macros.
+
 Fri Jun 25 13:53:23 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* examples/Logging/Makefile
