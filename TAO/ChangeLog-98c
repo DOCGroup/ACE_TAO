@@ -1,3 +1,8 @@
+Thu Dec  4 18:20:55 1997  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* TAO_IDL/tao_idl.dsp: Changed hard coded path for cl.exe to CPP_PATH 
+          environment variable
+       
 Thu Dec  4 11:23:55 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/include/{idl,ast,utl_idlist, utl_identifier}.h: removed
