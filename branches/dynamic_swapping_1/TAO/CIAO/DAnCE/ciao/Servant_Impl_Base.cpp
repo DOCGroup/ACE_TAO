@@ -65,7 +65,6 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
-    ACE_DEBUG ((LM_DEBUG, "i am being called to remove\n"));
     Components::SessionComponent_var temp = this->get_executor ();
     temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
