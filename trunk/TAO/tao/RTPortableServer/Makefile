@@ -72,10 +72,7 @@ endif # corba_messaging
 
 
 .obj/RTPortableServer.o .obj/RTPortableServer.so .shobj/RTPortableServer.o .shobj/RTPortableServer.so: RTPortableServer.cpp RTPortableServer.h \
- $(ACE_ROOT)/ace/pre.h \
- rtportableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h rtportableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -265,10 +262,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Reactor_Impl.h
 
 .obj/RTPortableServerC.o .obj/RTPortableServerC.so .shobj/RTPortableServerC.o .shobj/RTPortableServerC.so: RTPortableServerC.cpp RTPortableServerC.h \
- $(ACE_ROOT)/ace/pre.h \
- rtportableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h rtportableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -431,8 +425,6 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -602,18 +594,16 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Profile.i
 
 .obj/RT_Collocation_Resolver.o .obj/RT_Collocation_Resolver.so .shobj/RT_Collocation_Resolver.o .shobj/RT_Collocation_Resolver.so: RT_Collocation_Resolver.cpp \
- $(TAO_ROOT)/tao/RTPortableServer/RT_Collocation_Resolver.h \
+ RT_Collocation_Resolver.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
+ rtportableserver_export.h \
  $(TAO_ROOT)/tao/Collocation_Resolver.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -738,7 +728,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(TAO_ROOT)/tao/RTPortableServer/RT_Collocation_Resolver.i \
+ RT_Collocation_Resolver.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Exception.h \
@@ -868,9 +858,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -941,11 +929,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/RTCORBA/Thread_Pool.i
 
 .obj/RT_Object_Adapter_Factory.o .obj/RT_Object_Adapter_Factory.so .shobj/RT_Object_Adapter_Factory.o .shobj/RT_Object_Adapter_Factory.so: RT_Object_Adapter_Factory.cpp \
- RT_Object_Adapter_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- rtportableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ RT_Object_Adapter_Factory.h $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1108,9 +1092,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -1231,8 +1213,7 @@ endif # corba_messaging
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(TAO_ROOT)/tao/ORB_Core.i \
- RT_Servant_Dispatcher.h \
+ $(TAO_ROOT)/tao/ORB_Core.i RT_Servant_Dispatcher.h \
  $(TAO_ROOT)/tao/PortableServer/Servant_Dispatcher.h \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
@@ -1243,16 +1224,12 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
  RT_Policy_Validator.h RT_Collocation_Resolver.h \
- $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
+ rtportableserver_export.h \
  $(TAO_ROOT)/tao/Collocation_Resolver.h \
  $(TAO_ROOT)/tao/Collocation_Resolver.i \
- $(TAO_ROOT)/tao/RTPortableServer/RT_Collocation_Resolver.i
+ RT_Collocation_Resolver.i
 
-.obj/RT_POA.o .obj/RT_POA.so .shobj/RT_POA.o .shobj/RT_POA.so: RT_POA.cpp RT_POA.h \
- $(ACE_ROOT)/ace/pre.h \
- rtportableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+.obj/RT_POA.o .obj/RT_POA.so .shobj/RT_POA.o .shobj/RT_POA.so: RT_POA.cpp RT_POA.h $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1388,9 +1365,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -1591,16 +1566,14 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/PortableServer/Default_Acceptor_Filter.h \
  $(TAO_ROOT)/tao/Acceptor_Filter.h \
  $(TAO_ROOT)/tao/Acceptor_Filter.i \
- $(TAO_ROOT)/tao/RTPortableServer/RT_Policy_Validator.h \
- $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
+ RT_Policy_Validator.h \
+ rtportableserver_export.h \
  RT_Acceptor_Filters.h RT_Acceptor_Filters.i
 
 .obj/RT_Policy_Validator.o .obj/RT_Policy_Validator.so .shobj/RT_Policy_Validator.o .shobj/RT_Policy_Validator.so: RT_Policy_Validator.cpp RT_Policy_Validator.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1901,11 +1874,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/PortableServer/POA_Cached_Policies.i
 
 .obj/RT_Servant_Dispatcher.o .obj/RT_Servant_Dispatcher.so .shobj/RT_Servant_Dispatcher.o .shobj/RT_Servant_Dispatcher.so: RT_Servant_Dispatcher.cpp \
- RT_Servant_Dispatcher.h \
- $(ACE_ROOT)/ace/pre.h \
- rtportableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ RT_Servant_Dispatcher.h $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2041,9 +2010,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -2139,8 +2106,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
- RT_POA.h \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i RT_POA.h \
  $(TAO_ROOT)/tao/PortableServer/POA.h \
  $(TAO_ROOT)/tao/PortableServer/POAManager.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
