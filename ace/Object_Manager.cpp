@@ -9,6 +9,7 @@
 #include "ace/Object_Manager.i"
 #endif /* __ACE_INLINE__ */
 
+// Singleton pointer.
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 
 ACE_Object_Manager::ACE_Object_Manager (void)
