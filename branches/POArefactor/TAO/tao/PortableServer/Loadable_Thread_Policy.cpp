@@ -21,8 +21,28 @@ namespace TAO
     POA_ThreadPolicy* policy = 0;
 
     ACE_NEW_RETURN (policy,
-                    POA_ThreadPolicy (value),
-                    0);
+                    POA_ThreadPolicy,
+                    PortableServer::ThreadPolicy::_nil ());
+
+    (void) policy->init (value);
+
+    return policy;
+  }
+
+  PortableServer::ThreadPolicy_ptr
+  Loadable_Thread_Policy::create (
+    const CORBA::Any &value
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::PolicyError))
+  {
+    POA_ThreadPolicy* policy = 0;
+
+    ACE_NEW_RETURN (policy,
+                    POA_ThreadPolicy,
+                    PortableServer::ThreadPolicy::_nil ());
+
+    (void) policy->init (value ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (PortableServer::ThreadPolicy::_nil ());
 
     return policy;
   }

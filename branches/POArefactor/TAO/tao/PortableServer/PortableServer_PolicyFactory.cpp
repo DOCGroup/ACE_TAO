@@ -19,16 +19,11 @@ TAO_PortableServer_PolicyFactory::create_policy (
 
   if (type == PortableServer::THREAD_POLICY_ID)
   {
-  PortableServer::ThreadPolicyValue thrvalue;
-  if ((value >>= thrvalue) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                      CORBA::Policy::_nil ());
+    TAO::Loadable_Thread_Policy *policy =
+      ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
+             "Loadable_Thread_Policy");
 
-  TAO::Loadable_Thread_Policy *policy =
-    ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
-           "Loadable_Thread_Policy");
-
-  return policy->create(thrvalue);
+    return policy->create(value);
 
 //    return TAO_Thread_Policy::create (value
 //                                      ACE_ENV_ARG_PARAMETER);

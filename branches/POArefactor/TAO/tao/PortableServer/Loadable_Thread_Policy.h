@@ -31,6 +31,12 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+namespace CORBA
+{
+  class Any;
+  class PolicyError;
+}
+
 namespace PortableServer
 {
   enum ThreadPolicyValue;
@@ -52,8 +58,14 @@ namespace TAO
       /// Returns the scope at which this policy can be applied. See orbconf.h.
       TAO_Policy_Scope _tao_scope (void) const;
 
-      /// Create a new thread polciy
-      PortableServer::ThreadPolicy_ptr create (PortableServer::ThreadPolicyValue value);
+      /// Create a new thread policy
+      PortableServer::ThreadPolicy_ptr create (
+        PortableServer::ThreadPolicyValue value);
+
+      /// Create a new thread policy
+      PortableServer::ThreadPolicy_ptr create (
+        const CORBA::Any &value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::PolicyError));
   };
 
   ACE_STATIC_SVC_DECLARE (Loadable_Thread_Policy)

@@ -1,3 +1,18 @@
+Fri Sep 17 14:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA_Thread_Policy.{h,cpp}:
+          Let the constructor do nothing, make an init method to intialize the
+          object, the init method with an Any can throw an exception and that
+          is something we don't want to do in a constructor
+
+        * tao/PortableServer/PortableServer_PolicyFactory.cpp:
+          Don't get the ThreadPolicyValue out of the Any here, just pass it to
+          the Loadable_Thread_Policy and get it out of the Any in the
+          POA_ThreadPolicy.
+
+        * tao/PortableServer/Loadable_Thread_Policy.{h,cpp}:
+          Added create method with an Any, this can throw exceptions
+
 Fri Sep 17 10:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Base.h:

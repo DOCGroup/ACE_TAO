@@ -40,7 +40,7 @@ namespace TAO
     public virtual TAO_Local_RefCounted_Object
   {
     public:
-      POA_ThreadPolicy (PortableServer::ThreadPolicyValue value);
+      POA_ThreadPolicy ();
 
       CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
@@ -53,6 +53,11 @@ namespace TAO
 
       CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
+
+       void init (PortableServer::ThreadPolicyValue value);
+
+       void init (const CORBA::Any &value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::PolicyError));
 
      private:
        Thread_Policy_Value *value_;
