@@ -4,7 +4,15 @@
 #       Makefile for building tests using Visual Age C++ Incremental compiler
 #----------------------------------------------------------------------------
 
-tests := $(wildcard *.icc)
+# There is a tests.icp Visual Age C++ 5 Project file which will build all
+# of the tests; however, running vacbld_r on that project from here may
+# take so long that the nightly build times out the make and tries to
+# kill off the vacbld_r command. This produces a big mess of broken .ics
+# files, and not-built tests. Instead, run through all of the tests
+# we want, and build each individually, using the configuration.
+
+iccs := $(wildcard *.icc)
+tests := $(filter-out vacpp_setup.icc,$(iccs))
 exes := $(basename $tests)
 codestores := $(addsuffix .ics, $(exes))
 
@@ -21,6 +29,7 @@ clean:
 	/bin/rm -rf $(codestores)
 
 realclean: clean
-        /bin/rm -rf $(exes) libDLL_Test.$(SOEXT)
+	/bin/rm -rf $(exes) libDLL_Test.$(SOEXT)
+	/bin/rm -rf log/*.log
 
 #	vacbld_r -p tests.icp:all -clean
