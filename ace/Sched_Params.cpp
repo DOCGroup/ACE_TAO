@@ -104,7 +104,7 @@ ACE_Sched_Params::priority_min (const Policy policy,
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   return 255;
-#elif
+#else
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   ACE_NOTSUP_RETURN (-1);
@@ -179,7 +179,7 @@ ACE_Sched_Params::priority_max (const Policy policy,
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   return 0;
-#elif
+#else
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   ACE_NOTSUP_RETURN (-1);
@@ -222,7 +222,7 @@ ACE_Sched_Params::next_priority (const Policy policy,
   // including STHREADS, DCETHREADS, and PTHREADS
   const int max = priority_max (policy, scope);
   return priority < max  ?  priority + 1  :  max;
-#elif
+#else
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   ACE_NOTSUP_RETURN (-1);
@@ -265,7 +265,7 @@ ACE_Sched_Params::previous_priority (const Policy policy,
   // including STHREADS, DCETHREADS, and PTHREADS
   const int min = priority_min (policy, scope);
   return priority > min  ?  priority - 1  :  min;
-#elif
+#else
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   ACE_NOTSUP_RETURN (-1);
