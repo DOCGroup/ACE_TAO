@@ -1,3 +1,12 @@
+Mon Jun 28 23:03:06 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp (visit_predefined_type):
+	  
+	  Fixed code generation for multidimensional arrays. The fix required 
+	  us to cast the flattened array to the appropriate type.
+
+	  Thanks to Joyce Fu <fu@gsao.med.ge.com> for reporting the bug.
+
 Mon Jun 28 21:41:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/Dump_Schedule/Dump_Schedule.cpp,
