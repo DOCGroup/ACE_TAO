@@ -62,14 +62,14 @@ protected:
   static ACE_Singleton<TYPE, ACE_LOCK> *singleton_;
   // Pointer to the Singleton (ACE_Cleanup) instance.
 
-  static LOCK ace_singleton_lock_;
+  static ACE_LOCK ace_singleton_lock_;
   // Lock the creation of the singleton.
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   static ACE_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
   // Get pointer to the Singleton instance.
 
-  static LOCK &singleton_lock_i (void);
+  static ACE_LOCK &singleton_lock_i (void);
   // Get reference to Singleton lock.
 };
 
@@ -114,7 +114,7 @@ protected:
   static ACE_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
   // Pointer to the Singleton (ACE_Cleanup) instance.
 
-  static LOCK ace_singleton_lock_;
+  static ACE_LOCK ace_singleton_lock_;
   // Lock the creation of the singleton.
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 };
