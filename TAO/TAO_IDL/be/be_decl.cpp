@@ -40,12 +40,9 @@ be_decl::be_decl (void)
     cli_hdr_cdr_op_gen_ (I_FALSE),
     cli_stub_cdr_op_gen_ (I_FALSE),
     cli_inline_cdr_op_gen_ (I_FALSE),
-    fullname_ (0),
-    ami_handler_fullname_ (0),
-    flatname_ (0),
-    ami_handler_flatname_ (0),
+    full_name_ (0),
+    flat_name_ (0),
     repoID_ (0),
-    ami_handler_repoID_ (0),
     prefix_ (0),
     size_type_ (be_decl::SIZE_UNKNOWN)
 {
@@ -68,12 +65,9 @@ be_decl::be_decl (AST_Decl::NodeType type,
     cli_stub_any_op_gen_ (I_FALSE),
     cli_hdr_cdr_op_gen_ (I_FALSE),
     cli_stub_cdr_op_gen_ (I_FALSE),
-    fullname_ (0),
-    ami_handler_fullname_ (0),
-    flatname_ (0),
-    ami_handler_flatname_ (0),
+    full_name_ (0),
+    flat_name_ (0),
     repoID_ (0),
-    ami_handler_repoID_ (0),
     prefix_ (0),
     size_type_ (be_decl::SIZE_UNKNOWN)
 {
@@ -82,35 +76,20 @@ be_decl::be_decl (AST_Decl::NodeType type,
 //destructor
 be_decl::~be_decl (void)
 {
-  if (this->fullname_ != 0)
+  if (this->full_name_ != 0)
     {
-      delete[] this->fullname_;
-      this->fullname_ = 0;
+      delete[] this->full_name_;
+      this->full_name_ = 0;
     }
-  if (this->ami_handler_fullname_ != 0)
+  if (this->flat_name_ != 0)
     {
-      delete[] this->ami_handler_fullname_;
-      this->ami_handler_fullname_ = 0;
-    }
-  if (this->flatname_ != 0)
-    {
-      delete[] this->flatname_;
-      this->flatname_ = 0;
-    }
-  if (this->ami_handler_flatname_ != 0)
-    {
-      delete[] this->ami_handler_flatname_;
-      this->ami_handler_flatname_ = 0;
+      delete[] this->flat_name_;
+      this->flat_name_ = 0;
     }
   if (this->repoID_ != 0)
     {
       delete[] this->repoID_;
       this->repoID_ = 0;
-    }
-  if (this->ami_handler_repoID_ != 0)
-    {
-      delete[] this->ami_handler_repoID_;
-      this->ami_handler_repoID_ = 0;
     }
   if (this->prefix_ != 0)
     {
@@ -147,30 +126,19 @@ be_decl::size_type (be_decl::SIZE_TYPE st)
 }
 
 const char*
-be_decl::fullname (void)
+be_decl::full_name (void)
 {
-  if (!this->fullname_)
-    compute_fullname ();
+  if (!this->full_name_)
+    compute_full_name ();
 
-  return this->fullname_;
+  return this->full_name_;
 }
-
-const char*
-be_decl::ami_handler_fullname (void)
-{
-  if (!this->ami_handler_fullname_)
-    compute_ami_handler_name (this->fullname (),
-                              this->ami_handler_fullname_);
-
-  return this->ami_handler_fullname_;
-}
-
 
 // compute stringified fully scoped name
 void
-be_decl::compute_fullname (void)
+be_decl::compute_full_name (void)
 {
-  if (fullname_)
+  if (full_name_)
     return;
   else
     {
@@ -202,19 +170,19 @@ be_decl::compute_fullname (void)
         }
       delete i;
 
-      this->fullname_ = new char [namelen+1];
-      this->fullname_[0] = '\0';
+      this->full_name_ = new char [namelen+1];
+      this->full_name_[0] = '\0';
       first = I_TRUE;
       second = I_FALSE;
       i = new UTL_IdListActiveIterator (this->name ());
       while (!(i->is_done ()))
         {
           if (!first)
-            ACE_OS::strcat (this->fullname_, "::");
+            ACE_OS::strcat (this->full_name_, "::");
           else if (second)
             first = second = I_FALSE;
           // print the identifier
-          ACE_OS::strcat (this->fullname_, i->item ()->get_string ());
+          ACE_OS::strcat (this->full_name_, i->item ()->get_string ());
           if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
@@ -230,30 +198,81 @@ be_decl::compute_fullname (void)
   return;
 }
 
-const char*
-be_decl::flatname (void)
+void
+be_decl::compute_full_name  (const char *prefix, 
+                            const char *suffix,
+                            char *&name)
 {
-  if (!this->flatname_)
-    this->compute_flatname ();
+  if (prefix == 0 || suffix == 0)
+    return;
 
-  return this->flatname_;
+  ACE_CString prefix_str (prefix);
+  ACE_CString suffix_str (suffix);
+
+  ACE_CString result_str;
+
+  // Get parent.
+  if (this->defined_in () == 0)
+    {
+      // Global scope.
+
+      // Prefix.
+      result_str = prefix_str;
+
+      // Local name.
+      result_str += ACE_CString (this->local_name ()->get_string ());
+
+      // Suffix.
+      result_str += suffix_str;
+    }
+  else
+    {
+      // Get scope name.
+      be_decl *parent = be_scope::narrow_from_scope (this->defined_in ())->decl ();
+      if (parent == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) be_decl::"
+                      "compute_flat_name - "
+                      "scope name is nil\n"));
+        }
+
+      // Parent name.
+      result_str = ACE_CString (parent->full_name ());
+
+      // _
+      if (ACE_OS::strcmp (parent->full_name (), "") != 0)
+        result_str += ACE_CString ("::");
+
+      // Prefix.
+      result_str += prefix_str;
+
+      // Local name.
+      result_str += ACE_CString (this->local_name ()->get_string ());
+
+      // Suffix.
+      result_str += suffix_str;
+    }
+
+  name = result_str.rep ();
 }
 
-const char*
-be_decl::ami_handler_flatname (void)
-{
-  if (!this->ami_handler_flatname_)
-    this->compute_flatname ("AMI_","_Handler");
 
-  return this->ami_handler_flatname_;
+const char*
+be_decl::flat_name (void)
+{
+  if (!this->flat_name_)
+    this->compute_flat_name ();
+
+  return this->flat_name_;
 }
 
 
 // compute stringified flattened fully scoped name
 void
-be_decl::compute_flatname (void)
+be_decl::compute_flat_name (void)
 {
-  if (flatname_)
+  if (flat_name_)
     return;
   else
     {
@@ -286,19 +305,19 @@ be_decl::compute_flatname (void)
         }
       delete i;
 
-      this->flatname_ = new char [namelen+1];
-      this->flatname_[0] = '\0';
+      this->flat_name_ = new char [namelen+1];
+      this->flat_name_[0] = '\0';
       first = I_TRUE;
       second = I_FALSE;
       i = new UTL_IdListActiveIterator (this->name ());
       while (!(i->is_done ()))
         {
           if (!first)
-            ACE_OS::strcat (this->flatname_, "_");
+            ACE_OS::strcat (this->flat_name_, "_");
           else if (second)
             first = second = I_FALSE;
           // print the identifier
-          ACE_OS::strcat (this->flatname_, i->item ()->get_string ());
+          ACE_OS::strcat (this->flat_name_, i->item ()->get_string ());
           if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
@@ -316,11 +335,13 @@ be_decl::compute_flatname (void)
 
 
 
-char *
-be_decl::compute_flatname  (const char *prefix, const char *suffix)
+void
+be_decl::compute_flat_name  (const char *prefix, 
+                            const char *suffix,
+                            char *&name)
 {
   if (prefix == 0 || suffix == 0)
-    return 0;
+    return;
 
   ACE_CString prefix_str (prefix);
   ACE_CString suffix_str (suffix);
@@ -347,22 +368,21 @@ be_decl::compute_flatname  (const char *prefix, const char *suffix)
       be_decl *parent = be_scope::narrow_from_scope (this->defined_in ())->decl ();
       if (parent == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_decl::"
-                             "compute_flat_name - "
-                             "scope name is nil\n"),
-                            0);
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) be_decl::"
+                      "compute_flat_name - "
+                      "scope name is nil\n"));
         }
 
       // Parent name.
-      result_str = ACE_CString (parent->fullname ());
+      result_str = ACE_CString (parent->full_name ());
 
       // _
-      if (ACE_OS::strcmp (parent->fullname (), "") != 0)
+      if (ACE_OS::strcmp (parent->full_name (), "") != 0)
         result_str += ACE_CString ("_");
 
       // Prefix.
-      result_str += ACE_CString ("AMI_");
+      result_str += prefix_str;
 
       // Local name.
       result_str += ACE_CString (this->local_name ()->get_string ());
@@ -371,8 +391,7 @@ be_decl::compute_flatname  (const char *prefix, const char *suffix)
       result_str += suffix_str;
     }
 
-  this->ami_handler_flatname_ = result_str.rep ();
-  return this->ami_handler_flatname_;
+  name = result_str.rep ();
 }
 
 const char *
@@ -382,16 +401,6 @@ be_decl::repoID (void)
     this->compute_repoID ();
 
   return this->repoID_;
-}
-
-
-const char *
-be_decl::ami_handler_repoID (void)
-{
-  if (!this->ami_handler_repoID_)
-    this->compute_repoID ("AMI_","_Handler");
-
-  return this->ami_handler_repoID_;
 }
 
 
@@ -470,12 +479,14 @@ be_decl::compute_repoID (void)
 
 // Apply the prefix and suffix to the local name and compute the
 // repoID.  Both the parameters should be non-null.
-char *
-be_decl::compute_repoID (const char *prefix, const char *suffix)
+void
+be_decl::compute_repoID (const char *prefix, 
+                         const char *suffix,
+                         char *&name)
 {
   // Prefix and suffix should be valid.
   if (prefix == 0 || suffix == 0)
-    return 0;
+    return;
 
   // First prepare the result without IDL: and  :1.0 strings.
 
@@ -605,56 +616,7 @@ be_decl::compute_repoID (const char *prefix, const char *suffix)
   delete result;
   result = 0;
 
-  this->ami_handler_repoID_ = repoID.rep ();
-
-  return this->ami_handler_repoID_;
-}
-
-
-int
-be_decl::compute_ami_handler_name (const char *name,
-                                        char *&ami_handler_name)
-{
-  int name_length = ACE_OS::strlen (name);
-  int ami_handler_length = ACE_OS::strlen ("AMI__HANDLER");
-
-  ACE_NEW_RETURN (ami_handler_name,
-                  char[name_length + ami_handler_length+1],
-                  -1);
-
-  // copy it in
-  ACE_OS::strcpy (ami_handler_name, name);
-
-  const char *interface_name = 0;
-  int i = ACE_OS::strlen (name);
-  for (;i >= 1; i--)
-    {
-      if (name[i-1] == ':' && name[i] == ':')
-        {
-          interface_name = &name[i+1];
-          break;
-        }
-      else if (i >= 3)
-        if (name[i-3] == 'P' &&
-            name[i-2] == 'O' &&
-            name[i-1] == 'A' &&
-            name[i] == '_')
-          {
-            interface_name = &name[i+1];
-            break;
-          }
-  }
-
-  if (interface_name == 0)
-    interface_name = name;
-
-  ACE_OS::strcpy(&ami_handler_name[name_length-ACE_OS::strlen(interface_name)],"AMI_");
-  ACE_OS::strcpy(&ami_handler_name[name_length-ACE_OS::strlen(interface_name)+4],
-                 interface_name);
-  ACE_OS::strcpy(&ami_handler_name[name_length+4],
-                 "_Handler");
-
-  return 0;
+  name = repoID.rep ();
 }
 
 
@@ -952,7 +914,7 @@ be_decl::is_child (be_decl *node)
       if (!bd)
         return 0;
 
-      if (!ACE_OS::strcmp (bd->fullname (), node->fullname ()))
+      if (!ACE_OS::strcmp (bd->full_name (), node->full_name ()))
         return 1; // true
     }
   return 0; // not a child

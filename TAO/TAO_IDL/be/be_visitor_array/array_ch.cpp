@@ -64,7 +64,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
     }
 
   // generate the ifdefined macro
-  os->gen_ifdef_macro (node->flatname ());
+  os->gen_ifdef_macro (node->flat_name ());
 
   // If we contain an anonymous sequence, 
   // generate code for the sequence here.

@@ -54,6 +54,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       if (idl_global->ami_call_back () == I_TRUE)
         {
+          be_interface_type_strategy *old_strategy =  
+            node->set_strategy (new be_interface_ami_handler_strategy (node));
+
           // Set the context.
           be_visitor_context ctx (*this->ctx_);
 
@@ -82,6 +85,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                                 -1);
             }
           delete visitor;
+
+          delete node->set_strategy (old_strategy);
         }
 
       // Grab the stream.
@@ -90,7 +95,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // == STEP 1:  generate the class name and class names we inherit ==
 
       // generate the ifdefined macro for  the _ptr type
-      os->gen_ifdef_macro (node->flatname (), "_ptr");
+      os->gen_ifdef_macro (node->flat_name (), "_ptr");
 
 
       // the following two are required to be under the ifdef macro to avoid
@@ -106,7 +111,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       os->gen_endif ();
 
       // generate the ifdefined macro for the var type
-      os->gen_ifdef_macro (node->flatname (), "_var");
+      os->gen_ifdef_macro (node->flat_name (), "_var");
 
       // generate the _var declaration
       if (node->gen_var_defn () == -1)
@@ -119,7 +124,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       os->gen_endif ();
 
       // generate the ifdef macro for the _out class
-      os->gen_ifdef_macro (node->flatname (), "_out");
+      os->gen_ifdef_macro (node->flat_name (), "_out");
 
       // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
       if (node->gen_out_defn () == -1)
@@ -133,7 +138,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       os->gen_endif ();
 
       // now the interface definition itself
-      os->gen_ifdef_macro (node->flatname ());
+      os->gen_ifdef_macro (node->flat_name ());
 
       // now generate the class definition
       *os << "class " << idl_global->export_macro ()
@@ -247,14 +252,12 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       // private copy constructor and assignment operator. These are not
       // allowed, hence they are private.
-      *os << "private:\n";
-      os->incr_indent ();
+      *os << "private:" << be_idt_nl;
       *os << node->local_name () << " (const " << node->local_name () << " &);"
           << be_nl
-          << "void operator= (const " << node->local_name () << " &);\n";
-
-      os->decr_indent ();
+          << "void operator= (const " << node->local_name () << " &);" << be_uidt_nl;
       *os << "};\n\n";
+
       os->gen_endif ();
 
       // by using a visitor to declare and define the TypeCode, we have the
@@ -280,6 +283,10 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       if (idl_global->ami_call_back () == I_TRUE)
         {
           // = Generate the default stub code for Handler.
+
+          be_interface_type_strategy *old_strategy =  
+            node->set_strategy (new be_interface_ami_handler_strategy (node));
+
 
           // Set the context.
           be_visitor_context ctx (*this->ctx_);
@@ -340,6 +347,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                                 -1);
             }
           delete visitor;
+
+          delete node->set_strategy (old_strategy);
         }
 
       node->cli_hdr_gen (I_TRUE);

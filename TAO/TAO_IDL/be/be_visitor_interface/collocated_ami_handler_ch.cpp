@@ -47,44 +47,19 @@ be_visitor_interface_collocated_ami_handler_ch::visit_interface (be_interface *n
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Generate AMI_...name..._Handler string.
-  char *ifdef_string = 0;
-  ACE_NEW_RETURN (ifdef_string,
-                  char [ACE_OS::strlen ("AMI_") +
-                       ACE_OS::strlen (node->flatname ()) + 
-                       ACE_OS::strlen ("_Handler") +
-                       // end of string
-                       1],
-                  0);
-  ACE_OS::sprintf (ifdef_string, 
-                   "AMI_%s_Handler",
-                   node->flatname ());
-  
-  os->gen_ifdef_macro (ifdef_string, "_collocated");
-  
-  // Prepare the local name for the class.
-  char *local_name = 0;
-  ACE_NEW_RETURN (local_name,
-                  char [ACE_OS::strlen ("AMI_") +
-                       ACE_OS::strlen (node->local_name ()->get_string ()) +
-                       ACE_OS::strlen ("_Handler") +
-                       // end of string
-                       1],
-                  0);
-  ACE_OS::sprintf (local_name, 
-                   "AMI_%s_Handler",
-                   node->local_name ()->get_string ());
-
-  // Get the coll names.
-  char *coll_local_name, *coll_full_name;
-  node->compute_coll_names (local_name, coll_local_name, coll_full_name); 
+  os->gen_ifdef_macro (node->flat_name (), "_collocated");
   
   // Output the class defn.
   os->indent ();
-  *os << "class " << idl_global->export_macro ()
-      << " " << coll_local_name;
+  *os << "class " << idl_global->export_macro () << " ";
+
+  if (idl_global->gen_direct_collocation ())
+     *os << node->local_coll_name (be_interface::DIRECT);
+  else if (idl_global->gen_thru_poa_collocation ())
+     *os << node->local_coll_name (be_interface::THRU_POA);
+
   os->incr_indent ();
-  *os << " : public virtual " << local_name;
+  *os << " : public virtual " << node->local_name ();
 
   *os << "\n";
   os->decr_indent ();
@@ -92,7 +67,11 @@ be_visitor_interface_collocated_ami_handler_ch::visit_interface (be_interface *n
   *os << "public:\n";
   os->incr_indent ();
 
-  *os << coll_local_name << " (\n";
+ if (idl_global->gen_direct_collocation ())
+     *os << node->local_coll_name (be_interface::DIRECT) << " (\n";
+ else if (idl_global->gen_thru_poa_collocation ())
+     *os << node->local_coll_name (be_interface::THRU_POA) << " (\n";
+
 
   os->incr_indent (0);
   os->incr_indent ();
@@ -105,7 +84,7 @@ be_visitor_interface_collocated_ami_handler_ch::visit_interface (be_interface *n
       *os << "POA_";
     }
 
-  *os << local_name << "_ptr "
+  *os << node->local_name () << "_ptr "
       << " servant," << be_nl;
   
   *os << "TAO_Stub *stub\n";
@@ -131,7 +110,7 @@ be_visitor_interface_collocated_ami_handler_ch::visit_interface (be_interface *n
       *os << "POA_";
     }
 
-  *os << local_name
+  *os << node->local_name ()
       << "_ptr _get_servant (void) const;" << be_nl << be_nl;
 
   // _non_existent method.
@@ -160,15 +139,11 @@ be_visitor_interface_collocated_ami_handler_ch::visit_interface (be_interface *n
       // POA_ prefix that goes with it.
       *os << "POA_";
     }
-  *os << local_name << "_ptr servant_;\n";
+  *os << node->local_name () << "_ptr servant_;\n";
   os->decr_indent ();
   *os << "};\n\n";
 
   os->gen_endif ();
 
-  delete ifdef_string;
-  delete local_name;
-  delete coll_local_name;
-  delete coll_full_name;
   return 0;
 }

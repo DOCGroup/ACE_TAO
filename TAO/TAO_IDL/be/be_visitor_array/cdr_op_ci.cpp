@@ -92,7 +92,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
         }
 
       // for anonymous arrays, the type name has a _ prepended. We compute the
-      // fullname with or without the underscore and use it later on.
+      // full_name with or without the underscore and use it later on.
       char fname [NAMEBUFSIZE];  // to hold the full and
 
       // save the node's local name and full name in a buffer for quick use later
@@ -101,7 +101,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
       if (this->ctx_->tdef ())
         {
           // typedefed node
-          ACE_OS::sprintf (fname, "%s", node->fullname ());
+          ACE_OS::sprintf (fname, "%s", node->full_name ());
         }
       else
         {
@@ -112,12 +112,12 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
           if (node->is_nested ())
             {
               be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-              ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
+              ACE_OS::sprintf (fname, "%s::_%s", parent->full_name (),
                                node->local_name ()->get_string ());
             }
           else
             {
-              ACE_OS::sprintf (fname, "_%s", node->fullname ());
+              ACE_OS::sprintf (fname, "_%s", node->full_name ());
             }
         }
 
