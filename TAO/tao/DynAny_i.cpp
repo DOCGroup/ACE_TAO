@@ -220,7 +220,7 @@ CORBA::Boolean
 TAO_DynAny_i::seek (CORBA::Long slot,
                     CORBA::Environment &)
 {
-  return slot == 0 ? 1 : 0;
+  return (CORBA::Boolean) (slot == 0 ? 1 : 0);
 }
 
 // Nothing to rewind in this class.

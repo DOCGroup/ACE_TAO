@@ -158,7 +158,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   ACE_Env_Value<int> defport ("TAO_DEFAULT_SERVER_PORT",
                               TAO_DEFAULT_SERVER_PORT);
   ACE_CString host;
-  CORBA::UShort port = defport;
+  CORBA::UShort port = (CORBA::UShort) defport;
 
   // @@ GIOPLite should be an alternative ORB Messaging protocols, fredk
   int giop_lite = 0;
@@ -404,7 +404,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              ns_port = ACE_OS::atoi (arg_shifter.get_current ());
+              ns_port = (CORBA::UShort) ACE_OS::atoi (arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
         }
@@ -428,7 +428,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              ts_port = ACE_OS::atoi (arg_shifter.get_current ());
+              ts_port = (CORBA::UShort) ACE_OS::atoi (arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
         }
@@ -452,7 +452,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              ir_port = ACE_OS::atoi (arg_shifter.get_current ());
+              ir_port = (CORBA::UShort) ACE_OS::atoi (arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
         }
@@ -473,7 +473,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             {
               // We really shouldn't limit this to being specified as
               // an int, but oh well for now.
-              port = ACE_OS::atoi (arg_shifter.get_current ());
+              port = (CORBA::UShort) ACE_OS::atoi (arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
         }

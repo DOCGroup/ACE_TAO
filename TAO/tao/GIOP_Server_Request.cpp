@@ -87,7 +87,7 @@ TAO_GIOP_ServerRequest::parse_header_std (void)
   TAO_InputCDR& input = *this->incoming_;
 
   input >> this->service_info_;
-  CORBA::Boolean hdr_status = input.good_bit ();
+  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
   // Get the rest of the request header ...
 
@@ -98,7 +98,7 @@ TAO_GIOP_ServerRequest::parse_header_std (void)
   // the reference count on the CDR message block, because this key
   // will not outlive the request (or the message block).
 
-  CORBA::Long key_length;
+  CORBA::Long key_length = 0;
   hdr_status = hdr_status && input.read_long (key_length);
   if (hdr_status)
     {
@@ -110,7 +110,7 @@ TAO_GIOP_ServerRequest::parse_header_std (void)
 
   if (input.char_translator () == 0)
     {
-      CORBA::ULong length;
+      CORBA::ULong length = 0;
       hdr_status = hdr_status && input.read_ulong (length);
       if (hdr_status)
         {
@@ -138,7 +138,7 @@ TAO_GIOP_ServerRequest::parse_header_std (void)
   if (hdr_status)
     {
       input >> this->requesting_principal_.out ();
-      hdr_status = input.good_bit ();
+      hdr_status = (CORBA::Boolean) input.good_bit ();
     }
 
   return hdr_status ? 0 : -1;
@@ -149,7 +149,7 @@ TAO_GIOP_ServerRequest::parse_header_lite (void)
 {
   TAO_InputCDR& input = *this->incoming_;
 
-  CORBA::Boolean hdr_status = input.good_bit ();
+  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
   // Get the rest of the request header ...
 
@@ -160,7 +160,7 @@ TAO_GIOP_ServerRequest::parse_header_lite (void)
   // the reference count on the CDR message block, because this key
   // will not outlive the request (or the message block).
 
-  CORBA::Long key_length;
+  CORBA::Long key_length = 0;
   hdr_status = hdr_status && input.read_long (key_length);
   if (hdr_status)
     {
@@ -172,7 +172,7 @@ TAO_GIOP_ServerRequest::parse_header_lite (void)
 
   if (input.char_translator () == 0)
     {
-      CORBA::ULong length;
+      CORBA::ULong length = 0;
       hdr_status = hdr_status && input.read_ulong (length);
       if (hdr_status)
         {
