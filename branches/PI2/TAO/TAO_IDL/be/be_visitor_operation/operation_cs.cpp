@@ -732,7 +732,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
     {
       *os << " ri.result (";
       // get the return val
-      ctx = *this->ctx_;
+      /*      ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_PRE_INVOKE_CS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
       visitor = tao_cg->make_visitor (&ctx);
@@ -744,7 +744,17 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
                                  "gen_marshal_and_invoke - "
                                  "codegen for return var failed\n"),
                                 -1);
+                                }*/
+      if (bt->size_type () == be_decl::VARIABLE
+          || bt->base_node_type () == AST_Decl::NT_array)
+        {
+          *os << "_tao_safe_retval.in ();";
         }
+      else
+        {
+          *os << "_tao_retval;";
+            }
+
           *os <<");" << be_nl;
     }
 
