@@ -1,6 +1,6 @@
-// $Id$
-
 /* -*- C++ -*- */
+
+// $Id$
 
 template<class TQ> ACE_INLINE
 ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (void)

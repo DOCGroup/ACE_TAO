@@ -59,8 +59,10 @@ run Reactor_Exceptions_Test	        # uses Reactor and C++ exceptions
 run Reactor_Notify_Test		        # uses Reactor's notify() method, Task
 run Reactor_Timer_Test		        # uses Event_Handler, Reactor
 run Reader_Writer_Test		        # uses Thread_Manager, Mutex
+run Priority_Reactor_Test               # uses Priority_Reactor, Acceptor/Connector...
 run SOCK_Test			        # uses Thread_Manager, SOCK_SAP
 run Conn_Test			        # uses Thread_Manager, Acceptor/Connector, SOCK_SAP
+run MT_SOCK_Test                        # uses Thread_Manager, Acceptor/Connector
 
 # ifdef ACE_HAS_STREAM_PIPES
 run SPIPE_Test			        # uses SPIPE_Acceptor/Connector, Thread_Manager

@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/Timer_Queue_Adapters.cpp"
+
 #if !defined (ACE_TIMER_QUEUE_ADAPTERS_C)
 #define ACE_TIMER_QUEUE_ADAPTERS_C
 
@@ -135,7 +137,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::schedule
     (ACE_Event_Handler* handler,
      const void *act,
      const ACE_Time_Value &delay,
-     const ACE_Time_Value &interval = ACE_Time_Value::zero)
+     const ACE_Time_Value &interval)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 

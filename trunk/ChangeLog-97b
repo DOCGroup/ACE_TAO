@@ -1,3 +1,20 @@
+Sun Oct 12 16:16:15 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* tests: Addes a new test Priority_Reactor_Test.
+	  
+	* ace/Timer_Queue_Adapters.{h,i}: Added or moved the line that
+	  instructs edit mode to use on emace to the first line.  Also
+	  added ACE_Export to classes in this file.
+	  
+	* ace/Timer_Queue_Adapters.cpp: Added proper inclusion of the
+	  header file.  Corrected a syntax error.
+
+	* examples/Timer_Queue/Timer_Queue.dsw:  Added a new project
+	  Thread_Timer_Queue_Test.dsp. 
+	
+	* tests/run_tests.{bat,sh}: Added MT_SOCK_Test and
+ 	  Priority_Reactor_Test into one-buttoned test set.
+
 Sun Oct 12 16:53:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/examples/Service_Configurator/IPC-tests/server: Reformatted
@@ -49,6 +66,9 @@ Sun Oct 12 16:45:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 Sun Oct 12 03:35:37 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
+	* examples/Timer_Queue: Added a new directory for testing of
+	  various usages of timer queue.
+	
 	* ace/ACE.cpp (register_stdin_handler): Must register the reactor
 	  we are using to the event handler.
 	  (read_adapter): Must notify the reactor when we are done with
