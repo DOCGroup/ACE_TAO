@@ -151,6 +151,7 @@ namespace TAO
       {
 	// @@ Dale, could you please make this a warning. Add TAO_debug_level 
 	// around this. 
+	//  Further pass in a operation name to this method and make a check here. 
         ACE_ERROR ((LM_ERROR,
                     "TAO-FT (%P|%t) - Wrong version information "
                     "within the interceptor [%u | %u] \n",
