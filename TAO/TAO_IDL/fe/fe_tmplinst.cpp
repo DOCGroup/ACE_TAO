@@ -26,7 +26,6 @@ template class ACE_Node<AST_Field *>;
 template class ACE_Unbounded_Queue<AST_Field *>;
 template class ACE_Unbounded_Queue_Iterator<AST_Field *>;
 
-template class ACE_Node<char *>;
 template class ACE_Unbounded_Stack<char *>;
 template class ACE_Unbounded_Stack_Iterator<char *>;
 
@@ -49,7 +48,6 @@ template class ACE_Unbounded_Stack_Iterator<char *>;
 #pragma instantiate ACE_Unbounded_Queue<AST_Decl *>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<AST_Decl *>
 
-#pragma instantiate ACE_Node<char *>
 #pragma instantiate ACE_Unbounded_Stack<char *>
 #pragma instantiate ACE_Unbounded_Stack_Iterator<char *>
 

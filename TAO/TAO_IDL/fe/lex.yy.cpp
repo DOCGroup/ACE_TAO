@@ -2950,8 +2950,8 @@ idl_valid_version (char *s)
   char *tmp = minor + 1;
 
   // Some preprocessors leave trailing whitespace, hence the
-  // check for ' '.
-  for (i = 0; tmp[i] != '\0' && !isspace (tmp[i]); ++i)
+  // check for a space character.
+  for (i = 0; tmp[i] != '\0' && !ACE_OS::ace_isspace (tmp[i]); ++i)
     {
       if (!isdigit (tmp[i]))
         {
