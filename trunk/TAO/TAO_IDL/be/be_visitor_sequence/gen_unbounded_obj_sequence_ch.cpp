@@ -209,8 +209,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
       << "if (!this->release_)" << be_idt_nl
       << "tmp[i] = "; pt->accept (visitor); *os << "::_duplicate (old[i]);" << be_uidt_nl
       << "else" << be_idt_nl
-      << "tmp[i] = old[i];" << be_uidt_nl
-      << be_nl
+      << "tmp[i] = old[i];" << be_uidt_nl << be_uidt_nl
       << "if (this->release_)" << be_idt_nl
       << "delete[] old;" << be_uidt_nl << be_uidt_nl
       << "}" << be_nl
@@ -291,9 +290,12 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
       << "CORBA::release (tmp[i]);" << be_nl
       << "tmp[i] = "; pt->accept (visitor); *os << "::_nil ();" << be_uidt_nl
       << "}" << be_uidt_nl
-      << "}" << be_uidt_nl;
+      << "}" << be_nl;
 
-  if (pt->node_type () != AST_Decl::NT_pre_defined)
+  
+  be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
+  if ((pt->node_type () != AST_Decl::NT_pre_defined) ||
+      (prim && (prim->pt () == AST_PredefinedType::PT_pseudo)))
     {
       // Pseudo objects do not require this methods.
       *os << "virtual void _downcast (" << be_idt << be_idt_nl
@@ -322,7 +324,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
 	  << "return *tmp;" << be_uidt_nl
 	  << "}" << be_nl;
     }
-  *os << "};" << be_uidt_nl << "\n";
+  *os << be_uidt_nl << "};\n"; 
 
   os->gen_endif (); // endif macro
 

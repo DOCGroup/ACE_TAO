@@ -292,7 +292,9 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
       << "}" << be_uidt_nl
       << "}\n" << be_nl;
 
-  if (pt->node_type () != AST_Decl::NT_pre_defined)
+  be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
+  if ((pt->node_type () != AST_Decl::NT_pre_defined) ||
+      (prim && (prim->pt () == AST_PredefinedType::PT_pseudo)))
     {
       // Pseudo objects do not require this methods.
       *os << "virtual void _downcast (" << be_idt << be_idt_nl
@@ -321,7 +323,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
 	  << "return *tmp;" << be_uidt_nl
 	  << "}" << be_nl;
     }
-  *os << "};" << be_uidt_nl << "\n";
+  *os << be_uidt_nl << "};\n";
 
   os->gen_endif ();
 
