@@ -1,3 +1,15 @@
+Wed Sep 16 18:21:45 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Containers.h: Reformatted the ACE_DLList* classes to conform
+ 	  to ACE programming conventions.
+
+	* ace/config-hpux-11.x-hpc++.h: Added ACE_HAS_DIRENT and
+ 	  ACE_HAS_GPERF to appease John Mulhern.
+
+	* ace/Asynch_Acceptor.cpp: Added ACE_reinterpret_cast()s to the
+ 	  sockaddr *'s to appease aCC on HP/UX 11.  Thanks to John Mulhern
+ 	  for reporting this.
+
 Wed Sep 16 17:16:51 EDT 1998   James CE Johnson    <jcej@lads.com>
 
         * docs/tutorials/012/Makefile
