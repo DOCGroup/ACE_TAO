@@ -1,3 +1,9 @@
+Mon Aug 17 22:56:17 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/version_tests/version_tests.dsw:
+	* tests/version_tests/Dynamic_Priority_Test.dsp: Added a new
+	  project (as shown) into the workspace.
+
 Mon Aug 17 17:17:52 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/Makefile: Removed IO_Cntl_Msg from files to build.  It's empty.
