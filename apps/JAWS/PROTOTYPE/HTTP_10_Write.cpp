@@ -43,10 +43,12 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
       return -1;
     }
 
+#if 0
   ACE_DEBUG ((LM_DEBUG, " (%t) request %s::%s::%s parsed\n",
               (info->method () ? info->method () : "-"),
               (info->uri () ? info->uri () : "="),
               (info->version () ? info->version () : "HTTP/0.9")));
+#endif
 
   if (info->type () != (int) JAWS_HTTP_10_Request::GET)
     info->set_status (JAWS_HTTP_10_Request::STATUS_NOT_IMPLEMENTED);
@@ -57,7 +59,6 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
   if (info->status () != (int) JAWS_HTTP_10_Request::STATUS_OK)
     {
       JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, ! STATUS OK");
-      cerr << "status: " << info->status () << endl;
 
       char msg[] =
         "<html><head><title>HTTP/1.0 500 Internal Server Error</title>"
