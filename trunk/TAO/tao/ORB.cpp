@@ -256,7 +256,7 @@ CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion,
   tm->cancel_all ();
 
   // Wake up all waiting threads in the reactor.
-  this->orb_core_->reactor ()->wakeup_all_threads ();
+  this->orb_core_->reactor ()->end_reactor_event_loop ();
 
   // If <wait_for_completion> is set, wait for all threads to exit.
   if (wait_for_completion != 0)
