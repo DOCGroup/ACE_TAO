@@ -14,7 +14,7 @@
 //
 // = DESCRIPTION
 //    Wrapper on top of ACE Task that integrates an Active Object with
-//    the COFP Scheduler and Event Service.
+//    the Event Service.
 //
 // ============================================================================
 

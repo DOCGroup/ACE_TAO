@@ -1,3 +1,25 @@
+Tue Dec  2 10:32:01 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* local/bin/Event_Service/Makefile: 
+	* local/bin/Event_Service/Dispatching_Modules.h: 
+	* local/bin/Event_Service/Event_Channel.cpp: 
+	* local/bin/Event_Service/Event_Channel.h: 
+	* local/bin/Event_Service/Event_Channel.i: 
+	* local/bin/Event_Service/RT_Task.cpp: 
+	* local/bin/Event_Service/RT_Task.h: 
+	  The ACE_TIMEPROBE implementation was moved into the orbsvcs
+	  library.
+	  Added some more ACE_TIMEPROBE to the point were all the lifetime
+	  of an event seems to every message
+	  seems 
+	  Removed some forwarding info leftovers on the Event Channel
+	  implementation.
+
+	* local/tests/Latency.cpp: 
+	  Added some ACE_TIMEPROBE calls to measure delays.
+	  Use the double field to timestamp the event, using a
+	  highrestimer (TOTAL HACK).
+
 Sun Nov 30 16:57:40 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* bin/Event_Service/Makefile: 

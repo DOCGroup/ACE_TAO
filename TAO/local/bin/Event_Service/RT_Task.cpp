@@ -107,8 +107,12 @@ ACE_RT_Task::svc_one (void)
   int result;
   u_long command_action = ACE_RT_Task_Command::RELEASE;
 
+  ACE_TIMEPROBE (" RT_Task - start execute");
+
   // @@ Put exception handling around this!
   result = command->execute (command_action);
+
+  ACE_TIMEPROBE (" RT_Task - end execute");
 
   switch (command_action)
     {
