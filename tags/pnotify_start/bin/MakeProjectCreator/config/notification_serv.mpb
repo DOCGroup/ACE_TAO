@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : orbsvcslib, notification_skel, etcl, dynamicany {
+  after     += CosNotification_Serv
+  libs      += TAO_CosNotification_Serv
+  tagchecks += Notify
+}

@@ -1,0 +1,369 @@
+--- ETCL_y.cpp	Mon Nov 12 16:07:25 2001
++++ ETCL_y.cpp.safe	Fri Oct 19 21:35:04 2001
+@@ -36,7 +36,7 @@
+ #define	TAO_ETCL_SIGNED	285
+ #define	TAO_ETCL_DOUBLE	286
+ #define	TAO_ETCL_CONSTRAINT	287
+-#define	TAO_ETCL_SEQUENCE	288
++#define	TAO_ETCL_COMPONENT	288
+ #define	TAO_ETCL_WITH	289
+ #define	TAO_ETCL_MAX	290
+ #define	TAO_ETCL_MIN	291
+@@ -49,7 +49,7 @@
+ #define	TAO_ETCL_TYPE_ID	298
+ #define	TAO_ETCL_REPOS_ID	299
+ 
+-#line 1 "ETCL/ETCL.yy"
++//#line 1 "ETCL/ETCL.yy"
+ 
+ // $Id$
+ // ========================================================================
+@@ -78,9 +78,6 @@
+   // Ignore error messages
+ }
+ 
+-#ifndef YYSTYPE
+-#define YYSTYPE int
+-#endif
+ #include <stdio.h>
+ 
+ #ifndef __cplusplus
+@@ -188,7 +185,7 @@
+ "TAO_ETCL_DIV","TAO_ETCL_UMINUS","TAO_ETCL_INTEGER","TAO_ETCL_FLOAT","TAO_ETCL_STRING",
+ "TAO_ETCL_RPAREN","TAO_ETCL_LPAREN","TAO_ETCL_RBRA","TAO_ETCL_LBRA","TAO_ETCL_IDENT",
+ "TAO_ETCL_UNSIGNED","TAO_ETCL_SIGNED","TAO_ETCL_DOUBLE","TAO_ETCL_CONSTRAINT",
+-"TAO_ETCL_SEQUENCE","TAO_ETCL_WITH","TAO_ETCL_MAX","TAO_ETCL_MIN","TAO_ETCL_FIRST",
++"TAO_ETCL_COMPONENT","TAO_ETCL_WITH","TAO_ETCL_MAX","TAO_ETCL_MIN","TAO_ETCL_FIRST",
+ "TAO_ETCL_RANDOM","TAO_ETCL_DOLLAR","TAO_ETCL_DOT","TAO_ETCL_DISCRIMINANT","TAO_ETCL_LENGTH",
+ "TAO_ETCL_TYPE_ID","TAO_ETCL_REPOS_ID","constraint","preference","bool_or","bool_and",
+ "bool_compare","expr_in","expr_twiddle","expr","term","factor_not","factor",
+@@ -294,8 +291,8 @@
+     -1,    -1,    29,     3,     4,     5,     6,     7,     8,    -1,
+     -1,    -1,    -1,    40,    49,    50,    51,    52,    53,    54
+ };
+-/* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
+-#line 3 "/pkg/gnu/share/bison.simple"
++/* -*-C-*-  Note some compilers choke on comments on `//#line' lines.  */
++//#line 3 "/pkg/gnu/share/bison.simple"
+ /* This file comes from bison-1.28.  */
+ 
+ /* Skeleton output parser for bison,
+@@ -433,6 +430,10 @@
+ int	yychar;			/*  the lookahead symbol		*/
+ YYSTYPE	yylval;			/*  the semantic value of the		*/
+ 				/*  lookahead symbol			*/
++YYSTYPE yyval;		/*  the variable used to return		*/
++				/*  semantic values from the action	*/
++				/*  routines				*/
++
+ 
+ #ifdef YYLSP_NEEDED
+ YYLTYPE yylloc;			/*  location data for the lookahead	*/
+@@ -509,7 +510,7 @@
+ #endif
+ #endif
+ 
+-#line 217 "/pkg/gnu/share/bison.simple"
++//#line 217 "/pkg/gnu/share/bison.simple"
+ 
+ /* The user can define YYPARSE_PARAM as the name of an argument to be passed
+    into yyparse.  The argument should have type void *.
+@@ -578,10 +579,6 @@
+ #endif
+ #endif
+ 
+-  YYSTYPE yyval;		/*  the variable used to return		*/
+-				/*  semantic values from the action	*/
+-				/*  routines				*/
+-
+   int yylen;
+ 
+ #if YYDEBUG != 0
+@@ -838,224 +835,224 @@
+   switch (yyn) {
+ 
+ case 3:
+-#line 97 "ETCL/ETCL.yy"
++//#line 97 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Preference (TAO_ETCL_MIN, yyvsp[0].constraint); ;
+     break;}
+ case 4:
+-#line 99 "ETCL/ETCL.yy"
++//#line 99 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Preference (TAO_ETCL_MAX, yyvsp[0].constraint); ;
+     break;}
+ case 5:
+-#line 101 "ETCL/ETCL.yy"
++//#line 101 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Preference (TAO_ETCL_WITH, yyvsp[0].constraint); ;
+     break;}
+ case 6:
+-#line 103 "ETCL/ETCL.yy"
++//#line 103 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Preference (TAO_ETCL_FIRST); ;
+     break;}
+ case 7:
+-#line 105 "ETCL/ETCL.yy"
++//#line 105 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Preference (TAO_ETCL_RANDOM); ;
+     break;}
+ case 8:
+-#line 109 "ETCL/ETCL.yy"
++//#line 109 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_OR, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 10:
+-#line 114 "ETCL/ETCL.yy"
++//#line 114 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_AND, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 12:
+-#line 119 "ETCL/ETCL.yy"
++//#line 119 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_EQ, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 13:
+-#line 121 "ETCL/ETCL.yy"
++//#line 121 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_NE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 14:
+-#line 123 "ETCL/ETCL.yy"
++//#line 123 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_GT, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 15:
+-#line 125 "ETCL/ETCL.yy"
++//#line 125 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_GE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 16:
+-#line 127 "ETCL/ETCL.yy"
++//#line 127 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_LT, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 17:
+-#line 129 "ETCL/ETCL.yy"
++//#line 129 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_LE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 19:
+-#line 134 "ETCL/ETCL.yy"
++//#line 134 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_IN, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 20:
+-#line 136 "ETCL/ETCL.yy"
++//#line 136 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_IN, yyvsp[-3].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 22:
+-#line 141 "ETCL/ETCL.yy"
++//#line 141 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_TWIDDLE, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 24:
+-#line 146 "ETCL/ETCL.yy"
++//#line 146 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_PLUS, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 25:
+-#line 148 "ETCL/ETCL.yy"
++//#line 148 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_MINUS, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 27:
+-#line 153 "ETCL/ETCL.yy"
++//#line 153 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_MULT, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 28:
+-#line 155 "ETCL/ETCL.yy"
++//#line 155 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Binary_Expr (TAO_ETCL_DIV, yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 30:
+-#line 160 "ETCL/ETCL.yy"
++//#line 160 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Unary_Expr (TAO_ETCL_NOT, yyvsp[0].constraint); ;
+     break;}
+ case 32:
+-#line 165 "ETCL/ETCL.yy"
++//#line 165 "ETCL/ETCL.yy"
+ { yyval.constraint = yyvsp[-1].constraint; ;
+     break;}
+ case 33:
+-#line 167 "ETCL/ETCL.yy"
++//#line 167 "ETCL/ETCL.yy"
+ { yyval.constraint = yyvsp[0].constraint; ;
+     break;}
+ case 34:
+-#line 169 "ETCL/ETCL.yy"
++//#line 169 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Unary_Expr (TAO_ETCL_PLUS, yyvsp[0].constraint); ;
+     break;}
+ case 35:
+-#line 171 "ETCL/ETCL.yy"
++//#line 171 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Unary_Expr (TAO_ETCL_MINUS, yyvsp[0].constraint); ;
+     break;}
+ case 36:
+-#line 173 "ETCL/ETCL.yy"
++//#line 173 "ETCL/ETCL.yy"
+ { yyval.constraint = yyvsp[0].constraint; ;
+     break;}
+ case 37:
+-#line 175 "ETCL/ETCL.yy"
++//#line 175 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Unary_Expr (TAO_ETCL_PLUS, yyvsp[0].constraint); ;
+     break;}
+ case 38:
+-#line 177 "ETCL/ETCL.yy"
++//#line 177 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Unary_Expr (TAO_ETCL_MINUS, yyvsp[0].constraint); ;
+     break;}
+ case 39:
+-#line 179 "ETCL/ETCL.yy"
++//#line 179 "ETCL/ETCL.yy"
+ { yyval.constraint = yyvsp[0].constraint; ;
+     break;}
+ case 40:
+-#line 181 "ETCL/ETCL.yy"
++//#line 181 "ETCL/ETCL.yy"
+ { yyval.constraint = yyvsp[0].constraint; ;
+     break;}
+ case 41:
+-#line 183 "ETCL/ETCL.yy"
++//#line 183 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Exist (yyvsp[0].constraint); ;
+     break;}
+ case 42:
+-#line 185 "ETCL/ETCL.yy"
++//#line 185 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Exist (yyvsp[0].constraint); ;
+     break;}
+ case 43:
+-#line 187 "ETCL/ETCL.yy"
++//#line 187 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Default (yyvsp[0].constraint); ;
+     break;}
+ case 44:
+-#line 189 "ETCL/ETCL.yy"
++//#line 189 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Eval (yyvsp[0].constraint); ;
+     break;}
+ case 45:
+-#line 191 "ETCL/ETCL.yy"
++//#line 191 "ETCL/ETCL.yy"
+ { yyval.constraint = yyvsp[0].constraint; ;
+     break;}
+ case 46:
+-#line 195 "ETCL/ETCL.yy"
++//#line 195 "ETCL/ETCL.yy"
+ { yyval.constraint = 0; ;
+     break;}
+ case 47:
+-#line 197 "ETCL/ETCL.yy"
++//#line 197 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Dot (yyvsp[0].constraint); ;
+     break;}
+ case 48:
+-#line 200 "ETCL/ETCL.yy"
++//#line 200 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Component (yyvsp[-1].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 51:
+-#line 207 "ETCL/ETCL.yy"
++//#line 207 "ETCL/ETCL.yy"
+ { yyval.constraint = 0; ;
+     break;}
+ case 52:
+-#line 209 "ETCL/ETCL.yy"
++//#line 209 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Dot (yyvsp[0].constraint); ;
+     break;}
+ case 55:
+-#line 216 "ETCL/ETCL.yy"
++//#line 216 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Component (yyvsp[-1].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 56:
+-#line 218 "ETCL/ETCL.yy"
++//#line 218 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Special (TAO_ETCL_LENGTH); ;
+     break;}
+ case 57:
+-#line 220 "ETCL/ETCL.yy"
++//#line 220 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Special (TAO_ETCL_DISCRIMINANT); ;
+     break;}
+ case 58:
+-#line 222 "ETCL/ETCL.yy"
++//#line 222 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Special (TAO_ETCL_TYPE_ID); ;
+     break;}
+ case 59:
+-#line 224 "ETCL/ETCL.yy"
++//#line 224 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Special (TAO_ETCL_REPOS_ID); ;
+     break;}
+ case 62:
+-#line 230 "ETCL/ETCL.yy"
++//#line 230 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Component_Array (yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 63:
+-#line 234 "ETCL/ETCL.yy"
++//#line 234 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Component_Assoc (yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 64:
+-#line 238 "ETCL/ETCL.yy"
++//#line 238 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Component_Pos (yyvsp[-1].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 65:
+-#line 242 "ETCL/ETCL.yy"
++//#line 242 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Union_Pos (yyvsp[-2].constraint, yyvsp[0].constraint); ;
+     break;}
+ case 66:
+-#line 246 "ETCL/ETCL.yy"
++//#line 246 "ETCL/ETCL.yy"
+ { yyval.constraint = 0; ;
+     break;}
+ case 67:
+-#line 248 "ETCL/ETCL.yy"
++//#line 248 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Union_Value (+1, yyvsp[0].constraint); ;
+     break;}
+ case 68:
+-#line 250 "ETCL/ETCL.yy"
++//#line 250 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Union_Value (+1, yyvsp[0].constraint); ;
+     break;}
+ case 69:
+-#line 252 "ETCL/ETCL.yy"
++//#line 252 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Union_Value (-1, yyvsp[0].constraint); ;
+     break;}
+ case 70:
+-#line 254 "ETCL/ETCL.yy"
++//#line 254 "ETCL/ETCL.yy"
+ { yyval.constraint = new TAO_ETCL_Union_Value (yyvsp[0].constraint); ;
+     break;}
+ }
+    /* the action file gets copied in in place of this dollarsign */
+-#line 543 "/pkg/gnu/share/bison.simple"
++//#line 543 "/pkg/gnu/share/bison.simple"
+ 
+   yyvsp -= yylen;
+   yyssp -= yylen;
+@@ -1275,6 +1272,6 @@
+     }
+   return 1;
+ }
+-#line 257 "ETCL/ETCL.yy"
++//#line 257 "ETCL/ETCL.yy"
+ 
+ 

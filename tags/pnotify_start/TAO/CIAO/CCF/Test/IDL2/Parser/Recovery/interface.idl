@@ -1,0 +1,41 @@
+// file      : CCF/Test/IDL2/Parsing/Recovery/interface.idl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+interface Base {};
+
+
+// Interface declaration syntax errors
+//
+//
+
+local intrrface L;
+
+//
+
+abstract interrface A;
+
+//
+
+interface ;
+
+//
+
+interface I : {};
+
+//
+
+interface I : Base, {};
+
+//
+
+interface I };
+
+//
+
+interface I {;
+
+//
+
+interface I {}
+
