@@ -113,8 +113,7 @@ public:
   // Constructor.
   AIO_CLD_Connector ()
     : retry_delay_ (INITIAL_RETRY_DELAY), ssl_ctx_ (0), ssl_ (0)
-  { open (0, ACE_Proactor::instance (), 1); }
-  //    Pass addr                     Validate
+  { open (); }
 
   // Destructor frees the SSL resources.
   virtual ~AIO_CLD_Connector (void) {
