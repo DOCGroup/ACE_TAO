@@ -234,12 +234,6 @@ public:
   // Helper method passed to the template method that generates code for the
   // is_a method.
 
-  static int queryinterface_helper (be_interface *,
-                                    be_interface *,
-                                    TAO_OutStream *os);
-  // Helper method passed to the template method that generates code for the
-  // _tao_QueryInterface method.
-
   static int downcast_helper (be_interface *,
                               be_interface *,
                               TAO_OutStream *os);
