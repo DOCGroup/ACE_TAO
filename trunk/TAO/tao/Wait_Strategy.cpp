@@ -46,17 +46,9 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time)
   ACE_Reactor* reactor =
     this->transport_->orb_core ()->reactor ();
 
-  // @@ Carlos: Can we rely on <reply_received> flag in the AMI case?
-  //    It depends on whether we are expecting replies or not, right?
-  //    So, I think we can simply return from this loop, when some
-  //    event occurs, and the invocation guy can call us again, if it
-  //    wants to. (AMI will call, if it is expecting replies, SMI will
-  //    call if the reply is not arrived) (Alex).
-  // @@ Alex: I think you are right, let's fix it later....
-
-  // Do the event loop, till we received the reply.
-
-  int result = 1;
+  // Do the event loop, till we fully receive a reply.
+  
+  int result = 1; // So the first iteration works...
   this->reply_received_ = 0;
   while (this->reply_received_ == 0 && result > 0)
     {
@@ -153,23 +145,12 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
     //if (TAO_debug_level > 0)
     //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - sending request for <%x>\n",
     //this->transport_));
-
   }
-
-  // @@ Should we do here that checking for the difference in the
-  //    Reactor used??? (Alex).
 
   // Register the handler.
   this->transport_->register_handler ();
-  // @@ Carlos: We do this only if the reactor is different right?
-  //    (Alex)
-  // @@ Alex: that is taken care of in
-  //    IIOP_Transport::register_handler, but maybe we shouldn't do
-  //    this checking everytime, I recall that there was a problem
-  //    (sometime ago) about using the wrong ORB core, but that may
-  //    have been fixed...
-
-  // Send the request
+  
+  // Send the request.
   int result =
     this->TAO_Wait_Strategy::sending_request (orb_core,
                                               two_way);
@@ -232,9 +213,11 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
       if (leader_follower.add_follower (cond) == -1)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
-                    "add_follower failed for <%x>\n", cond));
+                    "add_follower failed for <%x>\n",
+                    cond));
 
-      while (!this->reply_received_ && leader_follower.leader_available ())
+      while (!this->reply_received_ &&
+             leader_follower.leader_available ())
         {
           if (max_wait_time == 0)
             {
@@ -264,7 +247,8 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
       // our input. We are already removed from the follower queue.
       if (this->reply_received_ == 1)
         {
-          // But first reset our state in case we are invoked again...
+          // But first reset our state in case we are invoked
+          // again... 
           this->reply_received_ = 0;
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
@@ -273,7 +257,8 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
         }
       else if (this->reply_received_ == -1)
         {
-          // But first reset our state in case we are invoked again...
+          // But first reset our state in case we are invoked
+          // again... 
           this->reply_received_ = 0;
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
@@ -377,7 +362,8 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
 
   // Obtain the lock.
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                    orb_core->leader_follower ().lock (), -1);
+                    orb_core->leader_follower ().lock (), 
+                    -1);
 
   //  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - reading reply <%x>\n",
   //              this->transport_));
@@ -398,7 +384,6 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
 
   // Receive any data that is available, without blocking...
   int result = this->transport_->handle_client_input (0);
-
 
   // Data was read, but there the reply has not been completely
   // received...
@@ -494,12 +479,12 @@ TAO_Wait_On_Read::~TAO_Wait_On_Read (void)
 int
 TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time)
 {
-  int received_reply = 0;
-  while (received_reply != 1)
+  int reply_complete = 0;
+  while (reply_complete != 1)
     {
-      received_reply =
+      reply_complete =
         this->transport_->handle_client_input (1, max_wait_time);
-      if (received_reply == -1)
+      if (reply_complete == -1)
         return -1;
     }
 

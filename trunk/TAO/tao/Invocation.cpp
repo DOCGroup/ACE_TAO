@@ -87,7 +87,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
   if (this->transport_ != 0)
-    this->transport_->idle ();
+    this->transport_->idle_after_reply ();
 }
 
 // The public API involves creating an invocation, starting it, filling
@@ -283,8 +283,6 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
   return TAO_INVOKE_OK;
 }
 
-// ****************************************************************
-
 int
 TAO_GIOP_Invocation::close_connection (void)
 {
@@ -406,10 +404,6 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
-  // If there was a previous reply, cleanup its state first.
-  if (this->message_state_.message_size != 0)
-    this->message_state_.reset ();
-
   this->transport_->start_request (this->orb_core_,
                                    this->profile_,
                                    this->opname_,
@@ -422,9 +416,9 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 int
 TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                     CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException))
+  ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException))
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_Invocation_INVOKE_START);
 
   int retval = this->invoke_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
@@ -646,8 +640,23 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
                   "TAO (%P|%t) Timeout on recv is <%u>\n",
                   msecs));
     }
+
   int reply_error =
     this->transport_->wait_for_reply (this->max_wait_time_);
+
+  // Do the wait loop till we receive the reply for this invocation.
+  // while (reply_error != -1 && 
+  //        this->transport_->reply_received (this->request_id_) != 1)
+  //   {
+  //     // @@ Hack to init the Leader-Follower state, so that we can
+  //     //    wait again. (Alex).
+  //     // this->transport_->wait_strategy ()->sending_request (this->orb_core_,
+  //     //                                                  1);
+  //     
+  //     // Wait for reply.
+  //     reply_error = this->transport_->wait_for_reply ();
+  //   }
+
   if (TAO_debug_level > 0 && this->max_wait_time_ != 0)
     {
       CORBA::ULong msecs =
@@ -656,6 +665,8 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
                   "TAO (%P|%t) Timeout after recv is <%u> status <%d>\n",
                   msecs, reply_error));
     }
+
+  // Check the reply error.
 
   if (reply_error == -1)
     {
@@ -778,18 +789,13 @@ TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
 // ****************************************************************
 
-// Send request, block until any reply comes back
-
+// Send request, block until any reply comes back. 
 void
 TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
-
-  // If there was a previous reply, cleanup its state first.
-  if (this->message_state_.message_size != 0)
-    this->message_state_.reset ();
 
   this->transport_->start_locate (this->orb_core_,
                                   this->profile_,
@@ -860,6 +866,14 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   int reply_error =
     this->transport_->wait_for_reply (this->max_wait_time_);
 
+  //   // Do the wait loop, till we receive the reply for this invocation. 
+  //   while (reply_error != -1 && 
+  //          this->transport_->reply_received (this->request_id_) != 1)
+  //     {
+  //       reply_error = this->transport_->wait_for_reply ();
+  //     }
+  
+  // Check the reply error.
   if (reply_error == -1)
     {
       if (errno == ETIME)

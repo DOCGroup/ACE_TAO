@@ -10,7 +10,8 @@
 //    Invocation.h
 //
 // = DESCRIPTION
-//   Encapsulate the logic for remote invocations, oneways or twoways.
+//    Encapsulate the logic for remote invocations, oneways or
+//    twoways.  
 //
 //   THREADING NOTE: Threads should never manipulate another
 //   thread's invocations.  In this implementation, all data
@@ -20,7 +21,8 @@
 //   GIOP code is reentrant.
 //
 // = AUTHOR
-//   Carlos O'Ryan <coryan@cs.wustl.edu>
+//    Carlos O'Ryan <coryan@cs.wustl.edu> and Alexander Babu Arulanthu
+//    <alex@cs.wustl.edu> 
 //
 // ============================================================================
 
@@ -49,34 +51,38 @@ enum TAO_Invoke_Status
   // An exception was raised.
 };
 
+// ****************************************************************
+
 class TAO_Export TAO_GIOP_Invocation
 {
   // = TITLE
-  //   Encapsulates common behavior for both oneway and twoway
-  //   invocations.
+  //     Encapsulates common behavior for both oneway and twoway
+  //     invocations. 
   //
   // = DESCRIPTION
-  //   This class connects (or lookups a connection from the cache) to
-  //   the remote server, builds the CDR stream for the Request, send
-  //   the CDR stream and expects the response and interprets the
-  //   incoming CDR stream.
-  //
+  //     This class connects (or lookups a connection from the cache)
+  //     to the remote server, builds the CDR stream for the Request,
+  //     send the CDR stream and expects the response and interprets
+  //     the incoming CDR stream. 
+  
 public:
-  // = Initialization and termination methods.
   TAO_GIOP_Invocation (TAO_Stub *data,
                        const char *operation,
                        TAO_ORB_Core* orb_core);
+  // Constructor.
+  
   ~TAO_GIOP_Invocation (void);
+  // Destructor.
 
   void put_param (CORBA::TypeCode_ptr tc,
                   void *value,
                   CORBA_Environment &ACE_TRY_ENV =
                         TAO_default_environment ());
   // Encodes the value into the undelying CDR stream based on the
-  // TypeCode parameter
+  // TypeCode parameter.
 
   TAO_OutputCDR &out_stream (void);
-  // return the underlying output stream
+  // Return the underlying output stream.
 
 protected:
   void start (CORBA_Environment &ACE_TRY_ENV =
@@ -147,6 +153,8 @@ protected:
   // start() and updated as required.
 };
 
+// ****************************************************************
+
 class TAO_Export TAO_GIOP_Twoway_Invocation : public TAO_GIOP_Invocation
 {
   // = TITLE
@@ -159,12 +167,12 @@ class TAO_Export TAO_GIOP_Twoway_Invocation : public TAO_GIOP_Invocation
   //   incoming CDR stream.
   //
 public:
-  // = Initialization and termination methods.
   TAO_GIOP_Twoway_Invocation (TAO_Stub *data,
                               const char *operation,
                               TAO_ORB_Core* orb_core);
-
-  void start (CORBA_Environment &ACE_TRY_ENV =
+  // Constructor.
+  
+  void start (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Calls TAO_GIOP_Invocation::start.
@@ -202,12 +210,14 @@ private:
   // send/reply code and the system exceptions.
 
 private:
-  TAO_GIOP_Message_State message_state_;
+  // TAO_GIOP_Message_State message_state_;
   // Stream into which the reply is placed.
 
   TAO_Synch_Reply_Dispatcher rd_;
   // Reply dispatcher for the current synchronous invocation.
 };
+
+// ****************************************************************
 
 class TAO_Export TAO_GIOP_Oneway_Invocation : public TAO_GIOP_Invocation
 {
@@ -215,12 +225,12 @@ class TAO_Export TAO_GIOP_Oneway_Invocation : public TAO_GIOP_Invocation
   //   Sends a oneway request.
   //
 public:
-  // = Initialization and termination methods.
   TAO_GIOP_Oneway_Invocation (TAO_Stub *data,
                               const char *operation,
                               TAO_ORB_Core* orb_core);
+  // Constructor.
 
-  void start (CORBA_Environment &ACE_TRY_ENV =
+  void start (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Call TAO_GIOP_Invocation::start()
@@ -231,6 +241,7 @@ public:
   // Send request, without blocking for any response.
 };
 
+// ****************************************************************
 
 class TAO_Export TAO_GIOP_Locate_Request_Invocation : public TAO_GIOP_Invocation
 {
@@ -238,11 +249,11 @@ class TAO_Export TAO_GIOP_Locate_Request_Invocation : public TAO_GIOP_Invocation
   //   Sends a locate request.
   //
 public:
-  // = Initialization and termination methods.
   TAO_GIOP_Locate_Request_Invocation (TAO_Stub *data,
                                       TAO_ORB_Core* orb_core);
+  // Constructor.
 
-  void start (CORBA_Environment &ACE_TRY_ENV =
+  void start (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Calls TAO_GIOP_Invocation::start.
@@ -256,7 +267,7 @@ public:
   // return the underlying input stream
 
 private:
-  TAO_GIOP_Message_State message_state_;
+  // TAO_GIOP_Message_State message_state_;
   // Stream into which the request is placed.
 
   TAO_Synch_Reply_Dispatcher rd_;

@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -61,5 +61,8 @@
 #include "be_visitor_operation/ami_arglist.cpp"
 #include "be_visitor_operation/ami_handler_operation_ch.cpp"
 #include "be_visitor_operation/ami_handler_arglist.cpp"
+#include "be_visitor_operation/ami_handler_operation_cs.cpp"
+#include "be_visitor_operation/ami_handler_skeleton_cs.cpp"
+#include "be_visitor_operation/ami_handler_argument_marshal.cpp"
 
 ACE_RCSID(be, be_visitor_operation, "$Id$")

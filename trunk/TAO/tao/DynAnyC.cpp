@@ -1356,6 +1356,7 @@ CORBA::TypeCode_ptr _tc_CORBA_DynArray =
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class TAO_Object_Manager<CORBA_DynAny,CORBA_DynAny_var>;
   template class TAO_Object_Field_T<CORBA_DynAny,CORBA_DynAny_var>;
   template class TAO_Object_Field_T<CORBA_DynEnum,CORBA_DynEnum_var>;
   template class TAO_Object_Field_T<CORBA_DynStruct,CORBA_DynStruct_var>;
@@ -1369,6 +1370,7 @@ CORBA::TypeCode_ptr _tc_CORBA_DynArray =
   template class TAO_Object_Manager<CORBA_DynSequence,CORBA_DynSequence_var>;
   template class TAO_Object_Manager<CORBA_DynArray,CORBA_DynArray_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  pragma instantiate TAO_Object_Manager<CORBA_DynAny,CORBA_DynAny_var>
 #  pragma instantiate TAO_Object_Field_T<CORBA_DynAny,CORBA_DynAny_var>
 #  pragma instantiate TAO_Object_Field_T<CORBA_DynEnum,CORBA_DynEnum_var>
 #  pragma instantiate TAO_Object_Field_T<CORBA_DynStruct,CORBA_DynStruct_var>
