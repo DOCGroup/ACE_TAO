@@ -1710,9 +1710,15 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
                             node->local_name (),
                             "Explicit",
                             ScopeAsDecl (node->defined_in ()));
+                            
+  // We're at global scope here so we need to fool the scope stack
+  // for a minute so the correct repo id can be calculated at
+  // interface construction time.
+  idl_global->scopes ().push (node->defined_in ());
+  
   AST_Interface *i = 0;
   ACE_NEW_RETURN (i,
-                  be_interface (0,
+                  be_interface (explicit_name,
                                 header.inherits (),
                                 header.n_inherits (),
                                 header.inherits_flat (),
@@ -1720,6 +1726,10 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
                                 I_FALSE,
                                 I_FALSE),
                   0);
+     
+  // Back to reality.                
+  idl_global->scopes ().pop ();
+  
   i->set_name (explicit_name);
   i->set_defined_in (node->defined_in ());
   i->set_imported (node->imported ());
@@ -1779,9 +1789,15 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
                              I_FALSE,
                              I_TRUE);
   parent_id.destroy ();
+  
+  // We're at global scope here so we need to fool the scope stack
+  // for a minute so the correct repo id can be calculated at
+  // interface construction time.
+  idl_global->scopes ().push (node->defined_in ());
+  
   AST_Interface *i = 0;
   ACE_NEW_RETURN (i,
-                  be_interface (0,
+                  be_interface (implicit_name,
                                 header.inherits (),
                                 header.n_inherits (),
                                 header.inherits_flat (),
@@ -1789,6 +1805,10 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
                                 I_FALSE,
                                 I_FALSE),
                   0);
+     
+  // Back to reality.                
+  idl_global->scopes ().pop ();
+  
   i->set_name (implicit_name);
   i->set_defined_in (node->defined_in ());
   i->set_imported (node->imported ());
@@ -1818,9 +1838,15 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
                              I_FALSE,
                              I_FALSE,
                              I_TRUE);
+
+  // We're at global scope here so we need to fool the scope stack
+  // for a minute so the correct repo id can be calculated at
+  // interface construction time.
+  idl_global->scopes ().push (node->defined_in ());
+  
   AST_Interface *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_interface (0,
+                  be_interface (equiv_name,
                                 header.inherits (),
                                 header.n_inherits (),
                                 header.inherits_flat (),
@@ -1828,6 +1854,10 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
                                 I_FALSE,
                                 I_FALSE),
                   0);
+     
+  // Back to reality.                
+  idl_global->scopes ().pop ();
+  
   retval->set_name (equiv_name);
   retval->set_defined_in (s);
   retval->set_imported (node->imported ());
