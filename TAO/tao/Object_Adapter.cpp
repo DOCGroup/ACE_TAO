@@ -277,11 +277,11 @@ TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
   ACE_CHECK;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
-
-  if (req.sync_with_server ())
-    {
-      req.send_no_exception_reply (transport);
-    }
+//BRT
+//  if (req.sync_with_server ())
+//    {
+//      req.send_no_exception_reply (transport);
+//    }
 
   // Servant dispatch.
   {
