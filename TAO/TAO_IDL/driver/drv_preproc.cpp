@@ -70,6 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_extern.h"
 #include "drv_private.h"
 #include "drv_extern.h"
+#include "ace/Version.h"
 #include "ace/Process_Manager.h"
 #include "ace/SString.h"
 #include "ace/Env_Value_T.h"
@@ -152,7 +153,17 @@ DRV_cpp_init (void)
     }
 
   DRV_cpp_putarg (cpp_loc);
-  DRV_cpp_putarg ("-DIDL");
+
+  // Add an option to the IDL compiler to make the TAO version
+  // available to the user. A XX.YY.ZZ release gets version 0xXXYYZZ,
+  // for example, 5.1.14 gets 0x050114
+  char version_option[128];
+  ACE_OS::sprintf (version_option,
+
+                   "-D__TAO_IDL=0x%2.2d%2.2d%2.2d",
+                   ACE_MAJOR_VERSION, ACE_MINOR_VERSION, ACE_BETA_VERSION);
+  DRV_cpp_putarg (version_option);
+
   DRV_cpp_putarg ("-I.");
 
   // Added some customizable preprocessor options
@@ -183,9 +194,6 @@ DRV_cpp_init (void)
           // If no cpp flag was defined by the user, we define some
           // platform specific flags here.
           char option[BUFSIZ];
-//          char* option = 0;
-//          ACE_NEW (option,
-//                   char[BUFSIZ]);
 
 #if defined (TAO_IDL_PREPROCESSOR_ARGS)
           cpp_args = TAO_IDL_PREPROCESSOR_ARGS;
@@ -582,9 +590,9 @@ DRV_pre_proc (const char *myfile)
 
   FE_set_yyin (ACE_reinterpret_cast (File *, yyin));
 
-  if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC) 
+  if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC)
     {
-      FILE *preproc = ACE_OS::fopen (tmp_file, "r");      
+      FILE *preproc = ACE_OS::fopen (tmp_file, "r");
       char buffer[BUFSIZ + 1];  // 1 for extra null
       int bytes;
 
@@ -598,7 +606,7 @@ DRV_pre_proc (const char *myfile)
           ACE_OS::exit (99);
         }
 
-      while ((bytes = ACE_OS::fread (buffer, sizeof (char), BUFSIZ, preproc)) != 0) 
+      while ((bytes = ACE_OS::fread (buffer, sizeof (char), BUFSIZ, preproc)) != 0)
         {
           buffer[bytes] = 0;  // Null char
 
