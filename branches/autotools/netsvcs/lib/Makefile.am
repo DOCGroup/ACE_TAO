@@ -13,7 +13,7 @@
 ## needed to process this file.
 AUTOMAKE_OPTIONS = 1.4 
 
-INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
 
 lib_LTLIBRARIES = libnetsvcs.la
 

@@ -1,3 +1,28 @@
+Fri Jun 06 14:53:00 2003  Stephen Torri <storri@cse.wustl.edu>
+
+	* ace/Makefile.am:
+	* Makefile.am:
+	* ace/QoS/Makefile.am:
+	* ace/RMCast/Makefile.am:
+	* ace/SSL/Makefile.am:
+	* apps/gperf/src/Makefile.am:
+	* netsvcs/makefile.am:
+	* netsvcs/clients/Logger/Makefile.am:
+	* netsvcs/clients/Naming/Client/Makefile.am:
+	* netsvcs/clients/Naming/Dump_Restore/Makefile.am:
+	* netsvcs/clients/Tokens/colleciton/Makefile.am:
+	* netsvcs/clients/Tokens/deadlock/Makefile.am:
+	* netsvcs/clients/Tokens/invariant/Makefile.am:
+	* netsvcs/clients/Tokens/manual/Makefile.am:
+	* netsvcs/clients/Tokens/mutex/Makefile.am:
+	* netsvcs/clients/Tokens/rw_lock/Makefile.am:
+	* netsvcs/lib/Makefile.am:
+	* configure.ac:
+
+	  Added in netsvcs and man directories into the build. Replaced INCLUDES with AM_CPPFLAGS.
+	  The INCLUDES macros is now deprecated.
+	
+
 Wed Mar 26 08:00:11 2003  Ossama Othman  <ossama@uci.edu>
 
 	* configure.ac:

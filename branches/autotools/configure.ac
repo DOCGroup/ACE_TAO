@@ -7333,10 +7333,6 @@ dnl We can finally create all the files listed here; Makefile is
 dnl created from Makefile.in, etc.  Top-level Makefiles should be
 dnl created first.
 
-dnl   Makefile
-dnl   ace/Makefile
-dnl   apps/Makefile
-dnl   apps/gperf/Makefile
 dnl   apps/gperf/src/Makefile
 dnl   man/Makefile
 dnl   man/man3/Makefile
@@ -7369,6 +7365,23 @@ AC_CONFIG_FILES([
   apps/Makefile
   apps/gperf/Makefile
   apps/gperf/src/Makefile
+  man/Makefile
+  man/man3/Makefile
+  netsvcs/Makefile
+  netsvcs/clients/Makefile
+  netsvcs/clients/Logger/Makefile
+  netsvcs/clients/Naming/Makefile
+  netsvcs/clients/Naming/Client/Makefile
+  netsvcs/clients/Naming/Dump_Restore/Makefile
+  netsvcs/clients/Tokens/Makefile
+  netsvcs/clients/Tokens/collection/Makefile
+  netsvcs/clients/Tokens/deadlock/Makefile
+  netsvcs/clients/Tokens/invariant/Makefile
+  netsvcs/clients/Tokens/manual/Makefile
+  netsvcs/clients/Tokens/mutex/Makefile
+  netsvcs/clients/Tokens/rw_lock/Makefile
+  netsvcs/lib/Makefile
+  netsvcs/servers/Makefile
   tests/Makefile
 ])
 
