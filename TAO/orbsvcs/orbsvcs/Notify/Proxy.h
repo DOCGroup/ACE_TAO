@@ -44,8 +44,8 @@ public:
   /// Destructor
   ~TAO_NS_Proxy ();
 
-  /// Subscribed types.
-  TAO_NS_EventTypeSeq& subscribed_types (void);
+  /// Obtain the Proxy's subscribed types.
+  void subscribed_types (TAO_NS_EventTypeSeq& subscribed_types ACE_ENV_ARG_DECL);
 
   /// Check if this event passes the admin and proxy filters.
   CORBA::Boolean check_filters (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL);

@@ -209,7 +209,7 @@ TAO_NS_EventTypeSeq::intersection (const TAO_NS_EventTypeSeq& rhs, const TAO_NS_
 }
 
 void
-TAO_NS_EventTypeSeq::dump (void)
+TAO_NS_EventTypeSeq::dump (void) const
 {
   TAO_NS_EventTypeSeq::CONST_ITERATOR iter (*this);
 

@@ -22,13 +22,22 @@
 #include "orbsvcs/CosNotifyFilterS.h"
 #include "FilterFactory.h"
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 /**
  * @class TAO_NS_ETCL_FilterFactory
  *
  * @brief
  *
  */
-class TAO_Notify_Export TAO_NS_ETCL_FilterFactory : public POA_CosNotifyFilter::FilterFactory, public TAO_NS_FilterFactory
+class TAO_Notify_Export TAO_NS_ETCL_FilterFactory : public virtual PortableServer::RefCountServantBase
+                                                  , public virtual POA_CosNotifyFilter::FilterFactory
+                                                  , public TAO_NS_FilterFactory
 {
 public:
   /// Constuctor
@@ -60,6 +69,10 @@ public:
                      CosNotifyFilter::InvalidGrammar
                      ));
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 ACE_FACTORY_DECLARE (TAO_Notify, TAO_NS_ETCL_FilterFactory)
 

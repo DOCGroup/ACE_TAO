@@ -63,7 +63,7 @@ public:
   void populate_no_special (CosNotification::EventTypeSeq& event_type) const;
 
   /// Print the contents.
-  void dump (void);
+  void dump (void) const;
 };
 
 #if defined (__ACE_INLINE__)

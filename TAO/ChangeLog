@@ -1,3 +1,46 @@
+Thu Jan 16 17:24:30 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.h:
+	  Make the FilterFactory a RefCounted servant.
+	  This allows us to cleanup this object when the ChannelFactory
+	  dies.
+
+	* orbsvcs/orbsvcs/NotifyExt.idl:
+	* orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+	* orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+	  Extend the ChannelFactory interface to include a destroy method.
+	  This allows us to check for memory leaks using a tool like
+	  purify when the channel factory is destroyed.
+	
+	* orbsvcs/orbsvcs/Notify/EventType.cpp:
+	* orbsvcs/orbsvcs/Notify/EventType.h:
+	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+	* orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
+	  Made the <dump> methods const.
+	
+	* orbsvcs/orbsvcs/Notify/Object.cpp:
+	* orbsvcs/orbsvcs/Notify/Object_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Object_T.h:
+	  The <shutdown_> flag is now set in the Object_T::destroy method.
+	  Note that if multiple threads that encounter dispatch failure
+	  try to destroy the proxy object, only the first one will run the
+	  destroy method, others will check for the shutdown flag and
+	  return. This fixes the random crashes in some of the Linux
+	  builds on the scoreboard (orbsvcs/tests/Notify/MT_Dispatching).
+
+	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
+	* orbsvcs/orbsvcs/Notify/Proxy.h:
+	  Changed the <subscribed_types> method to return a copy of the
+	  curent subscriptions. This method has been corrected to be
+	  thread safe.
+	
+	* orbsvcs/orbsvcs/Notify/Peer.cpp:
+	  Changed to new usage of Proxy::subscribed_types.
+	
+	* orbsvcs/orbsvcs/Notify/Properties.h:
+	  Use TAO_Singleton instead of ACE_Singleton.  
+
 Thu Jan 16 16:27:59 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.{h,cpp}: Added patches from

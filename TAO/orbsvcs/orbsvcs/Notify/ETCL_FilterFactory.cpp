@@ -21,6 +21,8 @@ TAO_NS_ETCL_FilterFactory::~TAO_NS_ETCL_FilterFactory ()
 CosNotifyFilter::FilterFactory_ptr
 TAO_NS_ETCL_FilterFactory::create (ACE_ENV_SINGLE_ARG_DECL)
 {
+  PortableServer::ServantBase_var servant_var (this);
+
   return _this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 

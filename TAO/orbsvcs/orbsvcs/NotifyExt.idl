@@ -11,6 +11,8 @@
 #ifndef _NOTIFY_EXT_IDL_
 #define _NOTIFY_EXT_IDL_
 
+#include "CosNotifyChannelAdmin.idl"
+
 #pragma prefix ""
 
 /**
@@ -64,6 +66,14 @@ module NotifyExt
       boolean allow_request_buffering;
       unsigned long max_buffered_requests;
       unsigned long max_request_buffer_size;
+  };
+
+  /*
+   * Extend the EventChannelFactory to have a shutdown method.
+   */
+  interface EventChannelFactory : CosNotifyChannelAdmin::EventChannelFactory
+  {
+    void destroy ();
   };
 };
 
