@@ -165,7 +165,6 @@ run_test (u_short localport,
                            "(%P|%t) %p\n",
                            "handle_events"),
                           -1);
-
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) return from handle events\n"));
 
@@ -176,7 +175,8 @@ run_test (u_short localport,
     }
 
   if (ACE_Reactor::instance ()->remove_handler
-      (&endpoint, ACE_Event_Handler::READ_MASK) == -1)
+      (&endpoint,
+       ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_Reactor::remove_handler"),
                       -1);
