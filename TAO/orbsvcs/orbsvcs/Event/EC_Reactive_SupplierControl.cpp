@@ -138,8 +138,11 @@ TAO_EC_Reactive_SupplierControl::activate (void)
 int
 TAO_EC_Reactive_SupplierControl::shutdown (void)
 {
-  return this->reactor_->remove_handler (&this->adapter_,
-                                         ACE_Event_Handler::DONT_CALL);
+  int r =
+    this->reactor_->remove_handler (&this->adapter_,
+                                    ACE_Event_Handler::DONT_CALL);
+  this->adapter_.reactor (0);
+  return r;
 }
 
 void
