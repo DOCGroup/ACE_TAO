@@ -1,3 +1,8 @@
+Tue Dec  7 08:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/GNUmakefile.clone:
+          Removed this file because clone.cpp has been zapped
+
 Mon Dec  6 18:16:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* m4/config_h.m4: Added AH_TEMPLATE for ACE_HAS_POSIX_REALTIME_SIGNALS.
