@@ -33,6 +33,11 @@ Thu Jan 29 10:52:34 1998  David L. Levine  <levine@cs.wustl.edu>
           platform_sunos5_egcs.GNU if necessary.  See the commented
           example there.
 
+        * tests/Env_Value_Test.cpp: updated comment to explain why we
+          can't use spawn with ACE_HAS_NONSTATIC_OBJECT_MANAGER.  We
+          can, in general, but we can't on VxWorks because it doesn't
+          have fork ().
+
 Thu Jan 29 10:32:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
