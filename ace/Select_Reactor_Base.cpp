@@ -634,6 +634,12 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
             case ACE_Event_Handler::EXCEPT_MASK:
               result = buffer.eh_->handle_exception (ACE_INVALID_HANDLE);
               break;
+            case ACE_Event_Handler::QOS_MASK:
+              result = buffer.eh_->handle_qos (ACE_INVALID_HANDLE);
+              break;
+            case ACE_Event_Handler::GROUP_QOS_MASK:
+              result = buffer.eh_->handle_group_qos (ACE_INVALID_HANDLE);
+              break;
             default:
               // Should we bail out if we get an invalid mask?
               ACE_ERROR ((LM_ERROR, ASYS_TEXT ("invalid mask = %d\n"), buffer.mask_));
