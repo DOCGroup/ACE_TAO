@@ -8,13 +8,12 @@ CFG=QuoterFactoryFinder - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "QuoterFactoryFinder.mak".
+!MESSAGE NMAKE /f "FactoryFinder.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "QuoterFactoryFinder.mak"\
- CFG="QuoterFactoryFinder - Win32 Debug"
+!MESSAGE NMAKE /f "FactoryFinder.mak" CFG="QuoterFactoryFinder - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -89,15 +88,15 @@ LINK32=link.exe
 # PROP Default_Filter "cpp"
 # Begin Source File
 
+SOURCE=.\FactoryFinder.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FactoryFinderImpl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\QuoterC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\QuoterFactoryFinder.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\QuoterFactoryFinderImpl.cpp
 # End Source File
 # Begin Source File
 
@@ -109,22 +108,22 @@ SOURCE=.\QuoterS.cpp
 # PROP Default_Filter "h"
 # Begin Source File
 
+SOURCE=.\FactoryFinder.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FactoryFinderImpl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\QuoterC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\QuoterFactoryFinder.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\QuoterFactoryFinderImpl.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\QuoterS.h
 # End Source File
 # End Group
-# Begin Group "Include Files"
+# Begin Group "Inline Files"
 
 # PROP Default_Filter "i"
 # Begin Source File

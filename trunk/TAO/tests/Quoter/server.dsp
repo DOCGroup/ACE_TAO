@@ -124,7 +124,7 @@ SOURCE=.\QuoterS.h
 SOURCE=.\server.h
 # End Source File
 # End Group
-# Begin Group "Include Files"
+# Begin Group "Inline Files"
 
 # PROP Default_Filter "i"
 # Begin Source File

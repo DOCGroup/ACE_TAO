@@ -225,12 +225,23 @@ Quoter_Client::init_naming_service (void)
 
     if (factories_ptr == 0)
       ACE_ERROR_RETURN ((LM_ERROR,
-      "Did not get a Quoter Factory.\n"),
-      -1);
+                         "Did not get a Quoter Factory.\n"),
+                         -1);
 
     // Get the first object reference to a factory.
-    CORBA::Object_var quoter_FactoryObj_var = (*factories_ptr)[0];
+    CORBA::Object_var quoter_FactoryObj_var;
 
+    if (factories_ptr->length () >= 1)
+    {
+      // everything is ok, at least one factory is there
+      quoter_FactoryObj_var = (*factories_ptr)[0];
+    }
+    else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "No Factory received.\n"),
+                         -1);
+    }
 
       // Narrow it to a Quoter Factory.
     factory_var_ = Stock::Quoter_Factory::_narrow (quoter_FactoryObj_var.in (),
@@ -240,8 +251,8 @@ Quoter_Client::init_naming_service (void)
 
     if (CORBA::is_nil (this->factory_var_.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
-      "Factory received is not valid.\n"),
-      -1);
+                         "Factory received is not valid.\n"),
+                         -1);
 
     ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Quoter Factory.\n"));
   }
