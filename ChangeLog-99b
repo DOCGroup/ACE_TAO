@@ -1,7 +1,16 @@
+Tue Mar 02 14:43:29 1999  Steve Huston  <shuston@riverace.com>
+
+       * ace/Map_T.(h i): Qualified types inherited from template base
+         classes; qualified with ACE_TYPENAME where needed.  Now aC++
+         is happy.
+
+       * ace/config-hpux-10.x-hpc++.h: Added ACE_HAS_TYPENAME_KEYWORD for
+         aC++.
+
 Tue Mar  2 12:41:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * ace/IOStream_T.{cpp, h}: Fixed some line breaks that were 
-          inadvertently introduced when these files were last checked in.
+       * ace/IOStream_T.{cpp, h}: Fixed some line breaks that were 
+         inadvertently introduced when these files were last checked in.
 
 Tue Mar  2 10:54:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
