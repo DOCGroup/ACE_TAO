@@ -1,5 +1,8 @@
 Wed Sep 10 11:04:08 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/config-sunos5.5-g++.h: added
+	  ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS.
+
 	* include/makeinclude/wrapper_macros.GNU: added PIC= with
 	  static_libs_only, and added list of supported make flags.
 
@@ -13,8 +16,9 @@ Wed Sep 10 11:04:08 1997  David L. Levine  <levine@cs.wustl.edu>
 	  disabled.  Thanks to Per Andersson and James CE Johnson
 	  for noticing this deficiency.
 
-	* ace/config-sunos5.5-g++.h: added
-	  ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS.
+	* include/makeinclude/platform_vxworks5.x_g++.GNU: removed
+	  "-I. -I$(ACE_ROOT)" from CFLAGS because it duplicates the
+	  INCLDIRS set in wrapper_root.GNU.
 
 Wed Sep 10 10:35:06 1997  David L. Levine  <levine@cs.wustl.edu>
 
