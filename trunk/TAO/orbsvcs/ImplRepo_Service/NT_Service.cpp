@@ -17,6 +17,7 @@
 #if defined (ACE_WIN32)
 
 #include "ImplRepo_i.h"
+#include "tao/ORB_Core.h"
 
 /**
  * Default constructor, does nothing special.

@@ -13,10 +13,18 @@
 
 #ifndef IMR_LOCATOR_H
 #define IMR_LOCATOR_H
+#include "ace/pre.h"
 
 #include "tao/IORTable/IORTable.h"
 
 class ImplRepo_i;
+
+#if defined (_MSC_VER)
+# if (_MSC_VER >= 1200)
+#  pragma warning(push)
+# endif /* _MSC_VER >= 1200 */
+# pragma warning (disable:4250)
+#endif /* _MSC_VER */
 
 /**
  * @class ImR_Locator
@@ -43,4 +51,9 @@ private:
   ImplRepo_i *repo_;
 };
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+# pragma warning(pop)
+#endif /* _MSC_VER */
+
+#include "ace/post.h"
 #endif /* IMR_LOCATOR_H */

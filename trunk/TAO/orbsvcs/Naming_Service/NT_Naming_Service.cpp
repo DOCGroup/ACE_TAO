@@ -3,6 +3,7 @@
 
 #include /**/ "Naming_Service.h"
 #include /**/ "NT_Naming_Service.h"
+#include "tao/ORB_Core.h"
 #include "ace/ARGV.h"
 
 #define REGISTRY_KEY_ROOT HKEY_LOCAL_MACHINE
