@@ -37,8 +37,7 @@ ACE_MEM_Connector::ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
                                       const ACE_Addr &local_sap,
                                       int reuse_addr,
                                       int flags,
-                                      int perms,
-                                      int protocol)
+                                      int perms)
   : malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
     preferred_strategy_ (ACE_MEM_IO::Reactive)
 {
@@ -51,8 +50,7 @@ ACE_MEM_Connector::ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
                  local_sap,
                  reuse_addr,
                  flags,
-                 perms,
-                 protocol);
+                 perms);
 }
 
 int
@@ -62,8 +60,7 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
                             const ACE_Addr &local_sap,
                             int reuse_addr,
                             int flags,
-                            int perms,
-                            int protocol)
+                            int perms)
 {
   ACE_TRACE ("ACE_MEM_Connector::connect");
 
@@ -83,8 +80,7 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   if (ACE_SOCK_Connector::connect (temp_stream,
                                    this->address_.get_local_addr (),
                                    timeout, local_sap,
-                                   reuse_addr, flags, perms,
-                                   0, protocol) == -1)
+                                   reuse_addr, flags, perms) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_LIB_TEXT ("%p\n"),
                        ACE_LIB_TEXT ("ACE_MEM_Connector::connect")),

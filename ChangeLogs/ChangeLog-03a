@@ -1,3 +1,17 @@
+Tue Jan 15 15:35:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Connector.(h cpp):
+        * ace/LSOCK_Connector.(h i cpp):
+        * ace/MEM_Connector.(h cpp):
+        * ace/SSL/SSL_SOCK_Connector.(h cpp):
+          Improved the Doxygenation and removed the protocol_family and
+          protocol arguments from the ctors and connect() methods. The
+          protocol family is always taken from the ACE_Addr remote_sap
+          argument since it can now be either PF_INET or PF_INET6 (for
+          SOCK_Connector objects) and should be PF_UNIX for LSOCKs.
+          It is pointless to allow the user to request something that
+          is impossible to do correctly.
+
 Tue Jan 15 10:52:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * include/makeinclude/ace_flags.bor:
