@@ -1,3 +1,15 @@
+Sun Jan  4 22:56:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAOACE.dsw:
+
+	  Added a dependency for AV. 
+	
+	* orbsvcs/orbsvcs/FTClientORB.dsp:
+	* orbsvcs/orbsvcs/FTServerORB.dsp:
+
+	  Added Messaging library to be linked in for release builds. This
+	  is crazy, but that is what the daily builds want. Grrr..
+
 Sun Jan  4 20:17:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Smart_Proxies/Collocation/Makefile.main:
