@@ -1,5 +1,6 @@
 Fri Mar 30 10:33:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* performance-tests/Cubit/TAO/MT_Cubit/Makefile:
 	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: Updated
 	  dependencies.  
 
