@@ -1,10 +1,12 @@
 project(*Server): rt_server {
+  avoids += minimum_corba
   Source_Files {
     server.cpp
   }
 }
 
 project(*Client): rt_client {
+  avoids += minimum_corba
   Source_Files {
     testC.cpp
     client.cpp
