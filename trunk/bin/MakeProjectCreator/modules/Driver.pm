@@ -34,11 +34,23 @@ sub new {
                          'version'  => 1.2,
                          'types'    => {},
                          'creators' => \@creators,
-                         'signif'   => 3,
                          'default'  => $creators[0],
                         }, $class;
 
   return $self;
+}
+
+
+sub extractType {
+  my($self) = shift;
+  my($name) = shift;
+  my($type) = $name;
+
+  if ($name =~ /(.*)(Project|Workspace)Creator/) {
+    $type = $1;
+  }
+
+  return lc($type);
 }
 
 
@@ -67,11 +79,14 @@ sub usageAndExit {
     if ($i != $#keys) {
       print STDERR " | ";
     }
+    if ((($i + 1) % 6) == 0) {
+      print STDERR "\n$spaces        ";
+    }
   }
   print STDERR ">]\n" .
                $spaces . "[files]\n\n";
 
-  my($default) = lc(substr($self->{'default'}, 0, $self->{'signif'}));
+  my($default) = $self->extractType($self->{'default'});
   print STDERR
 "       -global         Specifies the global input file.  Values stored\n" .
 "                       within this file are applied to all projects.\n" .
@@ -140,7 +155,6 @@ sub run {
   my(%ti)         = ();
   my($dynamic)    = 1;
   my($static)     = 1;
-  my($signif)     = $self->{'signif'};
   my(%relative)   = ();
   my($reldefs)    = 1;
   my(%addtemp)    = ();
@@ -150,7 +164,7 @@ sub run {
   ## the type tags and project creators
   my($creators) = $self->{'creators'};
   foreach my $creator (@$creators) {
-    my($tag) = lc(substr($creator, 0, $signif));
+    my($tag) = $self->extractType($creator);
     $self->{'types'}->{$tag} = $creator;
   }
 
@@ -166,7 +180,7 @@ sub run {
         $self->usageAndExit("-type requires an argument");
       }
 
-      my($type) = lc(substr($args[$i], 0, $signif));
+      my($type) = lc($args[$i]);
       if (defined $self->{'types'}->{$type}) {
         my($call) = $self->{'types'}->{$type};
         push(@generators, $call);

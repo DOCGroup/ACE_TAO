@@ -1,7 +1,7 @@
 package BorlandProjectCreator;
 
 # ************************************************************
-# Description   : Not a complete implementation for Borland
+# Description   : A Borland Project Creator
 # Author        : Chad Elliott
 # Create Date   : 3/14/2002
 # ************************************************************
@@ -21,23 +21,6 @@ use vars qw(@ISA);
 # ************************************************************
 # Subroutine Section
 # ************************************************************
-
-sub translate_value {
-  my($self) = shift;
-  my($key)  = shift;
-  my($val)  = shift;
-
-  if ($key eq 'depends' && $val ne '') {
-    my($arr) = $self->create_array($val);
-    $val = '';
-    foreach my $entry (@$arr) {
-      $val .= '"' . $self->project_file_name($entry) . '" ';
-    }
-    $val =~ s/\s+$//;
-  }
-  return $val;
-}
-
 
 sub fill_value {
   my($self)  = shift;

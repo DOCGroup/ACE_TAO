@@ -1,9 +1,9 @@
-package GHSProjectCreator;
+package MakeProjectCreator;
 
 # ************************************************************
-# Description   : Not a complete implementation for GHS
+# Description   : A Generic Make Project Creator
 # Author        : Chad Elliott
-# Create Date   : 4/19/2002
+# Create Date   : 2/18/2003
 # ************************************************************
 
 # ************************************************************
@@ -21,11 +21,15 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
-sub file_sorter {
-  my($self)  = shift;
-  my($left)  = shift;
-  my($right) = shift;
-  return lc($left) cmp lc($right);
+sub sort_files {
+  #my($self) = shift;
+  return 0;
+}
+
+
+sub convert_slashes {
+  #my($self) = shift;
+  return 0;
 }
 
 
@@ -37,26 +41,25 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return "ghs/$name.bld";
+  return 'Makefile' . ($name eq '' ? '' : ".$name");
 }
 
 
 sub get_dll_exe_template_input_file {
   #my($self) = shift;
-  return 'ghsexe';
+  return 'makeexe';
 }
 
 
 sub get_dll_template_input_file {
   #my($self) = shift;
-  return 'ghsdll';
+  return 'makedll';
 }
 
 
 sub get_template {
   #my($self) = shift;
-  return 'ghs';
+  return 'make';
 }
-
 
 1;

@@ -15,7 +15,8 @@ Usage: mwc.pl [-global <file>] [-include <directory>]
               [-relative NAME=VAR] [-noreldefs]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
-              [-type <bor | em3 | ghs | gnu | nma | va4 | vc6 | vc7>]
+              [-type <borland | em3 | ghs | gnu | make | nmake |
+                      va4 | vc6 | vc7>]
               [files]
 
        -global         Specifies the global input file.  Values stored
@@ -99,7 +100,8 @@ Usage: mpc.pl [-global <file>] [-include <directory>]
               [-relative NAME=VAR] [-noreldefs]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
-              [-type <bor | em3 | ghs | gnu | nma | va4 | vc6 | vc7>]
+              [-type <borland | em3 | ghs | gnu | make | nmake |
+                      va4 | vc6 | vc7>]
               [files]
 
        -global         Specifies the global input file.  Values stored

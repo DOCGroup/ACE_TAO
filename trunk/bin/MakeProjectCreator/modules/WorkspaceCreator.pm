@@ -173,7 +173,7 @@ sub generate_default_components {
   my($self)  = shift;
   my($files) = shift;
   my($pjf)   = $self->{'project_files'};
-  my(@exts)  = ("\\.mpc");
+  my(@exts)  = ('\\.mpc');
   if (defined $$pjf[0]) {
     ## If we have files, then process directories
     my(@built) = ();
@@ -433,6 +433,25 @@ sub project_creator {
 sub sort_files {
   #my($self) = shift;
   return 0;
+}
+
+
+sub get_modified_workspace_name {
+  my($self) = shift;
+  my($name) = shift;
+  my($ext)  = shift;
+
+  if (!defined $self->{'previous_workspace_name'}) {
+    $self->{'previous_workspace_name'} = $self->get_workspace_name();
+  }
+  elsif ($self->{'previous_workspace_name'} ne $self->get_workspace_name()) {
+    $self->{'previous_workspace_name'} = $self->get_workspace_name();        
+    $self->{'current_workspace_name'} =
+                          "$name.$self->{'previous_workspace_name'}$ext";
+  }
+
+  return (defined $self->{'current_workspace_name'} ?
+                  $self->{'current_workspace_name'} : "$name$ext");
 }
 
 

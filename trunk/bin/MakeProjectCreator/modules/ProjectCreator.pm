@@ -26,10 +26,10 @@ use vars qw(@ISA);
 # Data Section
 # ************************************************************
 
-my($BaseClassExtension)      = "mpb";
-my($ProjectCreatorExtension) = "mpc";
-my($TemplateExtension)       = "mpd";
-my($TemplateInputExtension)  = "mpt";
+my($BaseClassExtension)      = 'mpb';
+my($ProjectCreatorExtension) = 'mpc';
+my($TemplateExtension)       = 'mpd';
+my($TemplateInputExtension)  = 'mpt';
 
 ## Valid names for assignments within a project
 my(%validNames) = ('exename'         => 1,
@@ -1434,8 +1434,7 @@ sub update_project_info {
 sub get_verbatim {
   my($self)   = shift;
   my($marker) = shift;
-  my($type)   = lc(substr("$self", 0, 3));  ## This number corresponds to
-                                            ## signif in Driver.pm
+  my($type)   = Driver::extractType($self, "$self");
   my($str)    = undef;
   my($thash)  = $self->{'verbatim'}->{$type};
 
@@ -1485,6 +1484,15 @@ sub translate_value {
   my($self) = shift;
   my($key)  = shift;
   my($val)  = shift;
+
+  if ($key eq 'depends' && $val ne '') {
+    my($arr) = $self->create_array($val);
+    $val = '';
+    foreach my $entry (@$arr) {
+      $val .= '"' . $self->project_file_name($entry) . '" ';
+    }
+    $val =~ s/\s+$//;
+  }
   return $val;
 }
 

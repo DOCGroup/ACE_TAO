@@ -24,8 +24,8 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub workspace_file_name {
-  #my($self) = shift;
-  return 'Makefile';
+  my($self) = shift;
+  return $self->get_modified_workspace_name('Makefile', '');
 }
 
 
@@ -65,7 +65,7 @@ sub write_comps {
     for(my $i = 0; $i <= $#list; $i++) {
       print $fh "         $list[$i]";
       if ($i != $#list) {
-        print $fh " \\";
+        print $fh ' \\';
       }
       print $fh $crlf;
     }
