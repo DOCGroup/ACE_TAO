@@ -1,25 +1,31 @@
+Tue Oct 13 07:28:38 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/High_Res_Timer.cpp (dump): replaced ACE_static_casts with
+          ACE_CU64_TO_CU32, because the method is const.  Thanks to Doug
+          for reporting this.
+
 Tue Oct 13 00:19:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i (sema_destroy): I believe I've fixed the rats nest of
- 	  #ifdefs to get semaphores to work correctly on Chorus again.
-  	  Thanks to Naga for tracking this down!
+        * ace/OS.i (sema_destroy): I believe I've fixed the rats nest of
+          #ifdefs to get semaphores to work correctly on Chorus again.
+          Thanks to Naga for tracking this down!
 
-	* ace/High_Res_Timer.cpp: Temporarily commented out the
- 	  ACE_static_casts so that this will compile with CC.
+        * ace/High_Res_Timer.cpp: Temporarily commented out the
+          ACE_static_casts so that this will compile with CC.
 
-	* ace/Hash_Map_Manager,
-	  ace/Map_Manager:
-	  Added a public mutex() accessor that allows us to return a
- 	  reference to the lock_.  This is useful for cases where we're
- 	  using ACE_Process_Mutex and need to call remove().  Thanks to
- 	  Bob McWhirter <bob@netwrench.com> for this suggestion.
+        * ace/Hash_Map_Manager,
+          ace/Map_Manager:
+          Added a public mutex() accessor that allows us to return a
+          reference to the lock_.  This is useful for cases where we're
+          using ACE_Process_Mutex and need to call remove().  Thanks to
+          Bob McWhirter <bob@netwrench.com> for this suggestion.
 
 Mon Oct 12 23:03:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Mem_Map.cpp (map_it): Added a minor fix to handle the fact
- 	  that Chorus doesn't support filesize() on a shared memory
- 	  segment.  Thanks to Alberto Villarica
- 	  <Alberto.Villarica.rav@nt.com> for reporting this.
+        * ace/Mem_Map.cpp (map_it): Added a minor fix to handle the fact
+          that Chorus doesn't support filesize() on a shared memory
+          segment.  Thanks to Alberto Villarica
+          <Alberto.Villarica.rav@nt.com> for reporting this.
 
 Mon Oct 12 22:18:03 1998  David L. Levine  <levine@cs.wustl.edu>
 
