@@ -1,16 +1,16 @@
 Tue Sep  8 12:57:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp: 
-	  The table for perfect hashing of operations did not include the
-	  _non_existent skeleton.
+        * TAO_IDL/be/be_interface.cpp:
+          The table for perfect hashing of operations did not include the
+          _non_existent skeleton.
 
 Tue Sep 08 10:47:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/Event_Service/Event_Service.dsp:
-	* orbsvcs/Naming_Service/Naming_Service.dsp:
-	* orbsvcs/Scheduling_Service/Scheduling_Service.dsp:
-	* orbsvcs/tests/Event_Latency/Event_Latency.dsp: Performed VC 6
-	  modification.
+        * orbsvcs/Event_Service/Event_Service.dsp:
+        * orbsvcs/Naming_Service/Naming_Service.dsp:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.dsp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.dsp: Performed VC 6
+          modification.
 
 Tue Sep 08 07:30:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -27,6 +27,9 @@ Tue Sep 08 07:30:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (TAO_ECG_UDP_Sender::push):
           commented out unused local "count".
+
+        * tests/POA/TIE/Makefile: use ACE_HAS_GNUG_PRE_2_8 to suppress builds
+          with old g++.
 
 Mon Sep  7 21:10:06 1998  Balachandran Natarajan  <bala@cumbia.cs.wustl.edu>
 
