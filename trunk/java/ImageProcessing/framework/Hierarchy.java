@@ -57,11 +57,19 @@ public class Hierarchy extends Canvas
   public void setExpandable(boolean expandable)
   {
     deadend_ = ! expandable;
+
+    /*
+    if (root_ != null)
+      root_.repaint();
+      */
   }
 
   public void setCollapsed(boolean collapsed)
   {
     collapsed_ = collapsed;
+
+    if (root_ != null)
+      root_.repaint();
   }
 
   public void addEntry(Hierarchy entry)
@@ -156,13 +164,18 @@ public class Hierarchy extends Canvas
     
     return false;
   }
- 
-  
+
   public void paint(Graphics g)
   {
+    Dimension d = size();
+
     drawLevel(g, SPACE, SPACE);
+
+    if (d.width < scope_.width || d.height < scope_.height)
+	resize(scope_.width, scope_.height);
   }
 
+  
   private Point drawLevel(Graphics g, int x, int y)
   {
     g.setFont(FONT);
@@ -212,7 +225,7 @@ public class Hierarchy extends Canvas
 	  {
 	    entry = (Hierarchy)contained_.elementAt(i);
 	    place_marker = entry.drawLevel(g, x, y);
-	    total_width = Math.max(total_width, entry.self_.width + indent);
+	    total_width = Math.max(total_width, entry.scope_.width + indent + SPACE);
 	    x = place_marker.x;
 	    y = place_marker.y;
 	  }
