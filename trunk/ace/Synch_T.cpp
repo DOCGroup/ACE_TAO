@@ -53,6 +53,13 @@ ACE_Test_and_Set<ACE_LOCK, TYPE>::handle_signal (int, siginfo_t *, ucontext_t *)
   return 0;
 }
 
+template <class ACE_LOCK, class TYPE> ACE_LOCK &
+ACE_Atomic_Op<ACE_LOCK, TYPE>::lock (void)
+{
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::lock");
+  return this->lock_;
+}
+
 template <class ACE_LOCK, class TYPE> void
 ACE_Atomic_Op<ACE_LOCK, TYPE>::dump (void) const
 {

@@ -1,3 +1,10 @@
+Sat Oct 18 09:13:29 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch_T.cpp (lock): Moved the frigging lock method of
+ 	  Atomic_Op into the *.cpp file to work around bugs with earlier
+ 	  versions of the horribleHP/UX C++ compiler.  Thanks to Neil
+ 	  Cohen for reporting this.
+
 Sat Oct 18 07:43:29 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/rules.local.GNU: added $(TEMPLATE_REPOSITORY)
@@ -7,6 +14,10 @@ Sat Oct 18 07:43:29 1997  David L. Levine  <levine@cs.wustl.edu>
 	* include/makeinclude/platform_sunos{4,5}_sunc++*.GNU: added
 	  TEMPLATE_REPOSITORY with Templates.DB and Templates.DB/Modules.DB.
 	  We can build without any warnings with Sun C++ now.
+
+Sat Oct 18 00:17:26 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ACE version 4.3.21, released Sat Oct 18 00:17:26 1997.
 
 Fri Oct 17 22:51:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
