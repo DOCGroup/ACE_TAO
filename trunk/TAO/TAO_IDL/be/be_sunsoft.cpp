@@ -87,7 +87,7 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           this->TAO_OutStream::print ("%f%c", ev->u.fval, 'F');
           break;
         case AST_Expression::EV_double:
-          this->TAO_OutStream::print ("%f", ev->u.dval);
+          this->TAO_OutStream::print ("%16.16G", ev->u.dval);
           break;
         case AST_Expression::EV_longdouble:
           break;
