@@ -432,6 +432,24 @@ ACE_WFMO_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 }
 
 ACE_INLINE long
+ACE_WFMO_Reactor::reset_timer_interval
+  (const long timer_id, 
+   const ACE_Time_Value &interval)
+{
+  ACE_TRACE ("ACE_WFMO_Reactor::reset_timer_interval");
+  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
+
+  long result = this->timer_queue_->reset_interval
+    (timer_id,
+     interval);
+
+  // Wakeup the owner thread so that it gets the latest timer values
+  this->notify ();
+
+  return result;
+}
+
+ACE_INLINE long
 ACE_WFMO_Reactor::schedule_timer (ACE_Event_Handler *handler,
                                   const void *arg,
                                   const ACE_Time_Value &delta_time,
@@ -440,7 +458,10 @@ ACE_WFMO_Reactor::schedule_timer (ACE_Event_Handler *handler,
   ACE_TRACE ("ACE_WFMO_Reactor::schedule_timer");
 
   long result = this->timer_queue_->schedule
-    (handler, arg, timer_queue_->gettimeofday () + delta_time, interval);
+    (handler, 
+     arg,
+     timer_queue_->gettimeofday () + delta_time,
+     interval);
 
   // Wakeup the owner thread so that it gets the latest timer values
   this->notify ();
