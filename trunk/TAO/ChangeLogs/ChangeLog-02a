@@ -1,3 +1,16 @@
+Wed Jun 05 10:36:28 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+	  (locations_of_members):
+
+	  Corrected type of return value in ACE_CHECK_RETURN macro.  Fixes
+	  emulated exception builds.
+
+	  (create_object_group):
+
+	  Added missing semi-colon after ACE_CHECK_RETURN.  Fixes emulated
+	  exception builds.
+
 Wed Jun 05 10:30:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs\orbsvcs\PortableGroup\PG_GenericFactory.cpp
