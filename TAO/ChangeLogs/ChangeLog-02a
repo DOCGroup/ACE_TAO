@@ -1,4 +1,12 @@
-Thu Dec 14 18:22:54 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+Thu Dec 14 16:44:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
+
+          Changed the name of the static configurations from
+          "static" to "Static" so they will be recognized as
+          such.
+
+Thu Dec 14 18:22:54 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicInterface/Context.inl:
         * tao/DynamicInterface/ExceptionList.inl:
@@ -23,7 +31,7 @@ Thu Dec 14 13:53:14 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	  Added description and comparison of two designs.
 
-Thu Dec 14 11:39:55 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+Thu Dec 14 11:39:55 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicInterface/TAO_DynamicInterface_Static.dsp:
 

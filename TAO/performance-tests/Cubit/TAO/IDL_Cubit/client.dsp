@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=IDL_Cubit Client - Win32 static Debug
+CFG=IDL_Cubit Client - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,14 +13,14 @@ CFG=IDL_Cubit Client - Win32 static Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "client.mak" CFG="IDL_Cubit Client - Win32 static Debug"
+!MESSAGE NMAKE /f "client.mak" CFG="IDL_Cubit Client - Win32 Static Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
 !MESSAGE "IDL_Cubit Client - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "IDL_Cubit Client - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "IDL_Cubit Client - Win32 static Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "IDL_Cubit Client - Win32 static Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "IDL_Cubit Client - Win32 Static Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "IDL_Cubit Client - Win32 Static Release" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -80,7 +80,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
 # ADD LINK32 aced.lib TAOd.lib TAO_Strategiesd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao\Strategies" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "IDL_Cubit Client - Win32 static Debug"
+!ELSEIF  "$(CFG)" == "IDL_Cubit Client - Win32 Static Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -107,7 +107,7 @@ LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 # ADD LINK32 acesd.lib TAOsd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\..\tao..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "IDL_Cubit Client - Win32 static Release"
+!ELSEIF  "$(CFG)" == "IDL_Cubit Client - Win32 Static Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -140,8 +140,8 @@ LINK32=link.exe
 
 # Name "IDL_Cubit Client - Win32 Release"
 # Name "IDL_Cubit Client - Win32 Debug"
-# Name "IDL_Cubit Client - Win32 static Debug"
-# Name "IDL_Cubit Client - Win32 static Release"
+# Name "IDL_Cubit Client - Win32 Static Debug"
+# Name "IDL_Cubit Client - Win32 Static Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -258,7 +258,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "IDL_Cubit Client - Win32 static Debug"
+!ELSEIF  "$(CFG)" == "IDL_Cubit Client - Win32 Static Debug"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__CUBIT="..\..\..\..\..\bin\tao_idl_static.exe"	
@@ -297,7 +297,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "IDL_Cubit Client - Win32 static Release"
+!ELSEIF  "$(CFG)" == "IDL_Cubit Client - Win32 Static Release"
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
