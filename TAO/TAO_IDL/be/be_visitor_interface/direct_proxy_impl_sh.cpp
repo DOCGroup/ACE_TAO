@@ -26,9 +26,11 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->decr_indent (0);
+  *os << be_nl << be_nl 
+      << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl
+  *os << be_nl << be_nl
       << "///////////////////////////////////////////////////////////////////////" 
       << be_nl
       << "//                    Direct  Impl. Declaration" << be_nl
@@ -36,9 +38,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
   // Generate Class Declaration.
   *os << "class " << be_global->skel_export_macro ()
       << " " << node->direct_proxy_impl_name ();
-  *os << " : " << be_idt_nl << "public virtual " 
-      << node->full_base_proxy_impl_name ()
-      << "," << be_nl << "public virtual " << "TAO_Direct_Object_Proxy_Impl";
+  *os << be_idt_nl << ": public virtual TAO_Direct_Object_Proxy_Impl";
 
   if (node->n_inherits () > 0)
     {
@@ -79,8 +79,8 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
                         -1);
     }
 
-  *os << "};" << be_uidt << be_nl << be_nl;
-  *os << be_nl
+  *os << be_uidt << be_uidt_nl 
+      << "};" << be_nl << be_nl
       << "//" << be_nl
       << "//                Direct  Proxy Impl. Declaration" << be_nl
       << "///////////////////////////////////////////////////////////////////////"
