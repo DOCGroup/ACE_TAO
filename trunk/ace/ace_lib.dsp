@@ -31,7 +31,8 @@ CFG=ACE static library - Win32 Alpha Unicode Debug
 # Begin Project
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
+# PROP Scc_LocalPath "Desktop"
+# PROP WCE_FormatVersion ""
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
 
@@ -46,7 +47,7 @@ CFG=ACE static library - Win32 Alpha Unicode Debug
 # PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /YX /FD /c
+# ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
@@ -72,8 +73,8 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409
@@ -98,8 +99,8 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir ".\LIB\Unicode_Debug"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409
@@ -124,8 +125,8 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir ".\LIB\Unicode_Release"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "..\STL" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O1 /I "..\\" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409
@@ -150,10 +151,10 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Lib\Debug"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /D "_DEBUG" /D "_WINDOWS" /FD /I "..\\ /D " WIN32" /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /D "_DEBUG" /D "_WINDOWS" /FD /I /MTd "..\\ /D " WIN32" /c
-# SUBTRACT CPP /YX
+# ADD BASE CPP nologo Gt0 W3 GX Zi Od Gy D "_DEBUG" D "_WINDOWS" FD I "..\\ /D " WIN32" c
+# SUBTRACT BASE CPP YX
+# ADD CPP nologo Gt0 W3 GX Zi Od Gy D "_DEBUG" D "_WINDOWS" FD I MTd "..\\ /D " WIN32" c
+# SUBTRACT CPP YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -174,10 +175,10 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Lib\Release"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /O1 /D "NDEBUG" /D "_WINDOWS" /FD /I "..\\ /D " WIN32" /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /D "NDEBUG" /D "_WINDOWS" /FD /I "..\\ /D " WIN32" /c
-# SUBTRACT CPP /YX
+# ADD BASE CPP nologo Gt0 W3 GX O1 D "NDEBUG" D "_WINDOWS" FD I "..\\ /D " WIN32" c
+# SUBTRACT BASE CPP YX
+# ADD CPP nologo MT Gt0 W3 GX O1 D "NDEBUG" D "_WINDOWS" FD I "..\\ /D " WIN32" c
+# SUBTRACT CPP YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -198,10 +199,10 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "LIB\Unicode_Debug"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /FD /I "..\\ /D " WIN32" /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /FD /I /MTd "..\\ /D " WIN32" /c
-# SUBTRACT CPP /YX
+# ADD BASE CPP nologo Gt0 W3 GX Zi Od Gy D "_DEBUG" D "_WINDOWS" D "UNICODE" FD I "..\\ /D " WIN32" c
+# SUBTRACT BASE CPP YX
+# ADD CPP nologo Gt0 W3 GX Zi Od Gy D "_DEBUG" D "_WINDOWS" D "UNICODE" FD I MTd "..\\ /D " WIN32" c
+# SUBTRACT CPP YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -222,10 +223,10 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "LIB\Unicode_Release"
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /O1 /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /FD /I "..\\ /D " WIN32" /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /FD /I "..\\ /D " WIN32" /c
-# SUBTRACT CPP /YX
+# ADD BASE CPP nologo Gt0 W3 GX O1 D "NDEBUG" D "_WINDOWS" D "UNICODE" FD I "..\\ /D " WIN32" c
+# SUBTRACT BASE CPP YX
+# ADD CPP nologo MT Gt0 W3 GX O1 D "NDEBUG" D "_WINDOWS" D "UNICODE" FD I "..\\ /D " WIN32" c
+# SUBTRACT CPP YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -7024,29 +7025,6 @@ DEP_CPP_PROFI=\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\RB_Tree.cpp
-
-!IF  "$(CFG)" == "ACE static library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
 
@@ -16247,6 +16225,11 @@ SOURCE=.\Module.cpp
 # Begin Source File
 
 SOURCE=.\Pair_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\RB_Tree.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
