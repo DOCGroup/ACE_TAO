@@ -21,7 +21,73 @@ finishLaunch (const Deployment::Connections & providedReference,
 		   Deployment::StartError,
 		   Deployment::InvalidConnection))
 {
-  //@@ not implemented yet.
+  CORBA::ULong length = providedReference.length ();
+
+  // For every connection struct we finish the connection.
+  for (CORBA::ULong i = 0; i < length; ++i)
+  {
+    ACE_CString name = providedReference[i].instanceName.in ();
+    Components::CCMObject_ptr comp;
+
+    if (this->component_map_.find (name, comp) != 0)
+      ACE_THROW (Deployment::InvalidConnection ());
+    // Since we have done _narrow before
+    Components::CCMObject_var save_comp = Components::CCMObject::_duplicate(comp);
+
+    Components::EventConsumerBase_var consumer;
+    //Since we know CCMObject inherits from navigation/event/receptacle, no need
+    //to narrow here.
+
+    switch (providedReference[i].kind)
+    {
+    case Deployment::SimplexReceptacle:
+      comp->connect (providedReference[i].portName.in (),
+		     providedReference[i].endpoint.in ()
+		     ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      break;
+
+    case Deployment::MultiplexReceptacle:
+      comp->connect(providedReference[i].portName.in (),
+		    providedReference[i].endpoint.in ()
+		    ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      break;
+
+    case Deployment::EventEmitter:
+      consumer = Components::EventConsumerBase::
+	_narrow (providedReference[i].endpoint.in ()
+		 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      if (CORBA::is_nil (consumer.in ()))
+	ACE_THROW (Deployment::InvalidConnection ());
+
+      comp->connect_consumer(providedReference[i].portName.in (),
+			     consumer.in ()
+			     ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      break;
+
+    case Deployment::EventPublisher:
+      consumer = Components::EventConsumerBase::
+	_narrow (providedReference[i].endpoint.in ()
+		 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      if (CORBA::is_nil (consumer.in ()))
+	ACE_THROW (Deployment::InvalidConnection ());
+
+      comp->subscribe (providedReference[i].portName.in (),
+		       consumer.in ()
+		       ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      break;
+
+    default:
+      ACE_THROW (Deployment::InvalidConnection ());
+    }
+  }
+  if (start)
+    ACE_DEBUG ((LM_DEBUG, "I don't know what I should do here!\n"));
 }
 
 void
@@ -105,7 +171,7 @@ install (const ::Deployment::ImplementationInfos & impl_infos
 
   for (CORBA::ULong i = 0; i < len; ++i)
   {
-    home = install_home (impl_infos[i]);
+    home = this->install_home (impl_infos[i]);
     ACE_CHECK;
 
     Components::KeylessCCMHome_var kh =
@@ -118,7 +184,7 @@ install (const ::Deployment::ImplementationInfos & impl_infos
 
     // @@ Note, here we are missing the CreateFailure.
     // Sometime I will come back to add exception rethrow.
-    comp = kh->create_component ();//_component ();
+    comp = kh->create_component ();
     ACE_CHECK;
 
     if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
@@ -153,6 +219,8 @@ install_home (const ::Deployment::ImplementationInfo & impl_info
     ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (Components::CCMHome::_nil ());
+  // We don't have to do _narrow since the generated code makes sure of
+  // the object type for us
 
   // Bind the home in the map.
   if (this->home_map_.bind (impl_info.component_instance_name.in (),

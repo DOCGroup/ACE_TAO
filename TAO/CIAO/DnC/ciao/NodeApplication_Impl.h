@@ -212,7 +212,7 @@ namespace CIAO
     // Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
 
-    /// Internal container implementation.
+    // Internal container implementation.
     CIAO::Container *container_;
 
     // Cached properties
