@@ -1,3 +1,5 @@
+// $Id
+//
 // ============================================================================
 //
 // = LIBRARY
@@ -17,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 /*
  * BE_Array
@@ -80,19 +82,19 @@ be_array::tao_name (void)
     }
 
   const char prefix[] = "_tc_tao_array_";
-  
+
   int l = (ACE_OS::strlen (bt->local_name ()->get_string ())
-	   + ACE_OS::strlen (this->local_name ()->get_string ()) + 1
-	   + sizeof (prefix)
-	   + 5 * this->n_dims ());
+           + ACE_OS::strlen (this->local_name ()->get_string ()) + 1
+           + sizeof (prefix)
+           + 5 * this->n_dims ());
 
   ACE_NEW_RETURN (this->tao_name_, char[l], 0);
 
   ACE_OS::sprintf (this->tao_name_, "%s%s_%s",
-		   prefix, this->local_name ()->get_string (),
-		   bt->local_name ()->get_string());
+                   prefix, this->local_name ()->get_string (),
+                   bt->local_name ()->get_string());
 
-  for (int i = 0; i < this->n_dims (); ++i)
+  for (unsigned int i = 0; i < this->n_dims (); ++i)
     {
       AST_Expression *expr = this->dims ()[i]; // retrieve the ith
 
@@ -113,7 +115,7 @@ be_array::tao_name (void)
                              "tao_name - "
                              "bad dimension value\n"),
                             0);
-	}
+        }
 
       char buf[16];
       ACE_OS::sprintf (buf, "_%04.4x", ((int)expr->ev ()->u.ulval));
@@ -359,7 +361,7 @@ be_array::gen_client_header (void)
 
       // the return type is a pointer to slice
       *ch <<  this->local_name () << "_slice *"
-	  << this->local_name () << "_alloc (void);" << nl;
+          << this->local_name () << "_alloc (void);" << nl;
       // the T_dup method
       if (this->is_nested ())
         *ch << "static ";
@@ -377,16 +379,16 @@ be_array::gen_client_header (void)
           // we have a scoped name
           ch->indent ();
           *ch << "static CORBA::TypeCode_ptr "
-	      << this->tao_name () << ";\n\n";
+              << this->tao_name () << ";\n\n";
         }
       else
         {
           // we are in the ROOT scope
           ch->indent ();
           *ch << "extern "
-	      << idl_global->export_macro ()
-	      << " CORBA::TypeCode_ptr "
-	      << this->tao_name () << ";\n\n";
+              << idl_global->export_macro ()
+              << " CORBA::TypeCode_ptr "
+              << this->tao_name () << ";\n\n";
         }
       ch->gen_endif ();
 
@@ -451,7 +453,7 @@ be_array::gen_client_stubs (void)
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_"
-	  << this->tao_name () << "[] =" << nl;
+          << this->tao_name () << "[] =" << nl;
       *cs << "{\n";
       cs->incr_indent (0);
       if (this->gen_encapsulation () == -1)
@@ -463,15 +465,15 @@ be_array::gen_client_stubs (void)
       *cs << "};" << nl;
 
       *cs << "static CORBA::TypeCode _tc__tc_"
-	  << this->tao_name ()
-	  << " (CORBA::tk_sequence, "
-	  << "sizeof (_oc_" <<  this->tao_name ()
-	  << "), (unsigned char *) &_oc_"
-	  << this->tao_name ()
-	  << ", CORBA::B_FALSE);" << nl;
+          << this->tao_name ()
+          << " (CORBA::tk_sequence, "
+          << "sizeof (_oc_" <<  this->tao_name ()
+          << "), (unsigned char *) &_oc_"
+          << this->tao_name ()
+          << ", CORBA::B_FALSE);" << nl;
       *cs << "CORBA::TypeCode_ptr "
-	  << this->tao_name () << " = &_tc__tc_"
-	  << this->tao_name () << ";\n\n";
+          << this->tao_name () << " = &_tc__tc_"
+          << this->tao_name () << ";\n\n";
 
       cg->pop ();
       this->cli_stub_gen_ = I_TRUE;
@@ -479,7 +481,7 @@ be_array::gen_client_stubs (void)
       // T_dup method
       *cs << this->name () << "_slice *" << nl;
       *cs << this->name () << "_dup (const "
-	  << this->name () << "_slice * s)" << nl;
+          << this->name () << "_slice * s)" << nl;
       *cs << "{\n";
       cs->incr_indent ();
       *cs << this->name () << "_slice *temp;" << nl;
@@ -615,8 +617,8 @@ be_array::gen_client_inline (void)
 
       // free method
       *ci << "void" << nl
-	  << this->name () << "_free (" << this->name ()
-	  << "_slice *s)" << nl;
+          << this->name () << "_free (" << this->name ()
+          << "_slice *s)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
       *ci << "delete [] s;\n";
@@ -1514,7 +1516,7 @@ be_array::compute_size_type (void)
 }
 
 int be_array::write_as_return (TAO_OutStream *stream,
-			       be_type *type)
+                               be_type *type)
 {
   *stream << type->name () << "_slice *";
   return 0;
