@@ -551,7 +551,7 @@ get_options (int argc,
 {
   // We need the 'O' in get_opt() because we also want to have ORB
   // parameters, they all start with 'O'.
-  ACE_Get_Opt get_opt (argc, argv, "O?m:f:");
+  ACE_Get_Opt get_opt (argc, argv, "O:?m:f:");
   int opt;
   int temp;
 
@@ -582,7 +582,7 @@ get_options (int argc,
           input_file_name = get_opt.optarg;
 
           if (!input_file_name || ACE_OS::strlen (input_file_name) > 0)
-            cout << "Messages to send:" << total_messages << endl;
+            cout << "Reading file!<< endl;
           else
             {
               input_file_name = 0;
@@ -591,6 +591,9 @@ get_options (int argc,
                                  argv[0]),
                                 1);
             }
+          break;
+        case 'O': // This is kind of tricky, it is actually read by the
+                  // ORB later.
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -698,6 +701,7 @@ main (int argc, char *argv [])
       // Register the internal demo consumer for timeout events.
       demo_supplier->start_generating_events ();
 
+      /*
       ACE_DEBUG ((LM_DEBUG,
                   "Supplier is registered for timeout events.\n"));
 
@@ -712,7 +716,7 @@ main (int argc, char *argv [])
                            "%p\n",
                            "CORBA::ORB::run"),
                           -1);
-      TAO_CHECK_ENV;
+      TAO_CHECK_ENV; */
 
       delete demo_supplier;
       TAO_CHECK_ENV;
