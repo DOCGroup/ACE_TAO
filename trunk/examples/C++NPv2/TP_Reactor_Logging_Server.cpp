@@ -105,3 +105,9 @@ int main (int argc, char *argv[])
     (controller, ACE_Reactor::instance ());
   return ACE_Thread_Manager::instance ()->wait ();
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class Reactor_Logging_Server<Logging_Acceptor_Ex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate Reactor_Logging_Server<Logging_Acceptor_Ex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
