@@ -1,3 +1,8 @@
+Sun Aug 25 14:15:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Certain defines should only be defined without a value.
+
 Sun Aug 25 12:45:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao.doxygen:
