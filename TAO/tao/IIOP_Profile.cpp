@@ -72,7 +72,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
-                                    const Version& version,
+                                    const TAO_IOP_Version& version,
                                     const char *object_key)
   : host_ (0),
     port_ (0),
@@ -97,7 +97,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
-                                    const Version& version,
+                                    const TAO_IOP_Version& version,
                                     const TAO_ObjectKey& object_key)
   : host_ (0),
     port_ (0),
@@ -170,7 +170,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     CORBA::UShort port,
-                                    const Version& version,
+                                    const TAO_IOP_Version& version,
                                     const TAO_ObjectKey& object_key)
   : host_ (0),
     port_ (port),
@@ -235,7 +235,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
 
 }
 
-TAO_IIOP_Profile::TAO_IIOP_Profile (const Version &version)
+TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IOP_Version &version)
   : host_ (0),
     port_ (0),
     tag_ (TAO_IOP_TAG_INTERNET_IOP),
@@ -700,7 +700,7 @@ TAO_IIOP_Profile::forward_to (TAO_MProfile *mprofiles)
 }
 
 TAO_MProfile *
-TAO_IIOP_Profile::get_forward_to (void)
+TAO_IIOP_Profile::forward_to (void)
 {
   return new TAO_MProfile (this->forward_to_);
 }
@@ -780,7 +780,7 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR *&stream,
   // CHAR describing byte order, starting the encapsulation
   stream->write_octet (TAO_ENCAP_BYTE_ORDER);
 
-  // IIOP::Version, two characters (version 1.0) padding
+  // IIOP::TAO_IOP_Version, two characters (version 1.0) padding
   stream->write_char (this->version_.major);
   stream->write_char (this->version_.minor);
 

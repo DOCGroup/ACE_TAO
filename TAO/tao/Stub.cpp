@@ -374,18 +374,18 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
               if (profile_success_ && forward_profiles_)
                 {
                   // reset profiles list and start all over again
-                  reset_profiles ();
+                  reset_profiles_i ();
                   TAO_IN_ENV.clear ();
                   TAO_GOTO (roundtrip_continue_label);
                 }
-              else if (next_profile () != 0)
+              else if (next_profile_i () != 0)
                 {
                   TAO_IN_ENV.clear ();
                   TAO_GOTO (roundtrip_continue_label);
                 }
 
               // @@ Should re reset the profile list here?
-              reset_profiles ();
+              reset_profiles_i ();
               TAO_RETHROW_SAME_ENV_RETURN_VOID;
             }
           TAO_ENDTRY;
@@ -409,18 +409,18 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
               if (profile_success_ && forward_profiles_)
                 {
                   // reset profiles list and start all over again
-                  reset_profiles ();
+                  reset_profiles_i ();
                   TAO_IN_ENV.clear ();
                   TAO_GOTO (roundtrip_continue_label);
                 }
-              else if (next_profile () != 0)
+              else if (next_profile_i () != 0)
                 {
                   TAO_IN_ENV.clear ();
                   TAO_GOTO (roundtrip_continue_label);
                 }
 
               // @@ Should re reset the profile list here?
-              reset_profiles ();
+              reset_profiles_i ();
               TAO_RETHROW_SAME_ENV_RETURN_VOID;
             }
           TAO_ENDTRY;
@@ -544,18 +544,18 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
               if (profile_success_ && forward_profiles_)
                 {
                   // reset profiles list and start all over again
-                  reset_profiles ();
+                  reset_profiles_i ();
                   TAO_IN_ENV.clear ();
                   TAO_GOTO (oneway_continue_label);
                 }
-              else if (next_profile () != 0)
+              else if (next_profile_i () != 0)
                 {
                   TAO_IN_ENV.clear ();
                   TAO_GOTO (oneway_continue_label);
                 }
 
               // @@ Should re reset the profile list here?
-              reset_profiles ();
+              reset_profiles_i ();
               TAO_RETHROW_SAME_ENV_RETURN_VOID;
             }
           TAO_ENDTRY;
