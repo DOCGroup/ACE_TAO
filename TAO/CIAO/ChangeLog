@@ -1,3 +1,44 @@
+Thu May 29 22:25:09 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * docs/XML/componentassembly.dtd:
+
+          Fixed an error in the DTD.
+
+        * examples/handcrafted/BasicSP/descriptors/BMClosedED.csd:
+        * examples/handcrafted/BasicSP/descriptors/BMClosedED.ssd:
+        * examples/handcrafted/BasicSP/descriptors/BMDevice.csd:
+        * examples/handcrafted/BasicSP/descriptors/BMDevice.ssd:
+        * examples/handcrafted/BasicSP/descriptors/BMDisplay.csd:
+        * examples/handcrafted/BasicSP/descriptors/BMDisplay.ssd:
+        * examples/handcrafted/BasicSP/descriptors/BasicSP.cad:
+        * examples/handcrafted/BasicSP/descriptors/EC.csd:
+        * examples/handcrafted/BasicSP/descriptors/EC.ssd:
+        * examples/handcrafted/Display/descriptors/DuelDisplay.cad:
+        * examples/handcrafted/Display/descriptors/GPS.csd:
+        * examples/handcrafted/Display/descriptors/GPS.ssd:
+        * examples/handcrafted/Display/descriptors/GPS_tracing.csd:
+        * examples/handcrafted/Display/descriptors/HUDisplay.cad:
+        * examples/handcrafted/Display/descriptors/HUDisplayGUI.cad:
+        * examples/handcrafted/Display/descriptors/NavDisplay.csd:
+        * examples/handcrafted/Display/descriptors/NavDisplay.ssd:
+        * examples/handcrafted/Display/descriptors/NavDisplayGUI.csd:
+        * examples/handcrafted/Display/descriptors/RateGen.csd:
+        * examples/handcrafted/Display/descriptors/RateGen.ssd:
+        * examples/handcrafted/Display/descriptors/RemoteDisplay.cad:
+        * examples/handcrafted/Display/descriptors/RemoteDisplayGUI.cad:
+        * examples/handcrafted/Hello/hello.csd:
+        * examples/handcrafted/Hello/hello.ssd:
+
+          Modified the files to point to the correct DTDs. Also added a
+          note to make sure that noone changes the path to the DTD by
+          mistake.
+
+        * tools/XML_Helpers/svc.conf.xml:
+
+          Fixed some errors in the file to allow parsing with the new
+          parser.
+
+
 Tue May 27 18:23:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/handcrafted/BasicSP/BMClosedED/BMClosedED.cidl:
@@ -24,7 +65,7 @@ Tue May 27 09:57:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_RootPanel.cpp:
 	  Removed these Qt generated files.  Andrey fixed the mpc file for
 	  this component so they will be generated on the fly.
-	
+
 Mon May 26 21:34:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/Simple_Component_Server/Simple_Component_Server.cpp:
