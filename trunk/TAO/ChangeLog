@@ -1,3 +1,10 @@
+Wed Jun 23 14:29:12 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* performance-tests/Protocols: 
+
+	  Several things were cleaned up and latency and throughput
+	  testing were added.
+
 Wed Jun 23 14:29:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.cpp (DRV_init):
