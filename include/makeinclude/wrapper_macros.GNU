@@ -192,41 +192,56 @@
 ifndef CLEANUP_BIN
   ifdef BIN
     CLEANUP_BIN = $(BIN)
-  else
+  else # !BIN
     ifdef BIN2
       CLEANUP_BIN = $(BIN2)
       BIN_UNCHECKED = $(BIN2)
-    else
-      CLEANUP_BIN = $(BIN_UNCHECKED)
-    endif
-  endif
-endif
+    else # !BIN2
+      ifdef BIN_UNCHECKED
+        CLEANUP_BIN = $(BIN_UNCHECKED)
+      else # !BIN_UNCHECKED
+        BIN_UNCHECKED ?=
+        CLEANUP_BIN ?=
+      endif # BIN_UNCHECKED
+    endif # BIN2
+  endif # BIN
+endif # CLEANUP_BIN
 
 ifndef CLEANUP_LIB
   ifdef LIB
     CLEANUP_LIB = $(LIB)
-  else
+  else # !LIB
     ifdef LIB2
       CLEANUP_LIB = $(LIB2)
       LIB_UNCHECKED = $(LIB2)
-    else
-      CLEANUP_LIB = $(LIB_UNCHECKED)
-    endif
-  endif
-endif
+    else # !LIB2
+      ifdef LIB_UNCHECKED
+        CLEANUP_LIB = $(LIB_UNCHECKED)
+      else # !LIB_UNCHECKED
+        LIB_UNCHECKED ?=
+        CLEANUP_LIB ?=
+      endif # LIB_UNCHECKED
+    endif # LIB2
+  endif # LIB
+endif # CLEANUP_LIB
 
 ifndef CLEANUP_SHLIB
   ifdef SHLIB
     CLEANUP_SHLIB = $(SHLIB)
-  else
+  else # !SHLIB
     ifdef SHLIB2
       CLEANUP_SHLIB = $(SHLIB2)
       SHLIB_UNCHECKED = $(SHLIB2)
-    else
-      CLEANUP_SHLIB = $(SHLIB_UNCHECKED)
-    endif
-  endif
-endif
+    else # !SHLIB2
+      ifdef SHLIB_UNCHECKED
+        CLEANUP_SHLIB = $(SHLIB_UNCHECKED)
+      else # ! SHLIB_UNCHECKED
+        SHLIB_UNCHECKED ?=
+        CLEANUP_SHLIB ?=
+      endif # SHLIB_UNCHECKED
+    endif # SHLIB_UNCHECKED
+  endif # SHLIB
+endif # CLEANUP_SHLIB
 
 ifndef CLEANUP_SHLIBA
   ifdef SHLIBA
@@ -263,9 +278,25 @@ ifndef PACE_ROOT
   PACE_ROOT = $(ACE_ROOT)/PACE
 endif # PACE_ROOT
 
+# Define some variables to silence warnings
+ifndef SHR_FILTER
+  SHR_FILTER ?=
+endif # SHR_FILTER
+
 # Include this before the below variables to make it possible for
 # platform_macros.GNU to set default values for them.
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+
+# Define some variables to silence warnings
+ifndef GHS
+  GHS ?=
+endif
+ifndef CHORUS
+  CHORUS ?=
+endif
+ifndef AIX_TEMPLATE_HACK
+  AIX_TEMPLATE_HACK ?=
+endif
 
 # $(ACE_PLATFORM_CONFIG) is used in dependency rules and corresponds to the
 # platform dependent config-*.h file included in config.h, and can be set
@@ -301,24 +332,12 @@ endif
 ifeq (,$(versioned_so))
   versioned_so = 1
 endif
-ifeq ($(versioned_so),1)
-  # Turn on symbol versioning. The scheme that we follow is to allow
-  # applications dependent on libraries, with same version numbers (major,
-  # minor and beta) to run, but applications with dependencies on libraries
-  # with different minor or major or beta versions to fail.
-  #
-  # Version number of the libraries
-  #
-  ifndef SOVERSION
-    SOVERSION = .$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
-  endif # SOVERSION
-
-  # Name that will be written into the dynamic library
-  #
-  ifndef SONAME
-    SONAME = $(SHLIB)$(SOVERSION)
-  endif # SONAME
-endif # versioned_so
+ifndef SOVERSION
+  SOVERSION ?=
+endif # SOVERSION
+ifndef SONAME
+  SONAME ?=
+endif
 
 #----------------------------------------------------------------------------
 #      Platform-independent macro definitions
@@ -381,6 +400,10 @@ ifeq (,$(findstring -L$(ACE_ROOT)/ace,$(LDFLAGS)))
   LDFLAGS         += -L$(ACE_ROOT)/ace -L./
 endif
 LEX             = flex
+
+ifndef EXEEXT
+  EXEEXT ?=
+endif
 
 ifndef COMSPEC
   ifdef ComSpec
@@ -751,8 +774,10 @@ ifdef static_libs
   ACE_MAKE_OPTIONS += static_libs
 endif
 
-# These rules are here for backward compatibility, but are overwritten by the
-# new all_in_one.GNU file.
+ifndef ACE_SHLIBS
+  ACE_SHLIBS ?=
+endif # ACE_SHLIBS
+
 ifdef shared_libs
   ifdef SHLIBA
     LDLIBS := $(LDLIBS:-l%=-l%shr)
@@ -881,6 +906,25 @@ endif
 #----------------------------------------------------------------------------
 #      Conditional macro definitions
 #----------------------------------------------------------------------------
+
+ifndef PTDIRS
+  PTDIRS ?=
+endif # PTDIRS
+ifndef PRELINK
+  PRELINK ?=
+endif # PRELINK
+ifndef POSTLINK
+  POSTLINK ?=
+endif # POSTLINK
+ifndef PURELINK
+  PURELINK ?=
+endif # PURELINK
+ifndef TEMPLATES_FLAG
+  TEMPLATES_FLAG ?=
+endif # TEMPLATES_FLAG
+ifndef MVCMD
+  MVCMD ?=
+endif # MVCMD
 
 COMPILE.c       = $(CC) $(CFLAGS) $(CPPFLAGS) -c
 COMPILE.cc      = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c

@@ -28,11 +28,14 @@ VOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(SRC))))
 # Needed for depend.
 PSRC += $(addsuffix .cpp, $(CLEANUP_BIN))
 
-ifndef EXEEXT
-  EXEEXT ?=
-endif
-
 CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(VAR)$(EXEEXT))
+
+ifndef CHORUSLINK
+  CHORUSLINK ?=
+endif # CHORUSLINK
+ifndef using_aix_vacpp
+  using_aix_vacpp ?=
+endif
 
 ifeq ($(CHORUSLINK),true)
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
