@@ -1,5 +1,8 @@
 Fri Jul 24 21:42:39 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * ace/OS.{h,cpp},Message_Block.{h,cpp}: renamed ACE_Time_Value::max
+          to ACE_Time_Value::max_time, because VxWorks #defines max.
+
         * tests/Message_Queue_Test.cpp: rearranged declarations so
           that the test will build without ACE_HAS_THREADS.
 
