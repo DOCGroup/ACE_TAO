@@ -38,17 +38,6 @@ For Borland C++ Builder:
 *) Build the the dynamically linked release version of ACE and TAO. See
 http://www.tenermerx.com/programming/corba/tao_bcb/index.html.
 
-*) optionally use MPC to generate the makefile 
-
-  -) enable the wxwindows feature
-     vi $ACE_ROOT/bin/MakeProjectCreator/config/default.features
-     and add/change 
-      wxwindows     = 1
-
-  -) build the Makefile
-     cd $TAO_ROOT/utils
-     mwc.pl -type gnuace -recurse
-
 *) Make the wxNamingViewer using either the command line compiler with
 make -f makefile.b32 (set ACE_ROOT as usual; set BCCDIR to your C++ Builder
 install directory) or use the C++ Builder IDE (double-click on
@@ -69,13 +58,13 @@ For linux/gcc:
   -) enable the wxwindows feature
      vi $ACE_ROOT/bin/MakeProjectCreator/config/default.features
      and add/change 
-      wxwindows     = 1
+      wxWindows     = 1
 
   -) build the Makefile
      cd $TAO_ROOT/utils
      mwc.pl -type gnuace -recurse
 
-*) Make the wxNamingViewer with wxNamingView=1.
+*) Make the wxNamingViewer
    must have wxWindows=1 on make line or in 
    $ACE_ROOT/include/makeinclude/platform_macros.GNU
 
