@@ -353,19 +353,11 @@ SOURCE=.\IIOP_ORB.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\compat\initguid.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\marshal.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\nvlist.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\compat\objbase.h
 # End Source File
 # Begin Source File
 
