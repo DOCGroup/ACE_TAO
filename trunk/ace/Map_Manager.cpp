@@ -125,7 +125,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (size_t size)
 
   for (i = this->cur_size_; i < this->total_size_; i++)
     {
-      // Call the constructor for each element in the array.
+      // Call the constructor for each element in the array.  Note
+      // that this requires a default constructor for <EXT_ID> and
+      // <INT_ID>.
       new (&(temp[i])) ACE_Map_Entry<EXT_ID, INT_ID>;
       temp[i].is_free_ = 1;
     }
