@@ -89,11 +89,13 @@ public:
 
   static int open (const char program_name[]);
   // Performs an open without parsing command-line arguments.
+  // @@ What is its return value?
 
   static int open (int argc, char *argv[]);
   // This is the primary entry point into the ACE_Service_Config (the
   // constructor just handles simple initializations).  It parses
   // arguments passed in from the command-line.
+  // @@ What is its return value?
 
   virtual ~ACE_Service_Config (void);
   // Perform user-specified close activities and remove dynamic
@@ -102,15 +104,18 @@ public:
   static int close (void);
   // Tidy up and perform last rites when ACE_Service_Config is shut
   // down.  This method calls <close_svcs> and <close_singletons>.
+  // @@ What is its return value?
 
   static int close_svcs (void);
   // Perform user-specified close hooks on all of the configured
   // services in the <Service_Repository>, then delete the
   // <Service_Repository> itself.
+  // @@ What is its return value?
 
   static int close_singletons (void); 
   // Delete the dynamically allocated Singletons (i.e., the <Reactor>,
   // <Proactor>, <ReactorEx>, <Thread_Manager>, and <Allocator>).
+  // @@ What is its return value?
 
   // = Reactor event loop management methods.
   static int run_reactor_event_loop (void);

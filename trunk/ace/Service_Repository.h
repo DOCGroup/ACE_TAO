@@ -58,10 +58,15 @@ public:
   int insert (const ACE_Service_Record *);
   // Insert a new service record.
 
-  int find (const char[], 
-	    const ACE_Service_Record ** = 0, 
+  int find (const char name[], 
+	    const ACE_Service_Record **srp = 0, 
 	    int ignore_suspended = 1);
-  // Locate an existing service record.
+  // Locate an entry with <name> in the table.  If <ignore_suspended>
+  // is set then only consider services marked as resumed.  If the
+  // caller wants the located entry, pass back a pointer to the
+  // located entry via <srp>.  If <name> is not found, -1 is returned.
+  // If <name> is found, but it is suspended and the caller wants to
+  // ignore suspended services a -2 is returned.
 
   int remove (const char[]);
   // Remove an existing service record.
