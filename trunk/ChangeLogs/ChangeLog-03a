@@ -1,3 +1,8 @@
+Thu Nov  9 10:26:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/make_pretty.pl:
+          Add yet another link error message.
+
 Thu Nov  9 08:51:04 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/rules.local.GNU:

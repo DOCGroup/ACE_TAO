@@ -155,7 +155,8 @@ sub is_error ()
 
     # Look for linking errors too
     return 1 if (/undefined reference to/
-		 || /: cannot open/);
+		 || /: cannot open/
+		 || /: multiple definition of/);
 
     # Look for possible errors
     return 1 if (/error/i
