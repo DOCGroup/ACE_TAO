@@ -111,6 +111,10 @@ SOURCE=.\Naming_Service.h
 
 SOURCE=.\NS_CosNaming.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\orbsvcs\Naming\nsconf.h
+# End Source File
 # End Group
 # End Target
 # End Project
