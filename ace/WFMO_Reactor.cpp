@@ -1578,25 +1578,22 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
     {
       long actual_events = events.lNetworkEvents;
 
-      if ((interested_events & actual_events & FD_READ)
-          && event_handler->handle_input (io_handle) == -1)
+      if ((interested_events & actual_events & FD_READ) && 
+          event_handler->handle_input (io_handle) == -1)
         ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
-
-      if ((interested_events & actual_events & FD_CLOSE)
-          && event_handler->handle_input (io_handle) == -1)
+      
+      if ((interested_events & actual_events & FD_CLOSE) &&
+          !ACE_BIT_ENABLED (problems, ACE_Event_Handler::READ_MASK) &&
+          event_handler->handle_input (io_handle) == -1)
         ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
-
-      if ((interested_events & actual_events & FD_WRITE)
-          && event_handler->handle_output (io_handle) == -1)
-        ACE_SET_BITS (problems, ACE_Event_Handler::WRITE_MASK);
-
-      if ((interested_events & actual_events & FD_OOB)
-          && event_handler->handle_exception (io_handle) == -1)
-        ACE_SET_BITS (problems, ACE_Event_Handler::EXCEPT_MASK);
-
-      if ((interested_events & actual_events & FD_ACCEPT)
-          && event_handler->handle_input (io_handle) == -1)
+      
+      if ((interested_events & actual_events & FD_ACCEPT) &&
+          event_handler->handle_input (io_handle) == -1)
         ACE_SET_BITS (problems, ACE_Event_Handler::ACCEPT_MASK);
+      
+      if ((interested_events & actual_events & FD_WRITE) &&
+          event_handler->handle_output (io_handle) == -1)
+        ACE_SET_BITS (problems, ACE_Event_Handler::WRITE_MASK);
 
       if (interested_events & actual_events & FD_CONNECT)
 	{
@@ -1611,6 +1608,10 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
 	  else if (event_handler->handle_input (io_handle) == -1)
             ACE_SET_BITS (problems, ACE_Event_Handler::CONNECT_MASK);
 	}
+
+      if ((interested_events & actual_events & FD_OOB) &&
+          event_handler->handle_exception (io_handle) == -1)
+        ACE_SET_BITS (problems, ACE_Event_Handler::EXCEPT_MASK);
 
       if ((interested_events & actual_events & FD_QOS)
           && event_handler->handle_qos (io_handle) == -1)
