@@ -84,7 +84,9 @@ ACE_Trace::ACE_Trace (const ACE_TCHAR *n,
 
   this->name_ = n;
 
-  if (ACE_Trace::enable_tracing_)
+  // If ACE has not yet been initialized, don't try to trace... there's
+  // too much stuff not yet initialized.
+  if (ACE_Trace::enable_tracing_ && !ACE_OS_Object_Manager::starting_up ())
     {
       ACE_Log_Msg *lm = ACE_LOG_MSG;
       if (lm->tracing_enabled ()
@@ -108,7 +110,9 @@ ACE_Trace::ACE_Trace (const ACE_TCHAR *n,
 
 ACE_Trace::~ACE_Trace (void)
 {
-  if (ACE_Trace::enable_tracing_)
+  // If ACE has not yet been initialized, don't try to trace... there's
+  // too much stuff not yet initialized.
+  if (ACE_Trace::enable_tracing_ && !ACE_OS_Object_Manager::starting_up ())
     {
       ACE_Log_Msg *lm = ACE_LOG_MSG;
       if (lm->tracing_enabled ()
