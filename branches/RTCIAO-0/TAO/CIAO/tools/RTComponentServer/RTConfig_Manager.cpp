@@ -199,7 +199,7 @@ CIAO::RTPolicy_Set_Manager::create_single_policy
     case RTCORBA::PRIORITY_MODEL_POLICY_TYPE:
       CIAO::RTConfiguration::Priority_Model_Config *tmp;
 
-      if (policy_config.configuration >>= t CORBA::PolicyList::_duplicate (entry->int_id_.in ()); CORBA::PolicyList::_duplicate (entry->int_id_.in ());mp)
+      if (policy_config.configuration >>= tmp)
         {
           retv = this->rtorb_->create_priority_model_policy (tmp->model,
                                                              tmp->default_priority
