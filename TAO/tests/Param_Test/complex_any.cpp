@@ -22,7 +22,7 @@
 const int LEVEL_2_LENGTH = 5;
 const int LEVEL_3_LENGTH = 3;
 
-ACE_RCSID(Param_Test, any, "$Id$")
+ACE_RCSID(Param_Test, complex_any, "$Id$")
 
 // ************************************************************************
 //               Test_Complex_Any
