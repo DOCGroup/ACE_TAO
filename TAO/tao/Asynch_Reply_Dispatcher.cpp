@@ -112,6 +112,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
   ACE_Data_Block *db =
     this->reply_cdr_.clone_from (params.input_cdr_);
 
+  ACE_UNUSED_ARG (db);
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.
   CORBA::ULong max = params.svc_ctx_.maximum ();

@@ -356,10 +356,8 @@ TAO_GIOP_Message_Base::byte_order (void)
 }
 
 int
-TAO_GIOP_Message_Base::is_message_complete (ACE_Message_Block &incoming)
+TAO_GIOP_Message_Base::is_message_complete (ACE_Message_Block & /*incoming*/)
 {
-
-
   // @@Bala: Implement other cases
   return 0;
 }
