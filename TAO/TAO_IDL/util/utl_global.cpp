@@ -477,9 +477,6 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
       return;
     }
 
-  // If it's a new filename, we need to push an empty prefix.
-  idl_global->pragma_prefixes ().push (ACE::strnew (""));
-
   // OK, need to store. Make sure there's space for one more string
   if (this->pd_n_include_file_names == this->pd_n_alloced_file_names)
     {
@@ -912,6 +909,20 @@ ACE_Unbounded_Stack<char *> &
 IDL_GlobalData::pragma_prefixes (void)
 {
   return this->pragma_prefixes_;
+}
+
+void 
+IDL_GlobalData::update_prefix (char *filename)
+{
+  ACE_CString tmp ("", 0, 0);
+  ACE_CString fn (filename, 0, 0);
+  int result =
+    this->file_prefixes_.trybind (fn, tmp);
+  char *trash = 0;
+  this->pragma_prefixes_.pop (trash);
+  delete [] trash;
+  this->pragma_prefixes_.push (tmp.rep ());
+  this->pd_root->prefix ((char *) tmp.fast_rep ());
 }
 
 UTL_ScopedName *
