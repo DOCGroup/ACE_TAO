@@ -70,9 +70,6 @@ main (int, char *[])
   int n_iterations = ACE_MAX_ITERATIONS;
 
   ACE_Barrier tester_barrier (n_threads);
-  ACE_hthread_t *thread_handles;
-  
-  ACE_NEW_RETURN (thread_handles, ACE_hthread_t[n_threads], -1);
   
   Tester_Args args (tester_barrier, n_iterations);
 
@@ -84,35 +81,15 @@ main (int, char *[])
 		  iteration_count));
 
       if (ACE_Thread_Manager::instance ()->spawn_n 
-	  ((ACE_thread_t *) 0,
-	   n_threads,
+          (n_threads,
 	   ACE_THR_FUNC (tester), 
 	   (void *) &args,
-	   THR_NEW_LWP | THR_JOINABLE,
-	   ACE_DEFAULT_THREAD_PRIORITY,
-	   -1,
-	   0,
-	   0,
-	   thread_handles) == -1)
+	   THR_NEW_LWP | THR_JOINABLE) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
-#if defined (VXWORKS)
-      // VxWorks doesn't support thr_join() semantics...  Someday
-      // we'll fix this.
       ACE_Thread_Manager::instance ()->wait ();
-#else
-      // Wait for all the threads to reach their exit point and then join
-      // with all the exiting threads.
-      for (int i = 0;
-	   i < n_threads;
-	   i++)
-	if (ACE_Thread::join (thread_handles[i]) == -1)
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
-#endif /* VXWORKS */     
     }
 
-  delete [] thread_handles;
-  
   ACE_DEBUG ((LM_DEBUG, "test done\n"));
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
