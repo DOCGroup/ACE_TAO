@@ -111,7 +111,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (node->has_mixed_parentage ())
     {
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << "void" << be_nl
           << "CORBA::release ("
           << node->name ()
@@ -122,7 +121,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << "CORBA::Boolean" << be_nl
           << "CORBA::is_nil ("
           << node->name ()
