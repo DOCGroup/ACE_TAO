@@ -1,3 +1,9 @@
+Sun Mar 21 20:27:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Param_Test/objref.cpp: 
+	  The test for object references was broken; but only Linux/EGCS
+	  triggered the error.
+
 Sun Mar 21 15:45:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/GIOP.cpp:
