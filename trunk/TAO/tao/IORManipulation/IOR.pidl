@@ -74,25 +74,30 @@ module TAO_IOP
    */
   local interface TAO_IOR_Property
   {
-      boolean set_property (in Object ior)
-        raises (Invalid_IOR);
-      // Operation that would set the required properties in the <ior>
-      // as needed by the service.
+    /// Operation that would set the required properties in the <ior>
+    /// as needed by the service.
+    boolean set_property (inout Object ior)
+      raises (Invalid_IOR);
 
-      boolean set_primary (in Object ior1,
-                           in Object ior2)
-        raises (Duplicate, NotFound);
-      // Sets the profile ior1, in the profile ior2 to be a
-      // primary.
+    /// Sets the profile ior1, in the profile ior2 to be a
+    /// primary.
+    boolean set_primary (inout Object ior1,
+                         in Object ior2)
+      raises (Duplicate, NotFound);
 
-      Object get_primary (in Object ior)
-        raises (NotFound);
-      // Returns the ior  of the primary from <ior> if it has been
-      // set. Else returns a NotFound exception
+    /// Returns the ior  of the primary from <ior> if it has been
+    /// set. Else returns a NotFound exception
+    Object get_primary (in Object ior)
+      raises (NotFound);
 
-      boolean is_primary_set (in Object ior);
-      // Returns a true or false depending on whether a primary member
-      // has been set in <ior>
+    /// Returns a true or false depending on whether a primary member
+    /// has been set in <ior>
+    boolean is_primary_set (in Object ior);
+
+    /// If any of the IOR's within the IOGR has a primary tag, just
+    /// remove it. Returns zero if no primary was found.
+    boolean remove_primary_tag (in Object iogr)
+      raises (NotFound);
   };
 
   /**
@@ -164,6 +169,12 @@ module TAO_IOP
       // in ior2, it raises an Invalid_IOR exception. If ior2 has a
       // primary already defined then it raises a Duplicate
       // exception.
+
+      /// If any of the IOR's within the IOGR has a primary tag, just remove
+      /// it. Return zero if no primary found.
+      boolean remove_primary_tag (in TAO_IOR_Property prop,
+                                  in Object ior);
+
 
       Object get_primary (in TAO_IOR_Property prop,
                           in Object ior)
