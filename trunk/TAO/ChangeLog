@@ -1,3 +1,26 @@
+Thu Sep 16 11:03:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/tests/Miop/McastHello/README:
+
+	  Upadted it again. 
+	
+	* orbsvcs/tests/Miop/McastHello/client.conf:
+	* orbsvcs/tests/Miop/McastHello/server.conf:	
+
+	  Removed them from the repo. We don't need two. 
+	
+	* orbsvcs/tests/Miop/McastHello/client.cpp:
+
+	  Added MIOP.h
+	
+	* orbsvcs/tests/Miop/McastHello/run_test.pl:
+
+	  Removed references to the two conf files. 
+
+	* orbsvcs/tests/Miop/McastHello/svc.conf:
+
+	  Checked in a single svc.conf file. 
+
 Thu Sep 16 10:09:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_scope.cpp (lookup_by_name_local):

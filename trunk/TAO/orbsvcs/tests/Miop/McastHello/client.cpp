@@ -2,8 +2,8 @@
 
 #include "TestC.h"
 #include "ace/Get_Opt.h"
-
 #include "tao/Object_T.h"
+#include "orbsvcs/PortableGroup/MIOP.h"
 
 ACE_RCSID(Hello, client, "$Id$")
 
