@@ -116,7 +116,7 @@ public:
 
 protected:
   /// Constructor.
-  ACE_WIN32_Asynch_Result (ACE_Handler &handler,
+  ACE_WIN32_Asynch_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                            const void* act,
                            ACE_HANDLE event,
                            u_long offset,
@@ -124,8 +124,8 @@ protected:
                            int priority,
                            int signal_number = 0);
 
-  /// Handler that will be called back.
-  ACE_Handler &handler_;
+  /// Proxy for the ACE_Handler that will be called back.
+  ACE_Handler::Proxy_Ptr &handler_proxy_;
 
   /// ACT for this operation.
   const void *act_;
@@ -159,7 +159,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler &handler,
+  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -190,7 +190,7 @@ protected:
   ACE_Proactor *proactor_;
 
   /// Handler that will receive the callback.
-  ACE_Handler *handler_;
+  ACE_Handler::Proxy_Ptr handler_proxy_;
 
   /// I/O handle used for reading.
   ACE_HANDLE handle_;
@@ -269,7 +269,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_Stream factory.
-  ACE_WIN32_Asynch_Read_Stream_Result (ACE_Handler &handler,
+  ACE_WIN32_Asynch_Read_Stream_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block &message_block,
                                        size_t bytes_to_read,
@@ -352,7 +352,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler &handler,
+  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -446,7 +446,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_Stream factory.
-  ACE_WIN32_Asynch_Write_Stream_Result (ACE_Handler &handler,
+  ACE_WIN32_Asynch_Write_Stream_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                         ACE_HANDLE handle,
                                         ACE_Message_Block &message_block,
                                         size_t bytes_to_write,
@@ -531,7 +531,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler &handler,
+  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -628,7 +628,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_File factory.
-  ACE_WIN32_Asynch_Read_File_Result (ACE_Handler &handler,
+  ACE_WIN32_Asynch_Read_File_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block &message_block,
                                      size_t bytes_to_read,
@@ -715,7 +715,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler &handler,
+  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -839,7 +839,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_File factory.
-  ACE_WIN32_Asynch_Write_File_Result (ACE_Handler &handler,
+  ACE_WIN32_Asynch_Write_File_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block &message_block,
                                       size_t bytes_to_write,
@@ -921,7 +921,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler &handler,
+  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -1036,7 +1036,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Accept factory.
-  ACE_WIN32_Asynch_Accept_Result (ACE_Handler &handler,
+  ACE_WIN32_Asynch_Accept_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE listen_handle,
                                   ACE_HANDLE accept_handle,
                                   ACE_Message_Block &message_block,
@@ -1118,7 +1118,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler &handler,
+  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -1202,7 +1202,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Connect factory.
-  ACE_WIN32_Asynch_Connect_Result (ACE_Handler &handler,
+  ACE_WIN32_Asynch_Connect_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                    ACE_HANDLE  connect_handle,
                                    const void* act,
                                    ACE_HANDLE  event,
@@ -1246,7 +1246,7 @@ public:
    * this call to that method. We have put this here to avoid the
    * compiler warnings.
    */
-  int open (ACE_Handler &handler,
+  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
@@ -1440,7 +1440,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Transmit_File factory.
-  ACE_WIN32_Asynch_Transmit_File_Result (ACE_Handler &handler,
+  ACE_WIN32_Asynch_Transmit_File_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                          ACE_HANDLE socket,
                                          ACE_HANDLE file,
                                          ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -1545,7 +1545,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler &handler,
+  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -1639,7 +1639,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_Dgram factory.
-  ACE_WIN32_Asynch_Read_Dgram_Result (ACE_Handler &handler,
+  ACE_WIN32_Asynch_Read_Dgram_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block *message_block,
                                       size_t bytes_to_read,
@@ -1735,7 +1735,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler &handler,
+  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);
@@ -1828,7 +1828,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_Stream factory.
-  ACE_WIN32_Asynch_Write_Dgram_Result (ACE_Handler &handler,
+  ACE_WIN32_Asynch_Write_Dgram_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block *message_block,
                                        size_t bytes_to_write,
@@ -1920,7 +1920,7 @@ public:
    * <ACE_Handler::handle> will be called on the <handler> to get the
    * correct handle.
    */
-  int open (ACE_Handler &handler,
+  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor);

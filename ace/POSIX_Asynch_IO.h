@@ -114,7 +114,7 @@ public:
 
 protected:
   /// Constructor. <Event> is not used on POSIX.
-  ACE_POSIX_Asynch_Result (ACE_Handler &handler,
+  ACE_POSIX_Asynch_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                            const void* act,
                            ACE_HANDLE event,
                            u_long offset,
@@ -123,7 +123,7 @@ protected:
                            int signal_number);
 
   /// Handler that will be called back.
-  ACE_Handler &handler_;
+  ACE_Handler::Proxy_Ptr &handler_proxy_;
 
   /**
    * ACT for this operation.
@@ -166,7 +166,7 @@ public:
    * Operation class itself was created by the correct implementation
    * Proactor class.
    */
-  int open (ACE_Handler &handler,
+  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
@@ -209,7 +209,7 @@ protected:
   ACE_Proactor *proactor_;
 
   /// Handler that will receive the callback.
-  ACE_Handler *handler_;
+  ACE_Handler::Proxy_Ptr *handler_proxy_;
 
   /// I/O handle used for reading.
   ACE_HANDLE handle_;
@@ -243,7 +243,7 @@ public:
   ACE_HANDLE handle (void) const;
 
 protected:
-  ACE_POSIX_Asynch_Read_Stream_Result (ACE_Handler &handler,
+  ACE_POSIX_Asynch_Read_Stream_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block &message_block,
                                        size_t bytes_to_read,
@@ -335,7 +335,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_Stream factory.
-  ACE_POSIX_Asynch_Write_Stream_Result (ACE_Handler &handler,
+  ACE_POSIX_Asynch_Write_Stream_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                         ACE_HANDLE handle,
                                         ACE_Message_Block &message_block,
                                         size_t bytes_to_write,
@@ -410,7 +410,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_File factory.
-  ACE_POSIX_Asynch_Read_File_Result (ACE_Handler &handler,
+  ACE_POSIX_Asynch_Read_File_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block &message_block,
                                      size_t bytes_to_read,
@@ -514,7 +514,7 @@ class ACE_Export ACE_POSIX_Asynch_Write_File_Result : public virtual ACE_Asynch_
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_File factory.
-  ACE_POSIX_Asynch_Write_File_Result (ACE_Handler &handler,
+  ACE_POSIX_Asynch_Write_File_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block &message_block,
                                       size_t bytes_to_write,
@@ -618,7 +618,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Accept factory.
-  ACE_POSIX_Asynch_Accept_Result (ACE_Handler &handler,
+  ACE_POSIX_Asynch_Accept_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE listen_handle,
                                   ACE_HANDLE accept_handle,
                                   ACE_Message_Block &message_block,
@@ -676,7 +676,7 @@ public:
    * this call to that method. We have put this here to avoid the
    * compiler warnings.
    */
-  int open (ACE_Handler &handler,
+  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
@@ -784,7 +784,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Connect factory.
-  ACE_POSIX_Asynch_Connect_Result (ACE_Handler &handler,
+  ACE_POSIX_Asynch_Connect_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                    ACE_HANDLE  connect_handle,
                                    const void* act,
                                    ACE_HANDLE  event,
@@ -828,7 +828,7 @@ public:
    * this call to that method. We have put this here to avoid the
    * compiler warnings.
    */
-  int open (ACE_Handler &handler,
+  int open (ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
             const void *completion_key,
             ACE_Proactor *proactor = 0);
@@ -969,7 +969,7 @@ public:
   u_long flags (void) const;
 
 protected:
-  ACE_POSIX_Asynch_Transmit_File_Result (ACE_Handler &handler,
+  ACE_POSIX_Asynch_Transmit_File_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                          ACE_HANDLE socket,
                                          ACE_HANDLE file,
                                          ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -1142,7 +1142,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_Stream factory.
-  ACE_POSIX_Asynch_Write_Dgram_Result (ACE_Handler &handler,
+  ACE_POSIX_Asynch_Write_Dgram_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block *message_block,
                                        size_t bytes_to_write,
@@ -1275,7 +1275,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_Dgram factory.
-  ACE_POSIX_Asynch_Read_Dgram_Result (ACE_Handler &handler,
+  ACE_POSIX_Asynch_Read_Dgram_Result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block *message_block,
                                       size_t bytes_to_read,

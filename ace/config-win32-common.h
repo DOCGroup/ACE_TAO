@@ -352,12 +352,6 @@ typedef   signed long long ACE_INT64;
 # endif /* !_MT && !ACE_HAS_WINCE */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-// We are using STL's min and max (in algobase.h).  Therefore the
-// macros in window.h are extra
-#if !defined (NOMINMAX)
-# define NOMINMAX
-#endif /* NOMINMAX */
-
 #if !defined(_DEBUG)
 // If we are making a release, and the user has not specified
 // inline directives, we will default to inline
