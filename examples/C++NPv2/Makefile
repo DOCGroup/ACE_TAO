@@ -18,6 +18,7 @@ EXAMPLES = Reactor_Logging_Server \
            CLD \
            TPLS \
            TPCLS \
+           AC_CLD \
            display_logfile
 
 all:
