@@ -491,10 +491,6 @@ SOURCE=.\IOPC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IOPS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\IOR_Parser.cpp
 # End Source File
 # Begin Source File
@@ -639,10 +635,6 @@ SOURCE=.\PollableC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\PollableS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Pool_Per_Endpoint.cpp
 # End Source File
 # Begin Source File
@@ -747,14 +739,6 @@ SOURCE=.\RTCORBAC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\RTCORBAS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAS_T.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Sequence.cpp
 # End Source File
 # Begin Source File
@@ -824,10 +808,6 @@ SOURCE=.\TAO_Singleton_Manager.cpp
 # Begin Source File
 
 SOURCE=.\TAOC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAOS.cpp
 # End Source File
 # Begin Source File
 

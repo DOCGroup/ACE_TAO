@@ -47,7 +47,6 @@ OBJFILES = \
 	$(OBJDIR)\Connector_Registry.obj \
 	$(OBJDIR)\Connector_Impl.obj \
 	$(OBJDIR)\CONV_FRAMEC.obj \
-	$(OBJDIR)\CONV_FRAMES.obj \
 	$(OBJDIR)\corbafwd.obj \
 	$(OBJDIR)\CORBA_String.obj \
 	$(OBJDIR)\CORBALOC_Parser.obj \
@@ -98,7 +97,6 @@ OBJFILES = \
 	$(OBJDIR)\Invocation.obj \
 	$(OBJDIR)\Invocation_Endpoint_Selectors.obj \
 	$(OBJDIR)\IOPC.obj \
-	$(OBJDIR)\IOPS.obj \
 	$(OBJDIR)\IOR_Parser.obj \
 	$(OBJDIR)\IORInfo.obj \
 	$(OBJDIR)\Leader_Follower.obj \
@@ -140,7 +138,6 @@ OBJFILES = \
 	$(OBJDIR)\PolicyC.obj \
 	$(OBJDIR)\PolicyFactory_Registry.obj \
 	$(OBJDIR)\PollableC.obj \
-	$(OBJDIR)\PollableS.obj \
 	$(OBJDIR)\Pool_Per_Endpoint.obj \
 	$(OBJDIR)\PortableInterceptor.obj \
 	$(OBJDIR)\PortableInterceptorC.obj \
@@ -167,7 +164,6 @@ OBJFILES = \
 	$(OBJDIR)\RT_PolicyFactory.obj \
 	$(OBJDIR)\RT_Protocols_Hooks.obj \
 	$(OBJDIR)\RTCORBAC.obj \
-	$(OBJDIR)\RTCORBAS.obj \
 	$(OBJDIR)\Sequence.obj \
 	$(OBJDIR)\Server_Strategy_Factory.obj \
 	$(OBJDIR)\Services.obj \
@@ -185,7 +181,6 @@ OBJFILES = \
 	$(OBJDIR)\TAO_Server_Request.obj \
 	$(OBJDIR)\TAO_Singleton_Manager.obj \
 	$(OBJDIR)\TAOC.obj \
-	$(OBJDIR)\TAOS.obj \
 	$(OBJDIR)\target_specification.obj \
 	$(OBJDIR)\TimeBaseC.obj \
 	$(OBJDIR)\TimeBaseS.obj \
