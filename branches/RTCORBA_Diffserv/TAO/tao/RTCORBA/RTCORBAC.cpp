@@ -5207,10 +5207,8 @@ const char* RTCORBA::RTORB::_interface_repository_id (void) const
 
 // Default constructor.
 RTCORBA::RTORB::MutexNotFound::MutexNotFound (void)
-  : CORBA_UserException (
-        "IDL:omg.org/RTCORBA/RTORB/MutexNotFound:1.0",
-        "MutexNotFound"
-      )
+  : CORBA_UserException ("IDL:omg.org/RTCORBA/RTORB/MutexNotFound:1.0",
+			 "MutexNotFound")
 {
 }
 
@@ -5221,10 +5219,9 @@ RTCORBA::RTORB::MutexNotFound::~MutexNotFound (void)
 
 // Copy constructor.
 RTCORBA::RTORB::MutexNotFound::MutexNotFound (const ::RTCORBA::RTORB::MutexNotFound &_tao_excp)
-  : CORBA_UserException (
-        _tao_excp._rep_id (),
-        _tao_excp._name ()
-      )
+  : CORBA_UserException (_tao_excp._rep_id () ,
+			 _tao_excp._name ()
+)
 {
 }
 
@@ -5232,7 +5229,7 @@ RTCORBA::RTORB::MutexNotFound::MutexNotFound (const ::RTCORBA::RTORB::MutexNotFo
 RTCORBA::RTORB::MutexNotFound&
 RTCORBA::RTORB::MutexNotFound::operator= (const ::RTCORBA::RTORB::MutexNotFound &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+ this->CORBA_UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -5291,10 +5288,9 @@ void RTCORBA::RTORB::MutexNotFound::_tao_decode (
 
 // Default constructor.
 RTCORBA::RTORB::InvalidThreadpool::InvalidThreadpool (void)
-  : CORBA_UserException (
-        "IDL:omg.org/RTCORBA/RTORB/InvalidThreadpool:1.0",
-        "InvalidThreadpool"
-      )
+  : CORBA_UserException ("IDL:omg.org/RTCORBA/RTORB/InvalidThreadpool:1.0",
+			 "InvalidThreadpool"
+			 )
 {
 }
 
@@ -5305,10 +5301,9 @@ RTCORBA::RTORB::InvalidThreadpool::~InvalidThreadpool (void)
 
 // Copy constructor.
 RTCORBA::RTORB::InvalidThreadpool::InvalidThreadpool (const ::RTCORBA::RTORB::InvalidThreadpool &_tao_excp)
-  : CORBA_UserException (
-        _tao_excp._rep_id (),
-        _tao_excp._name ()
-      )
+  : CORBA_UserException (_tao_excp._rep_id (),
+			 _tao_excp._name ()
+			 )
 {
 }
 
@@ -5885,16 +5880,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 1159.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len)
       return 1;
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 58.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
@@ -5932,16 +5927,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 1159.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len)
       return 1;
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 58.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
