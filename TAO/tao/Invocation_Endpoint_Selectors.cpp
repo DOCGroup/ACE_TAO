@@ -264,9 +264,16 @@ TAO_Default_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
                                                 *invocation,
                                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   invocation->profile_ = invocation->stub_->profile_in_use ();
   invocation->endpoint_ = invocation->profile_->endpoint ();
+
+  if (invocation->endpoint_ == 0)
+    {
+      // Unknown protocol - move onto the next profile.
+      this->next (invocation, ACE_TRY_ENV);
+      ACE_CHECK;
+      this->select_endpoint (invocation, ACE_TRY_ENV);
+    }
 }
 
 void
@@ -337,7 +344,15 @@ TAO_Priority_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
 
   // Select an endpoint from the profile.
 
-  if (invocation->profile_->endpoint_count () == 1)
+  if (invocation->profile_->endpoint_count () == 0)
+    {
+    // Unknown protocol - move onto the next profile.
+      this->next (invocation, ACE_TRY_ENV);
+      ACE_CHECK;
+      this->select_endpoint (invocation, ACE_TRY_ENV);
+    }
+
+  else if (invocation->profile_->endpoint_count () == 1)
     {
       // Profile contains just one endpoint.  This happens when:
       //    a) we are talking to a nonTAO server (which doesn't have
@@ -454,10 +469,12 @@ TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
         }
     }
 
-  if (profile == 0)
+  if (profile == 0
+      || profile->endpoint_count () == 0)
     {
-      // If no Profile for the protocol of interest were found,
-      // try another protocol.
+      // If either no profile for the protocol of interest were found
+      // or profile was found but client ORB doesn't understand the
+      // protocol, try another protocol.
       invocation->endpoint_selection_state_.client_protocol_index_++;
       this->select_endpoint (invocation, ACE_TRY_ENV);
     }

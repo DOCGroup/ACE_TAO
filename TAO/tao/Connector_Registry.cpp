@@ -268,19 +268,15 @@ TAO_Connector_Registry::connect (TAO_Endpoint *endpoint,
                                  ACE_Time_Value *max_wait_time,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  // Find the appropriate connector object
+  if (endpoint == 0)
+    return -1;
+
+  // Find the appropriate connector object.
   TAO_Connector *connector =
     this->get_connector (endpoint->tag ());
 
   if (connector == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) Connector_Registry::connect - ")
-                    ACE_TEXT ("protocol %u not available.\n"),
-                    endpoint->tag ()));
       return -1;
-    }
 
   return connector->connect (endpoint,
                              transport,

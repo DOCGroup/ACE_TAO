@@ -308,19 +308,6 @@ TAO_Unknown_Profile::hash (CORBA::ULong max,
                          this->body_.length ()) % max);
 }
 
-int
-TAO_Unknown_Profile::addr_to_string (char * /* buffer */,
-                                     size_t /* length */)
-{
-  return -1;
-}
-
-void
-TAO_Unknown_Profile::reset_hint (void)
-{
-  // do nothing
-}
-
 IOP::TaggedProfile&
 TAO_Unknown_Profile::create_tagged_profile (void)
 {
