@@ -50,15 +50,18 @@ TAO_DynUnion_i::init (const CORBA_Any& any,
                       CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::TypeCode_var tc = any.type ();
-  int tk = TAO_DynAnyFactory::unalias (tc.in (),
-                                       ACE_TRY_ENV);
+
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in (),
+                                                   ACE_TRY_ENV);
   ACE_CHECK;
 
-  if (tk != CORBA::tk_union)
-    ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+  if (kind != CORBA::tk_union)
+    {
+      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+    }
 
-  // Initialize the typecode holder
-  this->type_ = any.type ();
+  // Initialize the typecode holder.
+  this->type_ = tc;
 
   this->set_from_any (any,
                       ACE_TRY_ENV);
@@ -69,14 +72,16 @@ void
 TAO_DynUnion_i::init (CORBA_TypeCode_ptr tc,
   CORBA::Environment &ACE_TRY_ENV)
 {
-  int tk = TAO_DynAnyFactory::unalias (tc,
-                                       ACE_TRY_ENV);
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc,
+                                                   ACE_TRY_ENV);
   ACE_CHECK;
 
-  if (tk != CORBA::tk_union)
-    ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+  if (kind != CORBA::tk_union)
+    {
+      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+    }
 
-  // Initialize the typecode holder
+  // Initialize the typecode holder.
   this->type_ =
     CORBA::TypeCode::_duplicate (tc);
 

@@ -43,11 +43,9 @@ TAO_DynArray_i::init (const CORBA_Any& any,
   ACE_CHECK;
 
   if (kind != CORBA::tk_array)
-    ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
-
-  // The type will be correct if this constructor called from a
-  // factory function, but it could also be called by the user,
-  // so.....
+    {
+      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+    }
 
   this->type_ = tc;
 
@@ -94,13 +92,14 @@ void
 TAO_DynArray_i::init (CORBA_TypeCode_ptr tc,
                       CORBA::Environment &ACE_TRY_ENV)
 {
-  // Need to check if called by user.
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc,
                                                    ACE_TRY_ENV);
   ACE_CHECK;
 
   if (kind != CORBA::tk_array)
-    ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+    {
+      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+    }
 
   this->type_ = CORBA::TypeCode::_duplicate (tc);
   this->current_index_ = 0;
@@ -169,7 +168,7 @@ TAO_DynArray_i::get_arg_length (CORBA::TypeCode_ptr tc,
 
 TAO_DynArray_i *
 TAO_DynArray_i::_narrow (CORBA::Object_ptr obj,
-                       CORBA::Environment &)
+                         CORBA::Environment &)
 {
   if (CORBA::is_nil (obj))
     return 0;
