@@ -119,8 +119,11 @@ TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
       // encode the typecode
       retval = dest->encode (CORBA::_tc_TypeCode, &elem_tc, 0, env);
       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-        // append the data
-        retval = dest->append (elem_tc, src, env);
+        {
+          // append the data
+          retval = dest->append (elem_tc, src, env);
+          CORBA::release (elem_tc);
+        }
     }
   if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
@@ -434,9 +437,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr  tc,
                                 case CORBA::tk_enum:
                                   {
                                     CORBA::Long l;
-                                    TAO_InputCDR stream ((ACE_Message_Block *)
-                                                         member_label->value
-							 ());
+                                    TAO_InputCDR stream (member_label->_tao_get_cdr ());
                                     (void)stream.decode (discrim_tc, &l, 0, env);
                                     if (l == *(CORBA::Long *) &discrim_val)
                                       discrim_matched = 1;
