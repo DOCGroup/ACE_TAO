@@ -65,6 +65,7 @@
 #define ACE_HAS_POLL
 #define ACE_HAS_POSIX_NONBLOCK
 #define ACE_HAS_POSIX_TIME
+#define ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_SEMUN
 #define ACE_HAS_SHM_OPEN
@@ -113,7 +114,6 @@
 // MAP_SHARED.
 #define ACE_MAP_PRIVATE ACE_MAP_SHARED
 #define ACE_PAGE_SIZE 4096
-#define ACE_POLL_IS_BROKEN
 
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
