@@ -20,7 +20,9 @@
 #define	AVSTREAMS_I_H
 
 #include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/CosPropertyServiceS.h"
 #include "orbsvcs/AVStreamsS.h"
+#include "orbsvcs/Property/CosPropertyService_i.h"
 
 class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl 
   : public virtual POA_AVStreams::Basic_StreamCtrl
@@ -393,7 +395,7 @@ class TAO_ORBSVCS_Export TAO_VDev
 };
 
 class TAO_ORBSVCS_Export TAO_MMDevice 
-  : public virtual POA_AVStreams::MMDevice
+  : public virtual TAO_PropertySet, public virtual POA_AVStreams::MMDevice
 // = DESCRIPTION
 //     Implements a factory to create Endpoints and VDevs
 {
@@ -455,7 +457,7 @@ public:
                                                      const AVStreams::flowSpec &the_spec,  
                                                      CORBA::Environment &env);
   // Called by StreamCtrl to create a "A" type streamandpoint and vdev
-
+  
   virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester, 
                                                      AVStreams::VDev_out the_vdev, 
                                                      AVStreams::streamQoS &the_qos, 
@@ -471,7 +473,7 @@ class TAO_ORBSVCS_Export TAO_Server_MMDevice
   : public virtual TAO_MMDevice
 {
 public:
-  TAO_Server_MMDevice ();
+  TAO_Server_MMDevice (void);
 
   virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester, 
                                                      AVStreams::VDev_out the_vdev, 
