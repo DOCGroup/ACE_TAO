@@ -1,3 +1,7 @@
+Wed Jul 28 13:09:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/minimumTAO.html: updated libTAO size breakdown.
+
 Wed Jul 28 12:31:41 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/POA.i (establish_servant_lock,teardown_servant_lock):
