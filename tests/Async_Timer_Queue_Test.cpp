@@ -243,7 +243,7 @@ static char menu[] =
 "1) schedule timer <usecs> \n"
 "2) cancel timer <timer_id>\n"
 "^C list timers\n"
-"^\ exit program\n"
+"^\\ exit program\n"
 "please enter your choice: ";
 
 int
