@@ -22,6 +22,7 @@
 //  TAO_Trading_Components_Impl
 //  TAO_Link_Attributes_Impl
 //  TAO_Import_Attributes_Impl
+//  TAO_Sequence_Extracter_Base
 //
 // ============================================================================
 
@@ -469,8 +470,13 @@ public:
   // The function that computes a hash value. 
 };
 
+  // *************************************************************
+  // TAO_Sequence_Extracter_Base
+  // *************************************************************
 
 class TAO_Sequence_Extracter_Base
+// = TITLE
+//   Static methods used by the TAO_Sequence_Extracter class.
 {
 public:
 
@@ -479,12 +485,6 @@ public:
     TAO_THROW_SPEC ((CORBA::SystemException));
   // Return the sequence element type for the sequence whose typecode
   // is <code>.
-
-  static CORBA::Boolean extract_value (const CORBA::Any& source,
-                                       const CORBA::TypeCode *,
-                                       void* new_mem) { return CORBA::B_TRUE; }
-  // Extract the contents of the any into the buffer pointed to by
-  // <new_mem>.
 };
 
 
