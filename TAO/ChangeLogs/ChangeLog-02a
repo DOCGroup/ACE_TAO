@@ -1,3 +1,9 @@
+Wed Mar  7 13:03:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* examples/PluggableUDP/Makefile:
+	* examples/Makefile:
+	  Added DIOP and tests to the non-windows builds.
+
 Wed Mar  7 12:01:36 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be_operation/operation_cs.cpp:
@@ -61,7 +67,7 @@ Wed Mar  7 08:39:56 2001  Chad Elliott  <elliott_c@ociweb.com>
 Wed Mar  7 06:43:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/examples/CosEC/RtEC_Based/lib: Fixed a typo in exception
-          macros.  
+          macros.
 
 Wed Mar 07 00:07:48 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -119,9 +125,9 @@ Tue Mar 06 23:43:07 2001  Ossama Othman  <ossama@uci.edu>
 
           Added missing ACE_CHECK/ACE_TRY_CHECK macros.
 
-        * orbsvcs/tests/LoadBalancing/server.cpp (main): 
+        * orbsvcs/tests/LoadBalancing/server.cpp (main):
         * orbsvcs/tests/Security/RejectInsecure/server.cpp (main):
-        * orbsvcs/tests/Security/SecurityLevel1/server.cpp (main): 
+        * orbsvcs/tests/Security/SecurityLevel1/server.cpp (main):
         * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp
           (authorize_level1):
 

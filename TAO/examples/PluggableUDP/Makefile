@@ -10,22 +10,8 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Callback_Quoter \
-        POA \
-        Logging \
-        Simple \
-        Event_Comm \
-        OBV \
-        Load_Balancing \
-	Persistent_Grid \
-	AMI \
-	Quoter \
-	Buffered_Oneways \
-	Buffered_AMI \
-	Load_Balancing_persistent \
-	Simulator \
-	Content_Server \
-        DIOP
+DIRS  = DIOP \
+	tests
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
