@@ -106,8 +106,7 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
                                    "cannot accept visitor\n"),
                                   -1);
               }
-            
-            *os <<node->local_name () << "_;" ;
+            //            *os <<node->local_name () << "_);" ;
             break;
           }
           
@@ -180,12 +179,10 @@ be_visitor_args_paramlist::visit_string (be_string *node)
       // bounded strings
       if (node->width () == (long) sizeof (char))
         {
-          //      *os << "CORBA::Any::to_string (";
           *os << "CORBA::Any::from_string ((char *)";
         }
       else
         {
-          //      *os << "CORBA::Any::to_wstring (";
           *os << "CORBA::Any::from_wstring ((CORBA::WChar *)";
         }
       *os << arg->local_name () <<"_, "
@@ -194,21 +191,6 @@ be_visitor_args_paramlist::visit_string (be_string *node)
     }
   else
       *os << arg->local_name () <<"_; ";
-  /*
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
-  switch (bt->node_type ())
-    {
-    case AST_Decl::NT_pre_defined:
-      *os << "CORBA::Any::from_string (this->"<< arg->local_name () 
-          << node->max_size ()->ev ()->u.ulval << "_);" ;
-      break;
-    case AST_Decl::NT_wstring:
-      *os << "CORBA::Any::from_wstring (this->"<< arg->local_name ()
-          << node->max_size ()->ev ()->u.ulval << "_);" ;
-      break;
-    default:
-      break;
-      }*/
 return 0;
 }
 
@@ -216,24 +198,42 @@ int
 be_visitor_args_paramlist::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-
+  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_boolean:
-      *os << "CORBA::Any::from_boolean (this->";
-      break;
+      {
+        *os << "CORBA::Any::from_boolean (this->";
+        *os << arg->local_name () <<"_ "
+            << ");";
+        break;
+      }
     case AST_PredefinedType::PT_char:
-      *os << "CORBA::Any::from_char (this->";
-      break;
+      {
+        *os << "CORBA::Any::from_char (this->";
+        *os << arg->local_name () <<"_ "
+            << ");";
+        break;
+      }
     case AST_PredefinedType::PT_wchar:
-      *os << "CORBA::Any::from_wchar (this->";
-      break;
+      {
+        *os << "CORBA::Any::from_wchar (this->";
+        *os << arg->local_name () <<"_ "
+            << ");";
+        break;
+      }
     case AST_PredefinedType::PT_octet:
-      *os << "CORBA::Any::from_octet (this->";
-      break;
-            
+      {  
+        *os << "CORBA::Any::from_octet (this->";
+        *os << arg->local_name () <<"_ "
+            << ");";
+        break;
+      }
     default:
-      break;
+      {
+        *os << arg->local_name () <<"_; ";
+        break;
+      }
     }
   return 0;
 }
