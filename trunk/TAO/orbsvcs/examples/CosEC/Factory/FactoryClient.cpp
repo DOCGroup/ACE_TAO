@@ -8,9 +8,10 @@
 class FactoryClient
 {
   // = TITLE
-  //    class FactoryClient
+  //   A simple client to test the CosEC factory
+  //
   // = DESCRIPTION
-  //    Test Client for the CosEC factory.
+  //   Test Client for the CosEC factory.
 
 public:
   // Initialization and termination methods
@@ -19,15 +20,27 @@ public:
 
   int init_ORB (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);
   // Initializes the ORB.
+  // @@ Pradeep: this method should be void, you return -1 only if an
+  //    exception is raised.
+
+  // @@ Pradeep: I know this is just an example, but the ACE
+  //    guidelines still apply, words in the methods should be
+  //    separated by '_' not capitalization.
 
   int resolveNamingService (CORBA::Environment &ACE_TRY_ENV);
   // Try to get hold of a running naming service.
+  // @@ Pradeep: I think Vishal was fixing resolve_initial_references
+  //    so it would raise an exception instead of just returning a nil 
+  //    reference on error. Could you check that with him and change
+  //    the code to use only exceptions to report errors.
 
   int resolveFactory (CORBA::Environment &ACE_TRY_ENV);
   // Try to resolve the factory from the Naming service.
+  // @@ Pradeep: this method should clearly be void, you only
+  //    return -1 when there is an exception
 
-   CosEventChannelFactory::ChannelFactory_ptr
-   createFactory (CORBA::Environment &ACE_TRY_ENV);
+  CosEventChannelFactory::ChannelFactory_ptr
+      createFactory (CORBA::Environment &ACE_TRY_ENV);
   // Create a local Factory and also set the <factory_>.
 
   virtual int run_test (CORBA::Environment &ACE_TRY_ENV);
@@ -35,9 +48,9 @@ public:
 
 protected:
   CosEventChannelAdmin::EventChannel_ptr
-  createChannel (const char *channel_id,
-                 CosEventChannelFactory::ChannelFactory_ptr factory,
-                 CORBA::Environment &ACE_TRY_ENV);
+      createChannel (const char *channel_id,
+                     CosEventChannelFactory::ChannelFactory_ptr factory,
+                     CORBA::Environment &ACE_TRY_ENV);
   // Create a channel.
 
   void destroyChannel (const char *channel_id,
@@ -124,6 +137,7 @@ FactoryClient::init_ORB (int argc,
 int
 FactoryClient::resolveNamingService (CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Pradeep: this should be initialized in the constructor.
   this->use_naming_service = 0;
 
   // Initialization of the naming service.
@@ -148,6 +162,8 @@ FactoryClient::resolveFactory (CORBA::Environment &ACE_TRY_ENV)
   CORBA::Object_var obj =
     this->naming_client_->resolve (name,
                                    ACE_TRY_ENV);
+  // @@ Pradeep: there was a missing check here!
+  ACE_CHECK_RETURN (-1);
 
   this->factory_ =
     CosEventChannelFactory::ChannelFactory::_narrow (obj.in (),
@@ -169,6 +185,8 @@ FactoryClient::createChannel (const char *channel_id,
                             CosEventChannelFactory::ChannelFactory_ptr factory,
                               CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Pradeep: you may want to use an _var here, and use ._retn()
+  //    to return the value and release it from the var.
   CosEventChannelAdmin::EventChannel_ptr ec =
     CosEventChannelAdmin::EventChannel::_nil ();
 
@@ -179,6 +197,9 @@ FactoryClient::createChannel (const char *channel_id,
                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // @@ Pradeep: the only standard way to check for nil object
+      // references is:
+      // CORBA::is_nil (ec.in ());
       ACE_ASSERT (ec !=
                   CosEventChannelAdmin::EventChannel::_nil ());
 
@@ -238,10 +259,12 @@ FactoryClient::findChannel (const char* channel_id,
 }
 
 void
-FactoryClient:: findChannel_Id
-(CosEventChannelAdmin::EventChannel_ptr channel,
- CORBA::Environment &ACE_TRY_ENV)
+FactoryClient:: findChannel_Id (CosEventChannelAdmin::EventChannel_ptr channel,
+                                CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Pradeep: you may want to use object_to_string and print the
+  //    string here, the pointers are not very meaningful (not that
+  //    the string is helpful either)
   ACE_DEBUG ((LM_DEBUG,
               "trying to find the Channel %d \n",
               channel));
@@ -262,11 +285,19 @@ FactoryClient:: findChannel_Id
 int
 FactoryClient::run_test (CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Pradeep: use CORBA::is_nil()
+  
   ACE_ASSERT (this->factory_.in () !=
               CosEventChannelFactory::ChannelFactory::_nil ());
 
   const char *channel_id [3] = {"cosec1", "cosec2", "cosec3"};
   CosEventChannelAdmin::EventChannel_var cosec [3];
+
+  // @@ This looks like a good test, could you please check that the
+  //    right exceptions are raised if you try to create a channel
+  //    again? Or to find a channel that is not there?
+  //    What happens if you create a channel, then destroy it and then 
+  //    try to find it?
 
   // create the first cosec
   cosec[0] = this->createChannel (channel_id[0],

@@ -23,16 +23,20 @@ TAO_CosEventChannelFactory_i::~TAO_CosEventChannelFactory_i (void)
 }
 
 int
-TAO_CosEventChannelFactory_i::init
-(PortableServer::POA_ptr poa,
- const char* child_poa_name,
- CosNaming::NamingContext_ptr naming,
- CORBA_Environment &TAO_IN_ENV
- )
+TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
+                                    const char* child_poa_name,
+                                    CosNaming::NamingContext_ptr naming,
+                                    CORBA_Environment &TAO_IN_ENV)
 {
+  // @@ Pradeep, please use ACE_TRY_ENV instead of TAO_IN_ENV..
+  //    I hate the multiplicity of macros too....
+
   // Check if we have a parent poa.
   if (poa == PortableServer::POA::_nil ())
     return -1;
+
+  // @@ Pradeep, is this the only policy that we must set?
+  //    I thought that we should set USER_ID too!
 
   // Create a UNIQUE_ID policy because we want the POA to detect
   // duplicates for us.
@@ -64,12 +68,9 @@ TAO_CosEventChannelFactory_i::init
 }
 
 CosEventChannelAdmin::EventChannel_ptr
-TAO_CosEventChannelFactory_i::create
-(
- const char * channel_id,
- CORBA::Boolean store_in_naming_service,
- CORBA::Environment &ACE_TRY_ENV
- )
+TAO_CosEventChannelFactory_i::create (const char * channel_id,
+                                      CORBA::Boolean store_in_naming_service,
+                                      CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_ASSERT (this->poa_ != PortableServer::POA::_nil ());
 
@@ -90,24 +91,35 @@ TAO_CosEventChannelFactory_i::create
 
       auto_ptr <FactoryCosEventChannel_i> ec (_ec);
 
+      // @@ Pradeep: could we pass the POA used to activate the
+      //    EC-generated objects as an argument?  The point is that
+      //    the user must be aware that we require a POA with the
+      //    SYSTEM_ID policy....  This is not urgent, but a "wishlist" 
+
       // let all those contained in FactoryEC use the default POA.
       // We only need the FactoryEC's to be unique!
       PortableServer::POA_ptr defPOA = this->_default_POA (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // @@ Pradeep: I hate to bring this up, but what happens if the
+      //    init() method raises ServantAlreadyActive or something
+      //    similar?  Do we want to convert that into
+      //    DuplicateChannel?  IMHO you should be more careful about
+      //    the exception translation.
+
+      // @@ Pradeep: you have two ways to return errors in this init() 
+      //    function, either -1 or exceptions, could you just use
+      //    exceptions?
       if (ec->init (defPOA,
                     ACE_TRY_ENV) == -1)
         return ec_nil;
-
-      // @@ Pradeep: you have a point here! the POA that the EC needs
-      //    to activate its own objects maybe different from the POA
-      //    where you activate the EC itself, this is because the
-      //    policies required in each case are different....
 
       ACE_TRY_CHECK;
 
       ACE_CString str_channel_id (channel_id);
 
+      // @@ Pradeep: again the comment about the two ways to return
+      //    errors.
       if (ec->activate (str_channel_id,
                          ACE_TRY_ENV) == -1)
         return ec_nil;
@@ -132,12 +144,18 @@ TAO_CosEventChannelFactory_i::create
           CosNaming::Name name (1);
           name.length (1);
           name[0].id = CORBA::string_dup (channel_id);
+
+          // @@ Pradeep: you may want to use rebind() here to avoid
+          //    problems with repeated names in the NamingService
           this->naming_->bind (name,
                                obj.in (),
                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
+      // @@ Pradeep: shouldn't you do this as soon as you activate the 
+      //    EC in the POA? After all it is the POA who has the
+      //    ownership now.
       ec.release (); // release the ownership from the auto_ptr.
 
       return CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
@@ -208,6 +226,12 @@ TAO_CosEventChannelFactory_i::destroy
         this->poa_->id_to_reference (oid,
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+
+      // @@ Pradeep: shouldn't this be done *after* deactivating the
+      //    EC from the POA?  Otherwise if the NamingService operation
+      //    fails then you busted the whole thing.
+      
       // Remove from the naming service.
       if (unbind_from_naming_service &&
           this->naming_ != CosNaming::NamingContext::_nil ())
@@ -215,6 +239,9 @@ TAO_CosEventChannelFactory_i::destroy
           CosNaming::Name name (1);
           name.length (1);
           name[0].id = CORBA::string_dup (channel_id);
+
+          // @@ Pradeep: do you want to translate exceptions in this
+          //    method to "NoSuchChannel"?
           this->naming_->unbind (name,
                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
@@ -272,6 +299,14 @@ TAO_CosEventChannelFactory_i::find
   ACE_ENDTRY;
   ACE_CHECK_RETURN (ec_nil);
 
+  // @@ Pradeep: we usually put the ';' outside the macro, like in:
+  //
+  //     ACE_NOTREACHED (return ec_nil);
+  //
+  //    I don't know if there is a guideline about that, could you
+  //    check it out? But I think no compilers will cause you grief
+  //    for it.
+  //
   ACE_NOTREACHED (return ec_nil;)
 }
 

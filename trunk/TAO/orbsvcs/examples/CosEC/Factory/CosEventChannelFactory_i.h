@@ -1,4 +1,3 @@
-
 // -*- C++ -*-
 // $Id$
 
@@ -18,8 +17,8 @@
 //
 // ============================================================================
 
-#ifndef TAO_COSEVENTCHANNELFACTORY_H
-#define TAO_COSEVENTCHANNELFACTORY_H
+#ifndef TAO_COSEVENTCHANNELFACTORY_I_H
+#define TAO_COSEVENTCHANNELFACTORY_I_H
 
 #include "CosEventChannelFactoryS.h"
 #include "orbsvcs/CosNamingC.h"
@@ -84,4 +83,5 @@ class TAO_CosEventChannelFactory_i :
   CosNaming::NamingContext_var naming_;
   // The naming context to use.
 };
-#endif /* TAO_COSEVENTCHANNELFACTORY_H */
+
+#endif /* TAO_COSEVENTCHANNELFACTORY_I_H */
