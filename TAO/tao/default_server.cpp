@@ -18,6 +18,7 @@ TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
     event_loop_lock_type_ (TAO_NULL_LOCK),
     collocation_table_lock_type_ (TAO_THREAD_LOCK),
     cached_connector_lock_type_ (TAO_THREAD_LOCK),
+    creation_strategy_ (0),
     concurrency_strategy_ (0)
 {
 }
@@ -25,6 +26,15 @@ TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
 TAO_Default_Server_Strategy_Factory::~TAO_Default_Server_Strategy_Factory (void)
 {
   // Perform appropriate cleanup.
+}
+
+TAO_Default_Server_Strategy_Factory::CREATION_STRATEGY *
+TAO_Default_Server_Strategy_Factory::creation_strategy (void)
+{
+  if (this->creation_strategy_ == 0)
+    return &this->default_creation_strategy_;
+  else
+    return this->creation_strategy_;
 }
 
 TAO_Default_Server_Strategy_Factory::CONCURRENCY_STRATEGY *
@@ -367,6 +377,31 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 
   return 0;
 }
+
+TAO_Default_Server_Creation_Strategy::
+TAO_Default_Server_Creation_Strategy (ACE_Thread_Manager *t)
+  :  TAO_Server_Strategy_Factory::CREATION_STRATEGY (t)
+{
+}
+
+int
+TAO_Default_Server_Creation_Strategy::
+make_svc_handler (TAO_Server_Connection_Handler *&sh)
+{
+  if (sh == 0)
+    {
+      // Maybe this show be cached in the constructor, but it is
+      // possible that this method is invoked in several threads
+      // during the lifetime of this object, and the ORB_Core is a
+      // TSS singleton.
+      TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+      ACE_NEW_RETURN (sh,
+		      TAO_Server_Connection_Handler (orb_core),
+		      -1);
+    }
+  return 0;
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Reactive_Strategy<TAO_Server_Connection_Handler>;
