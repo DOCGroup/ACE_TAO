@@ -1,3 +1,10 @@
+Thu Sep 26 07:16:56 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Local_Name_Space.h (ACE_NS_String): Removed the comment
+	  about ACE_NS_String not having a destructor since this seems to
+ 	  have been overtaken by events.  Thanks to Vladislav Zverev
+ 	  <vladislav@gtss.spb.ru> for reporting this inconsistency.
+
 Thu Sep 26 09:18:55 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Logging_Strategy.h:
