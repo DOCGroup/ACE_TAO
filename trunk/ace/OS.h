@@ -1093,6 +1093,13 @@ typedef int clockid_t;
 #   endif /* CLOCK_REALTIME */
 # endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T */
 
+class ACE_Time_Value;
+ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
+                                      const ACE_Time_Value &tv2);
+
+ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
+                                      const ACE_Time_Value &tv2);
+
 class ACE_Export ACE_Time_Value
 {
   // = TITLE
