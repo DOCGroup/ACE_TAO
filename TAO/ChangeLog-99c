@@ -6,6 +6,9 @@ Fri Nov 19 17:44:36 1999  David L. Levine  <levine@cs.wustl.edu>
         * examples/Simulator/DOVEMIB/PrintVisitor.cpp (Print_Visitor):
           ACE_TRY_NEW_ENV instead of ACE_TRY.
 
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp: fixed
+          ACE_TRY's so that it compiles again.
+
 Fri Nov 19 17:43:31 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile:
