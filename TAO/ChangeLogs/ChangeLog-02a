@@ -1,3 +1,10 @@
+Fri Mar 23 09:42:30 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Hello/Hello.dsw:
+        * tests/Hello/server.dsp:
+        * tests/Hello/client.dsp:
+          Add project files for MSVC
+
 Fri Mar 23 09:06:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
