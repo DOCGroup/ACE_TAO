@@ -117,7 +117,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
   parse_error = 0;
 }
 
-// Constructor used Thru-POA collocation code.
+// Constructor used in Thru-POA collocation code.
 TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
                                       TAO_Operation_Details const & details,
                                       CORBA::Object_ptr target)
