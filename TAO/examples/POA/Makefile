@@ -28,7 +28,6 @@ endif
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 
 ifndef minimum_corba
 
@@ -60,6 +59,7 @@ ifndef minimum_corba
 endif # minimum_corba
 
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
