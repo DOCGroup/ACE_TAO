@@ -1,3 +1,11 @@
+Sun Aug 16 11:52:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Offer_Database.h: 
+	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp: 
+	  Fixed unproper use of private typedefs and of ACE_TYPENAME
+	  macro, thanks to John Mulhern <9107@mn3.lawson.lawson.com> for
+	  this patches.
+
 Sun Aug 16 09:11:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Trader.cpp: added #include
