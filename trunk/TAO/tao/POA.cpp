@@ -1697,23 +1697,22 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
   // Id is returned.
   if (this->policies ().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)
     {
-      if (this->policies ().id_uniqueness () == PortableServer::MULTIPLE_ID 
-          || this->active_object_map ().find (servant) != 0)
+      // If we reach here, then we either have the MULTIPLE_ID policy
+      // or we have the UNIQUE_ID policy and we are not in the active
+      // object map.
+      PortableServer::ObjectId_var new_id = this->create_object_id (servant, env);
+      if (env.exception () != 0)
+        return 0;
+      
+      if (this->active_object_map ().bind (new_id.in (), servant) == -1)
         {
-          PortableServer::ObjectId_var new_id = this->create_object_id (servant, env);
-          if (env.exception () != 0)
-            return 0;
-
-          if (this->active_object_map ().bind (new_id.in (), servant) == -1)
-            {
-              CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-              env.exception (exception);
-              return 0;
-            }
-
-          // Everything is finally ok
-          return new_id._retn ();
+          CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
+          env.exception (exception);
+          return 0;
         }
+      
+      // Everything is finally ok
+      return new_id._retn ();
     }
 
   // Otherwise, the ServantNotActive exception is raised.
