@@ -6,6 +6,8 @@
 #include "NamingViewer.h"
 #include "SelectNSDialog.h"
 #include "AddNameServerDlg.h"
+#include "ace/SString.h"
+#include "ace/OS_NS_String.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -71,11 +73,11 @@ void CSelectNSDialog::OnAdd()
     return;
   }
   ACE_Configuration_Section_Key Section = m_pConfig->root_section();
-  ACE_TString Value = Dialog.m_IOR;
+  ACE_CString Value = Dialog.m_IOR;
   m_pConfig->set_string_value(Section, Dialog.m_Name, Value);
   int pos = m_Servers.AddString(Dialog.m_Name);
   char* pIOR = new char[Value.length() + 1];
-  strcpy(pIOR, Value.c_str());
+  ACE_OS::strcpy(pIOR, Value.c_str());
   m_Servers.SetItemData(pos, (DWORD)pIOR);
 
 }
@@ -101,7 +103,7 @@ BOOL CSelectNSDialog::OnInitDialog()
 	CDialog::OnInitDialog();
 	
 	// TODO: Add extra initialization here
-  HKEY hKey = ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE, "Software\\TAO\\NamingViewer\\Servers");
+  HKEY hKey = ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE, ACE_TEXT("Software\\TAO\\NamingViewer\\Servers"));
   m_pConfig = new ACE_Configuration_Win32Registry(hKey);
   ACE_Configuration_Section_Key Section = m_pConfig->root_section();;
   int index = 0; 
@@ -114,7 +116,7 @@ BOOL CSelectNSDialog::OnInitDialog()
     {
       int pos = m_Servers.AddString(name.c_str());
       char* pIOR = new char[value.length() + 1];
-      strcpy(pIOR, value.c_str());
+      ACE_OS::strcpy(pIOR, value.c_str());
       m_Servers.SetItemData(pos, (DWORD)pIOR);
     }
     index++;

@@ -54,13 +54,13 @@ BOOL CNamingViewerApp::InitInstance()
 #endif
 
   // Parse command line arguments so we can initialize ORB with them
-  ACE_ARGV Argv(m_lpCmdLine);
+  ACE_ARGV Argv(ACE_TEXT_CHAR_TO_TCHAR(m_lpCmdLine));
 
   ACE::init();
   {
     
     int argc = Argv.argc();
-    char** argv = Argv.argv();
+    ACE_TCHAR** argv = Argv.argv();
     CORBA::ORB_var ORB = CORBA::ORB_init(argc, argv);
 	  CNamingViewerDlg dlg(ORB);
 	  m_pMainWnd = &dlg;
