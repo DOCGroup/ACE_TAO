@@ -1,3 +1,8 @@
+Thu Feb 22 03:31:06 2001  Krishnakumar B  <kitty@ace.cs.wustl.edu>
+
+	* ace/OS.i (dlsym): 
+	Hopefully fixed the Win32 builds. Removed a extra ! in the #ifdef.
+
 Thu Feb 22 02:58:36 2001  Krishnakumar B  <kitty@ace.cs.wustl.edu>
 
 	* VERSION:
