@@ -1,3 +1,10 @@
+Mon Jun 14 16:07:47 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
+	Added ACE_THROW_SPEC to the relevant methods.
+
+
 Mon Jun 14 15:34:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Cubit/TAO/DII_Cubit/run_test.pl:
