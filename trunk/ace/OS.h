@@ -4240,6 +4240,12 @@ typedef fd_set ACE_FD_SET_TYPE;
 #   define MAXHOSTNAMELEN  256
 # endif /* MAXHOSTNAMELEN */
 
+// Define INET loopback address constant if it hasn't been defined
+// Dotted Decimal 127.0.0.1 == Hexidecimal 0x7f000001
+# if !defined (INADDR_LOOPBACK)
+#   define INADDR_LOOPBACK 0x7f000001
+# endif /* INADDR_LOOPBACK */
+
 // Define INET string length constants if they haven't been defined
 //
 // for IPv4 dotted-decimal
