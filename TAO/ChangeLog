@@ -1,3 +1,15 @@
+Mon Nov 11 14:28:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/GIOP_Message_Base.cpp (consolidate_fragments): When growing
+	  the message block to increase the allocated memory, we now use
+	  the length () of the available message block as the basis for
+	  growing instead of the size (). Simon McQueen of PrismTech ran
+	  several experiments while investigating problems related to
+	  [BUGID 1356] and is convinced this is the right way to go, since
+	  this uses less memory. Since I dont foresee problems, his patch
+	  is being accepted for the release. Thanks to Simon for putting
+	  in lot of effort to narrow down the problem to this area. 
+	  
 Mon Nov 11 10:43:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.dsp:
