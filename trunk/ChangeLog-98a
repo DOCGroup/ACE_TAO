@@ -1,3 +1,8 @@
+Fri Mar 13 23:41:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process.cpp (ACE_Process_Options): Moved column out of
+	  ifdef'ed area.
+
 Fri Mar 13 21:17:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Process.cpp (ACE_Process_Options): reordered initializers
@@ -11,7 +16,7 @@ Fri Mar 13 17:30:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  attributes, current directory, stratup info, and security
 	  attributes. I have modified these files so that most attribute
 	  access functions just do nothing.  Some of "do nothing"
-	  functions were defined as ACE_INLINE on CE.  
+	  functions were defined as ACE_INLINE on CE.
 
 	* ace/Memory_Pool.cpp:  Regular CE stuff.
 
