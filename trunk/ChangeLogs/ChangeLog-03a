@@ -1,5 +1,8 @@
 Sun Apr  8 13:12:54 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/SString.cpp: Reordered various constructor initializers so
+	  G++ doesn't complain.  Thanks to Bala for reporting this.
+
 	* ace/SString.{h,i,cpp}: Added various optimizations to ACE_WString
 	  so it will perform certain operations as efficiently as
  	  ACE_CString.  Thanks to Eric Zuur <Eric.Zuur@meco.nl> for

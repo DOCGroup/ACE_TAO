@@ -630,7 +630,7 @@ ACE_WString::ACE_WString (ACE_Allocator *alloc)
     this->allocator_ = ACE_Allocator::instance ();
 
   this->len_ = 0;
-  this->check_allocate(1);
+  this->check_allocate (1);
 }
 
 /* static */
@@ -710,7 +710,8 @@ ACE_WString::ushort_rep (void) const
 ACE_WString::ACE_WString (const char *s,
                           ACE_Allocator *alloc)
   : allocator_ (alloc),
-    buf_len_ (0)
+    buf_len_ (0),
+    rep_ (0)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 
@@ -720,12 +721,12 @@ ACE_WString::ACE_WString (const char *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->check_allocate(1);
+      this->check_allocate (1);
     }
   else
     {
       this->len_ = ACE_OS::strlen (s);
-      this->check_allocate(this->len_+1);
+      this->check_allocate (this->len_ + 1);
 
       // Copy the char * string byte-by-byte into the ACE_WSTRING_TYPE
       // * string.
@@ -742,7 +743,8 @@ ACE_WString::ACE_WString (const char *s,
 ACE_WString::ACE_WString (const ACE_WSTRING_TYPE *s,
                           ACE_Allocator *alloc)
   : allocator_ (alloc),
-    buf_len_ (0)
+    buf_len_ (0),
+    rep_ (0)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 
@@ -752,12 +754,12 @@ ACE_WString::ACE_WString (const ACE_WSTRING_TYPE *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->check_allocate(1);
+      this->check_allocate (1);
     }
   else
     {
       this->len_ = ACE_WString::strlen (s);
-      this->check_allocate(this->len_ + 1);
+      this->check_allocate (this->len_ + 1);
 
       ACE_OS::memcpy (this->rep_,
                       s,
@@ -771,7 +773,8 @@ ACE_WString::ACE_WString (const ACE_WSTRING_TYPE *s,
 ACE_WString::ACE_WString (ACE_WSTRING_TYPE c,
                           ACE_Allocator *alloc)
   : allocator_ (alloc),
-    buf_len_ (0)
+    buf_len_ (0),
+    rep_ (0)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 
@@ -779,7 +782,7 @@ ACE_WString::ACE_WString (ACE_WSTRING_TYPE c,
     this->allocator_ = ACE_Allocator::instance ();
 
   this->len_ = 1;
-  this->check_allocate(this->len_ + 1);
+  this->check_allocate (this->len_ + 1);
   this->rep_[0] = c;
   this->rep_[this->len_] = 0;
 }
@@ -790,7 +793,8 @@ ACE_WString::ACE_WString (const ACE_WSTRING_TYPE *s,
                           size_t len,
                           ACE_Allocator *alloc)
   : allocator_ (alloc),
-    buf_len_ (0)
+    buf_len_ (0),
+    rep_ (0)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 
@@ -800,12 +804,12 @@ ACE_WString::ACE_WString (const ACE_WSTRING_TYPE *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->check_allocate(1);
+      this->check_allocate (1);
     }
   else
     {
       this->len_ = len;
-      this->check_allocate(this->len_ + 1);
+      this->check_allocate (this->len_ + 1);
 
       ACE_OS::memcpy (this->rep_,
                       s,
@@ -821,7 +825,8 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
                           size_t len,
                           ACE_Allocator *alloc)
   : allocator_ (alloc),
-    buf_len_ (0)
+    buf_len_ (0),
+    rep_ (0)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 
@@ -831,12 +836,12 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->check_allocate(1);
+      this->check_allocate (1);
     }
   else
     {
       this->len_ = len;
-      this->check_allocate(this->len_ + 1);
+      this->check_allocate (this->len_ + 1);
 
       for (size_t i = 0; i <= len; ++i)
         this->rep_[i] = (const ACE_WSTRING_TYPE) s[i];
@@ -852,29 +857,31 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
 ACE_WString::ACE_WString (size_t len,
                           ACE_Allocator *alloc)
   : allocator_ (alloc),
-    buf_len_ (0)
+    buf_len_ (0),
+    rep_ (0)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 
-  this->resize(len);
+  this->resize (len);
 }
 
 // Copy constructor.
 
 ACE_WString::ACE_WString (const ACE_WString &s)
   : allocator_ (s.allocator_),
+    buf_len_ (0),
     len_ (s.len_),
-    buf_len_ (0)
+    rep_ (0)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 
-  this->check_allocate(s.len_ + 1);
+  this->check_allocate (s.len_ + 1);
   ACE_OS::memcpy ((void *) this->rep_,
                   (const void *) s.rep_,
                   this->len_ * sizeof (ACE_WSTRING_TYPE));
@@ -968,7 +975,7 @@ ACE_WString::operator+= (const ACE_WString &s)
 {
   ACE_TRACE ("ACE_WString::operator+=");
 
-  this->check_allocate(len_ + s.len_);
+  this->check_allocate (len_ + s.len_);
 
   ACE_OS::memcpy ((void *) (this->rep_ + this->len_),
                   (const void *) s.rep_,
@@ -990,7 +997,7 @@ ACE_WString::operator += (const ACE_WSTRING_TYPE *s)
 
   size_t len = ACE_WString::strlen(s);
 
-  this->check_allocate(len_ + len);
+  this->check_allocate (len_ + len);
 
   ACE_OS::memcpy ((void *) (this->rep_ + this->len_),
                   (const void *) s,
