@@ -1,3 +1,13 @@
+Fri Jun 16 14:37:39 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Performance/Makefile:
+          The RTSched library is not needed in this directory.
+
+        * orbsvcs/tests/Event/Performance/Inversion.h:
+        * orbsvcs/tests/Event/Performance/Inversion.cpp:
+          Add new option to make all suppliers generate the same
+          event. This is useful as a torture test.
+
 Fri Jun 16 14:34:19 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/configurations.html:
