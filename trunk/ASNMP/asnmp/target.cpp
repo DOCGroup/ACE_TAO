@@ -290,7 +290,7 @@ UdpTarget& UdpTarget::operator=( const UdpTarget& lhs)
   return *this;
 }
 
-char *UdpTarget::to_string()
+const char *UdpTarget::to_string()
 {
   sprintf(output_buffer_,"UdpTarget: [ valid: %d addr: %s rd: %s wr: %s \
 ver: %d, timeout: %d, retries: %d max_pdu_size: %d]",

@@ -160,7 +160,7 @@ public:
   unsigned char& operator[]( const int position);
   // for non const [], allows reading and writing
 
-  virtual char *to_string() = 0;
+  virtual const char *to_string() = 0;
   // get a printable ASCII value
 
   virtual SnmpSyntax *clone() const = 0;
@@ -228,11 +228,11 @@ public:
   SnmpSyntax *clone() const;
   // create a new instance of this Value
 
-  char *resolve_hostname(int& was_found);
+  const char *resolve_hostname(int& was_found);
   // return the DNS Fully Qualified Domain Name (host.domain)
   // on failure returns dotted_quad string
 
-  virtual char *to_string() ;
+  virtual const char *to_string() ;
   // return string representation of object (dotted quad returned)
 
   virtual operator const char *() const;
@@ -367,7 +367,7 @@ public:
   SnmpSyntax *clone() const;
   // create a new instance of this Value
 
-  virtual char *to_string() ;
+  virtual const char *to_string() ;
   // output in the form of address:port
 
   virtual operator const char *() const;
@@ -430,7 +430,7 @@ public:
   SnmpSyntax *clone() const;
   // create a new instance of this Value
 
-  virtual char *to_string();
+  virtual const char *to_string();
   // create a string to internal class storage representing object
 
   virtual operator const char *() const;
@@ -480,7 +480,7 @@ public:
 
    ~NetbiosAddress();
 
-   virtual char *to_string();
+   virtual const char *to_string();
 
    NetbiosAddress& operator=( const NetbiosAddress &nbaddr);
 
@@ -535,7 +535,7 @@ class  ACE_Export DecNetAddress : public Address
 
    ~DecNetAddress();
 
-   virtual char *to_string();
+   virtual const char *to_string();
 
    DecNetAddress& operator=( const DecNetAddress &decaddr);
 
@@ -581,7 +581,7 @@ class  ACE_Export AppleTalkAddress :  public Address
 
    ~AppleTalkAddress();
 
-   virtual char *to_string();
+   virtual const char *to_string();
 
    AppleTalkAddress& operator=( const AppleTalkAddress &atkaddr);
 
@@ -655,7 +655,7 @@ public:
   SnmpSyntax *clone() const;
   // create a new instance of this Value
 
-  virtual char *to_string();
+  virtual const char *to_string();
   // create string represtation of object value
 
   virtual operator const char *() const;
@@ -727,7 +727,7 @@ public:
   unsigned short get_socket() const;
   // get the socket number
 
-  virtual char *to_string();
+  virtual const char *to_string();
   // create string representation of object value
 
   virtual operator const char *() const;
@@ -781,7 +781,7 @@ public:
   SnmpSyntax& operator=( SnmpSyntax &val);
   // copy an instance of this Value
 
-  virtual char *to_string();
+  virtual const char *to_string();
   // string representation of object value
 
   virtual operator const char *() const;

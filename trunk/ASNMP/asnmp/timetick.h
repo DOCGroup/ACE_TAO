@@ -60,7 +60,7 @@ class ACE_Export TimeTicks: public SnmpUInt32
      SmiUINT32 get_syntax();
      // syntax type
 
-     char *to_string();
+     const char *to_string();
      // get a printable ASCII value
 
      SnmpSyntax *clone() const;

@@ -88,7 +88,7 @@ public:
   Counter64& operator=( const Counter64 &rhs);
   // overloaded assignment
 
-  char *to_string();
+  const char *to_string();
   // get a printable ASCII representation
 
   SnmpSyntax *clone() const;

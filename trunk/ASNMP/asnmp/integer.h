@@ -73,7 +73,7 @@ class ACE_Export SnmpUInt32: public SnmpSyntax
      operator unsigned long();
      // otherwise, behave like an unsigned long int
 
-     virtual char *to_string();
+     virtual const char *to_string();
      // get a printable ASCII value
 
      virtual SnmpSyntax *clone() const;
@@ -125,7 +125,7 @@ class ACE_Export SnmpInt32: public SnmpSyntax
      SnmpSyntax& operator=( SnmpSyntax &val);
      // copy an instance of this Value
 
-     char *to_string();
+     const char *to_string();
      // get a printable ASCII value
 
      int valid() const;
