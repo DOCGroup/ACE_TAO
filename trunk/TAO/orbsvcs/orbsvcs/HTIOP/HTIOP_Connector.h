@@ -127,7 +127,7 @@ namespace TAO
       /// reference to the configuration parameters
       ACE::HTBP::Environment *ht_env_;
     };
-  };
-};
+  }
+}
 #include /**/ "ace/post.h"
 #endif  /* HTIOP_CONNECTOR_H */

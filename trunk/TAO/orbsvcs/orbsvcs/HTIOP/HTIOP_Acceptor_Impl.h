@@ -96,49 +96,49 @@ namespace TAO
     template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
     class Strategy_Acceptor : public ACE_Service_Object
     {
-public:
+    public:
 
-  /// Default constructor.
-  Strategy_Acceptor (const ACE_TCHAR service_name[] = 0,
-                               const ACE_TCHAR service_description[] = 0,
-                               int use_select = 1,
-                               int reuse_addr = 1);
+      /// Default constructor.
+      Strategy_Acceptor (const ACE_TCHAR service_name[] = 0,
+                                   const ACE_TCHAR service_description[] = 0,
+                                   int use_select = 1,
+                                   int reuse_addr = 1);
 
-  int open (const ACE_PEER_ACCEPTOR_ADDR &,
-	    ACE_Reactor * = ACE_Reactor::instance (),
-	    Creation_Strategy<SVC_HANDLER> * = 0,
-	    Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> * =0,
-	    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
-	    int reuse_addr = 1);
+      int open (const ACE_PEER_ACCEPTOR_ADDR &,
+                ACE_Reactor * = ACE_Reactor::instance (),
+                Creation_Strategy<SVC_HANDLER> * = 0,
+                Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> * =0,
+                ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
+                int reuse_addr = 1);
 
-  int close ();
+      int close ();
 
-  virtual ACE_HANDLE get_handle (void) const;
+      virtual ACE_HANDLE get_handle (void) const;
 
 
-private:
+    private:
 
-  int handle_input (ACE_HANDLE);
+      int handle_input (ACE_HANDLE);
 
-  int activate_svc_handler (SVC_HANDLER *svc_handler);
+      int activate_svc_handler (SVC_HANDLER *svc_handler);
 
-  int accept_svc_handler (SVC_HANDLER *svc_handler);
+      int accept_svc_handler (SVC_HANDLER *svc_handler);
 
-  int make_svc_handler (SVC_HANDLER *&sh);
+      int make_svc_handler (SVC_HANDLER *&sh);
 
-  int shared_open (const ACE_PEER_ACCEPTOR_ADDR &,
-		   int protocol_family,
-		   int backlog);
+      int shared_open (const ACE_PEER_ACCEPTOR_ADDR &,
+                       int protocol_family,
+                       int backlog);
 
-  Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> *accept_strategy_;
+      Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> *accept_strategy_;
 
-  Creation_Strategy<SVC_HANDLER> * creation_strategy_;
+      Creation_Strategy<SVC_HANDLER> * creation_strategy_;
 
-  ACE_Concurrency_Strategy<SVC_HANDLER> * concurrency_strategy_;
-};
+      ACE_Concurrency_Strategy<SVC_HANDLER> * concurrency_strategy_;
+    };
 
-};
-};
+  }
+}
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "HTIOP_Acceptor_Impl.cpp"

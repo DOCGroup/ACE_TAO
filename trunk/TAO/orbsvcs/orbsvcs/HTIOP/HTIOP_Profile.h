@@ -140,8 +140,8 @@ namespace TAO
       /// Number of endpoints in the list headed by <endpoint_>.
       CORBA::ULong count_;
     };
-  };
-};
+  }
+}
 
 #if defined (__ACE_INLINE__)
 # include "HTIOP_Profile.i"
