@@ -15,6 +15,8 @@
 
 #include "TAO.h"
 
+ACE_RCSID(tao, TAO, "$Id$")
+
 // constructor
 TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
                                   PortableServer::POA_ptr poa,

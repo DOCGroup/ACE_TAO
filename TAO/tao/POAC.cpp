@@ -17,6 +17,8 @@
 #include "POAC.i"
 #endif // !defined INLINE
 
+ACE_RCSID(tao, POAC, "$Id$")
+
 #if !defined (_PORTABLESERVER__TAO_SEQ_OCTET_CS_)
 #define _PORTABLESERVER__TAO_SEQ_OCTET_CS_
 

@@ -25,6 +25,8 @@
 
 #include "tao/corba.h"
 
+ACE_RCSID(tao, decode, "$Id$")
+
 // The decoder is exactly the reverse of the encoder, except that:
 //
 //      * Unmarshaling some data types involve allocating memory.  Such

@@ -2,6 +2,8 @@
 
 #include "tao/Forwarding_Servant.h"
 
+ACE_RCSID(tao, Forwarding_Servant, "$Id$")
+
 TAO_Forwarding_Servant::TAO_Forwarding_Servant (CORBA::Object_ptr forward_to,
                                                 const char *interface_repository_id)
   : forward_to_ (CORBA::Object::_duplicate (forward_to)),

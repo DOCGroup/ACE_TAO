@@ -49,6 +49,8 @@
 # include "tao/GIOP.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(tao, GIOP, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_GIOP_Timeprobe_Description[] =

@@ -18,6 +18,8 @@
 # include "tao/Typecode.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(tao, Typecode, "$Id$")
+
 CORBA_TypeCode::Bounds::Bounds (void)
   : CORBA_UserException (CORBA::_tc_Bounds)
 {

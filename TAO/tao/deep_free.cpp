@@ -30,6 +30,8 @@
 
 #include "tao/corba.h"
 
+ACE_RCSID(tao, deep_free, "$Id$")
+
 CORBA::TypeCode::traverse_status
 DEEP_FREE (CORBA::TypeCode_ptr  param,
 	   const void *source,

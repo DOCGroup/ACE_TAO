@@ -6,6 +6,8 @@
 #include "tao/ORB_Strategies_T.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(tao, ORB_Strategies_T, "$Id$")
+
 template <class SH> int
 TAO_Reactive_Strategy<SH>::activate_svc_handler (SH *svc_handler, void *arg)
 {

@@ -7,6 +7,8 @@
 #include "tao/default_client.h"
 #include "tao/TAO_Internal.h"
 
+ACE_RCSID(tao, TAO_Internal, "$Id$")
+
 int TAO_Internal::service_open_count_ = 0;
 
 int

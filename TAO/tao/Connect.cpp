@@ -7,6 +7,8 @@
 # include "tao/Connect.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(tao, Connect, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Connect_Timeprobe_Description[] =

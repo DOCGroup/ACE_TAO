@@ -15,6 +15,8 @@
 # include "tao/IIOP_ORB.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(tao, IIOP_ORB, "$Id$")
+
 static const char ior_prefix [] = "IOR:";
 static const char iiop_prefix [] = "iiop:";
 

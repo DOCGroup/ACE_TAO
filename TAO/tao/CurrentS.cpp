@@ -9,6 +9,8 @@
 
 #include "corba.h"
 
+ACE_RCSID(tao, CurrentS, "$Id$")
+
 static const TAO_operation_db_entry CORBA_Current_operations [] = {
   {"_is_a", &POA_CORBA::Current::_is_a_skel}
 };

@@ -15,6 +15,8 @@
 // Timeprobes class
 #include "tao/Timeprobe.h"
 
+ACE_RCSID(tao, POA, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_POA_Timeprobe_Description[] =

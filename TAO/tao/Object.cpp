@@ -11,6 +11,8 @@
 # include "tao/Object.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(tao, Object, "$Id$")
+
 CORBA_Object::~CORBA_Object (void)
 {
   this->protocol_proxy_->_decr_refcnt ();

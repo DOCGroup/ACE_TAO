@@ -5,6 +5,8 @@
 #include "tao/corba.h"
 #include "tao/Object_Table.h"
 
+ACE_RCSID(tao, Object_Table, "$Id$")
+
 TAO_Object_Table_Iterator_Impl::~TAO_Object_Table_Iterator_Impl (void)
 {
 }

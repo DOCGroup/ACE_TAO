@@ -6,6 +6,8 @@
 #include "tao/Sequence.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(tao, Sequence, "$Id$")
+
 // *************************************************************
 // Operations for class TAO_Base_Sequence
 // *************************************************************

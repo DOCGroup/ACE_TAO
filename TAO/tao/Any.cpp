@@ -36,6 +36,8 @@
 # include "tao/Any.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID(tao, Any, "$Id$")
+
 CORBA::TypeCode_ptr
 CORBA_Any::type (void) const
 {
