@@ -1,3 +1,16 @@
+Mon Mar 04 17:29:25 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile:
+	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
+	* orbsvcs/performance-tests/RTEvent/lib/EC_Destroyer.h:
+	* orbsvcs/performance-tests/RTEvent/lib/EC_Destroyer.inl:
+	* orbsvcs/performance-tests/RTEvent/lib/EC_Destroyer.cpp:
+	  Factor out code to destroy the EC into an exception safe class.
+
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.cpp:
+	  Use new EC_Destroyer class.
+
 Mon Mar  4 13:38:11 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tests/Hello/Makefile:
@@ -24,7 +37,7 @@ Mon Mar  4 12:24:52 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
           Removed Any_out's assignment operator from const Any *. The C++
           mapping for Any_out is supposed to be the same as for any T_out
-          class, which contains no such assignment operator. Thanks to 
+          class, which contains no such assignment operator. Thanks to
           Don Hinton <dhinton@ieee.org> for pointing this out.
 
 Mon Mar  4 11:47:17 2002  Jeff Parsons <parsons@cs.wustl.edu>

@@ -106,6 +106,10 @@ SOURCE=.\Consumer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\EC_Destroyer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Loopback_Consumer.cpp
 # End Source File
 # Begin Source File
@@ -187,6 +191,10 @@ SOURCE=.\Client_Pair.h
 # Begin Source File
 
 SOURCE=.\Consumer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\EC_Destroyer.h
 # End Source File
 # Begin Source File
 
@@ -279,6 +287,10 @@ SOURCE=.\Client_Group.inl
 # Begin Source File
 
 SOURCE=.\Client_Pair.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\EC_Destroyer.inl
 # End Source File
 # Begin Source File
 
