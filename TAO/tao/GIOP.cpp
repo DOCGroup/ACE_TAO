@@ -776,7 +776,7 @@ TAO_GIOP::message_name (TAO_GIOP::Message_Type which)
 }
 
 TAO_GIOP_ReplyStatusType
-TAO_GIOP::convert_CORBA_to_GIOP_exception (CORBA::ExceptionType corba_type)
+TAO_GIOP::convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type)
 {
   switch (corba_type)
     {

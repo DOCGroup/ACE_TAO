@@ -582,7 +582,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
               // Write the exception
               CORBA::TypeCode_ptr except_tc = x->_type ();
 
-              CORBA::ExceptionType extype = CORBA::USER_EXCEPTION;
+              CORBA::exception_type extype = CORBA::USER_EXCEPTION;
               if (CORBA::SystemException::_narrow (x) != 0)
                 extype = CORBA::SYSTEM_EXCEPTION;
 
