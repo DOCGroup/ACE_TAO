@@ -86,6 +86,99 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 #endif /* ACE_HAS_THREADS */
 }
 
+// The following *printf functions aren't inline because
+// they use varargs.
+int 
+ACE_OS::fprintf (FILE *fp, const char *format, ...)
+{
+  // ACE_TRACE ("ACE_OS::fprintf");
+  int result = 0;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::vfprintf (fp, format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+}
+
+int 
+ACE_OS::printf (const char *format, ...)
+{
+  // ACE_TRACE ("ACE_OS::printf");
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::vprintf (format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+}
+
+int 
+ACE_OS::sprintf (char *buf, const char *format, ...)
+{
+  // ACE_TRACE ("ACE_OS::sprintf");
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::vsprintf (buf, format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+}
+
+#if defined (ACE_HAS_UNICODE)
+#if defined (ACE_WIN32)
+int 
+ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
+{
+  // ACE_TRACE ("ACE_OS::sprintf");
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::vswprintf (buf, format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+}
+#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_UNICODE */
+
+int 
+ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
+{
+  // ACE_TRACE ("ACE_OS::execl");
+#if defined (ACE_WIN32) || defined (VXWORKS)
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_NOTSUP_RETURN (-1);
+  // Need to write this code.
+  // ACE_OSCALL_RETURN (::execv (path, argv), int, -1);
+#endif /* ACE_WIN32 */
+}
+
+int 
+ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
+{
+  // ACE_TRACE ("ACE_OS::execle");
+#if defined (ACE_WIN32) || defined (VXWORKS)
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_NOTSUP_RETURN (-1);
+  // Need to write this code.
+  //  ACE_OSCALL_RETURN (::execve (path, argv, envp), int, -1);
+#endif /* ACE_WIN32 */
+}
+
+int 
+ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
+{
+  // ACE_TRACE ("ACE_OS::execlp");
+#if defined (ACE_WIN32) || defined (VXWORKS)
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_NOTSUP_RETURN (-1);
+  // Need to write this code.
+  //  ACE_OSCALL_RETURN (::execvp (file, argv), int, -1);
+#endif /* ACE_WIN32 */
+}
+
 // = Static initialization.
 
 // This is necessary to deal with POSIX pthreads insanity.  This
