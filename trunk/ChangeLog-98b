@@ -1,3 +1,7 @@
+Wed Sep 16 09:46:31 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-hpux-10.x.h: Added ACE_HAS_DIRENT.
+
 Tue Sep 15 20:25:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tests/test_config.h: Always #undef ACE_NLOGGING so the tests
