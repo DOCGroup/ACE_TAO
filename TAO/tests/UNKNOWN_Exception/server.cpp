@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "testS.h"
 #include "tao/PortableServer/POA.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (UNKNOWN_Exception, server, "$Id$")
 
