@@ -1,3 +1,9 @@
+Mon Sep 14 09:37:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch_T.h: Fixed a deadlock condition caused by acquiring
+ 	  the internal lock in multiple places during the same call.
+  	  Thanks to Jorn Jensen <jornj@funcom.com> for reporting this.
+
 Mon Sep 14 01:59:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Strategies_T.{h,i,cpp}: Added two new classes
