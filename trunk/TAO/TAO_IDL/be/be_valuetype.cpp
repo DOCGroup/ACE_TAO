@@ -124,7 +124,7 @@ be_valuetype::~be_valuetype (void)
 }
 
 void
-be_valuetype::redefine (AST_ValueType *from)
+be_valuetype::redefine (AST_Interface *from)
 {
   this->AST_ValueType::redefine (from);
 }
