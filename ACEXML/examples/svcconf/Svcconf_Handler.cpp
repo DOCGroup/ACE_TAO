@@ -44,10 +44,22 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                                      ACEXML_Env &xmlenv)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  // @@
-  ACE_UNUSED_ARG (xmlenv);
-
-  ACE_UNUSED_ARG (qName);
+  if (ACE_OS_String::strcmp (qName, "dynamic") == 0)
+    {
+    }
+  else if (ACE_OS_String::strcmp (qName, "static") == 0)
+    {
+    }
+  else if (ACE_OS_String::strcmp (qName, "module") == 0)
+    {
+      this->in_module_ = 0;
+    }
+  else if (ACE_OS_String::strcmp (qName, "stream") == 0)
+    {
+    }
+  else
+    {
+    }
 }
 
 void
