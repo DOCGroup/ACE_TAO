@@ -1,3 +1,9 @@
+Wed Aug 26 18:15:37 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/: Added a README file and 
+	  renamed the README and INSTALL files to README.OGI and
+ 	  INSTALL.OGI.
+
 Wed Aug 26 18:07:31 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tao/orb.h:
