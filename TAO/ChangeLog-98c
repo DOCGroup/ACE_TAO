@@ -1,6 +1,6 @@
 Tue Jun 23 16:47:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Core.h (class TAO_Collocation_Table_Lock): Rename
+	* tao/ORB_Core.{h,cpp} (class TAO_Collocation_Table_Lock): Rename
 	  TAO_COLTBL_Lock TO TAO_Collocation_Table_Lock.  COLTBL was a bit
 	  cryptic.  Changed its implementation to use the new
 	  ACE_Adaptive_Lock class.
