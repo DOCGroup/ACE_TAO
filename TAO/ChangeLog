@@ -7,8 +7,9 @@ Mon Sep 30 12:25:11 2002  Ossama Othman  <ossama@uci.edu>
 
 Mon Sep 30 11:40:20  2002 Priyanka Gontla <pgontla@doc.ece.uci.edu>
 
-     * orbsvcs/ImplRepo_Service/ImR_Activator.dsp:
-	   Committing again .. the previous commit seems to have problems.
+        * orbsvcs/ImplRepo_Service/ImR_Activator.dsp:
+	  Replaced 'ImR_Activator ' with ImR_Activator. The empty space at
+	  the end seems to have been causing the problems.
 
 Sat Sep 28 22:16:50 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
