@@ -1,3 +1,10 @@
+Fri Jun 25 13:53:23 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* examples/Logging/Makefile
+	  Oy. Added " -Ge 1" flag to guarantee that the IDL generated
+	  skeletons are the same regardless of platform (DU wasn't
+	  happy). Thanks to Mad Dog Carlos!
+
 Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Context.i:
