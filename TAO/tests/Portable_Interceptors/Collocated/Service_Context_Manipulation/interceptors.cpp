@@ -73,13 +73,12 @@ Echo_Client_Request_Interceptor::send_request (
   CORBA::String_var ior =
     this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-#if 0
+
   ACE_DEBUG ((LM_DEBUG,
               "%s.send_request "
               "from \"%s\"\n",
               this->myname_,
               operation.in ()));
-#endif /*if 0*/
 
   // Populate target member of the ClientRequestInfo.
 
@@ -107,7 +106,6 @@ Echo_Client_Request_Interceptor::send_request (
 
   ACE_UNUSED_ARG (buf2);
 
-#if 0
   if (ACE_OS::strcmp (buf2, request_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
@@ -116,7 +114,6 @@ Echo_Client_Request_Interceptor::send_request (
                     request_msg,
                     buf2));
     }
-#endif /*if 0*/
 }
 
 void
@@ -147,13 +144,11 @@ Echo_Client_Request_Interceptor::receive_reply (
     this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-#if 0
   ACE_DEBUG ((LM_DEBUG,
               "%s.receive_reply from "
               "\"%s\"\n",
               this->myname_,
               operation.in ()));
-#endif /*if 0*/
 
   ACE_TRY
     {
@@ -242,13 +237,11 @@ Echo_Client_Request_Interceptor::receive_exception (
     this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-#if 0
   ACE_DEBUG ((LM_DEBUG,
               "%s.received_exception "
               "from \"%s\"\n",
               this->myname_,
               operation.in ()));
-#endif /*if 0*/
 
     ACE_TRY
     {
@@ -337,12 +330,6 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
               this->myname_,
               operation.in ()));
 
-  // Ignore the "_is_a" operation since it may have been invoked
-  // locally on the server side as a side effect of another call,
-  // meaning that the client hasn't added the service context yet.
-  if (ACE_OS_String::strcmp ("_is_a", operation.in ()) == 0)
-    return;
-
   IOP::ServiceId id = ::service_id;
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (id ACE_ENV_ARG_PARAMETER);
@@ -403,7 +390,7 @@ Echo_Server_Request_Interceptor::send_reply (
   ACE_DEBUG ((LM_DEBUG,
               "%s.send_reply from \"%s\"\n",
               this->myname_,
-              ri->operation ()));
+              operation.in ()));
 
   // Check that the reply service context is set as expected.
   IOP::ServiceContext_var sc =

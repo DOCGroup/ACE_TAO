@@ -1,3 +1,10 @@
+Mon Mar 07 13:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+          Removed checks for _is_a, this was because PI was broken but now
+          things work
+
 Mon Mar 07 13:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Base.cpp:
