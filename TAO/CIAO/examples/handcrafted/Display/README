@@ -9,7 +9,7 @@ assembly which updates the display of current coordination of the car
 periodically.  It consists of 3 components as shown in
 <Configuration-0.png>.
 
-These components are:
+These components are all placed under their own subdirectories:
 
 * RateGen - A component that allows it's client to start/stop the rate
             generating event.
@@ -22,7 +22,7 @@ These components are:
         its Ready port to inform the event consumers that a new GPS
         reading is available.
 
-* navDisplay - A navigation display component that projects the
+* NavDisplay - A navigation display component that projects the
                current location of the vehicle on the windshield.
                When a navDisplay receives an event notifying the
                availability of new data on its Refresh port, it will

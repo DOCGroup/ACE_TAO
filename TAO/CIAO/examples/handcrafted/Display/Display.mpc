@@ -1,0 +1,26 @@
+project (HUD_stub) : ciao_client {
+  sharedname = HUD_stub
+  dll_flags  = HUD_STUB_BUILD_DLL
+  idlflags  += -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,stub_export_macro=HUD_STUB_Export -Wb,stub_export_include=HUD_stub_export.h -Wb,skel_export_macro=HUD_SKEL_Export -Wb,skel_export_include=HUD_skel_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+
+  IDL_Files {
+    HUDisplay.idl
+  }
+
+  Source_Files {
+    HUDisplayC.cpp
+  }
+}
+
+project (HUD_skel) : ciao_component {
+  depends += HUD_stub
+  sharedname = HUD_skel
+  dll_flags  = HUD_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    HUDisplayS.cpp
+  }
+}
