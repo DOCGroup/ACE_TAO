@@ -1,3 +1,10 @@
+Mon Jun 21 13:13:09 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* m4/config_h.m4:
+	  Removed ACE_HAS_SIGNAL_SAFE_OS_CALLS test.  The macro has
+	  been deprecated.
+
 Mon Jun 21 13:21:38 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/String_Base.cpp (resize): Don't free() the existing buffer if
