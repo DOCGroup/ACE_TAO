@@ -74,7 +74,7 @@ test_i::invoke_me (CORBA::Environment &ACE_TRY_ENV)
                   "(%P|%t) Problem extracting data from "
                   "CORBA::Any retrieved from TSC.\n"));
 
-      ACE_THROW ((CORBA::INTERNAL ()));
+      ACE_THROW (CORBA::INTERNAL ());
     }
   // ----------------------------------------------------
 
@@ -85,7 +85,8 @@ test_i::invoke_me (CORBA::Environment &ACE_TRY_ENV)
 
   data <<= str;
 
-  ACE_TRY
+
+  ACE_TRY_EX (foo)
     {
       this->current_->set_slot (this->slot_id_, data, ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -101,7 +102,7 @@ test_i::invoke_me (CORBA::Environment &ACE_TRY_ENV)
                   "Invalid slot: %u\n",
                   this->slot_id_));
 
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      ACE_TRY_THROW_EX (CORBA::INTERNAL (), foo);
     }
   ACE_ENDTRY;
   ACE_CHECK;
