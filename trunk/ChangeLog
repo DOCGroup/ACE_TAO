@@ -1,3 +1,13 @@
+Tue Nov  7 11:47:42 2000 Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Cached_Accept_Conn_Test.cpp:
+        * tests/Cached_Conn_Test.cpp:
+        * tests/Collection_Test.cpp:
+
+          Protected some of the explicit template instantiations with #if's
+          to make sure we don't get duplicate ones with ACE_INT32 == int
+          (since ACE_HANDLE and DATA are also int in some configurations).
+
 Tue Nov  7 09:04:15 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/RMCast.h:

@@ -123,7 +123,13 @@ int main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Unbounded_Set<DATA>;
 template class ACE_Unbounded_Set_Iterator<DATA>;
+
+#if (ACE_SIZEOF_INT != 4)
+// These might be already instantiated in ace/stats.cpp 
+// (if ACE_INT32 == int)
 template class ACE_Node<DATA>;
+#endif /* ACE_SIZEOF_INT != 4 */
+
 template class ACE_Array<DATA>;
 template class ACE_Array_Base<DATA>;
 template class ACE_Array_Iterator<DATA>;
