@@ -1,3 +1,20 @@
+Wed Aug 26 20:37:33 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Globals.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Globals.h:
+	* tests/Cubit/TAO/MT_Cubit/Makefile:
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+	* tests/Cubit/TAO/MT_Cubit/client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
+	* tests/Cubit/TAO/MT_Cubit/cubit_i.h:
+	* tests/Cubit/TAO/MT_Cubit/server.cpp:
+	* tests/Cubit/TAO/MT_Cubit/server.h: Added code to test ORB/OS CPU
+ 	overhead.  Separated code into different source files.  The server
+ 	does not depend on the Task_State class anymore.
+
 Wed Aug 26 20:13:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* utils/IOR-parser/*: Added this another utility (which was
