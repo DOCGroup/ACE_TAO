@@ -1,9 +1,17 @@
+Thu Apr 22 15:07:10 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          added PPC860 support.  Thanks to Todd Mullanix
+          <Todd.Mullanix@sylantro.com> figuring out how to
+          support it, with help from Thomas Mehrkam <Thomas_Mehrkam@i-o.com>
+          and Hai Vu <Hai_Vu@Mitel.Com>.
+
 Thu Apr 22 13:26:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/XtReactor.cpp (remove_handler_i): In the registration phase,
-	  we registered first with ACE_Select_Reactor and then with X.
-	  Now we are now doing things in reverse order.  Thanks to JM
-	  Strauss <jms97@club-internet.fr> for contributing these changes.
+        * ace/XtReactor.cpp (remove_handler_i): In the registration phase,
+          we registered first with ACE_Select_Reactor and then with X.
+          Now we are now doing things in reverse order.  Thanks to JM
+          Strauss <jms97@club-internet.fr> for contributing these changes.
 
 Thu Apr 22 13:23:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -19,7 +27,7 @@ Thu Apr 22 10:46:17 1999  Steve Huston  <shuston@riverace.com>
         * apps/JAWS/server: Added $(ACELIB) to LDLIBS to build libJAWS on AIX
           with xlC.
 
-	* tests/New_Fail_Test.cpp: Added __GNUG__ to the platforms which do not
+        * tests/New_Fail_Test.cpp: Added __GNUG__ to the platforms which do not
           actually perform the test; added some more explanation and a better
           log message for when it doesn't actually run.
 
