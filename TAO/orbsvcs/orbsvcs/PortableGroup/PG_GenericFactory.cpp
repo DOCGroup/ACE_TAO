@@ -72,8 +72,8 @@ TAO_PG_GenericFactory::create_object (
 
   PortableGroup::MembershipStyleValue membership_style =
     TAO_PG_MEMBERSHIP_STYLE;
-  PortableGroup::FactoriesValue * factory_infos = 0;  // Memory owned
-                                                      // by Any.
+  PortableGroup::FactoriesValue factory_infos;
+
   PortableGroup::InitialNumberMembersValue initial_number_members =
     TAO_PG_INITIAL_NUMBER_MEMBERS;
   PortableGroup::MinimumNumberMembersValue minimum_number_members =
@@ -137,8 +137,7 @@ TAO_PG_GenericFactory::create_object (
 
   TAO_PG_Factory_Set factory_set;
 
-  const CORBA::ULong factory_infos_count =
-    (factory_infos == 0 ? 0 : factory_infos->length ());
+  const CORBA::ULong factory_infos_count = factory_infos.length ();
 
   ACE_TRY
     {
@@ -147,7 +146,7 @@ TAO_PG_GenericFactory::create_object (
         {
           this->populate_object_group (object_group.in (),
                                        type_id,
-                                       *factory_infos,
+                                       factory_infos,
                                        initial_number_members,
                                        factory_set
                                        ACE_ENV_ARG_PARAMETER);
@@ -461,7 +460,7 @@ TAO_PG_GenericFactory::process_criteria (
   const char * type_id,
   const PortableGroup::Criteria & criteria,
   PortableGroup::MembershipStyleValue & membership_style,
-  PortableGroup::FactoriesValue *& factory_infos,
+  PortableGroup::FactoriesValue & factory_infos,
   PortableGroup::InitialNumberMembersValue & initial_number_members,
   PortableGroup::MinimumNumberMembersValue & minimum_number_members
   ACE_ENV_ARG_DECL)
@@ -500,9 +499,10 @@ TAO_PG_GenericFactory::process_criteria (
     }
 
   // Factories
+  const PortableGroup::FactoryInfos * factory_infos_tmp = 0;
   name[0].id = CORBA::string_dup ("org.omg.PortableGroup.Factories");
   if (TAO_PG::get_property_value (name, props.in (), value)
-      && !(value >>= factory_infos))
+      && !(value >>= factory_infos_tmp))
     {
       // This only occurs if extraction of the actual value from the
       // Any fails.
@@ -510,7 +510,7 @@ TAO_PG_GenericFactory::process_criteria (
     }
 
   const CORBA::ULong factory_infos_count =
-    (factory_infos == 0 ? 0 : factory_infos->length ());
+    (factory_infos_tmp == 0 ? 0 : factory_infos_tmp->length ());
 
   // InitialNumberMembers
   name[0].id =
@@ -555,13 +555,17 @@ TAO_PG_GenericFactory::process_criteria (
   // @note This code is not part of the above "MEMB_INF_CTRL" criteria
   //       check since the "name" and "value" variables have been
   //       changed.
-  if (membership_style == PortableGroup::MEMB_INF_CTRL
-      && (minimum_number_members < initial_number_members
-          || ACE_static_cast (CORBA::ULong,
-                              minimum_number_members) > factory_infos_count))
+  if (membership_style == PortableGroup::MEMB_INF_CTRL)
     {
-      unmet_criteria[uc].nam = name;
-      unmet_criteria[uc++].val = value;
+      if (minimum_number_members < initial_number_members
+          || ACE_static_cast (CORBA::ULong,
+                              minimum_number_members) > factory_infos_count)
+        {
+          unmet_criteria[uc].nam = name;
+          unmet_criteria[uc++].val = value;
+        }
+      else if (factory_infos_tmp != 0)
+        factory_infos = *factory_infos_tmp;
     }
 
   if (uc > 0)
