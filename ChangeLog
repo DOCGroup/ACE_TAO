@@ -1,8 +1,19 @@
+Fri Mar  7 06:35:09 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Parser.pm:
+
+          Fixed a bug introduced with the
+          "Thu Mar  6 08:06:35 2003  Chad Elliott" modification of
+          Driver.pm.  I made $cwd part of the class instead of a static
+          local.  The value wasn't being updated properly since Driver.pm
+          now "uses" Parser.  Thanks to Steve Huston for bringing this to my
+          attention.
+
 Thu Mar  6 14:49:37 2003  Steve Huston  <shuston@riverace.com>
 
-	* apps/mkcsregdb/mkcsregdb.cpp: const_cast pointers that need to be
-	  delete[]-ed sp MSVC 6 doesn't complain. static_cast result of
-	  strtol() to ACE_CDR::UShort when needed.
+        * apps/mkcsregdb/mkcsregdb.cpp: const_cast pointers that need to be
+          delete[]-ed sp MSVC 6 doesn't complain. static_cast result of
+          strtol() to ACE_CDR::UShort when needed.
 
 Thu Mar  6 11:41:46 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -57,7 +68,7 @@ Wed Mar  5 07:05:11 2003  Phil Mesnier  <mesnier_p@ociweb.com>
         * ace/ace.icc:
         * ace/ace_dll64.mak:
         * ace/ace_lib64.mak:
-	  Added codeset registry files to more makefiles.
+          Added codeset registry files to more makefiles.
 
 Wed Mar  5 06:32:40 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -66,7 +77,7 @@ Wed Mar  5 06:32:40 2003  Phil Mesnier  <mesnier_p@ociweb.com>
         * ace/ace_lib.dsp:
 
           Added codeset registry files and fixed spelling error in
-	  Makefile.bor. 
+          Makefile.bor.
 
 Wed Mar  5 06:10:48 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -114,10 +125,10 @@ Tue Mar  4 13:54:52 2003  Phil Mesnier  <mesnier_p@ociweb.com>
         * ace/Codeset_Registry.inl:
 
           New files added to support the codeset framework. The Codeset
-	  Registry is either a wrapper for dce code and character set
-	  registry functions, if the system supports them, or these
-	  fucntions are emulated. Only the functions necessary to support
-	  TAO's Codeset translation framework are emulated.
+          Registry is either a wrapper for dce code and character set
+          registry functions, if the system supports them, or these
+          fucntions are emulated. Only the functions necessary to support
+          TAO's Codeset translation framework are emulated.
 
         * ace/Codeset_Registry_db.cpp:
 
