@@ -28,7 +28,8 @@ use vars qw(@ISA);
 my($wsext) = 'mwc';
 
 ## Valid names for assignments within a workspace
-my(%validNames) = ('cmdline' => 1,
+my(%validNames) = ('cmdline'  => 1,
+                   'implicit' => 1,
                   );
 
 # ************************************************************
@@ -188,18 +189,40 @@ sub search_for_files {
   my($files) = shift;
   my($exts)  = shift;
   my($array) = shift;
+  my($impl)  = $self->get_assignment('implicit');
 
   foreach my $file (@$files) {
     if (-d $file) {
       my(@f) = $self->generate_default_file_list($file);
       $self->search_for_files(\@f, $exts, $array);
+      if ($impl) {
+        unshift(@$array, $file);
+      }
     }
     else {
       foreach my $ext (@$exts) {
         if ($file =~ /$ext$/) {
           unshift(@$array, $file);
-          last;
         }
+      }
+    }
+  }
+}
+
+
+sub remove_duplicate_projects {
+  my($self)  = shift;
+  my($list)  = shift;
+  my($count) = scalar(@$list);
+
+  for(my $i = 0; $i < $count; ++$i) {
+    my($file) = $$list[$i];
+    foreach my $inner (@$list) {
+      if ($file ne $inner && $file eq dirname($inner) && ! -d $inner) {
+        splice(@$list, $i, 1);
+        --$count;
+        --$i;
+        last;
       }
     }
   }
@@ -211,6 +234,8 @@ sub generate_default_components {
   my($files) = shift;
   my($pjf)   = $self->{'project_files'};
   my(@exts)  = ('\\.mpc');
+  my($impl)  = $self->get_assignment('implicit');
+
   if (defined $$pjf[0]) {
     ## If we have files, then process directories
     my(@built) = ();
@@ -225,12 +250,26 @@ sub generate_default_components {
         push(@built, $file);
       }
     }
+
+    ## If the workspace is set to implicit
+    if ($impl) {
+      ## Remove duplicates from this list
+      $self->remove_duplicate_projects(\@built);
+    }
+
+    ## Set the project files
     $self->{'project_files'} = \@built;
   }
   else {
     ## Add all of the mpc files in this directory
     ## and in the subdirectories.
     $self->search_for_files($files, \@exts, $pjf);
+
+    ## If the workspace is set to implicit
+    if ($impl) {
+      ## Remove duplicates from this list
+      $self->remove_duplicate_projects($pjf);
+    }
 
     ## If no files were found, then we push the empty
     ## string, so the Project Creator will generate
@@ -328,9 +367,16 @@ sub generate_project_files {
   my(%pi)         = ();
   my($generator)  = $self->project_creator();
   my($cwd)        = $self->getcwd();
+  my($impl)       = $self->get_assignment('implicit');
 
-  foreach my $file (@{$self->{'project_files'}}) {
+  foreach my $ofile (@{$self->{'project_files'}}) {
+    my($file) = $ofile;
     my($dir)  = dirname($file);
+
+    if ($impl && -d $file) {
+      $dir  = $file;
+      $file = '';
+    }
 
     ## We must change to the subdirectory for
     ## which this project file is intended
@@ -351,7 +397,7 @@ sub generate_project_files {
       ## If we need to generate a workspace file per project
       ## then we generate a temporary project info and projects
       ## array and call write_project().
-      if ($dir ne '.' && $self->workspace_per_project()) {
+      if ($dir ne '.' && defined $$gen[0] && $self->workspace_per_project()) {
         my(%perpi)       = ();
         my(@perprojects) = ();
         $self->save_project_info($gen, $gpi, '.', \@perprojects, \%perpi);

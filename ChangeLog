@@ -1,7 +1,17 @@
+Mon Mar 31 14:03:35 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added an 'implicit' assignment to the workspace that will cause
+          the workspace creator to generate projects in directories where
+          there are no mpc files.  If no valid project can be made, then
+          that directory is ignored.
+
 Mon Mar 31 12:32:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/tao_orb_tests.lst: Added the new collocation tests to the
-	  daily builds.
+        * bin/tao_orb_tests.lst: Added the new collocation tests to the
+          daily builds.
 
 Mon Mar 31 08:44:16 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -26,111 +36,111 @@ Mon Mar 31 08:19:16 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Mar 31 15:51:54 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* tests/Unbounded_Set_Test.cpp:
-	
-	  Verify that a set may be emptied while an iterator on the set is
-	  in-scope but inactive.
+        * tests/Unbounded_Set_Test.cpp:
 
-	  Changed the "Selective deletion of elements" step not to summon
-	  bug 1460.
+          Verify that a set may be emptied while an iterator on the set is
+          in-scope but inactive.
+
+          Changed the "Selective deletion of elements" step not to summon
+          bug 1460.
 
 Mon Mar 31 14:13:31 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* apps/mkcsregdb/mkcsregdb.dsp: Added release configuration custom build step.
+        * apps/mkcsregdb/mkcsregdb.dsp: Added release configuration custom build step.
 
 Sun Mar 30 21:46:54 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/topinfo_iorsize_stats.sh: Added data collection points for
-	  optimized cases.
+        * bin/topinfo_iorsize_stats.sh: Added data collection points for
+          optimized cases.
 
 Sun Mar 30 09:12:16 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Connector.cpp (handle_timeout): Restructured the code so that
-	  if the call to sh->handle_close() deletes the handlers, which in
- 	  turn deletes the connector, the decr_ast_refcount() call won't
- 	  cause a crash.  Thanks to Tomer Amiaz <Tomer@bandwiz.com> for
- 	  reporting this bug and supplying a fix.
+        * ace/Connector.cpp (handle_timeout): Restructured the code so that
+          if the call to sh->handle_close() deletes the handlers, which in
+          turn deletes the connector, the decr_ast_refcount() call won't
+          cause a crash.  Thanks to Tomer Amiaz <Tomer@bandwiz.com> for
+          reporting this bug and supplying a fix.
 
 Sat Mar 29 16:34:56 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* THANKS: Added Bertin Colpron to the hall of fame.
+        * THANKS: Added Bertin Colpron to the hall of fame.
 
 Fri Mar 28 10:18:48 2003  Steve Huston  <shuston@riverace.com>
 
-	* bin/PerlACE/Process_Win32.pm: For WinCE, when generating the
-	  Pocket Controller script, put a 60-second sleep between running the
-	  test and grabbing the log file. The script doesn't wait for the
-	  program to exit before continuing. Will take this up with SOTI,
-	  makers of Pocket Controller.
+        * bin/PerlACE/Process_Win32.pm: For WinCE, when generating the
+          Pocket Controller script, put a 60-second sleep between running the
+          test and grabbing the log file. The script doesn't wait for the
+          program to exit before continuing. Will take this up with SOTI,
+          makers of Pocket Controller.
 
-	* ace/Configuration.cpp (ACE_Configuration_Win32Registry::remove_section):
-	  In the non-recursive case, try to delete the key; previously only
-	  tried to delete the key if recursive.
+        * ace/Configuration.cpp (ACE_Configuration_Win32Registry::remove_section):
+          In the non-recursive case, try to delete the key; previously only
+          tried to delete the key if recursive.
 
-	* tests/Config_Test.cpp: When reporting failed file import, list why
-	  (%p), not the failed return status (-1). Also fixed many ACE_DEBUG
-	  and ACE_ERROR strings by enclosing in ACE_TEXT.
+        * tests/Config_Test.cpp: When reporting failed file import, list why
+          (%p), not the failed return status (-1). Also fixed many ACE_DEBUG
+          and ACE_ERROR strings by enclosing in ACE_TEXT.
 
-	* tests/Conn_Test.cpp: When displaying a hostname, properly adjust
-	  to the charset width in use.
+        * tests/Conn_Test.cpp: When displaying a hostname, properly adjust
+          to the charset width in use.
 
-	* tests/run_test.lst: Added !WinCE to Env_Value_Test. CE doesn't
-	  do environment variables.
+        * tests/run_test.lst: Added !WinCE to Env_Value_Test. CE doesn't
+          do environment variables.
 
 Thu Mar 27 14:20:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* THANKS: Added Jia Wan to the hall of fame.
+        * THANKS: Added Jia Wan to the hall of fame.
 
 Wed Mar 26 16:45:29 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* THANKS: Added Sebastien Lalonde to the hall of fame.
+        * THANKS: Added Sebastien Lalonde to the hall of fame.
 
 Wed Mar 26 16:48:31 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-WinCE.h: Let ACE_HAS_WINSOCK2 be conditional on the CE
-	  version; there was a #define ACE_HAS_WINSOCK2 at the end of the
-	  file that shouldn't have been there.
+        * ace/config-WinCE.h: Let ACE_HAS_WINSOCK2 be conditional on the CE
+          version; there was a #define ACE_HAS_WINSOCK2 at the end of the
+          file that shouldn't have been there.
 
-	* ace/config-win32-common.h: For WinCE and ACE_HAS_WINSOCK2, need
-	  to define the errno codes without WSA prefixes. Also, WinCE (at
-	  least at CE 4.0) doesn't have Winsock 2 extensions, so don't pull
-	  in mswsock.h, and set up to link ws2.lib, not ws2_32.lib.
+        * ace/config-win32-common.h: For WinCE and ACE_HAS_WINSOCK2, need
+          to define the errno codes without WSA prefixes. Also, WinCE (at
+          least at CE 4.0) doesn't have Winsock 2 extensions, so don't pull
+          in mswsock.h, and set up to link ws2.lib, not ws2_32.lib.
 
-	* ace/Reactor.cpp: Don't use ACE_HAS_WINCE to block out
-	  ACE_WFMO_Reactor; use the more direct tests (Winsock versions) if
-	  needed.
+        * ace/Reactor.cpp: Don't use ACE_HAS_WINCE to block out
+          ACE_WFMO_Reactor; use the more direct tests (Winsock versions) if
+          needed.
 
-	* ace/SPIPE_Stream.i (send_handle): Don't attempt this on WinCE even
-	  though CE4 has ACE_HAS_WINSOCK2. It doesn't have WSADuplicateSocket.
+        * ace/SPIPE_Stream.i (send_handle): Don't attempt this on WinCE even
+          though CE4 has ACE_HAS_WINSOCK2. It doesn't have WSADuplicateSocket.
 
 Wed Mar 26 16:15:39 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* ace/Unbounded_Set.h:
-	* ace/Unbounded_Set.cpp:
-	* ace/Unbounded_Set.inl:
-	* ace/Node.h:
-	* ace/Node.cpp:
-	* tests/Makefile:
-	* tests/Makefile.am:
-	* tests/Makefile.bor:
+        * ace/Unbounded_Set.h:
+        * ace/Unbounded_Set.cpp:
+        * ace/Unbounded_Set.inl:
+        * ace/Node.h:
+        * ace/Node.cpp:
+        * tests/Makefile:
+        * tests/Makefile.am:
+        * tests/Makefile.bor:
 
-	  Reverted changes to the above to position before changelog entry:
-	  Mon Mar 24 13:16:29 CET 2003  Oliver Kellog
-	
+          Reverted changes to the above to position before changelog entry:
+          Mon Mar 24 13:16:29 CET 2003  Oliver Kellog
+
 Wed Mar 26 16:48:54 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* tests/Unbounded_Set_Test.cpp:
-	
-	  Corrected signature of main program and inserted an
-	  ACE_START_TEST/ACE_END_TEST.  Thanks to Johnny Willemsen for
-	  suggesting this.
+        * tests/Unbounded_Set_Test.cpp:
+
+          Corrected signature of main program and inserted an
+          ACE_START_TEST/ACE_END_TEST.  Thanks to Johnny Willemsen for
+          suggesting this.
 
 Wed Mar 26 11:33:15 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* ace/Unbounded_Set.cpp (ACE_Unbounded_Set<T>::delete_nodes):
+        * ace/Unbounded_Set.cpp (ACE_Unbounded_Set<T>::delete_nodes):
 
-	  Temporarily commented out the ACE_ASSERT(number_of_iterators_ ==
-	  0) until the iterator usage problem is repaired in TAO.
+          Temporarily commented out the ACE_ASSERT(number_of_iterators_ ==
+          0) until the iterator usage problem is repaired in TAO.
 
 Tue Mar 25 21:08:04 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -165,129 +175,129 @@ Tue Mar 25 21:08:04 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Tue Mar 25 09:01:00 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Default_Constants.h (ACE_CONNECTOR_HANDLER_MAP_SIZE):
+        * ace/Default_Constants.h (ACE_CONNECTOR_HANDLER_MAP_SIZE):
 
-	  Changed type of this constant from "size_t" to "unsigned int".
-	  This header does not include system headers that define "size_t"
-	  type.  Fixes a syntax error on some platforms.
+          Changed type of this constant from "size_t" to "unsigned int".
+          This header does not include system headers that define "size_t"
+          type.  Fixes a syntax error on some platforms.
 
 Tue Mar 25 17:09:22 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	From Rudolf Weber <rfweber@tesionmail.de>
-	* ace/Unbounded_Set.cpp:
-	  Correction to the handling of the deleted_ flag in the iterators.
+        From Rudolf Weber <rfweber@tesionmail.de>
+        * ace/Unbounded_Set.cpp:
+          Correction to the handling of the deleted_ flag in the iterators.
 
-	* tests/Unbounded_Set_Test.cpp:
-	  Extended towards making it a general test of the ACE_Unbounded_Set.
-	  Added test for the ACE_Unbounded_Set_Const_Iterator.
+        * tests/Unbounded_Set_Test.cpp:
+          Extended towards making it a general test of the ACE_Unbounded_Set.
+          Added test for the ACE_Unbounded_Set_Const_Iterator.
 
 Tue Mar 25 10:44:23 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* ace/Unbounded_Set.{h,cpp}: Removed the `const' at the
-	  ACE_Unbounded_Set::iterator_leave() method declaration.
+        * ace/Unbounded_Set.{h,cpp}: Removed the `const' at the
+          ACE_Unbounded_Set::iterator_leave() method declaration.
 
 Mon Mar 24 22:05:56 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/Default_Constants.h: Added a const value for the connector's
-	  map size.
-	* ace/Connector.cpp: Used the constant value to configure the
-	  internal map. Too large a map doesnt help with run-time
-	  footprint.
+        * ace/Default_Constants.h: Added a const value for the connector's
+          map size.
+        * ace/Connector.cpp: Used the constant value to configure the
+          internal map. Too large a map doesnt help with run-time
+          footprint.
 
 Mon Mar 24 18:06:49 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.pl: Modified the script to do the following
+        * bin/auto_run_tests.pl: Modified the script to do the following
 
-	  - Added an option to run only TAO tests in $TAO_ROOT/tests.
-	  - Instead of reading just one file for all the tests and
-	    examples in our daily builds, we will now use 3 files. One of
-	    the files is for ACE tests, one for tests in TAO and the last
-	    one is for all the other tests and examples in TAO.
+          - Added an option to run only TAO tests in $TAO_ROOT/tests.
+          - Instead of reading just one file for all the tests and
+            examples in our daily builds, we will now use 3 files. One of
+            the files is for ACE tests, one for tests in TAO and the last
+            one is for all the other tests and examples in TAO.
 
-	  This provides various flexibilities for a poor developer like
-	  yours truly, to just build and run all the tests in TAO/tests
-	  after making changes to the ORB Core. It helps automating some
-	  development work. We could also take this to our daily
-	  builds. We will see more of this over a period of time.
+          This provides various flexibilities for a poor developer like
+          yours truly, to just build and run all the tests in TAO/tests
+          after making changes to the ORB Core. It helps automating some
+          development work. We could also take this to our daily
+          builds. We will see more of this over a period of time.
 
-	  The changes should be backward compatible and shouldnt break any
-	  of the existing builds.
+          The changes should be backward compatible and shouldnt break any
+          of the existing builds.
 
-	* bin/ace_tests.lst:
-	* bin/tao_orb_tests.lst:
-	* bin/tao_other_tests.lst: New configuration files for ACE+TAO
-	  tests. We will use only this to add new tests to ACE+TAO.
+        * bin/ace_tests.lst:
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst: New configuration files for ACE+TAO
+          tests. We will use only this to add new tests to ACE+TAO.
 
-	* bin/auto_run_tests.lst: Removed this file from the repo.
+        * bin/auto_run_tests.lst: Removed this file from the repo.
 
 Mon Mar 24 10:23:08 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Context.h:
+        * ace/SSL/SSL_Context.h:
 
-	  No longer any need to include "ace/Singleton.h" due to the below
-	  change.
+          No longer any need to include "ace/Singleton.h" due to the below
+          change.
 
-	From David Kinder <david.kinder@sophos.com>
-	* ace/SSL/SSL_Context.inl (instance):
-	* ace/SSL/SSL_Context.cpp (instance):
+        From David Kinder <david.kinder@sophos.com>
+        * ace/SSL/SSL_Context.inl (instance):
+        * ace/SSL/SSL_Context.cpp (instance):
 
-	  Uninlined this method.  Fixes a problem found in Win32 "release"
-	  builds where an application could end up with multiple
-	  ACE_SSL_Context singleton instances.  [Bug 1475]
+          Uninlined this method.  Fixes a problem found in Win32 "release"
+          builds where an application could end up with multiple
+          ACE_SSL_Context singleton instances.  [Bug 1475]
 
 Mon Mar 24 18:03:34 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* ace/Unbounded_Set.{h,cpp}:
+        * ace/Unbounded_Set.{h,cpp}:
 
-	  Added method const_iterator_leave() in class ACE_Unbounded_Set.
-	  The destructor of the ACE_Unbounded_Set_Const_Iterator calls
-	  it. Deleted elements are not cleaned up in that case, but they
-	  probably don't need to, given that we are dealing with a "const"
-	  set.
+          Added method const_iterator_leave() in class ACE_Unbounded_Set.
+          The destructor of the ACE_Unbounded_Set_Const_Iterator calls
+          it. Deleted elements are not cleaned up in that case, but they
+          probably don't need to, given that we are dealing with a "const"
+          set.
 
-	  Thanks to Jeff Parsons for noticing the problem.
+          Thanks to Jeff Parsons for noticing the problem.
 
 Mon Mar 24 06:54:55 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/config-linux-common.h: Change the ACE_DEFAULT_BASE_ADDR for
-	  the IA-64 from 0x8 to 0x0 so the Linux kernel can choose the
- 	  right value.  Thanks to Sergei Pimenov
- 	  <sergei.pimenov@intel.com> for reporting this.
+        * ace/config-linux-common.h: Change the ACE_DEFAULT_BASE_ADDR for
+          the IA-64 from 0x8 to 0x0 so the Linux kernel can choose the
+          right value.  Thanks to Sergei Pimenov
+          <sergei.pimenov@intel.com> for reporting this.
 
 Mon Mar 24 13:16:29 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* ace/Node.{h,cpp}:
-	* ace/Unbounded_Set.{h,inl,cpp}:
+        * ace/Node.{h,cpp}:
+        * ace/Unbounded_Set.{h,inl,cpp}:
 
-	  Fix for Bugzilla bug 1460 supplied by Rudolf Weber
-	  <rfweber@tesionmail.de>, adds a `deleted' flag to ACE_Node, and
-	  adds corresponding management methods to ACE_Unbounded_Set.
+          Fix for Bugzilla bug 1460 supplied by Rudolf Weber
+          <rfweber@tesionmail.de>, adds a `deleted' flag to ACE_Node, and
+          adds corresponding management methods to ACE_Unbounded_Set.
 
-	* tests/Unbounded_Set_Test.{cpp,icc}: New.
+        * tests/Unbounded_Set_Test.{cpp,icc}: New.
 
-	* tests/Makefile, tests/Makefile.{am,bor}:
-	  Add Unbounded_Set_Test.cpp, a regression test for bug 1460.
+        * tests/Makefile, tests/Makefile.{am,bor}:
+          Add Unbounded_Set_Test.cpp, a regression test for bug 1460.
 
 Sat Mar 22 11:58:12 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Configuration.cpp: When remove_section() was called the
-	  buckets created for the value and section hash map were not
-	  deleted.  Added two new lines after
-	  if (index_->unbind (SectionExtId, allocator_))
-	    return -1;
+        * ace/Configuration.cpp: When remove_section() was called the
+          buckets created for the value and section hash map were not
+          deleted.  Added two new lines after
+          if (index_->unbind (SectionExtId, allocator_))
+            return -1;
 
           as follows:
 
-	  value_hash_map->close();
-	  section_entry->int_id_.section_hash_map_->close(allocator_);
+          value_hash_map->close();
+          section_entry->int_id_.section_hash_map_->close(allocator_);
 
           Thanks to Sandip Patel <spatel@pwcwireless.com> for reporting
- 	  this.
+          this.
 
-	* ace/Message_Queue_T.cpp: Moved the notify() hook calls within
-	  the protection of the guard lock critical section to prevent
- 	  race conditions on cleanup.  Thanks to Ron Muck <rlm@sdiusa.com>
-	  for this suggestion.
+        * ace/Message_Queue_T.cpp: Moved the notify() hook calls within
+          the protection of the guard lock critical section to prevent
+          race conditions on cleanup.  Thanks to Ron Muck <rlm@sdiusa.com>
+          for this suggestion.
 
 Fri Mar 21 13:07:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
