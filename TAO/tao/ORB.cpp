@@ -393,7 +393,6 @@ CORBA_ORB::resolve_poa_current (void)
     return result._retn ();
 }
 
-
 CORBA_Object_ptr
 CORBA_ORB::resolve_name_service (ACE_Time_Value *timeout)
 {
