@@ -90,7 +90,7 @@ public:
   virtual int activate (long flags = THR_NEW_LWP, 
 			int n_threads = 1, 
 			int force_active = 0,
-			long priority = -1,
+			long priority = ACE_DEFAULT_THREAD_PRIORITY,
 			int grp_id = -1,
 			ACE_Task_Base *task = 0); 
   // Turn the task into an active object, i.e., having <n_threads> of
@@ -110,7 +110,8 @@ public:
   // THR_SCHED_RR, THR_SCHED_DEFAULT
   // = END<INDENT>
   // 
-  // By default, or if <{priority}> is set to -1, an "appropriate"
+  // By default, or if <{priority}> is set to ACE_DEFAULT_THREAD_PRIORITY,
+  // an "appropriate"
   // priority value for the given scheduling policy (specified in
   // <{flags}>, e.g., <THR_SCHED_DEFAULT>) is used.  This value is
   // calculated dynamically, and is the median value between the
