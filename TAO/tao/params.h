@@ -25,7 +25,6 @@
 class TAO_Server_Connection_Handler;
 class TAO_Active_Object_Map_Impl;
 class TAO_Reverse_Active_Object_Map_Impl;
-class TAO_IOR_LookupTable;
 
 // This is a quick hack to avoid having to unravel the intracacies of
 // the all the hairy order interdepencies that currently exist in TAO.
@@ -114,23 +113,13 @@ public:
 
   int use_lite_protocol (void) const;
   void use_lite_protocol (int);
-  // The ORB will use a modified version of GIOP that minimizes the
-  // header size. By default we use the standard GIOP protocol.
+  // The ORB will use a modified version of IIOP that minimizes the
+  // header size. By default we use the standard IIOP protocol.
 
   int use_dotted_decimal_addresses (void) const;
   void use_dotted_decimal_addresses (int);
   // The ORB will use the dotted decimal notation for addresses. By
   // default we use the full ascii names.
-
-  TAO_IOR_LookupTable * ior_lookup_table (void);
-  void ior_lookup_table (TAO_IOR_LookupTable *table);
-  // The table used by the ORB for looking up the ObjectID:IOR mappings
-  // specified on the commandline through the -ORBInitRef and
-  // -ORBDefaultInitRef parameters.
-
-  char *default_init_ref (void) const;
-  void default_init_ref (const ACE_CString &default_init_ref);
-  // Set/Get the Init Reference of an arbitrary ObjectID.
 
 private:
   ACE_INET_Addr addr_;
@@ -153,14 +142,6 @@ private:
 
   ACE_CString init_ref_;
   // Initial Reference supplied as <ObjectID>:<IOR>
-
-  TAO_IOR_LookupTable *ior_lookup_table_;
-  // Table that has the mapping <ObjectID>:<IOR>
-  // The IOR could be in any of the following formats :
-  // IOR: ...  / iiop: ...  / iioploc: ... / iiopname: ...
-
-  ACE_CString default_init_ref_;
-  // List of comma separated prefixes from ORBDefaultInitRef.
 
   int sock_rcvbuf_size_;
   // Size to be used for a socket's receive buffer.
@@ -194,6 +175,44 @@ enum TAO_Demux_Strategy
   TAO_DYNAMIC_HASH,
   TAO_ACTIVE_DEMUX,
   TAO_USER_DEFINED
+};
+
+class TAO_Export TAO_OA_Parameters
+  // = TITLE
+  //    Parameters specific to an Object Adapter.  By definition, this
+  //    is only on the server side, since a client does not have an
+  //    object adapter.
+  //
+  // = NOTES
+  //    This can be subclassed in order to have OA-specific
+  //    parameters, e.g., the Realtime Object Adapter might subclass
+  //    this and add its own parameters.
+{
+public:
+  TAO_LOCAL_INLINE TAO_OA_Parameters (void);
+  // Constructor
+
+  TAO_LOCAL_INLINE ~TAO_OA_Parameters (void);
+  // Destructor
+
+  TAO_LOCAL_INLINE TAO_Active_Object_Map_Impl *userdef_lookup_strategy_for_user_id_policy (void);
+  // return the lookup strategy for the user id policy
+
+  TAO_LOCAL_INLINE TAO_Active_Object_Map_Impl *userdef_lookup_strategy_for_system_id_policy (void);
+  // return the lookup strategy for the system id policy
+
+  TAO_LOCAL_INLINE TAO_Reverse_Active_Object_Map_Impl *userdef_reverse_lookup_strategy_for_unique_id_policy (void);
+  // return the reverse lookup strategy for unique id policy
+
+  TAO_LOCAL_INLINE void tablesize (CORBA::ULong tablesize);
+  // set the table size for lookup table
+
+  TAO_LOCAL_INLINE CORBA::ULong tablesize (void);
+  // get the table size for the lookup table
+
+private:
+  CORBA::ULong tablesize_;
+  // size of object lookup table
 };
 
 #if defined (__ACE_INLINE__)

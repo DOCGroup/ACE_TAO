@@ -2,23 +2,17 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Proactor.h"
-#include "ace/Proactor_Impl.h"
-#include "ace/Object_Manager.h"
-#include "ace/Task_T.h"
 
 ACE_RCSID(ace, Proactor, "$Id$")
 
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
-// This only works on Win32 platforms and on Unix platforms with aio
-// calls.
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) \
+  || (defined (ACE_HAS_AIO_CALLS))
+  // This only works on Win32 platforms and on Unix platforms with aio
+  // calls.
+
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
-
-#if defined (ACE_HAS_AIO_CALLS)
-#   include "ace/POSIX_Proactor.h"
-#else /* !ACE_HAS_AIO_CALLS */
-#   include "ace/WIN32_Proactor.h"
-#endif /* ACE_HAS_AIO_CALLS */
+#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Proactor.i"
@@ -34,40 +28,31 @@ int ACE_Proactor::delete_proactor_ = 0;
 // Terminate the eventloop.
 sig_atomic_t ACE_Proactor::end_event_loop_ = 0;
 
-// Number of threads in the event loop.
-sig_atomic_t ACE_Proactor::event_loop_thread_count_ = 0;
-
 class ACE_Export ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
+// = TITLE
+//     A Handler for timer. It helps in the management of timers
+//     registered with the Proactor.
+//
+// = DESCRIPTION
+//     This object has a thread that will wait on the earliest time
+//     in a list of timers and an event. When a timer expires, the
+//     thread will post a completion event on the port and go back
+//     to waiting on the timer queue and event. If the event is
+//     signaled, the thread will refresh the time it is currently
+//     waiting on (in case the earliest time has changed)
 {
-  // = TITLE
-  //     A Handler for timer. It helps in the management of timers
-  //     registered with the Proactor.
-  //
-  // = DESCRIPTION
-  //     This object has a thread that will wait on the earliest time
-  //     in a list of timers and an event. When a timer expires, the
-  //     thread will post a completion event on the port and go back
-  //     to waiting on the timer queue and event. If the event is
-  //     signaled, the thread will refresh the time it is currently
-  //     waiting on (in case the earliest time has changed).
-  
   friend class ACE_Proactor;
   // Proactor has special privileges
   // Access needed to: timer_event_
 
-public:
+ public:
   ACE_Proactor_Timer_Handler (ACE_Proactor &proactor);
   // Constructor.
 
-  virtual ~ACE_Proactor_Timer_Handler (void);
+  ~ACE_Proactor_Timer_Handler (void);
   // Destructor.
 
-  int destroy (void);
-  // Proactor calls this to shut down the timer handler
-  // gracefully. Just calling the destructor alone doesnt do what
-  // <destroy> does. <destroy> make sure the thread exits properly. 
-
-protected:
+ protected:
   virtual int svc (void);
   // Run by a daemon thread to handle deferred processing. In other
   // words, this method will do the waiting on the earliest timer and
@@ -97,59 +82,184 @@ ACE_Proactor_Timer_Handler::~ACE_Proactor_Timer_Handler (void)
 
   // Signal timer event.
   this->timer_event_.signal ();
-  
-  // Wait for the Timer Handler thread to exit. 
-  this->thr_mgr ()->wait ();
 }
 
 int
 ACE_Proactor_Timer_Handler::svc (void)
 {
+#if defined (ACE_HAS_AIO_CALLS)
+  // @@ To be implemented.
+  return 0;
+#else /* ACE_HAS_AIO_CALLS */
+  u_long time;
   ACE_Time_Value absolute_time;
-  int empty_flag = 0;
-  int result = 0;
 
   while (this->shutting_down_ == 0)
     {
-      // Is the timer queue empty?
-      empty_flag = this->proactor_.timer_queue ()->is_empty ();
-      
-      if (!empty_flag)
-	{
-	  // Get the earliest absolute time.
-	  absolute_time = this->proactor_.timer_queue ()->earliest_time ();
-          
-          // Block for absolute time.
-          result = this->timer_event_.wait (&absolute_time);
-        }
-      else
+      // default value
+      time = ACE_INFINITE;
+
+      // If the timer queue is not empty
+      if (!this->proactor_.timer_queue ()->is_empty ())
         {
-          // Wait for ever.
-          result = this->timer_event_.wait ();
+          // Get the earliest absolute time.
+          absolute_time
+            = this->proactor_.timer_queue ()->earliest_time ()
+            - this->proactor_.timer_queue ()->gettimeofday ();
+
+          // Time to wait.
+          time = absolute_time.msec ();
         }
-      
-      // Check for timer expiries.
-      if (result == -1)
+
+      // Wait for event upto <time> milli seconds.
+      u_int result = ::WaitForSingleObject (this->timer_event_.handle (),
+                                            time);
+      switch (result)
         {
-          switch (errno)
-            {
-            case ETIME:
-              // timeout: expire timers
-              this->proactor_.timer_queue ()->expire ();
-              break;
-            default:
-              // Error.
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("%N:%l:(%P | %t):%p\n"),
-                                 ASYS_TEXT ("ACE_Proactor_Timer_Handler::svc:wait failed")),
-                                -1);
-            }
+        case ACE_WAIT_TIMEOUT:
+          // timeout: expire timers
+          this->proactor_.timer_queue ()->expire ();
+          break;
+        case ACE_WAIT_FAILED:
+          // error
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ASYS_TEXT ("%p\n"),
+                             ASYS_TEXT ("WaitForSingleObject")), -1);
         }
     }
+
+  return 0;
+#endif /* ACE_HAS_AIO_CALLS */
+}
+
+#if defined (ACE_HAS_AIO_CALLS)
+class ACE_Export ACE_AIO_Accept_Handler : public ACE_Handler
+{
+  // = TITLE
+  //     Helper class for doing Asynch_Accept in POSIX4 systems, in
+  //     the case of doing AIO_CONTROL_BLOCKS strategy.
+  //
+  // = DESCRIPTION
+  //     Doing Asynch_Accept in POSIX4 implementation is tricky. In
+  //     the case of doing the things with AIO_CONTROL_BLOCKS and not
+  //     with Real-Time Signals, this becomes even more trickier. We
+  //     use a notifyn pipe here to implement Asynch_Accpet. This class
+  //     will issue a <Asynch_Read> on the pipe. <Asynch_Accept> will
+  //     send a result pointer containg all the information through
+  //     this pipe.
+  //     Handling the MessageBlock:
+  //     We give this message block to read the result pointer through
+  //     the notify pipe. We expect that to read 4 bytes from the
+  //     notify pipe, for each <accept> call. Before giving this
+  //     message block to another <accept>, we update <wr_ptr> and put
+  //     it in its initial position. 
+public:
+  ACE_AIO_Accept_Handler (ACE_Proactor* proactor);
+  // Constructor.
+
+  ~ACE_AIO_Accept_Handler (void);
+  // Destructor.
+  
+  int notify (ACE_Asynch_Accept::Result* result);
+  // Send this Result to Proactor through the notification pipe.
+
+  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  // Read from the pipe is complete.  We get the <Result> from
+  // Asynch_Handler. We have to do the notification here.
+
+private:
+  ACE_Proactor* proactor_;
+  // The proactor in use.
+
+  ACE_Message_Block message_block_;
+  // Message block to get ACE_Asynch_Accept::Result pointer from
+  // ACE_Asych_Accept. 
+
+  ACE_Pipe pipe_;
+  // Pipe for the communication between Proactor and the
+  // Asynch_Accept.
+
+  ACE_Asynch_Read_Stream read_stream_;
+  // To do asynch_read on the pipe.
+
+  ACE_AIO_Accept_Handler (void);
+  // Default constructor. Shouldnt be called.
+};
+
+ACE_AIO_Accept_Handler::ACE_AIO_Accept_Handler (ACE_Proactor *proactor)
+  : proactor_ (proactor),
+    message_block_ (sizeof (ACE_Asynch_Accept::Result *) + 64)
+{
+  // Open the pipe.
+  this->pipe_.open ();
+
+  // Open the read stream.
+  if (this->read_stream_.open (*this,
+                               this->pipe_.read_handle (),
+                               0,
+                               this->proactor_) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%N:%l:%p\n",
+                "Open on Read Stream failed"));
+
+  // Issue an asynch_read on the read_stream of the notify pipe. 
+  if (this->read_stream_.read (this->message_block_,
+                               sizeof (ACE_Asynch_Accept::Result *)) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%N:%l:%p\n",
+                "Read from stream failed"));
+}
+
+ACE_AIO_Accept_Handler::~ACE_AIO_Accept_Handler (void)
+{
+}
+
+int
+ACE_AIO_Accept_Handler::notify (ACE_Asynch_Accept::Result* result)
+{
+  // Send the result pointer through the pipe.
+  int return_val = ACE::send (this->pipe_.write_handle (),
+                              (char *) &result,
+                              sizeof (result));
+  if (return_val != sizeof (result))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P %t):%p\n",
+                       "Error:Writing on to pipe failed"),
+                      -1);
   return 0;
 }
 
-// *********************************************************************
+void
+ACE_AIO_Accept_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+{
+  // @@
+  ACE_DEBUG ((LM_DEBUG, "ACE_AIO_Accept_Handler::handle_read_stream called\n"));
+  
+  // The message block actually contains the ACE_Asynch_Accept::Result.
+  ACE_Asynch_Accept::Result *accept_result = 0;
+  accept_result = *(ACE_Asynch_Accept::Result **) result.message_block ().rd_ptr ();
+  
+  // Do the upcall.
+  this->proactor_->application_specific_code (accept_result,
+                                              0,  // No Bytes transferred.
+                                              1,  // Success.
+                                              0,  // Completion token.
+                                              0); // Error.
+
+  // Set the message block properly. Put the <wr_ptr> back in the
+  // initial position. 
+  if (this->message_block_.length () > 0)
+      this->message_block_.wr_ptr (this->message_block_.rd_ptr ());
+  
+  // One accept has completed. Issue a read to handle any <accept>s in
+  // the future.
+  if (this->read_stream_.read (this->message_block_,
+                               sizeof (ACE_Asynch_Accept::Result)) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%N:%l:%p\n",
+                "Read from stream failed"));
+}
+#endif /* ACE_HAS_AIO_CALLS */
 
 ACE_Proactor_Handle_Timeout_Upcall::ACE_Proactor_Handle_Timeout_Upcall (void)
   : proactor_ (0)
@@ -163,29 +273,23 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
                                              const ACE_Time_Value &time)
 {
   ACE_UNUSED_ARG (timer_queue);
-  
+
   if (this->proactor_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall,")
                        ASYS_TEXT (" no completion port to post timeout to?!@\n")),
                       -1);
-  
+
   // Create the Asynch_Timer.
-  ACE_Asynch_Result_Impl *asynch_timer = this->proactor_->create_asynch_timer (*handler,
-                                                                               act,
-                                                                               time,
-                                                                               ACE_INVALID_HANDLE,
-                                                                               0,
-                                                                               -1);
-  if (asynch_timer == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):%p\n",
-                       "ACE_Proactor_Handle_Timeout_Upcall::timeout:"
-                       "create_asynch_timer failed"),
-                      -1);
-  
+  ACE_Proactor::Asynch_Timer *asynch_timer;
+  ACE_NEW_RETURN (asynch_timer,
+                  ACE_Proactor::Asynch_Timer (*handler,
+                                              act,
+                                              time),
+                  -1);
+
   // Post a completion.
-  if (asynch_timer->post_completion (this->proactor_->implementation ()) == -1)
+  if (this->proactor_->post_completion (asynch_timer) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("Failure in dealing with timers: ")
                        ASYS_TEXT ("PostQueuedCompletionStatus failed\n")),
@@ -232,59 +336,118 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
                       -1);
 }
 
-// *********************************************************************
-
-ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
-                            int delete_implementation,
-                            TIMER_QUEUE *tq)
-  : implementation_ (0),
-    delete_implementation_ (delete_implementation),
-    timer_handler_ (0),
-    timer_queue_ (0),
-    delete_timer_queue_ (0)
-{
-  this->implementation (implementation);
-  
-  if (this->implementation () == 0)
-    {
+ACE_Proactor::ACE_Proactor (size_t number_of_threads,
+                            Timer_Queue *tq,
+                            int used_with_reactor_event_loop,
+                            POSIX_COMPLETION_STRATEGY completion_strategy)
+  :
 #if defined (ACE_HAS_AIO_CALLS)
-      // POSIX Proactor.
-  #if defined (ACE_POSIX_AIOCB_PROACTOR)
-      ACE_NEW (implementation, ACE_POSIX_AIOCB_Proactor);
-  #elif defined (ACE_POSIX_SIG_PROACTOR)
-      ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
-  #else /* Default is to use the SIG one */
-      ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
-  #endif
-#elif (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
-      // WIN_Proactor.
-      ACE_NEW (implementation, ACE_WIN32_Proactor);
+  posix_completion_strategy_ (completion_strategy),
+  aio_accept_handler_ (0),
+  aiocb_list_max_size_ (ACE_RTSIG_MAX),
+  aiocb_list_cur_size_ (0),
+#else /* ACE_HAS_AIO_CALLS */
+  completion_port_ (0),
+  // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE !!!
+  number_of_threads_ (number_of_threads),
 #endif /* ACE_HAS_AIO_CALLS */
-      this->implementation (implementation);
-      this->delete_implementation_ = 1;
+  timer_queue_ (0),
+  delete_timer_queue_ (0),
+  timer_handler_ (0),
+  used_with_reactor_event_loop_ (used_with_reactor_event_loop)
+{
+#if defined (ACE_HAS_AIO_CALLS)
+  ACE_UNUSED_ARG (number_of_threads);
+  ACE_UNUSED_ARG (tq);
+
+  // The following things are necessary only for the
+  // AIO_CONTROL_BLOCKS strategy.
+  if (this->posix_completion_strategy_ == AIO_CONTROL_BLOCKS)
+    {
+      // Initialize the array.
+      for (size_t ai = 0;
+           ai < this->aiocb_list_max_size_;
+           ai++)
+        aiocb_list_[ai] = 0;
+
+      // Accept Handler for aio_accept. Remember! this issues a Asynch_Read
+      // on the notify pipe for doing the Asynch_Accept.
+      ACE_NEW (aio_accept_handler_,
+               ACE_AIO_Accept_Handler (this));
     }
+
+
+  // Mask the RT_compeltion signals if we are using the RT_SIGNALS
+  // STRATEGY for completion querying.
+  if (completion_strategy == RT_SIGNALS)
+    {
+      // Make the sigset_t consisting of the completion signals.
+      if (sigemptyset (&this->RT_completion_signals_) < 0)
+        ACE_ERROR ((LM_ERROR,
+                    "Error:%p\n",
+                    "Couldn't init the RT completion signal set"));
+
+      if (sigaddset (&this->RT_completion_signals_,
+                     ACE_SIG_AIO) < 0)
+        ACE_ERROR ((LM_ERROR,
+                    "Error:%p\n",
+                    "Couldnt init the RT completion signal set"));
+
+      // Mask them.
+      if (sigprocmask (SIG_BLOCK, &RT_completion_signals_, 0) < 0)
+        ACE_ERROR ((LM_ERROR,
+                    "Error:%p\n",
+                    "Couldnt mask the RT completion signals"));
+
+      // Setting up the handler(!) for these signals.
+      struct sigaction reaction;
+      sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
+      reaction.sa_flags = SA_SIGINFO;    // Realtime flag.
+#if defined (SA_SIGACTION)
+      // Lynx says, it is better to set this bit to be portable.
+      reaction.sa_flags &= SA_SIGACTION;
+#endif /* SA_SIGACTION */
+      reaction.sa_sigaction = 0;         // No handler.
+      int sigaction_return = sigaction (ACE_SIG_AIO,
+                                        &reaction,
+                                        0);
+      if (sigaction_return == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "Error:%p\n",
+                    "Proactor couldnt do sigaction for the RT SIGNAL"));
+    }
+
+#else /* ACE_HAS_AIO_CALLS */
+
+  ACE_UNUSED_ARG (completion_strategy);
+
+  // Create the completion port.
+  this->completion_port_ = ::CreateIoCompletionPort (INVALID_HANDLE_VALUE,
+                                                     this->completion_port_,
+                                                     0,
+                                                     this->number_of_threads_);
+  if (this->completion_port_ == 0)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("CreateIoCompletionPort")));
 
   // Set the timer queue.
   this->timer_queue (tq);
-  
+
   // Create the timer handler
   ACE_NEW (this->timer_handler_,
            ACE_Proactor_Timer_Handler (*this));
-  
-  // Activate <timer_handler>
+
+  // activate <timer_handler>
   if (this->timer_handler_->activate (THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%N:%l:(%P | %t):%p\n"),
-                ASYS_TEXT ("Task::activate:could not create thread\n")));
-}
-
-ACE_Proactor::~ACE_Proactor (void)
-{
-  this->close ();
+                ASYS_TEXT ("%p Could not create thread\n"),
+                ASYS_TEXT ("Task::activate")));
+#endif /* ACE_HAS_AIO_CALLS */
 }
 
 ACE_Proactor *
-ACE_Proactor::instance (size_t /* threads */)
+ACE_Proactor::instance (size_t threads)
 {
   ACE_TRACE ("ACE_Proactor::instance");
 
@@ -292,16 +455,16 @@ ACE_Proactor::instance (size_t /* threads */)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-				*ACE_Static_Object_Lock::instance (),
+                                *ACE_Static_Object_Lock::instance (),
                                 0));
 
       if (ACE_Proactor::proactor_ == 0)
-	{
-	  ACE_NEW_RETURN (ACE_Proactor::proactor_,
-                          ACE_Proactor,
+        {
+          ACE_NEW_RETURN (ACE_Proactor::proactor_,
+                          ACE_Proactor (threads),
                           0);
-	  ACE_Proactor::delete_proactor_ = 1;
-	}
+          ACE_Proactor::delete_proactor_ = 1;
+        }
     }
   return ACE_Proactor::proactor_;
 }
@@ -312,7 +475,7 @@ ACE_Proactor::instance (ACE_Proactor *r)
   ACE_TRACE ("ACE_Proactor::instance");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-			    *ACE_Static_Object_Lock::instance (), 0));
+                            *ACE_Static_Object_Lock::instance (), 0));
 
   ACE_Proactor *t = ACE_Proactor::proactor_;
 
@@ -329,7 +492,7 @@ ACE_Proactor::close_singleton (void)
   ACE_TRACE ("ACE_Proactor::close_singleton");
 
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
-		     *ACE_Static_Object_Lock::instance ()));
+                     *ACE_Static_Object_Lock::instance ()));
 
   if (ACE_Proactor::delete_proactor_)
     {
@@ -342,60 +505,21 @@ ACE_Proactor::close_singleton (void)
 int
 ACE_Proactor::run_event_loop (void)
 {
-  int result = 0;
+  ACE_TRACE ("ACE_Proactor::run_event_loop");
 
-  // Declaring the lock variable.
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *lock =
-    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
-    (ACE_Object_Manager::ACE_PROACTOR_EVENT_LOOP_LOCK);
-#endif /* ACE_MT_SAFE */
-
-  // Early check. It is ok to do this without lock, since we care just
-  // whether it is zero or non-zero.
-  if (ACE_Proactor::end_event_loop_ != 0)
-    return 0;
-   
-  // First time you are in. Increment the thread count.
-  {
-    // Obtain the lock in the MT environments.
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
-#endif /* ACE_MT_SAFE */
-
-    // Increment the thread count.
-    ACE_Proactor::event_loop_thread_count_ ++;
-  }
-    
-  // Run the event loop.
-  while (1)
+  while (ACE_Proactor::end_event_loop_ == 0)
     {
-      // Check the end loop flag. It is ok to do this without lock,
-      // since we care just whether it is zero or non-zero. 
-      if (ACE_Proactor::end_event_loop_ != 0)
-          break;
-      
-      // <end_event_loop> is not set. Ready to do <handle_events>.
-      result = ACE_Proactor::instance ()->handle_events ();
+      int result = ACE_Proactor::instance ()->handle_events ();
 
       if (ACE_Service_Config::reconfig_occurred ())
-	ACE_Service_Config::reconfigure ();
-      
+        ACE_Service_Config::reconfigure ();
+
       else if (result == -1)
-	break;
+        return -1;
     }
-  
-  // Leaving the event loop. Decrement the thread count.
 
-  // Obtain the lock in the MT environments.
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
-#endif /* ACE_MT_SAFE */
-  
-  // Decrement the thread count.
-  ACE_Proactor::event_loop_thread_count_ --;
-
-  return result;
+  /* NOTREACHED */
+  return 0;
 }
 
 // Handle events for -tv- time.  handle_events updates -tv- to reflect
@@ -405,95 +529,33 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Proactor::run_event_loop");
 
-  int result = 0;
-
-  // Declaring the lock variable.
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *lock =
-    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
-    (ACE_Object_Manager::ACE_PROACTOR_EVENT_LOOP_LOCK);
-#endif /* ACE_MT_SAFE */
-
-  // Early check. It is ok to do this without lock, since we care just 
-  // whether it is zero or non-zero.
-  if (ACE_Proactor::end_event_loop_ != 0 ||
-      tv == ACE_Time_Value::zero)
-    return 0;
-  
-  // First time you are in. Increment the thread count.
-  {
-    // Obtain the lock in the MT environments.
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
-#endif /* ACE_MT_SAFE */
-    
-    // Increment the thread count.
-    ACE_Proactor::event_loop_thread_count_ ++;
-  }
-
-  // Run the event loop.
-  while (1)
+  while (ACE_Proactor::end_event_loop_ == 0
+         && tv != ACE_Time_Value::zero)
     {
-      // Check for end of loop. It is ok to do this without lock,
-      // since we care just whether it is zero or non-zero.
-      if (ACE_Proactor::end_event_loop_ != 0 ||
-          tv == ACE_Time_Value::zero)
-        break;
-
-      // <end_event_loop> is not set. Ready to do <handle_events>.
-      result = ACE_Proactor::instance ()->handle_events (tv);
+      int result = ACE_Proactor::instance ()->handle_events (tv);
 
       if (ACE_Service_Config::reconfig_occurred ())
-	ACE_Service_Config::reconfigure ();
-      
+        ACE_Service_Config::reconfigure ();
+
       // An error has occurred.
       else if (result == -1)
-	break;
+        return result;
     }
 
-  // Leaving the event loop. Decrement the thread count.
-
-  // Obtain the lock in the MT environments.
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
-#endif /* ACE_MT_SAFE */
-  
-  // Decrement the thread count.
-  ACE_Proactor::event_loop_thread_count_ --;
-
-  return result;
+  /* NOTREACHED */
+  return 0;
 }
 
 int
 ACE_Proactor::end_event_loop (void)
 {
   ACE_TRACE ("ACE_Proactor::end_event_loop");
-  
-  // Obtain the lock, set the end flag and post the wakeup
-  // completions. 
-  
-  // Obtain the lock in the MT environments.
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *lock =
-    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
-    (ACE_Object_Manager::ACE_PROACTOR_EVENT_LOOP_LOCK);
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
-#endif /* ACE_MT_SAFE */
-  
-  // Set the end flag.
   ACE_Proactor::end_event_loop_ = 1;
-    
-  // Number of completions to post.
-  int how_many = ACE_Proactor::event_loop_thread_count_;
-  
-  // Reset the thread count.
-  ACE_Proactor::event_loop_thread_count_ = 0;
-
-  // Post completions to all the threads so that they will all wake
-  // up. 
-  return ACE_Proactor::post_wakeup_completions (how_many);
+  //  ACE_Proactor::instance()->notify ();
+  return 0;
 }
 
+/* static */
 int
 ACE_Proactor::event_loop_done (void)
 {
@@ -501,47 +563,66 @@ ACE_Proactor::event_loop_done (void)
   return ACE_Proactor::end_event_loop_ != 0;
 }
 
+ACE_Proactor::~ACE_Proactor (void)
+{
+  this->close ();
+}
+
 int
 ACE_Proactor::close (void)
 {
-  // Close the implementation.
-  if (this->implementation ()->close () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t):%p\n",
-                       "ACE_Proactor::close:implementation couldnt be closed"),
-                      -1);
-  
-  // Delete the implementation.
-  if (this->delete_implementation_)
-    {
-      delete this->implementation ();
-      this->implementation_ = 0;
-    }
-
-  // Delete the timer handler.
+  // Take care of the timer handler
   if (this->timer_handler_)
     {
       delete this->timer_handler_;
       this->timer_handler_ = 0;
     }
-  
-  // Delete the timer queue.
+
+  // Take care of the timer queue
   if (this->delete_timer_queue_)
     {
       delete this->timer_queue_;
       this->timer_queue_ = 0;
       this->delete_timer_queue_ = 0;
     }
-
+#if !defined  (ACE_HAS_AIO_CALLS)
+  // Close the completion port
+  if (this->completion_port_ != 0)
+    {
+      int result = ACE_OS::close (this->completion_port_);
+      this->completion_port_ = 0;
+      return result;
+    }
+#endif /* NOT ACE_HAS_AIO_CALLS */
   return 0;
 }
 
 int
 ACE_Proactor::register_handle (ACE_HANDLE handle,
-			       const void *completion_key)
+                               const void *completion_key)
 {
-  return this->implementation ()->register_handle (handle,
-                                                   completion_key);
+#if defined (ACE_HAS_AIO_CALLS)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (completion_key);
+  return 0;
+#else /* ACE_HAS_AIO_CALLS */
+  // No locking is needed here as no state changes.
+  ACE_HANDLE cp = ::CreateIoCompletionPort (handle,
+                                            this->completion_port_,
+                                            (u_long) completion_key,
+                                            this->number_of_threads_);
+  if (cp == 0)
+    {
+      errno = ::GetLastError ();
+      // If errno == ERROR_INVALID_PARAMETER, then this handle was
+      // already registered.
+      if (errno != ERROR_INVALID_PARAMETER)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("CreateIoCompletionPort")), -1);
+    }
+  return 0;
+#endif /* ACE_HAS_AIO_CALLS */
 }
 
 long
@@ -575,12 +656,9 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
   // absolute time.
   ACE_Time_Value absolute_time =
     this->timer_queue_->gettimeofday () + time;
-  
+
   // Only one guy goes in here at a time
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
-                    ace_mon,
-                    this->timer_queue_->mutex (),
-                    -1);  
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->timer_queue_->mutex (), -1);
 
   // Schedule the timer
   long result = this->timer_queue_->schedule (&handler,
@@ -591,7 +669,7 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
     {
       // no failures: check to see if we are the earliest time
       if (this->timer_queue_->earliest_time () == absolute_time)
-        
+
         // wake up the timer thread
         if (this->timer_handler_->timer_event_.signal () == -1)
           {
@@ -617,7 +695,7 @@ ACE_Proactor::cancel_timer (long timer_id,
 
 int
 ACE_Proactor::cancel_timer (ACE_Handler &handler,
-                                  int dont_call_handle_close)
+                            int dont_call_handle_close)
 {
   // No need to signal timer event here. Even if the cancel timer was
   // the earliest, we will have an extra wakeup.
@@ -626,15 +704,396 @@ ACE_Proactor::cancel_timer (ACE_Handler &handler,
 }
 
 int
+ACE_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
+{
+  // Perform a non-blocking "poll" for all the I/O events that have
+  // completed in the I/O completion queue.
+
+  ACE_Time_Value timeout (0, 0);
+  int result = 0;
+
+  for (;;)
+    {
+      result = this->handle_events (timeout);
+
+      if (result != 0 || errno == ETIME)
+        break;
+    }
+
+  // If our handle_events failed, we'll report a failure to the
+  // Reactor.
+  if (result == -1)
+    return -1;
+  else
+    return 0;
+}
+
+int
+ACE_Proactor::handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask)
+{
+  ACE_UNUSED_ARG (close_mask);
+  ACE_UNUSED_ARG (handle);
+
+  return this->close ();
+}
+
+// @@ get_handle () implementation. (Alex)
+ACE_HANDLE
+ACE_Proactor::get_handle (void) const
+{
+#if defined (ACE_HAS_AIO_CALLS)
+  return ACE_INVALID_HANDLE;
+#else /* Not ACE_HAS_AIO_CALLS */
+  if (this->used_with_reactor_event_loop_)
+    return this->event_.handle ();
+  else
+    return 0;
+#endif /* ACE_HAS_AIO_CALLS */
+}
+
+#if defined (ACE_HAS_AIO_CALLS)
+ACE_Proactor::POSIX_COMPLETION_STRATEGY
+ACE_Proactor::posix_completion_strategy (void)
+{
+  return posix_completion_strategy_;
+}
+
+#if 0
+void
+ACE_Proactor::posix_completion_strategy (ACE_Proactor::POSIX_COMPLETION_STRATEGY strategy)
+{
+  this->posix_completion_strategy_ = strategy;
+}
+#endif /* 0 */
+
+int
+ACE_Proactor::notify_asynch_accept (ACE_Asynch_Accept::Result* result)
+{
+  this->aio_accept_handler_->notify (result);
+
+  return 0;
+}
+#endif /* ACE_HAS_AIO_CALLS */
+
+int
 ACE_Proactor::handle_events (ACE_Time_Value &wait_time)
 {
-  return implementation ()->handle_events (wait_time);
+  // Decrement <wait_time> with the amount of time spent in the method
+  ACE_Countdown_Time countdown (&wait_time);
+  return this->handle_events (wait_time.msec ());
 }
 
 int
 ACE_Proactor::handle_events (void)
 {
-  return this->implementation ()->handle_events ();
+  return this->handle_events (ACE_INFINITE);
+}
+
+int
+ACE_Proactor::handle_events (unsigned long milli_seconds)
+{
+#if defined (ACE_HAS_AIO_CALLS)
+  if (posix_completion_strategy () == ACE_Proactor::RT_SIGNALS)
+    {
+      // Using RT Signals.
+
+      // Wait for <milli_seconds> amount of time.
+      // @@ Assigning <milli_seconds> to tv_sec.
+      timespec timeout;
+      timeout.tv_sec = milli_seconds;
+      timeout.tv_nsec = 0;
+
+      // To get back the signal info.
+      siginfo_t sig_info;
+
+      // Await the RT completion signal.
+      int sig_return = sigtimedwait (&this->RT_completion_signals_,
+                                     &sig_info,
+                                     &timeout);
+
+      // Error case.
+      // If failure is coz of timeout, then return *0* but set
+      // errno appropriately. This is what the WinNT proactor
+      // does.
+      if (sig_return == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Error:%p\n",
+                           "Waiting for RT completion signals"),
+                          0);
+
+      // RT completion signals returned.
+      if (sig_return != ACE_SIG_AIO)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Unexpected signal (%d) has been received while waiting for RT Completion Signals\n",
+                           sig_return),
+                          -1);
+
+      // @@ Debugging.
+      ACE_DEBUG ((LM_DEBUG,
+                  "Sig number found in the sig_info block : %d\n",
+                  sig_info.si_signo));
+
+      // Is the signo returned consistent?
+      if (sig_info.si_signo != sig_return)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Inconsistent signal number (%d) in the signal info block\n",
+                           sig_info.si_signo),
+                          -1);
+
+      // @@ Debugging.
+      ACE_DEBUG ((LM_DEBUG,
+                  "Signal code for this signal delivery : %d\n",
+                  sig_info.si_code));
+
+      // Retrive the result pointer.
+      ACE_Asynch_Result *asynch_result =
+        (ACE_Asynch_Result *) sig_info.si_value.sival_ptr;
+
+      // Check the <signal code> and act according to that.
+      if (sig_info.si_code == SI_ASYNCIO)
+        {
+          // Retrieve the aiocb from Result ptr.
+          // @@ Some checking should be done to make sure this pointer
+          // is valid. Otherwise <aio_error> will bomb.
+          aiocb* aiocb_ptr =
+            (aiocb *)asynch_result->aiocb_ptr ();
+
+          // Analyze error and return values. Return values are
+          // actually <errno>'s associated with the <aio_> call
+          // corresponding to aiocb_ptr.
+          int error_code = aio_error (aiocb_ptr);
+          if (error_code == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Error:%p\n",
+                               "Invalid control block was sent to <aio_error> for compleion querying"),
+                              -1);
+
+          if (error_code != 0)
+            // Error occurred in the <aio_>call. Return the errno
+            // corresponding to that <aio_> call.
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Error:%p\n",
+                               "An AIO call has failed"),
+                              error_code);
+
+          // No error occured in the AIO operation.
+          int nbytes = aio_return (aiocb_ptr);
+          if (nbytes == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Error:%p\n",
+                               "Invalid control block was send to <aio_return>"),
+                              -1);
+
+          // <nbytes> have been successfully transmitted.
+          size_t bytes_transferred = nbytes;
+
+          // Call the application code.
+          this->application_specific_code (asynch_result,
+                                           bytes_transferred,
+                                           1,  // Result : True.
+                                           0,  // No completion_signal.
+                                           0); // Error.
+        }
+      else if (sig_info.si_code == SI_QUEUE)
+        {
+          // @@ Just debugging.
+          ACE_DEBUG ((LM_DEBUG, "<sigqueue>'d signal received\n"));
+
+          // Should be from the <Asynch_Accept> call.
+          this->application_specific_code (asynch_result,
+                                           0, // No bytes transferred.
+                                           1, // Result : True.
+                                           0, // No completion key.
+                                           0); // No error.
+
+        }
+      else
+        // Unknown signal code.
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           "Unexpected signal code (%d) returned on completion querying\n",
+                           sig_info.si_code),
+                          -1);
+    }
+  else
+    {
+      //  Not RT_SIGNALS approach. Using <aiocb> control blocks.
+
+      // Is there any entries in the list.
+      if (this->aiocb_list_cur_size_ == 0)
+        // No aio is pending.
+        return 0;
+
+      // Wait for asynch operation to complete.
+      timespec timeout;
+      timeout.tv_sec = milli_seconds;
+      timeout.tv_nsec = 0;
+
+      if (aio_suspend (this->aiocb_list_,
+                       this->aiocb_list_max_size_,
+                       &timeout) == -1)
+        // If failure is coz of timeout, then return *0* but set errno
+        // appropriately. This is what the WinNT proactor does.
+        if (errno ==  EAGAIN)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error:%p\n",
+                             "aio_suspend"),
+                            0);
+        else
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error:%p\n",
+                             "aio_suspend"),
+                            -1);
+      // Check which aio has finished.
+      size_t ai;
+      ssize_t nbytes = 0;
+      for (ai = 0; ai < this->aiocb_list_max_size_; ai++)
+        {
+          if (aiocb_list_ [ai] == 0)
+            continue;
+          // Analyze error and return values.
+          if (aio_error (aiocb_list_[ai]) != EINPROGRESS)
+            {
+              nbytes = aio_return (aiocb_list_[ai]);
+
+              if (nbytes == -1)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "Error:%p\n",
+                                   "An AIO has failed"),
+                                  -1);
+              else
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "An aio has finished\n"));
+                  // This AIO is done.
+                  break;
+                }
+            }
+        }
+
+      if (ai == this->aiocb_list_max_size_)
+        // Nothing completed.
+        return 0;
+
+      // Get the values for the completed aio.
+      
+      // Bytes transfered is what the aio_return gives back.
+      size_t bytes_transferred = nbytes;
+
+      // Retrive the result pointer.
+      ACE_Asynch_Result *asynch_result = (ACE_Asynch_Result *)
+        aiocb_list_[ai]->aio_sigevent.sigev_value.sival_ptr;
+
+      // Invalidate entry in the aiocb list.
+      delete this->aiocb_list_[ai];
+      this->aiocb_list_[ai] = 0;
+      this->aiocb_list_cur_size_--;
+
+      // Call the application code.
+      // @@ Pass <errno> instead of 0. Check out on LynxOS. It is set
+      // to 77 somewhere.
+      this->application_specific_code (asynch_result,
+                                       bytes_transferred,
+                                       1,
+                                       0, // No completion key.
+                                       0);
+    }
+  return 0;
+#else /* ACE_HAS_AIO_CALLS */
+  ACE_OVERLAPPED *overlapped = 0;
+  u_long bytes_transferred = 0;
+  u_long completion_key = 0;
+
+  // Get the next asynchronous operation that completes
+  BOOL result = ::GetQueuedCompletionStatus (this->completion_port_,
+                                             &bytes_transferred,
+                                             &completion_key,
+                                             &overlapped,
+                                             milli_seconds);
+  if (result == FALSE && overlapped == 0)
+    {
+      errno = ::GetLastError ();
+
+      if (errno == WAIT_TIMEOUT)
+        {
+          errno = ETIME;
+          return 0;
+        }
+      else
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("GetQueuedCompletionStatus")),
+                          -1);
+    }
+  else
+    {
+      // Narrow the result.
+      ACE_Asynch_Result *asynch_result = (ACE_Asynch_Result *) overlapped;
+
+      // If errors happen, grab the error.
+      if (result == FALSE)
+        errno = ::GetLastError ();
+
+      this->application_specific_code (asynch_result,
+                                       bytes_transferred,
+                                       result,
+                                       (void *) completion_key,
+                                       errno);
+    }
+  return 0;
+#endif /* ACE_HAS_AIO_CALLS */
+}
+
+void
+ACE_Proactor::application_specific_code (ACE_Asynch_Result *asynch_result,
+                                         u_long bytes_transferred,
+                                         int success,
+                                         const void *completion_key,
+                                         u_long error)
+{
+  ACE_SEH_TRY
+    {
+      // Call completion hook
+      asynch_result->complete (bytes_transferred,
+                               success,
+                               (void *) completion_key,
+                               error);
+    }
+  ACE_SEH_FINALLY
+    {
+      // This is crucial to prevent memory leaks
+      delete asynch_result;
+    }
+}
+
+int
+ACE_Proactor::post_completion (ACE_Asynch_Result *result)
+{
+#if defined (ACE_HAS_AIO_CALLS)
+  ACE_UNUSED_ARG (result);
+  return 0;
+#else /* ACE_HAS_AIO_CALLS */
+  // Grab the event associated with the Proactor
+  HANDLE handle = this->get_handle ();
+
+  // If Proactor event is valid, signal it
+  if (handle != ACE_INVALID_HANDLE &&
+      handle != 0)
+    ACE_OS::event_signal (&handle);
+
+  // Post a completion
+  if (::PostQueuedCompletionStatus (this->completion_port_, // completion port
+                                    0, // number of bytes tranferred
+                                    0,// completion key
+                                    result // overlapped
+                                    ) == FALSE)
+    {
+      delete result;
+      ACE_ERROR_RETURN ((LM_ERROR, "Failure in dealing with timers: PostQueuedCompletionStatus failed\n"), -1);
+    }
+
+  return 0;
+#endif /* ACE_HAS_AIO_CALLS */
 }
 
 int
@@ -649,38 +1108,40 @@ ACE_Proactor::close_dispatch_threads (int)
   return 0;
 }
 
+#if !defined (ACE_HAS_AIO_CALLS)
 size_t
 ACE_Proactor::number_of_threads (void) const
 {
-  return this->implementation ()->number_of_threads ();
+  return this->number_of_threads_;
 }
 
 void
 ACE_Proactor::number_of_threads (size_t threads)
 {
-  this->implementation ()->number_of_threads (threads);
+  this->number_of_threads_ = threads;
 }
+#endif /* ACE_HAS_AIO_CALLS */
 
-ACE_Proactor::TIMER_QUEUE *
+ACE_Proactor::Timer_Queue *
 ACE_Proactor::timer_queue (void) const
 {
   return this->timer_queue_;
 }
 
 void
-ACE_Proactor::timer_queue (TIMER_QUEUE *tq)
+ACE_Proactor::timer_queue (Timer_Queue *tq)
 {
-  // Cleanup old timer queue.
+  // cleanup old timer queue
   if (this->delete_timer_queue_)
     {
       delete this->timer_queue_;
       this->delete_timer_queue_ = 0;
     }
 
-  // New timer queue.
+  // new timer queue
   if (tq == 0)
     {
-      this->timer_queue_ = new TIMER_HEAP;
+      this->timer_queue_ = new Timer_Heap;
       this->delete_timer_queue_ = 1;
     }
   else
@@ -693,232 +1154,27 @@ ACE_Proactor::timer_queue (TIMER_QUEUE *tq)
   this->timer_queue_->upcall_functor ().proactor (*this);
 }
 
-ACE_HANDLE
-ACE_Proactor::get_handle (void) const
+ACE_Proactor::Asynch_Timer::Asynch_Timer (ACE_Handler &handler,
+                                          const void *act,
+                                          const ACE_Time_Value &tv,
+                                          ACE_HANDLE event)
+  : ACE_Asynch_Result (handler, act, event),
+    time_ (tv)
 {
-  return this->implementation ()->get_handle ();
-}
-
-ACE_Proactor_Impl *
-ACE_Proactor::implementation (void) const
-{
-  return this->implementation_;
-}
-
-
-ACE_Asynch_Read_Stream_Impl *
-ACE_Proactor::create_asynch_read_stream (void)
-{
-  return this->implementation ()->create_asynch_read_stream ();
-}
-
-ACE_Asynch_Write_Stream_Impl *
-ACE_Proactor::create_asynch_write_stream (void)
-{
-  return this->implementation ()->create_asynch_write_stream ();
-}
-
-ACE_Asynch_Read_File_Impl *
-ACE_Proactor::create_asynch_read_file (void)
-{
-  return this->implementation ()->create_asynch_read_file ();
-}
-
-ACE_Asynch_Write_File_Impl *
-ACE_Proactor::create_asynch_write_file (void)
-{
-  return this->implementation ()->create_asynch_write_file ();
-}
-
-ACE_Asynch_Accept_Impl *
-ACE_Proactor::create_asynch_accept (void)
-{
-  return this->implementation ()->create_asynch_accept ();
-}
-
-ACE_Asynch_Transmit_File_Impl *
-ACE_Proactor::create_asynch_transmit_file (void)
-{
-  return this->implementation ()->create_asynch_transmit_file ();
-}
-
-ACE_Asynch_Read_Stream_Result_Impl *
-ACE_Proactor::create_asynch_read_stream_result (ACE_Handler &handler,
-                                                ACE_HANDLE handle,
-                                                ACE_Message_Block &message_block,
-                                                u_long bytes_to_read,
-                                                const void* act,
-                                                ACE_HANDLE event,
-                                                int priority,
-                                                int signal_number)
-{
-  return this->implementation ()->create_asynch_read_stream_result (handler,
-                                                                    handle,
-                                                                    message_block,
-                                                                    bytes_to_read,
-                                                                    act,
-                                                                    event,
-                                                                    priority,
-                                                                    signal_number);
-}
-
-
-ACE_Asynch_Write_Stream_Result_Impl *
-ACE_Proactor::create_asynch_write_stream_result (ACE_Handler &handler,
-                                                 ACE_HANDLE handle,
-                                                 ACE_Message_Block &message_block,
-                                                 u_long bytes_to_write,
-                                                 const void* act,
-                                                 ACE_HANDLE event,
-                                                 int priority,
-                                                 int signal_number)
-
-{
-  return this->implementation ()->create_asynch_write_stream_result (handler,
-                                                                     handle,
-                                                                     message_block,
-                                                                     bytes_to_write,
-                                                                     act,
-                                                                     event,
-                                                                     priority,
-                                                                     signal_number);
-}
-
-
-
-ACE_Asynch_Read_File_Result_Impl *
-ACE_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
-                                              ACE_HANDLE handle,
-                                              ACE_Message_Block &message_block,
-                                              u_long bytes_to_read,
-                                              const void* act,
-                                              u_long offset,
-                                              u_long offset_high,
-                                              ACE_HANDLE event,
-                                              int priority,
-                                              int signal_number)
-
-{
-  return this->implementation ()->create_asynch_read_file_result (handler,
-                                                                  handle,
-                                                                  message_block,
-                                                                  bytes_to_read,
-                                                                  act,
-                                                                  offset,
-                                                                  offset_high,
-                                                                  event,
-                                                                  priority,
-                                                                  signal_number);
-}
-
-
-
-ACE_Asynch_Write_File_Result_Impl *
-ACE_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
-                                               ACE_HANDLE handle,
-                                               ACE_Message_Block &message_block,
-                                               u_long bytes_to_write,
-                                               const void* act,
-                                               u_long offset,
-                                               u_long offset_high,
-                                               ACE_HANDLE event,
-                                               int priority,
-                                               int signal_number)
-
-{
-  return this->implementation ()->create_asynch_write_file_result (handler,
-                                                                   handle,
-                                                                   message_block,
-                                                                   bytes_to_write,
-                                                                   act,
-                                                                   offset,
-                                                                   offset_high,
-                                                                   event,
-                                                                   priority,
-                                                                   signal_number);
-}
-
-
-ACE_Asynch_Accept_Result_Impl *
-ACE_Proactor::create_asynch_accept_result (ACE_Handler &handler,
-                                           ACE_HANDLE listen_handle,
-                                           ACE_HANDLE accept_handle,
-                                           ACE_Message_Block &message_block,
-                                           u_long bytes_to_read,
-                                           const void* act,
-                                           ACE_HANDLE event,
-                                           int priority,
-                                           int signal_number)
-
-{
-  return this->implementation ()->create_asynch_accept_result (handler,
-                                                               listen_handle,
-                                                               accept_handle,
-                                                               message_block,
-                                                               bytes_to_read,
-                                                               act,
-                                                               event,
-                                                               priority,
-                                                               signal_number);
-}
-
-ACE_Asynch_Transmit_File_Result_Impl *
-ACE_Proactor::create_asynch_transmit_file_result (ACE_Handler &handler,
-                                                  ACE_HANDLE socket,
-                                                  ACE_HANDLE file,
-                                                  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-                                                  u_long bytes_to_write,
-                                                  u_long offset,
-                                                  u_long offset_high,
-                                                  u_long bytes_per_send,
-                                                  u_long flags,
-                                                  const void *act,
-                                                  ACE_HANDLE event,
-                                                  int priority,
-                                                  int signal_number)
-
-{
-  return this->implementation ()->create_asynch_transmit_file_result (handler,
-                                                                      socket,
-                                                                      file,
-                                                                      header_and_trailer,
-                                                                      bytes_to_write,
-                                                                      offset,
-                                                                      offset_high,
-                                                                      bytes_per_send,
-                                                                      flags,
-                                                                      act,
-                                                                      event,
-                                                                      priority,
-                                                                      signal_number);
-}
-
-ACE_Asynch_Result_Impl *
-ACE_Proactor::create_asynch_timer (ACE_Handler &handler,
-                                   const void *act,
-                                   const ACE_Time_Value &tv,
-                                   ACE_HANDLE event,
-                                   int priority,
-                                   int signal_number)
-{
-  return this->implementation ()->create_asynch_timer (handler,
-                                                       act,
-                                                       tv,
-                                                       event,
-                                                       priority,
-                                                       signal_number);
-}
-
-int
-ACE_Proactor::post_wakeup_completions (int how_many)
-{
-  return ACE_Proactor::instance ()->implementation ()->post_wakeup_completions (how_many);
 }
 
 void
-ACE_Proactor::implementation (ACE_Proactor_Impl *implementation)
+ACE_Proactor::Asynch_Timer::complete (u_long bytes_transferred,
+                                      int success,
+                                      const void *completion_key,
+                                      u_long error)
 {
-  this->implementation_ = implementation;
+  ACE_UNUSED_ARG (error);
+  ACE_UNUSED_ARG (completion_key);
+  ACE_UNUSED_ARG (success);
+  ACE_UNUSED_ARG (bytes_transferred);
+
+  this->handler_.handle_time_out (this->time_, this->act ());
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -971,7 +1227,7 @@ template class ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
         ACE_Proactor_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#else /* !ACE_WIN32 || !ACE_HAS_AIO_CALLS */
+#else /* ACE_WIN32 */
 
 ACE_Proactor *
 ACE_Proactor::instance (size_t threads)
@@ -1018,5 +1274,4 @@ ACE_Proactor::event_loop_done (void)
 {
   return sig_atomic_t (1);
 }
-
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/

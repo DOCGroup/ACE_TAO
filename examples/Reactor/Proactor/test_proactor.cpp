@@ -21,7 +21,6 @@
 #include "ace/Service_Config.h"
 #include "ace/Proactor.h"
 #include "ace/Asynch_IO.h"
-#include "ace/Asynch_IO_Impl.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Connector.h"
@@ -32,10 +31,6 @@
 #include "ace/streams.h"
 
 ACE_RCSID(Proactor, test_proactor, "$Id$")
-
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
-  // This only works on Win32 platforms and on Unix platforms supporting
-  // POSIX aio calls.
 
 static char *host = 0;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
@@ -93,8 +88,8 @@ private:
 };
 
 Receiver::Receiver (void)
-  : dump_file_ (ACE_INVALID_HANDLE),
-    handle_ (ACE_INVALID_HANDLE)
+  : handle_ (ACE_INVALID_HANDLE),
+    dump_file_ (ACE_INVALID_HANDLE)
 {
 }
 
@@ -151,15 +146,12 @@ Receiver::open (ACE_HANDLE handle,
   if (message_block.length () != 0)
     {
       // Fake the result so that we will get called back.
-      ACE_Asynch_Read_Stream_Result_Impl *fake_result =
-        ACE_Proactor::instance ()->create_asynch_read_stream_result (*this,
-                                                                     this->handle_,
-                                                                     duplicate,
-                                                                     initial_read_size,
-                                                                     0,
-                                                                     ACE_INVALID_HANDLE,
-                                                                     0,
-                                                                     0);
+      ACE_Asynch_Read_Stream::Result fake_result (*this,
+                                                  this->handle_,
+                                                  duplicate,
+                                                  initial_read_size,
+                                                  0,
+                                                  ACE_INVALID_HANDLE);
       
       size_t bytes_transferred = message_block.length ();
       
@@ -167,9 +159,8 @@ Receiver::open (ACE_HANDLE handle,
       // forward. Update it to the beginning position.
       duplicate.wr_ptr (duplicate.wr_ptr () - bytes_transferred);
 
-
       // This will call the callback.
-      fake_result->complete (message_block.length (), 1, 0);
+      fake_result.complete (bytes_transferred, 1, 0);
     }
   else 
     // Otherwise, make sure we proceed. Initiate reading the
@@ -303,9 +294,6 @@ private:
   ACE_Asynch_Read_File rf_;
   // rf (read file): for writing from the file
 
-  ACE_Asynch_Transmit_File tf_;
-  // Transmit file. 
-
   ACE_HANDLE input_file_;
   // File to read from
 
@@ -400,20 +388,23 @@ Sender::transmit_file (void)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::open"), -1);
 
   // Open ACE_Asynch_Transmit_File
-  if (this->tf_.open (*this) == -1)
+  ACE_Asynch_Transmit_File tf;
+  if (tf.open (*this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Transmit_File::open"), -1);
 
-  // Header and trailer data for the file.
-  // @@ What happens if header and trailer are the same?
+  // Header and trailer data for the file
   this->header_and_trailer_.header_and_trailer (&this->welcome_message_,
 						this->welcome_message_.length (),
 						this->welcome_message_.duplicate (),
 						this->welcome_message_.length ());
-  
+
+  // Starting position
+  cerr << "Staring position: " << ACE_OS::lseek (file_handle, 0L, SEEK_CUR) << endl;
+
   // Send it
-  if (this->tf_.transmit_file (file_handle,
+  if (tf.transmit_file (file_handle,
 			&this->header_and_trailer_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Transmit_File::transmit_file"), -1); 
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Transmit_File::transmit_file"), -1);
 
   return 0;
 }
@@ -436,9 +427,12 @@ Sender::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
 
+  // Ending position
+  cerr << "Ending position: " << ACE_OS::lseek (result.file (), 0L, SEEK_CUR) << endl;
+
   // Done with file
   ACE_OS::close (result.file ());
-  
+
   this->transmit_file_done_ = 1;
   if (this->stream_write_done_)
     done = 1;
@@ -582,6 +576,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  
   if (parse_args (argc, argv) == -1)
     return -1;
 
@@ -602,12 +597,12 @@ main (int argc, char *argv[])
   else if (sender.open (host, port) == -1)
     return -1;
 
-  int success = 1;
+  int error = 0;
 
-  while (success > 0  && !done)
+  while (!error && !done)
     // dispatch events
-    success = ACE_Proactor::instance ()->handle_events ();
-  
+    error = ACE_Proactor::instance ()->handle_events ();
+
   return 0;
 }
 
@@ -616,5 +611,3 @@ template class ACE_Asynch_Acceptor<Receiver>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Asynch_Acceptor<Receiver>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/

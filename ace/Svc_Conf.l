@@ -82,17 +82,6 @@ yywrap (void)
   yyleng = 0;
 
   // This needs to be freed to prevent a memory leak.
-  yy_delete_parse_buffer ();
-
+  yy_delete_buffer (yy_current_buffer);
   return 1;
-}
-
-void
-yy_delete_parse_buffer (void)
-{
-  if (yy_current_buffer != 0) 
-    {
-      yy_delete_buffer (yy_current_buffer);
-      yy_current_buffer = 0;
-    }
 }

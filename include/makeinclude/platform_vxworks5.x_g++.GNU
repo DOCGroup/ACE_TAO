@@ -17,22 +17,21 @@ CROSS-COMPILE = 1
 
 debug = 1
 optimize = 1
-rtti =
 shared_libs =
 static_libs = 1
 
 
 ifeq (,$(WIND_BASE))
   default:
-	@ERROR: you must set your WIND_BASE environment variable
+        @ERROR: you must set your WIND_BASE environment variable
 endif # WIND_BASE
 
 ifeq (,$(WIND_HOST_TYPE))
   default:
-	@ERROR: you must set your WIND_HOST_TYPE environment variable
+        @ERROR: you must set your WIND_HOST_TYPE environment variable
 endif # WIND_HOST_TYPE
 
-HOST_DIR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
+HOST_DIR        = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
 
 ifeq (,$(findstring $(HOST_DIR)/bin,$PATH))
   #### Use := instead of += because += inserts a space.
@@ -42,19 +41,17 @@ endif # PATH
 PERL_PATH = perl
 
 ifeq (win32,$(findstring win32,$(WIND_HOST_TYPE)))
-  #### GNU make on WIN32 needs quoted double quotes.
-  ACE_QUOTE ='"'
+  #### GNU make on WIN32 needs double double quotes.
+  ACE_QUOTE =""
 else  # ! win32 host
   ACE_QUOTE ="
 endif # ! win32 host
 
-
 #### BEGIN target CPU-specific settings
 
-
-#### This is kind of messy so that it can support multiple targets.
-#### You'll need to set CPU to a supported CPU using one of these
-#### methods (unless your CPU is a PowerPC 604):
+#### This is kind of messy so that it can support multiple
+#### targets.  You'll need to set CPU to a supported CPU
+#### using one of these methods (unless your CPU is a PowerPC 604):
 #### 1) create a $ACE_ROOT/include/makeinclude/platform_macros.GNU
 ####    that contains something like:
 ####
@@ -71,39 +68,15 @@ ifeq ($(CPU),)
 endif # default CPU
 
 ifeq ($(CPU),PPC604)
-  BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC604
-  CCFLAGS += -fno-implicit-templates
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
-  TOOLENV = ppc
-else
-ifeq ($(CPU),PPC860)
-  BINXSYM_NAME = xsym
-  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC860 -mcpu=860
-  CCFLAGS += -fno-implicit-templates
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = ppc
 else
 ifeq ($(CPU),I80486)
-  #### Note: -fno-implicit-templates doesn't seem to work well with g++
-  #### cygnus-2.7.2-960126 for pc486 target.  Some member functions don't
-  #### get instantiated.  Wind River knows about this problem (SPR 8483).
-  BINXSYM_NAME = xsymDec
   CFLAGS += -DCPU=I80486 -m486
   TOOLENV = 386
-else
-ifeq ($(CPU),I80386)
-  BINXSYM_NAME = xsymDec
-  CFLAGS += -DCPU=I80386
-  TOOLENV = 386
-else
-  BINXSYM_NAME = xsym
-  CCFLAGS += -fno-implicit-templates
-endif # I80386
 endif # I80486
-endif # PPC860
 endif # PPC604
-
 
 #### END target CPU-specific settings
 
@@ -116,38 +89,16 @@ else  # ! x86-win32
   PIPE_OPT = -pipe
 endif # ! x86-win32
 
-ifeq ($(shared_libs),1)
-  SHARED_LIBS = 1
-endif
-ifeq ($(shared_libs_only),1)
-  SHARED_LIBS = 1
-endif
-
-ifeq ($(SHARED_LIBS),1)
-  ACELIB = -L./
-  #### There's no difference between non-shared and shared object code.
-  VSHDIR = .obj/
-endif # shared_libs
-
-ifeq ($(static_libs),1)
-  AR              = ar$(TOOLENV)
-  ARFLAGS         = rv
-else  # ! static_libs
-  AR              = echo
-  ARFLAGS         = "build shared lib only"
-endif # ! static_libs
 
 CC              = cc$(TOOLENV)
 CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
                    -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -Wall
-CCFLAGS         += $(CFLAGS)
-ifeq (,$(rtti))
-  #### Don't use RTTI even with egcs, because Tornado 1.0.x libraries
-  #### don't support it.
-  CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
-endif # rtti
+#### Note: -f-no-implicit-templates doesn't seem to work well with
+####       g++ cygnus-2.7.2-960126 for pc486 target.  Some
+####       member functions don't get instantiated.  Wind River knows
+####       about this problem (SPR 8483).
+CCFLAGS         += $(CFLAGS) #### -fno-implicit-templates
 DCFLAGS         += -g
-DLD             = $(LD)
 INCLDIRS        += -I$(WIND_BASE)/target/h
 LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld -c \
                   $(ACE_QUOTE)$(COMPILE.c) -traditional$(ACE_QUOTE) \
@@ -157,6 +108,9 @@ LDFLAGS         += -X -r
 #### the i386 family.  And -O2 causes some compilation failures.
 OCFLAGS         += -O
 PIC             =
+AR              = ar$(TOOLENV)
+ARFLAGS         = rv
+RANLIB          = /bin/true
 
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
@@ -166,6 +120,17 @@ LINK.c.override  = $(LD) $(LDFLAGS) $(LDLIBS) $(LIBS)
 LINK.cc          = override
 LINK.cc.override = $(LD)
 
+
+#### The symbol table extractor is target-dependent.
+ifeq ($(CPU),I80486)
+  BINXSYM_NAME = xsymDec
+else
+ifeq ($(CPU),I80386)
+  BINXSYM_NAME = xsymDec
+else
+  BINXSYM_NAME = xsym
+endif # I80486
+endif # I80386
 
 #### To extract the symbol table from each executable, uncomment the POSTLINK
 #### definition below.

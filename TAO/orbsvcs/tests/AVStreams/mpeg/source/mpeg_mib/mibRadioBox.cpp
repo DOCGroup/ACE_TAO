@@ -183,7 +183,7 @@ int mib_load_RadioBox(mib_Widget *thisw, mib_Buffer *fin)
     {
       if (!mib_read_line(fin, res, val))
 	return 0;
-      vallen =ACE_OS::strlen (val);
+      vallen = strlen(val);
       if (vallen < 2)
 	return 0;
       val[vallen-1] = '\0';
@@ -203,7 +203,7 @@ int mib_load_RadioBox(mib_Widget *thisw, mib_Buffer *fin)
 
   if (!mib_read_line(fin, res, val))
     return 0;
-  if (ACE_OS::strcmp (res,"EndWidget"))
+  if (strcmp(res,"EndWidget"))
     return 0;
 
   return 1;

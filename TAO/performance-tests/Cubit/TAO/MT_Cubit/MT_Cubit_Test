@@ -4,13 +4,13 @@
 # Spawns MT_Cubit server and client executables on a single host.
 
 usage="usage: $0 [-n <iterations>] [-r <host>] [-t] [-l] <# low priority threads>"
-usage2="    [-l] suppresses use of -ORBgioplite, [-r runs client on <host>], [-t] uses /tmp"
+usage2="    [-l] suppresses use of -ORBiioplite, [-r runs client on <host>], [-t] uses /tmp"
 
 user=`whoami`
 ior_file=/tmp/MT_Cubit-ior.${user}
 iterations=1000
 client_exec_prefix=time
-gioplite=-ORBgioplite
+iiop_lite=-ORBiioplite
 remote_host=
 
 if [ "$HOSTTYPE" = "lynxos" ]; then
@@ -30,7 +30,7 @@ fi
 ########
 while getopts ?ln:r:t arg; do
   case $arg in
-      l   ) gioplite= ;;
+      l   ) iiop_lite= ;;
       n   ) iterations=$OPTARG ;;
       r   ) remote_host=$OPTARG
             ior_file=MT_Cubit-ior ;;
@@ -38,46 +38,25 @@ while getopts ?ln:r:t arg; do
       '?' ) echo $usage; echo $usage2; exit 0 ;;
   esac
 done
+shift `expr $OPTIND - 1`
 
-if [ "$OPTIND" ]; then
-  shift `expr $OPTIND - 1`
-
-  if [ $# -ne 1 ]; then
-    echo $usage; echo $usage2
-    exit 1
-  fi
-else
-  #### sh does not support $OPTIND.  Arg error checking isn't as good.
-  if [ $# -lt 1 ]; then
-    echo $usage; echo $usage2
-    exit 1
-  fi
-
-  shift `expr $# - 1`
+if [ $# -ne 1 ]; then
+  echo $usage; echo $usage2
+  exit 1
 fi
-
 threads=`expr $1 + 1`
-
-
-########
-######## Make sure that the executables have been built.
-########
-if [ ! -f ./server  -o  ! -f ./client ]; then
-  echo $0: 'server and/or client need to be built!'
-  exit -1
-fi
 
 
 ########
 ######## Enable signal handler.
 ########
-trap 'kill -15 $server_pid; /bin/rm -f $ior_file; exit 0' 0 1 2 15
+trap 'kill -15 $server_pid; /bin/rm -f $ior_file' 0 1 2 15
 
 
 ########
 ######## Start server and save its pid.
 ########
-$server_exec_prefix ./server -f $ior_file -t $threads $gioplite > \
+$server_exec_prefix ./server -f $ior_file -t $threads $iiop_lite > \
   ${tmp}server.log 2>&1 &
 server_pid=$!
 
@@ -92,10 +71,10 @@ done
 if [ "$remote_host" ]; then
   rsh $remote_host \
     "cd $PWD; LD_LIBRARY_PATH=$LD_LIBRARY_PATH $client_exec_prefix \
-    ./client -f $ior_file -t $threads -n $iterations $gioplite" > \
+    ./client -f $ior_file -t $threads -n $iterations $iiop_lite" > \
     ${tmp}client-${threads}.log 2>&1
 else
   $client_exec_prefix \
-    ./client -f $ior_file -t $threads -n $iterations $gioplite  > \
+    ./client -f $ior_file -t $threads -n $iterations $iiop_lite  > \
     ${tmp}client-${threads}.log 2>&1
 fi

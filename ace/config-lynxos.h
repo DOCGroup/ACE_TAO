@@ -82,7 +82,6 @@
 // Platform does not have const anything
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 #define ACE_HAS_NONCONST_GETBY
-#define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_BROKEN_WRITEV
 #define ACE_HAS_BROKEN_READV
 #define ACE_HAS_BROKEN_SETRLIMIT
@@ -153,7 +152,6 @@
 
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_DRAFT4
-#define ACE_LACKS_NULL_PTHREAD_STATUS
 #define ACE_LACKS_THREAD_STACK_ADDR
 #define ACE_LACKS_SETDETACH
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
@@ -196,17 +194,6 @@ extern "C"
   int putenv (const char *);
 }
 
-// = Proactor stuff
-
-// Aio works on lynx
 #define ACE_HAS_AIO_CALLS
 
-// AIOCB Proactor works on Lynx. But it is not
-// multi-threaded.
-// Lynx OS 3.0.0 lacks POSIX call <pthread_sigmask>. So,we cannot use
-// SIG Proactor also, with multiple threads. So, let us use the AIOCB
-// Proactor. Once <pthreadd_sigmask> is available on Lynx, we can turn
-// on SIG Proactor for this platform.
-// #define ACE_POSIX_SIG_PROACTOR
-#define ACE_POSIX_AIOCB_PROACTOR
 #endif /* ACE_CONFIG_H */

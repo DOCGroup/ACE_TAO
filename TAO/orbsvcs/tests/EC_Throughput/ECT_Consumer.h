@@ -13,26 +13,24 @@
 #ifndef ECT_CONSUMER_H
 #define ECT_CONSUMER_H
 
-#include "ECT_Driver.h"
+#include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/High_Res_Timer.h"
 #include "orbsvcs/Channel_Clients_T.h"
-#include "ace/Task.h"
+
+#include "ECT_Driver.h"
 
 class Test_Consumer : public POA_RtecEventComm::PushConsumer
 {
+  //
   // = TITLE
   //   Receive the events.
   //
   // = DESCRIPTION
-  //   This class is a consumer of events. It subscribes for a
-  //   continous ranges of event types, this permits studying the
-  //   effect of the number of subscriptions for each particular kind
-  //   of event on the EC.
-  //
 public:
   Test_Consumer (ECT_Driver* driver,
                  void* cookie,
@@ -40,8 +38,8 @@ public:
 
   void connect (RtecScheduler::Scheduler_ptr scheduler,
                 const char* name,
-                int type_start,
-                int type_count,
+                int event_a,
+                int event_b,
                 RtecEventChannelAdmin::EventChannel_ptr ec,
                 CORBA::Environment& _env);
   // This method connects the consumer to the EC.
@@ -51,12 +49,6 @@ public:
 
   void dump_results (const char* name);
   // Print out the results
-
-  void accumulate (ECT_Driver::Throughput_Stats& stats) const;
-  // Add our throughput statistics to <stats>
-
-  void accumulate (ECT_Driver::Latency_Stats& stats) const;
-  // Add our latency statistics to <stats>
 
   virtual void push (const RtecEventComm::EventSet& events,
                      CORBA::Environment &_env);
@@ -80,13 +72,8 @@ private:
 
   ACE_SYNCH_MUTEX lock_;
   int recv_count_;
+  ACE_High_Res_Timer timer_;
   // How many events we have received.
-
-  ECT_Driver::Throughput_Stats throughput_;
-  // Used for reporting stats.
-
-  ECT_Driver::Latency_Stats latency_;
-  // Used for reporting stats.
 
   int shutdown_count_;
   // How many shutdown events we have received.

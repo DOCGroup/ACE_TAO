@@ -25,9 +25,8 @@ main (int argc, char *argv [])
 ECT_Consumer_Driver::ECT_Consumer_Driver (void)
   : n_consumers_ (1),
     n_suppliers_ (1),
-    type_start_ (ACE_ES_EVENT_UNDEFINED),
-    type_count_ (1),
-    shutdown_event_channel_ (1),
+    event_a_ (ACE_ES_EVENT_UNDEFINED),
+    event_b_ (ACE_ES_EVENT_UNDEFINED + 1),
     pid_file_name_ (0),
     active_count_ (0)
 {
@@ -68,14 +67,14 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
                   "Execution parameters:\n"
                   "  consumers = <%d>\n"
                   "  suppliers = <%d>\n"
-                  "  type_start = <%d>\n"
-                  "  type count = <%d>\n"
+                  "  supplier Event A = <%d>\n"
+                  "  supplier Event B = <%d>\n"
                   "  pid file name = <%s>\n",
 
                   this->n_consumers_,
                   this->n_suppliers_,
-                  this->type_start_,
-                  this->type_start_,
+                  this->event_a_,
+                  this->event_b_,
 
                   this->pid_file_name_?this->pid_file_name_:"nil") );
 
@@ -132,7 +131,7 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
       TAO_CHECK_ENV;
       if (CORBA::is_nil (sched_obj.in ()))
         return 1;
-      RtecScheduler::Scheduler_var scheduler =
+      RtecScheduler::Scheduler_var scheduler = 
         RtecScheduler::Scheduler::_narrow (sched_obj.in (),
                                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -171,11 +170,8 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
       this->disconnect_consumers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      if (this->shutdown_event_channel_ != 0)
-        {
-          channel->destroy (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-        }
+      channel->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
     {
@@ -227,8 +223,8 @@ ECT_Consumer_Driver::connect_consumers
 
       this->consumers_[i]->connect (scheduler,
                                     buf,
-                                    this->type_start_,
-                                    this->type_count_,
+                                    this->event_a_,
+                                    this->event_b_,
                                     channel,
                                     TAO_IN_ENV);
       TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
@@ -238,20 +234,14 @@ ECT_Consumer_Driver::connect_consumers
 void
 ECT_Consumer_Driver::dump_results (void)
 {
-  ECT_Driver::Throughput_Stats throughput;
-  ECT_Driver::Latency_Stats latency;
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "consumer_%02.2d", i);
 
       this->consumers_[i]->dump_results (buf);
-      this->consumers_[i]->accumulate (throughput);
-      this->consumers_[i]->accumulate (latency);
     }
-  throughput.dump_results ("ECT_Consumer", "accumulated");
-  latency.dump_results ("ECT_Consumer", "accumulated");
-  // this->dump_latency_results ("Latency");
+  this->dump_latency_results ("Latency");
 }
 
 void
@@ -267,17 +257,13 @@ ECT_Consumer_Driver::disconnect_consumers (CORBA::Environment &TAO_IN_ENV)
 int
 ECT_Consumer_Driver::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "xdc:s:h:p:");
+  ACE_Get_Opt get_opt (argc, argv, "dc:s:h:p:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
         {
-        case 'x':
-          this->shutdown_event_channel_ = 0;
-          break;
-
         case 'c':
           this->n_consumers_ = ACE_OS::atoi (get_opt.optarg);
           break;
@@ -291,9 +277,9 @@ ECT_Consumer_Driver::parse_args (int argc, char *argv [])
             char* aux;
                 char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
 
-            this->type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+            this->event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
-            this->type_count_ = ACE_OS::atoi (arg);
+            this->event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
           }
           break;
 
@@ -306,10 +292,9 @@ ECT_Consumer_Driver::parse_args (int argc, char *argv [])
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       "[ORB options] "
-                      "-d -x "
                       "-c <n_consumers> "
                       "-s <n_suppliers> "
-                      "-h <type_start,type_count> "
+                      "-h <event_a,event_b> "
                       "-p <pid file name> "
                       "\n",
                       argv[0]));
@@ -329,18 +314,9 @@ ECT_Consumer_Driver::parse_args (int argc, char *argv [])
 
   if (this->n_consumers_ <= 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of consumers or "
                          "suppliers out of range\n", argv[0]), -1);
-    }
-
-  if (this->type_count_ <= 0)
-    {
-      this->type_count_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%s: number of event types "
-                         "suppliers out of range, reset to default (1)\n",
-                         argv[0]), -1);
     }
 
   return 0;

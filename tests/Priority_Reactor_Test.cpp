@@ -45,12 +45,7 @@ USELIB("..\ace\aced.lib");
 
 // The number of children to run, it can be changed using the -c
 // option.
-static int opt_nchildren =
-#if defined (__Lynx__)
-  5;
-#else  /* ! __Lynx__ */
- 10;
-#endif /* ! __Lynx__ */
+static int opt_nchildren = 10;
 
 // The number of loops per children, it can be changed using the -l
 // option.
@@ -186,7 +181,7 @@ Write_Handler::svc (void)
 static void *
 client (void *arg)
 {
-  ACE_INET_Addr *connection_addr =
+  ACE_INET_Addr *connection_addr = 
     ACE_reinterpret_cast (ACE_INET_Addr *, arg);
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) running client\n"));
@@ -283,13 +278,10 @@ main (int argc, char *argv[])
     {
       ACE_Select_Reactor *impl_ptr;
       ACE_NEW_RETURN (impl_ptr, ACE_Priority_Reactor, -1);
-      auto_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
-      impl = auto_impl;
-
+      impl = auto_ptr<ACE_Select_Reactor> (impl_ptr);
       ACE_Reactor *reactor_ptr;
       ACE_NEW_RETURN (reactor_ptr, ACE_Reactor (impl_ptr), -1);
-      auto_ptr<ACE_Reactor> auto_reactor (reactor_ptr);
-      reactor = auto_reactor;
+      reactor = auto_ptr<ACE_Reactor> (reactor_ptr);
       ACE_Reactor::instance (reactor_ptr);
     }
 

@@ -235,12 +235,13 @@ single_thread_performance_test (int queue_type = 0)
   // heap in case messages is large relative to the amount of
   // stack space available.
   ACE_Message_Block *receive_block;
-  ACE_NEW_RETURN (receive_block,
-                  ACE_Message_Block[messages],
-                  -1);
+  ACE_NEW_RETURN (receive_block, ACE_Message_Block[messages], -1);
 
   for (i = 0; i < messages; ++i)
     {
+      // There's got to be a better way to do this.  <init> doesn't
+      // delete any existing data block, so we do it explicitly.
+      delete receive_block[i].data_block ();
       receive_block[i].init (MAX_MESSAGE_SIZE);
 
       // For VxWorks Message Queues, the receive block pointer must be
@@ -316,6 +317,9 @@ receiver (void *arg)
 
   for (i = 0; i < messages; ++i)
     {
+      // There's got to be a better way to do this.  <init> doesn't
+      // delete any existing data block, so we do it explicitly.
+      delete receive_block[i].data_block ();
       receive_block[i].init (MAX_MESSAGE_SIZE);
 
       // For VxWorks Message Queues, the receive block pointer must be
@@ -405,7 +409,7 @@ performance_test (int queue_type = 0)
       ACE_NEW_RETURN (queue_wrapper.q_,
                       ACE_Message_Queue_NT,
                       -1);
-      message = ASYS_TEXT ("ACE_Message_Queue_NT");
+      message = "ACE_Message_Queue_NT";
     }
 #endif /* VXWORKS */
 
@@ -429,7 +433,7 @@ performance_test (int queue_type = 0)
   ACE_Time_Value tv;
   timer->elapsed_time (tv);
   ACE_DEBUG ((LM_INFO, ASYS_TEXT ("%s: %u messages took %u msec (%f msec/message)\n"),
-              message,
+              ASYS_WIDE_STRING (message),
               messages,
               tv.msec (),
               (double) tv.msec () / messages));

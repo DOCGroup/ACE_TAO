@@ -1,6 +1,6 @@
-// $Id$
+// $Id: test.cpp 1.1	10/18/96
 
-// Tests the generated perfect hash function.
+// Tests the generated perfect has function.
 
 // The -v option prints diagnostics as to whether a word is in the set
 // or not.  Without -v the program is useful for timing.

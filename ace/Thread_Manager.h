@@ -147,7 +147,7 @@ protected:
 
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
-class ACE_Thread_Descriptor_Base : public ACE_OS_Thread_Descriptor
+class ACE_Thread_Descriptor_Base
 {
   // = TITLE
   //     Basic information for thread descriptors.  These information
@@ -197,6 +197,12 @@ protected:
   ACE_Task_Base *task_;
   // Pointer to an <ACE_Task_Base> or NULL if there's no
   // <ACE_Task_Base>.
+
+ long flags_;
+  // Keeps track of whether this thread was created "detached" or not.
+  // If a thread is *not* created detached then if someone calls
+  // <ACE_Thread_Manager::wait>, we need to join with that thread (and
+  // close down the handle).
 
   ACE_Thread_Descriptor_Base *next_;
   ACE_Thread_Descriptor_Base *prev_;
@@ -260,6 +266,9 @@ public:
 
   ~ACE_Thread_Descriptor (void);
   // Do nothing destructor to keep some compilers happy
+
+  long flags (void) const;
+  // Get the thread creation flags.
 
   void acquire_release (void);
   // Do nothing but to acquire the thread descriptor's lock and
@@ -489,7 +498,6 @@ public:
   // Called to clean up when a thread exits.  If <do_thread_exit> is
   // non-0 then <ACE_Thread::exit> is called to exit the thread, in
   // which case <status> is passed as the exit value of the thread.
-  // Should _not_ be called by main thread.
 
   int wait (const ACE_Time_Value *timeout = 0,
             int abandon_detached_threads = 0);
@@ -498,19 +506,14 @@ public:
   // treated as "absolute" time.  Returns 0 on success and -1 on
   // failure.  If <abandon_detached_threads> is set, wait will first
   // check thru its thread list for threads with THR_DETACHED or
-  // THR_DAEMON flags set and remove these threads.  Notice that
-  // unlike other wait_* function, by default, wait () does wait on
-  // all thread spawned by this thread_manager no matter the detached
-  // flags are set or not unless it is called with
-  // <abandon_detached_threads> flag set.
+  // THR_DAEMON flags set and remove these threads.
 
   int join (ACE_thread_t tid, void **status = 0);
-  // Join a thread specified by <tid>.  Do not wait on a detached thread.
+  // Join a thread specified by <tid>.
 
   int wait_grp (int grp_id);
   // Block until there are no more threads running in a group.
-  // Returns 0 on success and -1 on failure.  Notice that wait_grp
-  // will not wait on detached threads.
+  // Returns 0 on success and -1 on failure.
 
   // = Accessors for ACE_Thread_Descriptors.
   ACE_Thread_Descriptor *thread_desc_self (void);
@@ -600,8 +603,7 @@ public:
   // = Operations on ACE_Tasks.
   int wait_task (ACE_Task_Base *task);
   // Block until there are no more threads running in <task>.  Returns
-  // 0 on success and -1 on failure.  Notice that wait_task will not
-  // wait on detached threads.
+  // 0 on success and -1 on failure.
   int suspend_task (ACE_Task_Base *task);
   // Suspend all threads in an ACE_Task.
   int resume_task (ACE_Task_Base *task);
@@ -616,12 +618,9 @@ public:
   // supports cancellation.  Otherwise, perform a "cooperative"
   // cancellation.
 
-  // = Collect thread handles in the thread manager.  Notice that
-  //   the collected information is just a snapshot.
-  int hthread_within (ACE_hthread_t handle);
-  int thread_within (ACE_thread_t tid);
-  // Check if the thread is managed by the thread manager.  Return true if
-  // the thread is found, false otherwise.
+  // = The following method provide new functionality. They do not
+  // follow the same design as current methods. They provide new
+  // functionality.
 
   int num_tasks_in_group (int grp_id);
   // Returns the number of <ACE_Task_Base> in a group.
@@ -633,68 +632,25 @@ public:
                  ACE_Task_Base *task_list[],
                  size_t n);
   // Returns in <task_list> a list of up to <n> <ACE_Tasks> in a
-  // group.  The caller must allocate the memory for <task_list>.  In
-  // case of an error, -1 is returned. If no requested values are
-  // found, 0 is returned, otherwise correct number of retrieved
-  // values are returned.
+  // group.  The caller must allocate the memory for <task_list>
 
   int thread_list (ACE_Task_Base *task,
                    ACE_thread_t thread_list[],
                    size_t n);
-  // Returns in <thread_list> a list of up to <n> thread ids in an
+  // Returns in <thread_list> a list of up to <h> thread ids in an
   // <ACE_Task_Base>.  The caller must allocate the memory for
-  // <thread_list>.  In case of an error, -1 is returned. If no
-  // requested values are found, 0 is returned, otherwise correct
-  // number of retrieved values are returned.
+  // <thread_list>.
 
   int hthread_list (ACE_Task_Base *task,
                     ACE_hthread_t hthread_list[],
                     size_t n);
   // Returns in <hthread_list> a list of up to <n> thread handles in
   // an <ACE_Task_Base>.  The caller must allocate memory for
-  // <hthread_list>.  In case of an error, -1 is returned. If no
-  // requested values are found, 0 is returned, otherwise correct
-  // number of retrieved values are returned.
-
-  int thread_grp_list (int grp_id,
-                       ACE_thread_t thread_list[],
-                       size_t n);
-  // Returns in <thread_list> a list of up to <n> thread ids in a
-  // group <grp_id>.  The caller must allocate the memory for
-  // <thread_list>.  In case of an error, -1 is returned. If no
-  // requested values are found, 0 is returned, otherwise correct
-  // number of retrieved values are returned.
-
-  int hthread_grp_list (int grp_id,
-                        ACE_hthread_t hthread_list[],
-                        size_t n);
-  // Returns in <hthread_list> a list of up to <n> thread handles in
-  // a group <grp_id>.  The caller must allocate memory for
   // <hthread_list>.
-
-  int task_all_list (ACE_Task_Base *task_list[],
-                     size_t n);
-  // Returns in <task_list> a list of up to <n> <ACE_Tasks>.  The
-  // caller must allocate the memory for <task_list>.  In case of an
-  // error, -1 is returned. If no requested values are found, 0 is
-  // returned, otherwise correct number of retrieved values are
-  // returned.
-
-  int thread_all_list (ACE_thread_t thread_list[],
-                       size_t n);
-  // Returns in <thread_list> a list of up to <n> thread ids.  The
-  // caller must allocate the memory for <thread_list>.  In case of an
-  // error, -1 is returned. If no requested values are found, 0 is
-  // returned, otherwise correct number of retrieved values are
-  // returned.
 
   // = Set/get group ids for a particular task.
   int set_grp (ACE_Task_Base *task, int grp_id);
   int get_grp (ACE_Task_Base *task, int &grp_id);
-
-  int count_threads (void) const;
-  // Return a count of the current number of threads active in the
-  // <Thread_Manager>.
 
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   int at_exit (ACE_At_Thread_Exit* cleanup);
@@ -874,6 +830,115 @@ private:
 
   static int delete_thr_mgr_;
   // Must delete the <thr_mgr_> if non-0.
+};
+
+class ACE_Export ACE_Thread_Control
+{
+  // = TITLE
+  //     Used to keep track of a thread's activities within its entry
+  //     point function.
+  //
+  // = DESCRIPTION
+  //     A <ACE_Thread_Manager> uses this class to ensure that threads
+  //     it spawns automatically register and unregister themselves
+  //     with it.
+  //
+  //     This class can be stored in thread-specific storage using the
+  //     <ACE_TSS> wrapper.  When a thread exits the
+  //     <ACE_TSS::cleanup> function deletes this object, thereby
+  //     ensuring that it gets removed from its associated
+  //     <ACE_Thread_Manager>.
+public:
+  ACE_Thread_Control (ACE_Thread_Manager *tm = 0,
+                      int insert = 0);
+  // Initialize the thread control object.  If <insert> != 0, then
+  // register the thread with the Thread_Manager.
+
+  ~ACE_Thread_Control (void);
+  // Remove the thread from its associated <Thread_Manager> and exit
+  // the thread if <do_thr_exit> is enabled.
+
+  void *exit (void *status,
+              int do_thr_exit);
+  // Remove this thread from its associated <Thread_Manager> and exit
+  // the thread if <do_thr_exit> is enabled.
+
+  int insert (ACE_Thread_Manager *tm, int insert = 0);
+  // Store the <Thread_Manager> and use it to register ourselves for
+  // correct shutdown.
+
+  ACE_Thread_Manager *thr_mgr (void);
+  // Returns the current <Thread_Manager>.
+
+  ACE_Thread_Manager *thr_mgr (ACE_Thread_Manager *);
+  // Atomically set a new <Thread_Manager> and return the old
+  // <Thread_Manager>.
+
+  void *status (void *status);
+  // Set the exit status (and return existing status).
+
+  void *status (void);
+  // Get the current exit status.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+  ACE_Thread_Manager *tm_;
+  // Pointer to the thread manager for this block of code.
+
+  void *status_;
+  // Keeps track of the exit status for the thread.
+};
+
+class ACE_Export ACE_Thread_Exit
+{
+  // = TITLE
+  //    Keep exit information for a Thread in thread specific storage.
+  //    so that the thread-specific exit hooks will get called no
+  //    matter how the thread exits (e.g., via <ACE_Thread::exit>, C++
+  //    or Win32 exception, "falling off the end" of the thread entry
+  //    point function, etc.).
+  //
+  // = DESCRIPTION
+  //    This clever little helper class is stored in thread-specific
+  //    storage using the <ACE_TSS> wrapper.  When a thread exits the
+  //    <ACE_TSS::cleanup> function deletes this object, thereby
+  //    closing it down gracefully.
+public:
+  ACE_Thread_Exit (void);
+  // Capture the Thread that will be cleaned up automatically.
+
+  void thr_mgr (ACE_Thread_Manager *tm);
+  // Set the <ACE_Thread_Manager>.
+
+  void *status (void *s);
+  // Set the exit status.
+
+  void *status (void);
+  // Get the exit status.
+
+  ~ACE_Thread_Exit (void);
+  // Destructor calls the thread-specific exit hooks when a thread
+  // exits.
+
+  static ACE_Thread_Exit *instance (void);
+  // Singleton access point.
+
+  static void cleanup (void *instance, void *);
+  // Cleanup method, used by the <ACE_Object_Manager> to destroy the
+  // singleton.
+
+private:
+  void *status_;
+  // Exit status...
+
+  ACE_Thread_Control thread_control_;
+  // Automatically add/remove the thread from the
+  // <ACE_Thread_Manager>.
 };
 
 #if defined (__ACE_INLINE__)

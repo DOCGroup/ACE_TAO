@@ -209,6 +209,14 @@ public:
   // system call).  If <handle> is set to non-blocking mode this call
   // will poll until all <len> bytes are sent.
 
+  static ssize_t send_n (ACE_HANDLE handle,
+                         const void *buf,
+                         size_t len);
+  // Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::write>
+  // system call on UNIX and the <ACE_OS::recv> call on Win32).  If
+  // <handle> is set to non-blocking mode this call will poll until
+  // all <len> bytes are sent.
+
   // = Timed <send> operations.
   static ssize_t send (ACE_HANDLE handle,
                        const void *buf,
@@ -339,24 +347,24 @@ public:
   // = File system I/O functions.
 
   // These encapsulate differences between UNIX and Win32 and also
-  // send and recv exactly n bytes.  The definitions have been moved
-  // to ACE_OS; these remain for backward compatiblity.
-
-  static ssize_t send_n (ACE_HANDLE handle,
-                         const void *buf,
-                         size_t len);
-  // Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::write>
-  // system call on UNIX and the <ACE_OS::recv> call on Win32).  If
-  // <handle> is set to non-blocking mode this call will poll until
-  // all <len> bytes are sent.
+  // send and recv exactly n bytes.
 
   static ssize_t read_n (ACE_HANDLE handle,
                          void *buf,
                          size_t len);
+  // Receive <len> bytes into <buf> from <handle> (uses the
+  // <ACE_OS::read> call, which uses the <read> system call on UNIX
+  // and the <ReadFile> call on Win32).  If <handle> is set to
+  // non-blocking mode this call will poll until all <len> bytes are
+  // received.
 
   static ssize_t write_n (ACE_HANDLE handle,
                           const void *buf,
                           size_t len);
+  // Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::write>
+  // calls, which is uses the <write> system call on UNIX and the
+  // <WriteFile> call on Win32).  If <handle> is set to non-blocking
+  // mode this call will poll until all <len> bytes are sent.
 
   // = Socket connection establishment calls.
 
@@ -444,7 +452,7 @@ public:
   // Return a dynamically allocated duplicate of <str>, substituting
   // the environment variable if <str[0] == '$'>.  Note that the
   // pointer is allocated with <ACE_OS::malloc> and must be freed by
-  // <ACE_OS::free>.
+  // <ACE_OS::free>
 #endif /* ACE_HAS_WINCE */
 
   static char *strecpy (char *des, const char *src);
@@ -689,11 +697,6 @@ private:
                                     int val);
   // Cleanup after the <send> operation (e.g., restore the appropriate
   // non-blocking status of <handle>).
-
-  static u_int init_fini_count_;
-  // Counter to match init ()/fini () calls.  init () must increment
-  // it; fini () must decrement it.  fini () then does nothing until
-  // it reaches 0.
 
   static size_t pagesize_;
   // Size of a VM page.

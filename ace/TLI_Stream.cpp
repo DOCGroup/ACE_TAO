@@ -19,7 +19,6 @@ ACE_TLI_Stream::dump (void) const
 }
 
 ACE_TLI_Stream::ACE_TLI_Stream (void)
-  : rwflag_ (0)
 {
   ACE_TRACE ("ACE_TLI_Stream::ACE_TLI_Stream");
 }
@@ -32,12 +31,10 @@ ACE_TLI_Stream::get_remote_addr (ACE_Addr &sa) const
 #if defined (ACE_HAS_SVR4_TLI)
   struct netbuf name;
   name.maxlen = sa.get_size ();
-  name.buf = (char *) sa.get_addr ();
+  name.buf    = (char *) sa.get_addr ();
 
-  // if (ACE_OS::t_getname (this->get_handle (), &name, REMOTENAME) == -1)   
-  if (ACE_OS::ioctl (this->get_handle (),
-                     TI_GETPEERNAME,
-                     &name) == -1)
+  if (ACE_OS::ioctl (this->get_handle (), TI_GETPEERNAME, &name) == -1)
+/*  if (ACE_OS::t_getname (this->get_handle (), &name, REMOTENAME) == -1) */
     return -1;
   else
     return 0;
@@ -47,7 +44,7 @@ ACE_TLI_Stream::get_remote_addr (ACE_Addr &sa) const
 #endif /* ACE_HAS_SVR4_TLI */
 }
 
-// Send a release and then await the release from the other side.
+/* Send a release and then await the release from the other side */
 
 int
 ACE_TLI_Stream::active_close (void)
@@ -70,8 +67,8 @@ ACE_TLI_Stream::active_close (void)
   return this->close ();
 }
 
-// Acknowledge the release from the other side and then send the
-// release to the other side.
+/* Acknowledge the release from the other side and then send the release to
+   the other side. */
 
 int
 ACE_TLI_Stream::passive_close (void)
@@ -83,6 +80,7 @@ ACE_TLI_Stream::passive_close (void)
     return ACE_INVALID_HANDLE;
   return this->close ();
 }
+
 
 int
 ACE_TLI_Stream::close (void)

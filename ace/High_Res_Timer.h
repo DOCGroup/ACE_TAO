@@ -178,11 +178,20 @@ public:
   // However, setting the global_scale_factor_ appropriately will
   // result in the finest resolution possible.
 
+protected:
+
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+  static u_long get_registry_scale_factor (void);
+  // This is used to find out the Mhz of the machine for the scale
+  // factor.  If there are any problems getting it, we just return 1
+  // (the default).
+#endif /* ACE_WIN32 */
+
+private:
   static void hrtime_to_tv (ACE_Time_Value &tv,
                             const ACE_hrtime_t hrt);
   // Converts an <hrt> to <tv> using global_scale_factor_.
 
-private:
   static ACE_hrtime_t gettime (const ACE_OS::ACE_HRTimer_Op =
                                  ACE_OS::ACE_HRTIMER_GETTIME);
   // For internal use:  gets the high-resolution time using
@@ -206,12 +215,6 @@ private:
   static ACE_UINT32 global_scale_factor_;
   // Converts ticks to microseconds.  That is, ticks /
   // global_scale_factor_ == microseconds.
-
-  static int global_scale_factor_status_;
-  // Indicates the status of the global scale factor,
-  // 0  = hasn't been set
-  // 1  = been set
-  // -1 = HR timer not supported
 };
 
 #if defined (__ACE_INLINE__)

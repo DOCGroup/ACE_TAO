@@ -14,6 +14,46 @@
 //
 // ============================================================================
 
+ACE_INLINE
+TAO_OA_Parameters::TAO_OA_Parameters (void)
+{
+}
+
+ACE_INLINE
+TAO_OA_Parameters::~TAO_OA_Parameters (void)
+{
+}
+
+ACE_INLINE void
+TAO_OA_Parameters::tablesize (CORBA::ULong tblsize)
+{
+  this->tablesize_ = tblsize;
+}
+
+ACE_INLINE CORBA::ULong
+TAO_OA_Parameters::tablesize (void)
+{
+  return this->tablesize_;
+}
+
+ACE_INLINE TAO_Active_Object_Map_Impl *
+TAO_OA_Parameters::userdef_lookup_strategy_for_user_id_policy (void)
+{
+  return 0;
+}
+
+ACE_INLINE TAO_Active_Object_Map_Impl *
+TAO_OA_Parameters::userdef_lookup_strategy_for_system_id_policy (void)
+{
+  return 0;
+}
+
+ACE_INLINE TAO_Reverse_Active_Object_Map_Impl *
+TAO_OA_Parameters::userdef_reverse_lookup_strategy_for_unique_id_policy (void)
+{
+  return 0;
+}
+
 ACE_INLINE int
 TAO_ORB_Parameters::sock_rcvbuf_size (void) const
 {
@@ -156,28 +196,4 @@ ACE_INLINE CORBA::UShort
 TAO_ORB_Parameters::trading_service_port (void) const
 {
   return this->trading_service_port_;
-}
-
-ACE_INLINE TAO_IOR_LookupTable *
-TAO_ORB_Parameters::ior_lookup_table (void)
-{
-  return this->ior_lookup_table_;
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::ior_lookup_table (TAO_IOR_LookupTable *table)
-{
-  this->ior_lookup_table_ = table;
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::default_init_ref (const ACE_CString &default_init_ref)
-{
-  this->default_init_ref_ = default_init_ref;
-}
-
-ACE_INLINE char *
-TAO_ORB_Parameters::default_init_ref (void) const
-{
-  return this->default_init_ref_.rep ();
 }

@@ -22,7 +22,7 @@ typedef struct
   INSTR *pc;
 } task_info;
 
-const u_int SWITCHES = 25000;
+const int SWITCHES=25000;
 task_info tInfo[SWITCHES];
 
 extern "C"
@@ -30,8 +30,6 @@ int
 switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
             WIND_TCB *pNewTcb)   // pointer to new task's WIND_TCB.
 {
-  ACE_UNUSED_ARG (pOldTcb);
-
   // We create the client threads with names starting with "@".
   if (pNewTcb->name[0] == '@')
     ctx++;
@@ -92,7 +90,7 @@ Client_i::init (int argc, char *argv[])
 
   int result;
   result = GLOBALS::instance ()->sched_fifo_init ();
-  if (result == -1)
+  if (result != 0)
     return result;
   VX_VME_INIT;
   FORCE_ARGV (this->argc_,this->argv_);
@@ -322,17 +320,16 @@ Client_i::activate_high_client (void)
   ACE_DEBUG ((LM_DEBUG,
               "Creating 1 client with high priority of %d\n",
               this->high_priority_));
-  if (this->high_priority_client_->activate (
-      GLOBALS::instance ()->thr_create_flags,
-      1,
-      0,
-      this->high_priority_,
-      -1,
-      0,
-      0,
-      0,
-      0,
-    (ACE_thread_t *) &this->task_id_) == -1)
+  if (this->high_priority_client_->activate (THR_BOUND | ACE_SCHED_FIFO,
+                                             1,
+                                             0,
+                                             this->high_priority_,
+                                             -1,
+                                             0,
+                                             0,
+                                             0,
+                                             0,           //  size_t stack_size[] = 0,
+                                             (ACE_thread_t *) &this->task_id_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p; priority is %d\n",
                        "activate failed",
@@ -391,17 +388,17 @@ Client_i::activate_low_client (void)
                   this->low_priority_));
       // The first thread starts at the lowest priority of all the low
       // priority clients.
-      if (this->low_priority_client_[i - 1]->activate (
-          GLOBALS::instance ()->thr_create_flags,
-          1,
-          0,
-          this->low_priority_, // These are constructor defaults.
-          -1,                  // int grp_id = -1,
-          0,                   // ACE_Task_Base *task = 0,
-          0,                   // ACE_hthread_t thread_handles[] = 0,
-          0,                   // void *stack[] = 0,
-          0,                   // size_t stack_size[] = 0,
-            (ACE_thread_t *) &this->task_id_) == -1)
+      if (this->low_priority_client_[i - 1]->activate
+          (THR_BOUND | ACE_SCHED_FIFO,
+           1,
+           0,
+           this->low_priority_, // These are constructor defaults.
+           -1,                  // int grp_id = -1,
+           0,                   // ACE_Task_Base *task = 0,
+           0,                   // ACE_hthread_t thread_handles[] = 0,
+           0,                   // void *stack[] = 0,
+           0,                   // size_t stack_size[] = 0,
+           (ACE_thread_t *) &this->task_id_) == -1)
         ACE_ERROR ((LM_ERROR,
                     "%p; priority is %d\n",
                     "activate failed",
@@ -449,11 +446,11 @@ Client_i::activate_util_thread (void)
 
       // Activate the Utilization thread.  It will wait until all
       // threads have finished binding.
-      this->util_thread_->activate (
-        GLOBALS::instance ()->thr_create_flags,
-        1,
-        0,
-        this->low_priority_);
+      this->util_thread_->activate
+        (THR_BOUND | ACE_SCHED_FIFO,
+         1,
+         0,
+         this->low_priority_);
     }
   else
     this->util_thread_->close ();
@@ -605,13 +602,13 @@ Client_i::start_servant (void)
               this->high_priority_));
 
   // Make the high priority task an active object.
-   if (high_priority_task->activate (
-       GLOBALS::instance ()->thr_create_flags,
-       1,
-       0,
-       this->high_priority_) == -1)
+   if (high_priority_task->activate
+       (THR_BOUND | ACE_SCHED_FIFO,
+        1,
+        0,
+        this->high_priority_) == -1)
      ACE_ERROR ((LM_ERROR,
-                 "(%P|%t) %p\n",
+                 "(%P|%t) %p\n"
                  "\thigh_priority_task->activate failed"));
 
    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
@@ -740,11 +737,10 @@ Client_i::do_thread_per_rate_test (void)
               "Creating 20 Hz client with priority %d\n",
               priority));
 
-  if (CB_20Hz_client.activate (
-       GLOBALS::instance ()->thr_create_flags,
-       1,
-       1,
-       priority) == -1)
+  if (CB_20Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO,
+                               1,
+                               1,
+                               priority) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%P|%t) errno = %p: activate failed\n"));
   // The high priority thread is parsing the arguments, so wait on the
@@ -770,11 +766,10 @@ Client_i::do_thread_per_rate_test (void)
               "Creating 10 Hz client with priority %d\n",
               priority));
 
-  if (CB_10Hz_client.activate (
-       GLOBALS::instance ()->thr_create_flags,
-       1,
-       1,
-       priority) == -1)
+  if (CB_10Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO,
+                               1,
+                               1,
+                               priority) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%P|%t) errno = %p: activate failed\n"));
 
@@ -785,11 +780,10 @@ Client_i::do_thread_per_rate_test (void)
               "Creating 5 Hz client with priority %d\n",
               priority));
 
-  if (CB_5Hz_client.activate (
-       GLOBALS::instance ()->thr_create_flags,
-       1,
-       1,
-       priority) == -1)
+  if (CB_5Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO,
+                              1,
+                              1,
+                              priority) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%P|%t) errno = %p: activate failed\n"));
 
@@ -800,11 +794,10 @@ Client_i::do_thread_per_rate_test (void)
               "Creating 1 Hz client with priority %d\n",
               priority));
 
-  if (CB_1Hz_client.activate (
-       GLOBALS::instance ()->thr_create_flags,
-       1,
-       1,
-       priority) == -1)
+  if (CB_1Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO,
+                              1,
+                              1,
+                              priority) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%P|%t) errno = %p: activate failed\n"));
 
@@ -863,6 +856,12 @@ main (int argc, char *argv[])
                 &pTime) != K_OK)
     ACE_DEBUG ((LM_DEBUG,
                 "pccTimer has a pending bench mark\n"));
+#elif defined (VXWORKS)
+  // Shoot myself.  Otherwise, there's a General Protection Fault.
+  // This will leak memory, but that's preferable.  It looks like the
+  // problem might be due to static objects in libTAO.
+  int status;
+  ACE_OS::thr_exit (&status);
 #endif /* CHORUS */
   return 0;
 }

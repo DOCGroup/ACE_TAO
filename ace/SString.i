@@ -9,11 +9,12 @@ ACE_INLINE
 ACE_CString::ACE_CString (ACE_Allocator *alloc)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
-    buf_len_ (0),
-    rep_ (&ACE_CString::NULL_CString_),
+    rep_ (0),
     release_ (0)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
+
+  this->set (0, 0, 0);
 }
 
 // Constructor that actually copies memory.
@@ -24,7 +25,6 @@ ACE_CString::ACE_CString (const char *s,
                           int release)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
-    buf_len_ (0),
     rep_ (0),
     release_ (0)
 {
@@ -44,7 +44,6 @@ ACE_CString::ACE_CString (char c,
                           ACE_Allocator *alloc)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
-    buf_len_ (0),
     rep_ (0),
     release_ (0)
 {
@@ -62,7 +61,6 @@ ACE_CString::ACE_CString (const char *s,
                           int release)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
-    buf_len_ (0),
     rep_ (0),
     release_ (0)
 {
@@ -77,7 +75,6 @@ ACE_INLINE
 ACE_CString::ACE_CString (const ACE_CString &s)
   : allocator_ (s.allocator_ ? s.allocator_ : ACE_Allocator::instance ()),
     len_ (0),
-    buf_len_ (0),
     rep_ (0),
     release_ (0)
 {
@@ -234,26 +231,7 @@ ACE_INLINE int
 ACE_CString::compare (const ACE_CString &s) const
 {
   ACE_TRACE ("ACE_CString::compare");
-
-  // We can't just pass both strings to strcmp, since they are not
-  // guaranteed to be null-terminated.
-
-  // Pick smaller of the two lengths and perform the comparison.
-  int smaller_length = (this->len_ < s.len_) ? this->len_ : s.len_;
-  int result = ACE_OS::strncmp (this->rep_,
-                                s.rep_,
-                                smaller_length);
-
-  if (result != 0 || s.len_ == this->len_)
-    return result;
-
-  else
-    // we need to differentiate based on length
-    if (this->len_ > s.len_)
-      return (this->rep_[smaller_length] - '\0');
-
-    else
-      return ('\0' - s.rep_[smaller_length]);
+  return ACE_OS::strncmp (this->rep_, s.rep_, this->len_);
 }
 
 ACE_INLINE int
@@ -559,7 +537,7 @@ ACE_INLINE int
 ACE_WString::operator < (const ACE_WString &s) const
 {
   ACE_TRACE ("ACE_WString::operator <");
-  return (this->len_ < s.len_)
+  return (this->len_ < s.len_) 
           ? (ACE_OS::memcmp ((const void *) this->rep_,
                              (const void *) s.rep_,
                              this->len_ * sizeof (ACE_USHORT16)) <= 0)
@@ -574,7 +552,7 @@ ACE_INLINE int
 ACE_WString::operator > (const ACE_WString &s) const
 {
   ACE_TRACE ("ACE_WString::operator >");
-  return (this->len_ <= s.len_)
+  return (this->len_ <= s.len_) 
           ? (ACE_OS::memcmp ((const void *) this->rep_,
                              (const void *) s.rep_,
                              this->len_ * sizeof (ACE_USHORT16)) > 0)
@@ -683,70 +661,4 @@ ACE_INLINE u_long
 ACE_WString::hash (void) const
 {
   return ACE::hash_pjw (this->rep_);
-}
-
-// ****************************************************************
-
-ACE_INLINE
-ACE_Auto_String_Free::ACE_Auto_String_Free (char* p)
-  :  p_ (p)
-{
-}
-
-ACE_INLINE
-ACE_Auto_String_Free::ACE_Auto_String_Free (ACE_Auto_String_Free& rhs)
-  :  p_ (rhs.p_)
-{
-  rhs.p_ = 0;
-}
-
-ACE_INLINE void
-ACE_Auto_String_Free::reset (char* p)
-{
-  if (this->p_ != 0)
-    ACE_OS::free (this->p_);
-  this->p_ = p;
-}
-
-ACE_INLINE ACE_Auto_String_Free&
-ACE_Auto_String_Free::operator= (ACE_Auto_String_Free& rhs)
-{
-  if (this != &rhs)
-    {
-      this->reset (rhs.p_);
-      rhs.p_ = 0;
-    }
-  return *this;
-}
-
-ACE_INLINE
-ACE_Auto_String_Free::~ACE_Auto_String_Free (void)
-{
-  this->reset (0);
-}
-
-ACE_INLINE char*
-ACE_Auto_String_Free::operator* (void) const
-{
-  return this->p_;
-}
-
-ACE_INLINE char
-ACE_Auto_String_Free::operator[] (int i) const
-{
-  return this->p_[i];
-}
-
-ACE_INLINE char*
-ACE_Auto_String_Free::get (void) const
-{
-  return this->p_;
-}
-
-ACE_INLINE char*
-ACE_Auto_String_Free::release (void)
-{
-  char* p = this->p_;
-  this->p_ = 0;
-  return p;
 }

@@ -551,7 +551,8 @@ Thr_Consumer_Handler::svc (void)
         }
     }
 
-  ACE_NOTREACHED (return 0;)
+  /* NOTREACHED */
+  return 0;
 }
 
 Thr_Supplier_Handler::Thr_Supplier_Handler (const Connection_Config_Info &pci)

@@ -30,22 +30,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class T>
-class ACE_Noop_Key_Generator
-{
-  // = TITLE
-  //     Defines a noop key generator.
-public:
-
-  int operator() (T &);
-  // Functor method: generates a new key.
-};
-
-////////////////////////////////////////////////////////////////////////////////
-
-template <class T>
 class ACE_Incremental_Key_Generator
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a simple incremental key generator.
   //
   // = DESCRIPTION
@@ -55,7 +42,7 @@ class ACE_Incremental_Key_Generator
   //       - Constructor that accepts 0 in the constructor.
   //       - Prefix increment.
   //       - Assignment.
-  //
+  // 
   //     Note that a primitive types such as u_long, int, etc., are
   //     suitable for this class.
 public:
@@ -80,18 +67,18 @@ protected:
 template <class T>
 class ACE_Iterator_Impl
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a abstract iterator.
   //
   // = DESCRIPTION
   //     Implementation to be provided by subclasses.
 public:
-
+  
   virtual ~ACE_Iterator_Impl (void);
-  // Destructor.
-
+  // Destructor.  
+  
   virtual ACE_Iterator_Impl<T> *clone (void) const = 0;
-  // Clone.
+  // Clone.  
 
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const = 0;
   // Comparison.
@@ -111,18 +98,18 @@ public:
 template <class T>
 class ACE_Reverse_Iterator_Impl
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a abstract reverse iterator.
   //
   // = DESCRIPTION
   //     Implementation to be provided by subclasses.
 public:
-
+  
   virtual ~ACE_Reverse_Iterator_Impl (void);
-  // Destructor.
-
+  // Destructor.  
+  
   virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const = 0;
-  // Clone.
+  // Clone.  
 
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const = 0;
   // Comparison.
@@ -142,29 +129,29 @@ public:
 template <class T>
 class ACE_Iterator
 {
-  // = TITLE
+  // = TITLE  
   //     Defines the iterator interface.
   //
   // = DESCRIPTION
   //     Implementation to be provided by forwarding.
 public:
-
+  
   // = Traits.
   typedef T value_type;
   typedef ACE_Iterator_Impl<T> implementation;
 
   ACE_Iterator (ACE_Iterator_Impl<T> *impl);
-  // Constructor.
+  // Constructor.  
 
   ACE_Iterator (const ACE_Iterator<T> &rhs);
   // Copy constructor.
-
+  
   ~ACE_Iterator (void);
-  // Destructor.
+  // Destructor.  
 
   ACE_Iterator<T> &operator= (const ACE_Iterator<T> &rhs);
   // Assignment operator.
-
+  
   int operator== (const ACE_Iterator<T> &rhs) const;
   int operator!= (const ACE_Iterator<T> &rhs) const;
   // Comparison operators.
@@ -185,12 +172,12 @@ public:
   // Postfix reverse.
 
   ACE_Iterator_Impl<T> &impl (void);
-  // Accessor to implementation object.
+  // Accessor to implementation object.    
 
 protected:
 
   ACE_Iterator_Impl<T> *implementation_;
-  // Implementation pointer.
+  // Implementation pointer.    
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -198,29 +185,29 @@ protected:
 template <class T>
 class ACE_Reverse_Iterator
 {
-  // = TITLE
+  // = TITLE  
   //     Defines the reverse iterator interface.
   //
   // = DESCRIPTION
   //     Implementation to be provided by forwarding.
 public:
-
+  
   // = Traits.
   typedef T value_type;
   typedef ACE_Reverse_Iterator_Impl<T> implementation;
 
   ACE_Reverse_Iterator (ACE_Reverse_Iterator_Impl<T> *impl);
-  // Constructor.
+  // Constructor.  
 
   ACE_Reverse_Iterator (const ACE_Reverse_Iterator<T> &rhs);
   // Copy constructor.
-
+  
   ~ACE_Reverse_Iterator (void);
-  // Destructor.
+  // Destructor.  
 
   ACE_Reverse_Iterator<T> &operator= (const ACE_Reverse_Iterator<T> &rhs);
   // Assignment operator.
-
+  
   int operator== (const ACE_Reverse_Iterator<T> &rhs) const;
   int operator!= (const ACE_Reverse_Iterator<T> &rhs) const;
   // Comparison operators.
@@ -241,12 +228,12 @@ public:
   // Postfix reverse.
 
   ACE_Reverse_Iterator_Impl<T> &impl (void);
-  // Accessor to implementation object.
+  // Accessor to implementation object.    
 
 protected:
 
   ACE_Reverse_Iterator_Impl<T> *implementation_;
-  // Implementation pointer.
+  // Implementation pointer.    
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -254,7 +241,7 @@ protected:
 template <class KEY, class VALUE>
 class ACE_Map
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a map interface.
   //
   // = DESCRIPTION
@@ -336,7 +323,7 @@ public:
 
   virtual int rebind (const KEY &key,
                       const VALUE &value,
-                      KEY &old_key,
+                      KEY &old_key, 
                       VALUE &old_value) = 0;
   // Reassociate <key> with <value>, storing the old key and value
   // into the "out" parameters <old_key> and <old_value>.  The
@@ -354,7 +341,7 @@ public:
   // attempt is made to bind an existing entry.  This function fails
   // for maps that do not allow user specified keys.
 
-  virtual int find (const KEY &key,
+  virtual int find (const KEY &key, 
                     VALUE &value) = 0;
   // Locate <value> associated with <key>.
 
@@ -364,7 +351,7 @@ public:
   virtual int unbind (const KEY &key) = 0;
   // Remove <key> from the map.
 
-  virtual int unbind (const KEY &key,
+  virtual int unbind (const KEY &key, 
                       VALUE &value) = 0;
   // Remove <key> from the map, and return the <value> associated with
   // <key>.
@@ -413,24 +400,24 @@ private:
 template <class T, class IMPLEMENTATION, class ENTRY>
 class ACE_Map_Impl_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a iterator implementation for the Map_Impl class.
   //
   // = DESCRIPTION
   //     Implementation to be provided by <IMPLEMENTATION>.
 public:
-
+  
   // = Traits.
   typedef IMPLEMENTATION implementation;
 
   ACE_Map_Impl_Iterator_Adapter (const IMPLEMENTATION &impl);
-  // Constructor.
+  // Constructor.  
 
   virtual ~ACE_Map_Impl_Iterator_Adapter (void);
-  // Destructor.
+  // Destructor.  
 
   virtual ACE_Iterator_Impl<T> *clone (void) const;
-  // Clone.
+  // Clone.  
 
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
   // Comparison.
@@ -448,9 +435,9 @@ public:
   // Accessor to implementation object.
 
 protected:
-
+  
   IMPLEMENTATION implementation_;
-  // All implementation details are forwarded to this class.
+  // All implementation details are forwarded to this class.  
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -458,25 +445,24 @@ protected:
 template <class T, class IMPLEMENTATION, class ENTRY>
 class ACE_Map_Impl_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a reverse iterator implementation for the Map_Impl class.
   //
   // = DESCRIPTION
   //     Implementation to be provided by IMPLEMENTATION.
 public:
-
+  
   // = Traits.
-  typedef IMPLEMENTATION
-          implementation;
+  typedef IMPLEMENTATION implementation;
 
   ACE_Map_Impl_Reverse_Iterator_Adapter (const IMPLEMENTATION &impl);
-  // Constructor.
+  // Constructor.  
 
   virtual ~ACE_Map_Impl_Reverse_Iterator_Adapter (void);
-  // Destructor.
+  // Destructor.  
 
   virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const;
-  // Clone.
+  // Clone.  
 
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
   // Comparison.
@@ -496,7 +482,7 @@ public:
 protected:
 
   IMPLEMENTATION implementation_;
-  // All implementation details are forwarded to this class.
+  // All implementation details are forwarded to this class.  
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -504,7 +490,7 @@ protected:
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY>
 class ACE_Map_Impl : public ACE_Map<KEY, VALUE>
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a map implementation.
   //
   // = DESCRIPTION
@@ -512,8 +498,8 @@ class ACE_Map_Impl : public ACE_Map<KEY, VALUE>
 public:
 
   // = Traits.
-  typedef ACE_Map_Impl_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, ITERATOR, ENTRY> iterator_impl;
-  typedef ACE_Map_Impl_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, REVERSE_ITERATOR, ENTRY> reverse_iterator_impl;
+  typedef ACE_Map_Impl_Iterator_Adapter<value_type, ITERATOR, ENTRY> iterator_impl;
+  typedef ACE_Map_Impl_Reverse_Iterator_Adapter<value_type, REVERSE_ITERATOR, ENTRY> reverse_iterator_impl;
   typedef IMPLEMENTATION implementation;
 
   // = Initialization and termination methods.
@@ -591,7 +577,7 @@ public:
 
   virtual int rebind (const KEY &key,
                       const VALUE &value,
-                      KEY &old_key,
+                      KEY &old_key, 
                       VALUE &old_value);
   // Reassociate <key> with <value>, storing the old key and value
   // into the "out" parameters <old_key> and <old_value>.  The
@@ -609,7 +595,7 @@ public:
   // attempt is made to bind an existing entry.  This function fails
   // for maps that do not allow user specified keys.
 
-  virtual int find (const KEY &key,
+  virtual int find (const KEY &key, 
                     VALUE &value);
   // Locate <value> associated with <key>.
 
@@ -619,7 +605,7 @@ public:
   virtual int unbind (const KEY &key);
   // Remove <key> from the map.
 
-  virtual int unbind (const KEY &key,
+  virtual int unbind (const KEY &key, 
                       VALUE &value);
   // Remove <key> from the map, and return the <value> associated with
   // <key>.
@@ -663,24 +649,24 @@ private:
 template <class T, class VALUE>
 class ACE_Active_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a iterator implementation for the Active_Map_Manager_Adapter.
   //
   // = DESCRIPTION
   //     Implementation to be provided by ACE_Active_Map_Manager::iterator.
 public:
-
+  
   // = Traits.
-  typedef ACE_TYPENAME ACE_Active_Map_Manager<VALUE>::iterator implementation;
+  typedef ACE_Active_Map_Manager<VALUE>::iterator implementation;
 
   ACE_Active_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
-  // Constructor.
+  // Constructor.  
 
   virtual ~ACE_Active_Map_Manager_Iterator_Adapter (void);
-  // Destructor.
+  // Destructor.  
 
   virtual ACE_Iterator_Impl<T> *clone (void) const;
-  // Clone.
+  // Clone.  
 
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
   // Comparison.
@@ -693,14 +679,14 @@ public:
 
   virtual void minus_minus (void);
   // Reverse.
-
+  
   ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl (void);
   // Accessor to implementation object.
 
 protected:
 
   ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
+  // All implementation details are forwarded to this class.  
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -708,24 +694,24 @@ protected:
 template <class T, class VALUE>
 class ACE_Active_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a reverse iterator implementation for the Active_Map_Manager_Adapter.
   //
   // = DESCRIPTION
   //     Implementation to be provided by ACE_Active_Map_Manager::reverse_iterator.
 public:
-
+  
   // = Traits.
-  typedef ACE_TYPENAME ACE_Active_Map_Manager<VALUE>::reverse_iterator implementation;
+  typedef ACE_Active_Map_Manager<VALUE>::reverse_iterator implementation;
 
   ACE_Active_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
-  // Constructor.
+  // Constructor.  
 
   virtual ~ACE_Active_Map_Manager_Reverse_Iterator_Adapter (void);
-  // Destructor.
+  // Destructor.  
 
   virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const;
-  // Clone.
+  // Clone.  
 
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
   // Comparison.
@@ -745,7 +731,7 @@ public:
 protected:
 
   ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
+  // All implementation details are forwarded to this class.  
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -753,17 +739,17 @@ protected:
 template <class KEY, class VALUE, class KEY_ADAPTER>
 class ACE_Active_Map_Manager_Adapter : public ACE_Map<KEY, VALUE>
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a map implementation.
   //
-  // = DESCRIPTION
+  // = DESCRIPTION  
   //     Implementation to be provided by <ACE_Active_Map_Manager>.
 public:
 
   // = Traits.
   typedef ACE_Pair<KEY, VALUE> expanded_value;
-  typedef ACE_Active_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, expanded_value> iterator_impl;
-  typedef ACE_Active_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, expanded_value> reverse_iterator_impl;
+  typedef ACE_Active_Map_Manager_Iterator_Adapter<value_type, expanded_value> iterator_impl;
+  typedef ACE_Active_Map_Manager_Reverse_Iterator_Adapter<value_type, expanded_value> reverse_iterator_impl;
   typedef ACE_Active_Map_Manager<expanded_value> implementation;
 
   // = Initialization and termination methods.
@@ -841,7 +827,7 @@ public:
 
   virtual int rebind (const KEY &key,
                       const VALUE &value,
-                      KEY &old_key,
+                      KEY &old_key, 
                       VALUE &old_value);
   // Reassociate <key> with <value>, storing the old key and value
   // into the "out" parameters <old_key> and <old_value>.  The
@@ -859,7 +845,7 @@ public:
   // attempt is made to bind an existing entry.  This function fails
   // for maps that do not allow user specified keys.
 
-  virtual int find (const KEY &key,
+  virtual int find (const KEY &key, 
                     VALUE &value);
   // Locate <value> associated with <key>.
 
@@ -869,7 +855,7 @@ public:
   virtual int unbind (const KEY &key);
   // Remove <key> from the map.
 
-  virtual int unbind (const KEY &key,
+  virtual int unbind (const KEY &key, 
                       VALUE &value);
   // Remove <key> from the map, and return the <value> associated with
   // <key>.
@@ -898,7 +884,7 @@ protected:
   virtual int unbind (const KEY &key,
                       expanded_value *&internal_value);
   // Unbind helper.
-
+  
   ACE_Active_Map_Manager<ACE_Pair<KEY, VALUE> > implementation_;
   // All implementation details are forwarded to this class.
 
@@ -927,24 +913,24 @@ private:
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS>
 class ACE_Hash_Map_Manager_Ex_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a iterator implementation for the Hash_Map_Manager_Adapter.
   //
   // = DESCRIPTION
   //     Implementation to be provided by ACE_Hash_Map_Manager_Ex::iterator.
 public:
-
+  
   // = Traits.
-  typedef ACE_TYPENAME ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator implementation;
+  typedef ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator implementation;
 
   ACE_Hash_Map_Manager_Ex_Iterator_Adapter (const ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
-  // Constructor.
+  // Constructor.  
 
   virtual ~ACE_Hash_Map_Manager_Ex_Iterator_Adapter (void);
-  // Destructor.
+  // Destructor.  
 
   virtual ACE_Iterator_Impl<T> *clone (void) const;
-  // Clone.
+  // Clone.  
 
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
   // Comparison.
@@ -964,7 +950,7 @@ public:
 protected:
 
   ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
+  // All implementation details are forwarded to this class.  
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -972,24 +958,24 @@ protected:
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS>
 class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a reverse iterator implementation for the Hash_Map_Manager_Adapter.
   //
   // = DESCRIPTION
   //     Implementation to be provided by ACE_Hash_Map_Manager_Ex::reverse_iterator.
 public:
-
+  
   // = Traits.
-  typedef ACE_TYPENAME ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator implementation;
+  typedef ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator implementation;
 
   ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (const ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
-  // Constructor.
+  // Constructor.  
 
   virtual ~ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (void);
-  // Destructor.
+  // Destructor.  
 
   virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const;
-  // Clone.
+  // Clone.  
 
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
   // Comparison.
@@ -1009,7 +995,7 @@ public:
 protected:
 
   ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
+  // All implementation details are forwarded to this class.  
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1017,16 +1003,16 @@ protected:
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR>
 class ACE_Hash_Map_Manager_Ex_Adapter : public ACE_Map<KEY, VALUE>
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a map implementation.
   //
-  // = DESCRIPTION
+  // = DESCRIPTION  
   //     Implementation to be provided by <ACE_Hash_Map_Manager_Ex>.
 public:
 
   // = Traits.
-  typedef ACE_Hash_Map_Manager_Ex_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS> iterator_impl;
-  typedef ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS> reverse_iterator_impl;
+  typedef ACE_Hash_Map_Manager_Ex_Iterator_Adapter<value_type, KEY, VALUE, HASH_KEY, COMPARE_KEYS> iterator_impl;
+  typedef ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<value_type, KEY, VALUE, HASH_KEY, COMPARE_KEYS> reverse_iterator_impl;
   typedef ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation;
 
   // = Initialization and termination methods.
@@ -1104,7 +1090,7 @@ public:
 
   virtual int rebind (const KEY &key,
                       const VALUE &value,
-                      KEY &old_key,
+                      KEY &old_key, 
                       VALUE &old_value);
   // Reassociate <key> with <value>, storing the old key and value
   // into the "out" parameters <old_key> and <old_value>.  The
@@ -1122,7 +1108,7 @@ public:
   // attempt is made to bind an existing entry.  This function fails
   // for maps that do not allow user specified keys.
 
-  virtual int find (const KEY &key,
+  virtual int find (const KEY &key, 
                     VALUE &value);
   // Locate <value> associated with <key>.
 
@@ -1132,7 +1118,7 @@ public:
   virtual int unbind (const KEY &key);
   // Remove <key> from the map.
 
-  virtual int unbind (const KEY &key,
+  virtual int unbind (const KEY &key, 
                       VALUE &value);
   // Remove <key> from the map, and return the <value> associated with
   // <key>.
@@ -1182,24 +1168,24 @@ private:
 template <class T, class KEY, class VALUE>
 class ACE_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a iterator implementation for the Map_Manager_Adapter.
   //
   // = DESCRIPTION
   //     Implementation to be provided by ACE_Map_Manager::iterator.
 public:
-
+  
   // = Traits.
-  typedef ACE_TYPENAME ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator implementation;
+  typedef ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator implementation;
 
   ACE_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
-  // Constructor.
+  // Constructor.  
 
   virtual ~ACE_Map_Manager_Iterator_Adapter (void);
-  // Destructor.
+  // Destructor.  
 
   virtual ACE_Iterator_Impl<T> *clone (void) const;
-  // Clone.
+  // Clone.  
 
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
   // Comparison.
@@ -1219,7 +1205,7 @@ public:
 protected:
 
   ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
+  // All implementation details are forwarded to this class.  
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1227,24 +1213,24 @@ protected:
 template <class T, class KEY, class VALUE>
 class ACE_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a reverse iterator implementation for the Map Manager.
   //
   // = DESCRIPTION
   //     Implementation to be provided by ACE_Map_Manager::reverse_iterator.
 public:
-
+  
   // = Traits.
-  typedef ACE_TYPENAME ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator implementation;
+  typedef ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator implementation;
 
   ACE_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
-  // Constructor.
+  // Constructor.  
 
   virtual ~ACE_Map_Manager_Reverse_Iterator_Adapter (void);
-  // Destructor.
+  // Destructor.  
 
   virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const;
-  // Clone.
+  // Clone.  
 
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
   // Comparison.
@@ -1264,7 +1250,7 @@ public:
 protected:
 
   ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> implementation_;
-  // All implementation details are forwarded to this class.
+  // All implementation details are forwarded to this class.  
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1272,16 +1258,16 @@ protected:
 template <class KEY, class VALUE, class KEY_GENERATOR>
 class ACE_Map_Manager_Adapter : public ACE_Map<KEY, VALUE>
 {
-  // = TITLE
+  // = TITLE  
   //     Defines a map implementation.
   //
-  // = DESCRIPTION
+  // = DESCRIPTION  
   //     Implementation to be provided by <ACE_Map_Manager>.
 public:
 
   // = Traits.
-  typedef ACE_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE> iterator_impl;
-  typedef ACE_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE> reverse_iterator_impl;
+  typedef ACE_Map_Manager_Iterator_Adapter<value_type, KEY, VALUE> iterator_impl;
+  typedef ACE_Map_Manager_Reverse_Iterator_Adapter<value_type, KEY, VALUE> reverse_iterator_impl;
   typedef ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex> implementation;
 
   // = Initialization and termination methods.
@@ -1359,7 +1345,7 @@ public:
 
   virtual int rebind (const KEY &key,
                       const VALUE &value,
-                      KEY &old_key,
+                      KEY &old_key, 
                       VALUE &old_value);
   // Reassociate <key> with <value>, storing the old key and value
   // into the "out" parameters <old_key> and <old_value>.  The
@@ -1377,7 +1363,7 @@ public:
   // attempt is made to bind an existing entry.  This function fails
   // for maps that do not allow user specified keys.
 
-  virtual int find (const KEY &key,
+  virtual int find (const KEY &key, 
                     VALUE &value);
   // Locate <value> associated with <key>.
 
@@ -1387,7 +1373,7 @@ public:
   virtual int unbind (const KEY &key);
   // Remove <key> from the map.
 
-  virtual int unbind (const KEY &key,
+  virtual int unbind (const KEY &key, 
                       VALUE &value);
   // Remove <key> from the map, and return the <value> associated with
   // <key>.

@@ -1,62 +1,53 @@
 #----------------------------------------------------------------------------
-#       $Id$
+#	$Id$
 #
-#       Makefile for tests of the miscellaneous ACE performance tests
+#	Makefile for tests of the miscellaneous ACE performance tests
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#       Local macros
+#	Local macros
 #----------------------------------------------------------------------------
 
-BIN = basic_perf \
-      childbirth_time \
-      context_switch_time \
-      preempt \
-      test_mutex \
-      test_singleton
-#### See below for test_naming.
+BIN     = basic_perf \
+	  childbirth_time \
+	  context_switch_time \
+	  preempt \
+	  test_mutex \
+	  test_singleton \
+	  test_naming
 
 # Only build static library for optimum run-time speed.
-LIB     = libPerf.a
+LIB	= libPerf.a
 FILES   = basic_func
-LSRC    = $(addsuffix .cpp,$(FILES))
-LOBJ    = $(addsuffix .o,$(FILES))
-LDLIBS  = -lPerf
+LSRC	= $(addsuffix .cpp,$(FILES)) 
+LOBJ	= $(addsuffix .o,$(FILES))
+LDLIBS 	= -lPerf
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 # See comment above about only building libPerf.a for max performance.
 BUILD = $(VLIB) $(VBIN)
 
-BIN2 = test_naming
-
-#### If the ACE library wasn't built with sufficient components, don't
-#### try to build here.
-ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
-ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
-  BIN += $(BIN2)
-endif # ! Other
-
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
-
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-
-#----------------------------------------------------------------------------
-#       Local targets
-#----------------------------------------------------------------------------
-
 # For make depend.
 PSRC = $(addsuffix .cpp, $(BIN))
 
 #----------------------------------------------------------------------------
-#       Dependencies
+#	Include macros and targets
+#----------------------------------------------------------------------------
+
+include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include	$(ACE_ROOT)/include/makeinclude/macros.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+#----------------------------------------------------------------------------
+#	Local targets
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#	Dependencies
 #----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
@@ -66,6 +57,9 @@ PSRC = $(addsuffix .cpp, $(BIN))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -83,6 +77,9 @@ PSRC = $(addsuffix .cpp, $(BIN))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -103,6 +100,9 @@ PSRC = $(addsuffix .cpp, $(BIN))
 .obj/childbirth_time.o .obj/childbirth_time.so .shobj/childbirth_time.o .shobj/childbirth_time.so: childbirth_time.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -173,6 +173,9 @@ PSRC = $(addsuffix .cpp, $(BIN))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -257,15 +260,10 @@ PSRC = $(addsuffix .cpp, $(BIN))
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
@@ -299,6 +297,9 @@ PSRC = $(addsuffix .cpp, $(BIN))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -383,15 +384,10 @@ PSRC = $(addsuffix .cpp, $(BIN))
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
@@ -420,6 +416,9 @@ PSRC = $(addsuffix .cpp, $(BIN))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -441,6 +440,9 @@ PSRC = $(addsuffix .cpp, $(BIN))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -485,6 +487,9 @@ PSRC = $(addsuffix .cpp, $(BIN))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \

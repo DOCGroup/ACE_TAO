@@ -26,7 +26,7 @@ ACE_ARGV::buf (void)
   if (this->buf_ == 0 && this->state_ == ITERATIVE) 
     this->create_buf_from_queue ();
 
-  return (const ASYS_TCHAR *) this->buf_;
+  return (const ASYS_TCHAR *)this->buf_;
 }
 
 // Return the arguments in an entry-per-argument array
@@ -44,10 +44,10 @@ ACE_ARGV::argv (void)
 
       // Convert buf_ to argv_
       if (this->string_to_argv () == -1)
-        return (ASYS_TCHAR **) 0;
+        return 0;
     }
 
-  return (ASYS_TCHAR **) this->argv_;
+  return this->argv_;
 }
 
 // Subscript operator.  

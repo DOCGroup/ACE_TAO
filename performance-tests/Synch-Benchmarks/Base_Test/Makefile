@@ -13,8 +13,7 @@ LIB	= libBase_Test.a
 SHLIB	= libBase_Test.$(SOEXT)
 
 FILES	= Baseline_Test \
-	  mutex_test \
-	  base_test
+	  mutex_test
 
 LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)

@@ -13,51 +13,24 @@ CXX             = $(CC)
 ####       instead, change "-pthread" to "-threads".
 CFLAGS          += -pthread
 
-ifndef CXX_VERSION
-  CXX_VERSION := $(shell $(CXX) -V)
-endif # CXX_VERSION
-
-CXX_1016 =
-CXX_1136 =
-
-ifneq (,$(optimize))
-  CXX_1016 = ,1016
-endif # optimize
-
-#### 6.1-029 and later support msg 1136.  We disable it by default.
-ifneq (6.0-,$(findstring 6.0-,$(CXX_VERSION)))
-ifeq (6.1-,$(findstring 6.1-,$(CXX_VERSION)))
-  ifeq (6.1-029,$(findstring 6.1-029,$(CXX_VERSION)))
-    CXX_1136 = ,1136
-  endif # 6.1-029
-else  # 6.2 or later
-  CXX_1136 = ,1136
-endif # 6.2 or later
-endif # ! 6.0
-
 #### These flags can only be used with cxx Version 6.0 and later.
 #### They are enabled by default; they can be disabled by settting
 #### CXX_VER to CXX_5 either on the make command line, or by
 #### or by setting the CXX_VER environment variable to CXX_5.
 # WARNING_FLAGS +=
+#    9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
+#  174: expr_has_no_effect
 #  193: zero used for undefined preprocessing identifier
 #  236: controlling expression is constant
 #  401: base_class_with_nonvirtual_dtor
+#  610: nonoverriding_function_decl
 #  835: unreferenced_function_param
 #  839: no_corresponding_delete (until this is fixed in libTAO)
-# 1016: expected type is incompatible with declared type of int (in bzero ())
 # 1136: conversion to integral type of smaller size could lose data
 ifneq ($(CXX_VER),CXX_5)
-  WARNING_FLAGS += -w0 -msg_display_number -msg_display_tag
-  WARNING_FLAGS += \
-    -msg_disable 193,236,401,835,839$(CXX_1016)$(CXX_1136)
-
-  ifndef ACE_DU_VERSION
-    # In case this file wasn't included by platform_osf1_cxx.GNU:
-    # 9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
-    WARNING_FLAGS += -msg_disable 9
-  endif # ACE_DU_VERSION
-endif # 6.0 or later
+  WARNING_FLAGS += -w0 -msg_display_number \
+                   -msg_disable 9,174,193,236,401,610,835,839,1136
+endif
 
 CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
 ifeq ($(rtti),)
@@ -86,7 +59,10 @@ ifndef exceptions
   #### Disable the default exception handling of cxx >= 6.0.
   #### This is untested.  exceptions=1 is the default, so it's not used
   #### by default.
-  ifeq (6.,$(findstring 6.,$(CXX_VERSION)))
+  CXX_HAS_EXCEPTIONS := \
+    $(shell if cxx -V | egrep -v 'C\+\+ [a-zA-Z][6-9]' > /dev/null; then \
+               echo 1; fi)
+  ifdef CXX_HAS_EXCEPTIONS
     CCFLAGS += -nocleanup
-  endif # 6.x
+  endif # CXX_HAS_EXCEPTIONS
 endif # ! exceptions

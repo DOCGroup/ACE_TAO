@@ -48,10 +48,7 @@
 # define DEC_CXX
 # if (__DECCXX_VER >= 60090010)
     // DEC CXX 6.0 supports exceptions, etc., by default.  Exceptions
-    // are enabled by platform_osf1_4.0.GNU/wrapper_macros.GNU.
-#   if defined (ACE_HAS_EXCEPTIONS)
-#     define ACE_NEW_THROWS_EXCEPTIONS
-#   endif /* ACE_HAS_EXCEPTIONS */
+    // are enabled by platform_osf1_4.0.GNU.
 #   define ACE_HAS_ANSI_CASTS
 #   if !defined (__RTTI)
 #     define ACE_LACKS_RTTI
@@ -60,9 +57,7 @@
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 #   define ACE_HAS_TYPENAME_KEYWORD
-# else  /* __DECCXX_VER < 60090010 */
-#   define ACE_LACKS_PRAGMA_ONCE
-# endif /* __DECCXX_VER < 60090010 */
+# endif /* __DECCXX_VER >= 60090010 */
 #elif defined (__rational__)
 # define ACE_HAS_REENTRANT_FUNCTIONS
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
@@ -83,14 +78,14 @@
 # define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 # define ACE_HAS_BROKEN_IF_HEADER
 # define ACE_HAS_BROKEN_R_ROUTINES
+# define ACE_HAS_BROKEN_T_ERRNO
 # define ACE_HAS_PTHREADS
 # define ACE_HAS_PTHREADS_STD
+# define ACE_HAS_PTHREAD_SIGMASK
 # define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 # define ACE_LACKS_T_ERRNO
 # define ACE_POLL_IS_BROKEN
-# if !defined (DIGITAL_UNIX)
-#   define DIGITAL_UNIX
-# endif /* ! DIGITAL_UNIX */
+# define DIGITAL_UNIX
   // DJT removed this due to some minor issues related to the
   // definitions of timestruc_t and tid_t in procfs.h not sure what
   // functionality is lost?  Platform supports <sys/procfs.h>
@@ -138,7 +133,6 @@
 #define ACE_HAS_IP_MULTICAST
 #define ACE_HAS_LONG_MAP_FAILED
 #define ACE_HAS_MSG
-#define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_OSF1_GETTIMEOFDAY
 #define ACE_HAS_OSF_TIMOD_H
 #define ACE_HAS_POLL

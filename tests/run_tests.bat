@@ -1,6 +1,6 @@
-@echo off
 rem $Id$
 
+@echo off
 rem    To use this either give it no arguments to run all the tests or
 rem    pass it the test name (without the extention) to run only one
 rem    test
@@ -22,7 +22,6 @@ if not "%arg%" == "" goto runtest
 
 :runall
 
-call %0 %dopure% ACE_Init_Test
 call %0 %dopure% Atomic_Op_Test
 call %0 %dopure% Barrier_Test
 call %0 %dopure% Basic_Types_Test
@@ -30,7 +29,7 @@ call %0 %dopure% Buffer_Stream_Test
 call %0 %dopure% CDR_Test
 call %0 %dopure% Collection_Test
 call %0 %dopure% Conn_Test
-call %0 %dopure% DLL_Test
+rem call %0 %dopure% DLL_Test
 call %0 %dopure% DLList_Test
 call %0 %dopure% Enum_Interfaces_Test
 call %0 %dopure% Env_Value_Test
@@ -49,7 +48,6 @@ call %0 %dopure% MT_Reactor_Timer_Test
 call %0 %dopure% MM_Shared_Memory_Test
 call %0 %dopure% MT_SOCK_Test
 call %0 %dopure% Naming_Test
-call %0 %dopure% New_Fail_Test
 call %0 %dopure% Notify_Performance_Test
 call %0 %dopure% OrdMultiSet_Test
 call %0 %dopure% Pipe_Test
@@ -68,7 +66,6 @@ call %0 %dopure% Reactor_Timer_Test
 call %0 %dopure% Reader_Writer_Test
 call %0 %dopure% Thread_Pool_Reactor_Test
 call %0 %dopure% Recursive_Mutex_Test
-call %0 %dopure% Reverse_Lock_Test
 call %0 %dopure% Semaphore_Test
 call %0 %dopure% Service_Config_Test
 call %0 %dopure% Sigset_Ops_Test
@@ -84,7 +81,7 @@ call %0 %dopure% Thread_Mutex_Test
 call %0 %dopure% Thread_Pool_Test
 call %0 %dopure% Timer_Queue_Test
 call %0 %dopure% Timeprobe_Test
-if exist ..\netsvcs\servers\main.exe call %0 %dopure% Time_Service_Test
+call %0 %dopure% Time_Service_Test
 call %0 %dopure% Time_Value_Test
 call %0 %dopure% Tokens_Test
 call %0 %dopure% TSS_Test

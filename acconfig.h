@@ -42,8 +42,8 @@
 # undef _POSIX_PTHREAD_SEMANTICS
 #endif
 
-/* Some platforms require _GNU_SOURCE to be defined to make some function
-   prototypes "visible." */
+/* Some platforms require _GNU_SOURCE to be defined to make some functions
+   declaration "visible." */
 #ifndef _GNU_SOURCE
 # undef _GNU_SOURCE
 #endif
@@ -114,28 +114,28 @@
 
 /* Cray specific configuration parameters */
 /*
- *  The following predefined macros are used within ACE ifdefs.  
- *  These are defined when using the Cray compilers.  _CRAYMPP
- *  is defined, for example, if you are running on a Cray T3E
- *  massively parallel machine.  Moreover, in the case of the T3E,
- *  _CRAYT3E will be defined.  This is used to determine the
- *  ACE_SIZEOF defines for primitive types.  
- *
- *  _UNICOS is defined as either the major version of UNICOS being run,
- *  e.g. 9 or 10 on the vector machines (e.g. C90, T90, J90, YMP, ...)
- *  or the major+minor+level UNICOS/mk version, e.g. 2.0.3 => 203,
- *  being run on an MPP machine.
- *
- *  Summary:
- *
- *  _CRAYMPP  (defined only if running on MPP machine, e.g. T3E, UNICOS/mk)
- *  _CRAYT3E  (defined specifically if compiling on a Cray T3E)
- *  _UNICOS   (defined if running UNICOS or UNICOS/mk)
- *
- *  Tested on UNICOS 10.0.0.2, UNICOS/mk 2.0.3.10
- *
- *  Contributed by Doug Anderson <doug "at" clark.net>
- */
+    The following predefined macros are used within ACE ifdefs.  
+    These are defined when using the Cray compilers.  _CRAYMPP
+    is defined, for example, if you are running on a Cray T3E
+    massively parallel machine.  Moreover, in the case of the T3E,
+    _CRAYT3E will be defined.  This is used to determine the
+    ACE_SIZEOF defines for primitive types.  
+
+    _UNICOS is defined as either the major version of UNICOS being run,
+    e.g. 9 or 10 on the vector machines (e.g. C90, T90, J90, YMP, ...)
+    or the major+minor+level UNICOS/mk version, e.g. 2.0.3 => 203,
+    being run on an MPP machine.
+
+    Summary:
+
+    _CRAYMPP  (defined only if running on MPP machine, e.g. T3E, UNICOS/mk)
+    _CRAYT3E  (defined specifically if compiling on a Cray T3E)
+    _UNICOS   (defined if running UNICOS or UNICOS/mk)
+
+    Tested on UNICOS 10.0.0.2, UNICOS/mk 2.0.3.10
+
+    Contributed by Doug Anderson <doug@clark.net>
+*/
 #undef _CRAYMPP
 #undef _CRAYT3E
 #undef _UNICOS
@@ -238,13 +238,16 @@
 
 /* typedef for ACE_UINT64 */
 /*
-   We only make the typedef if ACE_UINT64_TYPEDEF is defined.  Otherwise,
-   let ace/Basic_Types.h do the work for us.
+   We only make the typedef if ACE_UINT64_TYPEDEF is defined and
+   ACE_LACKS_LONGLONG_T isn't defined  .  Otherwise,
+   let ace/Basic_Types.h do the work for us.  ACE_UINT64_TYPEDEF is
+   defined during the initial configuration process if a 64 bit unsigned int
+   was found.
 */
 #undef ACE_UINT64_TYPEDEF
 #if defined(ACE_UINT64_TYPEDEF)
-   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
-#endif /* ACE_UINT64_TYPEDEF && !ACE_DISABLE_AUTOCONF_UINT64 */
+  typedef ACE_UINT64_TYPEDEF ACE_UINT64;
+#endif /* ACE_UINT64_TYPEDEF */
 
 /* Enable ACE inlining */
 #undef __ACE_INLINE__
@@ -352,9 +355,6 @@
    See "ace/OS.h" for details. */
 #undef ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 
-/* Platform doesn't cast MAP_FAILED to a (void *). */
-#undef ACE_HAS_BROKEN_MAP_FAILED
-
 /* Compiler/platform doesn't support namespaces (or the support is not fully
    implemented.) */
 #undef ACE_HAS_BROKEN_NAMESPACES
@@ -410,6 +410,9 @@
    prototype. */
 #undef ACE_HAS_BROKEN_SETRLIMIT
 
+/* Platform doesn't define _terrno() even though it should (only for TLI) */
+#undef ACE_HAS_BROKEN_T_ERRNO
+
 /* platform define struct timespec members as ts_sec and ts_nsec instead of
    tv_sec and tv_nsec.  This is highly non-portable.  Currently only
    FreeBSD 2.1.x uses it. */
@@ -427,6 +430,9 @@
 
 /* Platform has <bytesex.h>. */
 #undef ACE_HAS_BYTESEX_H
+
+/* Platform has <features.h> */
+#undef ACE_HAS_FEATURES_H
 
 /* Platform supports the Win32 CancelIO() function (WinNT 4.0 and beyond). */
 #undef ACE_HAS_CANCEL_IO
@@ -502,9 +508,6 @@
 
 /* Platform supports IP multicast */
 #undef ACE_HAS_IP_MULTICAST
-
-/* Platform supports IPv6 */
-#undef ACE_HAS_IP6
 
 /* Platform supports the very odd IRIX 6.2 threads... */
 #undef ACE_HAS_IRIX62_THREADS
@@ -641,6 +644,9 @@
 /* pthread.h declares an enum with PTHREAD_PROCESS_PRIVATE and
    PTHREAD_PROCESS_SHARED values */
 #undef ACE_HAS_PTHREAD_PROCESS_ENUM
+
+/* Platform has pthread_sigmask() defined. */
+#undef ACE_HAS_PTHREAD_SIGMASK
 
 /* Purify'ing.  Defined on command line. */
 #undef ACE_HAS_PURIFY
@@ -801,7 +807,7 @@
 /* Platform supports STREAMS */
 #undef ACE_HAS_STREAMS
 
-/* Platform supports STREAM pipes */
+/* Platform s  upports STREAM pipes */
 #undef ACE_HAS_STREAM_PIPES
 
 /* Compiler/platform supports strerror () */
@@ -942,7 +948,7 @@
 #undef ACE_HAS_MOSTLY_UNICODE_APIS
 
 /* Compiler supports the C++ typename keyword */
-#undef ACE_HAS_TYPENAME_KEYWORD
+#undef E_HAS_TYPENAME_KEYWORD
 
 /* Compiler supports the new using keyword for C++ namespaces. */
 #undef ACE_HAS_USING_KEYWORD
@@ -1085,9 +1091,6 @@
 /* Platform lacks pthread_mutexattr_setpshared(). */
 #undef ACE_LACKS_MUTEXATTR_PSHARED
 
-/* OS requires non-null status pointer for ::pthread_join () */
-#undef ACE_LACKS_NULL_PTHREAD_STATUS
-
 /* Platform lacks <sys/param.h> (e.g., MVS) */
 #undef ACE_LACKS_PARAM_H
 
@@ -1109,7 +1112,7 @@
    memory and message queues. */
 #undef ACE_LACKS_SOME_POSIX_PROTOTYPES
 
-/* Compiler complains about use of obsolete "#pragma once" */
+/* Compiler complains about "#pragma once" */
 #undef ACE_LACKS_PRAGMA_ONCE
 
 /* Platform lacks pri_t (e.g., Tandem NonStop UNIX). */
@@ -1118,11 +1121,8 @@
 /* Platform lack pthread_attr_setstackaddr() */
 #undef ACE_LACKS_THREAD_STACK_ADDR
 
-/* Platform lacks pthread_cancel() */
+/* Platform lacks pthread_cancel(). */
 #undef ACE_LACKS_PTHREAD_CANCEL
-
-/* Platform lacks pthread_sigmask () */
-#undef ACE_LACKS_PTHREAD_SIGMASK
 
 /* Platform lacks pthread_thr_sigsetmask (e.g., MVS, HP/UX, and OSF/1 3.2) */
 #undef ACE_LACKS_PTHREAD_THR_SIGSETMASK
@@ -1138,9 +1138,6 @@
 
 /* Platform lacks the readlink() function. */
 #undef ACE_LACKS_READLINK
-
-/* Platform lacks the rename() function. */
-#undef ACE_LACKS_RENAME
 
 /* Platform lacks recvmsg() */
 #undef ACE_LACKS_RECVMSG
@@ -1224,9 +1221,6 @@
 /* Platform doesn't have netinet/tcp.h */
 #undef ACE_LACKS_TCP_H
 
-/* OS does not support TCP_NODELAY */
-#undef ACE_LACKS_TCP_NODELAY
-
 /* Platform lacks pthread_attr_setscope() */
 #undef ACE_LACKS_THREAD_PROCESS_SCOPING
 
@@ -1244,14 +1238,6 @@
 
 /* Platform/compiler lacks the ualarm() prototype (e.g., Solaris) */
 #undef ACE_LACKS_UALARM_PROTOTYPE
-
-/* Compiler does not have any istream operator>> for chars, u_chars, or
-   signed chars. */
-#undef ACE_LACKS_CHAR_RIGHT_SHIFTS
-
-/* Compiler does not have operator>> (istream &, u_char *) or
-   operator>> (istream &, signed char *) */
-#undef ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS
 
 /* Platform lacks the ucontext.h file */
 #undef ACE_LACKS_UCONTEXT_H
@@ -1305,7 +1291,7 @@
 #undef ACE_NEEDS_REGEXPR_H
 
 /* Platform needs to #include <sched.h> to get thread scheduling defs. */
-#undef ACE_NEEDS_SCHED_H
+#undef ACE_LACKS_SCHED_H
 
 /* <time.h> doesn't automatically #include <sys/time.h> */
 #undef ACE_LACKS_SYSTIME_H

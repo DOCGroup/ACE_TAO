@@ -187,17 +187,17 @@ private:
   // limitation of only 1 TAO_TRY being allowed per function.
 
   void invalid_name_test (TAO_Naming_Client &root_context,
-                          CORBA::Environment &ACE_TRY_ENV);
+                          CORBA::Environment &_env);
   void already_bound_test (TAO_Naming_Client &root_context,
-                           CORBA::Environment &ACE_TRY_ENV);
+                           CORBA::Environment &_env);
   void already_bound_test2 (TAO_Naming_Client &root_context,
-                            CORBA::Environment &ACE_TRY_ENV);
+                            CORBA::Environment &_env);
   void not_found_test (TAO_Naming_Client &root_context,
-                       CORBA::Environment &ACE_TRY_ENV);
+                       CORBA::Environment &_env);
   void not_found_test2 (TAO_Naming_Client &root_context,
-                        CORBA::Environment &ACE_TRY_ENV);
+                        CORBA::Environment &_env);
   void not_found_test3 (TAO_Naming_Client &root_context,
-                        CORBA::Environment &ACE_TRY_ENV);
+                        CORBA::Environment &_env);
 };
 
 class Destroy_Test : public Naming_Test
@@ -221,9 +221,9 @@ public:
 private:
   // = The following functions isolate specific tests.
   void not_empty_test (CosNaming::NamingContext_var &ref,
-                       CORBA::Environment &ACE_TRY_ENV);
+                       CORBA::Environment &_env);
   void not_exist_test (CosNaming::NamingContext_var &ref,
-                       CORBA::Environment &ACE_TRY_ENV);
+                       CORBA::Environment &_env);
 };
 
 class CosNaming_Client
@@ -254,7 +254,7 @@ public:
   // Initialize the client communication endpoint with server.
 
   // = Symbolic ids.
-  enum OBJ_ID
+  enum
   {
     OBJ1_ID = 5,
     OBJ2_ID = 6

@@ -85,13 +85,12 @@ be_visitor_args_post_docall_cs::visit_interface (be_interface *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_INOUT:
-    case AST_Argument::dir_OUT:
       {
         os->indent ();
         // assign the narrowed obj reference
         *os << arg->local_name () << " = " << node->name ()
             << "::_narrow (_tao_base_" << arg->local_name ()
-            << ", ACE_TRY_ENV);" << be_nl;
+            << ", _tao_environment);" << be_nl;
         *os << "CORBA::release (_tao_base_" << arg->local_name ()
             << ");\n";
       }
@@ -118,7 +117,7 @@ be_visitor_args_post_docall_cs::visit_interface_fwd (be_interface_fwd *node)
         // assign the narrowed obj reference
         *os << arg->local_name () << " = " << node->name ()
             << "::_narrow (_tao_base_" << arg->local_name ()
-            << ", ACE_TRY_ENV);" << be_nl;
+            << ", _tao_environment);" << be_nl;
         *os << "CORBA::release (_tao_base_" << arg->local_name ()
             << ");\n";
       }

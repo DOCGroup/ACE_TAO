@@ -310,10 +310,10 @@ public:
 
   virtual ~TAO_Register (void);
 
-  virtual CosTrading::OfferId _cxx_export (CORBA::Object_ptr reference,
-                                           const char *type,
-                                           const CosTrading::PropertySeq& properties,
-                                           CORBA::Environment& _env)
+  virtual CosTrading::OfferId export (CORBA::Object_ptr reference,
+                                      const char *type,
+                                      const CosTrading::PropertySeq& properties,
+                                      CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::Register::InvalidObjectRef,
                     CosTrading::IllegalServiceType,
@@ -909,12 +909,10 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
   ACE_UNIMPLEMENTED_FUNC (TAO_Link (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
 
-  typedef ACE_Hash_Map_Manager_Ex
+  typedef ACE_Hash_Map_Manager
   <
   TAO_String_Hash_Key,
   CosTrading::Link::LinkInfo,
-  ACE_Hash<TAO_String_Hash_Key>,
-  ACE_Equal_To<TAO_String_Hash_Key>,
   MAP_LOCK_TYPE
   >
   Links;

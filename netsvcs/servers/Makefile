@@ -1,47 +1,41 @@
 #----------------------------------------------------------------------------
-#       $Id$
+#	$Id$
 #
-#       Makefile
+#	Makefile 
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#       Local macros
+#	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS  = -lnetsvcs
+BIN   	= main 
+LSRC   	= $(addsuffix .cpp,$(BIN))
+
+LDLIBS 	= -lnetsvcs
+ 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-LSRC = $(addsuffix .cpp,$(BIN))
 
-BIN2 = main
-
-#### If the ACE library wasn't built with sufficient components, don't
-#### try to build here.
-ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
-ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
-  ifeq (Token,$(findstring Token,$(ACE_BUILD_COMPONENTS)))
-    BIN = $(BIN2)
-  endif # ! Token
-endif # ! Other
+BUILD 	= $(VBIN)
 
 #----------------------------------------------------------------------------
-#       Include macros and targets
+#	Include macros and targets
 #----------------------------------------------------------------------------
 
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include	$(ACE_ROOT)/include/makeinclude/macros.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
-#       Local targets
+#	Local targets
 #----------------------------------------------------------------------------
 
 CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
 
 #----------------------------------------------------------------------------
-#       Dependencies
+#	Dependencies
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
@@ -53,6 +47,9 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -143,15 +140,10 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.i \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \

@@ -161,7 +161,7 @@
   typedef unsigned short ACE_UINT16;
 # elif ACE_SIZEOF_INT == 2
   typedef int ACE_INT16;
-  typedef unsigned int ACE_UINT16;
+  typedef unsigned short ACE_UINT16;
 # elif (ACE_SIZEOF_SHORT) == 4 && defined(_CRAYMPP)
   // mpp cray - uses Alpha processors
   //   Use the real 32-bit quantity for ACE_INT32's, and use a "long"
@@ -184,9 +184,6 @@ typedef ACE_UINT16 ACE_USHORT16;
 # if ACE_SIZEOF_INT == 4
   typedef int ACE_INT32;
   typedef unsigned int ACE_UINT32;
-#   if defined (__KCC) && !defined (ACE_LACKS_LONGLONG_T)
-  typedef unsigned long long ACE_UINT64;
-#   endif /* __KCC */
 # elif ACE_SIZEOF_LONG == 4
   typedef long ACE_INT32;
   typedef unsigned long ACE_UINT32;
@@ -356,25 +353,13 @@ typedef ACE_UINT16 ACE_USHORT16;
 // 64-bit literals require special marking on some platforms.
 # if defined (ACE_WIN32)
 #   define ACE_UINT64_LITERAL(n) n ## ui64
-#   define ACE_INT64_LITERAL(n) n ## i64
-# elif defined (ACE_LACKS_LONGLONG_T)
-    // Can only specify 32-bit arguments.
-#   define ACE_UINT64_LITERAL(n) (ACE_U_LongLong (n))
-      // This one won't really work, but it'll keep
-      // some compilers happy until we have better support
-#   define ACE_INT64_LITERAL(n) (ACE_U_LongLong (n))
-# else  /* ! ACE_WIN32  &&  ! ACE_LACKS_LONGLONG_T */
+# else  /* ! ACE_WIN32 */
 #   define ACE_UINT64_LITERAL(n) n ## ull
-#   define ACE_INT64_LITERAL(n) n ## ll
-# endif /* ! ACE_WIN32  &&  ! ACE_LACKS_LONGLONG_T */
+# endif /* ! ACE_WIN32 */
 
 #if !defined (ACE_UINT64_FORMAT_SPECIFIER)
 # define ACE_UINT64_FORMAT_SPECIFIER "%llu"
 #endif /* ACE_UINT64_FORMAT_SPECIFIER */
-
-#if !defined (ACE_INT64_FORMAT_SPECIFIER)
-# define ACE_INT64_FORMAT_SPECIFIER "%lld"
-#endif /* ACE_INT64_FORMAT_SPECIFIER */
 
 // Cast from UINT64 to a double requires an intermediate cast to INT64
 // on some platforms.
@@ -431,24 +416,6 @@ typedef ACE_UINT16 ACE_USHORT16;
 #     error: unsupported double size, must be updated for this platform!
 #   endif /* LDBL_MAX_EXP */
 # endif /* ACE_SIZEOF_LONG_DOUBLE */
-
-// Max and min sizes for the ACE integer types.
-#define ACE_CHAR_MAX 0x7F
-#define ACE_CHAR_MIN -(ACE_CHAR_MAX)-1
-#define ACE_OCTET_MAX 0xFF
-#define ACE_INT16_MAX 0x7FFF
-#define ACE_INT16_MIN -(ACE_INT16_MAX)-1
-#define ACE_UINT16_MAX 0xFFFF
-#define ACE_WCHAR_MAX ACE_UINT16_MAX
-#define ACE_INT32_MAX 0x7FFFFFFF
-#define ACE_INT32_MIN -(ACE_INT32_MAX)-1
-#define ACE_UINT32_MAX 0xFFFFFFFF
-#define ACE_INT64_MAX ACE_INT64_LITERAL(0x7FFFFFFFFFFFFFFF)
-#define ACE_INT64_MIN -(ACE_INT64_MAX)-1
-#define ACE_UINT64_MAX ACE_UINT64_LITERAL(0xFFFFFFFFFFFFFFFF)
-// These use ANSI/IEEE format.
-#define ACE_FLT_MAX 3.402823466e+38F
-#define ACE_DBL_MAX 1.7976931348623158e+308
 
 // Byte-order (endian-ness) determination.
 # if defined (BYTE_ORDER)

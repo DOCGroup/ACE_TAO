@@ -228,30 +228,8 @@ public:
                                        CORBA::ULong_out s3,
                                        CORBA::Environment &env);
 
-  virtual Param_Test::Big_Union*
-    test_big_union (const Param_Test::Big_Union& u1,
-                    Param_Test::Big_Union& u2,
-                    Param_Test::Big_Union_out u3,
-                    CORBA::Environment &env);
-
-  virtual CORBA::Any* 
-    test_complex_any (const CORBA::Any &a1,
-                      CORBA::Any &a2,
-                      CORBA::Any_out a3,
-                      CORBA::Environment &env);
-
-# if 0
-  // Test for multi dimensional arrays
-  virtual Param_Test::Multdim_Array_slice *
-  test_multdim_array (const Param_Test::Multdim_Array,
-                      Param_Test::Multdim_Array ,
-                      Param_Test::Multdim_Array_out ,
-                      CORBA::Environment &);
-  
-#endif
   void shutdown (CORBA::Environment &env);
 
-  
 private:
   Coffee_i obj_;
   // the coffee object reference we maintain

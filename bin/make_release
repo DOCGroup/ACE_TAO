@@ -126,7 +126,6 @@ chop ($now = `$date +"%a %b %d %T %Y"`);
 ########
 ######## Setup signal handlers.
 ########
-$status = 1;  #### Must get set to 0 explicitly to indicate success.
 $SIG{'HUP'} = $SIG{'INT'} = $SIG{'QUIT'} = $SIG{'TERM'} = 'cleanup';
 
 
@@ -143,16 +142,15 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
   $major_version = $minor_version = $beta_version = 0;
   $previous_version = $version = '';
 
-  $status =
-    &check_workspace ()  ||
-    &get_versions ()  ||
-    &update_version_files ()  ||
-    &update_changelog ()  ||
-    &tag ()  ||
-    &diff ()  ||
-    &create_kit ();
+  &check_workspace ()  ||
+  &get_versions ()  ||
+  &update_version_files ()  ||
+  &update_changelog ()  ||
+  &tag ()  ||
+  &diff ()  ||
+  &create_kit ();
 } else {
-  $status = &create_kit ();
+  &create_kit ();
 }
 &cleanup;
 
@@ -161,7 +159,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
 ######## Clean up when done or on signal.
 ########
 sub cleanup {
-  exit $status;
+  exit;
 }
 
 
@@ -297,27 +295,14 @@ sub update_version_files () {
 
   system ("$exec_prefix" .
     "perl -pi -e 's/$KIT VERSION:.*/$KIT VERSION: $version/' " .
-    "PROBLEM-REPORT-FORM $exec_suffix");
+    "BUG-REPORT-FORM $exec_suffix");
   return 1 if $? >> 8;
 
-  if (! "$exec_prefix"  &&  $kit =~ /^tao/) {
+  if ($kit =~ /^tao/) {
     system ("$exec_prefix" .
       "perl -pi -e 's/ACE VERSION:.*/ACE VERSION: $ace_version/' " .
-      "PROBLEM-REPORT-FORM $exec_suffix");
+      "BUG-REPORT-FORM $exec_suffix");
     return 1 if $? >> 8;
-
-    open (TAO_VERSION_H, "> tao/Version.h")  ||
-      die "$0: unable to open tao/Version.h\n";
-
-    print TAO_VERSION_H
-      "// \$Id\$\n" .
-      "// This is an automatically generated file.\n\n" .
-      "\#define TAO_MAJOR_VERSION ${major_version}\n" .
-      "\#define TAO_MINOR_VERSION ${minor_version}\n" .
-      "\#define TAO_BETA_VERSION ${beta_version}\n" .
-      "\#define TAO_VERSION \"${version}\"\n";
-
-    close TAO_VERSION_H;
   }
 
   if (! "$exec_prefix"  &&  $kit =~ /^ace/) {
@@ -327,10 +312,10 @@ sub update_version_files () {
     print ACE_VERSION_H
       "// \$Id\$\n" .
       "// This is an automatically generated file.\n\n" .
-      "\#define ACE_MAJOR_VERSION ${major_version}\n" .
-      "\#define ACE_MINOR_VERSION ${minor_version}\n" .
-      "\#define ACE_BETA_VERSION ${beta_version}\n" .
-      "\#define ACE_VERSION \"${version}\"\n";
+      "\#define ACE_MAJOR_VERSION (${major_version}u)\n" .
+      "\#define ACE_MINOR_VERSION (${minor_version}u)\n" .
+      "\#define ACE_BETA_VERSION (${beta_version}u)\n" .
+      "\#define ACE_VERSION \"${version}\\0\"\n";
 
     close ACE_VERSION_H;
   }
@@ -362,14 +347,11 @@ sub update_changelog () {
 
   if ($kit =~ /^ace/) {
     system ("$cvs commit -m'$version' " .
-            "VERSION PROBLEM-REPORT-FORM ChangeLog ace/Version.h " .
-            "&& chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog " .
-            "ace/Version.h");
+            "VERSION BUG-REPORT-FORM ChangeLog ace/Version.h " .
+            "&& chmod 0644 VERSION BUG-REPORT-FORM ChangeLog ace/Version.h");
   } elsif ($kit =~ /tao/) {
-    system ("$cvs commit -m'$version' VERSION PROBLEM-REPORT-FORM ChangeLog " .
-            "tao/Version.h " .
-            "&& chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog " .
-            "tao/Version.h");
+    system ("$cvs commit -m'$version' VERSION BUG-REPORT-FORM ChangeLog " .
+            "&& chmod 0644 VERSION BUG-REPORT-FORM ChangeLog");
   }
   return 1 if $? >> 8;
 
@@ -442,7 +424,7 @@ sub create_kit () {
 
   # These files don't get LF->CRLF conversions done when making the zip.
   $bin_files =
-    "\"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|\\.gif\"";
+    "\"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\|\\.gz\|\\.zip\|\\.gif\"";
 
   if ($kit eq 'ace') {
     system ("$exec_prefix" .
@@ -470,10 +452,10 @@ sub create_kit () {
     system ("$exec_prefix" .
             "/bin/rm -f ACE+TAO.zip; " .
             "$find $release_files $release_filter | " .
-            "$egrep $bin_files | " .
+            "$egrep \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\" | " .
             "zip ACE+TAO.zip -q9@ &&" .
             "$find $release_files $release_filter | " .
-            "$egrep -v $bin_files | " .
+            "$egrep -v \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\" | " .
             "zip ACE+TAO.zip -qlg9@ &&" .
             "$find $release_files $release_filter | $cpio -o -H tar | " .
             "$gzip -9 > ACE+TAO.tar.gz && " .

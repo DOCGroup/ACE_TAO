@@ -33,7 +33,7 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
   ACE_TRACE ("ACE_Local_Memory_Pool::acquire");
   rounded_bytes = this->round_up (nbytes);
 
-  ACE_Auto_Basic_Array_Ptr<char> cp (new char[rounded_bytes]);
+  ACE_Auto_Basic_Array_Ptr<char> cp = new char[rounded_bytes];
 
   if (cp.get () == 0)
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) new failed \n")), 0);
@@ -402,18 +402,9 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   // knowing the faulting address.  guess_on_fault_ can only be true
   // on platforms that do not provide the faulting address through
   // signals or exceptions.
-  // We check to see if the mapping is up to date. If it is, then this
-  // fault isn't due to this mapping and we pass it on.
   if (guess_on_fault_)
     {
-      // check if the current mapping is up to date.
       off_t current_file_offset = ACE_OS::filesize (this->mmap_.handle ());
-
-      if (ACE_static_cast(size_t, current_file_offset) == this->mmap_.size())
-	{
-	  // It is up to date so this is a bad address.
-	  return -1;
-	}
 
       // Extend the mapping to cover the size of the backing store.
       return this->map_file (current_file_offset);

@@ -39,10 +39,10 @@ ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
                                         ACE_HAS_NONSTATIC_OBJECT_MANAGER.
                                         Usually used with MFC
                                         applications.
-ACE_MAIN                                Renames "main (int, char *[])",
-                                        for platforms such as g++/VxWorks
-                                        that don't allow "main".  Requires
-                                        the use of
+ACE_MAIN                                Renames "main (int, char
+                                        *[])", for platforms such as
+                                        g++/VxWorks that don't allow
+                                        main.  Requires the use of
                                         ACE_HAS_NONSTATIC_OBJECT_MANAGER.
 ACE_MT_SAFE                             Compile using multi-thread libraries
 ACE_NDEBUG                              Turns off debugging features
@@ -100,7 +100,6 @@ ACE_HAS_GNUG_PRE_2_8                    Compiling with g++ prior to
 ACE_HAS_ONE_DEFINITION_RULE             Compiler enforces C++ One
                                         Definition Rule
 ACE_HAS_PRIOCNTL                        OS has priocntl (2).
-ACE_HAS_RECURSIVE_MUTEXES               Mutexes are inherently recursive (e.g., Win32)
 ACE_HAS_RECV_TIMEDWAIT                  Platform has the MIT pthreads
                                         APIs for
 ACE_HAS_RECVFROM_TIMEDWAIT              timed send/recv operations
@@ -186,8 +185,6 @@ ACE_HAS_BROKEN_ENUMS                    Compiler can't handle large
                                         enums (e.g., HP/UX C++)
 ACE_HAS_BROKEN_HPUX_TEMPLATES           Earlier versions of HP/UX C++
                                         are damned...
-ACE_HAS_BROKEN_MAP_FAILED               Platform doesn't cast MAP_FAILED
-                                        to a void *.
 ACE_HAS_BROKEN_MSG_H                    Platform headers don't support
                                         <msg.h> prototypes
 ACE_HAS_BROKEN_MMAP_H                   HP/UX does not wrap the
@@ -300,7 +297,6 @@ ACE_HAS_INLINED_OSCALLS                 Inline all the static class OS
                                         methods to remove call
                                         overhead
 ACE_HAS_IP_MULTICAST                    Platform supports IP multicast
-ACE_HAS_IP6                             Platform supports IPv6.
 ACE_HAS_IRIX62_THREADS                  Platform supports the very odd
                                         IRIX 6.2 threads...
 ACE_HAS_NONSTATIC_OBJECT_MANAGER        Causes the ACE_Object_Manager
@@ -314,14 +310,10 @@ ACE_HAS_THR_MINSTACK                    Platform calls thr_minstack()
                                         (e.g., Tandem).
 ACE_HAS_LIMITED_RUSAGE_T                The rusage_t structure has
                                         only two fields.
-ACE_HAS_LIMITED_SELECT                  The select is unable to deal with
-                                        large file descriptors.
 ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as
                                         a long constant.
 ACE_HAS_MALLOC_STATS                    Enabled malloc statistics
                                         collection.
-ACE_HAS_MEMCHR                          Use native implementation of memchr.
-ACE_HAS_MINIMAL_ACE_OS                  Disables some #includes in ace/OS.*.
 ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION     Avoid #including ace/streams.h
                                         in OS.h.  Users must include
                                         ace/streams.h, <iostream>, or
@@ -407,6 +399,8 @@ ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP    Platform has
 ACE_HAS_PTHREAD_PROCESS_ENUM            pthread.h declares an enum with
                                         PTHREAD_PROCESS_PRIVATE and
                                         PTHREAD_PROCESS_SHARED values.
+ACE_HAS_PTHREAD_SIGMASK                 Platform has pthread_sigmask()
+                                        defined.
 ACE_HAS_PURIFY                          Purify'ing.  Set by wrapper_macros.GNU.
 ACE_HAS_QUANTIFY                        Quantify'ing.  Set by wrapper_macros.GNU.
 ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS    Platform will recurse
@@ -650,6 +644,13 @@ ACE_LACKS_FCNTL                         Platform lacks POSIX-style fcntl ().
 ACE_LACKS_FSYNC                         Platform lacks fsync().
 ACE_LACKS_INLINE_FUNCTIONS              Platform can't handle "inline"
                                         keyword correctly.
+ACE_LACKS_NETDB_REENTRANT_FUNCTIONS     Platform does not support
+                                        reentrant netdb functions
+                                        (getprotobyname_r,
+                                        getprotobynumber_r,
+                                        gethostbyaddr_r,
+                                        gethostbyname_r,
+                                        getservbyname_r).
 ACE_LACKS_EXEC                          Platform lacks the exec()
                                         family of system calls (e.g.,
                                         Win32, VxWorks, Chorus)
@@ -716,8 +717,6 @@ ACE_LACKS_NETDB_REENTRANT_FUNCTIONS     Platform does not support
                                         gethostbyaddr_r,
                                         gethostbyname_r,
                                         getservbyname_r).
-ACE_LACKS_NULL_PTHREAD_STATUS           OS requires non-null status pointer
-                                        for ::pthread_join ().
 ACE_LACKS_PARAM_H                       Platform lacks <sys/param.h>
                                         (e.g., MVS)
 ACE_LACKS_POSIX_PROTOTYPES              Platform lacks POSIX
@@ -729,7 +728,6 @@ ACE_LACKS_PRI_T                         Platform lacks pri_t (e.g.,
                                         Tandem NonStop UNIX).
 ACE_LACKS_PTHREAD_CANCEL                Platform lacks
                                         pthread_cancel().
-ACE_LACKS_PTHREAD_SIGMASK               Platform lacks pthread_sigmask ().
 ACE_LACKS_PTHREAD_THR_SIGSETMASK        Platform lacks
                                         pthread_thr_sigsetmask (e.g.,
                                         MVS, HP/UX, and OSF/1 3.2)
@@ -741,7 +739,6 @@ ACE_LACKS_QSORT                         Compiler/platform lacks the
 ACE_LACKS_READLINK                      Platform lacks the readlink() function.
 ACE_LACKS_READV                         Platform doesn't define readv,
                                         so use our own
-ACE_LACKS_RENAME                        Platform lacks rename().
 ACE_LACKS_RLIMIT                        Platform/compiler lacks
                                         {get,set}rlimit() function
                                         (e.g., VxWorks, Chorus, and
@@ -762,6 +759,10 @@ ACE_LACKS_RWLOCK_T                      Platform lacks readers/writer
 ACE_LACKS_SBRK                          Platform lacks a working
                                         sbrk() (e.g., Win32 and
                                         VxWorks)
+ACE_LACKS_SCHED_H                       Platform needs to #include
+                                        <sched.h>
+                                        to get thread scheduling
+                                        defs.
 ACE_LACKS_SEEKDIR                       Platform uses ACE_HAS_DIRENT
                                         but does not have seekdir ().
 ACE_LACKS_SEMBUF_T                      Platform lacks struct sembuf
@@ -820,7 +821,6 @@ ACE_LACKS_T_ERRNO                       Header files lack t_errno for
                                         TLI
 ACE_LACKS_TCP_H                         Platform doesn't have
                                         netinet/tcp.h
-ACE_LACKS_TCP_NODELAY                   OS does not support TCP_NODELAY.
 ACE_LACKS_TELLDIR                       Platform uses ACE_HAS_DIRENT
                                         but does not have telldir ().
 ACE_LACKS_THREAD_STACK_SIZE             Platform lacks
@@ -839,16 +839,8 @@ ACE_LACKS_U_LONGLONG_T                  Platform does not have
 ACE_LACKS_UALARM_PROTOTYPE              Platform/compiler lacks the
                                         ualarm() prototype (e.g.,
                                         Solaris)
-ACE_LACKS_CHAR_RIGHT_SHIFTS             Compiler does not have any istream
-                                        operator>> for chars, u_chars, or
-                                        signed chars.
-ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS        Compiler does not have
-                                        operator>> (istream &, u_char *) or
-                                        operator>> (istream &, signed char *)
 ACE_LACKS_UCONTEXT_H                    Platform lacks the ucontext.h
                                         file
-ACE_LACKS_UNBUFFERED_STREAMBUF          Platform lacks streambuf
-                                        "unbuffered ()".
 ACE_LACKS_UNISTD_H                      Platform lacks the unistd.h
                                         file (e.g., VxWorks and Win32)
 ACE_LACKS_UNIX_DOMAIN_SOCKETS           ACE platform has no UNIX
@@ -880,10 +872,6 @@ ACE_NEEDS_LWP_PRIO_SET                  OS has LWPs, and when the
                                         priority of a bound thread is
                                         set, then the LWP priority
                                         must be set also.
-ACE_NEEDS_SCHED_H                       Platform needs to #include
-                                        <sched.h>
-                                        to get thread scheduling
-                                        defs.
 ----------------------------------------
 
 The following is a partial list of where some of these macros are used

@@ -20,8 +20,8 @@ Baseline_Test_Options baseline_options;
 Baseline_Test_Base::Baseline_Test_Base (void)
   : Benchmark_Base (Benchmark_Base::BASELINE),
     yield_method_ (Baseline_Test_Options::USE_SLEEP_ZERO),
-    iteration_ (DEFAULT_ITERATIONS),
-    what_(TEST_LOCK)
+    multiply_factor_ (100),
+    iteration_ (10000)
 {
 }
 
@@ -34,13 +34,25 @@ Baseline_Test_Base::init (int argc, char *argv[])
 int
 Baseline_Test_Base::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, "i:ylrw", 0);
+  ACE_Get_Opt getopt (argc, argv, "m:i:y", 0);
   int c;
 
   while ((c = getopt ()) != -1)
     switch (c)
       {
-      case 'i':                 // Total iterations
+      case 'm':
+        {
+          int tmp = ACE_OS::atoi (getopt.optarg);
+          if (tmp <= 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%d is not a valid value for multiply_factor\n",
+                               tmp), -1);
+          else
+            this->multiply_factor_ = ACE_static_cast (size_t, tmp);
+        }
+        break;
+
+      case 'i':
         {
           int tmp = ACE_OS::atoi (getopt.optarg);
           if (tmp <= 0)
@@ -54,18 +66,6 @@ Baseline_Test_Base::parse_args (int argc, char *argv[])
 
       case 'y':                 // Use thr_yield.
         this->yield_method_ = Baseline_Test_Options::USE_THR_YIELD;
-        break;
-
-      case 'l':
-        this->what_ = TEST_LOCK;
-        break;
-
-      case 'r':
-        this->what_ = TEST_READLOCK;
-        break;
-
-      case 'w':
-        this->what_ = TEST_WRITELOCK;
         break;
 
       default:
@@ -88,8 +88,9 @@ Baseline_Test_Options::Baseline_Test_Options (void)
   : test_try_lock_ (0),
     verbose_ (0),
     current_yield_method_ (0),
+    current_multiply_factor_ (10),
     current_iteration_ (0),
-    total_iteration_ (DEFAULT_ITERATIONS)
+    total_iteration_ (10000)
 {
 }
 
@@ -118,13 +119,16 @@ Baseline_Test_Options::parse_args (int argc, char *argv[])
 }
 
 int
-Baseline_Test_Options::reset_params (size_t iteration,
+Baseline_Test_Options::reset_params (size_t multiply,
+                                     size_t iteration,
                                      int yield)
 {
   this->current_iteration_ = 0;
   this->timer.reset ();
+  // Start a new test, reset statistic info.
 
   this->current_yield_method_ = yield;
+  this->current_multiply_factor_ = multiply;
   this->total_iteration_ = iteration;
   return 0;
 }
@@ -139,11 +143,12 @@ Baseline_Test_Options::print_result (void)
   this->timer.elapsed_time_incr (nsec);
   ACE_DEBUG ((LM_DEBUG,
               "Total Time: %d sec %d usec for a "
-              "total of %d iterations\n"
+              "total of %d iterations (%d iterations before yield)\n"
               "Average time: %d nanoseconds.\n",
               tv.sec (), tv.usec (),
               this->current_iteration_,
-              (int) (nsec / this->current_iteration_)));
+              this->current_multiply_factor_,
+              nsec / this->current_iteration_));
 }
 
 Baseline_Test::Baseline_Test (void)
@@ -165,7 +170,8 @@ int
 Baseline_Test::pre_run_test (Benchmark_Base *bb)
 {
   this->current_test_ = (Baseline_Test_Base *) bb;
-  baseline_options.reset_params (this->current_test_->iteration (),
+  baseline_options.reset_params (this->current_test_->multiply_factor (),
+                                 this->current_test_->iteration (),
                                  this->current_test_->yield_method ());
   if (baseline_options.test_try_lock ())
     {
@@ -176,6 +182,11 @@ Baseline_Test::pre_run_test (Benchmark_Base *bb)
       this->get_lock_.wait ();
       // Wait until the lock is held by the spawning thread.
     }
+
+  this->run_test ();
+  baseline_options.reset_params (this->current_test_->multiply_factor (),
+                                 this->current_test_->iteration (),
+                                 this->current_test_->yield_method ());
 
   return 0;
 }

@@ -100,7 +100,7 @@ private:
   ACE_HANDLE proc_handle_;
   // I/O handle for /proc file system.
 
-#elif defined (ACE_HAS_GETRUSAGE) 
+#elif defined (ACE_HAS_GETRUSAGE)
   void subtract (timeval &tdiff, timeval &t0, timeval &t1);
   // Substract two timestructs and store their difference.
 
@@ -112,12 +112,9 @@ private:
 
   timeval last_time_;
   // Keep track of the last time for incremental timing.
-#endif /* ACE_HAS_PRUSAGE_T */
-
-#if defined (ACE_WIN32) || (!defined (ACE_HAS_PRUSAGE_T) && !defined (ACE_HAS_GETRUSAGE))
+#else
   ACE_High_Res_Timer timer_;
-  // The high resolution timer
-#endif /* ACE_WIN32 || !ACE_HAS_PRUSAGE_T && !ACE_HAS_GETRUSAGE */
+#endif /* ACE_HAS_PRUSAGE_T */
 };
 
 #if defined (__ACE_INLINE__)

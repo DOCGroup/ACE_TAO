@@ -7,15 +7,8 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/CosEventCommS.h"
 #include "ProxyPushConsumer_i.h"
-#include "ace/Auto_Ptr.h"
 
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-class TAO_CosEC_PushSupplierWrapper :
-  public virtual POA_RtecEventComm::PushSupplier,
-  public virtual PortableServer::RefCountServantBase
+class TAO_CosEC_PushSupplierWrapper : public POA_RtecEventComm::PushSupplier
 {
   // = TITLE
   //   A Wrapper for the Rtec PushSupplier.
@@ -32,7 +25,7 @@ public:
   ~TAO_CosEC_PushSupplierWrapper (void);
   // Destructor.
 
-  virtual void disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV);
+  virtual void disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV);
   // Disconnects the push supplier.
 
 private:
@@ -46,10 +39,6 @@ private:
   // The Cos PushSupplier that we're proxying for.
 };
 
-#if defined(_MSC_VER)
-#pragma warning(default:4250)
-#endif /* _MSC_VER */
-
 TAO_CosEC_PushSupplierWrapper::TAO_CosEC_PushSupplierWrapper
 (CosEventComm::PushSupplier_ptr supplier)
   : supplier_ (CosEventComm::PushSupplier::_duplicate (supplier))
@@ -57,38 +46,39 @@ TAO_CosEC_PushSupplierWrapper::TAO_CosEC_PushSupplierWrapper
   // No-Op.
 }
 
-TAO_CosEC_PushSupplierWrapper::~TAO_CosEC_PushSupplierWrapper (void)
+TAO_CosEC_PushSupplierWrapper::~TAO_CosEC_PushSupplierWrapper ()
 {
   // No-Op.
 }
 
 void
-TAO_CosEC_PushSupplierWrapper::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+TAO_CosEC_PushSupplierWrapper::disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV)
 {
-  this->supplier_->disconnect_push_supplier (ACE_TRY_ENV);
+  this->supplier_->disconnect_push_supplier (TAO_TRY_ENV);
 
   // Deactivate the supplier proxy
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
+    this->_default_POA (TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this,
-                        ACE_TRY_ENV);
-  ACE_CHECK;
+                        TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   poa->deactivate_object (id.in (),
-                          ACE_TRY_ENV);
-  ACE_CHECK;
+                          TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   // @@ If we keep a list remember to remove this object from the
   // list.
+  delete this;
 }
 
 TAO_CosEC_ProxyPushConsumer_i::TAO_CosEC_ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos,
-                                                              RtecEventChannelAdmin::ProxyPushConsumer_ptr proxypushconsumer)
+                                                              RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc)
   : qos_ (qos),
-    proxypushconsumer_ (RtecEventChannelAdmin::ProxyPushConsumer::_duplicate (proxypushconsumer)),
+    ppc_ (RtecEventChannelAdmin::ProxyPushConsumer::_duplicate (ppc)),
     wrapper_ (0)
 {
   // No-Op.
@@ -101,7 +91,7 @@ TAO_CosEC_ProxyPushConsumer_i::~TAO_CosEC_ProxyPushConsumer_i (void)
 
 void
 TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data,
-                                     CORBA::Environment &ACE_TRY_ENV)
+                                     CORBA::Environment &TAO_TRY_ENV)
 {
   RtecEventComm::Event buffer[1];
   // Create an event set that does not own the buffer....
@@ -126,67 +116,52 @@ TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data,
 
   ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time,
                                  t);
-  e.header.ec_recv_time = ORBSVCS_Time::zero ();
-  e.header.ec_send_time = ORBSVCS_Time::zero ();
+  e.header.ec_recv_time = ORBSVCS_Time::zero;
+  e.header.ec_send_time = ORBSVCS_Time::zero;
 
   e.data.any_value = data;
 
-  this->proxypushconsumer_->push (events,
-                                  ACE_TRY_ENV);
+  this->ppc_->push (events,
+                    TAO_TRY_ENV);
 }
 
 void
-TAO_CosEC_ProxyPushConsumer_i::disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+TAO_CosEC_ProxyPushConsumer_i::disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV)
 {
-  this->proxypushconsumer_->disconnect_push_consumer (ACE_TRY_ENV);
+  this->ppc_->disconnect_push_consumer (TAO_TRY_ENV);
 
   // Deactivate the ProxyPushConsumer
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK;
+    this->_default_POA (TAO_TRY_ENV);
+
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this,
-                        ACE_TRY_ENV);
-  ACE_CHECK;
+                        TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   poa->deactivate_object (id.in (),
-                          ACE_TRY_ENV);
-  ACE_CHECK;
+                          TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+
+  delete this;
 }
 
 void
 TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier,
-                                                      CORBA::Environment &ACE_TRY_ENV)
+                                                      CORBA::Environment &TAO_IN_ENV)
 {
   if (this->connected ())
-    ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
+    TAO_THROW (CosEventChannelAdmin::AlreadyConnected ());
 
-  TAO_CosEC_PushSupplierWrapper *wrapper;
+  ACE_NEW_THROW (this->wrapper_,
+                 TAO_CosEC_PushSupplierWrapper (push_supplier),
+                 CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
-  ACE_NEW_THROW_EX (wrapper,
-                    TAO_CosEC_PushSupplierWrapper (push_supplier),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
-
-  auto_ptr <TAO_CosEC_PushSupplierWrapper>
-    auto_wrapper (wrapper);
-
-  RtecEventComm::PushSupplier_ptr rtecpushsupplier
-    = auto_wrapper.get ()->_this (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // give the ownership to the POA.
-  auto_wrapper.get ()->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->proxypushconsumer_->connect_push_supplier
-    (rtecpushsupplier,
-     this->qos_,
-     ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->wrapper_ = auto_wrapper.release ();
+  this->ppc_->connect_push_supplier (this->wrapper_->_this (TAO_IN_ENV),
+                                     this->qos_,
+                                     TAO_IN_ENV);
 }
 
 int
@@ -194,11 +169,3 @@ TAO_CosEC_ProxyPushConsumer_i::connected (void)
 {
   return this->wrapper_ == 0 ? 0 : 1;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Auto_Basic_Ptr<TAO_CosEC_PushSupplierWrapper>;
-  template class auto_ptr<TAO_CosEC_PushSupplierWrapper>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Auto_Basic_Ptr<TAO_CosEC_PushSupplierWrapper>
-# pragma instantiate auto_ptr<TAO_CosEC_PushSupplierWrapper>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

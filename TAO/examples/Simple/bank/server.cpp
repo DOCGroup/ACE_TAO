@@ -1,50 +1,45 @@
 // $Id$
-#include "../Simple_util.h"
-#include "AccountManager_i.h"
 
-// This is the main driver program for the time and date server.
+#include "Server_i.h"
+
+ACE_RCSID(Time, server, "$Id$")
+
+// This is the main driver program for the Bank server.
 
 int
 main (int argc, char *argv[])
 {
-  Server<AccountManager_i> server;
+  Server_i server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tBank server\n\n"));
+              "[SERVER] Process/Thread Id : (%P/%t) Bank server\n"));
 
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
-      if (server.init ("Bank",
-                       argc,
-                       argv,
-                       ACE_TRY_ENV) == -1)
-        return 1;
+      if (server.init (argc, argv, TAO_TRY_ENV) == -1)
+        {
+	  TAO_CHECK_ENV;
+	  return 1;
+	}
       else
         {
-          server.run (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          server.run (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  TAO_CATCH (CORBA::SystemException, sysex)
     {
       ACE_UNUSED_ARG (sysex);
-      ACE_TRY_ENV.print_exception ("System Exception");
+      TAO_TRY_ENV.print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  TAO_CATCH (CORBA::UserException, userex)
     {
       ACE_UNUSED_ARG (userex);
-      ACE_TRY_ENV.print_exception ("User Exception");
+      TAO_TRY_ENV.print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Server<AccountManager_i>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Server<Account_Manager_i>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

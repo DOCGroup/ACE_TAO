@@ -24,7 +24,7 @@ ACE_RCSID(Loader, Servant_Activator, "$Id$")
 // Initialization.The dllname is used by the Loactor to load it into
 // memory. The factory function is the point of entry into the dll and
 // is used for obtaining the servant. The garbage_collection_function
-// is used to kill the servant.
+// is used to kill the servant. 
 
 ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb,
                                         const char *dllname,
@@ -37,17 +37,17 @@ ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb,
      ACE_ERROR ((LM_ERROR,
                  "%p\n",
                  this->dll_.error ()));
-
+                   
 
   // Obtain the symbol for the function that will
   // get the servant object.
-  servant_supplier_ =
-    (SERVANT_FACTORY) this->dll_.symbol (factory_function);
+  servant_supplier_ = ACE_reinterpret_cast
+    (SERVANT_FACTORY, this->dll_.symbol (factory_function));
 
   // Obtain tne symbol for the function which
-  // will destroy the servant.
-  servant_garbage_collector_ =
-    (SERVANT_GARBAGE_COLLECTOR) this->dll_.symbol (garbage_collection_function);
+  // will destroy the servant.  
+  servant_garbage_collector_ = ACE_reinterpret_cast
+    (SERVANT_GARBAGE_COLLECTOR, this->dll_.symbol (garbage_collection_function));
 
 }
 
@@ -56,7 +56,7 @@ ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb,
 PortableServer::Servant
 ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
                                PortableServer::POA_ptr poa,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::Environment &env)
 {
   // Obtain the servant else exception.
   PortableServer::Servant servant =
@@ -66,8 +66,9 @@ ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
   if (servant != 0)
     return servant;
   else
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      0);
+    TAO_THROW_ENV_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO),
+                          env,
+                          0);
 }
 
 // This is the method invoked when the object is deactivated or the
@@ -91,3 +92,4 @@ ServantActivator_i::etherealize (const PortableServer::ObjectId &oid,
                                    servant);
 
 }
+

@@ -13,6 +13,7 @@
 // Add threading support
 
 #define ACE_HAS_IRIX62_THREADS
+#define ACE_HAS_PTHREAD_SIGMASK
 #define ACE_HAS_UALARM
 
 // Needed for the threading stuff?
@@ -32,6 +33,9 @@
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_STD
 
+// Platforms has pthread_thr_sigsetmask
+#define ACE_HAS_PTHREAD_SIGMASK
+
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
@@ -39,7 +43,7 @@
 #define ACE_LACKS_COND_TIMEDWAIT_RESET 1
 
 // Scheduling functions are declared in <sched.h>
-#define ACE_NEEDS_SCHED_H
+#define ACE_LACKS_SCHED_H
 
 // When threads are enabled READDIR_R is supported on IRIX.
 #undef ACE_LACKS_READDIR_R

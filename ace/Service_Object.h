@@ -38,11 +38,8 @@ class ACE_Export ACE_Service_Object : public ACE_Event_Handler, public ACE_Share
   //     the <ACE_Service_Config> (due to the <ACE_Shared_Object>).
 public:
   // = Initialization and termination methods.
-  ACE_Service_Object (ACE_Reactor * = 0);
-  // Constructor.
-
+  ACE_Service_Object (void);
   virtual ~ACE_Service_Object (void);
-  // Destructor.
 
   virtual int suspend (void);
     // Temporarily disable a service without removing it completely.
@@ -97,9 +94,6 @@ public:
 
   void fini (void);
   // Calls fini() on <type_>
-
-  int fini_called (void) const;
-  // Check if the service has been fini'ed.
 
   void dump (void) const;
   // Dump the state of an object.

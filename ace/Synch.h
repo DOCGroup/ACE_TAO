@@ -105,8 +105,7 @@ class ACE_Export ACE_Adaptive_Lock : public ACE_Lock
   //    This class, as ACE_Lock, provide a set of general locking APIs.
   //    However, it defers our decision of what kind of lock to use
   //    to the run time and delegates all locking operations to the actual
-  //    lock.  Users must define a constructor in their subclass to
-  //    initialize <lock_>.
+  //    lock.  Users must overwrite the constructor to initialize <lock_>.
 public:
   virtual ~ACE_Adaptive_Lock (void);
   // You must also override the destructor function to match with how
@@ -399,37 +398,6 @@ protected:
   ACE_SV_Semaphore_Complex lock_;
   // We need this to get the right semantics...
 #endif /* ACE_WIN32 */
-};
-
-class ACE_Export ACE_Null_Semaphore
-{
-  // = TITLE
-  //     Implement a do nothing <ACE_Semaphore>, i.e., all the methods are
-  //     no ops.
-public:
-  ACE_Null_Semaphore (u_int count = 1, // By default make this unlocked.
-		       int type = USYNC_THREAD,
-		       LPCTSTR name = 0,
-		       void * = 0,
-		       int max = 0x7fffffff);
-  ~ACE_Null_Semaphore (void);
-  int remove (void);
-
-  int acquire (ACE_Time_Value &);
-  int acquire (void);
-  int tryacquire (void);
-  int release (void);
-  int release (size_t);
-  int acquire_write (void);
-  int tryacquire_write (void);
-  int acquire_read (void);
-  int tryacquire_read (void);
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 };
 
 class ACE_Export ACE_RW_Mutex
@@ -1267,10 +1235,22 @@ private:
 };
 
 class ACE_Export ACE_Recursive_Thread_Mutex
+#if defined (ACE_WIN32)
+  : public ACE_Thread_Mutex
+#endif /* ACE_WIN32 */
 {
   // = TITLE
-  //     Implement a C++ wrapper that allows nested acquisition and
-  //     release of a mutex that occurs in the same thread.
+  //     Implement a C++ wrapper that allows calls to class
+  //     <ACE_Thread_Mutex> to be nested for a nested acquire() that
+  //     occurs in the same thread.
+  //
+  // = DESCRIPTION
+  //     This class should be a specialization of the
+  //     ACE_Recursive_Lock template class, but problems with some C++
+  //     compilers preclude this.  This implementation is based
+  //     on an algorithm sketched by Dave Butenhof  <butenhof@zko.dec.com>.
+  //     Naturally, I take the credit for any mistakes ;-)
+  // friend class ACE_Condition<class ACE_COND_MUTEX>;
 public:
   ACE_Recursive_Thread_Mutex (LPCTSTR name = 0,
                               void *arg = 0);
@@ -1279,6 +1259,7 @@ public:
   ~ACE_Recursive_Thread_Mutex (void);
   // Implicitly release a recursive mutex.
 
+#if !defined (ACE_WIN32)
   int remove (void);
   // Implicitly release a recursive mutex.
 
@@ -1322,6 +1303,7 @@ public:
   // Releases a recursive mutex (will not release mutex until all the
   // nesting level drops to 0, which means the mutex is no longer
   // held).
+#endif /* ! ACE_WIN32 */
 
   ACE_thread_t get_thread_id (void);
   // Return the id of the thread that currently owns the mutex.
@@ -1332,6 +1314,7 @@ public:
   // The nesting level is incremented every time the thread acquires
   // the mutex recursively.
 
+#if !defined (ACE_WIN32)
   void dump (void) const;
   // Dump the state of an object.
 
@@ -1339,11 +1322,22 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  // = This method should *not* be public (they hold no locks...)
+  // These methods should *not* be public (they hold no locks...)
   void set_thread_id (ACE_thread_t t);
 
-  ACE_recursive_thread_mutex_t recursive_mutex_;
-  // Recursive mutex.
+  ACE_Thread_Mutex nesting_mutex_;
+  // Guards the state of the nesting level and thread id.
+
+  ACE_Condition_Thread_Mutex lock_available_;
+  // This is the condition variable that actually suspends other
+  // waiting threads until the mutex is available.
+
+  int nesting_level_;
+  // Current nesting level of the recursion.
+
+  ACE_thread_t owner_id_;
+  // Current owner of the lock.
+#endif /* ! ACE_WIN32 */
 
   int removed_;
   // Keeps track of whether <remove> has been called yet to avoid
@@ -1577,9 +1571,7 @@ public:
   // = Initialization and termination methods.
   ACE_Guard (ACE_Null_Mutex &) {}
   ACE_Guard (ACE_Null_Mutex &, int) {}
-#if defined (ACE_WIN32)
   ~ACE_Guard (void) {}
-#endif /* ACE_WIN32 */
 
   int acquire (void) { return 0; }
   int tryacquire (void) { return 0; }

@@ -3,7 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
-#include "ace/High_Res_Timer.h"
 
 #include "tao/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
@@ -15,8 +14,7 @@
 #include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/Module_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
-#include "orbsvcs/Event/EC_ConsumerAdmin.h"
+#include "orbsvcs/Event/EC_Basic_Factory.h"
 #include "ECT_Throughput.h"
 
 ACE_RCSID(EC_Throughput, ECT_Throughput, "$Id$")
@@ -24,8 +22,6 @@ ACE_RCSID(EC_Throughput, ECT_Throughput, "$Id$")
 int
 main (int argc, char *argv [])
 {
-  TAO_EC_Default_Factory::init_svcs ();
-
   ECT_Throughput driver;
   return driver.run (argc, argv);
 }
@@ -39,18 +35,12 @@ ECT_Throughput::ECT_Throughput (void)
     burst_size_ (100),
     event_size_ (128),
     burst_pause_ (100),
-    consumer_type_start_ (ACE_ES_EVENT_UNDEFINED),
-    consumer_type_count_ (1),
-    consumer_type_shift_ (0),
-    supplier_type_start_ (ACE_ES_EVENT_UNDEFINED),
-    supplier_type_count_ (1),
-    supplier_type_shift_ (0),
+    event_a_ (ACE_ES_EVENT_UNDEFINED),
+    event_b_ (ACE_ES_EVENT_UNDEFINED + 1),
     pid_file_name_ (0),
     active_count_ (0),
     reactive_ec_ (0),
-    new_ec_ (1),
-    ec_concurrency_hwm_ (1),
-    thr_create_flags_ (THR_NEW_LWP|THR_BOUND|THR_SCHED_FIFO)
+    new_ec_ (0)
 {
 }
 
@@ -63,10 +53,6 @@ ECT_Throughput::run (int argc, char* argv[])
 {
   TAO_TRY
     {
-      // Calibrate the high resolution timer *before* starting the
-      // test.
-      ACE_High_Res_Timer::calibrate ();
-
       this->orb_ =
         CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -96,17 +82,12 @@ ECT_Throughput::run (int argc, char* argv[])
                   "  burst count = <%d>\n"
                   "  burst size = <%d>\n"
                   "  event size = <%d>\n"
-                  "  burst pause = <%d>\n"
-                  "  consumer type start = <%d>\n"
-                  "  consumer type count = <%d>\n"
-                  "  consumer type shift = <%d>\n"
-                  "  supplier type start = <%d>\n"
-                  "  supplier type count = <%d>\n"
-                  "  supplier type shift = <%d>\n"
+                  "  burst size = <%d>\n"
+                  "  supplier Event A = <%d>\n"
+                  "  supplier Event B = <%d>\n"
                   "  pid file name = <%s>\n"
                   "  remote EC = <%d>\n"
-                  "  new EC = <%d>\n"
-                  "  concurrency HWM = <%d>\n",
+                  "  new EC = <%d>\n",
 
                   this->n_consumers_,
                   this->n_suppliers_,
@@ -114,17 +95,12 @@ ECT_Throughput::run (int argc, char* argv[])
                   this->burst_size_,
                   this->event_size_,
                   this->burst_pause_,
-                  this->consumer_type_start_,
-                  this->consumer_type_count_,
-                  this->consumer_type_shift_,
-                  this->supplier_type_start_,
-                  this->supplier_type_count_,
-                  this->supplier_type_shift_,
+                  this->event_a_,
+                  this->event_b_,
 
                   this->pid_file_name_?this->pid_file_name_:"nil",
                   this->reactive_ec_,
-                  this->new_ec_,
-                  this->ec_concurrency_hwm_
+                  this->new_ec_
                   ) );
 
       if (this->pid_file_name_ != 0)
@@ -137,30 +113,24 @@ ECT_Throughput::run (int argc, char* argv[])
             }
         }
 
-      int priority =
-        (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-         + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority);
-      // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      int min_priority =
+        ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+        // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
 
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
-                                                  priority,
+                                                  min_priority,
                                                   ACE_SCOPE_PROCESS)) != 0)
         {
           if (ACE_OS::last_error () == EPERM)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "%s: user is not superuser, "
-                          "so remain in time-sharing class\n", argv[0]));
-              this->thr_create_flags_ = THR_NEW_LWP;
-            }
+            ACE_DEBUG ((LM_DEBUG,
+                        "%s: user is not superuser, "
+                        "so remain in time-sharing class\n", argv[0]));
           else
             ACE_ERROR ((LM_ERROR,
                         "%s: ACE_OS::sched_params failed\n", argv[0]));
         }
 
-      if (ACE_OS::thr_setprio (priority) == -1)
+      if (ACE_OS::thr_setprio (min_priority) == -1)
         {
           ACE_ERROR ((LM_ERROR, "(%P|%t) main thr_setprio failed,"
                       "no real-time features\n"));
@@ -188,7 +158,7 @@ ECT_Throughput::run (int argc, char* argv[])
 #else
 #include "ECT_Scheduler_Info.h"
       ACE_Runtime_Scheduler scheduler_impl (
-        runtime_configs_size,
+	runtime_configs_size,
         runtime_configs,
         runtime_infos_size,
         runtime_infos);
@@ -205,7 +175,7 @@ ECT_Throughput::run (int argc, char* argv[])
                   str.in ()));
 
       // Register the servant with the Naming Context....
-      naming_context->rebind (schedule_name, scheduler.in (), TAO_TRY_ENV);
+      naming_context->bind (schedule_name, scheduler.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
@@ -214,6 +184,7 @@ ECT_Throughput::run (int argc, char* argv[])
       // The factories must be destroyed *after* the EC, hence the
       // auto_ptr declarations must go first....
       auto_ptr<TAO_Module_Factory> module_factory;
+      auto_ptr<TAO_EC_Factory> ec_factory;
 
       auto_ptr<POA_RtecEventChannelAdmin::EventChannel> ec_impl;
       if (this->new_ec_ == 0)
@@ -221,38 +192,41 @@ ECT_Throughput::run (int argc, char* argv[])
 
           if (this->reactive_ec_ == 1)
             {
-              auto_ptr<TAO_Module_Factory> auto_module_factory (new TAO_Reactive_Module_Factory);
-              module_factory = auto_module_factory;
+              module_factory =
+                auto_ptr<TAO_Module_Factory> (new TAO_Reactive_Module_Factory);
             }
           else
             {
-              auto_ptr<TAO_Module_Factory> auto_module_factory (new TAO_Default_Module_Factory);
-              module_factory = auto_module_factory;
+              module_factory =
+                auto_ptr<TAO_Module_Factory> (new TAO_Default_Module_Factory);
             }
 
           // Create the EC
-          auto_ptr<POA_RtecEventChannelAdmin::EventChannel> auto_ec_impl
-            (new ACE_EventChannel (scheduler.in (),
-                                   1,
-                                   ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                   module_factory.get ()));
-          ec_impl = auto_ec_impl;
+          ec_impl =
+            auto_ptr<POA_RtecEventChannelAdmin::EventChannel>
+                (new ACE_EventChannel (scheduler.in (),
+                                       1,
+                                       ACE_DEFAULT_EVENT_CHANNEL_TYPE,
+                                       module_factory.get ()));
         }
       else
         {
-          TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
-                                                root_poa.in ());
-          attr.busy_hwm = this->ec_concurrency_hwm_;
-          attr.max_write_delay = this->ec_concurrency_hwm_;
+#if defined (TAO_ORBSVCS_HAS_Event2)
+          ec_factory =
+            auto_ptr<TAO_EC_Factory>(new TAO_EC_Basic_Factory (root_poa.in ()));
 
-          TAO_EC_Event_Channel *ec =
-            new TAO_EC_Event_Channel (attr);
-
+          TAO_EC_Event_Channel* ec =
+            new TAO_EC_Event_Channel (ec_factory.get ());
           ec->activate (TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-          auto_ptr<POA_RtecEventChannelAdmin::EventChannel> auto_ec_impl (ec);
-          ec_impl = auto_ec_impl;
+          ec_impl =
+            auto_ptr<POA_RtecEventChannelAdmin::EventChannel> (ec);
+#else
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "The new event channel is not supported "
+                             "please recompile\n"), 1);
+#endif /* TAO_ORBSVCS_HAS_Event2 */
         }
 
       RtecEventChannelAdmin::EventChannel_var channel =
@@ -279,6 +253,16 @@ ECT_Throughput::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "suppliers are active\n"));
 
+      ACE_DEBUG ((LM_DEBUG, "running the event loop\n"));
+      if (this->orb_->run () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+
+#if 0
+      naming_context->unbind (schedule_name, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+#endif
+
       // Wait for the supplier threads...
       if (ACE_Thread_Manager::instance ()->wait () == -1)
         {
@@ -302,8 +286,6 @@ ECT_Throughput::run (int argc, char* argv[])
         TAO_CHECK_ENV;
       }
 
-      ACE_DEBUG ((LM_DEBUG, "EC deactivated\n"));
-
       {
         // Deactivate the Scheduler
         PortableServer::POA_var poa =
@@ -316,22 +298,14 @@ ECT_Throughput::run (int argc, char* argv[])
         TAO_CHECK_ENV;
       }
 
-      ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
-
       this->disconnect_consumers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG, "consumers disconnected\n"));
 
       this->disconnect_suppliers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG, "suppliers disconnected\n"));
-
       channel->destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG, "channel destroyed\n"));
     }
   TAO_CATCHANY
     {
@@ -347,7 +321,7 @@ ECT_Throughput::run (int argc, char* argv[])
 
 void
 ECT_Throughput::shutdown_consumer (void*,
-                                   CORBA::Environment &)
+                               CORBA::Environment &)
 {
   // int ID =
   //   (ACE_reinterpret_cast(Test_Consumer**,consumer_cookie)
@@ -358,10 +332,7 @@ ECT_Throughput::shutdown_consumer (void*,
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
   this->active_count_--;
   if (this->active_count_ <= 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%t) shutting down the ORB\n"));
-      this->orb_->shutdown ();
-    }
+    this->orb_->shutdown ();
 }
 
 void
@@ -384,13 +355,10 @@ ECT_Throughput::connect_consumers
                               this->consumers_ + i,
                               this->n_suppliers_));
 
-      int start = this->consumer_type_start_
-        + i * this->consumer_type_shift_;
-
       this->consumers_[i]->connect (scheduler,
                                     buf,
-                                    start,
-                                    this->consumer_type_count_,
+                                    this->event_a_,
+                                    this->event_b_,
                                     channel,
                                     TAO_IN_ENV);
       if (TAO_IN_ENV.exception () != 0) return;
@@ -410,15 +378,14 @@ ECT_Throughput::connect_suppliers
 
       ACE_NEW (this->suppliers_[i], Test_Supplier (this));
 
-      int start = this->supplier_type_start_ + i*this->supplier_type_shift_;
       this->suppliers_[i]->connect (scheduler,
                                     buf,
                                     this->burst_count_,
                                     this->burst_size_,
                                     this->event_size_,
                                     this->burst_pause_,
-                                    start,
-                                    this->supplier_type_count_,
+                                    this->event_a_,
+                                    this->event_b_,
                                     channel,
                                     TAO_IN_ENV);
       if (TAO_IN_ENV.exception () != 0) return;
@@ -428,19 +395,9 @@ ECT_Throughput::connect_suppliers
 void
 ECT_Throughput::activate_suppliers (CORBA::Environment &)
 {
-  int priority =
-    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      if (this->suppliers_[i]->activate (this->thr_create_flags_,
-                                         1, 0, priority) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Cannot activate thread for supplier %d\n",
-                      i));
-        }
+      this->suppliers_[i]->activate ();
     }
 }
 
@@ -467,37 +424,27 @@ ECT_Throughput::disconnect_consumers (CORBA::Environment &TAO_IN_ENV)
 void
 ECT_Throughput::dump_results (void)
 {
-  ECT_Driver::Throughput_Stats consumers;
-  ECT_Driver::Latency_Stats latency;
   for (int j = 0; j < this->n_consumers_; ++j)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "consumer_%02.2d", j);
 
       this->consumers_[j]->dump_results (buf);
-      this->consumers_[j]->accumulate (consumers);
-      this->consumers_[j]->accumulate (latency);
     }
-  consumers.dump_results ("ECT_Consumer", "throughput");
-  latency.dump_results ("ECT_Consumer", "latency");
-
-  ECT_Driver::Throughput_Stats suppliers;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "supplier_%02.2d", i);
 
       this->suppliers_[i]->dump_results (buf);
-      this->suppliers_[i]->accumulate (suppliers);
     }
-  suppliers.dump_results ("ECT_Supplier", "accumulated");
   this->dump_latency_results ("Latency");
 }
 
 int
 ECT_Throughput::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "rdc:s:u:n:t:b:h:l:p:m:w:");
+  ACE_Get_Opt get_opt (argc, argv, "dc:s:u:n:t:b:h:p:m:r");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -565,24 +512,9 @@ ECT_Throughput::parse_args (int argc, char *argv [])
             char* aux;
                 char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
 
-            this->consumer_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+            this->event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
-            this->consumer_type_count_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (0, ",", &aux);
-            this->consumer_type_shift_ = ACE_OS::atoi (arg);
-          }
-          break;
-
-        case 'l':
-          {
-            char* aux;
-                char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
-
-            this->supplier_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (0, ",", &aux);
-            this->supplier_type_count_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (0, ",", &aux);
-            this->supplier_type_shift_ = ACE_OS::atoi (arg);
+            this->event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
           }
           break;
 
@@ -590,26 +522,19 @@ ECT_Throughput::parse_args (int argc, char *argv [])
           this->pid_file_name_ = get_opt.optarg;
           break;
 
-        case 'w':
-          this->ec_concurrency_hwm_ = ACE_OS::atoi (get_opt.optarg);
-          break;
-
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       "[ORB options] "
-                      "-r -d -x "
                       "-c <n_consumers> "
                       "-s <n_suppliers> "
                       "-u <burst count> "
                       "-n <burst size> "
                       "-b <event payload size> "
                       "-t <burst pause (usecs)> "
-                      "-h <consumer_start,consumer_count,consumer_shift> "
-                      "-l <supplier_start,supplier_count,supplier_shift> "
+                      "-h <eventa,eventb> "
                       "-p <pid file name> "
-                      "-w <concurrency HWM> "
                       "-r "
                       "\n",
                       argv[0]));
@@ -651,7 +576,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
       || this->n_consumers_ >= ECT_Throughput::MAX_CONSUMERS)
     {
       this->n_consumers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of consumers or "
                          "suppliers out of range, "
                          "reset to default (%d)\n",
@@ -662,7 +587,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
       || this->n_suppliers_ >= ECT_Throughput::MAX_SUPPLIERS)
     {
       this->n_suppliers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of suppliers out of range, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);
@@ -672,18 +597,9 @@ ECT_Throughput::parse_args (int argc, char *argv [])
     {
       this->n_suppliers_ = 1;
       this->n_consumers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: no suppliers or consumers, "
                          "reset to default (%d of each)\n",
-                         argv[0], 1), -1);
-    }
-
-  if (this->ec_concurrency_hwm_ <= 0)
-    {
-      this->ec_concurrency_hwm_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%s: invalid concurrency HWM, "
-                         "reset to default (%d)\n",
                          argv[0], 1), -1);
     }
 

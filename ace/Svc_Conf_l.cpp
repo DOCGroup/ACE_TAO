@@ -1545,17 +1545,6 @@ ace_yywrap (void)
   ace_yyleng = 0;
 
   // This needs to be freed to prevent a memory leak.
-  ace_yy_delete_parse_buffer ();
-
+  ace_yy_delete_buffer (ace_yy_current_buffer);
   return 1;
-}
-
-void
-ace_yy_delete_parse_buffer (void)
-{
-  if (ace_yy_current_buffer != 0) 
-    {
-      ace_yy_delete_buffer (ace_yy_current_buffer);
-      ace_yy_current_buffer = 0;
-    }
 }

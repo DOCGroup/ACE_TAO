@@ -28,8 +28,7 @@ mib_Widget *mib_create_List(mib_Widget *parent, char *name, char *label,
   mib_Widget	*temp;
   mib_List	*myres;
   Widget	 wtemp;
-  //  unsigned char *label_text;
-  XmString label_text;
+  unsigned char *label_text;
   char		 ttext[30];
   Arg		 args[20];
   String	 myname;
@@ -160,7 +159,7 @@ int mib_load_List(mib_Widget *thisw, mib_Buffer *fin)
   if (!mib_read_line(fin, res, val))
     return 0;
 
-  if (ACE_OS::strcmp (res,"EndWidget"))
+  if (strcmp(res,"EndWidget"))
     return 0;
 
   return 1;

@@ -32,9 +32,6 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-#define ACE_PSOS_LACKS_PREPC
-
-#define ACE_PSOS_HAS_TIME
 
 #define ACE_HAS_STRDUP_EMULATION
 
@@ -61,6 +58,7 @@
 // Template instantiation definitions
 // #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_FILE
 #define ACE_TEMPLATES_REQUIRE_SOURCE
+#define ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE
 
 // IO Streams stuff
 // #define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
@@ -217,8 +215,6 @@
 
 // #define ACE_PSOS_LACKS_PHILE
 
-#define ACE_PSOS_HAS_C_LIBRARY
-
 #define ACE_PSOS_SNARFS_HEADER_INFO
 
 #define ACE_PSOS_LACKS_ARGC_ARGV
@@ -227,8 +223,8 @@
 #define ACE_PSOS
 #endif /* ACE_PSOS */
 
-#if !defined (ACE_PSOS_DIAB)
-#define ACE_PSOS_DIAB
-#endif /* ACE_PSOS_DIAB */
+#if !defined (ACE_PSOS_TBD)
+#define ACE_PSOS_TBD
+#endif /* ACE_PSOS_TBD */
 #define ACE_LACKS_MKFIFO
 #endif /* ACE_CONFIG_H */

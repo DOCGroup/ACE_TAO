@@ -29,11 +29,7 @@ JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,
         {
           int r = this->parse_header_value (info, mb);
           if (r == 1)
-            {
-              if (info->end_of_headers ())
-                return 1;
-              break;
-            }
+            break;
           continue;
         }
     }
@@ -47,10 +43,6 @@ JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,
       mb.crunch ();
       return 0;
     }
-  else if (mb.length () < mb.size ())
-    {
-      return 0;
-    }
   else if (mb.length () == mb.size ())
     {
       // This is one of those cases that should rarely ever happen.
@@ -61,12 +53,6 @@ JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,
       // connection needs to be closed and the client has to
       // reinitiate the connection.
 
-      info->status (JAWS_Header_Info::TOO_LONG);
-      return 1;
-    }
-  else if (mb.length () > mb.size ())
-    {
-      ACE_DEBUG ((LM_DEBUG, "JAWS_Parse_Headers: buffer overrun!!\n"));
       info->status (JAWS_Header_Info::TOO_LONG);
       return 1;
     }
@@ -177,15 +163,6 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
           if (q[-1] == '\r')
             mb.rd_ptr (q-1);
 
-          return 1;
-        }
-
-      if (*q == '\0')
-        {
-          // We are in the middle of binary data.  Get out!
-          mb.rd_ptr (q);
-          info->end_of_line (1);
-          info->end_of_headers (1);
           return 1;
         }
 

@@ -9,8 +9,7 @@ ACE_RCSID(ace, Addr, "$Id$")
 #if defined (ACE_HAS_BROKEN_SAP_ANY)
 #if defined (sap_any)
 #undef sap_any
-// Note: this object requires static construction and destruction.
-/* static */
+// This is a static class variable.
 const ACE_Addr ace_sap_any (AF_ANY, -1);
 
 const ACE_Addr &
@@ -21,8 +20,7 @@ ACE_Addr::sap_any (void)
 #define sap_any sap_any()
 #endif /* sap_any */
 #else
-// Note: this object requires static construction and destruction.
-/* static */
+// This is a static class variable.
 const ACE_Addr ACE_Addr::sap_any (AF_ANY, -1);
 #endif /* ACE_HAS_BROKEN_SAP_ANY */
 

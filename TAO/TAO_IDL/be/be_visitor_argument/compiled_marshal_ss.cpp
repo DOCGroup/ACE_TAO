@@ -151,21 +151,13 @@ int be_visitor_args_compiled_marshal_ss::visit_array (be_array *node)
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-#if 0
-          *os << node->name () << "_forany ("
+          *os << node->name () << "_forany (" 
               << "(" << node->name () << "_slice *)"
               << arg->local_name () << ")";
-#else
-          *os << "_tao_forany_" << arg->local_name ();
-#endif
           break;
         case AST_Argument::dir_INOUT:
-#if 0
-          *os << node->name () << "_forany ("
+          *os << node->name () << "_forany (" 
               << arg->local_name () << ")";
-#else
-          *os << "_tao_forany_" << arg->local_name ();
-#endif
           break;
         case AST_Argument::dir_OUT:
           break;
@@ -178,29 +170,21 @@ int be_visitor_args_compiled_marshal_ss::visit_array (be_array *node)
         case AST_Argument::dir_IN:
           break;
         case AST_Argument::dir_INOUT:
-#if 0
-          *os << node->name () << "_forany ("
+          *os << node->name () << "_forany (" 
               << arg->local_name () << ")";
-#else
-          *os << "_tao_forany_" << arg->local_name ();
-#endif
           break;
         case AST_Argument::dir_OUT:
-#if 0
           if (node->size_type () == be_decl::VARIABLE)
             {
-              *os << node->name () << "_forany ("
+              *os << node->name () << "_forany (" 
                   << "(" << node->name () << "_slice *)"
                   << arg->local_name () << ".in ())";
             }
           else
             {
-              *os << node->name () << "_forany ("
+              *os << node->name () << "_forany (" 
                   << arg->local_name () << ")";
             }
-#else
-          *os << "_tao_forany_" << arg->local_name ();
-#endif
           break;
         }
     }
@@ -337,92 +321,6 @@ int be_visitor_args_compiled_marshal_ss::visit_interface_fwd (be_interface_fwd *
     }
   return 0;
 }
-
-#ifdef IDL_HAS_VALUETYPE
-
-int be_visitor_args_compiled_marshal_ss::visit_valuetype (be_valuetype *)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-
-  if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
-    {
-      switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
-        case AST_Argument::dir_INOUT:
-          *os << arg->local_name () << ".out ()";
-          break;
-        case AST_Argument::dir_OUT:
-          break;
-        }
-    }
-  else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
-    {
-      switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
-          break;
-        case AST_Argument::dir_INOUT:
-        case AST_Argument::dir_OUT:
-          *os << arg->local_name () << ".in ()";
-          break;
-        }
-    }
-  else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
-                         "visit_valuetype - "
-                         "Bad substate\n"),
-                        -1);
-    }
-  return 0;
-}
-
-int be_visitor_args_compiled_marshal_ss::visit_valuetype_fwd (be_valuetype_fwd *)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-
-  if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
-    {
-      switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
-        case AST_Argument::dir_INOUT:
-          *os << arg->local_name () << "out ()";
-          break;
-        case AST_Argument::dir_OUT:
-          break;
-        }
-    }
-  else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
-    {
-      switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
-          break;
-        case AST_Argument::dir_INOUT:
-        case AST_Argument::dir_OUT:
-          *os << arg->local_name () << ".in ()";
-          break;
-        }
-    }
-  else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_compiled_marshal_ss::"
-                         "visit_valuetype_fwd - "
-                         "Bad substate\n"),
-                        -1);
-    }
-  return 0;
-}
-
-#endif /* IDL_HAS_VALUETYPE */
 
 int be_visitor_args_compiled_marshal_ss::visit_predefined_type (be_predefined_type *node)
 {
@@ -639,7 +537,7 @@ int be_visitor_args_compiled_marshal_ss::visit_string (be_string *node)
             {
               *os << "CORBA::Any::to_string ("
                   << arg->local_name () << ".out (), "
-                  << node->max_size ()->ev ()->u.ulval - 1
+                  << node->max_size ()->ev ()->u.ulval
                   << ")";
             }
           break;
@@ -672,9 +570,9 @@ int be_visitor_args_compiled_marshal_ss::visit_string (be_string *node)
               break;
             case AST_Argument::dir_INOUT:
             case AST_Argument::dir_OUT:
-              *os << "CORBA::Any::from_string ((char *)"
+              *os << "CORBA::Any::from_string ((char *)" 
                   << arg->local_name () << ".in (), "
-                  << node->max_size ()->ev ()->u.ulval - 1 << ")";
+                  << node->max_size ()->ev ()->u.ulval << ")";
               break;
             }
         }

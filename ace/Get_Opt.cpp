@@ -93,7 +93,7 @@ ACE_Get_Opt::operator () (void)
       if (this->optind >= this->argc_ 
 	  || *(this->nextchar_ = this->argv_[this->optind]) != '-') 
 	{
-	  this->nextchar_ = ACE_const_cast (char *, ASYS_TEXT (""));
+	  this->nextchar_ = ASYS_TEXT ("");
 	  return EOF;
 	}
 
@@ -102,7 +102,7 @@ ACE_Get_Opt::operator () (void)
 	{	
 	  // Found "--".
 	  ++this->optind;
-	  this->nextchar_ = ACE_const_cast (char *, ASYS_TEXT (""));
+	  this->nextchar_ = ASYS_TEXT ("");
 	  return EOF;
 	}
     }			
@@ -122,10 +122,8 @@ ACE_Get_Opt::operator () (void)
 	++this->optind;
 
       if (this->opterr && *this->optstring_ != ':')
-	ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%s: illegal option -- %c\n"), 
-		    this->argv_[0],
-                    opt));
+	ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%s: illegal option -- %c\n"), 
+		    this->argv_[0], opt));
       return '?';
     }
 
@@ -142,7 +140,7 @@ ACE_Get_Opt::operator () (void)
       else if (this->argc_ <= ++this->optind) 
 	{ 
 	  // No arg.
-	  this->nextchar_ = ACE_const_cast (char *, ASYS_TEXT (""));
+	  this->nextchar_ = ASYS_TEXT ("");
 
 	  if (*this->optstring_ == ':')
 	    return ':';
@@ -155,7 +153,7 @@ ACE_Get_Opt::operator () (void)
       else // White space.
 	this->optarg = this->argv_[this->optind];
 
-      this->nextchar_ = ACE_const_cast (char *, ASYS_TEXT (""));
+      this->nextchar_ = ASYS_TEXT ("");
       ++this->optind;
     }
 

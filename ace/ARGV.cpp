@@ -40,16 +40,186 @@ ACE_ARGV::string_to_argv (void)
 {
   ACE_TRACE ("ACE_ARGV::string_to_argv");
 
-  return ACE_OS::string_to_argv (this->buf_,
-                                 this->argc_,
-                                 this->argv_,
-                                 this->substitute_env_args_);
+  // Reset the number of arguments
+  this->argc_ = 0;
+  
+  if (this->buf_ == 0)
+    return -1;
+
+ ASYS_TCHAR *cp = this->buf_;
+
+ // First pass: count arguments.
+
+ // '#' is the start-comment token..
+ while (*cp != '\0' && *cp != '#')
+   {
+     // Skip whitespace..
+     while (ACE_OS::ace_isspace (*cp))
+       cp++;
+     
+     // Increment count and move to next whitespace..
+     if (*cp != '\0')
+       this->argc_++;
+     
+     // Grok quotes....
+     if (*cp == '\'' || *cp == '"')
+       {
+	 ASYS_TCHAR quote = *cp;
+	 
+	 // Scan past the string..
+	 for (cp++; *cp != '\0' && *cp != quote; cp++)
+	   continue;
+
+	 // '\0' implies unmatched quote..
+	 if (*cp == '\0')
+	   {
+	     ACE_ERROR ((LM_ERROR, 
+			 ASYS_TEXT ("unmatched %c detected\n"), quote));
+	     this->argc_--;
+	     break;
+	   } 
+	 else 
+	   cp++;
+       }
+     else // Skip over non-whitespace....
+       while (*cp != '\0' && !ACE_OS::ace_isspace (*cp))
+	 cp++;
+   }
+ 
+ // Second pass: copy arguments.
+ ASYS_TCHAR arg[ACE_DEFAULT_ARGV_BUFSIZ];
+ ASYS_TCHAR *argp = arg;
+ 
+ // Make sure that the buffer we're copying into is always large
+ // enough.
+ if (cp - this->buf_ >= ACE_DEFAULT_ARGV_BUFSIZ)
+   ACE_NEW_RETURN (argp,
+                   ASYS_TCHAR[cp - this->buf_ + 1],
+                   -1);
+
+ // Make a new argv vector of argc + 1 elements.
+ ACE_NEW_RETURN (this->argv_,
+                 ASYS_TCHAR *[this->argc_ + 1],
+                 -1);
+ 
+ ASYS_TCHAR *ptr = this->buf_;
+
+ for (size_t i = 0; i < this->argc_; i++)
+   {
+     // Skip whitespace..
+     while (ACE_OS::ace_isspace (*ptr))
+       ptr++;
+     
+     // Copy next argument and move to next whitespace..
+     if (*ptr == '\'' || *ptr == '"')
+       {
+	 ASYS_TCHAR quote = *ptr++;
+	 
+	 for (cp = argp;
+	      *ptr != '\0' && *ptr != quote; 
+	      ptr++, cp++)
+           {
+             // @@ We can probably remove this since we ensure it's
+             // big enough earlier!
+             ACE_ASSERT (unsigned (cp - argp) < ACE_DEFAULT_ARGV_BUFSIZ);
+	     *cp = *ptr;
+           }
+	 
+	 *cp = '\0';
+	 if (*ptr == quote)
+	   ptr++;
+       }
+     else
+       {
+	 for (cp = arg; 
+	      *ptr && !ACE_OS::ace_isspace (*ptr); 
+	      ptr++, cp++)
+           {
+             // @@ We can probably remove this since we ensure it's
+             // big enough earlier!
+             ACE_ASSERT (unsigned (cp - argp) < ACE_DEFAULT_ARGV_BUFSIZ);
+	     *cp = *ptr;
+           }
+
+	 *cp = '\0';
+       }
+     
+     // Check for environment variable substitution here.
+#if !defined (ACE_HAS_WINCE)
+     // WinCE doesn't have environment variables so we just skip it.
+     if (this->substitute_env_args_)
+       ACE_ALLOCATOR_RETURN (this->argv_[i],
+                             ACE::strenvdup (arg),
+                             -1);
+     else
+#endif /* !ACE_HAS_WINCE */
+       ACE_ALLOCATOR_RETURN (this->argv_[i], 
+                             ACE_OS::strdup (arg),
+                             -1);
+   }
+ 
+ if (argp != arg)
+   delete [] argp;
+
+ this->argv_[this->argc_] = 0;
+
+ return 0;
 }
 
 int
-ACE_ARGV::argv_to_string (ASYS_TCHAR **argv, ASYS_TCHAR *&buf)
+ACE_ARGV::argv_to_string (ASYS_TCHAR **argv,ASYS_TCHAR *&buf)
 {
-  return ACE_OS::argv_to_string (argv, buf);
+  if (argv == 0 || argv[0] == 0)
+    return 0;
+
+  int buf_len = 0;
+  
+  // Determine the length of the buffer.
+
+  for (int i = 0; argv[i] != 0; i++)
+    {
+      ASYS_TCHAR *temp;
+
+      // Account for environment variables.
+      if (this->substitute_env_args_
+	  && (argv[i][0] == '$'
+	  && (temp = ACE_OS::getenv (&argv[i][1])) != 0))
+	buf_len += ACE_OS::strlen (temp);	
+      else
+	buf_len += ACE_OS::strlen (argv[i]);
+
+      // Add one for the extra space between each string.
+      buf_len++;
+    }
+
+  // Step through all argv params and copy each one into buf; separate
+  // each param with white space.
+
+  ACE_NEW_RETURN (buf, ASYS_TCHAR[buf_len + 1],0);
+
+  // initial null charater to make it a null string.
+  buf[0] = '\0';
+  ASYS_TCHAR *end = buf;
+  int j;
+
+  for (j = 0; argv[j] != 0; j++)
+    {
+      ASYS_TCHAR *temp;
+
+      // Account for environment variables.
+      if (this->substitute_env_args_
+	  && (argv[j][0] == '$'
+	  && (temp = ACE_OS::getenv (&argv[j][1])) != 0))
+	end = ACE::strecpy (end, temp);
+      else
+	end = ACE::strecpy (end, argv[j]);
+
+      // Replace the null char that strecpy put there with white space.
+      *(end-1) = ' ';
+    }
+  // Null terminate the string.
+  *end = '\0';
+  return j;// the number of arguments.
 }
 
 ACE_ARGV::ACE_ARGV (const ASYS_TCHAR buf[],

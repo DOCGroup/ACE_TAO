@@ -28,22 +28,22 @@ TAO_IIOP_Connector::tag (void)
 
 TAO_IIOP_Connector::TAO_IIOP_Connector (void)
   : tag_(TAO_IOP_TAG_INTERNET_IOP),
-    base_connector_ ()
+    base_connector_()
 {
 }
 
-int
-TAO_IIOP_Connector::connect (TAO_Profile *profile,
-                             TAO_Transport *& transport)
+TAO_Transport *
+TAO_IIOP_Connector::connect(TAO_Profile *profile, CORBA::Environment &env)
 {
   if (profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
-    return -1;
+    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO), env, 0);
 
   TAO_IIOP_Profile *iiop_profile =
-    ACE_dynamic_cast (TAO_IIOP_Profile *, profile);
+    ACE_dynamic_cast(TAO_IIOP_Profile*,profile);
 
   if (iiop_profile == 0)
-    return -1;
+    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO), env, 0);
+
 
 // Establish the connection and get back a <Client_Connection_Handler>.
 // @@ We do not have the ORB core
@@ -68,48 +68,37 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
 //                    iiop_profile->addr_to_string (),
 //                    "errno"));
 //
-//        TAO_THROW_ENV_RETURN_VOID (CORBA::TRANSIENT (), env);
+//        TAO_THROW_ENV_RETURN_VOID (CORBA::TRANSIENT (CORBA::COMPLETED_NO), env);
 //        }
 //    }
 //  else
 //#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
+  // @@ think about making this a friend class!  FRED
+  const ACE_INET_Addr &oa =
+    ACE_dynamic_cast (const ACE_INET_Addr &, iiop_profile->object_addr ());
 
-  const ACE_INET_Addr &oa = iiop_profile->object_addr ();
+  if (base_connector_.connect (iiop_profile->hint (), oa) == -1)
+  { // Give users a clue to the problem.
+    if (TAO_orbdebug)
+      ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
+                  "%s failed (%p)\n",
+                  __FILE__,
+                  __LINE__,
+                  profile->addr_to_string (),
+                  "errno"));
 
-  TAO_Client_Connection_Handler* result;
+    TAO_THROW_ENV_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO), env, 0);
+  }
 
   // the connect call will set the hint () stored in the Profile
-  // object; but we obtain the transport in the <result>
-  // variable. Other threads may modify the hint, but we are not
-  // affected.
-  if (this->base_connector_.connect (iiop_profile->hint (),
-                                     result,
-                                     oa) == -1)
-    { // Give users a clue to the problem.
-      if (TAO_orbdebug)
-        ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
-                    "%s failed (%p)\n",
-                    __FILE__,
-                    __LINE__,
-                    profile->addr_to_string (),
-                    "errno"));
+  // object.
 
-      return -1;
-    }
-
-  transport = result->transport ();
-
-  return 0;
+  return iiop_profile->transport ();
 }
 
 int
-TAO_IIOP_Connector::open (TAO_Resource_Factory *trf,
-                          ACE_Reactor *reactor)
+TAO_IIOP_Connector::open(TAO_Resource_Factory *trf, ACE_Reactor *reactor)
 {
-  // @@ Fred: why not just
-  //
-  // return this->base_connector_.open (....); ????
-  //
   if (this->base_connector_.open (reactor,
                                   trf->get_null_creation_strategy (),
                                   trf->get_cached_connect_strategy (),
@@ -119,14 +108,14 @@ TAO_IIOP_Connector::open (TAO_Resource_Factory *trf,
 }
 
 int
-TAO_IIOP_Connector::close (void)
+TAO_IIOP_Connector::close ()
 {
   this->base_connector_.close ();
   return 0;
 }
 
 int
-TAO_IIOP_Connector::preconnect (char *preconnections)
+TAO_IIOP_Connector::preconnect(char* preconnections)
 {
 #if 0
   if (preconnections)
@@ -137,7 +126,6 @@ TAO_IIOP_Connector::preconnect (char *preconnections)
 
       char *nextptr = 0;
       char *where = 0;
-
       for (where = ACE::strsplit_r (preconnections, ",", nextptr);
            where != 0;
            where = ACE::strsplit_r (0, ",", nextptr))
@@ -151,14 +139,15 @@ TAO_IIOP_Connector::preconnect (char *preconnections)
               *sep = '\0';
               tport = sep + 1;
 
-              dest.set (ACE_OS::atoi (tport),
-                        thost);
+              dest.set (ACE_OS::atoi (tport), thost);
 
               // Try to establish the connection
               handler = 0;
               if (this->base_connector_.connect (handler, dest) == 0)
-                // Save it for later so we can mark it as idle
-                handlers.push (handler);
+                {
+                  // Save it for later so we can mark it as idle
+                  handlers.push (handler);
+                }
               else
                 ACE_ERROR ((LM_ERROR,
                             "(%P|%t) Unable to preconnect to host '%s', port %d.\n",
@@ -199,13 +188,12 @@ TAO_IIOP_Connector::preconnect (char *preconnections)
               *sep = '\0';
               tport = sep + 1;
 
-              dest.set (ACE_OS::atoi (tport), thost);
+              dest.set (atoi(tport), thost);
               dests.push (dest);
             }
           else
             ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) Yow!  Couldn't find a ':' separator in '%s' spec.\n",
-                        where));
+                        "(%P|%t) Yow!  Couldn't find a ':' separator in '%s' spec.\n", where));
         }
 
       // Create an array of addresses from the stack, as well as an
@@ -219,15 +207,14 @@ TAO_IIOP_Connector::preconnect (char *preconnections)
                       ACE_INET_Addr[num_connections],
                       -1);
       ACE_NEW_RETURN (handlers,
-                      TAO_Client_Connection_Handler *[num_connections],
+                      TAO_Client_Connection_Handler*[num_connections],
                       -1);
       ACE_NEW_RETURN (failures,
                       char[num_connections],
                       -1);
 
-      size_t index = 0;
-
       // Fill in the remote address array
+      size_t index = 0;
       while (dests.pop (remote_addrs[index]) == 0)
         handlers[index++] = 0;
 
@@ -238,11 +225,9 @@ TAO_IIOP_Connector::preconnect (char *preconnections)
                                        failures);
       // Loop over all the failures and set the handlers that
       // succeeded to idle state.
-      for (index = 0;
-           index < num_connections;
-           index++)
+      for (index = 0; index < num_connections; index++)
         {
-          if (!failures[index])
+          if (! failures[index])
             {
               handlers[index]->idle ();
               successes++;
@@ -252,17 +237,3 @@ TAO_IIOP_Connector::preconnect (char *preconnections)
 #endif /* 0 */
   return successes;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node<ACE_INET_Addr>;
-template class ACE_Unbounded_Stack<ACE_INET_Addr>;
-template class ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<ACE_INET_Addr>
-#pragma instantiate ACE_Unbounded_Stack<ACE_INET_Addr>
-#pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -35,7 +35,7 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
                              PortableServer::POA_ptr poa,
                              const char * /* operation */,
                              PortableServer::ServantLocator::Cookie &cookie,
-                             CORBA::Environment &ACE_TRY_ENV)
+                             CORBA::Environment &env)
 {
   // Convert ObjectID to String.
 
@@ -58,8 +58,9 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
       return servant;
     }
   else
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      0);
+    TAO_THROW_ENV_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO),
+                          env,
+                          0);
 }
 
 // Since the servant gets invoked per operation, the servant has to be
@@ -72,7 +73,7 @@ ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
                               const char * /* operation */,
                               PortableServer::ServantLocator::Cookie cookie,
                               PortableServer::Servant servant,
-                              CORBA::Environment &/* ACE_TRY_ENV */)
+                              CORBA::Environment &/* env */)
 {
   // Check the passed servant with the cookie.
 
@@ -94,7 +95,7 @@ ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
 
 PortableServer::ObjectId_var
 ServantLocator_i::create_dll_object_id (const char *dllname,
-                                        const char *factory_function)
+                                           const char *factory_function)
 {
   return this->servant_manager_.create_dll_object_id (dllname,
                                                       factory_function);

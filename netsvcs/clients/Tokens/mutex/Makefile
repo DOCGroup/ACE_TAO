@@ -1,46 +1,41 @@
 #----------------------------------------------------------------------------
-#       $Id$
+#	$Id$
 #
-#       Makefile for repeating token client application
+#	Makefile for repeating token client application
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#       Local macros
+#	Local macros
 #----------------------------------------------------------------------------
 
-FILES   = test_mutex
+BIN   	= test_mutex
 
-LSRC    = $(addsuffix .cpp,$(FILES))
-LOBJ    = $(LSRC:%.cpp=$(VDIR)%.o)
-SHOBJ   = $(addsuffix .so,$(FILES))
+FILES 	= test_mutex
 
-BIN2    = test_mutex
+LSRC   	= $(addsuffix .cpp,$(FILES))
+LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
+SHOBJ	= $(addsuffix .so,$(FILES))
 
-#### If the ACE library wasn't built with sufficient components, don't
-#### try to build here.
-ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
-ifeq (Token,$(findstring Token,$(ACE_BUILD_COMPONENTS)))
-  BIN = $(BIN2)
-endif # Token
+BUILD 	= $(VBIN)
 
 #----------------------------------------------------------------------------
-#       Include macros and targets
+#	Include macros and targets
 #----------------------------------------------------------------------------
 
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include		$(ACE_ROOT)/include/makeinclude/macros.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
-#       Local targets
+#	Local targets
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#       Dependencies
+#	Dependencies
 #----------------------------------------------------------------------------
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
@@ -50,6 +45,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/test_mutex.o .obj/test_mutex.so .shobj/test_mutex.o .shobj/test_mutex.so: test_mutex.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \

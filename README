@@ -208,7 +208,7 @@ that describe the ACE wrappers and the ADAPTIVE system in more detail.
 
 The current release has been tested extensively, but if you find any
 bugs, please report them to the ACE mailing list
-ace-users@cs.wustl.edu using the $ACE_ROOT/PROBLEM-REPORT-FORM.
+ace-users@cs.wustl.edu using the $ACE_ROOT/BUG-REPORT-FORM.
 Please use the same form to submit questions, comments, etc.
 To ensure that you see responses, please do one of the following:
 
@@ -246,7 +246,7 @@ Balachandran Natarajan <bala@cs.wustl.edu>
 Kirthika Parameswaran <kirthika@cs.wustl.edu>
 Carlos O'Ryan <coryan@cs.wustl.edu>
 Ossama Othman <ossama@cs.wustl.edu>
-Jeff Parsons <parsons@cs.wustl.edu>
+Jeff Parsons <jp4@cs.wustl.edu>
 Irfan Pyarali <irfan@cs.wustl.edu>
 Marina Spivak <marina@cs.wustl.edu>
 Nagarajan Surendran <naga@cs.wustl.edu>
@@ -335,7 +335,7 @@ Sandeep Joshi <sandeepj@emailbox.att.com>
 Bernd Hofner <hofner@pd.et-inf.uni-siegen.de>
 Craig Perras <craigp@wolfenet.com>
 Kirk Sinnard <kirk.sinnard@lawson.com>
-Matthew Newhook <matthew@ooc.com>
+Matthew Newhook <matthew@neweast.ca>
 Gerolf Wendland <wendland@hpp015.mch2.scn.de>
 Phil Mesnier <phil@envision.com>
 Ross Dargahi <rossd@krinfo.com>
@@ -646,7 +646,7 @@ Clinton Carr <ccarr@websocket.com>
 Peter Liqun Na <liqunna@cs.sunysb.edu>
 Frank Adcock <frank@bushlife.com.au>
 Xu Yifeng <xuyifeng@www.kali.com.cn>
-Valery Arkhangorodsky <valerya@servicesoft.com>
+Valery Arkhangorodsky <avalery@geocities.com>
 Alan Scheinine <scheinin@crs4.it>
 Andrew G. Harvey <agh@cisco.com>
 Dann Corbit <DCorbit@SolutionsIQ.com>
@@ -720,7 +720,7 @@ Greg Holtmeyer <gholtmeyer@mdc.com>
 Jody Hagins <jody@atdesk.com>
 Patrice Bensoussan <pbensoussan@amadeus.net>
 Keith Brown <kalbrown@ix.netcom.com>
-Barry Hoggard <hoggard@cfx.com>
+Barry Hoggard <hoggardb@panix.com>
 Peter J. Mason <peterm@fl.net.au>
 Jerry De Master <jdemaste@ipdinc.com>
 Greg Gallant <greg.gallant@jhuapl.edu>
@@ -740,6 +740,7 @@ Tommy Andreasen <tommy.andreasen@radiometer.dk>
 Slava Galperin <galperin@teknowledge.com>
 Jeff Olszewski <jolszewski@std.saic.com>
 Sudhanshu Garg <sg2@ladybug.cec.wustl.edu>
+Jerry D. De Master <jdemaster@ipdinc.com>
 Mike Preradovic <michael_preradovic@epicdata.com>
 Greg Harrison <harrisog@erinet.com>
 Sangwoo Jin <swjinjin@sei.co.kr>
@@ -750,102 +751,6 @@ Jacob Jones <Jacob.J.Jones@notesmta.gd-is.com>
 Phil Ruelle <Phil.Ruelle@adv.sonybpe.com>
 Sush Bankapura <Sush.Bankapura@sylantro.com>
 Eric Covington <eric@nowsol.com>
-Darren Whobrey <whobrey@fecit.co.uk>
-Mason Taube <taube@westcon.prc.com>
-Rod Joseph <rodjoseph@adt.com>
-Hans Horsmann <Hans.Horsmann@icn.siemens.de>
-Kevin Royalty <kroyalty@mdc.com>
-Souhad Mcheik <mcheiks@inrs-telecom.uquebec.ca>
-Mark Little <M.C.Little@ncl.ac.uk>
-Tim Stack <stack@cs.utah.edu>
-Marc Engel <engelm@tlse.sofreavia.fr>
-Uma Markandu <umam@nortelnetworks.com>
-Henrik Nordberg <hnordberg@lbl.gov>
-Tad Jarosinski <tadj@qualcomm.com>
-Andy Marchewka <AndyM@who.net>
-Neal Norwitz <nnorwitz@arinc.com>
-Frederic Maria <fmaria@lucent.com>
-David Hooker <DHooker@uniview.net>
-Christian.Destor <Christian.Destor@alcatel.fr>
-Andrew Hobson <ahobson@eng.mindspring.net>
-Andre Folkers <folkers@informatik.mu-leubeck.de>
-Torsten Kuepper <kuepper2@uni-wuppertal.de>
-Hao Ruan <hruan@lucent.com>
-Alexander Davidovich <sasha@ms.com>
-Cristian Ferretti <cfs@mat.puc.cl>
-N Becker <nbecker@fred.net>
-Yaolong Lan <lyaolong@cs.sunysb.edu>
-Elias Sreih <sealstd1@nortelnetworks.com>
-Liang Chen <chenl@nortelnetworks.com>
-Mark Laffoon <mark.laffoon@centraxcorp.com>
-Ti Z <tiz@cisco.com>
-Brian Dance <Brian_Dance@UECCS.co.uk>
-Alexey Gadzhiev <alg@null.ru>
-Francois Bernier <fbernier@gel.ulaval.ca>
-Bill Rizzi <rizzi@softserv.com>
-Peter Windle <peterw@ugsolutions.com>
-Andy Alvarez <axab@eci.esys.com>
-Jaepil Kim <jpkim@lgsoft.com>
-Goldshtain Dmitry <goldshtain.dmitry@usa.net>
-Carl Grinstead <grinstea@tsunami.com>
-Henric Jungheim <junghelh@pe-nelson.com>
-Konstantinos Margaritis <kmargar@cc.uoa.gr>
-Michael Preobrazhensky <mikep@xpedite.com>
-Gregory D. Fee <gdf2@cec.wustl.edu>
-Roland Gigler <roland@mch.pn.siemens.de>
-Frank Buschmann <Frank.Buschmann@mchp.siemens.de>
-Eric Eide <eeide@cs.utah.edu>
-Don Busch <busch_d@ociweb.com>
-Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov>
-David Hauck <davidh@realtimeint.com>
-Joe Hoffert  <joeh@tango.cs.wustl.edu>
-Keith Rohrer <KRohrer@hnv.com>
-Tim Rose <trose@bridgewatersys.com>
-Sam Rhine <rmsolution20@earchlink.net>
-Chris Schleicher <chrissch@cnd.hp.com>
-Margaret Reitz <margaret@veritas.com>
-Thomas Mehrkam <Thomas_Mehrkam@i-o.com>
-Erik Ivanenko <erik.ivanenko@utoronto.ca>
-Sarmeesha Reddy <sreddy@tr.comm.mot.com>
-Steven Tine <stevent@tr.comm.mot.com>
-Dave Steele <Dave_Steele@Mitel.COM>
-Simeon Simeonov <simeons@allaire.com>
-David H. Whittington <david.h.whittington@boeing.com>
-Ian MacDonald <ianmacd@bg.com>
-Rene Matteau <matteau@ca.ibm.com>
-Hans Ridder <ridder@veritas.com>
-Todd Mullanix <Todd.Mullanix@sylantro.com>
-Hai Vu <Hai_Vu@Mitel.Com>
-Paul Francis <pfrancis@dkl.com>
-Kris Johnson <kjohnson@gardnersys.com>
-Dave Butenhof <butenhof@zko.dec.com>
-Dominic Williams <dom@connected-place.co.uk>
-Srikumar Kareti <skareti@htc.honeywell.com>
-Ian Pepper <ian@aptest.ie>
-Kevin Lyda <kevin.lyda@trintech.com>
-James D. Rucker <jdrucker@huey.jpl.nasa.gov>
-Brian Wallis <Brian.Wallis@sr.com.au>
-Sandeep Goyal <sagoyal@hss.hns.com>
-englishmalc@my-dejanew.com
-Frank O'Dwyer <fod@brd.ie>
-Long Hoang <LHoang@hwdcsaws.cahwnet.gov>
-Steven D. Chen <sdc2951@aw101.iasl.ca.boeing.com>
-Alain Magloire <alain@qnx.com>
-Jim Rogers <jrogers@viasoft.com>
-Nick Sawadsky <Nick_Sawadsky@BrooksSoftware.com>
-David Brownell <david-b@pacbell.net>
-Richard Stallman <rms@gnu.org>
-Casey Lucas <clucas@sabre.com>
-Brian C. Olson <bolson@rtlogic.com>
-Joseph A. Condlin <jac@slpmbo.ed.ray.com>
-Serge Du <du@lal.in2p3.fr>
-Mike Mazurek <mmazurek@std.saic.com>
-Joe Golio <Joe.Golio@xylan.com>
-Christian Schuderer <Christian.Schuderer@erl9.siemens.de>
-John R. Taylor <jrtaylor@george.lbl.gov>
-gwtovrea@west.raytheon.com
-Wallace Owen <owen@visicom.com>
-Vyacheslav A. Batenin <slavikb@iname.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive

@@ -219,10 +219,8 @@ class ACE_DNode
 
 public:
 
-# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
   ~ACE_DNode (void);
-  // This isn't necessary, but it keeps some compilers happy.
-# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
+  // This isn't necessary, but it keeps the compiler happy.
 
 private:
 
@@ -249,7 +247,7 @@ class ACE_Unbounded_Stack
   // = DESCRIPTION
   //     This implementation of an unbounded Stack uses a linked list.
   //     If you use the <insert> or <remove> methods you should keep
-  //     in mind that duplicate entries aren't allowed.  In general,
+  //     in mind that duplicate entries aren't allow.  In general,
   //     therefore, you should avoid the use of these methods since
   //     they aren't really part of the ADT stack.
 public:
@@ -724,6 +722,7 @@ class ACE_DLList : public ACE_DLList_Base
   friend class ACE_DLList_Iterator<T>;
 
 public:
+
   void operator= (ACE_DLList<T> &l);
   // Delegates to ACE_Double_Linked_List.
 
@@ -830,10 +829,10 @@ public:
 
   // = STL styled iteration, compare, and reference functions.
 
-  ACE_Unbounded_Set_Iterator<T> operator++ (int);
+  ACE_Unbounded_Set_Iterator<T> operator++ (void);
   // Postfix advance.
 
-  ACE_Unbounded_Set_Iterator<T>& operator++ (void);
+  ACE_Unbounded_Set_Iterator<T>& operator++ (int);
   // Prefix advance.
 
   T& operator* (void);
@@ -847,7 +846,6 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-
   ACE_Node<T> *current_;
   // Pointer to the current node in the iteration.
 
@@ -1215,10 +1213,12 @@ class ACE_Ordered_MultiSet_Iterator
 {
   // = TITLE
   //     Implement a bidirectional iterator over an ordered multiset.
-  //     This class template requires that < operator semantics be
-  //     defined for the parameterized type <T>, but does not impose
-  //     any restriction on how that ordering operator is implemented.
+  //     This class template requires that < operator semantics be defined
+  //     for the parameterized type <T>, but does not impose any restriction
+  //     on how that ordering operator is implemented.
+
 public:
+
   friend class ACE_Ordered_MultiSet<T>;
 
   // = Initialization method.
@@ -1269,15 +1269,14 @@ class ACE_Ordered_MultiSet
 {
   // = TITLE
   //     Implement a simple ordered multiset of <T> of unbounded size.
-  //     This class template requires that < operator semantics be
-  //     defined for the parameterized type <T>, but does not impose
-  //     any restriction on how that ordering operator is implemented.
+  //     This class template requires that < operator semantics be defined
+  //     for the parameterized type <T>, but does not impose any restriction
+  //     on how that ordering operator is implemented.
   //
   // = DESCRIPTION
   //     This implementation of an unordered set uses a circular
   //     linked list with a dummy node.  This implementation does not
-  //     allow duplicates, but it maintains FIFO ordering of
-  //     insertions.
+  //     allow duplicates, but it maintains FIFO ordering of insertions.
 public:
   friend class ACE_Ordered_MultiSet_Iterator<T>;
 
@@ -1400,13 +1399,10 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_Array_Base (size_t size = 0,
-                  ACE_Allocator *alloc = 0);
+  ACE_Array_Base (size_t size = 0);
   // Dynamically create an uninitialized array.
 
-  ACE_Array_Base (size_t size,
-                  const T &default_value,
-                  ACE_Allocator *alloc = 0);
+  ACE_Array_Base (size_t size, const T &default_value);
   // Dynamically initialize the entire array to the <default_value>.
 
   ACE_Array_Base (const ACE_Array_Base<T> &s);
@@ -1414,7 +1410,7 @@ public:
   // copy of the contents of parameter <s>, i.e., *this == s will
   // return true.
 
-  void operator= (const ACE_Array_Base<T> &s);
+  ACE_Array_Base<T>& operator= (const ACE_Array_Base<T> &s);
   // Assignment operator performs an assignment by making an exact
   // copy of the contents of parameter <s>, i.e., *this == s will
   // return true.  Note that if the <max_size_> of <array_> is >= than
@@ -1481,9 +1477,6 @@ private:
   T *array_;
   // Pointer to the array's storage buffer.
 
-  ACE_Allocator *allocator_;
-  // Allocation strategy of the ACE_Array_Base.
-
   friend class ACE_Array_Iterator<T>;
 };
 
@@ -1498,6 +1491,7 @@ class ACE_Array : public ACE_Array_Base<T>
   // = DESCRIPTION
   //   This class extends ACE_Array_Base, it provides comparison
   //   operators.
+  //
 public:
   // Define a "trait"
   typedef T TYPE;
@@ -1508,13 +1502,10 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_Array (size_t size = 0,
-             ACE_Allocator* alloc = 0);
+  ACE_Array (size_t size = 0);
   // Dynamically create an uninitialized array.
 
-  ACE_Array (size_t size,
-             const T &default_value,
-             ACE_Allocator* alloc = 0);
+  ACE_Array (size_t size, const T &default_value);
   // Dynamically initialize the entire array to the <default_value>.
 
   ACE_Array (const ACE_Array<T> &s);

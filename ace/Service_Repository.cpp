@@ -134,15 +134,17 @@ ACE_Service_Repository::fini (void)
       // remove services, so typically they are deleted in reverse
       // order.
 
-      for (int i = this->current_size_ - 1; i >= 0; i--)
+      for (this->current_size_--;
+           this->current_size_ >= 0;
+           this->current_size_--)
         {
           if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
                         ASYS_TEXT ("finalizing %s\n"),
-                        this->service_vector_[i]->name ()));
+                        this->service_vector_[this->current_size_]->name ()));
           ACE_Service_Type *s =
             ACE_const_cast (ACE_Service_Type *,
-                            this->service_vector_[i]);
+                            this->service_vector_[this->current_size_]);
           s->fini ();
         }
     }
@@ -209,13 +211,6 @@ ACE_Service_Repository::find_i (const ASYS_TCHAR name[],
 
   if (i < this->current_size_)
     {
-      if (this->service_vector_[i]->fini_called ())
-        {
-          if (srp != 0)
-            *srp = 0;
-          return -1;
-        }
-
       if (srp != 0)
 	*srp = this->service_vector_[i];
       if (ignore_suspended

@@ -35,13 +35,6 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (void)
   ACE_NEW (this->lock_, ACE_LOCKING_MECHANISM);
 }
 
-template <class ACE_LOCKING_MECHANISM>
-ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::~ACE_Reverse_Lock (void)
-{
-  if (this->delete_lock_)
-    delete this->lock_;
-}
-
 template <class ACE_LOCK, class TYPE>
 ACE_Test_and_Set<ACE_LOCK, TYPE>::ACE_Test_and_Set (TYPE initial_value)
   : is_set_ (initial_value)
@@ -107,8 +100,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (const TYPE &c)
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
 }
 
-// ****************************************************************
-// ACE_ALLOC_HOOK_DEFINE(ACE_Guard)
+ACE_ALLOC_HOOK_DEFINE(ACE_Guard)
 
 template <class ACE_LOCK> void
 ACE_Guard<ACE_LOCK>::dump (void) const
@@ -121,7 +113,7 @@ ACE_Guard<ACE_LOCK>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-// ACE_ALLOC_HOOK_DEFINE(ACE_Write_Guard)
+ACE_ALLOC_HOOK_DEFINE(ACE_Write_Guard)
 
 template <class ACE_LOCK> void
 ACE_Write_Guard<ACE_LOCK>::dump (void) const
@@ -130,7 +122,7 @@ ACE_Write_Guard<ACE_LOCK>::dump (void) const
   ACE_Guard<ACE_LOCK>::dump ();
 }
 
-// ACE_ALLOC_HOOK_DEFINE(ACE_Read_Guard)
+ACE_ALLOC_HOOK_DEFINE(ACE_Read_Guard)
 
 template <class ACE_LOCK> void
 ACE_Read_Guard<ACE_LOCK>::dump (void) const

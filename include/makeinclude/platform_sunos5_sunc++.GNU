@@ -25,22 +25,10 @@
 # necessary with automatic template instantiation.
 
 debug = 1
-distrib = 0
 threads = 1
 
-tk_reactor = 0
-ace_with_x11 = 0
-
-PLATFORM_TK_CPPFLAGS=
-PLATFORM_TK_LIBS=-ltk -ltcl
-PLATFORM_TK_LDFLAGS=
-
-PLATFORM_X11_CPPFLAGS=
-PLATFORM_X11_LIBS =-lX11
-PLATFORM_X11_LDFLAGS=
-
 ifeq ($(threads),1)
-  CFLAGS += -mt
+  CFLAGS += -mt 
   LDFLAGS += -mt
 endif # threads
 
@@ -71,8 +59,8 @@ ifeq (Compilers 5,$(findstring Compilers 5,$(CC_VERSION)))
   inline = 0
   #### Support RTTI by default.  And, use explicit template instantiation
   #### because automatic instantiation appears to be broken, at least
-  #### with early releases of CC 5.0.  And, use old iostreams.
-  CCFLAGS += $(CFLAGS) -library=iostream,no%Cstd -instances=explicit
+  #### with early releases of CC 5.0.
+  CCFLAGS         += $(CFLAGS) -instances=explicit
 endif # CC 5.0 or later
 endif # ! 4.2
 
@@ -96,18 +84,11 @@ LD              = $(CXX)
 ifdef orbix
   LDFLAGS       += $(PIC) -L$(ORBIX_ROOT)/corba2/lib \
                    -R $(ACE_ROOT)/ace -R./ -R $(ORBIX_ROOT)/corba2/lib
-ifeq ($(mt_orbix),1)
-  LIBS          += -lITinimt -liiopmt -lorbixmt -lthread
-else
-  LIBS          += -lITini -liiop -lorbix
-endif
-
-  LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
+  LIBS          += -lITinimt -liiopmt -lorbixmt -lsocket -ldl -lnsl \
+                   -lthread -lgen -lposix4
   CPPFLAGS      += -I$(ORBIX_ROOT)/corba2/include
 else
-ifeq ($(distrib),0)
   LDFLAGS       += -R $(ACE_ROOT)/ace -R./
-endif
   LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
 endif # orbix
 

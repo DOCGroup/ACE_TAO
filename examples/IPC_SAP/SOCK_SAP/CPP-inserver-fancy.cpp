@@ -58,10 +58,6 @@ class Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
   // = TITLE
   //   Base class for the oneway and twoway handlers.
-
-  friend class Handler_Factory;
-  // The factory has special permission. (to access svc ()).
-
 public:
   virtual int open (void * = 0);
   // Generic initialization method.
@@ -529,8 +525,7 @@ Handler_Factory::create_handler (ACE_SOCK_Acceptor &acceptor,
   return handler->activate ();
 #else
   handler->svc ();
-  handler->close (0);
-  return 0;
+  handler->close ();
 #endif /* ACE_HAS_THREADS */
 }
 
@@ -594,7 +589,8 @@ Handler_Factory::handle_events (void)
         }
     }
 
-  ACE_NOTREACHED (return 0;)
+  /* NOTREACHED */
+  return 0;
 }
 
 int

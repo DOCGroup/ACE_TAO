@@ -18,7 +18,6 @@
 #  ----             -----------
 #  debug            Enable debugging; see DCFLAGS and DCCFLAGS.
 #  exceptions       Enable exception handling (not supported by all platforms).
-#  minimum_corba    Enable minimumCORBA support.
 #  fast             Enable -fast option, e.g., with Sun C++.
 #  inline           Enable ACE inlining.  Some platforms enable inlining by
 #                     default, others do not.
@@ -39,8 +38,6 @@
 #  static_libs_only Only build static libraries.
 #  threads          Build with thread support.
 #  xt_reactor       Build the XtReactor.
-#  fl_reactor       Build the FlReactor.
-#  tk_reactor       Build the TkReactor.    
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -195,15 +192,10 @@ ifeq ($(findstring g++,$(CXX)),g++)
         $(shell \
           if $(CXX) --version | egrep '^(cygnus-)?2\.[0-7]' > /dev/null; then \
           echo 1; else echo 0; fi)
-    else
-    ifeq ($(CXX),eg++)
-      # Assume that eg++ is egcs.
-      ACE_HAS_GNUG_PRE_2_8 := 0
-    else  # ! plain g++ or eg++
+    else  # ! plain g++
       # CXX is something like g++386.  Assume, for now, that it's an old g++.
-      ACE_HAS_GNUG_PRE_2_8 := 1
-    endif # eg++
-    endif # ! plain g++ or eg++
+      ACE_HAS_GNUG_PRE_2_8 = 1
+    endif # ! plain g++
   endif # ! ACE_HAS_GNUG_PRE_2_8
 else
   ACE_HAS_GNUG_PRE_2_8 =
@@ -246,76 +238,19 @@ ifeq ($(xt_reactor),0)
 endif # xt_reactor
 
 ifneq ($(xt_reactor),)
-  override ace_with_x11=1
   CPPFLAGS += -DACE_HAS_XT $(PLATFORM_XT_CPPFLAGS)
   LIBS += $(PLATFORM_XT_LIBS)
   LDFLAGS += $(PLATFORM_XT_LDFLAGS)
 endif # xt_reactor
 
-ifeq ($(fl_reactor),0)
-  override fl_reactor =
-endif # fl_reactor
-
-ifneq ($(fl_reactor),)
-  override ace_with_x11=1
-  override ace_with_gl=1
-  CPPFLAGS += -DACE_HAS_FL $(PLATFORM_FL_CPPFLAGS)
-  LIBS += $(PLATFORM_FL_LIBS)
-  LDFLAGS += $(PLATFORM_FL_LDFLAGS)
-endif # fl_reactor
-
-ifeq ($(tk_reactor),0)
-  override tk_reactor =
-endif # tk_reactor
-
-ifneq ($(tk_reactor),)
-  override ace_with_tk=1
-  CPPFLAGS += -DACE_HAS_TK $(PLATFORM_TK_CPPFLAGS)
-  LIBS += $(PLATFORM_TK_LIBS)
-  LDFLAGS += $(PLATFORM_TK_LDFLAGS)
-endif # tk_reactor
-
-ifeq ($(ace_with_gl),0)
-  override ace_with_gl =
-endif # ace_with_gl
-
-ifneq ($(ace_with_gl),)
-  override ace_with_x11 = 1
-  CPPFLAGS += $(PLATFORM_GL_CPPFLAGS)
-  LIBS += $(PLATFORM_GL_LIBS)
-  LDFLAGS += $(PLATFORM_GL_LDFLAGS)
-endif # ace_with_gl
-
-ifeq ($(ace_with_x11),0)
-  override ace_with_x11 =
-endif # ace_with_x11
-
-ifneq ($(ace_with_x11),)
-  CPPFLAGS += $(PLATFORM_X11_CPPFLAGS)
-  LIBS += $(PLATFORM_X11_LIBS)
-  LDFLAGS += $(PLATFORM_X11_LDFLAGS)
-endif # ace_with_x11
-
-
 ifdef exceptions
   CPPFLAGS += -DACE_HAS_EXCEPTIONS
-  ifeq ($(findstring g++,$(CXX)),g++)
-    ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
-      #### Enable exception handling with g++ < 2.8.0.  Not recommended,
-      #### but provided here for completeness.
-      CCFLAGS += -fhandle-exceptions
-    endif # ACE_HAS_GNUG_PRE_2_8
-  endif # g++
 else  # ! exceptions
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
     #### Disable the default exception handling of g++ >= 2.8.0.
     CCFLAGS += -fno-exceptions
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # ! exceptions
-
-ifeq ($(minimum_corba),1)
-  CPPFLAGS += -DTAO_HAS_MINIMUM_CORBA
-endif # minimum_corba
 
 ifeq ($(profile),0)
   override profile =
@@ -375,9 +310,7 @@ ifdef shared_libs
       BUILD         = $(VSHLIB) $(SHLIBA) $(VBIN)
       LIB           =
       OBJEXT        = so
-      ifndef VXWORKS
-        VDIR        = .shobj/
-      endif # ! VXWORKS
+      VDIR          = .shobj/
       ifeq ($(BIN),)
         #### No executables are being built, so don't create .obj/.
         OBJDIRS     = .shobj
