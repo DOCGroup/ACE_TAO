@@ -23,9 +23,9 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                                       size_t context_size,
                                       ACE_Time_Value *timeout,
                                       int resolve_for_existing_naming_service,
-                                      const ACE_TCHAR
-                                      *persistence_location,
-                                      void *base_addr)
+                                      const ACE_TCHAR *persistence_location,
+                                      void *base_addr,
+                                      int enable_multicast)
   : naming_context_ (),
     ior_multicast_ (0),
     naming_service_ior_ (),
@@ -37,7 +37,8 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                   timeout,
                   resolve_for_existing_naming_service,
                   persistence_location,
-                  base_addr) == -1)
+                  base_addr,
+                  enable_multicast) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%P|%t) %p\n",
                 "TAO_Naming_Server::init"));
@@ -51,7 +52,8 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                          ACE_Time_Value *timeout,
                          int resolve_for_existing_naming_service,
                          const ACE_TCHAR *persistence_location,
-                         void *base_addr)
+                         void *base_addr,
+                         int enable_multicast)
 {
   if (resolve_for_existing_naming_service)
     {
@@ -106,7 +108,8 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                                 poa,
                                 persistence_location,
                                 base_addr,
-                                context_size);
+                                context_size,
+                                enable_multicast);
 }
 
 int
@@ -115,7 +118,8 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                     const ACE_TCHAR
                                     *persistence_location,
                                     void *base_addr,
-                                    size_t context_size)
+                                    size_t context_size,
+                                    int enable_multicast)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -175,73 +179,79 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           return -1;
         }
 #if defined (ACE_HAS_IP_MULTICAST)
-      //
-      // Install ior multicast handler.
-      //
-      // Get reactor instance from TAO.
-      ACE_Reactor *reactor =
-        TAO_ORB_Core_instance ()->reactor ();
-
-      // See if the -ORBMulticastDiscoveryEndpoint option was specified.
-      ACE_CString mde (TAO_ORB_Core_instance ()->orb_params ()
-                       ->mcast_discovery_endpoint ());
-
-      // First, see if the user has given us a multicast port number
-      // on the command-line;
-      u_short port =
-        TAO_ORB_Core_instance ()->orb_params ()->service_port (NAMESERVICE);
-
-      if (port == 0)
+      if (enable_multicast)
         {
-          // Check environment var. for multicast port.
-          const char *port_number =
-            ACE_OS::getenv ("NameServicePort");
+          // @@ Marina: is there anyway to implement this stuff
+          // without using ORB_Core_instance()? For example can you
+          // pass the ORB as an argument?
 
-          if (port_number != 0)
-            port = ACE_OS::atoi (port_number);
-        }
+          //
+          // Install ior multicast handler.
+          //
+          // Get reactor instance from TAO.
+          ACE_Reactor *reactor =
+            TAO_ORB_Core_instance ()->reactor ();
 
-      // Port wasn't specified on the command-line or in environment -
-      // use the default.
-      if (port == 0)
-        port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
+          // See if the -ORBMulticastDiscoveryEndpoint option was specified.
+          ACE_CString mde (TAO_ORB_Core_instance ()->orb_params ()
+                           ->mcast_discovery_endpoint ());
 
-      // Instantiate a handler which will handle client requests for
-      // the root Naming Context ior, received on the multicast port.
-      ACE_NEW_RETURN (this->ior_multicast_,
-                      TAO_IOR_Multicast (),
-                      -1);
+          // First, see if the user has given us a multicast port number
+          // on the command-line;
+          u_short port =
+            TAO_ORB_Core_instance ()->orb_params ()->service_port (NAMESERVICE);
 
-      if (mde.length () != 0)
-        {
-          if (this->ior_multicast_->init (this->naming_service_ior_.in (),
-                                          mde.c_str (),
-                                          TAO_SERVICEID_NAMESERVICE) == -1)
-            return -1;
-        }
-      else
-        {
-          if (this->ior_multicast_->init (this->naming_service_ior_.in (),
-                                          port,
-                                          ACE_DEFAULT_MULTICAST_ADDR,
-                                          TAO_SERVICEID_NAMESERVICE) == -1)
-            return -1;
-        }
+          if (port == 0)
+            {
+              // Check environment var. for multicast port.
+              const char *port_number =
+                ACE_OS::getenv ("NameServicePort");
 
-      // Register event handler for the ior multicast.
-      if (reactor->register_handler (this->ior_multicast_,
-                                     ACE_Event_Handler::READ_MASK) == -1)
-        {
+              if (port_number != 0)
+                port = ACE_OS::atoi (port_number);
+            }
+
+          // Port wasn't specified on the command-line or in environment -
+          // use the default.
+          if (port == 0)
+            port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
+
+          // Instantiate a handler which will handle client requests for
+          // the root Naming Context ior, received on the multicast port.
+          ACE_NEW_RETURN (this->ior_multicast_,
+                          TAO_IOR_Multicast (),
+                          -1);
+
+          if (mde.length () != 0)
+            {
+              if (this->ior_multicast_->init (this->naming_service_ior_.in (),
+                                              mde.c_str (),
+                                              TAO_SERVICEID_NAMESERVICE) == -1)
+                return -1;
+            }
+          else
+            {
+              if (this->ior_multicast_->init (this->naming_service_ior_.in (),
+                                              port,
+                                              ACE_DEFAULT_MULTICAST_ADDR,
+                                              TAO_SERVICEID_NAMESERVICE) == -1)
+                return -1;
+            }
+
+          // Register event handler for the ior multicast.
+          if (reactor->register_handler (this->ior_multicast_,
+                                         ACE_Event_Handler::READ_MASK) == -1)
+            {
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG,
+                            "TAO_Naming_Server: cannot register Event handler\n"));
+              return -1;
+            }
+
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO_Naming_Server: cannot register Event handler\n"));
-          return -1;
+                        "TAO_Naming_Server: The multicast server setup is done.\n"));
         }
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Naming_Server: The multicast server setup is done.\n"));
-
 #endif /* ACE_HAS_IP_MULTICAST */
     }
   ACE_CATCHANY

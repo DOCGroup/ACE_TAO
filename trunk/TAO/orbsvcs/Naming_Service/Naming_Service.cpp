@@ -13,7 +13,8 @@ TAO_Naming_Service::TAO_Naming_Service (void)
     context_size_ (ACE_DEFAULT_MAP_SIZE),
     persistence_file_name_ (0),
     base_address_ (TAO_NAMING_BASE_ADDR),
-    time_ (0)
+    time_ (0),
+    multicast_ (1)
 {
 }
 
@@ -26,7 +27,8 @@ TAO_Naming_Service::TAO_Naming_Service (int argc,
     context_size_ (ACE_DEFAULT_MAP_SIZE),
     persistence_file_name_ (0),
     base_address_ (TAO_NAMING_BASE_ADDR),
-    time_ (0)
+    time_ (0),
+    multicast_ (1)
 {
   this->init (argc, argv);
 }
@@ -35,7 +37,7 @@ int
 TAO_Naming_Service::parse_args (int argc,
                                 char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:do:p:s:t:f:");
+  ACE_Get_Opt get_opts (argc, argv, "b:do:p:s:t:f:m:");
   int c;
   int size, time, result;
   long address;
@@ -81,6 +83,9 @@ TAO_Naming_Service::parse_args (int argc,
                             -1);
         this->base_address_ = (void *) address;
         break;
+      case 'm':
+        this->multicast_ = ACE_OS::atoi(get_opts.optarg);
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -90,6 +95,7 @@ TAO_Naming_Service::parse_args (int argc,
                            "-p <pid_file_name> "
                            "-f <persistence_file_name> "
                            "-b <base_address> "
+                           "-m <1=enable multicast(default), 0=disable multicast "
                            "\n",
                            argv [0]),
                           -1);
@@ -181,11 +187,12 @@ TAO_Naming_Service::init (int argc,
 
       result = this->my_naming_server_.init (this->orb_.in (),
                                              this->ns_poa_.in (),
-                                             context_size_,
+                                             this->context_size_,
                                              0,
                                              0,
-                                             persistence_file_name_,
-                                             base_address_);
+                                             this->persistence_file_name_,
+                                             this->base_address_,
+                                             this->multicast_);
       if (result == -1)
         return result;
     }
