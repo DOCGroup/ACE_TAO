@@ -1,8 +1,8 @@
 $Id$
 
-Svc_Conf_[ly].cpp.diff are use to patch their respective files in
-ACE_wrappers/ace.  They are used by Makefile in that directory, so
-users don't ordinarily need to be concerned with them.
+Svc_Conf_[ly].cpp.diff are used to patch their respective files in
+ACE_wrappers/ace.  They are used by the Makefile in that directory,
+so users don't ordinarily need to be concerned with them.
 
 To update Svc_Conf_l.cpp.diff:
 
