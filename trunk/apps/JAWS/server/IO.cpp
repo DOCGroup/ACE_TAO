@@ -112,7 +112,7 @@ JAWS_Synch_IO::transmit_file (const char *filename,
       stream.set_handle (this->handle_);
 
       if ((stream.send_n (header, header_size) == header_size)
-          && ((u_long) stream.send_n (handle.address (), handle.size ())
+          && (stream.send_n (handle.address (), handle.size ())
               == handle.size ())
           && (stream.send_n (trailer, trailer_size) == trailer_size))
         this->handler_->transmit_file_complete ();
