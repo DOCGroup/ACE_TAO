@@ -1,99 +1,104 @@
+Thu Jul 13 14:57:53 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * pace/{posix,win32}/assert.inl (pace_assert): removed unnecessary
+          return statement at end of function.
+
 Thu Jul 13 10:53:06 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/dirent.h:
+        * pace/win32/dirent.h:
 
-	  Added structs for dirent and DIR.
+          Added structs for dirent and DIR.
 
 Thu Jul 13 00:46:37 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/signal.h
-	* pace/posix/signal.h
-	* pace/posix/signal.inl
+        * pace/signal.h
+        * pace/posix/signal.h
+        * pace/posix/signal.inl
 
-	  Changed the typedef of pace_s_sigevent
-	  to pace_sigevent_s to match up with pace_stat_s. The
-	  problem with both of these is that the data type names
-	  conflict with function names.
+          Changed the typedef of pace_s_sigevent
+          to pace_sigevent_s to match up with pace_stat_s. The
+          problem with both of these is that the data type names
+          conflict with function names.
 
-	* pace/stdio.h
-	* pace/posix/stdio.c
+        * pace/stdio.h
+        * pace/posix/stdio.c
 
-	  Changed all '...' functions to defines. Now the library
-	  should be totally empty on platforms without emulation code.
+          Changed all '...' functions to defines. Now the library
+          should be totally empty on platforms without emulation code.
 
-	* include/makeinclude/rules.common.GNU
-	* tests/Makefile
+        * include/makeinclude/rules.common.GNU
+        * tests/Makefile
 
-	  Because the library can be empty again, don't include
-	  the library by default. As a temporary kludge emulation=1
-	  is set in rules.common.GNU for Linux, which is the only
-	  platform thus far which has a non-empty library.
+          Because the library can be empty again, don't include
+          the library by default. As a temporary kludge emulation=1
+          is set in rules.common.GNU for Linux, which is the only
+          platform thus far which has a non-empty library.
 
-	* pace/emulation/mqueue.c
-	* pace/emulation/mqueue.h
+        * pace/emulation/mqueue.c
+        * pace/emulation/mqueue.h
 
-	  Support for all functionality is now complete, cleaner,
-	  and somewhat less buggy.
+          Support for all functionality is now complete, cleaner,
+          and somewhat less buggy.
 
-	* tests/mqueue_test.c
+        * tests/mqueue_test.c
 
-	  Borrowed a test from Konstantin Knizhnik's web site,
-	  will eventually have to make this a one-button test.
+          Borrowed a test from Konstantin Knizhnik's web site,
+          will eventually have to make this a one-button test.
 
 Wed Jul 12 17:30:54 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/posix/types.h
-	  Fixed pace_tchar.
+        * pace/posix/types.h
+          Fixed pace_tchar.
 
 Wed Jul 12 16:31:51 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/types.h:
+        * pace/win32/types.h:
 
-	  Fixed PACE_TCHAR.
+          Fixed PACE_TCHAR.
 
 Wed Jul 12 16:10:39 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/fcntl.h
-	* pace/mqueue.h
-	* pace/semaphore.h
-	* pace/stdio.h
-	* pace/unistd.h
-	* pace/unistd.inl
-	* pace/tests/mqueue_test.c
-	  Updated all #define pace_func (X) macros to remove the need
-	  for double paranthesis.
+        * pace/fcntl.h
+        * pace/mqueue.h
+        * pace/semaphore.h
+        * pace/stdio.h
+        * pace/unistd.h
+        * pace/unistd.inl
+        * pace/tests/mqueue_test.c
+          Updated all #define pace_func (X) macros to remove the need
+          for double paranthesis.
 
 Wed Jul 12 17:01:47 2000  Ossama Othman  <ossama@uci.edu>
 
-	* Makefile.am:
-	* pace/Makefile.am:
-	* pace/posix/Makefile.am:
-	* tests/Makefile.am:
+        * Makefile.am:
+        * pace/Makefile.am:
+        * pace/posix/Makefile.am:
+        * tests/Makefile.am:
 
-	  Preliminary Automake input files for PACE.  They aren't working
-	  yet, but do provide a good start.
+          Preliminary Automake input files for PACE.  They aren't working
+          yet, but do provide a good start.
 
 Wed Jul 12 15:27:27 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/posix/types.h (PACE_TCHAR):
-	* pace/win32/types.h (PACE_TCHAR):
+        * pace/posix/types.h (PACE_TCHAR):
+        * pace/win32/types.h (PACE_TCHAR):
 
-	  Added typedef char PACE_TCHAR;
-	  Protected some of the typedefs.
+          Added typedef char PACE_TCHAR;
+          Protected some of the typedefs.
 
 Wed Jul 12 14:26:10 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/aio.inl:
+        * pace/win32/aio.inl:
 
-	  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-	  Emulate support for these latter.
+          PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+          Emulate support for these latter.
 
 Wed Jul 12 14:15:10 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/signal.h:
-	* pace/win32/time.h:
+        * pace/win32/signal.h:
+        * pace/win32/time.h:
 
-	  Added types to help win32 along.
+          Added types to help win32 along.
 
 Wed Jul 12 12:10:55 2000  David L. Levine  <levine@cs.wustl.edu>
 
@@ -101,14 +106,14 @@ Wed Jul 12 12:10:55 2000  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Jul 12 11:51:52 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/errno.h:
+        * pace/win32/errno.h:
 
-	  Added to repository.
+          Added to repository.
 
-	* pace/win32/pace_dll.dsp:
-	* pace/win32/pace_lib.dsp:
+        * pace/win32/pace_dll.dsp:
+        * pace/win32/pace_lib.dsp:
 
-	  Modified to include the new file.
+          Modified to include the new file.
 
 Wed Jul 12 11:45:34 2000  David L. Levine  <levine@cs.wustl.edu>
 
