@@ -17,9 +17,7 @@ FILES	= Options \
 	  Peer
 
 LSRC	= $(addsuffix .cpp,$(FILES))
-LDLIBS	=
-
-BUILD 	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
+LDLIBS	= -lPeer
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -38,12 +36,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 INCLDIRS += -I../Gateway
-
-ifeq ($(static_libs_only),1)
-$(VBIN): $(VLIB)
-else
-$(VBIN): $(VSHLIB)
-endif
 
 #----------------------------------------------------------------------------
 #	Dependencies

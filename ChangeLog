@@ -1,3 +1,79 @@
+Mon Nov 24 02:38:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/all_in_one.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/rules.local.GNU:
+          Removed the multiple assignements to BUILD from
+          wrapper_macros.GNU and all_in_one.GNU and replaced them with a
+          single assignment to VBUILD in rules.local.GNU.  VBUILD always
+          includes the following targets: IDL_SRC, VLIBS, VBIN, then
+          filters out any of these already in BUILD and includes them too.
+          IDL_SRC and the V* targets get defined in the appropriate
+          rules.*.GNU file or Makefile or are defined in rules.local.GNU
+          prior to use.  If VBIN has not yet been defined when
+          rules.local.GNU is loaded, but BIN has been (because BIN or
+          BIN_UNCHECKED was defined in the Makefile but rules.bin.GNU
+          wasn't included), VBIN is defined in terms of BIN, and is set to
+          depend on VLIBS.  VLIBS is defined in rules.lib.GNU and
+          discussed below.
+
+        * include/makeinclude/rules.lib.GNU:
+          Assign VLIB and/or VSHLIB and VSHLIBA to VLIBS if either
+          static_libs and/or shared_libs is defined, respectively.  Added
+          a rule that they depend on IDL_SRC if it's defined, which will
+          insure that they are built first.  Issue warning if this file
+          was included but no *LIB or *LIB_UNCHECKED variables were defined.
+
+        * include/makeinclude/rules.bin.GNU:
+          Modified the BIN target to command to use the specific objects
+          from the dependency list instead of $^ which takes all the
+          dependencies, even those added elsewhere--make is evil in this
+          respect.  Since objects could be listed mulitple times, sort is
+          used to remove duplicates. Added dependency rules making VBIN
+          dependent on VLIBS and IDL_SRC.  Issue warning if this file is
+          included and BIN or BIN_UNCHECKED wasn't defined.
+
+        * include/makeinclude/rules.local.GNU:
+          In addition to the BUILD changes noted above, added
+          makefile.local target the prints out the name of the Makefile in
+          use.  This really helpful in big directories with lots of
+          Makefiles.  Set the SUFFIXES to nothing so that implicit rule
+          matching based on suffixes is turn off--we only want our
+          explicit rules to fire.  Removed the IDL_SRC dependency rule
+          added below since it was redundent and already handled in
+          rules.tao.GNU.
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Removed VBIN assignment since it belongs in rules.bin.GNU and/or
+          rules.local.GNU and is no longer needed here since the BUILD
+          variable assignments were removed as noted above.  Added
+          comments on how to use the various variables.
+
+        * include/makeinclude/all_in_one.GNU:
+        * include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/rules.bin.GNU:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Use ifdef/ifndef to test to see if variables exist before
+          testing their values.
+
+        * apps/Gateway/Gateway/Makefile:
+          Added -lGateway to LDLIBS and removed the VBIN target dependency
+          lists.
+
+        * apps/Gateway/Peer/Makefile:
+          Added -lPeer to LDLIBS and removed the VBIN target dependency
+          lists.
+
+        * tests/Makefile.DLL_Test:
+        * tests/Makefile.Framework_Component_DLL:
+        * tests/Makefile.Service_Config_DLL:
+        * tests/Makefile.Test_Output:
+          Removed the erroneous BUILD variable assignments that were
+          incorrect and no longer work correctly.
+
 Sun Nov 23 11:00:02 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Service_Object.cpp (ACE_Service_Type): Added an ACE_const_cast<>

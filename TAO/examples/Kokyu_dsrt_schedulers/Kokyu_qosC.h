@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL_KOKYU_QOSC_H_
 #define _TAO_IDL_KOKYU_QOSC_H_
 
-#include /**/ "ace\pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/ORB.h"
 
@@ -256,7 +256,6 @@ Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>> (TAO_InputCDR &, Kokyu::S
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include /**/ "ace\post.h"
-
+#include "ace/post.h"
 #endif /* ifndef */
 

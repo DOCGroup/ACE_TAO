@@ -74,13 +74,11 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), Time_Date$(ext))
 
-server: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS)) $(SHLIB)
+server: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-$(BIN):
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), Time_Date$(ext))

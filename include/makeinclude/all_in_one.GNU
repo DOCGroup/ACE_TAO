@@ -28,24 +28,24 @@ include $(ACE_ROOT)/include/makeinclude/component_check.GNU
 
 # If no required components are missing, set the real targets
 ifeq ($(MISSING_COMPONENTS),)
-  ifneq ($(CLEANUP_BIN),)
-    ifeq ($(BIN),)
-      BIN = $(CLEANUP_BIN)
+  ifdef BIN_UNCHECKED
+    ifndef BIN
+      BIN = $(BIN_UNCHECKED)
     endif # !BIN
-  endif # !CLEANUP_BIN
+  endif # !BIN_UNCHECKED
   ifdef static_libs
-    ifneq ($(CLEANUP_LIB),)
-      ifeq ($(LIB),)
-        LIB = $(CLEANUP_LIB)
+    ifdef LIB_UNCHECKED
+      ifndef LIB
+        LIB = $(LIB_UNCHECKED)
       endif # !LIB
-    endif # !CLEANUP_LIB
+    endif # !LIB_UNCHECKED
   endif # static_libs
   ifdef shared_libs
-    ifneq ($(CLEANUP_SHLIB),)
-      ifeq ($(SHLIB),)
-        SHLIB = $(CLEANUP_SHLIB)
+    ifdef SHLIB_UNCHECKED
+      ifndef SHLIB
+        SHLIB = $(SHLIB_UNCHECKED)
       endif # !SHLIB
-    endif # !CLEANUP_SHLIB
+    endif # !SHLIB_UNCHECKED
   endif # !shared_libs
 endif # COMPILE_COMPONENT
 
@@ -53,18 +53,15 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 
-# The CLEAN_* targets are defined in wrapper_macros.GNU, so use them
-# to determine if we should include rules.bin.GNE or rules.lib.GNU.
-
-ifneq ($(CLEANUP_BIN),)
+ifdef BIN
   include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-endif # CLEANUP_BIN
+endif # BIN
 
-ifneq ($(CLEANUP_LIB),)
+ifdef LIB
   include_lib = 1
 endif # LIB
 
-ifneq ($(CLEANUP_SHLIB),)
+ifdef SHLIB
   include_lib = 1
 endif # SHLIB
 
@@ -72,23 +69,13 @@ ifeq ($(include_lib),1)
   include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 endif
 
-# Always build the V* targets in this order.  We control assignment to them
-# elsewhere.
-BUILD = $(IDL_SRC) $(VLIBS) $(VBIN)
-
-# Add VSHLIB if we're building shared_libs, could be undefined.
-ifdef shared_libs
-  VLIBS = $(VSHLIB) $(SHLIBA)
-endif
-
-# Finally, add VLIB if building static_libs, which could also be undefined.
-ifdef static_libs 
-  VLIBS += $(VLIB)
-endif
 
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # Remove the -g option if requested.
+ifndef SUPPRESS_DASH_G
+  SUPPRESS_DASH_G ?=
+endif
 ifeq ($(SUPPRESS_DASH_G),1)
   DCFLAGS := $(filter-out -g, $DCFLAGS)
 endif

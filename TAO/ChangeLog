@@ -1,3 +1,51 @@
+Mon Nov 24 02:38:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * rules.tao.GNU:
+          Removed $(IDL_EXT) from SUFFIXES, and set SUFFIXES to null,
+          which turns off all the implicit rules--we only want our
+          explicit rules to fire.  Added the IDL generated files to
+          .PRECIOUS:, since this seems to be done all over in individual
+          Makefiles.  This means that these files won't be deleted if make
+          is interrupted--but since they are cheap, maybe they should be.
+          Commented out the $(TAO_IDL_DEP) dependency from rule that
+          invokes the tao_idl compiler.  If the compiler either hasn't
+          been built or can't be found, this dependency produces a cryptic
+          errors like: "no rule to build xC.h needed by xC.cpp," instead
+          of the more useful, "tao_idl not found."
+
+        * examples/Simple/time-date/Makefile:
+          Removed $(SHLIB) from the dependency list for the server
+          target.  It isn't needed and wouldn't work like this anyway, if
+          you want a library, add it to LDLIBS.  Removed the empty BIN:
+          target.
+
+        * examples/Simulator/Event_Supplier/Makefile:
+          Changed IDL_FILES from NavWeap to ../NavWeap so it could be
+          found, and removed unneeded IDL variables.  Removed include
+          rules.bin.GNU since we aren't define our own targets, as well as
+          the realclean and .NOTPARALLEL targets (parallelism works now),
+          and the NavWeapC.h: target that invoke the tao_idl compiler.  Also,
+          added link lines to each of the targets since the BIN rule no
+          longer adds all the dependencies as objects via the $^
+          variable--which is what made it impossible to have BIN targets
+          depend on LIB or IDL targets and broke parallelism.  BIN no
+          longer does that, see the ACE ChangeLog entry with the same tag
+          for an explaination.
+
+        * orbsvcs/tests/Trading/Makefile:
+          Added -lTTest to LDLIBS and removed the BIN target dependencies
+          that are no longer needed.
+
+        * tests/Object_Loader/Makefile:
+          Added -lTest_DLL to LDLIBS.
+
+        * examples/Kokyu_dsrt_schedulers/FP_SchedulingC.h:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_qosC.h:
+        * examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.h:
+        * examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.h:
+          Changed the directory seperator from '\' to '/' so non-Windows
+          platforms will be happy.
+
 Sun Nov 23 21:52:19 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtecEventComm.idl:
