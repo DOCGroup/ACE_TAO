@@ -14,5 +14,6 @@
 
 public interface VisComp extends java.util.Observer {
 
+  public void setName (String title);
   public int getProperty ();
 }

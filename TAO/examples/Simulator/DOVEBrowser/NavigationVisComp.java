@@ -22,20 +22,21 @@ public class NavigationVisComp extends Panel implements VisComp
   private Alt_Horizon alt_hor_ = new Alt_Horizon ();
   private Position pos_ = new Position ();
 
-  public NavigationVisComp (String title)
+  public NavigationVisComp ()
     {
       setLayout (new BorderLayout (0, 2));
       add ("Center", alt_hor_);
       add ("South", pos_);
     }
 
-  public int getProperty ()
-    {
+  public void setName (String title) {
+  }
+
+  public int getProperty () {
       return Properties.NAVIGATION;
     }
   
-  public void update (java.util.Observable observable, java.lang.Object obj)
-  {
+  public void update (java.util.Observable observable, java.lang.Object obj) {
     Navigation navigation_ = null;
     try {
       navigation_ = (Navigation) obj;  
@@ -44,12 +45,14 @@ public class NavigationVisComp extends Panel implements VisComp
       System.out.println (excp);
       System.out.println ("Visualization Component received wrong data type!");
     }
-    if (navigation_ != null)
-    {            
+    if (navigation_ != null) {            
+      // make sure all the values are in the proper range.
       navigation_.roll = (navigation_.roll > 180 || navigation_.roll < -180) ? 
 	0 :  navigation_.roll;
       navigation_.pitch = (navigation_.pitch > 90 || navigation_.pitch < -90) ? 
 	0 :  navigation_.pitch;
+
+      // update the artificial horizon
       alt_hor_.update_display (navigation_.roll, navigation_.pitch);
 
       navigation_.pitch = (navigation_.position_latitude > 90 || navigation_.position_latitude < -90) ? 
@@ -61,6 +64,7 @@ public class NavigationVisComp extends Panel implements VisComp
       navigation_.pitch = (navigation_.heading > 180 || navigation_.heading < -180) ? 
 	0 :  navigation_.heading;
 
+      // update the position display
       pos_.update_display (navigation_.position_latitude, 
 			   navigation_.position_longitude, 
 			   navigation_.altitude, 
