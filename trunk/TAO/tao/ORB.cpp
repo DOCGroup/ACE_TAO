@@ -463,38 +463,27 @@ CORBA_ORB::run (void)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_root_poa (const char *adapter_name,
+CORBA_ORB::resolve_root_poa (CORBA::Environment &ACE_TRY_ENV,
+                             const char *adapter_name,
                              TAO_POA_Manager *poa_manager,
                              const TAO_POA_Policies *policies)
 {
-  // @@ Irfan: this method should take a CORBA::Environment as
-  // argument!
-  CORBA::Environment env;
-
-  return this->orb_core_->root_poa_reference (env,
+  return this->orb_core_->root_poa_reference (ACE_TRY_ENV,
                                               adapter_name,
                                               poa_manager,
                                               policies);
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_poa_current (void)
+CORBA_ORB::resolve_poa_current (CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@ Irfan: this method should take a CORBA::Environment as
-  // argument!
   // Return the pointer to this thread's POACurrent.
-
-  CORBA::Environment env;
 
   TAO_POA_Current *poa_current = this->orb_core_->poa_current ();
   if (poa_current == 0)
     return CORBA_Object::_nil ();
 
-  PortableServer::Current_var result = poa_current->_this (env);
-  if (env.exception () != 0)
-    return CORBA_Object::_nil ();
-  else
-    return result._retn ();
+  return poa_current->_this (ACE_TRY_ENV);
 }
 
 CORBA_Object_ptr
@@ -898,10 +887,10 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
     return this->resolve_trading_service (timeout, ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
-    return this->resolve_root_poa ();
+    return this->resolve_root_poa (ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
-    return this->resolve_poa_current ();
+    return this->resolve_poa_current (ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYMANAGER) == 0)
     return this->resolve_policy_manager (ACE_TRY_ENV);

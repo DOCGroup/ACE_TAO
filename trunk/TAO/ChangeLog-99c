@@ -1,4 +1,10 @@
-Mon Apr 19 02:02:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Mon Apr 19 02:28:45 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB.cpp (resolve_root_poa and resolve_poa_current): Now that
+	  resolve_initial_references takes a environment, we don't need to
+	  create temporary environments.  Changed these functions to take
+	  the environment as a parameter.  Thanks to Carlos for pointing
+	  this out.
 
 	* tao/POA: The following changes were made to comply with the new
 	  servant reference counting schemes in the upcoming CORBA 2.3

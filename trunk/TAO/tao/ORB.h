@@ -366,7 +366,8 @@ public:
                                       CORBA::Object_ptr &obj);
   // Find the given ObjectID in the table.
 
-  CORBA_Object_ptr resolve_root_poa (const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
+  CORBA_Object_ptr resolve_root_poa (CORBA_Environment &TAO_IN_ENV,
+                                     const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                                      TAO_POA_Manager *poa_manager = 0,
                                      const TAO_POA_Policies *policies = 0);
   // Resolve the POA.
@@ -445,7 +446,7 @@ protected:
   CORBA_ORB (TAO_ORB_Core* orb_core);
   virtual ~CORBA_ORB (void);
 
-  CORBA_Object_ptr resolve_poa_current (void);
+  CORBA_Object_ptr resolve_poa_current (CORBA_Environment &TAO_IN_ENV);
   // Resolve the POA current.
 
   CORBA_Object_ptr resolve_policy_manager (CORBA::Environment&);
