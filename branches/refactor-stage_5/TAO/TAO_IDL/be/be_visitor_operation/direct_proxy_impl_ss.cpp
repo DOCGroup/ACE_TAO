@@ -1,7 +1,7 @@
 // $Id$
 
-ACE_RCSID (be_visitor_operation, 
-           direct_proxy_impl_ss, 
+ACE_RCSID (be_visitor_operation,
+           direct_proxy_impl_ss,
            "$Id$")
 
 be_visitor_operation_direct_proxy_impl_ss::
@@ -127,7 +127,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
 
 int
 be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
-    be_visitor_context &ctx,
+    be_visitor_context & /*ctx*/,
     be_operation *node
   )
 {
@@ -187,4 +187,3 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
 
   return 0;
 }
-

@@ -1,3 +1,8 @@
+Tue Aug 12 12:47:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp: Fixed
+	  a unused variable warning. 
+
 Tue Aug 12 12:01:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface.cpp:
