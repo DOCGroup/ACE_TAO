@@ -421,7 +421,7 @@ ifeq ($(pace),0)
 endif # pace
 
 ifneq ($(pace),)
-  CFLAGS+= -DACE_HAS_PACE -DPACE_HAS_INLINE -I$(ACE_ROOT)/PACE
+  CFLAGS+= -DACE_HAS_PACE -DPACE_HAS_INLINE -DPACE_HAS_ALL_POSIX_FUNCS -I$(ACE_ROOT)/PACE
   include $(ACE_ROOT)/PACE/include/makeinclude/rules.common.GNU
 endif # pace
 
