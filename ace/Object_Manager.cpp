@@ -1,5 +1,7 @@
 // $Id$
 
+#define ACE_BUILD_DLL
+
 #include "ace/Object_Manager.h"
 #include "ace/Service_Repository.h"
 
