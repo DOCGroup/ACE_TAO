@@ -1,3 +1,23 @@
+Sat Oct 16 17:10:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Makefile:
+  	* ace/Svc_Conf_l.cpp: Replace exit(1) with ACE_OS::exit(1)
+	  so that CodeWarrior doesn't get confused.  Thanks to David
+ 	  Delano <delanod@agcs.com> for reporting this.
+
+	* ace/OS.cpp: Removed the '&' in front of thread_args to make
+	  CodeWarrior happier.  Thanks to David Delano <delanod@agcs.com>
+ 	  for reporting this.
+	
+	* ace/OS.cpp: Removed the table_() "initialization" for
+	  ACE_TSS_Cleanup since this breaks the CodeWarrior C++ compiler.
+  	  Thanks to David Delano <delanod@agcs.com> for reporting this.
+
+	* ace/OS.i: There was a bug with the ACE_OS::truncate()
+	  emulation for Win32.  We need to check for ACE_INVALID_HANDLE
+ 	  and NOT < 0!  Thanks to David Delano <delanod@agcs.com> for
+ 	  reporting this.
+
 Sat Oct 16 11:17:10 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* TAO/tao/Sync_Strategies.cpp (buffering_constraints_reached):
