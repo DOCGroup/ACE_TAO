@@ -1,3 +1,12 @@
+Fri Apr 21 13:27:56 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* Notify_Resource_Manager.cpp:
+          dereference <default_filter_factory_> via in ()
+	* Notify_ConsumerAdmin_i.h:
+ 	* Notify_SupplierAdmin_i.h:
+	  modified #pragma once usage
+	  - fixes for Vxworks warnings
+
 Fri Apr 21 09:15:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/POA/Demux/demux_test_server.cpp:
