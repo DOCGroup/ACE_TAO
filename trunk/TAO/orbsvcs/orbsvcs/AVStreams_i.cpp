@@ -128,21 +128,21 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
   if (CORBA::is_nil (a_party) || 
       CORBA::is_nil (b_party))
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       "(%p|%t) TAO_StreamCtrl::bind_devs: "
+                       "\n(%P|%t) TAO_StreamCtrl::bind_devs: "
                        "a_party or b_party is null!\n"),
                       0);
   
   // Request a_party to create the endpoint and vdev
   AVStreams::StreamEndPoint_A_ptr stream_endpoint_a;
-  AVStreams::VDev_var vdev_var;
-  AVStreams::VDev_out vdev_a (vdev_var);
+  AVStreams::VDev_ptr vdev_ptr;
+  AVStreams::VDev_out vdev_out (vdev_ptr);
   CORBA::Boolean met_qos;
-  char *named_vdev;
+  CORBA::String named_vdev = CORBA::string_alloc (1024);
   flowSpec the_spec;
-  
+
   stream_endpoint_a =
     a_party-> create_A (this->_this (env),
-                        vdev_a,
+                        vdev_out,
                         the_qos,
                         met_qos,
                         named_vdev,
@@ -150,7 +150,8 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                         env);
   TAO_CHECK_ENV_RETURN (env, 0);
   
-  ACE_DEBUG ((LM_DEBUG,"(%p|%t) TAO_StreamCtrl::create_A: succeeded"));
+  ACE_DEBUG ((LM_DEBUG,
+              "\n(%P|%t) TAO_StreamCtrl::create_A: succeeded"));
 }
   
 CORBA::Boolean 
@@ -298,6 +299,8 @@ TAO_StreamEndPoint::~TAO_StreamEndPoint (void)
 
 TAO_StreamEndPoint_A::TAO_StreamEndPoint_A (void)
 {
+  ACE_DEBUG ((LM_DEBUG, 
+              "\n(%P|%t) TAO_StreamEndPoint_A::TAO_StreamEndPoint_A: created"));
 }
 
 CORBA::Boolean 
@@ -354,6 +357,8 @@ TAO_StreamEndPoint_B::~TAO_StreamEndPoint_B (void)
 
 TAO_VDev::TAO_VDev (void)
 {
+  ACE_DEBUG ((LM_DEBUG, 
+              "\n(%P|%t) TAO_VDev::TAO_VDev: created"));
 }
 
 CORBA::Boolean 
@@ -417,6 +422,7 @@ TAO_MMDevice::TAO_MMDevice (void)
   ACE_DEBUG ((LM_DEBUG,"\n(%P|%t) TAO_MMDevice created"));
 }
 
+// We have been asked to create a new stream_endpoint and a vdev.
 AVStreams::StreamEndPoint_A_ptr  
 TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr the_requester, 
                         AVStreams::VDev_out the_vdev, 
@@ -426,7 +432,23 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr the_requester,
                         const AVStreams::flowSpec &the_spec,  
                         CORBA::Environment &env)
 {
-  return 0;
+  ACE_DEBUG ((LM_DEBUG, 
+              "\n(%P|%t) TAO_MMDevice::create_A: called"));
+
+  TAO_VDev *vdev = new TAO_VDev;
+  AVStreams::VDev::_duplicate (vdev->_this (env));
+  AVStreams::VDev::_duplicate (vdev->_this (env));
+  AVStreams::VDev::_duplicate (vdev->_this (env));
+  AVStreams::VDev::_duplicate (vdev->_this (env));
+  AVStreams::VDev::_duplicate (vdev->_this (env));
+  the_vdev = AVStreams::VDev::_duplicate (vdev->_this (env));
+  TAO_StreamEndPoint_A *stream_endpoint_a = new TAO_StreamEndPoint_A;
+  AVStreams::StreamEndPoint_A::_duplicate (stream_endpoint_a->_this (env));
+  AVStreams::StreamEndPoint_A::_duplicate (stream_endpoint_a->_this (env));
+  AVStreams::StreamEndPoint_A::_duplicate (stream_endpoint_a->_this (env));
+  AVStreams::StreamEndPoint_A::_duplicate (stream_endpoint_a->_this (env));
+  AVStreams::StreamEndPoint_A::_duplicate (stream_endpoint_a->_this (env));
+  return AVStreams::StreamEndPoint_A::_duplicate (stream_endpoint_a->_this (env));
 }
 
 AVStreams::StreamEndPoint_B_ptr  
@@ -457,7 +479,8 @@ TAO_MMDevice::bind (AVStreams::MMDevice_ptr peer_device,
       if (stream_ctrl == 0)
         return 0;
       stream_ctrl->bind_devs (peer_device,
-                              this->_this (TAO_TRY_ENV),
+                              AVStreams::StreamCtrl::_duplicate 
+                              (this->_this (TAO_TRY_ENV)),
                               the_qos,
                               the_spec,
                               TAO_TRY_ENV);
