@@ -1,3 +1,19 @@
+Wed Nov 17 08:53:11 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Makefile.am:
+
+	  Updated.
+
+	* ace/ace.mpc:
+
+	  Added Memory_Pool.h to Header_Files.
+
+	* Makefile.am:
+	* configure.ac:
+
+	  Changed to configure/build ACEXML only if --with-acexml (the
+	  default) was specified.
+
 Tue Nov 16 07:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/RB_Tree.cpp:

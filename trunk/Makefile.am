@@ -10,8 +10,13 @@
 
 SUBDIRS = \
         ace \
-        ASNMP \
-        ACEXML \
+        ASNMP
+
+if BUILD_ACEXML
+SUBDIRS += ACEXML 
+endif
+
+SUBDIRS += \
         apps \
         bin \
         examples \
@@ -31,7 +36,7 @@ endif
 
 man_MANS = ace-config.1
 
-bin_scripts = ace-config
+bin_SCRIPTS = ace-config
 
 ACLOCAL = @ACLOCAL@
 ACLOCAL_AMFLAGS = -I m4
