@@ -115,3 +115,43 @@ union outer switch (disc_outer)
   case out1: inner1 first;
   case out2: inner2 second;
 };
+
+module UnionTest3 
+{
+   enum ValChoice 
+     {
+    	 intVal,
+    	 realVal
+   	 };
+
+   union ValType switch(ValChoice) 
+     {
+       case intVal: long integerValue;
+       case realVal: double realValue;
+   	 };
+
+   struct UpType 
+     {
+       ValType high;
+       ValType low;
+   	 };
+
+   struct DownType 
+     {
+       ValType high;
+       ValType low;
+   	 };
+
+   enum IndChoice 
+     {
+       up_Level,
+       down_Level
+   	 };
+
+   union IndType switch(IndChoice) 
+     {
+       case up_Level: UpType up;
+       case down_Level: DownType down;
+   	 };
+};
+
