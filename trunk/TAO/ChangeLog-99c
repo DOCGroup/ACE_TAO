@@ -1,20 +1,26 @@
+Mon Jan 25 13:54:00 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * rules.tao.GNU,orbsvcs/orbsvcs/Makefile:  added TAO_ORBSVCS
+          support for subsetting the liborbsvcs build.  See rules.tao.GNU
+          for usage information and limitations.
+
 Sun Jan 24 22:46:43 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* removed the orbsvcs/orbsvcs/Time_Service/implrepo.conf file.
-	This file is not required here. It is required in the tests dir.
+        * removed the orbsvcs/orbsvcs/Time_Service/implrepo.conf file.
+        This file is not required here. It is required in the tests dir.
 
-	Made changes to the following Makefiles to incorporate the
-	Implementation Repository service.
+        Made changes to the following Makefiles to incorporate the
+        Implementation Repository service.
 
-	* orbsvcs/orbsvcs/Makefile
-	* orbsvcs/Makefile
-	* orbsvcs/orbsvcs/ImplRepo_Service/Makefile
-	* orbsvcs/orbsvcs/Time_Service/Makefile
+        * orbsvcs/orbsvcs/Makefile
+        * orbsvcs/Makefile
+        * orbsvcs/orbsvcs/ImplRepo_Service/Makefile
+        * orbsvcs/orbsvcs/Time_Service/Makefile
 
 Sun Jan 24 17:04:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/tests/ImplRepo/Repository_Test.cpp: Removed inclusion of
-	  <iostream.h>.  ACE should take care of it.
+        * orbsvcs/tests/ImplRepo/Repository_Test.cpp: Removed inclusion of
+          <iostream.h>.  ACE should take care of it.
 
 Sun Jan 24 00:48:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -72,18 +78,18 @@ Sat Jan 23 19:44:32 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Sat Jan 23 11:59:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Connect.cpp (send_error):
-	  (handle_input): Must use ACE_TRY_CHECK within the try block, not
-	  ACE_CHECK.  Thanks to David for reporting this.
+        * tao/Connect.cpp (send_error):
+          (handle_input): Must use ACE_TRY_CHECK within the try block, not
+          ACE_CHECK.  Thanks to David for reporting this.
 
 Fri Jan 22 18:45:48 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* docs/releasenotes/index.html:
-	Added the information about the generation of skeletons for
-	implementation by the IDL Compiler
+        * docs/releasenotes/index.html:
+        Added the information about the generation of skeletons for
+        implementation by the IDL Compiler
 
-	* docs/compiler.html:
-	Added the IDL compiler options for generating skeletons for implementation
+        * docs/compiler.html:
+        Added the IDL compiler options for generating skeletons for implementation
 
 Fri Jan 22 13:08:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
