@@ -2426,6 +2426,19 @@ ACE_Ordered_MultiSet_Iterator<T>::next (T *&item) const
   return 0;
 }
 
+template <class T> T&
+ACE_Ordered_MultiSet_Iterator<T>::operator* (void)
+{
+  //ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::operator*");
+  T *retv = 0;
+
+  int result = this->next (retv);
+  ACE_ASSERT (result != 0);
+  ACE_UNUSED_ARG (result);
+
+  return *retv;
+}
+
 ACE_ALLOC_HOOK_DEFINE (ACE_DLList_Node)
 
 template <class T> T *

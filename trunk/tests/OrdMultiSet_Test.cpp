@@ -97,6 +97,24 @@ main (int, ACE_TCHAR *[])
   // We should have iterated through the entire set.
   ACE_ASSERT (iter.done () != 0);
 
+  // Iterate through the set and use the operator* to get the element
+  iter.first ();
+  for (i = -19; i <= 19; ++i)
+    {
+      // we should still be in the set
+      ACE_ASSERT (iter.done () == 0);
+
+      // make sure the current element is what we expect
+      int& l = *iter;
+      ACE_ASSERT (l == i);
+
+      // move to the next element in the set
+      iter.advance ();
+    }
+
+  // We should have iterated through the entire set.
+  ACE_ASSERT (iter.done () != 0);
+
   // Clear the set, restart the iterator, and make sure the iterator
   // is out of range at both ends, the set is empty, and a subsequent
   // advance or retreat on an out of range iterator does not cause
