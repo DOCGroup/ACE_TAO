@@ -35,8 +35,8 @@ sub run_test
   }
 
   $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
-			 " $debug -f $iorfile  -i $invocation -t ".
-			 "$type -n $num -x");
+                         " $debug -f $iorfile  -i $invocation -t ".
+                         "$type -n $num -x");
 
   $client = $CL->TimedWait (60);
   if ($client == -1) {
@@ -56,9 +56,9 @@ sub run_test
 
 # Parse the arguments
 
-@types = ("short", "ulonglong", "ubstring", "bdstring", 
+@types = ("short", "ulonglong", "ubstring", "bdstring",
           "ubwstring", "bdwstring", "fixed_struct",
-          "ub_strseq", "bd_strseq", "ub_wstrseq", bd_wstrseq",
+          "ub_strseq", "bd_strseq", "ub_wstrseq", "bd_wstrseq",
           "var_struct", "nested_struct", "recursive_struct",
           "ub_struct_seq", "bd_struct_seq",
           "any", "objref", "objref_sequence", "objref_struct",
@@ -66,7 +66,7 @@ sub run_test
           "ub_short_sequence", "ub_long_sequence",
           "bd_short_sequence", "bd_long_sequence",
           "fixed_array", "var_array", "typecode", "exception",
-	  "big_union", "complex_any");
+          "big_union", "complex_any");
 
 for ($i = 0; $i <= $#ARGV; $i++)
 {

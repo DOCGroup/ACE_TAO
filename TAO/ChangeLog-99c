@@ -1,3 +1,8 @@
+Wed Aug 18 12:53:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Param_Test/run_test.pl: 
+	  Fixed typo.
+
 Wed Aug 18 10:49:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* default_resource.cpp:
