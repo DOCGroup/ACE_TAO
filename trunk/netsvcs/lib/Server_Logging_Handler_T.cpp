@@ -90,7 +90,11 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
       {
         ACE_Log_Record lp;
 
-        // Need to use ACE_NTOHL to get around bug in egcs 2.91.6x
+        // Use ACE_NTOHL to get around bug in egcs 2.91.6x.
+        //
+        // Using the ACE_NTOHL macro is functionally equivalent to
+        // the standard ntohl() system call but it may be more
+        // inefficient on some platforms.
         length = ACE_NTOHL (length);
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
