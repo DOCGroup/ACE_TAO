@@ -1338,10 +1338,11 @@ private:
 
   typedef ACE_Map_Manager<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
           MAP_MANAGER;
-  typedef ACE_Map_Iterator<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
-          MAP_ITERATOR;
-  typedef ACE_Map_Entry<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *>
-          MAP_ENTRY;
+
+  // (Two) Deprecated typedefs.  Use appropriate MAP_MANAGER traits
+  // instead.
+  typedef MAP_MANAGER::ITERATOR MAP_ITERATOR;
+  typedef MAP_MANAGER::ENTRY MAP_ENTRY;
 
   /// Map of Result pointers that correspond to all the <accept>'s
   /// pending.

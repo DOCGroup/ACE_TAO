@@ -37,7 +37,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE	*/
 
 #include "ace/Basic_Types.h"
-#include "ace/Message_Block.h"
+#include "ace/OS.h"
+
+
+class ACE_Message_Block;
 
 /**
  * @class ACE_CDR
@@ -163,10 +166,10 @@ public:
     // Green Hills C++68000 1.8.8 forces us into it.
     typedef unsigned long Boolean;
 #  else	 /* ! (CHORUS && ghs 1.8.8) */
-    typedef u_char Boolean;
+    typedef unsigned char Boolean;
 #  endif /* ! (CHORUS && ghs 1.8.8) */
 
-  typedef u_char Octet;
+  typedef unsigned char Octet;
   typedef char Char;
   typedef ACE_OS::WChar	WChar;
   typedef ACE_INT16 Short;
@@ -192,23 +195,43 @@ public:
 #     endif /* sun */
 #   else  /* no	native 64 bit integer type */
 #     define NONNATIVE_LONGLONG
+      struct ACE_Export LongLong 
+        {
 #     if defined (ACE_BIG_ENDIAN)
-	      struct ACE_Export LongLong 
-        { 
           ACE_CDR::Long	h;
-          ACE_CDR::Long l; 
-          int operator== (const LongLong &rhs) const;
-          int operator!= (const LongLong &rhs) const;
-        };
+          ACE_CDR::Long l;
 #     else
-	      struct ACE_Export LongLong 
-        { 
           ACE_CDR::Long	l;
-          ACE_CDR::Long h; 
+          ACE_CDR::Long h;
+#     endif /* ! ACE_BIG_ENDIAN	*/
+
+          LongLong (const ACE_INT32);
+          LongLong (const ACE_UINT32);
+
+          void operator= (ACE_CDR::Long rhs);
+          void operator= (ACE_CDR::ULong rhs);
+
+          /**
+           * @name Overloaded Relation Operators.
+           *
+           * The canonical comparison operators.
+           */
+          //@{
           int operator== (const LongLong &rhs) const;
           int operator!= (const LongLong &rhs) const;
+          int operator< (const ACE_CDR::LongLong &) const;
+          int operator<= (const ACE_CDR::LongLong &) const;
+          int operator> (const ACE_CDR::LongLong &) const;
+          int operator>= (const ACE_CDR::LongLong &) const;
+
+          int operator== (ACE_UINT32) const;
+          int operator!= (ACE_UINT32) const;
+          int operator< (ACE_UINT32) const;
+          int operator<= (ACE_UINT32) const;
+          int operator> (ACE_UINT32) const;
+          int operator>= (ACE_UINT32) const;
+          //@}
         };
-#     endif /* ! ACE_BIG_ENDIAN	*/
 #   endif /* no	native 64 bit integer type */
 
 #   if defined (NONNATIVE_LONGLONG)
@@ -223,8 +246,8 @@ public:
       struct Float
       {
 #  	if ACE_SIZEOF_INT == 4
-	  // Use u_int to get word alignment.
-	  u_int	f;
+	  // Use unsigned int to get word alignment.
+	  unsigned int f;
 #  	else  /* ACE_SIZEOF_INT	!= 4 */
 	  // Applications will probably	have trouble with this.
 	  char f[4];
@@ -244,8 +267,8 @@ public:
       struct Double
       {
 #  	if ACE_SIZEOF_LONG == 8
-	  // Use u_long	to get word alignment.
-	  u_long f;
+	  // Use u long to get word alignment.
+	  unsigned long f;
 #  	else  /* ACE_SIZEOF_INT	!= 8 */
 	  // Applications will probably	have trouble with this.
 	  char f[8];

@@ -117,12 +117,18 @@ private:
   COLLECTION;
 
   /// Allows iterations through collection_
-  typedef ACE_Map_Iterator<TOKEN_NAME, ACE_Tokens *, ACE_Null_Mutex>
-  COLLECTION_ITERATOR;
+  /**
+   * @note Deprecated typedef.  Use COLLECTION::ITERATOR trait
+   *       instead.
+   */
+  typedef COLLECTION::ITERATOR COLLECTION_ITERATOR;
 
   /// Allows iterations through collection_
-  typedef ACE_Map_Entry<TOKEN_NAME, ACE_Tokens *>
-  COLLECTION_ENTRY;
+  /**
+   * @note Deprecated typedef.  Use COLLECTION::ENTRY trait
+   *       instead.
+   */
+  typedef COLLECTION::ENTRY COLLECTION_ENTRY;
 
   /// COLLECTION maintains a mapping from token names to ACE_Tokens*.
   COLLECTION collection_;

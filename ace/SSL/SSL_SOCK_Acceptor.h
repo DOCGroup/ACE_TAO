@@ -47,7 +47,7 @@
  *       SSL implementations, such as OpenSSL, are not entirely
  *       thread-safe or reentrant.
  */
-class ACE_SSL_Export ACE_SSL_SOCK_Acceptor : public ACE_SSL_SOCK
+class ACE_SSL_Export ACE_SSL_SOCK_Acceptor : private ACE_SSL_SOCK
 {
 public:
 

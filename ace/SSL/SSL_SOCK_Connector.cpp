@@ -63,6 +63,9 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
             return -1;
     }
 
+  // Take into account the time between each select() call below.
+  ACE_Countdown_Time countdown (timeout);
+
   int status;
   do
     {
@@ -139,6 +142,9 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
                                 &wr_handle,
                                 0,
                                 timeout);
+
+          (void) countdown.update ();
+
           // 0 is timeout, so we're done.
           // -1 is error, so we're done.
           // Could be both handles set (same handle in both masks) so set to 1.
