@@ -147,6 +147,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << "}" << be_nl << be_nl;
     }
 
+  // Non-const downcast method.
   *os << node->name () << " *" << be_nl;
   *os << node->name () << "::_downcast (CORBA::Exception *_tao_excp)" << be_nl;
   *os << "{" << be_idt_nl;
@@ -154,6 +155,23 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << "\", _tao_excp->_rep_id ()))" << be_idt_nl;
   *os << "{" << be_idt_nl;
   *os << "return dynamic_cast<" << node->local_name ()
+      << " *> (_tao_excp);" << be_uidt_nl;
+  *os << "}" << be_uidt_nl;
+  *os << "else" << be_idt_nl;
+  *os << "{" << be_idt_nl;
+  *os << "return 0;" << be_uidt_nl;
+  *os << "}" << be_uidt << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
+  
+  // Const downcast method.
+  *os << "const " << node->name () << " *" << be_nl;
+  *os << node->name () << "::_downcast (CORBA::Exception const *_tao_excp)" 
+      << be_nl;
+  *os << "{" << be_idt_nl;
+  *os << "if (!ACE_OS::strcmp (\"" << node->repoID ()
+      << "\", _tao_excp->_rep_id ()))" << be_idt_nl;
+  *os << "{" << be_idt_nl;
+  *os << "return dynamic_cast<const " << node->local_name ()
       << " *> (_tao_excp);" << be_uidt_nl;
   *os << "}" << be_uidt_nl;
   *os << "else" << be_idt_nl;
