@@ -8,13 +8,22 @@
 
 INFO  = README
 
-BIN   = Async_Timer_Queue_Test \
-	Reactor_Timer_Queue_Test \
-	Thread_Timer_Queue_Test
+BIN   = main_async 
+FILES   = Async_Timer_Queue_Test
+LSRC    = $(addsuffix .cpp,$(FILES))
+LOBJ    = $(addsuffix .o,$(FILES))
+BUILD   = $(VBIN)
 
-SRC   = $(addsuffix .cpp,$(BIN))
-OBJ     = $(SRC:%.cpp=$(VDIR)%.o)
+BIN     = main_reactor
+FILES   = Reactor_Timer_Queue_Test 
+LSRC    = $(addsuffix .cpp,$(FILES))
+LOBJ    = $(addsuffix .o,$(FILES))
+BUILD   = $(VBIN)
 
+BIN     = main_thread
+FILES   = Thread_Timer_Queue_Test 
+LSRC    = $(addsuffix .cpp,$(FILES))
+LOBJ    = $(addsuffix .o,$(FILES))
 BUILD = $(VBIN)
 
 #----------------------------------------------------------------------------

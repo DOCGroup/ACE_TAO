@@ -21,15 +21,7 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"
 
-class Timer_Handler : public ACE_Event_Handler
-  // = TITLE
-  //     Target of the asynchronous timeout operation.
-{
-public:
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-			      const void *arg);
-  // Callback hook invoked by the <Timer_Queue>.
-};
+#include "Async_Timer_Queue_Test.h"
 
 int 
 Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
@@ -48,39 +40,6 @@ Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
   delete this;
   return 0;
 }
-
-class Async_Timer_Queue 
-  // = TITLE
-  //     Asynchronous Timer Queue Singleton.
-  //
-  // = DESCRIPTION
-  //     We use this class to avoid global variables and to
-  //     consolidate all the Timer Queue processing in one central 
-  //     place. 
-{
-public:
-  static Async_Timer_Queue *instance (void);
-  // Singleton access point.
-
-  void schedule (u_int microsecs);
-  // Schedule a timer to expire <microsecs> in the future.
-
-  void cancel (long timer_id);
-  // Cancel a timer with <timer_id>.
-
-  void dump (void);
-  // Dump the contents of the queue.
-
-private:
-  Async_Timer_Queue (ACE_Sig_Set *);
-  // Private constructor enforces the Singleton.
-
-  static Async_Timer_Queue *instance_;
-  // Pointer to the timer queue.
-
-  ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap> tq_;
-  // The adapter is instantiated by an <ACE_Timer_Heap>.
-};
 
 // Initialize the Singleton pointer.
 Async_Timer_Queue *Async_Timer_Queue::instance_ = 0;
@@ -167,34 +126,40 @@ Async_Timer_Queue::cancel (long timer_id)
   delete (ACE_Event_Handler *) act;
 }
 
-// Command-line API.
-
-static int
-parse_commands (const char *buf)
+int
+Async_Timer_Queue::schedule_timer (void *argument)
 {
-  u_int choice;
-  long value;
+  u_long useconds = *(int *)argument;
 
-  // @@ Should make sure to use signal-safe logic here...
-
-  if (sscanf (buf, "%u %ld", &choice, &value) != 2)
-    ACE_ERROR_RETURN ((LM_ERROR, "invalid input %s", buf), -1);
-
-  switch (choice)
-    {
-    case 1: // Schedule a timer.
-      Async_Timer_Queue::instance ()->schedule (value);
-
-      break;
-      /* NOTREACHED */
-
-    case 2: // Cancel a timer.
-      Async_Timer_Queue::instance ()->cancel (value);
-      break;
-      /* NOTREACHED */      
-    }
+  // Schedule a timer.
+  Async_Timer_Queue::instance ()->schedule (useconds);
 
   return 0;
+}
+
+int
+Async_Timer_Queue::cancel_timer (void *argument)
+{
+  u_long id = *(int *)argument;
+    
+  // Cancel a timer.
+  Async_Timer_Queue::instance ()->cancel (id);
+
+  return 0;
+}
+
+int
+Async_Timer_Queue::list_timer (void *argument)
+{
+  // Display an error message.
+  ACE_ERROR_RETURN ((LM_ERROR, "invalid input\n"), 0);
+}
+
+int
+Async_Timer_Queue::shutdown_timer (void *argument)
+{
+  // Display an error message.
+  ACE_ERROR_RETURN ((LM_ERROR, "invalid input\n"), 0);
 }
 
 // Handler for the SIGINT and SIGQUIT signals.
@@ -243,41 +208,56 @@ register_signal_handlers (void)
   ACE_UNUSED_ARG (sigint);
 }
 
-// The menu of options provided to the user.
-
-static char menu[] = 
-"****\n"
-"1) schedule timer <usecs> \n"
-"2) cancel timer <timer_id>\n"
-"^C list timers\n"
-"^\\ exit program\n"
-"please enter your choice: ";
-
-int
-main (int, char *[])
-{
-  register_signal_handlers ();
-
-  // Run until the user types ^\.
-
-  for (;;)
+Async_Timer_Queue_Test_Driver::Async_Timer_Queue_Test_Driver (void)
     {
-      ACE_DEBUG ((LM_DEBUG, "%s", menu));
-
-      char buf[BUFSIZ];
-
-      // Wait for user to type commands.  This call is automatically
-      // restarted when SIGINT or SIGALRM signals occur.
-      if (ACE_OS::read (ACE_STDIN, buf, sizeof buf) <= 0)
-	break;
-
-      // Run the command.
-      parse_commands (buf);
+      timer_queue_ = Async_Timer_Queue::instance ();
     }
 
-  return 0;
+int 
+Async_Timer_Queue_Test_Driver::display_menu (void)
+{ 
+  // The menu of options provided to the user.
+  static char menu[] = 
+    "****\n"
+    "1) schedule timer <usecs> \n"
+    "2) cancel timer <timer_id>\n"
+    "^C list timers\n"
+    "^\\ exit program\n";
+
+  ACE_DEBUG ((LM_DEBUG, "%s", menu)); 
+
+  return 0; 
 }
 
+int 
+Async_Timer_Queue_Test_Driver::init (void)
+{
+  // initialize commands with their corresponding input_task methods.
+  ACE_NEW_RETURN (schedule_cmd_, 
+		  Command<Async_Timer_Queue> (*Async_Timer_Queue::instance (),
+					      Async_Timer_Queue::instance ()->schedule_timer),
+		  -1);
+  
+  ACE_NEW_RETURN (cancel_cmd_,
+		  Command<Async_Timer_Queue> (*Async_Timer_Queue::instance (),
+				       Async_Timer_Queue::instance ()->cancel_timer),
+		  -1);
+
+  ACE_NEW_RETURN (list_cmd_,
+		  Command<Async_Timer_Queue> (*Async_Timer_Queue::instance (),
+				       Async_Timer_Queue::instance ()->list_timer),
+		  -1);
+
+  ACE_NEW_RETURN (shutdown_cmd_,
+		  Command<Async_Timer_Queue> (*Async_Timer_Queue::instance (),
+				       Async_Timer_Queue::instance ()->shutdown_timer),
+		  -1);
+
+  register_signal_handlers ();
+
+  return 0;
+} 
+    
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
