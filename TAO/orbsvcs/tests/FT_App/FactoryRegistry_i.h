@@ -90,6 +90,10 @@ public:
    */
   const char * identity () const;
 
+  ////////////////////////////////
+  // override servant base methods
+  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+
   //////////////////
   // CORBA interface
   // See IDL for documentation
@@ -201,10 +205,11 @@ private:
   int quit_on_idle_;
 
   /**
-   * boolean: starts false.  Set to true when it's time to quit.
+   * State of the quit process
    */
-  int quit_requested_;
+  enum {LIVE, DEACTIVATED, GONE} quit_state_;
 
+  int linger_;
 
   RegistryType registry_;
 

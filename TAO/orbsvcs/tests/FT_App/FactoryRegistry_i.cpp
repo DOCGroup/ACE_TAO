@@ -37,8 +37,8 @@ FactoryRegistry_i::FactoryRegistry_i ()
   : ior_output_file_(0)
   , ns_name_(0)
   , quit_on_idle_(0)
-  , quit_requested_(0)
-
+  , quit_state_(LIVE)
+  , linger_(0)
 {
 }
 
@@ -91,10 +91,27 @@ const char * FactoryRegistry_i::identity () const
   return this->identity_.c_str();
 }
 
+
+void FactoryRegistry_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
+{
+  this->quit_state_ = GONE;
+}
+
 int FactoryRegistry_i::idle (int & result)
 {
   result = 0;
-  int quit = this->quit_requested_;
+  int quit = 0;
+  if (this->quit_state_ == GONE)
+  {
+    if (linger_ < 2)
+    {
+      ++linger_;
+    }
+    else
+    {
+      quit = 1;
+    }
+  }
   return quit;
 }
 
@@ -154,18 +171,17 @@ int FactoryRegistry_i::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
   ACE_TRY_CHECK;
 
   // Register with the POA.
-
   this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
-  // find my IOR
-
-  CORBA::Object_var obj =
+  // find my identity as a corba object
+  CORBA::Object_var this_obj =
     this->poa_->id_to_reference (object_id_.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
-  this->ior_ = this->orb_->object_to_string (obj.in ()
+  // and create a ior string
+  this->ior_ = this->orb_->object_to_string (this_obj.in ()
                                   ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
@@ -205,7 +221,7 @@ int FactoryRegistry_i::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
     this->this_name_.length (1);
     this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
-    this->naming_context_->rebind (this->this_name_, _this()
+    this->naming_context_->rebind (this->this_name_, this_obj.in()  //CORBA::Object::_duplicate(this_obj)
                             ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }
@@ -270,9 +286,9 @@ void FactoryRegistry_i::register_factory (
   (*infos)[length] = factory_info;
 
   ACE_DEBUG(( LM_DEBUG,
-    "FactoryRegistry: Added factory: %s[%d] at %s\n",
-      type_id,
+    "FactoryRegistry: Added factory: [%d] %s@%s \n",
       ACE_static_cast(int,length + 1),
+      type_id,
       ACE_static_cast(const char *, factory_info.the_location[0].id)
     ));
 
@@ -304,7 +320,7 @@ void FactoryRegistry_i::unregister_factory (
         found = 1;
 
         ACE_ERROR(( LM_INFO,
-          "Unregistering  factory %s at location %s\n",
+          "Unregistering  factory %s@%s\n",
             type_id,
             ACE_static_cast(const char *, location[0].id)
           ));
@@ -312,16 +328,31 @@ void FactoryRegistry_i::unregister_factory (
         {
           while (nInfo + 1 < length)
           {
+            ACE_ERROR((LM_INFO,
+              "unregister_factory_by_location: Move: [%d] %s to [%d]\n",
+              (int)nInfo + 1, type_id, (int)nInfo
+              ));
             (*infos)[nInfo] = (*infos)[nInfo + 1];
             nInfo += 1;
           }
+          ACE_ERROR((LM_INFO,
+            "unregister_factory_by_location: New length [%d] %s\n",
+            (int)nInfo, type_id
+            ));
           infos->length(nInfo);
         }
         else
         {
-          assert ( length == 1 );
-          this->registry_.unbind (type_id);
-          delete infos;
+          ACE_ASSERT ( length == 1 );
+          if (this->registry_.unbind (type_id) == 0)
+          {
+            delete infos;
+          }
+          else
+          {
+            ACE_ERROR ((LM_ERROR,
+              "LOGIC ERROR AT " __FILE__ " (%d): Entry to be deleted disappeared\n", __LINE__));
+          }
         }
       }
     }
@@ -336,12 +367,18 @@ void FactoryRegistry_i::unregister_factory (
     this->registry_.bind(type_id, infos);
   }
 
-  if (registry_.current_size() == 0)
+  if (registry_.current_size() == 0 && quit_state_ == LIVE)
   {
     ACE_ERROR(( LM_INFO,
-      "FactoryRegistry is idle\n"
+      "%s is idle\n",
+      identity()
       ));
-    this->quit_requested_ |= this->quit_on_idle_;
+    if (quit_on_idle_)
+    {
+        this->poa_->deactivate_object (this->object_id_.in ()
+               ACE_ENV_ARG_PARAMETER);
+        quit_state_ = DEACTIVATED;
+    }
   }
 
   METHOD_RETURN(FactoryRegistry_i::unregister_factory);
@@ -355,7 +392,7 @@ void FactoryRegistry_i::unregister_factory_by_type (
 {
   METHOD_ENTRY(FactoryRegistry_i::unregister_factory_by_type);
   PortableGroup::FactoryInfos * infos;
-  if (this->registry_.unbind(type_id, infos) )
+  if (this->registry_.unbind(type_id, infos) == 0)
   {
     ACE_DEBUG(( LM_DEBUG,
       "Unregistering all factories for type %s\n", type_id
@@ -370,12 +407,18 @@ void FactoryRegistry_i::unregister_factory_by_type (
       ));
   }
 
-  if (registry_.current_size() == 0)
+  if (registry_.current_size() == 0 && quit_state_ == LIVE)
   {
     ACE_ERROR(( LM_INFO,
-      "FactoryRegistry is idle\n"
+      "%s is idle\n",
+      identity()
       ));
-    this->quit_requested_ |= this->quit_on_idle_;
+    if (quit_on_idle_)
+    {
+        this->poa_->deactivate_object (this->object_id_.in ()
+               ACE_ENV_ARG_PARAMETER);
+        quit_state_ = DEACTIVATED;
+    }
   }
 
   METHOD_RETURN(FactoryRegistry_i::unregister_factory_by_type);
@@ -397,7 +440,9 @@ void FactoryRegistry_i::unregister_factory_by_location (
        ++it)
   {
     RegistryType_Entry & entry = *it;
+    ACE_CString & type = entry.ext_id_;
     PortableGroup::FactoryInfos * infos = entry.int_id_;
+    // ACE_ERROR((LM_INFO,  "unregister_factory_by_location: Checking type %s\n", type.c_str()  ));
 
     int found = 0;
     size_t length = infos->length();
@@ -406,19 +451,36 @@ void FactoryRegistry_i::unregister_factory_by_location (
       PortableGroup::FactoryInfo & info = (*infos)[nInfo];
       if (info.the_location == location)
       {
+
+        ACE_ERROR((LM_INFO,
+          "unregister_factory_by_location: Removing: [%d] %s@%s\n",
+          (int)nInfo, type.c_str(), location[0].id
+          ));
         found = 1;
         if (length > 1)
         {
           while (nInfo + 1 < length)
           {
-            infos[nInfo] = infos[nInfo + 1];
+            ACE_ERROR((LM_INFO,
+              "unregister_factory_by_location: Move: [%d] %s to [%d]\n",
+              (int)nInfo + 1, type.c_str(), (int)nInfo
+              ));
+            (*infos)[nInfo] = (*infos)[nInfo + 1];
             nInfo += 1;
           }
+          ACE_ERROR((LM_INFO,
+            "unregister_factory_by_location: New length [%d] %s\n",
+            (int)nInfo, type.c_str()
+            ));
           infos->length(nInfo);
         }
         else
         {
-          assert ( length == 1 );
+          ACE_ERROR((LM_INFO,
+            "Removed all entries for %s\n",
+            type.c_str()
+            ));
+          ACE_ASSERT ( length == 1 );
           // remember entries to be deleted
           hitList.push_back(entry.ext_id_);
         }
@@ -430,27 +492,37 @@ void FactoryRegistry_i::unregister_factory_by_location (
 
   for (size_t nHit = 0; nHit < hitList.size(); ++nHit)
   {
+    ACE_ERROR((LM_INFO,
+      "Remove type %s\n",
+      hitList[nHit].c_str()
+      ));
     PortableGroup::FactoryInfos * infos;
-    if (this->registry_.unbind(hitList[nHit], infos) )
+    if (this->registry_.unbind(hitList[nHit], infos) == 0)
     {
       delete infos;
     }
     else
     {
       ACE_ERROR ((LM_ERROR,
-        "LOGIC ERROR AT " __FILE__ " (%d): Entry to be deleted disappeared\n", __LINE__));
+        "LOGIC ERROR AT " __FILE__ " (%d): Entry to be deleted disappeared\n",
+        __LINE__));
     }
   }
   //////////////////////////
   // If all types are gone...
-  if (registry_.current_size() == 0)
+  if (registry_.current_size() == 0 && quit_state_ == LIVE)
   {
     ACE_ERROR(( LM_INFO,
-      "FactoryRegistry is idle\n"
+      "%s is idle\n",
+      identity()
       ));
-    this->quit_requested_ |= this->quit_on_idle_;
+    if (quit_on_idle_)
+    {
+        this->poa_->deactivate_object (this->object_id_.in ()
+               ACE_ENV_ARG_PARAMETER);
+        quit_state_ = DEACTIVATED;
+    }
   }
-
 
   METHOD_RETURN(FactoryRegistry_i::unregister_factory_by_location);
 }

@@ -1,3 +1,68 @@
+Fri Oct 10 12:09:39 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+          Use ACE MUTEX macros.
+          Avoid the evil _this().
+          Use auto_ptr<>.
+
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+          Use ACE MUTEX macros.
+          Avoid the evil _this().
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.h:
+          Contrary to my comment, it is necessary to check status after find fails.
+          Remove the comment; add the status check.
+
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+          Rename *Config project to *Creator
+
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.h:
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+          New files replace StubConfig.cpp
+
+        * orbsvcs/tests/FT_App/StubConfig.cpp:
+          Removed
+
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+          Add a temporary hack to make the process containing TestReplicas go away sooner.  Otherwise the test
+          timed out waiting for the TestReplicaFactory to notice it was idle.
+
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+          Add support for location and type_id.
+          Register the factory (or factories!) with the FactoryRegistry.
+
+        * orbsvcs/tests/FT_App/FactoryRegistry_i.h:
+        * orbsvcs/tests/FT_App/FactoryRegistry_i.cpp:
+          Exit cleanly.  Use _remove_ref() to determine when we're really gone.
+          Add additional logging.
+
+        * orbsvcs/tests/FT_App/run_test_registry.pl:
+          Test is working.
+	
+        * orbsvcs/tests/FT_App/testscript:
+          Shorten sleep to make the test run faster
+
+
+        * tao/Utils/ServantMain.h:
+        * tao/Utils/ServantMain.cpp:
+          RIP: No remaining users.
+          Removed these files.
+
+        * orbsvcs/tests/FT_App/StubBatchConsumer.h:
+        * orbsvcs/tests/FT_App/StubBatchConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.h:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+          Ongoing work on conforming to ACE coding conventions.
+
+        These changes were made in the oci_haft branch.
+
+
 Wed Oct  8 13:59:40 2003  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:

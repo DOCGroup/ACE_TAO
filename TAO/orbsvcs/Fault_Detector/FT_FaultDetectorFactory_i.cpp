@@ -226,12 +226,12 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
   // find my IOR
 
-  CORBA::Object_var obj =
+  CORBA::Object_var this_obj =
     this->poa_->id_to_reference (objectId_.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
-  this->ior_ = this->orb_->object_to_string (obj.in ()
+  this->ior_ = this->orb_->object_to_string (this_obj.in ()
                                   ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
@@ -270,7 +270,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
     this->this_name_.length (1);
     this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
-    this->naming_context_->rebind (this->this_name_, _this()
+    this->naming_context_->rebind (this->this_name_, this_obj.in()  //CORBA::Object::_duplicate(this_obj)
                             ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }
@@ -481,7 +481,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 
   CORBA::ULong detectorId = allocate_id();
 
-  // NOTE: ACE_NEW is incompatable with ACE_Auto_Basic_Ptr
+  // NOTE: ACE_NEW is incompatable with auto_ptr
   // so create a bare pointer first.
   TAO::Fault_Detector_i * pFD = 0;
 
@@ -501,7 +501,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
       ));
     ACE_THROW ( PortableGroup::ObjectNotCreated() );
   }
-  ACE_Auto_Basic_Ptr<TAO::Fault_Detector_i> detector(pFD);
+  auto_ptr<TAO::Fault_Detector_i> detector(pFD);
 
   ACE_NEW_NORETURN ( factory_creation_id,
     PortableGroup::GenericFactory::FactoryCreationId);
@@ -572,9 +572,11 @@ CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template ACE_Vector<TAO::Fault_Detector_i *>;
-  template ACE_Guard<ACE_Mutex>;
+  template ACE_Guard<ACE_SYNCH_MUTEX>;
+  template auto_ptr<TAO::Fault_Detector_i>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate ACE_Vector<TAO::Fault_Detector_i *>
-# pragma ACE_Guard<ACE_Mutex>
+# pragma instantiate ACE_Guard<ACE_SYNCH_MUTEX>
+# pragma instantiate auto_ptr<TAO::Fault_Detector_i>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

@@ -43,6 +43,7 @@ class  FT_ReplicaFactory_i
   : public virtual POA_FT_TEST::ReplicaFactory
 {
   typedef ACE_Vector<FT_TestReplica_i *> ReplicaVec;
+  typedef ACE_Vector<ACE_CString> StringVec;
 
   //////////////////////
   // non-CORBA interface
@@ -86,6 +87,8 @@ public:
    * @return a string to identify this object for logging/console message purposes.
    */
   const char * identity () const;
+
+  const char * location () const;
 
   /**
    * Remove pointer to individual replica; delete FT_TestReplica_i.
@@ -141,8 +144,9 @@ public:
 private:
   /**
    * Actual replica creation happens in this method.
+   * @param name becomes part of the objects identity.
    */
-  FT_TestReplica_i * create_replica();
+  FT_TestReplica_i * create_replica(const char * name);
 
   /**
    * Find or allocate an ID for a new replica
@@ -239,14 +243,20 @@ private:
   CosNaming::Name this_name_;
 
 
-//todo initialize
-  const char * type_id_;
+  StringVec types_;
+
   const char * location_;
 
   /**
-   * Quit on idle flag.
+   * bool: quit on idle flag.
    */
   int quit_on_idle_;
+
+
+  /**
+   * bool: use a single call to unregister.
+   */
+  int unregister_by_location_;
 
   /**
    * A vector of Replicas.  Note that the Replica ID

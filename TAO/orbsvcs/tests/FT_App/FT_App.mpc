@@ -114,11 +114,11 @@ project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe {
   }
 }
 
-project(*Config): taoclient, fault_tolerance, orbsvcsexe {
-  exename = ft_config
+project(*Creator): taoclient, fault_tolerance, orbsvcsexe {
+  exename = ft_create
 
 	Source_Files {
-		StubConfig.cpp
+		TAO_Object_Group_Creator.cpp
 	}
 
   // explicitly omit IDL files

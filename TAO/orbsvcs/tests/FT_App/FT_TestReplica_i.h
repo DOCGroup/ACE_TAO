@@ -33,7 +33,7 @@ class FT_ReplicaFactory_i;
 class FT_TestReplica_i : public virtual POA_FT_TEST::TestReplica
 {
 public:
-  FT_TestReplica_i (FT_ReplicaFactory_i * factory, long factory_id);
+  FT_TestReplica_i (FT_ReplicaFactory_i * factory, const char * name, unsigned long factory_id);
   virtual ~FT_TestReplica_i ();
 
   /**
@@ -76,7 +76,7 @@ public:
   void request_quit();
 
 
-  long factory_id()const;
+  unsigned long factory_id()const;
 
   ::FT_TEST::TestReplica_ptr object_reference();
 
@@ -167,9 +167,14 @@ private:
   int verbose_;
 
   /**
+   * who am I?
+   */
+  ACE_CString name_;
+
+  /**
    * The ID number assigned by the factory
    */
-  long factory_id_;
+  unsigned long factory_id_;
 
   /**
    * the factory that created thsi replica
@@ -177,7 +182,7 @@ private:
   FT_ReplicaFactory_i * factory_;
 
   /**
-   * The orb 
+   * The orb
    */
   CORBA::ORB_var orb_;
 

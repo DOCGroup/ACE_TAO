@@ -25,7 +25,7 @@ StubFaultConsumer::~StubFaultConsumer ()
 
 PortableServer::ObjectId StubFaultConsumer::objectId()const
 {
-  return this->objectId_.in();
+  return this->object_id_.in();
 }
 
 size_t StubFaultConsumer::notifications () const
@@ -159,6 +159,9 @@ int StubFaultConsumer::init (CORBA::ORB_var & orb,
 {
   int result = 0;
   this->orb_ = orb;
+  this->notifier_ = notifier;
+  this->identity_ = "StubFaultConsumer";
+
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
@@ -193,17 +196,20 @@ int StubFaultConsumer::init (CORBA::ORB_var & orb,
 
   // Register with the POA.
 
-  this->objectId_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
-  this->notifier_ = notifier;
+  // find my identity as an object
 
-  this->identity_ = "StubFaultConsumer";
+  CORBA::Object_var this_obj =
+    this->poa_->id_to_reference (object_id_.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
 
   CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_nil();
 
-  this->consumerId_ = notifier->connect_structured_fault_consumer(
-    _this(),
+  this->consumer_id_ = notifier->connect_structured_fault_consumer(
+    CosNotifyComm::StructuredPushConsumer::_narrow(this_obj),
     filter);
 
   return result;
@@ -222,7 +228,7 @@ const char * StubFaultConsumer::identity () const
  */
 int StubFaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->notifier_->disconnect_consumer(this->consumerId_ ACE_ENV_ARG_PARAMETER);
+  this->notifier_->disconnect_consumer(this->consumer_id_ ACE_ENV_ARG_PARAMETER);
   return 0;
 }
 

@@ -85,8 +85,9 @@ namespace
 //////////////////////////////////////////////////
 // class FT_TestReplica_i construction/destruction
 
-FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, long factory_id)
+FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, const char * name, unsigned long factory_id)
   : factory_(factory)
+  , name_(name)
   , factory_id_(factory_id)
   , death_pending_(FT_TEST::TestReplica::NOT_YET)
   , verbose_(1)
@@ -100,7 +101,7 @@ FT_TestReplica_i::~FT_TestReplica_i ()
 
 void FT_TestReplica_i::suicide(const char * note)
 {
-  std::cout << this->factory_->identity() << '#' << this->factory_id_ << " Simulate fault: " << note << std::endl;
+  std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Simulate fault: " << note << std::endl;
 
   // Tell the poa we aren't accepting future calls
   this->poa_->deactivate_object (this->object_id_.in ()
@@ -122,7 +123,7 @@ FT_TestReplica_i::usage_options()
   return "";
 }
 
-long FT_TestReplica_i::factory_id()const
+unsigned long FT_TestReplica_i::factory_id()const
 {
   return this->factory_id_;
 }
@@ -209,8 +210,9 @@ CORBA::Boolean FT_TestReplica_i::is_alive ()
 {
   KEVORKIAN(DURING_IS_ALIVE, is_alive)
   ACE_ERROR ((LM_ERROR,
-    "%s#%d: is_alive: %d\n",
-    this->factory_->identity(),
+    "%s@%s#%d: is_alive: %d\n",
+    this->name_.c_str(),
+    this->factory_->location(),
     this->factory_id_,
     (this->death_pending_ != FT_TEST::TestReplica::DENY_IS_ALIVE)
     ));
@@ -328,7 +330,7 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  std::cout << this->factory_->identity() << '#' << this->factory_id_ << " Received death threat: " << when << std::endl;
+  std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Received death threat: " << when << std::endl;
 
   this->death_pending_ = when;
   KEVORKIAN(RIGHT_NOW, die)
@@ -337,7 +339,7 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
 void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  std::cout << this->factory_->identity() << '#' << this->factory_id_ << " Shut down requested" << std::endl;
+  std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Shut down requested" << std::endl;
   this->death_pending_ = FT_TEST::TestReplica::CLEAN_EXIT;
 }
 
@@ -349,8 +351,9 @@ int FT_TestReplica_i::idle (int & result)
   if (this->death_pending_ == FT_TEST::TestReplica::WHILE_IDLE)
   {
     ACE_ERROR ((LM_ERROR,
-      "%s#%d: Simulated fault WHILE_IDLE",
-      this->factory_->identity(),
+      "%s@%s#%d: Simulated fault WHILE_IDLE",
+      this->name_.c_str(),
+      this->factory_->location(),
       ACE_static_cast(int, this->factory_id_ )
       ));
     this->poa_->deactivate_object (this->object_id_.in ()
@@ -385,7 +388,7 @@ void FT_TestReplica_i::store(long counter)
     ACE_OS::fclose(f);
     if (this->verbose_)
     {
-      std::cout << this->factory_->identity() << '#' << this->factory_id_ << ": " << counter << std::endl;
+      std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << ": " << counter << std::endl;
     }
   }
 }
@@ -423,5 +426,3 @@ long FT_TestReplica_i::load ()
 # pragma long loadLong(const unsigned char * & state, size_t offset)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-

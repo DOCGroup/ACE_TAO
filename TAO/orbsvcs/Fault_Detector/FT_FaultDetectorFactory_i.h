@@ -232,8 +232,8 @@ namespace TAO
      * Implementation methods should assume the mutex is
      * locked if necessary.
      */
-    ACE_Mutex internals_;
-    typedef ACE_Guard<ACE_Mutex> InternalGuard;
+    ACE_SYNCH_MUTEX internals_;
+    typedef ACE_Guard<ACE_SYNCH_MUTEX> InternalGuard;
 
     /**
      * The orb 

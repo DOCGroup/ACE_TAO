@@ -239,12 +239,12 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
 
   // find my IOR
 
-  CORBA::Object_var obj =
+  CORBA::Object_var this_obj =
     this->poa_->id_to_reference (object_id_.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
-  this->ior_ = this->orb_->object_to_string (obj.in ()
+  this->ior_ = this->orb_->object_to_string (this_obj.in ()
                                   ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
@@ -393,7 +393,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL )
       this->this_name_.length (1);
       this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
-      this->naming_context_->rebind (this->this_name_, _this()
+      this->naming_context_->rebind (this->this_name_, this_obj.in()  //CORBA::Object::_duplicate(this_obj)
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -672,3 +672,8 @@ TAO::FT_FaultNotifier_i::ProxyInfo::ProxyInfo (const ProxyInfo & rhs)
   , proxyVar_ (rhs.proxyVar_)
 {
 }
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template ACE_Guard<ACE_SYNCH_MUTEX>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate ACE_Guard<ACE_SYNCH_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
