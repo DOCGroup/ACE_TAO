@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:Event
 
-ACE_SHLIBS = -lTAO_Svc_Utils -lTAO -lACE
+ACE_SHLIBS = -lRTSched -lTAO_Svc_Utils -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -119,7 +119,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #       Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-LDFLAGS += -L$(TAO_ROOT)/tao
+LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         -I$(TAO_ROOT)/orbsvcs/orbsvcs/Event
 
