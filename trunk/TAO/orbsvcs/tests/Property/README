@@ -16,25 +16,22 @@ To run:
 
 OR
 
-Run the each of NamingService, Server and Client separately. 
+Run the each of NamingService, Server and Client separately within the
+same host.
 
 
 Naming Service:
 --------------
 
-% setenv NameServicePort `expr $uid + $gid`
-
-% $TAO_ROOT/orbsvcs/'orbsvcs/NamingService
-
+% $TAO_ROOT/orbsvcs/NamingService/NamingService [-ORBnameserviceport <portnum>]
 
 Server:
 -----
 
-% server [-ORBhost <serverhost>] [-ORBport <portnum>]
-         [-ORBobjrefstyle <objrefstyle>]
-
+% server        [-ORBnameserviceport <portnum>]
 
 Client:
 ------
-% client 
+% client        [-ORBnameserviceport <portnum>]
         
+<portnum> is same everywhere.
