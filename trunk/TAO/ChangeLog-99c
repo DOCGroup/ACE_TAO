@@ -1,0 +1,640 @@
+Thu Jan 07 07:16:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp (svc): initialize local
+          "priority" to 0 to avoid warning about uninitialized use
+          from DEC cxx with DCE threads.
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (shutdown): fixed
+          if (_env.exception () == 0) test to be
+          if (_env.exception () != 0).  Thanks to Russ Noseworthy
+          <rnosewor@objectsciences.com> for providing the fix.
+
+Thu Jan 07 05:07:33 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.48 released.
+
+Thu Jan 07 04:06:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * Connect.cpp (check_unexpected_data): Made the checks for 0 and
+          -1 from recv() the same. 0 is a graceful shutdown, while -1 is a
+          somewhat ugly shutdown. Both will result in this function
+          returning -1 and this connection getting closed.
+
+        * Invocation.cpp (invoke): Added asserts to check for failures in
+          resume_handler().
+
+Wed Jan 06 16:44:06 1999  David L. Levine  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.47 released.
+
+Wed Jan 06 16:16:40 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/Time_Service/Server_i.cpp (init_IR): added .in ()
+          dereference to "time_service_server_".
+
+Wed Jan  6 15:33:10 1999  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * DynStruct_i.cpp:
+          Even though this had already been fixed with respect to
+          the latest compile problem, I noticed that the line in
+          this file that contains ACE_Array_Base<> should be
+          changed to something better that's already used in a
+          couple of the other DynAny classes.
+
+Wed Jan  6 15:29:10 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+        Commented out some IR related code for the build to go through.
+        * orbsvcs/Time_Service/Server_i.h (class Server_i):
+        * orbsvcs/Time_Service/Server_i.h:
+
+Wed Jan 06 15:03:44 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simple/echo/Client_i.cpp (echo_list): added .in ()
+          dereference to "ior".
+
+Wed Jan 06 14:07:15 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/Exception.{h,cpp} (TAO_DONT_CATCH):
+        * tao/try_macros.h: Reverted my previous change about not using
+          catch (...) on TAO_CATCHANY for debug build.  This "feature" is
+          turned on only when you define TAO_DONT_CATCH_DOT_DOT_DOT.
+          Thanks to Irfan for persuading me.
+
+Wed Jan  6 13:44:29 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+        * orbsvcs/Time_Service/Server_i.h (class Server_i): Addded the
+        IR related code.
+
+Wed Jan 06 13:29:04 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/DynStruct_i.cpp: removed ACE_Array_Base<CORBA_DynAny_var>
+          instantiation because it's in DynArray_i.cpp.
+
+Wed Jan  6 14:05:21 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+
+          g++ was issuing warnings for the helper methods defined for
+          arrays (e.g., _alloc, _dup, _copy, _free). These warnings
+          appeared only when the helper methods were in the outermost
+          global scope because they were defined static and the compiler
+          could not find their implementation. Thus, we now do not
+          generate the "static" keyword for these helpers if they are in
+          the outermost scope. However, this change made Sun C++ compiler
+          unhappy since it did not like the _free and _alloc in the inline
+          file (*.i) and their forward declarations did not have the
+          inline word. So now also generate the ACE_INLINE macro for the
+          _free and _alloc methods if they are in the outermost scope. Now
+          both compilers are happy. Hopefully others are too.
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+          The var and out implementation was not guarded by the #if
+          !defined conditionla. As a result, there were instances when we
+          could get multiple definitions. Thanks to Virginie Amar
+          <vamar@amadeus.net> for submitting the bugreport.
+
+          We had also forgotten to set the "is_generated" flag to true
+          once we had generated code for the sequence node.
+
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+
+          Since we now use the TAO_Object_Field_T<T> for object reference
+          members of union, we couldn't call CORBA::release in the "reset"
+          method. We now simply call "delete".
+
+Wed Jan 06 11:55:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/Simple/echo/Client_i.cpp (echo_list): Changed <l> to of
+          type Echo::List_var to free up the return value.  The returned
+          string from object_to_string must be freed properly.
+
+Wed Jan  6 09:31:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          The UDP_Receiver::init() method should only create the RT_Info
+          if it is not there already. Thanks to Dave Meyer
+          <dmeyer@std.saic.com> and J. Russell Noseworthy
+          <rnosewor@objectsciences.com> for providing this fix.
+
+Wed Jan 06 09:04:46 1999  Carlos O'Ryan  <coryan@JIG>
+
+        * docs/releasenotes/TODO.html:
+          Updated the information about EC related tasks.
+
+        * docs/releasenotes/ec.html:
+          Added the new features in the EC; removed the entries about a
+          missing CosEventChannel, because we have one now!
+
+        * docs/releasenotes/index.html:
+          Added some comments for Pradeep.
+
+Wed Jan  6 07:44:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * tao/DynStruct_i.cpp:
+          Removed the last use (hopefully) of ACE_Array<>
+
+Wed Jan 06 02:58:28 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * TAO_Examples.dsw
+        * POA/Explicit_Activation/Makefile
+        * POA/Generic_Servant/Makefile
+        * POA/Generic_Servant/server.dsp
+        * POA/Loader/Loader.dsw
+        * POA/Loader/Makefile
+        * POA/Loader/server.dsp
+        * POA/On_Demand_Activation/On_Demand_Activation.dsw
+        * POA/On_Demand_Activation/server.dsp
+        * POA/On_Demand_Activation/Makefile
+        * POA/On_Demand_Loading/Makefile
+        * POA/On_Demand_Loading/On_Demand_Loading.dsw
+        * POA/On_Demand_Loading/server.dsp
+
+          - Changed the name of the Generic Servant dynamic library from
+            MyFoo back to Generic_Servant.  This was causing too many
+            things to break on NT since the original settings were based
+            on the Generic_Servant name.
+
+          - Removed excess include directories in the make setting.
+
+          - Fixed NT make files (including release settings) and made them
+            conform with the existing makefiles.
+
+        * POA/On_Demand_Loading/Servant_Activator.cpp
+        * POA/On_Demand_Loading/Servant_Locator.cpp
+        * POA/Loader/Servant_Activator.cpp
+        * POA/Loader/Servant_Locator.cpp
+        * POA/Loader/Server_Manager.cpp
+
+          - Removed access includes files.
+
+        * POA/On_Demand_Loading/Servant_Manager.cpp: Fixed use of ACE_CString.
+
+Tue Jan  5 22:36:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/default_server.{h,cpp}:
+        * tao/default_client.{h,cpp}:
+        * tao/ORB_Core.{h,cpp}: We also need to define/declare static
+          services for platform without svc.conf support.
+
+Tue Jan  5 18:27:26 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+        * orbsvcs/Time_Service/Server_i.cpp (init): Added the IR related
+        code.
+
+Tue Jan  5 17:44:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * tao/DynAnyC.h
+        * tao/DynAnyC.i
+        * tao/DynSequence_i.h:
+        * tao/DynStruct_i.h:
+          Removed some other uses of ACE_Array in favor of ACE_Array_Base,
+          in these cases there was no need for the operator== and/or
+          operator!=
+
+Tue Jan 05 15:40:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (init_orb):
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp (initialize_orb):
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (init):
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp (init):
+          Removed explicit call to <TAO_Internal::open_services> when
+          building static lib version on Win32 since we can now use them
+          as static service (and configure them thru svc.conf.static
+          file.)
+
+        * performance_tests/Cubit/TAO/IDL_Cubit/svc.conf.static:
+        * performance_tests/Cubit/TAO/MT_Cubit/svc.conf.static: Added two
+          example svc.conf files to show how to use static services.
+
+        * tao/orbconf.h: Changed the format of XXX_FACTORY_ARGS strings for
+          platforms without svc.conf support to a single char string.
+          These entries should look like this now:
+
+           "static TAO_Foobar_Factory \"-ORBsettings a -ORBset b\""
+
+        * tao/TAO_Internal.{h,cpp}: Removed method open_services which
+          takes separate argument lists for each of the TAO default
+          service.  Service initialization is now done in a more general
+          way.
+
+Tue Jan 05 14:32:11 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/Object.i (_narrow): _narrow must increase the reference
+          count on the object.  Thanks to Ron Barack <rab@terminal.cz> for
+          reporting this bug.
+
+Tue Jan 05 14:21:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/TAO_Internal.cpp (open_services): Added insertion of
+          default static service objects of TAO.  I forgot to do that.
+
+Tue Jan  5 13:06:12 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+        * examples/Simple/bank/Client_i.cpp (withdraw): Removed the
+          cast and used the .in () method instead. This would probably
+          fix the error on DU cxx.
+
+Tue Jan 05 07:57:40 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simple/bank/Client_i.cpp (withdraw): added in ()
+          dereference of except->reason.  Thanks to Andy for figuring
+          out how to get this to compile now.
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp,client.cpp,
+          MT_Cubit/Task_Client.cpp: removed VxWorks #ifdefs that disabled
+          ORB shutdown, because it no longer causes a MemPartFree with
+          last night's remove () fixes to ace/Synch.
+
+Tue Jan 05 04:51:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/TAO_Internal.cpp:
+        * tao/ORB_Core.{h,cpp}:
+        * tao/default_server.{h,cpp}:
+        * tao/default_client.{h,cpp}: Added definitions for static service
+          objects and enabled TAO to use static services if
+          TAO_USES_STATIC_SERVICE is defined.  This will allow platforms
+          that doesn't support dynamic linking to change TAO's behavior at
+          run-time.
+
+Mon Jan 04 17:48:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp (for_suppliers):
+          Fixed typos.
+
+Mon Jan  4 16:52:08 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+        Added the following project files for Time Service on NT.
+        * orbsvcs/Time_Service/Time_Service.dsw
+        * orbsvcs/Time_Service/Time_Service_Clerk.dsp
+        * orbsvcs/Time_Service/Time_Service_Server.dsp
+
+        * orbsvcs/tests/Time/Time_Service_Test.dsw
+        * orbsvcs/tests/Time/Time_Service_Test.dsp
+
+        * orbsvcs/tests/Time/Client_i.cpp: Changed the TAO_CATCHANY to
+          TAO_CATCH (SystemException, sysex). The former somehow wasn't
+          catching CORBA::NO_IMPLEMENT on NT.
+
+
+Mon Jan  4 16:30:27 1999  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tao_idl/be/be_visitor_union_branch/private_ch.cpp:
+        * tao_idl/be/be_visitor_union_branch/public_access_cs.cpp:
+        * tao_idl/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * tao_idl/be/be_visitor_union_branch/public_ci.cpp:
+          Implemented TAO_Object_Field_T<foo> in place of foo_ptr
+          for objects inside a union, so that _upcast() and
+          _downcast() will work.
+
+Mon Jan 04 16:08:49 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/Event_Channel_i.cpp (for_consumers):
+          added missing ; at end of statement.
+
+        * TAO_IDL/Makefile: with GreenHills gcx, added -w to CCFLAGS
+          to suppress many warnings about TAO_YY_BREAK statements being
+          unreachable.
+
+Mon Jan  4 14:29:49 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+
+          For the [] operator, instead of returning a
+          TAO_SeqElem_String_Manager, we were generating
+          TAO_String_Manager.
+
+        * tests/Param_Test/objref.cpp
+          tests/Param_Test/ub_objref_seq.cpp:
+
+          There were instances of incorrect assignment between a
+          String_var and a TAO_String_Manager.
+
+Mon Jan 04 12:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Runtime_Scheduler.{cpp, h}
+          orbsvcs/orbsvcs/Scheduler_Utilities.{h, i}: added
+          ACE_NEW_THROW_RETURN, lots of comments.
+
+Mon Jan 04 12:04:37 1999  Carlos O'Ryan  <coryan@JIG>
+
+        * orbsvcs/orbsvcs/CosEvent/*
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+          Another code review for Pradeep.
+
+Mon Jan  4 07:39:27 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+
+          The code was written with the assumption that a string member of
+          a struct gets mapped to CORBA::String_var. However, due to the
+          recent changes made to the IDL compiler where a string member
+          gets mapped to a TAO_String_Manager caused several problems in
+          the Trader code. This happened when the string member was
+          assigned directly to a CORBA::String_var class. The right way to
+          do this is to use the "in ()" method on the TAO_String_Manager
+          class to retrieve the underlying string.
+
+        * tao/Managed_Types.h
+          tao/ORB.h:
+
+          I had forgotten to include the Managed_Types.i file when the
+          ACE_INLINE macro is defined. This was causing all kinds of
+          undefined symbol errors at link time. However, it turns out that
+          the Managed_Types.i file uses operations such as
+          CORBA::string_free that get used before their inline definition
+          is seen in ORB.i. The solution to this dependency problem is to
+          include Managed_Types.i after ORB.i in the file ORB.h.
+
+        * tao/{Sequence, Sequence_T}.{i,cpp} (operator []):
+
+          Moved the definition of the [] operator to the *.cpp file since
+          it was using the inline constructor of the
+          TAO_SeqElem_String_Manager before it was defined.
+
+        * tao/Managed_Types.i:
+
+          Some missing ACE_INLINE added.
+
+Mon Jan 04 00:15:13 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/tests/ImplRepo/IR_Helper.cpp:
+          Updated to work with recent changes to the ORB (specifically the
+          IIOP_Object constructor and ORB_Core::addr()).
+
+Sun Jan 03 23:05:08 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/TAO_Static.dsp:
+        * tao/TAO.dsp:
+
+          Added Managed_Types.cpp to build.
+
+Sun Jan 03 22:42:22 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp (TAO_UTO): moved "/2" out of
+          the ACE_U64_TO_U32 conversion, because dividing an ACE_U_LongLong
+          by an int results in an ACE_UINT32.
+
+Sun Jan  3 22:01:37 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+        * orbsvcs/Time_Service/Server_i.cpp:
+          Used rebind () instead of bind (). Because servers dont handle ^C,
+          once bound contexts stay bound till the Naming Service is up.
+          This was already being done for clerks. Commented out the IR part.
+          Fixed warnings in init() and run() methods.
+
+        * orbsvcs/Time_Service/Server_i.h:
+          Added some comments. Also commented out the IR part, so I could
+          fix the warnings pointed out by David and check the files in.
+
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+          Added some comments. Commented out the IR part. Removed warnings
+          for unreferenced variables
+
+Sun Jan 03 21:39:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/POA.cpp (encode_sequence_to_string): Removed extra call to
+          isascii().  It's followed by an isprint(): if byte is printable,
+          then it must be ascii.  Thanks to David Levine and Chris
+          Cleeland for helping with this.
+
+Sun Jan  3 21:10:42 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+        Addded a new function to check if it is the first server or clerk.
+        If it is then get a new context and bind it to the Name Server.
+        The subsequent servers and clerks will bind to this context. The
+        way this was being done previously is by clearing the exception
+        and checking the return value of NamingContext::resolve (). Was
+        working fine on Solaris but threw an exception on NT. I am now
+        handling the exception appropriately. Also corrected a memory
+        problem using CORBA::string_dup.
+
+        * orbsvcs/Time_Service/Server_i.cpp:
+        * orbsvcs/Time_Service/Server_i.h:
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+        * orbsvcs/Time_Service/Clerk_i.h:
+
+Sun Jan  3 20:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * docs/releasenotes/index.html: added TAO Scheduling Service section
+
+Sun Jan  3 19:22:23 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+        * orbsvcs/CosEvent_Service/CosEvent_Service.h:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+        * orbsvcs/CosEvent_Service/README:
+        * orbsvcs/CosEvent_Service/Makefile:
+          added the above files for the COS Event Service.
+
+Sun Jan  3 18:56:51 1999  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tao/DynSequence_i.{h,cpp}:
+        * tao/DynStruct_i.{h<cpp}:
+          Changed use of ACE_Array to use of ACE_Array_Base,
+          to match Carlos' changes to DynArray_i.
+
+Sun Jan  3 18:54:29  1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+        * examples/POA/On_Demand_Loading/On_Demand_Loading.dsw:
+        * examples/POA/On_Demand_Loading/"POA On_Demand_Loading Server.dsp":
+          Added the NT workspace for the On_Demand_Loading example.
+
+        * examples/POA/Loader/Loader.dsp:
+        * examples/POA/Loader/"POA Loader Server.dsp":
+          Added the NT workspace for the Loader example.
+
+        * examples/POA/Generic_Servant/Server.dsp:
+          Changed the settings of the project so that MyFoo.dll is produced as output.
+
+Sun Jan  3 19:27:01 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+        * tao/Managed_Types.{h,i,cpp}:
+
+          Three new files added. These define and implement the various
+          manager classes such as TAO_String_Manager,
+          TAO_SeqElem_String_Manager that are required by the IDL to C++
+          mapping for struct members that are strings and sequences of
+          strings, respectively. We had to resort to two different
+          managers because the managed type for sequence of strings must
+          obey the value of the release data member of the sequence
+          class. Other than this, the semantics are the same.
+
+        * tao/ORB.h:
+
+          Included the newly added Managed_Types.h file.
+
+        * tao/{Sequence, Sequence_T}.{h,i,cpp}:
+
+          Moved the TAO_String_Manager to the Managed_Types.* files. In
+          addition, we now use TAO_SeqElem_String_Manager for the return
+          type of the [] operator.
+
+        * TAO_IDL/be/be_visitor_array/array.cpp (visit_string):
+
+          Arrays of strings now use the TAO_String_Manager as its element
+          type instead of CORBA::String_var. This was required to conform
+          to the IDL->C++ mapping.
+
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp (visit_string):
+
+          Struct memebrs that are strings now use the TAO_String_Manager
+          as its type instead of CORBA::String_var. This was required to conform
+          to the IDL->C++ mapping.
+
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp
+          TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp
+          TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp
+
+          The generated code now produces TAO_SeqElem_String_Manager
+          instead of TAO_String_Manager for the [] operator.
+
+        * docs/releasenotes/index.html:
+
+          Updated to reflect latest status. Also, removed some old
+          comments that are no longer applicable.
+
+Sun Jan  3 17:32:27 1999  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Vistors.cpp:
+          Added some casting to fix some conversion warnings I was
+          getting while rebuilding with VC5.
+
+Sun Jan  3 13:12:27 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+        Added the TAO_ORBSVCS_Export macro to the following files.
+
+        * orbsvcs/orbsvcs/Time/Timer_Helper.h
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h
+        * orbsvcs/orbsvcs/Time/TAO_UTO.h
+        * orbsvcs/orbsvcs/Time/TAO_TIO.h
+
+Sat Jan  2 17:32:35 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+          split the <init> method over 3 other  methods -
+          <init_ORB>, <init_RtEC> and <init_CosEC>.
+
+Sat Jan 02 11:15:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp (obtain_push_supplier):
+          added .in () dereference to rtecproxypushsupplier.
+
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp (obtain_push_consumer):
+          added .in () dereference to rtecproxypushconsumer.
+
+        * examples/Simple/grid/Client_i.cpp (test_grid): added
+          ACE_UNUSED_ARG (ret_val) to avoid compiler warning with ACE_NDEBUG.
+
+        * orbsvcs/Time_Service/Clerk_i.cpp (get_first_IOR): added
+          .in () dereference to obj.
+
+Fri Jan  1 23:31:48 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.h:
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp:
+          corrections to comments after code review.
+
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp:
+          using ACE_NEW now.
+
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp:
+          using ACE_NEW now.
+
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
+          uses ACE_NEW now, added a <connected> method,
+          connect_push_consumer method throws AlreadyConnected and
+          BAD_PARAM exceptions.
+
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+          uses ACE_NEW now.
+
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.h:
+          changed method names to init,run and shutdown.
+          corrections to comments after code review.
+
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+          added checks for return errors.
+
+        * orbsvcs/tests/CosEC_Basic/CosECSupplier.h:
+        * orbsvcs/tests/CosEC_Basic/CosECSupplier.cpp:
+          corrections to comments after code review.
+          <disconnect_push_supplier> method now deactivates
+          the Supplier object.
+
+        * orbsvcs/tests/CosEC_Basic/CosECConsumer.h:
+        * orbsvcs/tests/CosEC_Basic/CosECConsumer.cpp:
+          corrections to comments after code review.
+          <disconnect_push_consumer> method now deactivates
+          the Comsumer object.
+
+Fri Jan  1 18:11:07 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+        * orbsvcs/Time_Service/Clerk_i.cpp : Used _duplicate ()
+        on the server IORs. This overcomes the automatic deletion of memory.
+
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp : Used the advance () method
+        to iterate over the ACE_Array. The ACE_Unbounded_Set which was being
+        used earlier did not require this method to be used.
+
+Fri Jan 01 16:48:23 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp (TAO_UTO): replaced cast
+          with ACE_U64_TO_U32 macro invocation.
+
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp: added
+          ACE_Array_Base<TAO_EC_Event> explicit instantiation.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: added
+          a bunch of TAO_find explicit instantiations.
+
+Fri Jan  1 13:33:33 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp: Removed a ; at the end of a
+          function. Digital Unix 4.0 was throwing a warning for this.
+
+Fri Jan  1 12:29:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/Makefile:
+          Added the Time_Service directory.
+
+        * orbsvcs/Time_Service/Clerk_i.h:
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
+        * orbsvcs/orbsvcs/Time/Timer_Helper.h:
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
+          Use ACE_Array_Base instead of ACE_Unbounded_Set because it does
+          not require an == or != operator defined.
+
+        * tao/DynArray_i.h:
+        * tao/DynArray_i.cpp:
+          Use ACE_Array_Base instead of ACE_Array.
+
+Fri Jan  1 11:51:42 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+        Removed some VxWorks errors like 'TAO_TRY_LABEL unreferenced' in
+        the following files.
+
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_TIO.cpp:
+        * orbsvcs/orbsvcs/Time//TAO_UTO.cpp:
+        * orbsvcs/orbsvcs/Time//TAO_Time_Service_Clerk.cpp:
+
+Fri Jan 01 02:45:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp (gen_forany_impl and
+          gen_var_impl): There is no cast required for assigning a pointer
+          to zero. Thanks to Patrice Bensoussan <pbensoussan@amadeus.net>
+          for reporting this bug.
+
+        * Active_Object_Map.i: Rearranged functions to remove "redeclared
+          inline after being called" warnings.  Thanks to David for
+          pointing these out.
