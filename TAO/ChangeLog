@@ -1,3 +1,9 @@
+Fri Mar 14 14:48:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/examples/ORT/Gateway_i.cpp:
+
+          Fixed Any constructor to have a CORBA compliant signature.
+
 Fri Mar 14 14:08:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
