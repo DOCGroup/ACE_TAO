@@ -463,7 +463,7 @@ class ACE_Export ACE_Mutex_Token : public ACE_Tokens
   //    order as other threads release the token (SunOS 5.x mutexes
   //    don't strictly enforce an acquisition order).
 public:
-  ACE_Mutex_Token (const ACE_TCHAR* name);
+  ACE_EXPLICIT ACE_Mutex_Token (const ACE_TCHAR* name);
   // life
 
   virtual ~ACE_Mutex_Token (void);
@@ -551,7 +551,7 @@ class ACE_Export ACE_RW_Token : public ACE_Tokens
   //    other threads release the token (SunOS 5.x mutexes don't strictly
   //    enforce an acquisition order).
 public:
-  ACE_RW_Token (const ACE_TCHAR* name);
+  ACE_EXPLICIT ACE_RW_Token (const ACE_TCHAR* name);
   // Life.
 
   virtual ~ACE_RW_Token (void);

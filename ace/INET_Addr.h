@@ -47,7 +47,7 @@ public:
   // Creates an <ACE_INET_Addr> from a <port_number> and the remote
   // <host_name>.
 
-  ACE_INET_Addr (const ACE_TCHAR address[]);
+  ACE_EXPLICIT ACE_INET_Addr (const ACE_TCHAR address[]);
   // Initializes an <ACE_INET_Addr> from the <address>, which can be
   // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
   // "128.252.166.57:1234").  If there is no ':' in the <address> it

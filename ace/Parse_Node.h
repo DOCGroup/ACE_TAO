@@ -31,7 +31,7 @@ class ACE_Export ACE_Parse_Node
   //    tree of Service Nodes.
 public:
   ACE_Parse_Node (void);
-  ACE_Parse_Node (const ACE_TCHAR *name);
+  ACE_EXPLICIT ACE_Parse_Node (const ACE_TCHAR *name);
   virtual ~ACE_Parse_Node (void);
 
   ACE_Parse_Node *link (void) const;
@@ -278,7 +278,7 @@ class ACE_Export ACE_Static_Function_Node : public ACE_Location_Node
   //     linked in from a DLL, but is statically linked with the
   //     application.
 public:
-  ACE_Static_Function_Node (const ACE_TCHAR *func_name);
+  ACE_EXPLICIT ACE_Static_Function_Node (const ACE_TCHAR *func_name);
   virtual void *symbol (ACE_Service_Object_Exterminator * = 0);
   virtual ~ACE_Static_Function_Node (void);
 

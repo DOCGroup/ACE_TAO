@@ -42,7 +42,7 @@ public:
   // Acts like a copy constructor.  If <sa> == ACE_Addr::sap_any then
   // create a temporary filename using <ACE_OS::mktemp>.
 
-  ACE_FILE_Addr (const ACE_TCHAR *filename);
+  ACE_EXPLICIT ACE_FILE_Addr (const ACE_TCHAR *filename);
   // Create a ACE_FILE_Addr from a pathname.
 
   int set (const ACE_TCHAR *filename);
