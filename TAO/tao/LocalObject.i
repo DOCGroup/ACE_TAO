@@ -19,16 +19,20 @@ CORBA::LocalObject::_nil (void)
 }
 
 ACE_INLINE CORBA::LocalObject_ptr
-CORBA::LocalObject::_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
+CORBA::LocalObject::_narrow (CORBA::Object_ptr obj, CORBA::Environment& ACE_TRY_ENV)
 {
-   (!ACE_OS::strcmp (, "IDL:omg.org/CORBA/LocalObject:1.0"))
-  return CORBA::LocalObject::_duplicate (obj);
+  if (obj->_is_a ("IDL:omg.org/CORBA/LocalObject:1.0", ACE_TRY_ENV))
+    return CORBA::LocalObject::_unchecked_narrow (obj, ACE_TRY_ENV);
+  else
+    return 0;
 }
 
 ACE_INLINE CORBA::LocalObject_ptr
-CORBA::LocalObject::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
+CORBA::LocalObject::_unchecked_narrow (CORBA::Object_ptr obj, CORBA::Environment&)
 {
-  return CORBA::LocalObject::_duplicate (obj);
+  return CORBA::LocalObject::_duplicate
+    (ACE_reinterpret_cast (CORBA::LocalObject_ptr,
+                           ACE_reinterpret_cast (void *, obj)));
 }
 
 // *************************************************************
@@ -36,30 +40,30 @@ CORBA::LocalObject::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment&
 // *************************************************************
 
 ACE_INLINE
-CORBA::LocalObject_var::CORBA::LocalObject_var (void)
+CORBA::LocalObject_var::LocalObject_var (void)
   : ptr_ (CORBA::LocalObject::_nil ())
 {
 }
 
 ACE_INLINE
-CORBA::LocalObject_var::CORBA::LocalObject_var (CORBA::LocalObject_ptr p)
+CORBA::LocalObject_var::LocalObject_var (CORBA::LocalObject_ptr p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA::LocalObject_var::~CORBA::LocalObject_var (void)
+CORBA::LocalObject_var::~LocalObject_var (void)
 {
   CORBA::release (this->ptr_);
 }
 
-ACE_INLINE CORBA_Object_ptr
+ACE_INLINE CORBA::LocalObject_ptr
 CORBA::LocalObject_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA::LocalObject_var::CORBA::LocalObject_var (const CORBA::LocalObject_var &p) // copy constructor
+CORBA::LocalObject_var::LocalObject_var (const CORBA::LocalObject_var &p) // copy constructor
         : ptr_ (CORBA::LocalObject::_duplicate (p.ptr ()))
 {}
 
@@ -134,14 +138,14 @@ CORBA::LocalObject_var::_retn (void)
 // *************************************************************
 
 ACE_INLINE
-CORBA::LocalObject_out::CORBA::LocalObject_out (CORBA::LocalObject_ptr &p)
+CORBA::LocalObject_out::LocalObject_out (CORBA::LocalObject_ptr &p)
         : ptr_ (p)
 {
   this->ptr_ = CORBA::LocalObject::_nil ();
 }
 
 ACE_INLINE
-CORBA::LocalObject_out::CORBA::LocalObject_out (CORBA::LocalObject_var &p) // constructor from _var
+CORBA::LocalObject_out::LocalObject_out (CORBA::LocalObject_var &p) // constructor from _var
         : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
@@ -149,7 +153,7 @@ CORBA::LocalObject_out::CORBA::LocalObject_out (CORBA::LocalObject_var &p) // co
 }
 
 ACE_INLINE
-CORBA::LocalObject_out::CORBA::LocalObject_out (const CORBA::LocalObject_out &p) // copy constructor
+CORBA::LocalObject_out::LocalObject_out (const CORBA::LocalObject_out &p) // copy constructor
         : ptr_ (p.ptr_)
 {}
 
