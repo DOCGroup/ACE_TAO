@@ -2,7 +2,10 @@
 // $Id$
 
 project(Node_Daemon): ciao_server, iortable {
+  libs += Deployment_svnt
   requires += dnc
+  includes += $(CIAO_ROOT)/DnC
+
   IDL_Files {
     NodeDaemon.idl
   }
@@ -11,25 +14,7 @@ project(Node_Daemon): ciao_server, iortable {
     NodeDaemonC.cpp
     NodeDaemonS.cpp
     NodeDaemon_Impl.cpp
+    NodeApplicationManager_Impl.cpp
     Node_Daemon.cpp
-  }
-}
-
-project(NodeDaemonController) : ciao_server, acexml, rtcorba {
-  requires += dnc
-  libs += CIAO_XML_Helpers
-  libpaths += ../XML_Helpers
-  after += XML_Helpers
-
-  IDL_Files {
-    NodeDaemon.idl
-  }
-
-  Source_Files {
-    NodeDaemonC.cpp
-    DaemonController.cpp
-    controller_i.cpp
-    Daemon_Commands.cpp
-    Softpkg_Commands.cpp
   }
 }

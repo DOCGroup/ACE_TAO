@@ -11,8 +11,6 @@
 
 module CIAO
 {
-  exception NotFound {};
-
   /**
    * @brief CIAO daemon process control program.
    *
@@ -24,10 +22,6 @@ module CIAO
   {
     // Canonical name of this daemon
     readonly attribute string name;
-
-    // Acquire a specific service
-    Object get_service (in string svc_name)
-      raises (NotFound);
 
     // Shutdown the daemon process.
     oneway void shutdown ();
