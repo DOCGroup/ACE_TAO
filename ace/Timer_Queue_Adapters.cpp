@@ -68,7 +68,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
   ACE_Sig_Guard sg (&this->mask_);
   ACE_UNUSED_ARG (sg);
 
-  // @@ We need to figure out how to implement interval timers...
+  // @@ We still need to implement interval timers...
   long tid = this->timer_queue_.schedule (eh, 0, delay);
 
   if (tid == -1)
