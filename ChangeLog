@@ -1,3 +1,16 @@
+Mon Dec 20 10:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.h:
+          Removed not needed VxWorks specific include
+
+        * ace/config-tandem.h:
+          Removed a lot of commented out defines, makes it much easier
+          to search for deprecated defines
+
+        * ace/config-g++-common.h:
+          Removed check for VxWorks >= 540, older versions are not supported
+          anymore, so no need to do this check
+
 Sun Dec 19 14:23:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
