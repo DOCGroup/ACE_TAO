@@ -8,21 +8,15 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-VISIJAVA_BIN=/project/doc/pkg/VisiJava-3.2/bin
+#### VisiBroker 3.2
+JAVA_DIR = /project/doc/pkg/VisiJava-3.2/bin/
+IDL2JAVA = $(JAVA_DIR)idl2java
+JAVAC = $(JAVA_DIR)vbjc
 
-#### Make sure that VisiJava is installed and visible.
-ifeq ($(shell type idl2java),)
-  #### Try again, appending $(VISIJAVA_BIN) to the PATH.  Use := instead
-  #### of += because there was an embedded space with +=.
-  PATH:=$(PATH):$(VISIJAVA_BIN)
-  ifeq ($(findstring No such, \
-                     $(shell ls $(VISIJAVA_BIN)/idl2java 2>&1)), \
-        No such)
-    ERROR:
-	  @echo idl2java was not found.  Please specify its path in
-	  @echo your VISIJAVA_BIN environment variable.
-  endif
-endif
+#### JDK 1.2
+#### JAVA_DIR = /pkg/java_1.2b4/bin/
+#### IDL2JAVA = $(JAVA_DIR)idltojava
+#### JAVAC = $(JAVA_DIR)javac
 
 DOVE_BROWSER_JAVA = \
         CosNaming.java \
@@ -50,6 +44,14 @@ ifeq ($(CROSS-COMPILE),)
   include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   include $(TAO_ROOT)/taoconfig.mk
+
+  realclean: clean
+	-/bin/rm -rf $(DOVE_BROWSER_JAVA) \
+         $(patsubst %.java,%.idl,$(DOVE_BROWSER_JAVA)) NavWeap.idl \
+         Navigation.java NavigationH*.java \
+         Weapons.java WeaponsH*.java *.class CosNaming \
+         RtecEventChannelAdmin RtecEventComm RtecScheduler TimeBase
+
 else
   all default_embedded:
 	@echo This module is not built on CROSS-COMPILE platforms.
@@ -72,26 +74,27 @@ OBJDIRS =
 .PRECIOUS: $(DOVE_BROWSER_JAVA) $(patsubst %.java,%.idl,$(DOVE_BROWSER_JAVA))
 
 %.java: %.idl
-	@idl2java $<
+	@$(IDL2JAVA) $<
 
-%.class: %.java
-	@vbjc *.java
+ifeq ($(findstring vbjc, $(JAVAC)), vbjc)
+  %.class: %.java
+  #### VisiBroker 3.2 idl2java creates references to a _long type,
+  #### but never defines it.  Just change it to long.
+	perl -pi -e 's/\b_long\b/long/g' \
+          `find . -name '*.java' | xargs egrep -l ' _long'`
+else  # ! vbjc
+  %.class: %.java
+endif # vbjc
+	@$(JAVAC) *.java
 
 NavWeap.idl: ../NavWeap.idl
 	@cp -p $< .
 
 Navigation.java Weapons.java: NavWeap.idl
-	@idl2java $<
+	@$(IDL2JAVA) $<
 
 %.idl: $(TAO_ROOT)/orbsvcs/orbsvcs/%.idl
 	@cp -p $< .
-
-realclean: clean
-	-/bin/rm -rf $(DOVE_BROWSER_JAVA) \
-         $(patsubst %.java,%.idl,$(DOVE_BROWSER_JAVA)) NavWeap.idl \
-         Navigation.java NavigationH*.java \
-         Weapons.java WeaponsH*.java *.class CosNaming \
-	 RtecEventChannelAdmin RtecEventComm RtecScheduler TimeBase
 
 #----------------------------------------------------------------------------
 #       Dependencies
