@@ -52,7 +52,15 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   while (registered_objects_ &&
          registered_objects_->dequeue_head (info) != -1)
     {
-      (*info.cleanup_hook_) (info.object_, info.param_);
+      if (info.cleanup_hook_ == (ACE_CLEANUP_FUNC) ace_cleanup_destroyer)
+        {
+          //
+          ace_cleanup_destroyer ((ACE_Cleanup *) info.object_, info.param_);
+        }
+      else
+        {
+          (*info.cleanup_hook_) (info.object_, info.param_);
+        }
     }
 
   delete registered_objects_;
