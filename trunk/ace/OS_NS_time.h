@@ -152,13 +152,15 @@ inline long ace_timezone()
 # elif defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) \
 	&& !defined (__linux__)  \
 	&& !defined (__FreeBSD__) \
-	&& !defined (__NetBSD__) \
-	&& !defined (__OpenBSD__)
+	&& !defined (__NetBSD__)
   // The XPG/POSIX specification does not require gettimeofday to
   // set the timezone struct (it leaves the behavior of passing a
   // non-null struct undefined).  We know gettimeofday() on Linux
   // *BSD systems does not set the timezone, so we avoid using it
   // and use the global variable <timezone> instead. 
+  //
+  // @note As of this writing, OpenBSD does not provide the global
+  // variable timezone.
   //
   // @todo It would be better if we had a feature test macro that
   // could be used instead of a list of operating systems.
