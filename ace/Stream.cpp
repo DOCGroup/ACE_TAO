@@ -122,22 +122,18 @@ ACE_Stream<ACE_SYNCH_USE>::insert (const ACE_TCHAR *prev_name,
     if (ACE_OS::strcmp (prev_mod->name (), prev_name) == 0)
       {
         ACE_Module<ACE_SYNCH_USE> *next_mod = prev_mod->next ();
-        ACE_Task<ACE_SYNCH_USE> *m_reader = mod->reader ();
-        ACE_Task<ACE_SYNCH_USE> *m_writer = mod->writer ();
 
-        next_mod->reader ()->next (m_reader);
-        m_writer->next (next_mod->writer ());
-
-        prev_mod->next (mod);
-        prev_mod->writer ()->next (m_writer);
-        m_reader->next (prev_mod->reader ());
-
-        mod->next (next_mod);
-
-        if (m_reader->open (mod->arg ()) == -1)
+        // We can't insert a module below <stream_tail_>.
+        if (next_mod == 0)
           return -1;
 
-        if (m_writer->open (mod->arg ()) == -1)
+        mod->link (next_mod);
+        prev_mod->link (mod);
+
+        if (mod->reader ()->open (mod->arg ()) == -1)
+          return -1;
+
+        if (mod->writer ()->open (mod->arg ()) == -1)
           return -1;
 
         return 0;
@@ -159,29 +155,30 @@ ACE_Stream<ACE_SYNCH_USE>::replace (const ACE_TCHAR *replace_name,
        rep_mod = rep_mod->next ())
     if (ACE_OS::strcmp (rep_mod->name (), replace_name) == 0)
       {
-        if (prev_mod == 0) // Do you want to replace <stream_head_>?
-          return -1;       // Might be modified?
-        else
+        ACE_Module<ACE_SYNCH_USE> *next_mod = rep_mod->next ();
+
+        if (next_mod)
+          mod->link (next_mod);
+        else // In case the <next_mod> is <stream_tail_>.
           {
-            ACE_Module<ACE_SYNCH_USE> *next_mod = rep_mod->next ();
-            ACE_Task<ACE_SYNCH_USE> *m_reader = mod->reader ();
-            ACE_Task<ACE_SYNCH_USE> *m_writer = mod->writer ();
-
-            next_mod->reader ()->next (m_reader);
-            m_writer->next (next_mod->writer ());
-
-            prev_mod->next (mod);
-            prev_mod->writer ()->next (m_writer);
-            m_reader->next (prev_mod->reader ());
-
-            mod->next (next_mod);
-
-            if (m_reader->open (mod->arg ()) == -1)
-              return -1;
-
-            if (m_writer->open (mod->arg ()) == -1)
-              return -1;
+            mod->writer ()->next (0);
+            mod->next (0);
+            this->stream_tail_ = mod;
           }
+
+        if (prev_mod)
+          prev_mod->link (mod);
+        else // In case the <prev_mod> is <stream_head_>.
+          {
+            mod->reader ()->next (0);
+            this->stream_head_ = mod;
+          }
+
+        if (mod->reader ()->open (mod->arg ()) == -1)
+          return -1;
+
+        if (mod->writer ()->open (mod->arg ()) == -1)
+          return -1;
 
         if (flags != ACE_Module<ACE_SYNCH_USE>::M_DELETE_NONE)
           {
