@@ -176,7 +176,7 @@ IIOP_Object::QueryInterface (REFIID riid,
 }
 
 //TAO extensions
-const char *IIOP_Object::_get_name (CORBA::Environment &)
+char *IIOP_Object::_get_name (CORBA::Environment &)
 {
   char *name;
 
