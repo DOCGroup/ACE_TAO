@@ -1,3 +1,10 @@
+Thu Jul 20 14:12:44 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/posix/unistd.inl:
+	* pace/unistd.h:
+
+	  Lots of int file descriptors changed to PACE_HANDLE.
+
 Wed Jul 19 19:50:54 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/utility.h:
