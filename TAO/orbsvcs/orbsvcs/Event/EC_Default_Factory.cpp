@@ -17,6 +17,7 @@
 #include "EC_Priority_Scheduling.h"
 #include "EC_Proxy_Collection.h"
 #include "EC_Concrete_Proxy_Set.h"
+#include "EC_Command.h" // Work around bug in GHS compiler
 #include "EC_Reactive_Timeout_Generator.h"
 #include "EC_Event_Channel.h"
 #include "EC_Reactive_ConsumerControl.h"

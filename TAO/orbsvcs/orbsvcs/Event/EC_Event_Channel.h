@@ -149,6 +149,10 @@ public:
   TAO_EC_Scheduling_Strategy* scheduling_strategy (void) const;
   // Access the scheduling strategy
 
+  TAO_EC_ConsumerControl *consumer_control (void) const;
+  TAO_EC_SupplierControl *supplier_control (void) const;
+  // Access the client control strategies.
+
   // = The factory methods, they delegate on the EC_Factory.
   TAO_EC_ProxyPushSupplier* create_proxy_push_supplier (void);
   void destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier*);

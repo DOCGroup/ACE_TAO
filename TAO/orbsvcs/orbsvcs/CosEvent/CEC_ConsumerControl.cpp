@@ -35,6 +35,12 @@ TAO_CEC_ConsumerControl::consumer_not_exist (TAO_CEC_ProxyPushSupplier *,
 }
 
 void
+TAO_CEC_ConsumerControl::consumer_not_exist (TAO_CEC_ProxyPullSupplier *,
+                                             CORBA::Environment &)
+{
+}
+
+void
 TAO_CEC_ConsumerControl::system_exception (TAO_CEC_ProxyPushSupplier *,
                                            CORBA::SystemException &,
                                            CORBA::Environment &)

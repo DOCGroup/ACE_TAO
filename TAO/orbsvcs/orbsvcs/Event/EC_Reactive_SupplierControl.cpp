@@ -161,8 +161,11 @@ TAO_EC_Reactive_SupplierControl::system_exception (
 {
   ACE_TRY
     {
-      // This is TAO's minor code for a failed connection, we may
-      // want to be more lenient in the future..
+      // The current implementation is very strict, and kicks out a
+      // client on the first system exception. We may
+      // want to be more lenient in the future, for example,
+      // this is TAO's minor code for a failed connection.
+      //
       // if (CORBA::TRANSIENT::_narrow (&exception) != 0
       //     && exception->minor () == 0x54410085)
       //   return;

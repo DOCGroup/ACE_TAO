@@ -30,6 +30,7 @@
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushSupplier;
+class TAO_CEC_ProxyPullSupplier;
 
 class TAO_ORBSVCS_Export TAO_CEC_ConsumerControl
 {
@@ -65,6 +66,12 @@ public:
   // exception was raised. The only interpretation is that the object
   // has been destroyed.  The strategy has to (at the very least),
   // reclaim all the resources attached to that object.
+
+  virtual void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy,
+                                   CORBA::Environment &);
+  // Invoked by helper classes when they detect that a consumer no
+  // longer exists (i.e. _non_existent() returns true and/or the
+  // CORBA::OBJECT_NOT_EXIST exception has been raised).
 
   virtual void system_exception (TAO_CEC_ProxyPushSupplier *proxy,
                                  CORBA::SystemException &,
