@@ -70,14 +70,15 @@ int be_visitor_union_ch::visit_union (be_union *node)
           << "public:" << be_idt_nl
 
         // generate default and copy constructors
-          << node->local_name () << " (void); // default constructor" << be_nl
+          << node->local_name () << " (void);" << be_nl
           << node->local_name () << " (const " << node->local_name ()
-          << " &); // copy constructor" << be_nl
+          << " &);" << be_nl
         // generate destructor
-          << "~" << node->local_name () << " (void); // destructor" << be_nl
+          << "~" << node->local_name () << " (void);" << be_nl
+          << "static void _tao_any_destructor (void*);\n" << be_nl
         // generate assignment operator
           << node->local_name () << " &operator= (const "
-          << node->local_name () << " &); // copy constructor\n\n";
+          << node->local_name () << " &);\n\n";
 
       // retrieve the disriminant type
       bt = be_type::narrow_from_decl (node->disc_type ());

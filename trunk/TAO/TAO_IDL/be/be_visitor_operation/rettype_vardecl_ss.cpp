@@ -78,32 +78,23 @@ be_visitor_operation_rettype_vardecl_ss::visit_enum (be_enum *node)
 }
 
 int
-be_visitor_operation_rettype_vardecl_ss::visit_interface (be_interface *)
+be_visitor_operation_rettype_vardecl_ss::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  // due to the virtual inheritance and the fact that we will be passing the
-  // address of the objref to the marshaling routine, we use the base
-  // CORBA::Object_ptr as the type for the return value even though the actual
-  // return type may be some derived class
-  *os << "CORBA::Object_var _tao_retval = CORBA::Object::_nil ();\n";
-
+  *os << node->name () << "_var _tao_retval;\n";
   return 0;
 }
 
 int
 be_visitor_operation_rettype_vardecl_ss::
-visit_interface_fwd (be_interface_fwd *)
+visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  // due to the virtual inheritance and the fact that we will be passing the
-  // address of the objref to the marshaling routine, we use the base
-  // CORBA::Object_ptr as the type for the return value even though the actual
-  // return type may be some derived class
-  *os << "CORBA::Object_var _tao_retval = CORBA::Object::_nil ();\n";
+  *os << node->name () << "_var _tao_retval;\n";
   return 0;
 }
 
@@ -264,41 +255,3 @@ be_visitor_operation_rettype_vardecl_ss::visit_union (be_union *node)
 }
 
 
-// ********************************************************************************
-//    be_visitor_operation_rettype_vardecl_ss
-//    This visitor generates code for variable declaration and initialization
-//    of the return type.
-// ********************************************************************************
-
-be_compiled_visitor_operation_rettype_vardecl_ss
-::be_compiled_visitor_operation_rettype_vardecl_ss
-(be_visitor_context *ctx)
-  : be_visitor_operation_rettype_vardecl_ss (ctx)
-{
-}
-
-be_compiled_visitor_operation_rettype_vardecl_ss::
-~be_compiled_visitor_operation_rettype_vardecl_ss (void)
-{
-}
-
-int
-be_compiled_visitor_operation_rettype_vardecl_ss::visit_interface (be_interface *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-
-  os->indent ();
-  *os << node->name () << "_var _tao_retval;\n";
-  return 0;
-}
-
-int
-be_compiled_visitor_operation_rettype_vardecl_ss::
-visit_interface_fwd (be_interface_fwd *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-
-  os->indent ();
-  *os << node->name () << "_var _tao_retval;\n";
-  return 0;
-}

@@ -68,39 +68,6 @@ public:
   // whether we own it or not
 };
 
-class TAO_Call_Data_Skel
-{
-  // = TITLE
-  //   Descriptions of operations, as used by the stub interpreter.
-  //   Only interpretive marshaling/unmarshaling is used, and the
-  //   stubs don't know what particular on-the-wire protocol is being
-  //   used.
-  //
-  // = DESCRIPTION
-  //   When using C++ exceptions, many C++ compilers will require the
-  //   use of compiled code throw the exception.  As binary standards
-  //   for exception throwing evolve, it may become practical to
-  //   interpretively throw exceptions.
-public:
-  const char *opname;
-  // Operation name.
-
-  CORBA::Boolean is_roundtrip;
-  // !oneway
-
-  // When constructing tables of parameters, put them in the same
-  // order they appear in the IDL spec: return value, then parameters
-  // left to right.  Other orders may produce illegal IIOP protocol
-  // messages.
-
-  CORBA::ULong param_count;
-  // # parameters.
-
-  const TAO_Param_Data_Skel *params;
-  // Their descriptions.
-
-};
-
 class TAO_Export CORBA_ServerRequest
 {
   // = TITLE
@@ -192,17 +159,6 @@ public:
 
   virtual CORBA::ORB_ptr  orb (void) = 0;
   // get the underlying ORB
-
-  virtual void demarshal (CORBA_Environment &ACE_TRY_ENV,
-                          const TAO_Call_Data_Skel *info,
-                          ...) = 0;
-  // demarshal incoming parameters
-
-  virtual void marshal (CORBA_Environment &ACE_TRY_ENV,
-                        //                        CORBA_Environment &skel_env,
-                        const TAO_Call_Data_Skel *info,
-                        ...) = 0;
-  // marshal outgoing parameters
 
   virtual TAO_InputCDR &incoming (void) = 0;
   // Retrieve the incoming stream.

@@ -74,13 +74,13 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
                             -1);
         }
 
-      // If our base type is anonymous sequence, 
+      // If our base type is anonymous sequence,
       // generate code for the base type sequence here.
 
       if (bt->node_type () == AST_Decl::NT_sequence)
         {
-          if (this->gen_anonymous_base_type (bt, 
-                                             TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS) 
+          if (this->gen_anonymous_base_type (bt,
+                                             TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS)
               == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -88,7 +88,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
                                  "visit_sequence - "
                                  "gen_anonymous_base_type failed\n"),
                                 -1);
-            }              
+            }
         }
 
       // generate the CDR << and >> operator defns
@@ -194,7 +194,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       *os << "return 1;" << be_uidt_nl;
       *os << "// retrieve all the elements" << be_nl;
 
-      
+
       if (bt->node_type () == AST_Decl::NT_sequence)
         {
           this->visit_node (node);
@@ -593,7 +593,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             }
 
           *os << "_copy (_tao_sequence[i], tmp.in ());" << be_nl;
-          
+
           if (bt->accept (visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -660,7 +660,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
 
             if (pt->pt () == AST_PredefinedType::PT_pseudo)
               {
-                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());" 
+                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());"
                     << be_uidt_nl;
               }
             else
@@ -689,7 +689,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             }
 
           *os << "_var tmp_var (" << be_idt << be_idt_nl;
-          
+
           if (bt->accept (visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,

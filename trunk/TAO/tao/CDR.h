@@ -132,14 +132,6 @@ public:
 
   // = TAO specific methods.
 
-  CORBA::TypeCode::traverse_status encode (CORBA::TypeCode_ptr tc,
-                                           const void *data,
-                                           const void *,
-                                           CORBA_Environment &ACE_TRY_ENV =
-                                           TAO_default_environment ());
-  // Marshalls the contents of <data> as described by the TypeCode in
-  // <tc>. Any errors are reported though the <ACE_TRY_ENV> parameter.
-
 private:
   TAO_OutputCDR (const TAO_OutputCDR& rhs);
   TAO_OutputCDR& operator= (const TAO_OutputCDR& rhs);
@@ -228,14 +220,6 @@ public:
   // destructor
 
   // = TAO specific methods.
-
-  CORBA::TypeCode::traverse_status decode (CORBA::TypeCode_ptr tc,
-                                           const void *data,
-                                           const void *,
-                                           CORBA_Environment &ACE_TRY_ENV =
-                                           TAO_default_environment ());
-  // Demarshall the contents of the CDR stream into <data> as
-  // described by <tc>; returning any errors in <ACE_TRY_ENV>.
 
   CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                          CORBA_Environment &ACE_TRY_ENV =

@@ -127,6 +127,7 @@ class TAO_Export Cookie : public virtual ACE_CORBA_1 (Object)
       {
         return (PortableInterceptor::Cookie_ptr)0;
       }
+    static void _tao_any_destructor (void*);
 
     virtual char * myname (
         CORBA::Environment &ACE_TRY_ENV =
@@ -226,6 +227,8 @@ class TAO_Export Cookie : public virtual ACE_CORBA_1 (Object)
     );
     Cookies (const Cookies &); // copy ctor
     ~Cookies (void); // dtor
+
+    static void _tao_any_destructor (void*);
   };
   typedef Cookies *Cookies_ptr;
 
@@ -386,6 +389,7 @@ class TAO_Export Interceptor : public virtual ACE_CORBA_1 (Object)
       {
         return (PortableInterceptor::Interceptor_ptr)0;
       }
+    static void _tao_any_destructor (void*);
 
     virtual char * name (
         CORBA::Environment &ACE_TRY_ENV =
@@ -504,6 +508,7 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
       {
         return (PortableInterceptor::ServerRequestInterceptor_ptr)0;
       }
+    static void _tao_any_destructor (void*);
 
     virtual void preinvoke (
         CORBA::ULong request_id,
@@ -651,6 +656,7 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
       {
         return (PortableInterceptor::ClientRequestInterceptor_ptr)0;
       }
+    static void _tao_any_destructor (void*);
 
     virtual void preinvoke (
         CORBA::ULong request_id,
@@ -715,32 +721,32 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
 TAO_NAMESPACE_CLOSE // module PortableInterceptor
 
 // Any operators for interface PortableInterceptor::Cookie
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              PortableInterceptor::Cookie_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        PortableInterceptor::Cookie *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const PortableInterceptor::Cookies &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              PortableInterceptor::Cookies*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        PortableInterceptor::Cookies *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const PortableInterceptor::Cookies *&);
 // Any operators for interface PortableInterceptor::Interceptor
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              PortableInterceptor::Interceptor_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        PortableInterceptor::Interceptor *&);
 // Any operators for interface PortableInterceptor::ServerRequestInterceptor
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              PortableInterceptor::ServerRequestInterceptor_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        PortableInterceptor::ServerRequestInterceptor *&);
 // Any operators for interface PortableInterceptor::ClientRequestInterceptor
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              PortableInterceptor::ClientRequestInterceptor_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        PortableInterceptor::ClientRequestInterceptor *&);
 
 #ifndef __ACE_INLINE__

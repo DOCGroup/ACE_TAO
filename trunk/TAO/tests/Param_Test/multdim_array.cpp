@@ -49,7 +49,31 @@ void
 Test_Multdim_Array::dii_req_invoke (CORBA::Request *req,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
+  req->add_in_arg ("s1") <<= Param_Test::Multdim_Array_forany (this->in_.inout ());
+  req->add_inout_arg ("s2") <<= Param_Test::Multdim_Array_forany (this->inout_.inout ());
+  req->add_out_arg ("s3") <<= Param_Test::Multdim_Array_forany (this->out_.inout ());
+
+  req->set_return_type (Param_Test::_tc_Multdim_Array);
+
   req->invoke (ACE_TRY_ENV);
+  ACE_CHECK;
+
+
+  Param_Test::Multdim_Array_forany forany;
+  req->return_value () >>= forany;
+  Param_Test::Multdim_Array_copy (this->ret_, forany.in ());
+
+  CORBA::NamedValue_ptr o2 =
+    req->arguments ()->item (1, ACE_TRY_ENV);
+  ACE_CHECK;
+  *o2->value () >>= forany;
+  Param_Test::Multdim_Array_copy (this->inout_, forany.in ());
+
+  CORBA::NamedValue_ptr o3 =
+    req->arguments ()->item (2, ACE_TRY_ENV);
+  ACE_CHECK;
+  *o3->value () >>= forany;
+  Param_Test::Multdim_Array_copy (this->out_, forany.in ());
 }
 
 int
@@ -116,57 +140,14 @@ Test_Multdim_Array::run_sii_test (Param_Test_ptr objref,
   return (ACE_TRY_ENV.exception () ? -1:0);
 }
 
-int
-Test_Multdim_Array::add_args (CORBA::NVList_ptr param_list,
-                              CORBA::NVList_ptr retval,
-                              CORBA::Environment &ACE_TRY_ENV)
-{
-  // We provide the top level memory
-  // the Any does not own any of these
-  CORBA::Any in_arg (Param_Test::_tc_Multdim_Array,
-                     this->in_.inout (),
-                     0);
-
-  CORBA::Any inout_arg (Param_Test::_tc_Multdim_Array,
-                        this->inout_.inout (),
-                        0);
-
-  CORBA::Any out_arg (Param_Test::_tc_Multdim_Array,
-                      this->out_.inout (),
-                      0);
-
-  // add parameters
-  param_list->add_value ("l1",
-                         in_arg,
-                         CORBA::ARG_IN,
-                         ACE_TRY_ENV);
-
-  param_list->add_value ("l2",
-                         inout_arg,
-                         CORBA::ARG_INOUT,
-                         ACE_TRY_ENV);
-
-  param_list->add_value ("l3",
-                         out_arg,
-                         CORBA::ARG_OUT,
-                         ACE_TRY_ENV);
-
-  // add return value type
-  retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_Multdim_Array,
-                                                    this->ret_.inout (),
-                                                    0, // does not own
-                                                    ACE_TRY_ENV);
-  return 0;
-}
-
 CORBA::Boolean
 Test_Multdim_Array::check_validity (void)
 {
-  if (this->compare (this->in_.in (), 
+  if (this->compare (this->in_.in (),
                      this->inout_.in ()) &&
-      this->compare (this->in_.in (), 
+      this->compare (this->in_.in (),
                      this->out_.in ()) &&
-      this->compare (this->in_.in (), 
+      this->compare (this->in_.in (),
                      this->ret_.in ()))
     return 1;
   else
@@ -225,4 +206,3 @@ Test_Multdim_Array::print (const Param_Test::Multdim_Array_slice *a)
         }
     }
 }
-

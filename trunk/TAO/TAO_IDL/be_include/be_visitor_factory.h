@@ -62,27 +62,6 @@ public:
   // make the right visitor based on the context and code generation state
 };
 
-class TAO_Interpretive_Visitor_Factory : public TAO_Visitor_Factory
-{
-  // =TITLE
-  //   TAO_Interpretive_Visitor_Factory
-  //
-  // =DESCRIPTION
-  //   A concrete visitor factory for generating the visitors for stubs and
-  //   skeletons using interpretive marshaling.
-
-public:
-
-  TAO_Interpretive_Visitor_Factory (void);
-  // constructor
-
-  virtual ~TAO_Interpretive_Visitor_Factory (void);
-  // destructor
-
-  virtual be_visitor *make_visitor (be_visitor_context *);
-  // make the right visitor based on the context and code generation state
-};
-
 class TAO_Compiled_Visitor_Factory : public TAO_Visitor_Factory
 {
   // =TITLE
@@ -106,7 +85,6 @@ public:
 
 // Singleton instance of the BE Visitor Factory
 typedef ACE_Singleton<TAO_Common_Visitor_Factory, ACE_SYNCH_RECURSIVE_MUTEX> TAO_COMMON_VISITOR_FACTORY;
-typedef ACE_Singleton<TAO_Interpretive_Visitor_Factory, ACE_SYNCH_RECURSIVE_MUTEX> TAO_INTERPRETIVE_VISITOR_FACTORY;
 typedef ACE_Singleton<TAO_Compiled_Visitor_Factory, ACE_SYNCH_RECURSIVE_MUTEX> TAO_COMPILED_VISITOR_FACTORY;
 
 #endif /* if !defined _TAO_BE_VISITOR_FACTORY_H_ */

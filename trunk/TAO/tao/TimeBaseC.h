@@ -57,6 +57,8 @@ TAO_NAMESPACE  TimeBase
 
   struct TAO_Export UtcT
   {
+    static void _tao_any_destructor (void*);
+
     TimeT time;
     CORBA::ULong inacclo;
     CORBA::UShort inacchi;
@@ -96,6 +98,8 @@ TAO_NAMESPACE  TimeBase
 
   struct TAO_Export IntervalT
   {
+    static void _tao_any_destructor (void*);
+
     TimeT lower_bound;
     TimeT upper_bound;
   };
@@ -135,21 +139,21 @@ TAO_NAMESPACE  TimeBase
 }
 TAO_NAMESPACE_CLOSE // module TimeBase
 
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const TimeBase::UtcT &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              TimeBase::UtcT*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        TimeBase::UtcT *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const TimeBase::UtcT *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const TimeBase::IntervalT &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              TimeBase::IntervalT*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        TimeBase::IntervalT *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const TimeBase::IntervalT *&);
 
 #if defined (__ACE_INLINE__)

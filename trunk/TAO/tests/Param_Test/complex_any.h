@@ -37,11 +37,6 @@ public:
                     CORBA::Environment &env);
   // run the SII test
 
-  int add_args (CORBA::NVList_ptr nvlist,
-                CORBA::NVList_ptr retval,
-                CORBA::Environment &env);
-  // add args to NVList for DII
-
   const char *opname (void) const;
   // return operation name
 

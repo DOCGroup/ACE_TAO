@@ -84,10 +84,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
               << "TAO_default_environment ())"
               << be_uidt;
           break;
-//    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
-//    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
-//    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OTHERS:
-    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
+        case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
           // last argument - is always CORBA::Environment
           *os << "CORBA::Environment &ACE_TRY_ENV)";
           break;

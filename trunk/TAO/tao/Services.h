@@ -34,6 +34,8 @@
 
 struct TAO_Export CORBA_ServiceDetail
 {
+  static void _tao_any_destructor (void*);
+
   CORBA::ServiceDetailType service_detail_type;
 
 #if !defined (_CORBA_SERVICEDETAIL__TAO_SEQ_OCTET_CH_)
@@ -183,6 +185,7 @@ class  CORBA_ServiceDetail_out
 
 struct  CORBA_ServiceInformation
 {
+  static void _tao_any_destructor (void*);
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
@@ -519,28 +522,21 @@ void  operator<<= (CORBA::Any &, const CORBA_ServiceInformation &); // copying v
 void  operator<<= (CORBA::Any &, CORBA_ServiceInformation*); // noncopying version
 CORBA::Boolean  operator>>= (const CORBA::Any &, CORBA_ServiceInformation *&);
 
-#ifndef __ACE_INLINE__
-
 CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceDetail &); //
 CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceDetail &);
 CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceDetail::_tao_seq_Octet &); //
 CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceDetail::_tao_seq_Octet &);
+
 CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceInformation &);
- //
 CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceInformation &);
-CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceInformation::_tao_seq_ServiceOption &); //
+CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceInformation::_tao_seq_ServiceOption &);
 CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceInformation::_tao_seq_ServiceOption &);
-CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceInformation::_tao_seq_ServiceDetail &); //
+CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ServiceInformation::_tao_seq_ServiceDetail &);
 CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceInformation::_tao_seq_ServiceDetail &);
 
-#endif /* __ACE_INLINE__ */
-
 #if defined (__ACE_INLINE__)
-
 #include "tao/Services.i"
 #endif /* defined INLINE */
-
-
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

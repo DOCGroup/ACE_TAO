@@ -85,7 +85,7 @@ public:
                             int twoway,
                             ACE_Time_Value *max_wait_time);
 
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   send_request_header (TAO_Operation_Details &opdetails,
                          TAO_Target_Specification &spec,
                          TAO_OutputCDR &msg);
@@ -125,7 +125,7 @@ public:
                               TAO_OutputCDR &output,
                               CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual void start_locate (TAO_ORB_Core *orb_core,
                              TAO_Target_Specification &spec,
                              TAO_Operation_Details &opdetails,
@@ -143,10 +143,10 @@ public:
                                    ACE_Time_Value *max_time_value = 0);
   virtual int register_handler (void);
 
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   send_request_header (TAO_Operation_Details &opdetails,
                        TAO_Target_Specification &spec,
-                       TAO_OutputCDR &msg);  
+                       TAO_OutputCDR &msg);
 
   int messaging_init (CORBA::Octet major,
                       CORBA::Octet minor);
@@ -161,13 +161,13 @@ private:
   TAO_Pluggable_Messaging *client_mesg_factory_;
   // The message_factor instance specific for this particular
   // transport protocol.
-  
+
   TAO_ORB_Core *orb_core_;
   // Our ORB core
 
   CORBA::Boolean lite_flag_;
   // Are we using lite?
-  
+
   TAO_Pluggable_Reply_Params params_;
   // The reply data that is sent back by the server
 };

@@ -227,7 +227,7 @@ be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
 		            }
 	            else
 		            {
-		              predef = 
+		              predef =
                     be_predefined_type::narrow_from_decl (
                         alias->primitive_base_type ()
                       );
@@ -371,7 +371,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       << ");" << be_nl;
   *os << node->local_name () << " (const " << node->local_name ()
       << " &); // copy ctor" << be_nl;
-  *os << "~" << node->local_name () << " (void); // dtor\n\n";
+  *os << "~" << node->local_name () << " (void);" << be_nl
+      << "static void _tao_any_destructor (void*);\n\n";
 
   // generate the _ptr_type and _var_type typedefs
   // but we must protect against certain versions of g++
@@ -460,12 +461,12 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   char namebuf [NAMEBUFSIZE];  // names
   be_type *bt;  // base type
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (namebuf, 
-                   "%s_var", 
+  ACE_OS::sprintf (namebuf,
+                   "%s_var",
                    node->local_name ()->get_string ());
 
   os = this->ctx_->stream ();
@@ -508,7 +509,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   // fixed-size base types only
   if (bt->size_type () == be_decl::FIXED)
     {
-      *os << namebuf << " (const " << node->local_name () 
+      *os << namebuf << " (const " << node->local_name ()
           << " &); // fixed-size base types only" << be_nl;
     }
 
@@ -518,13 +519,12 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   // assignment operator from a pointer
   *os << namebuf << " &operator= (" << node->local_name () << " *);" << be_nl;
   // assignment from _var
-  *os << namebuf << " &operator= (const " << namebuf <<
-    " &);" << be_nl;
+  *os << namebuf << " &operator= (const " << namebuf << " &);" << be_nl;
 
   // fixed-size base types only
   if (bt->size_type () == be_decl::FIXED)
     {
-      *os << namebuf << " &operator= (const " << node->local_name () 
+      *os << namebuf << " &operator= (const " << node->local_name ()
           << " &); // fixed-size base types only" << be_nl;
     }
 
@@ -542,7 +542,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
 
   if (bt->size_type () == be_decl::VARIABLE)
     {
-      *os << "operator " << node->local_name () 
+      *os << "operator " << node->local_name ()
           << " *&(); // variable-size base types only" << be_nl;
     }
 

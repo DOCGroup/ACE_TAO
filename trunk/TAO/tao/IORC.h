@@ -124,7 +124,7 @@ TAO_NAMESPACE  TAO_IOP
           TAO_default_environment ()
       );
     static TAO_IOR_Manipulation_ptr _nil (void);
-
+    static void _tao_any_destructor (void*);
 
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_EMPTYPROFILELIST___PTR_CH_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION_EMPTYPROFILELIST___PTR_CH_
@@ -156,7 +156,7 @@ TAO_NAMESPACE  TAO_IOP
                                 CORBA::Environment &);
 
       static EmptyProfileList *_narrow (CORBA::Exception *);
-
+      static void _tao_any_destructor (void*);
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
@@ -199,6 +199,7 @@ TAO_NAMESPACE  TAO_IOP
                                 CORBA::Environment &);
 
       static NotFound *_narrow (CORBA::Exception *);
+      static void _tao_any_destructor (void*);
 
 
       // = TAO extension
@@ -242,6 +243,7 @@ TAO_NAMESPACE  TAO_IOP
                                 CORBA::Environment &);
 
       static Duplicate *_narrow (CORBA::Exception *);
+      static void _tao_any_destructor (void*);
 
 
       // = TAO extension
@@ -285,6 +287,7 @@ TAO_NAMESPACE  TAO_IOP
                                 CORBA::Environment &);
 
       static Invalid_IOR *_narrow (CORBA::Exception *);
+      static void _tao_any_destructor (void*);
 
 
       // = TAO extension
@@ -318,6 +321,8 @@ TAO_NAMESPACE  TAO_IOP
       );
       IORList (const IORList &); // copy ctor
       ~IORList (void); // dtor
+
+      static void _tao_any_destructor (void*);
     };
     typedef IORList *IORList_ptr;
 
@@ -480,49 +485,49 @@ TAO_NAMESPACE  TAO_IOP
 TAO_NAMESPACE_CLOSE // module TAO_IOP
 
 // Any operators for interface TAO_IOP::TAO_IOR_Manipulation
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              TAO_IOP::TAO_IOR_Manipulation_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        TAO_IOP::TAO_IOR_Manipulation *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const TAO_IOP::TAO_IOR_Manipulation::NotFound &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              TAO_IOP::TAO_IOR_Manipulation::NotFound*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        TAO_IOP::TAO_IOR_Manipulation::NotFound *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const TAO_IOP::TAO_IOR_Manipulation::NotFound *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const TAO_IOP::TAO_IOR_Manipulation::Duplicate &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              TAO_IOP::TAO_IOR_Manipulation::Duplicate*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        TAO_IOP::TAO_IOR_Manipulation::Duplicate *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const TAO_IOP::TAO_IOR_Manipulation::Duplicate *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const TAO_IOP::TAO_IOR_Manipulation::IORList &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              TAO_IOP::TAO_IOR_Manipulation::IORList*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        TAO_IOP::TAO_IOR_Manipulation::IORList *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const TAO_IOP::TAO_IOR_Manipulation::IORList *&);
 #ifndef __ACE_INLINE__
 

@@ -188,12 +188,20 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
       os->indent ();
       *os << "// destructor" << be_nl
-          << node->name () << "::~" << node->local_name () 
+          << node->name () << "::~" << node->local_name ()
           << " (void)" << be_nl
           << "{" << be_idt_nl
           << "// finalize" << be_nl
           << "this->_reset (this->disc_, 1);" << be_uidt_nl
           << "}" << be_nl << be_nl;
+
+      *os << "void "
+          << node->name () << "::_tao_any_destructor (void *x)" << be_nl
+          << "{" << be_idt_nl
+          << node->name () << " *tmp = ACE_static_cast ("
+          << node->name () << "*,x);" << be_nl
+          << "delete tmp;" << be_uidt_nl
+          << "}\n" << be_nl;
 
       this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
 
@@ -204,7 +212,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       os->indent ();
       *os << "// assignment operator" << be_nl;
       *os << node->name () << " &" << be_nl; // return type
-      *os << node->name () << "::operator= (const ::" 
+      *os << node->name () << "::operator= (const ::"
           << node->name () << " &u)" << be_nl;
       *os << "{\n";
       os->incr_indent ();

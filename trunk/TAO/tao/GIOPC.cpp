@@ -346,54 +346,36 @@ TAO_NAMESPACE_BEGIN (GIOP)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_TargetAddress, &_tc_TAO_tc_GIOP_TargetAddress)
 TAO_NAMESPACE_END
 
+void
+GIOP::IORAddressingInfo::_tao_any_destructor (void *x)
+{
+  GIOP::IORAddressingInfo *tmp = ACE_static_cast (GIOP::IORAddressingInfo*,x);
+  delete tmp;
+}
+
 void operator<<= (CORBA::Any &_tao_any, const GIOP::IORAddressingInfo &_tao_elem) // copying
 {
-  GIOP::IORAddressingInfo *_any_val = 0;
-  ACE_NEW (_any_val, GIOP::IORAddressingInfo (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
-    TAO_OutputCDR stream;
-    stream << *_any_val;
-    _tao_any._tao_replace (
-        GIOP::_tc_IORAddressingInfo,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _any_val,
-        ACE_TRY_ENV
-      );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
+      GIOP::_tc_IORAddressingInfo,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
+    );
 }
 
 void operator<<= (CORBA::Any &_tao_any, GIOP::IORAddressingInfo *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (
-        GIOP::_tc_IORAddressingInfo,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        ACE_TRY_ENV
-      );
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      GIOP::_tc_IORAddressingInfo,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      GIOP::IORAddressingInfo::_tao_any_destructor
+    );
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, GIOP::IORAddressingInfo *&_tao_elem)
@@ -425,9 +407,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, GIOP::IORAddressingInfo 
             GIOP::_tc_IORAddressingInfo,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            GIOP::IORAddressingInfo::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -441,7 +422,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, GIOP::IORAddressingInfo 
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -449,53 +430,14 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, GIOP::IORAddressingInfo 
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const GIOP::IORAddressingInfo *&_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (GIOP::_tc_IORAddressingInfo, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (GIOP::IORAddressingInfo *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, GIOP::IORAddressingInfo, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *(GIOP::IORAddressingInfo *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            GIOP::_tc_IORAddressingInfo,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (GIOP::IORAddressingInfo *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (GIOP::IORAddressingInfo *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (GIOP::IORAddressingInfo *&, _tao_elem);
-    _tao_elem = 0;
-    return 0; 
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast(GIOP::IORAddressingInfo*&,_tao_elem);
+}
+
+void
+GIOP::TargetAddress::_tao_any_destructor (void *x)
+{
+  GIOP::TargetAddress *tmp = ACE_static_cast (GIOP::TargetAddress*,x);
+  delete tmp;
 }
 
 void operator<<= (
@@ -503,33 +445,15 @@ void operator<<= (
     const GIOP::TargetAddress &_tao_elem
   )
 {
-  GIOP::TargetAddress *_any_val = 0;
-  ACE_NEW (_any_val, GIOP::TargetAddress (_tao_elem));
-  ACE_TRY_NEW_ENV
-  {
-    TAO_OutputCDR stream;
-    if (stream << *_any_val)
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
           GIOP::_tc_TargetAddress,
           TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _any_val,
-          ACE_TRY_ENV
+          stream.begin ()
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _any_val;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
 }
 
 void operator<<= (
@@ -537,10 +461,8 @@ void operator<<= (
     GIOP::TargetAddress *_tao_elem
   )
 {
-  ACE_TRY_NEW_ENV
-  {
-    TAO_OutputCDR stream;
-    if (stream << *_tao_elem)
+  TAO_OutputCDR stream;
+  if (stream << *_tao_elem)
     {
       _tao_any._tao_replace (
           GIOP::_tc_TargetAddress,
@@ -548,21 +470,9 @@ void operator<<= (
           stream.begin (),
           1,
           _tao_elem,
-          ACE_TRY_ENV
+          GIOP::IORAddressingInfo::_tao_any_destructor
         );
-      ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_elem;
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (
@@ -591,16 +501,15 @@ CORBA::Boolean operator>>= (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
         );
-      
+
       if (stream >> *_tao_elem)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
             GIOP::_tc_TargetAddress,
             1,
             ACE_reinterpret_cast (void *, _tao_elem),
-            ACE_TRY_ENV
+            GIOP::IORAddressingInfo::_tao_any_destructor
           );
-        ACE_TRY_CHECK;
         return 1;
       }
       else
@@ -624,53 +533,5 @@ CORBA::Boolean operator>>= (
     const GIOP::TargetAddress *&_tao_elem
   )
 {
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (GIOP::_tc_TargetAddress, ACE_TRY_ENV)) // not equal
-      {
-        _tao_elem = 0;
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (GIOP::TargetAddress *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, GIOP::TargetAddress, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      
-      if (stream >> *(GIOP::TargetAddress *)_tao_elem)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            GIOP::_tc_TargetAddress,
-            1,
-            ACE_reinterpret_cast (void *, ACE_const_cast (GIOP::TargetAddress *&, _tao_elem)),
-            ACE_TRY_ENV
-          );
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete ACE_const_cast (GIOP::TargetAddress *&, _tao_elem);
-        _tao_elem = 0;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete ACE_const_cast (GIOP::TargetAddress *&, _tao_elem);
-    _tao_elem = 0;
-  }
-  ACE_ENDTRY;
-  return 0;
+  return _tao_any >>= ACE_const_cast (GIOP::TargetAddress*&,_tao_elem);
 }
-
-

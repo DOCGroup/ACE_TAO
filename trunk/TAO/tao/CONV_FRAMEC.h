@@ -48,6 +48,8 @@ TAO_NAMESPACE  CONV_FRAME
 
   struct TAO_Export CodeSetComponent
   {
+    static void _tao_any_destructor (void*);
+
     CodeSetId native_code_set;
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -239,6 +241,8 @@ TAO_NAMESPACE  CONV_FRAME
 
   struct TAO_Export CodeSetComponentInfo
   {
+    static void _tao_any_destructor (void*);
+
     CodeSetComponent ForCharData;
     CodeSetComponent ForWcharData;
   };
@@ -292,6 +296,8 @@ TAO_NAMESPACE  CONV_FRAME
 
   struct TAO_Export CodeSetContext
   {
+    static void _tao_any_destructor (void*);
+
     CodeSetId char_data;
     CodeSetId wchar_data;
   };
@@ -331,29 +337,29 @@ TAO_NAMESPACE  CONV_FRAME
 }
 TAO_NAMESPACE_CLOSE // module CONV_FRAME
 
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const CONV_FRAME::CodeSetComponent &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              CONV_FRAME::CodeSetComponent*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CONV_FRAME::CodeSetComponent *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CONV_FRAME::CodeSetComponent *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const CONV_FRAME::CodeSetComponentInfo &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              CONV_FRAME::CodeSetComponentInfo*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CONV_FRAME::CodeSetComponentInfo *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CONV_FRAME::CodeSetComponentInfo *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              const CONV_FRAME::CodeSetContext &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              CONV_FRAME::CodeSetContext*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CONV_FRAME::CodeSetContext *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CONV_FRAME::CodeSetContext *&);
 #ifndef __ACE_INLINE__
 

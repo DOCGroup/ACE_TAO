@@ -12,6 +12,9 @@
 #define _TAO_IDL_BOUNDSC_H_
 
 #include "tao/corbafwd.h"
+#include "tao/Exception.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,7 +48,7 @@
     CORBA_Bounds (void); // default ctor
     CORBA_Bounds (const CORBA_Bounds &); // copy ctor
     ~CORBA_Bounds (void); // dtor
-        CORBA_Bounds &operator= (const CORBA_Bounds &);
+    CORBA_Bounds &operator= (const CORBA_Bounds &);
 
 
     virtual void _raise (void);
@@ -56,7 +59,7 @@
                               CORBA::Environment &);
 
     static CORBA_Bounds *_narrow (CORBA::Exception *);
-
+    static void _tao_any_destructor (void*);
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);

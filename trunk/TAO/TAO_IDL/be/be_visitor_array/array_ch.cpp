@@ -463,7 +463,9 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
       << " &); // copy constructor" << be_nl;
   // destructor
   *os << "~" << foranyname << " (void); // destructor" << be_nl;
-  *os << be_nl;
+
+  *os << "static void _tao_any_destructor (void*);" << be_nl;
+
   // assignment operator from a pointer to slice
   *os << foranyname << " &operator= (" << namebuf << "_slice *);"
       << be_nl;
