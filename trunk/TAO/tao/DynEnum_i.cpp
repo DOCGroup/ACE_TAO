@@ -26,36 +26,52 @@ TAO_DynEnum_i::TAO_DynEnum_i (const CORBA_Any &any)
   : type_ (any.type ()),
     value_ (0)
 {
-  CORBA::Environment env;
-
-  // The type will be correct if this constructor called from a
-  // factory function, but it could also be called by the user,
-  // so.....
-  if (TAO_DynAny_i::unalias (this->type_.in (),
-                             env) == CORBA::tk_enum)
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      // Get the CDR stream of the argument.
-      ACE_Message_Block* mb = any._tao_get_cdr ();
+      // The type will be correct if this constructor called from a
+      // factory function, but it could also be called by the user,
+      // so.....
+      if (TAO_DynAny_i::unalias (this->type_.in (),
+                                 ACE_TRY_ENV) == CORBA::tk_enum)
+        {
+          // Get the CDR stream of the argument.
+          ACE_Message_Block* mb = any._tao_get_cdr ();
 
-      TAO_InputCDR cdr (mb);
+          TAO_InputCDR cdr (mb);
 
-      cdr.read_ulong (this->value_);
+          cdr.read_ulong (this->value_);
+        }
+      else
+        ACE_THROW (CORBA_ORB_InconsistentTypeCode ());
     }
-  else
-    env.exception (new CORBA_ORB_InconsistentTypeCode);
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 TAO_DynEnum_i::TAO_DynEnum_i (CORBA_TypeCode_ptr tc)
   : type_ (CORBA::TypeCode::_duplicate (tc)),
     value_ (0)
 {
-  CORBA::Environment env;
-
-  // Need to check if called by user.
-  if (TAO_DynAny_i::unalias (tc,
-                             env)
-      != CORBA::tk_enum)
-    env.exception (new CORBA_ORB_InconsistentTypeCode);
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      // Need to check if called by user.
+      if (TAO_DynAny_i::unalias (tc,
+                                 ACE_TRY_ENV)
+          != CORBA::tk_enum)
+        ACE_THROW (CORBA_ORB_InconsistentTypeCode ());
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 TAO_DynEnum_i::~TAO_DynEnum_i (void)
@@ -65,30 +81,30 @@ TAO_DynEnum_i::~TAO_DynEnum_i (void)
 // Functions specific to DynEnum
 
 char *
-TAO_DynEnum_i::value_as_string (CORBA::Environment& env)
+TAO_DynEnum_i::value_as_string (CORBA::Environment& ACE_TRY_ENV)
 {
   return CORBA::string_dup (this->type_.in ()->member_name (this->value_,
-                                                            env));
+                                                            ACE_TRY_ENV));
 }
 
 void
 TAO_DynEnum_i::value_as_string (const char *value_as_string,
-                                CORBA::Environment &env)
+                                CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::ULong count = this->type_.in ()->member_count (env);
+  CORBA::ULong count = this->type_.in ()->member_count (ACE_TRY_ENV);
   CORBA::ULong i;
 
   for (i = 0; i < count; i++)
     if (!ACE_OS::strcmp (value_as_string,
                          this->type_.in ()->member_name (i,
-                                                         env)))
+                                                         ACE_TRY_ENV)))
       break;
 
   if (i < count)
     this->value_ = i;
   else
     // *** NOT part of CORBA spec ***
-    env.exception (new CORBA_DynAny::InvalidValue);
+    ACE_THROW (CORBA_DynAny::InvalidValue ());
 }
 
 CORBA::ULong
@@ -99,36 +115,36 @@ TAO_DynEnum_i::value_as_ulong (CORBA::Environment &)
 
 void
 TAO_DynEnum_i::value_as_ulong (CORBA::ULong value_as_ulong,
-                               CORBA::Environment& env)
+                               CORBA::Environment& ACE_TRY_ENV)
 {
-  if (value_as_ulong < this->type_.in ()->member_count (env))
+  if (value_as_ulong < this->type_.in ()->member_count (ACE_TRY_ENV))
     this->value_ = value_as_ulong;
   else
     // *** NOT part of CORBA spec ***
-    env.exception (new CORBA_DynAny::InvalidValue);
+    ACE_THROW (CORBA_DynAny::InvalidValue ());
 }
 
 // Common functions
 
 void
 TAO_DynEnum_i::assign (CORBA_DynAny_ptr dyn_any,
-                       CORBA::Environment &env)
+                       CORBA::Environment &ACE_TRY_ENV)
 {
   // *dyn_any->to_any raises Invalid if arg is bad.
-  if (this->type_.in ()->equal (dyn_any->type (env),
-                                env))
-    this->from_any (*dyn_any->to_any (env),
-                    env);
+  if (this->type_.in ()->equal (dyn_any->type (ACE_TRY_ENV),
+                                ACE_TRY_ENV))
+    this->from_any (*dyn_any->to_any (ACE_TRY_ENV),
+                    ACE_TRY_ENV);
   else
-    env.exception (new CORBA_DynAny::Invalid);
+    ACE_THROW (CORBA_DynAny::Invalid ());
 }
 
 CORBA_DynAny_ptr
-TAO_DynEnum_i::copy (CORBA::Environment &env)
+TAO_DynEnum_i::copy (CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_Any_ptr a = this->to_any (env);
+  CORBA_Any_ptr a = this->to_any (ACE_TRY_ENV);
   return TAO_DynAny_i::create_dyn_any (*a,
-                                       env);
+                                       ACE_TRY_ENV);
 }
 
 void
@@ -140,10 +156,10 @@ TAO_DynEnum_i::destroy (CORBA::Environment &)
 
 void
 TAO_DynEnum_i::from_any (const CORBA_Any& any,
-                         CORBA::Environment &env)
+                         CORBA::Environment &ACE_TRY_ENV)
 {
   if (TAO_DynAny_i::unalias (any.type (),
-                             env) == CORBA::tk_enum)
+                             ACE_TRY_ENV) == CORBA::tk_enum)
     {
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
@@ -153,7 +169,7 @@ TAO_DynEnum_i::from_any (const CORBA_Any& any,
       cdr.read_ulong (this->value_);
     }
   else
-    env.exception (new CORBA_DynAny::Invalid);
+    ACE_THROW (CORBA_DynAny::Invalid ());
 }
 
 CORBA::Any_ptr
@@ -180,9 +196,9 @@ TAO_DynEnum_i::type (CORBA::Environment &)
 }
 
 CORBA_DynAny_ptr
-TAO_DynEnum_i::current_component (CORBA::Environment &env)
+TAO_DynEnum_i::current_component (CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->_this (env);
+  return this->_this (ACE_TRY_ENV);
 }
 
 CORBA::Boolean
@@ -215,204 +231,204 @@ TAO_DynEnum_i::rewind (CORBA::Environment &)
 
 void
 TAO_DynEnum_i::insert_boolean (CORBA::Boolean,
-                               CORBA::Environment &env)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_octet (CORBA::Octet,
-                             CORBA::Environment &env)
+                             CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_char (CORBA::Char,
-                            CORBA::Environment &env)
+                            CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_short (CORBA::Short,
-                             CORBA::Environment &env)
+                             CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_ushort (CORBA::UShort,
-                              CORBA::Environment &env)
+                              CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_long (CORBA::Long,
-                            CORBA::Environment &env)
+                            CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_ulong (CORBA::ULong,
-                             CORBA::Environment &env)
+                             CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_float (CORBA::Float,
-                             CORBA::Environment &env)
+                             CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_double (CORBA::Double,
-                              CORBA::Environment &env)
+                              CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_string (const char *,
-                              CORBA::Environment &env)
+                              CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_reference (CORBA::Object_ptr,
-                                 CORBA::Environment &env)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_typecode (CORBA::TypeCode_ptr,
-                                CORBA::Environment &env)
+                                CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_longlong (CORBA::LongLong,
-                               CORBA::Environment &env)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_ulonglong (CORBA::ULongLong,
-                                 CORBA::Environment &env)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_wchar (CORBA::WChar,
-                             CORBA::Environment &env)
+                             CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_any (const CORBA::Any&,
-                           CORBA::Environment &env)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
 CORBA::Boolean
-TAO_DynEnum_i::get_boolean (CORBA::Environment &env)
+TAO_DynEnum_i::get_boolean (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Octet
-TAO_DynEnum_i::get_octet (CORBA::Environment &env)
+TAO_DynEnum_i::get_octet (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Char
-TAO_DynEnum_i::get_char (CORBA::Environment &env)
+TAO_DynEnum_i::get_char (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Short
-TAO_DynEnum_i::get_short (CORBA::Environment &env)
+TAO_DynEnum_i::get_short (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::UShort
-TAO_DynEnum_i::get_ushort (CORBA::Environment &env)
+TAO_DynEnum_i::get_ushort (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Long
-TAO_DynEnum_i::get_long (CORBA::Environment &env)
+TAO_DynEnum_i::get_long (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::ULong
-TAO_DynEnum_i::get_ulong (CORBA::Environment &env)
+TAO_DynEnum_i::get_ulong (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Float
-TAO_DynEnum_i::get_float (CORBA::Environment &env)
+TAO_DynEnum_i::get_float (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Double
-TAO_DynEnum_i::get_double (CORBA::Environment &env)
+TAO_DynEnum_i::get_double (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 char *
-TAO_DynEnum_i::get_string (CORBA::Environment &env)
+TAO_DynEnum_i::get_string (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Object_ptr
-TAO_DynEnum_i::get_reference (CORBA::Environment &env)
+TAO_DynEnum_i::get_reference (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::TypeCode_ptr
-TAO_DynEnum_i::get_typecode (CORBA::Environment &env)
+TAO_DynEnum_i::get_typecode (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::LongLong
-TAO_DynEnum_i::get_longlong (CORBA::Environment &env)
+TAO_DynEnum_i::get_longlong (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
 
 #if defined (ACE_LACKS_LONGLONG_T)
   CORBA::LongLong tmp = {0, 0};
@@ -423,23 +439,23 @@ TAO_DynEnum_i::get_longlong (CORBA::Environment &env)
 }
 
 CORBA::ULongLong
-TAO_DynEnum_i::get_ulonglong (CORBA::Environment &env)
+TAO_DynEnum_i::get_ulonglong (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::WChar
-TAO_DynEnum_i::get_wchar (CORBA::Environment &env)
+TAO_DynEnum_i::get_wchar (CORBA::Environment &ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Any_ptr
-TAO_DynEnum_i::get_any (CORBA::Environment& env)
+TAO_DynEnum_i::get_any (CORBA::Environment& ACE_TRY_ENV)
 {
-  env.exception (new CORBA::BAD_OPERATION ());
+  ACE_THROW (CORBA::BAD_OPERATION ());
   return 0;
 }
 
