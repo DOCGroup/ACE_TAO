@@ -50,7 +50,7 @@ SUBDIRS = \
   $(SSL_DIR)
 
 
-INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
 
 # Define any X libraries that ACE needs, if any.
 ACE_XLIBS = @ACE_XLIBS@
