@@ -5,7 +5,6 @@
 
 #if defined (ACE_HAS_AIO_CALLS) && !defined(__Lynx__) && !defined (__FreeBSD__)
 
-#include "ace/OS_NS_sys_time.h"
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"

@@ -1,3 +1,20 @@
+Sun Mar  6 00:52:13 2005  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* ace/Process.cpp
+	* ace/Process_Manager.h
+	* ace/Process_Manager.cpp
+	* ace/Reactor_Impl.h
+	* ace/TP_Reactor.cpp
+	* ace/Proactor_Impl.h
+	* ace/POSIX_CB_Proactor.cpp
+	* ace/SSL/SSL_SOCK_Connector.cpp
+	* ace/SSL/SSL_SOCK_Stream.cpp
+	  Removed unnecessary includes and added include
+	  at proper places.
+
+	* ace/ace.mpc
+	  Added Countdown_Time.cpp.
+
 Sat Mar  5 23:57:53 2005  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* ace/Time_Value.h
