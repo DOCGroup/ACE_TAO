@@ -1,3 +1,13 @@
+Fri Aug 28 21:53:13 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.h: Conditionalize setting of ACE_INFINITE on non-Win32
+	  to allow the platform config to define a value.
+
+	* ace/config-hpux11.h: Define ACE_INFINITE as 10000000.  This value
+	  was empirically determined by John Mulhern.  Until we know why
+	  this had to be done, you may need to set a different value in
+	  your own config.h file.
+
 Fri Aug 28 13:14:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Service_Configurator/Misc/main.cpp: Made the file CE
