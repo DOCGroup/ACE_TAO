@@ -54,9 +54,11 @@ public RTScheduling::Current,
 {
  public:
   
-  TAO_RTScheduler_Current (TAO_ORB_Core*);
-  
-  
+  TAO_RTScheduler_Current (void);
+
+  void init (TAO_ORB_Core* orb 
+	     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
   virtual RTCORBA::Priority the_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -88,8 +90,7 @@ public RTScheduling::Current,
     ACE_THROW_SPEC ((CORBA::SystemException));
   
   virtual RTScheduling::DistributableThread_ptr 
-    lookup(const RTScheduling::Current::IdType & id
-	   ACE_ENV_ARG_DECL)
+    lookup(const RTScheduling::Current::IdType & id)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // returns a null reference if
@@ -272,18 +273,18 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
     ACE_THROW_SPEC ((CORBA::SystemException));
   
   virtual RTScheduling::Current::IdType * 
-    id (ACE_ENV_SINGLE_ARG_DECL)
+    id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
    
   void  id (RTScheduling::Current::IdType guid );
   
   virtual CORBA::Policy_ptr 
-    scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
+    scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   
   virtual CORBA::Policy_ptr 
-    implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
+    implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
@@ -292,7 +293,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
   void implicit_scheduling_parameter (CORBA::Policy_ptr);
   
   virtual RTScheduling::Current::NameList * 
-    current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DECL)
+    current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException)); 
   
   void cancel_thread (ACE_ENV_SINGLE_ARG_DECL)
@@ -343,8 +344,9 @@ public:
 	  CORBA::Policy_ptr implicit_sched_param);
 	  
   int activate_task (RTCORBA::Priority base_priority,
-		     CORBA::ULong stack_size);
-
+		     CORBA::ULong stack_size
+		     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  
   virtual int svc (void);
 
  private:
