@@ -53,7 +53,7 @@ Legend:
         [xxxxxx] runs for Struct
 [xx0x0x] Thruput/TAO compiles
 [xx1x1x] liborbsvcs compiles
-[  1 1 ] Naming_Service compiles
+[1 1 1 ] Naming_Service compiles
 [  0 0 ] Scheduling_Service compiles
 [  0 0 ] Event_Service compiles
 [  0 0 ] Dump_Schedule compiles
@@ -67,6 +67,7 @@ Legend:
 
 NOTES
 * Solaris/CC
+**orbsvcs/tests/Logger does not compile
 
 * NT
 ** Warnings on libTAO and tao_idl compilation.
