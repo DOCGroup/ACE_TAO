@@ -250,7 +250,7 @@ ACE_ReactorEx_Handler_Repository::max_handlep1 (void) const
 }
 
 ACE_INLINE int
-ACE_ReactorEx_Handler_Repository::scheduled_for_deletion (int index) const
+ACE_ReactorEx_Handler_Repository::scheduled_for_deletion (size_t index) const
 {
   if (ACE_Thread::self () == this->reactorEx_.owner_i ())
     return this->current_info_[index].delete_entry_ == 1;
