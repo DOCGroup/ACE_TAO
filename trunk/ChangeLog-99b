@@ -1,101 +1,108 @@
+Tue Sep 21 08:33:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: use shared_libs=1, not shared_libs_only=1,
+          to build shared libs on VxWorks.  That avoids missing libACE.a,
+          for example, when linking other libraries.  Thanks to
+          Uwe Landrock <Uwe.Landrock@med.siemens.de> for reporting this.
+
 Mon Sep 20 10:52:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ACE-INSTALL.html: Clarified that the --unix flag must be given for
-	  Cygwin tools on Vxworks and NT.  Thanks to Uwe Landrock
-	  <Uwe.Landrock@med.siemens.de> for reporting this.
-  
+        * ACE-INSTALL.html: Clarified that the --unix flag must be given for
+          Cygwin tools on Vxworks and NT.  Thanks to Uwe Landrock
+          <Uwe.Landrock@med.siemens.de> for reporting this.
+
 Mon Sep 20 10:34:51 1999  Steve Huston  <shuston@riverace.com>
 
-	* ACE-INSTALL.html: Fixed broken link to Riverace's HP-UX info.
-	  Thanks to Doug for finding this.
+        * ACE-INSTALL.html: Fixed broken link to Riverace's HP-UX info.
+          Thanks to Doug for finding this.
 
 Sun Sep 19 12:48:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Signal_Test.cpp: Only send outselves a signal if we're
-	  running the signal handler in a separate thread.
+        * tests/Signal_Test.cpp: Only send outselves a signal if we're
+          running the signal handler in a separate thread.
 
 Sun Sep 19 10:39:30 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* tests/Signal_Test.cpp: Changed the type of shut_down indicator from
-	  ACE_Atomic_Op<> to sig_atomic_t.  This prevents some nasty
- 	  deadlocks.
+        * tests/Signal_Test.cpp: Changed the type of shut_down indicator from
+          ACE_Atomic_Op<> to sig_atomic_t.  This prevents some nasty
+          deadlocks.
 
-	* tests/run_tests.lst: Reenabled Signal_Test so we can see if it's
-	  still working.
+        * tests/run_tests.lst: Reenabled Signal_Test so we can see if it's
+          still working.
 
-	* tests/Signal_Test.cpp: Changed the worker_child() function so that
-	  just before its thread exits, it will sent its process a signal
- 	  to the signal handling thread to dislodge it if it hasn't
- 	  shutdown on its own accord yet.  Thanks to David Levine for
- 	  reporting this.  This fixes [BUGID:309].
+        * tests/Signal_Test.cpp: Changed the worker_child() function so that
+          just before its thread exits, it will sent its process a signal
+          to the signal handling thread to dislodge it if it hasn't
+          shutdown on its own accord yet.  Thanks to David Levine for
+          reporting this.  This fixes [BUGID:309].
 
-	* ACE/Handle_Set.h: Updated the documentation to point out that it's
-	  the *caller's* responsibility to ensure handles aren't
- 	  added/cleared from the set if their values are larger than
- 	  ACE_DEFAULT_SELECT_REACTOR_SIZE.  This behavior is necessary to
- 	  ensure efficiency.
-  
-	* tests/Handle_Set_Test.cpp (test_boundaries): Fixed the test so 
-	  that it will correctly ignore any handle values >=
- 	  ACE_DEFAULT_SELECT_REACTOR_SIZE.  Thanks to David Levine for
- 	  reporting this.  This fixes [BUGID:315].
+        * ACE/Handle_Set.h: Updated the documentation to point out that it's
+          the *caller's* responsibility to ensure handles aren't
+          added/cleared from the set if their values are larger than
+          ACE_DEFAULT_SELECT_REACTOR_SIZE.  This behavior is necessary to
+          ensure efficiency.
+
+        * tests/Handle_Set_Test.cpp (test_boundaries): Fixed the test so
+          that it will correctly ignore any handle values >=
+          ACE_DEFAULT_SELECT_REACTOR_SIZE.  Thanks to David Levine for
+          reporting this.  This fixes [BUGID:315].
 
 Sat Sep 18 18:49:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/config-win32-borland.h:
-	  Undefined ACE_HAS_BROKEN_IMPLICIT_CONST_CAST as 
-	  suggested by Christopher Kohlhoff <chris@kohlhoff.com>.
+        * ace/config-win32-borland.h:
+          Undefined ACE_HAS_BROKEN_IMPLICIT_CONST_CAST as
+          suggested by Christopher Kohlhoff <chris@kohlhoff.com>.
 
 Sat Sep 18 17:31:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/QOS: Improved the conformance to ACE programming
- 	  guidelines a bit.
+        * examples/QOS: Improved the conformance to ACE programming
+          guidelines a bit.
 
-	* ace/Message_Block.cpp: Whenever a ACE_Message_Block accepts a
-	  ACE_Data_Block that was produced by someone else, it should
- 	  verify that the allocator is non-NULL and if it is, then it
- 	  should allocate the ACE_ALLOCATOR_RETURN on it.  Thanks to
- 	  Pierre Grondin <pierre_grondin@srtelecom.com> for reporting
- 	  this.
+        * ace/Message_Block.cpp: Whenever a ACE_Message_Block accepts a
+          ACE_Data_Block that was produced by someone else, it should
+          verify that the allocator is non-NULL and if it is, then it
+          should allocate the ACE_ALLOCATOR_RETURN on it.  Thanks to
+          Pierre Grondin <pierre_grondin@srtelecom.com> for reporting
+          this.
 
-	* docs/tutorials/006: Fixed the activate() method so that it uses
-	  THR_DETACHED.  Thanks to Shafiek Savahl
- 	  <shafiek.savahl@ericsson.com.au> for reporting this.
+        * docs/tutorials/006: Fixed the activate() method so that it uses
+          THR_DETACHED.  Thanks to Shafiek Savahl
+          <shafiek.savahl@ericsson.com.au> for reporting this.
 
 Sat Sep 18 16:17:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile:
-	  The messages include the build name in the subject line. Thanks
-	  to Darrell for suggesting this idea.
+        * bin/auto_compile:
+          The messages include the build name in the subject line. Thanks
+          to Darrell for suggesting this idea.
 
 Sat Sep 18 12:00:28 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Message_Block.h: Changed all the ACE_Message_Block constructors
-	  so that the priority parameter defaults to
- 	  ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY, rather than 0.  Thanks to
- 	  Detlef Becker for this suggestion.
+        * ace/Message_Block.h: Changed all the ACE_Message_Block constructors
+          so that the priority parameter defaults to
+          ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY, rather than 0.  Thanks to
+          Detlef Becker for this suggestion.
 
-	* ace/OS.h: Added a new macro called
- 	  ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY, which defaults to 0 but
- 	  which can be overridden in a config.h file to a different value
- 	  so it's possible to transparently choose default priorities that
- 	  are > 0.  Thanks to Detlef Becker <Detlef.Becker@med.siemens.de>
- 	  for this suggestion.
+        * ace/OS.h: Added a new macro called
+          ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY, which defaults to 0 but
+          which can be overridden in a config.h file to a different value
+          so it's possible to transparently choose default priorities that
+          are > 0.  Thanks to Detlef Becker <Detlef.Becker@med.siemens.de>
+          for this suggestion.
 
 Fri Sep 17 19:49:15 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Hash_Map_Manager_Test.cpp: Repositioned template
-	  instantiations and static variables to make the debug=0 build
-	  happy with SunCC5.0.
+        * tests/Hash_Map_Manager_Test.cpp: Repositioned template
+          instantiations and static variables to make the debug=0 build
+          happy with SunCC5.0.
 
 Fri Sep 17 15:34:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc.cpp (dump):
-	* ace/Malloc_T.cpp (dump): Enriched various dump methods a bit.
+        * ace/Malloc.cpp (dump):
+        * ace/Malloc_T.cpp (dump): Enriched various dump methods a bit.
 
 Thu Sep 16 17:53:57 CDT 1999  Loren Rittle  <rittle@rsch.comm.mot.com>
 
-	* bin/update-ace+tao.sh: Added force option.
+        * bin/update-ace+tao.sh: Added force option.
 
 Thu Sep 16 17:43:02 CDT 1999  Loren Rittle  <rittle@rsch.comm.mot.com>
 
@@ -103,37 +110,37 @@ Thu Sep 16 17:43:02 CDT 1999  Loren Rittle  <rittle@rsch.comm.mot.com>
 
 Thu Sep 16 11:08:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Makefile:
-	* tests/Makefile:
+        * ace/Makefile:
+        * tests/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Wed Sep 15 21:42:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h:
-	  Removed extra "typedef" in the declaration of the
-	  ACE_Protocol_Info structure, it was causing a large number of
-	  warnings in several platforms.
+        * ace/OS.h:
+          Removed extra "typedef" in the declaration of the
+          ACE_Protocol_Info structure, it was causing a large number of
+          warnings in several platforms.
 
 Wed Sep 15 15:08:33 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* bin/run_all_list.pm:
+        * bin/run_all_list.pm:
 
-	  Run the newly added TAO/tests/ORB_init/run_test.pl script when
-	  executing the ORB_init test.
+          Run the newly added TAO/tests/ORB_init/run_test.pl script when
+          executing the ORB_init test.
 
 Wed Sep 15 14:49:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Hash_Map_With_Allocator_T.h:
-	* ace/Hash_Map_With_Allocator_T.i: Added a method unbind () which
-	  unbinds an entry by only taking a key.
+        * ace/Hash_Map_With_Allocator_T.h:
+        * ace/Hash_Map_With_Allocator_T.i: Added a method unbind () which
+          unbinds an entry by only taking a key.
 
 Wed Sep 15 13:19:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (process_directive): Added ace_yyrestart
-	  to make sure the service config parser has a valid buffer to
-	  work on.  Thanks to Lothar Werzinger
-	  <werzinger.lothar@krones.de> for reporting this.
+        * ace/Service_Config.cpp (process_directive): Added ace_yyrestart
+          to make sure the service config parser has a valid buffer to
+          work on.  Thanks to Lothar Werzinger
+          <werzinger.lothar@krones.de> for reporting this.
 
 Wed Sep 15 10:50:21 1999  James Hu <jxh@entera.com>
 
@@ -147,11 +154,11 @@ Wed Sep 15 10:50:21 1999  James Hu <jxh@entera.com>
 
 Wed Sep 15 10:14:21 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/exceptions.html:
+        * docs/exceptions.html:
 
-	  Corrected some ACE_TRY_THROW examples.  The exception being
-	  thrown must have a parameter list, even if it is empty
-	  (e.g.: ACE_TRY_THROW (CORBA::BAD_PARAM ());)
+          Corrected some ACE_TRY_THROW examples.  The exception being
+          thrown must have a parameter list, even if it is empty
+          (e.g.: ACE_TRY_THROW (CORBA::BAD_PARAM ());)
 
 Tue Sep 14 22:10:24 1999  Kristopher Johnson <kjohnson@gardnersys.com>
 

@@ -1425,7 +1425,8 @@ putenv("ACE_TEST_DIR=/tgtsvr")
 
 ACE supports shared libraries for VxWorks, but only with the g++
 compiler.  To build shared libraries instead of the default static
-libraries, added <code>shared_libs_only=1</code> to either your
+libraries, added <code>shared_libs=1</code> (<strong>not</strong>
+<code>shared_libs_only=1</code>) to either your
 <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code> or
 your <code>make</code> invocation.  Then, be sure to load the ACE (and
 any other) shared library before loading your executable(s).<p>
@@ -1469,7 +1470,7 @@ example, to build a libACE.so for PowerPC that can be linked into
 the kernel:
 <pre>
 % cd $ACE_ROOT/ace
-% make LD=ldppc shared_libs_only=1
+% make LD=ldppc shared_libs=1
 </pre>
 After building the shared lib, link it into the kernel by setting
 the <code>MACH_EXTRA</code> make variable in the kernel configuration
