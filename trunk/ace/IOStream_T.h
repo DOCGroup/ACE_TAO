@@ -101,57 +101,62 @@ class ACE_IOStream : public iostream, public STREAM
   //     customize only one or two.
 {
 public:
+  // = Initialization and termination methods.
   ACE_IOStream (STREAM &stream,
 		  u_int streambuf_size = ACE_STREAMBUF_SIZE);
+
   ACE_IOStream (u_int streambuf_size = ACE_STREAMBUF_SIZE);
   // The default constructor.  This will initiailze your STREAM and
   // then setup the iostream baseclass to use a custom streambuf based
   // on STREAM.
 
   virtual ~ACE_IOStream (void);
-  // We have to get rid of the streambuf_ ourselves since we gave it
-  // to iostream();
+  // We have to get rid of the <streambuf_> ourselves since we gave it
+  // to the <iostream> base class;
 
   virtual int close (void);
-  // The only ambituity in the multiple inheritance is the close()
+  // The only ambituity in the multiple inheritance is the <close>
   // function.
+
+  int eof (void) const;
+  // Returns 1 if we're at the end of the <STREAM>, i.e., if the
+  // connection has closed down or an error has occurred, else 0.
 
 #if defined (ACE_HAS_STRING_CLASS)
   virtual ACE_IOStream<STREAM> &operator>> (ACE_IOStream_String &v);
-  // A simple string operator.  The base iostream has 'em for char*
-  // but that isn't always the best thing for a String.  If we don't
+  // A simple string operator.  The base <iostream> has them for char*
+  // but that isn't always the best thing for a <String>.  If we don't
   // provide our own here, we may not get what we want.
 
   virtual ACE_IOStream<STREAM> &operator<< (ACE_IOStream_String &v);
-  // The converse of the String put operator.
+  // The converse of the <String::put> operator.
 
 #endif /* ACE_HAS_STRING_CLASS */
-
   // = Using the macros to provide get/set operators.
   GETPUT_FUNC_SET (ACE_IOStream<STREAM>)
 
 #if defined (ACE_LACKS_IOSTREAM_FX)
   virtual int ipfx (int /* need */ = 0) {  return good(); }
-  virtual int ipfx0(void)         {  return good(); }  // Optimized ipfx(0)
-  virtual int ipfx1(void)         {  return good(); }  // Optimized ipfx(1)
+  virtual int ipfx0(void)         {  return good (); }  // Optimized ipfx(0)
+  virtual int ipfx1(void)         {  return good (); }  // Optimized ipfx(1)
   virtual void isfx (void)        {  return; }
-  virtual int opfx (void)         {  return good(); }
-  virtual void osfx (void)        {  put(' '); return; }
+  virtual int opfx (void)         {  return good (); }
+  virtual void osfx (void)        {  put (' '); return; }
 #else
 #if defined (__GNUC__)
-  virtual int ipfx0(void)         { return(iostream::ipfx0()); }  // Optimized ipfx(0)
-  virtual int ipfx1(void)         { return(iostream::ipfx1()); }  // Optimized ipfx(1)
+  virtual int ipfx0(void)         { return iostream::ipfx0 (); }  // Optimized ipfx(0)
+  virtual int ipfx1(void)         { return iostream::ipfx1(); }  // Optimized ipfx(1)
 #else
-  virtual int ipfx0(void)         {  return(iostream::ipfx(0)); }
-  virtual int ipfx1(void)         {  return(iostream::ipfx(1)); }
+  virtual int ipfx0(void)         {  return iostream::ipfx (0); }
+  virtual int ipfx1(void)         {  return iostream::ipfx (1); }
 #endif /* __GNUC__ */
-  virtual int ipfx (int need = 0) {  return(iostream::ipfx(need)); }
-  virtual void isfx (void)        {  iostream::isfx(); return; }
-  virtual int opfx (void)         {  return(iostream::opfx()); }
-  virtual void osfx (void)        {  iostream::osfx(); return; }
+  virtual int ipfx (int need = 0) {  return iostream::ipfx (need); }
+  virtual void isfx (void)        {  iostream::isfx (); return; }
+  virtual int opfx (void)         {  return iostream::opfx (); }
+  virtual void osfx (void)        {  iostream::osfx (); return; }
 #endif /* ACE_LACKS_IOSTREAM_FX */
 
-  ACE_IOStream<STREAM> & operator>>(ACE_Time_Value *&tv);
+  ACE_IOStream<STREAM> & operator>> (ACE_Time_Value *&tv);
   // Allow the programmer to provide a timeout for read operations.
   // Give it a pointer to NULL to block forever.
 

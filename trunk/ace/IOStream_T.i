@@ -41,6 +41,18 @@ ACE_Streambuf_T<STREAM>::get_handle (void)
 }
 
 template <class STREAM> ACE_INLINE
+ACE_IOStream<STREAM>::eof (void) const
+{
+  char c;
+  return ACE_OS::recv (this->get_handle (),
+                       &c,
+                       sizeof c, 
+                       MSG_PEEK) <= 0;
+}
+
+
+
+template <class STREAM> ACE_INLINE
 ACE_SOCK_Dgram_SC<STREAM>::ACE_SOCK_Dgram_SC (void)
 {
 }

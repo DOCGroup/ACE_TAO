@@ -1,3 +1,15 @@
+Sat Dec  6 12:02:09 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/IOStream: Revised both the client and server to
+ 	  demonstrate the ACE_IOStream functionality correctly.  Also
+ 	  added a README file explaining how to run the examples.  Thanks
+ 	  to James Johnson and Dustin Laurence
+ 	  <laurence@alice.wonderland.caltech.edu> for suggesting this.
+
+	* ace/IOStream_T: Added a new method eof() to the ACE_IOStream_T<>
+ 	  class.  This returns 1 if we've reached the end of the socket
+ 	  stream, else 0.
+
 Fri Dec  5 16:58:29 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Addr.h: Added a const ACE_Addr & instead of const ACE_Addr.
