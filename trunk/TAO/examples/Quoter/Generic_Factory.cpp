@@ -78,13 +78,8 @@ Quoter_Generic_Factory_Server::init (int argc,
   CORBA::String_var str  =
     this->orb_manager_.activate (this->quoter_Generic_Factory_i_ptr_,
                                  ACE_TRY_ENV);
-
+  ACE_CHECK_RETURN (-1);
   // Failure while activating the Quoter Factory Finder object
-  if (ACE_TRY_ENV.exception () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "init: Failure while activating the Quoter Generic Factory Impl.\n"),
-                      -1);
 
 
   ACE_DEBUG ((LM_DEBUG,
@@ -186,7 +181,7 @@ Quoter_Generic_Factory_Server::init (int argc,
         ACE_DEBUG ((LM_DEBUG,
                     "Registered the Quoter GenericFactory to the Life Cycle Service.\n"));
       }
-            
+
     }
   ACE_CATCHANY
     {

@@ -1,3 +1,10 @@
+Wed Jun 30 13:43:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Quoter/Generic_Factory.cpp:
+	* examples/Quoter/Generic_Factory_i.cpp:
+	* examples/Quoter/Generic_Factory_i.h:
+	  More exception handling fixes
+
 Wed Jun 30 13:36:29 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	Fixed the exception warnings for the following:
