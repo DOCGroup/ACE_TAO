@@ -238,7 +238,7 @@ else
 TEMPLATE_FILES =
 endif
 
-IDL_HEADERS = \
+IDL_FILES = \
   orb.idl \
   Policy.pidl
 
@@ -512,7 +512,7 @@ pkginclude_HEADERS = \
   $(HEADER_FILES) \
   $(INLINE_FILES) \
   $(TEMPLATE_FILES) \
-  $(IDL_HEADERS)
+  $(IDL_FILES)
 
 
 ## Clean up some additional files/directories possibly created during
