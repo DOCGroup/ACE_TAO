@@ -1,3 +1,8 @@
+Fri Jan 21 13:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+          Added needed include for Solaris 10 build
+
 Fri Jan 21 13:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/SHMIOP_Acceptor.cpp:
