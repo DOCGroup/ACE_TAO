@@ -236,12 +236,6 @@ ACE_POSIX_SIG_Asynch_Operation::~ACE_POSIX_SIG_Asynch_Operation (void)
 {
 }
 
-int
-ACE_POSIX_SIG_Asynch_Operation::register_aio_with_proactor (ACE_POSIX_Asynch_Result *result)
-{
-  return this->posix_proactor ()->register_aio_with_proactor (result);
-}
-
 // *********************************************************************
 
 u_long
@@ -540,10 +534,6 @@ ACE_POSIX_SIG_Asynch_Read_Stream::shared_read (ACE_POSIX_Asynch_Read_Stream_Resu
   result->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   result->aio_sigevent.sigev_signo = result->signal_number ();
   result->aio_sigevent.sigev_value.sival_ptr = (void *) result;
-
-  // Register the real-time signal with the Proactor. 
-  if (this->register_aio_with_proactor (result) == -1)
-    return -1;
   
   // Fire off the aio read.
   if (aio_read (result) == -1)
@@ -873,10 +863,6 @@ ACE_POSIX_SIG_Asynch_Write_Stream::shared_write (ACE_POSIX_Asynch_Write_Stream_R
   result->aio_sigevent.sigev_signo = result->signal_number ();
   result->aio_sigevent.sigev_value.sival_ptr = (void *) result;
 
-  // Register the real-time signal with the Proactor. 
-  if (this->register_aio_with_proactor (result) == -1)
-    return -1;
-  
   // Fire off the aio write.
   if (aio_write (result) == -1)
     // Queueing failed.
@@ -1957,9 +1943,8 @@ ACE_POSIX_SIG_Asynch_Accept_Handler::register_accept_call (ACE_POSIX_Asynch_Acce
   // Do the work.
   if (this->register_accept_call_i (result) == -1)
     return -1;
-
-  // Also register the real-time signal.
-  return this->posix_proactor_->register_aio_with_proactor (result);
+  
+  return 0;
 }
 
 int
@@ -2476,7 +2461,9 @@ class ACE_Export ACE_POSIX_Asynch_Transmit_Handler : public ACE_Handler
   // = DESCRIPTION
   //
   //     This is a helper class for implementing
-  //     <ACE_POSIX_Asynch_Transmit_File> in Unix systems.
+  //     <ACE_POSIX_Asynch_Transmit_File> in Unix systems. This class
+  //     abstracts out all the commonalities in the two different
+  //     POSIX Transmit Handler implementations.
 
 public:
   virtual ~ACE_POSIX_Asynch_Transmit_Handler (void);
@@ -2695,32 +2682,25 @@ ACE_POSIX_AIOCB_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_W
   // Check the success parameter.
   if (result.success () == 0)
     {
+      // Failure.
       ACE_ERROR ((LM_ERROR,
                   "Asynch_Transmit_File failed.\n"));
-
-      // Check the success parameter.
-      if (result.success () == 0)
+      
+      ACE_SEH_TRY
         {
-          // Failure.
-          ACE_ERROR ((LM_ERROR,
-                      "Asynch_Transmit_File failed.\n"));
-
-          ACE_SEH_TRY
-            {
-              this->result_->complete (this->bytes_transferred_,
-                                       0,      // Failure.
-                                       0,      // @@ Completion key.
-                                       0);     // @@ Error no.
-            }
-          ACE_SEH_FINALLY
-            {
-              // This is crucial to prevent memory leaks. This deletes
-              // the result pointer also.
-              delete this;
-            }
+          this->result_->complete (this->bytes_transferred_,
+                                   0,      // Failure.
+                                   0,      // @@ Completion key.
+                                   0);     // @@ Error no.
+        }
+      ACE_SEH_FINALLY
+        {
+          // This is crucial to prevent memory leaks. This deletes
+          // the result pointer also.
+          delete this;
         }
     }
-
+  
   // Write stream successful.
 
   // Partial write to socket.
@@ -2816,8 +2796,10 @@ ACE_POSIX_AIOCB_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read
   if (result.bytes_transferred () == 0)
     return;
 
-  // Increment offset and write data to network.
+  // Increment offset.
   this->file_offset_ += result.bytes_transferred ();
+
+  // Write data to network.
   if (this->ws_.write (result.message_block (),
                        result.bytes_transferred (),
                        (void *)&this->data_act_,

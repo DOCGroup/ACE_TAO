@@ -200,6 +200,12 @@ extern "C"
 // Aio works on lynx
 #define ACE_HAS_AIO_CALLS
 
-// AIOCB Proactor doesnt work on lynx yet.
-#define ACE_POSIX_SIG_PROACTOR
+// AIOCB Proactor works on Lynx. But it is not
+// multi-threaded.
+// Lynx OS 3.0.0 lacks POSIX call <pthread_sigmask>. So,we cannot use
+// SIG Proactor also, with multiple threads. So, let us use the AIOCB
+// Proactor. Once <pthreadd_sigmask> is available on Lynx, we can turn
+// on SIG Proactor for this platform.
+// #define ACE_POSIX_SIG_PROACTOR
+#define ACE_POSIX_AIOCB_PROACTOR
 #endif /* ACE_CONFIG_H */
