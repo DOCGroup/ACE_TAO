@@ -273,7 +273,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {

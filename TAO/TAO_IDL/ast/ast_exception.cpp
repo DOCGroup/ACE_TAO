@@ -174,7 +174,7 @@ AST_Exception::fe_add_field (AST_Field *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
@@ -222,7 +222,7 @@ AST_Exception::fe_add_union (AST_Union *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
@@ -269,7 +269,7 @@ AST_Exception::fe_add_structure (AST_Structure *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
@@ -314,7 +314,7 @@ AST_Exception::fe_add_enum (AST_Enum *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
@@ -363,7 +363,7 @@ AST_Exception::fe_add_enum_val (AST_EnumVal *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
