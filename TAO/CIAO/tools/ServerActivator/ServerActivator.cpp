@@ -19,12 +19,13 @@
 
 char *ior_file_name_ = 0;
 char *comserv_path_ = "../ComponentServer/ComponentServer";
+char *installation_ior_ = 0;
 CORBA::ULong spawn_wait_ = 5;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "n:o:d:");
+  ACE_Get_Opt get_opts (argc, argv, "n:o:d:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -32,15 +33,19 @@ parse_args (int argc, char *argv[])
       {
       case 'o':  // get the file name to write to
        ior_file_name_ = get_opts.opt_arg ();
-      break;
+       break;
 
       case 'n':  // get the path name to the component server
         comserv_path_ = get_opts.opt_arg ();
-      break;
+        break;
 
       case 'd':  // get the path name to the component server
         spawn_wait_ = ACE_OS::atoi (get_opts.opt_arg ());
-      break;
+        break;
+
+      case 'i':  // get the ior to a ComponentInstallation interface
+        installation_ior_ = get_opts.opt_arg ();
+        break;
 
       case '?':  // display help for use of the server.
       default:
@@ -53,6 +58,12 @@ parse_args (int argc, char *argv[])
                            argv [0]),
                           -1);
       }
+
+  if (installation_ior_ == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "An IOR to a ComponentInstallation interface is needed."
+                       "  Specified with \"-i <ior>\"\n"),
+                      -1);
 
   return 0;
 }
@@ -115,7 +126,8 @@ main (int argc, char *argv[])
                       -1);
 
       activator_servant->init (comserv_path_,
-                               spawn_wait_
+                               spawn_wait_,
+                               installation_ior_
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

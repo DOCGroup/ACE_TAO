@@ -1,5 +1,4 @@
 // $Id$
-// $Id$
 
 #include "CCM_DeploymentC.h"
 #include "Client_init.h"

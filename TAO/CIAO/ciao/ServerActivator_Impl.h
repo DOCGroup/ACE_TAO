@@ -110,7 +110,8 @@ namespace CIAO
     /// ServerActivator should wait (in second) for ComponentServer to
     /// call back.
     int init (const char *server_location,
-              CORBA::ULong delay
+              CORBA::ULong delay,
+              const char *installation_ior
               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -151,6 +152,9 @@ namespace CIAO
 
     /// Child poa that uses active object map.
     PortableServer::POA_var callback_poa_;
+
+    /// Cached the IOR string to ComponentInstallation Interface
+    CORBA::String_var installation_ior_;
 
     /// Specify the time in second ServerActivator will wait for a
     /// child ComponentServer to callback.  Default is 5 second.

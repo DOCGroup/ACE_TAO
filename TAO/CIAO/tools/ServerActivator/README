@@ -27,6 +27,13 @@ Other command line flags supported by ServerActivator include:
   * -o <filename> : Specify the filename ServerActivator uses to
                     write the IOR.
 
+  * -i <ior> : Specify the IOR for the ComponentInstallation interface.
+               It will be passed as
+
+                  "-ORBInitRef ComponentInstallation=<ior>"
+
+               command line options to the ComponentServer.
+
   * -d <second> : Specify the time, in second, ServerActivator will
                   wait for the ComponentServer to callback to notify
                   ServerActivator their IOR.  ServerActivator

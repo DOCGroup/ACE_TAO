@@ -28,8 +28,7 @@
 class CIAO_HelloWorld_Servant;
 
 class HELLO_SERVANT_Export CIAO_HelloWorld_Context :
-  public virtual CCM_HelloWorld_Context,
-  public virtual ::Components::SessionContext
+  public virtual CCM_HelloWorld_Context
 {
 public:
   // Ctor.
@@ -43,9 +42,6 @@ public:
   // We need to overwrite the following method to avoid ambiguity
   // This is strange, but thankfully, this is generated code so it's
   // okay (?) to mess with this.
-
-  virtual void *_tao_QueryInterface (ptr_arith_t type);
-  virtual const char* _interface_repository_id (void) const;
 
   // Operations for HellowWorld attributes, event source, and
   // receptable defined in CCM_HelloWorld_Context.
@@ -68,11 +64,6 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::IllegalState));
 
-
-  // Operations for ::Components::SessionContext interface
-  virtual CORBA::Object_ptr get_CCM_object (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::IllegalState));
 
 protected:
   ::Components::CCMHome_var home_;

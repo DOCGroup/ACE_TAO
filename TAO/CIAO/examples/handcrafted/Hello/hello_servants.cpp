@@ -20,72 +20,6 @@ CIAO_HelloWorld_Context::~CIAO_HelloWorld_Context ()
 
 }
 
-void *
-CIAO_HelloWorld_Context::_tao_QueryInterface (ptr_arith_t type)
-{
-  void *retv = 0;
-
-  if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
-              &CCM_HelloWorld_Context::_tao_class_id)
-            )
-    {
-      retv = ACE_reinterpret_cast (void*, this);
-    }
-  else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
-              &::Components::SessionContext::_tao_class_id)
-            )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (
-                Components::SessionContext_ptr,
-                this
-              )
-          );
-    }
-  else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
-              &::Components::CCMContext::_tao_class_id)
-            )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (
-                Components::CCMContext_ptr,
-                this
-              )
-          );
-    }
-  else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
-               &CORBA::Object::_tao_class_id)
-             )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
-    }
-
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-
-  return retv;
-}
-
-const char*
-CIAO_HelloWorld_Context::_interface_repository_id (void) const
-{
-  return CCM_HelloWorld_Context::_interface_repository_id ();
-}
-
 // Operations for HellowWorld attributes, event source, and
 // receptable defined in CCM_HelloWorld_Context.
 
@@ -143,32 +77,6 @@ CIAO_HelloWorld_Context::set_rollback_only (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-
-// Operations for ::Components::SessionContext interface
-CORBA::Object_ptr
-CIAO_HelloWorld_Context::get_CCM_object (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::IllegalState))
-{
-  // @@ How do I check for IllegalState here?  When it's not in a
-  //    callback operation...
-  //    ACE_THROW_RETURN (::Components::IllegalState (), 0);
-
-  if (CORBA::is_nil (this->component_.in ()))
-    {
-      CORBA::Object_var obj =  this->container_->get_objref (this->servant_
-                                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      this->component_ = HelloWorld::_narrow (obj.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (CORBA::is_nil (this->component_.in ()))
-        ACE_THROW_RETURN (CORBA::INTERNAL (), 0); // This should not happen...
-    }
-  return HelloWorld::_duplicate (this->component_.in ());
-}
 
 ////////////////////////////////////////////////////////////////
 /////////////////// CIAO_HelloWorld_Servant ////////////////////
