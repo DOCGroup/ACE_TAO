@@ -618,6 +618,8 @@ cat_iiop_profile (TAO_InputCDR& stream)
       return 1;
     }
 
+  str >> port_number;
+
   ACE_DEBUG ((LM_DEBUG,
               "Host Name:\t%s\n",
               hostname));
