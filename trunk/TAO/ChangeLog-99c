@@ -1,3 +1,9 @@
+Wed Jul 14 21:44:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Object.cpp (_is_a): Should return 0 instead of
+	  CORBA::Object::_nil when prepare_for_upcall failed.  Thanks to
+	  Carlos for pointing this out.
+
 Wed Jul 14 21:35:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (invoke): This function
