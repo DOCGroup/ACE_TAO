@@ -1089,7 +1089,7 @@ Admin_Client::struct_test (ACE_ENV_SINGLE_ARG_DECL)
                 length));
 
   ACE_ASSERT (length == 2);
-
+  
   contents = svar->contents (CORBA::dk_all,
                              0
                              ACE_ENV_ARG_PARAMETER);
@@ -2915,13 +2915,13 @@ Admin_Client::module_test (ACE_ENV_SINGLE_ARG_DECL)
                                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::ModuleDef_var middle = outer->create_module ("IDL:middle:1.0",
+  CORBA::ModuleDef_var middle = outer->create_module ("IDL:outer/middle:1.0",
                                                       "middle",
                                                       "1.0"
                                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::ModuleDef_var inner = middle->create_module ("IDL:inner:1.0",
+  CORBA::ModuleDef_var inner = middle->create_module ("IDL:outer/middle/inner:1.0",
                                                       "inner",
                                                       "1.0"
                                                       ACE_ENV_ARG_PARAMETER);
@@ -3161,6 +3161,8 @@ Admin_Client::module_test (ACE_ENV_SINGLE_ARG_DECL)
       ACE_ASSERT (!ACE_OS::strcmp (str.in (), "::outer::iface::op"));
     }
 
+  ex_var->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
   outer->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }

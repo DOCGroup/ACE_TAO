@@ -118,17 +118,7 @@ TAO_Container_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
                                               "refs",
                                               1);
     }
-
-  ACE_TString id;
-  this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
-                                            id);
-
-  ACE_TString my_path;
-  this->repo_->config ()->get_string_value (this->repo_->repo_ids_key (),
-                                            id.c_str (),
-                                            my_path);
-
+    
   // Destroy definitions.
 
   ACE_Configuration_Section_Key defns_key;
@@ -137,6 +127,10 @@ TAO_Container_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
                                           "defns",
                                           0,
                                           defns_key);
+   
+  // Store our section key for later in case this method is
+  // called recursively                               
+  ACE_Configuration_Section_Key holder = this->section_key_;
 
   // This section may not have been created.
   if (status == 0)
@@ -167,6 +161,10 @@ TAO_Container_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
           ACE_CHECK;
         }
 
+      // Restore our original section key, in case this method was
+      // called recursively.
+      this->section_key (holder);
+      
       this->repo_->config ()->remove_section (this->section_key_,
                                               "defns",
                                               1);

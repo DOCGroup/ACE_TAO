@@ -1246,7 +1246,8 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
 
   static char out[256] = "";
 
-  double temp1 = ACE_UINT64_DBLCAST_ADAPTER (p_time);;
+  double temp1 = 
+    ACE_static_cast (double, ACE_UINT64_DBLCAST_ADAPTER (p_time));
 
   ACE_OS::sprintf (out, "time > %.0f", temp1);
 
