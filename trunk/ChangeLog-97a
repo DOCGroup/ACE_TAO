@@ -1,3 +1,53 @@
+Tue Apr  8 00:04:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace: Changed the signature of all the make_svc_handler() methods
+ 	  so that they return int (rather than SVC_HANDLER *) and they
+ 	  pass back a SVC_HANDLER * by reference.  This makes it possible
+ 	  to totally control the creation of svc handlers (which is useful
+ 	  for the new ACE_Strategy_Connector).
+
+	* ace/Connector.cpp: Factored out the active_svc_handler() call
+ 	  from the connect_svc_handler() method into the connect() method
+ 	  so that it would behave correctly as a Template Method and
+ 	  Strategy.
+
+	* ace/Connector: Removed the explicit use of the Reactor data
+ 	  member from the ACE_Connector since it's inherited from the
+ 	  ACE_Service_Object.
+
+	* ace/Log_Msg.cpp: The MVS compiler doesn't like the call to
+ 	  atexit() in ACE_Log_Msg::instance() because atexit() requires an
+ 	  a function pointer of type extern "C" for its parameter.  I've
+ 	  fixed this via an adapter.  Thanks to Chuck Gehr
+ 	  <gehr@sweng.stortek.com> for reporting this.
+
+	* ace/Strategies_T: Added a new ACE_Connect_Strategy that
+ 	  complements the ACE_Strategy_Connector in the same manner that
+ 	  the ACE_Accept_Strategy complements the ACE_Strategy_Acceptor.
+
+	* ace/Connector.h: The destructor for ACE_Connector should have
+ 	  been virtual.  Now it is.
+
+	* ace/Connector: Added a new factory method called
+ 	  make_svc_handler().  This behaves similiarly to the
+ 	  ACE_Acceptor::make_svc_handler().  However, for the
+ 	  ACE_Connector we only use this when the SVC_HANDLER * is NULL.
+
+	* ace/Connector: Changed the signature for connect() to take a &
+ 	  to a SVC_HANDLER * in anticipation of our new
+ 	  ACE_Strategy_Connector.  This new connector will make it easy to
+ 	  implement cached connections.
+
+	* ace/config-win32-common.h: Added a new #include for <mswsock.h>,
+ 	  which contains the declarations for TransmitFile() data
+ 	  structures.  They are in WINSOCK.H if you do not use
+ 	  ACE_HAS_WINSOCK2.  Thanks to Norbert Rapp
+ 	  <norbert.rapp@nexus-informatics.de> for reporting this.
+
+	* ace/OS.i: Fixed a typo in the new condition variable
+ 	  implementation for Win32.  Thanks to Norbert Rapp
+ 	  <norbert.rapp@nexus-informatics.de> for reporting this.
+
 Wed Apr  9 03:12:24 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/config-win32-common.h: Defining _WIN32_WINNT as 0x0400
@@ -24,6 +74,10 @@ Tue Apr 08 22:08:12 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Apr  8 00:04:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Task_T.cpp: Added a hack to work around the new weird HP/UX
+ 	  aCC template semantics.  Thanks to Neil B. Cohen
+ 	  <nbc@metsci.com> for reporting this.
+ 
 	* ace/config-hpux-10.x[-g++].h: Added #define
  	  ACE_HAS_CLOCK_GETTIME.  Thanks to Neil B. Cohen <nbc@metsci.com>
  	  for reporting this.

@@ -18,6 +18,7 @@
 #define ACE_STRATEGIES_T_H
 
 #include "ace/Service_Config.h"
+#include "ace/Synch_Options.h"
 
 template <class SVC_HANDLER>
 class ACE_Creation_Strategy
@@ -44,10 +45,11 @@ public:
   virtual ~ACE_Creation_Strategy (void);
 
   // = Factory method.
-  virtual SVC_HANDLER *make_svc_handler (void);
+  virtual int make_svc_handler (SVC_HANDLER *&sh);
   // Create a SVC_HANDLER with the appropriate creation strategy.  The
-  // default behavior of this method is to make a new SVC_HANDLER,
-  // passing in the Thread_Manager (if any).
+  // default behavior of this method is to make a new <SVC_HANDLER> if
+  // <sh> == 0 (passing in the <Thread_Manager>), else <sh> is
+  // unchanged.  Returns -1 on failure, else 0.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -80,9 +82,9 @@ public:
   virtual ~ACE_Singleton_Strategy (void);
   
   // = Factory method.
-  virtual SVC_HANDLER *make_svc_handler (void);
+  virtual int make_svc_handler (SVC_HANDLER *&);
   // Create a Singleton SVC_HANDLER by always returning the same
-  // SVC_HANDLER. 
+  // SVC_HANDLER.  Returns -1 on failure, else 0.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -120,8 +122,9 @@ public:
   // information contained in the <svc_dll_info> string.
 
   // = Factory method.
-  virtual SVC_HANDLER *make_svc_handler (void);
+  virtual int make_svc_handler (SVC_HANDLER *&);
   // Create a SVC_HANDLER by dynamically linking it from a DLL.
+  // Returns -1 on failure, else 0.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -323,8 +326,50 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  ACE_PEER_ACCEPTOR peer_acceptor_;     
+  ACE_PEER_ACCEPTOR acceptor_;     
   // Factory that establishes connections passively.
+};
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
+class ACE_Connect_Strategy 
+  // = TITLE
+  //     Defines the interface for specifying an active 
+  //     connection establishment strategy for a SVC_HANDLER.
+  //
+  // = DESCRIPTION
+  //     This class provides a strategy that manages active 
+  //     connection establishment to a server.
+{
+public:
+  // = Initialization and termination methods.
+  ACE_Connect_Strategy (void);
+  // Default constructor.
+
+  virtual ACE_PEER_CONNECTOR &connector (void) const;
+  // Return a reference to the <peer_connector_>.
+
+  virtual ~ACE_Connect_Strategy (void);
+
+  // = Factory method.
+  virtual int connect_svc_handler (SVC_HANDLER *&sh,
+				   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+				   ACE_Time_Value *timeout,
+				   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+				   int reuse_addr,
+				   int flags,
+				   int perms);
+  // The default behavior delegates to the <connect> method of the
+  // <PEER_CONNECTOR::connect>.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+protected:
+  ACE_PEER_CONNECTOR connector_;     
+  // Factory that establishes connections actively.
 };
 
 template <class SVC_HANDLER>

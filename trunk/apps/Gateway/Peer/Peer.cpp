@@ -632,7 +632,7 @@ public:
   virtual int fini (void);
   // Perform termination.
 
-  virtual Peer_Handler *make_svc_handler (void);
+  virtual int make_svc_handler (Peer_Handler *&);
   // Factory method that creates the Peer_Handler once.
 
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
@@ -660,10 +660,11 @@ Peer_Acceptor::Peer_Acceptor (void)
 // Note how this method just passes back the pre-allocated Peer_Handler
 // instead of having the ACE_Acceptor allocate a new one each time!
 
-Peer_Handler *
-Peer_Acceptor::make_svc_handler (void)
+int
+Peer_Acceptor::make_svc_handler (Peer_Handler *&sh)
 {
-  return this->peer_handler_;
+  sh = this->peer_handler_;
+  return 0;
 }
 
 int 

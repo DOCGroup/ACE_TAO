@@ -99,10 +99,9 @@ public:
 	       INT_ID &int_id);
   // Associate <ext_id> with <int_id> if and only if <ext_id> is not
   // in the map.  If <ext_id> is already in the map then the <int_id>
-  // parameter is overwritten with the existing value in the map
-  // Returns 0 if a new entry is bound successfully, returns 1 if an
-  // attempt is made to bind an existing entry, and returns -1 if
-  // failures occur.
+  // parameter is assigned the existing value in the map.  Returns 0
+  // if a new entry is bound successfully, returns 1 if an attempt is
+  // made to bind an existing entry, and returns -1 if failures occur.
 
   int bind (const EXT_ID &item,
 	    const INT_ID &int_id);
@@ -127,7 +126,7 @@ public:
   int find (const EXT_ID &item,
 	    INT_ID &int_id);
   // Locate <ext_id> and pass out parameter via <int_id>.  If found,
-  // return 0, returns -1 if failure occurs.
+  // return 0, returns -1 if not found.
 
   int find (const EXT_ID &ext_id);
   // Returns 0 if the <ext_id> is in the mapping, otherwise -1.

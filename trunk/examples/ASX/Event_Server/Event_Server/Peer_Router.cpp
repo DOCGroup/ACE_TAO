@@ -132,10 +132,10 @@ Peer_Router_Context::peer_router (Peer_Router *pr)
   this->peer_router_ = pr;
 }
 
-Peer_Handler *
-Peer_Router_Context::make_svc_handler (void)
+int
+Peer_Router_Context::make_svc_handler (Peer_Handler *&sh)
 { 
-  return new Peer_Handler (this);
+  ACE_NEW_RETURN (sh, Peer_Handler (this), -1);
 }
 
 Peer_Handler::Peer_Handler (Peer_Router_Context *prc)

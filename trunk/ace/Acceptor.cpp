@@ -190,11 +190,13 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
 // subclass instances of SVC_HANDLER, using a singleton, dynamically
 // linking the handler, etc.).
 
-template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> SVC_HANDLER *
-ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::make_svc_handler (void)
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
+ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::make_svc_handler (SVC_HANDLER *&sh)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::make_svc_handler");
-  return new SVC_HANDLER;
+  if (sh == 0)
+    ACE_NEW_RETURN (sh, SVC_HANDLER, -1);
+  return 0;
 }
 
 // Bridge method for accepting the new connection into the
@@ -269,9 +271,9 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
       // Create a service handler, using the appropriate creation
       // strategy.
 
-      SVC_HANDLER *svc_handler = this->make_svc_handler ();
-
-      if (svc_handler == 0)
+      SVC_HANDLER *svc_handler = 0;
+      
+      if (this->make_svc_handler (svc_handler) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "make_svc_handler"), 0);
 
       // Accept connection into the Svc_Handler.
@@ -478,6 +480,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
    const char service_description[])
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor");
+
   if (this->open (addr, reactor, cre_s, acc_s, con_s, sch_s,
 		  service_name, service_description) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Strategy_Acceptor::ACE_Strategy_Acceptor"));
@@ -537,11 +540,11 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDL
 // subclass instances of SVC_HANDLER, using a singleton, dynamically
 // linking the handler, etc.).
 
-template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> SVC_HANDLER *
-ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::make_svc_handler (void)
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
+ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::make_svc_handler (SVC_HANDLER *&sh)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::make_svc_handler");
-  return this->creation_strategy_->make_svc_handler ();
+  return this->creation_strategy_->make_svc_handler (sh);
 }
 
 // Bridge method for accepting the new connection into the
@@ -892,7 +895,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::fini (void)
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp, 
-					 size_t length) const
+							      size_t length) const
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info");
   char buf[BUFSIZ];

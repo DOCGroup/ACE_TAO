@@ -23,7 +23,6 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Synch.h"
 #include "test_config.h"
-#include "Map_Manager_Test_Key.h"
 
 typedef ACE_Null_Mutex MUTEX;
 typedef size_t VALUE;

@@ -116,12 +116,12 @@ public:
   virtual int open (ACE_Reactor *r = ACE_Service_Config::reactor ());
   // Initialize a connector.
 
-  ~ACE_Connector (void);
+  virtual ~ACE_Connector (void);
   // Shutdown a connector and release resources.
 
   // = Connection establishment method
 
-  virtual int connect (SVC_HANDLER *svc_handler,
+  virtual int connect (SVC_HANDLER *&svc_handler,
 		       const ACE_PEER_CONNECTOR_ADDR &remote_addr,
 		       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
 		       const ACE_PEER_CONNECTOR_ADDR &local_addr 
@@ -142,12 +142,6 @@ public:
 
   ACE_PEER_CONNECTOR &connector (void) const;
   // Return the underlying PEER_CONNECTOR object.
-
-  ACE_Reactor *reactor (void) const;
-  // Get the underlying Reactor *.
-
-  void reactor (ACE_Reactor *);
-  // Set the underlying Reactor *.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -172,18 +166,27 @@ protected:
 #endif /* ACE_MT_SAFE */
 
   // = The following two methods define the Connector's strategies for
-  // connecting and activating SVC_HANDLER's, respectively.
+  // creating, connecting, and activating SVC_HANDLER's, respectively.
 
-  virtual int connect_svc_handler (SVC_HANDLER *svc_handler,
+  virtual int make_svc_handler (SVC_HANDLER *&sh);
+  // Bridge method for creating a SVC_HANDLER.  The default is to
+  // create a new SVC_HANDLER only if <sh> == 0, else <sh> is
+  // unchanged.  However, subclasses can override this policy to
+  // perform SVC_HANDLER creation in any way that they like (such as
+  // creating subclass instances of SVC_HANDLER, using a singleton,
+  // dynamically linking the handler, etc.).  Returns -1 if failure,
+  // else 0.
+
+  virtual int connect_svc_handler (SVC_HANDLER *&svc_handler,
 				   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-				   const ACE_Synch_Options &synch_options,
+				   ACE_Time_Value *timeout,
 				   const ACE_PEER_CONNECTOR_ADDR &local_addr,
 				   int reuse_addr,
 				   int flags,
 				   int perms);
   // Bridge method for connecting the <svc_handler> to the
   // <remote_addr>.  The default behavior delegates to the
-  // PEER_CONNECTOR::connect.
+  // <PEER_CONNECTOR::connect>.
 
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
   // Bridge method for activating a <svc_handler> with the appropriate
@@ -254,12 +257,107 @@ private:
   ACE_PEER_CONNECTOR connector_;
   // Factor that establishes connections actively.
 
-  ACE_Reactor *reactor_;
-  // Event demultiplex associated with this object.
-
   char closing_;
   // Keeps track of whether we are in the process of closing (required
   // to avoid circular calls to <handle_close>).
+};
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
+class ACE_Strategy_Connector : public ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+  // = TITLE
+  //     Abstract factory for creating a service handler
+  //     (SVC_HANDLER), connecting the SVC_HANDLER, and activating the
+  //     SVC_HANDLER.
+  //
+  // = DESCRIPTION
+  //     Implements a flexible and extensible set of strategies for
+  //     actively establishing connections with clients.  There are
+  //     three main strategies: (1) creating a SVC_HANDLER, (2)
+  //     actively connecting a new connection from a client into the
+  //     SVC_HANDLER, and (3) activating the SVC_HANDLER with a
+  //     particular concurrency mechanism.
+{
+public:
+  ACE_Strategy_Connector (ACE_Reactor *r = ACE_Service_Config::reactor (),
+			  ACE_Creation_Strategy<SVC_HANDLER> * = 0,
+			  ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> * = 0,
+			  ACE_Concurrency_Strategy<SVC_HANDLER> * = 0);
+  // Initialize a connector.
+
+  virtual int open (ACE_Reactor *r = ACE_Service_Config::reactor (),
+		    ACE_Creation_Strategy<SVC_HANDLER> * = 0,
+		    ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> * = 0,
+		    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0);
+  // Initialize a connector.
+
+  virtual ~ACE_Strategy_Connector (void);
+  // Shutdown a connector and release resources.
+
+protected:
+  // = The following three methods define the <Connector>'s strategies
+  // for creating, connecting, and activating <SVC_HANDLER>'s,
+  // respectively.
+
+  virtual int make_svc_handler (SVC_HANDLER *&sh);
+  // Bridge method for creating a <SVC_HANDLER>.  The strategy for
+  // creating a <SVC_HANDLER> are configured into the Connector via
+  // it's <creation_strategy_>.  The default is to create a new
+  // <SVC_HANDLER> only if <sh> == 0, else <sh> is unchanged.
+  // However, subclasses can override this policy to perform
+  // <SVC_HANDLER> creation in any way that they like (such as
+  // creating subclass instances of <SVC_HANDLER>, using a singleton,
+  // dynamically linking the handler, etc.).  Returns -1 if failure,
+  // else 0.
+
+  virtual int connect_svc_handler (SVC_HANDLER *&sh,
+				   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+				   ACE_Time_Value *timeout,
+				   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+				   int reuse_addr,
+				   int flags,
+				   int perms);
+  // Bridge method for connecting the new connection into the
+  // <SVC_HANDLER>.  The default behavior delegates to the
+  // <PEER_CONNECTOR::connect> in the <Connect_Strategy>.
+
+  virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
+  // Bridge method for activating a <SVC_HANDLER> with the appropriate
+  // concurrency strategy.  The default behavior of this method is to
+  // activate the <SVC_HANDLER> by calling its <open> method (which
+  // allows the <SVC_HANDLER> to define its own concurrency strategy).
+  // However, subclasses can override this strategy to do more
+  // sophisticated concurrency activations (such as creating the
+  // <SVC_HANDLER> as an "active object" via multi-threading or
+  // multi-processing).
+
+  // = Define some useful typedefs.
+  typedef ACE_Creation_Strategy<SVC_HANDLER> CREATION_STRATEGY;
+  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> CONNECT_STRATEGY;
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER> CONCURRENCY_STRATEGY;
+
+  // = Strategy objects.
+
+  CREATION_STRATEGY *creation_strategy_;
+  // Creation strategy for an <Connector>.
+
+  int delete_creation_strategy_;
+  // 1 if <Connector> created the creation strategy and thus should
+  // delete it, else 0.
+
+  CONNECT_STRATEGY *connect_strategy_;
+  // Connect strategy for a <Connector>.
+
+  int delete_connect_strategy_;
+  // 1 if <Connector> created the connect strategy and thus should
+  // delete it, else 0.
+
+  CONCURRENCY_STRATEGY *concurrency_strategy_;
+  // Concurrency strategy for an <Connector>.
+
+  int delete_concurrency_strategy_;
+  // 1 if <Connector> created the concurrency strategy and thus should
+  // delete it, else 0.
+
 };
 
 #include "ace/Connector.i"

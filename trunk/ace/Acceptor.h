@@ -84,12 +84,13 @@ protected:
   // for creating, accepting, and activating SVC_HANDLER's,
   // respectively.
 
-  virtual SVC_HANDLER *make_svc_handler (void);
+  virtual int make_svc_handler (SVC_HANDLER *&sh);
   // Bridge method for creating a SVC_HANDLER.  The default is to
-  // create a new SVC_HANDLER.  However, subclasses can override this
-  // policy to perform SVC_HANDLER creation in any way that they like
-  // (such as creating subclass instances of SVC_HANDLER, using a
-  // singleton, dynamically linking the handler, etc.).
+  // create a new <SVC_HANDLER> if <sh> == 0, else <sh> is unchanged.
+  // However, subclasses can override this policy to perform
+  // SVC_HANDLER creation in any way that they like (such as creating
+  // subclass instances of SVC_HANDLER, using a singleton, dynamically
+  // linking the handler, etc.).  Returns -1 on failure, else 0.
 
   virtual int accept_svc_handler (SVC_HANDLER *svc_handler);
   // Bridge method for accepting the new connection into the
@@ -222,14 +223,15 @@ protected:
   // for creating, accepting, and activating <SVC_HANDLER>'s,
   // respectively.
 
-  virtual SVC_HANDLER *make_svc_handler (void);
+  virtual int make_svc_handler (SVC_HANDLER *&);
   // Bridge method for creating a <SVC_HANDLER>.  The strategy for
   // creating a <SVC_HANDLER> are configured into the Acceptor via
   // it's <creation_strategy_>.  The default is to create a new
-  // <SVC_HANDLER>.  However, subclasses can override this policy to
-  // perform <SVC_HANDLER> creation in any way that they like (such as
-  // creating subclass instances of <SVC_HANDLER>, using a singleton,
-  // dynamically linking the handler, etc.).
+  // <SVC_HANDLER> if <sh> == 0, else <sh> is unchanged.  However,
+  // subclasses can override this policy to perform <SVC_HANDLER>
+  // creation in any way that they like (such as creating subclass
+  // instances of <SVC_HANDLER>, using a singleton, dynamically
+  // linking the handler, etc.).  Returns -1 on failure, else 0.
 
   virtual int accept_svc_handler (SVC_HANDLER *svc_handler);
   // Bridge method for accepting the new connection into the
