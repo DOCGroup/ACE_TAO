@@ -2,7 +2,8 @@ Tue Jun 15 22:11:09 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/IOStream/client/iostream_client.cpp:
 
-	  Added missing "ace/OS_NS_stdlib.h" include.
+	  Added missing "ace/OS_NS_stdlib.h" and "ace/OS_NS_unistd.h"
+	  includes.
 
 Tue Jun 15 20:27:06 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
