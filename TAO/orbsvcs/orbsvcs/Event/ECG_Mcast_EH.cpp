@@ -5,7 +5,7 @@
 #include "orbsvcs/Event_Service_Constants.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_MCast_EH.i"
+#include "ECG_MCast_EH.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_UDP_EH, "$Id$")
@@ -309,6 +309,7 @@ TAO_ECG_Mcast_EH::update_consumer (
   Address_Set multicast_addresses;
 
   this->compute_required_subscriptions (sub, multicast_addresses, ACE_TRY_ENV);
+  ACE_CHECK;
 
   // 2) To conserve OS and network resources we first unsubscribe from
   //    the multicast groups no longer wanted.  This is done by
@@ -359,48 +360,24 @@ TAO_ECG_Mcast_EH::Observer::update_supplier (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Atomic_Op<TAO_SYNCH_MUTEX,CORBA::ULong>;
-
-template class ACE_Hash_Map_Manager<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,TAO_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Manager<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>;
 template class ACE_Unbounded_Set<ACE_INET_Addr>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
 template class ACE_Array_Base<ACE_SOCK_Dgram_Mcast *>;
-template class ACE_Hash_Map_Entry<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *>;
 template class ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
-template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_Request_Entry*, ACE_Hash<TAO_ECG_UDP_Request_Index>, ACE_Equal_To<TAO_ECG_UDP_Request_Index>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*>;
-template class ACE_Hash<TAO_ECG_UDP_Request_Index>;
-template class ACE_Equal_To<TAO_ECG_UDP_Request_Index>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_Request_Entry*, ACE_Hash<TAO_ECG_UDP_Request_Index>, ACE_Equal_To<TAO_ECG_UDP_Request_Index>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,TAO_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Iterator<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_Request_Entry*, ACE_Hash<TAO_ECG_UDP_Request_Index>, ACE_Equal_To<TAO_ECG_UDP_Request_Index>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_Request_Entry*, ACE_Hash<TAO_ECG_UDP_Request_Index>, ACE_Equal_To<TAO_ECG_UDP_Request_Index>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX,CORBA::ULong>
-
-#pragma instantiate ACE_Hash_Map_Manager<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Unbounded_Set<ACE_INET_Addr>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
 #pragma instantiate ACE_Array_Base<ACE_SOCK_Dgram_Mcast *>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_INET_Addr>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_Request_Entry*, ACE_Hash<TAO_ECG_UDP_Request_Index>, ACE_Equal_To<TAO_ECG_UDP_Request_Index>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*>
-#pragma instantiate ACE_Hash<TAO_ECG_UDP_Request_Index>
-#pragma instantiate ACE_Equal_To<TAO_ECG_UDP_Request_Index>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_Request_Entry*, ACE_Hash<TAO_ECG_UDP_Request_Index>, ACE_Equal_To<TAO_ECG_UDP_Request_Index>, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator<ACE_INET_Addr,ACE_SOCK_Dgram_Mcast*,ACE_Null_Mutex>;
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_Request_Entry*, ACE_Hash<TAO_ECG_UDP_Request_Index>, ACE_Equal_To<TAO_ECG_UDP_Request_Index>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_ECG_UDP_Request_Index,TAO_ECG_UDP_Request_Entry*,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_ECG_UDP_Request_Index, TAO_ECG_UDP_Request_Entry*, ACE_Hash<TAO_ECG_UDP_Request_Index>, ACE_Equal_To<TAO_ECG_UDP_Request_Index>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr, ACE_SOCK_Dgram_Mcast *>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
