@@ -1,3 +1,15 @@
+Mon Oct 12 19:19:27 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/ACE-tutorials.html:
+	Added a link to Bob McWhirter's	Frequently Made Mistakes page.
+
+	* docs/tutorials/014/Makefile
+	* docs/tutorials/014/Task.{cpp|h}
+	* docs/tutorials/014/EndTask.h
+	* docs/tutorials/014/stream.cpp
+	* docs/tutorials/014/page0[123456].html
+	A slightly modified version of Bob McWhirter's ACE_Stream tutorial.
+	
 Mon Oct 12 14:39:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/ASX/CCM_App/CCM_App.cpp: We need to make sure and use
