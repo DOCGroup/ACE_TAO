@@ -1,3 +1,36 @@
+Fri Nov  3 17:42:34 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+        * TAO_IDL/TAO_IDL_FE_LIB.dsp:
+        * TAO_IDL/tao_idl_static.dsp:
+        * examples/Simple/time/client_static.dsp:
+        * examples/Simple/time/server_static.dsp:
+        * orbsvcs/Naming_Service/Naming_Server_static.dsp:
+        * orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
+        * orbsvcs/orbsvcs/CosEvent_Static.dsp:
+        * orbsvcs/orbsvcs/CosLifeCycle_Static.dsp:
+        * orbsvcs/orbsvcs/CosNaming_Static.dsp:
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+        * orbsvcs/orbsvcs/CosProperty_Static.dsp:
+        * orbsvcs/orbsvcs/CosTime_Static.dsp:
+        * orbsvcs/orbsvcs/CosTrading_Static.dsp:
+        * orbsvcs/orbsvcs/LoadBalancing_Static.dsp:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTOLDEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTSchedEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTSched_Static.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/IORManipulation/TAO_IORManip_Static.dsp:
+        * tao/IORTable/TAO_IORTable_Static.dsp:
+        * tao/PortableServer/TAO_PortableServer_Static.dsp:
+
+          Updated static configurations for Static Release.
+
+        * tao/DynamicInterface/ExceptionList.inl:
+
+          Added CVS ID string to this file.
+
 Fri Nov  3 16:49:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_structure.cpp:

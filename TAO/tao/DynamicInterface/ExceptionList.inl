@@ -1,3 +1,5 @@
+// $Id$
+
 ACE_INLINE
 CORBA_ExceptionList::CORBA_ExceptionList (void)
   : ref_count_ (1)

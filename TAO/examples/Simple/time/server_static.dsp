@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 TAO_CosNamings.lib TAO_Svc_Utilss.lib TAO_IORTables.lib TAO_PortableServers.lib TAOs.lib aces.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\portableserver" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 TAO_CosNamings.lib TAO_Svc_Utilss.lib TAO_IORTables.lib TAO_PortableServers.lib TAOs.lib aces.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\IORTable" /libpath:"..\..\..\tao\portableserver" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
 !ENDIF 
 
