@@ -1,3 +1,15 @@
+Wed May 19 23:50:18 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* ace/TkReactor.{h,cpp}: 
+	* ace/Makefile:
+	  Added a new reactor implementation based on the Tcl/Tk Event
+	  loop and event handling mechanism.
+	
+	* ace/tests/TkReactor_Test.{cpp,tcl}:
+	* ace/tests/Makefile:
+	  The Tk Reactor test and the tcl script for the GUI. This is
+	  similar to the XtReactor_Test. 
+	
 Wed May 19 21:56:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Message_Queue.h: fixed typo in comment: interrupt.
