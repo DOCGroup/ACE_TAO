@@ -1,3 +1,20 @@
+Mon Jan 26 17:46:18 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        
+          In generated operation stub code, changed the name of the
+          array of argument helper classes passed to Invocation_Adapter,
+          so that the array name does not begin with the characters
+          '_tao_'. These characters are coincidentally applied as a prefix
+          to each argument helper class identifier, and so there was a 
+          possibility of a name clash. Of course there is still a
+          chance of a name clash with the argument identifier itself,
+          but there is no way to eliminate that, only to minimize it.
+          This fix closes [BUGID:1725]. Thanks to Mouna Seri 
+          <seri@crhc.uiuc.edu> for reporting the bug and for sending
+          the example IDL file that illustrated it.
+
 Mon Jan 26 09:32:58 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/FTRT_Event_Service/Event_Service/FTRT_Event_Service.mpc:

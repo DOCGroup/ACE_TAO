@@ -183,7 +183,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   // Assemble the arg helper class pointer array.
   *os << be_nl << be_nl
-      << "TAO::Argument *_tao_signature [] =" << be_idt_nl
+      << "TAO::Argument *_the_tao_operation_signature [] =" << be_idt_nl
       << "{" << be_idt_nl
       << "&_tao_retval";
 
@@ -235,7 +235,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   *os << be_nl << be_nl
       << "TAO::Asynch_Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "this," << be_nl
-      << "_tao_signature," << be_nl
+      << "_the_tao_operation_signature," << be_nl
       << nargs << "," << be_nl
       << "\"" << opname.fast_rep () << "\"," << be_nl
       << opname_len << "," << be_nl

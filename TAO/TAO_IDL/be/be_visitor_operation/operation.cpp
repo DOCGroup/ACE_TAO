@@ -457,7 +457,7 @@ be_visitor_operation::gen_stub_operation_body (
   this->gen_stub_body_arglist (node, os);
 
   *os << be_nl << be_nl
-      << "TAO::Argument *_tao_signature [] =" << be_idt_nl
+      << "TAO::Argument *_the_tao_operation_signature [] =" << be_idt_nl
       << "{" << be_idt_nl
       << "&_tao_retval";
 
@@ -493,7 +493,7 @@ be_visitor_operation::gen_stub_operation_body (
       << "TAO::" << (node->is_abstract () ? "AbstractBase_" : "" )
       << "Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "this," << be_nl
-      << "_tao_signature," << be_nl
+      << "_the_tao_operation_signature," << be_nl
       << node->argument_count () + 1 << "," << be_nl
       << "\"";
 
