@@ -208,7 +208,9 @@ public:
   // Set the cancellation state.
 
   static int cancel (ACE_thread_t t_id);
-  // Cancel a thread.
+  // Cancel a thread.  Note that this method is only portable on
+  // platforms, such as POSIX pthreads, that support thread
+  // cancellation.
 
   static void testcancel (void);
   // Test the cancel.

@@ -886,6 +886,7 @@ Alvin C. Shih <acs@ml.com>
 J. Scott Evans <evans@cpi.com>
 Alex Luk <fluk7@ie.cuhk.edu.hk>
 Kenneth Osenbroch <kennetho@stud.cs.uit.no>
+Jason Czavislak <jczavislak@osprey.smcm.edu>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
