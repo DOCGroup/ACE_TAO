@@ -39,12 +39,15 @@
 // ============================================================================
 
 #include "tests/test_config.h"
+#include "tests/Thread_Pool_Reactor_Test.h"
 #include "ace/Get_Opt.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Acceptor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
+
+typedef ACE_Strategy_Acceptor <Acceptor_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 
 ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
 
@@ -101,21 +104,6 @@ parse_arg (int argc, ASYS_TCHAR *argv[])
         }
     }
 }
-
-class Acceptor_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
-{
-  // = TITLE
-  //   This class is the Svc_Handler used by <Acceptor>.
-public:
-  Acceptor_Handler (ACE_Thread_Manager *tm = 0);
-  // The default constructor makes sure the right reactor is used.
-
-protected:
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask = 0);
-};
-
-typedef ACE_Strategy_Acceptor <Acceptor_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 
 Acceptor_Handler::Acceptor_Handler (ACE_Thread_Manager *thr_mgr)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr)
