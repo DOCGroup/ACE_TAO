@@ -97,7 +97,7 @@ else # VXWORKS
          # since protocols/rwhod.h is not available under cygwin32
          # drwho will not build on cygwin32
        all clean realclean:
-         @echo drwho will not build on cygwin32
+	@echo drwho will not build on cygwin32
       else # cygwin32
 
 include		$(ACE_ROOT)/include/makeinclude/macros.GNU
