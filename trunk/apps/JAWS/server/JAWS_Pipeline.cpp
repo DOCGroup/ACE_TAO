@@ -7,7 +7,7 @@ JAWS_Pipeline::JAWS_Pipeline (void)
 }
 
 int
-JAWS_Pipeline::open (void * = 0)
+JAWS_Pipeline::open (void *)
 {
   // Simply call into the virtual svc() method.
   if (this->svc() == -1)
@@ -16,7 +16,7 @@ JAWS_Pipeline::open (void * = 0)
 }
 
 int
-JAWS_Pipeline::close (u_long = 0)
+JAWS_Pipeline::close (u_long)
 {
   return 0;
 }
