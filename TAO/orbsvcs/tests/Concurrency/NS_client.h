@@ -49,8 +49,11 @@ private:
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
-  int resolve_name(char *n);
+  int resolve_name(char *c, char *n);
   // Resolves the name given on the commandlinn (-n option)
+
+  void list_contents(void);
+  // lists the contents of the naming service
 
   CORBA::ORB_var orb_;
   // Our ORB
@@ -58,11 +61,17 @@ private:
   CosNaming::NamingContext_var naming_context_;
   // Our naming context
 
+  int list_contents_;
+  // Iterate through the naming service and list the contents
+
   int resolve_name_;
   // Flag set by the -n option
 
   char *name_to_resolve_;
   // Parameter given to the -n option
+
+  char *context_to_resolve_;
+  // Parameter given to the -c option
 
   int argc_;
   // # of arguments on the command line.
