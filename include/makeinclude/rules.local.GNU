@@ -293,18 +293,14 @@ ifdef IDL_FILES
 	-$(RM) $(foreach ext, $(IDL_EXT), $(addsuffix $(ext), $(IDL_FILES)))
 endif
 
-ifdef CLEANUP_BIN
-  CLEANUP_BIN ?=
-endif # CLEANUP_BIN
+CLEANUP_BIN ?=
 ifneq ($(CLEANUP_BIN),)
   DO_CLEANUP = 1
   REALCLEAN_FILES = $(CLEANUP_BIN:%=%$(EXEEXT)) $(CLEANUP_BIN:%=%_debug$(EXEEXT)) $(CLEANUP_BIN:%=%_profile$(EXEEXT)) $(CLEANUP_BIN:%=%_optimize$(EXEEXT))
 endif # !CLEANUP_BIN
 
 ifdef static_libs
-  ifdef CLEANUP_LIB
-    CLEANUP_LIB ?=
-  endif # CLEANUP_LIB
+  CLEANUP_LIB ?=
   ifneq ($(CLEANUP_LIB),)
     DO_CLEANUP = 1
     REALCLEAN_FILES += $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize)
@@ -312,12 +308,10 @@ ifdef static_libs
 endif # static_libs
 
 ifdef shared_libs
-  ifdef CLEANUP_SHLIB
-    CLEANUP_SHLIB ?=
-  endif
+  CLEANUP_SHLIB ?=
   ifneq ($(CLEANUP_SHLIB),)
     DO_CLEANUP = 1
-    REALCLEAN_FILES += $(CLEANUP_VSHLIB:%=%) $(CLEANUP_VSHLIB_NO_VER:%=%) $(CLEANUP_VSHLIB_NO_VER:%=%_debug) $(CLEANUP_VSHLIB_NO_VER:%=%_profile) $(CLEANUP_VSHLIB_NO_VER:%=%_optimize)
+    REALCLEAN_FILES += $(CLEANUP_VSHLIB:%=%) $(CLEANUP_VSHLIB_NO_VER:%=%*) $(CLEANUP_VSHLIB_NO_VER:%=%_debug) $(CLEANUP_VSHLIB_NO_VER:%=%_profile) $(CLEANUP_VSHLIB_NO_VER:%=%_optimize)
   endif # !CLEANUP_SHLIB
 endif # shared_libs
 

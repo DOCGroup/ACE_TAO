@@ -57,11 +57,11 @@ ifdef DIRS
 else # !DIRS
   include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 endif # DIRS
-ifdef LIB
+ifdef CLEANUP_LIB
   include_lib = 1
 endif # LIB
 
-ifdef SHLIB
+ifdef CLEANUP_SHLIB
   include_lib = 1
 endif # SHLIB
 
@@ -69,7 +69,7 @@ ifeq ($(include_lib),1)
   include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 endif
 
-ifdef BIN
+ifdef CLEANUP_BIN
   include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 endif # BIN
 
