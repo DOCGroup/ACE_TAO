@@ -45,6 +45,12 @@ TAO_AV_Flow_Protocol_Factory::control_flow_factory (void)
 //----------------------------------------------------------------------
 // TAO_AV_Protocol_Object
 //----------------------------------------------------------------------
+TAO_AV_Protocol_Object::TAO_AV_Protocol_Object (void)
+  :transport_ (0),
+   callback_ (0) 
+{
+}
+
 TAO_AV_Protocol_Object::TAO_AV_Protocol_Object (TAO_AV_Callback *callback,
                                                 TAO_AV_Transport *transport)
   :transport_ (transport),
