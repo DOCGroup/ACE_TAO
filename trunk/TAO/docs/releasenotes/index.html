@@ -270,11 +270,26 @@ far only the repository ID is output, but this may be enhanced when
 requirements and/or desires become clearer.</li>
 
 <li>
+The IDL compiler now has limited support for valuetypes (see release notes
+for valuetypes for details). If the TAO library is built with 
+TAO_HAS_VALUETYPE defined, and IDL_HAS_VALUETYPE is also defined, then
+the IDL compiler will enable OBV support with the command line option
+-Gv, and disable it with the option -Sv (the default).</li>
+
+<li>
+As part of the implementation of interceptors, the TAO IDL compiler
+now generates interception points in the client and server, as well 
+as the prepare_header method in the stubs.</li>
+
+<li>
+Scoping and name resolution rules have changed in CORBA with version
+2.3. The IDL compiler now conforms to these new rules. </li>
+
+<li>
 IDL compiler now supports the CORBA AMI callback model, generating code
 for reply handlers and reply stubs if the -GC command line option is
-used. For now, TAO_HAS_CORBA_MESSAGING and TAO_HAS_AMI_CALLBACK must
-be defined in ace/config.h, but in the future these conditions will 
-become the default.
+used. The TAO library must be compiled with TAO_HAS_CORBA_MESSAGING, 
+TAO_HAS_AMI_CALLBACK, TAO_HAS_VALUETYPE and IDL_HAS_VALURTYPE defined.
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
