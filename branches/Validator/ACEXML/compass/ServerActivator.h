@@ -26,8 +26,6 @@ namespace Deployment
   {
   public:
     friend class ACE_Singleton <ServerActivator, ACE_SYNCH_MUTEX>;
-    ServerActivator();
-    ~ServerActivator();
     ComponentServer* create_component_server (const ConfigValues& config)
       ACE_THROW_SPEC ((CreateFailure, InvalidConfiguration));
 
@@ -37,6 +35,8 @@ namespace Deployment
     ComponentServers* get_component_servers ();
 
   protected:
+    ServerActivator();
+    ~ServerActivator();
     ServerActivator (const ServerActivator&);
     ServerActivator& operator= (const ServerActivator&);
   private:

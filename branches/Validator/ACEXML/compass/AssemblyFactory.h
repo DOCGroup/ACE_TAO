@@ -44,8 +44,7 @@ namespace Deployment
   {
   public:
     friend class ACE_Singleton<AssemblyFactory, ACE_SYNCH_MUTEX>;
-    AssemblyFactory();
-    ~AssemblyFactory();
+
     Cookie create(const Location& assembly_loc)
       ACE_THROW_SPEC ((InvalidLocation, CreateFailure));
 
@@ -55,6 +54,8 @@ namespace Deployment
     void destroy(const Cookie& c)
       ACE_THROW_SPEC ((InvalidAssembly, RemoveFailure));
   protected:
+    AssemblyFactory();
+    ~AssemblyFactory();
     AssemblyFactory (const AssemblyFactory&);
     AssemblyFactory& operator= (const AssemblyFactory&);
   private:

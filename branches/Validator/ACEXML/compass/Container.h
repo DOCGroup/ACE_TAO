@@ -19,9 +19,8 @@ namespace Deployment
   {
   public:
     Container(const ComponentServer* server);
-    ~Container();
 
-    ComponentServer* get_component_server ();
+    ~Container();
 
     CCMHome* install_home (const UUID& id, const string& entrypt,
                            const ConfigValues* config)
@@ -31,12 +30,14 @@ namespace Deployment
     void remove_home (const CCMHome* href)
       ACE_THROW_SPEC ((RemoveFailure));
 
-    CCMHomes* get_homes ();
-
     void remove ()
       ACE_THROW_SPEC ((RemoveFailure));
 
-    ConfigValues get_configuration (void);
+    CCMHomes* get_homes ();
+
+    ComponentServer* get_component_server ();
+
+    ConfigValues* get_configuration (void);
 
     void set_configuration (const ConfigValues* config);
 
