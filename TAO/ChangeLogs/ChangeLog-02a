@@ -1,3 +1,9 @@
+Tue Apr 17 22:09:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * examples/TypeCode_Creation/TypeCode_Creation.dsp:
+
+          Fixed settings in the release version.
+
 Tue Apr 17 21:59:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/BiDirectional/client.dsp:
