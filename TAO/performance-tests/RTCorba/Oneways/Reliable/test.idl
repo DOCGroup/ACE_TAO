@@ -4,9 +4,12 @@
 
 interface Test
 {
-  oneway void oneway_op (in unsigned long work);
+  typedef sequence<octet> data;
+  oneway void oneway_payload_test (in data d);
 
-  void twoway_op (in unsigned long work);
+  oneway void oneway_work_test (in unsigned long work);
+
+  void twoway_work_test (in unsigned long work);
 
   oneway void shutdown ();
 };
