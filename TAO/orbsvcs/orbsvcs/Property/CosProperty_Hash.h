@@ -23,7 +23,7 @@
 #include "ace/Synch.h"
 #include "CosPropertyServiceS.h"
 
-class EXT_ID 
+class TAO_ORBSVCS_Export EXT_ID 
 {
   // = TITLE
   //     Key for the Hash Table.
@@ -50,7 +50,7 @@ public:
   // This is still the public variable... 
 };
 
-class INT_ID
+class TAO_ORBSVCS_Export INT_ID
 {
   // = TITLE 
   //     This is the Hash Entry.

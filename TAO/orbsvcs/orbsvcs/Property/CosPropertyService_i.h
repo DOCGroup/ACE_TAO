@@ -22,7 +22,7 @@
 #include "orbsvcs/CosPropertyServiceS.h"
 #include "CosProperty_Hash.h"
 
-class TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
+class TAO_ORBSVCS_Export TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
 {
 // @@ Alex, can you please add the normal = TITLE and = DESCRIPTION
 // comments here?  In addition, can you please comment the various methods.
@@ -45,7 +45,7 @@ public:
 
 };
 
-class TAO_PropertySetDefFactory : public virtual POA_CosPropertyService::PropertySetDefFactory  
+class TAO_ORBSVCS_Export TAO_PropertySetDefFactory : public virtual POA_CosPropertyService::PropertySetDefFactory  
 {
 // @@ Alex, can you please add the normal = TITLE and = DESCRIPTION
 // comments here?  In addition, can you please comment the various methods.
@@ -66,7 +66,7 @@ public:
                                  CORBA::Environment &env);
 };
 
-class TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet  
+class TAO_ORBSVCS_Export TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet  
 {    
   // = TITLE
   //    Gives operations for defining, deleting, enumerating and
@@ -137,7 +137,7 @@ private:
   // This Hash_Table is the storage for our properties 
 };
 
-class TAO_PropertySetDef : public virtual TAO_PropertySet
+class TAO_ORBSVCS_Export TAO_PropertySetDef : public virtual TAO_PropertySet
 {
 // @@ Alex, can you please add the normal = TITLE and = DESCRIPTION
 // comments here?  In addition, can you please comment the various methods.
@@ -176,7 +176,7 @@ public:
                                    CORBA::Environment &env);
 };
 
-class TAO_PropertyNamesIterator :  public virtual POA_CosPropertyService::PropertyNamesIterator
+class TAO_ORBSVCS_Export TAO_PropertyNamesIterator :  public virtual POA_CosPropertyService::PropertyNamesIterator
 {
 // @@ Alex, can you please add the normal = TITLE and = DESCRIPTION
 // comments here?  In addition, can you please comment the various methods.
@@ -198,7 +198,7 @@ public:
     
 };
 
-class TAO_PropertiesIterator :  public virtual POA_CosPropertyService::PropertiesIterator
+class TAO_ORBSVCS_Export TAO_PropertiesIterator :  public virtual POA_CosPropertyService::PropertiesIterator
 {
 // @@ Alex, can you please add the normal = TITLE and = DESCRIPTION
 // comments here?  In addition, can you please comment the various methods.
