@@ -118,11 +118,6 @@
 #   define ACE_NESTED_CLASS(TYPE, NAME) TYPE::NAME
 # endif /* ! ACE_HAS_BROKEN_NAMESPACES */
 
-// Define some helpful macros.
-# define ACE_ONE_SECOND_IN_MSECS 1000L
-# define ACE_ONE_SECOND_IN_USECS 1000000L
-# define ACE_ONE_SECOND_IN_NSECS 1000000000L
-
 # if defined (ACE_NO_INLINE)
   // ACE inlining has been explicitly disabled.  Implement
   // internally within ACE by undefining __ACE_INLINE__.
@@ -2618,6 +2613,17 @@ typedef unsigned int size_t;
 #   include /**/ <bytesex.h>
 # endif /* ACE_HAS_BYTESEX_H */
 # include "ace/Basic_Types.h"
+
+// Define some helpful constants.
+// Not type-safe, and signed.  For backward compatibility.
+#define ACE_ONE_SECOND_IN_MSECS 1000l
+#define ACE_ONE_SECOND_IN_USECS 1000000l
+#define ACE_ONE_SECOND_IN_NSECS 1000000000l
+
+// Type-safe, and unsigned.
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000u;
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000u;
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000u;
 
 # if defined (ACE_HAS_SIG_MACROS)
 #   undef sigemptyset
