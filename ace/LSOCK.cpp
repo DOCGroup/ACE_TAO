@@ -69,10 +69,11 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
   unsigned char a[2];
   iovec iov;
   msghdr recv_msg;
-#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG) && !defined (ACE_HAS_STREAMS)
   char cmsgbuf[ACE_BSD_CONTROL_MSG_LEN];
   cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
-#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG && !ACE_HAS_STREAMS */
    
   if (pbuf != 0 && len != 0)
     {
@@ -89,13 +90,13 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
   recv_msg.msg_iovlen = 1;
   recv_msg.msg_name = 0;
   recv_msg.msg_namelen = 0;
-#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG) && !defined (ACE_HAS_STREAMS)
   recv_msg.msg_control = cmsgbuf;
   recv_msg.msg_controllen = sizeof cmsgbuf;
 #else
   recv_msg.msg_accrights = (char *) &handle;
   recv_msg.msg_accrightslen = sizeof handle;
-#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG && !ACE_HAS_STREAMS */
    
 #if defined (ACE_HAS_STREAMS)
   ssize_t nbytes = ACE_OS::recvmsg (this->get_handle (), &recv_msg, 0);
