@@ -1,6 +1,11 @@
+Wed Mar 24 06:53:57 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (thr_create): SunOS 5.7 allows thread priority of 0,
+          so we no longer need to work around that.
+
 Tue Mar 23 22:49:15 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in: Added a test for ACE_NEEDS_DEV_IO_CONVERSION.
+        * configure.in: Added a test for ACE_NEEDS_DEV_IO_CONVERSION.
 
 Tue Mar 23 22:29:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
