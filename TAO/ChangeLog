@@ -1,3 +1,11 @@
+Mon Apr 12 14:27:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/GIOP.pidl:
+        
+          Uncommented the omg.org #pragma prefix directive, and
+          updated the suggested IDL compiler command line options
+          for regenerating this file.
+
 Mon Apr 12 13:58:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/corba.h:
