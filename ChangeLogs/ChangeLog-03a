@@ -1,3 +1,11 @@
+Tue Feb 15 21:26:00 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp,CPP-unserver.cpp (main),
+          examples/Reactor/Multicast/server.cpp (main),
+          examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp (main),
+          examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp (main),
+          wrapped final return with ACE_NOTREACHED to please cxx T6.3-003.
+
 Mon Feb 14 16:52:24 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_linux_cxx.GNU:

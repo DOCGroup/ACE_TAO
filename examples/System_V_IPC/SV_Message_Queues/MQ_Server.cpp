@@ -19,14 +19,14 @@ handler (int)
   ACE_OS::exit (0);
 }
 
-int 
-main (int, char *[]) 
+int
+main (int, char *[])
 {
   long pid = long (ACE_OS::getpid ());
   Message_Block recv_msg (SRV_ID);
   Message_Block send_msg (0,
                           pid,
-                          ACE_OS::cuserid (0), 
+                          ACE_OS::cuserid (0),
                           "I received your message.");
 
   // Register a signal handler.
@@ -35,17 +35,17 @@ main (int, char *[])
 
   for (;;)
     {
-      if (ace_sv_message_queue.recv (recv_msg, 
+      if (ace_sv_message_queue.recv (recv_msg,
                                      sizeof (Message_Data),
                                      recv_msg.type ()) == -1)
         ::perror ("ace_sv_message_queue.recv"), ACE_OS::exit (1);
-      
+
       cout << "a msg of length "
            << recv_msg.length ()
-           << " sent from client " 
-           << recv_msg.pid () 
-           << " (user " 
-           << recv_msg.user () << "): " 
+           << " sent from client "
+           << recv_msg.pid ()
+           << " (user "
+           << recv_msg.user () << "): "
            << recv_msg.text () << "\n";
 
       cout.flush ();
@@ -57,6 +57,5 @@ main (int, char *[])
         ACE_OS::perror ("ace_sv_message_queue.send"), ACE_OS::exit (1);
     }
 
-  /* NOTREACHED */
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
