@@ -11,7 +11,7 @@ BUILD =	typical
 DIRS = \
 	..\ace \
 	..\apps\gperf\src \
-        ..\XML \
+        ..\ACEXML \
 	tao \
 	TAO_IDL	\
 	orbsvcs
@@ -21,7 +21,7 @@ DIRS = \
 DIRS = \
 	..\ace \
 	..\apps\gperf\src \
-        ..\XML \
+        ..\ACEXML \
 	tao \
 	TAO_IDL	\
 	orbsvcs	\
@@ -36,8 +36,8 @@ DIRS = \
 	..\tests \
         ..\examples \
         ..\performance-tests \
-        ..\XML \
-        ..\XML\tests \
+        ..\ACEXML \
+        ..\ACEXML\tests \
 	tao \
 	TAO_IDL	\
 	orbsvcs	\
