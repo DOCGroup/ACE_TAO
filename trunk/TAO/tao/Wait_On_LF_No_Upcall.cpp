@@ -6,49 +6,83 @@
 #include "tao/ORB_Core.h"
 #include "debug.h"
 
-ACE_RCSID(tao, Wait_On_LF_No_Upcall, "$Id$")
+ACE_RCSID(tao,
+          Wait_On_LF_No_Upcall,
+          "$Id$")
 
 class TAO_Transport;
-
-class TAO_Nested_Upcall_Guard
+namespace TAO
 {
-public:
-  // Maybe we should instead just take in a ptr to
-  // TAO_ORB_Core_TSS_Resources?  Or at least ORB_Core*?
-  TAO_Nested_Upcall_Guard (TAO_Transport* t) : t_(t)
+  /**
+   * @class Nested_Upcall_Guard
+   *
+   * @brief: Magic class that sets the status of the thread in the
+   * TSS.
+   *
+   */
+  class Nested_Upcall_Guard
   {
-    t_->orb_core()->get_tss_resources()->upcalls_temporarily_suspended_on_this_thread_ = true;
-    if (TAO_debug_level > 6)
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Wait_On_LF_No_Upcall::wait "
-                  "disabling upcalls on thread %t\n"));
-  }
-
-  ~TAO_Nested_Upcall_Guard ()
+  public:
+    // Maybe we should instead just take in a ptr to
+    // TAO_ORB_Core_TSS_Resources?  Or at least ORB_Core*?
+    Nested_Upcall_Guard (TAO_Transport* t)
+      : t_ (t)
     {
-    t_->orb_core()->get_tss_resources()->upcalls_temporarily_suspended_on_this_thread_ = false;
-    if (TAO_debug_level > 6)
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Wait_On_LF_No_Upcall::wait "
-                  "re-enabling upcalls on thread %t\n"));
+      TAO_ORB_Core_TSS_Resources *tss =
+        t_->orb_core()->get_tss_resources ();
+
+      tss->upcalls_temporarily_suspended_on_this_thread_ = true;
+
+      if (TAO_debug_level > 6)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Wait_On_LF_No_Upcall::wait "
+                    "disabling upcalls on thread %t\n"));
     }
 
-private:
-  TAO_Nested_Upcall_Guard ();
-  TAO_Nested_Upcall_Guard (const TAO_Nested_Upcall_Guard&);
+    ~Nested_Upcall_Guard (void)
+    {
+      TAO_ORB_Core_TSS_Resources *tss =
+        t_->orb_core()->get_tss_resources ();
 
-  TAO_Transport* t_;
-};
+      tss->upcalls_temporarily_suspended_on_this_thread_ =
+        false;
 
-TAO_Wait_On_LF_No_Upcall::~TAO_Wait_On_LF_No_Upcall (void)
-{
+      if (TAO_debug_level > 6)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Wait_On_LF_No_Upcall::wait "
+                    "re-enabling upcalls on thread %t\n"));
+    }
+
+  private:
+
+    ACE_UNIMPLEMENTED_FUNC (Nested_Upcall_Guard (void));
+
+    ACE_UNIMPLEMENTED_FUNC (Nested_Upcall_Guard (
+                              const Nested_Upcall_Guard&));
+
+    /// Pointer to the transport that we plan to use.
+    TAO_Transport* t_;
+  };
+
+
+  //=================================================================
+
+  Wait_On_LF_No_Upcall::Wait_On_LF_No_Upcall (TAO_Transport *t)
+    : base (t)
+  {
+  }
+
+  Wait_On_LF_No_Upcall::~Wait_On_LF_No_Upcall (void)
+  {
+  }
+
+  int
+  Wait_On_LF_No_Upcall::wait (ACE_Time_Value *max_wait_time,
+                              TAO_Synch_Reply_Dispatcher &rd)
+  {
+    Nested_Upcall_Guard upcall_guard (this->transport_);
+
+    return base::wait (max_wait_time, rd);
+  }
+
 }
-
-int
-TAO_Wait_On_LF_No_Upcall::wait (ACE_Time_Value *max_wait_time,
-                                TAO_Synch_Reply_Dispatcher &rd)
-{
-  TAO_Nested_Upcall_Guard upcall_guard(this->transport_);
-  return base::wait (max_wait_time, rd);
-}
-
