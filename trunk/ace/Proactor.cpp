@@ -250,7 +250,7 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
       ACE_NEW (implementation, ACE_POSIX_AIOCB_Proactor);
   #elif defined (ACE_POSIX_SIG_PROACTOR)
       ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
-#else /* Default is to use the SIG one */
+  #else /* Default is to use the SIG one */
       ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
   #endif
 #elif (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
@@ -470,7 +470,10 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
     this->timer_queue_->gettimeofday () + time;
   
   // Only one guy goes in here at a time
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->timer_queue_->mutex (), -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
+                    ace_mon,
+                    this->timer_queue_->mutex (),
+                    -1);  
 
   // Schedule the timer
   long result = this->timer_queue_->schedule (&handler,
