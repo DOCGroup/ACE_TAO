@@ -44,6 +44,10 @@ void
 Broadcaster_i::add (Receiver_ptr receiver,
                     const char *nickname,
                     CORBA::Environment &TAO_TRY_ENV)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      Broadcaster::CannotAdd
+    ))
 {
   Broadcaster_i::Receiver_Data receiver_data;
 
@@ -78,6 +82,10 @@ Broadcaster_i::add (Receiver_ptr receiver,
 void
 Broadcaster_i::remove (Receiver_ptr receiver,
                        CORBA::Environment &TAO_TRY_ENV)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      Broadcaster::CannotRemove
+    ))
 {
   Broadcaster_i::Receiver_Data receiver_data_to_remove;
 
@@ -117,6 +125,9 @@ void
 Broadcaster_i::say (Receiver_ptr receiver,
                     const char *text,
                     CORBA::Environment &T)
+ ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   TAO_TRY
     {

@@ -38,10 +38,16 @@ public:
   // Destructor.
 
   virtual void message (const char *msg,
-                        CORBA::Environment &TAO_TRY_ENV);
+                        CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
   // Receives a message string.
 
-  virtual void shutdown (CORBA::Environment &TAO_TRY_ENV);
+  virtual void shutdown (CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
   // Called when the chat server is going away.  The client
   // implementation should shutdown the chat client in response to
   // this.

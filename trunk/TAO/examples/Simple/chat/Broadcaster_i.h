@@ -46,16 +46,27 @@ public:
 
   virtual void add (Receiver_ptr receiver,
                     const char *nickname,
-                    CORBA::Environment &TAO_TRY_ENV);
+                    CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      Broadcaster::CannotAdd
+    ));
   // Saves receiver references in a list.
 
   virtual void remove (Receiver_ptr receiver,
-                       CORBA::Environment &TAO_TRY_ENV);
+                       CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      Broadcaster::CannotRemove
+    ));
   // Removes receiver references from the list.
 
   virtual void say (Receiver_ptr receiver,
                     const char *text,
-                    CORBA::Environment &TAO_TRY_ENV);
+                    CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
   // Called by Broadcaster clients to send messages.
 
 public:

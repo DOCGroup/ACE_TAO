@@ -104,6 +104,9 @@ CosECSupplier::send_event (const CORBA::Any & data,
 
 void
 CosECSupplier::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+        CORBA::SystemException
+        ))
 {
   // Deactivate this object.
 
