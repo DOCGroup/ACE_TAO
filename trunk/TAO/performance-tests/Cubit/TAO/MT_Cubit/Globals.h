@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #ifndef GLOBALS_H
