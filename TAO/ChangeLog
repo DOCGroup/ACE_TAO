@@ -1,3 +1,9 @@
+Tue Dec 30 13:36:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
+          Fixed compile errors in Tru64 build.
+
 Tue Dec 30 13:32:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/lib/LookupManager.h:
