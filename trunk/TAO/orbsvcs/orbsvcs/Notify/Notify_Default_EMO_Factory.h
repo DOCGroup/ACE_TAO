@@ -62,13 +62,18 @@ class TAO_Notify_Export TAO_Notify_Default_EMO_Factory : public TAO_Notify_EMO_F
   virtual TAO_Notify_Worker_Task* create_lookup_task (CORBA::Environment &ACE_TRY_ENV);
   virtual TAO_Notify_Worker_Task* create_listener_eval_task ( CORBA::Environment &ACE_TRY_ENV);
   virtual TAO_Notify_Worker_Task* create_dispatching_task (CORBA::Environment &ACE_TRY_ENV);
-
+  virtual void print_values (void);
 protected:
   // = Params read via the svc.conf
   CORBA::Boolean mt_dispatching_;
   CORBA::Boolean mt_source_eval_;
   CORBA::Boolean mt_lookup_;
   CORBA::Boolean mt_listener_eval_;
+
+  int dispatching_threads_;
+  int source_threads_;
+  int lookup_threads_;
+  int listener_threads_;
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_Notify_Default_EMO_Factory)

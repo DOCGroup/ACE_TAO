@@ -21,14 +21,16 @@ TAO_Notify_Buffering_Strategy::~TAO_Notify_Buffering_Strategy ()
 void
 TAO_Notify_Buffering_Strategy::execute (ACE_Message_Queue<ACE_SYNCH>* msg_queue, TAO_Notify_Command *mb, CORBA::Environment& /*ACE_TRY_ENV*/, ACE_Time_Value *tv)
 {
-  ACE_DEBUG ((LM_DEBUG, "Enqueing command priority %d, queue_length = %d\n",
-              mb->msg_priority (), queue_length_->value ()));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Enqueing command priority %d, queue_length = %d\n",
+                mb->msg_priority (), queue_length_->value ()));
 
   int result = 0;
 
   if (max_queue_length_ != 0 && queue_length_->value () > max_queue_length_)
     {
-      ACE_DEBUG ((LM_DEBUG, "max queue length reached, discarding event\n"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "max queue length reached, discarding event\n"));
 
       if (this->discard_policy_ == CosNotification::AnyOrder ||
           this->discard_policy_ == CosNotification::FifoOrder)
@@ -38,7 +40,8 @@ TAO_Notify_Buffering_Strategy::execute (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Invalid discard policy\n"));
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG, "Invalid discard policy\n"));
           result = -1;
         }
       //case (CosNotification::PriorityOrder):
@@ -58,11 +61,13 @@ TAO_Notify_Buffering_Strategy::execute (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
     }
   else if (this->order_policy_ == CosNotification::PriorityOrder)
     {
+      ACE_DEBUG ((LM_DEBUG, "enqueue in priority order\n"));
       result = msg_queue->enqueue_prio (mb, tv);
     }
   else  // CosNotification::DeadlineOrder
     {
-      ACE_DEBUG ((LM_DEBUG, "Invalid discard policy\n"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Invalid discard policy\n"));
       result = -1;
     }
 

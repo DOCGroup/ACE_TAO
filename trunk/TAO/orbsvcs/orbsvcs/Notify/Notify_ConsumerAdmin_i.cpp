@@ -184,7 +184,8 @@ TAO_Notify_ConsumerAdmin_i::init (CosNotifyChannelAdmin::AdminID my_id,
   ACE_CHECK;
   */
   this->filter_eval_task_ =
-    this->event_manager_objects_factory_->create_listener_eval_task (ACE_TRY_ENV);
+    new TAO_Notify_Worker_Task ();
+  // this->event_manager_objects_factory_->create_listener_eval_task (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Get hold of the admin properties.

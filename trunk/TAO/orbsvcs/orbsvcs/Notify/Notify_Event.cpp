@@ -132,7 +132,8 @@ TAO_Notify_Event::~TAO_Notify_Event ()
 {
   delete this->lock_;
   this->lock_ = 0;
-  ACE_DEBUG ((LM_DEBUG, "in ~TAO_Notify_Event %X\n", this));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "in ~TAO_Notify_Event %X\n", this));
 }
 
 
@@ -141,19 +142,28 @@ TAO_Notify_Event::_incr_refcnt (void)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
   this->refcount_++;
-  ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event %X incr %d\n", this, refcount_));
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event %X incr %d\n", this, refcount_));
 }
 
 void
 TAO_Notify_Event::_decr_refcnt (void)
 {
+  int delete_me = 0;
+
   {
     ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
     this->refcount_--;
+
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event %X decr %d\n", this, refcount_));
+
+    if (this->refcount_ == 0)
+      delete_me = 1;
   }
 
-  ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event %X decr %d\n", this, refcount_));
-  if (this->refcount_ == 0)
+  if (delete_me == 1)
     delete this;
 }
 
@@ -207,7 +217,9 @@ TAO_Notify_Any::clone (void)
 void
 TAO_Notify_Any::operator=(const TAO_Notify_Any& notify_any)
 {
-  ACE_DEBUG ((LM_DEBUG, "In TAO_Notify_Any::operator=\n"));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "In TAO_Notify_Any::operator=\n"));
+
   if (this->is_owner_)
     delete data_;
 
@@ -339,7 +351,9 @@ TAO_Notify_StructuredEvent::clone (void)
 void
 TAO_Notify_StructuredEvent::operator=(const TAO_Notify_StructuredEvent& structured_event)
 {
-  ACE_DEBUG ((LM_DEBUG, "In TAO_Notify_StructuredEvent::operator=\n"));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "In TAO_Notify_StructuredEvent::operator=\n"));
+
   if (this->is_owner_)
     delete this->data_;
 

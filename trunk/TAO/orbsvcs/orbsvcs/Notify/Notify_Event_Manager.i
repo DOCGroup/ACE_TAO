@@ -67,7 +67,7 @@ TAO_Notify_Event_Manager::obtain_subscription_types (void)
   return this->event_map_->obtain_subscription_types ();
 }
 
-ACE_INLINE TAO_Notify_AdminProperties* const
+ACE_INLINE TAO_Notify_AdminProperties*
 TAO_Notify_Event_Manager::admin_properties (void)
 {
   return this->admin_properties_;
