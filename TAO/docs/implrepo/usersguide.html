@@ -1,9 +1,10 @@
 <html>
+<!-- $Id$ -->
 
 <head>
 <meta http-equiv="Content-Type"
 content="text/html; charset=iso-8859-1">
-<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
 <title>Implementation Repository User's Guide</title>
 </head>
 
@@ -11,14 +12,14 @@ content="text/html; charset=iso-8859-1">
 
 <hr>
 
-<h3>User's Guide</h3>
+<h3><font color="#FF0000">Warning, this document is out of date and is currently
+being updated.</font></h3>
 
-<p>The Implementation Repository is still kind of in a state of
-flux and will probably change quite a bit this semester. Right
-now it works, although it is still a bit inflexible. Most of this
-document will change, so make sure to get the version of this
-document that is paired with the version of the IR that you are
-using.</p>
+<h3>Implementation Repository User's Guide</h3>
+
+<p>Since the POA/ORB integration is not yet completed, the functionality still
+exists in separately in IR_Helper, which is included in orbsvcs.&nbsp; When the
+integration is done, this dependency to orbsvcs will be removed.</p>
 
 <hr>
 
@@ -33,7 +34,7 @@ it if necessary).</p>
 
 <p>So the server needs to know the IOR of the IR in order to
 change the host and port in it to that of the IR. The information
-the IR needs to receive from the server is its poa name (which it
+the IR needs to receive from the server is its POA name (which it
 uses as an identifier) and commands used to restart the server.</p>
 
 <hr>
@@ -81,16 +82,6 @@ the server. Note that -r will not work in the example without -i.
 This does require some more work on the server side, so if you
 choose you can just use the IR all the time and only worry about
 -r.</p>
-
-<hr>
-
-<h4>The implrepo.conf file</h4>
-
-<p>Because with the way it is set up, and the current
-over-restrictiveness of the POA locks, the IR requires a special
-configuration file, implrepo.conf, which you need to pass to the
-IR via <font face="Times New Roman"><code>-ORBsvcconf
-implrepo.conf</code></font> flag</p>
 
 <hr>
 
