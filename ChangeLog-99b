@@ -1,3 +1,10 @@
+Mon Aug  9 11:29:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* bin: Fixed html-windex so that it works when class names contain
+	  the digit '3' in them, e.g., ACE_WIN32_Asynch_Accept, etc.
+  	  Thanks to Jody Hagins <jody@atdesk.com> for reporting this
+ 	  problem.
+
 Mon Aug 09 15:10:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Process.h (wait): Rewrote comments.

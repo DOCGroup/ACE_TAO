@@ -1004,7 +1004,7 @@ public:
   // Virtual destruction.
 
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
-   // This method will be called when an asynchronous read completes on
+  // This method will be called when an asynchronous read completes on
   // a stream.
 
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
