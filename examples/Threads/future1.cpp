@@ -394,7 +394,6 @@ main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 template class ACE_Future<const char *>;
 template class ACE_Future<u_long>;
 template class ACE_Future_Rep<const char *>;

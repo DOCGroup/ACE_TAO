@@ -13,6 +13,9 @@ Tue Dec 25 09:07:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  Atomic_Op.h. Added template instantiations for ACE_Atomic_Op_Ex
 	  in places that was required.
 
+	* netsvcs/lib/Makefile:
+	* netsvcs/servers/makefile: Updated dependencies.
+
 Mon Dec 25 01:05:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Atomic_Op.h: Added a #include to get it compiling on win32
