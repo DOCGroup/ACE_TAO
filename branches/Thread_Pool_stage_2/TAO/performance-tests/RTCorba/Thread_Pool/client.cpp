@@ -24,11 +24,12 @@ static int done = 0;
 static CORBA::ULong time_for_test = 10;
 static CORBA::ULong work = 10;
 static CORBA::ULong max_throughput_timeout = 5;
+static int set_priority = 1;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hxk:r:c:w:t:");
+  ACE_Get_Opt get_opts (argc, argv, "hxk:r:c:w:t:p:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -62,6 +63,10 @@ parse_args (int argc, char *argv[])
         time_for_test = ACE_OS::atoi (get_opts.optarg);
         break;
 
+      case 'p':
+        set_priority = ACE_OS::atoi (get_opts.optarg);
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -69,10 +74,11 @@ parse_args (int argc, char *argv[])
                            "-h <show history> "
                            "-x [shutdown server] "
                            "-k <ior> "
-                           "-i <iterations for slowest paced worker> "
                            "-r <rates file> "
                            "-c <number of continuous workers> "
-                           "-w <work in milli seconds> "
+                           "-w <work> "
+                           "-t <time for test> "
+                           "-p <set priorities> "
                            "\n",
                            argv [0]),
                           -1);
@@ -234,18 +240,21 @@ Paced_Worker::svc (void)
 
   ACE_TRY_NEW_ENV
     {
-      this->current_->the_priority (this->priority_,
-                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      if (set_priority)
+        {
+          this->current_->the_priority (this->priority_,
+                                        ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-      CORBA::Boolean result =
-        priority_mapping_.to_native (this->priority_,
-                                     native_priority);
-      if (!result)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error in converting CORBA priority %d to native priority\n",
-                           this->priority_),
-                          -1);
+          CORBA::Boolean result =
+            priority_mapping_.to_native (this->priority_,
+                                         native_priority);
+          if (!result)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Error in converting CORBA priority %d to native priority\n",
+                               this->priority_),
+                              -1);
+        }
 
       this->start_of_test_ =
         ACE_OS::gettimeofday ();
@@ -303,8 +312,8 @@ Paced_Worker::svc (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Priority = %d/%d; Rate = %d/sec; Iterations = %d; "
                   "deadlines made = %d; deadlines missed = %d; Success = %d%%\n",
-                  this->priority_,
-                  native_priority,
+                  set_priority ? this->priority_ : -1,
+                  set_priority ? native_priority : -1,
                   this->rate_,
                   this->history_.max_samples (),
                   this->history_.sample_count (),
