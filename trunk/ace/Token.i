@@ -63,11 +63,29 @@ ACE_Token::tryacquire_read (void)
 }
 
 ACE_INLINE int
+ACE_Token::acquire_read (void (*sleep_hook_func)(void *),
+                         void *arg,
+                         ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Token::acquire_read");
+  return this->shared_acquire (sleep_hook_func, arg, timeout, ACE_Token::READ_TOKEN);
+}
+
+ACE_INLINE int
 ACE_Token::tryacquire_write (void)
 {
   ACE_TRACE ("ACE_Token::tryacquire_write");
   return this->shared_acquire
     (0, 0, (ACE_Time_Value *) &ACE_Time_Value::zero, ACE_Token::WRITE_TOKEN);
+}
+
+ACE_INLINE int
+ACE_Token::acquire_write (void (*sleep_hook_func)(void *),
+                          void *arg,
+                          ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Token::acquire_write");
+  return this->shared_acquire (sleep_hook_func, arg, timeout, ACE_Token::WRITE_TOKEN);
 }
 
 ACE_INLINE int

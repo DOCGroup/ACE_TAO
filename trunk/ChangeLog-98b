@@ -1,3 +1,7 @@
+Fri Jul 24 12:35:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Token.{h,cpp}: Fixed warnings from gcc and SunCC.
+
 Fri Jul 24 09:05:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (thr_create): with ACE_HAS_DCE_DRAFT4_THREADS and
