@@ -415,7 +415,7 @@ User_Input_Task::report_stats (void *)
           case 1:
             ACE_DEBUG ((LM_DEBUG,
                         "\nRun transmission: "
-                        "\transmission already in progress\n"));
+                        "\ntransmission already in progress\n"));
             return 0;
              /* NOTREACHED */
 
