@@ -771,7 +771,7 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
 // ================================================================
 // Any_Impl_T template specializations.
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::Object>::to_object (
     CORBA::Object_ptr &_tao_elem

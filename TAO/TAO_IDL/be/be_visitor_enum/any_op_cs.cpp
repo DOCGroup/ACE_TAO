@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_enum, 
-           any_op_cs, 
+ACE_RCSID (be_visitor_enum,
+           any_op_cs,
            "$Id$")
 
 // ***************************************************************************
@@ -52,7 +52,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Since we don't generate CDR stream operators for types that
-  // explicitly contain a local interface (at some level), we 
+  // explicitly contain a local interface (at some level), we
   // must override these Any template class methods to avoid
   // calling the non-existent operators. The zero return value
   // will eventually cause CORBA::MARSHAL to be raised if this
@@ -60,7 +60,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
   if (node->is_local ())
     {
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
           << "TAO::Any_Basic_Impl_T<" << node->name ()
           << ">::marshal_value (TAO_OutputCDR &)" << be_nl
@@ -69,7 +69,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
           << "}";
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
           << "TAO::Any_Basic_Impl_T<" << node->name ()
           << ">::demarshal_value (TAO_InputCDR &)" << be_nl
