@@ -7,7 +7,7 @@
 #include "ace/Log_Msg.h"
 #include "Segment_Timer_Export.h"
 
-#define MAX_READINGS 50
+#define MAX_READINGS 500
 class Segment_Timer_Export Segment_Timer : public ACE_High_Res_Timer
 {
   ACE_hrtime_t recorded_times_[MAX_READINGS];
