@@ -26871,6 +26871,21 @@ NODEP_CPP_SERVER=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\Services.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\skip.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -30990,6 +31005,10 @@ SOURCE=.\Server_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Services.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\singletons.h
 # End Source File
 # Begin Source File
@@ -31179,6 +31198,10 @@ SOURCE=.\Sequence_T.i
 # Begin Source File
 
 SOURCE=.\Server_Request.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Services.i
 # End Source File
 # Begin Source File
 

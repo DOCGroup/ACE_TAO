@@ -1,3 +1,9 @@
+Tue May 11 22:39:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Added Bals's new files to these projects.
+
 Tue May 11 21:46:52 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	Added a new type ObjectIDList to the ORB interface. This is
