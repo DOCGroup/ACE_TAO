@@ -126,7 +126,8 @@ public abstract class Task implements Runnable, EventHandler
   public synchronized void suspend ()
     {
       // Suspend all threads
-      this.thrMgr_.thrGrp ().suspend ();
+      if (this.thrMgr_ != null)
+	this.thrMgr_.thrGrp ().suspend ();
     }
 
   /** 
@@ -135,7 +136,8 @@ public abstract class Task implements Runnable, EventHandler
   public synchronized void resume ()
     {
       // Resume all threads
-      this.thrMgr_.thrGrp ().resume ();
+      if (this.thrMgr_ != null)
+	this.thrMgr_.thrGrp ().resume ();
     }
 
   /**
@@ -144,7 +146,10 @@ public abstract class Task implements Runnable, EventHandler
    */
   public synchronized String grpName ()
     {
-      return this.thrMgr_.thrGrp ().getName ();
+      if (this.thrMgr_ != null)
+	return this.thrMgr_.thrGrp ().getName ();
+      else
+	return null;
     }
 
   /**
@@ -172,7 +177,10 @@ public abstract class Task implements Runnable, EventHandler
    */
   public synchronized int thrCount ()
     {
-      return this.thrMgr_.thrGrp ().activeCount ();
+      if (this.thrMgr_ != null)
+	return this.thrMgr_.thrGrp ().activeCount ();
+      else
+	return 0;
     }
 
   // = Message queue manipulation methods.
@@ -310,7 +318,7 @@ public abstract class Task implements Runnable, EventHandler
 	return -1;
     }
 
-  private ThreadManager thrMgr_;
+  private ThreadManager thrMgr_ = null;
   // Thread_Manager that manages all the spawned threads
 
   private long flags_;
