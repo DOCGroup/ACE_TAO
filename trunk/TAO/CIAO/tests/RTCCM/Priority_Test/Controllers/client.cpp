@@ -8,6 +8,8 @@
 #include "ControllerC.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
+#include "ace/SString.h"
+
 
 int ctrl_off = 0;
 long work = 80;

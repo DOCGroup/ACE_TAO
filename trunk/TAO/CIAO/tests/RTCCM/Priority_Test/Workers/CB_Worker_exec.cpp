@@ -3,6 +3,9 @@
 #include "CB_Worker_exec.h"
 #include "CIAO_common.h"
 
+#include "ace/ACE.h"
+
+
 // This should really be a configurable value.  CIAO doesn't suppor
 // this yet but the new D&C shall support this RSN.
 static long local_primer_ = 9619;

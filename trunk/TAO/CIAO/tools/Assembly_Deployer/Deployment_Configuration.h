@@ -18,13 +18,15 @@
 #define CIAO_DEPLOYMENT_CONFIGURATION_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Hash_Map_Manager_T.h"
+#include "ciao/CCM_DeploymentC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/CCM_DeploymentC.h"
+#include "ace/SString.h"
+#include "ace/Hash_Map_Manager_T.h"
+
 
 namespace CIAO
 {
