@@ -3,12 +3,11 @@
 #include "tao/ORB_Core.h"
 #include "tao/CDR.h"
 #include "tao/debug.h"
-
+#include "tao/Transport.h"
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_NonReactive_Handler.inl"
 #endif /* __ACE_INLINE__ */
-
 
 ACE_RCSID (tao, GIOP_Message_NonReactive_Handler, "$Id$")
 
@@ -141,9 +140,16 @@ TAO_GIOP_Message_NonReactive_Handler::read_message (TAO_Transport *transport,
        n != 0;
        n -= bytes)
     {
-      bytes = transport->recv_n (buf,
-                                 n,
-                                 max_wait_time);
+      // We would have liked to use something like a recv_n ()
+      // here. But at the time when the code was written, the MEM_Stream
+      // classes had poor support  for recv_n (). Till a day when we
+      // get proper recv_n (), let us stick with this. The other
+      // argument that can be said against this is that, this is the
+      // bad layer in which this is being done ie. recv_n is
+      // simulated. But...
+      bytes = transport->recv (buf,
+                               n,
+                               max_wait_time);
 
       // @@ Do we need to check for errno != EWOULDBLOCK?? and errno ==
       // @@ ECONNRESET. Does such things make sense here??

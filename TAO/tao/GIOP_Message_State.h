@@ -97,14 +97,14 @@ public:
   /// if required...
   int is_complete (ACE_Message_Block &current_buf);
 
+  /// Did we get fragmented messages?
+  int message_fragmented (void);
+
   /// Version info
   TAO_GIOP_Version giop_version;
 
   /// 0 = big, 1 = little
   CORBA::Octet byte_order;
-
-  /// (Requests and Replys)
-  CORBA::Octet more_fragments;
 
   /// MsgType above
   CORBA::Octet message_type;
@@ -149,11 +149,14 @@ public:
    */
   CORBA::Octet first_fragment_message_type;
 
+  /// (Requests and Replys)
+  CORBA::Octet more_fragments;
 
 private:
   /// Append <current> to the list of fragments
   /// Also resets the state, because the current message was consumed.
   int append_fragment (ACE_Message_Block &current);
+
 
 };
 

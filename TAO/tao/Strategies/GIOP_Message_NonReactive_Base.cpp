@@ -110,6 +110,36 @@ TAO_GIOP_Message_NonReactive_Base::process_reply_message (
 int
 TAO_GIOP_Message_NonReactive_Base::more_messages (void)
 {
+  if (this->message_handler_.message_state ().message_fragmented ())
+    {
+      // We have fragmented message
+      // Get the message block from the handler
+      ACE_Message_Block *mesg_block =
+        this->message_handler_.input_cdr ().steal_contents ();
+
+      // Send the message block for patching with the right info.
+      int retval =
+        this->message_handler_.message_state ().is_complete (*mesg_block);
+
+      // Get the read and write pointers of the message block
+      size_t rd_pos =
+        mesg_block->rd_ptr () - mesg_block->base ();
+
+      size_t wr_pos =
+        mesg_block->wr_ptr () - mesg_block->base ();
+
+      // Create a new InputCDR stream
+      TAO_InputCDR cdr (mesg_block->data_block (),
+                        rd_pos,
+                        wr_pos);
+
+      this->message_handler_.input_cdr ().exchange_data_blocks (cdr);
+
+      return retval;
+    }
+
+
+
   ///@@@
-  return 0;
+  return 1;
 }

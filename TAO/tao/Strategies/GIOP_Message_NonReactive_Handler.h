@@ -14,12 +14,13 @@
 #define TAO_GIOP_MESSAGE_NON_REACTIVE_HANDLER_H
 #include "ace/pre.h"
 
-#include "tao/CDR.h"
+#include "strategies_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/CDR.h"
 #include "tao/GIOP_Message_Reactive_Handler.h"
 
 class TAO_Transport;
@@ -43,7 +44,7 @@ class TAO_GIOP_Message_NonReactive_Base;
  *  higher level??
  */
 
-class TAO_GIOP_Message_NonReactive_Handler : public TAO_GIOP_Message_Reactive_Handler
+class TAO_Strategies_Export TAO_GIOP_Message_NonReactive_Handler : public TAO_GIOP_Message_Reactive_Handler
 {
 public:
 
