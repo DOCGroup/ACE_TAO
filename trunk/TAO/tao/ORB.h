@@ -193,21 +193,23 @@ typedef u_int CORBA_Flags;
   typedef u_char CORBA_Boolean;
 #endif /* ! (ghs && CHORUS) */
 
-  typedef struct TAO_Leader_Follower_Info_Struct
-    {
-      ACE_SYNCH_MUTEX leader_follower_lock_; 
-      // do protect the access to the following three members
+struct TAO_Leader_Follower_Info
+{
+  TAO_Leader_Follower_Info (void);
+
+  ACE_SYNCH_MUTEX leader_follower_lock_; 
+  // do protect the access to the following three members
   
-      ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
-      // keep a set of followers around (protected)
-
-      int leaders_; 
-      // 0 if no leader is around, 1 if there is a leader
-      // > 1 if we do nested upcalls (protected)
-
-      ACE_thread_t leader_thread_ID_;
-      // thread ID of the leader thread (protected)
-    } TAO_Leader_Follower_Info;
+  ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
+  // keep a set of followers around (protected)
+  
+  int leaders_; 
+  // 0 if no leader is around, 1 if there is a leader
+  // > 1 if we do nested upcalls (protected)
+  
+  ACE_thread_t leader_thread_ID_;
+  // thread ID of the leader thread (protected)
+};
 
 
 // forward declare sequences.

@@ -44,6 +44,14 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
 // Static initialization.
 int CORBA_ORB::orb_init_count_ = 0;
 
+TAO_Leader_Follower_Info::TAO_Leader_Follower_Info (void)
+  : leader_follower_lock_ (),
+    follower_set_ (),
+    leaders_ (0),
+    leader_thread_ID_ (ACE_OS::NULL_thread)
+{
+}
+
 CORBA::String_var::String_var (char *p)
   : ptr_ (p)
 {
@@ -82,7 +90,6 @@ CORBA_ORB::CORBA_ORB (void)
     event_service_ (CORBA_Object::_nil ()),
     trading_service_ (CORBA_Object::_nil ())
 {
-  leader_follower_info_.leader_thread_ID_ = ACE_OS::NULL_thread;
   ACE_NEW (this->cond_become_leader_,
            ACE_SYNCH_CONDITION (leader_follower_info_.leader_follower_lock_));
 }

@@ -1,3 +1,8 @@
+Wed Sep 23 01:24:09 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB.h (struct TAO_Leader_Follower_Info): Added constructor
+ 	  cause all the fields were not being initialized properly.
+	
 1998-09-22  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp :
