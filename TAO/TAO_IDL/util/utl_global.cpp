@@ -556,7 +556,10 @@ IDL_GlobalData::validate_included_idl_files (void)
   
   already_done = 1;
 
-  for (size_t newj = 0, j = 0;
+  // New number of included_idl_files.
+  size_t newj = 0;
+
+  for (size_t j = 0;
        j < idl_global->n_included_idl_files ();
        j++)
     {
