@@ -12,6 +12,16 @@
 static const ACEXML_Char *test_string =
 ACE_TEXT ("<?xml version='1.0'?> <ACE_Svc_Conf> <static id=\"ACE_Service_Manager\" params='-d -p 4911'/> <dynamic id=\"Test_Task\" type=\"service_object\"> &#65; &amp; <initializer path=\"CCM_App\" init='_make_Test_Task' params='-p 3000'/> </dynamic> </ACE_Svc_Conf>");
 
+static void
+usage ()
+{
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("Usage: main [-sl] [-f <filename> | -u <url>]\n")
+              ACE_TEXT ("  -s: Use SAXPrint_Handler (Default is Print_Handler\n")
+              ACE_TEXT ("  -l: Parse the internal strings (test the StrCharStream class\n")
+              ACE_TEXT ("  -f: Specify the filename when -l is not specified\n")
+              ACE_TEXT ("  -u: URL specifying the path to the file\n")));
+}
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -41,27 +51,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           url = get_opt.opt_arg();
           break;
         default:
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Usage: %s [-sl] [-f <filename> | -u <url>]\n%s"),
-                             argv[0],
-                             ACE_TEXT ("  -s: Use SAXPrint_Handler (Default is Print_Handler\n")
-                             ACE_TEXT ("  -l: Parse the internal strings (test the StrCharStream class\n")
-                             ACE_TEXT ("  -f: Specify the filename when -l is not specified\n")
-                             ACE_TEXT ("  -u: URL specifying the path to the file\n")),
-                            -1);
+          usage();
+          return -1;
         }
     }
 
-  if (str == 0 && filename == 0 && url == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Usage: %s [-sl] [-f <filename> | -u <url>]\n%s"),
-                       argv[0],
-                       ACE_TEXT ("  -s: Use SAXPrint_Handler (Default is Print_Handler\n")
-                       ACE_TEXT ("  -l: Parse the internal strings (test the StrCharStream class\n")
-                       ACE_TEXT ("  -f: Specify the filename when -l is not specified\n")
-                       ACE_TEXT ("  -u: URL specifying the path to the file\n")),
-                      -1);
-
+  if (str == 0 && filename == 0 && url == 0) {
+    usage();
+    return -1;
+  }
 
   ACEXML_DefaultHandler *handler = 0;
   {
