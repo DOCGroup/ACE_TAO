@@ -1,3 +1,9 @@
+Tue Jun 08 10:00:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simple/time-date/Makefile: added some Time_Date*
+          files to FILES and LDLIBS to LIBS, to enable creation of the
+          shlib without warnings on DU 5.0.
+
 Tue Jun 08 09:42:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Simple_Naming/client.cpp (execute): added .ptr ()
