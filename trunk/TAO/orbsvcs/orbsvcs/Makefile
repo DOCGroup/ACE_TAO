@@ -25,7 +25,7 @@ IDL_FILES = \
 	CosLifeCycleC \
 	CosLifeCycleS \
 	CosPropertyServiceS \
-	CosPropertyServiceC
+	CosPropertyServiceC \
 	CosTimeBaseC \
 	CosTimeBaseS \
 	LoggerC \
@@ -38,8 +38,8 @@ IDL_FILES = \
 	RtecEventChannelAdminS
 
 # @@ have these been removed?
-# LifeCycleServiceC \
-# LifeCycleServiceS \
+# LifeCycleServiceC 
+# LifeCycleServiceS 
 
 # Compile using av=1 to compile the AVStreams stuff.
 ifdef av
