@@ -134,6 +134,9 @@ module RtecEventComm
     Time ec_send_time;
     //@}
 #endif /* TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS */
+
+    ///Absolute deadline set according to RT_Info when event released
+    Time deadline;
   };
 
   /**
