@@ -1,3 +1,6 @@
+//
+// $Id$
+//
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
@@ -54,7 +57,17 @@ be_scope::gen_client_header (void)
               // that do not belong to the appropriate scope
 
               bd = be_decl::narrow_from_decl (d);
-              bd->gen_client_header ();
+	      // @@ Despite the comment above the following code will
+	      // crash without the if() around it.
+	      if (bd != 0)
+		{
+		  bd->gen_client_header ();
+		}
+	      else
+		{
+		  ACE_DEBUG ((LM_DEBUG, "WARNING (%N:%l): "
+			      "narrow_from_decl returned 0\n"));
+		}
             }
           si->next ();
         } // end of while
@@ -91,7 +104,17 @@ be_scope::gen_client_stubs (void)
               // have taken care of weeding out such errors
 
               bd = be_decl::narrow_from_decl (d);
-              bd->gen_client_stubs ();
+	      // @@ Despite the comment above the following code will
+	      // crash without the if() around it.
+	      if (bd != 0)
+		{
+		  bd->gen_client_stubs ();
+		}
+	      else
+		{
+		  ACE_DEBUG ((LM_DEBUG, "WARNING (%N:%l): "
+			      "narrow_from_decl returned 0\n"));
+		}
             }
           si->next ();
         } // end of while
@@ -128,7 +151,15 @@ be_scope::gen_client_inline (void)
               // have taken care of weeding out such errors
 
               bd = be_decl::narrow_from_decl (d);
-              bd->gen_client_inline ();
+	      if (bd != 0)
+		{
+		  bd->gen_client_inline ();
+		}
+	      else
+		{
+		  ACE_DEBUG ((LM_DEBUG, "WARNING (%N:%l): "
+			      "narrow_from_decl returned 0\n"));
+		}
             }
           si->next ();
         } // end of while
@@ -165,7 +196,15 @@ be_scope::gen_server_header (void)
               // have taken care of weeding out such errors
 
               bd = be_decl::narrow_from_decl (d);
-              bd->gen_server_header ();
+	      if (bd != 0)
+		{
+		  bd->gen_server_header ();
+		}
+	      else
+		{
+		  ACE_DEBUG ((LM_DEBUG, "WARNING (%N:%l): "
+			      "narrow_from_decl returned 0\n"));
+		}
             }
           si->next ();
         } // end of while
@@ -202,7 +241,15 @@ be_scope::gen_server_skeletons (void)
               // have taken care of weeding out such errors
 
               bd = be_decl::narrow_from_decl (d);
-              bd->gen_server_skeletons ();
+	      if (bd != 0)
+		{
+		  bd->gen_server_skeletons ();
+		}
+	      else
+		{
+		  ACE_DEBUG ((LM_DEBUG, "WARNING (%N:%l): "
+			      "narrow_from_decl returned 0\n"));
+		}
             }
           si->next ();
         } // end of while
@@ -239,7 +286,15 @@ be_scope::gen_server_inline (void)
               // have taken care of weeding out such errors
 
               bd = be_decl::narrow_from_decl (d);
-              bd->gen_server_inline ();
+	      if (bd != 0)
+		{
+		  bd->gen_server_inline ();
+		}
+	      else
+		{
+		  ACE_DEBUG ((LM_DEBUG, "WARNING (%N:%l): "
+			      "narrow_from_decl returned 0\n"));
+		}
             }
           si->next ();
         } // end of while
@@ -310,7 +365,15 @@ be_scope::tc_encap_len (void)
               // have taken care of weeding out such errors
 
               bd = be_decl::narrow_from_decl (d);
-              encap_len += bd->tc_encap_len ();
+	      if (bd != 0)
+		{
+		  encap_len += bd->tc_encap_len ();
+		}
+	      else
+		{
+		  ACE_DEBUG ((LM_DEBUG, "WARNING (%N:%l): "
+			      "narrow_from_decl returned 0\n"));
+		}
             }
           si->next ();
         } // end of while
