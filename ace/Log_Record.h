@@ -16,7 +16,7 @@
 
 // These need to go outside of the #ifdef to avoid problems with
 // circular dependencies...
-#include "ace/ACE.h"
+#include "ace/OS.h"
 
 #include "ace/Log_Priority.h"
 
