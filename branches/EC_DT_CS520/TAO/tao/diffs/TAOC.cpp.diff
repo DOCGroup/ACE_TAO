@@ -1,0 +1,55 @@
+--- orig/TAOC.cpp	Tue Apr 16 17:44:38 2002
++++ TAOC.cpp	Tue Apr 16 17:48:15 2002
+@@ -21,20 +21,13 @@
+ 
+ #include "TAOC.h"
+ 
+-#include "tao/Stub.h"
+-#include "tao/Invocation.h"
+-#include "tao/PortableInterceptor.h"
+-
+-#if TAO_HAS_INTERCEPTORS == 1
+-#include "tao/RequestInfo_Util.h"
+-#include "tao/ClientRequestInfo_i.h"
+-#include "tao/ClientInterceptorAdapter.h"
+-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+ 
+ #if defined (__BORLANDC__)
+ #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
+ #endif /* __BORLANDC__ */
+ 
++#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
++
+ #if !defined (__ACE_INLINE__)
+ #include "TAOC.i"
+ #endif /* !defined INLINE */
+@@ -561,6 +554,8 @@
+ TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_BufferingConstraintPolicy, &_tc_TAO_tc_TAO_BufferingConstraintPolicy)
+ TAO_NAMESPACE_END
+ 
++#endif  /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
++
+ TAO_NAMESPACE_TYPE (const CORBA::Short)
+ TAO_NAMESPACE_BEGIN (TAO)
+ TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_EAGER_BUFFERING, 0)
+@@ -570,6 +565,8 @@
+ TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_DELAYED_BUFFERING, -2)
+ TAO_NAMESPACE_END
+ 
++#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
++
+ // TAO_IDL - Generated from 
+ // be/be_visitor_structure/any_op_cs.cpp:58
+ 
+@@ -770,10 +767,4 @@
+   return 0;
+ }
+ 
+-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+-    defined (ACE_HAS_GNU_REPO)
+-  template class TAO_Object_Manager<TAO::BufferingConstraintPolicy,TAO::BufferingConstraintPolicy_var>;
+-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+-#  pragma instantiate TAO_Object_Manager<TAO::BufferingConstraintPolicy,TAO::BufferingConstraintPolicy_var>
+-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+-
++#endif  /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

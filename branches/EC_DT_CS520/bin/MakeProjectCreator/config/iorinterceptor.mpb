@@ -1,0 +1,4 @@
+project : taolib, objreftemplate, valuetype {
+  after += IORInterceptor
+  libs  += TAO_IORInterceptor
+}

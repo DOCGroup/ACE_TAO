@@ -1,0 +1,24 @@
+#----------------------------------------------------------------------------
+#       Borland Workspace
+#----------------------------------------------------------------------------
+
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+
+all:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f UNKNOWN_Exception_Server.bor all
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f UNKNOWN_Exception_Client.bor all
+
+clean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f UNKNOWN_Exception_Server.bor clean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f UNKNOWN_Exception_Client.bor clean
+
+realclean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f UNKNOWN_Exception_Server.bor realclean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f UNKNOWN_Exception_Client.bor realclean
+
+install:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f UNKNOWN_Exception_Server.bor install
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f UNKNOWN_Exception_Client.bor install
+
+regenerate:
+	C:\Program Files\Perl\bin\perl.exe C:\irfan\ACE_wrappers\bin\mwc.pl -type borland

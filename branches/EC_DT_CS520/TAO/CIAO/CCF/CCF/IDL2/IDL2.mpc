@@ -1,0 +1,72 @@
+//$Id$
+project {
+
+  staticname = IDL2
+
+  // @@ (diego) This hack is needed because MPC doesn't generate
+  // static-only projects for gnuace
+  verbatim(gnuace, top) {
+        static_libs_only = 1
+  }
+
+  includes += ../.. $(UTILITY_ROOT) $(BOOST_ROOT)
+
+  Source_Files {
+    LexicalAnalyzer.cpp
+    Parser.cpp
+
+    SemanticAction/Operation.cpp
+    SyntaxTree/BuiltIn.cpp
+    SyntaxTree/Elements.cpp
+    SyntaxTree/Interface.cpp
+    SyntaxTree/Module.cpp
+    SyntaxTree/Operation.cpp
+    SyntaxTree/Translation.cpp
+    SyntaxTree/ValueType.cpp
+    Traversal/BuiltIn.cpp
+    Traversal/Elements.cpp
+    Traversal/Interface.cpp
+    Traversal/Module.cpp
+    Traversal/Operation.cpp
+    Traversal/Translation.cpp
+  }
+
+  Header_Files {
+    Parsing/Action.hpp
+    Parsing/Elements.hpp
+    Parsing/Recovery.hpp
+    LexicalAnalyzer.hpp
+    Parser.hpp
+    SemanticAction.hpp
+    SyntaxTree.hpp
+    Token.hpp
+    Traversal.hpp
+    SemanticAction/Impl/Attribute.hpp
+    SemanticAction/Impl/Elements.hpp
+    SemanticAction/Impl/Factory.hpp
+    SemanticAction/Impl/Include.hpp
+    SemanticAction/Impl/Interface.hpp
+    SemanticAction/Impl/Module.hpp
+    SemanticAction/Impl/Operation.hpp
+    SemanticAction/Attribute.hpp
+    SemanticAction/Elements.hpp
+    SemanticAction/Factory.hpp
+    SemanticAction/Include.hpp
+    SemanticAction/Interface.hpp
+    SemanticAction/Module.hpp
+    SemanticAction/Operation.hpp
+    SyntaxTree/BuiltIn.hpp
+    SyntaxTree/Elements.hpp
+    SyntaxTree/Interface.hpp
+    SyntaxTree/Module.hpp
+    SyntaxTree/Operation.hpp
+    SyntaxTree/Translation.hpp
+    SyntaxTree/ValueType.hpp
+    Traversal/BuiltIn.hpp
+    Traversal/Elements.hpp
+    Traversal/Interface.hpp
+    Traversal/Module.hpp
+    Traversal/Operation.hpp
+    Traversal/Translation.hpp
+  }
+}

@@ -1,0 +1,70 @@
+--- orig/DomainC.cpp	2003-11-03 20:40:54.000000000 -0600
++++ DomainC.cpp	2003-11-03 21:16:48.000000000 -0600
+@@ -30,13 +30,17 @@
+ 
+ 
+ #include "DomainC.h"
+-#include "tao/Exception_Data.h"
+-#include "tao/Invocation_Adapter.h"
+-#include "tao/Object_T.h"
+-#include "tao/Basic_Arguments.h"
+-#include "tao/Object_Argument_T.h"
+-#include "tao/Special_Basic_Arguments.h"
++#include "IFR_Client_Adapter.h"
++#include "Exception_Data.h"
++#include "Invocation_Adapter.h"
++#include "Object_T.h"
++#include "Basic_Arguments.h"
++#include "Object_Argument_T.h"
++#include "Special_Basic_Arguments.h"
++#include "ORB_Core.h"
+ #include "ace/OS_NS_string.h"
++#include "ace/Dynamic_Service.h"
++
+ 
+ #if defined (__BORLANDC__)
+ #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
+@@ -46,9 +50,42 @@
+ #include "DomainC.i"
+ #endif /* !defined INLINE */
+ 
++// TAO specific stuff.
++namespace CORBA
++{
++  class InterfaceDef;
++  typedef InterfaceDef *InterfaceDef_ptr;
++  typedef TAO_Objref_Var_T<InterfaceDef> InterfaceDef_var;
++  typedef TAO_Objref_Out_T<InterfaceDef> InterfaceDef_out;
++}
++
++ACE_TEMPLATE_SPECIALIZATION
++void
++TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::interceptor_param (Dynamic::Parameter & p)
++{
++  TAO_IFR_Client_Adapter *adapter =
++    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
++        TAO_ORB_Core::ifr_client_adapter_name ()
++      );
++
++  adapter->interfacedef_any_insert (p.argument, this->x_);
++  p.mode = CORBA::PARAM_IN;
++}
++
++ACE_TEMPLATE_SPECIALIZATION
++CORBA::Boolean
++TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::marshal (TAO_OutputCDR & cdr)
++{
++  TAO_IFR_Client_Adapter *adapter =
++    ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
++        TAO_ORB_Core::ifr_client_adapter_name ()
++      );
++
++  return adapter->interfacedef_cdr_insert (cdr, this->x_);
++}
++
+ // TAO_IDL - Generated from
+ // be/be_visitor_arg_traits.cpp:60
+-
+ // Arg traits specializations.
+ namespace TAO
+ {

@@ -1,0 +1,63 @@
+README.SCIOP
+------------
+
+Author: Jason Cohen
+Lockheed Martin, Advanced Technology Labs
+
+
+The SCIOP pluggable protocol for TAO uses the SCTP transport protocol through
+the use of the SOCK_SEQPACK ACE wrappers for sequence based transport.  The
+current implementation supported is the OpenSS7 SCTP protocol layer, tested
+under Linux 2.4.18.
+
+For more information on SOCK_SEQPACK and OpenSS7 SCTP see
+ACE_wrappers/performance-tests/SCTP/README*
+
+Features Currently Supported:
+-----------------------------
+
+o) Sequenced delivery via SOCK_SEQPACK
+Currently, only one stream is supported as there are no available bindings to
+provide a user with stream designation for messages.
+
+o) SCIOR compliance to OMG GIOP SCTP Protocol Mapping submission mars/2002-09-01.  
+
+o) Multiple address SCIOR profiles
+When multiple addresses are included in a SCIOR profile, each address is
+handled separately during the connection process.  Specifying multiple
+addresses for a single connection attempt remains as work to be done.
+However, multiple path discovery during connection time in OpenSS7's
+SCTP implementation has been tested to work properly with SCIOP.
+
+The catior utility under ACE_wrappers/TAO/utils/catior has also modified
+to display SCIOR profile information.
+
+To test SCIOP after installing an SCTP implementation supported by
+SOCK_SEQPACK, try using a performance test specifying an sciop address as the
+ORBEndpoint.  One way to do this is with the test found under:
+ACE_wrappers/TAO/performance-tests/Pluggable/
+
+Make sure to build the pluggable protocols into the executable:
+gmake LIBS+=-lTAO_Strategies
+
+Run the server with an sciop endpoint specified:
+./server -ORBEndpoint sciop://${HOSTNAME} -o test.ior &
+
+Finally, run the client on the same machine or another that has file
+access to your IOR file:
+./client -f test.ior
+
+TO-DO:
+------
+
+o) Multiple association connection using Multihomed_INET_Addr
+Currently, only one address connection is attempted at a time, even when a
+profile contains multiple address.  Later, we hope to allow this
+implementation of SCIOP to exploit the multiple address connection
+capabilities of STCP.
+
+o) SCTP ProtocolManagement/SCTPProtocolProperties
+
+o) Support for max_streams > 1
+
+o) SCIOR Profile Components

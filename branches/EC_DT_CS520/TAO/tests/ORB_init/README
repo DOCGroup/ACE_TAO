@@ -1,0 +1,68 @@
+$Id$
+
+ORB_init Test
+-------------
+
+The ORB_init test simply verifies that the CORBA::ORB_init() call
+behaves as defined in the OMG CORBA specification.  Here are the
+behaviors it tests:
+
+        1. Multiple ORB_init calls with the same ORBid but in
+           different scopes should return the same ORB.
+
+	    {
+               CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "my_orb");
+            }
+            {
+	       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "my_orb");
+	    }
+
+           In both scopes, "my_orb" refers to the same ORB.
+
+        2. The ORB must be explicitly destroyed in order to free the
+           ORBid "my_orb" for use by another ORB.
+
+	    {
+               CORBA::ORB_var orb1 = CORBA::ORB_init (argc, argv, "my_orb");
+               orb1->destroy();
+
+               // "my_orb" ORB identifier can now be used to identify
+               // another ORB.
+	       CORBA::ORB_var orb2 = CORBA::ORB_init (argc, argv, "my_orb");
+	    }
+
+        3. CORBA system exceptions should be available even after the
+           last ORB is released.
+
+            try
+              {
+                 CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "my_orb");
+                 // Exception is thrown
+              }
+            catch (CORBA::System_Exception &exc)
+              {
+                 // Do something with exc.
+              }
+
+ORB_init also makes a call to CORBA::ORB::string_to_object() to aid in
+debugging during TAO_Stub destruction (memory leaks, etc).
+
+Simply run the `ORB_init' program with out any argument to begin the
+test.  The correct output is:
+
+        The ORB <mighty_orb> was successfully returned from a second
+        call to CORBA::ORB_init() after it was released in
+        a previous scope.
+
+
+        A new ORB with ORBid <mighty_orb> was successfully returned
+        from a second call to CORBA::ORB_init() after the
+        first ORB with the same ORBid was destroyed.
+
+
+        Successfully caught CORBA system exception after the
+        last ORB was released with the following repository ID:
+          IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0
+        This exception was expected.  It is safe to ignore it.
+
+        ORB_init test completed successfully.

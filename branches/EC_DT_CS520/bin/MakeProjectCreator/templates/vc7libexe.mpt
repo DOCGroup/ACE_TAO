@@ -1,0 +1,55 @@
+conditional_include "idl_compiler_win32"
+conditional_include "common"
+
+configurations     = "Static Release" "Static Debug"
+type_is_binary     = 1
+common_defines     = WIN32 _CONSOLE
+configuration_type = 1
+subsystem          = 1
+pdb                = 1
+
+Static Release {
+  optimize         = 3
+  defines          = NDEBUG
+  output_dir       = Static_Release
+  intermediate_dir = Static_Release
+  lib_modifier     = s
+  need_staticflags = 1
+  runtime_library  = 2
+}
+
+Static Debug {
+  optimize         = 0
+  debug            = 1
+  defines          = _DEBUG
+  output_dir       = Static_Debug
+  intermediate_dir = Static_Debug
+  lib_modifier     = sd
+  need_staticflags = 1
+  runtime_library  = 3
+}
+
+Static MFC Release {
+  optimize         = 3
+  defines          = NDEBUG _AFXDLL
+  output_dir       = Static_MFC_Release
+  intermediate_dir = Static_MFC_Release
+  lib_modifier     = mfcs
+  need_staticflags = 1
+  runtime_library  = 2
+  use_mfc          = 2
+}
+
+Static MFC Debug {
+  optimize         = 0
+  debug            = 1
+  defines          = _DEBUG _AFXDLL
+  output_dir       = Static_MFC_Debug
+  intermediate_dir = Static_MFC_Debug
+  lib_modifier     = mfcsd
+  need_staticflags = 1
+  runtime_library  = 3
+  use_mfc          = 2
+}
+
+conditional_include "vcfullmacros"
