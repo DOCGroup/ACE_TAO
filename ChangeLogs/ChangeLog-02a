@@ -1,3 +1,39 @@
+Tue Dec 11 12:17:45 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Accept_Handler.h (ACE_SSL_Accept_Handler):
+	* ace/SSL/SSL_Connect_Handler.h (ACE_SSL_Connect_Handler):
+
+	  Accept a reference to the flag that causes the calling thread's
+	  event loop to stop on error.  See below for details.
+
+	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept): 
+	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
+
+	  Return 1 if errno == EWOULDBLOCK and SSL_pending() return a
+	  value greater than zero.  The event handler should be called
+	  back before waiting for more in events in the reactor.  This
+	  change causes the behavior for this case to match that of the
+	  SSL_ERROR_WANT_{READ,WRITE} cases.  Thanks to Vladimir Chovanec
+	  <Vladimir.CHOVANEC@asset.sk> for providing this fix.
+
+	  (handle_close):
+
+	  Set the "handler_closed" flag to one.  This will notify the
+	  event loop in the SSL_SOCK_{Acceptor,Connector} that it should
+	  stop handling events in the event of an error.
+
+	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+
+	  Pass a flag by reference to the event handler responsible for
+	  completing the non-blocking SSL connection.  The event handler
+	  will set the flag to 1 in order to cause the event loop in this
+	  method to stop if the event handler is closed on error.
+
+	  Stop the event loop if a timeout occurs, i.e. handle_events()
+	  returns 0.  In conjunction with the above change, this fixes an
+	  infinite loop that would occur in such a timeout situation.
+
 Tue Dec 11 07:59:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Makefile.bor:

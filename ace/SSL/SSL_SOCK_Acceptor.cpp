@@ -136,11 +136,16 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   if (!SSL_in_accept_init (ssl))
     ::SSL_set_accept_state (ssl);
 
+  // Flag that is set to true (non-zero) if the SSL_Connect_Handler
+  // was closed before an SSL connection was established.  This flag
+  // is used to break out of the below event handling loop.
+  int handler_closed = 0;
+
   // Register an event handler to complete the non-blocking SSL
   // accept.  A specialized event handler is necessary since since
   // the ACE Acceptor strategies are not designed for protocols
   // that require additional handshakes after the initial accept.
-  ACE_SSL_Accept_Handler eh (new_stream);
+  ACE_SSL_Accept_Handler eh (new_stream, handler_closed);
 
   const ACE_Reactor_Mask reactor_mask =
     ACE_Event_Handler::READ_MASK |
@@ -164,12 +169,13 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
     return -1;
 
   // Have the Reactor complete the SSL passive connection.  Run the
-  // event loop until the passive connection is completed.  Since
-  // the Reactor is used, this isn't a busy wait.
+  // event loop until the passive connection is completed or until the
+  // event handler is closed (due to an error).  Since the Reactor is
+  // used, this isn't a busy wait.
   while (!SSL_is_init_finished (ssl))
     {
-      if (this->reactor_->handle_events (timeout) == -1
-          || new_stream.get_handle () == ACE_INVALID_HANDLE)
+      if (this->reactor_->handle_events (timeout) <= 0
+          || handler_closed)
         {
           (void) this->reactor_->remove_handler (&eh, reactor_mask);
           (void) this->reactor_->owner (old_owner);
