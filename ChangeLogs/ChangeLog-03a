@@ -1,3 +1,14 @@
+Fri Oct  5 12:48:48 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.i (close):
+
+	  Reset the SSL object to allow another connection to be made
+	  using the existing ACE_SSL_SOCK_Stream instance.  This prevents
+	  the previous SSL session state from being associated with the
+	  new SSL session/connection.  Thanks to Vladimir Chovanec
+	  <Vladimir.CHOVANEC@asset.sk> for pointing out this problem and
+	  suggesting a course of action.
+
 Fri Oct  5 14:40:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Mcast.cpp (open): Removed the #if defined (linux)
@@ -130,6 +141,7 @@ Tue Oct  2 15:00:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  <sleung@opentext.com> for reporting this. This closes bugzilla
 	  #1043.  
 
+>>>>>>> 4.2644
 Tue Oct  2 09:45:39 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/libDLL_Test.icc:
