@@ -48,19 +48,6 @@ ACE_Thread_Descriptor::~ACE_Thread_Descriptor (void)
 }
 
 int
-ACE_Thread_Descriptor::operator==(const ACE_Thread_Descriptor &rhs) const
-{
-  return ACE_OS::thr_cmp (this->thr_handle_, rhs.thr_handle_) == 0
-    && ACE_OS::thr_equal (this->thr_id_, rhs.thr_id_) == 0;
-}
-
-int
-ACE_Thread_Descriptor::operator!=(const ACE_Thread_Descriptor &rhs) const
-{
-  return !(*this == rhs);
-}
-
-int
 ACE_Thread_Descriptor::at_exit (void *object,
                                 ACE_CLEANUP_FUNC cleanup_hook,
                                 void *param)
@@ -81,19 +68,18 @@ ACE_Thread_Descriptor::dump (void) const
   ACE_TRACE ("ACE_Thread_Descriptor::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nthr_id_ = %d"), this->thr_id_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nthr_handle_ = %d"), this->thr_handle_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ngrp_id_ = %d"), this->grp_id_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nthr_state_ = %d"), this->thr_state_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ncleanup_info_.cleanup_hook_ = %x"), this->cleanup_info_.cleanup_hook_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nflags_ = %x\n"), this->flags_));
+	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nthr_id_ = %d"), this->thr_id_));
+	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nthr_handle_ = %d"), this->thr_handle_));
+	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ngrp_id_ = %d"), this->grp_id_));
+	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nthr_state_ = %d"), this->thr_state_));
+	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ncleanup_info_.cleanup_hook_ = %x"), this->cleanup_info_.cleanup_hook_));
+	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nflags_ = %x\n"), this->flags_));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+	ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
-  : thr_id_ (ACE_OS::NULL_thread),
-    grp_id_ (0),
+  : grp_id_ (0),
     thr_state_ (ACE_THR_IDLE),
     task_ (0)
 {
