@@ -582,6 +582,9 @@ template class ACE_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>;
 template class ACE_Recyclable_Handler_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>;
 template class ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>;
 
+template class ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -667,6 +670,9 @@ template class ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH
 #pragma instantiate ACE_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>
 #pragma instantiate ACE_Recyclable_Handler_Cleanup_Strategy<ADDR, CACHED_HANDLER, HASH_MAP>
 #pragma instantiate ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>
+
+#pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

@@ -1,3 +1,24 @@
+Mon Jul 19 22:46:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T.cpp
+	  (ACE_Cached_Connect_Strategy::new_connection):: We use a reverse
+	  lock to let go of the lock for the duration of the actual
+	  connect.  This will allow other threads to hack on the
+	  connection cache while this thread creates the new connection.
+	  Thanks to James Whitledge <jwhitledge@spyglass.com> for
+	  suggesting this.
+
+	* tests/Cached_Accept_Conn_Test.cpp
+	* tests/Cached_Conn_Test.cpp
+	* tests/Conn_Test.cpp
+
+	  Added reverse lock template instantiations.
+
+	* ace/Synch_T: Since the reverse lock constructor that created the
+	  regular lock was removed, there was no need for the
+	  <delete_lock_> variable, and <lock_> could be changed into a
+	  reference (instead of pointer).
+
 Mon Jul 19 23:04:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/lib/Logging_Strategy.cpp (init): The ACE_LOG_MSG->open()

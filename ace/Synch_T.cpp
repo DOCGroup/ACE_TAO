@@ -39,8 +39,6 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (void)
 template <class ACE_LOCKING_MECHANISM>
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::~ACE_Reverse_Lock (void)
 {
-  if (this->delete_lock_)
-    delete this->lock_;
 }
 
 template <class ACE_LOCK, class TYPE>

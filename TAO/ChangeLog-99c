@@ -1,3 +1,10 @@
+Mon Jul 19 22:46:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp
+	* tao/UIOP_Connector.cpp
+
+	  Added reverse lock template instantiations.
+
 Mon Jul 19 21:49:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
@@ -13,9 +20,9 @@ Mon Jul 19 21:39:06 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  For operation names that are C++ reserved words, the mapping
 	  has a _cxx_ prepended to the name. However, the skeleton's lookup
 	  strategy still expects the original name. This implies that the
-	  stub send the original name in the request. We were doing this 
+	  stub send the original name in the request. We were doing this
 	  correctly for the compiled stubs. However, for the interpreted
-	  stubs, we were sending the _cxx_<name> in the request. This is 
+	  stubs, we were sending the _cxx_<name> in the request. This is
 	  now fixed.
 
 Mon Jul 19 20:00:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
