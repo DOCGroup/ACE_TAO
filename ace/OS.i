@@ -7409,7 +7409,7 @@ ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
 #else
   wchar_t *result = s;
 
-  while ((*t++ = *s++) != 0)
+  while ((*s++ = *t++) != 0)
     continue;
 
   return result;
