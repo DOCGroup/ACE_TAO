@@ -71,7 +71,6 @@ RELEASE_FILES = ACE_wrappers/ACE-categories \
 		ACE_wrappers/include \
 		ACE_wrappers/man \
 		ACE_wrappers/netsvcs \
-		ACE_wrappers/rpc++ \
 		ACE_wrappers/performance-tests \
 		ACE_wrappers/tests
 

@@ -1,3 +1,9 @@
+Mon Jun 30 17:28:53 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* Makefile (RELEASE_FILES): Removed the rpc++ directory from the
+ 	  main release since this doesn't seem to be widely used and the
+ 	  GPL copyleft confuses people.
+
 Mon Jun 30 15:08:04 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/platform_vxworks5.x_g++.GNU: added -lgcc

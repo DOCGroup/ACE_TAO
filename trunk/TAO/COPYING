@@ -1,11 +1,25 @@
 COPYRIGHT INFORMATION FOR TAO
 
 TAO is copyrighted by Douglas C. Schmidt and his research group at
-Washington University, Copyright (c) 1997, all rights reserved, and
-portions by SunSoft (need to get the full SunSoft copyright chunk into
-here).
+Washington University, Copyright (c) 1997, all rights reserved.  In
+addition, some portions of TAO (particularly the IIOP protocol engine)
+are copyrighted by SunSoft (see the ./IIOP/lib/COPYING.sun file for
+more details).  Likewise, TAO relies heavily on ACE, which is also
+copyrighted by Douglas C. Schmidt and his research group at Washington
+University (see the ../COPYING file for more details).
 
-It's primary purpose is a research vehicle for those wishing to
-experiment with the real-time aspects of CORBA.  It IS NOT a product,
-nor should it be treated as such; the user assumes complete
-responsibility for any and all results of the use of this ORB.
+You are free to do anything you like with the Wash. U. portions of
+TAO's source code (and object code produced from the source).  For
+instance, you can include it in commercial software, as long as you
+include this copyright statement along with code built using TAO.
+
+You are under no obligation to freely redistribute any of your source
+code that is built using TAO.  Please note, however, that you may not
+do anything to the ACE code that will prevent it from being
+distributed freely (such as copyrighting it or claiming authorship).
+Naturally, neither I nor my research group is responsible for any
+problems caused by the use of TAO.
+
+        Douglas C. Schmidt 
+        schmidt@cs.wustl.edu 
+
