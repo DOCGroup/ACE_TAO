@@ -1,5 +1,7 @@
 Thu May 29 21:28:25 1997    <harrison@samba.cs.wustl.edu>
 
+	* Process.*: Removed the ACE_Process_Old class.
+
 	* Local_Tokens_T.*: Removed all these files.  They have not been
 	  used by the token library for some time.  They were mistakenly
 	  put in the release.
