@@ -23,14 +23,17 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 
   // Temporary current.
   TAO_RTScheduler_Current_i *new_current = 0;
-  TAO_RTScheduler_Current_i *prev_current = 0;
+  TAO_RTScheduler_Current_i *current = 0;
   
   TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
   
-  prev_current = ACE_static_cast (TAO_RTScheduler_Current_i *,
+  current = ACE_static_cast (TAO_RTScheduler_Current_i *,
 				  tss->rtscheduler_current_impl_);
   
-  if (prev_current != 0)
+  if (current == 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"No Scheduling Segment Context\n"));
+  else 
     {
       // If this is a one way request
       if (!ri->response_expected ()) 
@@ -61,21 +64,27 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
  
 
 	  // Add new DT to map.
-	  prev_current->dt_hash ()->bind (guid, dt.in ());
-      
+	  int result = current->dt_hash ()->bind (guid, dt);
+	  if (result != 0)
+	    {
+	      ACE_DEBUG ((LM_DEBUG,
+			  "No Scheduling Segment Context\n"));
+	      
+	    }
+	  
 	  // Create new temporary current. Note that
 	  // the new <sched_param> is the current
 	  // <implicit_sched_param> and there is no
 	  // segment name.
 	  ACE_NEW (new_current,
-		   TAO_RTScheduler_Current_i (prev_current->orb (),
-					      prev_current->dt_hash (),
+		   TAO_RTScheduler_Current_i (current->orb (),
+					      current->dt_hash (),
 					      guid,
 					      0,
-					      prev_current->implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_PARAMETER),
+					      current->implicit_scheduling_parameter (),
 					      0,
 					      dt.in (),
-					      prev_current));
+					      current));
       
       
 	  // Install new current in the ORB.
@@ -86,7 +95,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
   
       // Scheduler populates the service context with
       // scheduling parameters.
-      prev_current->scheduler ()->send_request (ri);
+      current->scheduler ()->send_request (ri);
   
       // If this is a one way request
       if (!ri->response_expected ()) 
@@ -98,9 +107,6 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 	  new_current->cleanup_current ();
 	}
     }
-  else 
-    ACE_DEBUG ((LM_DEBUG,
-		"No Scheduling Segment Context\n"));
 }
 
 void 
@@ -122,14 +128,14 @@ Client_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
   ACE_DEBUG ((LM_DEBUG,
 	      "Client_Interceptor::receive_reply\n"));
 
-  TAO_RTScheduler_Current_i *prev_current = 0;
+  TAO_RTScheduler_Current_i *current = 0;
   
   TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
   
-  prev_current = ACE_static_cast (TAO_RTScheduler_Current_i *,
+  current = ACE_static_cast (TAO_RTScheduler_Current_i *,
 				  tss->rtscheduler_current_impl_);
-  if (prev_current != 0)
-    prev_current->scheduler ()->receive_reply (ri);
+  if (current != 0)
+    current->scheduler ()->receive_reply (ri);
 }
   
 void 
@@ -149,29 +155,29 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
 	      "Received Exception %s\n",
 	      id));
   
-  TAO_RTScheduler_Current_i *prev_current = 0;
+  TAO_RTScheduler_Current_i *current = 0;
   
   TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
   
-  prev_current = ACE_static_cast (TAO_RTScheduler_Current_i *,
+  current = ACE_static_cast (TAO_RTScheduler_Current_i *,
 				  tss->rtscheduler_current_impl_);
   
-  if (prev_current != 0)
+  if (current != 0)
     {
       // If the remote host threw a THREAD_CANCELLED
       // exception, make sure to take the appropriate
       // local action.
-      if (ACE_OS_String::strcmp (id, "CORBA::THREAD_CANCELLED") == 0)
+      if (ACE_OS_String::strstr (id, "CORBA::THREAD_CANCELLED") == 0)
 	{
 	  // Perform the necessary cleanup as the
 	  // thread was cancelled.
-	  prev_current->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
+	  current->cancel_thread ();
 	}
       else
 	{
 	  // Inform scheduler that exception was
 	  // received.
-	  prev_current->scheduler ()->receive_exception (ri);
+	  current->scheduler ()->receive_exception (ri);
 	}
     }
 }
@@ -185,14 +191,14 @@ Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
   ACE_DEBUG ((LM_DEBUG,
 	      "Client_Interceptor::receive_other\n"));
 
-  TAO_RTScheduler_Current_i *prev_current = 0;
+  TAO_RTScheduler_Current_i *current = 0;
   
   TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
   
-  prev_current = ACE_static_cast (TAO_RTScheduler_Current_i *,
+  current = ACE_static_cast (TAO_RTScheduler_Current_i *,
 				  tss->rtscheduler_current_impl_);
-  if (prev_current != 0)
-    prev_current->scheduler ()->receive_other (ri);
+  if (current != 0)
+    current->scheduler ()->receive_other (ri);
 
 }
 
@@ -303,25 +309,25 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
   ACE_DEBUG ((LM_DEBUG,
 	      "Server_Interceptor::send_reply\n"));
 
-  TAO_RTScheduler_Current_i *prev_current = 0;
+  TAO_RTScheduler_Current_i *current = 0;
   
   TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
   
-  prev_current = ACE_static_cast (TAO_RTScheduler_Current_i *,
+  current = ACE_static_cast (TAO_RTScheduler_Current_i *,
 				  tss->rtscheduler_current_impl_);
-  if (prev_current != 0)
+  if (current != 0)
     {
-      if (prev_current->DT ()->state () == RTScheduling::DistributableThread::CANCELLED)
+      if (current->DT ()->state () == RTScheduling::DistributableThread::CANCELLED)
 	{
-	  prev_current->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
+	  current->cancel_thread (ACE_ENV_ARG_PARAMETER);
 	  ACE_CHECK;
 	}
 
       // Inform scheduler that upcall is complete.
-      prev_current->scheduler ()->send_reply (ri);
+      current->scheduler ()->send_reply (ri);
 
-      prev_current->cleanup_DT ();
-      prev_current->cleanup_current ();
+      current->cleanup_DT ();
+      current->cleanup_current ();
     }
 }
   
@@ -334,19 +340,19 @@ Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr r
   ACE_DEBUG ((LM_DEBUG,
 	      "Server_Interceptor::send_exception\n"));
 
-  TAO_RTScheduler_Current_i *prev_current = 0;
+  TAO_RTScheduler_Current_i *current = 0;
   
   TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
   
-  prev_current = ACE_static_cast (TAO_RTScheduler_Current_i *,
+  current = ACE_static_cast (TAO_RTScheduler_Current_i *,
 				  tss->rtscheduler_current_impl_);
-  if (prev_current != 0)
+  if (current != 0)
     {
       // Inform scheduler that upcall is complete.
-      prev_current->scheduler ()->send_other (ri);
+      current->scheduler ()->send_other (ri);
       
-      prev_current->cleanup_DT ();
-      prev_current->cleanup_current ();
+      current->cleanup_DT ();
+      current->cleanup_current ();
     }
 }
   
@@ -359,19 +365,19 @@ Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri
   ACE_DEBUG ((LM_DEBUG,
 	      "Server_Interceptor::send_other\n"));
 
-  TAO_RTScheduler_Current_i *prev_current = 0;
+  TAO_RTScheduler_Current_i *current = 0;
   
   TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
   
-  prev_current = ACE_static_cast (TAO_RTScheduler_Current_i *,
+  current = ACE_static_cast (TAO_RTScheduler_Current_i *,
 				  tss->rtscheduler_current_impl_);
-  if (prev_current != 0)
+  if (current != 0)
     {
       // Inform scheduler that upcall is complete.
-      prev_current->scheduler ()->send_other (ri);
+      current->scheduler ()->send_other (ri);
       
-      prev_current->cleanup_DT ();
-      prev_current->cleanup_current ();
+      current->cleanup_DT ();
+      current->cleanup_current ();
     }
 }
 
