@@ -35,7 +35,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void validate_protocol (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((SimpleServer::WrongProtocolType,
+    ACE_THROW_SPEC ((Simple_Server::WrongProtocolType,
                      CORBA::SystemException));
 
   CORBA::Long test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
