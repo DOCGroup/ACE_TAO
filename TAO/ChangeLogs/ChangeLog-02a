@@ -1,88 +1,95 @@
+Fri Sep 21 13:01:53 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/tutorials/Quoter/Event_Service/Makefile:
+        * docs/tutorials/Quoter/Naming_Service/Makefile:
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile:
+          Fixed dependencies on the tutorial.
+
 Fri Sep 21 12:36:36 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Profile.cpp (policies):
+        * tao/Profile.cpp (policies):
 
-	  Added missing CORBA::Environment parameter to the call to
-	  CORBA::Policy::policy_type().  Removes a TSS access during each
-	  policy insertion into the TAG_POLICIES IOR tagged component.
-	  Also fixes a potential problem where an emulated exception would
-	  not be caught if thrown during a remote
-	  CORBA::Policy::policy_type() invocation.
+          Added missing CORBA::Environment parameter to the call to
+          CORBA::Policy::policy_type().  Removes a TSS access during each
+          policy insertion into the TAG_POLICIES IOR tagged component.
+          Also fixes a potential problem where an emulated exception would
+          not be caught if thrown during a remote
+          CORBA::Policy::policy_type() invocation.
 
-	* tao/ClientInterceptorAdapter.cpp (receive_exception):
-	* tao/PortableServer/ServerInterceptorAdapter.cpp (send_exception):
+        * tao/ClientInterceptorAdapter.cpp (receive_exception):
+        * tao/PortableServer/ServerInterceptorAdapter.cpp (send_exception):
 
-	  Only re-throw the exception if it hasn't been transformed
-	  (e.g. to a LOCATION_FORWARD)by the receive_exception() and
-	  send_exception() interception points, respectively.
+          Only re-throw the exception if it hasn't been transformed
+          (e.g. to a LOCATION_FORWARD)by the receive_exception() and
+          send_exception() interception points, respectively.
 
-	* tao/PortableServer/POA.cpp (client_exposed_policies): 
+        * tao/PortableServer/POA.cpp (client_exposed_policies):
 
-	  Improved exception-safety of this method by storing the
-	  allocated CORBA::PolicyList in a CORBA::PolicyList_var.  Fixes a
-	  memory leak that occurred if an exception was thrown within this
-	  method.
+          Improved exception-safety of this method by storing the
+          allocated CORBA::PolicyList in a CORBA::PolicyList_var.  Fixes a
+          memory leak that occurred if an exception was thrown within this
+          method.
 
-	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
-	  (gen_marshal_and_invoke):
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
+          (gen_marshal_and_invoke):
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+          (visit_operation):
 
-	  Do not call the generated instantiation of the RequestInfo
-	  object "ri."  Doing so will cause conflicts with IDL that
-	  uses an operation parameter of the same name.  The generated
-	  code now uses "_tao_ri" to avoid namespace pollution.
+          Do not call the generated instantiation of the RequestInfo
+          object "ri."  Doing so will cause conflicts with IDL that
+          uses an operation parameter of the same name.  The generated
+          code now uses "_tao_ri" to avoid namespace pollution.
 
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor_Flow.dsw:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/client.dsp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/server.dsp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor_Flow.dsw:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/client.dsp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/server.dsp:
 
-	  Corrected spelling.  "Inteceptor" --> "Interceptor"
+          Corrected spelling.  "Inteceptor" --> "Interceptor"
 
 Thu Sep 20 15:48:33 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Thread_Pool/client.cpp: Added ability
-	  to adjust timeout for max throughput run.
+        * performance-tests/RTCorba/Thread_Pool/client.cpp: Added ability
+          to adjust timeout for max throughput run.
 
 Thu Sep 20 13:23:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional_NestedUpcall/client.cpp:
-	* tests/BiDirectional_NestedUpcall/server.cpp: Created the servant
-          object on the heap instead of on the stack. 
-	
-	* tests/BiDirectional_NestedUpcall/test_i.h: Inherited the
-	  implementation from the Refcounted servant base. 
-	  
-	  The above changes should prevent the client from crashing if the
-	  server crashes during the upcall. 
-	
+        * tests/BiDirectional_NestedUpcall/client.cpp:
+        * tests/BiDirectional_NestedUpcall/server.cpp: Created the servant
+          object on the heap instead of on the stack.
+
+        * tests/BiDirectional_NestedUpcall/test_i.h: Inherited the
+          implementation from the Refcounted servant base.
+
+          The above changes should prevent the client from crashing if the
+          server crashes during the upcall.
+
 Thu Sep 20 13:23:59 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/tests/IOR_MCast/server.bor: Added missing iortable
-	  library.
+        * orbsvcs/tests/IOR_MCast/server.bor: Added missing iortable
+          library.
 
-	* orbsvcs/tests/IOR_MCast/MCast_Server_i.cpp (connect_server):
-	  Fixed missing throw spec. 
+        * orbsvcs/tests/IOR_MCast/MCast_Server_i.cpp (connect_server):
+          Fixed missing throw spec.
 
-	  Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for the above
-	  fixes.
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for the above
+          fixes.
 
 Thu Sep 20 12:40:34 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Thread_Pool/client.cpp: 
+        * performance-tests/RTCorba/Thread_Pool/client.cpp:
 
-	  - Previously, each thread kept it's own start time.  This
-	    meant that if a low priority thread did not reach the
-	    point where it recorded it's start time before it got
-	    preempted by a thread of higher priority, then it is
-	    possible that this low priority thread may start after the
-	    high priority thread is done and hence would not notice
-	    that it is late at all.  Therefore, the start time is made
-	    global and is the same for all threads.
+          - Previously, each thread kept it's own start time.  This
+            meant that if a low priority thread did not reach the
+            point where it recorded it's start time before it got
+            preempted by a thread of higher priority, then it is
+            possible that this low priority thread may start after the
+            high priority thread is done and hence would not notice
+            that it is late at all.  Therefore, the start time is made
+            global and is the same for all threads.
 
-	  - We now keep track of the invocations that were missed
+          - We now keep track of the invocations that were missed
             because we didn't make the deadline.  This will help note
-            any particularities in the test. 
+            any particularities in the test.
 
           - Some of the threads were being given an unfair advantage
             because a connection had already been setup for them
@@ -95,46 +102,46 @@ Thu Sep 20 12:40:34 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Wed Sep 19 17:43:42 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/RTCORBA/Linear_Priority/server.cpp:
-	* tests/RTCORBA/Persistent_IOR/server.cpp:
-	* tests/RTCORBA/Policy_Combinations/server.cpp:
+        * tests/RTCORBA/Linear_Priority/server.cpp:
+        * tests/RTCORBA/Persistent_IOR/server.cpp:
+        * tests/RTCORBA/Policy_Combinations/server.cpp:
 
-	  Added missing ACE_UNUSED_ARGs for asserted <result>.
+          Added missing ACE_UNUSED_ARGs for asserted <result>.
 
-	* tao/TAO_Internal.cpp: Added explicit template instantiations for
-	  ACE_Dynamic_Service<ACE_Service_Object>.
+        * tao/TAO_Internal.cpp: Added explicit template instantiations for
+          ACE_Dynamic_Service<ACE_Service_Object>.
 
-	* tests/Exposed_Policies/Policy_Tester.cpp (init): Changed
-	  ACE_CHECK to ACE_CHECK_RETURN.	  
+        * tests/Exposed_Policies/Policy_Tester.cpp (init): Changed
+          ACE_CHECK to ACE_CHECK_RETURN.
 
-	* tests/RTCORBA/Collocation/Collocation.cpp
-	  (create_poa_and_servant_with_tp_policy and
-	  create_servant_in_root_poa): Fixed misplaced ACE_CHECKs.
+        * tests/RTCORBA/Collocation/Collocation.cpp
+          (create_poa_and_servant_with_tp_policy and
+          create_servant_in_root_poa): Fixed misplaced ACE_CHECKs.
 
 Wed Sep 19 14:15:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	* tao/BiDir_GIOP/TAO_BiDir_GIOP.dsp:
-	* tao/DynamicAny/TAO_DynamicAny.dsp:
-	* tao/IFR_Client/TAO_IFR_Client.dsp:
-	* tao/IFR_Client/TAO_IFR_Client_Static.dsp:
-	* tao/IORManipulation/TAO_IORManip.dsp:
-	* tao/IORManipulation/TAO_IORManip_Static.dsp:
-	* tao/IORTable/TAO_IORTable.dsp:
-	* tao/IORTable/TAO_IORTable_Static.dsp:
-	* tao/PortableServer/TAO_PortableServer.dsp:
-	* tao/PortableServer/TAO_PortableServer_Static.dsp:
-	* tao/RTCORBA/TAO_RTCORBA.dsp:
-	* tao/RTCORBA/TAO_RTCORBA_Static.dsp:
-	* tao/RTPortableServer/TAO_RTPortableServer.dsp:
-	* tao/RTPortableServer/TAO_RTPortableServer_Static.dsp:
-	* tao/SmartProxies/SmartProxies.dsp:
-	* tao/Strategies/TAO_Strategies.dsp:
-	* tao/Strategies/TAO_Strategies_Static.dsp:
-	* tao/TypeCodeFactory/TypeCodeFactory.dsp: Enabled generation of
-	  debug info even for release configurations.  Thanks to Jonathan
-	  Reis <reis@stentor.com> for suggesting this.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/BiDir_GIOP/TAO_BiDir_GIOP.dsp:
+        * tao/DynamicAny/TAO_DynamicAny.dsp:
+        * tao/IFR_Client/TAO_IFR_Client.dsp:
+        * tao/IFR_Client/TAO_IFR_Client_Static.dsp:
+        * tao/IORManipulation/TAO_IORManip.dsp:
+        * tao/IORManipulation/TAO_IORManip_Static.dsp:
+        * tao/IORTable/TAO_IORTable.dsp:
+        * tao/IORTable/TAO_IORTable_Static.dsp:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/PortableServer/TAO_PortableServer_Static.dsp:
+        * tao/RTCORBA/TAO_RTCORBA.dsp:
+        * tao/RTCORBA/TAO_RTCORBA_Static.dsp:
+        * tao/RTPortableServer/TAO_RTPortableServer.dsp:
+        * tao/RTPortableServer/TAO_RTPortableServer_Static.dsp:
+        * tao/SmartProxies/SmartProxies.dsp:
+        * tao/Strategies/TAO_Strategies.dsp:
+        * tao/Strategies/TAO_Strategies_Static.dsp:
+        * tao/TypeCodeFactory/TypeCodeFactory.dsp: Enabled generation of
+          debug info even for release configurations.  Thanks to Jonathan
+          Reis <reis@stentor.com> for suggesting this.
 
 Wed Sep 19 12:06:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -153,26 +160,26 @@ Wed Sep 19 12:06:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Wed Sep 19 02:58:46 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.av (.obj/Transport.o): Fixed minor
-	  error in the dependencies (though I am not sure how this error
-	  got in since the dependencies are auto generated).
+        * orbsvcs/orbsvcs/Makefile.av (.obj/Transport.o): Fixed minor
+          error in the dependencies (though I am not sure how this error
+          got in since the dependencies are auto generated).
 
 Tue Sep 18 17:18:35 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Thread_Pool/client.cpp: Added priority
-	  information to max throughput testing.  Also,
-	  <Continuous_Worker::time_for_test_> has the max time of all the
-	  continuous workers.
+        * performance-tests/RTCorba/Thread_Pool/client.cpp: Added priority
+          information to max throughput testing.  Also,
+          <Continuous_Worker::time_for_test_> has the max time of all the
+          continuous workers.
 
 Tue Sep 18 15:55:18 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/RTCORBA/README: Updated with information about new tests.
+        * tests/RTCORBA/README: Updated with information about new tests.
 
-	* tests/TAO_Tests.dsw: Added Cache_Growth_Test and
-	  Exposed_Policies.
+        * tests/TAO_Tests.dsw: Added Cache_Growth_Test and
+          Exposed_Policies.
 
-	* tests/Cache_Growth_Test/Hello.cpp (get_string): transport_cache
-	  is now in the lane resources.
+        * tests/Cache_Growth_Test/Hello.cpp (get_string): transport_cache
+          is now in the lane resources.
 
 Tue Sep 18 13:05:09 2001  Carlos O'Ryan  <coryan@uci.edu>
 
