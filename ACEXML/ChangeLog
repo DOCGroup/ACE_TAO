@@ -1,3 +1,14 @@
+Wed Jan  5 14:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/DefaultHandler.{h,cpp,i}:
+        * common/NamespaceSupport.{h,cpp,i}:
+        * common/Transcode.{h,cpp,i}:
+        * examples/SAXPrint/Print_Handler.{cpp,i}:
+          Removed .i file and updated h/cpp file
+
+        * common/Makefile.am:
+          Updated
+
 Tue Aug 17 19:07:11 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* common/NamespaceSupport.cpp:

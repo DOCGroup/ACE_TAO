@@ -79,10 +79,6 @@ private:
   // Display the graphics...
 };
 
-#if defined(__ACE_INLINE__)
-#include "test_i.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* ACE_HAS_FL */
 
 #endif /* TAO_FL_SERVER_TEST_I_H */
