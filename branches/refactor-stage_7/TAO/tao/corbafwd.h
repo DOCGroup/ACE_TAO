@@ -685,8 +685,6 @@ const CORBA::ULong TAO_ENOTSUP_MINOR_CODE            = 0x14U;
 #define TAO_DEFAULT_CHAR_CODESET_ID  TAO_CODESET_ID_ISO8859_1
 #define TAO_DEFAULT_WCHAR_CODESET_ID TAO_CODESET_ID_UNICODE
 
-#define TAO_INVALID_PRIORITY -1
-
 // An hash define for the regular two way operation
 #define TAO_TWOWAY_RESPONSE_FLAG 255
 // ****************************************************************
@@ -705,6 +703,13 @@ operator<< (TAO_OutputCDR&, const TAO_opaque&);
 
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, TAO_opaque&);
+
+TAO_Export CORBA::Boolean 
+operator<< (TAO_OutputCDR &,
+            const CORBA::ParameterMode &);
+TAO_Export CORBA::Boolean 
+operator>> (TAO_InputCDR &,
+            CORBA::ParameterMode &);
 
 #if defined (__ACE_INLINE__)
 # include "tao/corbafwd.i"

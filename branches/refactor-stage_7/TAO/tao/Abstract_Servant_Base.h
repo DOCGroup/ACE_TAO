@@ -26,7 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
+#include "tao/Basic_Types.h"
 #include "tao/TAO_Export.h"
 #include "tao/Pseudo_VarOut_T.h"
 
@@ -49,6 +49,7 @@ namespace CORBA
 namespace TAO
 {
   class Argument;
+  class Collocation_Strategy;
 };
 
 typedef void (*TAO_Skeleton)(

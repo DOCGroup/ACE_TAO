@@ -20,6 +20,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class ACE_Char_Codeset_Translator;
+class ACE_WChar_Codeset_Translator;
+
 namespace TAO
 {
   /**

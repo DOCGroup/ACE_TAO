@@ -24,6 +24,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/Synch_Traits.h"
 
+#define TAO_INVALID_PRIORITY -1
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

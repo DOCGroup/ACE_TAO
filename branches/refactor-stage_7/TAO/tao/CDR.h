@@ -42,7 +42,6 @@
 #define TAO_CDR_H
 
 #include "ace/pre.h"
-
 #include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -51,7 +50,9 @@
 
 #include "ace/CDR_Stream.h"
 
-#include "tao/corbafwd.h"
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+#include "tao/orbconf.h"
 
 class TAO_ORB_Core;
 
@@ -321,10 +322,6 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Char* &x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::WChar* &x);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &,
-                                      const CORBA::ParameterMode &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,
-                                      CORBA::ParameterMode &);
 #endif /* __ACE_INLINE */
 
 #include /**/ "ace/post.h"

@@ -9,6 +9,9 @@
 #include "tao/debug.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Codeset_Manager.h"
+#include "tao/Transport.h"
+#include "Thread_Lane_Resources.h"
+#include "Thread_Per_Connection_Handler.h"
 
 #include "ace/Auto_Ptr.h"
 
