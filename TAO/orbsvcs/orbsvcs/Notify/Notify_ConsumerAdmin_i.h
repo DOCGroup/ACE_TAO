@@ -17,12 +17,12 @@
 #ifndef TAO_NOTIFY_CONSUMERADMIN_I_H
 #define TAO_NOTIFY_CONSUMERADMIN_I_H
 #include "ace/pre.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "Notify_ID_Pool_T.h"
 #include "Notify_QoSAdmin_i.h"
 #include "Notify_FilterAdmin_i.h"
