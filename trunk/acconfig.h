@@ -815,6 +815,9 @@
 /* Platform/compiler lacks strdup() (e.g., VxWorks, Chorus, WinCE) */
 #undef ACE_HAS_STRDUP_EMULATION
 
+/* Compile ACE_OS::strptime() wrapper into ACE. */
+#undef ACE_HAS_STRPTIME
+
 /* Platform supports STREAMS */
 #undef ACE_HAS_STREAMS
 
@@ -1128,6 +1131,9 @@
 /* Platform lacks named POSIX semaphores (e.g., Chorus) */
 #undef ACE_LACKS_NAMED_POSIX_SEM
 
+/* Platform lacks native strptime() implementation. */
+#undef ACE_LACKS_NATIVE_STRPTIME
+
 /* Platform/compiler lacks {get,set}rlimit() function (e.g., VxWorks, Chorus,
    and SCO UNIX) */
 #undef ACE_LACKS_RLIMIT
@@ -1142,6 +1148,12 @@
 /* Platform lacks POSIX prototypes for certain System V functions like shared
    memory and message queues. */
 #undef ACE_LACKS_SOME_POSIX_PROTOTYPES
+
+/* Compiler doesn't support placement operator new(size_t, void *). */
+#undef ACE_LACKS_PLACEMENT_OPERATOR_NEW
+
+/* Compiler doesn't support placement operator delete(void *, void *). */
+#undef ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 
 /* Compiler complains about use of obsolete "#pragma once" */
 #undef ACE_LACKS_PRAGMA_ONCE
