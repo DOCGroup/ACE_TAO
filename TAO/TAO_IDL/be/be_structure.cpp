@@ -33,17 +33,6 @@ be_structure::be_structure (UTL_ScopedName *n, UTL_StrList *p)
     UTL_Scope (AST_Decl::NT_struct),
     member_count_ (-1)
 {
-  // computes the repoID
-  compute_repoID ();
-
-  // computes the fully scoped name
-  compute_fullname ();
-
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
-  // compute the flattened fully scoped name
-  compute_flatname ();
 }
 
 // compute total number of members

@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_typedef.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -29,17 +29,6 @@ be_typedef::be_typedef (AST_Type *bt, UTL_ScopedName *n, UTL_StrList *p)
   : AST_Typedef (bt, n, p),
     AST_Decl (AST_Decl::NT_typedef, n, p)
 {
-  // computes the repoID
-  compute_repoID ();
-
-  // computes the fully scoped name
-  compute_fullname ();
-
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
-  // compute the flattened fully scoped name 
-  compute_flatname ();
 }
 
 // given a typedef node, traverse the chain of base types until they are no
@@ -50,7 +39,7 @@ be_typedef::primitive_base_type (void)
   be_type *d;
 
   d = this;
-  while (d->node_type () == AST_Decl::NT_typedef)
+  while (d && d->node_type () == AST_Decl::NT_typedef)
     {
       be_typedef *temp; // temporary
 
@@ -71,7 +60,9 @@ be_typedef::gen_client_header (void)
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
       cg->push (TAO_CodeGen::TAO_TYPEDEF_CH);
-      cg->node (this); // pass ourselves
+      cg->node (this); // pass ourselves. For typedefs, this is very important,
+                       // because other nodes's code generation may depend on
+                       // whether they were typedefed or not.
       cg->outstream (cg->client_header ());
       s = cg->make_state ();
 
@@ -109,12 +100,14 @@ be_typedef::gen_client_stubs (void)
       cs = cg->client_stubs ();
       // pass info
       cg->outstream (cs);
-      cg->node (this);
+      cg->node (this); // pass ourselves. For typedefs, this is very important,
+                       // because other nodes's code generation may depend on
+                       // whether they were typedefed or not.
 
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
-        nl; 
+        nl;
       *cs << "{\n";
       cs->incr_indent (0);
       // note that we just need the parameters here and hence we generate the
@@ -128,9 +121,9 @@ be_typedef::gen_client_stubs (void)
       cs->decr_indent ();
       *cs << "};" << nl;
 
-      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () << 
-        " (CORBA::tk_struct, sizeof (_oc_" <<  this->flatname () << 
-        "), (unsigned char *) &_oc_" << this->flatname () << 
+      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () <<
+        " (CORBA::tk_struct, sizeof (_oc_" <<  this->flatname () <<
+        "), (unsigned char *) &_oc_" << this->flatname () <<
         ", CORBA::B_FALSE);" << nl;
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
@@ -154,7 +147,7 @@ be_typedef::gen_server_skeletons (void)
 }
 
 // Generates the client-side inline information
-int 
+int
 be_typedef::gen_client_inline (void)
 {
   be_type *bt;       // type node
@@ -184,7 +177,7 @@ be_typedef::gen_client_inline (void)
 }
 
 // Generates the server-side inline
-int 
+int
 be_typedef::gen_server_inline (void)
 {
   // nothing to be done
@@ -203,7 +196,7 @@ be_typedef::tc_size (void)
   return 0;
 }
 
-int 
+int
 be_typedef::gen_encapsulation  (void)
 {
   return 0;
@@ -218,4 +211,3 @@ be_typedef::tc_encap_len (void)
 // Narrowing
 IMPL_NARROW_METHODS2 (be_typedef, AST_Typedef, be_type)
 IMPL_NARROW_FROM_DECL (be_typedef)
-
