@@ -1,58 +1,68 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Makefile for the ACE Adapter Web Server (JAWS)
+#       Makefile for the ACE Adapter Web Server (JAWS)
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
-BIN   	= main
-LIB	= libJAWS.a
-SHLIB	= libJAWS.$(SOEXT)
+BIN2    = main
+LIB2    = libJAWS.a
+SHLIB2  = libJAWS.$(SOEXT)
 
-FILES  	= \
-	HTTP_Server \
-	HTTP_Config \
-	HTTP_Handler \
-	HTTP_Helpers \
-	JAWS_Pipeline \
-	JAWS_Concurrency \
-	HTTP_Request \
-	HTTP_Response \
-	Parse_Headers \
-	IO
+FILES   = \
+        HTTP_Server \
+        HTTP_Config \
+        HTTP_Handler \
+        HTTP_Helpers \
+        JAWS_Pipeline \
+        JAWS_Concurrency \
+        HTTP_Request \
+        HTTP_Response \
+        Parse_Headers \
+        IO
 
 LIBS   += $(ACELIB)
-LDLIBS	= -lJAWS
+LDLIBS  = -lJAWS
 
-PSRC   	= $(addsuffix .cpp,$(BIN))
-LSRC	= $(addsuffix .cpp,$(FILES))
+PSRC    = $(addsuffix .cpp,$(BIN))
+LSRC    = $(addsuffix .cpp,$(FILES))
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
-
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
-include         $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include         $(ACE_ROOT)/include/makeinclude/macros.GNU
-include         $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include         $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include         $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include         $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include         $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If the ACE library wasn't built with sufficient components, don't
+#### try to build here.
+ACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --ace)
+ifeq (Utils,$(findstring Utils,$(ACE_BUILD_COMPONENTS)))
+  ifneq (FOR_TAO,$(ACE_COMPONENTS))
+    BIN = $(BIN2)
+    LIB = $(LIB2)
+    SHLIB = $(SHLIB2)
+  endif # ! FOR_TAO
+endif # ! Utils
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 
 #----------------------------------------------------------------------------
-#	Dependencies
+#       Dependencies
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
