@@ -514,7 +514,7 @@ TAO::PG_Object_Group::distribute_iogr (ACE_ENV_SINGLE_ARG_DECL)
                                             this->tagged_component_.object_group_ref_version,
                                             info->is_primary_
                                             ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK; 
+              ACE_TRY_CHECK;
             }
           ACE_CATCHANY
             {
@@ -718,7 +718,7 @@ TAO::PG_Object_Group::create_member (
                 {
                   ACE_THROW(CORBA::NO_MEMORY());
                 }
-              
+
               this->reference_ = new_reference; // note var-to-var
                                                 // assignment does a
                                                 // duplicate
@@ -837,7 +837,7 @@ TAO::PG_Object_Group::create_members (size_t count ACE_ENV_ARG_DECL)
               ACE_ENDTRY;
             }
         }
-      
+
       if (this->increment_version ())
         {
           this->distribute_iogr (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -859,7 +859,7 @@ TAO::PG_Object_Group::initial_populate (ACE_ENV_SINGLE_ARG_DECL)
     {
       PortableGroup::InitialNumberMembersValue initial_number_members =
         this->get_initial_number_members ();
-      
+
       if (this->members_.current_size () < initial_number_members)
         {
           this->create_members (initial_number_members
