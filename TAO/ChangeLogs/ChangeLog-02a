@@ -1,3 +1,10 @@
+Tue Aug 07 21:54:31 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/IORManipulation/IORTest.cpp (main):
+
+	  Updated URL IORs used in test to be of the standard "corbaloc"
+	  form.  Fixes a CORBA::INV_OBJREF exception.
+
 Tue Aug  7 23:29:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Thread_Per_Connection_Latency/svc.conf:  Did
