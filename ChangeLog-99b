@@ -1,9 +1,15 @@
+Fri Aug 13 21:18:40 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (llseek): on Linux, moved extern "C" llseek ()
+          declaration out of the function.  Thanks to Tal Lev-Ami
+          <tla@tici.co.il> for this fix.
+
 Fri Aug 13 20:50:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Select_Reactor_T.cpp (handle_events): Added a deactivation
-	  check for non-threaded case.  The original check was mixed with
-	  thread owner check and thus got disabled under single-threaded
-	  configurations.  Thanks to Kirthika for reporting the problem.
+        * ace/Select_Reactor_T.cpp (handle_events): Added a deactivation
+          check for non-threaded case.  The original check was mixed with
+          thread owner check and thus got disabled under single-threaded
+          configurations.  Thanks to Kirthika for reporting the problem.
 
 Fri Aug 13 13:11:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
