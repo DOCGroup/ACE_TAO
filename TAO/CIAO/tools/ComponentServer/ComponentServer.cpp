@@ -120,6 +120,12 @@ main (int argc, char *argv[])
 
       PortableServer::ServantBase_var safe_servant (comserv_servant);
 
+      // @@ We need to call ComponentServer servant's init method.
+      // But it's not sure to me where exactly we can get the
+      // ConfigValues needed by the init method at this moment.
+
+      // comserv_servant->init (config ACE_ENV_ARG_PARAMETER);
+
       // Configuring ComponentServer.
       PortableServer::ObjectId_var cs_oid
         = poa->activate_object (comserv_servant

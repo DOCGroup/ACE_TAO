@@ -44,6 +44,7 @@ main (int argc, char *argv[])
 
       // Resolve HomeFinder interface
 
+#if 0
       CORBA::Object_var obj = orb->resolve_initial_references ("HomeFinder"
                                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -78,6 +79,12 @@ main (int argc, char *argv[])
         ("IDL:omg.org/HelloWorld:1.0"
          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+#else
+      CORBA::Object_var obj
+        = orb->string_to_object ("file://hello.ior" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+#endif
+
 
       invoke (obj, "Meriadoc Brandybuck using 'find_home_by_component_type'"
               ACE_ENV_ARG_PARAMETER);

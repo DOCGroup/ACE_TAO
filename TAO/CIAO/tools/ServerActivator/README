@@ -33,6 +33,8 @@ Other command line flags supported by ServerActivator include:
                   considers the activation fails if the
                   ComponentServer does not call back in time.
 
+  * -c : Try creating a container and install a home.
+
 There is also a simple test program in this directory called
 ServerActivator_test_client.  It is used to debug ServerActivator
 implementation.

@@ -116,7 +116,7 @@ protected:
     /// And a reference to the ServerActivator that created us.
     Components::Deployment::ServerActivator_var activator_;
 
-    /// Cached the object reference to ourselves.
+    /// Cache the object reference to ourselves.
     Components::Deployment::ComponentServer_var objref_;
 
     /// Synchronize access to the object set.

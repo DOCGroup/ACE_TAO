@@ -374,7 +374,7 @@ CIAO_HelloWorld_Servant::subscribe (const char * publisher_name,
   ACE_THROW_RETURN (::Components::InvalidName (), 0);
 }
 
-void
+::Components::EventConsumerBase_ptr
 CIAO_HelloWorld_Servant::unsubscribe (const char * publisher_name,
                                       Components::Cookie * ck
                                       ACE_ENV_ARG_DECL)
@@ -385,7 +385,7 @@ CIAO_HelloWorld_Servant::unsubscribe (const char * publisher_name,
   ACE_UNUSED_ARG (publisher_name);
   ACE_UNUSED_ARG (ck);
 
-  ACE_THROW (::Components::InvalidName ());
+  ACE_THROW_RETURN (::Components::InvalidName (), 0);
 }
 
 void

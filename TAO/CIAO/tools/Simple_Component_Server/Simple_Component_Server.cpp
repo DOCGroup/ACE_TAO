@@ -120,11 +120,11 @@ install_homes (CIAO::Session_Container &container,
           // 6 -> Canonical Name of home interface.
 
           Components::CCMHome_var home =
-            container._ciao_install_home (items[0],
-                                          items[1],
-                                          items[2],
-                                          items[3]
-                                          ACE_ENV_ARG_PARAMETER);
+            container.ciao_install_home (items[0],
+                                         items[1],
+                                         items[2],
+                                         items[3]
+                                         ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           if (CORBA::is_nil (home))
