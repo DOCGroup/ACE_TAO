@@ -43,8 +43,9 @@ TAO_Server_Strategy_Factory::scheduling_strategy (void)
 }
 
 TAO_Object_Table_Impl *
-TAO_Server_Strategy_Factory::create_object_table (void)
+TAO_Server_Strategy_Factory::create_object_table (int user_id_policy)
 {
+  ACE_UNUSED_ARG (user_id_policy);
   return 0;
 }
 

@@ -121,10 +121,6 @@ or a number. The default is <TT>10013</TT>.</TD></TR>
 is <CODE>IOR</CODE>, which is the traditional nonsensical object reference,
 or <CODE>URL</CODE>, which looks more like a URL.</TD></TR>
 <TR>
-<TD><CODE>-ORBobjdemux</CODE> <EM>demux_method</EM></TD>
-<TD>Specifies the method used to demultiplex to an object. The range of values
-is <CODE>dynamic</CODE>, <CODE>linear</CODE>, <CODE>active</CODE>, or <CODE>user</CODE>.</TD></TR>
-<TR>
 <TD><CODE>-ORBtablesize</CODE> <EM>object table size</EM></TD>
 <TD>Specifies the size of the object table as a positive, non-zero integer.
 If not specified, the default is <TT>64</TT>.</TD></TR>
@@ -246,12 +242,23 @@ for a purely Reactor-driven concurrency strategy or
 <TD><CODE>-ORBtablesize</CODE> <EM>object table size</EM></TD>
 <TD>Specify the size of the object table. If not specified, the default value
 is 64.</TD></TR>
+<TR> 
+
+<TD><CODE>-ORBuseridpolicydemuxstrategy</CODE> <EM>user id policy
+based demultiplexing strategy</EM></TD> <TD>Specify the demultiplexing
+lookup strategy to be used with the user id policy.  The
+<EM>demultiplexing strategy</EM> can be one of <CODE>dynamic</CODE>,
+<CODE>linear</CODE>, or <CODE>user</CODE>.  This option defaults to
+use the <CODE>dynamic</CODE> strategy. </TD></TR> <TR>
+
+<TD><CODE>-ORBsystemidpolicydemuxstrategy</CODE> <EM>system id policy
+based demultiplexing strategy</EM></TD> <TD>Specify the demultiplexing
+lookup strategy to be used with the system id policy. The
+<EM>demultiplexing strategy</EM> can be one of <CODE>dynamic</CODE>,
+<CODE>linear</CODE>, <CODE>active</CODE>, or <CODE>user</CODE>. This
+option defaults to use the <CODE>active</CODE> strategy. </TD></TR>
 <TR>
-<TD><CODE>-ORBdemuxstrategy</CODE> <EM>demultiplexing strategy</EM></TD>
-<TD>Specify the demultiplexing lookup strategy. The <EM>demultiplexing strategy</EM>
-can be one of <CODE>dynamic</CODE>, <CODE>linear</CODE>, <CODE>active</CODE>,
-or <CODE>user</CODE>.</TD></TR>
-<TR>
+
 <TD><CODE>-ORBthreadflags</CODE> <EM>thread flags</EM></TD>
 <TD>Specify the flags used for thread creation. Flags can be any logical-OR
 combination of <CODE>THR_DETACHED</CODE>, <CODE>THR_BOUND</CODE>, <CODE>THR_NEW_LWP</CODE>,

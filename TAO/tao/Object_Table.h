@@ -123,8 +123,11 @@ public:
   // is associated with <servant>, returns <0> otherwise.
 
   virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant, 
-                                                      CORBA::Environment &env);
+                                                      CORBA::Environment &env) = 0;
   // Create an object id
+
+  virtual CORBA::ULong system_id_size (void) const = 0;
+  // Size of the system generated id.
 };
 
 class TAO_Export TAO_Object_Table_Iterator
@@ -167,9 +170,12 @@ class TAO_Export TAO_Object_Table
   //     to pointers to CORBA objects.
 {
 public:
-  TAO_Object_Table (TAO_Object_Table_Impl *impl = 0, 
+  TAO_Object_Table (TAO_Object_Table_Impl *impl, 
                     int delete_impl = 0);
-  // Constructor
+  // Constructor: Must pass valid <impl>
+
+  TAO_Object_Table (int user_id_policy);
+  // Constructor: System creates table based on <user_id_policy>
   
   virtual ~TAO_Object_Table (void);
   // Destructor.
@@ -212,6 +218,9 @@ public:
   PortableServer::ObjectId *create_object_id (PortableServer::Servant servant, 
                                               CORBA::Environment &env);
   // Create an object id
+
+  virtual CORBA::ULong system_id_size (void) const;
+  // Size of the system generated id.
 
   typedef TAO_Object_Table_Iterator iterator;
   iterator begin (void) const;
@@ -271,6 +280,9 @@ public:
 		    PortableServer::Servant servant);
   virtual int unbind (const PortableServer::ObjectId &id,
 		      PortableServer::Servant &servant);
+  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant, 
+                                                      CORBA::Environment &env);
+  virtual CORBA::ULong system_id_size (void) const;
   virtual TAO_Object_Table_Iterator_Impl *begin (void) const;
   virtual TAO_Object_Table_Iterator_Impl *end (void) const;
 
@@ -281,6 +293,8 @@ public:
 protected:
   Hash_Map hash_map_;
   // internal hash table
+
+  CORBA::ULong counter_;
 };
 
 class TAO_Export TAO_Dynamic_Hash_ObjTable_Iterator : public TAO_Object_Table_Iterator_Impl
@@ -363,6 +377,9 @@ public:
 		    PortableServer::Servant servant);
   virtual int unbind (const PortableServer::ObjectId &id,
 		      PortableServer::Servant &servant);
+  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant, 
+                                                      CORBA::Environment &env);
+  virtual CORBA::ULong system_id_size (void) const;
   virtual TAO_Object_Table_Iterator_Impl *begin () const;
   virtual TAO_Object_Table_Iterator_Impl *end () const;
 
@@ -374,6 +391,7 @@ protected:
   CORBA::ULong tablesize_;
   TAO_Object_Table_Entry *table_;
   PortableServer::ObjectId empty_id_;
+  CORBA::ULong counter_;
 };
 
 /****************************************************************/
@@ -409,6 +427,7 @@ public:
 		    PortableServer::Servant servant);
   virtual int unbind (const PortableServer::ObjectId &id,
 		      PortableServer::Servant &servant);
+  virtual CORBA::ULong system_id_size (void) const;
   virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant, 
                                                       CORBA::Environment &env);
 

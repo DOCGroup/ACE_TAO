@@ -15,12 +15,14 @@ TAO_Object_Table::TAO_Object_Table (TAO_Object_Table_Impl *impl,
   : impl_ (impl),
     delete_impl_ (delete_impl)
 {
-  if (this->impl_ == 0)
-    {
-      this->impl_ =
-        TAO_ORB_Core_instance ()->server_factory ()->create_object_table ();
-      this->delete_impl_ = 1;
-    }
+  ACE_ASSERT (this->impl_ != 0);
+}
+
+TAO_Object_Table::TAO_Object_Table (int user_id_policy)
+{
+  this->impl_ = 
+    TAO_ORB_Core_instance ()->server_factory ()->create_object_table (user_id_policy);
+  this->delete_impl_ = 1;
 }
 
 int
@@ -93,49 +95,44 @@ ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNC
   return hash;
 }
 
-int
-TAO_Dynamic_Hash_ObjTable::find (const PortableServer::ObjectId &id,
-                                 PortableServer::Servant &servant)
-{
-  return this->hash_map_.find (id, servant);
-}
-
-int
-TAO_Dynamic_Hash_ObjTable::bind (const PortableServer::ObjectId &id,
-                                 PortableServer::Servant servant)
-{
-  return this->hash_map_.bind (id, servant);
-}
-
-int
-TAO_Dynamic_Hash_ObjTable::unbind (const PortableServer::ObjectId &id,
-                                   PortableServer::Servant &servant)
-{
-  return this->hash_map_.unbind (id, servant);
-}
-
 TAO_Dynamic_Hash_ObjTable::TAO_Dynamic_Hash_ObjTable (CORBA::ULong size)
-  : hash_map_ (size == 0 ?
+  : hash_map_ (size == 0 ? 
       ACE_static_cast (size_t, TAO_Object_Table_Impl::DEFAULT_TABLE_SIZE) :
-      size)
+      size),
+    counter_ (0)
 {
+}
+
+PortableServer::ObjectId *
+TAO_Dynamic_Hash_ObjTable::create_object_id (PortableServer::Servant servant,
+                                             CORBA::Environment &env)
+{
+  // This method assumes that locks are held when it is called
+  PortableServer::ObjectId *id;
+  CORBA::ULong size = sizeof (CORBA::ULong);
+  ACE_NEW_RETURN (id,
+                  PortableServer::ObjectId (size),
+                  0);
+
+  id->length (size);
+
+  ACE_OS::memcpy (id->get_buffer (),
+                  &this->counter_,
+                  size);
+
+  this->counter_++;
+
+  return id;  
 }
 
 TAO_Linear_ObjTable::TAO_Linear_ObjTable (CORBA::ULong size)
   : next_ (0),
     tablesize_ (size == 0 ?
       ACE_static_cast (size_t, TAO_Object_Table_Impl::DEFAULT_TABLE_SIZE) :
-      size)
+      size),
+    counter_ (0)
 {
   ACE_NEW (table_, TAO_Object_Table_Entry[this->tablesize_]);
-}
-
-// Active Demux search strategy
-// constructor
-
-TAO_Active_Demux_ObjTable::TAO_Active_Demux_ObjTable (CORBA::ULong size)
-  : TAO_Linear_ObjTable (size)
-{
 }
 
 int
@@ -239,6 +236,32 @@ TAO_Linear_ObjTable::resize (void)
   return 0;
 }
 
+PortableServer::ObjectId *
+TAO_Linear_ObjTable::create_object_id (PortableServer::Servant servant,
+                                       CORBA::Environment &env)
+{
+  PortableServer::ObjectId *id;
+  CORBA::ULong size = sizeof (CORBA::ULong);
+  ACE_NEW_RETURN (id,
+                  PortableServer::ObjectId (size),
+                  0);
+
+  id->length (size);
+
+  ACE_OS::memcpy (id->get_buffer (),
+                  &this->counter_,
+                  size);
+
+  this->counter_++;
+  
+  return id;  
+}
+
+TAO_Active_Demux_ObjTable::TAO_Active_Demux_ObjTable (CORBA::ULong size)
+  : TAO_Linear_ObjTable (size)
+{
+}
+
 int
 TAO_Active_Demux_ObjTable::bind (const PortableServer::ObjectId &id,
                                  PortableServer::Servant servant)
@@ -247,12 +270,12 @@ TAO_Active_Demux_ObjTable::bind (const PortableServer::ObjectId &id,
   CORBA::ULong generation = 0;
   int result = this->parse_object_id (id, index, generation);
 
-  if (result != 0 
-      || index > this->tablesize_ 
-      || this->table_[index].generation_ != generation)
+  if (result != 0 ||
+      index > this->tablesize_ ||
+      this->table_[index].generation_ != generation ||
+      this->table_[index].is_free_ != 0)
     return -1;
 
-  ACE_ASSERT (this->table_[index].is_free_ == 0);
   this->table_[index].servant_ = servant;
 
   return 0;
@@ -285,9 +308,10 @@ TAO_Active_Demux_ObjTable::unbind (const PortableServer::ObjectId &id,
   CORBA::ULong generation = 0;
   int result = this->parse_object_id (id, index, generation);
 
-  if (result != 0
-      || index > this->tablesize_
-      || this->table_[index].generation_ != generation)
+  if (result != 0 || 
+      index > this->tablesize_ || 
+      this->table_[index].generation_ != generation ||
+      this->table_[index].is_free_ != 0)
     return -1;
 
   servant = this->table_[index].servant_;
