@@ -147,8 +147,8 @@ main (int argc, char* argv[])
 
       // We need a local socket to send the data, open it and check
       // that everything is OK:
-      TAO_ECG_UDP_Out_Endpoint endpoint;
-      if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1)
+      TAO_ECG_Refcounted_Endpoint endpoint(new TAO_ECG_UDP_Out_Endpoint);
+      if (endpoint->dgram ().open (ACE_Addr::sap_any) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, "Cannot open send endpoint\n"),
                             1);
@@ -158,7 +158,7 @@ main (int argc, char* argv[])
       TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender = TAO_ECG_UDP_Sender::create();
       sender->init (event_channel.in (),
                     address_server.in (),
-                    &endpoint
+                    endpoint
                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -199,7 +199,7 @@ main (int argc, char* argv[])
       // supplier of events, using the Observer features to detect
       // local consumers and their interests:
       receiver->init (event_channel.in (),
-                      &endpoint,
+                      endpoint,
                       address_server.in ()
                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
