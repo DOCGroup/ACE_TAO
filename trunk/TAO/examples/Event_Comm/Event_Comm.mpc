@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*notifier): namingexe, naming_serv, utils {
+project(*notifier): namingexe, utils {
   Source_Files {
     Event_Comm_i.cpp
     Notifier_Server.cpp

@@ -103,11 +103,9 @@ Logger_Server::init_naming_service (ACE_ENV_SINGLE_ARG_DECL_NOT_USED ACE_ENV_SIN
 {
   // Get pointers to the ORB and child POA
   CORBA::ORB_var orb = this->orb_manager_.orb ();
-  PortableServer::POA_var child_poa = this->orb_manager_.child_poa ();
 
   // Initialize the naming service
-  if (this->my_name_server_.init (orb.in (),
-                                  child_poa.in ()) == -1)
+  if (this->my_name_server_.init (orb.in ()) == -1)
     return -1;
 
   // Create an instance of the Logger_Factory

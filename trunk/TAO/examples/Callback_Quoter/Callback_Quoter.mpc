@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Callback_Quoter notifier): namingexe, naming_serv, utils {
+project(Callback_Quoter notifier): namingexe, utils {
   Source_Files {
     Notifier_i.cpp
     Notifier_Input_Handler.cpp
