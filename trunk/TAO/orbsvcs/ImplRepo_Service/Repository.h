@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    TAO/orbsvcs/ImplRepo_Service
-// 
+//
 // = FILENAME
 //    Repository.h
 //
@@ -14,14 +14,15 @@
 //
 // = AUTHOR
 //    Darrell Brunsch <brunsch@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
-#if !defined (REPOSITORY_H)
+#ifndef REPOSITORY_H
 #define REPOSITORY_H
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h"
+#include "ace/SString.h"
 
 #if defined (UNICODE)
 #define ACE_TString ACE_WString
@@ -63,19 +64,19 @@ public:
   Repository ();
   // Default Constructor
 
-  typedef ACE_Hash_Map_Entry<ACE_TString, 
+  typedef ACE_Hash_Map_Entry<ACE_TString,
                              Repository_Record *> HASH_IR_ENTRY;
 
-  typedef ACE_Hash_Map_Manager_Ex<ACE_TString, 
-                                  Repository_Record *, 
-                                  ACE_Hash<ACE_TString>, 
-                                  ACE_Equal_To<ACE_TString>, 
+  typedef ACE_Hash_Map_Manager_Ex<ACE_TString,
+                                  Repository_Record *,
+                                  ACE_Hash<ACE_TString>,
+                                  ACE_Equal_To<ACE_TString>,
                                   ACE_Null_Mutex> HASH_IR_MAP;
 
   typedef ACE_Hash_Map_Iterator_Ex<ACE_TString,
-                                   Repository_Record *, 
-                                   ACE_Hash<ACE_TString>, 
-                                   ACE_Equal_To<ACE_TString>, 
+                                   Repository_Record *,
+                                   ACE_Hash<ACE_TString>,
+                                   ACE_Equal_To<ACE_TString>,
                                    ACE_Null_Mutex> HASH_IR_ITER;
 
   int add (ACE_TString key, const Repository_Record &rec);
@@ -83,7 +84,7 @@ public:
 
   int update (ACE_TString key, const Repository_Record &rec);
   // Updates an existing key with <rec>
-  
+
   int remove (ACE_TString key);
   // Removes the server from the Repository
 
