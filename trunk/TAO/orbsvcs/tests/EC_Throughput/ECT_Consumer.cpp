@@ -145,7 +145,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "ECT_Consumer (%P|%t): %d events received\n",
-		  this->recv_count_));
+                  this->recv_count_));
     }
 
   // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
