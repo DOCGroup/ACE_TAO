@@ -432,5 +432,32 @@ public:
 
 #include "ace/Managed_Object.h"
 
+#if !defined (ACE_LACKS_ACE_SVCCONF)
+// We can't use the ACE_SVC_FACTORY_DECLARE macro here because this
+// needs to be in the ACE_Export context rather than the
+// ACE_Svc_Export context.
+class ACE_Service_Object;
+extern "C" ACE_Export
+ACE_Service_Object *
+_make_ACE_Service_Manager (ACE_Service_Object_Exterminator *);
+#endif /* ! ACE_LACKS_ACE_SVCCONF */
+
+// hack to get around errors while compiling using split-cpp
+#if defined (ACE_HAS_THREADS)
+
+# if defined (ACE_IS_SPLITTING)
+typedef ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> ACE_Static_Object_Lock_Type;
+
+#  if defined (__GNUC__)
+// With g++, suppress the warning that this is unused.
+static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock __attribute__ ((unused)) = 0;
+#  else
+static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock = 0;
+#  endif /* __GNUC__ */
+
+# endif /* ACE_IS_SPLITTING */
+
+#endif /* ACE_HAS_THREADS */
+
 #include "ace/post.h"
 #endif /* ACE_OBJECT_MANAGER_H */
