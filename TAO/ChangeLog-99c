@@ -2,7 +2,7 @@ Sat Jul 10 15:53:59 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/Transport_Mux_Strategy.cpp: Single lined the #pragma lines
 	  to fix the warnings in VxWorks.  Thanks to David for reporting
-	  this. 
+	  this and for Carlos for coming up with the solution.
 
 Fri Jul  9 19:12:14 1999  Ossama Othman  <othman@cs.wustl.edu>
 
