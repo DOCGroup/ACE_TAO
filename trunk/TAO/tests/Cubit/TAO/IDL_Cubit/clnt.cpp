@@ -671,7 +671,7 @@ Cubit_Client::run (void)
 
   if (this->exit_later_)
     {
-      this->cubit_->please_exit (this->env_);
+      this->cubit_->shutdown (this->env_);
       dexc (this->env_, "server, please ACE_OS::exit");
     }
 
