@@ -4916,7 +4916,7 @@ inline long ace_timezone()
   ACE_OSCALL (::gettimeofday (&time, &zone), int, -1, result);
   return zone.tz_minuteswest * 60;
 # else  /* __Lynx__ || __FreeBSD__ ... */
-  return timezone ();
+  return timezone;
 # endif /* __Lynx__ || __FreeBSD__ ... */
 #else
   ACE_NOTSUP_RETURN (0);
