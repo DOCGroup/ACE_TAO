@@ -80,7 +80,7 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
 	// Use NET_LOCAL name space, set up connection with remote server.
 	ACE_NEW_RETURN (this->name_space_,
 			ACE_Remote_Name_Space (this->netnameserver_host_,
-					       this->netnameserver_port_),
+					       (u_short) this->netnameserver_port_),
 			-1);
       }
     else // Use NODE_LOCAL or PROC_LOCAL name space.

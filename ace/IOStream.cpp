@@ -284,7 +284,7 @@ ACE_Streambuf::overflow (int c)
       // buffer, so we're guaranteed to have room in the buffer for
       // this new information.  So... we add it to the buffer and
       // adjust our 'next' pointer acordingly.
-      *pptr () = c;
+      *pptr () = (char) c;
       pbump (1);
     }
 
