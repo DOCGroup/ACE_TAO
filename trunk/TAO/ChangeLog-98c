@@ -1,3 +1,10 @@
+Wed Sep  2 09:37:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Environment.cpp: 
+	  The exception() modifier was trying to _raise() the new
+	  exception even if it was 0. Thanks to J. Russell Noseworthy
+	  <rnosewor@objectsciences.com> for reporting this problem.
+
 Tue Sep 01 21:45:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Multiple: added VBIN so that the executable
