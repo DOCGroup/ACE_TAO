@@ -20,6 +20,11 @@ Sat Jun 13 13:10:05 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Process.cpp (spawn): added an ACE_DEBUG printout before each
           call to ACE_OS::exit ().
 
+        * ace/Synch_T.cpp: removed the #pragma define_template for
+          ACE_Condition<ACE_Mutex> on __osf__ with cxx.  It's no longer
+          needed, and was causing multiply defined instantiations with
+          cxx 6.1.
+
 Fri Jun 12 17:04:14 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
         * ace/OS.h: Moved the #define's and typedef's (related to Proactor
