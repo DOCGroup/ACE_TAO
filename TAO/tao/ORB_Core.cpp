@@ -1699,9 +1699,40 @@ TAO_ORB_Core::establish_components (TAO_MProfile &mp,
 
   for (size_t i = 0; i < interceptor_count; ++i)
     {
-      interceptors[i]->establish_components (
-        info.in ()
-	TAO_ENV_ARG_PARAMETER);
+      ACE_TRY
+        {
+          interceptors[i]->establish_components (
+            info.in ()
+            TAO_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // According to the Portable Interceptors specification,
+          // IORInterceptor::establish_components() must not throw an
+          // exception.  If it does, then the ORB is supposed to
+          // ignore it and continue processing the remaining
+          // IORInterceptors.
+          if (TAO_debug_level > 1)
+            {
+              CORBA::String_var name = interceptors[i]->name (
+                TAO_ENV_SINGLE_ARG_PARAMETER);
+              // @@ What do we do if we get an exception here?
+
+              if (name.in () != 0)
+                {
+                  ACE_DEBUG ((LM_WARNING,
+                              "(%P|%t) Exception thrown while processing "
+                              "IORInterceptor \"%s\">\n",
+                              name.in ()));
+                }
+
+              ACE_PRINT_TAO_EXCEPTION (ACE_ANY_EXCEPTION,
+                                       "Ignoring exception in "
+                                       "IORInterceptor::establish_components");
+            }
+        }
+      ACE_ENDTRY;
       ACE_CHECK;
     }
 }
