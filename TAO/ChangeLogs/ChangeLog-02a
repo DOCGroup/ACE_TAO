@@ -1,3 +1,176 @@
+Sun Apr  2 12:14:56 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile.ETCL:
+        * orbsvcs/orbsvcs/ETCL/README:
+        * orbsvcs/orbsvcs/ETCL/ETCL.ll:
+        * orbsvcs/orbsvcs/ETCL/ETCL.yy:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.i:
+        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp.diff:
+        * orbsvcs/orbsvcs/ETCL/ETCL_y.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_y.h:
+        * orbsvcs/orbsvcs/ETCL/etcl_export.h:
+          A simple parser and classes to build an abstract syntax tree for
+          the Extended Trader Constraint Language.  This is the filtering
+          language that both the Notification and Logging Service
+          require.  I intended to use it in the RTEC too, but it probably
+          won't work for that case.
+
+        * orbsvcs/orbsvcs/Makefile.ESF:
+        * orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Defaults.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_List.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_List.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Worker.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Worker.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Worker.i:
+        * orbsvcs/orbsvcs/ESF/esf_export.h:
+          I'm starting the implementation of a framework for event
+          services.  Many of the current classes have been moved out of
+          the RTEC, and have been validated when used in the
+          implementation of the CosEC.  We want to use the same framework
+          for the notification service and to make it easy for users to
+          implement their own event services.
+          It is possible that the framework will help with typed events
+          and similar things.
+
+	  Below a more detailed description:
+
+	* orbsvcs/orbsvcs/Makefile:
+	  Add orbsvcs/orbsvcs/ESF to the include path, because some
+	  compilers need that for template instantiation.
+
+	* orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.i:
+	* orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.cpp:
+	  An ACE_Guard-compatible class to implement Delayed_Commands
+
+	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.i:
+	  Realize the Copy_On_Read pattern for iterations and event
+	  dispatching
+
+	* orbsvcs/orbsvcs/ESF/ESF_Defaults.h:
+	  Define the default configuration values
+
+	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.i:
+	  Realize the Delayed_Changes pattern for iterations and event
+	  dispatching
+
+	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.i:
+	  Implement the Command objects used in Delayed_Changes
+
+	* orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.i:
+	  Realize the Immediate_Changes pattern for iterations and event
+	  dispatching
+
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.i:
+	  Implement a Proxy Admin class that 'matches' suppliers and
+	  consumers (Peers)
+
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Workers.i:
+	  Generic workers to implement Peer_Admin 
+
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i:
+	  Implement a generic Admin interface for an Event Service
+
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i:
+	  Define the interface used for the Proxy collections
+
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_List.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_List.i:
+	  Implement a concrete Proxy collection, based on a linked list
+
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.i:
+	  Implement a concrete Proxy collection, based on a RB-tree
+
+	* orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i:
+	  A worker object to invoke shutdown() on the proxies
+
+	* orbsvcs/orbsvcs/ESF/ESF_Worker.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Worker.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Worker.i:
+	  Define the Worker interface
+
+	* orbsvcs/orbsvcs/ETCL/README:
+	  A parser for the Extended Trader Constraint Language.
+
+	* orbsvcs/orbsvcs/ETCL/ETCL.ll:
+	  The flex(1) file for the ETCL language
+
+	* orbsvcs/orbsvcs/ETCL/ETCL.yy:
+	  The bison(1) file for the ETCL language
+
+	* orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h:
+	* orbsvcs/orbsvcs/ETCL/ETCL_Constraint.i:
+	* orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+	  The parser generates an abstract syntax tree, the nodes in the
+	  tree are implemented here.
+	  We use the familiar Visitor pattern to traverse the tree, only
+	  the Visitor interface is defined, applications must provide
+	  interesting ones.
+	  
+	* orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
+	* orbsvcs/orbsvcs/ETCL/ETCL_y.h:
+	* orbsvcs/orbsvcs/ETCL/ETCL_y.cpp:
+	* orbsvcs/orbsvcs/ETCL/ETCL_l.cpp.diff:
+	  The generated files with the required patches.
+
 Fri Mar 31 21:01:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/examples/Notify/Filter/Makefile:
