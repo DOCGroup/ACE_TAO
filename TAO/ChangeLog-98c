@@ -1,3 +1,8 @@
+Mon Jun 30 17:39:02 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* Added a new README file and a COPYING file that explains the
+ 	contents of TAO and clarifies its copyright status.
+
 Sun Jun 29 10:06:50 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* marshal.*: Added CORBA_Environment as a parameter to
