@@ -1,3 +1,9 @@
+Wed Jun 16 19:24:30 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+	  (visit_interface): Added an ACE_UNUSED_ARG (ACE_TRY_ENV) for the
+	  _unchecked_narrow method.
+
 Wed Jun 16 19:11:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/POA/Forwarding/run_test.pl:
@@ -19,19 +25,19 @@ Wed Jun 16 18:54:32 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	reserved keywords. But when we invoke the operation remotely, we
 	should be sending only the name with out "_cxx_"
 	prefix. Similarly, the look up table should be generated with the
-	names without "_cxx_". 
-		
+	names without "_cxx_".
+
 	* TAO_IDL/include/ast_decl.h:
 	* TAO_IDL/ast/ast_decl.cpp:
 	Added a new method "original_local_name" to return the
 	operation/attribute name without "_cxx_" prefix.
-	
+
 	Thanks to Sean Landis <seanl@rsch.comm.mot.com> for reporting this
 	problem.
-	
+
 	Also, added "-F 0" to the options list given to the gperf by the
 	IDL compiler. This was needed to get rid of the warnings in some
-	platforms. 
+	platforms.
 
 	Thanks to Irfan and Naga for helping in this.
 
