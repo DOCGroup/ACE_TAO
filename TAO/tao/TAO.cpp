@@ -101,14 +101,12 @@ TAO_ORB_Manager::init_child_poa (int argc,
   policies[0] =
     this->poa_->create_id_assignment_policy (PortableServer::USER_ID,
                                              env);
-  // @@ Must destroy the policies created to avoid memory leaks!
   TAO_CHECK_ENV_RETURN (env, -1);
 
   // Lifespan policy
   policies[1] =
     this->poa_->create_lifespan_policy (PortableServer::PERSISTENT,
                                         env);
-  // @@ Must destroy the policies created to avoid memory leaks!
   TAO_CHECK_ENV_RETURN (env, -1);
 
   // We use a different POA, otherwise the user would have to change
@@ -119,7 +117,7 @@ TAO_ORB_Manager::init_child_poa (int argc,
                             this->poa_manager_.in (),
                             policies,
                             env);
-  // @@ Warning!  If create_POA fails, then the policies won't be
+  // Warning!  If create_POA fails, then the policies won't be
   // destroyed and there will be hell to pay in memory leaks!
   TAO_CHECK_ENV_RETURN (env, -1);
 

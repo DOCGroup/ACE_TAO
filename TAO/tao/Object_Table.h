@@ -99,10 +99,10 @@ public:
   // Returns 0 if there is a servant for <id> in the table, <-1>
   // otherwise.
 
-  // @@ TODO check with Irfan the semantics of this method when more
-  // than one <id> is handled by the same servant. Also wonder if the
-  // "default" implementation (linear search on the iterator) makes
-  // sense, since the operation is (IMHO) not time critical.
+  // This method is only used with unique ids.  Therefore, selecting
+  // the first match is ok. Also the "default" implementation (linear
+  // search on the iterator) makes sense, since the operation is not
+  // time critical.
   virtual int find (const PortableServer::Servant servant,
 		    PortableServer::ObjectId_out id);
   // Find the <id> for <servant>.
@@ -182,10 +182,10 @@ public:
   // Returns 0 if there is a servant for <id> in the table, <-1>
   // otherwise.
 
-  // @@ TODO check with Irfan the semantics of this method when more
-  // than one <id> is handled by the same servant. Also wonder if the
-  // "default" implementation (linear search on the iterator) makes
-  // sense, since the operation is (IMHO) not time critical.
+  // This method is only used with unique ids.  Therefore, selecting
+  // the first match is ok. Also the "default" implementation (linear
+  // search on the iterator) makes sense, since the operation is not
+  // time critical.
   int find (const PortableServer::Servant servant,
 	    PortableServer::ObjectId_out id);
   // Find the <id> for <servant>.
