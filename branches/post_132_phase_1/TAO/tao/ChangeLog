@@ -1,3 +1,15 @@
+Thu Feb 20 12:10:13 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Tagged_Components.h:
+	* tao/Tagged_Components.cpp:
+	* tao/Tagged_Components.i (TAO_Tagged_Components): Reverted the
+	  change "Wed Feb 12 15:40:46 2003  Balachandran Natarajan
+	  <bala@isis-server.isis.vanderbilt.edu>" since it was counter
+	  productive. 
+
+	* tao/ClientRequestInfo_i.cpp: Reverted the changes made to
+	  accomodatethe above change.
+
 Thu Feb 13 17:53:44 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IIOP_Endpoint.h (TAO_IIOP_Endpoint): 
