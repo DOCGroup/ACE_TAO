@@ -3377,7 +3377,7 @@ case 287:
 	      AST_Type *tp = d->compose(tao_yyvsp[-2].dcval);
  	      if (tp == NULL)
 	 	continue;
-	      a = idl_global->gen()->create_attribute(tao_yyvsp[-5].bval, tp, d->name(), p);
+	      a = idl_global->gen()->create_attribute(tao_yyvsp[-5].bval, tp, (UTL_IdList *) d->name()->copy (), p);
 	      /*
 	       * Add one attribute to the enclosing scope
 	       */
@@ -3625,7 +3625,7 @@ case 316:
 	  if (tao_yyvsp[-2].dcval != NULL && tao_yyvsp[0].deval != NULL && s != NULL) {
 	    AST_Type *tp = tao_yyvsp[0].deval->compose(tao_yyvsp[-2].dcval);
 	    if (tp != NULL) {
-	      a = idl_global->gen()->create_argument(tao_yyvsp[-4].dival, tp, tao_yyvsp[0].deval->name(), p);
+	      a = idl_global->gen()->create_argument(tao_yyvsp[-4].dival, tp, (UTL_IdList *) tao_yyvsp[0].deval->name ()->copy (), p);
 	      (void) s->fe_add_argument(a);
 	    }
 	  }
