@@ -138,4 +138,5 @@ private:
 #include "tao/Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /*TAO_CONNECTION_HANDLER_H*/
