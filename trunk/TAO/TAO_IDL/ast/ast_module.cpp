@@ -253,13 +253,18 @@ AST_Module *AST_Module::fe_add_module (AST_Module *t)
       /*
        * Add it to scope
        */
-      add_to_scope (t);
+      this->add_to_scope (t);
       /*
        * Add it to set of locally referenced symbols
        */
-      add_to_referenced (t, 
-                         I_FALSE, 
-                         t->local_name ());
+      this->add_to_referenced (t, 
+                               I_FALSE, 
+                               t->local_name ());
+
+      // Can't redefine a module immediately inside its own scope.
+      t->add_to_referenced (t, 
+                            I_FALSE, 
+                            t->local_name ());
     }
 
   return t;
@@ -268,7 +273,7 @@ AST_Module *AST_Module::fe_add_module (AST_Module *t)
 /*
  * Add this AST_Interface node (an interface declaration) to this scope
  */
-AST_Interface *AST_Module::fe_add_interface(AST_Interface *t)
+AST_Interface *AST_Module::fe_add_interface (AST_Interface *t)
 {
   AST_Decl              *predef;
   AST_Interface         *fwd;
@@ -276,51 +281,81 @@ AST_Interface *AST_Module::fe_add_interface(AST_Interface *t)
   /*
    * Already defined?
    */
-  if ((predef = lookup_for_add(t, I_FALSE)) != NULL) {
-    /*
-     * Treat fwd declared interfaces specially
-     */
-    if (predef->node_type() == AST_Decl::NT_interface) {
-      fwd = AST_Interface::narrow_from_decl(predef);
+  if ((predef = lookup_for_add (t, I_FALSE)) != NULL) 
+    {
+      /*
+       * Treat fwd declared interfaces specially
+       */
+      if (predef->node_type() == AST_Decl::NT_interface) 
+        {
+          fwd = AST_Interface::narrow_from_decl (predef);
 
-      if (fwd == NULL)
+          if (fwd == NULL)
+              return NULL;
+
+          if (!fwd->is_defined ()) /* Forward declared and not defined yet */
+            {
+              if (fwd->defined_in () != this) 
+                {
+                  idl_global->err ()->error3 (UTL_Error::EIDL_SCOPE_CONFLICT, 
+                                              fwd, 
+                                              t, 
+                                              this);
+
+                  return NULL;
+                }
+            }
+
+          /*
+           * OK, not illegal redef of forward declaration. Now check whether
+           * it has been referenced already
+           */
+          else if (referenced (predef, t->local_name ())) 
+            {
+              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
+                                          t, 
+                                          this, 
+                                          predef);
+
+              return NULL;
+            }
+        } 
+      else if (!can_be_redefined (predef)) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
+                                      t, 
+                                      this, 
+                                      predef);
+
           return NULL;
+        } 
+      else if (referenced (predef, t->local_name ())) 
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
+                                      t, 
+                                      this, 
+                                      predef);
 
-      if (!fwd->is_defined()) { /* Forward declared and not defined yet */
-        if (fwd->defined_in() != this) {
-          idl_global->err()
-             ->error3(UTL_Error::EIDL_SCOPE_CONFLICT, fwd, t, this);
+          return NULL;
+        } 
+      else if (t->has_ancestor (predef)) 
+        {
+          idl_global->err ()->redefinition_in_scope (t, 
+                                                     predef);
+
           return NULL;
         }
-      }
-      /*
-       * OK, not illegal redef of forward declaration. Now check whether
-       * it has been referenced already
-       */
-      else if (referenced(predef, t->local_name ())) {
-        idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, predef);
-        return NULL;
-      }
-    } else if (!can_be_redefined(predef)) {
-      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, predef);
-      return NULL;
-    } else if (referenced(predef, t->local_name ())) {
-      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, predef);
-      return NULL;
-    } else if (t->has_ancestor(predef)) {
-      idl_global->err()->redefinition_in_scope(t, predef);
-      return NULL;
     }
-  }
   /*
    * Add it to scope
    */
-  add_to_scope(t);
+  this->add_to_scope (t);
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced(t, I_FALSE, t->local_name ());
-
+  this->add_to_referenced (t, 
+                           I_FALSE, 
+                           t->local_name ());
   return t;
 }
 
