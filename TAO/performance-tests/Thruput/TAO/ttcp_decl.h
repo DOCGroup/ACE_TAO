@@ -30,8 +30,8 @@
 /**************
 // Prototypes
 ***************/
-int err (CORBA::Char *s);
-void mes (CORBA::Char *s);
+int err (const char *s);
+void mes (const char *s);
 CORBA::String outfmt (CORBA::Double b);
 void prep_timer (void);
 CORBA::Double read_timer (CORBA::Char *str, CORBA::Long len);
@@ -50,7 +50,7 @@ extern ACE_Svc_Export CORBA::Long buflen;               /* length of buffer */
 extern ACE_Svc_Export CORBA::Char *buf;         /* ptr to dynamic buffer */
 extern ACE_Svc_Export CORBA::Long nbuf;         /* number of buffers to send in sinkmode */
 extern ACE_Svc_Export CORBA::Short port;                /* TCP port number */
-extern ACE_Svc_Export CORBA::Char *host;              /* ptr to name of host */
+extern ACE_Svc_Export const char *host;              /* ptr to name of host */
 extern ACE_Svc_Export CORBA::Long verbose;                      /* 0=print basic info, 1=prCORBA::Long cpu rate, proc
                                  * resource usage. */
 extern ACE_Svc_Export CORBA::Char fmt;          /* output format:k=kilobits,K=kilobytes,
@@ -75,4 +75,3 @@ extern ACE_Svc_Export ttcp_sequence::StructSeq          *Sseq;
 //extern ACE_Svc_Export ttcp_sequence::RtiPacketSeq *rtipacketSeq;
 
 #endif /* _TTCP_DECL_H_ */
-

@@ -6,9 +6,9 @@
 
 
 int
-Checkpoint_Client_i::run (char *name,
-                    int argc,
-                    char *argv[])
+Checkpoint_Client_i::run (const char *name,
+                          int argc,
+                          char *argv[])
 {
   // Initialize the client (read ior...).
   if (checkpoint.init (name,argc, argv) == -1)
