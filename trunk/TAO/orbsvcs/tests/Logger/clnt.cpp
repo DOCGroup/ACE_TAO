@@ -21,6 +21,7 @@
 
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/OS.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/LoggerC.h"
 #include "clnt.h"
@@ -30,6 +31,7 @@
 Logger_Client::Logger_Client (void)
   : test_nesting_ (0)
 {
+  // Do nothing
 }
 
 // Parses the command line arguments and returns an error status.
@@ -66,6 +68,34 @@ Logger_Client::parse_args (void)
   return 0;
 }
 
+void
+Logger_Client::setup_record (Logger::Log_Record newrec, Logger::Log_Priority lp,
+			     const char* msg)
+{
+  ACE_Time_Value time;
+  pid_t pid;
+  hostent *he;
+  struct utsname h_name;
+   
+
+  char msg_data[ACE_MAXLOGMSGLEN+1];
+  ACE_OS::strncpy (msg_data, msg, ACE_MAXLOGMSGLEN);
+  newrec.type = lp;
+
+  time = ACE_OS::gettimeofday();
+  newrec.time = time.sec();
+
+  pid = getpid();
+  newrec.app_id = pid;
+
+  ACE_OS::uname(&h_name);
+  he = (ACE_OS::gethostbyname (h_name.nodename));
+  newrec.host_addr = inet_addr(he->h_addr);
+
+  ACE_OS::strcpy ( newrec.msg_data, msg);
+}
+
+  
 // Execute client example code.
 
 int
@@ -73,14 +103,18 @@ Logger_Client::run (void)
 {
   TAO_TRY
     {
-      CORBA::String_var msg1 =
-        CORBA::string_copy ("Logging at logger 1");
-      this->logger_1_->log (msg1.in (), TAO_TRY_ENV);
+      Logger::Log_Record rec1;
+      Logger::Log_Record rec2;
+
+      setup_record (rec1, Logger::LM_DEBUG, "Logging at logger 1");
+      
+      this->logger_1_->log (rec1, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      CORBA::String_var msg2 =
-        CORBA::string_copy ("Logging at logger 2");
-      this->logger_2_->log (msg2.in (), TAO_TRY_ENV);
+      
+      setup_record (rec2, Logger::LM_ERROR, "Logging at logger 2");
+
+      this->logger_2_->log (rec2, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
     }
@@ -95,6 +129,7 @@ Logger_Client::run (void)
 
 Logger_Client::~Logger_Client (void)
 {
+  // Do nothing
 }
 
 int
@@ -126,11 +161,10 @@ Logger_Client::init (int argc, char **argv)
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
-
+           
       CosNaming::Name factory_name(1);
       factory_name.length (1);
       factory_name[0].id = CORBA::string_dup ("logger_factory");
-
       CORBA::Object_var factory_ref =
         naming_context->resolve (factory_name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
