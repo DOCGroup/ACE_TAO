@@ -26,6 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Message_Block;
+class ACE_RMCast_Proxy;
 
 class ACE_RMCast_Export ACE_RMCast
 {
@@ -194,33 +195,43 @@ public:
     //    piggyback the ACK / NAK messages
 
     ACE_Message_Block *payload;
+
+    ACE_RMCast_Proxy *source;
   };
 
   struct Poll
   {
+    ACE_RMCast_Proxy *source;
   };
 
   struct Ack_Join
   {
     ACE_INT32 next_sequence_number;
+
+    ACE_RMCast_Proxy *source;
   };
 
   struct Ack_Leave
   {
+    ACE_RMCast_Proxy *source;
   };
 
   struct Ack
   {
     ACE_UINT32 highest_in_sequence;
     ACE_UINT32 highest_received;
+
+    ACE_RMCast_Proxy *source;
   };
 
   struct Join
   {
+    ACE_RMCast_Proxy *source;
   };
 
   struct Leave
   {
+    ACE_RMCast_Proxy *source;
   };
 };
 
