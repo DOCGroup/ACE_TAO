@@ -1,3 +1,8 @@
+Tue Apr  6 17:55:48 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/Generic_Servant/client.cpp: Changed ACE_TRY_NEW_ENV
+	as ACE_TRY with appropriate declaration
+
 Tue Apr 06 16:29:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.cpp (ORB_init): Some how, calling to init_orb_globals()
