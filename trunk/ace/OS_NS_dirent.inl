@@ -16,13 +16,13 @@ ACE_OS::closedir (ACE_DIR *d)
 
 # else /* ! ACE_PSOS */
 
-#   if defined (ACE_WIN32)
+#   if defined (ACE_WIN32) && defined (ACE_LACKS_CLOSEDIR)
   ACE_OS::closedir_emulation (d);
   delete [] d->directory_name_;
   delete d;
-#   else /* ACE_WIN32 */
+#   else /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
   ::closedir (d);
-#   endif /* ACE_WIN32 */
+#   endif /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
 
 # endif /* ACE_PSOS */
 #else /* ACE_HAS_DIRENT */
@@ -51,12 +51,12 @@ ACE_OS::opendir (const ACE_TCHAR *filename)
       return 0;
     }
 #  else /* ! ACE_PSOS */
-#    if defined (ACE_WIN32)
+#    if defined (ACE_WIN32) && defined (ACE_LACKS_OPENDIR)
   return ::ACE_OS::opendir_emulation (filename);
-#    else /* ! ACE_WIN32 */
+#    else /* ! ACE_WIN32 && ACE_LACKS_OPENDIR */
   // VxWorks' ::opendir () is declared with a non-const argument.
   return ::opendir (ACE_const_cast (ACE_TCHAR *, filename));
-#    endif /* ACE_WIN32 */
+#    endif /* ACE_WIN32 && ACE_LACKS_OPENDIR */
 #  endif /* ACE_PSOS */
 #else
   ACE_UNUSED_ARG (filename);
@@ -80,11 +80,11 @@ ACE_OS::readdir (ACE_DIR *d)
     }
 
 #  else /* ! ACE_PSOS */
-#    if defined (ACE_WIN32)
+#    if defined (ACE_WIN32) && defined (ACE_LACKS_READDIR)
   return ACE_OS::readdir_emulation (d);
-#    else /* defined (ACE_WIN32) */
+#    else /* ACE_WIN32 && ACE_LACKS_READDIR */
   return ::readdir (d);
-#    endif /* defined (ACE_WIN32) */
+#    endif /* ACE_WIN32 && ACE_LACKS_READDIR */
 #  endif /* ACE_PSOS */
 #else
   ACE_UNUSED_ARG (d);

@@ -1,3 +1,24 @@
+Wed Jan 21 12:58:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          Removed the setting of MWMO_ALERTABLE when using MinGW. This is
+          set already by MinGW a long time.
+
+        * ace/config-win32-common.h:
+        * ace/config-win32-mingw.h:
+        * ace/OS_NS_dirent.cpp:
+        * ace/OS_NS_dirent.inl:
+        * ace/README:
+          MinGW delivers a dirent.h which has opendir, closedir, readdir,
+          etc. Because in the OS_NS_dirent files always on win32 is assumed
+          that we haven't these methods, introduces ACE_LACKS_OPENDIR,
+          ACE_LACKS_CLOSEDIR and ACE_LACKS_READDIR. These defines are set
+          in config-win32-common and undef'd in config-win32-mingw.h.
+          So, on MinGW we use the normal opendir/closedir/readdir, the other
+          environmens in win32 use the corresponding emulation methods. This
+          fixes [BUGID 1718]. Thanks to Matthew Grosso <mgrosso@acm.org>
+          for reporting this and supplying the patches.
+
 Tue Jan 20 19:58:03 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac:
