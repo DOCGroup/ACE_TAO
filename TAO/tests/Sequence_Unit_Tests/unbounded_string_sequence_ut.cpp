@@ -30,25 +30,6 @@ struct Tester
 
   typedef TAO::unbounded_string_sequence tested_sequence;
 
-  void add_all(test_suite * ts)
-  {
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_default_constructor, shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_ulong_constructor, shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_copy_constructor, shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_set_length_less_than_maximum,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_set_length_more_than_maximum,
-                shared_from_this()));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_index_accessor,
-                shared_from_this()));
-  }
-
   /**
    * @brief Make sure the default constructor works as expected.
    */
@@ -84,7 +65,33 @@ struct Tester
     BOOST_CHECK_MESSAGE(i.expect(0), i);
   }
 
-  void test_copy_constructor()
+  void test_copy_constructor_from_default()
+  {
+    expected_calls a(tested_allocation_traits::allocbuf_calls);
+    expected_calls f(tested_allocation_traits::freebuf_calls);
+    expected_calls i(tested_element_traits::default_initializer_calls);
+    expected_calls d(tested_element_traits::duplicate_calls);
+    {
+      tested_sequence x;
+      BOOST_CHECK_MESSAGE(a.expect(0), a);
+      BOOST_CHECK_MESSAGE(i.expect(0), i);
+
+      BOOST_CHECK_EQUAL(CORBA::ULong(0), x.maximum());
+      BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
+      BOOST_CHECK_EQUAL(true, x.release());
+
+      tested_sequence y(x);
+      BOOST_CHECK_MESSAGE(a.expect(1), a);
+      BOOST_CHECK_MESSAGE(i.expect(0), i);
+
+      BOOST_CHECK_EQUAL(CORBA::ULong(0), y.maximum());
+      BOOST_CHECK_EQUAL(CORBA::ULong(0), y.length());
+      BOOST_CHECK_EQUAL(true, y.release());
+    }
+    BOOST_CHECK_MESSAGE(f.expect(2), f);
+  }
+
+  void test_copy_constructor_from_ulong()
   {
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
@@ -165,6 +172,55 @@ struct Tester
     BOOST_CHECK_MESSAGE(std::strcmp(t, "") == 0,
         "Unexpected string value " << t);
   }
+
+  void test_index_modifier()
+  {
+    tested_sequence x(16);
+    x.length(8);
+
+    tested_sequence const & y = x;
+
+    char const * text = "text";
+    expected_calls d(tested_element_traits::duplicate_calls);
+    x[4] = text;
+    BOOST_CHECK_MESSAGE(d.expect(1), d);
+
+    char const * t = y[4];
+
+    BOOST_CHECK_MESSAGE(std::strcmp(text, x[4]) == 0,
+        "Mismatched values expected=" << text
+        << ", got=" << x[4]);
+    BOOST_CHECK_MESSAGE(std::strcmp(text, y[4]) == 0,
+        "Mismatched values expected=" << text
+        << ", got=" << y[4]);
+    BOOST_CHECK(text != t);
+  }
+
+  void add_all(test_suite * ts)
+  {
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_default_constructor,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_ulong_constructor,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_copy_constructor_from_default,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_copy_constructor_from_ulong,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_set_length_less_than_maximum,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_set_length_more_than_maximum,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_index_accessor,
+                shared_from_this()));
+  }
+
 };
 
 test_suite *

@@ -13,6 +13,8 @@ my $final_result = 0;
 
 foreach my $process (qw(unbounded_value_sequence_ut
                         bounded_value_sequence_ut
+                        string_sequence_element_ut
+                        unbounded_string_sequence_ut
                         Unbounded_Simple_Types
                         Bounded_Simple_Types)) {
 
