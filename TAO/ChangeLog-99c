@@ -1,3 +1,9 @@
+Thu Jul 29 11:21:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/POA/Forwarding/run_test.pl:
+	  Increased the timeout values because it was giving spurious
+	  timeouts on IRIX.
+
 Thu Jul 29 02:51:45 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/tests/ImplRepo/implrepo.conf:  This file isn't being used
