@@ -7,6 +7,19 @@ distrib = 0
 threads = 1
 exceptions = 1
 
+# I(kitty) don't know anything about this combination. Making it explicit.
+# XXX: Get the flags from the Kai web-site and fill it in.
+templates = "explicit"
+
+# Turn on the proper flags for explicit template instantiation.
+#
+ifeq ("$(templates)","explicit")
+  ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
+    TEMPLATES_FLAG=
+  endif
+  CPPFLAGS += -DACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+endif
+
 # These are required for KCC 3.4g compiler.
 LDFLAGS += --one_instantiation_per_object
 CCFLAGS += --one_instantiation_per_object

@@ -35,7 +35,6 @@
        With CC 5.0, those problems may be fixed.  And, this is necessary
        to work around problems with automatic template instantiation. */
 #   if (__SUNPRO_CC <= 0x500)
-#      define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #      define ACE_TEMPLATES_REQUIRE_SOURCE
 #   endif /* __SUNPRO_CC <= 0x500 */
     // If -compat=4 is turned on, the old 4.2 settings for iostreams are used,

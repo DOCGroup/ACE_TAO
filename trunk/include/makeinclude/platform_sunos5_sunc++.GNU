@@ -92,6 +92,7 @@ ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
 
   #### Create template repository to avoid compiler warning.
   TEMPLATE_REPOSITORY = Templates.DB
+
 else  # ! 4.2
   ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
     #### CC 5.0 or later
@@ -102,11 +103,12 @@ else  # ! 4.2
     else
       ifeq (C++ 5.1,$(findstring C++ 5.1,$(CC_VERSION)))
         inline = 0
-      else
+      else # ! 5.1
         inline = 1
         exceptions = 1
-      endif #!5.1
-    endif #!5.0
+        templates = "automatic"
+      endif # 5.2 or greater
+    endif #! 5.0
 
     CCFLAGS += $(CFLAGS)
 
@@ -114,7 +116,7 @@ else  # ! 4.2
     #### in the compatibility modes, but here all we need to be concerned with
     #### is turning on -compat=4, and not trying to enable the new libraries.
     ifeq ($(compat4),1)
-      CCFLAGS += -compat=4 -instances=explicit
+      CCFLAGS += -compat=4
 
       #### RTTI can coexist with ACE, but it doesn't use it.  To enable,
       #### add rtti=1 to your make invocation.  Sun C++ 4.2, only, supports
@@ -130,7 +132,6 @@ else  # ! 4.2
       #### Support RTTI by default.  And, use explicit template instantiation
       #### because automatic instantiation appears to be broken, at least
       #### with early releases of CC 5.0.  And, use old iostreams.
-      CCFLAGS += -instances=explicit
       ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
         ifeq (1,$(stdcpplib))
           CCFLAGS += -library=Cstd
@@ -157,12 +158,45 @@ else  # ! 4.2
   endif # CC 5.0 or later
 endif # ! 4.2
 
+# If no option has been specified, try to enable templates based on the
+# version of the compiler.
+#
+ifeq ($(templates),)
+  ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
+    templates = "explicit"
+  else
+    ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
+      templates = "explicit"
+    else
+      ifeq (C++ 5.1,$(findstring C++ 5.1,$(CC_VERSION)))
+        templates = "automatic"
+      else
+        # Assume it's Forte Update 1 or later. Implicit template
+        # instantiation seems to work.
+        #
+        templates = "automatic"
+      endif
+    endif
+  endif
+endif
+
+# Turn on the proper flags for explicit template instantiation.
+#
+ifeq ("$(templates)","explicit")
+  ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
+    TEMPLATES_FLAG=-instances=explicit
+  endif
+  CPPFLAGS += -DACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+endif
+
+CCFLAGS         += $(TEMPLATES_FLAG)
 DCFLAGS         += -g
-DCCFLAGS        += -g
+DCCFLAGS        +=
 DLD             = $(CXX)
 
 
 #### Sun CC-specific "Pure virtual finction called" bug fix trigger.
+#### XXX: Shouldn't this go into a compiler specific guard ???
 CPPFLAGS       += -DSUN_CC_HAS_PVFC_BUG
 
 #### Exception handling breaks on MP machines prior to Sun C++ 4.2
@@ -184,7 +218,7 @@ endif
 
 LDFLAGS         += -xildoff
 
-OCFLAGS         += -O
+OCFLAGS         += -xO4
 PIC             = -KPIC
 AR              = CC
 ARFLAGS         = -xar -o
