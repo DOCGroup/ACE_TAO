@@ -51,12 +51,15 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
             XMLString::transcode ( doc->getDocumentURI ());
           ACE_TString doc_path = doc_path_ch;
           XMLString::release (&doc_path_ch);
-          result.makeRelativeTo
+          XMLCh* rel_str =
             (XMLString::transcode (doc_path.c_str ()));
+          result.makeRelativeTo
+            (rel_str);
           char* final_url_ch =
             XMLString::transcode (result.getURLText ());
           ACE_TString final_url = final_url_ch;
           XMLString::release (&final_url_ch);
+          XMLString::release (&rel_str);
 
           DOMDocument* href_doc;
 
