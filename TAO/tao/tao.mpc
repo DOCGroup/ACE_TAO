@@ -1,5 +1,4 @@
 project : acelib, taoversion, core {
-  tao         = 1
   includes   += $(TAO_ROOT) $(TAO_ROOT)/tao
   sharedname  = TAO
   libflags   += TAO_AS_STATIC_LIBS
