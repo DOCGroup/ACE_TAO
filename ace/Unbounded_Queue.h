@@ -137,49 +137,84 @@ public:
   // = Initialization and termination methods.
   /// construction.  Use user specified allocation strategy
   /// if specified.
+  /**
+   * Initialize an empty queue using the strategy provided. 
+   */
   ACE_Unbounded_Queue (ACE_Allocator *alloc = 0);
 
   /// Copy constructor.
+  /**
+   * Initialize the queue to be a copy of the provided queue. 
+   */
   ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &);
 
   /// Assignment operator.
+  /**
+   * Perform a deep copy of rhs. 
+   */
   void operator= (const ACE_Unbounded_Queue<T> &);
 
   /// Destructor.
+  /**
+   * Clean up the memory for the queue. 
+   */
   ~ACE_Unbounded_Queue (void);
 
   // = Check boundary conditions.
 
   /// Returns 1 if the container is empty, otherwise returns 0.
+  /**
+   * Constant time check to see if the queue is empty. 
+   */
   int is_empty (void) const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns 0.
+  /**
+   * The queue cannot be full, so it always returns 0. 
+   */
   int is_full (void) const;
 
   // = Classic queue operations.
 
   /// Adds <new_item> to the tail of the queue.  Returns 0 on success,
   /// -1 on failure.
+  /**
+   * Insert an item at the end of the queue. 
+   */
   int enqueue_tail (const T &new_item);
 
   /// Adds <new_item> to the head of the queue.  Returns 0 on success,
   /// -1 on failure.
+  /**
+   * Insert an item at the head of the queue. 
+   */
   int enqueue_head (const T &new_item);
 
   /// Removes and returns the first <item> on the queue.  Returns 0 on
   /// success, -1 if the queue was empty.
+  /** 
+   * Remove an item from the head of the queue. 
+   */
   int dequeue_head (T &item);
 
   // = Additional utility methods.
 
   /// Reset the <ACE_Unbounded_Queue> to be empty and release all its
   /// dynamically allocated resources.
+  /**
+   * Delete the queue nodes. 
+   */
   void reset (void);
 
   /// Get the <slot>th element in the set.  Returns -1 if the element
   /// isn't in the range {0..<size> - 1}, else 0.
+  /**
+   * Find the item in the queue between 0 and the provided index of the
+   * queue. 
+   */
   int get (T *&item, size_t slot = 0) const;
 
+  ///Set the <slot>th element of the queue to <item>.
   /**
    * Set the <slot>th element in the set.  Will pad out the set with
    * empty nodes if <slot> is beyond the range {0..<size> - 1}.
@@ -189,6 +224,9 @@ public:
   int set (const T &item, size_t slot);
 
   /// The number of items in the queue.
+  /**
+   * Return the size of the queue. 
+   */
   size_t size (void) const;
 
   /// Dump the state of an object.
