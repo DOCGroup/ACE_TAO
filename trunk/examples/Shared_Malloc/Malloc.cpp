@@ -58,7 +58,6 @@ template class ACE_Allocator_Adapter<M_ALLOCATOR>;
 template class ACE_Allocator_Adapter<SB_ALLOCATOR>;
 template class ACE_Allocator_Adapter<SP_ALLOCATOR>;
 template class ACE_Allocator_Adapter<ST_ALLOCATOR>;
-template class ACE_Guard<ACE_Process_Mutex>;
 template class ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
 template class ACE_Read_Guard<ACE_Process_Mutex>;
@@ -84,7 +83,6 @@ template class ACE_Malloc <ACE_SBRK_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Allocator_Adapter<SB_ALLOCATOR>
 #pragma instantiate ACE_Allocator_Adapter<SP_ALLOCATOR>
 #pragma instantiate ACE_Allocator_Adapter<ST_ALLOCATOR>
-#pragma instantiate ACE_Guard<ACE_Process_Mutex>
 #pragma instantiate ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>
 #pragma instantiate ACE_Read_Guard<ACE_Process_Mutex>
