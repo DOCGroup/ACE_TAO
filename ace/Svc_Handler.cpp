@@ -81,11 +81,16 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *obj)
 template <PR_ST_1, ACE_SYNCH_DECL>
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler (ACE_Thread_Manager *tm,
                                                           ACE_Message_Queue<ACE_SYNCH_USE> *mq,
-                                                          ACE_Reactor *reactor)
+                                                          ACE_Reactor *reactor,
+                                                          size_t maximum_buffer_size,
+                                                          ACE_Time_Value *timeout)
   : ACE_Task<ACE_SYNCH_USE> (tm, mq),
     closing_ (0),
     recycler_ (0),
-    recycling_act_ (0)
+    recycling_act_ (0),
+    maximum_buffer_size_ (maximum_buffer_size),
+    timeout_ (timeout == 0 ? ACE_Time_Value::zero : *timeout),
+    timeoutp_ (timeout)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler");
 
@@ -99,19 +104,20 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler (ACE_Thread_Manager *tm
   // work correctly in multi-threaded programs by using our ACE_TSS
   // class.
   this->dynamic_ = ACE_Dynamic::instance ()->is_dynamic ();
-  if (this->dynamic_)
-    // Make sure to reset the flag
+
+  if (this->dynamic_ != 0)
+    // Make sure to reset the flag.
     ACE_Dynamic::instance ()->reset ();
 }
 
-// Default behavior for a ACE_Svc_Handler object is to be registered with
-// the ACE_Reactor (thereby ensuring single threading).
+// Default behavior for a ACE_Svc_Handler object is to be registered
+// with the ACE_Reactor (thereby ensuring single threading).
 
 template <PR_ST_1, ACE_SYNCH_DECL> int
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open (void *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open");
-#if defined (DEBUGGING)
+#if defined (ACE_DEBUGGING)
   ASYS_TCHAR buf[BUFSIZ];
   ACE_PEER_STREAM_ADDR client_addr;
 
@@ -129,7 +135,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open (void *)
               ASYS_TEXT ("connected to %s on fd %d\n"),
               buf,
               this->peer_.get_handle ()));
-#endif /* DEBUGGING */
+#endif /* ACE_DEBUGGING */
   if (this->reactor ()
       && this->reactor ()->register_handler
       (this,
@@ -176,6 +182,101 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::cleanup_hint (void)
   if (this->recycler ())
     this->recycler ()->cleanup_hint (this->recycling_act_);
 
+}
+
+template <PR_ST_1, ACE_SYNCH_DECL> int
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::put (ACE_Message_Block *mb,
+                                              ACE_Time_Value *tv)
+{
+  // Enqueue <mb> onto the message queue.
+  if (this->putq (mb, tv) == -1)
+    return -1;
+  else 
+    {
+      // Flush the buffer when the number of bytes exceeds the maximum
+      // buffer size or when the timeout period has elapsed.
+      if (mb->total_size () >= this->maximum_buffer_size_
+          || (this->timeoutp_ != 0 
+              && this->timeout_ > ACE_OS::gettimeofday ()))
+          return this->flush ();
+
+      return 0;
+    }
+}
+
+// Flush the buffer.
+
+template <PR_ST_1, ACE_SYNCH_DECL> int
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::flush (void)
+{
+  // @@ Doug, need to add appropriate locks!
+  ACE_Message_Block *entry = 0;
+  iovec iov[IOV_MAX];
+  size_t i = 0;
+  int result = 0;
+
+  // Iterate over all the <ACE_Message_Block>s in the
+  // <ACE_Message_Queue> and prepare them to be written out.
+  for (ACE_Message_Queue_Iterator<ACE_NULL_SYNCH> iterator (*this->msg_queue ());
+       iterator.next (entry) != 0
+         && result == 0;
+       iterator.advance ())
+    {
+      // Iterate over all the <Message_Block>s in a chain, including
+      // continuations.
+      for (ACE_Message_Block *temp = entry;
+           entry != 0;
+           entry = entry->cont ())
+        {
+          iov[i].iov_len = entry->length ();
+          iov[i].iov_base = entry->rd_ptr ();
+
+          i++;
+
+          // Flush the <iovec>s when we've reached the maximum size
+          // for the platform.
+          if (i == IOV_MAX)
+            {
+#if defined (ACE_DEBUGGING)
+              ACE_DEBUG ((LM_DEBUG,
+                          "sending data (inside loop, i = %d)\n",
+                          i));
+#endif /* ACE_DEBUGGING */
+              // Send off the data.
+              if (this->peer ().sendv_n (iov,
+                                         i) == -1)
+                {
+                  result = -1;
+                  break;
+                }
+              i = 0;
+            }
+        }
+    }
+
+  // Take care of any remaining <iovec>s.
+  if (i > 0 && result != -1)
+    {
+      if (this->peer ().sendv_n (iov, i) == -1)
+        result = -1;
+#if defined (ACE_DEBUGGING)
+      ACE_DEBUG ((LM_DEBUG,
+                  "sending data (final flush, i = %d)\n",
+                  i));
+#endif (ACE_DEBUGGING)
+    }
+
+  // Remove all the <ACE_Message_Block>s in the <ACE_Message_Queue>
+  // and <release> their memory.
+  while (this->msg_queue ()->is_empty () == 0)
+    {
+      if (this->msg_queue ()->dequeue_head (entry) == -1)
+        break;
+
+      entry->release ();
+    }
+
+  return result;
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> void

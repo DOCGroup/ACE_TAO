@@ -172,6 +172,7 @@ run SPIPE_Test                          # tests ACE_SPIPE_Acceptor/ACE_Connector
 run UPIPE_SAP_Test                      # tests ACE_UPIPE, ACE_Thread, ACE_Thread_Manager
 
 run Barrier_Test                        # tests ACE_Service_Config, ACE_Barrier
+run Svc_Handler_Test                    # tests ACE_Service_Config buffering and ACE_FILE_IO
 run Buffer_Stream_Test                  # tests ACE_Service_Config, ACE_Stream (ACE_Module, ACE_Task, ACE_Message_Queue)
 run Priority_Buffer_Test                # tests ACE_Service_Config, ACE_Message_Queue
 run Dynamic_Priority_Test               # tests ACE_ACE_Message_Queue, ACE_Dynamic_Message_Queue
