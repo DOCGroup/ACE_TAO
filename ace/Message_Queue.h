@@ -53,7 +53,7 @@ public:
 #include "ace/Message_Queue_T.h"
 
 #if defined (VXWORKS)
-# include <msgQLib.h>
+# include /**/ <msgQLib.h>
 
 class ACE_Message_Queue_Vx : public ACE_Message_Queue<ACE_NULL_SYNCH>
 {
