@@ -594,12 +594,15 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       result_object = Test_Object::_narrow (result_obj_ref.in (),
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      CORBA::Short obj_id = result_object->id (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (result_object.in ())
-          || !(result_object->id (ACE_TRY_ENV) == CosNaming_Client::OBJ1_ID))
+          || !(obj_id == CosNaming_Client::OBJ1_ID))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Problems in the Tree Test\n"),
                           -1);
-      ACE_TRY_CHECK;
 
       My_Test_Object *impl2 =
         new My_Test_Object (CosNaming_Client::OBJ2_ID);
@@ -619,12 +622,15 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       result_object = Test_Object::_narrow (result_obj_ref.in (),
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      obj_id = result_object->id (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (result_object.in ())
-          || !(result_object->id (ACE_TRY_ENV) == CosNaming_Client::OBJ2_ID))
+          || !( obj_id == CosNaming_Client::OBJ2_ID))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Problems with rebind in Tree Test\n"),
                           -1);
-      ACE_TRY_CHECK;
     }
 
   ACE_CATCHANY
