@@ -99,8 +99,11 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "{" << be_idt_nl
       << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
       << "if (!type->equivalent (" << node->tc_name ()
-      << ", ACE_TRY_ENV))" << be_idt_nl
+      << ", ACE_TRY_ENV)) // not equal" << be_idt_nl
+      << "{" << be_idt_nl
+      << "_tao_elem = 0;" << be_nl
       << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl
       << "if (_tao_any.any_owns_data ())" << be_nl
       << "{" << be_idt_nl
@@ -123,12 +126,55 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
       << "{" << be_idt_nl
-      << "delete _tao_elem;" << be_uidt_nl
+      << "delete _tao_elem;" << be_nl
+      << "_tao_elem = 0;" << be_uidt_nl
       << "}" << be_nl
       << "ACE_ENDTRY;" << be_nl
       << "return 0;" << be_uidt_nl
       << "}\n\n";
 
+  *os << "CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
+      << "const CORBA::Any &_tao_any, const " << be_nl
+      << node->name () << " *&_tao_elem" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "ACE_TRY_NEW_ENV" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
+      << "if (!type->equivalent (" << node->tc_name ()
+      << ", ACE_TRY_ENV)) // not equal" << be_idt_nl
+      << "{" << be_idt_nl
+      << "_tao_elem = 0;" << be_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl
+      << "if (_tao_any.any_owns_data ())" << be_nl
+      << "{" << be_idt_nl
+      << "_tao_elem = (" << node->name () << " *)_tao_any.value ();"
+      << be_nl
+      << "return 1;" << be_uidt_nl
+      << "}" << be_nl
+      << "else" << be_nl  // else any does not own the data
+      << "{" << be_idt_nl
+      << "ACE_NEW_RETURN (_tao_elem, " << node->name () << ", 0);"
+      << be_nl
+      << "TAO_InputCDR stream (_tao_any._tao_get_cdr ());" << be_nl;
+
+  if (this->gen_const_extraction (os, node) != 0)
+    return -1;
+
+  *os << be_nl
+      << "return 1;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_nl
+      << "ACE_CATCHANY" << be_nl
+      << "{" << be_idt_nl
+      << "delete _tao_elem;" << be_nl
+      << "_tao_elem = 0;" << be_uidt_nl
+      << "}" << be_nl
+      << "ACE_ENDTRY;" << be_nl
+      << "return 0;" << be_uidt_nl
+      << "}\n\n";
 
   // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)
@@ -229,6 +275,22 @@ gen_extraction (TAO_OutStream *os,
   return 0;
 }
 
+int
+be_visitor_union_any_op_compiled_cs::
+gen_const_extraction (TAO_OutStream *os,
+                      be_union *node)
+{
+  *os << "stream >> *(" << node->name () << " *)_tao_elem;" << be_nl
+      << "((CORBA::Any *)&_tao_any)->_tao_replace (" << be_idt << be_idt_nl
+      << node->tc_name () << "," << be_nl
+      << "1," << be_nl
+      << "ACE_reinterpret_cast(void*,_tao_elem)," << be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
+  return 0;
+}
+
 // ****************************************************************
 
 be_visitor_union_any_op_interpretive_cs::
@@ -274,3 +336,13 @@ gen_extraction (TAO_OutStream *os,
       << "}";
   return 0;
 }
+
+int
+be_visitor_union_any_op_interpretive_cs::
+gen_const_extraction (TAO_OutStream *os,
+                      be_union *node)
+{
+  return this->gen_extraction (os,
+                               node);
+}
+

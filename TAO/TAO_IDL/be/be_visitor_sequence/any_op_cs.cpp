@@ -95,7 +95,11 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
       << "if (!type->equivalent (" << node->tc_name ()
-      << ", ACE_TRY_ENV)) return 0; // not equal" << be_nl
+      << ", ACE_TRY_ENV)) // not equal" << be_idt_nl
+      << "{" << be_idt_nl
+      << "_tao_elem = 0;" << be_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl
       << "if (_tao_any.any_owns_data ())" << be_nl
       << "{" << be_idt_nl
@@ -121,16 +125,72 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "}" << be_nl
       << "else" << be_nl  // decode failed
       << "{" << be_idt_nl
-      << "delete _tao_elem;" << be_uidt_nl
+      << "delete _tao_elem;" << be_nl
+      << "_tao_elem = 0;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
       << "{" << be_idt_nl
       << "delete _tao_elem;" << be_nl
+      << "_tao_elem = 0;" << be_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
       << "ACE_ENDTRY;" << be_nl
+      << "_tao_elem = 0;" << be_nl
+      << "return 0;" << be_uidt_nl
+      << "}\n\n";
+
+  *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const "
+      << node->name () << " *&_tao_elem)" << be_nl
+      << "{" << be_idt_nl
+      << "ACE_TRY_NEW_ENV" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
+      << "if (!type->equivalent (" << node->tc_name ()
+      << ", ACE_TRY_ENV)) // not equal" << be_idt_nl
+      << "{" << be_idt_nl
+      << "_tao_elem = 0;" << be_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl
+      << "if (_tao_any.any_owns_data ())" << be_nl
+      << "{" << be_idt_nl
+      << "_tao_elem = (" << node->name () << " *)_tao_any.value ();"
+      << be_nl
+      << "return 1;" << be_uidt_nl
+      << "}" << be_nl
+      << "else" << be_nl  // else any does not own the data
+      << "{" << be_idt_nl
+      << "ACE_NEW_RETURN (_tao_elem, " << node->name () << ", 0);"
+      << be_nl
+      << "TAO_InputCDR stream (_tao_any._tao_get_cdr ());"
+      << be_nl
+      << "if (stream.decode (" << node->tc_name ()
+      << ", _tao_elem, 0, ACE_TRY_ENV)" << be_nl
+      << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
+      << "{" << be_idt_nl
+      << "((CORBA::Any *)&_tao_any)->replace ("
+      << node->tc_name () << ", _tao_elem, 1, ACE_TRY_ENV);"
+      << be_nl
+      << "ACE_TRY_CHECK;" << be_nl
+      << "return 1;" << be_uidt_nl
+      << "}" << be_nl
+      << "else" << be_nl  // decode failed
+      << "{" << be_idt_nl
+      << "delete _tao_elem;" << be_nl
+      << "_tao_elem = 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_nl
+      << "ACE_CATCHANY" << be_nl
+      << "{" << be_idt_nl
+      << "delete _tao_elem;" << be_nl
+      << "_tao_elem = 0;" << be_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_nl
+      << "ACE_ENDTRY;" << be_nl
+      << "_tao_elem = 0;" << be_nl
       << "return 0;" << be_uidt_nl
       << "}\n\n";
 
