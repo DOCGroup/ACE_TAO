@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # undef ACE_INLINE
 # define ACE_INLINE
@@ -49,6 +48,14 @@ typedef char *ACE_SOCKOPT_TYPE1;
 #else
 typedef const char *ACE_SOCKOPT_TYPE1;
 #endif /* ACE_HAS_VOIDPTR_SOCKOPT */
+
+#if defined (ACE_LACKS_SETREUID_PROTOTYPE)
+extern int setreuid (uid_t ruid, uid_t euid);
+#endif /* ACE_LACKS_SETREUID_PROTOTYPE */
+
+#if defined (ACE_LACKS_SETREGID_PROTOTYPE)
+extern int setregid (gid_t rgid, gid_t egid);
+#endif /* ACE_LACKS_SETREGID_PROTOTYPE */
 
 #if defined (ACE_LACKS_WRITEV)
 extern "C" ACE_Export int writev (ACE_HANDLE handle, ACE_WRITEV_TYPE *iov, int iovcnt);
@@ -10471,12 +10478,48 @@ ACE_OS::setpgid (pid_t pid, pid_t pgid)
   ACE_UNUSED_ARG (pgid);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (VXWORKS) || defined (ACE_PSOS)
-  // setpgid() is not supported, only one process anyway.
+  // <setpgid> is not supported, only one process anyway.
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (pgid);
   return 0;
 #else
-  ACE_OSCALL_RETURN (::setpgid (pid, pgid), pid_t, -1);
+  ACE_OSCALL_RETURN (::setpgid (pid, pgid), int, -1);
+#endif /* ACE_WIN32 */
+}
+
+ACE_INLINE int
+ACE_OS::setreuid (uid_t ruid, uid_t euid)
+{
+  ACE_TRACE ("ACE_OS::setreuid");
+#if defined (ACE_LACKS_SETREUID)
+  ACE_UNUSED_ARG (ruid);
+  ACE_UNUSED_ARG (euid);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (VXWORKS) || defined (ACE_PSOS)
+  // <setpgid> is not supported, only one process anyway.
+  ACE_UNUSED_ARG (ruid);
+  ACE_UNUSED_ARG (euid);
+  return 0;
+#else
+  ACE_OSCALL_RETURN (::setreuid (ruid, euid), int, -1);
+#endif /* ACE_WIN32 */
+}
+
+ACE_INLINE int
+ACE_OS::setregid (gid_t rgid, gid_t egid)
+{
+  ACE_TRACE ("ACE_OS::setregid");
+#if defined (ACE_LACKS_SETREGID)
+  ACE_UNUSED_ARG (rgid);
+  ACE_UNUSED_ARG (egid);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (VXWORKS) || defined (ACE_PSOS)
+  // <setregid> is not supported, only one process anyway.
+  ACE_UNUSED_ARG (rgid);
+  ACE_UNUSED_ARG (egid);
+  return 0;
+#else
+  ACE_OSCALL_RETURN (::setregid (rgid, egid), int, -1);
 #endif /* ACE_WIN32 */
 }
 

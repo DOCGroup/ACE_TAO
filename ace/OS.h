@@ -5794,6 +5794,8 @@ public:
   static int setuid (uid_t);
   static pid_t setsid (void);
   static int setpgid (pid_t pid, pid_t pgid);
+  static int setreuid (uid_t ruid, uid_t euid);
+  static int setregid (gid_t rgid, gid_t egid);
   static int system (const char *s);
   static pid_t waitpid (pid_t pid,
                         ACE_exitcode *status = 0,
