@@ -1,120 +1,125 @@
+Tue Jul 07 07:36:36 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/compat/objbase.h: use #if 0 instead of // to comment out a
+          multiline #define, to avoid warning about a multiline comment.
+
 Mon Jul  6 19:33:54 1998  Jeff Parsons  <jp4@cs.wustl,edu>
 
-	* TAO/tests/Cubit/TAO/DII_Cubit/client.cpp:
-	  Made the shutdown request DII instead of SII. Everything 
-	  works on NT except for the shutdown option. Unix is OK.
-	  Also, changed the parse_args call to come after initializing
-	  the orb, so other orb-specific args can be used and not
-	  confuse parse_args.
+        * TAO/tests/Cubit/TAO/DII_Cubit/client.cpp:
+          Made the shutdown request DII instead of SII. Everything
+          works on NT except for the shutdown option. Unix is OK.
+          Also, changed the parse_args call to come after initializing
+          the orb, so other orb-specific args can be used and not
+          confuse parse_args.
 
 Mon Jul  6 19:17:00 1998  Michael Kircher <mk1@cs.wustl.edu>
 
-	* docs/Options.html: Added documentation about the
-	  -ORBiiopprofilelock switch.
+        * docs/Options.html: Added documentation about the
+          -ORBiiopprofilelock switch.
 
 Mon Jul  6 17:00:00 1998  Jeff Parsons   <jp4@cs.wustl.edu>
 
-	* TAO/tests/Cubit/TAO/DII_Cubit/client.{h,cpp}:
-	  Added a DII request on the naming service to get the
-	  Cubit factory IOR, plus code to implement all the 
-	  command line options. Built with SunCC, it works on Unix,
-	  but not yet on NT.
+        * TAO/tests/Cubit/TAO/DII_Cubit/client.{h,cpp}:
+          Added a DII request on the naming service to get the
+          Cubit factory IOR, plus code to implement all the
+          command line options. Built with SunCC, it works on Unix,
+          but not yet on NT.
 
 Mon Jul  6 15:46:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/decode.cpp: 
-	  Strings contain a nested CDR with the bounds for it, the
-	  demarshalling code in that case was invoking the TypeCode
-	  constructor with the wrong parameters, hence the bounds were
-	  invalid.  The problem only shows up now because we were ignoring
-	  the bounds in previous releases.
+        * tao/decode.cpp:
+          Strings contain a nested CDR with the bounds for it, the
+          demarshalling code in that case was invoking the TypeCode
+          constructor with the wrong parameters, hence the bounds were
+          invalid.  The problem only shows up now because we were ignoring
+          the bounds in previous releases.
 
 Mon Jul  6 15:24:21 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* tests/Logger/client.h
-	* tests/Logger/client.cpp
-	* orbsvcs/orbsvcs/Log/Logger_i.h
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp
-	* orbsvcs/orbsvcs/Logger.idl
+        * tests/Logger/client.h
+        * tests/Logger/client.cpp
+        * orbsvcs/orbsvcs/Log/Logger_i.h
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp
+        * orbsvcs/orbsvcs/Logger.idl
 
-	Routine checkin. Ignore the man behind that curtain....
-	Fully working version complete, but not yet Purified. 
-	
+        Routine checkin. Ignore the man behind that curtain....
+        Fully working version complete, but not yet Purified.
+
 Mon Jul 06 15:13:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/compat/initguid.h: Reordered some stuff.
+        * tao/compat/initguid.h: Reordered some stuff.
 
-	* tao/corba.h: Don't include in "compat/initguid.h" anymore.  
-	  
+        * tao/corba.h: Don't include in "compat/initguid.h" anymore.
+
 Mon Jul  6 15:10:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Makefile: 
-	  Updated dependencies.
+        * orbsvcs/Naming_Service/Makefile:
+          Updated dependencies.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Data.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
-	  The CDR size was wrong, this resulted in all kind of strange
-	  errors n the client side. This is another reminder that an octet
-	  sequence only uses a single Message_Block, not a chain of them.
+        * orbsvcs/tests/EC_Throughput/ECT_Data.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+          The CDR size was wrong, this resulted in all kind of strange
+          errors n the client side. This is another reminder that an octet
+          sequence only uses a single Message_Block, not a chain of them.
 
 Mon Jul 06 14:58:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/IIOP_Object.{h,cpp}:
-	* tao/Object.{h,i,cpp}:
-	* tao/Server_Request.{h,cpp}:
-	* tao/compat/objbase.h: Renamed REFIID to TAO_REFIID and
-	  DEFINE_GUID to TAO_DEFINE_GUID to avoid conflict with MSVC's
- 	  COM.  We don't support COM at this moment.
+        * tao/IIOP_Object.{h,cpp}:
+        * tao/Object.{h,i,cpp}:
+        * tao/Server_Request.{h,cpp}:
+        * tao/compat/objbase.h: Renamed REFIID to TAO_REFIID and
+          DEFINE_GUID to TAO_DEFINE_GUID to avoid conflict with MSVC's
+          COM.  We don't support COM at this moment.
 
-	* tao/compat/objbase.h: Disable the definition of TAO_VARENUM.  It
-	  is not used currently.  Thanks to Maximilian Hoferer
- 	  <mhoferer@krones.de> for noticing this.
+        * tao/compat/objbase.h: Disable the definition of TAO_VARENUM.  It
+          is not used currently.  Thanks to Maximilian Hoferer
+          <mhoferer@krones.de> for noticing this.
 
 Mon Jul 06 09:07:36 1998  Steve Huston  <shuston@riverace.com>
 
-	* tao/ORB_Core.{i cpp}: Removed redundant preprocessing token 
-	  concatentations - HP-UX aCC warned about them.
+        * tao/ORB_Core.{i cpp}: Removed redundant preprocessing token
+          concatentations - HP-UX aCC warned about them.
 
-	* tao/Connect.h: Added #include "tao/corba.h" so the defs are visible
-	  at template instantiation on AIX xlC.
+        * tao/Connect.h: Added #include "tao/corba.h" so the defs are visible
+          at template instantiation on AIX xlC.
 
 Mon Jul  6 04:45:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Connect.h (TAO_Client_Connect_Handler): Added a new data
-	  member <reactive_> to trace whether this client connection is
-	  running reactively or in a separate thread (other than the main
-	  thread.)
+        * tao/Connect.h (TAO_Client_Connect_Handler): Added a new data
+          member <reactive_> to trace whether this client connection is
+          running reactively or in a separate thread (other than the main
+          thread.)
 
-	* tao/Connect.cpp (open,close,send_request): Check to see if the
-	  client is going to run in a separate thread (by comparing its
-	  thread id with that of reactor's.)  If so, the handler won't try
-	  to register itself with the reactor and simply block on the
-	  socket IO calls.  This change enables the NestedUpcall/Reactor
-	  example to use the thread-per-connection strategy.
+        * tao/Connect.cpp (open,close,send_request): Check to see if the
+          client is going to run in a separate thread (by comparing its
+          thread id with that of reactor's.)  If so, the handler won't try
+          to register itself with the reactor and simply block on the
+          socket IO calls.  This change enables the NestedUpcall/Reactor
+          example to use the thread-per-connection strategy.
 
 Sun Jul  5 21:22:42 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/orbconf.h: Undid the change I made on July 3.  Although it
-	  fixed the one problem I was looking at, it broke everything
-	  else.  Oops.
+        * tao/orbconf.h: Undid the change I made on July 3.  Although it
+          fixed the one problem I was looking at, it broke everything
+          else.  Oops.
 
-	* TAO_IDL/be/be_codegen.cpp: Changed the TAO_EXPORT_MACRO
-	  definition to override any that came before.  Without this the
-	  ordering of includes (putting corba.h before an orbsvc, such as
-	  CosNamingC.h) would break in certain configurations.  Also moved
-	  it after the includes so it shouldn't affect included files.
+        * TAO_IDL/be/be_codegen.cpp: Changed the TAO_EXPORT_MACRO
+          definition to override any that came before.  Without this the
+          ordering of includes (putting corba.h before an orbsvc, such as
+          CosNamingC.h) would break in certain configurations.  Also moved
+          it after the includes so it shouldn't affect included files.
 
 Sat Jul  4 01:18:21 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitor.cpp:
-	* orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Interpreters.cpp:
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
-	  Addressed warnings/errors on IRIX.
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitor.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Interpreters.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+          Addressed warnings/errors on IRIX.
 
 Fri Jul 03 21:51:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
