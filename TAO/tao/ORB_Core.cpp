@@ -1970,6 +1970,12 @@ TAO_ORB_Core::leader_follower (void)
   return this->reactor_registry_->leader_follower ();
 }
 
+TAO_LF_Strategy &
+TAO_ORB_Core::lf_strategy (void)
+{
+  return this->reactor_registry_->lf_strategy ();
+}
+
 int
 TAO_ORB_Core::run (ACE_Time_Value *tv,
                    int perform_work,
@@ -2009,7 +2015,10 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
       // acquired the leader role...
       TAO_Leader_Follower &leader_follower =
         this->leader_follower ();
-      TAO_LF_Event_Loop_Thread_Helper helper (leader_follower);
+
+      TAO_LF_Strategy &lf_strategy =
+        this->lf_strategy ();
+      TAO_LF_Event_Loop_Thread_Helper helper (leader_follower, lf_strategy);
 
       result = helper.set_event_loop_thread (tv);
 

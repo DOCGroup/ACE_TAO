@@ -1,3 +1,57 @@
+Tue May 15 15:48:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tao/Reactor_Registry.h:
+	* tao/Reactor_Registry.cpp:
+
+	  Added a member variable holding the leader follower strategy,
+	  and a method for accessing it. The leader follower strategy
+	  gets created by the resource factory, which is obtained from the
+	  ORB core.
+
+	* tao/ORB_core.h:
+		
+	  Added a accessor method to the leader follower strategy,
+	  it fetches it via the reactor registry.
+
+	* tao/ORB_core.h:
+	* tao/ORB_core.cpp:
+
+	  Implemented the accessor method the leader follower strategy
+	  and changed the usage of the leader follower helper class 
+	  to use the leader follower strategy in the method <run>.
+
+	* tao/Leader_Follower.h:
+	* tao/Leader_Follower.i:
+	* tao/Leader_Follower.cpp:
+
+	  Added the leader follower strategies, consisting of a base
+	  class <TAO_LF_Strategy> and two concrete strategies 
+	  <TAO_Null_LF_Strategy>, doing nothing, and <TAO_Complete_LF_Strategy>,
+	  behaving as the normal.
+
+	  Also, changed the implementation of <TAO_LF_Event_Loop_Thread_Helper>
+	  to use the new strategy.
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Lite.cpp:
+
+	  Changed the call on <set_upcall_thread> to go via the strategy
+	  in <process_request_message>.
+
+	* tao/default_resource.h:
+	* tao/default_resource.cpp:
+
+	  Added a factory method <create_lf_strategy> which instantiates
+	  the <TAO_Complete_LF_strategy>.
+
+	* tao/Strategies/advanced_resource.h:
+	* tao/Strategies/advanced_resource.cpp:
+
+	  Added a factory method <create_lf_strategy> which instantiates
+	  the <TAO_Complete_LF_Strategy> for the <select_mt> and <tp> reactor.
+	
+	  For the <select_st> reactor it instantiates the <TAO_Null_LF_Strategy>.
+
 Tue May 15 15:42:11 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:

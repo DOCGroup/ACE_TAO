@@ -421,7 +421,7 @@ TAO_GIOP_Message_Lite::process_request_message (TAO_Transport *transport,
                                                 TAO_ORB_Core *orb_core)
 {
   // Set the upcall thread
-  orb_core->leader_follower ().set_upcall_thread ();
+  orb_core->lf_strategy ().set_upcall_thread (orb_core->leader_follower ());
 
   // Reset the output CDR stream.
   // @@@@Is it necessary  here?

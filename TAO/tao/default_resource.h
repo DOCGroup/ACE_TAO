@@ -26,6 +26,7 @@
 
 class TAO_Object_Adapter;
 class TAO_IOR_Parser;
+class TAO_LF_Strategy;
 
 /**
  * @class TAO_Default_Resource_Factory
@@ -94,6 +95,7 @@ public:
   virtual TAO_Priority_Mapping *get_priority_mapping (void);
   virtual ACE_Lock *create_cached_connection_lock (void);
   virtual TAO_Flushing_Strategy *create_flushing_strategy (void);
+  virtual TAO_LF_Strategy *create_lf_strategy (void);
 
 protected:
   /// Obtain the reactor implementation
