@@ -1,8 +1,10 @@
 // $Id$
 
 #include "Consumer.h"
+#include "Supplier.h"
 
 #include "ace/High_Res_Timer.h"
+#include "ace/Time_Value.h"
 #include "ace/ACE.h" //for is_prime()
 #include "orbsvcs/orbsvcs/Time_Utilities.h" //ORBSVCS_Time
 #include <Kokyu/Counter.h>
@@ -15,13 +17,15 @@
 
 ACE_RCSID(EC_Examples, Consumer, "$Id$")
 
-Consumer::Consumer (void)
+Consumer::Consumer (ACE_Time_Value& worktime, Supplier *fwddest)
+  : worktime_(worktime),
+    fwddest_(fwddest)
 {
 }
 
 void
 Consumer::push (const RtecEventComm::EventSet& events
-                ACE_ENV_ARG_DECL_NOT_USED)
+                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
@@ -37,6 +41,8 @@ Consumer::push (const RtecEventComm::EventSet& events
   //@BT INSTRUMENT with event ID: EVENT_WORK_START Measure time
   //when work triggered by event starts.
   //DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, guid, 0, NULL);
+  ACE_Time_Value tv = ACE_OS::gettimeofday();
+  ACE_DEBUG((LM_DEBUG,"Consumer in thread %t START_SERVICE at %u\n",tv.msec()));
   Kokyu::Object_Counter::object_id oid;
   oid.id = events[0].header.eid.id;
   oid.tid = events[0].header.eid.tid;
@@ -46,39 +52,11 @@ Consumer::push (const RtecEventComm::EventSet& events
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
 
-//   ACE_DEBUG ((LM_DEBUG, "Request in thread %t\n"));
-
-//   if (ACE_Thread::getprio (thr_handle, prio) == -1)
-//     {
-//       if (errno == ENOTSUP)
-//      {
-//        ACE_DEBUG((LM_DEBUG,
-//                   ACE_TEXT ("getprio not supported on this platform\n")
-//                   ));
-//        return;
-//      }
-//       ACE_ERROR ((LM_ERROR,
-//                       ACE_TEXT ("%p\n"),
-//                       ACE_TEXT ("getprio failed"))
-//                      );
-//     }
-
-//   ACE_DEBUG ((LM_DEBUG,
-//               "Request in thread %t, prio = %d,"
-//               "exec duration = %u\n", prio, exec_duration));
 
   static CORBA::ULong prime_number = 9619899;
 
-  CORBA::Long exec_duration(1); //one second
-  ACE_Time_Value compute_count_down_time (exec_duration, 0);
+  ACE_Time_Value compute_count_down_time (this->worktime_);
   ACE_Countdown_Time compute_count_down (&compute_count_down_time);
-
-  //Applicable only for CV based implementations
-  //yield every 1 sec
-  //ACE_Time_Value yield_interval (0,100000);
-
-  //ACE_Time_Value yield_count_down_time (yield_interval);
-  //ACE_Countdown_Time yield_count_down (&yield_count_down_time);
 
   timer.start ();
   int j=0;
@@ -90,39 +68,13 @@ Consumer::push (const RtecEventComm::EventSet& events
 
       ++j;
 
-//       if (j%1000 == 0)
-//         {
-//           ACE_Time_Value run_time = ACE_OS::gettimeofday ();
-//           task_stats_.sample (ACE_UINT64 (run_time.msec ()), guid);
-//         }
-
       compute_count_down.update ();
-
-//       if (enable_yield_)
-//         {
-//           yield_count_down.update ();
-//           if (yield_count_down_time <= ACE_Time_Value::zero)
-//             {
-//               CORBA::Policy_var sched_param_policy =
-//                 CORBA::Policy::_duplicate (current_->
-//                                            scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER));
-
-//               const char * name = 0;
-
-//               CORBA::Policy_var implicit_sched_param = sched_param_policy;
-//               current_->update_scheduling_segment (name,
-//                                                    sched_param_policy.in (),
-//                                                    implicit_sched_param.in ()
-//                                                    ACE_ENV_ARG_PARAMETER);
-//               yield_count_down_time = yield_interval;
-//               yield_count_down.start ();
-//             }
-//         }
     }
 
   TimeBase::TimeT current;
   ORBSVCS_Time::Time_Value_to_TimeT (current, ACE_OS::gettimeofday ());
   CORBA::Long temp = (long) current;
+  //TODO: How do I know when the deadline was?
   CORBA::Long deadline(0); //no deadline specified
   if(temp > deadline )
     {
@@ -153,6 +105,8 @@ Consumer::push (const RtecEventComm::EventSet& events
       //@BT INSTRUMENT with event ID: EVENT_WORK_DEADLINE_MISSED Measure time when
       //work triggered by event finishes and deadline missed.
       //DSUI_EVENT_LOG (TEST_ONE_FAM, DEADLINE_MISSED, guid, strlen(extra_info), extra_info);
+      tv = ACE_OS::gettimeofday();
+      ACE_DEBUG((LM_DEBUG,"Consumer in thread %t STOP_SERVICE (DEADLINE_MISSED) at %u\n",tv.msec()));
       DSUI_EVENT_LOG (TEST_ONE_FAM, DEADLINE_MISSED, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 
     }
@@ -161,8 +115,16 @@ Consumer::push (const RtecEventComm::EventSet& events
   //@BT INSTRUMENT with event ID: EVENT_WORK_END Measure time when
   //work triggered by event finishes.
   //DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, guid,0,NULL);
+  tv = ACE_OS::gettimeofday();
+  ACE_DEBUG((LM_DEBUG,"Consumer in thread %t STOP_SERVICE (DEADLINE_MADE) at %u\n",tv.msec()));
   DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 
+  //now, trigger the next subtask if any
+  if (this->fwddest_ != 0)
+    {
+      //trigger next subtask
+      this->fwddest_->timeout_occured(ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
 }
 
 void
