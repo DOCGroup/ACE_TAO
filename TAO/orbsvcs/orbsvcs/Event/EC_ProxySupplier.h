@@ -76,8 +76,6 @@ public:
   /**
    * Return the consumer object reference. It returns nil() if it has
    * not connected yet.
-   * NOTE: This method does not return a new reference!!! Doing so
-   * will increase the locking overhead on the critical path.
    */
   RtecEventComm::PushConsumer_ptr consumer (void) const;
 
