@@ -28,8 +28,7 @@ protected:
 
 };
 
-
-class JAWS_Protocol_Handler
+class JAWS_Export JAWS_Protocol_Handler
   : public JAWS_Event_Completer
 // = TITLE
 //     Abstraction that interacts with concurrency dispatching.
