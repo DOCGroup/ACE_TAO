@@ -10,10 +10,12 @@
 # include "ace/OS.i"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
-#include "ace/Task.h"
 #include "ace/Synch_T.h"
-#include "ace/Containers.h"
 #include "ace/streams.h"
+
+#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
+# include "ace/Containers.h"
+#endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 
 ACE_RCSID(ace, OS, "$Id$")
 
