@@ -1,3 +1,19 @@
+Mon May 15 16:26:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+	  If an interface is forward declared, we now generate as
+	  much inline code as possible at that point, saving only
+	  the generation of members' inline code for the full
+	  definition. Since the be_interface_fwd node contains
+	  a reference to its full definition node, we can set the 
+	  cli_inline_gen flag in that node as well, to avoid redundant 
+	  code generation. Recent changes to generated _var code
+	  for interfaces have made all this necessary. Agressively
+	  inlining compilers like cxx now need to see the _var code 
+	  sooner if the forward declared interface is used as an arg
+	  or a member before it is fully defined.
+
 Mon May 15 14:20:38 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Object.cpp (operator>>):
