@@ -1,3 +1,12 @@
+Tue May 18 09:22:35 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+
+          Provide the getBasePath() method which returns the full path to
+          the MPC location.  This will be used by MPC's Version module in
+          the future.
+
 Tue May 18 11:32:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Condition_Thread_Mutex.h:
@@ -54,26 +63,26 @@ Tue May 18 06:20:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon May 17 21:19:27 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/CDR_Stream.h:
+        * ace/CDR_Stream.h:
 
-	  Spelling correction.
+          Spelling correction.
 
-	* ace/Time_Value.cpp (normalize, operator *=):
+        * ace/Time_Value.cpp (normalize, operator *=):
 
-	  Optimized some code.
+          Optimized some code.
 
-	  ACE coding style updates.
+          ACE coding style updates.
 
-	* tests/Time_Value_Test.cpp (run_main):
+        * tests/Time_Value_Test.cpp (run_main):
 
-	  Updated code to conform to ACE coding conventions.
+          Updated code to conform to ACE coding conventions.
 
 Mon May 17 17:35:24 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Timer_Queue_T.cpp (schedule): Don't narrow the scheduled timer ID
-	  from long to int; this smashes the ID on 64-bit systems where the
-	  timer ID is larger than 32 bits holds; for example, in ACE_Timer_Hash
-	  where it's a pointer.
+        * ace/Timer_Queue_T.cpp (schedule): Don't narrow the scheduled timer ID
+          from long to int; this smashes the ID on 64-bit systems where the
+          timer ID is larger than 32 bits holds; for example, in ACE_Timer_Hash
+          where it's a pointer.
 
 Mon May 17 22:38:48 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
