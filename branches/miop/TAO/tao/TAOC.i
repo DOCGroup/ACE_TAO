@@ -77,9 +77,9 @@ TAO::PrioritySpecification_var::operator= (const ::TAO::PrioritySpecification_va
         }
       else
         {
-          TAO::PrioritySpecification *deep_copy = 
+          TAO::PrioritySpecification *deep_copy =
             new TAO::PrioritySpecification (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               TAO::PrioritySpecification *tmp = deep_copy;
@@ -89,7 +89,7 @@ TAO::PrioritySpecification_var::operator= (const ::TAO::PrioritySpecification_va
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -300,9 +300,9 @@ TAO::BufferingConstraint_var::operator= (const ::TAO::BufferingConstraint_var &p
         }
       else
         {
-          TAO::BufferingConstraint *deep_copy = 
+          TAO::BufferingConstraint *deep_copy =
             new TAO::BufferingConstraint (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               TAO::BufferingConstraint *tmp = deep_copy;
@@ -312,7 +312,7 @@ TAO::BufferingConstraint_var::operator= (const ::TAO::BufferingConstraint_var &p
             }
         }
     }
-  
+
   return *this;
 }
 

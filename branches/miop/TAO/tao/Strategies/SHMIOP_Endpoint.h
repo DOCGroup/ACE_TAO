@@ -85,7 +85,7 @@ public:
   virtual TAO_Endpoint *next (void);
   virtual int addr_to_string (char *buffer, size_t length);
   virtual void reset_hint (void);
-  virtual TAO_Endpoint *duplicate (void);
+  virtual TAO_Endpoint *duplicate (void) const;
   // Return a copy of <this>
 
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);

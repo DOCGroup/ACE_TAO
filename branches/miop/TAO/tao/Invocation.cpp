@@ -58,6 +58,7 @@ enum
   };
 
 
+
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
                                   TAO_GIOP_INVOCATION_INVOKE_START);
@@ -312,8 +313,13 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   // Set the unique request ID associated with this request.
   this->op_details_.request_id (this->transport_->tms ()->request_id ());
 
-  // Make sure that you have the right object key
-  this->target_spec_.target_specifier (this->profile_->object_key ());
+  // Set the target specifier to point to the right kind
+  // of specifier for our request.  Normally, this is just
+  // the object key.  However, some pluggable have special
+  // requires such that the object key does not make the
+  // most sense.  For example, MIOP requires the group id
+  // to be sent.
+  this->profile_->request_target_specifier (this->target_spec_);
 }
 
 void
@@ -334,6 +340,9 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
 
   this->add_rt_service_context (ACE_TRY_ENV);
   ACE_CHECK;
+
+/* @@ Frank - I don't understand the purpose of this code.  We just
+              set the target specification in TAO_GIOP_Invocation::start ().
 
   // The target specification mode
   if (this->stub_->addressing_mode () ==
@@ -377,7 +386,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
       this->target_spec_.target_specifier (*ior_info,
                                            index);
     }
-
+*/
   // Update the response flags
   this->op_details_.response_flags (response_flags);
 

@@ -178,7 +178,7 @@ TAO_NAMESPACE  Messaging
     static RebindPolicy_ptr nil (void);
     static RebindPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RebindPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -313,7 +313,7 @@ class TAO_Export RebindPolicy: public virtual CORBA::Policy
     static SyncScopePolicy_ptr nil (void);
     static SyncScopePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     SyncScopePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -498,7 +498,7 @@ class TAO_Export SyncScopePolicy: public virtual CORBA::Policy
     static RequestPriorityPolicy_ptr nil (void);
     static RequestPriorityPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RequestPriorityPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -629,7 +629,7 @@ class TAO_Export RequestPriorityPolicy: public virtual CORBA::Policy
     static ReplyPriorityPolicy_ptr nil (void);
     static ReplyPriorityPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     ReplyPriorityPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -764,7 +764,7 @@ class TAO_Export ReplyPriorityPolicy: public virtual CORBA::Policy
     static RequestStartTimePolicy_ptr nil (void);
     static RequestStartTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RequestStartTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -899,7 +899,7 @@ class TAO_Export RequestStartTimePolicy: public virtual CORBA::Policy
     static RequestEndTimePolicy_ptr nil (void);
     static RequestEndTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RequestEndTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1034,7 +1034,7 @@ class TAO_Export RequestEndTimePolicy: public virtual CORBA::Policy
     static ReplyStartTimePolicy_ptr nil (void);
     static ReplyStartTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     ReplyStartTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1169,7 +1169,7 @@ class TAO_Export ReplyStartTimePolicy: public virtual CORBA::Policy
     static ReplyEndTimePolicy_ptr nil (void);
     static ReplyEndTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     ReplyEndTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1304,7 +1304,7 @@ class TAO_Export ReplyEndTimePolicy: public virtual CORBA::Policy
     static RelativeRequestTimeoutPolicy_ptr nil (void);
     static RelativeRequestTimeoutPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RelativeRequestTimeoutPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1439,7 +1439,7 @@ class TAO_Export RelativeRequestTimeoutPolicy: public virtual CORBA::Policy
     static RelativeRoundtripTimeoutPolicy_ptr nil (void);
     static RelativeRoundtripTimeoutPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RelativeRoundtripTimeoutPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1624,7 +1624,7 @@ class TAO_Export RelativeRoundtripTimeoutPolicy: public virtual CORBA::Policy
     static RoutingPolicy_ptr nil (void);
     static RoutingPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RoutingPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1759,7 +1759,7 @@ class TAO_Export RoutingPolicy: public virtual CORBA::Policy
     static MaxHopsPolicy_ptr nil (void);
     static MaxHopsPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     MaxHopsPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1894,7 +1894,7 @@ class TAO_Export MaxHopsPolicy: public virtual CORBA::Policy
     static QueueOrderPolicy_ptr nil (void);
     static QueueOrderPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     QueueOrderPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2480,7 +2480,7 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
     static ReplyHandler_ptr nil (void);
     static ReplyHandler_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     ReplyHandler_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2553,35 +2553,35 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
     static void _tao_any_destructor (void*);
 
     virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id, 
-        CORBA::Environment &ACE_TRY_ENV = 
+        const CORBA::Char *type_id,
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   private:
     _TAO_ReplyHandler_Proxy_Broker *the_TAO_ReplyHandler_Proxy_Broker_;
-    
+
   protected:
     ReplyHandler (int collocated = 0);
-    
+
     protected:
       // This methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode
       virtual void Messaging_ReplyHandler_setup_collocation (int collocated);
-      
+
       ReplyHandler (
-        TAO_Stub *objref, 
+        TAO_Stub *objref,
         CORBA::Boolean _tao_collocated = 0,
         TAO_Abstract_ServantBase *servant = 0
         );
-      
+
       friend class _TAO_ReplyHandler_Remote_Proxy_Impl;
       friend class _TAO_ReplyHandler_ThruPOA_Proxy_Impl;
       friend class _TAO_ReplyHandler_Direct_Proxy_Impl;
-    
+
     virtual ~ReplyHandler (void);
   private:
     ReplyHandler (const ReplyHandler &);

@@ -141,7 +141,7 @@ TAO_IIOP_Endpoint::next (void)
 }
 
 TAO_Endpoint *
-TAO_IIOP_Endpoint::duplicate (void)
+TAO_IIOP_Endpoint::duplicate (void) const
 {
   // @@ Bala, we probably need to make sure that the duplicate has the
   // same priority as the original.  Although it does not matter in

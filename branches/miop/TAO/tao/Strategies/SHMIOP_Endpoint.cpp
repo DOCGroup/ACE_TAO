@@ -150,7 +150,7 @@ TAO_SHMIOP_Endpoint::next (void)
 }
 
 TAO_Endpoint *
-TAO_SHMIOP_Endpoint::duplicate (void)
+TAO_SHMIOP_Endpoint::duplicate (void) const
 {
   TAO_SHMIOP_Endpoint *endpoint = 0;
   ACE_NEW_RETURN (endpoint,

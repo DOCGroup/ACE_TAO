@@ -111,8 +111,8 @@ private:
    * @return Returns 1 if the deadline has already expired and
    *         flushing must commence immediately.  If the function
    *         returns 0 then flushing may need to be delayed, use @c
-   *         set_timer and 
-   *         
+   *         set_timer and
+   *
    */
   int timer_check (const TAO::BufferingConstraint &buffering_constraint,
                    const ACE_Time_Value &current_deadline,

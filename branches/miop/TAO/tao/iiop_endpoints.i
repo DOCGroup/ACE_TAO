@@ -13,7 +13,7 @@
 // *************************************************************
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_TAO_IIOPENDPOINTSEQUENCE_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_TAO_IIOPENDPOINTSEQUENCE_CI_
 
@@ -26,24 +26,24 @@
     ACE_NEW_RETURN (retval, TAO_IIOP_Endpoint_Info[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::freebuf (TAO_IIOP_Endpoint_Info *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::_TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::_TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::_TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -52,7 +52,7 @@
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::_TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence (const _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence &rhs)
   // Copy constructor.
@@ -62,10 +62,10 @@
     {
       TAO_IIOP_Endpoint_Info *tmp1 = _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::allocbuf (this->maximum_);
       TAO_IIOP_Endpoint_Info * const tmp2 = ACE_reinterpret_cast (TAO_IIOP_Endpoint_Info * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -73,14 +73,14 @@
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence &
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::operator= (const _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -93,18 +93,18 @@
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     TAO_IIOP_Endpoint_Info *tmp1 = ACE_reinterpret_cast (TAO_IIOP_Endpoint_Info *, this->buffer_);
     TAO_IIOP_Endpoint_Info * const tmp2 = ACE_reinterpret_cast (TAO_IIOP_Endpoint_Info * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE TAO_IIOP_Endpoint_Info &
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::operator[] (CORBA::ULong i)
@@ -114,7 +114,7 @@
     TAO_IIOP_Endpoint_Info* tmp = ACE_reinterpret_cast(TAO_IIOP_Endpoint_Info*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const TAO_IIOP_Endpoint_Info &
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::operator[] (CORBA::ULong i) const
   // operator []
@@ -123,9 +123,9 @@
     TAO_IIOP_Endpoint_Info * const tmp = ACE_reinterpret_cast (TAO_IIOP_Endpoint_Info* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE TAO_IIOP_Endpoint_Info *
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::get_buffer (CORBA::Boolean orphan)
   {
@@ -159,13 +159,13 @@
     }
     return result;
   }
-  
+
   ACE_INLINE const TAO_IIOP_Endpoint_Info *
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const TAO_IIOP_Endpoint_Info * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -182,11 +182,11 @@
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_TAO_IIOPENDPOINTSEQUENCE_CI_)
 #define _TAO_IIOPENDPOINTSEQUENCE_CI_
@@ -251,27 +251,27 @@ TAO_IIOPEndpointSequence_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_IIOPEndpointSequence_var::operator const ::TAO_IIOPEndpointSequence &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-TAO_IIOPEndpointSequence_var::operator ::TAO_IIOPEndpointSequence &() // cast 
+ACE_INLINE
+TAO_IIOPEndpointSequence_var::operator ::TAO_IIOPEndpointSequence &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-TAO_IIOPEndpointSequence_var::operator ::TAO_IIOPEndpointSequence &() const // cast 
+ACE_INLINE
+TAO_IIOPEndpointSequence_var::operator ::TAO_IIOPEndpointSequence &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-TAO_IIOPEndpointSequence_var::operator ::TAO_IIOPEndpointSequence *&() // cast 
+TAO_IIOPEndpointSequence_var::operator ::TAO_IIOPEndpointSequence *&() // cast
 {
   return this->ptr_;
 }
@@ -294,7 +294,7 @@ TAO_IIOPEndpointSequence_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::TAO_IIOPEndpointSequence *&
 TAO_IIOPEndpointSequence_var::out (void)
 {
@@ -329,7 +329,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IIOP_Endpoi
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO_IIOP_Endpoint_Info &_tao_aggregate)
@@ -342,7 +342,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO_IIOP_Endpoint_Info
     return 1;
   else
     return 0;
-  
+
 }
 
 

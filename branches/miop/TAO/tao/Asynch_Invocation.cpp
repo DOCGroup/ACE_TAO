@@ -71,7 +71,13 @@ TAO_GIOP_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->target_spec_.target_specifier (this->profile_->object_key ());
+  // Set the target specifier to point to the right kind
+  // of specifier for our request.  Normally, this is just
+  // the object key.  However, some pluggable have special
+  // requires such that the object key does not make the
+  // most sense.  For example, MIOP requires the group id
+  // to be sent.
+  this->profile_->request_target_specifier (this->target_spec_);
 }
 
 // **************************************************************************

@@ -69,7 +69,7 @@ Dynamic::Parameter_var::operator= (const ::Dynamic::Parameter_var &p)
       else
         {
           Dynamic::Parameter *deep_copy = new Dynamic::Parameter (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               Dynamic::Parameter *tmp = deep_copy;
@@ -79,7 +79,7 @@ Dynamic::Parameter_var::operator= (const ::Dynamic::Parameter_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -102,20 +102,20 @@ Dynamic::Parameter_var::operator const ::Dynamic::Parameter &() const // cast
 }
 
 ACE_INLINE
-Dynamic::Parameter_var::operator ::Dynamic::Parameter &() // cast 
+Dynamic::Parameter_var::operator ::Dynamic::Parameter &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-Dynamic::Parameter_var::operator ::Dynamic::Parameter &() const // cast 
+Dynamic::Parameter_var::operator ::Dynamic::Parameter &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-Dynamic::Parameter_var::operator ::Dynamic::Parameter *&() // cast 
+Dynamic::Parameter_var::operator ::Dynamic::Parameter *&() // cast
 {
   return this->ptr_;
 }
@@ -132,7 +132,7 @@ Dynamic::Parameter_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::Dynamic::Parameter *&
 Dynamic::Parameter_var::out (void)
 {
@@ -193,7 +193,7 @@ Dynamic::Parameter_out::operator= (Parameter *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Dynamic::Parameter_out::operator ::Dynamic::Parameter *&() // cast
 {
   return this->ptr_;
@@ -213,7 +213,7 @@ Dynamic::Parameter_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMIC_PARAMETERLIST_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMIC_PARAMETERLIST_CI_
 
@@ -226,24 +226,24 @@ Dynamic::Parameter_out::operator-> (void)
     ACE_NEW_RETURN (retval, Dynamic::Parameter[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::freebuf (Dynamic::Parameter *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::_TAO_Unbounded_Sequence_Dynamic_ParameterList (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::_TAO_Unbounded_Sequence_Dynamic_ParameterList (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_Dynamic_ParameterList::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::_TAO_Unbounded_Sequence_Dynamic_ParameterList (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -252,7 +252,7 @@ Dynamic::Parameter_out::operator-> (void)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::_TAO_Unbounded_Sequence_Dynamic_ParameterList (const _TAO_Unbounded_Sequence_Dynamic_ParameterList &rhs)
   // Copy constructor.
@@ -262,10 +262,10 @@ Dynamic::Parameter_out::operator-> (void)
     {
       Dynamic::Parameter *tmp1 = _TAO_Unbounded_Sequence_Dynamic_ParameterList::allocbuf (this->maximum_);
       Dynamic::Parameter * const tmp2 = ACE_reinterpret_cast (Dynamic::Parameter * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -273,14 +273,14 @@ Dynamic::Parameter_out::operator-> (void)
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList &
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::operator= (const _TAO_Unbounded_Sequence_Dynamic_ParameterList &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -293,18 +293,18 @@ Dynamic::Parameter_out::operator-> (void)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_Dynamic_ParameterList::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     Dynamic::Parameter *tmp1 = ACE_reinterpret_cast (Dynamic::Parameter *, this->buffer_);
     Dynamic::Parameter * const tmp2 = ACE_reinterpret_cast (Dynamic::Parameter * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE Dynamic::Parameter &
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::operator[] (CORBA::ULong i)
@@ -314,7 +314,7 @@ Dynamic::Parameter_out::operator-> (void)
     Dynamic::Parameter* tmp = ACE_reinterpret_cast(Dynamic::Parameter*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const Dynamic::Parameter &
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::operator[] (CORBA::ULong i) const
   // operator []
@@ -323,9 +323,9 @@ Dynamic::Parameter_out::operator-> (void)
     Dynamic::Parameter * const tmp = ACE_reinterpret_cast (Dynamic::Parameter* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE Dynamic::Parameter *
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::get_buffer (CORBA::Boolean orphan)
   {
@@ -359,13 +359,13 @@ Dynamic::Parameter_out::operator-> (void)
     }
     return result;
   }
-  
+
   ACE_INLINE const Dynamic::Parameter *
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const Dynamic::Parameter * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -382,11 +382,11 @@ Dynamic::Parameter_out::operator-> (void)
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_DYNAMIC_PARAMETERLIST_CI_)
 #define _DYNAMIC_PARAMETERLIST_CI_
@@ -440,9 +440,9 @@ Dynamic::ParameterList_var::operator= (const ::Dynamic::ParameterList_var &p) //
         }
       else
         {
-          Dynamic::ParameterList *deep_copy = 
+          Dynamic::ParameterList *deep_copy =
             new Dynamic::ParameterList (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               Dynamic::ParameterList *tmp = deep_copy;
@@ -452,7 +452,7 @@ Dynamic::ParameterList_var::operator= (const ::Dynamic::ParameterList_var &p) //
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -468,27 +468,27 @@ Dynamic::ParameterList_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Dynamic::ParameterList_var::operator const ::Dynamic::ParameterList &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-Dynamic::ParameterList_var::operator ::Dynamic::ParameterList &() // cast 
+ACE_INLINE
+Dynamic::ParameterList_var::operator ::Dynamic::ParameterList &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-Dynamic::ParameterList_var::operator ::Dynamic::ParameterList &() const // cast 
+ACE_INLINE
+Dynamic::ParameterList_var::operator ::Dynamic::ParameterList &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-Dynamic::ParameterList_var::operator ::Dynamic::ParameterList *&() // cast 
+Dynamic::ParameterList_var::operator ::Dynamic::ParameterList *&() // cast
 {
   return this->ptr_;
 }
@@ -517,7 +517,7 @@ Dynamic::ParameterList_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::Dynamic::ParameterList *&
 Dynamic::ParameterList_var::out (void)
 {
@@ -578,7 +578,7 @@ Dynamic::ParameterList_out::operator= (ParameterList *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Dynamic::ParameterList_out::operator ::Dynamic::ParameterList *&() // cast
 {
   return this->ptr_;
@@ -607,7 +607,7 @@ Dynamic::ParameterList_out::operator[] (CORBA::ULong index)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMIC_EXCEPTIONLIST_CI_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMIC_EXCEPTIONLIST_CI_
 
@@ -615,34 +615,34 @@ Dynamic::ParameterList_out::operator[] (CORBA::ULong index)
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::allocbuf (CORBA::ULong nelems)
   {
     CORBA::TypeCode **buf = 0;
-    
+
     ACE_NEW_RETURN (buf, CORBA::TypeCode*[nelems], 0);
-    
+
     for (CORBA::ULong i = 0; i < nelems; i++)
       buf[i] = CORBA::TypeCode::_nil ();
-    
+
     return buf;
   }
-  
-  ACE_INLINE void 
+
+  ACE_INLINE void
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::freebuf (CORBA::TypeCode **buffer)
   {
     if (buffer == 0)
       return;
     delete[] buffer;
   }
-  
+
   ACE_INLINE
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList (void)
   {
   }
-  
+
   ACE_INLINE
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -651,7 +651,7 @@ Dynamic::ParameterList_out::operator[] (CORBA::ULong index)
   : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
   {
   }
-  
+
   ACE_INLINE
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList(const _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
@@ -660,10 +660,10 @@ Dynamic::ParameterList_out::operator[] (CORBA::ULong index)
     {
       CORBA::TypeCode **tmp1 = _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::allocbuf (this->maximum_);
       CORBA::TypeCode ** const tmp2 = ACE_reinterpret_cast (CORBA::TypeCode ** ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
         tmp1[i] = CORBA::TypeCode::_duplicate (tmp2[i]);
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -671,17 +671,17 @@ Dynamic::ParameterList_out::operator[] (CORBA::ULong index)
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList &
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::operator= (const _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList &rhs)
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       CORBA::TypeCode **tmp = ACE_reinterpret_cast (CORBA::TypeCode **, this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
         CORBA::release (tmp[i]);
@@ -695,18 +695,18 @@ Dynamic::ParameterList_out::operator[] (CORBA::ULong index)
     }
     else
       this->buffer_ = _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     CORBA::TypeCode **tmp1 = ACE_reinterpret_cast (CORBA::TypeCode **, this->buffer_);
     CORBA::TypeCode ** const tmp2 = ACE_reinterpret_cast (CORBA::TypeCode ** ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
       tmp1[i] = CORBA::TypeCode::_duplicate (tmp2[i]);
-    
+
     return *this;
   }
-  
+
   ACE_INLINE TAO_Pseudo_Object_Manager<Dynamic::TypeCode,Dynamic::TypeCode_var>
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::operator[] (CORBA::ULong index) const
   // read-write accessor
@@ -715,7 +715,7 @@ Dynamic::ParameterList_out::operator[] (CORBA::ULong index)
     CORBA::TypeCode ** const tmp = ACE_reinterpret_cast (CORBA::TypeCode ** ACE_CAST_CONST, this->buffer_);
     return TAO_Pseudo_Object_Manager<Dynamic::TypeCode,Dynamic::TypeCode_var> (tmp + index, this->release_);
   }
-  
+
   ACE_INLINE CORBA::TypeCode* *
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::get_buffer (CORBA::Boolean orphan)
   {
@@ -749,18 +749,18 @@ Dynamic::ParameterList_out::operator[] (CORBA::ULong index)
     }
     return result;
   }
-  
+
   ACE_INLINE const CORBA::TypeCode* *
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::TypeCode ** ACE_CAST_CONST, this->buffer_);
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_DYNAMIC_EXCEPTIONLIST_CI_)
 #define _DYNAMIC_EXCEPTIONLIST_CI_
@@ -814,9 +814,9 @@ Dynamic::ExceptionList_var::operator= (const ::Dynamic::ExceptionList_var &p) //
         }
       else
         {
-          Dynamic::ExceptionList *deep_copy = 
+          Dynamic::ExceptionList *deep_copy =
             new Dynamic::ExceptionList (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               Dynamic::ExceptionList *tmp = deep_copy;
@@ -826,7 +826,7 @@ Dynamic::ExceptionList_var::operator= (const ::Dynamic::ExceptionList_var &p) //
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -842,27 +842,27 @@ Dynamic::ExceptionList_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Dynamic::ExceptionList_var::operator const ::Dynamic::ExceptionList &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-Dynamic::ExceptionList_var::operator ::Dynamic::ExceptionList &() // cast 
+ACE_INLINE
+Dynamic::ExceptionList_var::operator ::Dynamic::ExceptionList &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-Dynamic::ExceptionList_var::operator ::Dynamic::ExceptionList &() const // cast 
+ACE_INLINE
+Dynamic::ExceptionList_var::operator ::Dynamic::ExceptionList &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-Dynamic::ExceptionList_var::operator ::Dynamic::ExceptionList *&() // cast 
+Dynamic::ExceptionList_var::operator ::Dynamic::ExceptionList *&() // cast
 {
   return this->ptr_;
 }
@@ -885,7 +885,7 @@ Dynamic::ExceptionList_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::Dynamic::ExceptionList *&
 Dynamic::ExceptionList_var::out (void)
 {
@@ -946,7 +946,7 @@ Dynamic::ExceptionList_out::operator= (ExceptionList *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Dynamic::ExceptionList_out::operator ::Dynamic::ExceptionList *&() // cast
 {
   return this->ptr_;
@@ -983,12 +983,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Dynamic::ParameterMode
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (Dynamic::ParameterMode, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1001,7 +1001,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Dynamic::Parame
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Dynamic::Parameter &_tao_aggregate)
@@ -1013,7 +1013,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Dynamic::Parameter &_t
     return 1;
   else
     return 0;
-  
+
 }
 
 

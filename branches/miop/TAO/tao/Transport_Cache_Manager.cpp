@@ -228,7 +228,7 @@ TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
 {
   if (entry == 0)
     return -1;
-  
+
   // First get the entry again (if at all things had changed in the
   // cache map in the mean time)
   HASH_MAP_ENTRY *new_entry = 0;
@@ -265,7 +265,7 @@ TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
 
       if ((*iter).int_id_.recycle_state () != ACE_RECYCLABLE_CLOSED)
         {
-#if 0 
+#if 0
           // @@ This code from Connection_Cache_Manager disappeared
           // during the changeover; we need the functional equivalent back.
           // The problem is that with the locking stuff that we're putting

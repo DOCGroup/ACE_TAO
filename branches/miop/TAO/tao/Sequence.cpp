@@ -197,7 +197,7 @@ TAO_Unbounded_String_Sequence::get_buffer (CORBA::Boolean orphan)
         {
           result = allocbuf (this->length_);
           this->buffer_ = result;
-	        this->release_ = 1;
+                this->release_ = 1;
         }
       else
         {
@@ -432,7 +432,7 @@ TAO_Unbounded_WString_Sequence::get_buffer (CORBA::Boolean orphan)
         {
           result = allocbuf (this->length_);
           this->buffer_ = result;
-	        this->release_ = 1;
+                this->release_ = 1;
         }
       else
         {

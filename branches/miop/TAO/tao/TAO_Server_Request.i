@@ -139,6 +139,19 @@ TAO_ServerRequest::profile (void)
   return this->profile_;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_ServerRequest::profile_has_dispatch_info (void)
+{
+  return this->profile_has_dispatch_info_;
+}
+
+ACE_INLINE void
+TAO_ServerRequest::profile_has_dispatch_info (CORBA::Boolean yes)
+{
+  profile_has_dispatch_info_ = yes;
+}
+
+
 ACE_INLINE void
 TAO_ServerRequest::forward_location (CORBA::Object_ptr forward_reference)
 {

@@ -12,32 +12,34 @@
 
 ACE_RCSID(tao, Tagged_Profile, "$Id$")
 
-CORBA::Boolean 
-TAO_Tagged_Profile::extract_object_key (IOP::TaggedProfile &profile) 
+
+CORBA::Boolean
+TAO_Tagged_Profile::extract_object_key (IOP::TaggedProfile &profile)
 {
   // Get our Acceptor registry
-  TAO_Acceptor_Registry  *acceptor_registry = 
+  TAO_Acceptor_Registry  *acceptor_registry =
     this->orb_core_->acceptor_registry ();
-  
+
   // Get the right acceptor for the tag in the TaggedProfile
-  TAO_Acceptor *acceptor = 
+  TAO_Acceptor *acceptor =
     acceptor_registry->get_acceptor (profile.tag);
-  
+
   if (acceptor)
     {
       // Get the object key
-      int retval = 
+      int retval =
         acceptor->object_key (profile,
                               this->object_key_);
       if (retval == -1)
         return 0;
     }
-  else 
+  else
     {
       if (TAO_debug_level > 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t)TAO_Tagged_Profile \n")),
                           0);
+      return 0;
     }
 
   return 1;

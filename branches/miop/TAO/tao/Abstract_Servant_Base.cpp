@@ -34,7 +34,7 @@ TAO_Abstract_ServantBase::TAO_Abstract_ServantBase (const TAO_Abstract_ServantBa
 TAO_Abstract_ServantBase & TAO_Abstract_ServantBase::operator= (const TAO_Abstract_ServantBase&)
 {
   return *this;
-} 
+}
 
 
 

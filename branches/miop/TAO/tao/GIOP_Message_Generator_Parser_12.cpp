@@ -289,22 +289,27 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   if (hdr_status)
     {
       if (disc == GIOP::KeyAddr)
-          {
-            hdr_status =
-              this->unmarshall_object_key (request.object_key (),
+        {
+          hdr_status =
+              this->unmarshall_object_key (request,
                                            input);
-          }
-       else if (disc == GIOP::ProfileAddr)
-          {
-            hdr_status =
-              this->unmarshall_iop_profile (request.profile (),
+        }
+      else if (disc == GIOP::ProfileAddr)
+        {
+          hdr_status =
+              this->unmarshall_iop_profile (request,
                                             input);
-          }
+        }
       else if (disc == GIOP::ReferenceAddr)
         {
-             hdr_status =
-               this->unmarshall_ref_addr (request.profile (),
+          hdr_status =
+               this->unmarshall_ref_addr (request,
                                           input);
+        }
+      else
+        {
+          // Unknown.
+          hdr_status = 0;
         }
     }
 
@@ -397,19 +402,19 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
       if (disc == GIOP::KeyAddr)
           {
             hdr_status =
-              this->unmarshall_object_key (request.object_key (),
+              this->unmarshall_object_key (request,
                                            msg);
           }
        else if (disc == GIOP::ProfileAddr)
           {
             hdr_status =
-              this->unmarshall_iop_profile (request.profile (),
+              this->unmarshall_iop_profile (request,
                                             msg);
           }
       else if (disc == GIOP::ReferenceAddr)
         {
              hdr_status =
-               this->unmarshall_ref_addr (request.profile (),
+               this->unmarshall_ref_addr (request,
                                           msg);
         }
     }

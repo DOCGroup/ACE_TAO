@@ -71,7 +71,7 @@ TAO_Interceptor_List::add_interceptor_i (
       /// Increase the length of the Interceptor sequence by one.
       size_t new_len = old_len + 1;
       this->length (new_len);
-	  return old_len;
+          return old_len;
     }
   else
     ACE_THROW_RETURN (CORBA::INV_OBJREF (

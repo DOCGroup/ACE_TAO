@@ -104,19 +104,19 @@ TAO_NAMESPACE  POA_Messaging
         TAO_ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
 
     virtual void _dispatch (
         TAO_ServerRequest &_tao_req,
         void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
 
     ::Messaging::ReplyHandler *_this (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
 

@@ -81,7 +81,7 @@ CORBA_OctetSeq_var::operator= (const ::CORBA_OctetSeq_var &p)
         {
           CORBA_OctetSeq *deep_copy =
             new CORBA_OctetSeq (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               CORBA_OctetSeq *tmp = deep_copy;
@@ -91,7 +91,7 @@ CORBA_OctetSeq_var::operator= (const ::CORBA_OctetSeq_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -119,20 +119,20 @@ CORBA_OctetSeq_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_OctetSeq_var::operator const ::CORBA_OctetSeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_OctetSeq_var::operator ::CORBA_OctetSeq &() // cast 
+ACE_INLINE
+CORBA_OctetSeq_var::operator ::CORBA_OctetSeq &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_OctetSeq_var::operator ::CORBA_OctetSeq &() const // cast 
+ACE_INLINE
+CORBA_OctetSeq_var::operator ::CORBA_OctetSeq &() const // cast
 {
   return *this->ptr_;
 }
@@ -161,7 +161,7 @@ CORBA_OctetSeq_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::CORBA_OctetSeq *&
 CORBA_OctetSeq_var::out (void)
 {
@@ -222,7 +222,7 @@ CORBA_OctetSeq_out::operator= (CORBA_OctetSeq *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_OctetSeq_out::operator ::CORBA_OctetSeq *&() // cast
 {
   return this->ptr_;

@@ -529,7 +529,7 @@ RTCORBA::PriorityModelPolicy_var::operator const ::RTCORBA::PriorityModelPolicy_
   return this->ptr_;
 }
 
-RTCORBA::PriorityModelPolicy_var::operator ::RTCORBA::PriorityModelPolicy_ptr &() // cast 
+RTCORBA::PriorityModelPolicy_var::operator ::RTCORBA::PriorityModelPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -796,7 +796,7 @@ RTCORBA::ThreadpoolPolicy_var::operator const ::RTCORBA::ThreadpoolPolicy_ptr &(
   return this->ptr_;
 }
 
-RTCORBA::ThreadpoolPolicy_var::operator ::RTCORBA::ThreadpoolPolicy_ptr &() // cast 
+RTCORBA::ThreadpoolPolicy_var::operator ::RTCORBA::ThreadpoolPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1059,7 +1059,7 @@ RTCORBA::ProtocolProperties_var::operator const ::RTCORBA::ProtocolProperties_pt
   return this->ptr_;
 }
 
-RTCORBA::ProtocolProperties_var::operator ::RTCORBA::ProtocolProperties_ptr &() // cast 
+RTCORBA::ProtocolProperties_var::operator ::RTCORBA::ProtocolProperties_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1410,7 +1410,7 @@ RTCORBA::ServerProtocolPolicy_var::operator const ::RTCORBA::ServerProtocolPolic
   return this->ptr_;
 }
 
-RTCORBA::ServerProtocolPolicy_var::operator ::RTCORBA::ServerProtocolPolicy_ptr &() // cast 
+RTCORBA::ServerProtocolPolicy_var::operator ::RTCORBA::ServerProtocolPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1677,7 +1677,7 @@ RTCORBA::ClientProtocolPolicy_var::operator const ::RTCORBA::ClientProtocolPolic
   return this->ptr_;
 }
 
-RTCORBA::ClientProtocolPolicy_var::operator ::RTCORBA::ClientProtocolPolicy_ptr &() // cast 
+RTCORBA::ClientProtocolPolicy_var::operator ::RTCORBA::ClientProtocolPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1944,7 +1944,7 @@ RTCORBA::PrivateConnectionPolicy_var::operator const ::RTCORBA::PrivateConnectio
   return this->ptr_;
 }
 
-RTCORBA::PrivateConnectionPolicy_var::operator ::RTCORBA::PrivateConnectionPolicy_ptr &() // cast 
+RTCORBA::PrivateConnectionPolicy_var::operator ::RTCORBA::PrivateConnectionPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2206,7 +2206,7 @@ RTCORBA::TCPProtocolProperties_var::operator const ::RTCORBA::TCPProtocolPropert
   return this->ptr_;
 }
 
-RTCORBA::TCPProtocolProperties_var::operator ::RTCORBA::TCPProtocolProperties_ptr &() // cast 
+RTCORBA::TCPProtocolProperties_var::operator ::RTCORBA::TCPProtocolProperties_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2484,7 +2484,7 @@ RTCORBA::GIOPProtocolProperties_var::operator const ::RTCORBA::GIOPProtocolPrope
   return this->ptr_;
 }
 
-RTCORBA::GIOPProtocolProperties_var::operator ::RTCORBA::GIOPProtocolProperties_ptr &() // cast 
+RTCORBA::GIOPProtocolProperties_var::operator ::RTCORBA::GIOPProtocolProperties_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2747,7 +2747,7 @@ RTCORBA::UnixDomainProtocolProperties_var::operator const ::RTCORBA::UnixDomainP
   return this->ptr_;
 }
 
-RTCORBA::UnixDomainProtocolProperties_var::operator ::RTCORBA::UnixDomainProtocolProperties_ptr &() // cast 
+RTCORBA::UnixDomainProtocolProperties_var::operator ::RTCORBA::UnixDomainProtocolProperties_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3010,7 +3010,7 @@ RTCORBA::SharedMemoryProtocolProperties_var::operator const ::RTCORBA::SharedMem
   return this->ptr_;
 }
 
-RTCORBA::SharedMemoryProtocolProperties_var::operator ::RTCORBA::SharedMemoryProtocolProperties_ptr &() // cast 
+RTCORBA::SharedMemoryProtocolProperties_var::operator ::RTCORBA::SharedMemoryProtocolProperties_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3564,7 +3564,7 @@ RTCORBA::PriorityBandedConnectionPolicy_var::operator const ::RTCORBA::PriorityB
   return this->ptr_;
 }
 
-RTCORBA::PriorityBandedConnectionPolicy_var::operator ::RTCORBA::PriorityBandedConnectionPolicy_ptr &() // cast 
+RTCORBA::PriorityBandedConnectionPolicy_var::operator ::RTCORBA::PriorityBandedConnectionPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3827,7 +3827,7 @@ RTCORBA::Current_var::operator const ::RTCORBA::Current_ptr &() const // cast
   return this->ptr_;
 }
 
-RTCORBA::Current_var::operator ::RTCORBA::Current_ptr &() // cast 
+RTCORBA::Current_var::operator ::RTCORBA::Current_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -4090,7 +4090,7 @@ RTCORBA::Mutex_var::operator const ::RTCORBA::Mutex_ptr &() const // cast
   return this->ptr_;
 }
 
-RTCORBA::Mutex_var::operator ::RTCORBA::Mutex_ptr &() // cast 
+RTCORBA::Mutex_var::operator ::RTCORBA::Mutex_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -4341,7 +4341,7 @@ RTCORBA::RTORB_var::operator const ::RTCORBA::RTORB_ptr &() const // cast
   return this->ptr_;
 }
 
-RTCORBA::RTORB_var::operator ::RTCORBA::RTORB_ptr &() // cast 
+RTCORBA::RTORB_var::operator ::RTCORBA::RTORB_ptr &() // cast
 {
   return this->ptr_;
 }

@@ -49,7 +49,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // ctor with T*, ownership flag and a POA
     ~ServerObject_tie (void);
     // dtor
-    
+
     // TIE specific functions
     T *_tied_object (void);
     // return the underlying object
@@ -61,14 +61,14 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // do we own it
     void _is_owner (CORBA::Boolean b);
     // set the ownership
-    
+
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     void ping (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -76,7 +76,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
 
     void shutdown (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -87,7 +87,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
-    
+
     // copy and assignment are not allowed
     ServerObject_tie (const ServerObject_tie &);
     void operator= (const ServerObject_tie &);
@@ -108,7 +108,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // ctor with T*, ownership flag and a POA
     ~Administration_tie (void);
     // dtor
-    
+
     // TIE specific functions
     T *_tied_object (void);
     // return the underlying object
@@ -120,15 +120,15 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // do we own it
     void _is_owner (CORBA::Boolean b);
     // set the ownership
-    
+
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     void activate_server (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -140,7 +140,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     void register_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -151,7 +151,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     void reregister_server (
         const char * server,
         const ImplementationRepository::StartupOptions & options,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -160,7 +160,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
     void remove_server (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -170,7 +170,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
     void shutdown_server (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -182,7 +182,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         const char * server,
         const char * addr,
         ImplementationRepository::ServerObject_ptr server_object,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -192,7 +192,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
     void server_is_shutting_down (
         const char * server,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -203,7 +203,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     void find (
         const char * server,
         ImplementationRepository::ServerInformation_out info,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -215,7 +215,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list,
         ImplementationRepository::ServerInformationIterator_out server_iterator,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -226,7 +226,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
-    
+
     // copy and assignment are not allowed
     Administration_tie (const Administration_tie &);
     void operator= (const Administration_tie &);
@@ -247,7 +247,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // ctor with T*, ownership flag and a POA
     ~ServerInformationIterator_tie (void);
     // dtor
-    
+
     // TIE specific functions
     T *_tied_object (void);
     // return the underlying object
@@ -259,16 +259,16 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // do we own it
     void _is_owner (CORBA::Boolean b);
     // set the ownership
-    
+
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     CORBA::Boolean next_n (
         CORBA::ULong how_many,
         ImplementationRepository::ServerInformationList_out server_list,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -276,7 +276,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
 
     void destroy (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -287,7 +287,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
-    
+
     // copy and assignment are not allowed
     ServerInformationIterator_tie (const ServerInformationIterator_tie &);
     void operator= (const ServerInformationIterator_tie &);

@@ -6,8 +6,8 @@
 ACE_RCSID(tao, IFR_TypeCodes, "$Id$")
 
 // These Interface Repository typecodes and constants are in
-// the CORBA namespace. The typecodes are set to 0 here. If the 
-// IFR_Client library is built and linked, the library initializer 
+// the CORBA namespace. The typecodes are set to 0 here. If the
+// IFR_Client library is built and linked, the library initializer
 // will set them to their correct values. The constants are set to
 // the correct values in this file, since it doesn't take up any
 // more space to do that.

@@ -2,6 +2,7 @@
 
 #include "Profile.h"
 #include "Object_KeyC.h"
+#include "target_specification.h"
 
 #include "MessagingC.h"
 #include "Stub.h"
@@ -261,9 +262,9 @@ TAO_Profile::verify_orb_configuration (CORBA::Environment &ACE_TRY_ENV)
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Cannot add ")
-		    ACE_TEXT ("IOP::TaggedComponent to profile.\n")
-		    ACE_TEXT ("(%P|%t) Standard profile components ")
-		    ACE_TEXT ("have been disabled or URL style IORs\n")
+                    ACE_TEXT ("IOP::TaggedComponent to profile.\n")
+                    ACE_TEXT ("(%P|%t) Standard profile components ")
+                    ACE_TEXT ("have been disabled or URL style IORs\n")
                     ACE_TEXT ("(%P|%t) are in use.  Try ")
                     ACE_TEXT ("\"-ORBStdProfileComponents 1\" and/or\n")
                     ACE_TEXT ("(%P|%t) \"-ORBObjRefStyle IOR\".\n")));
@@ -276,8 +277,8 @@ TAO_Profile::verify_orb_configuration (CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW (CORBA::BAD_PARAM (
                    CORBA_SystemException::_tao_minor_code (
                       TAO_DEFAULT_MINOR_CODE,
-		      EINVAL),
-		   CORBA::COMPLETED_NO));
+                      EINVAL),
+                   CORBA::COMPLETED_NO));
     }
 }
 
@@ -292,8 +293,8 @@ TAO_Profile::verify_profile_version (CORBA::Environment &ACE_TRY_ENV)
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Cannot add ")
-		    ACE_TEXT ("IOP::TaggedComponent to GIOP 1.0")
-		    ACE_TEXT ("IOR profile.\n")
+                    ACE_TEXT ("IOP::TaggedComponent to GIOP 1.0")
+                    ACE_TEXT ("IOR profile.\n")
                     ACE_TEXT ("(%P|%t) Try using a GIOP 1.1 or ")
                     ACE_TEXT ("greater endpoint.\n")));
 
@@ -305,9 +306,30 @@ TAO_Profile::verify_profile_version (CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW (CORBA::BAD_PARAM (
                    CORBA_SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
-		     EINVAL),
-		   CORBA::COMPLETED_NO));
+                     EINVAL),
+                   CORBA::COMPLETED_NO));
     }
+}
+
+void
+TAO_Profile::request_target_specifier (TAO_Target_Specification &target_spec)
+{
+  // @@ Frank - Note: This will need to be moved to handle exception
+  //   cases where the remote doesn't like the target specifier that
+  //   we picked.
+  //
+  // Almost 100% of the time, the request target specifier is the object
+  // key, so this is the default.  For the odd case where a pluggable
+  // protocol needs to change this, it can override this method.
+
+  target_spec.target_specifier (this->object_key ());
+}
+
+int
+TAO_Profile::supports_multicast (void) const
+{
+  // Most profiles do not support multicast endpoints.
+  return 0;
 }
 
 // ****************************************************************

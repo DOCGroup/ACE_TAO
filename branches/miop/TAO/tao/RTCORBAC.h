@@ -338,7 +338,7 @@ TAO_NAMESPACE  RTCORBA
     static PriorityModelPolicy_ptr nil (void);
     static PriorityModelPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     PriorityModelPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -477,7 +477,7 @@ class TAO_Export PriorityModelPolicy: public virtual CORBA::Policy
     static ThreadpoolPolicy_ptr nil (void);
     static ThreadpoolPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     ThreadpoolPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -606,7 +606,7 @@ class TAO_Export ThreadpoolPolicy: public virtual CORBA::Policy
     static ProtocolProperties_ptr nil (void);
     static ProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     ProtocolProperties_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -947,7 +947,7 @@ class TAO_Export ProtocolProperties : public virtual CORBA_Object,
     static ServerProtocolPolicy_ptr nil (void);
     static ServerProtocolPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     ServerProtocolPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1078,7 +1078,7 @@ class TAO_Export ServerProtocolPolicy: public virtual CORBA::Policy
     static ClientProtocolPolicy_ptr nil (void);
     static ClientProtocolPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     ClientProtocolPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1209,7 +1209,7 @@ class TAO_Export ClientProtocolPolicy: public virtual CORBA::Policy
     static PrivateConnectionPolicy_ptr nil (void);
     static PrivateConnectionPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     PrivateConnectionPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1330,7 +1330,7 @@ class TAO_Export PrivateConnectionPolicy: public virtual CORBA::Policy
     static TCPProtocolProperties_ptr nil (void);
     static TCPProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     TCPProtocolProperties_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1536,7 +1536,7 @@ class TAO_Export TCPProtocolProperties: public virtual ProtocolProperties
     static GIOPProtocolProperties_ptr nil (void);
     static GIOPProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     GIOPProtocolProperties_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1657,7 +1657,7 @@ class TAO_Export GIOPProtocolProperties: public virtual ProtocolProperties
     static UnixDomainProtocolProperties_ptr nil (void);
     static UnixDomainProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     UnixDomainProtocolProperties_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1812,7 +1812,7 @@ class TAO_Export UnixDomainProtocolProperties: public virtual ProtocolProperties
     static SharedMemoryProtocolProperties_ptr nil (void);
     static SharedMemoryProtocolProperties_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     SharedMemoryProtocolProperties_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2189,7 +2189,7 @@ class TAO_Export SharedMemoryProtocolProperties: public virtual ProtocolProperti
     static PriorityBandedConnectionPolicy_ptr nil (void);
     static PriorityBandedConnectionPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     PriorityBandedConnectionPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2318,7 +2318,7 @@ class TAO_Export PriorityBandedConnectionPolicy: public virtual CORBA::Policy
     static Current_ptr nil (void);
     static Current_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     Current_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2456,7 +2456,7 @@ class TAO_Export Current: public virtual CORBA::Current
     static Mutex_ptr nil (void);
     static Mutex_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     Mutex_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2602,7 +2602,7 @@ class TAO_Export Mutex : public virtual CORBA_Object
     static RTORB_ptr nil (void);
     static RTORB_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RTORB_ptr ptr_;
     // Unimplemented - prevents widening assignment.

@@ -79,7 +79,7 @@ PortableInterceptor::Interceptor_var::operator const ::PortableInterceptor::Inte
   return this->ptr_;
 }
 
-PortableInterceptor::Interceptor_var::operator ::PortableInterceptor::Interceptor_ptr &() // cast 
+PortableInterceptor::Interceptor_var::operator ::PortableInterceptor::Interceptor_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -383,45 +383,45 @@ static const CORBA::Long _oc_PortableInterceptor_ForwardRequest[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   43,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x72636570), 
-  ACE_NTOHL (0x746f722f), 
-  ACE_NTOHL (0x466f7277), 
-  ACE_NTOHL (0x61726452), 
-  ACE_NTOHL (0x65717565), 
-  ACE_NTOHL (0x73743a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x466f7277),
+  ACE_NTOHL (0x61726452),
+  ACE_NTOHL (0x65717565),
+  ACE_NTOHL (0x73743a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:PortableInterceptor/ForwardRequest:1.0
   15,
-  ACE_NTOHL (0x466f7277), 
-  ACE_NTOHL (0x61726452), 
-  ACE_NTOHL (0x65717565), 
+  ACE_NTOHL (0x466f7277),
+  ACE_NTOHL (0x61726452),
+  ACE_NTOHL (0x65717565),
   ACE_NTOHL (0x73740000),  // name = ForwardRequest
   2, // member count
   8,
-  ACE_NTOHL (0x666f7277), 
+  ACE_NTOHL (0x666f7277),
   ACE_NTOHL (0x61726400),  // name = forward
   CORBA::tk_objref,
   52, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     29,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4f62), 
-    ACE_NTOHL (0x6a656374), 
-    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4f62),
+    ACE_NTOHL (0x6a656374),
+    ACE_NTOHL (0x3a312e30),
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
     7,
-    ACE_NTOHL (0x4f626a65), 
+    ACE_NTOHL (0x4f626a65),
     ACE_NTOHL (0x63740000),  // name = Object
 
   10,
-  ACE_NTOHL (0x7065726d), 
-  ACE_NTOHL (0x616e656e), 
+  ACE_NTOHL (0x7065726d),
+  ACE_NTOHL (0x616e656e),
   ACE_NTOHL (0x74000000),  // name = permanent
   CORBA::tk_boolean,
 
@@ -450,19 +450,19 @@ static const CORBA::Long _oc_PortableInterceptor_ReplyStatus[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x72636570), 
-  ACE_NTOHL (0x746f722f), 
-  ACE_NTOHL (0x5265706c), 
-  ACE_NTOHL (0x79537461), 
-  ACE_NTOHL (0x7475733a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x5265706c),
+  ACE_NTOHL (0x79537461),
+  ACE_NTOHL (0x7475733a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:PortableInterceptor/ReplyStatus:1.0
   12,
-  ACE_NTOHL (0x5265706c), 
-  ACE_NTOHL (0x79537461), 
+  ACE_NTOHL (0x5265706c),
+  ACE_NTOHL (0x79537461),
   ACE_NTOHL (0x74757300),  // name = ReplyStatus
   CORBA::tk_short,
 
@@ -509,17 +509,17 @@ static const CORBA::Long _oc_PortableInterceptor_SlotId[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x72636570), 
-  ACE_NTOHL (0x746f722f), 
-  ACE_NTOHL (0x536c6f74), 
-  ACE_NTOHL (0x49643a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x536c6f74),
+  ACE_NTOHL (0x49643a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:PortableInterceptor/SlotId:1.0
   7,
-  ACE_NTOHL (0x536c6f74), 
+  ACE_NTOHL (0x536c6f74),
   ACE_NTOHL (0x49640000),  // name = SlotId
   CORBA::tk_ulong,
 
@@ -626,19 +626,19 @@ static const CORBA::Long _oc_PortableInterceptor_InvalidSlot[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x496e7465), 
-  ACE_NTOHL (0x72636570), 
-  ACE_NTOHL (0x746f722f), 
-  ACE_NTOHL (0x496e7661), 
-  ACE_NTOHL (0x6c696453), 
-  ACE_NTOHL (0x6c6f743a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x496e7465),
+  ACE_NTOHL (0x72636570),
+  ACE_NTOHL (0x746f722f),
+  ACE_NTOHL (0x496e7661),
+  ACE_NTOHL (0x6c696453),
+  ACE_NTOHL (0x6c6f743a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:PortableInterceptor/InvalidSlot:1.0
   12,
-  ACE_NTOHL (0x496e7661), 
-  ACE_NTOHL (0x6c696453), 
+  ACE_NTOHL (0x496e7661),
+  ACE_NTOHL (0x6c696453),
   ACE_NTOHL (0x6c6f7400),  // name = InvalidSlot
   0, // member count
 };
@@ -710,7 +710,7 @@ PortableInterceptor::Current_var::operator const ::PortableInterceptor::Current_
   return this->ptr_;
 }
 
-PortableInterceptor::Current_var::operator ::PortableInterceptor::Current_ptr &() // cast 
+PortableInterceptor::Current_var::operator ::PortableInterceptor::Current_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -973,7 +973,7 @@ PortableInterceptor::RequestInfo_var::operator const ::PortableInterceptor::Requ
   return this->ptr_;
 }
 
-PortableInterceptor::RequestInfo_var::operator ::PortableInterceptor::RequestInfo_ptr &() // cast 
+PortableInterceptor::RequestInfo_var::operator ::PortableInterceptor::RequestInfo_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1224,7 +1224,7 @@ PortableInterceptor::ClientRequestInfo_var::operator const ::PortableInterceptor
   return this->ptr_;
 }
 
-PortableInterceptor::ClientRequestInfo_var::operator ::PortableInterceptor::ClientRequestInfo_ptr &() // cast 
+PortableInterceptor::ClientRequestInfo_var::operator ::PortableInterceptor::ClientRequestInfo_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1487,7 +1487,7 @@ PortableInterceptor::ServerRequestInfo_var::operator const ::PortableInterceptor
   return this->ptr_;
 }
 
-PortableInterceptor::ServerRequestInfo_var::operator ::PortableInterceptor::ServerRequestInfo_ptr &() // cast 
+PortableInterceptor::ServerRequestInfo_var::operator ::PortableInterceptor::ServerRequestInfo_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1750,7 +1750,7 @@ PortableInterceptor::ClientRequestInterceptor_var::operator const ::PortableInte
   return this->ptr_;
 }
 
-PortableInterceptor::ClientRequestInterceptor_var::operator ::PortableInterceptor::ClientRequestInterceptor_ptr &() // cast 
+PortableInterceptor::ClientRequestInterceptor_var::operator ::PortableInterceptor::ClientRequestInterceptor_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2013,7 +2013,7 @@ PortableInterceptor::ServerRequestInterceptor_var::operator const ::PortableInte
   return this->ptr_;
 }
 
-PortableInterceptor::ServerRequestInterceptor_var::operator ::PortableInterceptor::ServerRequestInterceptor_ptr &() // cast 
+PortableInterceptor::ServerRequestInterceptor_var::operator ::PortableInterceptor::ServerRequestInterceptor_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2276,7 +2276,7 @@ PortableInterceptor::IORInfo_var::operator const ::PortableInterceptor::IORInfo_
   return this->ptr_;
 }
 
-PortableInterceptor::IORInfo_var::operator ::PortableInterceptor::IORInfo_ptr &() // cast 
+PortableInterceptor::IORInfo_var::operator ::PortableInterceptor::IORInfo_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2527,7 +2527,7 @@ PortableInterceptor::IORInterceptor_var::operator const ::PortableInterceptor::I
   return this->ptr_;
 }
 
-PortableInterceptor::IORInterceptor_var::operator ::PortableInterceptor::IORInterceptor_ptr &() // cast 
+PortableInterceptor::IORInterceptor_var::operator ::PortableInterceptor::IORInterceptor_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2790,7 +2790,7 @@ PortableInterceptor::PolicyFactory_var::operator const ::PortableInterceptor::Po
   return this->ptr_;
 }
 
-PortableInterceptor::PolicyFactory_var::operator ::PortableInterceptor::PolicyFactory_ptr &() // cast 
+PortableInterceptor::PolicyFactory_var::operator ::PortableInterceptor::PolicyFactory_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3041,7 +3041,7 @@ PortableInterceptor::ORBInitInfo_var::operator const ::PortableInterceptor::ORBI
   return this->ptr_;
 }
 
-PortableInterceptor::ORBInitInfo_var::operator ::PortableInterceptor::ORBInitInfo_ptr &() // cast 
+PortableInterceptor::ORBInitInfo_var::operator ::PortableInterceptor::ORBInitInfo_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3438,7 +3438,7 @@ PortableInterceptor::ORBInitializer_var::operator const ::PortableInterceptor::O
   return this->ptr_;
 }
 
-PortableInterceptor::ORBInitializer_var::operator ::PortableInterceptor::ORBInitializer_ptr &() // cast 
+PortableInterceptor::ORBInitializer_var::operator ::PortableInterceptor::ORBInitializer_ptr &() // cast
 {
   return this->ptr_;
 }

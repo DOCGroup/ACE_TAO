@@ -473,7 +473,7 @@ CORBA_ORB::poll_next_response (CORBA_Environment &ACE_TRY_ENV)
 
 // ****************************************************************
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_struct_tc (
     const char *id,
     const char *name,
@@ -496,10 +496,10 @@ CORBA_ORB::create_struct_tc (
   return adapter->create_struct_tc (id,
                                     name,
                                     members,
-                                    ACE_TRY_ENV);              
+                                    ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_union_tc (
     const char *id,
     const char *name,
@@ -524,10 +524,10 @@ CORBA_ORB::create_union_tc (
                                    name,
                                    discriminator_type,
                                    members,
-                                   ACE_TRY_ENV);              
+                                   ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_enum_tc (
     const char *id,
     const char *name,
@@ -550,10 +550,10 @@ CORBA_ORB::create_enum_tc (
   return adapter->create_enum_tc (id,
                                   name,
                                   members,
-                                  ACE_TRY_ENV);              
+                                  ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_alias_tc (
     const char *id,
     const char *name,
@@ -576,10 +576,10 @@ CORBA_ORB::create_alias_tc (
   return adapter->create_alias_tc (id,
                                    name,
                                    original_type,
-                                   ACE_TRY_ENV);              
+                                   ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_exception_tc (
     const char *id,
     const char *name,
@@ -602,10 +602,10 @@ CORBA_ORB::create_exception_tc (
   return adapter->create_exception_tc (id,
                                        name,
                                        members,
-                                       ACE_TRY_ENV);              
+                                       ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_interface_tc (
     const char *id,
     const char *name,
@@ -626,10 +626,10 @@ CORBA_ORB::create_interface_tc (
 
   return adapter->create_interface_tc (id,
                                        name,
-                                       ACE_TRY_ENV);              
+                                       ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_string_tc (
     CORBA::ULong bound,
     CORBA::Environment &ACE_TRY_ENV
@@ -648,10 +648,10 @@ CORBA_ORB::create_string_tc (
     }
 
   return adapter->create_string_tc (bound,
-                                    ACE_TRY_ENV);              
+                                    ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_wstring_tc (
     CORBA::ULong bound,
     CORBA::Environment &ACE_TRY_ENV
@@ -670,10 +670,10 @@ CORBA_ORB::create_wstring_tc (
     }
 
   return adapter->create_wstring_tc (bound,
-                                     ACE_TRY_ENV);              
+                                     ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_fixed_tc (
     CORBA::UShort digits,
     CORBA::UShort scale,
@@ -694,10 +694,10 @@ CORBA_ORB::create_fixed_tc (
 
   return adapter->create_fixed_tc (digits,
                                    scale,
-                                   ACE_TRY_ENV);              
+                                   ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_sequence_tc (
     CORBA::ULong bound,
     CORBA::TypeCode_ptr element_type,
@@ -718,10 +718,10 @@ CORBA_ORB::create_sequence_tc (
 
   return adapter->create_sequence_tc (bound,
                                       element_type,
-                                      ACE_TRY_ENV);              
+                                      ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_array_tc (
     CORBA::ULong length,
     CORBA::TypeCode_ptr element_type,
@@ -742,10 +742,10 @@ CORBA_ORB::create_array_tc (
 
   return adapter->create_array_tc (length,
                                    element_type,
-                                   ACE_TRY_ENV);              
+                                   ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_value_tc (
     const char *id,
     const char *name,
@@ -772,10 +772,10 @@ CORBA_ORB::create_value_tc (
                                    type_modifier,
                                    concrete_base,
                                    members,
-                                   ACE_TRY_ENV);              
+                                   ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_value_box_tc (
     const char *id,
     const char *name,
@@ -798,10 +798,10 @@ CORBA_ORB::create_value_box_tc (
   return adapter->create_value_box_tc (id,
                                        name,
                                        boxed_type,
-                                       ACE_TRY_ENV);              
+                                       ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_native_tc (
     const char *id,
     const char *name,
@@ -822,10 +822,10 @@ CORBA_ORB::create_native_tc (
 
   return adapter->create_native_tc (id,
                                     name,
-                                    ACE_TRY_ENV);              
+                                    ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_recursive_tc (
     const char *id,
     CORBA::Environment &ACE_TRY_ENV
@@ -844,10 +844,10 @@ CORBA_ORB::create_recursive_tc (
     }
 
   return adapter->create_recursive_tc (id,
-                                       ACE_TRY_ENV);              
+                                       ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_abstract_interface_tc (
     const char *id,
     const char *name,
@@ -871,7 +871,7 @@ CORBA_ORB::create_abstract_interface_tc (
                                                 ACE_TRY_ENV);
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_ORB::create_local_interface_tc (
     const char *id,
     const char *name,
@@ -978,6 +978,27 @@ CORBA_ORB::resolve_policy_current (CORBA::Environment &)
 
 }
 
+CORBA_Object_ptr
+CORBA_ORB::resolve_root_pga (CORBA::Environment &ACE_TRY_ENV)
+{
+//#if (TAO_HAS_MIOP == 1)
+//  return this->orb_core_->root_pga (ACE_TRY_ENV);
+//#else
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  return CORBA_Object::_nil ();
+//#endif /* TAO_HAS_MIOP == 1 */
+}
+
+CORBA_Object_ptr
+CORBA_ORB::resolve_miop (CORBA::Environment &ACE_TRY_ENV)
+{
+#if (TAO_HAS_MIOP == 1)
+  return this->orb_core_->resolve_miop (ACE_TRY_ENV);
+#else
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  return CORBA_Object::_nil ();
+#endif /* TAO_HAS_MIOP == 1 */
+}
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
@@ -1337,6 +1358,12 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_RTCURRENT) == 0)
     return this->resolve_rt_current (ACE_TRY_ENV);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPGA) == 0)
+    return this->resolve_root_pga (ACE_TRY_ENV);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_MIOP) == 0)
+    return this->resolve_miop (ACE_TRY_ENV);
 
   // -----------------------------------------------------------------
 

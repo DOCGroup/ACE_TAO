@@ -16,7 +16,7 @@ ACE_RCSID (TAO_CodecFactory,
 
 
 TAO_CDR_Encaps_Codec::TAO_CDR_Encaps_Codec (CORBA::Octet major,
-					    CORBA::Octet minor)
+                                            CORBA::Octet minor)
   : major_ (major),
     minor_ (minor)
 {
@@ -28,12 +28,12 @@ TAO_CDR_Encaps_Codec::~TAO_CDR_Encaps_Codec (void)
 
 CORBA::OctetSeq *
 TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data,
-			      CORBA::Environment &ACE_TRY_ENV)
+                              CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   IOP::Codec::InvalidTypeForEncoding))
+                   IOP::Codec::InvalidTypeForEncoding))
 {
   this->check_type_for_encoding (data,
-				 ACE_TRY_ENV);
+                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   // ----------------------------------------------------------------
@@ -75,9 +75,9 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data,
 
 CORBA::Any *
 TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data,
-			      CORBA::Environment &ACE_TRY_ENV)
+                              CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   IOP::Codec::FormatMismatch))
+                   IOP::Codec::FormatMismatch))
 {
   // @todo How do we check for a format mismatch so that we can throw
   //       a IOP::Codec::FormatMismatch exception?
@@ -117,12 +117,12 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data,
 
 CORBA::OctetSeq *
 TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data,
-				    CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   IOP::Codec::InvalidTypeForEncoding))
+                   IOP::Codec::InvalidTypeForEncoding))
 {
   this->check_type_for_encoding (data,
-				 ACE_TRY_ENV);
+                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   // ----------------------------------------------------------------
@@ -171,16 +171,16 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data,
       return safe_octet_seq._retn ();
     }
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (), 0);  
+  ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
 }
 
 CORBA::Any *
 TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
-				    CORBA::TypeCode_ptr tc,
-				    CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::TypeCode_ptr tc,
+                                    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   IOP::Codec::FormatMismatch,
-		   IOP::Codec::TypeMismatch))
+                   IOP::Codec::FormatMismatch,
+                   IOP::Codec::TypeMismatch))
 {
   // @todo How do we check for a type mismatch so that we can
   //       throw a IOP::Codec::TypeMismatch exception?

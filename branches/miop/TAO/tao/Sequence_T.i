@@ -51,20 +51,20 @@ TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
             {
               result = TAO_Unbounded_Sequence<T>::allocbuf (this->length_);
               this->buffer_ = result;
-	      this->release_ = 1;
+              this->release_ = 1;
             }
         }
       else
         {
           result =
-            ACE_reinterpret_cast (T*, 
-	                          this->buffer_);
+            ACE_reinterpret_cast (T*,
+                                  this->buffer_);
         }
     }
   else // if (orphan == 1)
     {
       result = ACE_reinterpret_cast (T*,
-	                             this->buffer_);
+                                     this->buffer_);
 
       if (this->release_ != 0)
         {
@@ -145,7 +145,7 @@ TAO_Bounded_Sequence<T, MAX>::get_buffer (CORBA::Boolean orphan)
         {
           result = TAO_Bounded_Sequence<T,MAX>::allocbuf (this->maximum_);
           this->buffer_ = result;
-	  this->release_ = 1;
+          this->release_ = 1;
         }
       else
         {
@@ -523,19 +523,19 @@ TAO_Unbounded_Array_Sequence<T, T_var>::get_buffer (CORBA::Boolean orphan)
         {
           if (this->length_ > 0)
             {
-              result = 
-	        TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (
+              result =
+                TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (
                     this->length_
                   );
               this->buffer_ = result;
-	      this->release_ = 1;
+              this->release_ = 1;
             }
         }
       else
         {
           result =
-            ACE_reinterpret_cast (T*, 
-	                          this->buffer_);
+            ACE_reinterpret_cast (T*,
+                                  this->buffer_);
         }
     }
   else // if (orphan == 1)
@@ -545,7 +545,7 @@ TAO_Unbounded_Array_Sequence<T, T_var>::get_buffer (CORBA::Boolean orphan)
           // We set the state back to default and relinquish
           // ownership.
           result = ACE_reinterpret_cast (T*,
-	                                 this->buffer_);
+                                         this->buffer_);
           this->maximum_ = 0;
           this->length_ = 0;
           this->buffer_ = 0;
@@ -558,13 +558,13 @@ TAO_Unbounded_Array_Sequence<T, T_var>::get_buffer (CORBA::Boolean orphan)
 template <class T, class T_var> ACE_INLINE const T *
 TAO_Unbounded_Array_Sequence<T, T_var>::get_buffer (void) const
 {
-  return ACE_reinterpret_cast (const T * ACE_CAST_CONST, 
+  return ACE_reinterpret_cast (const T * ACE_CAST_CONST,
                                this->buffer_);
 }
 
 template <class T, class T_var> ACE_INLINE void
 TAO_Unbounded_Array_Sequence<T, T_var>::replace (CORBA::ULong max,
-				                   CORBA::ULong length,
+                                                   CORBA::ULong length,
                                                    T *data,
                                                    CORBA::Boolean release)
 {
@@ -643,10 +643,10 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::get_buffer (CORBA::Boolean orphan)
 
       if (this->buffer_ == 0)
         {
-          result = 
-	    TAO_Bounded_Array_Sequence<T, T_var, MAX>::allocbuf (this->maximum_);
+          result =
+            TAO_Bounded_Array_Sequence<T, T_var, MAX>::allocbuf (this->maximum_);
           this->buffer_ = result;
-	  this->release_ = 1;
+          this->release_ = 1;
         }
       else
         {
@@ -673,7 +673,7 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::get_buffer (CORBA::Boolean orphan)
 template <class T, class T_var, size_t MAX> ACE_INLINE const T *
 TAO_Bounded_Array_Sequence<T, T_var, MAX>::get_buffer (void) const
 {
-  return ACE_reinterpret_cast (const T * ACE_CAST_CONST, 
+  return ACE_reinterpret_cast (const T * ACE_CAST_CONST,
                                this->buffer_);
 }
 
@@ -687,7 +687,7 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::replace (CORBA::ULong max,
   this->length_ = length;
   if (this->buffer_ && this->release_ == 1)
     {
-      T* tmp = ACE_reinterpret_cast (T*, 
+      T* tmp = ACE_reinterpret_cast (T*,
                                      this->buffer_);
       TAO_Bounded_Array_Sequence<T, T_var, MAX>::freebuf (tmp);
     }

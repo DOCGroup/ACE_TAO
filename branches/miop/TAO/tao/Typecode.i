@@ -48,7 +48,7 @@ CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc,
 {
   return this->equ_common (tc,
                            1,
-			   ACE_TRY_ENV);
+                           ACE_TRY_ENV);
 }
 
 // Returns true if the two typecodes are identical.
@@ -58,7 +58,7 @@ CORBA_TypeCode::equal (CORBA::TypeCode_ptr tc,
 {
   return this->equ_common (tc,
                            0,
-			   ACE_TRY_ENV);
+                           ACE_TRY_ENV);
 }
 
 // returns the Repository ID

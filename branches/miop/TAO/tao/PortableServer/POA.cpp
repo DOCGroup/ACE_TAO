@@ -25,6 +25,9 @@
 #include "Default_Acceptor_Filter.h"
 #include "RT_Acceptor_Filters.h"
 
+#include "tao/PortableGroup_Adapter.h"
+#include "PortableGroup_Hooks.h"
+
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
@@ -3078,6 +3081,48 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+#if (TAO_HAS_MIOP == 1)
+
+PortableServer::ObjectId *
+TAO_POA::create_id_for_reference (CORBA::Object_ptr the_ref,
+                                  CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::POA::WrongAdapter
+    ))
+{
+  TAO_POA_PortableGroup_Hooks *hooks =
+    orb_core_.portable_group ()->poa_hooks (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::ObjectId::_nil ());
+
+  PortableServer::ObjectId *obj_id =
+    hooks->create_id_for_reference (*this, the_ref, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::ObjectId::_nil ());
+
+  return obj_id;
+}
+
+PortableServer::IDs *
+TAO_POA::reference_to_ids (CORBA::Object_ptr the_ref,
+                           CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::POA::WrongAdapter
+    ))
+{
+  TAO_POA_PortableGroup_Hooks *hooks =
+    orb_core_.portable_group ()->poa_hooks (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::IDs::_nil ());
+
+  PortableServer::IDs *id_list =
+    hooks->reference_to_ids (*this, the_ref, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::IDs::_nil ());
+
+  return id_list;
+}
+
+#endif /* TAO_HAS_MIOP == 1 */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 

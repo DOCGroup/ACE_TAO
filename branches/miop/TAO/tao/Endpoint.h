@@ -82,7 +82,7 @@ public:
 
   /// This method returns a copy of the corresponding endpoints by
   /// allocation memory
-  virtual TAO_Endpoint *duplicate (void) = 0;
+  virtual TAO_Endpoint *duplicate (void) const = 0;
 
   /// Return a hash value for this object.
   virtual CORBA::ULong hash (void) = 0;

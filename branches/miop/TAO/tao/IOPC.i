@@ -70,7 +70,7 @@ IOP::TaggedProfile_var::operator= (const ::IOP::TaggedProfile_var &p)
         {
           TaggedProfile *deep_copy =
             new TaggedProfile (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               TaggedProfile *tmp = deep_copy;
@@ -80,7 +80,7 @@ IOP::TaggedProfile_var::operator= (const ::IOP::TaggedProfile_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -103,20 +103,20 @@ IOP::TaggedProfile_var::operator const ::IOP::TaggedProfile &() const // cast
 }
 
 ACE_INLINE
-IOP::TaggedProfile_var::operator ::IOP::TaggedProfile &() // cast 
+IOP::TaggedProfile_var::operator ::IOP::TaggedProfile &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IOP::TaggedProfile_var::operator ::IOP::TaggedProfile &() const // cast 
+IOP::TaggedProfile_var::operator ::IOP::TaggedProfile &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-IOP::TaggedProfile_var::operator ::IOP::TaggedProfile *&() // cast 
+IOP::TaggedProfile_var::operator ::IOP::TaggedProfile *&() // cast
 {
   return this->ptr_;
 }
@@ -133,7 +133,7 @@ IOP::TaggedProfile_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::IOP::TaggedProfile *&
 IOP::TaggedProfile_var::out (void)
 {
@@ -194,7 +194,7 @@ IOP::TaggedProfile_out::operator= (TaggedProfile *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IOP::TaggedProfile_out::operator ::IOP::TaggedProfile *&() // cast
 {
   return this->ptr_;
@@ -263,7 +263,7 @@ IOP::IOR_var::operator= (const ::IOP::IOR_var &p)
         {
           IOR *deep_copy =
             new IOR (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               IOR *tmp = deep_copy;
@@ -273,7 +273,7 @@ IOP::IOR_var::operator= (const ::IOP::IOR_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -296,20 +296,20 @@ IOP::IOR_var::operator const ::IOP::IOR &() const // cast
 }
 
 ACE_INLINE
-IOP::IOR_var::operator ::IOP::IOR &() // cast 
+IOP::IOR_var::operator ::IOP::IOR &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IOP::IOR_var::operator ::IOP::IOR &() const // cast 
+IOP::IOR_var::operator ::IOP::IOR &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-IOP::IOR_var::operator ::IOP::IOR *&() // cast 
+IOP::IOR_var::operator ::IOP::IOR *&() // cast
 {
   return this->ptr_;
 }
@@ -326,7 +326,7 @@ IOP::IOR_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::IOP::IOR *&
 IOP::IOR_var::out (void)
 {
@@ -387,7 +387,7 @@ IOP::IOR_out::operator= (IOR *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IOP::IOR_out::operator ::IOP::IOR *&() // cast
 {
   return this->ptr_;
@@ -407,7 +407,7 @@ IOP::IOR_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CI_
 
@@ -420,24 +420,24 @@ IOP::IOR_out::operator-> (void)
     ACE_NEW_RETURN (retval, IOP::TaggedProfile[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::freebuf (IOP::TaggedProfile *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -446,7 +446,7 @@ IOP::IOR_out::operator-> (void)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (const _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &rhs)
   // Copy constructor.
@@ -456,10 +456,10 @@ IOP::IOR_out::operator-> (void)
     {
       IOP::TaggedProfile *tmp1 = _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (this->maximum_);
       IOP::TaggedProfile * const tmp2 = ACE_reinterpret_cast (IOP::TaggedProfile * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -467,14 +467,14 @@ IOP::IOR_out::operator-> (void)
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &
   IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::operator= (const _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -487,18 +487,18 @@ IOP::IOR_out::operator-> (void)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     IOP::TaggedProfile *tmp1 = ACE_reinterpret_cast (IOP::TaggedProfile *, this->buffer_);
     IOP::TaggedProfile * const tmp2 = ACE_reinterpret_cast (IOP::TaggedProfile * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE IOP::TaggedProfile &
   IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::operator[] (CORBA::ULong i)
@@ -508,7 +508,7 @@ IOP::IOR_out::operator-> (void)
     IOP::TaggedProfile* tmp = ACE_reinterpret_cast(IOP::TaggedProfile*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const IOP::TaggedProfile &
   IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::operator[] (CORBA::ULong i) const
   // operator []
@@ -517,9 +517,9 @@ IOP::IOR_out::operator-> (void)
     IOP::TaggedProfile * const tmp = ACE_reinterpret_cast (IOP::TaggedProfile* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE IOP::TaggedProfile *
   IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::get_buffer (CORBA::Boolean orphan)
   {
@@ -553,13 +553,13 @@ IOP::IOR_out::operator-> (void)
     }
     return result;
   }
-  
+
   ACE_INLINE const IOP::TaggedProfile *
   IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IOP::TaggedProfile * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -576,11 +576,11 @@ IOP::IOR_out::operator-> (void)
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 // *************************************************************
 // Inline operations for class IOP::TaggedComponent_var
 // *************************************************************
@@ -632,7 +632,7 @@ IOP::TaggedComponent_var::operator= (const ::IOP::TaggedComponent_var &p)
         {
           TaggedComponent *deep_copy =
             new TaggedComponent (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               TaggedComponent *tmp = deep_copy;
@@ -642,7 +642,7 @@ IOP::TaggedComponent_var::operator= (const ::IOP::TaggedComponent_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -665,20 +665,20 @@ IOP::TaggedComponent_var::operator const ::IOP::TaggedComponent &() const // cas
 }
 
 ACE_INLINE
-IOP::TaggedComponent_var::operator ::IOP::TaggedComponent &() // cast 
+IOP::TaggedComponent_var::operator ::IOP::TaggedComponent &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IOP::TaggedComponent_var::operator ::IOP::TaggedComponent &() const // cast 
+IOP::TaggedComponent_var::operator ::IOP::TaggedComponent &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-IOP::TaggedComponent_var::operator ::IOP::TaggedComponent *&() // cast 
+IOP::TaggedComponent_var::operator ::IOP::TaggedComponent *&() // cast
 {
   return this->ptr_;
 }
@@ -695,7 +695,7 @@ IOP::TaggedComponent_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::IOP::TaggedComponent *&
 IOP::TaggedComponent_var::out (void)
 {
@@ -756,7 +756,7 @@ IOP::TaggedComponent_out::operator= (TaggedComponent *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IOP::TaggedComponent_out::operator ::IOP::TaggedComponent *&() // cast
 {
   return this->ptr_;
@@ -776,7 +776,7 @@ IOP::TaggedComponent_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_MULTIPLECOMPONENTPROFILE_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_MULTIPLECOMPONENTPROFILE_CI_
 
@@ -789,24 +789,24 @@ IOP::TaggedComponent_out::operator-> (void)
     ACE_NEW_RETURN (retval, IOP::TaggedComponent[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::freebuf (IOP::TaggedComponent *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -815,7 +815,7 @@ IOP::TaggedComponent_out::operator-> (void)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (const _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &rhs)
   // Copy constructor.
@@ -825,10 +825,10 @@ IOP::TaggedComponent_out::operator-> (void)
     {
       IOP::TaggedComponent *tmp1 = _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (this->maximum_);
       IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -836,14 +836,14 @@ IOP::TaggedComponent_out::operator-> (void)
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &
   IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::operator= (const _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -856,18 +856,18 @@ IOP::TaggedComponent_out::operator-> (void)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     IOP::TaggedComponent *tmp1 = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
     IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE IOP::TaggedComponent &
   IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::operator[] (CORBA::ULong i)
@@ -877,7 +877,7 @@ IOP::TaggedComponent_out::operator-> (void)
     IOP::TaggedComponent* tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const IOP::TaggedComponent &
   IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::operator[] (CORBA::ULong i) const
   // operator []
@@ -886,9 +886,9 @@ IOP::TaggedComponent_out::operator-> (void)
     IOP::TaggedComponent * const tmp = ACE_reinterpret_cast (IOP::TaggedComponent* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE IOP::TaggedComponent *
   IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::get_buffer (CORBA::Boolean orphan)
   {
@@ -922,13 +922,13 @@ IOP::TaggedComponent_out::operator-> (void)
     }
     return result;
   }
-  
+
   ACE_INLINE const IOP::TaggedComponent *
   IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IOP::TaggedComponent * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -945,11 +945,11 @@ IOP::TaggedComponent_out::operator-> (void)
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IOP_MULTIPLECOMPONENTPROFILE_CI_)
 #define _IOP_MULTIPLECOMPONENTPROFILE_CI_
@@ -1005,7 +1005,7 @@ IOP::MultipleComponentProfile_var::operator= (const ::IOP::MultipleComponentProf
         {
           MultipleComponentProfile *deep_copy =
             new MultipleComponentProfile (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               MultipleComponentProfile *tmp = deep_copy;
@@ -1015,7 +1015,7 @@ IOP::MultipleComponentProfile_var::operator= (const ::IOP::MultipleComponentProf
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -1031,27 +1031,27 @@ IOP::MultipleComponentProfile_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IOP::MultipleComponentProfile_var::operator const ::IOP::MultipleComponentProfile &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-IOP::MultipleComponentProfile_var::operator ::IOP::MultipleComponentProfile &() // cast 
+ACE_INLINE
+IOP::MultipleComponentProfile_var::operator ::IOP::MultipleComponentProfile &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-IOP::MultipleComponentProfile_var::operator ::IOP::MultipleComponentProfile &() const // cast 
+ACE_INLINE
+IOP::MultipleComponentProfile_var::operator ::IOP::MultipleComponentProfile &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-IOP::MultipleComponentProfile_var::operator ::IOP::MultipleComponentProfile *&() // cast 
+IOP::MultipleComponentProfile_var::operator ::IOP::MultipleComponentProfile *&() // cast
 {
   return this->ptr_;
 }
@@ -1080,7 +1080,7 @@ IOP::MultipleComponentProfile_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::IOP::MultipleComponentProfile *&
 IOP::MultipleComponentProfile_var::out (void)
 {
@@ -1141,7 +1141,7 @@ IOP::MultipleComponentProfile_out::operator= (MultipleComponentProfile *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IOP::MultipleComponentProfile_out::operator ::IOP::MultipleComponentProfile *&() // cast
 {
   return this->ptr_;
@@ -1170,7 +1170,7 @@ IOP::MultipleComponentProfile_out::operator[] (CORBA::ULong index)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTLIST_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTLIST_CI_
 
@@ -1183,24 +1183,24 @@ IOP::MultipleComponentProfile_out::operator[] (CORBA::ULong index)
     ACE_NEW_RETURN (retval, IOP::TaggedComponent[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::freebuf (IOP::TaggedComponent *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::_TAO_Unbounded_Sequence_IOP_TaggedComponentList (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::_TAO_Unbounded_Sequence_IOP_TaggedComponentList (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::_TAO_Unbounded_Sequence_IOP_TaggedComponentList (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -1209,7 +1209,7 @@ IOP::MultipleComponentProfile_out::operator[] (CORBA::ULong index)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::_TAO_Unbounded_Sequence_IOP_TaggedComponentList (const _TAO_Unbounded_Sequence_IOP_TaggedComponentList &rhs)
   // Copy constructor.
@@ -1219,10 +1219,10 @@ IOP::MultipleComponentProfile_out::operator[] (CORBA::ULong index)
     {
       IOP::TaggedComponent *tmp1 = _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (this->maximum_);
       IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -1230,14 +1230,14 @@ IOP::MultipleComponentProfile_out::operator[] (CORBA::ULong index)
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList &
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::operator= (const _TAO_Unbounded_Sequence_IOP_TaggedComponentList &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -1250,18 +1250,18 @@ IOP::MultipleComponentProfile_out::operator[] (CORBA::ULong index)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     IOP::TaggedComponent *tmp1 = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
     IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE IOP::TaggedComponent &
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::operator[] (CORBA::ULong i)
@@ -1271,7 +1271,7 @@ IOP::MultipleComponentProfile_out::operator[] (CORBA::ULong index)
     IOP::TaggedComponent* tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const IOP::TaggedComponent &
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::operator[] (CORBA::ULong i) const
   // operator []
@@ -1280,9 +1280,9 @@ IOP::MultipleComponentProfile_out::operator[] (CORBA::ULong index)
     IOP::TaggedComponent * const tmp = ACE_reinterpret_cast (IOP::TaggedComponent* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE IOP::TaggedComponent *
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::get_buffer (CORBA::Boolean orphan)
   {
@@ -1316,13 +1316,13 @@ IOP::MultipleComponentProfile_out::operator[] (CORBA::ULong index)
     }
     return result;
   }
-  
+
   ACE_INLINE const IOP::TaggedComponent *
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IOP::TaggedComponent * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -1339,11 +1339,11 @@ IOP::MultipleComponentProfile_out::operator[] (CORBA::ULong index)
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IOP_TAGGEDCOMPONENTLIST_CI_)
 #define _IOP_TAGGEDCOMPONENTLIST_CI_
@@ -1399,7 +1399,7 @@ IOP::TaggedComponentList_var::operator= (const ::IOP::TaggedComponentList_var &p
         {
           TaggedComponentList *deep_copy =
             new TaggedComponentList (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               TaggedComponentList *tmp = deep_copy;
@@ -1409,7 +1409,7 @@ IOP::TaggedComponentList_var::operator= (const ::IOP::TaggedComponentList_var &p
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -1425,27 +1425,27 @@ IOP::TaggedComponentList_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IOP::TaggedComponentList_var::operator const ::IOP::TaggedComponentList &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-IOP::TaggedComponentList_var::operator ::IOP::TaggedComponentList &() // cast 
+ACE_INLINE
+IOP::TaggedComponentList_var::operator ::IOP::TaggedComponentList &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-IOP::TaggedComponentList_var::operator ::IOP::TaggedComponentList &() const // cast 
+ACE_INLINE
+IOP::TaggedComponentList_var::operator ::IOP::TaggedComponentList &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-IOP::TaggedComponentList_var::operator ::IOP::TaggedComponentList *&() // cast 
+IOP::TaggedComponentList_var::operator ::IOP::TaggedComponentList *&() // cast
 {
   return this->ptr_;
 }
@@ -1474,7 +1474,7 @@ IOP::TaggedComponentList_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::IOP::TaggedComponentList *&
 IOP::TaggedComponentList_var::out (void)
 {
@@ -1535,7 +1535,7 @@ IOP::TaggedComponentList_out::operator= (TaggedComponentList *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IOP::TaggedComponentList_out::operator ::IOP::TaggedComponentList *&() // cast
 {
   return this->ptr_;
@@ -1564,7 +1564,7 @@ IOP::TaggedComponentList_out::operator[] (CORBA::ULong index)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTSEQ_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTSEQ_CI_
 
@@ -1577,24 +1577,24 @@ IOP::TaggedComponentList_out::operator[] (CORBA::ULong index)
     ACE_NEW_RETURN (retval, IOP::TaggedComponent[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::freebuf (IOP::TaggedComponent *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -1603,7 +1603,7 @@ IOP::TaggedComponentList_out::operator[] (CORBA::ULong index)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (const _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &rhs)
   // Copy constructor.
@@ -1613,10 +1613,10 @@ IOP::TaggedComponentList_out::operator[] (CORBA::ULong index)
     {
       IOP::TaggedComponent *tmp1 = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (this->maximum_);
       IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -1624,14 +1624,14 @@ IOP::TaggedComponentList_out::operator[] (CORBA::ULong index)
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::operator= (const _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -1644,18 +1644,18 @@ IOP::TaggedComponentList_out::operator[] (CORBA::ULong index)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     IOP::TaggedComponent *tmp1 = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
     IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE IOP::TaggedComponent &
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::operator[] (CORBA::ULong i)
@@ -1665,7 +1665,7 @@ IOP::TaggedComponentList_out::operator[] (CORBA::ULong index)
     IOP::TaggedComponent* tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const IOP::TaggedComponent &
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::operator[] (CORBA::ULong i) const
   // operator []
@@ -1674,9 +1674,9 @@ IOP::TaggedComponentList_out::operator[] (CORBA::ULong index)
     IOP::TaggedComponent * const tmp = ACE_reinterpret_cast (IOP::TaggedComponent* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE IOP::TaggedComponent *
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::get_buffer (CORBA::Boolean orphan)
   {
@@ -1710,13 +1710,13 @@ IOP::TaggedComponentList_out::operator[] (CORBA::ULong index)
     }
     return result;
   }
-  
+
   ACE_INLINE const IOP::TaggedComponent *
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IOP::TaggedComponent * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -1733,11 +1733,11 @@ IOP::TaggedComponentList_out::operator[] (CORBA::ULong index)
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IOP_TAGGEDCOMPONENTSEQ_CI_)
 #define _IOP_TAGGEDCOMPONENTSEQ_CI_
@@ -1793,7 +1793,7 @@ IOP::TaggedComponentSeq_var::operator= (const ::IOP::TaggedComponentSeq_var &p)
         {
           TaggedComponentSeq *deep_copy =
             new TaggedComponentSeq (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               TaggedComponentSeq *tmp = deep_copy;
@@ -1803,7 +1803,7 @@ IOP::TaggedComponentSeq_var::operator= (const ::IOP::TaggedComponentSeq_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -1819,27 +1819,27 @@ IOP::TaggedComponentSeq_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IOP::TaggedComponentSeq_var::operator const ::IOP::TaggedComponentSeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-IOP::TaggedComponentSeq_var::operator ::IOP::TaggedComponentSeq &() // cast 
+ACE_INLINE
+IOP::TaggedComponentSeq_var::operator ::IOP::TaggedComponentSeq &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-IOP::TaggedComponentSeq_var::operator ::IOP::TaggedComponentSeq &() const // cast 
+ACE_INLINE
+IOP::TaggedComponentSeq_var::operator ::IOP::TaggedComponentSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-IOP::TaggedComponentSeq_var::operator ::IOP::TaggedComponentSeq *&() // cast 
+IOP::TaggedComponentSeq_var::operator ::IOP::TaggedComponentSeq *&() // cast
 {
   return this->ptr_;
 }
@@ -1868,7 +1868,7 @@ IOP::TaggedComponentSeq_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::IOP::TaggedComponentSeq *&
 IOP::TaggedComponentSeq_var::out (void)
 {
@@ -1929,7 +1929,7 @@ IOP::TaggedComponentSeq_out::operator= (TaggedComponentSeq *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IOP::TaggedComponentSeq_out::operator ::IOP::TaggedComponentSeq *&() // cast
 {
   return this->ptr_;
@@ -2007,7 +2007,7 @@ IOP::ServiceContext_var::operator= (const ::IOP::ServiceContext_var &p)
         {
           ServiceContext *deep_copy =
             new ServiceContext (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               ServiceContext *tmp = deep_copy;
@@ -2017,7 +2017,7 @@ IOP::ServiceContext_var::operator= (const ::IOP::ServiceContext_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -2040,20 +2040,20 @@ IOP::ServiceContext_var::operator const ::IOP::ServiceContext &() const // cast
 }
 
 ACE_INLINE
-IOP::ServiceContext_var::operator ::IOP::ServiceContext &() // cast 
+IOP::ServiceContext_var::operator ::IOP::ServiceContext &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IOP::ServiceContext_var::operator ::IOP::ServiceContext &() const // cast 
+IOP::ServiceContext_var::operator ::IOP::ServiceContext &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-IOP::ServiceContext_var::operator ::IOP::ServiceContext *&() // cast 
+IOP::ServiceContext_var::operator ::IOP::ServiceContext *&() // cast
 {
   return this->ptr_;
 }
@@ -2070,7 +2070,7 @@ IOP::ServiceContext_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::IOP::ServiceContext *&
 IOP::ServiceContext_var::out (void)
 {
@@ -2131,7 +2131,7 @@ IOP::ServiceContext_out::operator= (ServiceContext *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IOP::ServiceContext_out::operator ::IOP::ServiceContext *&() // cast
 {
   return this->ptr_;
@@ -2151,7 +2151,7 @@ IOP::ServiceContext_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_SERVICECONTEXTLIST_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_SERVICECONTEXTLIST_CI_
 
@@ -2164,24 +2164,24 @@ IOP::ServiceContext_out::operator-> (void)
     ACE_NEW_RETURN (retval, IOP::ServiceContext[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::freebuf (IOP::ServiceContext *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::_TAO_Unbounded_Sequence_IOP_ServiceContextList (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::_TAO_Unbounded_Sequence_IOP_ServiceContextList (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::_TAO_Unbounded_Sequence_IOP_ServiceContextList (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -2190,7 +2190,7 @@ IOP::ServiceContext_out::operator-> (void)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::_TAO_Unbounded_Sequence_IOP_ServiceContextList (const _TAO_Unbounded_Sequence_IOP_ServiceContextList &rhs)
   // Copy constructor.
@@ -2200,10 +2200,10 @@ IOP::ServiceContext_out::operator-> (void)
     {
       IOP::ServiceContext *tmp1 = _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (this->maximum_);
       IOP::ServiceContext * const tmp2 = ACE_reinterpret_cast (IOP::ServiceContext * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -2211,14 +2211,14 @@ IOP::ServiceContext_out::operator-> (void)
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList &
   IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::operator= (const _TAO_Unbounded_Sequence_IOP_ServiceContextList &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -2231,18 +2231,18 @@ IOP::ServiceContext_out::operator-> (void)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     IOP::ServiceContext *tmp1 = ACE_reinterpret_cast (IOP::ServiceContext *, this->buffer_);
     IOP::ServiceContext * const tmp2 = ACE_reinterpret_cast (IOP::ServiceContext * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE IOP::ServiceContext &
   IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::operator[] (CORBA::ULong i)
@@ -2252,7 +2252,7 @@ IOP::ServiceContext_out::operator-> (void)
     IOP::ServiceContext* tmp = ACE_reinterpret_cast(IOP::ServiceContext*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const IOP::ServiceContext &
   IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::operator[] (CORBA::ULong i) const
   // operator []
@@ -2261,9 +2261,9 @@ IOP::ServiceContext_out::operator-> (void)
     IOP::ServiceContext * const tmp = ACE_reinterpret_cast (IOP::ServiceContext* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE IOP::ServiceContext *
   IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::get_buffer (CORBA::Boolean orphan)
   {
@@ -2297,13 +2297,13 @@ IOP::ServiceContext_out::operator-> (void)
     }
     return result;
   }
-  
+
   ACE_INLINE const IOP::ServiceContext *
   IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IOP::ServiceContext * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -2320,11 +2320,11 @@ IOP::ServiceContext_out::operator-> (void)
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IOP_SERVICECONTEXTLIST_CI_)
 #define _IOP_SERVICECONTEXTLIST_CI_
@@ -2380,7 +2380,7 @@ IOP::ServiceContextList_var::operator= (const ::IOP::ServiceContextList_var &p)
         {
           ServiceContextList *deep_copy =
             new ServiceContextList (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               ServiceContextList *tmp = deep_copy;
@@ -2390,7 +2390,7 @@ IOP::ServiceContextList_var::operator= (const ::IOP::ServiceContextList_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -2406,27 +2406,27 @@ IOP::ServiceContextList_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IOP::ServiceContextList_var::operator const ::IOP::ServiceContextList &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-IOP::ServiceContextList_var::operator ::IOP::ServiceContextList &() // cast 
+ACE_INLINE
+IOP::ServiceContextList_var::operator ::IOP::ServiceContextList &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-IOP::ServiceContextList_var::operator ::IOP::ServiceContextList &() const // cast 
+ACE_INLINE
+IOP::ServiceContextList_var::operator ::IOP::ServiceContextList &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-IOP::ServiceContextList_var::operator ::IOP::ServiceContextList *&() // cast 
+IOP::ServiceContextList_var::operator ::IOP::ServiceContextList *&() // cast
 {
   return this->ptr_;
 }
@@ -2455,7 +2455,7 @@ IOP::ServiceContextList_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::IOP::ServiceContextList *&
 IOP::ServiceContextList_var::out (void)
 {
@@ -2516,7 +2516,7 @@ IOP::ServiceContextList_out::operator= (ServiceContextList *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IOP::ServiceContextList_out::operator ::IOP::ServiceContextList *&() // cast
 {
   return this->ptr_;
@@ -2663,7 +2663,7 @@ IOP::Encoding_var::operator= (const ::IOP::Encoding_var &p)
         {
           Encoding *deep_copy =
             new Encoding (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               Encoding *tmp = deep_copy;
@@ -2673,7 +2673,7 @@ IOP::Encoding_var::operator= (const ::IOP::Encoding_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -2708,13 +2708,13 @@ IOP::Encoding_var::operator const ::IOP::Encoding &() const // cast
 }
 
 ACE_INLINE
-IOP::Encoding_var::operator ::IOP::Encoding &() // cast 
+IOP::Encoding_var::operator ::IOP::Encoding &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-IOP::Encoding_var::operator ::IOP::Encoding &() const // cast 
+IOP::Encoding_var::operator ::IOP::Encoding &() const // cast
 {
   return *this->ptr_;
 }
@@ -2731,7 +2731,7 @@ IOP::Encoding_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size 
+// mapping for fixed size
 ACE_INLINE ::IOP::Encoding &
 IOP::Encoding_var::out (void)
 {
@@ -2828,7 +2828,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IOP::TaggedProf
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IOP::TaggedProfile &_tao_aggregate)
@@ -2840,7 +2840,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IOP::TaggedProfile &_t
     return 1;
   else
     return 0;
-  
+
 }
 
 
@@ -2867,7 +2867,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IOP::IOR &_tao_
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IOP::IOR &_tao_aggregate)
@@ -2879,7 +2879,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IOP::IOR &_tao_aggrega
     return 1;
   else
     return 0;
-  
+
 }
 
 
@@ -2906,7 +2906,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IOP::TaggedComp
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IOP::TaggedComponent &_tao_aggregate)
@@ -2918,7 +2918,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IOP::TaggedComponent &
     return 1;
   else
     return 0;
-  
+
 }
 
 
@@ -2990,7 +2990,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IOP::ServiceCon
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IOP::ServiceContext &_tao_aggregate)
@@ -3002,7 +3002,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IOP::ServiceContext &_
     return 1;
   else
     return 0;
-  
+
 }
 
 
@@ -3030,7 +3030,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IOP::Encoding &
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IOP::Encoding &_tao_aggregate)
@@ -3043,6 +3043,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IOP::Encoding &_tao_ag
     return 1;
   else
     return 0;
-  
+
 }
 

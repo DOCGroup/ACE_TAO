@@ -49,9 +49,9 @@ CONV_FRAME::CodeSetComponent_var::operator= (const CONV_FRAME::CodeSetComponent_
         }
       else
         {
-          CONV_FRAME::CodeSetComponent *deep_copy = 
+          CONV_FRAME::CodeSetComponent *deep_copy =
                 new CONV_FRAME::CodeSetComponent (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               CONV_FRAME::CodeSetComponent *tmp = deep_copy;
@@ -61,7 +61,7 @@ CONV_FRAME::CodeSetComponent_var::operator= (const CONV_FRAME::CodeSetComponent_
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -408,12 +408,12 @@ CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId_var::operator= (const CONV_FRAM
         }
       else
         {
-          CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId *deep_copy = 
+          CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId *deep_copy =
             new CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
-              CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId *tmp = 
+              CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId *tmp =
                 deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
@@ -421,7 +421,7 @@ CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId_var::operator= (const CONV_FRAM
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -610,9 +610,9 @@ CONV_FRAME::CodeSetComponentInfo_var::operator= (const CONV_FRAME::CodeSetCompon
         }
       else
         {
-          CONV_FRAME::CodeSetComponentInfo *deep_copy = 
+          CONV_FRAME::CodeSetComponentInfo *deep_copy =
             new CONV_FRAME::CodeSetComponentInfo (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               CONV_FRAME::CodeSetComponentInfo *tmp = deep_copy;
@@ -622,7 +622,7 @@ CONV_FRAME::CodeSetComponentInfo_var::operator= (const CONV_FRAME::CodeSetCompon
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -796,9 +796,9 @@ CONV_FRAME::CodeSetContext_var::operator= (const CONV_FRAME::CodeSetContext_var 
         }
       else
         {
-          CONV_FRAME::CodeSetContext *deep_copy = 
+          CONV_FRAME::CodeSetContext *deep_copy =
             new CONV_FRAME::CodeSetContext (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               CONV_FRAME::CodeSetContext *tmp = deep_copy;
@@ -808,7 +808,7 @@ CONV_FRAME::CodeSetContext_var::operator= (const CONV_FRAME::CodeSetContext_var 
             }
         }
     }
-  
+
   return *this;
 }
 

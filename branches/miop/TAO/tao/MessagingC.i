@@ -2004,12 +2004,12 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
 
 }
 
-CORBA::Boolean TAO_Export 
+CORBA::Boolean TAO_Export
 operator<< (
     TAO_OutputCDR &,
     const Messaging::ReplyHandler_ptr
   );
-CORBA::Boolean TAO_Export 
+CORBA::Boolean TAO_Export
 operator>> (
     TAO_InputCDR &,
     Messaging::ReplyHandler_ptr &

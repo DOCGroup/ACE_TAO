@@ -6,6 +6,9 @@
 #include "tao/IOPC.h"
 #include "tao/Tagged_Profile.h"
 #include "tao/debug.h"
+#include "tao/Request_Dispatcher.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/GIOP_Message_Locate_Header.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Generator_Parser.inl"
@@ -166,7 +169,7 @@ TAO_GIOP_Message_Generator_Parser::marshal_reply_status (
 
 CORBA::Boolean
 TAO_GIOP_Message_Generator_Parser::unmarshall_object_key (
-    TAO_ObjectKey &object_key,
+    TAO_ServerRequest &request,
     TAO_InputCDR &input)
 {
   CORBA::Boolean hdr_status =
@@ -177,11 +180,16 @@ TAO_GIOP_Message_Generator_Parser::unmarshall_object_key (
 
   if (hdr_status)
     {
+      TAO_ObjectKey &object_key = request.object_key ();
+
       object_key.replace (key_length,
                           key_length,
                           (CORBA::Octet*)input.rd_ptr (),
                           0);
       input.skip_bytes (key_length);
+
+      // Save where the dispatch information is stored.
+      request.profile_has_dispatch_info (0);
     }
 
   return hdr_status;
@@ -190,7 +198,7 @@ TAO_GIOP_Message_Generator_Parser::unmarshall_object_key (
 
 CORBA::Boolean
 TAO_GIOP_Message_Generator_Parser::unmarshall_iop_profile (
-    TAO_Tagged_Profile &profile_addr,
+    TAO_ServerRequest &request,
     TAO_InputCDR &input)
 {
   CORBA::Boolean hdr_status =
@@ -198,24 +206,151 @@ TAO_GIOP_Message_Generator_Parser::unmarshall_iop_profile (
 
   // Get the IOP::Tagged profile.
   IOP::TaggedProfile &tagged_profile =
-    profile_addr.tagged_profile ();
+    request.profile ().tagged_profile ();
 
   hdr_status &= input >> tagged_profile;
 
-  // Extract the object key from the TaggedProfile.
-  hdr_status &=profile_addr.extract_object_key (tagged_profile);
+  // Save where the dispatch information is stored.
+  request.profile_has_dispatch_info (1);
 
   return hdr_status;
 }
 
 CORBA::Boolean
 TAO_GIOP_Message_Generator_Parser::unmarshall_ref_addr (
-    TAO_Tagged_Profile &profile_addr,
+    TAO_ServerRequest &request,
     TAO_InputCDR &input
   )
 {
   CORBA::Boolean hdr_status =
     (CORBA::Boolean) input.good_bit ();
+
+  TAO_Tagged_Profile &profile_addr = request.profile ();
+
+  /*
+   * The GIOP::IORAddressingInfo is defined as follows
+   *   struct IORAddressingInfo
+   *     {
+   *       unsigned long selected_profile_index;
+   *       IOP::IOR ior;
+   *     };
+   *
+   * and the IOP::IOR is defined to be
+   *   struct IOR
+   *      {
+   *        string type_id;
+   *        sequence<TaggedProfile>   profiles;
+   *      };
+   */
+
+  // First read the profile index
+  CORBA::ULong prof_index =  0;
+
+  hdr_status =
+    hdr_status && input.read_ulong (prof_index);
+
+  // Set the value in TAO_Tagged_Profile
+  if (hdr_status)
+    profile_addr.profile_index (prof_index);
+
+  // Get the length of the type_id
+  CORBA::Long id_length = 0;
+  hdr_status = hdr_status && input.read_long (id_length);
+
+  if (hdr_status)
+    {
+      // Get the type_id
+      ACE_CString &type_id =
+        profile_addr.type_id ();
+
+      type_id.set (input.rd_ptr (),
+                   0);
+
+      input.skip_bytes (id_length);
+    }
+
+  // Unmarshall the sequnce of TaggedProfiles
+  IOP::IOR::_tao_seq_TaggedProfile ior_profiles;
+
+  hdr_status &= input >> ior_profiles;
+
+  // Get the IOP::Tagged profile.
+  IOP::TaggedProfile &tagged_profile =
+    profile_addr.tagged_profile ();
+
+  // Get the right TaggedProfile from the <ior_profiles>
+  if (hdr_status)
+    {
+      tagged_profile =
+        ior_profiles [prof_index];
+    }
+
+  // Save where the dispatch information is stored.
+  request.profile_has_dispatch_info (1);
+
+  return hdr_status;
+}
+
+
+// @@ Frank - need to fix this....
+
+CORBA::Boolean
+TAO_GIOP_Message_Generator_Parser::unmarshall_object_key (
+    TAO_GIOP_Locate_Request_Header &request,
+    TAO_InputCDR &input)
+{
+  CORBA::Boolean hdr_status =
+    (CORBA::Boolean) input.good_bit ();
+
+  CORBA::Long key_length = 0;
+  hdr_status = hdr_status && input.read_long (key_length);
+
+  if (hdr_status)
+    {
+      TAO_ObjectKey &object_key = request.object_key ();
+
+      object_key.replace (key_length,
+                          key_length,
+                          (CORBA::Octet*)input.rd_ptr (),
+                          0);
+      input.skip_bytes (key_length);
+
+    }
+
+  return hdr_status;
+}
+
+
+CORBA::Boolean
+TAO_GIOP_Message_Generator_Parser::unmarshall_iop_profile (
+    TAO_GIOP_Locate_Request_Header &request,
+    TAO_InputCDR &input)
+{
+  CORBA::Boolean hdr_status =
+    (CORBA::Boolean) input.good_bit ();
+
+  // Get the IOP::Tagged profile.
+  IOP::TaggedProfile &tagged_profile =
+    request.profile ().tagged_profile ();
+
+  hdr_status &= input >> tagged_profile;
+
+  // Extract the object key from the TaggedProfile.
+  hdr_status &= request.profile ().extract_object_key (tagged_profile);
+
+  return hdr_status;
+}
+
+CORBA::Boolean
+TAO_GIOP_Message_Generator_Parser::unmarshall_ref_addr (
+    TAO_GIOP_Locate_Request_Header &request,
+    TAO_InputCDR &input
+  )
+{
+  CORBA::Boolean hdr_status =
+    (CORBA::Boolean) input.good_bit ();
+
+  TAO_Tagged_Profile &profile_addr = request.profile ();
 
   /*
    * The GIOP::IORAddressingInfo is defined as follows
@@ -276,8 +411,9 @@ TAO_GIOP_Message_Generator_Parser::unmarshall_ref_addr (
     }
 
   // Extract the object key from the TaggedProfile.
-  hdr_status &=
-    profile_addr.extract_object_key (tagged_profile);
+  hdr_status &= request.profile ().extract_object_key (tagged_profile);
 
   return hdr_status;
 }
+
+

@@ -1057,8 +1057,8 @@ TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (CORBA::ULong nelems)
 {
   T *buf = 0;
 
-  ACE_NEW_RETURN (buf, 
-                  T[nelems], 
+  ACE_NEW_RETURN (buf,
+                  T[nelems],
                   0);
 
   return buf;
@@ -1223,8 +1223,8 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::allocbuf (CORBA::ULong)
 {
   T *buf = 0;
 
-  ACE_NEW_RETURN (buf, 
-                  T[MAX], 
+  ACE_NEW_RETURN (buf,
+                  T[MAX],
                   0);
 
   return buf;

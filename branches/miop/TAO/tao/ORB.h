@@ -395,7 +395,7 @@ public:
   /// but will look for work to pending for more than the specified time.
   /// This is useful for implementing an event loop with an idle timeout.
   CORBA::Boolean work_pending (ACE_Time_Value &tv,
-                               CORBA_Environment &ACE_TRY_ENV = 
+                               CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ());
 
   /**
@@ -545,6 +545,11 @@ protected:
   /// Resolve the RT Current.
   CORBA_Object_ptr resolve_rt_current (CORBA_Environment &ACE_TRY_ENV);
 
+  /// Resolve the root PGA.
+  CORBA_Object_ptr resolve_root_pga (CORBA::Environment &ACE_TRY_ENV);
+
+  /// Resolve the MIOP object group factory.
+  CORBA_Object_ptr resolve_miop (CORBA::Environment &ACE_TRY_ENV);
 private:
 
   /// Resolve the given service based on the service ID.
