@@ -26,7 +26,8 @@
 class ACE_Export ACE_Profile_Timer
 {
   // = TITLE
-  //     A C++ wrapper for UNIX interval timers.
+  //     This class provides both a timing mechanism and a mechanism
+  //     for reporting the resource usage of a process.
 public:
   struct ACE_Elapsed_Time
     {
@@ -34,7 +35,6 @@ public:
       double user_time;
       double system_time;
     };
-
 #if defined (ACE_HAS_PRUSAGE_T)
     typedef prusage_t Rusage;
 #elif defined (ACE_HAS_GETRUSAGE)
