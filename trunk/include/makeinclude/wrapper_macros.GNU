@@ -30,13 +30,13 @@
 #	LDFLAGS		ld linker flags
 #	LINK.c		Flags for linking with C
 #	LINK.cc		Flags for linking with C++
-#	LINE_COMMAND	A hook for passing commands to the linker, e.g., for Quantify
 #	MAKEFLAGS	Flags that are passed into the compilation from the commandline
 #	OCFLAGS		Optimizing C compilation flags
 #	OCCFLAGS	Optimizing C++ compilation flags
 #	ORBIX_ROOT	Root of IONA's Orbix CORBA implementation
 #	PCFLAGS		C compilation flags for profiling
 #	PCCFLAGS	C++ compilation flags for profiling
+#	PRELINK		Executable to precede linking, such as purify or quantify
 #	PTDIRS		Pathnames of directories containing template code
 #	RM		Name of program to use to remove files
 #	SOFLAGS		Flags used to build a shared library
@@ -120,11 +120,25 @@ endif # optimize
 endif # profile
 endif # debug
 
+ifdef quantify
+#### You might want to adjust the Quantify options below.
+#### -best-effort is undocumented but supported, and seems
+#### to help avoid occasional link failure.
+PRELINK += quantify -best-effort -cache-dir=/tmp/purifycache
+endif # quantify
+
+ifdef purify
+#### You might want to adjust the Purify options below.
+#### -best-effort is undocumented but supported, and seems
+#### to help avoid occasional link failure.
+PRELINK += purify -best-effort -cache-dir=/tmp/purifycache -chain-length=20 -inuse-at-exit -fds-inuse-at-exit=no
+endif # purify
+
 COMPILE.c	=$(CC) $(CFLAGS) $(CPPFLAGS)  -c
 COMPILE.cc	=$(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)  -c
 # 960905 Marius Kjeldahl <marius@funcom.com>
 # Added the line below to be used for compiling executable shared objects
 COMPILEESO.cc   =$(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
-LINK.c		=$(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) $(LIBS)
-LINK.cc		=$(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
-SOLINK.cc	=$(LINK_COMMAND) $(DLD) $(SOFLAGS)
+LINK.c		=$(PRELINK) $(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS) $(LIBS)
+LINK.cc		=$(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
+SOLINK.cc	=$(PRELINK) $(DLD) $(SOFLAGS)
