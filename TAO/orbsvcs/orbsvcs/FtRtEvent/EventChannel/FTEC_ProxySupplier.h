@@ -51,7 +51,7 @@ public:
   virtual void resume_connection (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  const PortableServer::ObjectId& id() const;
+  const FtRtecEventChannelAdmin::ObjectId& id() const;
 
   void get_state(FtRtecEventChannelAdmin::ProxyPushSupplierStat& state);
   void set_state(const FtRtecEventChannelAdmin::ProxyPushSupplierStat& state
@@ -62,7 +62,7 @@ public:
 
   static const RollbackOperation rollback_obtain;
 private:
-  PortableServer::ObjectId_var object_id_;
+  FtRtecEventChannelAdmin::ObjectId_var object_id_;
 };
 
 #endif

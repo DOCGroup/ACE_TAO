@@ -69,7 +69,7 @@ namespace FTRTEC {
   }
 
 
-  const PortableServer::ObjectId& Identification_Service::object_id() const
+  const FtRtecEventComm::ObjectId& Identification_Service::object_id() const
   {
     return object_id_;
   }

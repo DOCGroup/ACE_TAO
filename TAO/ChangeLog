@@ -1,3 +1,25 @@
+Sun Nov 23 21:52:19 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtecEventComm.idl:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.h:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/activate_with_id.h:
+
+        Changed FtRtecEventComm::ObjectId from a typedef to CORBA::ObjectSeq
+        to sequence<octet>. Most references to PortableServer::ObjectId use
+        FtRtecEventComm::ObjectId instead.
+
 Sun Nov 23 21:28:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAOACE.dsw:
@@ -20,13 +42,13 @@ Sun Nov 23 20:43:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
 
 	  #included "ace/os_include/os_netdb.h" to pacify Win32 VC6
-	  builds.  
+	  builds.
 
 Sun Nov 23 20:09:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTCORBA/RTCORBA_include.pidl:
 	* tao/RTCORBA/RTCORBA_includeC.h:
-		
+
 	  New files, a .pidl which only includes RTCORBA.pidl, and the
 	  stub header file generated from it, hand-crafted to include
 	  RTCORBA.h instead of RTCORBAC.h. This pair of files allows
@@ -34,37 +56,37 @@ Sun Nov 23 20:09:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  including RTCORBA_include.pidl instead and let the IDL compiler
 	  automatically include  RTCORBA_includeC.h in the associated
 	  generated file, thus avoiding the error of including RTCORBAC.h
-	  directly. 
-		  
+	  directly.
+
 	* tao/RTCORBA/RTCORBA.mpc:
-		
+
 	  Added RTCORBA_includeC.h to the header file list.
-		  
+
 	* examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
         * examples/Kokyu_dsrt_schedulers/Kokyu_qos.idl:
         * examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
         * examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
-        
+
           Replaced include of RTCORBA.pidl in these files with
           RTCORBA_include.pidl.
-          
+
         * examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.mpc:
-        
+
           Reverted change to idlflags in
-          
+
           Sat Nov 22 17:20:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-          
+
           since changes above now make it unnecessary.
-		
+
 Sun Nov 23 17:48:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_decl.cpp (compute_full_name):
-        
+
           Added a copy operation to the char* return value since it
           is owned by a locally created ACE_CString. Even though
           this copy operation is necessary, its omission does not always
-          show up as a problem. Thanks to Malcolm McRoberts 
-          <mmcroberts@ideorlando.org> for pointing out a case and a 
+          show up as a problem. Thanks to Malcolm McRoberts
+          <mmcroberts@ideorlando.org> for pointing out a case and a
           platform where it does.
 
 Sun Nov 23 14:31:46 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -283,17 +305,17 @@ Fri Nov 21 21:05:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Added missing file includes, and made the RTFT Event Channel build
           work when TAO_HAS_SCIOP is not defined.
-          
+
         * orbsvcs/orbsvcs/FtRtEvent.mpc:
-        
+
           Added missing export header file.
-          
+
         * tao/tao.mpc:
-        
+
           Added missing file OctetSeqA.cpp.
-          
+
         * tao/Utils/tao_Utils.mpc:
-        
+
           Added missing TAO_UTILS_BUILD_DLL preprocessor directive.
 
 Fri Nov 21 20:48:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -343,7 +365,7 @@ Fri Nov 21 10:31:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           is anonymous or typedef'd.
 
 Fri Nov 21 08:55:16 2003 Charlie Frasch  <cfrasch@atdesk.com>
-  
+
 	* utils/wxNamingViewer/Makefile:
 	* utils/wxNamingViewer/README:
 	* utils/wxNamingViewer/mondrian.xpm:
@@ -357,11 +379,11 @@ Fri Nov 21 08:55:16 2003 Charlie Frasch  <cfrasch@atdesk.com>
 	* utils/wxNamingViewer/wxNamingViewerFrame.cpp:
 	* utils/wxNamingViewer/wxSelectNSDialog.cpp:
 	* utils/wxNamingViewer/wxViewIORDialog.cpp:
-	  Updated for linux, gcc, latest ACE/TAO and wxWindows 2.4.2. For 
-	  linux, the wxNamingViewer.wxr file is no longer used, and the 
-	  dialog components are created  inline. A future change should 
+	  Updated for linux, gcc, latest ACE/TAO and wxWindows 2.4.2. For
+	  linux, the wxNamingViewer.wxr file is no longer used, and the
+	  dialog components are created  inline. A future change should
 	  incorporate wxWindow's new XML-based resource system.
-  
+
 Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * rules.tao.GNU:
@@ -480,7 +502,7 @@ Thu Nov 20 20:12:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
 
-          Removed generation of explicit template instantiation of 
+          Removed generation of explicit template instantiation of
           sequence base class for anonymous sequences of typedef'd
           basic types. Also removed generation of explicit template
           instantiation of Any impl class for anonymous sequences.
@@ -500,15 +522,15 @@ Thu Nov 20 19:16:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/ServicesC.cpp:
 	* tao/ServicesC.h:
 	* tao/ServicesC.i:
-	
+
 	  Regenerated the code and removed the duplicate explicit template
-	  instantations.  
+	  instantations.
 
         * tao/Tagged_Components.cpp:
 	* tao/Typecode.cpp:
 
 	  Removed duplicate explicit template instantiations.
-	
+
 	* tao/diffs/Domain.diff
 
 	  Updated the diff files.
@@ -518,12 +540,12 @@ Thu Nov 20 18:28:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/IFR_Client_Adapter.h:
 	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
 	* tao/IFR_Client/IFR_Client_Adapter_Impl.h:
-	  
-	  Added TAO_HAS_MINIMUM_CORBA around create_operation_list. 
+
+	  Added TAO_HAS_MINIMUM_CORBA around create_operation_list.
 
 	* tao/orbconf.h:
 	* rules.tao.GNU:
-	
+
 	  Nowhere in the CORBA spec does it say that messaging and
 	  RTCORBA needs to disabled when minimum corba is enabled. It has
 	  been a TAO artifact from legacy code. This prevented users from
@@ -531,7 +553,7 @@ Thu Nov 20 18:28:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  the least. I am sure Bill Beckwith would support my argument:-)
 
 	  Just enabled RTCORBA and messaging in minimum_corba builds.
-	
+
 	* tao/RTCORBA/RTCORBA.cpp:
 	* tao/RTCORBA/RTCORBA.h:
 
@@ -545,7 +567,7 @@ Thu Nov 20 18:28:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/RTCORBA/Thread_Pool/Makefile:
 
 	  These tests specifically use the minimum_poa features. So
-	  prevented these tests from compiling in minimum_corba builds.  
+	  prevented these tests from compiling in minimum_corba builds.
 
 Thu Nov 20 18:05:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -558,7 +580,7 @@ Thu Nov 20 18:05:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           second has been removed from TAO entirely, replace with
           dynamic_cast<>, while the first was added to the original
           implementation of abstract interfaces but, in hindsight
-          seems not to be need. Thanks to George Edwards 
+          seems not to be need. Thanks to George Edwards
           <edwardsgt@vanderbilt.edu> for his advice on this last item.
 
         * tao/Valuetype/TAO_Valuetype.dsp:
@@ -601,9 +623,9 @@ Thu Nov 20 13:05:00 2003  Justin mIchel <michel_j@ociweb.com>
 	* tao/PortableServer/ImR_LocatorC.cpp:
 	* tao/PortableServer/ImR_Locator.pidl:
 
-	  Removed redundant explicit template instantiations. This should 
+	  Removed redundant explicit template instantiations. This should
 	  be a temporary workaround. Eventually, the generated file will
-	  work as is. 
+	  work as is.
 
 Thu Nov 20 11:04:09 2003  Dale Wilson  <wilson_d@>
 
