@@ -1,3 +1,22 @@
+Fri Aug  8 09:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.i:
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h:
+          Extended the IIOP Gateway factory with ECGIIOPUseTTL, to specify
+          whether the gateway must use the TTL flag in the event. By default
+          the TTL is enabled, but this can be disabled using -ECGIIOPUseTTL 0
+          in the svc.conf file. This is usefull for systems where a gateway
+          just wants to forward events over multiple ec's but the supplier
+          is unaware of that and just sets the TTL to 1 by default.
+
+        * docs/ec_options.html:
+          Described the existince of the IIOP Gateway factory, how it can
+          be configured and which options its supports.
+
 Thu Aug  7 22:14:34 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Kokyu_Filter.h: Added #include for
@@ -9,7 +28,7 @@ Thu Aug  7 22:06:12 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	  in the Makefile. Makefile.RTKokyuEvent was not appearing in the
 	  generated make command with .mkfiles and hence RTKokyuEvent was
 	  not getting built.
-	
+
 Thu Aug  7 15:48:59 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Added RTKokyuEvent to the list of
@@ -44,7 +63,7 @@ Wed Aug  6 22:10:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  FTORB would try to make simple calls, like trying to contact a
 	  naming service. The application can't do much if TAG_FT_GROUP
 	  isn't available. Thanks to Huang-Min Huang for reporting the
-	  problem. 
+	  problem.
 
 Wed Aug  6 19:09:00 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -60,7 +79,7 @@ Wed Aug  6 19:09:00 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
         * performance-tests/Latency/Collocation/README:
         * performance-tests/Latency/Collocation/Makefile:
         * performance-tests/Latency/Collocation/svc.conf:
-          Simple test to measure round-trip latency when client and server 
+          Simple test to measure round-trip latency when client and server
           are collocated. Both client and server are single-threaded.
           Collocation strategy used for testing is the "Thru_POA".
 
