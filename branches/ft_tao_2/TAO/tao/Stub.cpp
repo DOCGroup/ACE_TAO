@@ -526,6 +526,16 @@ TAO_Stub::put_params (TAO_GIOP_Invocation &call,
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+// ****************************************************************
+
+#if (TAO_HAS_FT_CORBA == 1)
+void
+TAO_Stub::set_profile_from_primary (void)
+{
+  // For FT_CORBA we need to find the profile with FT_TAG_PRIMARY
+}
+
+#endif /*TAO_HAS_FT_CORBA*/
 
 // ****************************************************************
 

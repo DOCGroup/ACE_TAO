@@ -419,6 +419,13 @@ private:
   TAO_Profile *next_forward_profile (void);
   // NON-THREAD-SAFE.  utility method for next_profile.
 
+#if (TAO_HAS_FT_CORBA == 1)
+private:
+  void set_profile_from_primary (void);
+  // 
+#endif /*TAO_HAS_FT_CORBA*/
+
+
 #if (TAO_HAS_RT_CORBA == 1)
 
 private:
@@ -444,6 +451,8 @@ private:
   CORBA::Boolean is_client_protocol_policy_parsed_;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
+  
+
 private:
 
   TAO_MProfile base_profiles_;

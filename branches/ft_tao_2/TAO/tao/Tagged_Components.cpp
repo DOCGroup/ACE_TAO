@@ -170,6 +170,88 @@ TAO_Tagged_Components::set_known_component_i (
     }
 }
 
+
+void
+TAO_Tagged_Components::set_unique_component_i (
+    const IOP::TaggedComponent& component)
+{
+  TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
+                                          component.component_data.get_buffer ()),
+                    component.component_data.length ());
+
+  CORBA::Boolean byte_order;
+  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+    return;
+  cdr.reset_byte_order (ACE_static_cast(int,byte_order));
+
+# if (TAO_HAS_FT_CORBA == 1)
+  if (component.tag == IOP::TAG_FT_PRIMARY)
+    {
+      CORBA::Boolean primary;
+      if ((cdr >> primary) == 0)
+        return;
+
+      this->ft_tag_primary_ = 1;
+    }
+  else if (component.tag == IOP::TAG_FT_GROUP)
+    {
+      // Revision numbers of the FT specification
+      CORBA::Octet ft_minor, ft_major;
+
+      if ((cdr >> ft_major) == 0)
+        return;
+      if ((cdr >> ft_minor) == 0)
+        return;
+
+      // Check for the revsion numbers
+      if (ft_major != TAO_DEF_FT_CORBA_MAJOR &&
+          ft_minor != TAO_DEF_FT_CORBA_MINOR)
+        {
+          // @@Should we print out an error??
+          return;
+        }
+
+      // Read the FTDomainId
+      if (cdr.char_translator () == 0)
+        {
+          CORBA::ULong length = 0;
+          if (cdr.read_ulong (length))
+            {
+              // Do not include NULL character at the end.
+              // @@ This is not getting demarshaled using the codeset
+              //    translators!
+              this->ft_tagged_component_.ft_domain_id_.set (cdr.rd_ptr (), 
+                                                            length - 1,
+                                                            0);
+              cdr.skip_bytes (length);
+            }
+        }
+      else
+        {
+          CORBA::String_var tmp;
+          cdr.read_string (tmp.inout ());
+          this->ft_tagged_component_.ft_domain_id_.set (tmp._retn (), 1);
+        }
+
+      // Read the Object Group ID
+      CORBA::ULongLong group_id;
+      if (cdr.read_ulonglong (group_id) == 0)
+        return;
+      
+      this->ft_tagged_component_.object_group_id_ = group_id;
+      
+      // Read the object group ref version
+      CORBA::ULong ref_version;
+      if (cdr.read_ulong (ref_version) == 0)
+        return;
+      
+      this->ft_tagged_component_.object_group_ref_version_ =
+        ref_version; 
+    }
+#endif /*TAO_HAS_FT_CORBA == 1 */
+
+}
+
 void
 TAO_Tagged_Components::set_component_i (const IOP::TaggedComponent& component)
 {
@@ -267,6 +349,8 @@ TAO_Tagged_Components::decode (TAO_InputCDR& cdr)
         this->components_[i];
       if (this->known_tag (component.tag))
         this->set_known_component_i (component);
+      else if (this->unique_tag (component.tag))
+        this->set_unique_component_i (component);
     }
   return 1;
 }
