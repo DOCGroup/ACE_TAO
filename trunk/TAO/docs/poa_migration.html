@@ -10,53 +10,73 @@ vlink="#cc0000"
 bgcolor="#ffffff">
 
 <HR><P>
-<H3>Migrating from BOA to POA</H3>
+<H3>Migrating CORBA Applications from BOA to POA</H3>
 
-<UL>
-<LI><EM><B>Client side</b></EM><P>
+Starting with the CORBA 2.2, the Basic Object Adapter (BOA) has been
+deprecated in favor of the <A
+HREF="http://www.cs.wustl.edu/~schmidt/POA.ps.gz">Portable Object
+Adapter</A> (POA).  This document explains the changes required to
+migrate CORBA applications based on the BOA to use TAO's POA
+implementation, which is the only Object Adapter supported by TAO.
+For more information on the benefits of the POA please see the <A
+HREF="http://www.cs.wustl.edu/~schmidt/report-doc.html">Object
+Interconnection</A> columns written by <A
+HREF="http://www.cs.wustl.edu/~schmidt/">Doug Schmidt</A> and <A
+HREF="http://www.iona.com/hyplan/vinoski/">Steve Vinoski</a>.
+
+<H4>Client-side Changes</h4>
+
 <ul>
-<li>Very little has changed, and some have not needed any changes.</li><P>
+<li>Very little has changed.  Thus, many applications require to changes.</li><P>
 <li>You'll have to insure that the Makefile includes .o's for both the server
-and client; this is necessary to support collocation.</li> <P>
+and client, which is necessary in TAO to support collocation.</li> <P>
 </ul>
 
-<LI><EM><B>Server side</B></EM><P>
+<h4>Server-side Changes</h4>
+
 <UL>
-<li>POA_init() is replaced with resolve_initial_references("RootPOA") followed
-by a _narrow operation.</li><P>
-<li>The implementation no longer inherits from the client-side stub; they
-inherit from PortableServer::ServantBase.  The implications of this are (a) if
-you want a object reference for that, you must use the _this() method.</li><P>
-<li>Object ID's are assigned by the POA unless you activate the servant with a
-specific ID; IDL_Cubit has examples on how to do this.</li><P>
-<li>Unlike the BOA, the POA explicitly addresses the temporal nature of servants
-and declares that a POA can service either transient or persistent servants
-(not both).  The root POA's (mandated, unchangeable) policy is "transient". 
-The implications of this are that in order for a client to be able to
-manufacture an object reference on its own and use that to access an object,
-the servant for that object must be registered with a POA whose policy is
-"persistent".  Thus, you must create a child POA with that policy and register
-the servant with that POA.  NOTE: when the POA declares something as
-"persistent", it is only stating that the key is valid between different runs
-of the server; it makes no claims that state or anything else is persistent.</li><P>
+<li><CODE>POA_init</CODE> is replaced with <CODE>resolve_initial_references("RootPOA")</CODE> followed
+by a <CODE>_narrow</CODE> operation.</li><P>
+
+<li>The implementation no longer inherits from the client-side stub.
+Instead, they inherit from <CODE>PortableServer::ServantBase</CODE>.
+The implications of this are (a) if you want a object reference for
+that, you must use the <CODE>_this</CODE> method.</li><P>
+
+<li>Object ID's are assigned by the POA unless you activate the
+servant with a specific ID.  <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/performance-tests/Cubit/TAO/IDL_Cubit">IDL_Cubit</A>
+has examples on how to do this.</li><P>
+
+<li>Unlike the BOA, the POA explicitly addresses the temporal nature
+of servants and declares that a POA can service either transient or
+persistent servants (not both).  The root POA's (mandated,
+unchangeable) policy is "transient".  The implications of this are
+that in order for a client to be able to manufacture an object
+reference on its own and use that to access an object, the servant for
+that object must be registered with a POA whose policy is
+"persistent".  Thus, you must create a child POA with that policy and
+register the servant with that POA.  NOTE: when the POA declares
+something as "persistent", it is only stating that the key is valid
+between different runs of the server; it makes no claims that state or
+anything else is persistent.</li><P>
 
 <ul>
 	<li> Servants are not automatically activated, hence you must register 
-	them by calling some of the activate_object* methods on a POA or 
-	calling _this() on the servant; with the latest you have no control on 
+	them by calling some of the <CODE>activate_object*</CODE> methods on a POA or 
+	calling <CODE>_this</CODE> on the servant; with the latest you have no control on 
 	the ObjectId (which sometimes is good), and the POA must support the 
 	right policies (the RootPOA does).</li><P>
     
-	<li>Servant constructors use to take a <const char*> parameter to set 
+	<li>Servant constructors use to take a <CODE>const
+char*</CODE> parameter to set
 	they object id, this is not needed now, in fact in many cases they use 
-	to pass this argument to the skeleton class: this will fail now.</li><P>
-</ul>
-This list is not intended to be exhaustive, but should give you a good
-starting point.  If you find things along the way which have to change and I
-didn't note them, please send them to me.  Perhaps we can work together on the
-ultimate migration document. <P>
-</UL>
-</UL>
+	to pass this argument to the skeleton class: this will fail
+now.</li><P> </ul> This list is not intended to be exhaustive, but
+should give you a good starting point.  If you find things along the
+way that change your applications and I didn't note them, please send
+them to me.  Perhaps we can work together on the ultimate migration
+document. <P> </UL>
 
 <hr><P>
 
