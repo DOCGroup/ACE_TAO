@@ -1,3 +1,13 @@
+Thu May  7 15:29:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp: 
+	  The warning was disabled before including other headers, it is
+	  possible (and in some cases certain) that the headers will
+	  enable the warning again. We now disable *after* all the
+	  includes and re-enable at the end.  Thanks to Darrell Brunsch
+	  <brunsch@cs.wustl.edu> for catching this one before we even
+	  tried it :-)
+
 Thu May  7 15:17:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Makefile: 

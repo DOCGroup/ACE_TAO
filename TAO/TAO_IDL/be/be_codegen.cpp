@@ -227,10 +227,6 @@ TAO_CodeGen::client_header (const char *fname)
           this->client_header_->print ("#if !defined (%s)\n", macro_name);
           this->client_header_->print ("#define %s\n\n", macro_name);
 
-	  *this->client_header_ << "#if defined(_MSC_VER)\n"
-				<< "#pragma warning(disable:4250)\n"
-				<< "#endif /* _MSC_VER */\n\n";
-
           *this->client_header_ << "#include \"tao/corba.h\"\n";
 
 	  if (idl_global->export_include () != 0)
@@ -265,6 +261,11 @@ TAO_CodeGen::client_header (const char *fname)
 		}
 	    }
 	  *this->client_header_ << "\n";
+
+	  *this->client_header_ << "#if defined(_MSC_VER)\n"
+				<< "#pragma warning(disable:4250)\n"
+				<< "#endif /* _MSC_VER */\n\n";
+
           return 0;
         }
     }
@@ -382,10 +383,6 @@ TAO_CodeGen::server_header (const char *fname)
           this->server_header_->print ("#if !defined (%s)\n", macro_name);
           this->server_header_->print ("#define %s\n\n", macro_name);
 
-	  *this->server_header_ << "#if defined(_MSC_VER)\n"
-				<< "#pragma warning(disable:4250)\n"
-				<< "#endif /* _MSC_VER */\n\n";
-
 	  // We must include all the skeleton headers corresponding to
 	  // IDL files included by the current IDL file.
 	  for (size_t j = 0;
@@ -404,6 +401,10 @@ TAO_CodeGen::server_header (const char *fname)
           // the server header should include the client header
           *this->server_header_ << "#include \"" <<
             idl_global->be_get_client_hdr_fname () << "\"\n\n";
+
+	  *this->server_header_ << "#if defined(_MSC_VER)\n"
+				<< "#pragma warning(disable:4250)\n"
+				<< "#endif /* _MSC_VER */\n\n";
 
           return 0;
         }
@@ -484,15 +485,15 @@ TAO_CodeGen::server_inline (void)
 int
 TAO_CodeGen::end_client_header (void)
 {
-  *this->client_header_ << "#if defined(_MSC_VER)\n"
-			<< "#pragma warning(default:4250)\n"
-			<< "#endif /* _MSC_VER */\n";
-
   // insert the code to include the inline file
   *this->client_header_ << "\n#if defined (__ACE_INLINE__)\n";
   *this->client_header_ << "#include \"" <<
     idl_global->be_get_client_inline_fname () << "\"\n";
   *this->client_header_ << "#endif /* defined INLINE */\n\n";
+
+  *this->client_header_ << "#if defined(_MSC_VER)\n"
+			<< "#pragma warning(default:4250)\n"
+			<< "#endif /* _MSC_VER */\n";
 
   // code to put the last #endif
   *this->client_header_ << "\n#endif /* if !defined */\n";
@@ -502,15 +503,15 @@ TAO_CodeGen::end_client_header (void)
 int
 TAO_CodeGen::end_server_header (void)
 {
-  *this->server_header_ << "#if defined(_MSC_VER)\n"
-			<< "#pragma warning(default:4250)\n"
-			<< "#endif /* _MSC_VER */\n";
-
   // insert the code to include the inline file
   *this->server_header_ << "\n#if defined (__ACE_INLINE__)\n";
   *this->server_header_ << "#include \"" <<
     idl_global->be_get_server_inline_fname () << "\"\n";
   *this->server_header_ << "#endif /* defined INLINE */\n\n";
+
+  *this->server_header_ << "#if defined(_MSC_VER)\n"
+			<< "#pragma warning(default:4250)\n"
+			<< "#endif /* _MSC_VER */\n";
 
   // code to put the last #endif
   *this->server_header_ << "\n#endif /* if !defined */\n";
