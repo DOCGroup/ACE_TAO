@@ -1,3 +1,8 @@
+Fri Mar 10 00:17:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SPIPE_Acceptor.cpp: Very minor reformatting of the code to
+	  conform to ACE guidelines.
+
 Thu Mar 09 23:12:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (flock_init): On Win32, the hEvent in strut overlapped
