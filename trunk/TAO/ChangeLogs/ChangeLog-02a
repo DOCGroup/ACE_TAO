@@ -1,3 +1,9 @@
+Wed Jan 24 08:26:52 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/Makefile.bor:
+        * tao/IFR_Client.bor:
+          Corrected makefiles for the latest changes
+
 Tue Jan 23 18:22:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Fault_Tolerance.dsp:
