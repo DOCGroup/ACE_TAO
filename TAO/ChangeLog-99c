@@ -1,3 +1,17 @@
+Tue Jun 29 22:34:12 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/UIOP_Profile.{h,i,cpp}:
+
+	  Removed rendezvous_point_ from the TAO_UIOP_Profile class.  It
+	  is already stored in the profile's object_addr_ member, and name 
+	  lookup overhead isn't an issue for UNIX domain rendezvous points 
+	  as it is for hostname lookup in the INET domain.
+
+	  TAO_UIOP_Profile now warns if a provided rendezvous_point is too 
+	  long, i.e. if the ACE_UNIX_Addr truncates it since it is larger
+	  than the sun_path[] array in the underlying sockaddr_un
+	  structure.
+
 Tue Jun 29 21:59:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO/orbsvcs/Time_Service/Clerk_i.cpp:
