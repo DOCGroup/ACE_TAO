@@ -1,3 +1,11 @@
+Fri Apr 13 10:49:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/IORManipulation/IORTest.cpp: Fixed a small problem that
+	  was showing up in the builds as test failures. The test used the
+	  name of a machine "acme.cs.wustl.edu" for creating IOR's. Looks
+	  like the machine has been removed from the network. The creation
+	  of IOR's failed and hence the test. 
+
 Fri Apr 13 2:15:04 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp: 
