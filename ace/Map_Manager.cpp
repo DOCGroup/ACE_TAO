@@ -502,7 +502,7 @@ template <class EXT_ID, class INT_ID, class LOCK> size_t
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::current_size (void)
 {
   ACE_TRACE ("ACE_Map_Manager::current_size");
-  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, (size_t) -1);
   return this->cur_size_;
 }
 
@@ -510,7 +510,7 @@ template <class EXT_ID, class INT_ID, class LOCK> size_t
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::total_size (void)
 {
   ACE_TRACE ("ACE_Map_Manager::total_size");
-  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
+  ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, (size_t) -1);
   return this->total_size_;
 }
 
