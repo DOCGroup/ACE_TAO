@@ -28,6 +28,10 @@ run()
   fi
 }
 
+if [ -x /bin/uname -a `uname -s` = 'LynxOS' ]; then
+  LynxOS=1
+fi
+
 echo "Starting tests..."
 
 run Basic_Types_Test
@@ -36,7 +40,7 @@ run Atomic_Op_Test                      # uses Atomic_Op
 run TSS_Test                            # uses Task, Mutex, Guard
 run Time_Value_Test
 run SString_Test
-run Naming_Test                         # uses Naming_Context, WString
+test $LynxOS || run Naming_Test         # uses Naming_Context, WString
 
 run Handle_Set_Test                     # uses Handle_Set
 run OrdMultiSet_Test                    # uses Ordered_MultiSet
@@ -47,7 +51,7 @@ run MM_Shared_Memory_Test
 
 run Sigset_Ops_Test                     # uses sigset*() functions
 
-run Timer_Queue_Test                    # uses Event_Handler, Timer_Queue
+test $LynxOS || run Timer_Queue_Test                    # uses Event_Handler, Timer_Queue
 
 run SOCK_Connector_Test                 # uses SOCK_Connector
 
@@ -59,10 +63,10 @@ run Reactors_Test                       # uses Task, Mutex, Reactor
 run Reactor_Exceptions_Test             # uses Reactor and C++ exceptions
 run Reactor_Notify_Test                 # uses Reactor's notify() method, Task
 run Reactor_Timer_Test                  # uses Event_Handler, Reactor
-run Reactor_Performance_Test            # uses Event_Handler, Reactor
+test $LynxOS || run Reactor_Performance_Test            # uses Event_Handler, Reactor
 run Notify_Performance_Test             # uses Event_Handler, Reactor
 run Reader_Writer_Test                  # uses Thread_Manager, Mutex
-run Priority_Reactor_Test               # uses Priority_Reactor, Acceptor/Connector...
+test $LynxOS || run Priority_Reactor_Test               # uses Priority_Reactor, Acceptor/Connector...
 run SOCK_Test                           # uses Thread_Manager, SOCK_SAP
 run MT_SOCK_Test                        # uses Thread_Manager, Acceptor/Connector
 
@@ -75,8 +79,8 @@ run Buffer_Stream_Test                  # uses Service_Config, Module (Stream,Ta
 run Priority_Buffer_Test                # uses Service_Config, Message_Queue
 run Recursive_Mutex_Test                # uses Service_Config, Recursive_Thread_Mutex
 
-run Time_Service_Test                   # uses libnetsvcs
-run Tokens_Test
+test $LynxOS || run Time_Service_Test                   # uses libnetsvcs
+test $LynxOS || run Tokens_Test
 
 run Map_Manager_Test                    # uses Map Manager and Hash Map Manager + Forward and Reverse Map Iterators.
 run Message_Queue_Notifications_Test    # uses Message_Queue + Reactor.
