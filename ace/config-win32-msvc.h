@@ -114,6 +114,7 @@
 #     pragma warning(disable: 4251)  /* using non-exported as public in exported */
 #     pragma warning(disable: 4786)  /* identifier was truncated to '255' characters in the browser information */
 #     pragma warning(disable: 4097)  /* typedef-name used as synonym for class-name */
+#     pragma warning(disable: 4800)  /* converting int to boolean */
 #   endif /* !ALL_WARNINGS && _MSV_VER && !ghs && !__MINGW32__ */
 
 // STRICT type checking in WINDOWS.H enhances type safety for Windows

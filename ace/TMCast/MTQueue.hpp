@@ -8,6 +8,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/Unbounded_Queue.h"
+#include "ace/os_include/sys/os_types.h"
 
 namespace TMCast
 {
@@ -25,7 +26,7 @@ namespace TMCast
 
   public:
 
-    MTQueue (std::size_t hint = 0)
+    MTQueue (size_t hint = 0)
         : mutexp_ (new MutexType),
           mutex_ (*mutexp_),
           // queue_ (hint),
@@ -34,7 +35,7 @@ namespace TMCast
     {
     }
 
-    MTQueue (MutexType& mutex, std::size_t hint = 0)
+    MTQueue (MutexType& mutex, size_t hint = 0)
         : mutexp_ (),
           mutex_ (mutex),
           // queue_ (hint),
@@ -50,7 +51,7 @@ namespace TMCast
       return queue_.is_empty ();
     }
 
-    std::size_t
+    size_t
     size () const
     {
       return queue_.size ();
