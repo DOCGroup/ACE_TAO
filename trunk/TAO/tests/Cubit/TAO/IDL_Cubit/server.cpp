@@ -4,7 +4,7 @@
 
 Cubit_Server::Cubit_Server (void)
   :num_of_objs_ (1),
-   use_naming_service_ (0),
+   use_naming_service_ (1),
    ior_output_file_ (0)
 {
 }
@@ -31,8 +31,8 @@ Cubit_Server::parse_args (void)
                              "Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
         break;
-      case 's': // use the TAO Naming Service.
-        this->use_naming_service_=1;
+      case 's': // Don't use the TAO Naming Service.
+        this->use_naming_service_=0;
         break;
       case '?':
       default:

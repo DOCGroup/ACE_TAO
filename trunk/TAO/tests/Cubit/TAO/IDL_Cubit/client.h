@@ -129,6 +129,6 @@ private:
   // File handle to read the IOR.
 
   int use_naming_service_;
-  // Flag to tell client to use Namingservice to find the cubit
+  // Flag to tell client not to use Namingservice to find the cubit
   // Factory.
 };
