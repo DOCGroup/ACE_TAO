@@ -1,3 +1,9 @@
+Tue Dec 11 09:13:19 2001  Justin Michel  <michel_j@ociweb.com>
+
+        * TAO/tests/ORB_init/Portspan/server.cpp
+
+        Updated activate method to use TAO_ENV_SINGLE_ARG_PARAMETER
+
 Mon Dec 10 20:24:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: Fixed a compile
