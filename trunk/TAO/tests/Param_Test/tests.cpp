@@ -1054,17 +1054,11 @@ Test_Struct_Sequence::init_parameters (Param_Test_ptr objref,
   // set the length of the sequence
   this->in_.length (len);
   // now set each individual element
-  for (CORBA::ULong i=0; i < this->in_.length (); i++)
+  for (CORBA::ULong i = 0; i < this->in_.length (); i++)
     {
       // generate some arbitrary string to be filled into the ith location in
       // the sequence
-      this->in_[i].dummy1 = gen->gen_string ();
-      this->in_[i].dummy2 = gen->gen_string ();
-
-      CORBA::ULong len2 = (CORBA::ULong) (gen->gen_long () % 3) + 1;
-      this->in_[i].seq.length (len2);
-      for (CORBA::ULong j = 0; j < this->in_[i].seq.length (); j++)
-	this->in_[i].seq[j] = gen->gen_string ();
+      this->in_[i] = gen->gen_fixed_struct ();
     }
   return 0;
 }
@@ -1169,25 +1163,17 @@ Test_Struct_Sequence::compare (const Param_Test::StructSeq &s1,
 
   for (CORBA::ULong i=0; i < s1.length (); i++)
     {
-      Param_Test::Var_Struct vs1, vs2;
-      vs1 = s1[i];
-      vs2 = s2[i];
+      const Param_Test::Fixed_Struct& vs1 = s1[i];
+      const Param_Test::Fixed_Struct& vs2 = s2[i];
 
-      if (ACE_OS::strcmp (vs1.dummy1.in (), vs2.dummy1.in ()))
-        return 0;
-      if (ACE_OS::strcmp (vs1.dummy2.in (), vs2.dummy2.in ()))
-        return 0;
-      // now check if the string sequence is correct
-
-      if (vs1.seq.maximum () != vs2.seq.maximum ())
-        return 0;
-      if (vs1.seq.length () != vs2.seq.length ())
-        return 0;
-      for (CORBA::ULong j=0; j < vs1.seq.length (); j++)
-        {
-          if (ACE_OS::strcmp (vs1.seq[j], vs2.seq[j]))
-            return 0;
-        }
+      if (vs1.l != vs2.l
+	  || vs1.c != vs2.c 
+	  || vs1.s != vs2.s 
+	  || vs1.o != vs2.o 
+	  || vs1.f != vs2.f 
+	  || vs1.b != vs2.b 
+	  || vs1.d != vs2.d )
+	return 0;
     }
 
   return 1; // success
@@ -1204,23 +1190,19 @@ Test_Struct_Sequence::print_sequence (const Param_Test::StructSeq &s)
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
   for (CORBA::ULong i=0; i < s.length (); i++)
     {
-      Param_Test::Var_Struct vs = s[i];
+      const Param_Test::Fixed_Struct& vs = s[i];
 
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "\t  dummy1 = <%s>\n"
-                  "\t  dummy2 = <%s>\n"
-                  "\t  seq length: %d\n",
+		  "\tl = %d\n"
+		  "\tc = %c\n"
+		  "\ts = %d\n"
+		  "\to = %x\n"
+		  "\tf = %f\n"
+		  "\tb = %d\n"
+		  "\td = %f\n",
                   i,
-                  vs.dummy1.in ()?(const char*)vs.dummy1.in ():"",
-                  vs.dummy2.in ()?(const char*)vs.dummy2.in ():"",
-                  vs.seq.length ()));
-      for (CORBA::ULong j = 0; j < vs.seq.length (); j++)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "\t\t    seq[%d] = <%s>\n",
-                      j, (const char*)vs.seq[j]));
-        }
+		  vs.l, vs.c, vs.s, vs.o, vs.f, vs.b, vs.d));
     }
 }
 

@@ -90,7 +90,7 @@ TAO_Unbounded_String_Sequence (const TAO_Unbounded_String_Sequence &rhs)
   : TAO_Unbounded_Base_Sequence (rhs)
 {
   char* *tmp1 = TAO_Unbounded_String_Sequence::allocbuf (this->maximum_);
-  char* *tmp2 = ACE_reinterpret_cast (char **, rhs.buffer_);
+  char ** const tmp2 = ACE_reinterpret_cast (char ** const, rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     tmp1[i] = CORBA::string_dup (tmp2[i]);
@@ -135,7 +135,7 @@ operator= (const TAO_Unbounded_String_Sequence &rhs)
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
   char **tmp1 = ACE_reinterpret_cast (char **, this->buffer_);
-  char **tmp2 = ACE_reinterpret_cast (char **, rhs.buffer_);
+  char ** const tmp2 = ACE_reinterpret_cast (char ** const, rhs.buffer_);
   for (CORBA::ULong i=0; i < rhs.length_; ++i)
     tmp1[i] = CORBA::string_dup (tmp2[i]);
 

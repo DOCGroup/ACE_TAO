@@ -74,12 +74,20 @@ public:
   // This is the Consumer side behavior, it pushes the events to the
   // local event channel.
 
+  int shutdown (CORBA::Environment&);
+
 private:
   ACE_PushConsumer_Adapter<EC_Proxy> consumer_;
+  // Our consumer personality....
+
   ACE_PushSupplier_Adapter<EC_Proxy> supplier_;
+  // Our supplier personality....
 
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
+  // We talk to the EC (as a supplier) using this proxy.
+
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
+  // We talk to the EC (as a consumer) using this proxy.
 };
 
 class Test_ECP
@@ -131,25 +139,45 @@ private:
 		   RtecEventChannelAdmin::EventChannel_ptr remote_ec,
 		   CORBA::Environment &_env);
 
+  int shutdown (CORBA::Environment&);
+
 private:
-  ACE_PushConsumer_Adapter<Test_ECP> consumer_;
+  ACE_PushConsumer_Adapter<Test_ECP> consumer_; 
+  // Our consumer personality....
+
   ACE_PushSupplier_Adapter<Test_ECP> supplier_;
+  // Our supplier personality....
 
   EC_Proxy ecp_;
+  // The proxy used to connect both event channels.
 
-  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
+  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_; 
+  // We talk to the EC (as a supplier) using this proxy.
+
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
+  // We talk to the EC (as a consumer) using this proxy.
 
   RtecEventComm::EventSourceID supplier_id_;
+  // Our ID as a supplier.
 
   char* rmt_ec_name_;
+  // The name of the "remote" EC.
+
   char* lcl_ec_name_;
+  // The name of the "local" EC.
   
   int event_a_;
   int event_b_;
   int event_c_;
+  // We generate events <a> and <b> and receive events <a> and <c>,
+  // this allows for a lot of configurations (making a == c or
+  // different, etc.)
 
   int interval_;
+  // The interval between the messages.
+
+  int message_count_;
+  // How many messages will we send...
 };
 
 

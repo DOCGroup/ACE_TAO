@@ -109,7 +109,44 @@ Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
   return s1;
 }
 
-// test for string sequence
+// = Sequences
+
+Param_Test::Long_Seq * Param_Test_i::test_long_sequence (
+      const Param_Test::Long_Seq & s1,
+      Param_Test::Long_Seq & s2,
+      Param_Test::Long_Seq_out s3,
+      CORBA::Environment &
+     )
+{
+  Param_Test::Long_Seq
+    *ret = new Param_Test::Long_Seq,
+    *out = new Param_Test::Long_Seq;
+
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
+Param_Test::Bounded_Long_Seq * Param_Test_i::test_bounded_long_sequence (
+      const Param_Test::Bounded_Long_Seq & s1,
+      Param_Test::Bounded_Long_Seq & s2,
+      Param_Test::Bounded_Long_Seq_out s3,
+      CORBA::Environment &
+     )
+{
+  Param_Test::Bounded_Long_Seq
+    *ret = new Param_Test::Bounded_Long_Seq,
+    *out = new Param_Test::Bounded_Long_Seq;
+
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
 Param_Test::StrSeq *
 Param_Test_i::test_strseq (const Param_Test::StrSeq &s1,
                            Param_Test::StrSeq &s2,
@@ -130,6 +167,106 @@ Param_Test_i::test_strseq (const Param_Test::StrSeq &s1,
   s3 = out;
   return ret;
 }
+
+Param_Test::Bounded_StrSeq * Param_Test_i::test_bounded_strseq (
+      const Param_Test::Bounded_StrSeq & s1,
+      Param_Test::Bounded_StrSeq & s2,
+      Param_Test::Bounded_StrSeq_out s3,
+      CORBA::Environment &
+     )
+{
+  // we copy the "in" sequences into all the inout, out and return sequences.
+
+  Param_Test::Bounded_StrSeq
+    *ret = new Param_Test::Bounded_StrSeq,
+    *out = new Param_Test::Bounded_StrSeq;
+
+  // now copy all elements of s1 into the others using the assignment operator
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
+// test for struct sequences
+Param_Test::StructSeq *
+Param_Test_i::test_struct_sequence (const Param_Test::StructSeq &s1,
+                                    Param_Test::StructSeq &s2,
+                                    Param_Test::StructSeq_out s3,
+                                    CORBA::Environment &)
+{
+  // we copy the "in" sequences into all the inout, out and return sequences.
+
+  Param_Test::StructSeq
+    *ret = new Param_Test::StructSeq,
+
+    *out = new Param_Test::StructSeq;
+
+  // now copy all elements of s1 into the others using the assignment operator
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
+Param_Test::Bounded_StructSeq * Param_Test_i::test_bounded_struct_sequence (
+      const Param_Test::Bounded_StructSeq & s1,
+      Param_Test::Bounded_StructSeq & s2,
+      Param_Test::Bounded_StructSeq_out s3,
+      CORBA::Environment &
+     )
+{
+  Param_Test::Bounded_StructSeq
+    *ret = new Param_Test::Bounded_StructSeq,
+    *out = new Param_Test::Bounded_StructSeq;
+
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
+Param_Test::Coffee_Mix * Param_Test_i::test_coffe_mix (
+      const Param_Test::Coffee_Mix & s1,
+      Param_Test::Coffee_Mix & s2,
+      Param_Test::Coffee_Mix_out s3,
+      CORBA::Environment &
+     )
+{
+  Param_Test::Coffee_Mix
+    *ret = new Param_Test::Coffee_Mix,
+    *out = new Param_Test::Coffee_Mix;
+
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
+Param_Test::Bounded_Coffee_Mix * Param_Test_i::test_bounded_coffe_mix (
+      const Param_Test::Bounded_Coffee_Mix & s1,
+      Param_Test::Bounded_Coffee_Mix & s2,
+      Param_Test::Bounded_Coffee_Mix_out s3,
+      CORBA::Environment &
+     )
+{
+  Param_Test::Bounded_Coffee_Mix
+    *ret = new Param_Test::Bounded_Coffee_Mix,
+    *out = new Param_Test::Bounded_Coffee_Mix;
+
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
+
+// = end of sequences...
 
 // test for variable structs
 Param_Test::Var_Struct *
@@ -168,29 +305,6 @@ Param_Test_i::test_nested_struct (const Param_Test::Nested_Struct &s1,
     *out = new Param_Test::Nested_Struct;
 
   // now copy all elements of s1 into the others
-  s2 = s1;
-  *out = s1;
-  *ret = s1;
-  s3 = out;
-  return ret;
-}
-
-// test for struct sequences
-Param_Test::StructSeq *
-Param_Test_i::test_struct_sequence (const Param_Test::StructSeq &s1,
-                                    Param_Test::StructSeq &s2,
-                                    Param_Test::StructSeq_out s3,
-                                    CORBA::Environment &env)
-{
-  ACE_UNUSED_ARG (env);
-  // we copy the "in" sequences into all the inout, out and return sequences.
-
-  Param_Test::StructSeq
-    *ret = new Param_Test::StructSeq,
-
-    *out = new Param_Test::StructSeq;
-
-  // now copy all elements of s1 into the others using the assignment operator
   s2 = s1;
   *out = s1;
   *ret = s1;

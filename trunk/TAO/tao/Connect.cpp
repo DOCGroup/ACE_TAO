@@ -538,6 +538,10 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
   // connection handler were obtained from a factory, then this could
   // be dynamically linked in (wouldn't that be cool/freaky?)
 
+  // Set the state so that we know we're looking for a response.
+  if (is_twoway)
+    this->expecting_response_ = 1;
+
   int success  = (int) TAO_GIOP::send_request (this, stream);
 
   if (!success)
@@ -545,9 +549,6 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
 
   if (is_twoway)
     {
-      // Set the state so that we know we're looking for a response.
-      this->expecting_response_ = 1;
-
       // Go into a loop, waiting until it's safe to try to read
       // something on the soket.  The handle_input() method doesn't
       // actualy do the read, though, proper behavior based on what is

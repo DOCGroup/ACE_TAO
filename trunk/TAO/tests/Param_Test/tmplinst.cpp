@@ -8,12 +8,20 @@
 #include "param_testC.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_Unbounded_Sequence<Param_Test::Var_Struct>;
+template class TAO_Bounded_Sequence<CORBA::Long,32>;
+template class TAO_Bounded_String_Sequence<32>;
+template class TAO_Unbounded_Sequence<Param_Test::Fixed_Struct>;
+template class TAO_Bounded_Sequence<Param_Test::Fixed_Struct,32>;
 template class TAO_Unbounded_Object_Sequence<Coffee>;
+template class TAO_Bounded_Object_Sequence<Coffee,32>;
 template class TAO_Object_Manager<Coffee>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Unbounded_Sequence<Param_Test::Var_Struct>
+#pragma instantiate TAO_Bounded_Sequence<CORBA::Long,32>
+#pragma instantiate TAO_Bounded_String_Sequence<32>
+#pragma instantiate TAO_Unbounded_Sequence<Param_Test::Fixed_Struct>
+#pragma instantiate TAO_Bounded_Sequence<Param_Test::Fixed_Struct,32>
 #pragma instantiate TAO_Unbounded_Object_Sequence<Coffee>
+#pragma instantiate TAO_Bounded_Object_Sequence<Coffee,32>
 #pragma instantiate TAO_Object_Manager<Coffee>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

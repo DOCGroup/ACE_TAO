@@ -61,11 +61,47 @@ interface Param_Test
                                   inout Fixed_Struct s2,
                                   out Fixed_Struct s3);
 
-  // sequences and typedefs
+  // = Sequences of long, strings, Var_Struct and Object
+  // references...
+  typedef sequence<long> Long_Seq;
+  Long_Seq test_long_sequence (in Long_Seq s1,
+			       inout Long_Seq s2,
+			       out Long_Seq s3);
+
+  typedef sequence<long,32> Bounded_Long_Seq;
+  Bounded_Long_Seq test_bounded_long_sequence (in Bounded_Long_Seq s1,
+					       inout Bounded_Long_Seq s2,
+					       out Bounded_Long_Seq s3);
+
   typedef sequence<string> StrSeq;
   StrSeq test_strseq (in StrSeq s1,
                       inout StrSeq s2,
                       out StrSeq s3);
+
+  typedef sequence<string,32> Bounded_StrSeq;
+  Bounded_StrSeq test_bounded_strseq (in Bounded_StrSeq s1,
+				      inout Bounded_StrSeq s2,
+				      out Bounded_StrSeq s3);
+
+  typedef sequence<Fixed_Struct> StructSeq;
+  StructSeq test_struct_sequence (in StructSeq s1,
+                                  inout StructSeq s2,
+                                  out StructSeq s3);
+
+  typedef sequence<Fixed_Struct,32> Bounded_StructSeq;
+  Bounded_StructSeq test_bounded_struct_sequence (in Bounded_StructSeq s1,
+						  inout Bounded_StructSeq s2,
+						  out Bounded_StructSeq s3);
+
+  typedef sequence<Coffee> Coffee_Mix;
+  Coffee_Mix test_coffe_mix (in Coffee_Mix s1,
+			     inout Coffee_Mix s2,
+			     out Coffee_Mix s3);
+
+  typedef sequence<Coffee,32> Bounded_Coffee_Mix;
+  Bounded_Coffee_Mix test_bounded_coffe_mix (in Bounded_Coffee_Mix s1,
+					     inout Bounded_Coffee_Mix s2,
+					     out Bounded_Coffee_Mix s3);
 
 
   typedef string DUMMY;
@@ -92,12 +128,6 @@ interface Param_Test
                                     inout Nested_Struct s2,
                                     out Nested_Struct s3);
 
-  // sequences of structs
-  typedef sequence<Var_Struct> StructSeq;
-
-  StructSeq test_struct_sequence (in StructSeq s1,
-                                  inout StructSeq s2,
-                                  out StructSeq s3);
   // object references
   Coffee make_coffee (); // make a Coffee object
   Coffee test_objref (in Coffee o1, inout Coffee o2, out Coffee o3);
