@@ -11,7 +11,9 @@ Sat May 12 12:39:47 2001  Ossama Othman  <ossama@uci.edu>
 	  style IORs of the form defined in the latest Interoperable
 	  Naming Service spec, i.e. "corbaloc:iiop:...".  Updated the
 	  above functions to parse "corbaloc" IORs instead.  This fixes a
-	  segmentation fault occured when "ImR-ifying" IORs.  [Bug 909]
+	  segmentation fault that occured when "ImR-ifying" IORs.  Thanks
+	  to John Ashmun <John.ASHMUN@esca.com> and Kirat Singh
+	  <kirat.singh@gs.com> for reporting this problem.  [Bug 909]
 
 	* orbsvcs/ImplRepo_Service/README.txt:
 
