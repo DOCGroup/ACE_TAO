@@ -677,19 +677,20 @@ TAO_ORB_Core::server_factory (void)
     {
       // Look in the service repository for an instance.
       this->server_factory_ =
-        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance ("Server_Strategy_Factory");
-
+        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance 
+          ("Server_Strategy_Factory");
       this->server_factory_from_service_config_ = CORBA::B_TRUE;
     }
 
+  // If the <server_factory_> isn't found it's usually because the ORB
+  // hasn't been intialized correctly...
   if (this->server_factory_ == 0)
     {
-      // Still don't have one, so let's allocate the default.  This
-      // will throw an exception if it fails on exception-throwing
-      // platforms.
+      // Still don't have one, so let's allocate the default.
       ACE_ERROR ((LM_WARNING,
-                  "(%P|%t) WARNING - No Server Strategy Factory found in Service Repository."
-                  "  Using default instance.\n"));
+                  "(%P|%t) WARNING - No %s found in Service Repository."
+                  "  Using default instance.\n",
+                  "Server Strategy Factory"));
 
       ACE_NEW_RETURN (this->server_factory_,
                       TAO_Default_Server_Strategy_Factory,
@@ -697,9 +698,10 @@ TAO_ORB_Core::server_factory (void)
 
       this->server_factory_from_service_config_ = CORBA::B_FALSE;
       // At this point we need to register this with the
-      // Service_Repository in order to get it cleaned up properly.
-      // But, for now we let it leak.
+      // <Service_Repository> to get it cleaned up properly.  But, for
+      // now we let it leak.
     }
+
   return this->server_factory_;
 }
 

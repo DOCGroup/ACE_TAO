@@ -49,6 +49,9 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 			 int argc,
                          char **argv)
 {
+  // Initialize our <NS_NamingContext> instance.
+  this->naming_context_impl_.init ();
+
   // Parse command-line arguments to determine if this name server
   // instance is part of a naming tree that resides under the default
   // name server.

@@ -25,12 +25,12 @@
 class Naming_Service
 {
   // = TITLE
-  //   Defines a class that encapsulates the implementation of a
-  //   naming service.
+  //   Defines a class that encapsulates the implementation of the
+  //   COS Naming Service.
   //
   // = DESCRIPTION
-  //   This class makes use of the TAO_Naming_Server and
-  //   TAO_ORB_Manager class to implement the Naming_Service.
+  //   This class makes use of the <TAO_Naming_Server> and
+  //   <TAO_ORB_Manager> class to implement the COS <Naming_Service>.
 public:
   Naming_Service (void);
   // Default Constructor.
