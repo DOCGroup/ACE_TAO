@@ -1,3 +1,17 @@
+Mon Jul 12 12:58:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_scope.cpp:
+	  Corrected a mistake in the logic that caused a
+	  failed lookup of a field to be given the type of
+	  the previous field (if any). As a by-product, the
+	  use of 'int' as a type (illegal) causes a lookup
+	  error output for '_cxx_int'. This is not wholly
+	  informative, but the corresponding syntax error
+	  (based on the parse state) is 'illegal component
+	  in scoped name', which is even less informative.
+	  Thanks to Surovegin Eugene <Surovegin@SoftLab.RU>
+	  for pointing out the code generation problem.
+
 Mon Jul 12 12:25:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp:
