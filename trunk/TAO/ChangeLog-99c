@@ -1,3 +1,9 @@
+Tue Feb 16 16:45:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Invocation.cpp: 
+	  Fixed warning due to unproper use of ACE_TRY macros, this time
+	  the warning was *very* significant.
+
 Mon Feb 15 21:22:55 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be-visitor_argument/post_upcall_ss.cpp:
