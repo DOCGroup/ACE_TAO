@@ -1,3 +1,9 @@
+Wed Mar 19 13:27:09 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/CodeSets/simple/Makefile: Fix the dependancies so that the
+          idl compiler isn't run twice in parallel jobs, thus corrupting
+          the generated Skeleton file.
+
 Tue Mar 18 18:00:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_declarator.cpp:
