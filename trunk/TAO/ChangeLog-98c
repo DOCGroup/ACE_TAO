@@ -1,3 +1,9 @@
+Sat Sep 19 14:03:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Explicit_Activation/alternate.conf: Fixed service
+ 	  config directive since directory name of the alternate resource
+ 	  factory was changed.
+
 Sat Sep 19 13:13:46 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp (consumer_push): added
