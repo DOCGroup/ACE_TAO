@@ -1,6 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    Asynch_Reply_Dispatcher.h
@@ -26,6 +25,8 @@
 #include "Asynch_Timeout_Handler.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
 
+class ACE_Allocator;
+
 /// Reply dispatcher for Asynchoronous Method Invocation (AMI)s.
 class TAO_Messaging_Export TAO_Asynch_Reply_Dispatcher
   : public TAO_Asynch_Reply_Dispatcher_Base
@@ -35,16 +36,19 @@ public:
   TAO_Asynch_Reply_Dispatcher (
       const TAO_Reply_Handler_Skeleton &reply_handler_skel,
       Messaging::ReplyHandler_ptr reply_handler_ptr,
-      TAO_ORB_Core *orb_core
+      TAO_ORB_Core *orb_core,
+      ACE_Allocator *allocator
     );
 
   /// Destructor.
   virtual ~TAO_Asynch_Reply_Dispatcher (void);
 
-  // = The Reply Dispatcher methods
+  /// @name The Reply Dispatcher methods
+  //@{
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
   virtual void connection_closed (void);
+  //@}
 
   /// Inform that the reply timed out
   virtual void reply_timed_out (void);

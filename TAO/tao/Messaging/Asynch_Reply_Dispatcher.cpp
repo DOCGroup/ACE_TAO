@@ -21,9 +21,10 @@ ACE_RCSID(Messaging, Asynch_Reply_Dispatcher, "$Id$")
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
     const TAO_Reply_Handler_Skeleton &reply_handler_skel,
     Messaging::ReplyHandler_ptr reply_handler,
-    TAO_ORB_Core *orb_core
+    TAO_ORB_Core *orb_core,
+    ACE_Allocator *allocator
   )
-  :TAO_Asynch_Reply_Dispatcher_Base (orb_core)
+  :TAO_Asynch_Reply_Dispatcher_Base (orb_core, allocator)
   , reply_handler_skel_ (reply_handler_skel)
   , reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler))
   , timeout_handler_ (0)
@@ -97,15 +98,12 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
   IOP::ServiceContext *context_list = params.svc_ctx_.get_buffer (1);
   this->reply_service_info_.replace (max, len, context_list, 1);
 
-
   if (TAO_debug_level >= 4)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher::")
                   ACE_TEXT ("dispatch_reply\n")));
     }
-
-
 
   CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
   switch (this->reply_status_)
