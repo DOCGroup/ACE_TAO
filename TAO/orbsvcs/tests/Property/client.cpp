@@ -408,6 +408,8 @@ int
 Client::test_delete_property (CORBA::String property_name,
                               CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
+
   ACE_DEBUG ((LM_DEBUG, "\nDeleting %s\n",property_name));
 
   TAO_TRY
@@ -756,6 +758,8 @@ Client::test_define_property_with_mode (CORBA::Environment &env)
 int
 Client::test_get_property_value (CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
+
   ACE_DEBUG ((LM_DEBUG, "Testing get_property_value\n"));
 
   TAO_TRY
@@ -769,7 +773,7 @@ Client::test_get_property_value (CORBA::Environment &env)
 
       // Check whether the IOR is fine.
       CORBA::Object_var propsetdef_object;
-      (*any_ptr) >>= CORBA::Any::to_object (propsetdef_object);
+      (*any_ptr) >>= CORBA::Any::to_object (propsetdef_object.out ());
       
       CosPropertyService::PropertySetDef_var propsetdef =
         CosPropertyService::PropertySetDef::_narrow (propsetdef_object.in (),
