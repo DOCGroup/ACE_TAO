@@ -3,6 +3,7 @@
 #include "test_i.h"
 
 #include "tao/ORB_Core.h"
+#include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
 #include "test_i.i"
@@ -22,7 +23,8 @@ void
 Callback_i::callback_method (CORBA::Environment & /*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Callback method called \n"));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Callback method called \n"));
 }
 
 

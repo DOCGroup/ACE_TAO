@@ -42,6 +42,7 @@ public:
 private:
   CORBA::ORB_var orb_;
   // The orb
+
 };
 
 class Simple_Server_i : public POA_Simple_Server
