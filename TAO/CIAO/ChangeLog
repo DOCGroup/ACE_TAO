@@ -7,6 +7,7 @@ Tue Dec 30 17:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 
 	* CCF/CCF/CompilerElements/Makefile.alt:
+	* CCF/CCF/CompilerElements/Preprocessor.cpp:
 	* CCF/CCF/CompilerElements/Preprocessor.hpp:
 	* CCF/CCF/CompilerElements/PreprocessorToken.cpp:
 	* CCF/CCF/CompilerElements/PreprocessorToken.hpp:
@@ -79,7 +80,7 @@ Tue Dec 30 17:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CCF/CCF/IDL3/SemanticAction/Impl/HomeFinder.hpp:
 
 	  Added support for IDL3 home finder feature.
-	
+
 	* CCF/CCF/IDL3/LexicalAnalyzer.cpp:
 	* CCF/CCF/IDL3/LexicalAnalyzer.hpp:
 	* CCF/CCF/IDL3/Parser.cpp:
