@@ -66,6 +66,197 @@ outfmt (CORBA::Double b)
   return obuf;
 }
 
+#if defined (VXWORKS) || defined (CHORUS)
+// Just so this file will compile.
+inline
+int
+lrand48 ()
+{
+  return ::rand ();
+}
+
+inline
+double
+drand48 ()
+{
+  return ::rand ();
+}
+#endif /* VXWORKS || CHORUS */
+
+// fill up a buffer with a data type that we want to send
+void
+FillPattern (register CORBA::Char *cp, register CORBA::Long bufLen, CORBA::ULong dt)
+{
+  unsigned long
+        num, i;
+
+  switch(dt){
+  case SEND_SHORT:
+    {
+       register short *SeqPtr = (short *)cp;
+       num = bufLen/sizeof(short);
+       for (i=0; i < num; i++)
+                SeqPtr[i] = (short)lrand48();
+       sseq = new ttcp_sequence::ShortSeq(num,num, SeqPtr);
+    }
+    break;
+  case SEND_LONG:
+    {
+       register CORBA::Long *SeqPtr = (CORBA::Long *)cp;
+       num = bufLen/sizeof(long);
+       for (i=0; i < num; i++)
+                SeqPtr[i] = lrand48();
+       lseq = new ttcp_sequence::LongSeq(num, num, SeqPtr);
+    }
+    break;
+  case SEND_DOUBLE:
+    {
+       register double *SeqPtr = (double *)cp;
+       num = bufLen/sizeof(double);
+       for (i=0; i < num; i++)
+                SeqPtr[i] = drand48();
+       dseq = new ttcp_sequence::DoubleSeq(num, num, SeqPtr);
+    }
+    break;
+  case SEND_CHAR:
+    {
+       register CORBA::Char *SeqPtr = (CORBA::Char *)cp;
+       register char c = 0;
+       num = bufLen/sizeof(char);
+       for(i=0; i < num; i++){
+         while (!isprint(c & 0x7f))
+                c++;
+         SeqPtr[i] = (c++ & 0x7f);
+       }
+       cseq = new ttcp_sequence::CharSeq(num, num, SeqPtr);
+    }
+    break;
+  case SEND_STRUCT:
+    {
+       register BinStruct *SeqPtr = (BinStruct *)cp;
+       register char c = 0;
+       num = bufLen/sizeof(BinStruct);
+       for (i=0; i < num; i++){
+           SeqPtr[i].s = (short)lrand48();
+           SeqPtr[i].l = lrand48();
+           SeqPtr[i].d = drand48();
+           while (!isprint(c & 0x7f))
+                c++;
+           SeqPtr[i].c = (c++ & 0x7f);
+           while (!isprint(c & 0x7f))
+                c++;
+           SeqPtr[i].o = (unsigned char)(c++ & 0x7f);
+       }
+       Sseq = new ttcp_sequence::StructSeq(num, num, SeqPtr);
+
+    }
+    break;
+  case SEND_OCTET:
+  default:
+    {
+       register CORBA::Octet *SeqPtr = (CORBA::Octet *)cp;
+       register char c = 0;
+       num = bufLen/sizeof(CORBA::Octet);
+       for(i=0; i < num; i++){
+         while (!isprint(c & 0x7f))
+                c++;
+         SeqPtr[i] = (c++ & 0x7f);
+       }
+       oseq = new ttcp_sequence::OctetSeq(num, num, SeqPtr);
+    }
+    break;
+  }
+}
+
+// print all the statistics
+void PrintStats (void)
+{
+  if (cput <= 0.0)
+    cput = 0.001;
+  if (realt <= 0.0)
+    realt = 0.001;
+
+  if (title != 0)
+    {
+      double tmp;
+      FILE *outFile;
+      char filename[BUFSIZ];
+
+      strcpy(filename, title);
+      switch(dt){
+      case SEND_SHORT:
+        strcat(filename, ".shortSeq.results");
+        break;
+      case SEND_LONG:
+        strcat(filename, ".longSeq.results");
+        break;
+      case SEND_DOUBLE:
+        strcat(filename, ".doubleSeq.results");
+        break;
+      case SEND_CHAR:
+        strcat(filename, ".charSeq.results");
+        break;
+      case SEND_STRUCT:
+        strcat(filename, ".structSeq.results");
+        break;
+      case SEND_COMPOSITE:
+        strcat(filename, ".compositeSeq.results");
+        break;
+      case SEND_OCTET:
+      default:
+        strcat(filename, ".octetSeq.results");
+        break;
+      }
+      outFile = fopen (filename, "a+");
+      ACE_OS::fprintf (outFile, "\n%ldk \t", buflen / 1024);
+      tmp = ((double) nbytes) / realt;
+      ACE_OS::fprintf (outFile, "%.2f ", tmp * 8.0 / 1024.0 / 1024.0);
+      fclose (outFile);
+    }
+
+  ACE_OS::fprintf (stdout,
+           "ttcp%s: %ld bytes in %.2f real seconds = %s/sec +++\n",
+           trans ? "-t" : "-r",
+           nbytes, realt, outfmt (((double) nbytes) / realt));
+  if (verbose)
+    {
+      ACE_OS::fprintf (stdout,
+               "ttcp%s: %ld bytes in %.2f CPU seconds = %s/cpu sec\n",
+               trans ? "-t" : "-r",
+               nbytes, cput, outfmt (((double) nbytes) / cput));
+    }
+  ACE_OS::fprintf (stdout,
+           "ttcp%s: %d Server Method calls, msec/call = %.2f, calls/sec = %.2f\n",
+           trans ? "-t" : "-r",
+           numCalls,
+           1024.0 * realt / ((double) numCalls),
+           ((double) numCalls) / realt);
+  ACE_OS::fprintf (stdout, "ttcp%s: %s\n", trans ? "-t" : "-r", stats);
+  if (verbose)
+    {
+      ACE_OS::fprintf (stdout,
+               "ttcp%s: buffer address %#x\n",
+               trans ? "-t" : "-r",
+               buf);
+    }
+}
+
+// generate the specified delay in microseconds
+void
+delay (int us)
+{
+  struct timeval tv;
+
+  tv.tv_sec = 0;
+  tv.tv_usec = us;
+  (void) select (1, (fd_set *) 0, (fd_set *) 0, (fd_set *) 0, &tv);
+}
+
+#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
+// Mon Apr 06 09:50:16 1998  David L. Levine  <levine@cs.wustl.edu>
+// @@ This file should be updated to use ACE_Profile_Timer instead of
+//    using rusage directly.
+
 static struct itimerval itime0; /* Time at which timing started */
 static struct rusage ru0;       /* Resource utilization at the start */
 
@@ -297,171 +488,19 @@ psecs (CORBA::Long l, register CORBA::Char *cp)
   ACE_OS::sprintf (cp, "%d%d", i / 10, i % 10);
 }
 
-// generate the specified delay in microseconds
+#else /* ! ACE_HAS_PRUSAGE_T || ! ACE_HAS_GETRUSAGE */
+
 void
-delay (int us)
+prep_timer (void)
 {
-  struct timeval tv;
-
-  tv.tv_sec = 0;
-  tv.tv_usec = us;
-  (void) select (1, (fd_set *) 0, (fd_set *) 0, (fd_set *) 0, &tv);
+  ACE_ERROR ((LM_ERROR, "%s:%d; not supported\n", __FILE__, __LINE__));
+  errno = ENOTSUP;
 }
 
-// fill up a buffer with a data type that we want to send
-void
-FillPattern (register CORBA::Char *cp, register CORBA::Long bufLen, CORBA::ULong dt)
+double
+read_timer (CORBA::Char *str, CORBA::Long len)
 {
-  unsigned long
-        num, i;
-
-  switch(dt){
-  case SEND_SHORT:
-    {
-       register short *SeqPtr = (short *)cp;
-       num = bufLen/sizeof(short);
-       for (i=0; i < num; i++)
-                SeqPtr[i] = (short)lrand48();
-       sseq = new ttcp_sequence::ShortSeq(num,num, SeqPtr);
-    }
-    break;
-  case SEND_LONG:
-    {
-       register CORBA::Long *SeqPtr = (CORBA::Long *)cp;
-       num = bufLen/sizeof(long);
-       for (i=0; i < num; i++)
-                SeqPtr[i] = lrand48();
-       lseq = new ttcp_sequence::LongSeq(num, num, SeqPtr);
-    }
-    break;
-  case SEND_DOUBLE:
-    {
-       register double *SeqPtr = (double *)cp;
-       num = bufLen/sizeof(double);
-       for (i=0; i < num; i++)
-                SeqPtr[i] = drand48();
-       dseq = new ttcp_sequence::DoubleSeq(num, num, SeqPtr);
-    }
-    break;
-  case SEND_CHAR:
-    {
-       register CORBA::Char *SeqPtr = (CORBA::Char *)cp;
-       register char c = 0;
-       num = bufLen/sizeof(char);
-       for(i=0; i < num; i++){
-         while (!isprint(c & 0x7f))
-                c++;
-         SeqPtr[i] = (c++ & 0x7f);
-       }
-       cseq = new ttcp_sequence::CharSeq(num, num, SeqPtr);
-    }
-    break;
-  case SEND_STRUCT:
-    {
-       register BinStruct *SeqPtr = (BinStruct *)cp;
-       register char c = 0;
-       num = bufLen/sizeof(BinStruct);
-       for (i=0; i < num; i++){
-           SeqPtr[i].s = (short)lrand48();
-           SeqPtr[i].l = lrand48();
-           SeqPtr[i].d = drand48();
-           while (!isprint(c & 0x7f))
-                c++;
-           SeqPtr[i].c = (c++ & 0x7f);
-           while (!isprint(c & 0x7f))
-                c++;
-           SeqPtr[i].o = (unsigned char)(c++ & 0x7f);
-       }
-       Sseq = new ttcp_sequence::StructSeq(num, num, SeqPtr);
-
-    }
-    break;
-  case SEND_OCTET:
-  default:
-    {
-       register CORBA::Octet *SeqPtr = (CORBA::Octet *)cp;
-       register char c = 0;
-       num = bufLen/sizeof(CORBA::Octet);
-       for(i=0; i < num; i++){
-         while (!isprint(c & 0x7f))
-                c++;
-         SeqPtr[i] = (c++ & 0x7f);
-       }
-       oseq = new ttcp_sequence::OctetSeq(num, num, SeqPtr);
-    }
-    break;
-  }
+  ACE_NOTSUP_RETURN (0.0);
 }
 
-// print all the statistics
-void PrintStats (void)
-{
-  if (cput <= 0.0)
-    cput = 0.001;
-  if (realt <= 0.0)
-    realt = 0.001;
-
-  if (title != 0)
-    {
-      double tmp;
-      FILE *outFile;
-      char filename[BUFSIZ];
-
-      strcpy(filename, title);
-      switch(dt){
-      case SEND_SHORT:
-        strcat(filename, ".shortSeq.results");
-        break;
-      case SEND_LONG:
-        strcat(filename, ".longSeq.results");
-        break;
-      case SEND_DOUBLE:
-        strcat(filename, ".doubleSeq.results");
-        break;
-      case SEND_CHAR:
-        strcat(filename, ".charSeq.results");
-        break;
-      case SEND_STRUCT:
-        strcat(filename, ".structSeq.results");
-        break;
-      case SEND_COMPOSITE:
-        strcat(filename, ".compositeSeq.results");
-        break;
-      case SEND_OCTET:
-      default:
-        strcat(filename, ".octetSeq.results");
-        break;
-      }
-      outFile = fopen (filename, "a+");
-      ACE_OS::fprintf (outFile, "\n%ldk \t", buflen / 1024);
-      tmp = ((double) nbytes) / realt;
-      ACE_OS::fprintf (outFile, "%.2f ", tmp * 8.0 / 1024.0 / 1024.0);
-      fclose (outFile);
-    }
-
-  ACE_OS::fprintf (stdout,
-           "ttcp%s: %ld bytes in %.2f real seconds = %s/sec +++\n",
-           trans ? "-t" : "-r",
-           nbytes, realt, outfmt (((double) nbytes) / realt));
-  if (verbose)
-    {
-      ACE_OS::fprintf (stdout,
-               "ttcp%s: %ld bytes in %.2f CPU seconds = %s/cpu sec\n",
-               trans ? "-t" : "-r",
-               nbytes, cput, outfmt (((double) nbytes) / cput));
-    }
-  ACE_OS::fprintf (stdout,
-           "ttcp%s: %d Server Method calls, msec/call = %.2f, calls/sec = %.2f\n",
-           trans ? "-t" : "-r",
-           numCalls,
-           1024.0 * realt / ((double) numCalls),
-           ((double) numCalls) / realt);
-  ACE_OS::fprintf (stdout, "ttcp%s: %s\n", trans ? "-t" : "-r", stats);
-  if (verbose)
-    {
-      ACE_OS::fprintf (stdout,
-               "ttcp%s: buffer address %#x\n",
-               trans ? "-t" : "-r",
-               buf);
-    }
-}
+#endif /* ! ACE_HAS_PRUSAGE_T || ! ACE_HAS_GETRUSAGE */
