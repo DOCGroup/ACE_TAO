@@ -1,3 +1,10 @@
+Tue Jul 10 16:01:52 2001  Ossama Othman  <ossama@uci.edu>
+
+	* THANKS:
+
+	  Added Sangeetha Ramadurai <Sangeetha.Ramadurai@geind.ge.com> to
+	  the hall of fame.
+
 Tue Jul 10 18:15:39 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/WFMO_Reactor.cpp (event_handling): Move the logic for
