@@ -60,6 +60,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 # $(ACE_ROOT)/bin/clone.cpp file and install it in your ~/bin
 # directory (or some place similar).
 
+.PHONY: clone
 clone:
 	@for dir in $(CLONE); \
         do \
@@ -200,6 +201,8 @@ releaseall-old: release-old
            cpio -o -H tar | gzip -9 > ACE+TAO.tar.gz; \
          chmod a+r ACE+TAO.tar.gz; \
          mv ACE+TAO.tar.gz ./ACE_wrappers/)
+
+.PHONY: release releasetao releaseall ACE-INSTALL
 
 REL = beta
 CHECK =
