@@ -461,7 +461,7 @@ bgcolor="#ffffff">
             }
           catch (exe_foo &foo)
             {
-              cerr &lt;&lt; "execption caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
 
           cout &lt;&lt; endl &lt;&lt; "Second exception" &lt;&lt; endl &lt;&lt; endl;
@@ -471,7 +471,7 @@ bgcolor="#ffffff">
             }
           catch (exe_foo foo)
             {
-              cerr &lt;&lt; "execption caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
 
           cout &lt;&lt; endl &lt;&lt; "Third exception" &lt;&lt; endl &lt;&lt; endl;
@@ -481,7 +481,7 @@ bgcolor="#ffffff">
             }
           catch (exe_foo &foo)
             {
-              cerr &lt;&lt; "execption caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
 
           cout &lt;&lt; endl &lt;&lt; "Fourth exception" &lt;&lt; endl &lt;&lt; endl;
@@ -491,7 +491,7 @@ bgcolor="#ffffff">
             }
           catch (exe_foo foo)
             {
-              cerr &lt;&lt; "execption caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
 
           return 0;
@@ -504,14 +504,14 @@ bgcolor="#ffffff">
         First exception
 
         constructor of exception called
-        execption caught: 0
+        exception caught: 0
         destructor of exception called
 
         Second exception
 
         constructor of exception called
         copy constructor of exception called
-        execption caught: 0
+        exception caught: 0
         destructor of exception called
         destructor of exception called
 
@@ -520,7 +520,7 @@ bgcolor="#ffffff">
         constructor of exception called
         copy constructor of exception called
         destructor of exception called
-        execption caught: 1
+        exception caught: 1
         destructor of exception called
 
         Fourth exception
@@ -529,7 +529,7 @@ bgcolor="#ffffff">
         copy constructor of exception called
         destructor of exception called
         copy constructor of exception called
-        execption caught: 1
+        exception caught: 1
         destructor of exception called
         destructor of exception called
 
@@ -621,6 +621,34 @@ bgcolor="#ffffff">
 <ul>
   <li>Always make sure that a change builds and executes correctly
       on at least one platform before checking it into the CVS repository.<p>
+</ul>
+
+
+<hr>
+<h3>Script Guidelines</h3>
+<ul>
+  <li>In general, it's best to write scripts in perl.<p>
+
+  <li>Don't specify a hard-coded path to perl itself.  Use
+    the following code at the top of the script to pick up
+    perl from the users <code>PATH</code>:<br>
+      <pre>
+      eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+      & eval 'exec perl -S $0 $argv:q'
+      if 0;
+      </pre><p>
+
+  <li>If your perl script relies on features only available
+    in never versions of perl, include the a statement similar
+    to the following:<br>
+      <pre>
+        require 5.003;
+      </pre>
+
+  <li>Don't depend on <strong><code>.</code></strong> being
+    in the user's path.  If the script spawns another executable
+    that is supposed to be in the current directory, be sure the
+    prefix its filename with <strong><code>.</code></strong>.<p>
 </ul>
 
 
