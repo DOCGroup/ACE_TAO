@@ -45,6 +45,9 @@
 // Scheduling functions are declared in <sched.h>
 #define ACE_LACKS_SCHED_H
 
+// When threads are enabled READDIR_R is supported on IRIX.
+#undef ACE_LACKS_READDIR_R
+
 // Compile using multi-thread libraries
 #if !defined (ACE_MT_SAFE)
   #define ACE_MT_SAFE 1
