@@ -1,3 +1,9 @@
+Wed Jan 03 05:42:20 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.h:
+          Remove broken #include of unistd.h, it was a debug statement
+          that sneaked through the commit.
+
 Tue Jan  2 14:22:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
@@ -11,18 +17,18 @@ Tue Jan  2 10:25:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Jan  2 09:03:18 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Asynch_Acceptor.{h,cpp},
-	  ace/POSIX_Async_IO.{h,cpp},
-	  ace/POSIX_Proactor.{h,cpp},
-	  ace/SUN_Proactor.{h,cpp}: Added enhanced versions of ACE_POSIX_Proactor
-	  and ACE_SUN_Proactor to fix various problems uncovered and fixed by
-	  Alexander Libman <Alibman@baltimore.com>.
+        * ace/Asynch_Acceptor.{h,cpp},
+          ace/POSIX_Async_IO.{h,cpp},
+          ace/POSIX_Proactor.{h,cpp},
+          ace/SUN_Proactor.{h,cpp}: Added enhanced versions of ACE_POSIX_Proactor
+          and ACE_SUN_Proactor to fix various problems uncovered and fixed by
+          Alexander Libman <Alibman@baltimore.com>.
 
-	* ace/ACE.{h,cpp}: Fixed the timestamp() method so that it works
- 	  identically on Win32 and on UNIX.  Also provided a new option
- 	  that'll make it possible to return a pointer to the beginning of
- 	  the time portion of "date and time."  Thanks to Michael Searles
- 	  <msearles@base16.com> for contributing these fixes.
+        * ace/ACE.{h,cpp}: Fixed the timestamp() method so that it works
+          identically on Win32 and on UNIX.  Also provided a new option
+          that'll make it possible to return a pointer to the beginning of
+          the time portion of "date and time."  Thanks to Michael Searles
+          <msearles@base16.com> for contributing these fixes.
 
 Mon Jan 01 16:35:00 2000  Michael Kircher  <Micahel.Kircher@mchp.siemens.de>
 
