@@ -121,3 +121,28 @@ TAO_Notify_EventChannelFactory_i::get_event_channel (CosNotifyChannelAdmin::Chan
 
   return ec->get_ref (ACE_TRY_ENV);
 }
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Hash_Map_Entry<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *>;
+template class ACE_Hash_Map_Manager<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Hash_Map_Entry<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *>
+#pragma instantiate ACE_Hash_Map_Manager<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyChannelAdmin::ChannelID, TAO_Notify_EventChannel_i *,ACE_Hash<CosNotifyChannelAdmin::ChannelID>, ACE_Equal_To<CosNotifyChannelAdmin::ChannelID>,ACE_SYNCH_MUTEX>
+
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
