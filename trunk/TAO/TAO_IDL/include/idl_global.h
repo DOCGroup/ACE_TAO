@@ -570,10 +570,10 @@ private:
   String                        *pd_stripped_filename;  // Stripped filename
   idl_bool                      pd_import;              // Is import on?
   idl_bool                      pd_in_main_file;        // Are we in it?
-  char                          *pd_prog_name;          // Argv[0]
-  char                          *pd_cpp_location;       // Where to find CPP
+  const char                    *pd_prog_name;          // Argv[0]
+  const char                    *pd_cpp_location;       // Where to find CPP
   long                          pd_compile_flags;       // Compile flags
-  char                          *pd_be;                 // BE name to use
+  const char                    *pd_be;                 // BE name to use
   char                          *pd_local_escapes;      // Trapdoor argument
   UTL_Indenter                  *pd_indent;             // Indent object
   UTL_StrList                   *pd_pragmas;            // List of pragmas

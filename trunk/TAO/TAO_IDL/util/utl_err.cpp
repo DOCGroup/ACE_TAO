@@ -80,8 +80,8 @@ ACE_RCSID(util, utl_error, "$Id$")
  * - Convert an ExprType to a string
  */
 
-// Convert an error code into a char *
-static char *
+// Convert an error code into a const char *
+static const char *
 error_string(UTL_Error::ErrorCode c)
 {
   switch (c) {
@@ -167,7 +167,7 @@ idl_error_header(UTL_Error::ErrorCode c, long lineno, String *s)
 }
 
 // Convert the type of an AST_Expression to a char *
-static char *
+static const char *
 exprtype_to_string(AST_Expression::ExprType t)
 {
   switch (t) {
@@ -210,7 +210,7 @@ exprtype_to_string(AST_Expression::ExprType t)
 /*
  * Convert a parse state into a possible error message
  */
-static char *
+static const char *
 parse_state_to_error_message(IDL_GlobalData::ParseState ps)
 {
   switch (ps) {

@@ -43,7 +43,7 @@ be_constant::be_constant (AST_Expression::ExprType et,
   this->size_type (be_decl::FIXED);
 }
 
-char *
+const char *
 be_constant::exprtype_to_string (void)
 {
   switch (this->et ())

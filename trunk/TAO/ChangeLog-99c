@@ -1,3 +1,13 @@
+Sun Jun  6 15:14:13 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* TAO_IDL/fe/keywords.dat: The type of keyword_ in
+ 	  TAO_IDL_CPP_Keyword_Entry should be const char *.
+
+	* TAO_IDL: Fixed zillions of improper uses of non-const char *'s
+ 	  that were reported by the new SunC++ 5.0 compiler.  Everything
+ 	  should be "const-correct" now.  BTW, whoever wrote the Sun IDL
+ 	  compiler clearly didn't understand the C++ const rules...
+
 Sun Jun  6 17:08:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/GIOP.cpp:
@@ -6,24 +16,20 @@ Sun Jun  6 17:08:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Sun Jun  6 16:14:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Pluggable/PP_Test_Client.h:
-	* TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
-	  Moved member CORBA::ORB_var orb_ ahead of the other
-	  _vars in the declaration/initialization order.
+	* TAO/performance-tests/Pluggable/PP_Test_Client.cpp: Moved member
+ 	  CORBA::ORB_var orb_ ahead of the other _vars in the
+ 	  declaration/initialization order.
 
 Sun Jun  6 15:41:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.h:
-	  Added comment for Any_var operator= (CORBA::Any_var).
+	* tao/Any.h: Added comment for Any_var operator= (CORBA::Any_var).
 
-	* tao/Any.cpp:
-	  Added checks for failure of memory allocation at several
-	  places in the insertion and extraction operators.
+	* tao/Any.cpp: Added checks for failure of memory allocation at
+ 	  several places in the insertion and extraction operators.
 
-	* tao/Context.h:
-	  Added comment to some member functions.
+	* tao/Context.h: Added comment to some member functions.
 
-	* tao/Stub.h:
-	  Cosmetic changes.
+	* tao/Stub.h: Cosmetic changes.
 
 Sun Jun  6 14:07:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -43,10 +49,9 @@ Sun Jun  6 14:07:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO/tests/DynAny_Test/test_dynunion.h:
 	* TAO/tests/DynAny_Test/test_dynunion.cpp:
 	* TAO/tests/DynAny_Test/test_wrapper.h:
-	* TAO/tests/DynAny_Test/test_wrapper.cpp:
-	  Made CORBA::ORB_var the first private member (declared and
-	  initialized) of any class where it appears, and also other
-	  cosmetic changes.
+	* TAO/tests/DynAny_Test/test_wrapper.cpp: Made CORBA::ORB_var the
+ 	  first private member (declared and initialized) of any class
+ 	  where it appears, and also other cosmetic changes.
 
 Sun Jun  6 14:04:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -54,11 +59,9 @@ Sun Jun  6 14:04:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/Environment.cpp:
 	* tao/GIOP.cpp:
 	* tao/Wait_Strategy.cpp:
-	* tao/GIOP.cpp:
-	  Addesses the @@ Carlos comments.
+	* tao/GIOP.cpp: Addesses the @@ Carlos comments.
 	
-	* tao/IOP.pidl:
-	  Completed the IOP module definition
+	* tao/IOP.pidl: Completed the IOP module definition
 
 Sun Jun  6 13:32:25 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

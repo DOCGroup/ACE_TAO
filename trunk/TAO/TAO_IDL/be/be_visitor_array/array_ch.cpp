@@ -191,7 +191,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
   // the _alloc, _dup, copy, and free methods. If the node is nested, the
   // methods become static
   os->indent ();
-  char *storage_class = 0;
+  const char *storage_class = 0;
 
   if (node->is_nested ())
     {
