@@ -87,7 +87,7 @@ main (int argc, char *argv[])
 #endif
 	  l_argv[0] = "-p " ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
 	  l_argv[1] = "-hflamenco.cs.wustl.edu";
-	  ACE_Service_Object_Ptr sp_6 = ACE_SVC_INVOKE (ACE_Client_Logging_Connector);
+	  ACE_Service_Object_Ptr sp_6 = ACE_SVC_INVOKE (ACE_Client_Logging_Acceptor);
 
 	  if (sp_6->init (2, l_argv) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Logging Client", 1));

@@ -14,9 +14,11 @@ const int DEFAULT_COUNT = 100;
 int 
 main (int argc, char *argv[])
 {
-  int  size       = argc > 1 ? atoi (argv[1]) : DEFAULT_SIZE;
-  int  iterations = argc > 2 ? atoi (argv[2]) : DEFAULT_COUNT;
-  char *buf	  = new char[size];
+  int size = argc > 1 ? atoi (argv[1]) : DEFAULT_SIZE;
+  int iterations = argc > 2 ? atoi (argv[2]) : DEFAULT_COUNT;
+  char *buf;
+
+  ACE_NEW_RETURN (buf, char[size], -1);
 
   if (argc > 3)
     rendezvous = argv[3];
@@ -34,7 +36,10 @@ main (int argc, char *argv[])
   ACE_Str_Buf buffer (buf, size);
 
   for (i = 0; i < iterations; i++)
-    if (cli_stream.send ((ACE_Str_Buf *) 0, &buffer) == -1)
+    if (cli_stream.send ((ACE_Str_Buf *) 0, 
+			 &buffer,
+			 1,
+			 MSG_BAND) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 1);
 
   if (cli_stream.close () == -1)

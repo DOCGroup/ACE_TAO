@@ -1,4 +1,20 @@
-Wed Sep 17 17:25:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Thu Sep 18 00:21:33 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp: Changed over to using ACE_SPIPEs for the
+ 	  logging mechanism rather than ACE_FIFOs to conform to the
+ 	  changes to Client_Logging_Handler.
+
+	* netsvcs/lib/Client_Logging_Handler.cpp:
+ 	  Completely rewrote the Client Logging Daemon so that it uses
+ 	  ACE_SPIPEs by default, rather than ACE_FIFOs.  This is more
+ 	  portable and makes it easier to write a generic client logging
+ 	  daemon...  If a platform doesn't support ACE_SPIPEs, then we 
+	  revert to using sockets.
+
+Wed Sep 17 22:47:20 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE: Added two new varargs methods for send() and recv().
+  	  These are modeled after the ones that are in, e.g., ACE_SOCK_IO.
 
 	* ace/Log_Msg.cpp (open): In the UNICODE version the compiler
 	  complains about mixed wchar/char usage in Log_Msg.cpp:
