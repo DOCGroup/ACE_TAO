@@ -75,7 +75,24 @@ int be_visitor_args_decl::visit_argument (be_argument *node)
       break;
     case AST_Decl::NT_pre_defined: // type is predefined type
       {
-        be_predefined_type *bpd = be_predefined_type::narrow_from_decl (type);
+	// @@ TODO This should be handled in a generic way, either:
+	// 1. Use another visitor to dump the types (this is the
+	// preferred method)
+	// 2. Add a method to be_type to dump each one as an
+	// argument).
+	//
+        be_predefined_type *bpd;
+	if (type->node_type () == AST_Type::NT_typedef)
+	  {
+	    be_typedef *td = 
+	      be_typedef::narrow_from_decl (type);
+	    bpd = be_predefined_type::narrow_from_decl
+	      (td->primitive_base_type ());
+	  }
+	else
+	  {
+	    bpd = be_predefined_type::narrow_from_decl (type);
+	  }
 
         // check if the type is an any
         if (bpd->pt () == AST_PredefinedType::PT_any)
