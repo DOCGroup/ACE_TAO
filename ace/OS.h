@@ -169,10 +169,6 @@ class ACE_Timeout_Manager;
 #     define IPPORT_RESERVED       1024
 #     define IPPORT_USERRESERVED   5000
 
-#     if !defined (howmany)
-#       define howmany(x, y) (((x)+((y)-1))/(y))
-#     endif /* howmany */
-
   extern "C"
   {
     typedef void (* ACE_SignalHandler) (void);
@@ -301,14 +297,6 @@ typedef struct
 #     endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
 #   endif /* ACE_DEFAULT_SVC_CONF */
 
-//#   if !defined (ACE_DEFAULT_SEM_KEY)
-//#     define ACE_DEFAULT_SEM_KEY 1234
-//#   endif /* ACE_DEFAULT_SEM_KEY */
-
-//#   define ACE_STDIN 0
-//#   define ACE_STDOUT 1
-//#   define ACE_STDERR 2
-
 #   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
 #   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
 #   define ACE_PLATFORM_A "pSOS"
@@ -321,10 +309,6 @@ typedef struct
 #   define ACE_LOGGER_KEY ACE_LIB_TEXT ("/tmp/server_daemon")
 
 #   define ACE_MAX_DEFAULT_PORT 65535
-
-#   if ! defined(MAXPATHLEN)
-#     define MAXPATHLEN  1024
-#   endif /* MAXPATHLEN */
 
 #   if ! defined(MAXNAMLEN)
 #     define MAXNAMLEN   255
@@ -424,18 +408,6 @@ struct ACE_OVERLAPPED
   ACE_HANDLE hEvent;
 };
 
-#   if !defined (USER_INCLUDE_SYS_TIME_TM)
-#     if defined (ACE_PSOS_DIAB_PPC)
-typedef struct timespec timespec_t;
-#     else /* ! defined (ACE_PSOS_DIAB_PPC) */
-typedef struct timespec
-{
-  time_t tv_sec; // Seconds
-  long tv_nsec; // Nanoseconds
-} timespec_t;
-#     endif /* defined (ACE_PSOS_DIAB_PPC) */
-#   endif /*  !defined (USER_INCLUDE_SYS_TIME_TM) */
-
 #if defined (ACE_PSOS_HAS_TIME)
 
 // Use pSOS time, wrapped . . .
@@ -498,56 +470,10 @@ private:
 
 # endif /* defined (ACE_PSOS) **********************************************/
 
-//# if defined (ACE_HAS_CHARPTR_SPRINTF)
-//#   define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
-//# else
-//#   define ACE_SPRINTF_ADAPTER(X) X
-//# endif /* ACE_HAS_CHARPTR_SPRINTF */
-
-//// Default address for shared memory mapped files and SYSV shared memory
-//// (defaults to 64 M).
-//# if !defined (ACE_DEFAULT_BASE_ADDR)
-//#   define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024))
-//# endif /* ACE_DEFAULT_BASE_ADDR */
-
-//// This fudge factor can be overriden for timers that need it, such as on
-//// Solaris, by defining the ACE_TIMER_SKEW symbol in the appropriate config
-//// header.
-//#if !defined (ACE_TIMER_SKEW)
-//#  define ACE_TIMER_SKEW 0
-//#endif /* ACE_TIMER_SKEW */
-
 // This needs to go here *first* to avoid problems with AIX.
 # if defined (ACE_HAS_PTHREADS)
-//extern "C" {
-//#   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
-//#     include "ace/os_include/signal.h"
-//#   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #   include "ace/os_include/pthread.h"
-//#   if defined (DIGITAL_UNIX)
-//#     define pthread_self __pthread_self
-//extern "C" pthread_t pthread_self (void);
-//#   endif /* DIGITAL_UNIX */
-//}
-//#   if defined (HPUX_10)
-////    HP-UX 10 needs to see cma_sigwait, and since _CMA_NOWRAPPERS_ is defined,
-////    this header does not get included from pthreads.h.
-//#     include /**/x <dce/cma_sigwait.h>
-//#   endif /* HPUX_10 */
 # endif /* ACE_HAS_PTHREADS */
-
-// There are a lot of threads-related macro definitions in the config files.
-// They came in at different times and from different places and platform
-// requirements as threads evolved.  They are probably not all needed - some
-// overlap or are otherwise confused.  This is an attempt to start
-// straightening them out.
-//# if defined (ACE_HAS_PTHREADS_STD)    /* POSIX.1c threads (pthreads) */
-//  // ... and 2-parameter asctime_r and ctime_r
-//#   if !defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) && (continuation removed)
-//       !defined (ACE_HAS_STHREADS)
-//#     define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
-//#   endif
-//# endif /* ACE_HAS_PTHREADS_STD */
 
 // By default we perform no tracing on the OS layer, otherwise the
 // coupling between the OS layer and Log_Msg is too tight.  But the
@@ -567,17 +493,6 @@ using std::timezone;
 # endif
 using std::difftime;
 # endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
-
-//# if !defined (ACE_HAS_CLOCK_GETTIME) && !(defined (_CLOCKID_T_) || defined (_CLOCKID_T))
-//typedef int clockid_t;
-//#   if !defined (CLOCK_REALTIME)
-//#     define CLOCK_REALTIME 0
-//#   endif /* CLOCK_REALTIME */
-//# endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T_ */
-
-//#if !defined (E2BIG)  // do idea what this is for...  dah
-//#  define E2BIG 7
-//#endif /* E2BIG */
 
 /**
  * @class ACE_Countdown_Time
@@ -851,10 +766,6 @@ private:
 # if !defined (ACE_WSOCK_VERSION)
 #   define ACE_WSOCK_VERSION 0, 0
 # endif /* ACE_WSOCK_VERSION */
-
-//# if defined (ACE_HAS_BROKEN_CTIME)
-//#   undef ctime
-//# endif /* ACE_HAS_BROKEN_CTIME */
 
 /// Service Objects, i.e., objects dynamically loaded via the service
 /// configurator, must provide a destructor function with the
@@ -2078,10 +1989,6 @@ typedef DWORD ACE_exitcode;
 
 // Reliance on CRT - I don't really like this.
 
-//#   define O_NDELAY    1
-#   if !defined (MAXPATHLEN)
-#     define MAXPATHLEN  _MAX_PATH
-#   endif /* !MAXPATHLEN */
 #   define MAXNAMLEN   _MAX_FNAME
 #   define EADDRINUSE WSAEADDRINUSE
 
@@ -2334,12 +2241,6 @@ extern "C"
 #     include "ace/os_include/netinet/tcp.h"
 #   endif /* ACE_LACKS_TCP_H */
 
-#   if defined (__Lynx__) || defined (UNIXWARE_7_1)
-#     ifndef howmany
-#       define howmany(x, y)   (((x)+((y)-1))/(y))
-#     endif /* howmany */
-#   endif /* __Lynx__ || UNIXWARE_7_1 **/
-
 #   if defined (CHORUS)
 #     include /**/x <chorus.h>
 #     if !defined(CHORUS_4)
@@ -2362,16 +2263,10 @@ extern_C char*    getcwd          __((char* buf, size_t size));
 extern_C int      pipe            __((int* fildes));
 extern_C int      gethostname     __((char*, size_t));
 
-// This must come after limits.h is included
-#     define MAXPATHLEN _POSIX_PATH_MAX
-
 #     if  !defined(CHORUS_4)
 typedef cx_fd_mask fd_mask;
 typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #     endif
-#     ifndef howmany
-#       define howmany(x, y)   (((x)+((y)-1))/(y))
-#     endif /* howmany */
 #   elif defined (CYGWIN32)
 #     include "ace/os_include/sys/uio.h"
 #     include "ace/os_include/fcntl.h"  // <sys/file.h>
@@ -2394,9 +2289,6 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #     if !defined (NFDBITS)
 #       define NFDBITS (sizeof(fd_mask) * NBBY)        /* bits per mask */
 #     endif /* ! NFDBITS */
-#     if !defined (howmany)
-#       define howmany(x, y)   (((x)+((y)-1))/(y))
-#     endif /* ! howmany */
 #   elif defined(__rtems__)
 #     include "ace/os_include/fcntl.h"  // <sys/file.h>
 #     include "ace/os_include/sys/resource.h"

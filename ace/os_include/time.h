@@ -52,5 +52,17 @@
 extern "C" char *strptime (const char *s, const char *fmt, struct tm *tp);
 #endif  /* ACE_LACKS_STRPTIME_PROTOTYPE */
 
+#if defined (ACE_PSOS) && !defined (USER_INCLUDE_SYS_TIME_TM)
+#  if defined (ACE_PSOS_DIAB_PPC)
+     typedef struct timespec timespec_t;
+#  else /* ! defined (ACE_PSOS_DIAB_PPC) */
+     typedef struct timespec
+     {
+       time_t tv_sec; // Seconds
+       long tv_nsec; // Nanoseconds
+     } timespec_t;
+#  endif /* defined (ACE_PSOS_DIAB_PPC) */
+#endif /*  defined (ACE_PSOS) && !defined (USER_INCLUDE_SYS_TIME_TM) */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_TIME_H */
