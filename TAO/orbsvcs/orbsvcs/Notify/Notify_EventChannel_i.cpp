@@ -170,7 +170,7 @@ TAO_Notify_EventChannel_i::MyFactory (CORBA::Environment &/*ACE_TRY_ENV*/)
                    ))
 {
   return CosNotifyChannelAdmin::EventChannelFactory
-    ::_duplicate (this->my_factory_);
+    ::_duplicate (this->my_factory_.in ());
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr

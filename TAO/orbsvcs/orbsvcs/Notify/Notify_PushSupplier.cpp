@@ -81,12 +81,19 @@ TAO_Notify_PushSupplier::_default_POA (CORBA::Environment& /* env */)
 
 void
 TAO_Notify_PushSupplier::subscription_change (const CosNotification::EventTypeSeq &/*added*/, const CosNotification::EventTypeSeq &/*removed*/, CORBA::Environment &/*ACE_TRY_ENV*/)
+      ACE_THROW_SPEC ((
+                       CORBA::SystemException,
+                       CosNotifyComm::InvalidEventType
+                       ))
 {
   // TODO:
 }
 
 void
 TAO_Notify_PushSupplier::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   this->deactivate (ACE_TRY_ENV);
 }

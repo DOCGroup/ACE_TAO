@@ -159,7 +159,7 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::MyAdmin (CORBA::Environment &ACE_TRY_ENV
 template <class SERVANT_TYPE> CosNotifyFilter::MappingFilter_ptr
 TAO_Notify_ProxySupplier<SERVANT_TYPE>::priority_filter (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
-                   CORBA::SystemExcqeption
+                   CORBA::SystemException
                    ))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
