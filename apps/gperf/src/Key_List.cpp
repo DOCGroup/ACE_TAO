@@ -219,25 +219,18 @@ Key_List::read_keys (void)
       // Hash table this number of times larger than keyword number.
       int table_size = (list_len = total_keys) * TABLE_MULTIPLE;
 
-#if defined (LARGE_STACK_ARRAYS)
-      // By allocating the memory here we save on dynamic allocation
-      // overhead.  Table must be a power of 2 for the hash function
-      // scheme to work.
-      List_Node *table[ACE_POW (table_size)];
-#else
       // Note: we don't use new, because that invokes a custom operator new.
       int malloc_size = ACE_POW (table_size) * sizeof(List_Node*);
       if (malloc_size == 0) malloc_size = 1;
       List_Node **table = (List_Node**)malloc(malloc_size);
       if (table == NULL)
 	abort ();
-#endif /* LARGE_STACK_ARRAYS */
 
       // Make large hash table for efficiency.
       Hash_Table found_link (table, table_size);
 
       // Test whether there are any links and also set the maximum length
-        an identifier in the keyword list. */
+      //  an identifier in the keyword list. 
       
       for (temp = head; temp; temp = temp->next)
         {
@@ -900,17 +893,14 @@ Key_List::output_lookup_array (void)
           int index;            // Index into the main keyword storage array.
           int count;            // Number of consecutive duplicates at this index.
         };
-#if defined (LARGE_STACK_ARRAYS)
-      duplicate_entry duplicates[total_duplicates];
-      int lookup_array[max_hash_value + 1];
-#else
+
       // Note: we don't use new, because that invokes a custom operator new.
       duplicate_entry *duplicates = (duplicate_entry*)
 	malloc (total_duplicates * sizeof(duplicate_entry));
       int *lookup_array = (int*)malloc(sizeof(int) * (max_hash_value + 1));
       if (duplicates == NULL || lookup_array == NULL)
 	abort();
-#endif /* LARGE_STACK_ARRAYS */
+
       duplicate_entry *dup_ptr = duplicates;
       int *lookup_ptr = lookup_array + max_hash_value + 1;
 
@@ -926,15 +916,13 @@ Key_List::output_lookup_array (void)
           if (!temp->link &&
               (!temp->next || hash_value != temp->next->hash_value))
             continue;
-#if defined (LARGE_STACK_ARRAYS)
-          *dup_ptr = (duplicate_entry) { hash_value, temp->index, 1 };
-#else
+
 	  duplicate_entry _dups;
 	  _dups.hash_value = hash_value;
 	  _dups.index = temp->index;
 	  _dups.count = 1;
 	  *dup_ptr = _dups;
-#endif /* LARGE_STACK_ARRAYS */
+
           
           for (List_Node *ptr = temp->link; ptr; ptr = ptr->link)
             {
