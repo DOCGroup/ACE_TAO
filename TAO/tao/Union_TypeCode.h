@@ -128,7 +128,7 @@ namespace TAO
        *       attempt to perform special handling for the @c default
        *       case by shifting the index value by one, for example.
        */
-      case_type const & the_case (CORBA::ULong index) const;
+      case_type & the_case (CORBA::ULong index) const;
 
     private:
 

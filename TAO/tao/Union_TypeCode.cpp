@@ -41,7 +41,7 @@ TAO::TypeCode::Union<StringType,
 
   for (unsigned int i = 0; i < count; ++i)
     {
-      case_type const & c = this->the_case (i);
+      case_type & c = this->the_case (i);
 
       if (!c.marshal (cdr))
         return false;
@@ -109,7 +109,7 @@ TAO::TypeCode::Union<StringType,
 
   for (CORBA::ULong i = 0; i < this_count; ++i)
     {
-      case_type const & lhs_case = this->the_case (i);
+      case_type & lhs_case = this->the_case (i);
 
       bool const equal_case =
         lhs_case.equal (i,
@@ -190,7 +190,7 @@ TAO::TypeCode::Union<StringType,
 
       for (CORBA::ULong i = 0; i < this_count; ++i)
         {
-          case_type const & lhs_case = this->the_case (i);
+          case_type & lhs_case = this->the_case (i);
 
           bool const equivalent_case =
             lhs_case.equivalent (i,
