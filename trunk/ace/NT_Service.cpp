@@ -83,29 +83,57 @@ ACE_NT_Service::handle_control (DWORD control_code)
   switch(control_code) {
   case SERVICE_CONTROL_SHUTDOWN:
   case SERVICE_CONTROL_STOP:
-    report_status(SERVICE_STOP_PENDING);
-    /* how to cancel? */
+    stop_requested(control_code);
     break;
 
   case SERVICE_CONTROL_PAUSE:
-    report_status(SERVICE_PAUSE_PENDING);
-    this->suspend();
-    report_status(SERVICE_PAUSED);
+    pause_requested(control_code);
     break;
 
   case SERVICE_CONTROL_CONTINUE:
-    report_status(SERVICE_CONTINUE_PENDING);
-    this->resume();
-    report_status(SERVICE_RUNNING);
+    continue_requested(control_code);
     break;
 
   case SERVICE_CONTROL_INTERROGATE:
-    report_status(0);
+    interrogate_requested(control_code);
     break;
   }
 
   return;
 
+}
+
+
+void
+ACE_NT_Service::stop_requested (DWORD)
+{
+  this->report_status (SERVICE_STOP_PENDING);
+  /* how to cancel? */
+}
+
+
+void
+ACE_NT_Service::pause_requested (DWORD)
+{
+  this->report_status (SERVICE_PAUSE_PENDING);
+  this->suspend ();
+  report_status (SERVICE_PAUSED);
+}
+
+
+void
+ACE_NT_Service::continue_requested (DWORD)
+{
+  this->report_status (SERVICE_CONTINUE_PENDING);
+  this->resume ();
+  report_status (SERVICE_RUNNING);
+}
+
+
+void
+ACE_NT_Service::interrogate_requested (DWORD)
+{
+  this->report_status (0);
 }
 
 
