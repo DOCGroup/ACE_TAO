@@ -47,9 +47,6 @@ public:
   virtual ~TAO_Notify_ProxyConsumer (void);
   // Destructor
 
-  void init (CORBA::Environment &ACE_TRY_ENV);
-  // Init
-
   virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (
     CORBA::Environment &ACE_TRY_ENV
   )

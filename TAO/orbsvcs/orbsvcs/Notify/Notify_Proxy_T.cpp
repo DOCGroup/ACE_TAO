@@ -25,8 +25,9 @@ TAO_Notify_Proxy<SERVANT_TYPE>::~TAO_Notify_Proxy (void)
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy<SERVANT_TYPE>::init (CORBA::Environment& /*ACE_TRY_ENV*/)
+TAO_Notify_Proxy<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID myID, CORBA::Environment& /*ACE_TRY_ENV*/)
 {
+  this->myID_ = myID;
 }
 
 template <class SERVANT_TYPE> void
