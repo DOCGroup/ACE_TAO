@@ -1,7 +1,12 @@
+Tue Dec 19 14:50:38 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: If on ACE_WIN32, set ACE_DEFAULT_FILE_PERMS to
+          (FILE_SHARE_READ | FILE_SHARE_WRITE), not 0666.
+
 Tue Dec 19 14:40:26 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Filecache.cpp: Changed definition of R_MASK and W_MASK to
-          0 for ACE_WIN32 () used to be for __BORLANDC__. This is related
+          0 for ACE_WIN32; used to be for __BORLANDC__. This is related
           to the change below because the third arg to ACE_OS::open is
           not ignored any longer for Win32.
 
