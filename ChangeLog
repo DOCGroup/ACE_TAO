@@ -1,3 +1,9 @@
+Thu Apr 10 09:51:59 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Improved Kylix specific rules. For Kylix we strip the -l in from
+          ACE_SHLIBS and prefix it with lib and postfix with .so.
+
 Thu Apr 10 08:12:22 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_borland.GNU:
