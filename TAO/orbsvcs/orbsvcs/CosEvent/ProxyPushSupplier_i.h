@@ -24,6 +24,10 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/CosEventChannelAdminC.h"
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_CosEC_PushConsumerWrapper;
 
 class TAO_ORBSVCS_Export TAO_CosEC_ProxyPushSupplier_i :
@@ -66,5 +70,9 @@ private:
   TAO_CosEC_PushConsumerWrapper *wrapper_;
   // The Rtec PushConsumer wrapper used by the Rtec ProxyPushSupplier.
 };
+
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
 
 #endif /* _PROXYPUSHSUPPLIER_H */

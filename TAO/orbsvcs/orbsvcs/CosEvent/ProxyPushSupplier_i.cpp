@@ -8,6 +8,10 @@
 #include "ProxyPushSupplier_i.h"
 #include "ace/Auto_Ptr.h"
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_CosEC_PushConsumerWrapper :
   public POA_RtecEventComm::PushConsumer,
   public virtual PortableServer::RefCountServantBase
@@ -38,6 +42,10 @@ private:
   CosEventComm::PushConsumer_var consumer_;
   // The Cos PushConsumer that we're proxying for.
 };
+
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
 
 TAO_CosEC_PushConsumerWrapper::TAO_CosEC_PushConsumerWrapper
 (CosEventComm::PushConsumer_ptr consumer)
