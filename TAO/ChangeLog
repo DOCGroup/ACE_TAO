@@ -1,3 +1,8 @@
+Sun Feb  1 15:05:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/FL_Cube/test_i.{h,cpp}:
+          Fixed method specifications.
+
 Sun Feb  1 09:13:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* rules.tao.GNU:
@@ -8,7 +13,7 @@ Sat Jan 31 18:24:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* rules.tao.GNU:
 
-	  Added -I$(TAO_ROOT) to TAO_IDLFLAGS by default. 
+	  Added -I$(TAO_ROOT) to TAO_IDLFLAGS by default.
 
 Fri Jan 30 16:43:43 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
