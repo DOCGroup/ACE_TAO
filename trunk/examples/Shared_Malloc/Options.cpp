@@ -149,49 +149,49 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
        )
     {
       switch (c)
-	{
-	case 'd':
-	  this->debug_ = 1;
-	  break;
-	case 'e':
-	  this->exec_slave_ = 1;
-	  break;
-	case 'h':
-	  this->print_usage_and_die ();
-	  /* NOTREACHED */
-	  break;
-	case 'l':
-	  this->use_sbrk_ = 0;
-	  break;
-	case 'L':
-	  this->max_msg_size_ = ACE_OS::atoi (get_opt.opt_arg ());
-	  break;
-	case 'm':
-	  this->use_mmap_ = 1;
-	  break;
-	case 'n':
-	  this->iteration_count_ = ACE_OS::atoi (get_opt.opt_arg ());
-	  break;
-	case 'p': // Spawn processes rather than threads
-	  this->spawn_threads_ = 0;
-	  break;
-	case 's':
-	  // Use System V shared memory...
-	  this->use_shmem_ = 1;
-	  break;
-	case 't':
-	  this->spawn_count_ = ACE_OS::atoi (get_opt.opt_arg ());
-	  break;
-	case 'T':
+        {
+        case 'd':
+          this->debug_ = 1;
+          break;
+        case 'e':
+          this->exec_slave_ = 1;
+          break;
+        case 'h':
+          this->print_usage_and_die ();
+          /* NOTREACHED */
+          break;
+        case 'l':
+          this->use_sbrk_ = 0;
+          break;
+        case 'L':
+          this->max_msg_size_ = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'm':
+          this->use_mmap_ = 1;
+          break;
+        case 'n':
+          this->iteration_count_ = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'p': // Spawn processes rather than threads
+          this->spawn_threads_ = 0;
+          break;
+        case 's':
+          // Use System V shared memory...
+          this->use_shmem_ = 1;
+          break;
+        case 't':
+          this->spawn_count_ = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'T':
 #if defined (ACE_HAS_TRACE)
           ACE_Trace::start_tracing ();
 #endif /* ACE_HAS_TRACE */
-	  break;
-	default:
-	  this->print_usage_and_die ();
-	  /* NOTREACHED */
-	  break;
-	}
+          break;
+        default:
+          this->print_usage_and_die ();
+          /* NOTREACHED */
+          break;
+        }
     }
 
   // Switch to using MMAP when the -p and -e options are enabled.
