@@ -1,3 +1,10 @@
+Sat Mar  9 21:22:51 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/CDR_Stream.cpp:
+	* ace/CDR_Stream.i:
+	* ace/CDR_Stream.h: Added accessor methods for GIOP versions of
+	  Input and Output CDR streams.
+
 Sat Mar  9 07:52:45 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/SPIPE_Addr.cpp (set): Changed a strcpy() to a strcat() to
