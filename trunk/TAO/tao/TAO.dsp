@@ -20,13 +20,12 @@ CFG=TAO - Win32 Alpha Debug
 !MESSAGE 
 !MESSAGE "TAO - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "TAO - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Release" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -105,13 +104,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\..\\ /I " ..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\\ /I " ..\\ /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
-CPP=cl.exe
-# ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -136,13 +135,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\ /I " ..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\ /I " ..\\ /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MDd /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
-CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MDd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -368,8 +367,6 @@ DEP_CPP_ACTIV=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -430,6 +427,10 @@ DEP_CPP_ACTIV=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ACTIV=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -628,8 +629,6 @@ DEP_CPP_ACTIV=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -690,6 +689,10 @@ DEP_CPP_ACTIV=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ACTIV=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -899,8 +902,6 @@ DEP_CPP_ANY_C=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -961,6 +962,10 @@ DEP_CPP_ANY_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ANY_C=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -1159,8 +1164,6 @@ DEP_CPP_ANY_C=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -1221,6 +1224,10 @@ DEP_CPP_ANY_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ANY_C=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -1430,8 +1437,6 @@ DEP_CPP_APPEN=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -1492,6 +1497,10 @@ DEP_CPP_APPEN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_APPEN=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -1690,8 +1699,6 @@ DEP_CPP_APPEN=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -1752,6 +1759,10 @@ DEP_CPP_APPEN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_APPEN=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -1967,8 +1978,6 @@ DEP_CPP_CDR_C=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -2029,6 +2038,10 @@ DEP_CPP_CDR_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CDR_C=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -2233,8 +2246,6 @@ DEP_CPP_CDR_C=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -2295,6 +2306,10 @@ DEP_CPP_CDR_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CDR_C=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -2504,8 +2519,6 @@ DEP_CPP_CLIEN=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -2566,6 +2579,10 @@ DEP_CPP_CLIEN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CLIEN=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -2764,8 +2781,6 @@ DEP_CPP_CLIEN=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -2826,6 +2841,10 @@ DEP_CPP_CLIEN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CLIEN=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -3041,8 +3060,6 @@ DEP_CPP_CONNE=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -3104,6 +3121,10 @@ DEP_CPP_CONNE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CONNE=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -3308,8 +3329,6 @@ DEP_CPP_CONNE=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -3371,6 +3390,10 @@ DEP_CPP_CONNE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CONNE=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -3580,8 +3603,6 @@ DEP_CPP_CURRE=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -3642,6 +3663,10 @@ DEP_CPP_CURRE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CURRE=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -3840,8 +3865,6 @@ DEP_CPP_CURRE=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -3902,6 +3925,10 @@ DEP_CPP_CURRE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CURRE=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -4111,8 +4138,6 @@ DEP_CPP_CURREN=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -4173,6 +4198,10 @@ DEP_CPP_CURREN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CURREN=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -4371,8 +4400,6 @@ DEP_CPP_CURREN=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -4433,6 +4460,10 @@ DEP_CPP_CURREN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_CURREN=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -4642,8 +4673,6 @@ DEP_CPP_DEBUG=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -4704,6 +4733,10 @@ DEP_CPP_DEBUG=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DEBUG=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -4902,8 +4935,6 @@ DEP_CPP_DEBUG=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -4964,6 +4995,10 @@ DEP_CPP_DEBUG=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DEBUG=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -5173,8 +5208,6 @@ DEP_CPP_DECOD=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -5235,6 +5268,10 @@ DEP_CPP_DECOD=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DECOD=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -5433,8 +5470,6 @@ DEP_CPP_DECOD=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -5495,6 +5530,10 @@ DEP_CPP_DECOD=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DECOD=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -5704,8 +5743,6 @@ DEP_CPP_DEEP_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -5766,6 +5803,10 @@ DEP_CPP_DEEP_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DEEP_=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -5964,8 +6005,6 @@ DEP_CPP_DEEP_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -6026,6 +6065,10 @@ DEP_CPP_DEEP_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DEEP_=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -6235,8 +6278,6 @@ DEP_CPP_DEFAU=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -6297,6 +6338,10 @@ DEP_CPP_DEFAU=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DEFAU=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -6495,8 +6540,6 @@ DEP_CPP_DEFAU=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -6557,6 +6600,10 @@ DEP_CPP_DEFAU=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DEFAU=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -6766,8 +6813,6 @@ DEP_CPP_DEFAUL=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -6828,6 +6873,10 @@ DEP_CPP_DEFAUL=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DEFAUL=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -7026,8 +7075,6 @@ DEP_CPP_DEFAUL=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -7088,6 +7135,10 @@ DEP_CPP_DEFAUL=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DEFAUL=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -7304,8 +7355,6 @@ DEP_CPP_DYNAN=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -7366,6 +7415,10 @@ DEP_CPP_DYNAN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNAN=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -7571,8 +7624,6 @@ DEP_CPP_DYNAN=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -7633,6 +7684,10 @@ DEP_CPP_DYNAN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNAN=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -7842,8 +7897,6 @@ DEP_CPP_DYNANY=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -7904,6 +7957,10 @@ DEP_CPP_DYNANY=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNANY=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -8102,8 +8159,6 @@ DEP_CPP_DYNANY=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -8164,6 +8219,10 @@ DEP_CPP_DYNANY=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNANY=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -8373,8 +8432,6 @@ DEP_CPP_DYNANYS=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -8435,6 +8492,10 @@ DEP_CPP_DYNANYS=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNANYS=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -8633,8 +8694,6 @@ DEP_CPP_DYNANYS=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -8695,6 +8754,10 @@ DEP_CPP_DYNANYS=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNANYS=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -8905,8 +8968,6 @@ DEP_CPP_DYNAR=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -8967,6 +9028,10 @@ DEP_CPP_DYNAR=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNAR=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -9166,8 +9231,6 @@ DEP_CPP_DYNAR=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -9228,6 +9291,10 @@ DEP_CPP_DYNAR=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNAR=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -9438,8 +9505,6 @@ DEP_CPP_DYNEN=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -9500,6 +9565,10 @@ DEP_CPP_DYNEN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNEN=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -9699,8 +9768,6 @@ DEP_CPP_DYNEN=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -9761,6 +9828,10 @@ DEP_CPP_DYNEN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNEN=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -9971,8 +10042,6 @@ DEP_CPP_DYNSE=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -10033,6 +10102,10 @@ DEP_CPP_DYNSE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNSE=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -10232,8 +10305,6 @@ DEP_CPP_DYNSE=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -10294,6 +10365,10 @@ DEP_CPP_DYNSE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNSE=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -10504,8 +10579,6 @@ DEP_CPP_DYNST=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -10566,6 +10639,10 @@ DEP_CPP_DYNST=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNST=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -10765,8 +10842,6 @@ DEP_CPP_DYNST=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -10827,6 +10902,10 @@ DEP_CPP_DYNST=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNST=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -11039,8 +11118,6 @@ DEP_CPP_DYNUN=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -11101,6 +11178,10 @@ DEP_CPP_DYNUN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNUN=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -11302,8 +11383,6 @@ DEP_CPP_DYNUN=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -11364,6 +11443,10 @@ DEP_CPP_DYNUN=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_DYNUN=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -11573,8 +11656,6 @@ DEP_CPP_ENCOD=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -11635,6 +11716,10 @@ DEP_CPP_ENCOD=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ENCOD=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -11833,8 +11918,6 @@ DEP_CPP_ENCOD=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -11895,6 +11978,10 @@ DEP_CPP_ENCOD=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ENCOD=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -12104,8 +12191,6 @@ DEP_CPP_ENVIR=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -12166,6 +12251,10 @@ DEP_CPP_ENVIR=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ENVIR=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -12364,8 +12453,6 @@ DEP_CPP_ENVIR=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -12426,6 +12513,10 @@ DEP_CPP_ENVIR=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ENVIR=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -12635,8 +12726,6 @@ DEP_CPP_EXCEP=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -12697,6 +12786,10 @@ DEP_CPP_EXCEP=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_EXCEP=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -12895,8 +12988,6 @@ DEP_CPP_EXCEP=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -12957,6 +13048,10 @@ DEP_CPP_EXCEP=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_EXCEP=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -13167,8 +13262,6 @@ DEP_CPP_FORWA=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -13229,6 +13322,10 @@ DEP_CPP_FORWA=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_FORWA=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -13428,8 +13525,6 @@ DEP_CPP_FORWA=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -13490,6 +13585,10 @@ DEP_CPP_FORWA=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_FORWA=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -13705,8 +13804,6 @@ DEP_CPP_GIOP_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -13768,6 +13865,10 @@ DEP_CPP_GIOP_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_GIOP_=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -13972,8 +14073,6 @@ DEP_CPP_GIOP_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -14035,6 +14134,10 @@ DEP_CPP_GIOP_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_GIOP_=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -14274,8 +14377,6 @@ DEP_CPP_IIOP_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -14336,6 +14437,10 @@ DEP_CPP_IIOP_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_IIOP_=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -14534,8 +14639,6 @@ DEP_CPP_IIOP_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -14597,550 +14700,9 @@ DEP_CPP_IIOP_=\
 	".\varout.h"\
 	".\varout.i"\
 	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\IIOP_Object.cpp
-
-!IF  "$(CFG)" == "TAO - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
-
-DEP_CPP_IIOP_O=\
-	"..\..\ace\Acceptor.cpp"\
-	"..\..\ace\Acceptor.h"\
-	"..\..\ace\Acceptor.i"\
-	"..\..\ace\ACE.h"\
-	"..\..\ace\ACE.i"\
-	"..\..\ace\Addr.h"\
-	"..\..\ace\Addr.i"\
-	"..\..\ace\Atomic_Op.i"\
-	"..\..\ace\Auto_Ptr.cpp"\
-	"..\..\ace\Auto_Ptr.h"\
-	"..\..\ace\Auto_Ptr.i"\
-	"..\..\ace\Basic_Types.h"\
-	"..\..\ace\Basic_Types.i"\
-	"..\..\ace\config-win32-borland.h"\
-	"..\..\ace\config-win32-common.h"\
-	"..\..\ace\config-win32.h"\
-	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
-	"..\..\ace\Connector.cpp"\
-	"..\..\ace\Connector.h"\
-	"..\..\ace\Connector.i"\
-	"..\..\ace\Containers.h"\
-	"..\..\ace\Containers.i"\
-	"..\..\ace\Containers_T.cpp"\
-	"..\..\ace\Containers_T.h"\
-	"..\..\ace\Containers_T.i"\
-	"..\..\ace\Dynamic.h"\
-	"..\..\ace\Dynamic.i"\
-	"..\..\ace\Dynamic_Service.cpp"\
-	"..\..\ace\Dynamic_Service.h"\
-	"..\..\ace\Event_Handler.h"\
-	"..\..\ace\Event_Handler.i"\
-	"..\..\ace\Free_List.cpp"\
-	"..\..\ace\Free_List.h"\
-	"..\..\ace\Free_List.i"\
-	"..\..\ace\Functor.h"\
-	"..\..\ace\Functor.i"\
-	"..\..\ace\Functor_T.cpp"\
-	"..\..\ace\Functor_T.h"\
-	"..\..\ace\Functor_T.i"\
-	"..\..\ace\Get_Opt.h"\
-	"..\..\ace\Get_Opt.i"\
-	"..\..\ace\Handle_Set.h"\
-	"..\..\ace\Handle_Set.i"\
-	"..\..\ace\Hash_Map_Manager.h"\
-	"..\..\ace\Hash_Map_Manager.i"\
-	"..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\ace\High_Res_Timer.h"\
-	"..\..\ace\High_Res_Timer.i"\
-	"..\..\ace\inc_user_config.h"\
-	"..\..\ace\INET_Addr.h"\
-	"..\..\ace\INET_Addr.i"\
-	"..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\ace\iosfwd.h"\
-	"..\..\ace\IPC_SAP.h"\
-	"..\..\ace\IPC_SAP.i"\
-	"..\..\ace\Log_Msg.h"\
-	"..\..\ace\Log_Priority.h"\
-	"..\..\ace\Log_Record.h"\
-	"..\..\ace\Log_Record.i"\
-	"..\..\ace\Malloc.h"\
-	"..\..\ace\Malloc.i"\
-	"..\..\ace\Malloc_Base.h"\
-	"..\..\ace\Malloc_T.cpp"\
-	"..\..\ace\Malloc_T.h"\
-	"..\..\ace\Malloc_T.i"\
-	"..\..\ace\Managed_Object.cpp"\
-	"..\..\ace\Managed_Object.h"\
-	"..\..\ace\Managed_Object.i"\
-	"..\..\ace\Map_Manager.cpp"\
-	"..\..\ace\Map_Manager.h"\
-	"..\..\ace\Map_Manager.i"\
-	"..\..\ace\Mem_Map.h"\
-	"..\..\ace\Mem_Map.i"\
-	"..\..\ace\Memory_Pool.h"\
-	"..\..\ace\Memory_Pool.i"\
-	"..\..\ace\Message_Block.h"\
-	"..\..\ace\Message_Block.i"\
-	"..\..\ace\Message_Block_T.cpp"\
-	"..\..\ace\Message_Block_T.h"\
-	"..\..\ace\Message_Block_T.i"\
-	"..\..\ace\Message_Queue.h"\
-	"..\..\ace\Message_Queue.i"\
-	"..\..\ace\Message_Queue_T.cpp"\
-	"..\..\ace\Message_Queue_T.h"\
-	"..\..\ace\Message_Queue_T.i"\
-	"..\..\ace\Module.cpp"\
-	"..\..\ace\Module.h"\
-	"..\..\ace\Module.i"\
-	"..\..\ace\Object_Manager.h"\
-	"..\..\ace\Object_Manager.i"\
-	"..\..\ace\OS.h"\
-	"..\..\ace\OS.i"\
-	"..\..\ace\Reactor.h"\
-	"..\..\ace\Reactor.i"\
-	"..\..\ace\Reactor_Impl.h"\
-	"..\..\ace\Service_Config.h"\
-	"..\..\ace\Service_Config.i"\
-	"..\..\ace\Service_Object.h"\
-	"..\..\ace\Service_Object.i"\
-	"..\..\ace\Service_Repository.h"\
-	"..\..\ace\Service_Repository.i"\
-	"..\..\ace\Service_Types.h"\
-	"..\..\ace\Service_Types.i"\
-	"..\..\ace\Shared_Object.h"\
-	"..\..\ace\Shared_Object.i"\
-	"..\..\ace\Signal.h"\
-	"..\..\ace\Signal.i"\
-	"..\..\ace\Singleton.cpp"\
-	"..\..\ace\Singleton.h"\
-	"..\..\ace\Singleton.i"\
-	"..\..\ace\SOCK.h"\
-	"..\..\ace\SOCK.i"\
-	"..\..\ace\SOCK_Acceptor.h"\
-	"..\..\ace\SOCK_Acceptor.i"\
-	"..\..\ace\SOCK_Connector.h"\
-	"..\..\ace\SOCK_Connector.i"\
-	"..\..\ace\SOCK_IO.h"\
-	"..\..\ace\SOCK_IO.i"\
-	"..\..\ace\SOCK_Stream.h"\
-	"..\..\ace\SOCK_Stream.i"\
-	"..\..\ace\SString.h"\
-	"..\..\ace\SString.i"\
-	"..\..\ace\Strategies.h"\
-	"..\..\ace\Strategies.i"\
-	"..\..\ace\Strategies_T.cpp"\
-	"..\..\ace\Strategies_T.h"\
-	"..\..\ace\Strategies_T.i"\
-	"..\..\ace\Stream_Modules.cpp"\
-	"..\..\ace\Stream_Modules.h"\
-	"..\..\ace\Stream_Modules.i"\
-	"..\..\ace\streams.h"\
-	"..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\ace\Svc_Handler.cpp"\
-	"..\..\ace\Svc_Handler.h"\
-	"..\..\ace\Svc_Handler.i"\
-	"..\..\ace\Synch.h"\
-	"..\..\ace\Synch.i"\
-	"..\..\ace\Synch_Options.h"\
-	"..\..\ace\Synch_Options.i"\
-	"..\..\ace\Synch_T.cpp"\
-	"..\..\ace\Synch_T.h"\
-	"..\..\ace\Synch_T.i"\
-	"..\..\ace\Task.h"\
-	"..\..\ace\Task.i"\
-	"..\..\ace\Task_T.cpp"\
-	"..\..\ace\Task_T.h"\
-	"..\..\ace\Task_T.i"\
-	"..\..\ace\Thread.h"\
-	"..\..\ace\Thread.i"\
-	"..\..\ace\Thread_Manager.h"\
-	"..\..\ace\Thread_Manager.i"\
-	"..\..\ace\Time_Value.h"\
-	"..\..\ace\Timeprobe.h"\
-	"..\..\ace\Timeprobe.i"\
-	"..\..\ace\Timeprobe_T.cpp"\
-	"..\..\ace\Timeprobe_T.h"\
-	"..\..\ace\Timer_Queue.h"\
-	"..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\ace\Timer_Queue_T.h"\
-	"..\..\ace\Timer_Queue_T.i"\
-	"..\..\ace\Trace.h"\
-	"..\..\ace\WFMO_Reactor.h"\
-	"..\..\ace\WFMO_Reactor.i"\
-	"..\..\ace\ws2tcpip.h"\
-	".\Active_Object_Map.h"\
-	".\Active_Object_Map.i"\
-	".\align.h"\
-	".\any.h"\
-	".\any.i"\
-	".\cdr.h"\
-	".\cdr.i"\
-	".\Client_Strategy_Factory.h"\
-	".\connect.h"\
-	".\connect.i"\
-	".\corba.h"\
-	".\CurrentC.h"\
-	".\CurrentC.i"\
-	".\debug.h"\
-	".\default_client.h"\
-	".\default_client.i"\
-	".\default_server.h"\
-	".\default_server.i"\
-	".\DynAny_i.h"\
-	".\DynAnyC.h"\
-	".\DynAnyC.i"\
-	".\Environment.h"\
-	".\Environment.i"\
-	".\Exception.h"\
-	".\Exception.i"\
-	".\giop.h"\
-	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+NODEP_CPP_IIOP_=\
 	".\IIOP_Object.h"\
 	".\IIOP_Object.i"\
-	".\IIOP_ORB.h"\
-	".\IIOP_ORB.i"\
-	".\InconsistentTypeCodeC.h"\
-	".\Invocation.h"\
-	".\Invocation.i"\
-	".\Managed_Types.h"\
-	".\Managed_Types.i"\
-	".\marshal.h"\
-	".\marshal.i"\
-	".\nvlist.h"\
-	".\NVList.i"\
-	".\object.h"\
-	".\object.i"\
-	".\Object_KeyC.h"\
-	".\Object_KeyC.i"\
-	".\Operation_Table.h"\
-	".\orb.h"\
-	".\ORB.i"\
-	".\orb_core.h"\
-	".\orb_core.i"\
-	".\ORB_Strategies_T.cpp"\
-	".\ORB_Strategies_T.h"\
-	".\ORB_Strategies_T.i"\
-	".\orbconf.h"\
-	".\params.h"\
-	".\params.i"\
-	".\poa.h"\
-	".\POA.i"\
-	".\POA_CORBA.h"\
-	".\poa_macros.h"\
-	".\poaC.h"\
-	".\poaC.i"\
-	".\poaS.h"\
-	".\poaS.i"\
-	".\PolicyC.h"\
-	".\PolicyC.i"\
-	".\Principal.h"\
-	".\Principal.i"\
-	".\request.h"\
-	".\Request.i"\
-	".\sequence.h"\
-	".\sequence.i"\
-	".\Sequence_T.cpp"\
-	".\Sequence_T.h"\
-	".\Sequence_T.i"\
-	".\servant_base.h"\
-	".\Servant_Base.i"\
-	".\Server_Request.h"\
-	".\Server_Request.i"\
-	".\Server_Strategy_Factory.h"\
-	".\singletons.h"\
-	".\stub.h"\
-	".\stub.i"\
-	".\Timeprobe.h"\
-	".\try_macros.h"\
-	".\typecode.h"\
-	".\typecode.i"\
-	".\Union.h"\
-	".\varout.cpp"\
-	".\varout.h"\
-	".\varout.i"\
-	
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
-
-DEP_CPP_IIOP_O=\
-	"..\..\ace\Acceptor.cpp"\
-	"..\..\ace\Acceptor.h"\
-	"..\..\ace\Acceptor.i"\
-	"..\..\ace\ACE.h"\
-	"..\..\ace\ACE.i"\
-	"..\..\ace\Addr.h"\
-	"..\..\ace\Addr.i"\
-	"..\..\ace\Atomic_Op.i"\
-	"..\..\ace\Auto_Ptr.cpp"\
-	"..\..\ace\Auto_Ptr.h"\
-	"..\..\ace\Auto_Ptr.i"\
-	"..\..\ace\Basic_Types.h"\
-	"..\..\ace\Basic_Types.i"\
-	"..\..\ace\config-win32-borland.h"\
-	"..\..\ace\config-win32-common.h"\
-	"..\..\ace\config-win32.h"\
-	"..\..\ace\config-WinCE.h"\
-	"..\..\ace\config.h"\
-	"..\..\ace\Connector.cpp"\
-	"..\..\ace\Connector.h"\
-	"..\..\ace\Connector.i"\
-	"..\..\ace\Containers.h"\
-	"..\..\ace\Containers.i"\
-	"..\..\ace\Containers_T.cpp"\
-	"..\..\ace\Containers_T.h"\
-	"..\..\ace\Containers_T.i"\
-	"..\..\ace\Dynamic.h"\
-	"..\..\ace\Dynamic.i"\
-	"..\..\ace\Dynamic_Service.cpp"\
-	"..\..\ace\Dynamic_Service.h"\
-	"..\..\ace\Event_Handler.h"\
-	"..\..\ace\Event_Handler.i"\
-	"..\..\ace\Free_List.cpp"\
-	"..\..\ace\Free_List.h"\
-	"..\..\ace\Free_List.i"\
-	"..\..\ace\Functor.h"\
-	"..\..\ace\Functor.i"\
-	"..\..\ace\Functor_T.cpp"\
-	"..\..\ace\Functor_T.h"\
-	"..\..\ace\Functor_T.i"\
-	"..\..\ace\Get_Opt.h"\
-	"..\..\ace\Get_Opt.i"\
-	"..\..\ace\Handle_Set.h"\
-	"..\..\ace\Handle_Set.i"\
-	"..\..\ace\Hash_Map_Manager.h"\
-	"..\..\ace\Hash_Map_Manager.i"\
-	"..\..\ace\Hash_Map_Manager_T.cpp"\
-	"..\..\ace\Hash_Map_Manager_T.h"\
-	"..\..\ace\Hash_Map_Manager_T.i"\
-	"..\..\ace\High_Res_Timer.h"\
-	"..\..\ace\High_Res_Timer.i"\
-	"..\..\ace\inc_user_config.h"\
-	"..\..\ace\INET_Addr.h"\
-	"..\..\ace\INET_Addr.i"\
-	"..\..\ace\IO_Cntl_Msg.h"\
-	"..\..\ace\iosfwd.h"\
-	"..\..\ace\IPC_SAP.h"\
-	"..\..\ace\IPC_SAP.i"\
-	"..\..\ace\Log_Msg.h"\
-	"..\..\ace\Log_Priority.h"\
-	"..\..\ace\Log_Record.h"\
-	"..\..\ace\Log_Record.i"\
-	"..\..\ace\Malloc.h"\
-	"..\..\ace\Malloc.i"\
-	"..\..\ace\Malloc_Base.h"\
-	"..\..\ace\Malloc_T.cpp"\
-	"..\..\ace\Malloc_T.h"\
-	"..\..\ace\Malloc_T.i"\
-	"..\..\ace\Managed_Object.cpp"\
-	"..\..\ace\Managed_Object.h"\
-	"..\..\ace\Managed_Object.i"\
-	"..\..\ace\Map_Manager.cpp"\
-	"..\..\ace\Map_Manager.h"\
-	"..\..\ace\Map_Manager.i"\
-	"..\..\ace\Mem_Map.h"\
-	"..\..\ace\Mem_Map.i"\
-	"..\..\ace\Memory_Pool.h"\
-	"..\..\ace\Memory_Pool.i"\
-	"..\..\ace\Message_Block.h"\
-	"..\..\ace\Message_Block.i"\
-	"..\..\ace\Message_Block_T.cpp"\
-	"..\..\ace\Message_Block_T.h"\
-	"..\..\ace\Message_Block_T.i"\
-	"..\..\ace\Message_Queue.h"\
-	"..\..\ace\Message_Queue.i"\
-	"..\..\ace\Message_Queue_T.cpp"\
-	"..\..\ace\Message_Queue_T.h"\
-	"..\..\ace\Message_Queue_T.i"\
-	"..\..\ace\Module.cpp"\
-	"..\..\ace\Module.h"\
-	"..\..\ace\Module.i"\
-	"..\..\ace\Object_Manager.h"\
-	"..\..\ace\Object_Manager.i"\
-	"..\..\ace\OS.h"\
-	"..\..\ace\OS.i"\
-	"..\..\ace\Reactor.h"\
-	"..\..\ace\Reactor.i"\
-	"..\..\ace\Reactor_Impl.h"\
-	"..\..\ace\Service_Config.h"\
-	"..\..\ace\Service_Config.i"\
-	"..\..\ace\Service_Object.h"\
-	"..\..\ace\Service_Object.i"\
-	"..\..\ace\Service_Repository.h"\
-	"..\..\ace\Service_Repository.i"\
-	"..\..\ace\Service_Types.h"\
-	"..\..\ace\Service_Types.i"\
-	"..\..\ace\Shared_Object.h"\
-	"..\..\ace\Shared_Object.i"\
-	"..\..\ace\Signal.h"\
-	"..\..\ace\Signal.i"\
-	"..\..\ace\Singleton.cpp"\
-	"..\..\ace\Singleton.h"\
-	"..\..\ace\Singleton.i"\
-	"..\..\ace\SOCK.h"\
-	"..\..\ace\SOCK.i"\
-	"..\..\ace\SOCK_Acceptor.h"\
-	"..\..\ace\SOCK_Acceptor.i"\
-	"..\..\ace\SOCK_Connector.h"\
-	"..\..\ace\SOCK_Connector.i"\
-	"..\..\ace\SOCK_IO.h"\
-	"..\..\ace\SOCK_IO.i"\
-	"..\..\ace\SOCK_Stream.h"\
-	"..\..\ace\SOCK_Stream.i"\
-	"..\..\ace\SString.h"\
-	"..\..\ace\SString.i"\
-	"..\..\ace\Strategies.h"\
-	"..\..\ace\Strategies.i"\
-	"..\..\ace\Strategies_T.cpp"\
-	"..\..\ace\Strategies_T.h"\
-	"..\..\ace\Strategies_T.i"\
-	"..\..\ace\Stream_Modules.cpp"\
-	"..\..\ace\Stream_Modules.h"\
-	"..\..\ace\Stream_Modules.i"\
-	"..\..\ace\streams.h"\
-	"..\..\ace\SV_Semaphore_Complex.h"\
-	"..\..\ace\SV_Semaphore_Complex.i"\
-	"..\..\ace\SV_Semaphore_Simple.h"\
-	"..\..\ace\SV_Semaphore_Simple.i"\
-	"..\..\ace\Svc_Conf_Tokens.h"\
-	"..\..\ace\Svc_Handler.cpp"\
-	"..\..\ace\Svc_Handler.h"\
-	"..\..\ace\Svc_Handler.i"\
-	"..\..\ace\Synch.h"\
-	"..\..\ace\Synch.i"\
-	"..\..\ace\Synch_Options.h"\
-	"..\..\ace\Synch_Options.i"\
-	"..\..\ace\Synch_T.cpp"\
-	"..\..\ace\Synch_T.h"\
-	"..\..\ace\Synch_T.i"\
-	"..\..\ace\Task.h"\
-	"..\..\ace\Task.i"\
-	"..\..\ace\Task_T.cpp"\
-	"..\..\ace\Task_T.h"\
-	"..\..\ace\Task_T.i"\
-	"..\..\ace\Thread.h"\
-	"..\..\ace\Thread.i"\
-	"..\..\ace\Thread_Manager.h"\
-	"..\..\ace\Thread_Manager.i"\
-	"..\..\ace\Time_Value.h"\
-	"..\..\ace\Timeprobe.h"\
-	"..\..\ace\Timeprobe.i"\
-	"..\..\ace\Timeprobe_T.cpp"\
-	"..\..\ace\Timeprobe_T.h"\
-	"..\..\ace\Timer_Queue.h"\
-	"..\..\ace\Timer_Queue_T.cpp"\
-	"..\..\ace\Timer_Queue_T.h"\
-	"..\..\ace\Timer_Queue_T.i"\
-	"..\..\ace\Trace.h"\
-	"..\..\ace\WFMO_Reactor.h"\
-	"..\..\ace\WFMO_Reactor.i"\
-	"..\..\ace\ws2tcpip.h"\
-	".\Active_Object_Map.h"\
-	".\Active_Object_Map.i"\
-	".\align.h"\
-	".\any.h"\
-	".\any.i"\
-	".\cdr.h"\
-	".\cdr.i"\
-	".\Client_Strategy_Factory.h"\
-	".\connect.h"\
-	".\connect.i"\
-	".\corba.h"\
-	".\CurrentC.h"\
-	".\CurrentC.i"\
-	".\debug.h"\
-	".\default_client.h"\
-	".\default_client.i"\
-	".\default_server.h"\
-	".\default_server.i"\
-	".\DynAny_i.h"\
-	".\DynAnyC.h"\
-	".\DynAnyC.i"\
-	".\Environment.h"\
-	".\Environment.i"\
-	".\Exception.h"\
-	".\Exception.i"\
-	".\giop.h"\
-	".\giop.i"\
-	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
-	".\IIOP_ORB.h"\
-	".\IIOP_ORB.i"\
-	".\InconsistentTypeCodeC.h"\
-	".\Invocation.h"\
-	".\Invocation.i"\
-	".\Managed_Types.h"\
-	".\Managed_Types.i"\
-	".\marshal.h"\
-	".\marshal.i"\
-	".\nvlist.h"\
-	".\NVList.i"\
-	".\object.h"\
-	".\object.i"\
-	".\Object_KeyC.h"\
-	".\Object_KeyC.i"\
-	".\Operation_Table.h"\
-	".\orb.h"\
-	".\ORB.i"\
-	".\orb_core.h"\
-	".\orb_core.i"\
-	".\ORB_Strategies_T.cpp"\
-	".\ORB_Strategies_T.h"\
-	".\ORB_Strategies_T.i"\
-	".\orbconf.h"\
-	".\params.h"\
-	".\params.i"\
-	".\poa.h"\
-	".\POA.i"\
-	".\POA_CORBA.h"\
-	".\poa_macros.h"\
-	".\poaC.h"\
-	".\poaC.i"\
-	".\poaS.h"\
-	".\poaS.i"\
-	".\PolicyC.h"\
-	".\PolicyC.i"\
-	".\Principal.h"\
-	".\Principal.i"\
-	".\request.h"\
-	".\Request.i"\
-	".\sequence.h"\
-	".\sequence.i"\
-	".\Sequence_T.cpp"\
-	".\Sequence_T.h"\
-	".\Sequence_T.i"\
-	".\servant_base.h"\
-	".\Servant_Base.i"\
-	".\Server_Request.h"\
-	".\Server_Request.i"\
-	".\Server_Strategy_Factory.h"\
-	".\singletons.h"\
-	".\stub.h"\
-	".\stub.i"\
-	".\Timeprobe.h"\
-	".\try_macros.h"\
-	".\typecode.h"\
-	".\typecode.i"\
-	".\Union.h"\
-	".\varout.cpp"\
-	".\varout.h"\
-	".\varout.i"\
 	
 
 !ENDIF 
@@ -15156,7 +14718,7 @@ SOURCE=.\IIOP_ORB.cpp
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
 
-DEP_CPP_IIOP_OR=\
+DEP_CPP_IIOP_O=\
 	"..\..\ace\Acceptor.cpp"\
 	"..\..\ace\Acceptor.h"\
 	"..\..\ace\Acceptor.i"\
@@ -15350,8 +14912,6 @@ DEP_CPP_IIOP_OR=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -15413,10 +14973,14 @@ DEP_CPP_IIOP_OR=\
 	".\varout.h"\
 	".\varout.i"\
 	
+NODEP_CPP_IIOP_O=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
+	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
 
-DEP_CPP_IIOP_OR=\
+DEP_CPP_IIOP_O=\
 	"..\..\ace\Acceptor.cpp"\
 	"..\..\ace\Acceptor.h"\
 	"..\..\ace\Acceptor.i"\
@@ -15610,8 +15174,6 @@ DEP_CPP_IIOP_OR=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -15672,6 +15234,10 @@ DEP_CPP_IIOP_OR=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_IIOP_O=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -15911,8 +15477,6 @@ DEP_CPP_INCON=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -15973,6 +15537,10 @@ DEP_CPP_INCON=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_INCON=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -16171,8 +15739,6 @@ DEP_CPP_INCON=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -16233,6 +15799,10 @@ DEP_CPP_INCON=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_INCON=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -16448,8 +16018,6 @@ DEP_CPP_INVOC=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -16511,6 +16079,10 @@ DEP_CPP_INVOC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_INVOC=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -16715,8 +16287,6 @@ DEP_CPP_INVOC=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -16778,6 +16348,10 @@ DEP_CPP_INVOC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_INVOC=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -16987,8 +16561,6 @@ DEP_CPP_MANAG=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -17049,6 +16621,10 @@ DEP_CPP_MANAG=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_MANAG=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -17247,8 +16823,6 @@ DEP_CPP_MANAG=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -17309,6 +16883,10 @@ DEP_CPP_MANAG=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_MANAG=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -17518,8 +17096,6 @@ DEP_CPP_MARSH=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -17580,6 +17156,10 @@ DEP_CPP_MARSH=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_MARSH=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -17778,8 +17358,6 @@ DEP_CPP_MARSH=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -17841,6 +17419,25 @@ DEP_CPP_MARSH=\
 	".\varout.h"\
 	".\varout.i"\
 	
+NODEP_CPP_MARSH=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\MProfile.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -18049,8 +17646,6 @@ DEP_CPP_NVLIS=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -18111,6 +17706,10 @@ DEP_CPP_NVLIS=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_NVLIS=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -18309,8 +17908,6 @@ DEP_CPP_NVLIS=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -18371,6 +17968,10 @@ DEP_CPP_NVLIS=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_NVLIS=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -18580,8 +18181,6 @@ DEP_CPP_OBJEC=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -18642,6 +18241,10 @@ DEP_CPP_OBJEC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_OBJEC=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -18840,8 +18443,6 @@ DEP_CPP_OBJEC=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -18902,6 +18503,10 @@ DEP_CPP_OBJEC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_OBJEC=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -19111,8 +18716,6 @@ DEP_CPP_OBJECT=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -19173,6 +18776,10 @@ DEP_CPP_OBJECT=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_OBJECT=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -19371,8 +18978,6 @@ DEP_CPP_OBJECT=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -19433,6 +19038,10 @@ DEP_CPP_OBJECT=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_OBJECT=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -19648,8 +19257,6 @@ DEP_CPP_OPERA=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -19711,6 +19318,10 @@ DEP_CPP_OPERA=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_OPERA=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -19915,8 +19526,6 @@ DEP_CPP_OPERA=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -19978,6 +19587,10 @@ DEP_CPP_OPERA=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_OPERA=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -20197,8 +19810,6 @@ DEP_CPP_ORB_C=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -20261,6 +19872,10 @@ DEP_CPP_ORB_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ORB_C=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -20469,8 +20084,6 @@ DEP_CPP_ORB_C=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -20533,6 +20146,10 @@ DEP_CPP_ORB_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ORB_C=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -20762,8 +20379,6 @@ DEP_CPP_ORB_CO=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -20825,6 +20440,10 @@ DEP_CPP_ORB_CO=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ORB_CO=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -21043,8 +20662,6 @@ DEP_CPP_ORB_CO=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -21106,6 +20723,10 @@ DEP_CPP_ORB_CO=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_ORB_CO=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -21315,8 +20936,6 @@ DEP_CPP_PARAM=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -21377,6 +20996,10 @@ DEP_CPP_PARAM=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_PARAM=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -21575,8 +21198,6 @@ DEP_CPP_PARAM=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -21637,6 +21258,10 @@ DEP_CPP_PARAM=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_PARAM=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -21868,8 +21493,6 @@ DEP_CPP_POA_C=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -21931,6 +21554,10 @@ DEP_CPP_POA_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POA_C=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -22136,8 +21763,6 @@ DEP_CPP_POA_C=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -22199,6 +21824,10 @@ DEP_CPP_POA_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POA_C=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -22408,8 +22037,6 @@ DEP_CPP_POAC_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -22470,6 +22097,10 @@ DEP_CPP_POAC_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POAC_=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -22668,8 +22299,6 @@ DEP_CPP_POAC_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -22730,6 +22359,10 @@ DEP_CPP_POAC_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POAC_=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -22939,8 +22572,6 @@ DEP_CPP_POAS_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -23001,6 +22632,10 @@ DEP_CPP_POAS_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POAS_=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -23199,8 +22834,6 @@ DEP_CPP_POAS_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -23261,6 +22894,10 @@ DEP_CPP_POAS_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POAS_=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -23470,8 +23107,6 @@ DEP_CPP_POLIC=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -23532,6 +23167,10 @@ DEP_CPP_POLIC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POLIC=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -23730,8 +23369,6 @@ DEP_CPP_POLIC=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -23792,6 +23429,10 @@ DEP_CPP_POLIC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POLIC=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -24001,8 +23642,6 @@ DEP_CPP_POLICY=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -24063,6 +23702,10 @@ DEP_CPP_POLICY=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POLICY=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -24261,8 +23904,6 @@ DEP_CPP_POLICY=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -24323,6 +23964,10 @@ DEP_CPP_POLICY=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_POLICY=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -24532,8 +24177,6 @@ DEP_CPP_PRINC=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -24594,6 +24237,10 @@ DEP_CPP_PRINC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_PRINC=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -24792,8 +24439,6 @@ DEP_CPP_PRINC=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -24854,6 +24499,10 @@ DEP_CPP_PRINC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_PRINC=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -25063,8 +24712,6 @@ DEP_CPP_REQUE=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -25125,6 +24772,10 @@ DEP_CPP_REQUE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_REQUE=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -25323,8 +24974,6 @@ DEP_CPP_REQUE=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -25385,6 +25034,10 @@ DEP_CPP_REQUE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_REQUE=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -25594,8 +25247,6 @@ DEP_CPP_SEQUE=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -25656,6 +25307,10 @@ DEP_CPP_SEQUE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SEQUE=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -25854,8 +25509,6 @@ DEP_CPP_SEQUE=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -25916,6 +25569,10 @@ DEP_CPP_SEQUE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SEQUE=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -26131,8 +25788,6 @@ DEP_CPP_SERVA=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -26194,6 +25849,10 @@ DEP_CPP_SERVA=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SERVA=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -26398,8 +26057,6 @@ DEP_CPP_SERVA=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -26461,6 +26118,10 @@ DEP_CPP_SERVA=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SERVA=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -26676,8 +26337,6 @@ DEP_CPP_SERVE=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -26739,6 +26398,10 @@ DEP_CPP_SERVE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SERVE=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -26943,8 +26606,6 @@ DEP_CPP_SERVE=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -27006,6 +26667,10 @@ DEP_CPP_SERVE=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SERVE=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -27215,8 +26880,6 @@ DEP_CPP_SERVER=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -27277,6 +26940,10 @@ DEP_CPP_SERVER=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SERVER=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -27475,8 +27142,6 @@ DEP_CPP_SERVER=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -27537,6 +27202,10 @@ DEP_CPP_SERVER=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SERVER=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -27746,8 +27415,6 @@ DEP_CPP_SKIP_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -27808,6 +27475,10 @@ DEP_CPP_SKIP_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SKIP_=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -28006,8 +27677,6 @@ DEP_CPP_SKIP_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -28068,6 +27737,10 @@ DEP_CPP_SKIP_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_SKIP_=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -28277,8 +27950,6 @@ DEP_CPP_STUB_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -28339,6 +28010,10 @@ DEP_CPP_STUB_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_STUB_=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -28537,8 +28212,6 @@ DEP_CPP_STUB_=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -28599,6 +28272,10 @@ DEP_CPP_STUB_=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_STUB_=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -28808,8 +28485,6 @@ DEP_CPP_TAO_C=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -28871,6 +28546,10 @@ DEP_CPP_TAO_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_TAO_C=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -29069,8 +28748,6 @@ DEP_CPP_TAO_C=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -29132,6 +28809,10 @@ DEP_CPP_TAO_C=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_TAO_C=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -29341,8 +29022,6 @@ DEP_CPP_TAO_I=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -29404,6 +29083,10 @@ DEP_CPP_TAO_I=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_TAO_I=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -29602,8 +29285,6 @@ DEP_CPP_TAO_I=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -29665,6 +29346,10 @@ DEP_CPP_TAO_I=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_TAO_I=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -29874,8 +29559,6 @@ DEP_CPP_TYPEC=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -29936,6 +29619,10 @@ DEP_CPP_TYPEC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_TYPEC=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -30134,8 +29821,6 @@ DEP_CPP_TYPEC=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -30196,6 +29881,10 @@ DEP_CPP_TYPEC=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_TYPEC=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -30405,8 +30094,6 @@ DEP_CPP_TYPECO=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -30467,6 +30154,10 @@ DEP_CPP_TYPECO=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_TYPECO=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -30665,8 +30356,6 @@ DEP_CPP_TYPECO=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -30727,6 +30416,10 @@ DEP_CPP_TYPECO=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_TYPECO=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -30936,8 +30629,6 @@ DEP_CPP_UNION=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -30998,6 +30689,10 @@ DEP_CPP_UNION=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_UNION=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
@@ -31196,8 +30891,6 @@ DEP_CPP_UNION=\
 	".\giop.h"\
 	".\giop.i"\
 	".\IIOP_Interpreter.h"\
-	".\IIOP_Object.h"\
-	".\IIOP_Object.i"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -31258,6 +30951,10 @@ DEP_CPP_UNION=\
 	".\varout.cpp"\
 	".\varout.h"\
 	".\varout.i"\
+	
+NODEP_CPP_UNION=\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
 	
 
 !ENDIF 
@@ -31373,10 +31070,6 @@ SOURCE=.\IIOP_Interpreter.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Object.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_ORB.h
 # End Source File
 # Begin Source File
@@ -31398,6 +31091,10 @@ SOURCE=.\Managed_Types.h
 # Begin Source File
 
 SOURCE=.\marshal.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MProfile.h
 # End Source File
 # Begin Source File
 
@@ -31570,10 +31267,6 @@ SOURCE=.\Exception.i
 # Begin Source File
 
 SOURCE=.\giop.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\IIOP_Object.i
 # End Source File
 # Begin Source File
 

@@ -22,9 +22,11 @@ CFG=TAO Static - Win32 Debug
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
+RSC=rc.exe
 
 !IF  "$(CFG)" == "TAO Static - Win32 Release"
 
@@ -38,12 +40,11 @@ CPP=cl.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
-RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /FD /c
 # SUBTRACT CPP /YX
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -63,11 +64,10 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-RSC=rc.exe
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "..\..\\" /I "..\\" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -202,10 +202,6 @@ SOURCE=.\IIOP_Interpreter.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Object.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_ORB.cpp
 # End Source File
 # Begin Source File
@@ -231,6 +227,10 @@ SOURCE=.\Managed_Types.cpp
 # Begin Source File
 
 SOURCE=.\Marshal.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\MProfile.cpp
 # End Source File
 # Begin Source File
 
@@ -442,10 +442,6 @@ SOURCE=.\IIOP_Interpreter.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Object.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_ORB.h
 # End Source File
 # Begin Source File
@@ -467,6 +463,10 @@ SOURCE=.\Managed_Types.h
 # Begin Source File
 
 SOURCE=.\marshal.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MProfile.h
 # End Source File
 # Begin Source File
 
@@ -618,11 +618,19 @@ SOURCE=.\connect.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\CurrentC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\default_client.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\default_server.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynAnyC.i
 # End Source File
 # Begin Source File
 
@@ -638,11 +646,11 @@ SOURCE=.\giop.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Object.i
+SOURCE=.\IIOP_ORB.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_ORB.i
+SOURCE=.\Invocation.i
 # End Source File
 # Begin Source File
 
@@ -682,6 +690,10 @@ SOURCE=.\params.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\POA.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\poaC.i
 # End Source File
 # Begin Source File
@@ -698,6 +710,10 @@ SOURCE=.\PolicyS.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Principal.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Request.i
 # End Source File
 # Begin Source File
@@ -707,6 +723,10 @@ SOURCE=.\sequence.i
 # Begin Source File
 
 SOURCE=.\Sequence_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Servant_Base.i
 # End Source File
 # Begin Source File
 
@@ -727,6 +747,10 @@ SOURCE=.\Timeprobe.i
 # Begin Source File
 
 SOURCE=.\typecode.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\varout.i
 # End Source File
 # End Group
 # Begin Group "Resource Files"

@@ -1,10 +1,17 @@
+Thu Feb 04 23:42:39 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Stub.cpp: It should now include Stub.i instead of
+	  STUB_Object.i.
+
+	* tao/TAO[_Static].dsp: Removed IIOP_Object and added MProfile.
+
 Thu Feb  4 22:18:13 1999 Fred Kuhns <fredk@cs.wustl.edu>
-  
+
   * added public destructor to TAO_IIOP_Profile
 
 Thu Feb  4 21:33:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* utils/catior/catior.cpp: 
+	* utils/catior/catior.cpp:
 	  It included $ACE_ROOT/tao/IIOP_Profile.h explicitly, the file
 	  has been removed. I'm not sure if the program will work, but at
 	  least I could update the Makefile dependencies.
@@ -14,10 +21,10 @@ Thu Feb  4 19:18:51 1999 Fred Kuhns <fredk@cs.wustl.edu>
         * Multiple Profiles (MP).
 	  This required the modification of several files, deleting others
 	  as well as adding and removing classes.
-    
+
         * Removed the files IIOP_Object.{h,i,cpp} and object IIOP_Object.
   	  All functionality now resided in the old base class STUB_Object.
-    
+
         * Changed many files and classes to multiple profiles or to
  	  account for removing the IIOP_Object class.
 
@@ -55,7 +62,7 @@ Thu Feb  4 14:34:43 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/mpeg/mpeg_server/Globals.cpp: Added the
  	  initialization of a missing member variable.  Thanks to Phil
  	  Ruelle <Phil.Ruelle@adv.sonybpe.com> for the fix.
-		
+
 Thu Feb 04 10:55:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB_Strategies_T.cpp (activate_svc_handler): Fixed unmatched
