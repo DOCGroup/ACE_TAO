@@ -496,7 +496,7 @@ tokenize (ACE_TCHAR *buffer)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     ACE_ERROR ((LM_ERROR,
