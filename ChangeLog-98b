@@ -9,6 +9,9 @@ Tue Jun 23 06:40:35 1998  David L. Levine  <levine@cs.wustl.edu>
           added #include of ace/streams.h.  Thanks to Philippe Klein
           <Philippe_Klein@vocaltec.com> for reporting this.
 
+        * tests/TSS_Test.cpp (worker): declare "u" globally so that
+          we don't quickly run out of TSS keys.
+
 Mon Jun 22 09:25:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/XtReactor.cpp:
