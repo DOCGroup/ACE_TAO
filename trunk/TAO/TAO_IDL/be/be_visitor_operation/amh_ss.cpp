@@ -49,6 +49,8 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
       vardecl_ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS);
 
       be_visitor_args_vardecl_ss vardecl_visitor (&vardecl_ctx);
+      vardecl_visitor.set_fixed_direction (AST_Argument::dir_IN);
+
       for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
            !si.is_done ();
            si.next ())
@@ -82,6 +84,8 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
       marshal_ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
 
       be_visitor_args_marshal_ss marshal_visitor (&marshal_ctx);
+      marshal_visitor.set_fixed_direction (AST_Argument::dir_IN);
+
       for (UTL_ScopeActiveIterator sj (node, UTL_Scope::IK_decls);
            !sj.is_done ();
            sj.next ())
@@ -119,13 +123,14 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
       *os << be_uidt << "\n";
     }
 
-  if (this->generate_shared_section (node, os, argument_count) == -1)
+  if (this->generate_shared_section (node, os) == -1)
     return -1;
 
   {
     be_visitor_context ctx (*this->ctx_);
     ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS);
     be_visitor_args_upcall_ss visitor (&ctx);
+    visitor.set_fixed_direction (AST_Argument::dir_IN);
 
     for (UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
          !i.is_done ();
@@ -167,7 +172,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
   if (this->generate_shared_prologue (node, os, "_get_") == -1)
     return -1;
 
-  if (this->generate_shared_section (node, os, 0) == -1)
+  if (this->generate_shared_section (node, os) == -1)
     return -1;
 
   *os << "TAO_ENV_ARG_PARAMETER";
@@ -222,7 +227,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
     }
   *os << be_uidt << "\n";
 
-  if (this->generate_shared_section (node, os, 1) == -1)
+  if (this->generate_shared_section (node, os) == -1)
     return -1;
 
   *os << ", " << node->local_name ()
@@ -292,8 +297,7 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
 
 int
 be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
-                                                      TAO_OutStream *os,
-                                                      int argument_count)
+                                                      TAO_OutStream *os)
 {
   be_interface *intf =
     be_interface::narrow_from_scope (node->defined_in ());
