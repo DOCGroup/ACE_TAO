@@ -1,3 +1,8 @@
+Wed Jun 16 06:58:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Makefile.am:
+	  Fixed typo.
+
 Wed Jun 16 12:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-bug-process.html:
