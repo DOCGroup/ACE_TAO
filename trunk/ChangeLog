@@ -1,3 +1,30 @@
+Sun Jan  4 15:12:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* apps/JAWS3/jaws3/Asynch_IO.cpp:
+	* apps/JAWS3/jaws3/Concurrency.cpp:
+	* apps/JAWS3/jaws3/Config_File.cpp:
+	* apps/JAWS3/jaws3/Datagram.cpp:
+	* apps/JAWS3/jaws3/Event_Completer.cpp:
+	* apps/JAWS3/jaws3/Event_Dispatcher.cpp:
+	* apps/JAWS3/jaws3/FILE.cpp:
+	* apps/JAWS3/jaws3/IO.cpp:
+	* apps/JAWS3/jaws3/Makefile:
+	* apps/JAWS3/jaws3/Options.cpp:
+	* apps/JAWS3/jaws3/Protocol_Handler.cpp:
+	* apps/JAWS3/jaws3/Reactive_IO.cpp:
+	* apps/JAWS3/jaws3/Signal_Task.cpp:
+	* apps/JAWS3/jaws3/Symbol_Table.cpp:
+	* apps/JAWS3/jaws3/Synch_IO.cpp:
+	* apps/JAWS3/jaws3/THYBRID_Concurrency.cpp:
+	* apps/JAWS3/jaws3/TPOOL_Concurrency.cpp:
+	* apps/JAWS3/jaws3/TPR_Concurrency.cpp:
+	* apps/JAWS3/jaws3/Task_Timer.cpp:
+	* apps/JAWS3/jaws3/Templates.cpp:
+	* apps/JAWS3/jaws3/Timer.cpp:
+	* apps/JAWS3/jaws3/Timer_Helpers.cpp:
+
+	  Fixed warnings in g++ due to redefinitions.
+
 Sun Jan  4 09:56:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/APG/Makefile:

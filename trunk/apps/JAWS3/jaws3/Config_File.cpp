@@ -6,7 +6,9 @@
 #include "ace/Singleton.h"
 #include "ace/Unbounded_Queue.h"
 
+#ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
+#endif
 
 #include "jaws3/Config_File.h"
 #include "jaws3/Symbol_Table.h"
