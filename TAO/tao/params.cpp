@@ -1,9 +1,18 @@
 #include "tao/corba.h"
 
-void
-TAO_ORB_Parameters::name_service_ior (CORBA::String ns)
+TAO_ORB_Parameters::TAO_ORB_Parameters (void)
+  : name_service_ior_ (0)
 {
-  this->name_service_ior_ = ns;
+}
+
+TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
+{
+}
+
+void
+TAO_ORB_Parameters::addr (const ACE_INET_Addr &addr)
+{
+  this->addr_ = addr;
 }
 
 // Get the address on which we're listening.
