@@ -1,3 +1,44 @@
+
+	TO-DO
+
+	* Modify code generation for local interface.  Abstract
+	  interface will come later.
+
+	* Need to add syntax/semantic check for local/abstract interfaces
+	  as defined in CCM.  (E.g., a local object can not be the
+	  argument of a remote operation.)
+
+	* Remove gen_locality_constraint stuff.
+
+Tue Apr 18 16:06:11 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: The idl
+	  compiler must generate <_remote_interface_repository_id> for
+	  remote client stubs now.
+
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Do not
+	  generate skeletons for local interfaces.
+
+	* tao/Object.h:
+	* tao/Object.i:
+	* tao/Object.cpp: Changed the method <_interface_repository_id> as
+	  inlined, non-virtual function and invoke either
+	  <_remote_interface_repository_id> or
+	  <_local_interface_repository_id> depending on whether the
+	  interface is remote or local.  Added the two aforementioned new
+	  virtual functions.
+
+	* tao/LocalObject.h:
+	* tao/LocalObject.cpp: Rename <_interface_repository_id> to
+	  <_local_interface_repository_id>.
+
+	* tao/POA_CORBA.h: Oops, revert my previous change on
+	  <_interface_repository_id>.  This file declares skeletons, which
+	  still use <_interface_repository_id>.
+
 Tue Apr 18 14:32:08 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/CurrentC.cpp:
@@ -19,6 +60,7 @@ Tue Apr 18 14:32:08 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tao/POAC.cpp:
 	* tao/POAC.h:
 	* tao/POA_CORBA.h:
+	* tao/PolicyC.h:
 	* tao/PolicyC.cpp:
 	* tao/PollableC.cpp:
 	* tao/PollableC.h:
@@ -27,7 +69,6 @@ Tue Apr 18 14:32:08 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tao/TAOC.cpp:
 	* tao/TAOC.h: Renamed method <_interface_repository_id> to
 	  <_remote_interface_repository_id>.
-
 
 Tue Apr 18 03:17:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -96,13 +137,6 @@ Mon Apr 17 20:48:42 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  interface and it's esier to simply "turn off" some feature of
 	  regular interface depend on the type of interfaces we are
 	  generating.
-
-	TO-DO: Modify code generation for local interface.  Abstract
-	  interface will come later.
-
-	  Need to add syntax/semantic check for local/abstract interfaces
-	  as defined in CCM.  (E.g., a local object can not be the
-	  argument of a remote operation.)
 
 Mon Apr 17 13:18:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 

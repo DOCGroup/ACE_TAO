@@ -69,7 +69,15 @@ public:
                                   TAO_default_environment ());
   // determine if we are of the type specified by the "logical_type_id"
 
-  virtual const char* _interface_repository_id (void) const;
+  const char* _interface_repository_id (void) const;
+  // The repository ID for the most derived class, this is an
+  // implementation method and does no remote invocations!
+
+  virtual const char* _remote_interface_repository_id (void) const;
+  // The repository ID for the most derived class, this is an
+  // implementation method and does no remote invocations!
+
+  virtual const char* _local_interface_repository_id (void) const;
   // The repository ID for the most derived class, this is an
   // implementation method and does no remote invocations!
 

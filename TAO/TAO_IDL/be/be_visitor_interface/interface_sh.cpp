@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -47,7 +47,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   long i; // loop index
   static char namebuf [NAMEBUFSIZE]; // holds the class name
 
-  if (node->srv_hdr_gen () || node->imported ())
+  if (node->srv_hdr_gen () || node->imported () || node->is_local_interface ())
     return 0;
 
   ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
@@ -242,7 +242,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     }
 
   // No need to generate TIE class for locality constraint interface.
-  if (!idl_global->gen_locality_constraint () 
+  if (!idl_global->gen_locality_constraint ()
       && idl_global->gen_tie_classes ())
     {
       // generate the TIE class.

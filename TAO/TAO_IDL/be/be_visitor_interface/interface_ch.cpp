@@ -203,7 +203,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl
           << "virtual const char* "
-          << "_interface_repository_id (void) const;\n" << be_uidt_nl;
+          << "_remote_interface_repository_id (void) const;\n" << be_uidt_nl;
 
       // generate the "protected" constructor so that users cannot instantiate
       // us

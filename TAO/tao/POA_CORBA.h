@@ -76,7 +76,7 @@ public:
       );
 
     ACE_CORBA_1(Current) *_this (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef Current_ptr _ptr_type;
@@ -190,7 +190,7 @@ public:
     CORBA_Policy_ptr _this (
         CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ());
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef Policy_ptr _ptr_type;
@@ -259,7 +259,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_PolicyManager : public virtual CORBA::PolicyManager
@@ -319,7 +319,7 @@ public:
           CORBA::Environment::default_environment ()
       );
 
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_PolicyCurrent     : public virtual CORBA::PolicyCurrent,
@@ -394,7 +394,7 @@ public:
           TAO_default_environment ()
       );
 
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Policy_ptr get_domain_policy (
       CORBA::PolicyType policy_type,
       CORBA::Environment &ACE_TRY_ENV =
@@ -501,7 +501,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_Pollable : public virtual CORBA::Pollable
@@ -595,7 +595,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_DIIPollable : public virtual CORBA::DIIPollable,
@@ -726,7 +726,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
   };
 
   class TAO_Export _tao_collocated_PollableSet : public virtual CORBA::PollableSet
@@ -1026,7 +1026,7 @@ public:
           CORBA::Environment::default_environment ()
       );
 
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     typedef DynAny_ptr _ptr_type;
@@ -1284,7 +1284,7 @@ public:
           CORBA::Environment::default_environment ()
       );
 
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     typedef DynEnum_ptr _ptr_type;
@@ -1373,7 +1373,7 @@ public:
           CORBA::Environment::default_environment ()
       );
 
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     typedef DynStruct_ptr _ptr_type;
@@ -1482,7 +1482,7 @@ public:
           CORBA::Environment::default_environment ()
       );
 
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     typedef DynUnion_ptr _ptr_type;
@@ -1596,7 +1596,7 @@ public:
           CORBA::Environment::default_environment ()
       );
 
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     typedef DynSequence_ptr _ptr_type;
@@ -1675,7 +1675,7 @@ public:
           CORBA::Environment::default_environment ()
       );
 
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     typedef DynArray_ptr _ptr_type;
@@ -1764,7 +1764,7 @@ public:
           TAO_default_environment ()
       );
 
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
     virtual void make_domain_manager (
       CORBA::InterfaceDef_ptr object_type,
       CORBA::Boolean constr_policy,
@@ -1861,7 +1861,7 @@ public:
           TAO_default_environment ()
       );
 
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
     virtual IR::DefinitionKind def_kind (
         CORBA::Environment &ACE_TRY_ENV =
@@ -1978,7 +1978,7 @@ public:
           TAO_default_environment ()
       );
 
-    virtual const char* _remote_interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
     virtual CORBA::TypeCode_ptr create_struct_tc (
         const char * id,

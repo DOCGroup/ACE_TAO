@@ -49,13 +49,13 @@ CORBA::LocalObject::_remove_ref (void)
 
 CORBA::Boolean
 CORBA::LocalObject::_is_a (const CORBA::Char *type_id,
-                           CORBA::Environment &)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 const char*
-CORBA::LocalObject::_interface_repository_id (void) const
+CORBA::LocalObject::_local_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/LocalObject:1.0";
 }

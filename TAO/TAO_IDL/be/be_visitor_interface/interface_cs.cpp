@@ -215,7 +215,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   os->indent ();
   *os << "const char* " << node->full_name ()
-      << "::_interface_repository_id (void) const"
+      << "::_remote_interface_repository_id (void) const"
       << be_nl
       << "{" << be_idt_nl
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
