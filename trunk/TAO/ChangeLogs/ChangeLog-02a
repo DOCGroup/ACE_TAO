@@ -1,3 +1,9 @@
+Sat Sep 16 00:58:16 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* utils/NamingViewer/ViewIORDialog.cpp:
+
+	  Fixed comilation problems.
+
 Fri Sep 15 20:39:49 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/IIOP_Endpoint.h:
