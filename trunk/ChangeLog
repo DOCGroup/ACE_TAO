@@ -1,3 +1,37 @@
+Wed Mar 28 11:37:09 2001  Fuzz Master D <brunsch@uci.edu>
+
+        * bin/fuzz.pl:
+
+          There are several instances where fuzz gives false 
+          positives, and the code is impossible to fix without
+          creating compiler warnings.  Example:
+
+          void function (CORBA::Environment &ACE_TRY_ENV)
+          {
+          #if FOO
+              some_other_function (ACE_TRY_ENV);
+              ACE_CHECK;
+          #else
+              ACE_UNUSED_ARG (ACE_TRY_ENV);
+          #endif
+          }
+
+          So normally ACE_UNUSED_ARG errors can be fixed by keeping
+          the CORBA::ENvironment unnamed and removing the ACE_UNUSED_ARG,
+          but in this case it isn't possible.  So fuzz now accepts
+          an ignore command for single line use.  The above can be fixed
+          by changing to:
+
+          void function (CORBA::Environment &ACE_TRY_ENV)
+          {
+          #if FOO
+              some_other_function (ACE_TRY_ENV);
+              ACE_CHECK;
+          #else
+              ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
+          #endif
+          }
+
 Tue Mar 28 13:03:07 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/make_pretty.pl:
