@@ -20,7 +20,6 @@
 #ifndef CONSUMER_SIGNAL_HANDLER_H
 #define CONSUMER_SIGNAL_HANDLER_H
 
-#include "ace/OS.h"
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
 #include "Consumer_Handler.h"
