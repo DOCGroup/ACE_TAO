@@ -77,21 +77,21 @@ ACE_TTY_IO::control (Control_Mode cmd,
           newbaudrate = B38400;
           break;
 #if defined (ACE_USES_HIGH_BAUD_RATES)
-        case 56000:
-          newbaudrate = B56000;
-          break;
+//          case 56000:
+//            newbaudrate = B56000;
+//            break;
         case 57600:
           newbaudrate = B57600;
           break;
         case 115200:
           newbaudrate = B115200;
           break;
-        case 128000:
-          newbaudrate = B128000;
-          break;
-        case 256000:
-          newbaudrate = B256000;
-          break;
+//          case 128000:
+//            newbaudrate = B128000;
+//            break;
+//          case 256000:
+//            newbaudrate = B256000;
+//            break;
 #endif /* ACE_USES_HIGH_BAUD_RATES */
         default:
           return -1;
@@ -197,11 +197,11 @@ ACE_TTY_IO::control (Control_Mode cmd,
         case  9600: dcb.BaudRate = CBR_9600; break;
         case  19200: dcb.BaudRate = CBR_19200; break;
         case  38400: dcb.BaudRate = CBR_38400; break;
-        case  56000: dcb.BaudRate = CBR_56000; break;
+//          case  56000: dcb.BaudRate = CBR_56000; break;
         case  57600: dcb.BaudRate = CBR_57600; break;
         case  115200: dcb.BaudRate = CBR_115200; break;
-        case  128000: dcb.BaudRate = CBR_128000; break;
-        case  256000: dcb.BaudRate = CBR_256000; break;
+//          case  128000: dcb.BaudRate = CBR_128000; break;
+//          case  256000: dcb.BaudRate = CBR_256000; break;
         default:  return -1;
         }
 
