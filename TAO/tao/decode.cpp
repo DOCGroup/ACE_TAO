@@ -191,20 +191,16 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
 
   end = temp.rd_ptr ();
 
-  ACE_Message_Block* cdr;
-
   // We need to allocate more memory than in the original
   // stream, first to guarantee that the buffer is aligned in
   // memory and next because the realignment may introduce
   // extra padding. 2*MAX_ALIGNMENT should be enough.
   // @@EXC@@ This doesn't seem to be exception safe.
-  ACE_NEW_RETURN (cdr,
-                  ACE_Message_Block (end - begin
-                                     + 2 * ACE_CDR::MAX_ALIGNMENT),
-                  CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_Message_Block cdr (end - begin + 2 * ACE_CDR::MAX_ALIGNMENT);
+
   // Align the buffer before creating the CDR stream.
-  ACE_CDR::mb_align (cdr);
-  TAO_OutputCDR out (cdr);
+  ACE_CDR::mb_align (&cdr);
+  TAO_OutputCDR out (&cdr);
 
   retval = out.append (elem_tc.in (), stream, env);
   TAO_CHECK_ENV_RETURN (env, retval);
@@ -216,7 +212,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
     DEEP_FREE (any->type_, any->value_, 0, env);
   TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
-  any->cdr_ = cdr;
+  any->cdr_ = ACE_Message_Block::duplicate (out.begin ());
   any->value_ = 0;
   any->type_ = elem_tc._retn ();
   any->any_owns_data_ = 1;
