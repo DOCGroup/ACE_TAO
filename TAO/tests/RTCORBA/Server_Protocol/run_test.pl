@@ -67,10 +67,10 @@ sub client
              ."          (POA Server Protocol set to SHMIOP only): \n");
 
 # UIOP only available on Unix.  Substitute with alternative tests on Windows.
-if ($OSNAME eq "MSWin32")
+if ($^O eq "MSWin32")
 {
     @server_opts =
-        ("-ORBEndpoint -ORBendpoint shmiop:// -ORBendpoint iiop://",
+        ("-ORBendpoint shmiop:// -ORBendpoint iiop://",
          "-ORBsvcconf server_reverse_nt.conf "
          ."-ORBEndpoint shmiop:// -ORBendpoint iiop://",
          "-ORBsvcconf server_shmiop.conf -ORBendpoint shmiop://",
@@ -80,7 +80,7 @@ if ($OSNAME eq "MSWin32")
          ." -p 1413566210");
     $comments[3] =
         "Overriding ORB Default Server Protocol Policy in the POA "
-            ."(POA Server Protocol set to IIOP only): \n",
+            ."(POA Server Protocol set to IIOP only): \n";
 }
 
 
