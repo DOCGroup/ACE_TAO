@@ -50,6 +50,7 @@ FILES = \
   PortableGroup/UIPMC_Connector \
   PortableGroup/UIPMC_Endpoint \
   PortableGroup/UIPMC_Factory \
+  PortableGroup/UIPMC_Message_Block_Data_Iterator \
   PortableGroup/UIPMC_Profile \
   PortableGroup/UIPMC_Transport \
   PortableGroup/UIPMC_Wait_Never \
