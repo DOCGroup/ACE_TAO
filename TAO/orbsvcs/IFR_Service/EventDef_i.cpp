@@ -74,7 +74,7 @@ CORBA_ValueDef_ptr
 TAO_EventDef_i::event (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR_ValueDef::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (CORBA_ValueDef::_nil ());
 
   return this->event_i (ACE_TRY_ENV);
 }
