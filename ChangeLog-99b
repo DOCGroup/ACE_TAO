@@ -1,13 +1,20 @@
+Thu Mar 18 22:21:39 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU: changed
+          ACE_QUOTE to '"', instead of "", on win32 hosts.   "" just
+          evaporates to nothing; we really need one double quote.
+          Thanks to Hans Rohnert for verifying this.
+
 Thu Mar 18 18:49:32 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* ace/SString.i (compare): fixed the function to work properly in
-	case strings have different lenghts.
+        * ace/SString.i (compare): fixed the function to work properly in
+        case strings have different lenghts.
 
-	* ace/SString.cpp: fixed code to gracefully handle failed memory
-	allocations.
+        * ace/SString.cpp: fixed code to gracefully handle failed memory
+        allocations.
 
-	* ace/SString.h: added comments about strings with release=0, not
-	necessarily being null terminated.
+        * ace/SString.h: added comments about strings with release=0, not
+        necessarily being null terminated.
 
 Thu Mar 18 14:31:29 1999  Steve Huston  <shuston@riverace.com>
 
@@ -33,38 +40,38 @@ Thu Mar 18 14:31:29 1999  Steve Huston  <shuston@riverace.com>
 
 Thu Mar 18 14:30:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (timezone): Removed the leading '::' to cope with VC
-	  5.  Thanks to Lan Yaolong <lyaolong@cs.sunysb.edu> for reporting
-	  this.
+        * ace/OS.i (timezone): Removed the leading '::' to cope with VC
+          5.  Thanks to Lan Yaolong <lyaolong@cs.sunysb.edu> for reporting
+          this.
 
 Thu Mar 18 11:53:48 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record):
-	  Changed the argument of the ntohl() call to be a temporary
-	  variable that had the same value as the original argument.
-	  This is need to get around what is apparently a bug in the
-	  egcs-2.91.63 compiler.
+        * netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record):
+          Changed the argument of the ntohl() call to be a temporary
+          variable that had the same value as the original argument.
+          This is need to get around what is apparently a bug in the
+          egcs-2.91.63 compiler.
 
 Wed Mar 17 17:23:43 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* ace/OS.i (timezone): Added support for timezone () on CHORUS
+        * ace/OS.i (timezone): Added support for timezone () on CHORUS
 
 Wed Mar 17 14:06:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acconfig.h: Some characters got removed so I put them back.
+        * acconfig.h: Some characters got removed so I put them back.
 
 Wed Mar 17 13:59:42 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
-	* acconfig.h:
-	  Added autoconf check for rename() system call.
+        * configure.in:
+        * acconfig.h:
+          Added autoconf check for rename() system call.
 
 Wed Mar 17 07:55:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/platform_freebsd_pthread.GNU: Made some
-	  adjustment for building ELF executables which are the default on
-	  FreeBSD 3 and above.  I'll incoporate Russell's LinuxThread
-	  change later.
+        * include/makeinclude/platform_freebsd_pthread.GNU: Made some
+          adjustment for building ELF executables which are the default on
+          FreeBSD 3 and above.  I'll incoporate Russell's LinuxThread
+          change later.
 
 Wed Mar 17 13:36:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
