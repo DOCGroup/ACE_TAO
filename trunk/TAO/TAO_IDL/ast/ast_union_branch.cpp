@@ -62,27 +62,21 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_union_branch.cc - Implementation of class AST_UnionBranch
- *
- * AST_UnionBranch nodes represent a single branch of an IDL union
- * declaration.
- * AST_UnionBranch is a subclass of AST_Field, adding a label (which
- * is a subclass of AST_UnionLabel).
- */
+// AST_UnionBranch nodes represent a single branch of an IDL union
+// declaration.
+// AST_UnionBranch is a subclass of AST_Field, adding a label (which
+// is a subclass of AST_UnionLabel).
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_union_branch, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
-AST_UnionBranch::AST_UnionBranch ()
- : pd_ll (NULL)
+// Constructor(s) and destructor.
+AST_UnionBranch::AST_UnionBranch (void)
+ : pd_ll (0)
 {
 }
 
@@ -90,9 +84,14 @@ AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll,
                                   AST_Type *ft,
 				                          UTL_ScopedName *n, 
                                   UTL_StrList *p)
-: AST_Field (AST_Decl::NT_union_branch, ft, n, p),
-	AST_Decl (AST_Decl::NT_union_branch, n, p),
-	pd_ll (ll)
+  : AST_Field (AST_Decl::NT_union_branch, 
+               ft, 
+               n, 
+               p),
+	  AST_Decl (AST_Decl::NT_union_branch, 
+              n, 
+              p),
+	  pd_ll (ll)
 {
 }
 
@@ -100,38 +99,24 @@ AST_UnionBranch::~AST_UnionBranch (void)
 {
 }
 
-/*
- * Private operations
- */
+// Redefinition of inherited virtual operations.
 
-/*
- * Public operations
- */
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Dump this AST_UnionBranch node to the ostream o
- */
+// Dump this AST_UnionBranch node to the ostream o.
 void
-AST_UnionBranch::dump(ostream &o)
+AST_UnionBranch::dump (ostream &o)
 {
-  for (unsigned long i = 0; 
-       i < this->label_list_length (); ++i)
+  for (unsigned long i = 0; i < this->label_list_length (); ++i)
     {
       o << "case ";
       AST_UnionLabel *ul = this->label (i);
-      ul->dump(o);
+      ul->dump (o);
       o << ": \n";
     }
-  AST_Field::dump(o);
+
+  AST_Field::dump (o);
 }
 
-/*
- * Data accessors
- */
+// Data accessors.
 
 AST_UnionLabel *
 AST_UnionBranch::label (unsigned long index)
@@ -145,8 +130,10 @@ AST_UnionBranch::label (unsigned long index)
         {
           return iter.item ();
         }
+
       ++i;
     }
+
   return 0;
 }
 
@@ -154,11 +141,15 @@ unsigned long
 AST_UnionBranch::label_list_length (void)
 {
   if (this->pd_ll)
-    return this->pd_ll->length ();
+    {
+      return this->pd_ll->length ();
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-// Narrowing
+// Narrowing.
 IMPL_NARROW_METHODS1(AST_UnionBranch, AST_Field)
 IMPL_NARROW_FROM_DECL(AST_UnionBranch)

@@ -62,36 +62,32 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_string.cc - Implementation of class AST_String
- *
- * AST_String nodes represent IDL string declarations.
- * AST_String is a subclass of AST_ConcreteType.
- * AST_String nodes have a maximum size (an AST_Expression which must
- * evaluate to a positive integer).
- */
+// AST_String nodes represent IDL string declarations.
+// AST_String is a subclass of AST_ConcreteType.
+// AST_String nodes have a maximum size (an AST_Expression which must
+// evaluate to a positive integer).
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_string, "$Id$")
-
-/*
- * Constructor(s) and destructor
- */
-AST_String::AST_String ()
+// Constructor(s) and destructor.
+AST_String::AST_String (void)
  : pd_max_size (0), 
-   pd_width (1)
+   pd_width (sizeof (char))
 {
 }
 
 AST_String::AST_String (AST_Expression *ms)
  : AST_Decl (AST_Decl::NT_string,
-		         new UTL_ScopedName (new Identifier ("string", 1, 0, I_FALSE),
-					                       NULL),
-		         NULL),
+		         new UTL_ScopedName (new Identifier ("string", 
+                                                 1, 
+                                                 0, 
+                                                 I_FALSE),
+					                       0),
+		         0),
 	 pd_max_size (ms),
    pd_width (sizeof (char))
 {
@@ -111,10 +107,10 @@ AST_String::AST_String (AST_Expression *ms,
                                                       1,
                                                       0,
                                                       I_FALSE),
-					                        NULL),
-		          NULL),
-    pd_max_size(ms),
-    pd_width(wide)
+					                       0),
+		         0),
+    pd_max_size (ms),
+    pd_width (wide)
 {
 }
 
@@ -122,45 +118,31 @@ AST_String::~AST_String (void)
 {
 }
 
-/*
- * Private operations
- */
+// Redefinition of inherited virtual operations.
 
-/*
- * Public operations
- */
-
-/*
- * Redefinition of inherited virtual operations
- */
-
-/*
- * Dump this AST_String node to the ostream o
- */
+// Dump this AST_String node to the ostream o.
 void
 AST_String::dump(ostream &o)
 {
   o << "string <";
-  pd_max_size->dump(o);
+  this->pd_max_size->dump (o);
   o << ">";
 }
 
-/*
- * Data accessors
- */
+// Data accessors.
 
 AST_Expression *
-AST_String::max_size()
+AST_String::max_size (void)
 {
-  return pd_max_size;
+  return this->pd_max_size;
 }
 
 long
-AST_String::width()
+AST_String::width (void)
 {
-  return pd_width;
+  return this->pd_width;
 }
 
-// Narrowing
+// Narrowing.
 IMPL_NARROW_METHODS1(AST_String, AST_ConcreteType)
 IMPL_NARROW_FROM_DECL(AST_String)

@@ -62,33 +62,29 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-/*
- * ast_root.cc - Implementation of class AST_Root
- *
- * AST_Root nodes represent the roots of ASTs.
- * AST_Root is a subclass of AST_Module, and is defined to allow BEs
- * to subclass it to associate their own information with an entire
- * AST.
- */
+// AST_Root nodes represent the roots of ASTs.
+// AST_Root is a subclass of AST_Module, and is defined to allow BEs
+// to subclass it to associate their own information with an entire
+// AST.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(ast, ast_root, "$Id$")
 
-/*
- * Constructor(s) and destructor
- */
-AST_Root::AST_Root ()
+// Constructor(s) and destructor.
+AST_Root::AST_Root (void)
 {
 }
 
 AST_Root::AST_Root (UTL_ScopedName *n, 
                     UTL_StrList *p)
-	: AST_Decl(AST_Decl::NT_module, n, p),
-	  UTL_Scope(AST_Decl::NT_module)
+	: AST_Decl (AST_Decl::NT_module, 
+              n, 
+              p),
+	  UTL_Scope (AST_Decl::NT_module)
 {
 }
 
@@ -96,78 +92,102 @@ AST_Root::~AST_Root (void)
 {
 }
 
-/*
- * Private operations
- */
+// Add protocol.
 
-/*
- * Public operations
- */
-
-/*
- * Add protocol
- */
-
-/*
- * Add this AST_Sequence to the locally defined types in this scope
- */
+// Add this AST_Sequence to the locally defined types in this scope.
 AST_Sequence *
-AST_Root::fe_add_sequence(AST_Sequence *t)
+AST_Root::fe_add_sequence (AST_Sequence *t)
 {
-  if (t == NULL)
-    return NULL;
-  t->set_name(new UTL_ScopedName(new Identifier("local type", 1, 0, I_FALSE),
-				 NULL));
-  add_to_local_types(t);
+  if (t == 0)
+    {
+      return 0;
+    }
+
+  Identifier *id = 0;
+  ACE_NEW_RETURN (id,
+                  Identifier ("local type", 
+                              1, 
+                              0, 
+                              I_FALSE),
+                  0);
+
+  UTL_ScopedName *sn = 0;
+  ACE_NEW_RETURN (sn,
+                  UTL_ScopedName (id,
+                                  0),
+                  0);
+
+  t->set_name (sn);
+  this->add_to_local_types (t);
   return t;
 }
 
-/*
- * Add this AST_String to the locally defined types in this scope
- */
+// Add this AST_String to the locally defined types in this scope.
 AST_String *
-AST_Root::fe_add_string(AST_String *t)
+AST_Root::fe_add_string (AST_String *t)
 {
-  if (t == NULL)
-    return NULL;
-  t->set_name(new UTL_ScopedName(new Identifier("local type", 1, 0, I_FALSE),
-				 NULL));
-  add_to_local_types(t);
+  if (t == 0)
+    {
+      return 0;
+    }
 
+  Identifier *id = 0;
+  ACE_NEW_RETURN (id,
+                  Identifier ("local type", 
+                              1, 
+                              0, 
+                              I_FALSE),
+                  0);
+
+  UTL_ScopedName *sn = 0;
+  ACE_NEW_RETURN (sn,
+                  UTL_ScopedName (id,
+                                  0),
+                  0);
+
+  t->set_name (sn);
+  this->add_to_local_types (t);
   return t;
 }
 
-/*
- * Add this AST_Array to the locally defined types in this scope
- */
+// Add this AST_Array to the locally defined types in this scope.
 AST_Array *
-AST_Root::fe_add_array(AST_Array *t)
+AST_Root::fe_add_array (AST_Array *t)
 {
-  if (t == NULL)
-    return NULL;
-  t->set_name(new UTL_ScopedName(new Identifier("local type",1,0,I_FALSE),
-				 NULL));
-  add_to_local_types(t);
+  if (t == 0)
+    {
+      return 0;
+    }
 
+  Identifier *id = 0;
+  ACE_NEW_RETURN (id,
+                  Identifier ("local type", 
+                              1, 
+                              0, 
+                              I_FALSE),
+                  0);
+
+  UTL_ScopedName *sn = 0;
+  ACE_NEW_RETURN (sn,
+                  UTL_ScopedName (id,
+                                  0),
+                  0);
+
+  t->set_name (sn);
+  this->add_to_local_types (t);
   return t;
 }
 
-/*
- * Redefinition of inherited virtual operations
- */
+// Redefinition of inherited virtual operations.
 
-/*
- * Dump this AST_Root node to the ostream o
- */
+// Dump this AST_Root node to the ostream o.
 void
-AST_Root::dump(ostream &o)
+AST_Root::dump (ostream &o)
 {
-  UTL_Scope::dump(o);
+  UTL_Scope::dump (o);
 }
 
-/*
- * Narrowing methods
- */
+// Narrowing methods.
 IMPL_NARROW_METHODS1(AST_Root, AST_Module)
 IMPL_NARROW_FROM_DECL(AST_Root)
 IMPL_NARROW_FROM_SCOPE(AST_Root)

@@ -62,53 +62,50 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH
 #define _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH
 
-// Representation of a forward interface declaration
-
-/*
-** DEPENDENCIES: ast_decl.hh, ast_interface.hh, utl_scoped_name.hh,
-**               utl_strlist.hh
-**
-** USE: Included from ast.hh
-*/
+// Representation of a forward interface declaration.
 
 class TAO_IDL_FE_Export AST_InterfaceFwd : public virtual AST_Type
 {
 public:
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_InterfaceFwd ();
+  // Constructor(s).
+  AST_InterfaceFwd (void);
+
   AST_InterfaceFwd (AST_Interface *dummy,
                     UTL_ScopedName *n,
                     UTL_StrList *p);
 
+  // Destructor.
   virtual ~AST_InterfaceFwd (void);
 
-  // Data Accessors
-  AST_Interface *full_definition();
-  void set_full_definition(AST_Interface *nfd);
+  // Data Accessors.
+  AST_Interface *full_definition (void);
 
-  virtual idl_bool is_local ();
-  virtual idl_bool is_valuetype ();
-  virtual idl_bool is_abstract_valuetype ();
-  virtual void set_abstract_valuetype ();
+  void set_full_definition (AST_Interface *nfd);
 
-  // Narrowing
+  virtual idl_bool is_local (void);
+  virtual idl_bool is_valuetype (void);
+  virtual idl_bool is_abstract_valuetype (void);
+  virtual void set_abstract_valuetype (void);
+
+  // Narrowing.
   DEF_NARROW_METHODS1(AST_InterfaceFwd, AST_Type);
   DEF_NARROW_FROM_DECL(AST_InterfaceFwd);
 
-  // AST Dumping
-  virtual void          dump(ostream &);
+  // AST Dumping.
+  virtual void dump(ostream &);
 
 private:
-  // Data
-  AST_Interface         *pd_full_definition;    // The interface this is a
-                                                // forward declaration of
+  // Data.
+
+  AST_Interface *pd_full_definition;
+  // The interface this is a forward declaration of
 };
 
 #endif           // _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH

@@ -62,52 +62,49 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _AST_UNION_LABEL_AST_UNION_LABEL_HH
 #define _AST_UNION_LABEL_AST_UNION_LABEL_HH
 
-// AST_UnionLabel.h
-//
-// Defines labels for unions
-
-/*
-** DEPENDENCIES: ast_expression.hh
-**
-** USE: included from ast.hh
-*/
+// Defines labels for unions.
 
 class TAO_IDL_FE_Export AST_UnionLabel
 {
 public:
-  // Define kind of label
-  enum UnionLabel {
-        UL_default              // Label is "default"
-      , UL_label                // Regular label
-  };
+  // Define kind of label.
+  enum UnionLabel 
+    {
+        UL_default              // Label is "default".
+      , UL_label                // Regular label.
+    };
 
-  // Operations
+  // Operations.
 
-  // Constructor(s)
-  AST_UnionLabel ();
+  // Constructor(s) and destructor.
+  AST_UnionLabel (void);
 
   AST_UnionLabel (UnionLabel lk, 
                   AST_Expression *lv);
 
   virtual ~AST_UnionLabel (void);
 
-  // Data Accessors
-  UnionLabel label_kind();
-  AST_Expression *label_val();
+  // Data Accessors.
+  UnionLabel label_kind (void);
 
-  // AST Dumping
-  virtual void                  dump(ostream &o);
+  AST_Expression *label_val (void);
+
+  // AST Dumping.
+  virtual void dump (ostream &o);
 
 private:
-  // Data
-  UnionLabel                    pd_label_kind;  // Label kind
-  AST_Expression                *pd_label_val;  // Label expression
+  // Data.
 
+  UnionLabel pd_label_kind;
+  // Label kind.
+
+  AST_Expression *pd_label_val;
+  // Label expression.
 };
 
 #endif           // _AST_UNION_LABEL_AST_UNION_LABEL_HH
