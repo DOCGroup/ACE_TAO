@@ -16,7 +16,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-// Forward Declarations
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 class Vault_Client_Request_Interceptor
