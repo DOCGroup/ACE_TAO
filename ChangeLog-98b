@@ -1,3 +1,22 @@
+Wed Sep 16 17:16:51 EDT 1998   James CE Johnson    <jcej@lads.com>
+
+        * docs/tutorials/012/Makefile
+          docs/tutorials/012/data.h
+          docs/tutorials/012/message_queue.cpp
+          docs/tutorials/012/page01.html
+          docs/tutorials/012/page02.html
+          docs/tutorials/012/page03.html
+          docs/tutorials/012/page04.html
+          docs/tutorials/012/page05.html
+          docs/tutorials/012/page06.html
+          docs/tutorials/012/task.cpp
+          docs/tutorials/012/task.h
+          docs/tutorials/index.html
+   
+   	  Tutorial 12.  This corrects some of the nastyness
+   	  in number 11 by specializing the ACE_Message_Block
+   	  to carry around the data.
+
 Wed Sep 16 16:01:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Select_Reactor_T.{h,i,cpp}: Disable inlining in
