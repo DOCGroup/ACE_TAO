@@ -18,6 +18,9 @@ ACE_RCSID (TAO,
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
 
+#include "ace/Service_Repository.h"
+#include "ace/Svc_Conf.h"
+
 void
 TAO_RT_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info
@@ -25,6 +28,30 @@ TAO_RT_ORBInitializer::pre_init (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ENV_ARG_DEFN;
+
+  // Just a convenient way to say the same thing.
+  const ACE_Static_Svc_Descriptor &desc =
+    ace_svc_desc_TAO_RT_Protocols_Hooks;
+
+  ACE_Service_Object_Exterminator gobbler;
+  void *sym = (*desc.alloc_)(&gobbler);
+
+  ACE_Service_Type_Impl *service_type_impl =
+    ace_create_service_type (desc.name_,
+                             desc.type_,
+                             sym,
+                             desc.flags_,
+                             gobbler);
+
+  // @@ Raise exception
+  ACE_Service_Type *service_type;
+  ACE_NEW (service_type,
+           ACE_Service_Type (desc.name_,
+                             service_type_impl,
+                             0,
+                             desc.active_));
+  // @@ Error checking
+  (void) ACE_Service_Repository::instance ()->insert (service_type);
 
   // Sets the name of the Protocol_Hooks to be the RT_Protocols_Hooks.
   TAO_ORB_Core::set_protocols_hooks ("RT_Protocols_Hooks");

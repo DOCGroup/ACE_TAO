@@ -1,3 +1,16 @@
+Tue Feb 20 16:35:27 2001  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/RT_ORBInitializer.cpp:
+	  We must add the RT_Protocols_Hooks service, after the
+	  Service_Configurator is opened.  This is a bit more complicated
+	  than the usual ACE_Service_Config::static_svcs()->insert().
+	  After the beta we need to revisit this code and factor out some
+	  commonalities with ACE_Service_Config::load_static_svcs(), and
+	  probably rethink this portion of the RT-CORBA initialization.
+
+	  This fix should solve the crashes under Sun/CC 4.2 that have
+	  plagued TAO-1.1.12 and our nightly builds too.
+
 Tue Feb 20 16:13:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp (handle_close):  Fixed a problem
