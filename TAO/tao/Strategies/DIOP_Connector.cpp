@@ -70,7 +70,7 @@ TAO_DIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
   this->orb_core (orb_core);
 
-  // @@ Michael: We do not use traditional connection management.
+  // @@ Michael: We do not use regular connection management.
 
   return 0;
 }
@@ -78,8 +78,6 @@ TAO_DIOP_Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO_DIOP_Connector::close (void)
 {
-  // @@ Michael: UDP Addition ------------------------------------
-
   // The list of service handlers cleans itself??
   SvcHandlerIterator iter (svc_handler_table_);
 
@@ -89,9 +87,8 @@ TAO_DIOP_Connector::close (void)
       delete (*iter).int_id_;
       iter++;
     }
-  // -----------------------------------------------------------------
 
-  // @@ Michael: We do not use traditional connection management.
+  // @@ Michael: We do not use regular connection management.
   return 0;
 }
 
@@ -135,8 +132,6 @@ TAO_DIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
 
   TAO_DIOP_Connection_Handler *svc_handler = 0;
 
-  // @@ Michael -- UDP Additions ----------------------------
-
   if (svc_handler_table_.find (remote_address, svc_handler) == -1)
     {
       TAO_DIOP_Connection_Handler *svc_handler_i = 0;
@@ -162,9 +157,7 @@ TAO_DIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
                     svc_handler->get_handle ()));
    }
 
-  // ---------------------------------------------------------
-
-  // @@ Michael: We do not use traditional connection management.
+  // @@ Michael: We do not use regular connection management.
 
   transport = TAO_Transport::_duplicate (svc_handler->transport ());
 

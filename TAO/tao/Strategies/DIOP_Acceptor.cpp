@@ -381,8 +381,7 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   // address.
   ACE_INET_Addr addr;
 
-  // @@ Michael: The following needs to be verified.
-  if (addr.set (ACE_DEFAULT_SERVER_PORT, // old: ACE_static_cast(u_short, 0),
+  if (addr.set (ACE_DEFAULT_SERVER_PORT,
                 ACE_static_cast(ACE_UINT32, INADDR_ANY),
                 1) != 0)
     return -1;
@@ -393,8 +392,6 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 int
 TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
 {
-  // @@ Michael: UDP changes  ---------------
-
   ACE_NEW_RETURN (this->connection_handler_,
                   TAO_DIOP_Connection_Handler (this->orb_core_,
                                                this->lite_flag_,
@@ -410,8 +407,6 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
       this->orb_core_->reactor ()->register_handler (this->connection_handler_,
                                                      ACE_Event_Handler::READ_MASK);
     }
-  // ------------------------------------
-
 
   // Set the port for each addr.  If there is more than one network
   // interface then the endpoint created on each interface will be on

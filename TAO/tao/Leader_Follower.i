@@ -216,11 +216,6 @@ TAO_LF_Client_Leader_Thread_Helper::~TAO_LF_Client_Leader_Thread_Helper (void)
 ACE_INLINE int
 TAO_LF_Event_Loop_Thread_Helper::set_event_loop_thread (ACE_Time_Value *max_wait_time)
 {
-  // @@ Michael:
-  // Does this method need to be in that helper? Shouldn't it's contents be invoked
-  // directly?
-  // Does call_reset_ need to be proteced by the mutex?
-
   int result = this->lf_strategy_.set_event_loop_thread (max_wait_time, leader_follower_);
 
   if (result == 0)
