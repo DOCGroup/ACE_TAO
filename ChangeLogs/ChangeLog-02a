@@ -1,11 +1,15 @@
+Sun Feb 17 16:03:03 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* etc/acexml.doxygen: Fixed the output directory name for ACEXML.
+
 Sun Feb 17 13:07:39 2002  Venkita  <venkita@cs.wustl.edu>
 
         * ACE version 5.2.2 released.
 
 Fri Feb 15 10:50:26 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* ace/Dynamic_Service.h: 
-	  Fixed compile error. Added forward declaration for 
+	* ace/Dynamic_Service.h:
+	  Fixed compile error. Added forward declaration for
 	  ACE_Service_Object.
 
 Thu Feb 14 19:10:04 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
