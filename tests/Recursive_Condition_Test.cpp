@@ -9,7 +9,7 @@
 //    Recursive_Condition_Test.cpp
 //
 // = DESCRIPTION
-//      This test program verifies the functionality of the
+//      This test program validates the functionality of the
 //      ACE_Condition<ACE_Recursive_Thread_Mutex> template
 //      specialization when combined with the
 //      ACE_Thread_Timer_Queue_Adapter on Win32 and Posix pthreads.
@@ -32,12 +32,12 @@ ACE_RCSID(tests, Recursive_Condition_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
-  typedef ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap> Thread_Timer_Queue;
+typedef ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap> Thread_Timer_Queue;
 
 class Test_Handler : public ACE_Event_Handler
 {
 public:
-  Test_Handler () : nr_expirations_ (0) {}
+  Test_Handler (void) : nr_expirations_ (0) {}
   int nr_expirations (void) { return this->nr_expirations_; }
 
   virtual int handle_timeout (const ACE_Time_Value &,
@@ -71,7 +71,8 @@ ACE_SYNCH_RECURSIVE_CONDITION condition_(mutex_);
 // Test driver sets this to non-zero before spawning and to zero for waiter.
 int protected_int = 0;
 
-ACE_THR_FUNC_RETURN waiter (void *)
+static ACE_THR_FUNC_RETURN 
+waiter (void *)
 {
   if (mutex_.acquire () != 0)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
@@ -94,9 +95,8 @@ ACE_THR_FUNC_RETURN waiter (void *)
   return 0;
 }
 
-
-int
-test_1(void)
+static int
+test_1 (void)
 {
   protected_int = 1;
   if (ACE_Thread_Manager::instance()->spawn (waiter) == -1)
@@ -124,8 +124,8 @@ test_1(void)
   return 0;
 }
 
-int
-test_2(void)
+static int
+test_2 (void)
 {
   protected_int = 1;
   if (ACE_Thread_Manager::instance()->spawn (waiter) == -1)
@@ -154,8 +154,8 @@ test_2(void)
   return 0;
 }
 
-int
-test_3()
+static int
+test_3 (void)
 {
   protected_int = 1;
   if (ACE_Thread_Manager::instance()->spawn_n (4, waiter) == -1)
@@ -182,8 +182,8 @@ test_3()
   return 0;
 }
 
-int
-test_4()
+static int
+test_4 (void)
 {
   const int recurse_count = 3;
 
@@ -195,15 +195,11 @@ test_4()
   ACE_OS::sleep (2);
   int i;
   for (i = 0; i < recurse_count; ++i)
-    {
-      if (mutex_.acquire () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("pass %d, %p\n"),
-                             i + 1,
-                             ACE_TEXT ("recursive acquire")),
-                            1);
-        }
-    }
+    if (mutex_.acquire () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("pass %d, %p\n"),
+                         i + 1,
+                         ACE_TEXT ("recursive acquire")),
+                        1);
 
   if (mutex_.get_nesting_level () != i)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("test 4 nesting level %d;"),

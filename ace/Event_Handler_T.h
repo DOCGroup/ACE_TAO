@@ -78,7 +78,7 @@ public:
   typedef int (T::*CL_HANDLER) (ACE_HANDLE, ACE_Reactor_Mask);
 
   /// = Initialization and termination methods.
-  typedef int (T::*SIG_HANDLER) (ACE_HANDLE, siginfo_t*, ucontext_t*);
+  typedef int (T::*SIG_HANDLER) (int, siginfo_t*, ucontext_t*);
 
   /// Initialize the op_handler.
   ACE_Event_Handler_T (T *op_handler,
