@@ -20,6 +20,7 @@ CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
     spawn_delay_ (spawn_delay),
     manager_ (Deployment::NodeApplicationManager::_nil ())
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
   {
     //create the call back poa for NAM.
@@ -74,7 +75,8 @@ CIAO::NodeDaemon_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 void
 CIAO::NodeDaemon_Impl::joinDomain (const Deployment::Domain & ,
                                    Deployment::TargetManager_ptr ,
-                                   Deployment::Logger_ptr)
+                                   Deployment::Logger_ptr
+                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
@@ -90,7 +92,8 @@ CIAO::NodeDaemon_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
 
 
 Deployment::NodeApplicationManager_ptr
-CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan)
+CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
+                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
                    Deployment::PlanError))
@@ -130,7 +133,7 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan)
       if (CORBA::is_nil (this->manager_.in ()))
         {
           ACE_DEBUG ((LM_DEBUG, "NodeDaemon_Impl:preparePlan: NodeApplicationManager ref is nil\n"));
-          ACE_THROW (Deployment::StartError ());
+          ACE_THROW_RETURN (Deployment::StartError (), 0);
         }
     }
 
@@ -149,7 +152,8 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan)
 }
 
 void
-CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr)
+CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
+                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, Deployment::StopError))
 {
   ACE_TRY

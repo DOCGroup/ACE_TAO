@@ -3,9 +3,6 @@
 #include "DomainApplicationManager_Impl.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
-
-#include "CIAO/DAnCE/Config_Handlers/DnC_Dump.h"
-
 #include "NodeManager/NodeDaemonC.h"
 
 #if !defined (__ACE_INLINE__)
@@ -33,6 +30,7 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
     deployment_file_ (CORBA::string_dup (deployment_file)),
     deployment_config_ (orb)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_NEW_THROW_EX (this->all_connections_,
                     Deployment::Connections (),
                     CORBA::NO_MEMORY ());
@@ -90,7 +88,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
           if (CIAO::debug_level () > 1)
             {
               // The dump() function is broken.
-              Deployment::DnC_Dump::dump (artifacts.child_plan_);
+              //Deployment::DnC_Dump::dump (artifacts.child_plan_);
             }
 
           // Call preparePlan() method on the NodeManager with the
@@ -411,7 +409,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
     }
   ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
 }
 
 void
@@ -476,7 +474,7 @@ finishLaunch (::CORBA::Boolean start
     }
   ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
 }
 
 void
@@ -503,7 +501,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
           ::Deployment::NodeApplication_var my_na =
             (entry->int_id_).node_application_.in ();
 
-          my_na->start (ACE_ENV_ARG_PARAMETER);
+          my_na->start ();
           ACE_TRY_CHECK;
         }
     }
@@ -515,7 +513,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
     }
   ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
 }
 
 void
