@@ -149,9 +149,15 @@ files in the correct place.</P>
   <LI>Make sure ACE is built (For Visual C++ 5.0, use ace.dsw or
       ace-vc50.dsw, whichever is in your copy of ACE). <P>
 
-  <LI>Make sure <CODE>ACE_wrappers\bin</CODE> is listed in the Executable
+  <LI>First make sure <CODE>ACE_wrappers\bin</CODE> is listed in the Executable
       Directories in Tools|Options.  This is needed if using the TAO_IDL
-      compiler under MSVC.<P>
+      compiler under MSVC.  If you intend to also use the release version of the
+	  libraries, also add <CODE>ACE_wrappers\bin\Release</CODE> to the directories.
+	  <STRONG>Note:</STRONG> The order that these are listed is important.  If your
+	  main development is with the debug versions, make sure \bin is before 
+	  \bin\Release, otherwise put the \bin\Release first.  Because the output names
+	  for the release and debug versions of TAO_IDL are the same, extra care must be
+	  taken when both versions are generated simulataneously. <P>
 
   <LI>Load the workspace <CODE>tao\TAO.dsw</CODE> and build the TAO
       library. <P>
