@@ -8,7 +8,7 @@
 #include "Method_Request_Updates_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Method_Request_Updates_T, "$id$")
+ACE_RCSID (Notify, TAO_Notify_Method_Request_Updates_T, "$Id$")
 
 template <class SEQ, class PROXY, class SEQ_PARAM, class PROXY_PARAM>
 TAO_Notify_Method_Request_Updates_T<SEQ, PROXY, SEQ_PARAM, PROXY_PARAM>::TAO_Notify_Method_Request_Updates_T (SEQ_PARAM added, SEQ_PARAM removed,

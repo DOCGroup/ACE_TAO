@@ -1,3 +1,50 @@
+Wed Sep  3 20:25:52 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Pseudo_VarOut_T.cpp (operator=):
+
+	  Removed spurious ACE_INLINE declaration.  Fixes a "fuzz" error.
+
+	* orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor_T.i (push):
+
+	  Added missing "ACE_CHECK".
+
+	* orbsvcs/examples/Notify/Lanes/Consumer.cpp:
+	* orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
+	* orbsvcs/examples/Notify/Lanes/ORB_Objects.cpp:
+	* orbsvcs/examples/Notify/Lanes/ORB_Run_Task.cpp:
+	* orbsvcs/examples/Notify/Lanes/Supplier.cpp:
+	* orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+	* orbsvcs/examples/Notify/ThreadPool/Consumer.cpp:
+	* orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
+	* orbsvcs/examples/Notify/ThreadPool/ORB_Objects.cpp:
+	* orbsvcs/examples/Notify/ThreadPool/ORB_Run_Task.cpp:
+	* orbsvcs/examples/Notify/ThreadPool/Supplier.cpp:
+	* orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+	* orbsvcs/orbsvcs/Notify/AdminProperties.cpp:
+	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Method_Request_Event.cpp:
+	* orbsvcs/orbsvcs/Notify/Method_Request_Lookup_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Timer_Queue.cpp:
+	* orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
+	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+	* orbsvcs/tests/Concurrency/lex.CC_command.cpp:
+
+	  Corrected broken "$Id$" RCS ID keywords.  "$id$" -> "$Id$".
+	  Fixes "fuzz" build errors.
+
 Wed Sep  3 17:37:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/RTScheduling/RTScheduler.mpc: Added the above file into the  

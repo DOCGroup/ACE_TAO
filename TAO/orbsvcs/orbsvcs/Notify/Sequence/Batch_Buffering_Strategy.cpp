@@ -7,7 +7,7 @@
 #include "Batch_Buffering_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Batch_Buffering_Strategy, "$id$")
+ACE_RCSID (Notify, TAO_Notify_Batch_Buffering_Strategy, "$Id$")
 
 TAO_Notify_Batch_Buffering_Strategy::TAO_Notify_Batch_Buffering_Strategy (TAO_Notify_Message_Queue& msg_queue, TAO_Notify_AdminProperties_var& admin_properties, CORBA::Long batch_size)
   :TAO_Notify_Buffering_Strategy (msg_queue, admin_properties, batch_size)

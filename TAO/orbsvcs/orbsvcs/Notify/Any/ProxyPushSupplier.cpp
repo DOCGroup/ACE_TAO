@@ -6,7 +6,7 @@
 #include "ProxyPushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_ProxyPushSupplier, "$id$")
+ACE_RCSID (Notify, TAO_Notify_ProxyPushSupplier, "$Id$")
 
 #include "tao/debug.h"
 #include "PushConsumer.h"

@@ -9,7 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/Sched_Params.h"
 
-ACE_RCSID(Notify, TAO_Notify_Lanes_Consumer_Client, "$id$")
+ACE_RCSID (Notify, TAO_Notify_Lanes_Consumer_Client, "$Id$")
 
 TAO_Notify_Lanes_Consumer_Client::TAO_Notify_Lanes_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)

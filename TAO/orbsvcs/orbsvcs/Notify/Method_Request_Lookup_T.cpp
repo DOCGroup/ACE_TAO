@@ -8,7 +8,7 @@
 #include "Method_Request_Lookup_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Method_Request_Lookup_T, "$id$")
+ACE_RCSID (Notify, TAO_Notify_Method_Request_Lookup_T, "$Id$")
 
 template <class EVENT, class PROXY, class EVENT_PARAM, class PROXY_PARAM>
 TAO_Notify_Method_Request_Lookup_T<EVENT, PROXY, EVENT_PARAM, PROXY_PARAM>::TAO_Notify_Method_Request_Lookup_T (EVENT_PARAM event, PROXY_PARAM proxy_consumer)
