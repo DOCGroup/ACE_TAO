@@ -428,7 +428,7 @@ main (int argc, ASYS_TCHAR *argv[])
     }
 
   // Wait a maximum of 1 second per iteration.
-  const ACE_Time_Value max_wait (ACE_Time_Value (n_iterations * 1));
+  const ACE_Time_Value max_wait (n_iterations * 1);
   const ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
   if (ACE_Thread_Manager::instance ()->wait (&wait_time) == -1)
     {
