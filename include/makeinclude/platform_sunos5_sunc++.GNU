@@ -147,6 +147,10 @@ ifeq (0,$(exceptions))
 endif # ! exceptions
 
 LD              = $(CXX)
+ifeq ($(distrib),0)
+  LDFLAGS       += -R $(ACE_ROOT)/ace -R./
+endif
+  LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
 
 ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
         ifeq ($(compat4),1)
