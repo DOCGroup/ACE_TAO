@@ -676,11 +676,14 @@ ACE_OS_String::strtok_r (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T 
 {
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #  if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-    // The XPG4 spec says this is thread-safe. wcstok_r is obsolete.
+    // The XPG4 spec says 2-arg wcstok() is thread-safe. wcstok_r is obsolete.
     *lasts = ::wcstok (s, tokens);
     return *lasts;
 #  else
-    return ::wcstok_r (s, tokens, lasts);
+    // Apparantly, UNIX98 and ISO/ANSI C define this with 3 args.
+    // Still no mention of wcstok_r...
+    // return ::wcstok_r (s, tokens, lasts);
+    return ::wcstok (s, tokens, lasts);
 #  endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 #else
     return ACE_OS_String::strtok_r_emulation (s, tokens, lasts);
