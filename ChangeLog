@@ -1,3 +1,11 @@
+Wed Dec 12 12:38:16 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Accept_Handler.cpp:
+	* ace/SSL/SSL_Connect_Handler.cpp:
+
+	  Added missing "ace/Reactor.h" include.  ACE_Reactor is only
+	  forward declared otherwise.
+
 Wed Dec 12 12:21:11 2001  Vladimir Chovanec  <Vladimir.CHOVANEC@asset.sk>
 
 	* ace/SSL/SSL_Accept_Handler.cpp (handle_input, handle_output):

@@ -3,6 +3,10 @@
 #include "SSL_Accept_Handler.h"
 #include "SSL_SOCK_Stream.h"
 
+#if defined (ACE_WIN32)
+#  include "ace/Reactor.h"
+#endif  /* ACE_WIN32 */
+
 #include <openssl/err.h>
 
 ACE_RCSID (ACE_SSL,
