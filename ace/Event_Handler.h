@@ -95,7 +95,14 @@ public:
   // Called when object is signaled by OS (either via UNIX signals or
   // when a Win32 object becomes signaled).
 
-  // = <ACE_Proactor> callbacks.  These are Win32 specific.  An Event_Handler can be given to a Proactor with a {RECV,SEND}_MASK.  The Proactor calls back <get_message> and <get_handle> to perform the correct operations (send/recv).  When the send/recv is complete, handle_{input,output} is called.  Thus, Event_Handlers are used for "proactive I/O" where they are told WHEN THE OPERATION IS COMPLETE.  Alternatively, the _Reactor_ tells Event_Handlers WHEN THE OPERATION CAN BE PERFORMED.
+  // = <ACE_Proactor> callbacks.  These are Win32 specific.  An
+  // Event_Handler can be given to a Proactor with a {RECV,SEND}_MASK.
+  // The Proactor calls back <get_message> and <get_handle> to perform
+  // the correct operations (send/recv).  When the send/recv is
+  // complete, handle_{input,output} is called.  Thus, Event_Handlers
+  // are used for "proactive I/O" where they are told WHEN THE
+  // OPERATION IS COMPLETE.  Alternatively, the _Reactor_ tells
+  // Event_Handlers WHEN THE OPERATION CAN BE PERFORMED.
 
   virtual int handle_input_complete (ACE_Message_Block *message,
 				     long bytes_transferred);
