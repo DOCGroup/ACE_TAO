@@ -1,3 +1,7 @@
+Fri May 08 22:29:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.cpp (subscribe): CE UNICODE related fix.
+
 Fri May  8 11:57:23 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Map_Manager.cpp: Fixed a bug where we weren't calling
