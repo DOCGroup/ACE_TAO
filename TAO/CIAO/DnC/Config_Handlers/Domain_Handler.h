@@ -111,6 +111,18 @@ namespace CIAO
                                         DOMNodeIterator* iter,
                                         Deployment::Node& domain_node);
 
+      /// Process the attributes for the interconnect
+      void process_attributes_for_ic (DOMNamedNodeMap* named_node_map,
+                                      DOMDocument* doc,
+                                      DOMNodeIterator* iter,
+                                      Deployment::Interconnect& domain_ic);
+
+      /// Process the attributes for the bridge
+      void process_attributes_for_bridge (DOMNamedNodeMap* named_node_map,
+                                          DOMDocument* doc,
+                                          DOMNodeIterator* iter,
+                                          Deployment::Bridge& domain_bridge);
+
       /// process the node attribute
       void process_domain_node (DOMDocument* doc,
                                 DOMNodeIterator* iter,
