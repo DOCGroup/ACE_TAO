@@ -96,6 +96,9 @@ namespace CIAO
     COMP_SVNT *svt = new COMP_SVNT(ciao_comp.in (), this->home_.in (),
                                    this->home_servant_,
                                    this->container_);
+
+    ACE_DEBUG ((LM_DEBUG, "after calling the session context\n"));
+
     if (component_removed_ == 1)
       {
         svt->ciao_preactivate ();

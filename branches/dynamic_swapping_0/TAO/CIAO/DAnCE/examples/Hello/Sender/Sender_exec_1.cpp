@@ -82,6 +82,9 @@ Sender_Impl::Sender_exec_1_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Sender_Impl::Sender_exec_1_i::ccm_activate\n"));
+
+  CORBA::Object_var o =
+    this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void

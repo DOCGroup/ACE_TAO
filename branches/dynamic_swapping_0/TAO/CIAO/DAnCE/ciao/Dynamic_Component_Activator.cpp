@@ -25,6 +25,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest))
   {
+    ACE_DEBUG ((LM_DEBUG, "i am being called to incarnate\n"));
     Dynamic_Component_Servant_Base* servant = 0;
     PortableServer::ObjectId new_oid (oid);
 
