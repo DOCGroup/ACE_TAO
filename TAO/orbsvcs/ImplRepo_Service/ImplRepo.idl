@@ -30,8 +30,8 @@ interface Implementation_Repository
 
   struct INET_Addr
   {
+    string host_;
     unsigned short port_;
-    unsigned long host_;
   };
   // The location of a server
 

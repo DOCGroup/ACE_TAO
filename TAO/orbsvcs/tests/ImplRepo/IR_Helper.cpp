@@ -37,13 +37,11 @@ IR_Helper::IR_Helper (char *server_name,
     ping_ (new Ping_i (debug)),
     implrepo_ (0),
     ir_key_ (0),
+    ir_addr_ (0),
     poa_ (poa),
     orb_ (orb),
     debug_ (debug)
 {
-  // Initialize ir_addr_
-  this->ir_addr_.host_ = 0;
-  this->ir_addr_.port_ = 0;
   
   TAO_TRY
   {
@@ -167,9 +165,11 @@ IR_Helper::notify_startup (CORBA_Environment &_env)
   ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->addr ();
   Implementation_Repository::INET_Addr my_ir_addr;
   my_ir_addr.port_ = my_addr.get_port_number ();
+  my_ir_addr.host_ = CORBA::string_dup (my_addr.get_host_name ());
 
   TAO_TRY 
     {
+      delete this->ir_addr_;
       this->ir_addr_ = this->implrepo_->server_is_running (this->name_, 
                                                            my_ir_addr,
                                                            this->ping_ptr_,

@@ -70,8 +70,8 @@ public:
   virtual CORBA::Object_ptr activate_object (CORBA::Object_ptr obj,
                                              CORBA::Environment &env);
 
-  virtual Implementation_Repository::INET_Addr activate_server (const char * server,
-                                                                CORBA::Environment &env);
+  virtual Implementation_Repository::INET_Addr *activate_server (const char * server,
+                                                                 CORBA::Environment &env);
 
   virtual void register_server (const char * server,
                                 const Implementation_Repository::Process_Options &options,
@@ -85,10 +85,10 @@ public:
                               CORBA::Environment &env);
 
   virtual Implementation_Repository::INET_Addr  
-    server_is_running (const char * server,
-                       const Implementation_Repository::INET_Addr &addr,
-                       CORBA::Object_ptr ping,
-                       CORBA::Environment &env);
+    *server_is_running (const char * server,
+                        const Implementation_Repository::INET_Addr &addr,
+                        CORBA::Object_ptr ping,
+                        CORBA::Environment &env);
 
   virtual void server_is_shutting_down (const char * server,
                                         CORBA::Environment &env);
@@ -101,7 +101,7 @@ public:
   int run (CORBA::Environment& env);
   // Runs the orb.
 
-  CORBA::ULong get_forward_host (const char *server);
+  CORBA::String get_forward_host (const char *server);
   // Returns the host of the server that needs to be forwarded to.
 
   CORBA::UShort get_forward_port (const char *server);
