@@ -1,3 +1,8 @@
+Wed Sep 29 10:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
+          Fixed pre/post includes.
+
 Wed Sep 29 07:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
