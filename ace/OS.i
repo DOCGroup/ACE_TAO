@@ -11674,6 +11674,17 @@ ACE_OS::sigismember (sigset_t *s, int signum)
 }
 
 ACE_INLINE int
+ACE_OS::sigpause (int signum)
+{
+#if defined (ACE_HAS_SIGPAUSE)
+  ACE_OSCALL_RETURN (::sigpause (signum), int, -1);
+#else
+  ACE_UNUSED_ARG (signum);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_SIGPAUSE */
+}
+
+ACE_INLINE int
 ACE_OS::sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)

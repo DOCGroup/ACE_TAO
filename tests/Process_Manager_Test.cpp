@@ -125,8 +125,11 @@ one_child_sig_handler (void *)
               // This method simply "reaps" the exit status of the
               // child without blocking.  Note that it also decrements
               // the count of waiting children by one.
-	      pid_t pid = ACE_Process_Manager::instance ()->wait 
-                (-1, &child_exit_status, WNOHANG);
+	      pid_t pid =
+                ACE_Process_Manager::instance ()->wait 
+                (-1,
+                 &child_exit_status,
+                 WNOHANG);
               // Check to see if there are anymore children to reap.
 	      if (pid == -1) 
 		break;
@@ -438,13 +441,6 @@ one_child_worker_parent (void *)
   return 0;
 }
 
-extern "C" void
-exithook (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) I'm outta here...\n")));
-}
-
 // Parse the command-line arguments and set options.
 
 static void
@@ -489,10 +485,6 @@ main (int argc, ASYS_TCHAR *argv[])
     {
       ACE_APPEND_LOG (ASYS_TEXT ("Process_Manager_Test-children"));
       parse_args (argc, argv);
-
-      // Register an exit hook so that we can tell when the child process
-      // exits.
-      ACE_OS::atexit (exithook);
 
       if (child_test == ACE_TEST_ONE_CHILD)
         run_test (one_child_sig_handler,
