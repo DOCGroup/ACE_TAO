@@ -1,3 +1,18 @@
+Mon Oct 25 10:04:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        
+          Removed some unnecessary dependencies.
+          
+        * orbsvcs/IFR_Service/be_produce.cpp:
+        
+          Uncommented a line that creates a holding scope for
+          struct/union/exception members that must be created
+          before the container scope, then moved in. Thanks to
+          Simon Massey <simon.massey@prismtech.com> for pointing
+          out this oversight, probably a leftover of some long-
+          finished debugging work.
+
 Fri Oct 22 17:43:45 2004  Olli Savia  <ops@iki.fi>
 
         * tests/Param_Test/helper.cpp:
