@@ -761,33 +761,79 @@ ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::dump (void) const
   ACE_Scheduling_Strategy<SVC_HANDLER>::dump ();
 }
 
-template<class ADDR_T> size_t
-ACE_Hash_Addr<ADDR_T>::hash_i (const ADDR_T &b) const
+template <class T>
+ACE_Recyclable<T>::ACE_Recyclable (void)
+  : t_ (T ()),
+    recyclable_ (0)
 {
-  ACE_UNUSED_ARG (b);
-  return 0;
 }
+
+template <class T>
+ACE_Recyclable<T>::ACE_Recyclable (const T &t, int recyclable)
+  : t_ (t),
+    recyclable_ (recyclable)
+{
+}
+
+template <class T>
+ACE_Recyclable<T>::~ACE_Recyclable (void)
+{
+}
+
+template <class T> int
+ACE_Recyclable<T>::operator== (const ACE_Recyclable<T> &rhs) const
+{
+  if (!this->recyclable ())
+    return 0;
+  else
+    return this->t_ == rhs.t_;
+}
+
+template <class T> int
+ACE_Recyclable<T>::recyclable (void) const
+{
+  return this->recyclable_;
+}
+
+template <class T> void
+ACE_Recyclable<T>::recyclable (int new_value)
+{
+  this->recyclable_ = new_value;
+}
+
+template <class T>
+ACE_Hash_Recyclable<T>::ACE_Hash_Recyclable (void)
+  : ACE_Recyclable<T> ()
+{
+}
+
+template <class T>
+ACE_Hash_Recyclable<T>::ACE_Hash_Recyclable (const T &t, int recyclable)
+  : ACE_Recyclable<T> (t, recyclable)
+{
+}
+
+template <class T>
+ACE_Hash_Recyclable<T>::~ACE_Hash_Recyclable (void)
+{
+}
+
+template <class T> u_long
+ACE_Hash_Recyclable<T>::hash (void) const
+{
+  return this->t_.hash ();
+}
+
 
 template<class ADDR_T>
 ACE_Hash_Addr<ADDR_T>::ACE_Hash_Addr (void)
-  : hash_value_ (0),
-    recyclable_ (0)
+  : hash_value_ (0)
 {
 }
 
 template<class ADDR_T>
 ACE_Hash_Addr<ADDR_T>::ACE_Hash_Addr (const ADDR_T &a)
   : hash_value_ (0),
-    recyclable_ (0),
-    addr_ (a)
-{
-  this->hash ();
-}
-
-template<class ADDR_T>
-ACE_Hash_Addr<ADDR_T>::ACE_Hash_Addr (const ADDR_T &a, int recyclable)
-  : hash_value_ (0),
-    recyclable_ (recyclable),
     addr_ (a)
 {
   this->hash ();
@@ -808,25 +854,17 @@ ACE_Hash_Addr<ADDR_T>::hash (void) const
   return this->hash_value_;
 }
 
+template<class ADDR_T> size_t
+ACE_Hash_Addr<ADDR_T>::hash_i (const ADDR_T &b) const
+{
+  ACE_UNUSED_ARG (b);
+  return 0;
+}
+
 template<class ADDR_T> int
 ACE_Hash_Addr<ADDR_T>::operator== (const ACE_Hash_Addr<ADDR_T> &rhs) const
 {
-  if (!this->recyclable ())
-    return 0;
-  else
-    return this->addr_ == rhs.addr_;
-}
-
-template<class ADDR_T> int
-ACE_Hash_Addr<ADDR_T>::recyclable (void) const
-{
-  return this->recyclable_;
-}
-
-template<class ADDR_T> void
-ACE_Hash_Addr<ADDR_T>::recyclable (int new_value)
-{
-  this->recyclable_ = new_value;
+  return this->addr_ == rhs.addr_;
 }
 
 template <class SVC_HANDLER> int

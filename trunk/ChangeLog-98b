@@ -1,3 +1,21 @@
+Wed Jun 10 12:34:25 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T: Added two new template classes: ACE_Recyclable
+ 	  and ACE_Hash_Recyclable. ACE_Recyclable adds a recyclable flag
+ 	  to the class it is instantiated with.  ACE_Hash_Recyclable
+ 	  inherits from ACE_Recyclable and forces the class it is
+ 	  instantiated with to have a hash() method.
+
+	  Also, the Hash_Addr was fixed so that it does not have the
+ 	  recyclable flag anymore, since the Hash_Addr can be used even
+ 	  when there is no recycling.
+
+	  Also updated the ACE_Cached_Connect_Strategy to reflect these
+ 	  changes.
+
+	* tests/Conn_Test.cpp: Fixed the template instantiations in lieu
+ 	  of the changes to Hash_Addr.
+
 Wed Jun 10 11:05:39 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: replaced ACE_wrappers-repository/ with
