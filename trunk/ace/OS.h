@@ -693,6 +693,20 @@ typedef u_int ACE_thread_key_t;
 #     include /**/ <taskLib.h>
 #     include /**/ <taskHookLib.h>
 
+// make sure these are included for VXWORKS.  
+// @todo move these to a common place, perhaps the top of the file.
+#include "ace/os_include/os_fcntl.h"
+#include "ace/os_include/os_netdb.h"
+#include "ace/os_include/os_semaphore.h"
+#include "ace/os_include/os_signal.h"
+#include "ace/os_include/os_stdio.h"
+#include "ace/os_include/os_stdlib.h"
+#include "ace/os_include/os_stropts.h"
+#include "ace/os_include/os_unistd.h"
+#include "ace/os_include/arpa/os_inet.h"
+#include "ace/os_include/sys/select.h"
+#include "ace/os_include/sys/os_socket.h"
+
 // task options:  the other options are either obsolete, internal, or for
 // Fortran or Ada support
 #     define VX_UNBREAKABLE        0x0002  /* breakpoints ignored */
