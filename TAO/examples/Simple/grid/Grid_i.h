@@ -77,7 +77,7 @@ public:
 
   virtual void destroy (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
-                     
+
   // Destroy the grid.
 
 private:
@@ -122,6 +122,9 @@ public:
 private:
   CORBA::ORB_var orb_;
   // ORB pointer.
+
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const Grid_Factory_i &));
+  // Keeping g++2.7.2
 };
 
 #endif /* GRID_I_H */
