@@ -1,3 +1,54 @@
+Tue Nov 25 11:22:22 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_CORBA.idl:
+        * orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl:
+        * orbsvcs/orbsvcs/FT_ReplicationManager.idl:
+          Increase use of PortableGroup definitions to
+          avoid confusion between synonyms (i.e. what's
+          the difference between PortableGroup::Name and
+          FT::Name?)
+
+        * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h:
+        * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.h:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+
+          Code review issues and use PortableGroup names.
+
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+          Code review issues.
+          Remove IOR Manipulator (moved into ObjectGroup)
+          Add comments about parallel data structures.
+          Move object group management code (create_object, add_member, remove_member)
+          to TAO::PG_Object_Group class.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Map.cpp:
+          Object group management code moved into Object_Group
+          and protected with a MUTEX
+
+        * orbsvcs/tests/FT_App/FT_Creator.h:
+        * orbsvcs/tests/FT_App/FT_Creator.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.h:
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+          Fix build issues encountered on solaris & linux.
+
+        * orbsvcs/tests/FT_App/replica.cmd:
+        * orbsvcs/tests/FT_App/run_test_registry.pl:
+          Keep scripts up to date with recent code changes.
+
 Wed Nov 19 14:30:07 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp
           Remove dead code.

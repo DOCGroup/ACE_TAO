@@ -446,7 +446,7 @@ void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault
 // FT_FaultDetectorFactory_i CORBA methods
 
 void TAO::FT_FaultDetectorFactory_i::change_properties (
-    const FT::Properties & property_set
+    const PortableGroup::Properties & property_set
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -500,8 +500,8 @@ void TAO::FT_FaultDetectorFactory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 
 CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
     const char * type_id,
-    const FT::Criteria & the_criteria,
-    FT::GenericFactory::FactoryCreationId_out factory_creation_id
+    const PortableGroup::Criteria & the_criteria,
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -573,7 +573,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 //    missingParameterName = ::FT::FT_DOMAIN_ID;
   }
 
-  FT::Location * object_location = 0;
+  PortableGroup::Location * object_location = 0;
   if (! ::TAO_PG::find (decoder, ::FT::FT_LOCATION, object_location) )
   {
       object_location = & this->location_;
@@ -586,7 +586,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 //    missingParameterName = ::FT::FT_LOCATION;
   }
 
-  FT::TypeId object_type = 0;
+  PortableGroup::TypeId object_type = 0;
   const char * object_type_string;
   if (::TAO_PG::find (decoder, ::FT::FT_TYPE_ID, object_type_string))
   {
@@ -662,7 +662,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 }
 
 void TAO::FT_FaultDetectorFactory_i::delete_object (
-    const FT::GenericFactory::FactoryCreationId & factory_creation_id
+    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((

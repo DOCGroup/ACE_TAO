@@ -37,9 +37,9 @@ TAO::Fault_Detector_i::Fault_Detector_i (
       FT::FaultNotifier_ptr & notifier,
       FT::PullMonitorable_ptr & monitorable,
       FT::FTDomainId domain_id,
-      const FT::Location & object_location,
-      FT::TypeId object_type,
-      FT::ObjectGroupId group_id
+      const PortableGroup::Location & object_location,
+      PortableGroup::TypeId object_type,
+      PortableGroup::ObjectGroupId group_id
       )
   : factory_(factory)
   , id_(id)

@@ -49,22 +49,22 @@ namespace TAO
     int object_is_primary;
 
     /// The location of the fault.
-    FT::Location_var location;
+    PortableGroup::Location_var location;
 
     /// The TypeId of the object that faulted.
-    FT::TypeId_var type_id;
+    PortableGroup::TypeId_var type_id;
 
     /// The ObjectGroupId of the faulted object.
     PortableGroup::ObjectGroupId object_group_id;
 
     /// Other properties of the object group to which the fault relates.
-    FT::MembershipStyleValue membership_style;
+    PortableGroup::MembershipStyleValue membership_style;
     FT::ReplicationStyleValue replication_style;
-    FT::MinimumNumberMembersValue minimum_number_members;
-    FT::InitialNumberMembersValue initial_number_members;
+    PortableGroup::MinimumNumberMembersValue minimum_number_members;
+    PortableGroup::InitialNumberMembersValue initial_number_members;
 
     /// The object group's factories.
-    FT::FactoryInfos_var factories;
+    PortableGroup::FactoryInfos_var factories;
 
   };
 

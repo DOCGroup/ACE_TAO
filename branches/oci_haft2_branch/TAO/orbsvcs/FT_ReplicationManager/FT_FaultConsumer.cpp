@@ -59,9 +59,7 @@ int TAO::FT_FaultConsumer::init (
   ACE_ENV_ARG_DECL)
 {
 
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
   if (TAO_debug_level > 1)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT (
@@ -107,9 +105,7 @@ int TAO::FT_FaultConsumer::init (
     this->consumer_ref_.in(), filter ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
   if (TAO_debug_level > 1)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT (
@@ -129,9 +125,7 @@ int TAO::FT_FaultConsumer::init (
 int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
 
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
   if (TAO_debug_level > 1)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("Enter TAO::FT_FaultConsumer::fini.\n")
@@ -145,9 +139,7 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
     if (!CORBA::is_nil (this->fault_notifier_.in()))
     {
 
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
       if (TAO_debug_level > 1)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT (
@@ -160,9 +152,7 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
         this->consumer_id_ ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
       if (TAO_debug_level > 1)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT (
@@ -188,9 +178,7 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
   ACE_ENDTRY;
   ACE_CHECK_RETURN(1);
 
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
   if (TAO_debug_level > 1)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT (
@@ -201,9 +189,7 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
 
   this->consumer_ref_ = CosNotifyComm::StructuredPushConsumer::_nil ();
 
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
   if (TAO_debug_level > 1)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("Leave TAO::FT_FaultConsumer::fini.\n")
@@ -242,9 +228,7 @@ void TAO::FT_FaultConsumer::push_structured_event (
 {
   // Debugging support.
   this->notifications_ += 1;
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
   if (TAO_debug_level > 1)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT (

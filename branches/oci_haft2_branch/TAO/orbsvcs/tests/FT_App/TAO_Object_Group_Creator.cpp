@@ -34,40 +34,17 @@ TAO::Object_Group_Creator::~Object_Group_Creator ()
 {
 }
 
-int TAO::Object_Group_Creator::set_factory_registry ( const char * factory_ior)
-{
-  int result = 1;
-
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var registry_obj = this->orb_->string_to_object (factory_ior  ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    this->registry_ = PortableGroup::FactoryRegistry::_narrow(registry_obj  ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    if (! CORBA::is_nil (registry_))
-    {
-      result = 0; // success
-    }
-  }
-  ACE_CATCHANY
-  {
-    result = 1;
-  }
-  ACE_ENDTRY;
-  return result;
-}
-
 int TAO::Object_Group_Creator::set_factory_registry (PortableGroup::FactoryRegistry_ptr factory)
 {
-  this->registry_ = factory;
-  return 0;
+  this->registry_ = PortableGroup::FactoryRegistry::_duplicate (factory);
+  return CORBA::is_nil (this->registry_.in()) ? -1 : 0 ;
 }
 
 
-int TAO::Object_Group_Creator::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
+int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
-  int result = 1;
-  this->orb_ = orb;
+  int result = 0;
+  this->orb_ = CORBA::ORB::_duplicate(orb);
 
   if (CORBA::is_nil (this->registry_))
   {
@@ -104,7 +81,7 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
           ACE_ERROR ((LM_ERROR,
             "%T %n (%P|%t) Object_Group_Creator: ReplicationManager failed to return FactoryRegistry.\n"
             ));
-          ACE_THROW (CORBA::NO_IMPLEMENT());
+          ACE_TRY_THROW (CORBA::NO_IMPLEMENT());
         }
       }
       else
@@ -112,7 +89,7 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
         ACE_ERROR ((LM_ERROR,
           "%T %n (%P|%t) Object_Group_Creator: resolve_initial_references for ReplicationManager failed.\n"
           ));
-        ACE_THROW (CORBA::OBJECT_NOT_EXIST());
+        ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST());
       }
     }
     ACE_CATCHANY
@@ -152,15 +129,17 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
 {
   int result = 0;
 
-  CORBA::ULong detector_count = this->detector_infos_->length();
-  for (CORBA::ULong n_detector = 0; result == 0 && n_detector < detector_count; ++n_detector)
+  if (this->have_replication_manager_)
   {
-    PortableGroup::FactoryInfo & info = (*this->detector_infos_)[n_detector];
-    if ( info.the_location == location || n_detector + 1 == detector_count)
+    CORBA::ULong detector_count = this->detector_infos_->length();
+    for (CORBA::ULong n_detector = 0; result == 0 && n_detector < detector_count; ++n_detector)
     {
-      TAO_PG::Properties_Encoder encoder;
+      PortableGroup::FactoryInfo & info = (*this->detector_infos_)[n_detector];
+      if ( info.the_location == location || n_detector + 1 == detector_count)
+      {
+        TAO_PG::Properties_Encoder encoder;
 
-      PortableGroup::Value value;
+        PortableGroup::Value value;
 
 /*
       //////////////////
@@ -171,49 +150,50 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
       encoder.add(::FT::FT_NOTIFIER, value);
 */
 
-      FT::PullMonitorable_ptr monitorable = FT::PullMonitorable::_narrow (replica);
-      value <<= monitorable;
-      encoder.add (::FT::FT_MONITORABLE, value);
+        FT::PullMonitorable_ptr monitorable = FT::PullMonitorable::_narrow (replica);
+        value <<= monitorable;
+        encoder.add (::FT::FT_MONITORABLE, value);
 
-      FT::FTDomainId domain_id = 0;
-      value <<= domain_id;
-      encoder.add (::FT::FT_DOMAIN_ID, value);
+        FT::FTDomainId domain_id = 0;
+        value <<= domain_id;
+        encoder.add (::FT::FT_DOMAIN_ID, value);
 
-      value <<= location;
-      encoder.add (::FT::FT_LOCATION, value);
+        value <<= location;
+        encoder.add (::FT::FT_LOCATION, value);
 
-      value <<= type_id;
-      encoder.add (::FT::FT_TYPE_ID, value);
+        value <<= type_id;
+        encoder.add (::FT::FT_TYPE_ID, value);
 
-      value <<= group_id;
-      encoder.add (::FT::FT_GROUP_ID, value);
+        value <<= group_id;
+        encoder.add (::FT::FT_GROUP_ID, value);
 
-      value <<= CORBA::string_dup (role);
-      encoder.add (PortableGroup::role_criterion, value);
+        value <<= CORBA::string_dup (role);
+        encoder.add (PortableGroup::role_criterion, value);
 
-      // allocate and populate the criteria
-      FT::Criteria_var criteria;
-      ACE_NEW_NORETURN (criteria,
-        FT::Criteria);
-      if (criteria.ptr() == 0)
-      {
-        ACE_ERROR((LM_ERROR,
-          "%T %n (%P|%t)Object_Group_Creater: Error cannot allocate criteria.\n"
-          ));
-          result = -1;
-      }
-      else
-      {
-        encoder.encode(criteria);
-        FT::GenericFactory::FactoryCreationId_var factory_creation_id;
+        // allocate and populate the criteria
+        FT::Criteria_var criteria;
+        ACE_NEW_NORETURN (criteria,
+          FT::Criteria);
+        if (criteria.ptr() == 0)
+        {
+          ACE_ERROR((LM_ERROR,
+            "%T %n (%P|%t)Object_Group_Creater: Error cannot allocate criteria.\n"
+            ));
+            result = -1;
+        }
+        else
+        {
+          encoder.encode(criteria);
+          FT::GenericFactory::FactoryCreationId_var factory_creation_id;
 
-        info.the_factory->create_object (
-          type_id,
-          criteria.in(),
-          factory_creation_id
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-        result = 1;
+          info.the_factory->create_object (
+            type_id,
+            criteria.in(),
+            factory_creation_id
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          result = 1;
+        }
       }
     }
   }
@@ -286,7 +266,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group(
       CORBA::Object_var created_obj = info.the_factory->create_object (
         type_id.in(),
         info.the_criteria,
-        factory_creation_id
+        factory_creation_id.out()
         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil());
       if ( !CORBA::is_nil(created_obj) )
@@ -354,11 +334,14 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group(
           }
         }
 
-        group = this->replication_manager_->add_member (group,
-                          info.the_location,
-                          created_obj
-                          ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (CORBA::Object::_nil());
+        if (this->have_replication_manager_)
+        {
+          group = this->replication_manager_->add_member (group,
+                            info.the_location,
+                            created_obj
+                            ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (CORBA::Object::_nil());
+        }
       }
       else
       {
@@ -368,7 +351,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group(
       }
     }
 
-    if (first_location != 0)
+    if (first_location != 0 && this->have_replication_manager_)
     {
       group = this->replication_manager_->set_primary_member (group.in(), * first_location ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil());

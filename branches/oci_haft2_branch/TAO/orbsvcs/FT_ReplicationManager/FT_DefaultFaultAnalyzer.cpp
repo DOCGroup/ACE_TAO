@@ -14,6 +14,7 @@
 #include "FT_DefaultFaultAnalyzer.h"
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/FT_NotifierC.h"
+#include "orbsvcs/FT_FaultDetectorFactoryC.h"
 #include "orbsvcs/FT_ReplicationManagerC.h"
 #include "orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h"
 #include <tao/debug.h>
@@ -58,21 +59,23 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
 
   if (result == 0)
   {
-    //TODO: Get rid of magic strings (though they come from the spec).
-    if (ACE_OS::strcmp (domain_name.in(), "FT_CORBA") != 0 ||
-        ACE_OS::strcmp (type_name.in(), "ObjectCrashFault") != 0)
+    if (ACE_OS::strcmp (domain_name.in(), FT::FT_EVENT_TYPE_DOMAIN) != 0 ||
+        ACE_OS::strcmp (type_name.in(), FT::FT_EVENT_TYPE_NAME) != 0)
     {
-      ACE_ERROR ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_DefaultFaultAnalyzer::validate_event_type: "
-          "Received invalid event type.\n"
-          "EventType domain: <%s>\n"
-          "EventType type: <%s>\n"
-          "EventName: <%s>\n"),
-        domain_name.in(),
-        type_name.in(),
-        event_name.in()
-      ));
+      if (TAO_debug_level > 6)
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT (
+            "TAO::FT_DefaultFaultAnalyzer::validate_event_type: "
+            "Received invalid event type.\n"
+            "EventType domain: <%s>\n"
+            "EventType type: <%s>\n"
+            "EventName: <%s>\n"),
+          domain_name.in(),
+          type_name.in(),
+          event_name.in()
+        ));
+      }
       result = -1;
     }
   }
@@ -97,39 +100,48 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
     {
       // Check for FTDomainId.
       if (ACE_OS::strcmp (
-            event.filterable_data[0].name.in(), "FTDomainId") != 0)
+            event.filterable_data[0].name.in(), FT::FT_DOMAIN_ID) != 0)
       {
-        ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO::FT_DefaultFaultAnalyzer::validate_event_type: "
-            "Received invalid structured event.\n"
-            "filterable_data[0] must be \"FTDomainId\", not \"%s\"\n"),
-          event.filterable_data[0].name.in()
-        ));
+        if (TAO_debug_level > 6)
+        {
+          ACE_ERROR ((LM_ERROR,
+            ACE_TEXT (
+              "TAO::FT_DefaultFaultAnalyzer::validate_event_type: "
+              "Received invalid structured event.\n"
+              "filterable_data[0] must be \"FTDomainId\", not \"%s\"\n"),
+            event.filterable_data[0].name.in()
+          ));
+        }
         result = -1;
       }
       else if (ACE_OS::strcmp (
-            event.filterable_data[1].name.in(), "Location") != 0)
+            event.filterable_data[1].name.in(), FT::FT_LOCATION) != 0)
       {
-        ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO::FT_DefaultFaultAnalyzer::validate_event_type: "
-            "Received invalid structured event.\n"
-            "filterable_data[1] must be \"Location\", not \"%s\"\n"),
-          event.filterable_data[1].name.in()
-        ));
+        if (TAO_debug_level > 6)
+        {
+          ACE_ERROR ((LM_ERROR,
+            ACE_TEXT (
+              "TAO::FT_DefaultFaultAnalyzer::validate_event_type: "
+              "Received invalid structured event.\n"
+              "filterable_data[1] must be \"Location\", not \"%s\"\n"),
+            event.filterable_data[1].name.in()
+          ));
+        }
         result = -1;
       }
     }
     else
     {
-      ACE_ERROR ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_DefaultFaultAnalyzer::validate_event_type: "
-          "Received invalid structured event.\n"
-          "There must be at least two name/value pairs in "
-          "the filterable_data field, for \"FTDomainId\" and \"Location\".\n")
-      ));
+      if (TAO_debug_level > 6)
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT (
+            "TAO::FT_DefaultFaultAnalyzer::validate_event_type: "
+            "Received invalid structured event.\n"
+            "There must be at least two name/value pairs in "
+            "the filterable_data field, for \"FTDomainId\" and \"Location\".\n")
+        ));
+      }
       result = -1;
     }
   }
@@ -141,9 +153,7 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
 int TAO::FT_DefaultFaultAnalyzer::analyze_fault_event (
   const CosNotification::StructuredEvent & event)
 {
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
   if (TAO_debug_level > 6)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
   {
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT (

@@ -38,7 +38,7 @@ namespace FTAPP
     // initialization
     int parse_args (int argc, char *argv[]);
 
-    int init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL);
+    int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
     ////////////
     // execution
@@ -66,7 +66,6 @@ namespace FTAPP
     TAO::Object_Group_Creator creator_;
     CORBA::ORB_var orb_;
     const char * registry_ior_;
-    PortableGroup::FactoryRegistry_var registry_;
     StringVec create_roles_;
     StringVec unregister_roles_;
 

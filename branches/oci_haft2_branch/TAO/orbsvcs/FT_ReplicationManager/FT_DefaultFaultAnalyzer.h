@@ -36,7 +36,7 @@ namespace TAO
   *
   */
   class TAO_ReplicationManagerLib_Export FT_DefaultFaultAnalyzer
-    : public TAO::FT_FaultAnalyzer
+    : public ::TAO::FT_FaultAnalyzer
   {
 
   public:

@@ -158,7 +158,7 @@ namespace TAO
     ///////////////////////////////////////////////
     // CORBA interface FaultDetectorFactory methods
     virtual void change_properties (
-        const FT::Properties & property_set
+        const PortableGroup::Properties & property_set
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -175,8 +175,8 @@ namespace TAO
     // CORBA interface GenericFactory methods
     virtual CORBA::Object_ptr create_object (
       const char * type_id,
-      const FT::Criteria & the_criteria,
-      FT::GenericFactory::FactoryCreationId_out factory_creation_id
+      const PortableGroup::Criteria & the_criteria,
+      PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -189,7 +189,7 @@ namespace TAO
     ));
 
     virtual void delete_object (
-      const FT::GenericFactory::FactoryCreationId & factory_creation_id
+      const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((

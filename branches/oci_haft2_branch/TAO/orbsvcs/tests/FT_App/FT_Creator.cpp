@@ -21,16 +21,13 @@
 
 
 FTAPP::FT_Creator::FT_Creator ()
-  : orb_ (0)
-  , registry_ior_ (0)
-  , registry_ (0)
-  , naming_context_ ()
+  : registry_ior_ (0)
   , replication_manager_ (0)
   , have_replication_manager_ (0)
   , write_iors_ (0)
   , write_iogr_ (0)
-  , ns_register_ (1)
   , iogr_seq_ (0)
+  , ns_register_ (1)
   , prefix_ ("")
 {
 }
@@ -132,22 +129,32 @@ void FTAPP::FT_Creator::usage(ostream & out)const
 
 
 
-int FTAPP::FT_Creator::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
+int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
-  int result = 1;
-  this->orb_ = orb;
+  int result = 0;
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // if a factory IOR was specified on command line
   if ( this->registry_ior_ != 0)
   {
-    result = this->creator_.set_factory_registry(this->registry_ior_  ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var registry_obj = this->orb_->string_to_object (this->registry_ior_  ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+    PortableGroup::FactoryRegistry_var registry = PortableGroup::FactoryRegistry::_narrow(registry_obj  ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+    if (! CORBA::is_nil (registry))
+    {
+      result = this->creator_.set_factory_registry(registry.in());
+    }
+  }
+
+  if (result == 0)
+  {
+    result = this->creator_.init (orb ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
   }
 
-  result = this->creator_.init (orb ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
 
-  if (this->ns_register_)
+  if (result == 0 && this->ns_register_)
   {
     CORBA::Object_var naming_obj =
       this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
@@ -183,7 +190,7 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
 
     if (this->write_iogr_)
     {
-      CORBA::String_var iogr = this->orb_->object_to_string (group.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var iogr = this->orb_->object_to_string (group ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (1);
 
       char iogr_filename[1000];
@@ -227,9 +234,9 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
   }
 
   typeCount = this->unregister_roles_.size();
-  for ( size_t nUnreg = 0; result == 0 && nUnreg < typeCount; ++nUnreg)
+  for ( nType = 0; result == 0 && nType < typeCount; ++nType)
   {
-    const char * role = this->unregister_roles_[nUnreg].c_str();
+    const char * role = this->unregister_roles_[nType].c_str();
     result = this->creator_.unregister_role (role);
   }
 
@@ -277,7 +284,7 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Vector<ACE_CString>;
+  template ACE_Vector<ACE_CString>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate ACE_Vector<ACE_CString>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

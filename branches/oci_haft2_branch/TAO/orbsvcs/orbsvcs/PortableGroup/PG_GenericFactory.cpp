@@ -18,11 +18,10 @@ TAO_PG_GenericFactory::TAO_PG_GenericFactory (
   TAO_PG_ObjectGroupManager & object_group_manager,
   TAO_PG_PropertyManager & property_manager)
   : poa_ (),
-//    next_group_id_(0),
     object_group_manager_ (object_group_manager),
     property_manager_ (property_manager),
     factory_map_ (TAO_PG_MAX_OBJECT_GROUPS),
-    next_fcid_ (0),
+//    next_fcid_ (0),
     lock_ ()
 {
   this->object_group_manager_.generic_factory (this);
