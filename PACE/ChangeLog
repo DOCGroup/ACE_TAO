@@ -1,3 +1,15 @@
+Mon Jun  5 17:04:36 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
+
+	* [inl,c]
+
+	  Commited files to the repository in pace/linux
+
+	* aio, dirent, fcntl, grp, in, inet, mman, mqueue,
+	  netdb, pthread, pwd, sched, semaphore, setjmp,
+	  signal, socket, stat, stdio, stdlib, string,
+	  strings, termios, time, times, unistd, utime,
+	  utsname, wait
+
 Mon Jun  5 16:47:32 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* [inl,c]
