@@ -131,9 +131,6 @@ TAO_UIOP_Client_Transport::start_request (TAO_ORB_Core *orb_core,
   const TAO_UIOP_Profile* profile =
     ACE_dynamic_cast(const TAO_UIOP_Profile*, pfile);
 
-  // Obtain object key.
-  const TAO_ObjectKey& key = profile->object_key ();
-
   // @@ This should be implemented in the transport object, which
   //    would query the profile to obtain the version...
   if (TAO_GIOP::start_message (profile->version (),
