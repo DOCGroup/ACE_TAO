@@ -59,10 +59,10 @@ TAO_ORB_Core::TAO_ORB_Core (void)
 #endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
     preconnections_ (0),
     default_environment_ (0),
-    tss_environment_ (this)
+    tss_environment_ (this),
+    policy_current_ (&this->initial_policy_current_)
 {
 }
-
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
 {

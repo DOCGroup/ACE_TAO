@@ -84,12 +84,10 @@ TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs \
 	-I$(TAO_ROOT) $(TSS_ORB_FLAG)
+TAO_IDLFLAGS +=  -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 realclean: clean
 	-/bin/rm -rf *C.* *S.* *S_T.*
-
-$(IDL_SRC): Quoter.idl
-	$(TAO_ROOT)/TAO_IDL/tao_idl Quoter.idl -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 .PRECIOUS: $(IDL_SRC)
 

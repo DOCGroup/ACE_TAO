@@ -24,10 +24,9 @@
 #include "tao/Environment.h"
 #include "tao/IIOP_Connector.h"
 #include "tao/IIOP_Acceptor.h"
-#include "tao/POAC.h"
 #include "tao/POA.h"
-#include "tao/POAManager.h"
-#include "tao/Object_Adapter.h"
+
+#include "tao/Policy_Manager.h"
 
 #include "tao/params.h"
 
@@ -301,7 +300,26 @@ public:
   // usually created on the stack, but, the spec allows their creation
   // on the heap and/or as class members; we need to investigate the
   // tradeoffs and take a decision.
-  //
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+  TAO_Policy_Manager *policy_manager (void);
+  // Return the Policy_Manager for this ORB.
+
+  TAO_Policy_Current *policy_current (void) const;
+  void policy_current (TAO_Policy_Current *);
+  // Accesors to the policy current, this object should be kept in TSS 
+  // storage.
+  // The POA has to reset the policy current object on every upcall.
+
+  CORBA::Policy_ptr get_default_policy (
+      CORBA::PolicyType policy,
+      CORBA::Environment &ACE_TRY_ENV =
+        CORBA::default_environment ());
+  // Accesor to obtain the default policy for a particular policy
+  // type.
+  // If there is no default policy it returns CORBA::Policy::_nil ()
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 protected:
   int set_endpoint (int dotted_decimal_addresses,
@@ -415,6 +433,22 @@ protected:
   CORBA_Environment tss_environment_;
   // If the user (or library) provides no environment the ORB_Core
   // still holds one.
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+  TAO_Policy_Manager policy_manager_;
+  // The Policy_Manager for this ORB.
+
+  TAO_Policy_Current initial_policy_current_;
+  // The initial PolicyCurrent for this thread. Should be a TSS
+  // resource.
+
+  TAO_Policy_Current* policy_current_;
+  // This pointer is reset by the POA on each upcall.
+
+  TAO_Policy_Manager_Impl default_policies_;
+  // The default policies.
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
 };
 
 class TAO_Default_Reactor : public ACE_Reactor

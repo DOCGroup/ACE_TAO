@@ -149,6 +149,35 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
   return this->resource_factory ()->create_input_cdr_data_block (size);
 }
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+ACE_INLINE TAO_Policy_Manager*
+TAO_ORB_Core::policy_manager (void)
+{
+  return &this->policy_manager_;
+}
+
+ACE_INLINE TAO_Policy_Current*
+TAO_ORB_Core::policy_current (void) const
+{
+  return this->policy_current_;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::policy_current (TAO_Policy_Current* current)
+{
+  this->policy_current_ = current;
+}
+
+ACE_INLINE CORBA::Policy_ptr
+TAO_ORB_Core::get_default_policy (
+      CORBA::PolicyType policy,
+      CORBA::Environment &ACE_TRY_ENV)
+{
+  return this->default_policies_.get_policy (policy, ACE_TRY_ENV);
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
 // ****************************************************************
 
 ACE_INLINE void
