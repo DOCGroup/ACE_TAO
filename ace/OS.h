@@ -3111,10 +3111,7 @@ private:
 #if defined (ACE_MT_SAFE) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   static int netdb_acquire (void);
   static int netdb_release (void);
-
-  static int netdb_mutex_inited_;
-  static ACE_mutex_t netdb_mutex_;
-#endif /* defined (ACE_MT_SAFE) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
+#endif /* defined (ACE_MT_SAFE) && ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 };
 
 // A useful abstraction for expressions involving operator new since
