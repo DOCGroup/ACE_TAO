@@ -1,3 +1,8 @@
+Tue Dec  2 07:56:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/ESF/ESF_Worker.h:
+          Added include ace/os_include/os_stddef.h to get size_t.
+
 Mon Dec  1 12:20:11 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
