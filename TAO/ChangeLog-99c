@@ -1,5 +1,9 @@
 Thu Jan 28 18:04:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tao/TAO.dsp: 
+	* tao/TAO_Static.dsp: 
+	  Added the new files to the NT projects.
+
 	* tao/Makefile: 
 	  Minor cosmetic changes.
 
