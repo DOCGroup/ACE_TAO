@@ -98,7 +98,7 @@ run Thread_Pool_Test                    # uses Thread_Manager, Task
 run Future_Test                         # uses Thread_Manager, Task
 run Reactors_Test                       # uses Task, Mutex, Reactor
 run Reactor_Exceptions_Test             # uses Reactor and C++ exceptions
-test $chorus || run Reactor_Notify_Test # uses Reactor's notify() method, Task
+run Reactor_Notify_Test                 # uses Reactor's notify() method, Task
 run Reactor_Timer_Test                  # uses Event_Handler, Reactor
 test $chorus || test $LynxOS || run Reactor_Performance_Test # uses Event_Handler, Reactor
 run Notify_Performance_Test             # uses Event_Handler, Reactor
