@@ -78,7 +78,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
 
       //  set the sub state as generating code for the output operator
       this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
-      *os << "CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
+      *os << "inline CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
           << "const " << node->name () << "_forany &_tao_array)" << be_nl
           << "{" << be_idt_nl;
 
@@ -95,7 +95,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
       //  set the sub state as generating code for the input operator
       os->indent ();
       this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-      *os << "CORBA::Boolean operator>> (TAO_InputCDR &strm, "
+      *os << "inline CORBA::Boolean operator>> (TAO_InputCDR &strm, "
           << node->name () << "_forany &_tao_array)" << be_nl
           << "{" << be_idt_nl;
       if (bt->accept (this) == -1)

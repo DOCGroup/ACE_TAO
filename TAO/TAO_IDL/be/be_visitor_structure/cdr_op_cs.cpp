@@ -52,7 +52,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 
   //  set the sub state as generating code for the output operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
-  *os << "CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
+  *os << "inline CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
       << "const " << node->name () << " &_tao_aggregate)" << be_nl
       << "{" << be_idt_nl
       << "if (" << be_idt_nl;
@@ -74,7 +74,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 
   // set the substate as generating code for the input operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "CORBA::Boolean operator>> (TAO_InputCDR &strm, "
+  *os << "inline CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << " &_tao_aggregate)" << be_nl
       << "{" << be_idt_nl
       << "if (" << be_idt_nl;
