@@ -49,6 +49,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Caching_Utility_T.h"
 #include "ace/Cached_Connect_Strategy_T.h"
+#include "ace/Handle_Gobbler.h"
 
 #if defined(_MSC_VER)
 #pragma warning(disable:4503)
@@ -182,10 +183,19 @@ enum Caching_Strategy_Type
 
 // Default number of clients/servers.
 static int listen_once = 1;
-static int iterations = 2000;
 static int user_has_specified_iterations = 0;
+static size_t keep_handles_available = 100;
 static double purge_percentage = 20;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
+static CACHED_CONNECT_STRATEGY *connect_strategy = 0;
+
+// On Win32, the handle gobbling doesn't work.  Therefore, we need
+// more iterations to get to the handle limit.
+#if defined (ACE_WIN32)
+static int iterations = 2000;
+#else
+static int iterations = 500;
+#endif /* ACE_WIN32 */
 
 //====================================================================
 
@@ -252,10 +262,6 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
   // Stop the event loop.
   int result = ACE_Reactor::instance ()->end_event_loop ();
   ACE_ASSERT (result != 1);
-
-  // Note: The base class method isnt called since it closes the
-  // svc_handler on error which we want to avoid as we are trying to
-  // accept after purging.
 
   // Try to find out if the implementation of the reactor that we are
   // using requires us to reset the event association for the newly
@@ -478,7 +484,7 @@ test_caching_strategy_type (void)
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "l:i:p:c:d");
+  ACE_Get_Opt get_opt (argc, argv, "l:i:p:c:a:d");
 
   int cc;
 
@@ -511,6 +517,9 @@ parse_args (int argc, char *argv[])
         if (ACE_OS::strcmp (get_opt.optarg, "fifo") == 0)
           caching_strategy_type = ACE_FIFO;
         break;
+      case 'a':
+        keep_handles_available = atoi (get_opt.optarg);
+        break;
       case '?':
       case 'h':
       default:
@@ -521,7 +530,8 @@ parse_args (int argc, char *argv[])
                     ASYS_TEXT ("[-i (iterations)] ")
                     ASYS_TEXT ("[-l (listen once)] ")
                     ASYS_TEXT ("[-d (addition debugging output)] ")
-                    ASYS_TEXT ("[-p (purge percent)] "),
+                    ASYS_TEXT ("[-p (purge percent)] ")
+                    ASYS_TEXT ("[-a (keep handles available)] "),
                     argv[0]));
         return -1;
       }
@@ -551,6 +561,20 @@ main (int argc,
 
   // Remove the extra debugging attributes from Log_Msg output.
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
+
+  // The reactor's constructor changes the handle limit for the
+  // process.
+  ACE_Reactor::instance ();
+
+  // Consume all handles in the process, leaving us
+  // <keep_handles_available> to play with.
+  ACE_Handle_Gobbler handle_gobbler;
+  result = handle_gobbler.consume_handles (keep_handles_available);
+  ACE_ASSERT (result == 0);
+
+#if defined ACE_HAS_BROKEN_EXTENDED_TEMPLATES
+  caching_strategy_type = ACE_LRU;
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
   // Do we need to test all the strategies.  Note, that the less
   // useful null strategy is ignored in this case.
@@ -598,6 +622,11 @@ main (int argc,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+// = Consume handles
+template class ACE_Node<ACE_HANDLE>;
+template class ACE_Unbounded_Set<ACE_HANDLE>;
+template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
+
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
 template class ACE_NOOP_Creation_Strategy<Client_Svc_Handler>;
@@ -608,13 +637,6 @@ template class ACE_Creation_Strategy<Client_Svc_Handler>;
 template class ACE_Hash_Map_Entry<ADDR, Client_Svc_Handler *>;
 template class ACE_Hash<ADDR>;
 template class ACE_Equal_To<ADDR>;
-template class ACE_Hash_Map_Manager<ADDR, Client_Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator<ADDR, Client_Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<ADDR, Client_Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
@@ -693,7 +715,6 @@ template class ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX>;
 template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 #pragma instantiate ACE_NOOP_Creation_Strategy<Client_Svc_Handler>
@@ -704,13 +725,6 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 #pragma instantiate ACE_Hash_Map_Entry<ADDR, Client_Svc_Handler *>
 #pragma instantiate ACE_Hash<ADDR>
 #pragma instantiate ACE_Equal_To<ADDR>
-#pragma instantiate ACE_Hash_Map_Manager<ADDR, Client_Svc_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<ADDR, Client_Svc_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ADDR, Client_Svc_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, Client_Svc_Handler *, H_KEY, C_KEYS, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *>
 #pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
@@ -757,6 +771,11 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 #pragma instantiate ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 
 #if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+
+// = Consume handles
+#pragma instantiate ACE_Node<ACE_HANDLE>
+#pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
 
 #pragma instantiate ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 #pragma instantiate ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>

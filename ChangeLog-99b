@@ -1,3 +1,21 @@
+Thu Jul 22 02:15:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Handle_Gobbler (class ACE_Handle_Gobbler): New class that
+	  gobbles up handles :) This class is useful when we need to
+	  control the number of handles available for a process.  Mostly
+	  used for testing purposes.
+
+	  Note that even though the new files are in the ace directory,
+	  they are not part of the ace library.  The files only contain
+	  inline functions and Handle_Gobbler.h is only included where
+	  needed.
+
+	* tests/Cached_Conn_Test.cpp:
+	* tests/Cached_Accept_Conn_Test.cpp:
+
+	  Added Handle_Gobbler to the test to reduce the iterations
+	  required before handles run out and purging starts.
+
 Wed Jul 21 21:45:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Reactor.cpp: Applied ACE_NOTREACHED to several
