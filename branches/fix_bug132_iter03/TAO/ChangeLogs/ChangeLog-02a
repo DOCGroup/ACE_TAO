@@ -1,3 +1,16 @@
+Mon Apr 09 00:41:20 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Invocation.cpp:
+          The default scope should be SYNC_WITH_TRANSPORT, but was
+          overriden and became SYNC_NONE.
+
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Fixed conditions to terminate the loop.
+
+        * tao/Transport.cpp:
+          Initialize byte_count to zero before calling send(), add more
+          ACE_ASSERT() calls to debug the system.
+
 Sat Apr  7 21:13:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.cpp:
