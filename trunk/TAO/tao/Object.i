@@ -43,7 +43,28 @@ CORBA_Object::_duplicate (CORBA_Object_ptr obj)
   return obj;
 }
 
+// ************************************************************
+// These are in CORBA namespace
 
+ACE_INLINE void
+CORBA::release (CORBA_Object_ptr obj)
+{
+  if (obj)
+    obj->_remove_ref ();
+}
+
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA_Object_ptr obj)
+{
+  if (obj == 0)
+    {
+      return 1;
+    }
+
+  return CORBA_Object::is_nil_i (obj);
+}
+
+// ************************************************************
 
 // Null pointers represent nil objects.
 
@@ -54,7 +75,7 @@ CORBA_Object::_nil (void)
 }
 
 ACE_INLINE CORBA_Object_ptr
-CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
+CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment &)
 {
   if (CORBA::is_nil (obj))
     return CORBA::Object::_nil ();
@@ -70,7 +91,7 @@ CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
 }
 
 ACE_INLINE CORBA_Object_ptr
-CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment&ACE_TRY_ENV)
+CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment &ACE_TRY_ENV)
 {
   return CORBA_Object::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -80,23 +101,6 @@ CORBA_Object::_stubobj (void) const
 {
   return this->protocol_proxy_;
 }
-
-
-// ************************************************************
-// These are in CORBA namespace
-
-ACE_INLINE void
-CORBA::release (CORBA_Object_ptr obj)
-{
-  if (obj)
-    obj->_remove_ref ();
-}
-
-// DII hook to objref
-//
-// The mapping for create_request is split into two forms,
-// corresponding to the two usage styles described in CORBA section
-// 6.2.1.
 
 // *************************************************************
 // Inline operations for class CORBA_Object_var
