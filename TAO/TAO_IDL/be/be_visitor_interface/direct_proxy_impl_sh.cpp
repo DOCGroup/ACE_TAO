@@ -42,7 +42,8 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
 
   if (node->n_inherits () > 0)
     {
-      for (int i = 0; i < node->n_inherits (); i++)
+      *os << ":";
+      for (int i = 0; i < node->n_inherits (); ++i)
         {
           be_interface *inherited =
             be_interface::narrow_from_decl (node->inherits ()[i]);
@@ -50,7 +51,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
           *os << "public virtual ::";
           *os << inherited->full_direct_proxy_impl_name ();
 
-          if (i < node->n_inherits () - 1)
+	  if (i < (node->n_inherits () - 1))
             {
               *os << ", ";
             }
