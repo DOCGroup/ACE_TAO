@@ -396,7 +396,7 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (be_predefined_type *no
 
       if (node->pt () == AST_PredefinedType::PT_pseudo)
         *os << "result = strm >> _tao_union."
-            << f->local_name () << " ().out ();";
+            << f->local_name () << " ();";
       else if (node->pt () == AST_PredefinedType::PT_char)
         *os << "CORBA::Char _tao_union_tmp;" << be_nl
             << "CORBA::Any::to_char _tao_union_helper "
@@ -441,7 +441,7 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (be_predefined_type *no
 
       *os << "result = ";
       if (node->pt () == AST_PredefinedType::PT_pseudo)
-        *os << "strm << _tao_union." << f->local_name () << " ().in ();";
+        *os << "strm << _tao_union." << f->local_name () << " ();";
       else if (node->pt () == AST_PredefinedType::PT_char)
         *os << "strm << CORBA::Any::from_char (_tao_union."
 	    << f->local_name () << " ());";
