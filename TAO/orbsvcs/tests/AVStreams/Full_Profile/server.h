@@ -5,6 +5,7 @@
 #include "tao/TAO.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/Flows_T.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Transport.h"
 #include "orbsvcs/AV/sfp.h"
@@ -16,7 +17,8 @@ class FTP_Server_Callback
 {
 public:
   virtual int handle_stop (void);
-  virtual int receive_frame (ACE_Message_Block *frame);
+  virtual int receive_frame (ACE_Message_Block *frame,
+                             TAO_AV_frame_info *);
   virtual int handle_end_stream (void);
 };
 
@@ -29,20 +31,21 @@ public:
                     TAO_AV_Callback *&callback);
 };
 
-class FTP_Server_FDev
-  :public TAO_FDev
-{
-public:
-  FTP_Server_FDev (void);
-  virtual AVStreams::FlowConsumer_ptr make_consumer (AVStreams::FlowConnection_ptr the_requester,
-                                                       AVStreams::QoS & the_qos,
-                                                       CORBA::Boolean_out met_qos,
-                                                       char *& named_fdev,
-                                                       CORBA::Environment &env = CORBA::Environment::default_environment ());
-  // bridge method for the application to override the consumer object
-  // creation. Default implementation creates a TAO_FlowConsumer.
+typedef TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint> FTP_Server_FDev;
+// class FTP_Server_FDev
+//   :public TAO_FDev
+// {
+// public:
+//   FTP_Server_FDev (void);
+//   virtual AVStreams::FlowConsumer_ptr make_consumer (AVStreams::FlowConnection_ptr the_requester,
+//                                                        AVStreams::QoS & the_qos,
+//                                                        CORBA::Boolean_out met_qos,
+//                                                        char *& named_fdev,
+//                                                        CORBA::Environment &env = CORBA::Environment::default_environment ());
+//   // bridge method for the application to override the consumer object
+//   // creation. Default implementation creates a TAO_FlowConsumer.
 
-};
+// };
 
 class Server
 {

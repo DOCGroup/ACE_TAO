@@ -2,99 +2,193 @@
 
 #include "ftp.h"
 
-FTP_Client_Callback::FTP_Client_Callback (FTP_Client_Flow_Handler *handler)
-  :handler_ (handler)
+// FTP_Client_Callback::FTP_Client_Callback (FTP_Client_Flow_Handler *handler)
+//   :handler_ (handler)
+// {
+// }
+
+// int
+// FTP_Client_Callback::handle_start (void)
+// {
+//   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::handle_start"));
+//   return this->handler_->start ();
+// }
+
+// int
+// FTP_Client_Callback::handle_stop (void)
+// {
+//   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::handle_stop"));
+//   return this->handler_->stop ();
+// }
+
+
+// FTP_Client_Flow_Handler::FTP_Client_Flow_Handler (TAO_ORB_Manager *orb_manager,
+//                                                   ACE_Time_Value &timeout)
+//   :TAO_FlowProducer ("Data",CLIENT::instance ()->protocols (),CLIENT::instance ()->format ()),
+//    orb_manager_ (orb_manager),
+//    count_ (0),
+//    timeout_ (timeout)
+// {
+// }
+
+// int
+// FTP_Client_Flow_Handler::get_callback (const char *flowname,
+//                                        TAO_AV_Callback *&callback)
+// {
+//   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Flow_Handler::get_callback\n"));
+//   ACE_NEW_RETURN (callback,
+//                   FTP_Client_Callback (this),
+//                   -1);
+//   return 0;
+// }
+
+// int
+// FTP_Client_Flow_Handler::start (void)
+// {
+//   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Flow_Handler::start"));
+//   ACE_Time_Value delta = ACE_Time_Value::zero;
+//   this->timer_id_ =  
+//     TAO_AV_CORE::instance ()->reactor ()->schedule_timer (this,
+//                                                           0,
+//                                                           delta,
+//                                                           this->timeout_);
+//   return 0;
+// }
+
+// int
+// FTP_Client_Flow_Handler::stop (void)
+// {
+//   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Flow_Handler::stop"));
+//   int result = TAO_AV_CORE::instance ()->reactor ()->cancel_timer (this->timer_id_);
+//   if (result < 0)
+//     ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::stop cancel timer failed\n"),-1);
+//   return 0;
+// }
+
+// int
+// FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
+//                                          const void *arg)
+// {
+//   ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::handle_timeout"));
+//   ACE_Message_Block mb (BUFSIZ);
+//   char *buf = mb.rd_ptr ();
+//   cerr << "message block size" << mb.size () << endl;
+//   int n = ACE_OS::fread(buf,1,mb.size (),CLIENT::instance ()->file ());
+//   if (n < 0)
+//     {
+//       TAO_AV_CORE::instance ()->reactor ()->cancel_timer (this->timer_id_);
+//       ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread end of file\n"),-1);
+//     }
+//   if (n == 0)
+//     {
+//       if (::feof (CLIENT::instance ()->file ()))
+//         {
+//           // wait for sometime for the data to be flushed to the other side.
+//           this->count_++;
+//           if (this->count_ == 2)
+//             {
+//               ACE_DECLARE_NEW_CORBA_ENV;
+//               ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
+//               AVStreams::flowSpec stop_spec (1);
+// //               stop_spec.length (1);
+// //               stop_spec [0] = CORBA::string_dup (CLIENT::instance ()->flowname ());
+//               CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
+//               ACE_CHECK_RETURN (-1);
+//               return 0;
+//             }
+//           else
+//             return 0;
+//         }
+//       else
+//         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread error\n"),-1);
+//     }
+//   cerr << "read bytes = " << n << endl;
+//   mb.wr_ptr (n);
+//   int result = this->protocol_object_->send_frame (&mb);
+//   if (result < 0)
+//     ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send \n"),-1);
+//   ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent succesfully\n"));
+// }
+
+//------------------------------------------------------------
+// FTP_Client_FDev
+//------------------------------------------------------------
+
+// FTP_Client_FDev::FTP_Client_FDev (TAO_ORB_Manager *orb_manager)
+//   :TAO_FDev (CORBA::string_dup ("Data")),
+//    orb_manager_ (orb_manager)
+// {
+// }
+
+// AVStreams::FlowProducer_ptr
+// FTP_Client_FDev::make_producer (AVStreams::FlowConnection_ptr the_requester,
+//                                 AVStreams::QoS & the_qos,
+//                                 CORBA::Boolean_out met_qos,
+//                                 char *& named_fdev,
+//                                 CORBA::Environment &ACE_TRY_ENV)
+// {
+//   ACE_DEBUG ((LM_DEBUG,"FTP_Client_FDev::make_producer\n"));
+//   FTP_Client_Flow_Handler *handler;
+//   ACE_Time_Value timeout (2);
+//   ACE_NEW_RETURN (handler,
+//                   FTP_Client_Flow_Handler (this->orb_manager_,
+//                                            timeout),
+//                   0);
+//   AVStreams::FlowProducer_ptr producer = handler->_this (ACE_TRY_ENV);
+//   ACE_CHECK_RETURN (0);
+//   return producer;
+// }
+
+FTP_Client_Callback::FTP_Client_Callback (void)
+  //  :handler_ (handler),
+  :count_ (0)
 {
 }
 
 int
-FTP_Client_Callback::handle_start (void)
+FTP_Client_Callback::handle_end_stream (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::handle_start"));
-  return this->handler_->start ();
-}
-
-int
-FTP_Client_Callback::handle_stop (void)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::handle_stop"));
-  return this->handler_->stop ();
-}
-
-
-FTP_Client_Flow_Handler::FTP_Client_Flow_Handler (TAO_ORB_Manager *orb_manager,
-                                                  ACE_Time_Value &timeout)
-  :TAO_FlowProducer ("Data",CLIENT::instance ()->protocols (),CLIENT::instance ()->format ()),
-   orb_manager_ (orb_manager),
-   count_ (0),
-   timeout_ (timeout)
-{
-}
-
-int
-FTP_Client_Flow_Handler::get_callback (const char *flowname,
-                                       TAO_AV_Callback *&callback)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_Flow_Handler::get_callback\n"));
-  ACE_NEW_RETURN (callback,
-                  FTP_Client_Callback (this),
-                  -1);
+  TAO_AV_CORE::instance ()->stop_run ();
   return 0;
 }
 
-int
-FTP_Client_Flow_Handler::start (void)
+void
+FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
+                                  void *&arg)
 {
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_Flow_Handler::start"));
-  ACE_Time_Value delta = ACE_Time_Value::zero;
-  this->timer_id_ =  
-    TAO_AV_CORE::instance ()->reactor ()->schedule_timer (this,
-                                                          0,
-                                                          delta,
-                                                          this->timeout_);
-  return 0;
+  ACE_Time_Value *timeout;
+  ACE_NEW (timeout,
+           ACE_Time_Value(2));
+  tv = timeout;
 }
 
 int
-FTP_Client_Flow_Handler::stop (void)
+FTP_Client_Callback::handle_timeout (void *arg)
 {
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_Flow_Handler::stop"));
-  int result = TAO_AV_CORE::instance ()->reactor ()->cancel_timer (this->timer_id_);
-  if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::stop cancel timer failed\n"),-1);
-  return 0;
-}
-
-int
-FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                         const void *arg)
-{
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_StreamEndPoint::handle_timeout"));
   ACE_Message_Block mb (BUFSIZ);
+  ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::get_frame"));
   char *buf = mb.rd_ptr ();
   cerr << "message block size" << mb.size () << endl;
   int n = ACE_OS::fread(buf,1,mb.size (),CLIENT::instance ()->file ());
   if (n < 0)
     {
-      TAO_AV_CORE::instance ()->reactor ()->cancel_timer (this->timer_id_);
       ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread end of file\n"),-1);
     }
   if (n == 0)
     {
-      if (::feof (CLIENT::instance ()->file ()))
+      if (feof (CLIENT::instance ()->file ()))
         {
           // wait for sometime for the data to be flushed to the other side.
           this->count_++;
           if (this->count_ == 2)
             {
-              ACE_DECLARE_NEW_CORBA_ENV;
               ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
               AVStreams::flowSpec stop_spec (1);
-//               stop_spec.length (1);
-//               stop_spec [0] = CORBA::string_dup (CLIENT::instance ()->flowname ());
+              ACE_DECLARE_NEW_CORBA_ENV;
               CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
               ACE_CHECK_RETURN (-1);
-              return 0;
+              CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
+              TAO_AV_CORE::instance ()->stop_run ();
             }
           else
             return 0;
@@ -108,41 +202,36 @@ FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send \n"),-1);
   ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent succesfully\n"));
+  return 0;
 }
 
-//------------------------------------------------------------
-// FTP_Client_FDev
-//------------------------------------------------------------
-
-FTP_Client_FDev::FTP_Client_FDev (TAO_ORB_Manager *orb_manager)
-  :TAO_FDev (CORBA::string_dup ("Data")),
-   orb_manager_ (orb_manager)
+FTP_Client_Producer::FTP_Client_Producer (void)
+  :TAO_FlowProducer ("Data",CLIENT::instance ()->protocols (),CLIENT::instance ()->format ())
 {
 }
-
-AVStreams::FlowProducer_ptr
-FTP_Client_FDev::make_producer (AVStreams::FlowConnection_ptr the_requester,
-                                AVStreams::QoS & the_qos,
-                                CORBA::Boolean_out met_qos,
-                                char *& named_fdev,
-                                CORBA::Environment &ACE_TRY_ENV)
+  
+int
+FTP_Client_Producer::set_protocol_object (const char *flowname,
+                                          TAO_AV_Protocol_Object *object)
 {
-  ACE_DEBUG ((LM_DEBUG,"FTP_Client_FDev::make_producer\n"));
-  FTP_Client_Flow_Handler *handler;
-  ACE_Time_Value timeout (2);
-  ACE_NEW_RETURN (handler,
-                  FTP_Client_Flow_Handler (this->orb_manager_,
-                                           timeout),
-                  0);
-  AVStreams::FlowProducer_ptr producer = handler->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  return producer;
+  this->callback_->set_protocol_object (object);
+  return 0;
+}
+
+int
+FTP_Client_Producer::get_callback (const char *flowname,
+                                   TAO_AV_Callback *&callback)
+{
+   ACE_NEW_RETURN (this->callback_,
+                   FTP_Client_Callback,
+                   -1);
+   callback = this->callback_;
 }
 
 Client::parse_args (int argc,
                     char **argv)
 {
-  ACE_Get_Opt opts (argc,argv,"f:a:p:s");
+  ACE_Get_Opt opts (argc,argv,"f:a:p:sd");
   
   this->use_sfp_ = 0;
   char c;
@@ -162,6 +251,9 @@ Client::parse_args (int argc,
         case 's':
           this->use_sfp_ = 1;
           break;
+	case 'd':
+	  TAO_debug_level++;
+	  break;
         default:
           ACE_DEBUG ((LM_DEBUG,"Unknown option\n"));
           return -1;
@@ -297,9 +389,16 @@ Client::init (int argc,char **argv)
       this->orb_manager_->activate_poa_manager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       ACE_NEW_RETURN (this->fdev_,
-                      FTP_Client_FDev (this->orb_manager_),
+                      //                      FTP_Client_FDev (this->orb_manager_),
+                      FTP_Client_FDev,
                       -1);
 
+      ACE_NEW_RETURN (this->flowname_,
+                      char [BUFSIZ],
+                      0);
+      ACE_OS::sprintf (this->flowname_,
+                       "Data");
+      this->fdev_->flowname (this->flowname ());
       AVStreams::MMDevice_var mmdevice = this->client_mmdevice_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       AVStreams::FDev_var fdev = this->fdev_->_this (ACE_TRY_ENV);
@@ -347,12 +446,6 @@ Client::run (void)
       // Bind the client and server mmdevices.
 
       ACE_INET_Addr addr (this->address_);
-      ACE_NEW_RETURN (this->flowname_,
-                      char [BUFSIZ],
-                      0);
-      ACE_OS::sprintf (this->flowname_,
-                       "Data",
-                       this->protocol_);
       TAO_Forward_FlowSpec_Entry entry (this->flowname_,
                                         "IN",
                                         "USER_DEFINED",

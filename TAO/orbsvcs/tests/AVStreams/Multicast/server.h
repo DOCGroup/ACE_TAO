@@ -26,7 +26,8 @@ class FTP_Server_Callback
 {
 public:
   virtual int handle_stop (void);
-  virtual int receive_frame (ACE_Message_Block *frame);
+  virtual int receive_frame (ACE_Message_Block *frame,
+                             TAO_AV_frame_info *);
   virtual int handle_end_stream (void);
 };
 
