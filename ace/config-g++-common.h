@@ -30,10 +30,10 @@
 
 # endif /* __GNUC__ >= 2.90 */
 
-# if __GNUC__ == 2 && __GNUC_MINOR__ != 91
-#   // egcs 2.91 apparently has a bug with this . . .
+# if __GNUC__ == 2  &&  __GNUC_MINOR__ != 9  &&  __GNUC_MINOR__ != 91
+#   // g++ 2.9 and egcs 2.91 apparently have a bug with this . . .
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
-# endif /* __GNUC__ != 2.91 */
+# endif /* __GNUC__ != 2.9  &&  __GNUC__ != 2.91*/
 
   // Some versions of egcs, e.g., egcs-2.90.27 980315 (egcs-1.0.2 release),
   // have bugs with static data members in template classes.
