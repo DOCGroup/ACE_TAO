@@ -1,3 +1,10 @@
+Thu Oct 30 13:50:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/DynamicInterface/DII_Invocation.cpp:
+	* TAO_IDL/ast/ast_string.cpp: 
+
+	  Fixed warnings with g++ 2.95.3.
+
 Thu Oct 30 11:47:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/Bug_1559/Client_ORBInitializer.h:
