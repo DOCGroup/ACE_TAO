@@ -154,6 +154,8 @@ Dispatch_Count_Handler::Dispatch_Count_Handler (void)
 
   ACE_Reactor *r = ACE_Reactor::instance ();
 
+  this->input_seen_ = this->notify_seen_ = this->timers_fired_ = 0;
+
   // Initialize the pipe.
   if (this->pipe_.open () == -1)
     ACE_ERROR ((LM_ERROR,
@@ -207,6 +209,9 @@ Dispatch_Count_Handler::handle_input (ACE_HANDLE h)
 {
   char c;
 
+  ACE_ASSERT (this->input_seen_ == 0);
+  this->input_seen_ = 1;
+
   if (ACE::recv (h, &c, 1) != 1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
@@ -225,6 +230,9 @@ Dispatch_Count_Handler::handle_exception (ACE_HANDLE h)
 {
   ACE_UNUSED_ARG (h);
 
+  ACE_ASSERT (this->notify_seen_ == 0);
+  this->notify_seen_ = 1;
+
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("%T (%t): handle_exception\n")));
   return 0;
@@ -236,6 +244,8 @@ Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
 {
   ACE_UNUSED_ARG (tv);
 
+  ++this->timers_fired_;
+
   long value = ACE_reinterpret_cast (long, arg);
 
   // This case just tests to make sure the Reactor is counting timer
@@ -246,12 +256,26 @@ Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
   return 0;
 }
 
+
+int
+Dispatch_Count_Handler::verify_results (void)
+{
+
+  ACE_ASSERT (this->input_seen_ == 1);
+  ACE_ASSERT (this->notify_seen_ == 1);
+  ACE_ASSERT (this->timers_fired_ == ACE_MAX_TIMERS);
+  return 0;
+
+}
+
+
 int
 main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("MT_Reactor_Timer_Test"));
 
   int status = 0;
+  int test_result = 0;
 
   ACE_Reactor *r = ACE_Reactor::instance ();
 
@@ -275,6 +299,12 @@ main (int, ASYS_TCHAR *[])
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("expected %d events, got %d instead\n"),
                 ACE_MAX_TIMERS + 2, result));
     ACE_ASSERT (result == ACE_MAX_TIMERS + 2);
+  }
+
+  status = callback.verify_results ();
+  if (status != 0) {
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Dispatch counting test failed.\n")));
+    test_result = 1;
   }
 
 #if defined (ACE_HAS_THREADS)
@@ -301,11 +331,14 @@ main (int, ASYS_TCHAR *[])
     }
 
   status = other_thread.verify_results ();
+  if (status != 0)
+    test_result = 1;
+
 #else
   ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
-  return status;
+  return test_result;
 }
