@@ -5,6 +5,13 @@ Mon May 11 07:57:47 1998  David L. Levine  <levine@cs.wustl.edu>
           Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for
           reporting this.
 
+        * IIOP/test/Makefile, IIOP/tests/Cubit/TAO/Makefile,
+          orbsvcs/tests/Trading_Service/Makefile, tests/CDR/Makefile,
+          tests/Cubit/CORBAplus/MT_Cubit/{client,server}/Makefile,
+          tests/Cubit/TAO/{DII,MT}_Cubit/Makefile,
+          tests/POA/Generic_Servant/Makefile, tests/Param_Test/Makefile,
+          tests/Thruput/CORBAplus/Makefile: removed Log from clean target.
+
 Sat May 09 12:01:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile: removed Log from clean target,
