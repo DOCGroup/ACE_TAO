@@ -271,7 +271,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 {
   ACE_Thread_Adapter *thread_args = 0;
 #if !defined (ACE_NO_THREAD_ADAPTER)
-  ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args, ace_thread_manager_adapter), -1);
+  ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args, (ACE_THR_C_FUNC) ace_thread_manager_adapter), -1);
 #endif /* ACE_NO_THREAD_ADAPTER */
 
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
@@ -292,7 +292,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 				  priority,
 				  stack,
 				  stack_size,
-				  thread_adapter);
+				  thread_args);
   if (result != 0)
     {
       // _Don't_ clobber errno here!  result is either 0 or -1, and
