@@ -10216,7 +10216,8 @@ ACE_INLINE DIR *
 ACE_OS::opendir (const char *filename)
 {
 #if defined (ACE_HAS_DIRENT)
-  return ::opendir (filename);
+  // VxWorks' ::opendir () is declared with a non-const argument.
+  return ::opendir (ACE_const_cast (char *, filename));
 #else
   ACE_UNUSED_ARG (filename);
   ACE_NOTSUP_RETURN (0);
@@ -10249,51 +10250,55 @@ ACE_OS::readdir_r (DIR *dirp,
                    struct dirent *entry,
                    struct dirent **result)
 {
-#if defined (ACE_HAS_DIRENT)
-#if defined (ACE_HAS_PTHREADS_STD)
-  return ::readdir_r (dirp, entry, result);
-#else  /* ! ACE_HAS_PTHREADS_STD */
-  // <result> had better not be 0!
-  *result = ::readdir_r (dirp, entry);
-  return 0;
-#endif /* ! ACE_HAS_PTHREADS_STD */
-#else
+#if defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_READDIR_R)
+# if defined (ACE_HAS_PTHREADS_STD)
+    return ::readdir_r (dirp, entry, result);
+# else  /* ! ACE_HAS_PTHREADS_STD */
+    // <result> had better not be 0!
+    *result = ::readdir_r (dirp, entry);
+    return 0;
+# endif /* ! ACE_HAS_PTHREADS_STD */
+#else  /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_READDIR_R */
   ACE_UNUSED_ARG (dirp);
   ACE_UNUSED_ARG (entry);
   ACE_UNUSED_ARG (result);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_DIRENT */
+#endif /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_READDIR_R */
 }
 
 ACE_INLINE long
 ACE_OS::telldir (DIR *d)
 {
-#if defined (ACE_HAS_DIRENT)
+#if defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_TELLDIR)
   return ::telldir (d);
-#else
+#else  /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_TELLDIR */
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_DIRENT */
+#endif /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_TELLDIR */
 }
 
 ACE_INLINE void
 ACE_OS::seekdir (DIR *d, long loc)
 {
-#if defined (ACE_HAS_DIRENT)
+#if defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_SEEKDIR)
   ::seekdir (d, loc);
-#else
+#else  /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_SEEKDIR */
   ACE_UNUSED_ARG (d);
   ACE_UNUSED_ARG (loc);
-#endif /* ACE_HAS_DIRENT */
+#endif /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_SEEKDIR */
 }
 
 ACE_INLINE void
 ACE_OS::rewinddir (DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
-  // We need to implement <rewinddir> using <seekdir> since it's often
-  // defined as a macro...
-  ::seekdir (d, long (0));
+# if defined (ACE_LACKS_SEEKDIR)
+   ::rewinddir (d);
+# else  /* ! ACE_LACKS_SEEKDIR */
+    // We need to implement <rewinddir> using <seekdir> since it's often
+    // defined as a macro...
+   ::seekdir (d, long (0));
+# endif /* ! ACE_LACKS_SEEKDIR */
 #else
   ACE_UNUSED_ARG (d);
 #endif /* ACE_HAS_DIRENT */
