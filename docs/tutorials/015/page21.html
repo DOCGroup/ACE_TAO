@@ -45,7 +45,8 @@ int <font color=#008888>Crypt::send</font>(ACE_Message_Block *message, ACE_Time_
 
         <font color=red>// I suspect that some encryptors might change the data size.</font>
         <font color=red>// It probably isn't safe to create a same-size destination buffer.</font>
-    ACE_Message_Block * encrypted = new ACE_Message_Block( message->size() );
+    ACE_Message_Block * encrypted = new ACE_Message_Block(
+        message->size() +16 );
 
         <font color=red>// Perform a bogus encryption algorithm and add our safety</font>
         <font color=red>// signature.  Adding the original data size is also probably</font>
@@ -73,7 +74,8 @@ int <font color=#008888>Crypt::recv</font>(ACE_Message_Block *message, ACE_Time_
 
         <font color=red>// Create a destination for the decrypted data.  The same</font>
         <font color=red>// block size caveat exists of course.</font>
-    ACE_Message_Block * decrypted = new ACE_Message_Block( message->size() );
+    ACE_Message_Block * decrypted = new ACE_Message_Block(
+        message->size() +16 );
 
         <font color=red>// Check the signature as expected.</font>
     if( <font color=#008888>ACE_OS::strncmp</font>( message->rd_ptr(), "<font color=green>ED:</font>", 3  ) )

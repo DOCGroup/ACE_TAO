@@ -31,7 +31,8 @@ int Compressor::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
         // Create a block to hold the compressed data.  I belive libz
         // recommends a buffer about 10-20% larger than the source.
         // Other libraries/algorithms may have their own quirks.
-    ACE_Message_Block * compressed = new ACE_Message_Block( message->size() );
+    ACE_Message_Block * compressed = new ACE_Message_Block(
+        message->size() +16 );
 
         // Perform a bogus compression algorithm.  'CD' just tells me
         // that this is compressed data and when we "decompress" we'll
@@ -66,7 +67,8 @@ int Compressor::recv(ACE_Message_Block *message, ACE_Time_Value *timeout)
         // possible decompression size but it's cheap and easy just to
         // send that along.  Look again at how I do exacly that
         // between Xmit and Recv.
-    ACE_Message_Block * decompressed = new ACE_Message_Block( message->size() );
+    ACE_Message_Block * decompressed = new ACE_Message_Block(
+        message->size() + 16 );
 
         // Check for our signature.  Even when you use a real
         // compression algorithm you may want to include your own

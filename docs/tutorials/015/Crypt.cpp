@@ -25,7 +25,8 @@ int Crypt::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
 
         // I suspect that some encryptors might change the data size.
         // It probably isn't safe to create a same-size destination buffer.
-    ACE_Message_Block * encrypted = new ACE_Message_Block( message->size() );
+    ACE_Message_Block * encrypted = new ACE_Message_Block(
+        message->size() +16 );
 
         // Perform a bogus encryption algorithm and add our safety
         // signature.  Adding the original data size is also probably
@@ -53,7 +54,8 @@ int Crypt::recv(ACE_Message_Block *message, ACE_Time_Value *timeout)
 
         // Create a destination for the decrypted data.  The same
         // block size caveat exists of course.
-    ACE_Message_Block * decrypted = new ACE_Message_Block( message->size() );
+    ACE_Message_Block * decrypted = new ACE_Message_Block(
+        message->size() +16 );
 
         // Check the signature as expected.
     if( ACE_OS::strncmp( message->rd_ptr(), "ED:", 3  ) )
