@@ -115,12 +115,33 @@ else  # ! x86-win32
   PIPE_OPT = -pipe
 endif # ! x86-win32
 
+ifeq ($(shared_libs),1)
+  SHARED_LIBS = 1
+endif
+ifeq ($(shared_libs_only),1)
+  SHARED_LIBS = 1
+endif
+
+ifeq ($(SHARED_LIBS),1)
+  ACELIB = -L./
+  #### There's no difference between non-shared and shared object code.
+  VSHDIR = .obj/
+endif # shared_libs
+
+ifeq ($(static_libs),1)
+  AR              = ar$(TOOLENV)
+  ARFLAGS         = rv
+else  # ! static_libs
+  AR              = echo
+  ARFLAGS         = "build shared lib only"
+endif # ! static_libs
 
 CC              = cc$(TOOLENV)
 CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
                    -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -Wall
 CCFLAGS         += $(CFLAGS)
 DCFLAGS         += -g
+DLD             = $(LD)
 INCLDIRS        += -I$(WIND_BASE)/target/h
 LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld -c \
                   $(ACE_QUOTE)$(COMPILE.c) -traditional$(ACE_QUOTE) \
@@ -130,8 +151,6 @@ LDFLAGS         += -X -r
 #### the i386 family.  And -O2 causes some compilation failures.
 OCFLAGS         += -O
 PIC             =
-AR              = ar$(TOOLENV)
-ARFLAGS         = rv
 
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
