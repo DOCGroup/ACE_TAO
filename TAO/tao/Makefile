@@ -118,7 +118,8 @@ copy:	$(INSTALL)
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/giop.o .shobj/giop.so: giop.cpp $(ACE_ROOT)/ace/Log_Msg.h \
+.obj/giop.o .shobj/giop.so: giop.cpp \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -141,14 +142,14 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(TAO_ROOT)/tao/giop.h \
- $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/giop.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -161,12 +162,11 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/iiopobj.h \
- $(TAO_ROOT)/tao/iiopobj.i \
- $(TAO_ROOT)/tao/factories.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/stub.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.i \
+ $(ACE_ROOT)/TAO/tao/factories.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -178,12 +178,9 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -193,9 +190,7 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
@@ -203,17 +198,14 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/ReactorEx.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -221,7 +213,6 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -230,67 +221,50 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/ReactorEx.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/boa.h \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/params.h \
+ $(ACE_ROOT)/TAO/tao/boa.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/boa.i \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/connect.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/boa.i \
+ $(ACE_ROOT)/TAO/tao/params.i \
+ $(ACE_ROOT)/TAO/tao/connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/factories.i \
- $(TAO_ROOT)/tao/orbobj.h \
- $(TAO_ROOT)/tao/orbobj.i \
- $(TAO_ROOT)/tao/debug.h
-.obj/iiopobj.o .shobj/iiopobj.so: iiopobj.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/connect.i \
+ $(ACE_ROOT)/TAO/tao/objtable.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/TAO/tao/factories.i \
+ $(ACE_ROOT)/TAO/tao/orbobj.h \
+ $(ACE_ROOT)/TAO/tao/orbobj.i \
+ $(ACE_ROOT)/TAO/tao/debug.h
+.obj/iiopobj.o .shobj/iiopobj.so: iiopobj.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -302,12 +276,13 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -320,12 +295,11 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/iiopobj.h \
- $(TAO_ROOT)/tao/iiopobj.i
-.obj/iioporb.o .shobj/iioporb.so: iioporb.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/stub.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.i
+.obj/iioporb.o .shobj/iioporb.so: iioporb.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -337,12 +311,13 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -355,25 +330,23 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/stub.h \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/iioporb.h \
- $(TAO_ROOT)/tao/orbobj.h \
- $(TAO_ROOT)/tao/factories.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/iioporb.h \
+ $(ACE_ROOT)/TAO/tao/orbobj.h \
+ $(ACE_ROOT)/TAO/tao/factories.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -397,12 +370,9 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -412,9 +382,7 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
@@ -422,17 +390,14 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/ReactorEx.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -440,7 +405,6 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -449,55 +413,40 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/ReactorEx.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/boa.h \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/boa.i \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/connect.h \
+ $(ACE_ROOT)/TAO/tao/params.h \
+ $(ACE_ROOT)/TAO/tao/boa.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/boa.i \
+ $(ACE_ROOT)/TAO/tao/params.i \
+ $(ACE_ROOT)/TAO/tao/connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/factories.i \
- $(TAO_ROOT)/tao/orbobj.i \
- $(TAO_ROOT)/tao/iioporb.i \
- $(TAO_ROOT)/tao/iiopobj.h \
- $(TAO_ROOT)/tao/iiopobj.i
-.obj/invoke.o .shobj/invoke.so: invoke.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/connect.i \
+ $(ACE_ROOT)/TAO/tao/objtable.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/TAO/tao/factories.i \
+ $(ACE_ROOT)/TAO/tao/orbobj.i \
+ $(ACE_ROOT)/TAO/tao/iioporb.i \
+ $(ACE_ROOT)/TAO/tao/iiopobj.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.i
+.obj/invoke.o .shobj/invoke.so: invoke.cpp \
+ $(ACE_ROOT)/TAO/tao/orb.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -509,12 +458,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -527,22 +476,20 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/giop.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/giop.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -555,10 +502,10 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/iiopobj.h \
- $(TAO_ROOT)/tao/iiopobj.i \
- $(TAO_ROOT)/tao/factories.h \
+ $(ACE_ROOT)/TAO/tao/stub.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.i \
+ $(ACE_ROOT)/TAO/tao/factories.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -570,12 +517,9 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -585,9 +529,7 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
@@ -595,17 +537,14 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/ReactorEx.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -613,7 +552,6 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -622,54 +560,37 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/ReactorEx.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/boa.h \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/boa.i \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/connect.h \
+ $(ACE_ROOT)/TAO/tao/params.h \
+ $(ACE_ROOT)/TAO/tao/boa.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/boa.i \
+ $(ACE_ROOT)/TAO/tao/params.i \
+ $(ACE_ROOT)/TAO/tao/connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/factories.i \
- $(TAO_ROOT)/tao/nvlist.h \
- $(TAO_ROOT)/tao/debug.h
-.obj/roa.o .shobj/roa.so: roa.cpp $(TAO_ROOT)/tao/orb.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/TAO/tao/connect.i \
+ $(ACE_ROOT)/TAO/tao/objtable.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/TAO/tao/factories.i \
+ $(ACE_ROOT)/TAO/tao/nvlist.h \
+ $(ACE_ROOT)/TAO/tao/debug.h
+.obj/roa.o .shobj/roa.so: roa.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
  $(ACE_ROOT)/ace/OS.i \
@@ -680,12 +601,13 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -698,14 +620,13 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/roa.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/roa.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(TAO_ROOT)/tao/boa.h \
+ $(ACE_ROOT)/TAO/tao/boa.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -714,37 +635,24 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/boa.i \
+ $(ACE_ROOT)/TAO/tao/params.h \
+ $(ACE_ROOT)/TAO/tao/params.i \
+ $(ACE_ROOT)/TAO/tao/connect.h \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
@@ -753,27 +661,33 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
  $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Acceptor.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/ReactorEx.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -781,7 +695,6 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -791,59 +704,42 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/ReactorEx.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/boa.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/connect.h \
- $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/roa.i \
- $(TAO_ROOT)/tao/giop.h \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/iiopobj.h \
- $(TAO_ROOT)/tao/iiopobj.i \
- $(TAO_ROOT)/tao/factories.h \
+ $(ACE_ROOT)/TAO/tao/connect.i \
+ $(ACE_ROOT)/TAO/tao/roa.i \
+ $(ACE_ROOT)/TAO/tao/giop.h \
+ $(ACE_ROOT)/TAO/tao/stub.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.i \
+ $(ACE_ROOT)/TAO/tao/factories.h \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(TAO_ROOT)/tao/factories.i \
- $(TAO_ROOT)/tao/orbobj.h \
- $(TAO_ROOT)/tao/orbobj.i \
- $(TAO_ROOT)/tao/nvlist.h \
- $(TAO_ROOT)/tao/debug.h
-.obj/params.o .shobj/params.so: params.cpp $(TAO_ROOT)/tao/params.h \
+ $(ACE_ROOT)/TAO/tao/objtable.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/TAO/tao/factories.i \
+ $(ACE_ROOT)/TAO/tao/orbobj.h \
+ $(ACE_ROOT)/TAO/tao/orbobj.i \
+ $(ACE_ROOT)/TAO/tao/nvlist.h \
+ $(ACE_ROOT)/TAO/tao/debug.h
+.obj/params.o .shobj/params.so: params.cpp \
+ $(ACE_ROOT)/TAO/tao/params.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -855,13 +751,13 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -874,9 +770,8 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/boa.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/boa.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -889,37 +784,23 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/boa.i \
+ $(ACE_ROOT)/TAO/tao/params.i \
+ $(ACE_ROOT)/TAO/tao/connect.h \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
@@ -928,27 +809,33 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
  $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Acceptor.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/ReactorEx.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -956,7 +843,6 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -966,40 +852,25 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/ReactorEx.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/boa.i \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/connect.h \
- $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(TAO_ROOT)/tao/connect.i
+ $(ACE_ROOT)/TAO/tao/connect.i \
+ $(ACE_ROOT)/TAO/tao/objtable.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i
 .obj/factories.o .shobj/factories.so: factories.cpp \
- $(TAO_ROOT)/tao/factories.h \
+ $(ACE_ROOT)/TAO/tao/factories.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -1036,9 +907,7 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -1047,12 +916,10 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -1062,9 +929,7 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
@@ -1072,17 +937,14 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/ReactorEx.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1090,7 +952,6 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -1099,73 +960,56 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/ReactorEx.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/boa.h \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/params.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/boa.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/boa.i \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/connect.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/boa.i \
+ $(ACE_ROOT)/TAO/tao/params.i \
+ $(ACE_ROOT)/TAO/tao/connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/factories.i
+ $(ACE_ROOT)/TAO/tao/connect.i \
+ $(ACE_ROOT)/TAO/tao/objtable.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/TAO/tao/factories.i
 .obj/objtable.o .shobj/objtable.so: objtable.cpp \
- $(TAO_ROOT)/tao/objtable.h \
+ $(ACE_ROOT)/TAO/tao/objtable.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
@@ -1189,96 +1033,19 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Token.h \
- $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Proactor.h \
- $(ACE_ROOT)/ace/Asynch_IO.h \
- $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Timer_Wheel.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/ReactorEx.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
- $(ACE_ROOT)/ace/ReactorEx.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
- $(TAO_ROOT)/tao/object.i
-.obj/connect.o .shobj/connect.so: connect.cpp $(TAO_ROOT)/tao/connect.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/object.i
+.obj/connect.o .shobj/connect.so: connect.cpp \
+ $(ACE_ROOT)/TAO/tao/connect.h \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1306,18 +1073,14 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
@@ -1342,22 +1105,17 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/ReactorEx.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1365,7 +1123,6 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -1376,10 +1133,7 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/ReactorEx.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
@@ -1387,56 +1141,42 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/roa.h \
- $(TAO_ROOT)/tao/boa.h \
- $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/connect.i \
+ $(ACE_ROOT)/TAO/tao/roa.h \
+ $(ACE_ROOT)/TAO/tao/boa.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/boa.i \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/roa.i \
- $(TAO_ROOT)/tao/debug.h
-.obj/xdr.o .shobj/xdr.so: xdr.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/boa.i \
+ $(ACE_ROOT)/TAO/tao/params.h \
+ $(ACE_ROOT)/TAO/tao/params.i \
+ $(ACE_ROOT)/TAO/tao/roa.i \
+ $(ACE_ROOT)/TAO/tao/debug.h
+.obj/xdr.o .shobj/xdr.so: xdr.cpp \
+ $(ACE_ROOT)/TAO/tao/orb.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -1448,12 +1188,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -1466,16 +1206,16 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/xdr.h \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i
-.obj/cdr.o .shobj/cdr.so: cdr.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/debug.h \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/xdr.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i
+.obj/cdr.o .shobj/cdr.so: cdr.cpp \
+ $(ACE_ROOT)/TAO/tao/orb.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -1487,12 +1227,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -1505,22 +1245,21 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i
-.obj/debug.o .shobj/debug.so: debug.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i
+.obj/debug.o .shobj/debug.so: debug.cpp \
+ $(ACE_ROOT)/TAO/tao/orb.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -1532,12 +1271,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -1550,10 +1289,10 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/debug.h
-.obj/interp.o .shobj/interp.so: interp.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/debug.h
+.obj/interp.o .shobj/interp.so: interp.cpp \
+ $(ACE_ROOT)/TAO/tao/orb.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -1565,12 +1304,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -1583,22 +1322,21 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i
-.obj/marshal.o .shobj/marshal.so: marshal.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i
+.obj/marshal.o .shobj/marshal.so: marshal.cpp \
+ $(ACE_ROOT)/TAO/tao/orb.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -1610,12 +1348,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -1628,22 +1366,21 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i
-.obj/encode.o .shobj/encode.so: encode.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i
+.obj/encode.o .shobj/encode.so: encode.cpp \
+ $(ACE_ROOT)/TAO/tao/orb.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -1655,12 +1392,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -1673,22 +1410,20 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/giop.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/giop.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -1701,10 +1436,10 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/iiopobj.h \
- $(TAO_ROOT)/tao/iiopobj.i \
- $(TAO_ROOT)/tao/factories.h \
+ $(ACE_ROOT)/TAO/tao/stub.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.i \
+ $(ACE_ROOT)/TAO/tao/factories.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -1716,12 +1451,9 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -1731,9 +1463,7 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
@@ -1741,17 +1471,14 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/ReactorEx.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1759,7 +1486,6 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -1768,52 +1494,37 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/ReactorEx.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/boa.h \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/boa.i \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/connect.h \
+ $(ACE_ROOT)/TAO/tao/params.h \
+ $(ACE_ROOT)/TAO/tao/boa.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/boa.i \
+ $(ACE_ROOT)/TAO/tao/params.i \
+ $(ACE_ROOT)/TAO/tao/connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/factories.i \
- $(TAO_ROOT)/tao/debug.h
-.obj/decode.o .shobj/decode.so: decode.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/connect.i \
+ $(ACE_ROOT)/TAO/tao/objtable.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/TAO/tao/factories.i \
+ $(ACE_ROOT)/TAO/tao/debug.h
+.obj/decode.o .shobj/decode.so: decode.cpp \
+ $(ACE_ROOT)/TAO/tao/orb.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -1825,12 +1536,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -1843,22 +1554,20 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/giop.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/giop.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -1871,10 +1580,10 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/iiopobj.h \
- $(TAO_ROOT)/tao/iiopobj.i \
- $(TAO_ROOT)/tao/factories.h \
+ $(ACE_ROOT)/TAO/tao/stub.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.i \
+ $(ACE_ROOT)/TAO/tao/factories.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -1886,12 +1595,9 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -1901,9 +1607,7 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
@@ -1911,17 +1615,14 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/ReactorEx.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1929,7 +1630,6 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -1938,52 +1638,37 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/ReactorEx.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/boa.h \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/boa.i \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/connect.h \
+ $(ACE_ROOT)/TAO/tao/params.h \
+ $(ACE_ROOT)/TAO/tao/boa.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/boa.i \
+ $(ACE_ROOT)/TAO/tao/params.i \
+ $(ACE_ROOT)/TAO/tao/connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/factories.i \
- $(TAO_ROOT)/tao/debug.h
-.obj/deep_copy.o .shobj/deep_copy.so: deep_copy.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/connect.i \
+ $(ACE_ROOT)/TAO/tao/objtable.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/TAO/tao/factories.i \
+ $(ACE_ROOT)/TAO/tao/debug.h
+.obj/deep_copy.o .shobj/deep_copy.so: deep_copy.cpp \
+ $(ACE_ROOT)/TAO/tao/orb.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -1995,12 +1680,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2013,22 +1698,20 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/giop.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/giop.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -2041,10 +1724,10 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/iiopobj.h \
- $(TAO_ROOT)/tao/iiopobj.i \
- $(TAO_ROOT)/tao/factories.h \
+ $(ACE_ROOT)/TAO/tao/stub.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.i \
+ $(ACE_ROOT)/TAO/tao/factories.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -2056,12 +1739,9 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -2071,9 +1751,7 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
@@ -2081,17 +1759,14 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/ReactorEx.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2099,7 +1774,6 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -2108,52 +1782,37 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/ReactorEx.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/boa.h \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/boa.i \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/connect.h \
+ $(ACE_ROOT)/TAO/tao/params.h \
+ $(ACE_ROOT)/TAO/tao/boa.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/boa.i \
+ $(ACE_ROOT)/TAO/tao/params.i \
+ $(ACE_ROOT)/TAO/tao/connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/factories.i \
- $(TAO_ROOT)/tao/debug.h
-.obj/deep_free.o .shobj/deep_free.so: deep_free.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/connect.i \
+ $(ACE_ROOT)/TAO/tao/objtable.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/TAO/tao/factories.i \
+ $(ACE_ROOT)/TAO/tao/debug.h
+.obj/deep_free.o .shobj/deep_free.so: deep_free.cpp \
+ $(ACE_ROOT)/TAO/tao/orb.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -2165,12 +1824,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2183,22 +1842,20 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/giop.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/giop.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -2211,10 +1868,10 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/iiopobj.h \
- $(TAO_ROOT)/tao/iiopobj.i \
- $(TAO_ROOT)/tao/factories.h \
+ $(ACE_ROOT)/TAO/tao/stub.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.h \
+ $(ACE_ROOT)/TAO/tao/iiopobj.i \
+ $(ACE_ROOT)/TAO/tao/factories.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
@@ -2226,12 +1883,9 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -2241,9 +1895,7 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
@@ -2251,17 +1903,14 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/ReactorEx.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2269,7 +1918,6 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -2278,52 +1926,37 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/ReactorEx.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/boa.h \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/boa.i \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/connect.h \
+ $(ACE_ROOT)/TAO/tao/params.h \
+ $(ACE_ROOT)/TAO/tao/boa.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/boa.i \
+ $(ACE_ROOT)/TAO/tao/params.i \
+ $(ACE_ROOT)/TAO/tao/connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/factories.i \
- $(TAO_ROOT)/tao/debug.h
-.obj/tc_const.o .shobj/tc_const.so: tc_const.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/connect.i \
+ $(ACE_ROOT)/TAO/tao/objtable.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/TAO/tao/factories.i \
+ $(ACE_ROOT)/TAO/tao/debug.h
+.obj/tc_const.o .shobj/tc_const.so: tc_const.cpp \
+ $(ACE_ROOT)/TAO/tao/orb.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -2335,12 +1968,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2353,14 +1986,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i
-.obj/any.o .shobj/any.so: any.cpp $(TAO_ROOT)/tao/orb.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i
+.obj/any.o .shobj/any.so: any.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
  $(ACE_ROOT)/ace/OS.i \
@@ -2371,12 +2002,13 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2389,23 +2021,22 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/debug.h
-.obj/corbacom.o .shobj/corbacom.so: corbacom.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/debug.h
+.obj/corbacom.o .shobj/corbacom.so: corbacom.cpp \
+ $(ACE_ROOT)/TAO/tao/orb.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -2417,12 +2048,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2435,26 +2066,26 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i
-.obj/except.o .shobj/except.so: except.cpp $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/TAO/tao/object.i
+.obj/except.o .shobj/except.so: except.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2467,24 +2098,20 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i
-.obj/nvlist.o .shobj/nvlist.so: nvlist.cpp $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i
+.obj/nvlist.o .shobj/nvlist.so: nvlist.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -2492,9 +2119,12 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2505,19 +2135,20 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/nvlist.h
-.obj/object.o .shobj/object.so: object.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/nvlist.h
+.obj/object.o .shobj/object.so: object.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -2529,12 +2160,13 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2547,98 +2179,19 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/optable.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/optable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Token.h \
- $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Proactor.h \
- $(ACE_ROOT)/ace/Asynch_IO.h \
- $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Timer_Wheel.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/ReactorEx.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
- $(ACE_ROOT)/ace/ReactorEx.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i
-.obj/orbobj.o .shobj/orbobj.so: orbobj.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/stub.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i
+.obj/orbobj.o .shobj/orbobj.so: orbobj.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -2650,12 +2203,13 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2668,15 +2222,13 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/iioporb.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/stub.h \
+ $(ACE_ROOT)/TAO/tao/iioporb.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/orbobj.h \
- $(TAO_ROOT)/tao/factories.h \
+ $(ACE_ROOT)/TAO/tao/orbobj.h \
+ $(ACE_ROOT)/TAO/tao/factories.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -2700,12 +2252,9 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -2715,9 +2264,7 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
@@ -2725,17 +2272,14 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/ReactorEx.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2743,7 +2287,6 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -2752,66 +2295,51 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/ReactorEx.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/boa.h \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(TAO_ROOT)/tao/boa.i \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/connect.h \
+ $(ACE_ROOT)/TAO/tao/params.h \
+ $(ACE_ROOT)/TAO/tao/boa.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/boa.i \
+ $(ACE_ROOT)/TAO/tao/params.i \
+ $(ACE_ROOT)/TAO/tao/connect.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/factories.i \
- $(TAO_ROOT)/tao/orbobj.i \
- $(TAO_ROOT)/tao/iioporb.i \
- $(TAO_ROOT)/tao/roa.h \
- $(TAO_ROOT)/tao/roa.i \
- $(TAO_ROOT)/tao/nvlist.h
-.obj/principa.o .shobj/principa.so: principa.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/connect.i \
+ $(ACE_ROOT)/TAO/tao/objtable.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/TAO/tao/factories.i \
+ $(ACE_ROOT)/TAO/tao/orbobj.i \
+ $(ACE_ROOT)/TAO/tao/iioporb.i \
+ $(ACE_ROOT)/TAO/tao/roa.h \
+ $(ACE_ROOT)/TAO/tao/roa.i \
+ $(ACE_ROOT)/TAO/tao/nvlist.h \
+ $(ACE_ROOT)/TAO/tao/debug.h
+.obj/principa.o .shobj/principa.so: principa.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -2823,12 +2351,13 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2841,10 +2370,9 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/principa.h
-.obj/request.o .shobj/request.so: request.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/principa.h
+.obj/request.o .shobj/request.so: request.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -2856,12 +2384,13 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2874,24 +2403,22 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/stub.h \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/nvlist.h
-.obj/svrrqst.o .shobj/svrrqst.so: svrrqst.cpp $(TAO_ROOT)/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/nvlist.h
+.obj/svrrqst.o .shobj/svrrqst.so: svrrqst.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
@@ -2903,12 +2430,13 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2921,26 +2449,24 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/nvlist.h \
- $(TAO_ROOT)/tao/debug.h
-.obj/boa.o .shobj/boa.so: boa.cpp orb.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/nvlist.h \
+ $(ACE_ROOT)/TAO/tao/debug.h
+.obj/boa.o .shobj/boa.so: boa.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/stdcpp.h \
  $(ACE_ROOT)/ace/OS.i \
@@ -2951,10 +2477,13 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h corbacom.h object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2967,7 +2496,8 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp object.i boa.h \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/boa.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -2980,213 +2510,38 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
+ $(ACE_ROOT)/TAO/tao/svrrqst.h \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/svrrqst.i \
- $(TAO_ROOT)/tao/objtable.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Token.h \
- $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Proactor.h \
- $(ACE_ROOT)/ace/Asynch_IO.h \
- $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Timer_Wheel.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/ReactorEx.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
- $(ACE_ROOT)/ace/ReactorEx.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i boa.i iioporb.h orbobj.h \
- $(TAO_ROOT)/tao/factories.h \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/svrrqst.i \
+ $(ACE_ROOT)/TAO/tao/boa.i \
+ $(ACE_ROOT)/TAO/tao/iioporb.h \
+ $(ACE_ROOT)/TAO/tao/orbobj.h \
+ $(ACE_ROOT)/TAO/tao/factories.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(ACE_ROOT)/ace/Svc_Handler.h \
- $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Task.i \
- $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
- $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/Svc_Handler.cpp \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Connector.i \
- $(ACE_ROOT)/ace/Connector.cpp \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/boa.h \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/connect.h \
- $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Acceptor.cpp \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/factories.i orbobj.i iioporb.i \
- roa.h roa.i
-.obj/typecode.o .shobj/typecode.so: typecode.cpp $(TAO_ROOT)/tao/orb.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/marshal.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/debug.h
-.obj/optable.o .shobj/optable.so: optable.cpp $(TAO_ROOT)/tao/optable.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/stdcpp.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -3194,42 +2549,24 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
  $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Wheel.h \
  $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/ReactorEx.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -3237,7 +2574,6 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -3245,25 +2581,117 @@ copy:	$(INSTALL)
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
  $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Message_Queue.cpp \
  $(ACE_ROOT)/ace/ReactorEx.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Connector.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/TAO/tao/params.h \
+ $(ACE_ROOT)/TAO/tao/params.i \
+ $(ACE_ROOT)/TAO/tao/connect.h \
+ $(ACE_ROOT)/ace/Acceptor.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
+ $(ACE_ROOT)/TAO/tao/connect.i \
+ $(ACE_ROOT)/TAO/tao/objtable.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/TAO/tao/factories.i \
+ $(ACE_ROOT)/TAO/tao/orbobj.i \
+ $(ACE_ROOT)/TAO/tao/iioporb.i \
+ $(ACE_ROOT)/TAO/tao/roa.h \
+ $(ACE_ROOT)/TAO/tao/roa.i
+.obj/typecode.o .shobj/typecode.so: typecode.cpp \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/TAO/tao/object.i \
+ $(ACE_ROOT)/TAO/tao/cdr.h \
+ $(ACE_ROOT)/TAO/tao/align.h \
+ $(ACE_ROOT)/TAO/tao/marshal.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/TAO/tao/typecode.h \
+ $(ACE_ROOT)/TAO/tao/any.h \
+ $(ACE_ROOT)/TAO/tao/any.i \
+ $(ACE_ROOT)/TAO/tao/typecode.i \
+ $(ACE_ROOT)/TAO/tao/principa.h \
+ $(ACE_ROOT)/TAO/tao/marshal.i \
+ $(ACE_ROOT)/TAO/tao/cdr.i \
+ $(ACE_ROOT)/TAO/tao/debug.h
+.obj/optable.o .shobj/optable.so: optable.cpp \
+ $(ACE_ROOT)/TAO/tao/optable.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/stdcpp.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/except.h \
- $(TAO_ROOT)/tao/object.i
+ $(ACE_ROOT)/TAO/tao/orb.h \
+ $(ACE_ROOT)/TAO/tao/orbconf.h \
+ $(ACE_ROOT)/TAO/tao/corbacom.h \
+ $(ACE_ROOT)/TAO/tao/object.h \
+ $(ACE_ROOT)/TAO/tao/request.h \
+ $(ACE_ROOT)/TAO/tao/sequence.h \
+ $(ACE_ROOT)/TAO/tao/except.h \
+ $(ACE_ROOT)/TAO/tao/object.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
