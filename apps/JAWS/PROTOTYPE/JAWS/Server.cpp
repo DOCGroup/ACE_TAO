@@ -107,6 +107,21 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
 
   db->task ()->next (protocol);
 
+  // prime the acceptor if appropriate
+  if (this->dispatch_ == 1)
+    {
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+
+      int n = this->nthreads_;
+      if (this->concurrency_ == 1)
+        n = 1;
+
+      for (int i = 0; i < n * this->ratio_ - n; i++)
+        db->task ()->put (db);
+
+#endif /* defined (ACE_WIN32) */
+    }
+
   // The message block should contain an INET_Addr, and call the
   // io->accept (INET_Addr) method!
 

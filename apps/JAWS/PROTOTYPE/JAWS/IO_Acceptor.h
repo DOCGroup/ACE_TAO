@@ -51,6 +51,9 @@ public:
   virtual ACE_HANDLE get_handle (void);
   // Get the listener's handle
 
+  virtual void close (void);
+  // Close the acceptor.
+
   enum { ASYNC = 0, SYNCH = 1 };
   // identify if this is being used for asynchronous or synchronous
   // accept calls
@@ -89,6 +92,9 @@ class JAWS_Export JAWS_IO_Asynch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
 
+  JAWS_IO_Asynch_Acceptor (void);
+  virtual ~JAWS_IO_Asynch_Acceptor (void);
+
   virtual int open (const ACE_INET_Addr &address, int backlog = 5);
   // Initiate an asynchronous passive connection
 
@@ -101,6 +107,8 @@ public:
   virtual ACE_HANDLE get_handle (void);
   // Get the listener's handle
 
+  virtual void close (void);
+
 private:
 
   virtual int accept (ACE_SOCK_Stream &new_stream,
@@ -111,7 +119,8 @@ private:
 
 private:
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-  ACE_Asynch_Acceptor<JAWS_Asynch_Handler> acceptor_;
+  ACE_Asynch_Acceptor<JAWS_Asynch_Handler> &acceptor_;
+  ACE_Asynch_Acceptor<JAWS_Asynch_Handler> *acceptor_ptr_;
   ACE_HANDLE handle_;
 #endif /* defined (ACE_WIN32) */
 };

@@ -2,6 +2,7 @@
 
 #include "JAWS/Reaper.h"
 #include "JAWS/Concurrency.h"
+#include "JAWS/IO_Acceptor.h"
 
 ACE_RCSID(JAWS, Reaper, "$Id$")
 
@@ -37,6 +38,8 @@ JAWS_Reaper::svc (void)
 {
   ACE_TRACE ("JAWS_Reaper::svc");
   int result = this->concurrency_->thr_mgr ()->wait ();
+  JAWS_IO_Synch_Acceptor_Singleton::instance ()->close ();
+  JAWS_IO_Asynch_Acceptor_Singleton::instance ()->close ();
   ACE_DEBUG ((LM_DEBUG, "(%t) Leaving REAPER\n"));
   return result;
 }
