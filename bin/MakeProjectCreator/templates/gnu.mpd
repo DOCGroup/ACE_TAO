@@ -73,10 +73,10 @@ RESOURCES += \
 #----------------------------------------------------------------------------
 <%marker(macros)%>
 <%if(exename)%>
-LDLIBS =<%foreach(libs)%> -l<%lib%><%endfor%><%foreach(lit_libs)%> -l<%lit_lib%><%endfor%><%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
+LDLIBS =<%foreach(libs)%> -l<%lib%><%endfor%><%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
 <%else%>
 <%if(sharedname)%>
-ACE_SHLIBS =<%foreach(libs)%> -l<%lib%><%endfor%><%foreach(lit_libs)%> -l<%lit_lib%><%endfor%><%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
+ACE_SHLIBS =<%foreach(libs)%> -l<%lib%><%endfor%><%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
 <%endif%>
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU

@@ -27,13 +27,13 @@ LFLAGS = \
 	-j"<%libpath%>\$(CONFIG_SUBDIR)" <%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
-<%if(libs || lit_libs || defaultlibs)%>
+<%if(libs || lit_libs)%>
 
 LIBFILES = \
 <%foreach(lit_libs)%>
 	<%lit_lib%>.lib \
 <%endfor%>
-<%foreach(libs defaultlibs)%>
+<%foreach(libs)%>
 	<%lib%>$(LIB_DECORATOR).lib<%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>

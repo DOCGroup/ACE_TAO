@@ -108,14 +108,11 @@ libout		Specifies where the dynamic and static libraries will be placed
 install		Specifies where executables will be installed
 pch_header	Specifies the precompiled header file name
 pch_source	Specifies the precompiled source file name
-ssl             Specifies that the project will use ssl
-tao		Specifies that the project will use TAO
 version         Specifies the version number for the library or executable
 macros          These values will be passed as macros to the compiler.
 libpaths	Specifies 1 or more locations to find libraries
 includes	Specifies 1 or more locations to find include files
 libs		Specifies 1 or more libraries to link into the exe or library
-defaultlibs	Specifies 1 or more default libraries to link in
 after           Specifies that this project must be built after 1 or more
                 project names listed.
 dynamicflags	Specifies preprocessor flags needed for dynamic libraries
