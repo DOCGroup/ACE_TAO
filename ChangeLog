@@ -1,8 +1,15 @@
+Wed Jul  7 06:31:30 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Reverted my generic target change from Thu Jul  1 14:00:09 2004.
+          It caused make to invoke every workspace target twice.
+
 Wed Jul  7 00:03:34 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_errno.inl: Clarified why ACE_OS::last_error()
-	  has a preference for errno.  Thanks to Lance Paine
- 	  <lance@ams.co.nz> for motivating this.
+        * ace/OS_NS_errno.inl: Clarified why ACE_OS::last_error()
+          has a preference for errno.  Thanks to Lance Paine
+          <lance@ams.co.nz> for motivating this.
 
 Tue Jul  6 16:13:31 2004  Rich Seibel <seibel_r@ociweb.com>
 
@@ -13,56 +20,56 @@ Tue Jul  6 16:13:31 2004  Rich Seibel <seibel_r@ociweb.com>
 
 Tue Jul  6 15:02:30 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/run_test.lst: Added Dev_Poll_Reactor_Test.
+        * tests/run_test.lst: Added Dev_Poll_Reactor_Test.
 
 Tue Jul  6 11:59:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Service_Config.cpp: Reverted the following change.
+        * ace/Service_Config.cpp: Reverted the following change.
 
 
           Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P4
           * ace/Service_Config.cpp: Insert component into repository before
             calling init as in the init the component may access the
-	    service repository.
+            service repository.
 
-	  Dr. Schmidt opines that this change is wrong for the following
-	  reasons:
+          Dr. Schmidt opines that this change is wrong for the following
+          reasons:
 
-	  (1) If the init () call returns a -1, the component should not
-	      be in the repository in the first place. 
+          (1) If the init () call returns a -1, the component should not
+              be in the repository in the first place.
 
-	  (2) If the component is in the repository, there is a
-	      possibility that another application thread could access the
-	      component in the repository before the component is
-	      initialized. 
+          (2) If the component is in the repository, there is a
+              possibility that another application thread could access the
+              component in the repository before the component is
+              initialized.
 
 
-	   Unless we address the above concerns to satisfaction, this
-	   change cannot be added to the repository.
+           Unless we address the above concerns to satisfaction, this
+           change cannot be added to the repository.
 
 Tue Jul  6 12:03:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* netsvcs/lib/Token_Handler.cpp (parse_args): The inherited
-	  ACE_Strategy_Acceptor::service_port_ member was removed prior
-	  to ACE 5.3. Use a local variable instead. Thanks to Johnny
-	  Willemsen for reporting this.
+        * netsvcs/lib/Token_Handler.cpp (parse_args): The inherited
+          ACE_Strategy_Acceptor::service_port_ member was removed prior
+          to ACE 5.3. Use a local variable instead. Thanks to Johnny
+          Willemsen for reporting this.
 
 Mon Jul  5 11:45:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/UUID.cpp (ACE_Utils):
+        * ace/UUID.cpp (ACE_Utils):
 
-	  Corrected syntax error in ACE_Thread_ID instance.
+          Corrected syntax error in ACE_Thread_ID instance.
 
 Mon Jul  5 10:40:59 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/UUID.cpp (ACE_Utils): Replaced the ACE_Thread_ID constructor
-	  with the new one that calls the ACE_OS::thr_self() methods.
+        * ace/UUID.cpp (ACE_Utils): Replaced the ACE_Thread_ID constructor
+          with the new one that calls the ACE_OS::thr_self() methods.
 
-	* ace/OS_NS_Thread.{h,cpp}: Added a new constructor to
-	  ACE_Thread_ID that calls the ACE_OS::thr_self() methods to
- 	  initialize an object, rather than having to do this externally
-	  to the constructor.
-  
+        * ace/OS_NS_Thread.{h,cpp}: Added a new constructor to
+          ACE_Thread_ID that calls the ACE_OS::thr_self() methods to
+          initialize an object, rather than having to do this externally
+          to the constructor.
+
 Mon Jul  5 14:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
@@ -71,11 +78,11 @@ Mon Jul  5 14:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jul  4 20:30:56 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_Thread.cpp: There was some weirdness in the
-	  to_string() method, which should have been using the local data
- 	  members for the thread id and thread handle, but instead was
- 	  calling the OS functions directly...  Thanks to Michael Hollins
- 	  <michael.hollins@silverbrookresearch.com> for reporting this.
+        * ace/OS_NS_Thread.cpp: There was some weirdness in the
+          to_string() method, which should have been using the local data
+          members for the thread id and thread handle, but instead was
+          calling the OS functions directly...  Thanks to Michael Hollins
+          <michael.hollins@silverbrookresearch.com> for reporting this.
 
 Sat Jul  3 06:46:06 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -84,20 +91,20 @@ Sat Jul  3 06:46:06 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Fri Jul  2 17:54:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/ThreadPools/Task_ThreadPool.cpp: Break out of
-	  Manager::svc() when getq() fails. Thanks to J.T. Conklin
-	  <jtc@acorntoolworks.com> for reporting this.
+        * examples/APG/ThreadPools/Task_ThreadPool.cpp: Break out of
+          Manager::svc() when getq() fails. Thanks to J.T. Conklin
+          <jtc@acorntoolworks.com> for reporting this.
 
 Fri Jul  2 10:42:00 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Based_Pointer_T.inl (operator->): Replaced the use of
-	  a C-style cast with a reinterpret cast.  Thanks to
-	  Rick Ohnemus <rick.ohnemus@systemware.com> for this fix, which
- 	  closes bugid 1866.
+        * ace/Based_Pointer_T.inl (operator->): Replaced the use of
+          a C-style cast with a reinterpret cast.  Thanks to
+          Rick Ohnemus <rick.ohnemus@systemware.com> for this fix, which
+          closes bugid 1866.
 
-	* ACE-INSTALL.html (HREF): Fixed a typo.  Thanks to
-	  Rick Ohnemus <rick.ohnemus@systemware.com> for this fix, which
- 	  closes bugid 1867.
+        * ACE-INSTALL.html (HREF): Fixed a typo.  Thanks to
+          Rick Ohnemus <rick.ohnemus@systemware.com> for this fix, which
+          closes bugid 1867.
 
 Thu Jul  1 17:03:40 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -121,12 +128,12 @@ Thu Jul  1 16:24:47 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Thu Jul  1 14:42:36 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* etc/ciao_assembly_deployer.doxygen:
-	* etc/ciao_componentserver.doxygen:
-	* etc/ciao_daemon.doxygen:
+        * etc/ciao_assembly_deployer.doxygen:
+        * etc/ciao_componentserver.doxygen:
+        * etc/ciao_daemon.doxygen:
 
-	  Fixed some reference error. Thanks to Johnny Willemsen
-	  <jwillemsen@remedy.nl> for reporting these bugs.
+          Fixed some reference error. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for reporting these bugs.
 
 Thu Jul  1 14:00:09 2004  Chad Elliott  <elliott_c@ociweb.com>
 
