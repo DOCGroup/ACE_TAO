@@ -1,7 +1,16 @@
+Thu Apr 27 16:53:49 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager_T.cpp (unbind_all_i): Added new method
+	  unbind_all() for removing all the entries in one shot.  Thanks
+	  to Boris Sukholitko <boris@WebGlide.com> for providing this
+	  enhancement.
+
+	* tests/Hash_Map_Manager_Test.cpp: Added test for unbind_all().
+
 Thu Apr 27 14:17:52 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * ace/OS.i: 
-        
+        * ace/OS.i:
+
           isatty (): Messed up on my CE change, so the version that
           takes an int was hidden by a ACE_WIN32 block.  This has been
           moved outside again.
@@ -13,8 +22,8 @@ Thu Apr 27 14:17:52 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Apr 27 13:08:00 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * bin/msvc_auto_compile.pl: 
-        
+        * bin/msvc_auto_compile.pl:
+
           Changed the code style and made it consistent.
 
           Also changed the core build to build all of the orbsvcs and
@@ -25,10 +34,10 @@ Thu Apr 27 13:08:00 2000  Darrell Brunsch <brunsch@uci.edu>
 
           For some reason, I had trouble with the libraries when the
           ACE_Cleanup destructor was in the .i file.  So I moved it to
-          the .cpp file instead.  
+          the .cpp file instead.
 
         * ace/ace_dll.dsp:
-          
+
           Was defining ACE_ACE_HAS_DLL=1, which is #1, not needed and,
           #2, the wrong macro name.
 
@@ -72,28 +81,28 @@ Thu Apr 27 10:55:11 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/ace_dll_ce.dsp: (added)
         * ace/ace_ce_dll.dsp: (removed)
         * ace/ace_ce.dsw:
-          
+
           Created a new dsp file from scratch from CE to see how the
           toolkit sets up the projects.  Removed the old one.
 
         * ace/ACE.cpp:
-          
+
           format_hexdump (): Changed usage of isprint to ACE_OS::ace_isprint.
 
-          get_ip_interfaces (): Changed use of deprecated ACE_TEXT_STRING to 
+          get_ip_interfaces (): Changed use of deprecated ACE_TEXT_STRING to
           ACE_TString.  Also added an ACE_TEXT_CHAR_TO_TCHAR to a use
           of the ACE_INET_Addr constructor.
 
         * ace/ARGV.cpp:
 
-          create_buf_from_queue (): We were not adjusting the size of a 
+          create_buf_from_queue (): We were not adjusting the size of a
           ACE_TCHAR buffer by sizeof ACE_TCHAR when we did a memcopy.
           Thanks to Valery Arkhangorodsky <valerya@servicesoft.com>
           for reporting this.
 
-        * ace/Memory_Pool.cpp: 
+        * ace/Memory_Pool.cpp:
 
-          seh_selector (): Changed use of LPEXCEPTION_POINTERS to 
+          seh_selector (): Changed use of LPEXCEPTION_POINTERS to
           EXCEPTION_POINTERS * since it seems like that definition is
           missing in some WinCE configs.
 
@@ -101,18 +110,18 @@ Thu Apr 27 10:55:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Added deprecated definition of ACE_TEXT_STRING.
 
-          convert (): Changed the conversions from CharToOem to 
+          convert (): Changed the conversions from CharToOem to
           MultiByteToWideChar, since it is more widely supported in Win32.
           Also removed the loading of user32.lib since it was only needed
           for CharToOem.
 
         * ace/config-win32-common.h:
 
-          Changed the _MT check so it doesn't do anything on CE.  Some 
+          Changed the _MT check so it doesn't do anything on CE.  Some
           CE targets do not have the Multithreaded DLL generation option.
 
         * ace/config-WinCE.h:
-          
+
           Changed ACE_DEFAULT_LD_SEARCH_PATH to use ACE_TEXT.
 
           Added a define for ACE_HAS_WCHAR and a check to always define
@@ -126,11 +135,11 @@ Thu Apr 27 10:55:11 2000  Darrell Brunsch <brunsch@uci.edu>
           older SDK's.
 
           Removed some UNDER_CE < 2.11 defines.  < 2.11 CE will not be
-          supported anymore.  
+          supported anymore.
 
           Removed definition of is_print, since it was moved into ACE_OS.
 
-          Added a definition for the operator placement new, which is 
+          Added a definition for the operator placement new, which is
           missing when MFC isn't used.
 
         * ace/OS.h:
@@ -146,12 +155,12 @@ Thu Apr 27 10:55:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
           abort (): changed ::exit to exit to get it to compile.
 
-          ace_isspace (): Changed to use ACE_TCHAR, but also made it 
+          ace_isspace (): Changed to use ACE_TCHAR, but also made it
           NOTSUP on CE 2.11.
 
           ace_isprint (): Added, but NOTSUP on CE 2.11.
 
-          sema_init (): Needed to cast an void *arg to ACE_mutexattr_t.  
+          sema_init (): Needed to cast an void *arg to ACE_mutexattr_t.
 
           dlsym (): Changed the way ACE declares symbolname so it uses the
  	  right one on Win32 (WinNT always uses char *, CE always uses
@@ -160,7 +169,7 @@ Thu Apr 27 10:55:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Removed a few global function definitions that were just for
           CE (like fwrite, fread, getc, etc.).  These are either supported
-          in newer CE's or is disabled in the ACE_OS methods.  
+          in newer CE's or is disabled in the ACE_OS methods.
 
           is_atty (): Enabled on CE.
 
@@ -183,7 +192,7 @@ Thu Apr 27 10:55:11 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/Svc_Conf.y:
         * ace/Svc_Conf_y.cpp:
 
-          ace_yyerror (): Takes an ACE_TCHAR * instead of char * now.  
+          ace_yyerror (): Takes an ACE_TCHAR * instead of char * now.
           Thanks to Valery Arkhangorodsky <valerya@servicesoft.com>
           for also reporting this.
 

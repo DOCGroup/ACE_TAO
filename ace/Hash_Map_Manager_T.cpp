@@ -42,7 +42,7 @@
 
 ACE_RCSID(ace, Hash_Map_Manager_T, "$Id$")
 
-template <class EXT_ID, class INT_ID> 
+template <class EXT_ID, class INT_ID>
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Map_Entry (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next,
                                                         ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev)
   : next_ (next),
@@ -50,7 +50,7 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Map_Entry (ACE_Hash_Map_Entry<EXT_I
 {
 }
 
-template <class EXT_ID, class INT_ID> 
+template <class EXT_ID, class INT_ID>
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Map_Entry (const EXT_ID &ext_id,
                                                         const INT_ID &int_id,
                                                         ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next,
@@ -63,7 +63,7 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Map_Entry (const EXT_ID &ext_id,
 }
 
 # if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
-template <class EXT_ID, class INT_ID> 
+template <class EXT_ID, class INT_ID>
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry (void)
 {
 }
@@ -143,37 +143,56 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::close
   // gets called.
   if (this->table_ != 0)
     {
-      // Iterate through the entire map calling the destuctor of each
-      // <ACE_Hash_Map_Entry>.
+      // Remove all the entries.
+      this->unbind_all_i ();
+
+      // Iterate through the buckets cleaning up the sentinels.
       for (size_t i = 0; i < this->total_size_; i++)
         {
-          for (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp_ptr = this->table_[i].next_;
-               temp_ptr != &this->table_[i];
-               )
-            {
-              ACE_Hash_Map_Entry<EXT_ID, INT_ID> *hold_ptr = temp_ptr;
-              temp_ptr = temp_ptr->next_;
-
-              // Explicitly call the destructor.
-              ACE_DES_FREE_TEMPLATE2 (hold_ptr, this->allocator_->free,
-                                      ACE_Hash_Map_Entry, EXT_ID, INT_ID);
-            }
-
           // Destroy the dummy entry.
-          ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry = &table_[i];
+          ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry = &this->table_[i];
           // The "if" second argument results in a no-op instead of
           // deallocation.
           ACE_DES_FREE_TEMPLATE2 (entry, ACE_NOOP,
                                   ACE_Hash_Map_Entry, EXT_ID, INT_ID);
         }
 
-      // Free table memory.
-      this->allocator_->free (this->table_);
-      this->cur_size_ = 0;
+      // Reset size.
       this->total_size_ = 0;
+
       // Should be done last...
       this->table_ = 0;
     }
+
+  return 0;
+}
+
+template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbind_all_i (void)
+{
+  // Iterate through the entire map calling the destuctor of each
+  // <ACE_Hash_Map_Entry>.
+  for (size_t i = 0; i < this->total_size_; i++)
+    {
+      for (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp_ptr = this->table_[i].next_;
+           temp_ptr != &this->table_[i];
+           )
+        {
+          ACE_Hash_Map_Entry<EXT_ID, INT_ID> *hold_ptr = temp_ptr;
+          temp_ptr = temp_ptr->next_;
+
+          // Explicitly call the destructor.
+          ACE_DES_FREE_TEMPLATE2 (hold_ptr, this->allocator_->free,
+                                  ACE_Hash_Map_Entry, EXT_ID, INT_ID);
+        }
+
+      // Restore the sentinel.
+      this->table_[i].next_ = &this->table_[i];
+      this->table_[i].prev_ = &this->table_[i];
+    }
+
+  this->cur_size_ = 0;
+
   return 0;
 }
 

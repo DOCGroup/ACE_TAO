@@ -27,7 +27,7 @@
 
 ACE_RCSID(tests, Hash_Map_Manager_Test, "$Id$")
 
-static const size_t STRING_TABLE_ENTRIES = 3;
+static const size_t STRING_TABLE_ENTRIES = 3 * 2;
 static const size_t MAX_HASH = 6;
 
 typedef ACE_Hash_Map_Entry<const ACE_TCHAR *,
@@ -201,6 +201,21 @@ run_test (void)
         i++;
       }
   }
+
+  // Remove all the entries.
+  if (hash.unbind_all () != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("unbind_all failed\n")),
+                       -1);
+
+  // Redo the <bind> operations.
+  for (i = 0; string_table[i].key_ != 0; i++)
+    if (hash.bind (string_table[i].key_,
+                   string_table[i].value_) != 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("%p failed for %s \n"),
+                         ASYS_TEXT ("bind"),
+                         ASYS_MULTIBYTE_STRING (string_table[i].key_)), -1);
 
   alloc.dump ();
   return 0;
