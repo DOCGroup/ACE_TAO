@@ -31,10 +31,10 @@ override TAO_IDLFLAGS += \
 IDL_SRCS= \
 	CosConcurrencyControl \
 	CosNaming \
+	CosTimeBase \
 	TimeService \
 	CosLifeCycle \
 	CosPropertyService \
-	CosTimeBase \
 	Logger \
 	RtecEventComm \
 	RtecScheduler \
