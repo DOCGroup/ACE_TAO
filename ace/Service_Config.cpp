@@ -55,6 +55,7 @@ sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
   // = Set by command-line options.
 int ACE_Service_Config::be_a_daemon_ = 0;
 int ACE_Service_Config::no_static_svcs_ = 1;
+char* ACE_Service_Config::pid_file_name_ = 0;
 
 // Number of the signal used to trigger reconfiguration.
 int ACE_Service_Config::signum_ = SIGHUP;
@@ -158,7 +159,7 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_TRACE ("ACE_Service_Config::parse_args");
   ACE_Get_Opt getopt (argc,
                       argv,
-                      ACE_LIB_TEXT ("bdf:k:nys:S:"),
+                      ACE_LIB_TEXT ("bdf:k:nyp:s:S:"),
                       1); // Start at argv[1].
 
   if (ACE_Service_Config::init_svc_conf_file_queue () == -1)
@@ -189,6 +190,9 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'y':
         ACE_Service_Config::no_static_svcs_ = 0;
+        break;
+      case 'p':
+        ACE_Service_Config::pid_file_name_ = getopt.opt_arg ();
         break;
       case 's':
         {
@@ -671,6 +675,21 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
     ACE_Service_Config::start_daemon ();
+
+  // Write process id to file.
+  if (ACE_Service_Config::pid_file_name_ != 0) 
+    {
+      FILE* pidf = ACE_OS::fopen (ACE_Service_Config::pid_file_name_, 
+				  ACE_LIB_TEXT("w"));
+
+      if (pidf != 0) 
+        {
+          ACE_OS::fprintf (pidf,
+                           "%ld\n",
+                           ACE_static_cast(long, ACE_OS::getpid()));
+          ACE_OS::fclose (pidf);
+        }
+    }
 
   u_long flags = log_msg->flags ();
 
