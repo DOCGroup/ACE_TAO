@@ -900,6 +900,7 @@ AC_CHECK_FUNC(gethostbyname, , dnl
 dnl Check for getservbyname in -lxnet since some platforms (e.g. Solaris)
 dnl may put it there.  Define ACE_LACKS_GETSERVBYNAME in case the getservbyname
 dnl AC_CHECK_FUNC gets skipped due to caching.
+ace_lacks_getservbyname=no
 AC_CHECK_FUNC(getservbyname, , dnl 
   AC_CHECK_LIB(xnet, getservbyname, , ace_lacks_getservbyname=yes))
 
