@@ -5,13 +5,17 @@ Tue Oct 28 05:44:56 1997  David L. Levine  <levine@cs.wustl.edu>
           ACE_OS::thr_[gs]etconcurrency ().  Thanks to Stephen Coy
           <stevec@magna.com.au> for tracking these problems down.
 
+        * tests/Priority_Task_Test.cpp (svc): removed ACE_ASSERT and
+          replaced with setting of error flag.  This allows the test
+          to continue and gather more possibly useful information.
+
         * tests/Conn_Test.cpp: 1) Added template instantiations.
           2) Re-enabled with DEC_CXX.  3) Removed THR_DETACHED flags.
 
         * include/makeinclude/platform_osf1_4.0.GNU: suppress warnings
           about unreachable statments.
 
-        * ACE-INSTALL.html: Conn_Test now runs with DEC_CXX 6.0
+        * ACE-INSTALL.html: Conn_Test now runs with DEC_CXX 6.0.
 
 Tue Oct 28 00:38:58 1997    <irfan@TWOSTEP>
 
