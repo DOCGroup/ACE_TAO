@@ -23,8 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Test_and_Set.h"
-
 // Forward decl
 class ACE_Time_Value;
 

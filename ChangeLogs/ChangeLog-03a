@@ -1,3 +1,10 @@
+Thu Oct 12 23:33:21 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Synch.h:
+        * ace/Synch_T.h:
+        * ace/Test_and_Set.cpp:
+	  Fixed order of includes to compile under gcc.
+	
 Thu Oct 12 22:58:13 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/ACE_Lib_Find.h:
