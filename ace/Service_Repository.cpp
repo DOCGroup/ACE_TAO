@@ -171,8 +171,8 @@ ACE_Service_Repository::close (void)
         {
           ACE_Service_Type *s = ACE_const_cast (ACE_Service_Type *,
                                                 this->service_vector_[i]);
-          delete s;
           --this->current_size_;
+          delete s;
         }
 
       delete [] this->service_vector_;
@@ -326,23 +326,23 @@ int
 ACE_Service_Repository::remove (const ACE_TCHAR name[])
 {
   ACE_TRACE ("ACE_Service_Repository::remove");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_Service_Type *s = 0;
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+    int i = this->find_i (name, 0, 0);
 
-  int i = this->find_i (name, 0, 0);
+    if (i == -1)
+      return -1;
 
-  if (i == -1)
-    return -1;
+    s = ACE_const_cast (ACE_Service_Type *,
+                        this->service_vector_[i]);
+    --this->current_size_;
 
-  ACE_Service_Type *s = ACE_const_cast (ACE_Service_Type *,
-                                        this->service_vector_[i]);
+    if (this->current_size_ >= 1)
+      this->service_vector_[i]
+        = this->service_vector_[this->current_size_];
+  }
   delete s;
-
-  --this->current_size_;
-
-  if (this->current_size_ >= 1)
-    this->service_vector_[i]
-      = this->service_vector_[this->current_size_];
-
   return 0;
 }
 
