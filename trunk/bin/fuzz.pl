@@ -627,6 +627,67 @@ sub check_for_bad_ace_trace()
     }
 }
 
+
+
+# This test checks missing ACE_TRY_ENV when using 
+# resolve_initial_references
+sub check_for_missing_rir_env ()
+{
+    print "Running resolve_inital_references() check\n";
+    foreach $file (@files_cpp, @files_inl) {
+        my $line = 0;
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            my $native_try = 0;
+            my $in_rir = 0;
+            my $found_env = 0;
+
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                ++$line;
+                if (/FUZZ\: disable check_for_missing_rir_env/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_missing_rir_env/) {
+                    $disable = 0;
+                }
+                if ($disable == 0) {
+                    if (m/try\s*\{/) {
+                        $disable = 1;
+                        next;
+                    }
+
+                    if (m/resolve_initial_references\s*\(/) {
+                        $found_env = 0;
+                        $in_rir = 1;
+                    }
+
+                    if (m/ACE_TRY_ENV/) {
+                        $found_env = 1;
+                    }
+
+                    if ($in_rir == 1 && m/\;\s*$/) {
+                        $in_rir = 0;
+                        if ($found_env != 1) {
+                            print_error ("Missing ACE_TRY_ENV in"
+					 . " resolve_initial_references"
+                                         . " in $file ($line)");
+                        }
+                        $found_env = 0;
+                    }
+                    
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
+
+
 ##############################################################################
 
 #our ($opt_c, $opt_d, $opt_h, $opt_l, $opt_m, $opt_v);
@@ -675,6 +736,7 @@ check_for_mismatched_filename () if ($opt_l >= 2);
 check_for_bad_run_test () if ($opt_l >= 6);
 check_for_absolute_ace_wrappers () if ($opt_l >= 3);
 check_for_bad_ace_trace () if ($opt_l >= 4);
+check_for_missing_rir_env () if ($opt_l >= 5);
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 
