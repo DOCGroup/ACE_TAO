@@ -80,18 +80,18 @@ main (int, char *[])
   Tester_Args args (tester_barrier, n_iterations);
 
   for (int iteration_count = 0;
-       iteration_count < 10;
+       iteration_count < ACE_MAX_ITERATIONS;
        iteration_count++)
     {
       ACE_DEBUG ((LM_DEBUG, "starting iteration %d\n", 
 		  iteration_count));
 
       if (ACE_Thread_Manager::instance ()->spawn_n 
-	  (0,
+	  ((ACE_thread_t *) 0,
 	   n_threads,
 	   ACE_THR_FUNC (tester), 
 	   (void *) &args,
-	   THR_NEW_LWP | THR_DETACHED,
+	   THR_NEW_LWP,
 	   ACE_DEFAULT_THREAD_PRIORITY,
 	   -1,
 	   0,
