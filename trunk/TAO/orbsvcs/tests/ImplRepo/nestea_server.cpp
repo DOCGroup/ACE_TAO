@@ -33,5 +33,8 @@ main (int argc, char *argv[])
       return -1;
     }
   ACE_ENDTRY;
+
+  ACE_DEBUG ((LM_DEBUG, "Nestea Bookshelf Server says goodnight\n"));
+
   return 0;
 }
