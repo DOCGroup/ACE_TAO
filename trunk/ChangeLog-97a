@@ -1,3 +1,11 @@
+Fri Jun 27 13:10:46 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
+
+	* ace: Changed the name of config-vxworks5.2-g++.h to
+ 	  config-vxworks5.x-g++.h since it works with 5.2 and 5.3.
+
+	* examples/Mem_Map/IO-tests/IO_Test.cpp: Fixed some bugs that were
+ 	  preventing this from running correctly.
+
 Fri Jun 27 13:37:37 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/Svc_Conf.y: Finished the sanity checks started below.

@@ -185,7 +185,7 @@ ACE_Time_Value::ACE_Time_Value (const timeval &tv)
 }
 
 ACE_INLINE 
-ACE_Time_Value::ACE_Time_Value ()
+ACE_Time_Value::ACE_Time_Value (void)
 {
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (0, 0);
