@@ -15,7 +15,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h
+TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h
 
 IDL_FILES = \
 	CosNamingC \
