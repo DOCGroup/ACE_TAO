@@ -70,7 +70,7 @@ ACE_Test_Output::output_file (void)
   // the output_file_ is given to ACE_LOG_MSG
   // and something else might destroy and/or change the stream
   // so return what ACE_LOG_MSG is using.
-  return dynamic_cast<OFSTREAM*>( ACE_LOG_MSG->msg_ostream () );
+  return reinterpret_cast<OFSTREAM*>( ACE_LOG_MSG->msg_ostream () );
   //return this->output_file_;
 }
 
