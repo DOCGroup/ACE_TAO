@@ -1,6 +1,6 @@
 Thu Mar 22 12:20:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-        * docs/release_notes/index.html:
+        * docs/releasenotes/index.html:
         
           Updated the release notes to reflect the latest status of
           AMI, e.g. AMI timeouts. 
