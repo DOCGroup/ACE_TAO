@@ -222,8 +222,8 @@ class ACE_Export ACE_Thread_Manager
   //    The default behavior of thread manager is to wait on
   //    all threads under it's management when it gets destructed.
   //    Therefore, remember to remove a thread from thread manager if
-  //    you don't want it to wait for the thread.  There are also
-  //    function to diable this default wait-on-exit behavior.
+  //    you don't want it to wait for the thread. There are also
+  //    function to disable this default wait-on-exit behavior.
   //    However, if your program depends on turning this off to run
   //    correctly, you are probably doing something wrong.  Rule of
   //    thumb, use ACE_Thread to manage your daemon threads.
