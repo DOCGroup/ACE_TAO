@@ -87,7 +87,7 @@ struct TAO_Strategies_Export TAO_UIOP_Endpoint_Info
 {
   typedef TAO_UIOP_Endpoint_Info_var _var_type;
   
-  static void _tao_any_destructor (void *);
+  
   TAO_String_Manager rendezvous_point;
   CORBA::Short priority;
 };
@@ -138,8 +138,6 @@ public:
   TAO_UIOPEndpointSequence (const TAO_UIOPEndpointSequence &);
   ~TAO_UIOPEndpointSequence (void);
   
-  static void _tao_any_destructor (void *);
-  
   typedef TAO_UIOPEndpointSequence_var _var_type;
 };
 
@@ -157,22 +155,6 @@ extern TAO_Strategies_Export ::CORBA::TypeCode_ptr const _tc_TAO_UIOPEndpointSeq
 namespace TAO
 {
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Strategies_Export void operator<<= (CORBA::Any &, const TAO_UIOP_Endpoint_Info &); // copying version
-TAO_Strategies_Export void operator<<= (CORBA::Any &, TAO_UIOP_Endpoint_Info*); // noncopying version
-TAO_Strategies_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO_UIOP_Endpoint_Info *&); // deprecated
-TAO_Strategies_Export CORBA::Boolean operator>>= (const CORBA::Any &, const TAO_UIOP_Endpoint_Info *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Strategies_Export void operator<<= (CORBA::Any &, const TAO_UIOPEndpointSequence &); // copying version
-TAO_Strategies_Export void operator<<= (CORBA::Any &, TAO_UIOPEndpointSequence*); // noncopying version
-TAO_Strategies_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO_UIOPEndpointSequence *&); // deprecated
-TAO_Strategies_Export CORBA::Boolean operator>>= (const CORBA::Any &, const TAO_UIOPEndpointSequence *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_structure/cdr_op_ch.cpp:54
