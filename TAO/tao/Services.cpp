@@ -8,7 +8,10 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "Services.h"
+#include "tao/Services.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
+#include "tao/Environment.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Services.i"
@@ -377,5 +380,179 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ServiceInformatio
   }
   ACE_ENDTRY;
   return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const CORBA_ServiceDetail::_tao_seq_Octet &_tao_sequence
+  )
+{
+  if (strm << _tao_sequence.length ())
+  {
+    // encode all elements
+    
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+    {
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+        ACE_dynamic_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (CORBA_ServiceDetail::_tao_seq_Octet *)&_tao_sequence);
+      if (oseq->mb ())
+        return strm.write_octet_array_mb (oseq->mb ());
+      else
+        return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+    }
+    
+#else /* TAO_NO_COPY_OCTET_SEQUENCES */
+    return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+  
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+  }
+  return 0; // error
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ServiceDetail::_tao_seq_Octet &_tao_sequence)
+{
+  CORBA::ULong _tao_seq_len;
+  if (strm >> _tao_seq_len)
+  {
+    // set the length of the sequence
+    _tao_sequence.length (_tao_seq_len);
+    // retrieve all the elements
+    
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+    if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
+    {
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+        ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
+      oseq->replace (_tao_seq_len, strm.start ());
+      oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
+      strm.skip_bytes (_tao_seq_len);
+      return 1;
+    }
+    else
+      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
+    
+#else /* TAO_NO_COPY_OCTET_SEQUENCES */
+    return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+  
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+  }
+  return 0; // error
+}
+
+CORBA::Boolean 
+operator<< (TAO_OutputCDR &strm, const CORBA_ServiceDetail &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.service_detail_type) &&
+    (strm << _tao_aggregate.service_detail)
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+CORBA::Boolean 
+operator>> (TAO_InputCDR &strm, CORBA_ServiceDetail &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.service_detail_type) &&
+    (strm >> _tao_aggregate.service_detail)
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+CORBA::Boolean 
+operator<< (
+            TAO_OutputCDR &strm,
+            const CORBA_ServiceInformation::_tao_seq_ServiceOption &_tao_sequence
+            )
+{
+  if (strm << _tao_sequence.length ())
+  {
+    // encode all elements
+    return strm.write_ulong_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+  }
+  return 0; // error
+}
+
+CORBA::Boolean 
+operator>> (TAO_InputCDR &strm, 
+            CORBA_ServiceInformation::_tao_seq_ServiceOption &_tao_sequence)
+{
+  CORBA::ULong _tao_seq_len;
+  if (strm >> _tao_seq_len)
+  {
+    // set the length of the sequence
+    _tao_sequence.length (_tao_seq_len);
+    // retrieve all the elements
+    return strm.read_ulong_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+  }
+  return 0; // error
+}
+
+CORBA::Boolean 
+operator<< (
+            TAO_OutputCDR &strm,
+            const CORBA_ServiceInformation::_tao_seq_ServiceDetail &_tao_sequence
+            )
+{
+  if (strm << _tao_sequence.length ())
+  {
+    // encode all elements
+    CORBA::Boolean _tao_marshal_flag = 1;
+    for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+      _tao_marshal_flag = (strm << _tao_sequence[i]);
+    return _tao_marshal_flag;
+  }
+  return 0; // error
+}
+
+CORBA::Boolean 
+operator>> (TAO_InputCDR &strm, 
+            CORBA_ServiceInformation::_tao_seq_ServiceDetail &_tao_sequence)
+{
+  CORBA::ULong _tao_seq_len;
+  if (strm >> _tao_seq_len)
+  {
+    // set the length of the sequence
+    _tao_sequence.length (_tao_seq_len);
+    // retrieve all the elements
+    CORBA::Boolean _tao_marshal_flag = 1;
+    for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+      _tao_marshal_flag = (strm >> _tao_sequence[i]);
+    return _tao_marshal_flag;
+  }
+  return 0; // error
+}
+
+CORBA::Boolean 
+operator<< (TAO_OutputCDR &strm, 
+            const CORBA_ServiceInformation &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.service_options) &&
+    (strm << _tao_aggregate.service_details)
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+CORBA::Boolean operator>> (TAO_InputCDR &strm, 
+                           CORBA_ServiceInformation &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.service_options) &&
+    (strm >> _tao_aggregate.service_details)
+  )
+    return 1;
+  else
+    return 0;
+  
 }
 
