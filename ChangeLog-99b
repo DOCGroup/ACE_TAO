@@ -1,3 +1,9 @@
+Tue Jan 19 17:52:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SString.h: Clarified the role of the <release> argument for
+ 	  the <set> method.  Thanks to Sudhanshu Garg
+ 	  <sg2@ladybug.cec.wustl.edu> for suggesting this.
+
 Tue Jan 19 16:15:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * OS.i,README,config-cygwin32-common.h,config-linux-common.h,
