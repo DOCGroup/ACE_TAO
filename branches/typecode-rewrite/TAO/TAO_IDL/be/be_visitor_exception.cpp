@@ -38,6 +38,7 @@
 #include "be_visitor_exception.h"
 #include "be_visitor_context.h"
 #include "be_visitor_field.h"
+#include "be_visitor_typecode.h"
 #include "ace/Log_Msg.h"
 
 #include "be_visitor_exception/exception.cpp"
@@ -51,6 +52,6 @@
 #include "be_visitor_exception/cdr_op_ch.cpp"
 #include "be_visitor_exception/cdr_op_cs.cpp"
 
-ACE_RCSID (be, 
-           be_visitor_exception, 
+ACE_RCSID (be,
+           be_visitor_exception,
            "$Id$")
