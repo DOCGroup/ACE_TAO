@@ -1,3 +1,66 @@
+Thu Sep 23 14:26:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/POA/RootPOA/Makefile: Moved the TAO_ROOT definition
+          check up before it is used.  Thanks to David for pointing this
+          out.
+
+        * Benchmark/Marshal_Test/TAO/Makefile:
+        * Benchmark/benchmark/Makefile:
+        * TAO_IDL/Makefile:
+        * examples/Makefile:
+        * examples/AMI/Makefile:
+        * examples/Advanced/Makefile:
+        * examples/OBV/Makefile:
+        * examples/POA/Makefile:
+        * examples/POA/Adapter_Activator/Makefile:
+        * examples/POA/Explicit_Activation/Makefile:
+        * examples/POA/Loader/Makefile:
+        * examples/POA/On_Demand_Activation/Makefile:
+        * examples/POA/On_Demand_Loading/Makefile:
+        * examples/POA/Reference_Counted_Servant/Makefile:
+        * examples/POA/RootPOA/Makefile:
+        * examples/Simple/Makefile:
+        * examples/Simulator/Makefile:
+        * orbsvcs/Makefile:
+        * orbsvcs/Concurrency_Service/Makefile:
+        * orbsvcs/CosEvent_Service/Makefile:
+        * orbsvcs/Dump_Schedule/Makefile:
+        * orbsvcs/Event_Service/Makefile:
+        * orbsvcs/Naming_Service/Makefile:
+        * orbsvcs/Scheduling_Service/Makefile:
+        * orbsvcs/Trading_Service/Makefile:
+        * orbsvcs/examples/Makefile:
+        * orbsvcs/examples/CosEC/Makefile:
+        * orbsvcs/examples/RtEC/Makefile:
+        * orbsvcs/examples/RtEC/Schedule/Makefile:
+        * orbsvcs/examples/RtEC/Simple/Makefile:
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/AVStreams/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/Makefile:
+        * orbsvcs/tests/CosEC_Basic/Makefile:
+        * orbsvcs/tests/EC_Basic/Makefile:
+        * orbsvcs/tests/EC_Mcast/Makefile:
+        * orbsvcs/tests/EC_Multiple/Makefile:
+        * orbsvcs/tests/Event/Makefile:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/Event_Latency/Makefile:
+        * orbsvcs/tests/Property/Makefile:
+        * orbsvcs/tests/Sched/Makefile:
+        * orbsvcs/tests/Sched_Conf/Makefile:
+        * performance-tests/Makefile:
+        * performance-tests/Cubit/Makefile:
+        * performance-tests/Cubit/TAO/Makefile:
+        * performance-tests/POA/Makefile:
+        * performance-tests/Thruput/Makefile:
+        * tests/Makefile:
+        * tests/NestedUpcall/Makefile:
+        * tests/POA/Makefile:
+        * utils/Makefile:
+        * utils/IOR-parser/Makefile: Added missing rules.tao.GNU.
+          [Bug 326].
+
 Thu Sep 23 11:26:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Globals.h,
