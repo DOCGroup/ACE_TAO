@@ -331,6 +331,12 @@ TAO_ORB_Manager::child_poa (void)
   return PortableServer::POA::_duplicate (this->child_poa_.in ());
 }
 
+PortableServer::POAManager_ptr
+TAO_ORB_Manager::poa_manager (void)
+{
+  return PortableServer::POAManager::_duplicate (this->poa_manager_.in ());
+}
+
 // Destructor.
 
 TAO_ORB_Manager::~TAO_ORB_Manager (void)

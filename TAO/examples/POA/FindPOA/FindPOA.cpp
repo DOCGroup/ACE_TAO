@@ -45,8 +45,16 @@ main (int argc, char **argv)
         PortableServer::POA::_narrow (obj.in(), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Get the POAManager of the RootPOA.
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       // Get a TAO_Adapter_Activator reference
-      TAO_Adapter_Activator activator_impl;
+      TAO_Adapter_Activator activator_impl (poa_manager.in ());
 
       ACE_OS::strcpy (str, "TAO_Adapter_Activator::_this");
       PortableServer::AdapterActivator_var activator =

@@ -50,7 +50,6 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
 
   if (this->forwarding_ == 0) // do not forward
     {
-
       // Convert ObjectID to String.
 
       CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
@@ -84,7 +83,9 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
   else // now forward, in throwing the ForwardRequest Exception
   {
     // Throw forward exception
-    ACE_THROW_RETURN (PortableServer::ForwardRequest (), 0);
+    ACE_THROW_RETURN (PortableServer::ForwardRequest (
+                        CORBA::Object::_duplicate (this->forward_to_var_.in ())),
+                      0);
   }
 }
 
@@ -103,4 +104,3 @@ MyFooServantLocator::forward (CORBA::Environment &)
 {
   this->forwarding_ = 1;
 }
-

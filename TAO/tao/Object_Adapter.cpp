@@ -830,6 +830,9 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
                                 0,
                                 operation);
 
+  // We have setup the POA Current.  Record this for later use.
+  this->state_ = POA_CURRENT_SETUP;
+
   {
     ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_SERVANT_START);
 
@@ -936,11 +939,20 @@ TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
 
       /** Fall through **/
 
+    case POA_CURRENT_SETUP:
+
+      // Teardown current for this request.
+      this->current_context_.teardown ();
+
+      /** Fall through **/
+
     case OBJECT_ADAPTER_LOCK_ACQUIRED:
 
       // Finally, since the object adapter lock was acquired, we must
       // release it.
       this->object_adapter_.lock ().release ();
+
+      /** Fall through **/
 
     case INITIAL_STAGE:
     default:
@@ -994,7 +1006,8 @@ TAO_POA_Current_Impl::setup (TAO_POA *impl,
   this->setup_done_ = 1;
 }
 
-TAO_POA_Current_Impl::~TAO_POA_Current_Impl (void)
+void
+TAO_POA_Current_Impl::teardown (void)
 {
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 

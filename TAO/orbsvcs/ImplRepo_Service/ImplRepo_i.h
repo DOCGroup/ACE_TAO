@@ -42,7 +42,8 @@ class IR_Adapter_Activator : public POA_PortableServer::AdapterActivator
   //    arbitrary requests.  This allows for the setting up of child
   //    POAs with default servants.
 public:
-  IR_Adapter_Activator (IR_Forwarder *servant);
+  IR_Adapter_Activator (IR_Forwarder *servant,
+                        PortableServer::POAManager_ptr poa_manager);
   // Constructor
 
   virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
@@ -55,6 +56,9 @@ public:
 private:
   IR_Forwarder *servant_;
   // The object to use as the default servant.
+
+  PortableServer::POAManager_var poa_manager_;
+  // POA Manager
 };
 
 class ImplRepo_i : public POA_Implementation_Repository
