@@ -103,7 +103,7 @@ ACE_Future_Rep<T>::operator T ()
   // If the value is already produced, return it.
   if (this->value_ == 0)
     {
-      // constructor of ace_mon acquires the mutex
+      // Constructor of ace_mon acquires the mutex.
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->value_ready_mutex_, 0));
 
       // If the value is not yet defined we must block until the
@@ -113,7 +113,10 @@ ACE_Future_Rep<T>::operator T ()
 	{
 	  // wait forever
 	  if (this->value_ready_.wait () == -1)
-	    return 0;
+	    // What to do in this case since we've got to indicate
+	    // failure somehow?  Exceptions would be nice, but they're
+	    // not portable...
+	    return 0; 
 	}
 
       // Destructor releases the mutex

@@ -61,7 +61,7 @@ Priority_Task::open (void *arg)
 int
 Priority_Task::svc (void)
 {
-  // set up logging for this thread
+  // Set up logging for this thread.
   ACE_NEW_THREAD;
 
   ACE_hthread_t thr_handle;
