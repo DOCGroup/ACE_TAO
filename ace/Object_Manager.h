@@ -24,53 +24,58 @@ class ACE_Export ACE_Object_Manager
   //     Manager for ACE library services.
   //
   // = DESCRIPTION
-  // This class shuts down ACE library services, reclaiming their storage,
-  // at program termination.  It does that by creating a static instance,
-  // whose destructor gets called along with those of all other static
-  // objects.  Hooks are provided for application code to register objects
-  // and arrays for destruction.
-  // Please note that the order of such destructor calls is not specified.
-  // Therefore, these destructors should not depend on any of the static
-  // instances.  Also note that ACE_Log_Msg currently takes care of its
-  // own cleanup.
-  // It would be worth adding a capability to do the shutdown prior to
-  // static object destruction, e.g., via an at_exit () call.  Without
-  // that capability, on VxWorks, for example, the program can be unloaded
-  // for this to work.  (On VxWorks, alternatively, the explicity OS calls
-  // to call all static destructors and constructors could be used.)
+  //     This class shuts down ACE library services, reclaiming their
+  //     storage, at program termination.  It does that by creating a
+  //     static instance, whose destructor gets called along with
+  //     those of all other static objects.  Hooks are provided for
+  //     application code to register objects and arrays for
+  //     destruction.  Please note that the order of such destructor
+  //     calls is not specified.  Therefore, these destructors should
+  //     not depend on any of the static instances.  Also note that
+  //     ACE_Log_Msg currently takes care of its own cleanup.  It
+  //     would be worth adding a capability to do the shutdown prior
+  //     to static object destruction, e.g., via an <at_exit> call.
+  //     Without that capability, on VxWorks, for example, the program
+  //     must be unloaded for this to work.  (On VxWorks,
+  //     alternatively, the explicity OS calls  to call all static
+  //     destructors and constructors could be used.) 
 {
 public:
-  static ACE_Object_Manager *instance ();
+  static ACE_Object_Manager *instance (void);
   // Accessor to singleton instance.
 
   static int delete_at_exit (void *object);
-  // Register an object for deletion at program termination.
-  // Returns 0 on success, non-zero on failure: -1 if virtual
-  // memory is exhausted or 1 if the object had already been
-  // registered.
+  // Register an object for deletion at program termination.  Returns
+  // 0 on success, non-zero on failure: -1 if virtual memory is
+  // exhausted or 1 if the object had already been registered.
 
-  static int delete_array_at_exit (void *array);
-  // Register an array for deletion at program termination.
-  // Returns 0 on success, non-zero on failure: -1 if virtual
-  // memory is exhausted or 1 if the object had already been
-  // registered.
+  void delete_array_at_exit (void *);
+  // Register an array for deletion at program termination.  Returns 0
+  // on success, non-zero on failure: -1 if virtual memory is
+  // exhausted or 1 if the object had already been registered.  Note
+  // that we need to distinguish arrays from objects so that we can
+  // use the [] operator.
 
 private:
   static ACE_Object_Manager *instance_;
+  // Singleton pointer.
 
   ACE_Unbounded_Queue<void *> registered_objects_;
+  // Keeps track of all the register objects (i.e., non-arrays). 
+
   ACE_Unbounded_Queue<void *> registered_arrays_;
+  // Keeps track of all the register arrays.
 
-  ACE_Object_Manager ();
-  ~ACE_Object_Manager ();
+  ACE_Object_Manager (void);
+  ~ACE_Object_Manager (void);
 
-  int delete_at_exit_ (void *);
+  int delete_at_exit_i (void *);
   // Register an object for deletion at program termination.
   // See description of static version above for return values.
 
-  int delete_array_at_exit_ (void *);
-  // Register an array for deletion at program termination.
-  // See description of static version above for return values.
+  int delete_array_at_exit_i (void *);
+  // Register an array for deletion at program termination.  See
+  // description of static version above for return values.
 
   friend class ACE_Object_Manager_Destroyer;
 };
