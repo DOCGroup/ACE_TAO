@@ -1,3 +1,86 @@
+Tue Feb 23 17:22:00 1999 Chris Gill  <cdgill@cs.wustl.edu>
+
+        * examples/Simulator/DOVEBrowser/make.bat
+          examples/Simulator/DOVEMIB/DOVEMIB.dsp
+          examples/Simulator/DOVEMIB/DOVEMIBx.dsp
+          examples/Simulator/DOVEMIB/TestClient.dsp
+          examples/Simulator/Event_Supplier/DualEC_Sup.dsp
+          examples/Simulator/Event_Supplier/Event_Sup.dsp
+          examples/Simulator/Event_Supplier/Logging_Sup.dsp
+          orbsvcs/tests/Simulator/Makefile
+          orbsvcs/tests/Simulator/NavWeap.idl
+          orbsvcs/tests/Simulator/README
+          orbsvcs/tests/Simulator/DOVEBrowser/AnswerEvent.java
+          orbsvcs/tests/Simulator/DOVEBrowser/AnswerListener.java
+          orbsvcs/tests/Simulator/DOVEBrowser/DOVEBrowser.html
+          orbsvcs/tests/Simulator/DOVEBrowser/DOVEBrowser.java
+          orbsvcs/tests/Simulator/DOVEBrowser/DOVEBrowserApplet.java
+          orbsvcs/tests/Simulator/DOVEBrowser/DataHandler.java
+          orbsvcs/tests/Simulator/DOVEBrowser/DemoCore.java
+          orbsvcs/tests/Simulator/DOVEBrowser/DemoObservable.java
+          orbsvcs/tests/Simulator/DOVEBrowser/DoubleVisComp.java
+          orbsvcs/tests/Simulator/DOVEBrowser/MTDataHandlerAdapter.java
+          orbsvcs/tests/Simulator/DOVEBrowser/MTQueue.java
+          orbsvcs/tests/Simulator/DOVEBrowser/Makefile
+          orbsvcs/tests/Simulator/DOVEBrowser/NS_Resolve.java
+          orbsvcs/tests/Simulator/DOVEBrowser/NavWeapDataHandler.java
+          orbsvcs/tests/Simulator/DOVEBrowser/NavigationVisComp.java
+          orbsvcs/tests/Simulator/DOVEBrowser/ObservablesDialog.java
+          orbsvcs/tests/Simulator/DOVEBrowser/Properties.java
+          orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java
+          orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java.JDK1.2
+          orbsvcs/tests/Simulator/DOVEBrowser/PushConsumerFactory.java
+          orbsvcs/tests/Simulator/DOVEBrowser/PushConsumerFactory.java.JDK1.2
+          orbsvcs/tests/Simulator/DOVEBrowser/Queue.java
+          orbsvcs/tests/Simulator/DOVEBrowser/VisComp.java
+          orbsvcs/tests/Simulator/DOVEBrowser/VisCompFactory.java
+          orbsvcs/tests/Simulator/DOVEBrowser/WeaponsVisComp.java
+          orbsvcs/tests/Simulator/DOVEBrowser/make.bat
+          orbsvcs/tests/Simulator/DOVEMIB/AnyAnalyser.cpp
+          orbsvcs/tests/Simulator/DOVEMIB/AnyAnalyser.h
+          orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.cpp
+          orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.dsp
+          orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.dsw
+          orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.h
+          orbsvcs/tests/Simulator/DOVEMIB/DOVEMIBx.dsp
+          orbsvcs/tests/Simulator/DOVEMIB/Makefile
+          orbsvcs/tests/Simulator/DOVEMIB/Node.cpp
+          orbsvcs/tests/Simulator/DOVEMIB/Node.h
+          orbsvcs/tests/Simulator/DOVEMIB/NodeVisitor.h
+          orbsvcs/tests/Simulator/DOVEMIB/PrintVisitor.cpp
+          orbsvcs/tests/Simulator/DOVEMIB/PrintVisitor.h
+          orbsvcs/tests/Simulator/DOVEMIB/TestClient.dsp
+          orbsvcs/tests/Simulator/DOVEMIB/any_test.idl
+          orbsvcs/tests/Simulator/DOVEMIB/any_test_i.cpp
+          orbsvcs/tests/Simulator/DOVEMIB/any_test_i.h
+          orbsvcs/tests/Simulator/DOVEMIB/clnt.cpp
+          orbsvcs/tests/Simulator/DOVEMIB/clnt.h
+          orbsvcs/tests/Simulator/DOVEMIB/svc.conf
+          orbsvcs/tests/Simulator/DOVEMIB/svr.cpp
+          orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp
+          orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.h
+          orbsvcs/tests/Simulator/Event_Supplier/DualEC_Sup.cpp
+          orbsvcs/tests/Simulator/Event_Supplier/DualEC_Sup.dsp
+          orbsvcs/tests/Simulator/Event_Supplier/DualEC_Sup.h
+          orbsvcs/tests/Simulator/Event_Supplier/EDF.dat
+          orbsvcs/tests/Simulator/Event_Supplier/Event_Con.cpp
+          orbsvcs/tests/Simulator/Event_Supplier/Event_Con.h
+          orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp
+          orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.dsp
+          orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.dsw
+          orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.h
+          orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.cpp
+          orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.dsp
+          orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.h
+          orbsvcs/tests/Simulator/Event_Supplier/MLF.dat
+          orbsvcs/tests/Simulator/Event_Supplier/MUF.dat
+          orbsvcs/tests/Simulator/Event_Supplier/Makefile
+          orbsvcs/tests/Simulator/Event_Supplier/RMS.dat
+          orbsvcs/tests/Simulator/Event_Supplier/RMS_Dyn.dat
+          orbsvcs/tests/Simulator/Event_Supplier/svc.conf: moved the DOVE
+	  Simulator from orbsvcs/tests to examples (adjusting NT project
+	  files and batch scripts accordingly).
+
 Tue Feb 23 16:53:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (run):
