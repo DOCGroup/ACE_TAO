@@ -174,7 +174,9 @@ module CosTrading {
 		enum HowManyProps { none, some, all };
 
 		union SpecifiedProps switch ( HowManyProps ) {
+		        case none: long corba_long1;
 			case some: PropertyNameSeq prop_names;
+			case all: long corba_long2;
 		};
 
 		exception IllegalPreference {
