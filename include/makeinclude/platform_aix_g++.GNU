@@ -1,8 +1,8 @@
 # $Id$
 #
 # Platform macros for building on AIX with g++.  This has been tested on
-# AIX 4.3 with gcc 3. Earlier versions of gcc may compile, but are known to
-# have serious problems on AIX.
+# AIX 4.3 and 5 with gcc 3. Earlier versions of gcc may compile, but are
+# known to have serious problems on AIX.
 #
 # Contributed by Ian Wright <I.Wright@elsevier.co.uk>
 # Updated for AIX 4.3 and gcc 3 by Steve Huston  <shuston@riverace.com>
@@ -40,6 +40,10 @@ SOEXT       = a
 # aix_build turns on the funky shared library building code in
 # rules.lib.GNU
 aix_build = 1
+
+ifeq (0,$(rtti))
+  CFLAGS += -fno-rtti
+endif
 
 ifeq (1,$(threads))
   CFLAGS  += -pthread
