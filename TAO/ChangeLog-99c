@@ -1,3 +1,8 @@
+Sun Jan 24 17:04:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/tests/ImplRepo/Repository_Test.cpp: Removed inclusion of
+	  <iostream.h>.  ACE should take care of it.
+
 Sun Jan 24 00:48:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/ImplRepo_Service/Ping.idl:
@@ -22,14 +27,14 @@ Sun Jan 24 00:48:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * orbsvcs/Time_Service/Server_i.cpp:
         * orbsvcs/Time_Service/Time_Service_Clerk.dsp:
         * orbsvcs/Time_Service/Time_Service_Server.dsp:
-          Changed because the IR IDL files moved, and also fixed various 
-          warnings on NT (mainly just changing TAO_CHECK_ENV_RETURNs to 
+          Changed because the IR IDL files moved, and also fixed various
+          warnings on NT (mainly just changing TAO_CHECK_ENV_RETURNs to
           TAO_CHECK_ENV - since it looks like the result was the same).
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
           Only one test now runs at a time.
 
-        * orbsvcs/tests/Time/Time_Service_Test.dsp: 
+        * orbsvcs/tests/Time/Time_Service_Test.dsp:
         * orbsvcs/tests/Time/run_test.pl:
           Fixed various problems on NT.
 
@@ -39,17 +44,17 @@ Sat Jan 23 22:29:12 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * docs/implrepo/paper.html:
         * docs/implrepo/index.html:
           Moved the IR document to the implrepo subdirectory and updated
-          it to address comments from John Mulhern 
+          it to address comments from John Mulhern
           <9107@mn3.lawson.lawson.com>.
 
-        * docs/orbsvcs.html: Added information about the Implementation 
+        * docs/orbsvcs.html: Added information about the Implementation
           Repository.
 
         * TAO-INSTALL.html: Updated the Unix compile instructions.
 
 Sat Jan 23 19:44:32 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: Hopefully fixed some 
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: Hopefully fixed some
           warnings on g++.
 
 Sat Jan 23 11:59:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
