@@ -124,6 +124,7 @@ while ( $#ARGV >= 0)
 }
 
 if ($infile eq "") {
+    print "Using default svc.conf name\n" if ($verbose != 0);
     $infile = "svc.conf";
 }
 
@@ -171,13 +172,13 @@ while (length ($_) != 0) {
           print "close module\n" if ($verbose);
       }
 
-      if (s/^\s*stream\s+dynamic\s+(\w+)\s+(\w+)\s*\*\s*(\S+):(\S+)\s*\(\s*\)(\s+"([^"]+)")?(\s+(active|inactive))?//) {
+      if (s/^\s*stream\s+dynamic\s+(\w+)\s+(\w+)\s*\*\s*(\S+):(\S+)\s*\(\s*\)(\s+(active|inactive))?(\s+"([^"]+)")?//) {
           $name = $1;
           $type = $2;
-          $init = $3;
-          $path = $4;
-          $param = $6;
-          $state = $8;
+          $path = $3;
+          $init = $4;
+          $state = $6;
+          $param = $8;
           acexml_start ("streamdef");
           if ($status ne "") {
               push @attnames, ("status");
@@ -226,13 +227,13 @@ while (length ($_) != 0) {
           print "stream $name\n" if ($verbose);
       }
 
-      if (s/^\s*dynamic\s+(\w+)\s+(\w+)\s*\*\s*(\S+):(\S+)\s*\(\s*\)(\s+"([^"]+)")?(\s+(active|inactive))?//) {
+      if (s/^\s*dynamic\s+(\w+)\s+(\w+)\s*\*\s*(\S+):(\S+)\s*\(\s*\)(\s+(active|inactive))?(\s+"([^"]+)")?//) {
           $name = $1;
           $type = $2;
-          $init = $3;
-          $path = $4;
-          $param = $6;
-          $state = $8;
+          $path = $3;
+          $init = $4;
+          $state = $6;
+          $param = $8;
           if ($status ne "") {
               push @attnames, ("status");
               push @attvalues, ("$state");

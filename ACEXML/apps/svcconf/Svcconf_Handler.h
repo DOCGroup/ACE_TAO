@@ -14,17 +14,11 @@
 #define ACEXML_SVCCONF_HANDLER_H
 
 #include "common/DefaultHandler.h"
+#include "ace/Service_Types.h"
 
 class ACE_Parsed_Info
 {
 public:
-  typedef enum {
-    MODULE_TYPE,
-    SERVICE_OBJECT_TYPE,
-    STREAM_TYPE,
-    INVALID_TYPE
-  } Service_Type;
-
   ACE_Parsed_Info ();
   ~ACE_Parsed_Info ();
 
@@ -37,8 +31,8 @@ public:
   /**
    * Set/get type of a dynamic node.
    */
-  int service_type (Service_Type type);
-  Service_Type service_type (void);
+  int service_type (int type);
+  int service_type (void);
 
   /**
    * Set/Get active status.
@@ -71,7 +65,7 @@ public:
 
 protected:
   ACEXML_Char *name_;
-  Service_Type service_type_;
+  int service_type_;
   int active_;
   ACEXML_Char *path_;
   ACEXML_Char *init_func_;
@@ -293,6 +287,12 @@ private:
 
   /// We are defining a steam module
   int in_module_;
+
+  /// @a stream_ holds the actually Stream_Type object managed by @a stream_svc_type_.
+  ACE_Service_Type *stream_svc_type_;
+  ACE_Stream_Type *stream_;
+
+  ACE_SHLIB_HANDLE dll_handle_;
 
   ACE_Parsed_Info parsed_info_;
 

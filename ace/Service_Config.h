@@ -14,12 +14,11 @@
 #define ACE_SERVICE_CONFIG_H
 #include "ace/pre.h"
 
-#include "ace/Service_Object.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Types.h"
 #include "ace/Signal.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Unbounded_Set.h"
@@ -29,7 +28,6 @@
 
 // Forward decl.
 class ACE_Service_Repository;
-class ACE_Service_Type;
 class ACE_Allocator;
 class ACE_Reactor;
 class ACE_Thread_Manager;
@@ -260,11 +258,11 @@ public:
   /// Dynamically link the shared object file and retrieve a pointer to
   /// the designated shared object in this file.
   static int initialize (const ACE_Service_Type *,
-                         ACE_TCHAR parameters[]);
+                         const ACE_TCHAR *parameters);
 
   /// Initialize and activate a statically <svc_name> service.
-  static int initialize (const ACE_TCHAR svc_name[],
-                         ACE_TCHAR parameters[]);
+  static int initialize (const ACE_TCHAR *svc_name,
+                         const ACE_TCHAR *parameters);
 
   /// Resume a <svc_name> that was previously suspended or has not yet
   /// been resumed (e.g., a static service).
@@ -354,6 +352,18 @@ public:
    *        for a list of files and here a list of services.
    */
   static int parse_args (int, ACE_TCHAR *argv[]);
+#if ! defined (ACE_USES_CLASSIC_SVC_CONF) || (ACE_USES_CLASSIC_SVC_CONF == 0)
+  static ACE_Service_Type *create_service_type  (const ACE_TCHAR *n,
+                                                 ACE_Service_Type_Impl *o,
+                                                 const ACE_SHLIB_HANDLE handle,
+                                                 int active);
+
+  static ACE_Service_Type_Impl *create_service_type_impl (const ACE_TCHAR *name,
+                                                          int type,
+                                                          void *symbol,
+                                                          u_int flags,
+                                                          ACE_Service_Object_Exterminator gobbler);
+#endif /* !ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 0 */
 protected:
   /// Process service configuration requests that were provided on the
   /// command-line.  Returns the number of errors that occurred.

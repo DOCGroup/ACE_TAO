@@ -227,11 +227,66 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
+#if ! defined (ACE_USES_CLASSIC_SVC_CONF) || (ACE_USES_CLASSIC_SVC_CONF == 0)
+ACE_Service_Type *
+ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
+                                          ACE_Service_Type_Impl *o,
+                                          const ACE_SHLIB_HANDLE handle,
+                                          int active)
+{
+  ACE_Service_Type *sp = 0;
+  ACE_NEW_RETURN (sp,
+                  ACE_Service_Type (n, o, handle, active),
+                  0);
+  return sp;
+}
+
+ACE_Service_Type_Impl *
+ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
+                                              int type,
+                                              void *symbol,
+                                              u_int flags,
+                                              ACE_Service_Object_Exterminator gobbler)
+{
+  ACE_Service_Type_Impl *stp = 0;
+
+  // Note, the only place we need to put a case statement.  This is
+  // also the place where we'd put the RTTI tests, if the compiler
+  // actually supported them!
+
+  switch (type)
+    {
+    case ACE_Service_Type::SERVICE_OBJECT:
+      ACE_NEW_RETURN (stp,
+                      ACE_Service_Object_Type ((ACE_Service_Object *) symbol,
+                                               name, flags,
+                                               gobbler),
+                      0);
+      break;
+    case ACE_Service_Type::MODULE:
+      ACE_NEW_RETURN (stp,
+                      ACE_Module_Type (symbol, name, flags),
+                      0);
+      break;
+    case ACE_Service_Type::STREAM:
+      ACE_NEW_RETURN (stp,
+                      ACE_Stream_Type (symbol, name, flags),
+                      0);
+      break;
+    default:
+      ACE_ERROR ((LM_ERROR,
+                  ACE_LIB_TEXT ("unknown case\n")));
+      break;
+    }
+  return stp;
+
+}
+#endif /* !ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 0 */
 // Initialize and activate a statically linked service.
 
 int
-ACE_Service_Config::initialize (const ACE_TCHAR svc_name[],
-                                ACE_TCHAR *parameters)
+ACE_Service_Config::initialize (const ACE_TCHAR *svc_name,
+                                const ACE_TCHAR *parameters)
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
@@ -271,7 +326,7 @@ ACE_Service_Config::initialize (const ACE_TCHAR svc_name[],
 
 int
 ACE_Service_Config::initialize (const ACE_Service_Type *sr,
-                                ACE_TCHAR parameters[])
+                                const ACE_TCHAR *parameters)
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
