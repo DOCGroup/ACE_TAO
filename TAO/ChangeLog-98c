@@ -1,3 +1,33 @@
+Fri Mar  6 17:56:25 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* Aloha: I bid fond farewall to Team TAO for now.  Thanks for the
+ 	fun times!
+	
+	* tests/NestedUpcall/server.cpp: Integrated new stuff.
+
+	* tests/NestedUpcall/client.cpp: Called new 'stop' method.
+
+	* tests/NestedUpcall/{Reactor.idl,reactor_i.*}: Added 'stop' to Reactor
+ 	interface to shutdown the server.
+
+	* tao/tao_util.cpp: Added code to explicitly destroy policies
+ 	after creating a child POA.
+
+	* tao/poaS.h: Added a little comment to bring this up in C++ mode
+ 	in emacs.
+
+	* tao/poa.cpp: Performed explicit deletes on buffers.
+
+	* tao/object.{cpp,i}: Moved DTOR into .cpp and stuck in comment
+ 	explaining refcount semantics on CORBA_Object.
+
+	* tao/iiopobj.i: Changed initial refcount value to zero; the ORB
+ 	Core must perform an explicit AddRef() if it intends to hold on to
+ 	this object.
+
+	* tao/iiopobj.cpp: Changed Release() so that it will call 'delete
+ 	this' whenever the refcount is below zero.
+
 Fri Mar 06 11:38:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/Options.html: Shrinked the table widths to 80% so we can

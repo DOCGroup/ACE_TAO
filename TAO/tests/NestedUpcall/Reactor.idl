@@ -45,4 +45,7 @@ interface Reactor
   UShort decrement (in EventHandler eh, in UShort num);
   // Decrements <num> by invoking the <decrement> operation on <eh>
   // and returning that value, finally stopping when it gets to zero.
+
+  void stop ();
+  // Stops the reactor.
 };

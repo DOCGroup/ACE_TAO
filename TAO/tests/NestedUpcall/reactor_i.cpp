@@ -63,9 +63,16 @@ Reactor_i::decrement (EventHandler_ptr eh,
   else
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reactor::decrement() invoking EventHandler::decrement(%d)%$", num));
-      ret = eh->decrement (_this (env), num, env);
+      Reactor_var me = _this (env);
+      ret = eh->decrement (me.in (), num, env);
     }
   ACE_DEBUG ((LM_DEBUG, "%}(%P|%t) Reactor::decrement() returning %d\n", ret));
   return ret;
 }
 
+void
+Reactor_i::stop (CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) stopping.\n"));
+  TAO_ORB_Core_instance ()->orb ()->shutdown ();
+}

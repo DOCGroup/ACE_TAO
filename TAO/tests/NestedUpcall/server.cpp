@@ -14,6 +14,7 @@
 // ============================================================================
 
 #include "tao/corba.h"
+#include "tao/tao_util.h"
 #include "reactor_i.h"
 
 int
@@ -24,7 +25,7 @@ main (int argc, char* argv[])
 
   TAO_TRY
     {
-#if !defined(USE_ORBMGR)
+#if defined(DONT_USE_ORBMGR)
       // @@ Chris, can you please try to replace most of this boiler
       // plate code with the TAO_Object_Manager stuff that Sumedh has
       // devised?  If we need to generalize his implementation to
@@ -83,24 +84,25 @@ main (int argc, char* argv[])
       // and register!
       Reactor_i *reactor_impl = 0;
       ACE_NEW_RETURN (reactor_impl, Reactor_i, -1);
-#if !defined(USE_ORBMGR)
+#if defined(DONT_USE_ORBMGR)
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("Reactor");
 
       poa->activate_object_with_id (id.in (),
                                     reactor_impl, TAO_TRY_ENV);
 #else
-      om.activate_under_child_poa ("Reactor", reactor_impl, TAO_TRY_ENV);
+      CORBA::String s = om.activate_under_child_poa ("Reactor", reactor_impl, TAO_TRY_ENV);
+      CORBA::string_free (s);
 #endif
       TAO_CHECK_ENV;
       
 
       // Stringify the object
-      Reactor_var reactor = reactor_impl->_this (TAO_TRY_ENV);
+      Reactor_ptr reactor = reactor_impl->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       CORBA::String_var str =
-        orb->object_to_string (reactor.in (), TAO_TRY_ENV);
+        orb->object_to_string (reactor, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -108,7 +110,12 @@ main (int argc, char* argv[])
                   str.in ()));
       
       // Run the server now.
+#if defined(DONT_USE_ORBMGR)
       orb->run ();
+#else
+      om.run (TAO_TRY_ENV);
+#endif
+      CORBA::release (reactor);
     }
   TAO_CATCHANY
     {

@@ -28,6 +28,9 @@ public:
                                    CORBA::Environment &env);
   // deccrement <num> by calling decrement thru <eh> until zero is
   // reached, then return.
+
+  virtual void stop (CORBA::Environment &env);
+  // Stops the reactor.
 };
 
 #endif /* REACTOR_I_H */
