@@ -1,3 +1,38 @@
+Wed Oct 27 17:06:31 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Protocols_Hooks.h (keep_alive_, dont_route_, no_delay_):
+
+	  Changed these class members to be of type "int" instead of
+	  CORBA::Boolean.  setsockopt() expects the data types of these
+	  socket options to be an int, not a boolean type of size 1.  See
+	  Unix Network Programming: Volume 1 by Richard Stevens for
+	  details.
+
+	* tao/IIOP_Connection_Handler.h:
+
+	  Nuked trailing whitespace.
+
+	* tao/IIOP_Connection_Handler.cpp (open):
+	* tao/Strategies/SCIOP_Connection_Handler.cpp (open):
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp (open):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp (open):
+
+	  Pass "sizeof (protocol_properties.no_delay)" rather than
+	  "sizeof (int)" to the set_option() method.  "sizeof (int)" is
+	  correct, but the corresponding variable "no_delay" in
+	  *_Protocol_Properties was incorrectly defined as a
+	  CORBA::Boolean, which resulted in data type/size mismatch in the
+	  arguments passed to setsockopt().  This change prevents data
+	  type/size mismatches from reoccuring should the data type be
+	  changed in the future, even though it remain as "int".
+	  Addresses a "contains uninitialised or unaddressable byte(s)"
+	  error exhibited by valgrind.
+
+	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
+
+	  Include "tao/Environment.h" to explicitly pull in
+	  CORBA::Environment class declaration.
+
 Wed Oct 27 12:00:25 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP.mpc:
