@@ -1,3 +1,8 @@
+Thu Aug 26 12:11:09 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: added guidelines to avoid
+          default arguments, and favor narrow interfaces.
+
 Thu Aug 26 11:44:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Time_Value_Test.cpp (main): added static casts
