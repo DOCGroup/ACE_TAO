@@ -2,29 +2,19 @@
 //
 // $Id$
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_nil (void)
 {
   return (CORBA::AbstractBase_ptr)0;
 }
 
-/// Just call _duplicate and let it decide what to do.
-ACE_INLINE 
-CORBA::AbstractBase_ptr
+ACE_INLINE CORBA::AbstractBase_ptr
 CORBA::AbstractBase::_narrow (CORBA::AbstractBase_ptr obj
-                              ACE_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL)
 {
-  return CORBA::AbstractBase::_duplicate (obj);
-}
-
-/// Same for this one.
-ACE_INLINE 
-CORBA::AbstractBase_ptr
-CORBA::AbstractBase::_unchecked_narrow (CORBA::AbstractBase_ptr obj
-                                        ACE_ENV_ARG_DECL_NOT_USED)
-{
-  return CORBA::AbstractBase::_duplicate (obj);
+  return CORBA::AbstractBase::_unchecked_narrow (obj
+                                                 ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE
@@ -91,4 +81,3 @@ CORBA::AbstractBase::_is_local (void) const
 {
   return this->is_local_;
 }
-

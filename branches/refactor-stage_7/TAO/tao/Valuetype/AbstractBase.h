@@ -89,26 +89,42 @@ namespace CORBA
     /// Used in the implementation of CORBA::Any
     static void _tao_any_destructor (void*);
 
+    /// Spec required conversion operations
     CORBA::Object_ptr _to_object (void);
     CORBA::ValueBase *_to_value (void);
 
     virtual CORBA::Boolean _is_a (const char *type_id
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
     virtual const char* _interface_repository_id (void) const;
+
+    /// TAO specific operation
+    virtual void *_tao_QueryInterface (ptrdiff_t type);
     virtual const char* _tao_obv_repository_id (void) const;
     virtual void *_tao_obv_narrow (ptrdiff_t type_id);
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &strm);
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &strm);
 
+    /// Memmory management operations
     virtual void _add_ref (void);
     virtual void _remove_ref (void);
 
     CORBA::Boolean _is_objref (void) const;
+
+    /// Return the stub object
     TAO_Stub *_stubobj (void) const;
+
+    /// Acessors
     CORBA::Boolean _is_collocated (void) const;
     TAO_Abstract_ServantBase *_servant (void) const;
     CORBA::Boolean _is_local (void) const;
+
+    /// Return the equivalent object reference.
+    /**
+     * The object is not refcounted. The caler should not put this in
+     * a var or some such thing. The memory is owned by <this>
+     * object.
+     */
+    CORBA::Object_ptr equivalent_objref (void);
 
   protected:
 
@@ -121,6 +137,7 @@ namespace CORBA
 
     CORBA::Boolean is_objref_;
 
+
   private:
 
     AbstractBase & operator= (const AbstractBase &);
@@ -128,10 +145,16 @@ namespace CORBA
     virtual CORBA::ValueBase *_tao_to_value (void);
 
   private:
+
     TAO_Stub *concrete_stubobj_;
     CORBA::Boolean is_collocated_;
     TAO_Abstract_ServantBase *servant_;
     CORBA::Boolean is_local_;
+
+    /// Our equivalent CORBA::Object version
+    /// @@todo: We may at some point of time should probably cache a
+    /// version of  CORBA::ValueBase
+    CORBA::Object_var equivalent_obj_;
   };
 }
 
