@@ -1,3 +1,9 @@
+Sat Mar 13 16:16:13 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/021:  Added some comments to page04 about the
+	template parameters and the use of the ACE_LOCK parameter in
+	particular.  (Thanks to Bala for the suggestion.)
+
 Sat Mar 13 13:27:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (timezone,tzset): not supported on VxWorks.

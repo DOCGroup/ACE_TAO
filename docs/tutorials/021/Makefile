@@ -64,7 +64,7 @@ HTML : #
 
 SHAR : #
 	[ ! -f combine.shar ] || exit 1
-	shar -T hdr bodies *.pre > combine.shar && rm -f hdr bodies *.pre *.pst
+	shar -T hdr bodies *.pre *.pst > combine.shar && rm -f hdr bodies *.pre *.pst
 
 UNSHAR : #
 	sh combine.shar

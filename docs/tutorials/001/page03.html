@@ -44,16 +44,16 @@ appropriate section (event_handler) which would cater to his needs.
 
 <font color=red>/* A SOCK_Acceptor knows how to accept socket connections.  We'll use
   one of those at the heart of our Logging_Acceptor.  */</font>
-<font color=blue>#include</font> "<font color=green>ace/SOCK_Acceptor.h</font>"
+<font color=blue>#include</font> "<A HREF="../../../ace/SOCK_Acceptor.h">ace/SOCK_Acceptor.h</A>"
 
 <font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
-# pragma once
+<font color=blue># pragma</font> <font color=purple>once</font>
 <font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
 
 <font color=red>/* An Event_Handler is what you register with ACE_Reactor.  When
   events occur, the reactor will callback on the Event_Handler.  More
   on that in a few lines.  */</font>
-<font color=blue>#include</font> "<font color=green>ace/Event_Handler.h</font>"
+<font color=blue>#include</font> "<A HREF="../../../ace/Event_Handler.h">ace/Event_Handler.h</A>"
 
 <font color=red>/* When a client connects, we'll create a Logging_Handler to deal with
   the connection.  Here, we bring in that declaration.  */</font>

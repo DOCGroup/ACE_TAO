@@ -28,7 +28,7 @@
 <font color=blue>#define</font> <font color=purple>MPOOL_H</font>
 
 <font color=red>// Everything else we need is in this one header</font>
-<font color=blue>#include</font> "<font color=green>ace/Malloc.h</font>"
+<font color=blue>#include</font> "<A HREF="../../../ace/Malloc.h">ace/Malloc.h</A>"
 
 <font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_SYSV_SHMEM</font>)
 
@@ -47,7 +47,7 @@ public:
   Allocator (const char * _name = "<font color=green>MemoryPool</font>");
   ~Allocator (void);
 
-  typedef ACE_Malloc&lt;ACE_MMAP_Memory_Pool, ACE_SV_Semaphore_Simple> pool_t;
+  typedef ACE_Malloc&lt;ACE_MMAP_MEMORY_POOL, ACE_SV_Semaphore_Simple> pool_t;
 
   <font color=red>// Provide an accessor to the pool.  This will also allocate the</font>
   <font color=red>// pool when first invoked.</font>
@@ -89,5 +89,21 @@ public:
 <font color=blue>#endif</font> <font color=red>/* ACE_LACKS_SYSV_SHMEM */</font>
 <font color=blue>#endif</font> <font color=red>/* MPOOL_H */</font>
 </PRE>
+<HR>
+    The really hard stuff is done by the ACE_Malloc<> template.  This
+      template takes two parameters.<sup>*</sup>  The first is a
+      memory pool class to use.  ACE has several, I've choosen one
+      that uses a memory-mapped file.  The second parameter is a lock
+      class of some sort.  This is needed so that the ACE_Malloc<> can 
+        protect its internal data.  Note that you still have to
+        provide your own mutex around the data you put into the
+        malloc'd area.
+
+<P>
+          * Actually, some implementations may require a different
+          number of parameters.
+        That's why ACE uses those funky macros.  ACE_MMAP_MEMORY_POOL
+        for instance turns into ACE_MMAP_Memory_Pool on Linux but may
+        do other things on your platform.
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page05.html">Continue This Tutorial</A>]</CENTER>
