@@ -29,6 +29,7 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Wheel.h"
 #include "ace/Free_List.h"
+#include "ace/Pipe.h"
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
     (defined (ACE_HAS_AIO_CALLS))
@@ -40,6 +41,9 @@ class ACE_Asynch_Result;
 class ACE_Asynch_Operation;
 class ACE_Proactor_Timer_Handler;
 class ACE_Proactor;
+#if defined (ACE_HAS_AIO_CALLS)
+class ACE_AIO_Accept_Handler;
+#endif /* ACE_HAS_AIO_CALLS */
 
 class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
 {
@@ -108,7 +112,17 @@ public:
   // <ACE_Asynch_Operation> to store some information with the
   // Proactor after an <aio_> call is issued, so that the Proactor can
   // retrive this information to do <aio_return> and <aio_error>. 
+
+#if defined (ACE_HAS_AIO_CALLS)
+  friend class ACE_Asynch_Accept_Handler;
+  // For POSIX4 implementation, this class takes care of doing the
+  // Asynch_Accept.
   
+  friend class ACE_AIO_Accept_Handler;
+  // We need also this class with the Proactor to take care of
+  // Asynch_Accept when we use AIO_CONTROL_BLOCKS.
+#endif /* ACE_HAS_AIO_CALLS */
+
   // = Here are the typedefs that the <ACE_Proactor> uses.
   
   // @@ Can these typedefs be capitalized?
@@ -145,6 +159,7 @@ public:
                                      ACE_SYNCH_RECURSIVE_MUTEX>
           Timer_Wheel_Iterator;
 
+#if defined (ACE_HAS_AIO_CALLS)
   enum POSIX_COMPLETION_STRATEGY
   {
     // Use the real time signals and do <sigtimedwait> on the
@@ -156,11 +171,12 @@ public:
   };
   // For Posix4-Compliat-Unix systems how the completion of the
   // asynchronous calls should be got from the OS.
+#endif /* ACE_HAS_AIO_CALLS */
 
   ACE_Proactor (size_t number_of_threads = 0,
 		Timer_Queue *tq = 0,
 		int used_with_reactor_event_loop = 0,
-                POSIX_COMPLETION_STRATEGY completion_strategy = RT_SIGNALS);
+                POSIX_COMPLETION_STRATEGY completion_strategy = AIO_CONTROL_BLOCKS);
   // A do nothing constructor.
   
   virtual ~ACE_Proactor (void);
@@ -283,8 +299,17 @@ public:
   // Get the event handle.
 
 #if defined (ACE_HAS_AIO_CALLS)
+#if 0
+  void posix_completion_strategy (POSIX_COMPLETION_STRATEGY strategy);
+  // Set the completion strategy.
+#endif /* 0 */
+
   POSIX_COMPLETION_STRATEGY posix_completion_strategy (void);
   // Return the completion strategy used.
+  
+  int notify_asynch_accept (ACE_Asynch_Accept::Result* result);
+  // Asynch_Accept calls this function to notify an accept to the
+  // Proactor. 
 #endif /* ACE_HAS_AIO_CALLS */  
 
 protected:
@@ -340,12 +365,30 @@ protected:
   };
 
 #if defined (ACE_HAS_AIO_CALLS)
+  POSIX_COMPLETION_STRATEGY posix_completion_strategy_;
+  // Flag that indicates how the completion status is got from the OS
+  // on the POSIX4-Compliant-Unix systems.
+  
+  sigset_t RT_completion_signals_;
+  // These signals are used for completion notification by the
+  // Proactor.
+  // These signals are masked in the current process.
+  // By default, ACE_SIG_AIO_READ and ACE_SIG_AIO_WRITE are
+  // the  two signals used for completion notification. But if the
+  // user has specified someother signals in any of the
+  // read/write/transmit operations, some other signals might also
+  // have got masked.
+  
+  ACE_AIO_Accept_Handler* aio_accept_handler_;
+  // This class takes care of doing <accept> when we use
+  // AIO_CONTROL_BLOCKS strategy.
+  
   aiocb *aiocb_list_ [ACE_RTSIG_MAX];
   // Use an array to keep track of all the aio's issued
   // currently. We'll limit the array size to Maximum RT signals that 
   // can be queued in a process.  This is the upper limit how many aio
   // operations can be pending at a time.
-
+  
   size_t aiocb_list_max_size_;
   // To maintain the maximum size of the array (list).
   
@@ -380,22 +423,6 @@ protected:
   int used_with_reactor_event_loop_;
   // Flag that indicates whether we are used in conjunction with
   // Reactor.
-
-#if defined (ACE_HAS_AIO_CALLS)
-  POSIX_COMPLETION_STRATEGY posix_completion_strategy_;
-  // Flag that indicates how the completion status is got from the OS
-  // on the POSIX4-Compliant-Unix systems.
-  
-  sigset_t RT_completion_signals_;
-  // These signals are used for completion notification by the
-  // Proactor.
-  // These signals are masked in the current process.
-  // By default, ACE_SIG_AIO_READ and ACE_SIG_AIO_WRITE are
-  // the  two signals used for completion notification. But if the
-  // user has specified someother signals in any of the
-  // read/write/transmit operations, some other signals might also
-  // have got masked.
-#endif /* ACE_HAS_AIO_CALLS */
 
 private:
   static ACE_Proactor *proactor_;
