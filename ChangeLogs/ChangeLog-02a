@@ -1,3 +1,20 @@
+Mon May 13 08:36:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Proactor_Test.cpp:
+
+	  Improved flow-control in full-duplex mode by increasing the
+	  window size, total_send - total_recv to achieve max performance
+	  from TCP/IP
+
+	  Improved static info which includes the number of bytes
+	  sent/recv and the number of read/write operations. This allows
+	  to see distribution of I/O operations between handlers. Would be
+	  useful for Proactor's future improvements.
+	  
+	  Impoved scatter/gather branch under Win32. Instead of splitting
+	  one message into 3 small blocks we now send them as a
+	  chain. This helps to improve performance.
+		
 Mon May 13 07:33:43 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACEXML/examples/SAXPrint/main.cpp:
