@@ -18,6 +18,14 @@ Thu Jan 30 16:01:37 1997  David L. Levine  <levine@cs.wustl.edu>
 	  problem with the nonstatic char arrays with sizes determined at
 	  runtime.
 
+	* bin/create_ace_build: added this script: it creates an ACE build
+	  tree in directory "build/<build name>" below the current
+	  directory, which must be a ACE "top level" directory (such as
+	  $WRAPPER_ROOT).  The build tree directory structure mirrors that
+	  of the ACE top level directory structure, except that instead of
+	  containing any plain files, it contains only symlinks to the files
+	  in the ACE top level structure.
+
 Thu Jan 30 06:57:50 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Thread_Priority.cpp (convert_to_os_priority): changed
