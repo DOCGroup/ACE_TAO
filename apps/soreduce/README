@@ -1,53 +1,67 @@
 Shared Library Reduction Tool
-The motivation for this tool was the understanding that the ACE & TAO libraries
-were to be linked with the VxWorks kernel to allow multiple applications to be
-run simultaniously with a minimum of footprint consumed. Ordinarily a choice is
-made between static linking applications, where each application gets only the
-object modules needed, and shared object linkage, where multiple applications
-share access to full libraries.  Frequently a shared library will contain code
-and data which is not used by any of the applications in a particular 
-configuration. The Shared Library Reduction Tool builds libraries that include
-only the modules needed to support a specified set of applications.
+-----------------------------
 
-The analysis is performed very late in the application implementation, allowing
-the system implementors the freedom to use whatever TAO & ACE components are 
-needed. Once an application is built and running, its shared object need may be
-evaluated.  The evaluation is straight forward. Run the soreduce program, 
-passing the path to all of the applications that will share the libraries. The
-soreduce program uses the following steps to generate its results.
+The motivation for this tool was the understanding that the ACE & TAO
+libraries were to be linked with the VxWorks kernel to allow multiple
+applications to be run simultaniously with a minimum of footprint
+consumed. Ordinarily a choice is made between static linking
+applications, where each application gets only the object modules
+needed, and shared object linkage, where multiple applications share
+access to full libraries.  Frequently a shared library will contain
+code and data which is not used by any of the applications in a
+particular configuration. The Shared Library Reduction Tool builds
+libraries that include only the modules needed to support a specified
+set of applications.
 
-1. A list of undefined symbols and shared libraries is built by invoking the 
-ldd and nm commands on each application. For now, soreduce assumes the GNU 
-variant of these tools.  
+The analysis is performed very late in the application implementation,
+allowing the system implementors the freedom to use whatever TAO & ACE
+components are needed. Once an application is built and running, its
+shared object need may be evaluated.  The evaluation is straight
+forward. Run the soreduce program, passing the path to all of the
+applications that will share the libraries. The soreduce program uses
+the following steps to generate its results.
 
-2. For each shared library, soreduce tries to invoke nm on each of the 
-intermediate object files used to build the library. It is important that 
-target library directory has a current .shobj subdirectory. 
+1. A list of undefined symbols and shared libraries is built by
+   invoking the ldd and nm commands on each application. For now,
+   soreduce assumes the GNU variant of these tools.
+
+2. For each shared library, soreduce tries to invoke nm on each of the
+   intermediate object files used to build the library. It is
+   important that target library directory has a current .shobj
+   subdirectory.
 
 3. The list of undefined symbols is traversed. For each entry in the list, the 
-modules loaded from step 2 are examined to look for a matching symbol. When one
-is found, the target symbol, and any others satisfied by the module are removed
-from the list, and any undefined symbols in the module are added to the list.
-This process is repeated until the entire list of undefined symbols is 
-traversed without change.
+   modules loaded from step 2 are examined to look for a matching
+   symbol. When one is found, the target symbol, and any others
+   satisfied by the module are removed from the list, and any
+   undefined symbols in the module are added to the list.  This
+   process is repeated until the entire list of undefined symbols is
+   traversed without change.
 
 4. Makefiles are generated. Rather than invoking the linker directly, a make
-file is generated that may be used to build the libs. With these makefiles, the
-actual library will be named lib(orig)_subset.so.  
+   file is generated that may be used to build the libs. With these
+   makefiles, the actual library will be named lib(orig)_subset.so.
 
 Analysis Artifacts
-Development of the shared library reduction tool also provided a secondary 
-benefit. It is able to output usage metrics for the various modules, which may
-be useful for directing further hand-crafted reduction efforts. Using the GNU
-nm with more verbose output, it is possible to determine the first function 
-using a given undefined symbol. While it is not (yet) possible to automate the
-refactoring of code based on this analysis, this information can provide a road
-map for breaking a single module into two or a few that will result in fewer 
-incidental dependancies overall.  However this speculation has not been tested.
+------------------
+   
+Development of the shared library reduction tool also provided a
+secondary benefit. It is able to output usage metrics for the various
+modules, which may be useful for directing further hand-crafted
+reduction efforts. Using the GNU nm with more verbose output, it is
+possible to determine the first function using a given undefined
+symbol. While it is not (yet) possible to automate the refactoring of
+code based on this analysis, this information can provide a road map
+for breaking a single module into two or a few that will result in
+fewer incidental dependancies overall.  However this speculation has
+not been tested.
 
 Test results
-Running soreduce providing itself as the sole client. The soreduce application
-is built on top of ACE, using just a few of ACE's features. Here is the output:
+------------
+
+Running soreduce providing itself as the sole client. The soreduce
+application is built on top of ACE, using just a few of ACE's
+features. Here is the output:
 
 bash$ ./soreduce soreduce
 discovering libraries
@@ -83,11 +97,11 @@ bash$ size libACE_subset.so
 
 2873234 - 1202199 = 1671035 bytes eliminated, a 58.2% reduction
 
-Here is another example, using the Naming Service, and its simple test client.
-Note that the orbsvcs results are bogus, the libraries are already fairly well
-factored so that the additional subsetting by soreduce is not effective. Also, 
-due to the layout of the orbsvcs library source directory, the tool does not
-generate valid makefiles.
+Here is another example, using the Naming Service, and its simple test
+client.  Note that the orbsvcs results are bogus, the libraries are
+already fairly well factored so that the additional subsetting by
+soreduce is not effective. Also, due to the layout of the orbsvcs
+library source directory, the tool does not generate valid makefiles.
 
 bash$ $ACE_ROOT/apps/soreduce/soreduce Naming_Service/Naming_Service tests/Simple_Naming/client                    
 discovering libraries

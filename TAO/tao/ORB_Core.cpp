@@ -822,7 +822,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   // implementation artifact of potential writes to dead connections,
   // as it'd be way expensive.  Do it here; who cares about SIGPIPE in
   // these kinds of applications, anyway?
-  (void) ACE_OS::signal (SIGPIPE, SIG_IGN);
+  (void) ACE_OS::signal (SIGPIPE, (ACE_SignalHandler) SIG_IGN);
 #endif /* SIGPIPE */
 
   // Calling the open method here so that the svc.conf file is
