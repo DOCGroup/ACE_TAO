@@ -106,9 +106,9 @@ TimeoutConsumer::connect (RtecScheduler::Scheduler_ptr scheduler,
   this->_handler = new Timer_Event_Handler(this);
   ACE_Time_Value interval;
   ORBSVCS_Time::TimeT_to_Time_Value(interval,period);
-  //TAO_ORB_Core *core = ec->orb_core();
-  //ACE_Reactor *reactor = core->reactor();
-  ACE_Reactor *reactor = ACE_Reactor::instance();
+  TAO_ORB_Core *core = ec->orb_core();
+  ACE_Reactor *reactor = core->reactor();
+  //ACE_Reactor *reactor = ACE_Reactor::instance();
   this->_timer_id = reactor->schedule_timer(this->_handler,
                                            0,
                                            interval,
@@ -142,7 +142,9 @@ TimeoutConsumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   //REACTOR CHANGE
-  ACE_Reactor::instance()->cancel_timer(this->_timer_id);
+  //ACE_Reactor *reactor = ACE_Reactor::instance();
+  ACE_Reactor *reactor = this->_supplier_proxy->orb_core()->reactor();
+  reactor->cancel_timer(this->_timer_id);
   delete this->_handler;
   this->_handler = 0;
   //REACTOR CHANGE END
