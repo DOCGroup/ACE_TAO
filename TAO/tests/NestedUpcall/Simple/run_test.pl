@@ -56,7 +56,7 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
 }
 
 $CL  = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-			" -k file://$iorfile -x -t 2");
+			" -k file://$iorfile -x -n 2");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
