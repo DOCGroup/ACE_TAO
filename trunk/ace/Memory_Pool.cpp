@@ -237,7 +237,7 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
 
   first_time = 0;
 
-  if (nbytes < this->minimum_bytes_) 
+  if (nbytes < (size_t) this->minimum_bytes_) 
     nbytes = this->minimum_bytes_;
 
   if (this->mmap_.open (this->backing_store_name_, 
