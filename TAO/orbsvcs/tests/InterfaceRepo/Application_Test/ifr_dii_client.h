@@ -31,7 +31,7 @@ private:
                   char *argv[]);
   // Process the command line arguments.
 
-  void find_interface_def (ACE_ENV_SINGLE_ARG_DECL);
+  int find_interface_def (ACE_ENV_SINGLE_ARG_DECL);
   // Query the object reference to get its InterfaceDef in the IFR.
 
   int lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL);
