@@ -1,3 +1,8 @@
+Sat Dec 15 11:17:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/dep.pl: Script to generate dependecies. To be run as "dep.pl
+	  <output_dir> <list of .o's>. Script given by Carlos.
+
 Fri Dec 14 07:00:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Merged with the main trunk and moved things to a new branch.
