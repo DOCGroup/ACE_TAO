@@ -29,6 +29,7 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/iiop_endpoints.h"
 
+
 static CORBA::Boolean
 catiiop (char* string
          ACE_ENV_ARG_DECL)
@@ -264,12 +265,19 @@ catior (char* str
             continue_decoding = cat_iiop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
+
+// the SCIOR decoding is disabled in the main branch. This will be
+// enabled when SCTP_O branch is merged in.
+// gthaker@atl.lmco.com, Feb 11, 2003.
+#if 0
         else if (tag == TAO_TAG_SCIOP_PROFILE)
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding = cat_sciop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
+#endif
+
         else if (tag == TAO_TAG_UIOP_PROFILE)
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
