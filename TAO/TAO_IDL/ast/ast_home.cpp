@@ -7,6 +7,7 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
+#include "utl_err.h"
 #include "global_extern.h"
 
 ACE_RCSID (ast, 
@@ -55,6 +56,58 @@ AST_Home::AST_Home (UTL_ScopedName *n,
 
 AST_Home::~AST_Home (void)
 {
+}
+
+AST_Decl *
+AST_Home::look_in_inherited (UTL_ScopedName *e,
+                             idl_bool treat_as_ref)
+{
+  AST_Decl *d = 0;
+  
+  if (this->pd_base_home != 0)
+    {
+      d = this->pd_base_home->lookup_by_name (e, treat_as_ref);
+    }
+  
+  return d;
+}
+
+// Look through supported interface list.
+AST_Decl *
+AST_Home::look_in_supported (UTL_ScopedName *e,
+                             idl_bool treat_as_ref)
+{
+  AST_Decl *d = 0;
+  AST_Interface **is = 0;
+  long nis = -1;
+
+  // Can't look in an interface which was not yet defined.
+  if (!this->is_defined ())
+    {
+      idl_global->err ()->fwd_decl_lookup (this,
+                                           e);
+      return 0;
+    }
+
+  // OK, loop through supported interfaces.
+
+  // (Don't leave the inheritance hierarchy, no module or global ...)
+  // Find all and report ambiguous results as error.
+
+  for (nis = this->n_supports (), is = this->supports ();
+       nis > 0;
+       nis--, is++)
+    {
+      d = (*is)->lookup_by_name (e,
+                                 treat_as_ref,
+                                 0 /* not in parent */);
+      if (d != 0)
+        {
+          break;
+        }
+    }
+    
+  return d;
 }
 
 AST_Home *

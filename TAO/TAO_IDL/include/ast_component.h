@@ -24,6 +24,14 @@ public:
   // This also calls the base class version.
   virtual void redefine (AST_Interface *from);
 
+  // Extend lookup to the base component.
+  virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
+                                       idl_bool treat_as_ref);
+                                       
+  // Extend lookup to the supported interfaces.
+  virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
+                                       idl_bool treat_as_ref);
+                                       
   // Utility data structure for port declarations.
   struct port_description
   {
