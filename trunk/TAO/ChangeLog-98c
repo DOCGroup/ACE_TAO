@@ -30,13 +30,13 @@ Sat Oct  4 20:08:57 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 	  list. 
 
 	* tao/tao_internals.h (TAO_Internal): Added ACE_Svc_Export and
-	  $Id$ tag.
+	  $ I d $.
 
 	* tao/tao_internals.i (open_services): Added default return value
 	  0. 
 
 	* tao/tao_internals.cpp: Added #include "tao/tao_internals.h" and
-	  the CVS $Id$ field.  Also, we should include inline (.i) file
+	  the CVS $ I d $ field.  Also, we should include inline (.i) file
 	  for inline code.
 
 Fri Oct  3 09:29:05 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
