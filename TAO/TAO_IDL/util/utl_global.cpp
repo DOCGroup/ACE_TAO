@@ -125,7 +125,7 @@ IDL_GlobalData::IDL_GlobalData (void)
       output_dir_ (0),
       any_support_ (I_TRUE),
       tc_support_ (I_TRUE),
-      compiled_marshaling_ (I_TRUE),
+      compiled_marshaling_ (I_FALSE),
       gen_impl_files_ (I_FALSE),
       gen_copy_ctor_ (I_FALSE),
       gen_assign_op_ (I_FALSE),
@@ -698,10 +698,10 @@ void IDL_GlobalData::idl_src_file(String *s)
 }
 
 // To switch between changing or non-changing standard include files
-// include files, so that #include statements can be 
+// include files, so that #include statements can be
 // generated with ""s or <>s respectively, for the standard include
-// files (e.g. tao/corba.h) 
-void 
+// files (e.g. tao/corba.h)
+void
 IDL_GlobalData::changing_standard_include_files (size_t changing)
 {
   this->changing_standard_include_files_ = changing;

@@ -1,3 +1,9 @@
+Thu Feb 25 09:27:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_global.cpp: 
+	  Use interpretive marshaling by default, at least until unions
+	  work correctly.
+
 Wed Feb 24 23:21:53 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/tests/CosEC_Multiple/CosECConsumer.cpp:
