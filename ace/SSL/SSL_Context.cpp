@@ -436,7 +436,9 @@ ACE_SSL_Context::report_error (unsigned long error_code)
 void
 ACE_SSL_Context::report_error (void)
 {
-  ACE_SSL_Context::report_error (::ERR_get_error ());
+  unsigned long error = ::ERR_get_error ();
+  ACE_SSL_Context::report_error (error);
+  ACE_OS::last_error (error);
 }
 
 
