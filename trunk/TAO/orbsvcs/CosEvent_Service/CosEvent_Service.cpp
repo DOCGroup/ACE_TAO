@@ -496,12 +496,15 @@ CosEvent_Service::register_CosEC (void)
 int
 CosEvent_Service::startup (int argc, char *argv[])
 {
-  // check command line args.
-  if (this->parse_args (argc, argv) == -1)
-    return -1;
-
   // initalize the ORB.
   if (this->init_ORB (argc, argv) == -1)
+    return -1;
+
+  // The ORB is initialized before <parse_args> because the ACE_Channel
+  // <destroy> method assumes an initialized ORB.
+
+  // check command line args.
+  if (this->parse_args (argc, argv) == -1)
     return -1;
 
   // initialize the Naming Client.
@@ -601,10 +604,7 @@ CosEvent_Service::shutdown (void)
           TAO_CHECK_ENV;
         }
 
-      if (TAO_ORB_Core_instance ()->orb () != CORBA::ORB::_nil ())
-        this->ec_impl_.shutdown ();
-      // The Rtec shutdown method tries to use the orb , which might not
-      // exist at that point so this check avoids that crash.
+      this->ec_impl_.shutdown ();
 
       // shutdown the ORB.
       if (this->orb_ != CORBA::ORB::_nil ())
@@ -627,7 +627,7 @@ main (int argc, char *argv[])
 
   if (service.startup (argc, argv) == -1)
     {
-      //service.shutdown ();
+      service.shutdown ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Failed to setup the Cos Event Channel.\n"),
                         1);
