@@ -144,6 +144,13 @@ TAO_Connection_Cache_Manager::make_idle (HASH_MAP_ENTRY *&entry)
 ACE_INLINE int
 TAO_Connection_Cache_Manager::close (ACE_Handle_Set &handle_Set)
 {
+  // The cache lock pointer should only be zero if
+  // Connection_Cache_Manager::open() was never called.  Note that
+  // only one thread opens the Connection_Cache_Manager at any given
+  // time, so it is safe to check for a non-zero lock pointer.
+  if (this->cache_lock_ == 0)
+    return -1;
+
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
                             *this->cache_lock_,

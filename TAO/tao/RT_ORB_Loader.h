@@ -39,8 +39,12 @@ public:
                                            CORBA::Environment &)
     ACE_THROW_SPEC (());
 
-  /// Sets RT_Current and Priority_Mapping_Manager
-  void set_objects (TAO_ORB_Core *orb_core);
+protected:
+
+  /// Setup additional RTCORBA related objects.
+  void set_objects (TAO_ORB_Core *orb_core,
+                    CORBA::Environment &);
+
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_RT_ORB_Loader)

@@ -10,7 +10,7 @@
 
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (TAO,
            RT_Protocols_Hooks,
            "$Id$")
 
@@ -254,9 +254,10 @@ TAO_RT_Protocols_Hooks::get_selector_bands_policy_hook (
 }
 
 CORBA::Policy *
-TAO_RT_Protocols_Hooks::effective_priority_banded_connection_hook (CORBA::Policy *override,
-                                                         CORBA::Policy *exposed,
-                                                         CORBA::Environment &ACE_TRY_ENV)
+TAO_RT_Protocols_Hooks::effective_priority_banded_connection_hook (
+  CORBA::Policy *override,
+  CORBA::Policy *exposed,
+  CORBA::Environment &ACE_TRY_ENV)
 {
   RTCORBA::PriorityBandedConnectionPolicy_var override_policy_ptr =
     RTCORBA::PriorityBandedConnectionPolicy::_narrow (override,
@@ -359,11 +360,11 @@ TAO_RT_Protocols_Hooks::get_thread_priority (TAO_ORB_Core *orb_core,
                   ACE_TEXT ("TAO (%P|%t) - ")
                   ACE_TEXT ("RT_Protocols_Hooks::get_thread_priority: ")
                   ACE_TEXT (" ACE_Thread::get_prio\n")));
+
       return -1;
     }
 
-  CORBA::Object_var obj =
-    orb_core->priority_mapping_manager ();
+  CORBA::Object_var obj = orb_core->priority_mapping_manager ();
 
   TAO_Priority_Mapping_Manager_var mapping_manager =
     TAO_Priority_Mapping_Manager::_narrow (obj.in (),
@@ -390,8 +391,7 @@ TAO_RT_Protocols_Hooks::set_thread_priority (TAO_ORB_Core *orb_core,
                                              CORBA::Short priority,
                                              CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Object_var obj =
-    orb_core->priority_mapping_manager ();
+  CORBA::Object_var obj = orb_core->priority_mapping_manager ();
 
   TAO_Priority_Mapping_Manager_var mapping_manager =
     TAO_Priority_Mapping_Manager::_narrow (obj.in (),
@@ -419,11 +419,9 @@ TAO_RT_Protocols_Hooks::set_priority_mapping (TAO_ORB_Core *orb_core,
                                               TAO_Resource_Factory *trf,
                                               CORBA::Environment &ACE_TRY_ENV)
 {
-  ///
-  CORBA::Object_var obj =
-    orb_core->priority_mapping_manager ();
-
-  /// Narrow it down correctly
+  // Obtain a reference to the Priority Mapping Manager.
+  CORBA::Object_var obj = orb_core->priority_mapping_manager ();
+  
   TAO_Priority_Mapping_Manager_var priority_mapping_manager =
     TAO_Priority_Mapping_Manager::_narrow (obj.in (),
                                            ACE_TRY_ENV);
@@ -431,6 +429,8 @@ TAO_RT_Protocols_Hooks::set_priority_mapping (TAO_ORB_Core *orb_core,
 
   if (!CORBA::is_nil (priority_mapping_manager.in ()))
     priority_mapping_manager->mapping (trf->get_priority_mapping ());
+  else
+    ACE_THROW (CORBA::INV_OBJREF ());
 }
 
 int
@@ -470,8 +470,12 @@ TAO_RT_Protocols_Hooks::set_default_policies (TAO_ORB_Core *orb_core)
   // Set ServerProtocolPolicy.
   TAO_ServerProtocolPolicy *server_protocol_policy = 0;
   ACE_NEW_RETURN (server_protocol_policy,
-                  TAO_ServerProtocolPolicy (protocols),
+                    TAO_ServerProtocolPolicy (protocols),
                   -1);
+
+  RTCORBA::ServerProtocolPolicy_var safe_server_protocol_policy =
+    server_protocol_policy;
+
   orb_core->get_default_policies ()->server_protocol (server_protocol_policy);
 
   // Set ClientProtocolPolicy.
@@ -483,6 +487,10 @@ TAO_RT_Protocols_Hooks::set_default_policies (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (client_protocol_policy,
                   TAO_ClientProtocolPolicy (protocols),
                   -1);
+
+  RTCORBA::ClientProtocolPolicy_var safe_client_protocol_policy =
+    client_protocol_policy;
+
   orb_core->get_default_policies ()->client_protocol (client_protocol_policy);
 
 #endif /* TAO_HAS_RT_CORBA == 1 */

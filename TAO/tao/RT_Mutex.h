@@ -43,14 +43,13 @@
  *
  */
 
-class TAO_Export TAO_RT_Mutex : public RTCORBA::Mutex, public TAO_Local_RefCounted_Object
+class TAO_Export TAO_RT_Mutex
+  : public RTCORBA::Mutex,
+    public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor.
   TAO_RT_Mutex (void);
-
-  /// Destructor.
-  virtual ~TAO_RT_Mutex (void);
 
   /// Acquire the lock.
   virtual void lock (CORBA::Environment &ACE_TRY_ENV =
@@ -70,6 +69,12 @@ public:
                                    CORBA::Environment &ACE_TRY_ENV =
                                    TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+protected:
+
+  /// Protected destructor to enforce proper memory management of this
+  /// reference counted object.
+  virtual ~TAO_RT_Mutex (void);
 
 protected:
   /// Synchronization lock.
