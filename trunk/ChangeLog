@@ -1,3 +1,8 @@
+Sat Apr 26 08:47:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_auto_compile.pl:
+          Reverted complete change. Too much is now build in first pass.
+
 Fri Apr 25 20:55:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         Please direct all immediate build issues to jcohen@atl.lmco.com
