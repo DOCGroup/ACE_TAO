@@ -127,7 +127,7 @@ ACE_Get_Opt::operator () (void)
 
   if (*++oli != ':') 
     { // Don't need argument.
-      this->optarg = NULL;
+      this->optarg = 0;
       if (!*this->nextchar_)
 	++this->optind;
     }

@@ -14,9 +14,9 @@ operator<< (ostream &stream, const ACE_Time_Value &tv)
   if (tv.usec () < 0 || tv.sec () < 0)
     stream << "-";
 
-  stream << dec << my_abs (int (tv.sec ())) << "."
+  stream << my_abs (int (tv.sec ())) << "."
 //	 << setw (6) << setfill ('0') 
-	 << dec << my_abs (int (tv.usec ()));
+	 << my_abs (int (tv.usec ()));
   return stream;
 }
 

@@ -26,7 +26,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::ACE_Locked_Free_List (int mode,
                                                      size_t hwm, 
                                                      size_t inc)
   : mode_ (mode),
-    free_list_ (NULL),
+    free_list_ (0),
     lwm_ (lwm),
     hwm_ (hwm),
     inc_ (inc),
@@ -41,7 +41,7 @@ template <class T, class ACE_LOCK>
 ACE_Locked_Free_List<T, ACE_LOCK>::~ACE_Locked_Free_List (void)
 {
   if (this->mode_ != ACE_PURE_FREE_LIST)
-    while (this->free_list_ != NULL)
+    while (this->free_list_ != 0)
       {
 	T *temp = this->free_list_;
 	this->free_list_ = this->free_list_->get_next ();
@@ -73,7 +73,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::dealloc (size_t n)
 {
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
 
-  for (; this->free_list_ != NULL && n > 0;
+  for (; this->free_list_ != 0 && n > 0;
        n--)
     {
       T *temp = this->free_list_;

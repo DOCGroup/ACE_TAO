@@ -1,3 +1,42 @@
+Sun Nov  2 15:31:45 1997  Douglas C. Schmidt  <schmidt@polka.cs.wustl.edu>
+
+	* examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp (main):
+ 	  Renamed allocator to my_alloc to work around wonderful STL and
+ 	  GCC problems...  Thanks to Ben Eng <ben@jetpen.com> for
+ 	  reporting this.
+
+	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp: Removed
+ 	  unused constant SHMSZ.  Thanks to Ben Eng <ben@jetpen.com> for
+ 	  reporting this.
+
+	* examples/Reactor/Misc/test_time_value.cpp (operator<<): Removed
+ 	  the "dec" stream manipulator since it isn't portable.  Thanks to
+ 	  Ben Eng <ben@jetpen.com> for reporting this.
+
+	* performance-tests/Misc/preempt.cpp (main): Cleaned up this test
+ 	  so it compiles on non-threaded platforms.  Thanks to Ben Eng
+ 	  <ben@jetpen.com> for reporting this.
+
+	* examples/Timer_Queue/main_*.cpp (main): std::auto_ptr does not
+ 	  have an operator= that accepts a raw pointer.  Therefore, we
+ 	  must assign raw pointers to an auto_ptr via the constructor.
+  	  Thanks to Ben Eng <ben@jetpen.com> for reporting this.
+
+	* apps/Gateway/Gateway/Proxy_Handler.cpp: Make sure we distinguish
+ 	  between ACE_NULL_SYNCH and ACE_MT_SYNCH since these will be
+ 	  different on all platforms, whereas ACE_SYNCH will be the same
+ 	  as ACE_NULL_SYNCH on platforms without threads.  Thanks to Ben
+ 	  Eng <ben@jetpen.com> for reporting this.
+
+	* ace: Removed lots of uses of NULL and replaced them with 0.
+  	  This works around bugs with lame C++ compilers that treat NULL
+ 	  as (void *).  Thanks to Ben Eng <ben@jetpen.com> for reporting
+ 	  this.
+
+	* ace/Thread.i (spawn): Replaced "stack" with "thr_stack" to work
+ 	  around bugs with lame C++ compilers and STL.  Thanks to Evgeny
+ 	  Beskrovny <evgeny_beskrovny@icomverse.com> for reporting this.
+
 Sat Nov  1 11:55:05 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/config-irix5.3-g++.h,

@@ -57,7 +57,7 @@ Options::parse_args (int argc, char *argv[])
         ACE_DEBUG ((LM_DEBUG, "%s -h hostname -f filename -[r/w] [-p port] [-l length] [-o offset] [-d]\n", argv[0]));
         ACE_OS::exit (1);
       }
-  if (this->hostname_ == NULL || this->filename_ == NULL)
+  if (this->hostname_ == 0 || this->filename_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG, 
 		  "%s -h hostname -f filename -[r/w] [-p port] [-l length] [-o offset] [-d]\n", 
@@ -68,9 +68,9 @@ Options::parse_args (int argc, char *argv[])
 }
 
 Options::Options (void) 
-  : hostname_ (NULL),
+  : hostname_ (0),
     port_ (ACE_DEFAULT_HTTP_SERVER_PORT),
-    filename_ (NULL),
+    filename_ (0),
     length_ (0),
     offset_ (0),
     operation_ ('r'),

@@ -64,7 +64,7 @@ ACE_Reactor::instance (void)
       
       if (ACE_Reactor::reactor_ == 0)
 	{
-	  ACE_NEW_RETURN (ACE_Reactor::reactor_, ACE_Reactor, NULL);
+	  ACE_NEW_RETURN (ACE_Reactor::reactor_, ACE_Reactor, 0);
 	  ACE_Reactor::delete_reactor_ = 1;
 	}
     }

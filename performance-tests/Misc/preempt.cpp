@@ -53,12 +53,7 @@ u_int low_yield = 0;
 // To permit calculation of relative times.
 ACE_hrtime_t starttime;
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
 // class High_Priority_Task
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
 
 class High_Priority_Task : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -146,12 +141,7 @@ High_Priority_Task::print_times () const
     }
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
 // class Low_Priority_Task
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
 
 class Low_Priority_Task : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -182,10 +172,9 @@ Low_Priority_Task::open (void *)
 
   // Become an active object.
   if (this->activate (flags, 1, 0, this->priority_) == -1)
-    {
-      ACE_DEBUG ((LM_ERROR, "(%t) task activation failed, exiting!\n%a", -1));
-    }
-
+    ACE_ERROR ((LM_ERROR,
+                "(%t) task activation failed, exiting!\n%a",
+                -1));
   return 0;
 }
 
@@ -225,17 +214,9 @@ Low_Priority_Task::svc (void)
   return 0;
 }
 
-#endif /* ACE_HAS_THREADS */
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
 // function get_options
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
 
-static
-unsigned int
+static u_int
 get_options (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "c:n:p:y?");
@@ -244,37 +225,22 @@ get_options (int argc, char *argv[])
     switch (opt) {
     case 'c':
       if (ACE_OS::atoi (get_opt.optarg) >= 2)
-        {
-          iterations = ACE_OS::atoi (get_opt.optarg);
-        }
+        iterations = ACE_OS::atoi (get_opt.optarg);
       else
-        {
-          ACE_DEBUG ((LM_ERROR, "%n: iterations must be >= 2\n"));
-          return 1;
-        }
+        ACE_ERROR_RETURN ((LM_ERROR, "%n: iterations must be >= 2\n"), 1);
       break;
     case 'n':
       if (ACE_OS::atoi (get_opt.optarg) >= 1)
-        {
-          high_priority_tasks = ACE_OS::atoi (get_opt.optarg);
-        }
+        high_priority_tasks = ACE_OS::atoi (get_opt.optarg);
       else
-        {
-          ACE_DEBUG ((LM_ERROR, "%n: number of high priority threads "
-                                "must be >= 1\n"));
-          return 1;
-        }
+        ACE_ERROR_RETURN ((LM_ERROR, "%n: number of high priority threads "
+                           "must be >= 1\n"), 1);
       break;
     case 'p':
       if (ACE_OS::atoi (get_opt.optarg) > 0)
-        {
-          read_period = ACE_OS::atoi (get_opt.optarg);
-        }
+        read_period = ACE_OS::atoi (get_opt.optarg);
       else
-        {
-          ACE_DEBUG ((LM_ERROR, "%n: read period > 0\n"));
-          return 1;
-        }
+        ACE_ERROR_RETURN ((LM_ERROR, "%n: read period > 0\n"), -1);
       break;
     case 'y':
       low_yield = 1;
@@ -283,9 +249,9 @@ get_options (int argc, char *argv[])
       ACE_DEBUG ((LM_ERROR, "usage: %n %s\n%a", usage, 0));
       break;
     default:
-      ACE_DEBUG ((LM_ERROR, "%n: unknown arg, %c\n", opt));
-      ACE_DEBUG ((LM_ERROR, "usage: %n %s\n", usage));
-      return 1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%n: unknown arg, %c\n"
+                         "usage: %n %s\n", opt, usage), 1);
     }
   }
 
@@ -294,20 +260,17 @@ get_options (int argc, char *argv[])
     // use default number of iterations
     break;
   default:
-    ACE_DEBUG ((LM_ERROR, "%n: too many arguments\n"));
-    ACE_DEBUG ((LM_ERROR, "usage: %n %s\n", usage));
-    return 1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%n: too many arguments\n"
+                         "usage: %n %s\n", usage), 1);
   }
 
   return 0;
 }
 
+#endif /* ACE_HAS_THREADS */
 
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
 // function main
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
 
 int
 main (int argc, char *argv[])
@@ -316,25 +279,19 @@ main (int argc, char *argv[])
 
   u_int i;
 
-  if (get_options (argc, argv)) ACE_OS::exit (-1);
+  if (get_options (argc, argv))
+    ACE_OS::exit (-1);
 
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-  if (ACE_OS::sched_params (
-        ACE_Sched_Params (
-          ACE_SCHED_FIFO,
-          ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
-          ACE_SCOPE_PROCESS)) != 0)
+  if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
+                                              ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
+                                              ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
-        {
-          ACE_DEBUG ((LM_MAX, "preempt: user is not superuser, "
-                              "so remain in time-sharing class\n"));
-        }
+        ACE_DEBUG ((LM_MAX, "preempt: user is not superuser, "
+                    "so remain in time-sharing class\n"));
       else
-        {
-          ACE_OS::perror ("preempt; ACE_OS::sched_params ()");
-          ACE_OS::exit (-1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR, "%n: getprio failed\n%a"), -1);
     }
 
   High_Priority_Task *high_priority_task;
@@ -358,12 +315,13 @@ main (int argc, char *argv[])
   // Wait for all threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
 
-  // Display the time deltas.  They should be about a half second apart.
+  // Display the time deltas.  They should be about a half second
+  // apart.
   for (i = 0; i < high_priority_tasks; ++i)
-  {
-    ACE_OS::printf ("High priority task %u:\n", i + 1);
-    high_priority_task[i].print_times ();
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, "High priority task %u:\n", i + 1));
+      high_priority_task[i].print_times ();
+    }
 
   delete [] high_priority_task;
 
