@@ -26,7 +26,7 @@
 // Must specialize templates due to G++'s lame parameterized type
 // support... I added this  Afara
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
+#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 #define ACE_LACKS_SYSCALL
 #define ACE_HAS_POSIX_TIME

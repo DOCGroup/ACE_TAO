@@ -15,7 +15,7 @@
 #    define ACE_NEEDS_DEV_IO_CONVERSION
 #  elif (__SUNPRO_CC >= 0x420)
     // Sun C++ 4.2 (and beyond) supports template specialization.
-#    define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
+#    define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #    define ACE_TEMPLATES_REQUIRE_SOURCE
 #  endif
 #endif /* __SUNPRO_CC */
