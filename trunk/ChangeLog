@@ -1,3 +1,9 @@
+Sat Jan  3 23:12:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Makefile:
+
+	  Added APG directory back in.
+
 Sat Jan  3 23:10:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/APG/Proactor/HA_Proactive_Status.cpp:
