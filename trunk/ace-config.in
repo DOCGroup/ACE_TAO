@@ -71,8 +71,8 @@ libs_l=false
 
 # These values are only valid for ACE.
 the_compiler="@CXX@"
-the_libs="$the_libs @ACE_LIBDIR@ @ACE_LIBS@"
-the_flags="$the_flags @ACE_INCLUDEDIR@ @CXXFLAGS@"
+the_libs="@ACE_LIBDIR@ -lACE @ACE_LIBS@"
+the_flags="@ACE_INCLUDEDIR@ @CXXFLAGS@"
 
 while test $# -gt 0; do
     case "$1" in
@@ -125,7 +125,7 @@ while test $# -gt 0; do
     ace)
 # These are set before this option parsing loop begins.
 #        the_compiler="@CXX@"
-#        the_libs="$the_libs @ACE_LIBDIR@ @ACE_LIBS@"
+#        the_libs="$the_libs @ACE_LIBDIR@ -lACE @ACE_LIBS@"
 #        the_flags="$the_flags @ACE_INCLUDEDIR@ @CXXFLAGS@"
 	;;
     netsvcs)
