@@ -1,3 +1,17 @@
+Tue Sep  8 20:34:08 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp : Split the run_tests 
+	  and svc method into smaller functions.
+	
+	* tests/Cubit/TAO/MT_Cubit/Cubit_Task.h: Moved Cubit_Task class
+	  from server.h to this file.
+
+	* tests/Cubit/TAO/MT_Cubit/client.cpp: Replaced magic numbers with
+	  #defines. Fixed vxWorks errors.
+
+	* tests/Cubit/TAO/MT_Cubit/Globals.h : Added #defines for the 
+	  constants.
+	
 Tue Sep  8 17:28:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/decode.cpp: 
