@@ -20,8 +20,8 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_ORB_Timeprobe_Description[] = 
-{ 
+static const char *TAO_ORB_Timeprobe_Description[] =
+{
   "CORBA_ORB::run - start",
   "CORBA_ORB::run - end",
 };
@@ -235,18 +235,20 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   if (this->open () == -1)
     return -1;
 
-  // Loop "forever" handling client requests.
+#if 0
   const int max_iterations = 100;
   int counter = 0;
+#endif /* 0 */
 
   // NOTE: we play some games with this monitor to release the lock
   // while blocked on I/O.
   ACE_GUARD_RETURN (ACE_Lock, monitor, *this->shutdown_lock_, -1);
 
+  // Loop "forever" handling client requests.
   while (this->should_shutdown_ == 0)
     {
       if (monitor.release () == -1)
-	return -1;
+        return -1;
 
 #if 0
       counter++;
@@ -258,8 +260,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
         }
 
       ACE_FUNCTION_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
-
-#endif
+#endif /* 0 */
 
       switch (r->handle_events (tv))
         {
@@ -276,7 +277,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
         }
 
       if (monitor.acquire () == -1)
-	return -1;
+        return -1;
     }
 
   return 0;
