@@ -10,6 +10,8 @@
 //
 // = DESCRIPTION
 //      This is:
+//      0) a test that ensures key ACE_Message_Queue features are
+//         working properly, including timeouts and priorities.
 //      1) a simple test of the ACE_Message_Queue that illustrates how to
 //         use the forward and reverse iterators;
 //      2) a simple performance measurement test for both single-threaded
@@ -18,7 +20,9 @@
 //      3) a test/usage example of ACE_Message_Queue_Vx.
 //
 // = AUTHORS
-//    Irfan Pyarali <irfan@cs.wustl.edu> and David L. Levine <levine@cs.wustl.edu>
+//    Irfan Pyarali <irfan@cs.wustl.edu>, 
+//    David L. Levine <levine@cs.wustl.edu>, and 
+//    Douglas C. Schmidt <schmidt@vanderbilt.edu> 
 //
 // ============================================================================
 
@@ -444,46 +448,103 @@ performance_test (int queue_type = 0)
 
   return 0;
 }
+
+// Ensure that the timedout dequeue_head() sets errno code properly.
+
+static int 
+timeout_test (void)
+{
+  SYNCH_QUEUE mq;
+  int status = 0;
+
+  if (!mq.is_empty ()) 
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("New queue is not empty!\n")));
+      status = 1;
+    }
+  else 
+    {
+      ACE_Message_Block *b;
+      ACE_Time_Value tv (ACE_OS::gettimeofday ());   // Now
+
+      if (mq.dequeue_head (b, &tv) != -1) 
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Dequeued from empty queue!\n")));
+          status = 1;
+        }
+      else if (errno != EWOULDBLOCK) 
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("Dequeue timeout should be EWOULDBLOCK, got")));
+          status = 1;
+        }
+      else 
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Timed dequeue test: OK\n")));
+          status = 0;     // All is well
+        }
+    }
+
+  return status;
+}
 #endif /* ACE_HAS_THREADS */
+
+// Check to make sure that dequeue_prio() respects FIFO ordering.
+// @@ At some point, this function should be enhanced to do a more
+// thorough check...
+
+static int
+prio_test (void)
+{
+  const char S1[] = "first";
+  const char S2[] = "second";
+  const int PRIORITY = 50;
+  QUEUE mq;
+  int status;
+
+  ACE_Message_Block mb1 (S1, sizeof S1, PRIORITY);
+  ACE_Message_Block mb2 (S2, sizeof S2, PRIORITY);
+
+  mq.enqueue_prio (&mb1);
+  mq.enqueue_prio (&mb2);
+
+  ACE_Message_Block *mb1p;
+  ACE_Message_Block *mb2p;
+
+  mq.dequeue_prio (mb1p);
+  mq.dequeue_prio (mb2p);
+
+  ACE_DEBUG ((LM_DEBUG, "message 1 = %s\nmessage 2 = %s\n",
+              mb1p->rd_ptr (),
+              mb2p->rd_ptr ()));
+
+  if (ACE_OS_String::strcmp (mb1p->rd_ptr (), S1) == 0
+      && ACE_OS_String::strcmp (mb2p->rd_ptr (), S2) == 0)
+    status = 0;
+  else
+    status = 1;
+
+  return status;
+}
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Message_Queue_Test"));
 
-  int status = 0;
-
   if (argc == 2)
-    if (! ACE_OS::strcmp (argv[1], ACE_TEXT ("-?")))
+    if (!ACE_OS::strcmp (argv[1], ACE_TEXT ("-?")))
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%s/n"),
                   usage));
     else
       max_messages = ACE_OS::atoi (argv[1]);
 
-  // Be sure that the a timed out get sets the error code properly.
-  ACE_Message_Queue<ACE_SYNCH> q1;
-  if (!q1.is_empty ()) {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("New queue is not empty!\n")));
-    status = 1;
-  }
-  else {
-    ACE_Message_Block *b;
-    ACE_Time_Value tv (ACE_OS::gettimeofday ());   // Now
-    if (q1.dequeue_head (b, &tv) != -1) {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Dequeued from empty queue!\n")));
-      status = 1;
-    }
-    else if (errno != EWOULDBLOCK) {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                  ACE_TEXT ("Dequeue timeout should be EWOULDBLOCK, got")));
-      status = 1;
-    }
-    else {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Timed dequeue test: OK\n")));
-      status = 0;     // All is well
-    }
-  }
+  int status = prio_test ();
 
 #if !defined (VXWORKS)
   // The iterator test occasionally causes a page fault or a hang on
@@ -498,21 +559,24 @@ run_main (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_HAS_THREADS)
   if (status == 0)
-    single_thread_performance_test ();
+    status = timeout_test ();
+
+  if (status == 0)
+    status = single_thread_performance_test ();
 
 # if defined (VXWORKS) || (defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0))
   // Test ACE_Message_Queue_Vx. or ACE_Message_Queue_NT
   if (status == 0)
-    single_thread_performance_test (1);
+    status = single_thread_performance_test (1);
 # endif /* VXWORKS */
 
   if (status == 0)
-    performance_test ();
+    status = performance_test ();
 
 # if defined (VXWORKS) || (defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0))
   // Test ACE_Message_Queue_Vx or ACE_Message_Queue_NT
   if (status == 0)
-    performance_test (1);
+    status = performance_test (1);
 # endif /* VXWORKS */
 #endif /* ACE_HAS_THREADS */
 
