@@ -1,3 +1,11 @@
+Thu May 17 12:10:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp: Added a
+	  check for the case when we get an errno of EAGAIN. 
+	
+	* tao/Strategies/GIOP_Message_NonReactive_Base.cpp: Cosmetic
+	  changes. 
+
 Thu May 17 11:03:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * examples/PluggableUDP/tests/Basic/client.dsp:
