@@ -208,7 +208,9 @@ endif # minimum_corba
 
 # TAOC and TAOS should be moved outside the corba_messaging scope once
 # more classes have been added to the TAO module.
+
 ifeq ($(corba_messaging),1)
+
 ORB_CORE_FILES += \
   MessagingC \
   MessagingS \
@@ -222,6 +224,7 @@ ORB_CORE_FILES += \
 endif # corba_messaging
 
 ifeq ($(rt_corba),1)
+
 ORB_CORE_FILES += \
   rtcorbafwd \
   Priority_Mapping \
@@ -229,7 +232,8 @@ ORB_CORE_FILES += \
   Direct_Priority_Mapping \
   RT_Current \
   Pool_Per_Endpoint
-endif # corba_messaging
+
+endif # rt_corba
 
 ####
 #### Build customization.
