@@ -188,7 +188,8 @@ Client::init (int argc,
 
   result 
     = this->bind_to_server (ACE_TRY_ENV);
-  
+  ACE_CHECK_RETURN (-1);
+
   // Resolve the object reference of the server from the Naming Service.
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
