@@ -1,5 +1,8 @@
 Sat Aug 22 13:24:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.h: Moved the ACE_timer_t down a bit in the file so that
+ 	  ACE_UINT is defined.  Thanks to Naga for reporting this.
+
 	* ace/OS.h: Added a "no-op" typedef for ACE_Rusage for platforms
  	  that don't support it.  Thanks to David Levine for reporting
  	  this.
