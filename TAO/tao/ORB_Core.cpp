@@ -543,12 +543,19 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           if (arg_shifter.is_parameter_next ())
             {
               char *opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt,
-                                      "YES") == 0)
-                this->opt_for_collocation_ = 1;
-              else if (ACE_OS::strcasecmp (opt,
-                                           "NO") == 0)
+              if (ACE_OS::strcasecmp (opt, "YES") == 0 ||
+                  ACE_OS::strcasecmp (opt, "global") == 0)
+                {
+                  this->opt_for_collocation_ = 1;
+                  this->use_global_collocation_ = 1;
+                }
+              else if (ACE_OS::strcasecmp (opt, "NO") == 0)
                 this->opt_for_collocation_ = 0;
+              else if (ACE_OS::strcasecmp (opt, "per-orb") == 0)
+                {
+                  this->opt_for_collocation_ = 1;
+                  this->use_global_collocation_ = 0;
+                }
 
               arg_shifter.consume_arg ();
             }
@@ -571,10 +578,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             }
         }
 
-      // @@ Ossama: could you add this option to the Options.html
-      //    file?  And could you also remove from the .html file the
-      //    stuff we took out of the default server strategy factory
-      //    and the default resource factory?
       else if (ACE_OS::strcasecmp (current_arg,
                                    "-ORBGlobalCollocation") == 0)
         // Specify whether we want to use collocation across ORBs;
@@ -582,6 +585,9 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         // calls.
         {
           arg_shifter.consume_arg ();
+          ACE_DEBUG ((LM_DEBUG,
+                      "Warning: -ORBGlobalCollocation option is obsolete."
+                      "  Please use '-ORBCollocation global/per-orb/no' instead.\n"));
           if (arg_shifter.is_parameter_next ())
             {
               char *opt = arg_shifter.get_current ();
