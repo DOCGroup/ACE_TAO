@@ -1,3 +1,10 @@
+Wed Mar 17 07:55:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/platform_freebsd_pthread.GNU: Made some
+	  adjustment for building ELF executables which are the default on
+	  FreeBSD 3 and above.  I'll incoporate Russell's LinuxThread
+	  change later.
+
 Wed Mar 17 13:36:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: return non-zero exit status on failure.
