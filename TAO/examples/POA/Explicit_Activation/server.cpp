@@ -13,7 +13,7 @@
 //     - A new POA ( firstPOA) is created, and the different functions
 //       for the explicit activation of objects are demonstrated.
 //     - The Foo application class objects (defined in
-//       ./../Generic_Servant/MyFooServant) are used as sample objects. 
+//       ./../Generic_Servant/MyFooServant) are used as sample objects.
 //
 // = AUTHOR
 //    Irfan Pyarali
@@ -75,48 +75,48 @@ write_iors_to_file (const char *first_ior,
   FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, "w");
   FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2, "w");
   FILE *output_file_3 = ACE_OS::fopen (ior_output_file_3, "w");
-  
-  if (output_file_1 == 0 || 
-      output_file_2 == 0 || 
+
+  if (output_file_1 == 0 ||
+      output_file_2 == 0 ||
       output_file_3 == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s %s\n", 
+    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s %s\n",
                        ior_output_file_1,
                        ior_output_file_2,
-                       ior_output_file_3), 
+                       ior_output_file_3),
                       -1);
 
-  int result = 0;
+  u_int result = 0;
 
   result = ACE_OS::fprintf (output_file_1,
-                            "%s", 
+                            "%s",
                             first_ior);
   if (result != ACE_OS::strlen (first_ior))
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "ACE_OS::fprintf failed while writing %s to %s\n", 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_OS::fprintf failed while writing %s to %s\n",
                        first_ior,
                        ior_output_file_1),
                       -1);
-  
+
   result = ACE_OS::fprintf (output_file_2,
-                            "%s", 
+                            "%s",
                             second_ior);
   if (result != ACE_OS::strlen (second_ior))
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "ACE_OS::fprintf failed while writing %s to %s\n", 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_OS::fprintf failed while writing %s to %s\n",
                        second_ior,
                        ior_output_file_2),
                       -1);
-  
+
   result = ACE_OS::fprintf (output_file_3,
-                            "%s", 
+                            "%s",
                             third_ior);
   if (result != ACE_OS::strlen (third_ior))
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "ACE_OS::fprintf failed while writing %s to %s\n", 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_OS::fprintf failed while writing %s to %s\n",
                        third_ior,
                        ior_output_file_3),
                       -1);
-  
+
   ACE_OS::fclose (output_file_1);
   ACE_OS::fclose (output_file_2);
   ACE_OS::fclose (output_file_3);
@@ -141,7 +141,7 @@ main (int argc, char **argv)
   int result = parse_args (argc, argv);
   if (result != 0)
     return result;
-  
+
   // Obtain the RootPOA.
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
@@ -166,7 +166,7 @@ main (int argc, char **argv)
     }
 
   // Policies for the firstPOA to be created.
-  CORBA::PolicyList policies (2); 
+  CORBA::PolicyList policies (2);
   policies.length (2);
 
   // Id Assignment Policy
@@ -179,7 +179,7 @@ main (int argc, char **argv)
     }
 
   // Lifespan policy
-  policies[1] = 
+  policies[1] =
     root_poa->create_lifespan_policy (PortableServer::PERSISTENT, env);
   if (env.exception () != 0)
     {
@@ -285,13 +285,13 @@ main (int argc, char **argv)
   //   Object create_reference_with_id (in ObjectId oid, in CORBA::RepositoryId intf );
   // This operation creates an object reference that encapsulates the
   // specified Object Id and interface repository Id values.
-  /* 
+  /*
   PortableServer::ObjectId_var third_oid =
     PortableServer::string_to_ObjectId ("thirdFoo");
   */
 
   // This will test how the POA handles a user given ID
-  PortableServer::ObjectId_var third_oid = 
+  PortableServer::ObjectId_var third_oid =
     PortableServer::string_to_ObjectId ("third Foo");
 
   third_oid[5] = (CORBA::Octet) '\0';
