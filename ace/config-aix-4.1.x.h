@@ -132,5 +132,5 @@
 #undef msg_controllen
 #define msg_accrightslen msg_controllen
 #endif /* msg_accrightslen */
-
+#define ACE_HAS_UALARM
 #endif /* ACE_CONFIG_H */
