@@ -1,3 +1,17 @@
+Wed Mar 28 16:40:24 2001  Luther Baker  <luther@cs.wustl.edu>
+
+	* ace/config-all.h
+
+	  Removed ACE_WIN32 support for ACE_HAS_POSIX_SEM just because
+	  ACE_HAS_PACE. This can be defined for ACE_WIN32 after we
+ 	  write more WIN32 emulation.
+
+	* ace/OS.h
+	* ace/OS.i
+	* ace/OS.cpp
+
+	  PACE updates.
+	
 Wed Mar 28 11:37:09 2001  Fuzz Master D <brunsch@uci.edu>
 
         * bin/fuzz.pl:
@@ -275,6 +289,7 @@ Thu Mar 22 10:18:24 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
           Thanks to Eric Desamore <Eric.Desamore@idtv.bull.net> for
           motivating this.
 
+>>>>>>> 4.1785
 Mon Mar 26 11:03:22 2001  Balachandran  <bala@cs.wustl.edu>
 
         * ACE version 5.1.14 released.
@@ -1044,15 +1059,37 @@ Mon Mar  5 13:56:33 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Mon Mar  5 19:20:45 2001  Fuzz Master D <brunsch@uci.edu>
 
         * bin/fuzz.pl:
+<<<<<<< ChangeLog
+=======
           As Ossama pointed out, the ACE_CHECK test was seeing problems in
+<<<<<<< ChangeLog
+ 	  the tao_idl files since it has uses of ACE_TRY_ENV inside
+ 	  quotes.  Made sure not to detect problems in this case.
+>>>>>>> 4.1785
+
+          As Ossama pointed out, the ACE_CHECK test was seeing
+          problems in the tao_idl files since it has uses of ACE_TRY_ENV
+          inside quotes.  Made sure not to detect problems in this case.
+=======
           the tao_idl files since it has uses of ACE_TRY_ENV inside
           quotes.  Made sure not to detect problems in this case.
+>>>>>>> 4.1786
 
 Mon Mar  5 18:58:32 2001  Fuzz Master D <brunsch@uci.edu>
 
         * bin/fuzz.pl:
+<<<<<<< ChangeLog
+
+          Fixed some false positives in the resolve_initial_reference
+          test and also added an ACE_CHECK test by Carlos's request.
+=======
           Fixed some false positives in the resolve_initial_reference test
+<<<<<<< ChangeLog
+ 	  and also added an ACE_CHECK test by Carlos's request.
+>>>>>>> 4.1785
+=======
           and also added an ACE_CHECK test by Carlos's request.
+>>>>>>> 4.1786
 
 Mon Mar  5 18:54:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
