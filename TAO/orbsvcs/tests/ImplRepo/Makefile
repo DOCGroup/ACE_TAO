@@ -17,9 +17,15 @@ DIRS = ../../ImplRepo_Service
 
 LDLIBS = -lTAO
 
-IDL_SRC	= Simple_ObjectC.cpp Simple_ObjectS.cpp
+IDL_SRC	= AirplaneS.cpp AirplaneC.cpp 
 PROG_SRCS = Repository.cpp \
 	    Repository_Test.cpp \
+	    airplane_client.cpp \
+	    airplane_server.cpp \
+	    airplane_client_i.cpp \
+	    airplane_server_i.cpp \
+	    airplane_i.cpp \
+            IR_Helper.cpp \
 	    client.cpp \
 	    client_impl.cpp \
 	    server.cpp \
@@ -35,6 +41,12 @@ IMPLREPO_SERVICE_FILES = PingC.cpp \
 
 IMPLREPO_SERVICE_OBJS = $(addprefix ../../ImplRepo_Service/$(VDIR), $(patsubst %.cpp,%.o,$(IMPLREPO_SERVICE_FILES)))
 
+#IMPLREPO_SERVICE_OBJS = ../../ImplRepo_Service/$(VDIR)/PingC.o \
+#                        ../../ImplRepo_Service/$(VDIR)/PingS.o \
+#                        ../../ImplRepo_Service/$(VDIR)/ImplRepoC.o \
+#                        ../../ImplRepo_Service/$(VDIR)/ImplRepoS.o 
+                        
+
 
 IMPLREPO_CLIENT_OBJS =  Simple_ObjectC.o \
 			Simple_ObjectS.o \
@@ -47,11 +59,23 @@ IMPLREPO_SERVER_OBJS =  Simple_ObjectC.o \
 			server_impl.o \
 			simple_object_impl.o
 
+AIRPLANE_CLIENT_OBJS =  AirplaneC.o \
+		        AirplaneS.o \
+		        airplane_client.o \
+		        airplane_client_i.o
+
+AIRPLANE_SERVER_OBJS =  AirplaneC.o \
+		        AirplaneS.o \
+		        airplane_server.o \
+		        airplane_server_i.o \
+		        airplane_i.o \
+                        IR_Helper.o
+
 REPOSITORY_TEST_OBJS =	Repository.o \
 			Repository_Test.o
 
-BIN = server \
-      client \
+BIN = airplane_server \
+      airplane_client \
       Repository_Test
 
 BUILD = $(BIN)
@@ -86,6 +110,12 @@ server:	$(addprefix $(VDIR),$(IMPLREPO_SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(IMPLREPO_SERVICE_OBJS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(IMPLREPO_CLIENT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
+airplane_server:	$(addprefix $(VDIR),$(AIRPLANE_SERVER_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(IMPLREPO_SERVICE_OBJS) $(POSTLINK)
+
+airplane_client:	$(addprefix $(VDIR),$(AIRPLANE_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 Repository_Test: $(addprefix $(VDIR),$(REPOSITORY_TEST_OBJS))
