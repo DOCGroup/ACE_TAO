@@ -1,21 +1,30 @@
+Mon Oct 13 03:18:33 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Thread_Manager.h: Removed the following code from
+	  ACE_Thread_Control:
+
+	  #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+	  static ACE_Thread_Mutex ace_thread_lock_;
+	  // Lock the creation of the Singleton.
+	  #endif /* defined (ACE_MT_SAFE) */
+
+	  What on earth was this doing here?!  Thanks to Stephen Coy
+ 	  <stevec@magna.com.au> for reporting this.
+
 Mon Oct 13 00:10:00 1997    <irfan@TWOSTEP>
 
 	* tests/Atomic_Op_Test.cpp (main): Changed "foo == 5L" to
  	  "foo.operator== (5L)" because the former was breaking some
- 	  compilers.
+ 	  compilers (e.g., HP/UX aCC).
 
 	* ace/Connector.h (open): Removed the defaults arguments since
- 	  some compilers complain about the two open()s been
+ 	  some compilers complain about the two open()s being
  	  indistinguishable.
 
 Sun Oct 12 23:51:57 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/{Synch_T,Atomic_Op}: All the relational operators should
  	  return int (really return bool) rather than TYPE.
-
-Sun Oct 12 23:16:15 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-	* ACE version 4.3.16, released Sun Oct 12 23:16:15 1997.
 
 Sun Oct 12 18:41:01 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
