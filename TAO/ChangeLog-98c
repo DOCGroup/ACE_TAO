@@ -1,3 +1,9 @@
+Mon Dec 15 19:13:51 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tao/Timeprobe.cpp: 
+	  Removed Solaris specific code, somehow it survived from some
+	  debugging session...
+
 Mon Dec 15 16:52:58 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* TAO-INSTALL.html: Added some explanations for setting CPP_PATH
