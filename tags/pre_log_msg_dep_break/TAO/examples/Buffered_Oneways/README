@@ -1,0 +1,26 @@
+# $Id$
+
+Description:
+
+This is a simple test for buffered oneways.  It invokes multiple
+oneway calls.  Due to buffering in the ORB, the calls are
+automatically bunched together instead of being delivered to the
+server upon every invocation.
+
+Expected output:
+
+The client invokes a oneway after <interval> amount of time.  Flushing
+occurs every <flush count> invocations (explicitly), or after <message
+count> invocations (implicitly), or after <message bytes> have been
+queued up (implicitly).  Any of these options can be turned off by
+setting them to -1.
+
+The server prints out the time and the number of the oneway request.
+The output should show a batch of invocations received on the server.
+
+How to run:
+
+You can use the run_test.pl script to run it or:
+
+$ server
+$ client

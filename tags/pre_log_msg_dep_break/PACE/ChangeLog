@@ -1,0 +1,34 @@
+Wed May 24 18:56:16 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * docs/ACE_Integration.txt: (added)
+
+          For the PACE crew, a file used to document our progress in
+          splitting of ACE_OS and the PACE integration.
+
+Wed May 24 14:40:41 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+        * README/VERSION:
+          Added to repository.
+
+Tue May 23 18:22:48 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+        * pace/pace/Makefile:
+          Added to repository.
+
+        * 'touch' to force dirs to show up with cvs co -P
+          pace/docs/README
+          pace/examples/README
+          pace/pace/README
+          pace/pace++/README
+          pace/tests/README
+
+Tue May 23 17:59:06 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+        * docs/todo.txt:
+          Currently, all .o files appear in the
+          ACE_wrappers/pace/pace directory (e.g.: nested
+          files such as pace/pace/sys/socket.c generate
+          pace/pace/socket.o. See pace/docs/todo.txt.
+
+        * ACE_wrappers/pace/pace:
+          Source files added.
