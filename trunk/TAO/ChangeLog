@@ -1,3 +1,8 @@
+Fri Mar 18 10:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.{h,cpp}:
+          Removed _optimize_collocation_objects, it is not used
+
 Fri Mar 18 09:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
