@@ -1,3 +1,9 @@
+Sun Jan 03 23:21:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Config.cpp (initialize): Both initialize methods now
+	  remove the service object from the repository if its init()
+	  method failed.
+
 Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/ACE: Added a simple dirname() wrapper method.
