@@ -756,7 +756,6 @@ TAO_DynCommon::insert_dyn_any (DynamicAny::DynAny_ptr value
   ACE_CHECK;
 }
 
-#if (TAO_HAS_VALUETYPE == 1)
 void
 TAO_DynCommon::insert_val (CORBA::ValueBase_ptr
                            ACE_ENV_ARG_DECL)
@@ -768,7 +767,6 @@ TAO_DynCommon::insert_val (CORBA::ValueBase_ptr
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
-#endif /* TAO_HAS_VALUETYPE */
 
 // ****************************************************************
 
@@ -1459,7 +1457,6 @@ TAO_DynCommon::get_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
                                           ACE_ENV_ARG_PARAMETER);
 }
 
-#if (TAO_HAS_VALUETYPE == 1)
 CORBA::ValueBase_ptr
 TAO_DynCommon::get_val (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -1471,7 +1468,6 @@ TAO_DynCommon::get_val (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     0);
 }
-#endif /* TAO_HAS_VALUETYPE == 1*/
 
 // ****************************************************************
 
