@@ -5,8 +5,9 @@
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
-LIB      = libACE.a
-SHLIB    = libACE.$(SOEXT)
+LIBACE   = libACE
+LIB      = $(LIBACE).a
+SHLIB    = $(LIBACE).$(SOEXT)
 
 OS_FILES = \
   Basic_Types \
