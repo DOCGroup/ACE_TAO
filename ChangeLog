@@ -1,3 +1,12 @@
+Mon Mar 31 08:44:16 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug in the project creator dealing with precompiled header
+          files.  If the pch_header or pch_source is set to "" then we need
+          to be sure that pch information is not put in the generated
+          project file.
+
 Mon Mar 31 08:19:16 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/em3vcp.mpd:

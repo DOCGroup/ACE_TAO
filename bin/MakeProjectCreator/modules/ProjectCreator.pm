@@ -771,6 +771,16 @@ sub generate_default_pch_filenames {
 }
 
 
+sub fix_pch_filenames {
+  my($self) = shift;
+  foreach my $type ('pch_header', 'pch_source') {
+    if ($self->get_assignment($type) eq '') {
+      $self->process_assignment($type, undef);
+    }
+  }
+}
+
+
 sub is_special_tag {
   my($self) = shift;
   my($tag)  = shift;
@@ -1170,8 +1180,12 @@ sub generate_defaults {
     }
   }
 
+  ## Generate the default pch file names (if needed)
   my(@files) = $self->generate_default_file_list();
   $self->generate_default_pch_filenames(\@files);
+
+  ## If the pch file names are empty strings then we need to fix that
+  $self->fix_pch_filenames();
 
   ## Generate default components, but @specialComponents
   ## are skipped in the initial default components generation
