@@ -1,7 +1,8 @@
 This directory contains several examples that illustrate how to use
 various concurrency mechanisms to schedule and handle timer-based
-events.  All programs are interactive.  You can schedule or cancel
-time events and list all the timers that are waiting to be triggered.
+events.  All programs are interactive and utilize a common timer queue
+test framework.  You can schedule or cancel time events and list all
+the timers that are waiting to be triggered.
 
 The tests include:
 

@@ -63,16 +63,20 @@ public:
   // Dump the contents of the queue.
 
   int schedule_timer (void *argument);
-  // hook method to schedule a timer.  Called from <Timer_Queue_Test_Driver>
+  // hook method to schedule a timer.  Called from
+  // <Timer_Queue_Test_Driver>
 
   int cancel_timer (void *argument);
-  // hook method to cancel a timer.  Called from <Timer_Queue_Test_Driver>
+  // hook method to cancel a timer.  Called from
+  // <Timer_Queue_Test_Driver>
 
   int list_timer (void *argument);
-  // hook method to list timers.  Called from <Timer_Queue_Test_Driver>
+  // hook method to list timers.  Called from
+  // <Timer_Queue_Test_Driver>
 
   int shutdown_timer (void *argument);
-  // hook method to exit the timer queue.  Called from <Timer_Queue_Test_Driver>
+  // hook method to exit the timer queue.  Called from
+  // <Timer_Queue_Test_Driver>
 
 private:
   Async_Timer_Queue (ACE_Sig_Set *);

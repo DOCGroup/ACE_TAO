@@ -192,7 +192,7 @@ main (int argc, char *const *argv)
   unsigned short done = 0;
   CORBA_Environment env;
   CORBA_ORB_ptr orb_ptr;
-  CORBA_BOA_ptr oa_ptr;
+  CORBA_POA_ptr oa_ptr;
   int iter = 1;
   TAO_OA_Parameters    *params = TAO_OA_PARAMS::instance();
   char                *orb_name = "ior";

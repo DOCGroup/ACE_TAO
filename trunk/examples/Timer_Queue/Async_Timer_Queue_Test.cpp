@@ -129,7 +129,7 @@ Async_Timer_Queue::cancel (long timer_id)
   delete (ACE_Event_Handler *) act;
 }
 
-// Schedule timer hook method.   This method is called from the driver.
+// Schedule timer hook method.  This method is called from the driver.
 
 int
 Async_Timer_Queue::schedule_timer (void *argument)
@@ -155,8 +155,8 @@ Async_Timer_Queue::cancel_timer (void *argument)
   return 0;
 }
 
-// Dummy list timer hook method.  The listing of timers is done from 
-// a signal handler using SIGINT, not from the driver.
+// Dummy list timer hook method.  The listing of timers is done from a
+// signal handler using SIGINT, not from the driver.
 
 int
 Async_Timer_Queue::list_timer (void *argument)
@@ -258,7 +258,7 @@ Async_Timer_Queue_Test_Driver::init (void)
 {
   typedef Command<Async_Timer_Queue, Async_Timer_Queue::ACTION> COMMAND;
 
-  // initialize <Command> objects with their corresponding <Input_Task> methods.
+  // Initialize <Command> objects with their corresponding <Input_Task> methods.
   ACE_NEW_RETURN (schedule_cmd_, 
 		  COMMAND (*Async_Timer_Queue::instance (),
 			   &Async_Timer_Queue::schedule_timer),

@@ -75,10 +75,10 @@ main (int argc, char *argv[])
     }
 
   // Initialize the Basic Object Adapter
-  CORBA::BOA_ptr oa_ptr = orb_ptr->BOA_init (argc, argv, "ROA");
+  CORBA::POA_ptr oa_ptr = orb_ptr->POA_init (argc, argv, "ROA");
 
   if (oa_ptr == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, " (%P|%t) Unable to initialize the BOA.\n"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, " (%P|%t) Unable to initialize the POA.\n"), 1);
 
   // Parse remaining command line and verify parameters.
 
@@ -103,7 +103,7 @@ main (int argc, char *argv[])
 
       if (TAO_debug_level >= 0)
 	{
-	  // Why are we getting the BOA_ptr from here when we've
+	  // Why are we getting the POA_ptr from here when we've
 	  // already got it above?
 
 	  CORBA::OctetSeq obj_key;

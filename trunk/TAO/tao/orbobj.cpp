@@ -424,7 +424,7 @@ CORBA_ORB::create_list (CORBA::Long count,
 // XXX it's server-side so should be OA-specific and not in this module
 
 CORBA::POA_ptr 
-CORBA_ORB::BOA_init (int &argc,
+CORBA_ORB::POA_init (int &argc,
 		     char **argv,
 		     const char *boa_identifier)
 {

@@ -114,7 +114,7 @@ long GenServerSkels(ACE_Unbounded_Queue<ACE_CString> &arr, int limit)
   skel << "\tconst char* repoID = \"IDL:tao_demux:1.0\";" << endl;
   skel << "\tCORBA_String_var  _tao_typeid = repoID;" << endl;
   skel << "\tIIOP_Object *data; // IIOP object reference" << endl;
-  skel << "\tCORBA_BOA_ptr oa = TAO_OA_PARAMS::instance()->oa(); // our OA" << endl;
+  skel << "\tCORBA_POA_ptr oa = TAO_OA_PARAMS::instance()->oa(); // our OA" << endl;
   skel << "\tTAO_Operation_Table_Parameters *op_params = " << endl;
   skel << "\t\tTAO_OP_TABLE_PARAMETERS::instance();" << endl << endl;
   skel << "\tCORBA_Long i;" << endl;

@@ -1,5 +1,25 @@
 Mon Oct 20 23:42:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+        * TAO/boa: Changed BOA_init() to POA_init() to be
+	  more consistent...
+
+        * TAO_IDL/be/be_interface.cpp,
+          tests/TAO/Thruput_test/server.cpp,
+	  tests/TAO/Thruput_test/ttcpS.cpp,
+	  tests/TAO/RT_test/Task_Client.cpp,
+	  tests/TAO/RT_test/cubit_impl.cpp,
+	  tests/TAO/multiCubit/cubitS.cpp,
+	  tests/TAO/multiCubit/svr.cpp,
+	  tests/TAO/Demux_Test/server.cpp,
+	  tests/TAO/Demux_Test/CodeGen/skel.cpp,
+	  tests/TAO/MT-Cubit/client/Task_Client.cpp,
+	  tests/TAO/MT-Cubit/server/cubitS.cpp,
+	  tests/TAO/MT-Cubit/server/svr.cpp,
+	  tests/TAO/cubitS.cpp,
+	  tests/TAO/svr.cpp,
+	  tests/TAO/test1_svr.cpp: Changed BOA to POA to reflect the 
+	  new naming conventions.
+
 	* tao/stub.i (STUB_Object): Removed a stray default value from the
  	STUB_Object constructor...  Thanks to Carlos for noticing this.
 
