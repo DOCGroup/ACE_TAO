@@ -56,7 +56,7 @@ GIOP_ServerRequest::response_expected (void) const
 ACE_INLINE CORBA::Principal_ptr
 GIOP_ServerRequest::principal (void) const
 {
-  return this->requesting_principal_;
+  return this->requesting_principal_.ptr ();
 }
 
 ACE_INLINE const TAO_ObjectKey &
