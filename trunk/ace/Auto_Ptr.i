@@ -3,7 +3,8 @@
 
 // Auto_Ptr.i
 
-#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
+	    (ACE_HAS_STANDARD_CPP_LIBRARY == 0)
 
 template<class X> ACE_INLINE void
 ACE_Auto_Basic_Ptr<X>::operator= (ACE_Auto_Basic_Ptr<X> &rhs)
