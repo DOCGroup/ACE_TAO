@@ -80,14 +80,6 @@
         #define ACE_HAS_STANDARD_CPP_LIBRARY 0
 #endif
 
-// Check to see whether we are compiling with the newer version
-// of WinSock 2 that has GQOS support.
-#if defined (WINSOCK_VERSION) && defined (MAKEWORD) 
-#  if (WINSOCK_VERSION == MAKEWORD(2,2))
-#    define ACE_HAS_WINSOCK2_GQOS 1
-#  endif /* WINSOCK_VERSION == MAKEWORD(2,2) */
-#endif /* WINSOCK_VERSION && MAKEWORD*/
-
 // The STL that comes with ACE uses the std namespace. Note however, it is not
 // part of the standard C++ library
 #if !defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
