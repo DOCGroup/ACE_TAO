@@ -58,7 +58,7 @@ Time_Handler::Time_Handler (void)
 // seconds.  The one at 3 seconds will get cancelled when the thread
 // starts.
 
-void 
+void
 Time_Handler::setup (void)
 {
   ACE_Reactor *r = ACE_Reactor::instance ();
@@ -92,7 +92,7 @@ Time_Handler::verify_results (void)
   return 0;
 }
 
-int 
+int
 Time_Handler::svc (void)
 {
   ACE_Reactor *r = ACE_Reactor::instance ();
@@ -124,7 +124,7 @@ Time_Handler::svc (void)
   return 0;
 }
 
-int 
+int
 Time_Handler::handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
 {
@@ -168,12 +168,12 @@ Dispatch_Count_Handler::Dispatch_Count_Handler (void)
                 ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("register_handler")));
   // Put something in our pipe and smoke it... ;-)
-  else if (ACE_OS::write (this->pipe_.write_handle (),
-                          "z",
-                          1) == -1)
+  else if (ACE::send (this->pipe_.write_handle (),
+                      "z",
+                      1) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("write")));
+                ASYS_TEXT ("send")));
   // Call notify to prime the pump for this, as well.
   else if (r->notify (this) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -208,10 +208,10 @@ Dispatch_Count_Handler::handle_input (ACE_HANDLE h)
 {
   char c;
 
-  if (ACE_OS::read (h, &c, 1) != 1)
+  if (ACE::recv (h, &c, 1) != 1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("read")),
+                       ASYS_TEXT ("recv")),
                       -1);
 
   ACE_ASSERT (c == 'z');
