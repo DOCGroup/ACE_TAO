@@ -48,7 +48,8 @@ be_visitor_interface_is::visit_interface (be_interface *node)
 
   // Generate the skeleton class name.
 
-  os->indent ();
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Implementation skeleton constructor" << be_nl;
 
@@ -57,10 +58,10 @@ be_visitor_interface_is::visit_interface (be_interface *node)
       << be_global->impl_class_suffix () <<"::"
       << be_global->impl_class_prefix () << node->flat_name ()
       << be_global->impl_class_suffix ()
-      << " (void)" << be_idt_nl;
+      << " (void)" << be_nl;
 
   *os << "{" << be_nl
-      << "}" << be_nl << be_uidt_nl;
+      << "}" << be_nl << be_nl;
 
   os->indent ();
   *os << "// Implementation skeleton destructor" << be_nl;
@@ -69,10 +70,10 @@ be_visitor_interface_is::visit_interface (be_interface *node)
       << be_global->impl_class_suffix () <<"::~"
       << be_global->impl_class_prefix () << node->flat_name ()
       << be_global->impl_class_suffix ()
-      << " (void)" << be_idt_nl;
+      << " (void)" << be_nl;
 
   *os << "{" <<be_nl;
-  *os << "}" << be_nl <<be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   if (be_global->gen_copy_ctor ())
     {
@@ -149,6 +150,7 @@ be_visitor_interface_is::method_helper (be_interface *derived,
   if (ACE_OS::strcmp (derived->flat_name (), node->flat_name ()) != 0)
     {
       be_visitor_context ctx;
+      ctx.state (TAO_CodeGen::TAO_ROOT_IS);
       ctx.interface (derived);
       ctx.stream (os);
       be_visitor_interface_is visitor (&ctx);

@@ -41,8 +41,6 @@ be_visitor_operation_is::visit_operation (be_operation *node)
 
   this->ctx_->node (node); // save the node
 
-  os->indent (); // start with the current indentation level
-
   // STEP I: generate the return type
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
 
@@ -54,6 +52,9 @@ be_visitor_operation_is::visit_operation (be_operation *node)
                          "Bad return type\n"),
                         -1);
     }
+
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   be_visitor_context ctx (*this->ctx_);
   be_visitor_operation_rettype oro_visitor (&ctx);
@@ -98,9 +99,9 @@ be_visitor_operation_is::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << be_idt_nl << "{" << be_idt_nl;
+  *os << be_nl << "{" << be_idt_nl;
   *os << "// Add your implementation here" << be_uidt_nl;
-  *os << "}" << be_nl << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   return 0;
 }
