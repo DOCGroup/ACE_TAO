@@ -649,6 +649,8 @@ ACE_CC_YY_DECL
 		ace_cc_yy_load_buffer_state();
 		}
 
+        ace_cc_yy_cp = ace_cc_yy_bp = 0; /* To avoid g++ warning about
+                                            possible uninitialized use. */
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
 		ace_cc_yy_cp = ace_cc_yy_c_buf_p;
