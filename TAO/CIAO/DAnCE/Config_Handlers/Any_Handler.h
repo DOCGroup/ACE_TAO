@@ -1,59 +1,57 @@
-//==================================================================
+//==============================================================
 /**
  *  @file  Any_Handler.h
  *
  *  $Id$
  *
- *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+ *  @author Jules White <jules@dre.vanderbilt.edu>
  */
-//=====================================================================
+//================================================================
 
-#ifndef ANY_HANDLER_H
-#define ANY_HANDLER_H
+#ifndef CIAO_CONFIG_HANDLERS_ANY_HANDLER_H
+#define CIAO_CONFIG_HANDLERS_ANY_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "ciao/DeploymentC.h"
-#include "Config_Handler_export.h"
+#include "Config_Handlers_Export.h"
 
-#include <xercesc/util/XercesDefs.hpp>
-#include <xercesc/dom/DOM.hpp>
-#include "XercesString.h"
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
-using Config_Handler::XStr;
-using xercesc::XMLString;
-using xercesc::DOMText;
-using xercesc::DOMNodeIterator;
-using xercesc::DOMNode;
+namespace CORBA
+{
+  class Any;
+}
 
 namespace CIAO
 {
-  namespace Config_Handler
+  namespace Config_Handlers
   {
-    /**
-     * @class Any_Handler
-     *
-     * @brief Handler class for <Deployment:Any> type
-     *
-     * This class defines handler methods to parse Implementation
-     * Dependency types in the descriptor files. The corresponding
-     * CORBA IDL type for the schema element is returned.
-     *
-     */
-    class Config_Handler_Export Any_Handler
-    {
-    public:
-      static void process_Any (DOMNodeIterator * iter,
-                               ::CORBA::Any &any_obj);
-      // process elements of type Deployment:Any in the descriptor files
+    class Any;
 
-    private:
-      static void validate_ValueNode (DOMNodeIterator * iter,
-                                      const char * name);
-      // validate <value> .. </value> node present in the XML schema
+   /*
+    * @class Any_Handler
+    *
+    * @brief Handler class for <ComponentInterfaceDescription> types.
+    *
+    * This class defines handler methods to map values from
+    * XSC Any objects, parsed from the descriptor files, to the
+    * corresponding CORBA IDL Any type.
+    *
+    */
+    class Config_Handlers_Export Any_Handler
+    {
+      public:
+      Any_Handler (void);
+      virtual ~Any_Handler (void);
+
+      static void extract_into_any (const Any& desc,
+                                    ::CORBA::Any& toconfig);
+
+      static Any get_any (const CORBA::Any &src);
     };
   }
 }
 
 #include /**/ "ace/post.h"
-
-#endif /* ID_HANDLER_H */
+#endif /* CIAO_CONFIG_HANDLERS_ANY_HANDLER_H*/

@@ -1,27 +1,53 @@
-//$Id$
+// $Id$
 
 #include "ERE_Handler.h"
-#include "Utils.h"
+#include "Basic_Deployment_Data.hpp"
+#include "ciao/Deployment_DataC.h"
 
-using CIAO::Config_Handler::Utils;
-
-void
-CIAO::Config_Handler::ERE_Handler::
-process_ExternalReferenceEndpoint (DOMNodeIterator * iter,
-                                   Deployment::ExternalReferenceEndpoint &ret_struct)
+namespace CIAO
 {
-  //Check if the Schema IDs for both the elements match
-  DOMNode * node = iter->nextNode ();
-  XStr name (node->getNodeName ());
-
-  if (name != XStr (ACE_TEXT ("location")))
+  namespace Config_Handlers
+  {
+    bool
+    ERE_Handler::external_ref_endpoints (
+        const PlanConnectionDescription &src,
+        Deployment::ExternalReferenceEndpoints &dest)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Config_Handlers::ERE_Handler::process_ExternalRefEndPoint \
-                   element mismatch expected <location>"));
-      ACE_THROW (CORBA::INTERNAL ());
+      PlanConnectionDescription::externalReference_const_iterator erep_e =
+        src.end_externalReference ();
+
+     for (PlanConnectionDescription::externalReference_const_iterator erep_b =
+            src.begin_externalReference ();
+          erep_b != erep_e;
+          ++erep_b)
+       {
+         CORBA::ULong len =
+           dest.length ();
+         dest.length (len + 1);
+
+         ERE_Handler::external_ref_endpoint ((*erep_b),
+                                             dest[0]);
+       }
+
+     return true;
     }
 
-  // Populate the structure
-  ret_struct.location = Utils::parse_string (iter);
+    void
+    ERE_Handler::external_ref_endpoint (
+        const ExternalReferenceEndpoint &src,
+        Deployment::ExternalReferenceEndpoint &dest)
+    {
+      dest.location =
+        src.location ().c_str ();
+    }
+   
+    ExternalReferenceEndpoint 
+    ERE_Handler::external_ref_endpoint (
+        const Deployment::ExternalReferenceEndpoint& src)
+    {
+      XMLSchema::string< char > loc ((src.location));
+      ExternalReferenceEndpoint erp (loc);
+      return erp;
+    }
+  }
 }
