@@ -48,8 +48,8 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
 {
   if (this->ctx_->alias ())
     {
-      // we are here because the base type of the array node is itself an array
-      // i.e., this is a case of array of array
+      // We are here because the base type of the array node is itself an array
+      // i.e., this is a case of array of array.
       return this->visit_node (node);
     }
   else
@@ -59,10 +59,13 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
       be_type *bt; // base type of the array
 
       if (node->cli_inline_cdr_op_gen () || node->imported ())
-        return 0;
+        {
+          return 0;
+        }
 
-      // retrieve the type
+      // Retrieve the type.
       bt = be_type::narrow_from_decl (node->base_type ());
+
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -91,23 +94,22 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
             }
         }
 
-      // for anonymous arrays, the type name has a _ prepended. We compute the
+      // For anonymous arrays, the type name has a _ prepended. We compute the
       // full_name with or without the underscore and use it later on.
       char fname [NAMEBUFSIZE];  // to hold the full and
 
-      // save the node's local name and full name in a buffer for quick use later
-      // on
+      // Save the node's local name and full name in a buffer for quick use later
+      // on.
       ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
       if (this->ctx_->tdef ())
         {
-          // typedefed node
           ACE_OS::sprintf (fname, "%s", node->full_name ());
         }
       else
         {
-          // for anonymous arrays ...
+          // For anonymous arrays ...
           // we have to generate a name for us that has an underscope prepended to
-          // our local name. This needs to be inserted after the parents's name
+          // our local name. This needs to be inserted after the parents's name.
 
           if (node->is_nested ())
             {
@@ -121,12 +123,12 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
             }
         }
 
-      // generate the CDR << and >> operator defns
+      // Generate the CDR << and >> operator defns.
 
-      // save the array node for further use
+      // Save the array node for further use.
       this->ctx_->node (node);
 
-      //  set the sub state as generating code for the output operator
+      //  Set the sub state as generating code for the output operator.
       this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
       *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
           << "const " << fname << "_forany &_tao_array)" << be_nl
@@ -142,12 +144,13 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
         }
       *os << "}\n\n";
 
-      //  set the sub state as generating code for the input operator
+      //  Set the sub state as generating code for the input operator.
       os->indent ();
       this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
       *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
           << fname << "_forany &_tao_array)" << be_nl
           << "{" << be_idt_nl;
+
       if (bt->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -156,6 +159,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
                              "Base type codegen failed\n"),
                             -1);
         }
+
       *os << "}\n\n";
 
       node->cli_inline_cdr_op_gen (1);
@@ -163,7 +167,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
   return 0;
 }
 
-// handle all the base types
+// Handle all the base types.
 
 int
 be_visitor_array_cdr_op_ci::visit_enum (be_enum *node)
@@ -192,7 +196,7 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
     {
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_any:
-      // let the helper handle this
+      // Let the helper handle this.
       return this->visit_node (node);
     case AST_PredefinedType::PT_void:
       // error
@@ -202,19 +206,18 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
                          "Bad primitive type\n"
                          ), -1);
     default:
-      // all other primitive types. Handle them as shown below
+      // All other primitive types. Handle them as shown below.
       break;
     };
 
-  // we get here if the "type" of individual elements of the array is a
+  // We get here if the "type" of individual elements of the array is a
   // primitive type. In this case, we treat the array as a single dimensional
   // array (even though it was multi-dimensional), and pass the total length of
-  // the array as a cross product of the dimensions
+  // the array as a cross product of the dimensions.
 
-  // index
   unsigned long i;
 
-  // grab the array node
+  // Grab the array node.
   be_array *array = this->ctx_->be_node_as_array ();
 
   if (!node)
@@ -226,13 +229,13 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
-  // we generate optimized code based on an optimized interface available from
+  // We generate optimized code based on an optimized interface available from
   // the CDR class. These optimizations are applicable only to primitive
   // types.
   *os << " return strm.";
 
-  // based on our substate, we may be reading from a stream or writing into a
-  // stream
+  // Based on our substate, we may be reading from a stream or writing into a
+  // stream.
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
@@ -249,7 +252,7 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
-  // determine what kind of array are we reading/writing
+  // Determine what kind of array are we reading/writing.
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_long:
@@ -292,7 +295,6 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
       *os << "boolean_array";
       break;
     default:
-      // error
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_ci::"
                          "visit_predefined_type - "
@@ -300,7 +302,7 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
-  // handle special case to avoid compiler errors
+  // Handle special case to avoid compiler errors.
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
@@ -310,7 +312,6 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
       *os << " ((const ";
       break;
     default:
-      // error
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_ci::"
                          "visit_predefined_type - "
@@ -360,7 +361,6 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
       *os << "ACE_CDR::Boolean *)";
       break;
     default:
-      // error
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_ci::"
                          "visit_predefined_type - "
@@ -368,7 +368,7 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
-  // handle special case to avoid compiler errors
+  // Handle special case to avoid compiler errors.
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
@@ -378,7 +378,6 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
       *os << "_tao_array.in (), ";
       break;
     default:
-      // error
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_ci::"
                          "visit_predefined_type - "
@@ -386,13 +385,13 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
-  // generate a product of all the dimensions. This will be the total length of
+  // Generate a product of all the dimensions. This will be the total length of
   // the "unfolded" single dimensional array.
   for (i = 0; i < array->n_dims (); i++)
     {
-      // retrieve the ith dimension value
+      // Retrieve the ith dimension value.
       AST_Expression *expr = array->dims ()[i];
-      // dimension value
+
       if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -401,12 +400,13 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
                              "bad array dimension\n"),
                             -1);
         }
+
       if (i != 0)
-        // do not generate the multiplication operator the first time in
+        // Do not generate the multiplication operator the first time in.
         *os << "*";
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
-          // generate a loop for each dimension
+          // Generate a loop for each dimension.
           *os << expr->ev ()->u.ulval;
         }
       else
@@ -450,25 +450,25 @@ be_visitor_array_cdr_op_ci::visit_union (be_union *node)
 int
 be_visitor_array_cdr_op_ci::visit_typedef (be_typedef *node)
 {
-  this->ctx_->alias (node); // save the typedef node for use in code generation
-                            // as we visit the base type
+  this->ctx_->alias (node);
 
-  // the node to be visited in the base primitve type that gets typedefed
+  // The node to be visited in the base primitve type that gets typedefed.
   be_type *bt = node->primitive_base_type ();
+
   if (!bt || (bt->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_ci::"
                          "visit_typedef - "
-                         "Bad primitive type\n"
-                         ), -1);
+                         "Bad primitive type\n"), 
+                        -1);
     }
 
   this->ctx_->alias (0);
   return 0;
 }
 
-// helper
+// Helper.
 int
 be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
 {
@@ -485,19 +485,19 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                         -1);
     }
 
-  // initialize a boolean variable
+  // Initialize a boolean variable.
   *os << "CORBA::Boolean _tao_marshal_flag = 1;" << be_nl;
 
-  // we get here if the "type" of individual elements of the array is not a
+  // We get here if the "type" of individual elements of the array is not a
   // primitive type. In this case, we are left with no other alternative but to
-  // encode/decode element by element
+  // encode/decode element by element.
 
   // generate nested loops for as many dimensions as there are
   for (i = 0; i < node->n_dims (); i++)
     {
-      // retrieve the ith dimension value
+      // Retrieve the ith dimension value.
       AST_Expression *expr = node->dims ()[i];
-      // dimension value
+
       if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -506,9 +506,10 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                              "bad array dimension\n"),
                             -1);
         }
+
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
-          // generate a loop for each dimension
+          // Generate a loop for each dimension.
           *os << be_nl << "for (CORBA::ULong i" << i << " = 0; i" << i << " < "
               << expr->ev ()->u.ulval << " && _tao_marshal_flag; i" << i
               << "++)" << be_idt_nl;
@@ -529,8 +530,8 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "{" << be_idt_nl;
 
-      // handle the array of array case, where we need to pass the
-      // forany type
+      // Handle the array of array case, where we need to pass the
+      // forany type.
       if (bt->node_type () == AST_Decl::NT_array)
         {
           *os << bt->name () << "_forany tmp ("
@@ -550,6 +551,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
         {
           *os << "_tao_marshal_flag = (strm >> ";
           *os << "_tao_array ";
+
           for (i = 0; i < node->n_dims (); i++)
             {
               *os << "[i" << i << "]";
@@ -557,8 +559,8 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
 
           switch (bt->node_type ())
             {
-              // the following have a _var type and must be
-              // handled in a special way
+              // The following have a _var type and must be
+              // handled in a special way.
               case AST_Decl::NT_string:
               case AST_Decl::NT_wstring:
               case AST_Decl::NT_interface:
@@ -567,10 +569,11 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                 break;
               case AST_Decl::NT_pre_defined:
                 {
-                  // we need to separately handle this case of pseudo
-                  // objects because they have a _var type
+                  // We need to separately handle this case of pseudo
+                  // objects because they have a _var type.
                   be_predefined_type *pt =
                     be_predefined_type::narrow_from_decl (bt);
+
                   if (!pt)
                     {
                       ACE_ERROR_RETURN ((LM_ERROR,
@@ -579,6 +582,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                                          "bad predefined type node\n"),
                                         -1);
                     }
+
                   if (pt->pt () == AST_PredefinedType::PT_pseudo)
                     {
                       *os << ".out ()";
@@ -597,8 +601,8 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "{" << be_idt_nl;
 
-      // handle the array of array case, where we need to pass the
-      // forany type
+      // Handle the array of array case, where we need to pass the
+      // forany type.
       if (bt->node_type () == AST_Decl::NT_array)
         {
           *os << bt->name () << "_var tmp_var ("
@@ -617,6 +621,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
         {
           *os << "_tao_marshal_flag = (strm << ";
           *os << "_tao_array ";
+
           for (i = 0; i < node->n_dims (); i++)
             {
               *os << "[i" << i << "]";
@@ -624,8 +629,8 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
 
           switch (bt->node_type ())
             {
-              // the following have a _var type and must be
-              // handled in a special way
+              // The following have a _var type and must be
+              // handled in a special way.
               case AST_Decl::NT_string:
               case AST_Decl::NT_wstring:
               case AST_Decl::NT_interface:
@@ -634,10 +639,11 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                 break;
               case AST_Decl::NT_pre_defined:
                 {
-                  // we need to separately handle this case of pseudo
-                  // objects because they have a _var type
+                  // We need to separately handle this case of pseudo
+                  // objects because they have a _var type.
                   be_predefined_type *pt =
                     be_predefined_type::narrow_from_decl (bt);
+
                   if (!pt)
                     {
                       ACE_ERROR_RETURN ((LM_ERROR,
@@ -646,6 +652,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                                          "bad predefined type node\n"),
                                         -1);
                     }
+
                   if (pt->pt () == AST_PredefinedType::PT_pseudo)
                     {
                       *os << ".in ()";
@@ -671,7 +678,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
 
   for (i = 0; i < node->n_dims (); i++)
     {
-      // decrement indentation as many times as the number of dimensions
+      // Decrement indentation as many times as the number of dimensions.
       *os << be_uidt;
     }
 
