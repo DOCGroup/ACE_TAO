@@ -6,8 +6,7 @@ Mon Dec 16 09:29:32 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
           Added the spec-required cast operator to char*& for 
           the string_var class. Thanks to Torsten Kuepper
           <torsten.kuepper@nokia.com> for reporting the oversight.
-          This closes [BUGID:1402]. Also removed the existing
-          non-compliant cast operator to char*.
+          This closes [BUGID:1402].
 
 Sun Dec 15 22:26:29 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
