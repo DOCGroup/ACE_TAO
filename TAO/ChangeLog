@@ -2,7 +2,7 @@ Fri Aug 15 00:37:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.cpp:
           Changed loc1 and loc2 to location1 and location2 since the
-          former are #defines in regexpr.h on Solaris.
+          they are #defines in regexpr.h on Solaris.
 
 Thu Aug 14 17:42:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
