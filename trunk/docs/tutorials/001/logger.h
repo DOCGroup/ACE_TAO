@@ -92,10 +92,10 @@ protected:
   virtual int handle_input (ACE_HANDLE)
   {
     /*
-      Create and initialize a small receive buffer.
+      Create and initialize a small receive buffer.  The extra byte is 
+      there to allow us to have a null-terminated string when it's over.
      */
-    char buf[128];
-    memset(buf,0,sizeof(buf));
+    char buf[128+1];
 
     /*
       Invoke the recv() method of the ACE_SOCK_Stream to get some data.  It will
@@ -120,7 +120,8 @@ protected:
       passed directly to the underlying OS recv() call.  See the man page recv(2)
       and the header sys/socket.h for the gory details.
      */
-    switch( this->cli_stream_.recv(buf,sizeof buf) )
+    ssize_t retval;
+    switch( retval = this->cli_stream_.recv(buf,sizeof(buf)-1) )
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p bad read\n", "client logger"), -1);
@@ -128,6 +129,7 @@ protected:
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) closing log daemon (fd = %d)\n",
         this->get_handle ()), -1);
     default:
+      buf[retval] = '\0';
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) from client: %s",buf));
     }
 
