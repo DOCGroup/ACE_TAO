@@ -1,3 +1,8 @@
+Fri Sep  4 12:54:58 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp: Parse-args was not
+	  recognizing the "-d" argument to set the debug level. Fixed.
+
 Fri Sep 04 02:37:05 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Explicit_Activation/: 
