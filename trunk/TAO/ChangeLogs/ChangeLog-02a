@@ -9,7 +9,7 @@ Mon Dec 18 18:58:00 2000  Ossama Othman  <ossama@uci.edu>
 	* tao/PortableServer/ServerRequestInfo.cpp (forward_reference):
 
 	  Fixed "better conversion sequence" warning by explicitly using
-	  the "CORBA::Object_var::in()" accessor.2
+	  the "CORBA::Object_var::in()" accessor.
 
 Mon Dec 18 14:09:31 2000  Ossama Othman  <ossama@uci.edu>
 
