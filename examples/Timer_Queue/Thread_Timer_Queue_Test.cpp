@@ -90,8 +90,8 @@ Handler::handle_timeout (const ACE_Time_Value &current_time,
 
   // No need to protect this printf is always called from a Async safe
   // point.
-  ACE_OS::printf ("\nexpiring timer %d at %u.%07.7u secs\n"
-                  "\tthere was a %u.%07.7u secs delay\n",
+  ACE_OS::printf ("\nexpiring timer %d at %lu.%7.7lu secs\n"
+                  "\tthere was a %lu.%7.7lu secs delay\n",
                   this->id_,
                   current_time.sec (),
                   current_time.usec (),
@@ -178,7 +178,7 @@ Input_Task::add_timer (void *argument)
 int
 Input_Task::cancel_timer (void *argument)
 {
-  return this->queue_->cancel (*ACE_reinterpret_cast (int *, 
+  return this->queue_->cancel (*ACE_reinterpret_cast (int *,
                                                       argument));
 }
 
@@ -214,7 +214,7 @@ Input_Task::shutdown_timer (void *argument)
   // Cancel the thread timer queue task "preemptively."
   if (ACE_Thread::cancel (this->queue_->thr_id ()) == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p\n", 
+                "%p\n",
                 "cancel"));
 #endif /* ACE_LACKS_PTHREAD_CANCEL */
 

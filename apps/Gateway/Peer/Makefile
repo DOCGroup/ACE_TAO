@@ -39,6 +39,12 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 INCLDIRS += -I../Gateway
 
+ifeq ($(static_libs_only),1)
+$(VBIN): $(VLIB)
+else
+$(VBIN): $(VSHLIB)
+endif
+
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------

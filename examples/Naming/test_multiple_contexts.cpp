@@ -31,10 +31,10 @@ int main (int, char *[])
   char address_arg1[BUFSIZ];
   char address_arg2[BUFSIZ];
   ACE_OS::sprintf (address_arg1,
-                   "-b%d",
+                   "-b%ld",
                    ACE_DEFAULT_BASE_ADDR_1);
 
-  const char *m_argv[] = 
+  const char *m_argv[] =
   {
     "MyName1",
     "-cNODE_LOCAL",
@@ -45,7 +45,7 @@ int main (int, char *[])
     sizeof (m_argv) / sizeof (char *) -1;
 
   ACE_OS::sprintf (address_arg2,
-                   "-b%d",
+                   "-b%ld",
                    ACE_DEFAULT_BASE_ADDR_2);
   const char *n_argv[] =
   {
@@ -66,7 +66,7 @@ int main (int, char *[])
               "(%P) opened with %d\n",
               i));
 
-  if (i != 0) 
+  if (i != 0)
     return -1;
 
   name_options1->parse_args (n_argc,
@@ -77,7 +77,7 @@ int main (int, char *[])
   ACE_DEBUG ((LM_DEBUG,
               "(%P) 1 opened with %d\n",
               i));
-  if (i != 0) 
+  if (i != 0)
     return -1;
 
   return 0;

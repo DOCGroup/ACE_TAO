@@ -1,3 +1,22 @@
+Wed Nov  8 09:02:10 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * apps/Gateway/Gateway/Makefile:
+        * apps/Gateway/Peer/Makefile:
+        * examples/Timer_Queue/Makefile:
+        * examples/Service_Configurator/IPC-tests/server/Makefile:
+        * examples/Service_Configurator/Misc/Makefile:
+          When generating a library and a binary that uses it in the same
+          Makefile we must add explicit dependency between them, otherwise
+          parallel builds can fail.
+
+        * apps/JAWS/server/HTTP_Helpers.cpp:
+        * examples/IPC_SAP/FILE_SAP/client.cpp:
+        * examples/Naming/test_multiple_contexts.cpp:
+        * examples/Threads/thread_specific.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+          Fixed warnings about mismatches between printf-like strings and
+          their arguments.
+
 Wed Nov  8 02:57:15 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * Local_Name_Space.cpp:
