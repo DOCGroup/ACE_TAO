@@ -1,3 +1,8 @@
+Sat Aug 25 09:04:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/performance-tests/EC_Latency/Makefile: Will not build
+	  if corba_messaging == 0.
+
 Fri Aug 24 23:16:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/File_IO/File.idl:
