@@ -1,3 +1,19 @@
+Thu Apr  1 19:41:26 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/IPC_SAP.h (ACE_IPC_SAP):
+	* ace/SOCK.h (ACE_SOCK):
+	* ace/SOCK_IO.h (ACE_SOCK_IO):
+	* ace/SV_Semaphore_Simple.h (ACE_SV_Semaphore_Simple):
+	* ace/Synch.h (ACE_Barrier):
+	* ace/Synch.h (ACE_Event):
+	* ace/Synch.h (ACE_Guard):
+	* ace/Synch.h (ACE_Null_Mutex):
+	* ace/Synch.h (ACE_RW_Mutex):
+	* ace/Synch.h (ACE_Semaphore):
+	  Reverted the changes that made these base class destructors
+	  virtual.  They don't need to be virtual for the way they are
+	  being used.
+
 Thu Apr 01 19:01:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Containers.h (ACE_DLList_Node):
