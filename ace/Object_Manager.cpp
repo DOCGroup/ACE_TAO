@@ -35,10 +35,8 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // singletons.
   ACE_Service_Config::close ();
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   // Finally, close the Log_Msg instance.
   ACE_Log_Msg::close ();
-#endif /* defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) */
 }
 
 ACE_Object_Manager *
