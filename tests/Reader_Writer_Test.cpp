@@ -29,7 +29,7 @@ ACE_RCSID(tests, Reader_Writer_Test, "$Id$")
 #if defined (ACE_HAS_THREADS)
 
 // Default number of iterations.
-#if defined (VXWORKS)
+#if defined (VXWORKS) || defined (__Lynx__)
   // So the test doesn't run for too long . . .
   static size_t n_iterations = 25;
 #else
