@@ -67,7 +67,7 @@
 #endif /* ACE_HAS_EXCEPTIONS */
 
 #define ACE_DECLARE_NEW_CORBA_ENV \
-  CORBA::Environment ACE_TRY_ENV;
+  CORBA::Environment ACE_TRY_ENV
 
 #if defined (ACE_CORBA_HAS_EXCEPTIONS)
 // -----------------------------------------------------------------
