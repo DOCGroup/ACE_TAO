@@ -1,24 +1,24 @@
 Thu Apr  8 15:30:55 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* TAO/docs/releasenotes/index.html:
-	updated to reflect the availability of the Persistent Naming Service.
+	* TAO/docs/releasenotes/index.html: Updated to reflect the
+ 	  availability of the Persistent Naming Service.
 
-	* orbsvcs/tests/Simple_Naming/client.cpp:
-	added a missing coma after macro.
+	* orbsvcs/tests/Simple_Naming/client.cpp: Added a missing coma
+ 	  after macro.
 
 	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.{h, cpp}
 	* orbsvcs/orbsvcs/Naming/Persistent_Bindings_Map.{h, cpp}
-	* orbsvcs/orbsvcs/Naming/Persistent_Entries.{h, cpp}
-	Fixed various compiler warnings/errors, e.g., order of member
-	initialization, explicit template instantiation, qualifying types with
-	class names, etc.
+	* orbsvcs/orbsvcs/Naming/Persistent_Entries.{h, cpp}: Fixed
+ 	  various compiler warnings/errors, e.g., order of member
+ 	  initialization, explicit template instantiation, qualifying
+ 	  types with class names, etc.
 
-	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.{h, cpp}
-	Added the files to separate template code from non-template code
-	in Persistent_Context_Index.{h,cpp}.
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.{h, cpp}:
+ 	  Added the files to separate template code from non-template code
+ 	  in Persistent_Context_Index.{h,cpp}.
 
-	* orbsvcs/orbsvcs/Naming/Shared_Hash_Map.{h, cpp}
-	Changed the name to Shared_Hash_Map_T.{h, cpp}
+	* orbsvcs/orbsvcs/Naming/Shared_Hash_Map.{h, cpp}: Changed the
+ 	  name to Shared_Hash_Map_T.{h, cpp}.
 
 Thu Apr 08 14:48:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
