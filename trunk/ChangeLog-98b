@@ -1,3 +1,9 @@
+Tue Jun 16 16:18:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/FILE_Addr.cpp (operator=): Check to make sure we
+ 	  NUL-terminate the memcpy'd filename correctly.  Thanks to Istvan
+ 	  Buki <ibuki@fedex.com> for reporting this.
+
 Tue Jun 16 15:43:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Changed to instruct users to #include

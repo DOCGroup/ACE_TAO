@@ -44,9 +44,14 @@ ACE_FILE_Addr &
 ACE_FILE_Addr::operator= (const ACE_FILE_Addr &sa)
 {
   if (this != &sa)
-    (void) ACE_OS::memcpy ((void *) &this->filename_,
-                           (void *) &sa.filename_,
-                           sa.get_size ());
+    {
+      size_t size = sa.get_size ();
+      (void) ACE_OS::memcpy ((void *) &this->filename_,
+                             (void *) &sa.filename_,
+                             size);
+      if (size < MAXNAMLEN + 1)
+        this->filename_[size] = '\0';
+    }
   return *this;
 }
 
