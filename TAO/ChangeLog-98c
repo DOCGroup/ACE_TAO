@@ -1,3 +1,10 @@
+Wed Oct 29 20:47:47 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* tests/IDL_Cubit/clnt.cpp: 
+	* tests/IDL_Cubit/clnt.h: 
+	Cleaned up the code.  Added ACE_Profile_Timer to time the calls.
+	Changed copyright header.  Added more comments.
+
 Wed Oct 29 18:55:57 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/giop: Added "_"'s to the data members in
