@@ -1,7 +1,7 @@
 // $Id$
 
 
-#include "SvcConf.h"
+#include "Svcconf.h"
 #include "common/FileCharStream.h"
 #include "common/StrCharStream.h"
 #include "parser/parser/Parser.h"
@@ -40,7 +40,7 @@ ACEXML_Svcconf_Parser::operator new (size_t s)
 void
 ACEXML_Svcconf_Parser::operator delete (void *p)
 {
-  delete[] p;
+  delete[] (char *)p;
 }
 
 int

@@ -1,3 +1,25 @@
+Fri May  3 15:48:11 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Config.h:
+	* ACEXML/apps/svcconf/Svcconf.cpp: Fixed Linux compilation warnings.
+
+	* ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+	* ace/Service_Config.cpp: Added more comprehensive error messages.
+
+	* ACEXML/Makefile:
+	* ACEXML/Makefile.bor:
+	* ACEXML/apps/Makefile:
+	* ACEXML/apps/Makefile.bor:
+	* ACEXML/apps/svcconf/Makefile:
+	* ACEXML/apps/svcconf/Makefile.bor:
+	* ACEXML/parser/parser/Makefile:
+	* ace/Makefile:
+	* ace/Makefile.am:
+	* ace/Makefile.bor:
+	* ace/ace.icc:
+	* examples/ASX/CCM_App/Makefile:
+	* examples/ASX/CCM_App/Makefile.CCM_App: Added or Updated Makefiles.
+
 Wed May 01 16:08:45 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/svcconf-convert.pl: Added more debugging info printout.

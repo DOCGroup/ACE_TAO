@@ -384,7 +384,11 @@ ACE_Service_Config::process_directives_i (ACE_Svc_Conf_Param *param)
 ACE_XML_Svc_Conf *
 ACE_Service_Config::get_xml_svc_conf (ACE_DLL &xmldll)
 {
-  xmldll.open (ACE_LIB_TEXT ("ACEXML_XML_Svc_Conf_Parser"));
+  if (xmldll.open (ACE_LIB_TEXT ("ACEXML_XML_Svc_Conf_Parser")) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("Fail to open ACEXML_XML_Svc_Conf_Parser: %p\n"),
+                       "ACE_Service_Config::get_xml_svc_conf"),
+                      0);
 
   void *foo;
 
@@ -398,7 +402,7 @@ ACE_Service_Config::get_xml_svc_conf (ACE_DLL &xmldll)
   ACE_XML_Svc_Conf::Factory factory = ACE_reinterpret_cast (ACE_XML_Svc_Conf::Factory, tmp);
   if (factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("Unable to resolve factory: %p\n"),
                        xmldll.error ()),
                       0);
 
@@ -411,9 +415,9 @@ ACE_Service_Config::process_file (const ACE_TCHAR file[])
 {
   ACE_TRACE ("ACE_Service_Config::process_file");
 
+#if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
   int result = 0;
 
-#if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
   FILE *fp = ACE_OS::fopen (file,
                             ACE_LIB_TEXT ("r"));
 

@@ -518,7 +518,7 @@ ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist,
           }
         else
           {
-            // @@ Exception...
+            xmlenv.exception (new ACEXML_SAXException ("Invalid stream attribute\n"));
             return -1;
           }
       }
@@ -538,7 +538,7 @@ ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist,
           }
         else
           {
-            // @@ Exception...
+            xmlenv.exception (new ACEXML_SAXException ("Invalid attribute, expecting 'id'\n"));
             return -1;
           }
       }
@@ -564,13 +564,17 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist,
             {
               if (ACE_OS_String::strcmp (alist->getValue (i), ACE_TEXT ("inactive")) == 0)
                 {
+                  info->active (0);
                 }
               else if (ACE_OS_String::strcmp (alist->getValue (i), ACE_TEXT ("active")) == 0)
                 {
+                  info->active (1);
                 }
               else
                 {
-                  // @@ error, invalid 'status' value.
+                  xmlenv.exception
+                    (new ACEXML_SAXException ("Invalid attribute value, expecting 'active' or 'inactive'\n"));
+                  return -1;
                 }
             }
           else if (ACE_OS_String::strcmp (alist->getQName (i), ACE_TEXT ("type")) == 0)
@@ -589,12 +593,14 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist,
                 }
               else
                 {
-                  // @@ error, invalid 'type' value.
+                  xmlenv.exception
+                    (new ACEXML_SAXException ("Invalid Service_Object attribute value\n"));
+                  return -1;
                 }
             }
           else
             {
-              // @@ Exception...
+              xmlenv.exception (new ACEXML_SAXException ("Invalid attribute\n"));
               return -1;
             }
         }
@@ -627,7 +633,7 @@ ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist,
             }
           else
             {
-              // @@ Exception...
+              xmlenv.exception (new ACEXML_SAXException ("Invalid initializer attribute.\n"));
               return -1;
             }
         }
@@ -656,7 +662,7 @@ ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist,
             }
           else
             {
-              // @@ Exception...
+              xmlenv.exception (new ACEXML_SAXException ("Invalid static attribute.\n"));
               return -1;
             }
         }

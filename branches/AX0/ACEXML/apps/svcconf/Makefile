@@ -4,16 +4,16 @@
 #       Makefile for the server-side ACE network services
 #----------------------------------------------------------------------------
 
-LIB     = libACEXML_Parser.a
-SHLIB   = libACEXML_Parser.$(SOEXT)
+LIB     = libACEXML_XML_Svc_Conf_Parser.a
+SHLIB   = libACEXML_XML_Svc_Conf_Parser.$(SOEXT)
 
-FILES   = Entity_Manager \
-	  Parser
+FILES   = Svcconf_Handler \
+	  Svcconf
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC    = $(addsuffix .cpp,$(FILES))
 
-LIBS   += -lACEXML $(ACELIB)
+LIBS   +=  -lACEXML_Parser -lACEXML $(ACELIB)
 CCFLAGS += -I../..
 
 BUILD   = $(VLIB) $(VSHLIB)

@@ -322,6 +322,7 @@ libACE_Svcconf_la_SOURCES = \
   Service_Types.cpp \
   Service_Templates.cpp \
   Shared_Object.cpp \
+  XML_Svc_Conf.cpp \
   Svc_Conf_l.cpp \
   Svc_Conf_y.cpp \
   Svc_Conf_Lexer_Guard.cpp
@@ -803,6 +804,7 @@ HEADER_FILES = \
   WFMO_Reactor.h \
   WIN32_Asynch_IO.h \
   WIN32_Proactor.h \
+  XML_Svc_Conf.h \
   XTI_ATM_Mcast.h \
   XtReactor.h \
   ace_wchar.h \
