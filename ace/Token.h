@@ -41,6 +41,17 @@ class ACE_Export ACE_Token
   //    blocked awaiting the token are serviced in strict FIFO order as
   //    other threads release the token (Solaris and Pthread mutexes don't 
   //    strictly enforce an acquisition order).
+  //    There are two FIFO lists within the class.  Write acquires always
+  //    have higher priority over read acquires.  Which means, if you use
+  //    both write/read operations, care must be taken to avoid starvation
+  //    on the readers.  Notice that the read/write acquire operations
+  //    do not have the usual semantic of reader/writer locks.  Only one
+  //    reader can acquire the token at a time (which is different from
+  //    the usual reader/writer locks where several readers can acquire
+  //    a lock at the same time as long as there is no writer waiting for
+  //    the lock.)  We choose the names 1.) to borrow the semantic to give
+  //    writers higher priority, and, 2.) to support a common interface
+  //    over all locking classes in ACE.
 public:
   // = Initialization and termination.
 
@@ -90,6 +101,7 @@ public:
   // nesting_level_ > 1.  I'm not sure if this is really the right
   // thing to do (since it makes it possible for shared data to be
   // changed unexpectedly) so use with caution...
+  // This method maintians the original token priority.  
 
   int tryacquire (void);
   // Become interface-compliant with other lock mechanisms (implements
@@ -103,7 +115,8 @@ public:
   // in line gets it.
 
   int acquire_read (void);
-  // Just calls <acquire>.
+  // Behave like acquire but in a lower priority.  It should probably
+  // be called acquire_yield.
 
   int acquire_read (void (*sleep_hook)(void *),
 	       void *arg = 0, 
@@ -119,7 +132,7 @@ public:
   // More sophisticate version of acquire_write.
 
   int tryacquire_read (void);
-  // Just calls <tryacquire>.
+  // Lower priority try_acquire.
 
   int tryacquire_write (void);
   // Just calls <tryacquire>.
