@@ -13,6 +13,8 @@
 #include "ace/Svc_Handler.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Svc_Handler, "$Id$")
+
 #define PR_ST_1 ACE_PEER_STREAM_1
 #define PR_ST_2 ACE_PEER_STREAM_2
 

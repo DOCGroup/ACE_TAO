@@ -10,6 +10,8 @@
 #include "ace/Handle_Set.h"
 #include "ace/WFMO_Reactor.h"
 
+ACE_RCSID(ace, Acceptor, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Acceptor)
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> void

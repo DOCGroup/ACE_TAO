@@ -19,11 +19,13 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Pipe.h"
 #include "ace/Select_Reactor.h"
-#include "test_config.h"
+
+ACE_RCSID(tests, Reactor_Notify_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");

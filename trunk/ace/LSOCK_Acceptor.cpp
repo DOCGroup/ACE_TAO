@@ -8,6 +8,8 @@
 #include "ace/LSOCK_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, LSOCK_Acceptor, "$Id$")
+
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Acceptor)

@@ -25,6 +25,8 @@
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 
+ACE_RCSID(tests, MM_Shared_Memory_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

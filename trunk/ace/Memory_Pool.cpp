@@ -8,6 +8,8 @@
 #include "ace/Memory_Pool.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Memory_Pool, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Local_Memory_Pool)
 
 void

@@ -19,9 +19,11 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
-#include "test_config.h"
+
+ACE_RCSID(tests, Priority_Buffer_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");

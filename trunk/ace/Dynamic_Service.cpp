@@ -9,6 +9,8 @@
 #include "ace/Service_Repository.h"
 #include "ace/Dynamic_Service.h"
 
+ACE_RCSID(ace, Dynamic_Service, "$Id$")
+
 template <class SERVICE> void
 ACE_Dynamic_Service<SERVICE>::dump (void) const
 {

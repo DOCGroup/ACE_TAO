@@ -4,6 +4,8 @@
 #include "ace/OS.h"
 #include "ace/Arg_Shifter.h"
 
+ACE_RCSID(ace, Arg_Shifter, "$Id$")
+
 ACE_Arg_Shifter::ACE_Arg_Shifter (int &argc, char **argv, char **temp)
   : argc_ (argc),
     total_size_ (argc),

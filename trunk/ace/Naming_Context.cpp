@@ -8,6 +8,8 @@
 #include "ace/Registry_Name_Space.h"
 #include "ace/Memory_Pool.h"
 
+ACE_RCSID(ace, Naming_Context, "$Id$")
+
 // Make life easier later on...
 
 typedef ACE_Local_Name_Space <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> 

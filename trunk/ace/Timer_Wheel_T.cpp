@@ -8,6 +8,7 @@
 #include "ace/Timer_Wheel_T.h"
 #include "ace/High_Res_Timer.h"
 
+ACE_RCSID(ace, Timer_Wheel_T, "$Id$")
 
 // Constructor that takes in a <wheel>, a reference to the timer queue
 

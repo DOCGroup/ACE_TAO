@@ -6,6 +6,8 @@
 #include /**/ "ace/Synch.h"
 #include /**/ "ace/LOCK_SOCK_Acceptor.h"
 
+ACE_RCSID(ace, LOCK_SOCK_Acceptor, "$Id$")
+
 template <class ACE_LOCK> int
 ACE_LOCK_SOCK_Acceptor<ACE_LOCK>::accept (ACE_SOCK_Stream &stream,
                                           ACE_Addr *remote_address,

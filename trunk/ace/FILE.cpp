@@ -11,6 +11,8 @@
 #include "ace/FILE.i"
 #endif
 
+ACE_RCSID(ace, FILE, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE)
 
 void

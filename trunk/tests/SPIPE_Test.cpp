@@ -29,6 +29,8 @@
 #include "ace/SPIPE_Connector.h"
 #include "ace/SPIPE_Acceptor.h"
 
+ACE_RCSID(tests, SPIPE_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

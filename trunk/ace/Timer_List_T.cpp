@@ -7,6 +7,8 @@
 
 #include "ace/Timer_List_T.h"
 
+ACE_RCSID(ace, Timer_List_T, "$Id$")
+
 // Default Constructor
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>

@@ -30,6 +30,8 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Synch.h"
 
+ACE_RCSID(tests, Notify_Performance_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

@@ -11,6 +11,8 @@
 #include "ace/Thread_Manager.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Thread_Manager, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Control)
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Manager)
 

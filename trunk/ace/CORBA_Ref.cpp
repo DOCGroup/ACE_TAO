@@ -12,6 +12,8 @@
 #include "ace/CORBA_Ref.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, CORBA_Ref, "$Id$")
+
 template<class CORBA_REF>
 ACE_CORBA_Ref<CORBA_REF>::ACE_CORBA_Ref (void)
   : ref_ (0)

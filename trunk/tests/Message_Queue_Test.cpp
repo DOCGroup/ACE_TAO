@@ -28,12 +28,14 @@
 #include "ace/Synch.h"
 #include "ace/High_Res_Timer.h"
 
-const ASYS_TCHAR usage[] = "usage: Message_Queue_Test <number of messages>\n";
+ACE_RCSID(tests, Message_Queue_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
+const ASYS_TCHAR usage[] = "usage: Message_Queue_Test <number of messages>\n";
 
 typedef ACE_Message_Queue<ACE_NULL_SYNCH> QUEUE;
 typedef ACE_Message_Queue_Iterator<ACE_NULL_SYNCH> ITERATOR;

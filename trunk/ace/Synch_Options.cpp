@@ -8,6 +8,8 @@
 #include "ace/Synch_Options.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Synch_Options, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Synch_Options)
 
 void

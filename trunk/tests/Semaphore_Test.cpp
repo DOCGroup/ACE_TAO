@@ -23,6 +23,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(tests, Semaphore_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

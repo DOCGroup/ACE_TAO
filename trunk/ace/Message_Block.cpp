@@ -9,6 +9,8 @@
 #include "ace/Message_Block.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Message_Block, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Block)
 
 void

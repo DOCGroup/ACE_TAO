@@ -9,6 +9,8 @@
 #include "ace/Token_Invariants.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Token_Invariants, "$Id$")
+
 ACE_Token_Invariant_Manager *ACE_Token_Invariant_Manager::instance_ = 0;
 
 ACE_Token_Invariant_Manager *

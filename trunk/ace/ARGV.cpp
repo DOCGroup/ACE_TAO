@@ -10,6 +10,8 @@
 #include "ace/ARGV.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, ARGV, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE (ACE_ARGV)
 
 void

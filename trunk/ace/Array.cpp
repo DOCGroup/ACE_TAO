@@ -10,6 +10,8 @@
 #include "ace/Array.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Array, "$Id$")
+
 // Dynamically initialize an array.
 
 template <class T>

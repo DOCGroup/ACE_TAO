@@ -6,6 +6,8 @@
 #include "ace/Dump.h"
 #include "ace/Object_Manager.h"
 
+ACE_RCSID(ace, Dump, "$Id$")
+
 // Implementations (very simple for now...)
 
 ACE_Dumpable::~ACE_Dumpable (void)

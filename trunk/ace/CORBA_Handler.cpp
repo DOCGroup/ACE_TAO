@@ -14,6 +14,8 @@
 #include "ace/CORBA_Handler.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, CORBA_Handler, "$Id$")
+
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 ACE_ALLOC_HOOK_DEFINE(ACE_ST_CORBA_Handler)
 ACE_ALLOC_HOOK_DEFINE(ACE_CORBA_Handler)

@@ -15,6 +15,8 @@
 #include "ace/Strategies_T.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+ACE_RCSID(ace, Strategies_T, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Singleton_Strategy)
 
 template<class SVC_HANDLER>

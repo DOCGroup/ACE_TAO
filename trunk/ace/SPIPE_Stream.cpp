@@ -8,6 +8,8 @@
 #include "ace/SPIPE_Stream.i"
 #endif
 
+ACE_RCSID(ace, SPIPE_Stream, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Stream)
 
 void

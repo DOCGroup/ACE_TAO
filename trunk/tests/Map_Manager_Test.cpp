@@ -27,6 +27,8 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Synch.h"
 
+ACE_RCSID(tests, Map_Manager_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

@@ -8,6 +8,8 @@
 
 #include "ace/Future.h"
 
+ACE_RCSID(ace, Future, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 // Dump the state of an object.

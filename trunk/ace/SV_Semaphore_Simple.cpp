@@ -10,6 +10,8 @@
 #include "ace/SV_Semaphore_Simple.i"
 #endif
 
+ACE_RCSID(ace, SV_Semaphore_Simple, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SV_Semaphore_Simple)
 
 void

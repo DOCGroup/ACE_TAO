@@ -10,6 +10,8 @@
 #include "ace/SOCK_Dgram.i"
 #endif
 
+ACE_RCSID(ace, SOCK_Dgram, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram)
 
 void

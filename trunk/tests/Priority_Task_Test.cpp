@@ -18,9 +18,11 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
-#include "test_config.h"
+
+ACE_RCSID(tests, Priority_Task_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");

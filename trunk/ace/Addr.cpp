@@ -4,6 +4,8 @@
 #define ACE_BUILD_DLL
 #include "ace/Addr.h"
 
+ACE_RCSID(ace, Addr, "$Id$")
+
 #if defined (ACE_HAS_BROKEN_SAP_ANY)
 #if defined (sap_any)
 #undef sap_any

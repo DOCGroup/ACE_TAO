@@ -17,10 +17,12 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Stream.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
-#include "test_config.h"
+
+ACE_RCSID(tests, UPIPE_SAP_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");

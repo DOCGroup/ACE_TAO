@@ -13,6 +13,8 @@
 #include "ace/Parse_Node.i"
 #endif /* ____ */
 
+ACE_RCSID(ace, Parse_Node, "$Id$")
+
 // Keeps track of the number of errors encountered so far.
 extern int ace_yyerrno;
 

@@ -21,6 +21,8 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 
+ACE_RCSID(tests, Reactors_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

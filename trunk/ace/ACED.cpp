@@ -6,6 +6,8 @@
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 #include <vcl.h>
 
+ACE_RCSID(ace, ACED, "$Id$")
+
 int WINAPI DllEntryPoint(HINSTANCE hinst, unsigned long reason, void*)
 {
   return 1;

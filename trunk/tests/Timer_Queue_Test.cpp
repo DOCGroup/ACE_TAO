@@ -29,6 +29,8 @@
 #include "ace/Timer_Hash.h"
 #include "ace/Timer_Queue.h"
 
+ACE_RCSID(tests, Timer_Queue_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

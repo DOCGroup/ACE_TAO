@@ -48,6 +48,8 @@
 // Counting_Service and Options in here
 #include "Process_Strategy_Test.h"
 
+ACE_RCSID(tests, Process_Strategy_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

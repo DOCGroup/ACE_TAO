@@ -10,6 +10,8 @@
 #include "ace/Pipe.i"
 #endif
 
+ACE_RCSID(ace, Pipe, "$Id$")
+
 void
 ACE_Pipe::dump (void) const
 {

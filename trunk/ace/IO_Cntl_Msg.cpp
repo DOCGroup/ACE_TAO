@@ -4,6 +4,8 @@
 #if 0
 // This is not meant to be used, it's just a place holder...
 
+ACE_RCSID(ace, IO_Cntl_Msg, "$Id$")
+
 // Forward decl
 template <class SYNCH> class ACE_Module;
 

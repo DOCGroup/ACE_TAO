@@ -12,6 +12,8 @@
 #include "ace/Module.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Module, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Module)
 
 template <ACE_SYNCH_DECL> void

@@ -8,6 +8,8 @@
 #include "ace/UNIX_Addr.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, UNIX_Addr, "$Id$")
+
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_UNIX_Addr)

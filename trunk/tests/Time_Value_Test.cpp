@@ -22,6 +22,8 @@
 // Note, for this test the config.h file *must* come first!
 #include "ace/inc_user_config.h"
 
+ACE_RCSID(tests, Time_Value_Test, "$Id$")
+
 // Force test of ACE_U_LongLong class on Solaris, et al.
 #if defined (ACE_HAS_STHREADS)
 # include <limits.h>

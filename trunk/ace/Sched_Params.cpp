@@ -30,6 +30,8 @@
 #include /**/ <sys/tspriocntl.h>
 #endif /* ACE_HAS_STHREADS */
 
+ACE_RCSID(ace, Sched_Params, "$Id$")
+
 int
 ACE_Sched_Params::priority_min (const Policy policy,
                                 const int scope)

@@ -11,6 +11,8 @@
 #include "ace/Auto_Ptr.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Auto_Ptr, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Auto_Basic_Ptr)
 
 template<class X> void

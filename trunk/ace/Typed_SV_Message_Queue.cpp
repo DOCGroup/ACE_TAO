@@ -12,6 +12,8 @@
 #include "ace/Typed_SV_Message_Queue.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Typed_SV_Message_Queue, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Typed_SV_Message_Queue)
 
 template <class T> void

@@ -23,6 +23,8 @@
 #include "ace/Naming_Context.h"
 #include "ace/Profile_Timer.h"
 
+ACE_RCSID(tests, Naming_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

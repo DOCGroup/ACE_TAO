@@ -10,6 +10,8 @@
 #include "ace/Local_Tokens.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Local_Tokens, "$Id$")
+
 void
 ACE_Tokens::dump (void) const
 {

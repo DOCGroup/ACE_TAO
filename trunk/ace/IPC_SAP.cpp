@@ -7,6 +7,8 @@
 #include "ace/IPC_SAP.i"
 #endif
 
+ACE_RCSID(ace, IPC_SAP, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_IPC_SAP)
 
 void

@@ -14,6 +14,8 @@
 #include "ace/Select_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Select_Reactor, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Select_Reactor)
 
 #if defined (ACE_WIN32)

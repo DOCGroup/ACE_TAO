@@ -118,4 +118,9 @@
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_SEMBUF_T
 
+// By default, don't include RCS Id strings in object code.
+#if !defined (ACE_USE_RCSID)
+#define ACE_USE_RCSID 0
+#endif /* #if !defined (ACE_USE_RCSID) */
+
 #endif /* ACE_CONFIG_H */

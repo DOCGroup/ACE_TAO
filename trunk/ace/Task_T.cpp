@@ -13,6 +13,8 @@
 #include "ace/Task_T.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Task_T, "$Id$")
+
 template <ACE_SYNCH_DECL> void
 ACE_Task<ACE_SYNCH_USE>::dump (void) const
 {

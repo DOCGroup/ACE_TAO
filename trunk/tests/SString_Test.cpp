@@ -21,6 +21,8 @@
 #include "test_config.h"
 #include "ace/SString.h"
 
+ACE_RCSID(tests, SString_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

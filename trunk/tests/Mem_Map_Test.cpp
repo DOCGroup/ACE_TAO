@@ -22,6 +22,8 @@
 #include "test_config.h"
 #include "ace/Mem_Map.h"
 
+ACE_RCSID(tests, Mem_Map_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

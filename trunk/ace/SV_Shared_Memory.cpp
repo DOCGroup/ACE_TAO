@@ -8,6 +8,8 @@
 #include "ace/SV_Shared_Memory.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, SV_Shared_Memory, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SV_Shared_Memory)
 
 void

@@ -22,8 +22,9 @@
 #include "ace/inc_user_config.h"
 
 #include "test_config.h"
-
 #include "ace/Containers.h"
+
+ACE_RCSID(tests, OrdMultiSet_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");

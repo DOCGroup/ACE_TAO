@@ -6,6 +6,8 @@
 #define ACE_BUILD_DLL
 #include "ace/TLI_Stream.h"
 
+ACE_RCSID(ace, TLI_Stream, "$Id$")
+
 #if defined (ACE_HAS_TLI)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Stream)

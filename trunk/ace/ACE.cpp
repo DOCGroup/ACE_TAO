@@ -16,6 +16,8 @@
 #include "ace/ACE.i"
 #endif
 
+ACE_RCSID(ace, ACE, "$Id$")
+
 // Hex characters.
 const char ACE::hex_chars_[] = "0123456789abcdef";
 

@@ -6,6 +6,8 @@
 #define ACE_BUILD_DLL
 #include "ace/inc_user_config.h"
 
+ACE_RCSID(ace, Trace, "$Id$")
+
 // Turn off tracing for the duration of this file.
 #if defined (ACE_NTRACE)
 #undef ACE_NTRACE

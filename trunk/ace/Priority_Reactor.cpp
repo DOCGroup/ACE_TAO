@@ -9,6 +9,8 @@
 #include "ace/Priority_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Priority_Reactor, "$Id$")
+
 typedef ACE_Unbounded_Queue_Iterator<ACE_Event_Tuple> QUEUE_ITERATOR;
 // Its iterator.
 

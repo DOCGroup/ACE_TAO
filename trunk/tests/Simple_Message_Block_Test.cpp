@@ -24,6 +24,8 @@
 #include "ace/Message_Block.h"
 #include "ace/Synch.h"
 
+ACE_RCSID(tests, Simple_Message_Block_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

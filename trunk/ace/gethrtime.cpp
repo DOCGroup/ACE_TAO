@@ -7,6 +7,8 @@
 
 #include "ace/OS.h"
 
+ACE_RCSID(ace, gethrtime, "$Id$")
+
 extern "C"
 ACE_hrtime_t
 ACE_gethrtime ()

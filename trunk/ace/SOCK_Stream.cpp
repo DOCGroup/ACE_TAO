@@ -8,6 +8,8 @@
 #include "ace/SOCK_Stream.i"
 #endif
 
+ACE_RCSID(ace, SOCK_Stream, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Stream)
 
 void

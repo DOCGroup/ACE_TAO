@@ -9,6 +9,8 @@
 #include "ace/Activation_Queue.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Activation_Queue, "$Id$")
+
 // Dump the state of an object.
 
 void 

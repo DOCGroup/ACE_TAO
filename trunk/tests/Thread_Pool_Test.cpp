@@ -22,8 +22,10 @@
 //
 // ============================================================================
 
-#include "ace/Task.h"
 #include "test_config.h"
+#include "ace/Task.h"
+
+ACE_RCSID(tests, Thread_Pool_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");

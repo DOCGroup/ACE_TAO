@@ -8,6 +8,8 @@
 #include "ace/Timer_Hash_T.h"
 #include "ace/High_Res_Timer.h"
 
+ACE_RCSID(ace, Timer_Hash_T, "$Id$")
+
 struct Hash_Token
 {
   Hash_Token (const void *act, size_t pos, long orig_id)

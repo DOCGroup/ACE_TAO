@@ -6,6 +6,8 @@
 #define ACE_BUILD_DLL
 #include "ace/Multiplexor.h"
 
+ACE_RCSID(ace, Multiplexor, "$Id$")
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Multiplexor.i"
 #endif /* __ACE_INLINE__ */

@@ -10,6 +10,8 @@
 #include "ace/Service_Object.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Service_Object, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
 

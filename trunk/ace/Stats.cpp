@@ -7,6 +7,8 @@
 # include "ace/Stats.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Stats, "$Id$")
+
 #if !defined ACE_LACKS_LONGLONG_T
 // 1) If ACE_LACKS_LONGLONG_T, then ACE_UINT64 is a user-defined class.
 //    To prevent having to construct a static of that class, declare it

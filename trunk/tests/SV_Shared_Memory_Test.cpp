@@ -20,6 +20,8 @@
 #include "test_config.h"
 #include "ace/Malloc.h"
 
+ACE_RCSID(tests, SV_Shared_Memory_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

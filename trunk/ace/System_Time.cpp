@@ -4,6 +4,8 @@
 #define ACE_BUILD_DLL
 #include "ace/System_Time.h"
 
+ACE_RCSID(ace, System_Time, "$Id$")
+
 ACE_System_Time::ACE_System_Time (LPCTSTR poolname)
   : delta_time_ (0)
 {

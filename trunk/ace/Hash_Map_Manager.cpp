@@ -20,6 +20,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Malloc.h"
 
+ACE_RCSID(ace, Hash_Map_Manager, "$Id$")
+
 template <class EXT_ID, class INT_ID>
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Map_Entry (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next,
                                                         ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev)

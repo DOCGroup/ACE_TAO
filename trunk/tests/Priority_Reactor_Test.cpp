@@ -36,6 +36,8 @@
 #include "ace/Priority_Reactor.h"
 #include "Priority_Reactor_Test.h"
 
+ACE_RCSID(tests, Priority_Reactor_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

@@ -20,11 +20,13 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Signal.h"
 #include "TSS_Test_Errno.h"
-#include "test_config.h"
+
+ACE_RCSID(tests, TSS_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");

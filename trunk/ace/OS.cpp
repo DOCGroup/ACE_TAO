@@ -21,6 +21,8 @@
 
 #include "ace/streams.h"
 
+ACE_RCSID(ace, OS, "$Id$")
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 # include "ace/Object_Manager.h"
 

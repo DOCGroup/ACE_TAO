@@ -14,6 +14,8 @@
 
 #include "ace/Strategies.h"	// Need ACE_Notification_Strategy
 
+ACE_RCSID(ace, Message_Queue_T, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Dynamic_Message_Queue)

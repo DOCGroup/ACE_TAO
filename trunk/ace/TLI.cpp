@@ -6,6 +6,8 @@
 #define ACE_BUILD_DLL
 #include "ace/TLI.h"
 
+ACE_RCSID(ace, TLI, "$Id$")
+
 #if defined (ACE_HAS_TLI)
 
 #if defined (ACE_HAS_BROKEN_T_ERRNO)

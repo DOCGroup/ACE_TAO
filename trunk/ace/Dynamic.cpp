@@ -8,6 +8,8 @@
 #include "ace/Dynamic.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Dynamic, "$Id$")
+
 ACE_Dynamic::ACE_Dynamic (void)
   : is_dynamic_ (0) 
 {

@@ -7,6 +7,8 @@
 #define ACE_BUILD_DLL
 #include "ace/Connector.h"
 
+ACE_RCSID(ace, Connector, "$Id$")
+
 // Shorthand names.
 #define SH SVC_HANDLER
 #define PR_CO_1 ACE_PEER_CONNECTOR_1

@@ -8,6 +8,8 @@
 #include "ace/Token_Request_Reply.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Token_Request_Reply, "$Id$")
+
 // Default "do nothing" constructor.
 
 ACE_Token_Request::ACE_Token_Request (void)

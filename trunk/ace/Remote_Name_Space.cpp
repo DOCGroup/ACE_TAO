@@ -4,6 +4,8 @@
 #define ACE_BUILD_DLL
 #include "ace/Remote_Name_Space.h"
 
+ACE_RCSID(ace, Remote_Name_Space, "$Id$")
+
 int
 ACE_Remote_Name_Space::open (const char *servername, u_short port)
 {

@@ -8,6 +8,8 @@
 #include "ace/SOCK.i"
 #endif
 
+ACE_RCSID(ace, SOCK, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK)
 
 void

@@ -32,6 +32,8 @@
 #include "ace/Get_Opt.h"
 #include "Conn_Test.h"
 
+ACE_RCSID(tests, Conn_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

@@ -8,6 +8,8 @@
 #include "ace/DEV_Addr.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, DEV_Addr, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV_Addr)
 
 void

@@ -3,6 +3,8 @@
 #define ACE_BUILD_DLL
 #include "ace/Proactor.h"
 
+ACE_RCSID(ace, Proactor, "$Id$")
+
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) \
     || (defined (ACE_HAS_AIO_CALLS))
 // This only works on Win32 platforms and on Unix platforms with aio

@@ -1,13 +1,14 @@
 // Token_Collection.cpp
 // $Id$
 
-
 #define ACE_BUILD_DLL
 #include "ace/Token_Collection.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Token_Collection.i"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID(ace, Token_Collection, "$Id$")
 
 ACE_Token_Collection::ACE_Token_Collection (int debug,
 					    const char *name)

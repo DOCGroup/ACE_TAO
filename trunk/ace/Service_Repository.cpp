@@ -9,6 +9,8 @@
 #include "ace/Service_Repository.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Service_Repository, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository)
 
 // Process-wide Service Repository.

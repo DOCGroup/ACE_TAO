@@ -4,6 +4,8 @@
 #define ACE_BUILD_DLL
 #include "ace/UPIPE_Stream.h"
 
+ACE_RCSID(ace, UPIPE_Stream, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__) 

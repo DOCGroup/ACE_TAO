@@ -8,6 +8,8 @@
 #include "ace/streams.h"
 #endif /* DEBUGGING */
 
+ACE_RCSID(ace, Token, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__)

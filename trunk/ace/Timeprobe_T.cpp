@@ -5,6 +5,8 @@
 
 #include "ace/OS.h"
 
+ACE_RCSID(ace, Timeprobe_T, "$Id$")
+
 #if defined (ACE_COMPILE_TIMEPROBES)
 
 #include "ace/Timeprobe.h"

@@ -9,6 +9,8 @@
 #include "ace/LOG_Record.i"
 #endif
 
+ACE_RCSID(ace, Log_Record, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)
 
 const ASYS_TCHAR *ACE_Log_Record::priority_names_[] = 

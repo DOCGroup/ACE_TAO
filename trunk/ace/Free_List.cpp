@@ -9,6 +9,8 @@
 #include "ace/Free_List.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Free_List, "$Id$")
+
 // Empty constructor
 
 template <class T>

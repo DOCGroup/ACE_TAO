@@ -6,6 +6,8 @@
 
 #include "ace/Dump_T.h"
 
+ACE_RCSID(ace, Dump_T, "$Id$")
+
 template <class Concrete>
 ACE_Dumpable_Adapter<Concrete>::~ACE_Dumpable_Adapter (void)
 {

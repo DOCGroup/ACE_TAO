@@ -12,6 +12,8 @@
 #include "ace/Strategies.i"
 #endif /* __ACE_INLINE __ */
 
+ACE_RCSID(ace, Strategies, "$Id$")
+
 ACE_Notification_Strategy::ACE_Notification_Strategy (ACE_Event_Handler *eh,
 						      ACE_Reactor_Mask mask)
   : eh_ (eh),

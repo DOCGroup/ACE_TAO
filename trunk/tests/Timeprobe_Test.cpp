@@ -23,6 +23,8 @@
 #include "tests/test_config.h"
 #include "ace/Timeprobe.h"
 
+ACE_RCSID(tests, Timeprobe_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

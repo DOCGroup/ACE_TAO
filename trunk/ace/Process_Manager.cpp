@@ -10,6 +10,8 @@
 #include "ace/Process_Manager.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Process_Manager, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager)
 
 void

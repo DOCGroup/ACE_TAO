@@ -4,6 +4,8 @@
 #define ACE_BUILD_DLL
 #include "ace/Name_Proxy.h"
 
+ACE_RCSID(ace, Name_Proxy, "$Id$")
+
 void
 ACE_Name_Proxy::dump (void) const
 {

@@ -25,6 +25,8 @@
 #include "ace/SString.h"
 #include "ace/Synch.h"
 
+ACE_RCSID(tests, Hash_Map_Manager_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

@@ -31,6 +31,8 @@
 #include "ace/OS.h"
 #include "ace/INET_Addr.h"
 
+ACE_RCSID(tests, Enum_Interfaces_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

@@ -8,6 +8,8 @@
 #include "ace/SV_Message_Queue.i"
 #endif
 
+ACE_RCSID(ace, SV_Message_Queue, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SV_Message_Queue)
 
 void

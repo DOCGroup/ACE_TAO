@@ -33,6 +33,8 @@
 #include "ace/Strategies.h"
 #include "ace/Task.h"
 
+ACE_RCSID(tests, MsgQueue_Notifications_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

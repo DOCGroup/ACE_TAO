@@ -7,6 +7,8 @@
 #include "ace/Obstack.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Obstack, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Obstack)
 
 void
