@@ -815,18 +815,16 @@ ACE_DynScheduler::calculate_utilization_params (void)
           RtecScheduler::OPERATION) &&
         (ordered_dispatch_entries_ [i]->task_entry ().effective_period () > 0))
     {
-      // Just use low 32 bits of worst_case_execution_time.  This will
-      // have to change when CosTimeBase.idl is finalized.
       utilization_ +=
-        ACE_static_cast(double,
-                        ordered_dispatch_entries_ [i]->
-                                                  task_entry ().rt_info ()->
-                                                    worst_case_execution_time) /
-        ACE_static_cast(double,
-                        ordered_dispatch_entries_ [i]->
-                          task_entry ().effective_period ());
-
-         }
+		ACE_static_cast(
+		  double, 
+		  ACE_UINT64_DBLCAST_ADAPTER(ordered_dispatch_entries_ [i]->
+              task_entry ().rt_info ()->worst_case_execution_time)) /
+        ACE_static_cast(
+		  double,
+		  ACE_UINT64_DBLCAST_ADAPTER(ordered_dispatch_entries_ [i]->
+              task_entry ().effective_period ()));
+	}
   }
 
   // update parameters for the lowest priority level
@@ -1544,12 +1542,9 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
         last_entry = last_entry->next ();
       }
 
-      // Just use low 32 bits of worst_case_execution_time.  This will
-      // have to change when CosTimeBase.idl is finalized.
-      const ACE_UINT32 tmp =
-        last_entry->stop () - link->entry ().arrival () -
-          link->entry ().dispatch_entry ().task_entry ().rt_info ()->
-            worst_case_execution_time;
+      Time tmp = last_entry->stop () - link->entry ().arrival () -
+                 link->entry ().dispatch_entry ().task_entry ().rt_info ()->
+                   worst_case_execution_time;
       if (link->entry ().dispatch_entry ().original_dispatch ())
       {
         if (ACE_OS::fprintf (
@@ -1698,10 +1693,10 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
   // iterate through timeline, picking out dispatches in chronological
   // order of operation completion time
   int entries_remain = 1;
-  u_long accumulated_execution = 0;
-  u_long current_accumulated_execution = 0;
-  u_long last_completion = 0;
-  u_long current_completion = 0;
+  Time accumulated_execution = 0;
+  Time current_accumulated_execution = 0;
+  Time last_completion = 0;
+  Time current_completion = 0;
   TimeLine_Entry *current_entry = 0;
   TimeLine_Entry *current_last_entry = 0;
 
@@ -1762,8 +1757,12 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
             file, "%-11s  %9lf  %9lf  %8lu  %8lu  %11lu  %11lu\n",
             current_entry->dispatch_entry ().task_entry ().rt_info ()->
               entry_point.in (),
-            (double) (((double) current_accumulated_execution) /
-                      ((double) current_completion)),
+			ACE_static_cast (
+			  double, 
+			  ACE_UINT64_DBLCAST_ADAPTER(current_accumulated_execution)) /
+			ACE_static_cast (
+			  double, 
+			  ACE_UINT64_DBLCAST_ADAPTER(current_completion)),
             0.0,
             current_entry->arrival (),
             current_entry->deadline (),

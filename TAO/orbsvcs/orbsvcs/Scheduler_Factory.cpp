@@ -174,10 +174,9 @@ static char header[] =
 
 static char footer[] =
 "\n"
-"// This setups Scheduler_Factory to use the runtime version\n"
+"// This sets up Scheduler_Factory to use the runtime version\n"
 "int scheduler_factory_setup = \n"
-"  ACE_Scheduler_Factory::use_runtime (sizeof (infos)/sizeof (infos[0]),\n"
-"                                      infos);\n"
+"  ACE_Scheduler_Factory::use_runtime (infos_size, infos);\n"
 "\n"
 "// EOF\n";
 
@@ -185,15 +184,24 @@ static char start_infos[] =
 "static ACE_Scheduler_Factory::POD_RT_Info infos[] = {\n";
 
 static char end_infos[] =
-"};\n"
+"};\n\n"
 "static int infos_size = sizeof(infos)/sizeof(infos[0]);\n\n";
+
+static char end_infos_empty[] =
+"};\n\n"
+"static int infos_size = 0;\n\n";
+
 
 static char start_configs[] =
 "\nstatic ACE_Scheduler_Factory::POD_Config_Info configs[] = {\n";
 
 static char end_configs[] =
-"};\n"
+"};\n\n"
 "static int configs_size = sizeof(configs)/sizeof(configs[0]);\n\n";
+
+static char end_configs_empty[] =
+"};\n\n"
+"static int configs_size = 0;\n\n";
 
 int ACE_Scheduler_Factory::dump_schedule
    (const RtecScheduler::RT_Info_Set& infos,
@@ -218,7 +226,8 @@ int ACE_Scheduler_Factory::dump_schedule
   // default format for printing Config_Info output
   if (config_info_format == 0)
   {
-    config_info_format = "{ %10d, %10d, (RtecScheduler::Dispatching_Type) %d }";
+    config_info_format = "  { %10d, %10d, "
+                         "(RtecScheduler::Dispatching_Type) %d }";
   }
 
   FILE* file = stdout;
@@ -263,7 +272,15 @@ int ACE_Scheduler_Factory::dump_schedule
     }
   // finish last line.
   ACE_OS::fprintf(file, "\n");
-  ACE_OS::fprintf(file, end_infos);
+
+  if (infos.length () > 0)
+  {
+    ACE_OS::fprintf(file, end_infos);
+  }
+  else
+  {
+    ACE_OS::fprintf(file, end_infos_empty);
+  }
 
   // print out queue configuration info
   ACE_OS::fprintf(file, start_configs);
@@ -283,7 +300,15 @@ int ACE_Scheduler_Factory::dump_schedule
     }
   // finish last line.
   ACE_OS::fprintf(file, "\n");
-  ACE_OS::fprintf(file, end_configs);
+
+  if (configs.length () > 0)
+  {
+    ACE_OS::fprintf(file, end_configs);
+  }
+  else
+  {
+    ACE_OS::fprintf(file, end_configs_empty);
+  }
 
   ACE_OS::fprintf(file, footer);
   ACE_OS::fclose (file);
