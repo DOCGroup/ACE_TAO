@@ -1,0 +1,6 @@
+project(MFC client): namingexe, mfc {
+  Source_Files {
+    w32_testC.cpp
+    client.cpp
+  }
+}

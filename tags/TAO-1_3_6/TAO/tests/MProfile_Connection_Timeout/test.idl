@@ -1,0 +1,9 @@
+/*
+ * $Id$
+ */
+
+interface Simple_Server
+{
+  unsigned long long remote_call ();
+  oneway void shutdown ();
+};

@@ -1,0 +1,16 @@
+project(*server): avstreamsexe, strategies {
+  exename  = server
+
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*ftp): avstreamsexe, strategies {
+  exename  = ftp
+
+  Source_Files {
+    ftp.cpp
+  }
+}
+

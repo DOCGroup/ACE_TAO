@@ -1,0 +1,25 @@
+
+#
+# Makefile for building the TAO examples
+#
+
+DIRS =  \
+        AMH \
+        Buffered_AMI \
+        Buffered_Oneways \
+        Callback_Quoter Simple \
+        Content_Server \
+        Event_Comm \
+        ior_corbaloc \
+        Load_Balancing \
+        Load_Balancing_persistent \
+        OBV \
+        PluggableUDP \
+        POA \
+        Quoter \
+        RTCORBA \
+        RTScheduling \
+        Simple \
+        TypeCode_Creation
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,18 @@
+project(nsadd): namingexe {
+  Source_Files {
+    nsadd.cpp
+  }
+}
+
+project(nsdel): namingexe {
+  Source_Files {
+    nsdel.cpp
+  }
+}
+
+project(nslist): namingexe {
+  Source_Files {
+    nslist.cpp
+  }
+}
+

@@ -1,0 +1,6 @@
+// $Id$
+project : taolib, core {
+  sharedname   = TAO_SmartProxies
+  dynamicflags = TAO_SMARTPROXIES_BUILD_DLL
+  include_dir  = tao/SmartProxies
+}

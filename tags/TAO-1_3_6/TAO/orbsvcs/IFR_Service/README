@@ -1,0 +1,80 @@
+$Id$
+
+
+Interface Repository -------
+
+Required libraries (in addition to ACE and TAO):
+        ACE_ROOT/TAO/tao/IFR_CLient/TAO_IFR_CLient.(lib-ext)     
+        ACE_ROOT/TAO/tao/TypeCodeFactory/TAO_TypeCodeFactory.(lib-ext)       
+        ACE_ROOT/TAO/tao/PortableServer/TAO_PortableServer.(lib-ext)    
+        ACE_ROOT/TAO/tao/IORTable/TAO_IORTable.(lib-ext)    
+        ACE_ROOT/TAO/orbsvcs/orbsvcs/TAO_Svc_Utils.(lib-ext)    
+
+Executable name is IFR_Service.
+
+Command line options are:
+
+ -p		Makes the Interface Repository persistent.
+
+ -b <filename>	Overrides the default filename used for 
+		persistent storage. The default filename
+		is "ifr_default_backing_store".
+
+ -m		Enables read/write locking of IFR calls.
+		If the IFR is started up with
+		multithreading enabled - for example if
+		a service config file is used that specifies
+		thread-per-connection - this option should be
+		used. Note that if ACE_HAS_THREADS is not
+		defined, this option will be ignored.
+
+ -r		Uses win32 registry for the database. Not
+		available with persistence. If -p is on
+		the command line, this option is ignored.
+		If the platform is not win32, an error
+		message is output.
+
+ -o <filename>	Overrides the default filename used for 
+		outputting the Interface Repository IOR. 
+		The default filename is "if_repo.ior".
+
+Test code for the Interface Repository can be found in
+ACE_ROOT/TAO/orbsvcs/tests/InterfaceRepo.
+
+
+
+tao_ifr ------
+
+This is the executable that administers the IFR. Calling
+tao_ifr <IDL filename> will add the contents of the IDL
+file to the repository. Calling tao_ifr -r <IDL filename>
+will remove the contents of the IDL file from the repository.
+tao_ifr requires all the libraries that are required by
+the IFR service, plus the IFR_Service executable itself.
+Test code for tao_ifr can be found in
+ACE_ROOT/TAO/orbsvcs/tests/InterfaceRepo/Application_Test.
+
+tao_ifr can also handle the -ORBxxx parameters. The one most 
+frequently used would probably be 
+
+'-ORBInitRef InterfaceRepository=file://<filename>'
+
+which will enable the IFR service to be resolved by getting 
+its IOR from <filename>. By default, the IFR service stores
+its IOR in the file 'if_repo.ior', but that can be modified
+by starting the IFR service using the -o option (see above).
+All -ORB options appear in the command line before any other
+options, since the -ORB options are consumed by CORBA::ORB_init.
+
+tao_ifr can process multiple IDL files in one execution. As
+long as the filenames come after any -ORB options that may
+be present, they may come mixed in any order with the other
+command line options. The tao_ifr command line parser will
+treat any option (or option pair) that doesn't begin with 
+'-' as a filename.
+
+More information about the Interface Repository and tao_ifr can 
+be found in ACE_ROOT/TAO/docs/releasenotes/index.html.
+
+
+- Jeff Parsons <parsons@cs.wustl.edu>

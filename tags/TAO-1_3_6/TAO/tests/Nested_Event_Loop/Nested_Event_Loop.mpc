@@ -1,0 +1,14 @@
+project(*Server): strategies, taoexe, portableserver {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(*Client): strategies, taoexe, portableserver {
+  Source_Files {
+    test_i.cpp
+    client.cpp
+  }
+}
+

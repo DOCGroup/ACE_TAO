@@ -1,0 +1,54 @@
+# Makefile for building the TAO_FT_ClientORB library with Borland C++ Builder
+
+NAME = TAO_FT_ClientORB
+
+
+OBJFILES = \
+	$(OBJDIR)\FT_ClientORBInitializer.obj \
+	$(OBJDIR)\FT_ClientPolicyFactory.obj \
+	$(OBJDIR)\FT_ClientPolicy_i.obj \
+	$(OBJDIR)\FT_ClientRequest_Interceptor.obj \
+	$(OBJDIR)\FT_ClientService_Activate.obj \
+	$(OBJDIR)\FT_Endpoint_Selector_Factory.obj \
+	$(OBJDIR)\FT_Invocation_Endpoint_Selectors.obj \
+	$(OBJDIR)\FT_Service_Callbacks.obj
+
+LFLAGS = \
+	-j..\..\..\lib\$(CONFIG_SUBDIR) -j..\..\..\lib \
+	-L..\..\..\lib\$(CONFIG_SUBDIR) -L..\..\..\lib \
+  -j$(CORE_BINDIR) \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+	TAO_FTORB_Utils$(LIB_DECORATOR).lib \
+	TAO_PortableServer$(LIB_DECORATOR).lib \
+	TAO_IORInterceptor$(LIB_DECORATOR).lib \
+	TAO_ObjRefTemplate$(LIB_DECORATOR).lib \
+	TAO_Valuetype$(LIB_DECORATOR).lib \
+	TAO_IORManip$(LIB_DECORATOR).lib \
+	TAO$(LIB_DECORATOR).lib \
+	ACE$(LIB_DECORATOR).lib \
+
+
+!ifdef STATIC
+LIB_FLAGS = -DTAO_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS = -DTAO_FT_CLIENTORB_BUILD_DLL
+!endif
+
+CFLAGS = \
+	-I..\..\orbsvcs\orbsvcs \
+	-I..\..\orbsvcs \
+	-I..\.. \
+	-I..\..\tao \
+	-I..\..\.. \
+	$(LIB_FLAGS) \
+	$(DLL_FLAGS)
+
+CPPDIR = FaultTolerance
+
+INCDIR_NAME = orbsvcs
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

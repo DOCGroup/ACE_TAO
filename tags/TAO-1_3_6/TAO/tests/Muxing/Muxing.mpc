@@ -1,0 +1,15 @@
+project(*Server): taoexe, portableserver {
+  Source_Files {
+    Receiver.cpp
+    Server_Task.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoexe, portableserver {
+  Source_Files {
+    Client_Task.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,20 @@
+#
+# Makefile for building orbsvcs
+#
+
+DIRS = \
+	orbsvcs \
+        PSS \
+	CosEvent_Service \
+	Event_Service \
+	IFR_Service \
+	ImplRepo_Service \
+        LifeCycle_Service \
+	LoadBalancer \
+	Naming_Service \
+	Notify_Service \
+	TAO_Service \
+	Time_Service \
+	Trading_Service
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

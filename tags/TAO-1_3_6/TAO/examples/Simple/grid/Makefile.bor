@@ -1,0 +1,8 @@
+#
+# Makefile for building the Grid example
+# 
+
+MAKEFILES = Grid_Client.bor Grid_Server.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+

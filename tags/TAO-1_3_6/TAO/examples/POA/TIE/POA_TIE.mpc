@@ -1,0 +1,17 @@
+project(*Client) : taoexe, portableserver {
+  avoids += minimum_corba
+  idlflags -= -Sc
+  source_files {
+    client.cpp
+    testC.cpp
+  }
+}
+
+project(*Server) : taoexe, portableserver {
+  avoids += minimum_corba
+  idlflags -= -Sc
+  source_files {
+    test_i.cpp
+    server.cpp
+  }
+}

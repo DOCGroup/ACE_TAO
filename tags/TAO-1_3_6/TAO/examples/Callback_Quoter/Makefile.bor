@@ -1,0 +1,11 @@
+#
+# Makefile for building the Callback Quoter example
+#
+
+MAKEFILES = \
+	Callback_Quoter_Notifier.bor \
+	Callback_Quoter_Consumer.bor \
+	Callback_Quoter_Supplier.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+

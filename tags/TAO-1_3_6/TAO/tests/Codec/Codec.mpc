@@ -1,0 +1,7 @@
+project(*Client): taoexe {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,16 @@
+workspace {
+    orbsvcs
+    Naming_Service
+    Scheduling_Service
+    Event_Service
+    Dump_Schedule
+    Notify_Service
+    Time_Service
+    CosEvent_Service
+    Concurrency_Service
+    ImplRepo_Service
+    LifeCycle_Service
+    Trading_Service
+    LoadBalancer
+    TAO_Service
+}

@@ -1,0 +1,40 @@
+#
+# $Id$
+#
+
+This directory contains a number of tests that illustrate the
+performance of TAO and other ORBs.  The individual directories contain
+READMEs on how to run the following performance tests:
+
+        . AMI
+
+          A latency test for AMI requests
+
+	. AMH
+
+	  Latency tests for AMH-enabled applications
+
+        . DII
+
+          A latency test for DII requests
+
+        . DSI
+
+          A latency test for DSI servers
+
+        . Deferred
+
+          A latency test for deferred synchronous requests
+
+	. Single_Threaded
+
+	  Latency test for single threaded applications
+
+	. Thread_Pool
+
+	  Latency test for thread pool servers (and threaded clients)
+
+	. Thread_Per_Connection
+
+	  Latency test for thread-per-connection servers (and threaded
+	  clients)

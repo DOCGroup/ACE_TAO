@@ -1,0 +1,48 @@
+project(*Alignment) : taoexe {
+  exename  = alignment
+
+  Source_Files {
+    alignment.cpp
+  }
+}
+
+project(*Allocator) : taoexe {
+  exename  = allocator
+
+  Source_Files {
+    allocator.cpp
+  }
+}
+
+project(*Basic Types) : taoexe {
+  exename  = basic_types
+
+  Source_Files {
+    basic_types.cpp
+  }
+}
+
+project(*Growth) : taoexe {
+  exename  = growth
+
+  Source_Files {
+    growth.cpp
+  }
+}
+
+project(*Octet Sequence) : taoexe {
+  exename  = octet_sequence
+
+  Source_Files {
+    octet_sequence.cpp
+  }
+}
+
+project(*Tc) : taoexe {
+  exename  = tc
+
+  Source_Files {
+    tc.cpp
+  }
+}
+

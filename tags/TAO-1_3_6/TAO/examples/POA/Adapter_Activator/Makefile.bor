@@ -1,0 +1,31 @@
+#
+# Makefile for building the POA Adapter_activator executable
+#
+
+NAME = server
+
+OBJFILES = \
+        $(OBJDIR)\server.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+        $(TAO_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        -I..\Generic_Servant \
+        -DGENERIC_SERVANT_BUILD_DLL=$(DLL_FLAG) \
+        $(TAO_VALUETYPE_CFLAGS) \
+	$(TAO_IORINTERCEPTOR_CFLAGS) \
+	$(TAO_ORT_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(CORE_BINDIR)\Generic_Servant$(LIB_DECORATOR).lib \
+        $(TAO_VALUETYPE_LIB) \
+	$(TAO_IORINTERCEPTOR_LIB) \
+	$(TAO_ORT_LIB)
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

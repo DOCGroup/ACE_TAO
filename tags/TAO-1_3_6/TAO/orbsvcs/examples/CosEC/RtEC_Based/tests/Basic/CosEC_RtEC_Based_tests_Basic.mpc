@@ -1,0 +1,6 @@
+project(*Client) : orbsvcsexe, event, rtevent, rtsched {
+  after += CosEC_RtEC_Based_lib
+  includes += ../../lib
+  libs += CosEC_RtEC_Based
+  libpaths += ../../lib
+}
