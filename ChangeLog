@@ -1,3 +1,9 @@
+Thu Oct 19 18:02:54 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/OS_Log_Msg_Attributes.h : 
+	  Modified u_long to 'unsigned long' as the compiler was
+	  complaining.
+	
 Thu Oct 19 13:52:49 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Malloc_Allocator.cpp:
