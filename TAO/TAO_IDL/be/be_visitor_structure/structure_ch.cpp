@@ -53,9 +53,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
       os->indent (); // start from whatever indentation level we were at
 
       *os << "struct " << node->local_name () << ";" << be_nl;
-      *os << "class " << node->local_name () << "_var;" << be_nl;
-      *os << "typedef " << node->local_name () << "* " 
-          << node->local_name () << "_ptr;" << be_nl << be_nl;
+      *os << "class " << node->local_name () << "_var;" << be_nl << be_nl;
 
       *os << "struct " << idl_global->stub_export_macro () << " "
           << node->local_name () << be_nl
@@ -65,8 +63,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
       // but we must protect against certain versions of g++
       *os << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)\n";
       os->indent ();
-      *os << "typedef " << node->local_name () << "_ptr _ptr_type;" << be_nl
-          << "typedef " << node->local_name () << "_var _var_type;\n"
+      *os << "typedef " << node->local_name () << "_var _var_type;\n"
           << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n\n";
 
       // generate code for field members
