@@ -1,3 +1,13 @@
+Mon May 15 09:09:49 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Remote_Name_Space.cpp:
+        * netsvcs/lib/Name_Handler.cpp:
+
+          Changed my use of ACE_Auto_Array_Ptr for ACE_USHORT16
+          to ACE_Auto_Basic_Array_Ptr.  Thanks to Andy Gokhale for
+          reporting this.
+
 Mon May 15 08:31:13 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/streams.h: 
