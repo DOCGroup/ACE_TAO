@@ -1789,20 +1789,17 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
 #if defined (ACE_HAS_POSIX_SEM)
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (max);
+
+#if !defined (ACE_LACKS_NAMED_POSIX_SEM)
   if (name)
     {
       s->name_ = ACE_OS::strdup (name);
 
-#if !defined (CHORUS)
       s->sema_ = ::sem_open (s->name_, O_CREAT,
 			     ACE_DEFAULT_FILE_PERMS, count);
       return (int) s->sema_ == -1 ? -1 : 0;
-#else
-      s->sema = (sem_t *) -1;
-      ACE_NOTSUP_RETURN (-1);
-#endif /* CHORUS */
-
     }
+#endif /*ACE_LACKS_NAMED_POSIX_SEM */
   else
     {
       s->name_ = 0;
