@@ -36,7 +36,7 @@
 
 enum Option_Type
 {
-  DEBUG        = 01,            // Enable debugging (prints diagnostics to stderr).
+  DEBUGGING    = 01,            // Enable debugging (prints diagnostics to stderr).
   ORDER        = 02,            // Apply ordering heuristic to speed-up search time.
   ANSI         = 04,            // Generate ANSI prototypes.
   ALLCHARS     = 010,           // Use all characters in hash function.

@@ -45,7 +45,7 @@ int Key_List::determined_[ACE_STANDARD_CHARACTER_SET_SIZE];
 
 Key_List::~Key_List (void)
 {
-  if (option[DEBUG])
+  if (option[DEBUGGING])
     this->dump ();
 
   // Free up all the nodes in the list.
@@ -303,7 +303,7 @@ Key_List::read_keys (void)
 
                   // Complain if user hasn't enabled the duplicate
                   // option.
-                  if (!option[DUP] || option[DEBUG])
+                  if (!option[DUP] || option[DEBUGGING])
                     ACE_ERROR ((LM_ERROR,
                                 "Key link: \"%s\" = \"%s\", with key set \"%s\".\n",
                                 temp->key,
@@ -628,7 +628,7 @@ Key_List::output_switch (int use_keyword_table)
 
               if (temp->link == 0)
                 {
-                  if (option[DEBUG])
+                  if (option[DEBUGGING])
                     ACE_OS::printf ("                  /* hash value = %4d, keyword = \"%s\" */\n",
                             temp->hash_value,
                             temp->key);
@@ -639,7 +639,7 @@ Key_List::output_switch (int use_keyword_table)
 
                   for (links = temp; links; links = links->link)
                     {
-                      if (option[DEBUG])
+                      if (option[DEBUGGING])
                         ACE_OS::printf ("                  /* hash value = %4d, keyword = \"%s\" */\n",
                                 temp->hash_value,
                                 links->key);
@@ -842,7 +842,7 @@ Key_List::output_keyword_table (void)
           else
             {
               ACE_OS::printf ("%s\"%s\", %s%s", l_brace, temp->key, temp->rest, r_brace);
-              if (option[DEBUG])
+              if (option[DEBUGGING])
                 ACE_OS::printf (" /* hash value = %d, slot = %d */",
                         temp->hash_value,
                         temp->slot);
@@ -852,7 +852,7 @@ Key_List::output_keyword_table (void)
         }
 
       ACE_OS::printf ("      %s\"%s\", %s%s", l_brace, temp->key, temp->rest, r_brace);
-      if (option[DEBUG])
+      if (option[DEBUGGING])
         ACE_OS::printf (" /* hash value = %d, slot = %d */",
                 temp->hash_value,
                 temp->slot);
@@ -864,7 +864,7 @@ Key_List::output_keyword_table (void)
           {
             links->slot = ++slot;
             ACE_OS::printf ("      %s\"%s\", %s%s", l_brace, links->key, links->rest, r_brace);
-            if (option[DEBUG])
+            if (option[DEBUGGING])
               ACE_OS::printf (" /* hash value = %d, slot = %d */",
                       links->hash_value,
                       links->slot);
@@ -1283,7 +1283,7 @@ Key_List::count_duplicates (List_Node *link,
     {
       count++;
 
-      if (option[DEBUG])
+      if (option[DEBUGGING])
         ACE_DEBUG ((LM_DEBUG,
                     "%s linked keyword = %s, slot = %d, hash_value = %d\n",
                     type,
@@ -1345,7 +1345,7 @@ Key_List::output_lookup_array (void)
           // keyword.
           lookup_array[hash_value] = temp->slot;
 
-          if (option[DEBUG])
+          if (option[DEBUGGING])
             ACE_DEBUG ((LM_DEBUG,
                         "keyword = %s, slot = %d, hash_value = %d, lookup_array[hash_value] = %d\n",
                         temp->key,
@@ -1386,7 +1386,7 @@ Key_List::output_lookup_array (void)
       // Compute the values in the lookup array.
       while (--dup_ptr >= duplicates)
         {
-          if (option[DEBUG])
+          if (option[DEBUGGING])
             ACE_DEBUG ((LM_DEBUG,
                         "dup_ptr[%d]: hash_value = %d, slot = %d, count = %d\n",
                         dup_ptr - duplicates,

@@ -156,13 +156,13 @@ Options::Options (void)
 
 Options::~Options (void)
 {
-  if (ACE_BIT_ENABLED (option_word_, DEBUG))
+  if (ACE_BIT_ENABLED (option_word_, DEBUGGING))
     {
       char *ptr;
 
       ACE_OS::fprintf (stderr,
                        "\ndumping Options:"
-                       "\nDEBUG is.......: %s"
+                       "\nDEBUGGING is...: %s"
                        "\nORDER is.......: %s"
                        "\nANSI is........: %s"
                        "\nTYPE is........: %s"
@@ -197,7 +197,7 @@ Options::~Options (void)
                        "\ndelimiters = %s"
                        "\nnumber of switch statements = %d"
                        "\n",
-                       ACE_BIT_ENABLED (option_word_, DEBUG) ? "enabled" : "disabled",
+                       ACE_BIT_ENABLED (option_word_, DEBUGGING) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, ORDER) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, ANSI) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, TYPE) ? "enabled" : "disabled",
@@ -301,7 +301,7 @@ Options::parse_args (int argc, char *argv[])
         // Enable debugging option.
         case 'd':
           {
-            ACE_SET_BITS (option_word_, DEBUG);
+            ACE_SET_BITS (option_word_, DEBUGGING);
             ACE_ERROR ((LM_ERROR,
                         "Starting program %n, version %s, with debuggin on.\n",
                         version_string));

@@ -33,7 +33,7 @@ ACE_RCSID(src, Bool_Array, "$Id$")
 
 Bool_Array::~Bool_Array (void)
 {
-  if (option[DEBUG])
+  if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
                 "\ndumping boolean array information\n"
                 "size = %u\niteration number = %u\nend of array dump\n",
@@ -63,7 +63,7 @@ Bool_Array::open (u_long s)
                   0,
                   s * sizeof *storage_array_);
 
-  if (option[DEBUG])
+  if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
                 "\nbool array size = %u, total bytes = %u\n",
                 size_,
@@ -88,7 +88,7 @@ Bool_Array::reset (void)
 {
   if (++generation_number_ == 0)
     {
-      if (option[DEBUG])
+      if (option[DEBUGGING])
         ACE_DEBUG ((LM_DEBUG,
                     "(re-initializing bool_array)..."));
 
@@ -96,7 +96,7 @@ Bool_Array::reset (void)
       ACE_OS::memset (storage_array_,
                       0,
                       size_ * sizeof *storage_array_);
-      if (option[DEBUG])
+      if (option[DEBUGGING])
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
     }
