@@ -96,7 +96,7 @@ protected:
   int pending_upcalls (void) const;
 
   /// Shutdown the object
-  virtual void shutdown_object (void) = 0;
+  virtual void handle_close_i (void) = 0;
 
 private:
   /// Pointer to the TAO_ORB_Core

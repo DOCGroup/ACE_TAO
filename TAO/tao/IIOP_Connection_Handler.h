@@ -133,11 +133,7 @@ protected:
   /// ensure that server threads eventually exit.
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
 
-  // = Connection handler overload
-  virtual void shutdown_object (void);
-
-private:
-
+  /// Connection Handler overloads
   /// Perform appropriate closing.
   void handle_close_i (void);
 

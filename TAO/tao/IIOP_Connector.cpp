@@ -186,6 +186,13 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
      }
 
 
+   cout << "Asked to go " << endl;
+   // Reduce the refcount to the svc_handler that we have. The
+   // increment to the handler is done in make_svc_handler (). Now
+   // that we dont need the reference to it anymore we can decrement
+   // the refcount whether the connection is successful ot not.
+   svc_handler->decr_refcount ();
+
    if (result == -1)
      {
        // Give users a clue to the problem.

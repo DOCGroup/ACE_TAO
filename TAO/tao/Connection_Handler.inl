@@ -65,7 +65,7 @@ TAO_Connection_Handler::decr_refcount (void)
   }
 
   if (this->reference_count_ == 0)
-    this->shutdown_object ();
+    this->handle_close_i ();
 }
 
 ACE_INLINE int

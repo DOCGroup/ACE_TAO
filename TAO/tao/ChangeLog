@@ -1,3 +1,27 @@
+Tue Apr 23 12:16:01 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connection_Handler.cpp:
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.inl: Removed the virtual method
+	  shutdown_object ().  Made the handle_close_i () implemented in
+	  all protocols a pure virtual method in this class. 
+
+	  The decr_refcount () calls handle_close_i () when the refcount
+	  reaches zero instead of shutdown_object ().
+	
+	* tao/IIOP_Connection_Handler.cpp: When the upcall count reaches
+	  zero, we call decr_refcount () in handle_close () and
+	  handle_input (). 
+
+	* tao/Connector_Impl.cpp: Incremented the refcount of the
+	  connection handler as soon as it is created, since we are aware
+	  that this handler could land up in the reactor if the right
+	  strategies are used. 
+
+	* tao/IIOP_Connector.cpp: Decermented the refcount of the handler
+	  after the wait () call. Unsuccesful connects will destroy the
+	  handler at this point. 
+
 Mon Apr 22 17:53:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Connection_Handler.cpp:
