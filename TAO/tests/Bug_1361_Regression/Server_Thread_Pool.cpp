@@ -2,6 +2,8 @@
 #include "Server_Thread_Pool.h"
 #include "TestC.h"
 
+time_t last_success;
+
 int
 Thread_Pool::close (u_long)
 {
@@ -15,12 +17,11 @@ Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
   : ACE_Task<ACE_SYNCH> (thr_mgr),
   nt_(n_threads)
 {
-  // Create the pool of worker threads.
   if (this->activate (THR_NEW_LWP,
                       n_threads) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
-                "activate failed"));
+                "activate failed \n"));
 }
 
 Thread_Pool::~Thread_Pool (void)
@@ -132,35 +133,39 @@ Thread_Pool::svc (void)
       for(int exception_count = 50; exception_count; --exception_count)
         {
 
-        ACE_TRY_NEW_ENV
-          {
-            // keep calling until get an exception
-            while(true)
-              {
-                if (0)
-                  {
-                    Test::Payload pload(10);
-                    pload.length(10);
-                    ACE_OS::memset(pload.get_buffer(), pload.length(), 0);
-                    echo->echo_payload (pload
-                                        ACE_ENV_ARG_PARAMETER);
-                    ACE_TRY_CHECK;
+          ACE_TRY_NEW_ENV
+            {
+              // keep calling until get an exception
+              while (true)
+                {
+                  if (0)
+                    {
+                      Test::Payload pload(10);
+                      pload.length(10);
+                      ACE_OS::memset(pload.get_buffer(), pload.length(), 0);
+                      echo->echo_payload (pload
+                                          ACE_ENV_ARG_PARAMETER);
+                      ACE_TRY_CHECK;
 
-                  }
-                else
-                  {
-                    Test::Payload_var pout;
-                    echo->echo_payload_out(pout.out());
-                  }
+                    }
+                  else
+                    {
+                      Test::Payload_var pout;
+                      echo->echo_payload_out (pout.out()
+                                              ACE_ENV_ARG_PARAMETER);
+                      ACE_TRY_CHECK;
+
+                      time_t last_success = ACE_OS::time();
+                    }
               }
-          }
-        ACE_CATCHANY
-          {
-            //            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-            //                                 "Exception caught:");
-          }
-        ACE_ENDTRY;
-      }
+            }
+          ACE_CATCHANY
+            {
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                   "Exception caught in Thread_Pool::svc ():");
+            }
+          ACE_ENDTRY;
+        }
 
     }
 

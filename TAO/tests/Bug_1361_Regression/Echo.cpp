@@ -44,4 +44,14 @@ Echo::echo_payload_out (
   data = new Test::Payload(j); 
   data->length(j);
   ACE_OS::memset(data->get_buffer(), data->length(), 0);
+
+  this->abort_counter_--;
+
+  if (this->abort_counter_ == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Echo::echo_payload, aborting\n"));
+      // Kill the app
+      raise(9);
+    }
+
 }
