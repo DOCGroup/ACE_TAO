@@ -13,7 +13,7 @@ LIBNAME  = libTAO_DIOP
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-#ACE_SHLIBS = -lTAO -lACE
+ACE_SHLIBS = -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
