@@ -3,7 +3,7 @@ Thu Dec 18 22:43:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * ace/Malloc_T.{h,cpp}:
           Added a new functor template class, ACE_Malloc_Adapter_T, used
           by ACE_Malloc_T as a factory of the ACE_LOCK template parameter,
-          and allows the use locking strategy classes that don't have a
+          and allows the use of locking strategy classes that don't have a
           satisfactory ctor taking a single required ACE_TCHAR* parameter,
           which is the default.
 
