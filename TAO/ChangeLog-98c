@@ -1,3 +1,31 @@
+Mon Nov 03 18:43:37 1997  Carlos O'Ryan  <coryan@MILONGA>
+
+	* TAO_IDL/be/be_operation.cpp: 
+	  "Fixed" skeleton generation code. Sometimes the formal parameter
+	  names for the skeleton can clash with the user defined names for
+	  the (IDL) method parameter names.
+	  To minimize the chances of such a problem I choose very long
+	  parameter names for the skeleton (things like <_tao_enviroment>
+	  instead of just <env>), but the right solution is to ignore the
+	  user defined parameter names and generate them using some
+	  numbering scheme.
+
+	* TAO_IDL/be/be_predefined_type.cpp: 
+	  Generate CORBA::_tc_Object as the TypeCode for all pseudo
+	  object, this is a hack but works for the files we are using
+	  right now (maybe it will fail for complex things, like the
+	  interface repository).
+
+	* TAO_IDL/be/be_sequence.cpp: 
+	  Fixed a number of minor problems:
+	  Missing _ptr type for sequences.
+	  The return type for T_var::operator-> was different in the
+	  .h and .i file.
+
+	* TAO_IDL/be/be_type.cpp: 
+	  tc_name_ and type_name_ were not initialized, producing some
+	  segfaults under NT.
+
 Mon Nov  3 18:30:09 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
 	* cubit_i.h (objrefs): Fixed invalid comparison between a signed
@@ -241,7 +269,7 @@ Fri Oct 31 01:03:05 1997    <irfan@TWOSTEP>
 	* TAO_IDL/ast/ast_expression.cpp (dump): Streaming the enum was
  	  ambiguous.  Therefore the enum was cast to an int.
 
-Thu Oct 30 22:50:44 1997    <coryan@MILONGA>
+Thu Oct 30 22:50:44 1997  Carlos O'Ryan  <coryan@MILONGA>
 
 	* tao/corba.h:
 	  Added a definition for ACE_NESTED_CLASS, maybe it is defined in
