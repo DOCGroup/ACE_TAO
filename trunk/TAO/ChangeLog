@@ -1,3 +1,27 @@
+Sun Jul 27 19:31:27 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* examples/RTScheduling/DT_Creator.h: 
+
+	  Added the missing DT_Creator.h file.
+
+	* examples/RTScheduling/FP_SchedulingC.h:	
+	* examples/RTScheduling/MIF_SchedulingC.h:	
+	  
+	  Included RTScheduler.h file instaed of RTSchedulerC.h.
+
+	* examples/RTScheduling/Thread_Task.h: 	
+	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.h:
+	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.h:	
+
+	  Removed the inclusion of Task.h file that is no longer used.
+
+	* examples/RTScheduling/MIF_Scheduler/Makefile:		
+	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:	
+
+	  Updated dependencies.
+
+	  Above changes fix compile problems on most builds.
+	
 Sun Jul 27 17:30:14 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp: Converted period
