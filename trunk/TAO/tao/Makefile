@@ -221,7 +221,8 @@ ORB_CORE_FILES = \
   Base_Connection_Property \
   Connection_Cache_Manager \
   Cleanup_Func_Registry \
-  IORInfo
+  IORInfo \
+  Object_Ref_Table
 
 DYNAMIC_ANY_FILES =
 
@@ -713,6 +714,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -726,8 +728,7 @@ realclean:
  target_specification.i
 
 .obj/Profile.o .obj/Profile.so .shobj/Profile.o .shobj/Profile.so: Profile.cpp Profile.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -990,11 +991,11 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
- Stub.i \
- debug.h
+ Stub.i debug.h
 
 .obj/Endpoint.o .obj/Endpoint.so .shobj/Endpoint.o .shobj/Endpoint.so: Endpoint.cpp \
  Endpoint.h \
@@ -1345,6 +1346,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -1620,6 +1622,7 @@ realclean:
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -1889,6 +1892,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -2571,6 +2575,7 @@ realclean:
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -2890,6 +2895,7 @@ realclean:
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -3182,6 +3188,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -3510,6 +3517,7 @@ realclean:
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -3836,6 +3844,7 @@ realclean:
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -4162,6 +4171,7 @@ realclean:
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -4508,6 +4518,7 @@ realclean:
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -5038,6 +5049,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -5305,6 +5317,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i
@@ -5558,6 +5571,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -6774,6 +6788,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -7482,6 +7497,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i
@@ -7748,6 +7764,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -8044,6 +8061,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -8484,6 +8502,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -8891,6 +8910,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -9696,6 +9716,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -9740,8 +9761,7 @@ realclean:
  PortableServer/portableserver_export.h
 
 .obj/DomainC.o .obj/DomainC.so .shobj/DomainC.o .shobj/DomainC.so: DomainC.cpp DomainC.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -10006,6 +10026,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -10803,8 +10824,7 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- Endpoint.i \
- Stub.h \
+ Endpoint.i Stub.h \
  Pluggable.h \
  Sequence.h \
  Managed_Types.h \
@@ -10968,11 +10988,12 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
- Stub.i \
- Sequence.h Object.h Invocation.h \
+ Stub.i Sequence.h \
+ Object.h Invocation.h \
  Synch_Reply_Dispatcher.h \
  Reply_Dispatcher.h \
  Reply_Dispatcher.i \
@@ -11416,6 +11437,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i
@@ -11944,6 +11966,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i
@@ -12493,6 +12516,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -12833,6 +12857,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -13008,6 +13033,7 @@ realclean:
  MProfile.i \
  Invocation_Endpoint_Selectors.i \
  Invocation.i \
+ Asynch_Reply_Dispatcher.h \
  MessagingC.h \
  ValueBase.h \
  ValueBase.i \
@@ -13016,7 +13042,6 @@ realclean:
  PollableC.h \
  PollableC.i \
  MessagingC.i \
- Asynch_Reply_Dispatcher.h \
  Asynch_Reply_Dispatcher.i \
  Asynch_Invocation.i \
  Timeprobe.h \
@@ -13127,6 +13152,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -13646,8 +13672,7 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -13924,8 +13949,7 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- OctetSeqC.i \
- Any.h \
+ OctetSeqC.i Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -14176,8 +14200,7 @@ realclean:
  Smart_Proxies.i
 
 .obj/ORB_Core.o .obj/ORB_Core.so .shobj/ORB_Core.o .shobj/ORB_Core.so: ORB_Core.cpp ORB_Core.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -14271,8 +14294,7 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
  TAO_Export.h \
- corbafwd.i \
- ORB.h \
+ corbafwd.i ORB.h \
  corbafwd.h \
  Exception.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -14377,8 +14399,7 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i \
  Protocol_Factory.h \
- params.h \
- params.i \
+ params.h params.i \
  TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
@@ -14387,10 +14408,9 @@ realclean:
  TAO_Singleton.h \
  TAO_Singleton_Manager.h \
  Adapter.h Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- Any.i \
- DynamicC.i MessagingC.h \
+ DynamicC.h Any.h \
+ Any.i DynamicC.i \
+ MessagingC.h \
  ValueBase.h \
  ValueBase.i \
  ValueFactory.h \
@@ -14417,8 +14437,8 @@ realclean:
  Base_Connection_Property.inl \
  Cache_Entries.inl \
  Connection_Cache_Manager.inl \
- Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Interceptor_List.h \
- Interceptor_List.inl ORB_Core.i ORB_Table.h \
+ Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
+ Interceptor_List.h Interceptor_List.inl ORB_Core.i ORB_Table.h \
  ORB_Table.inl \
  $(ACE_ROOT)/ace/Env_Value_T.h \
  $(ACE_ROOT)/ace/Env_Value_T.i \
@@ -14449,8 +14469,7 @@ realclean:
  Pluggable_Messaging.i \
  GIOP_Message_State.i \
  Profile.i \
- MProfile.i \
- Stub.h \
+ MProfile.i Stub.h \
  MProfile.h \
  ORB.h \
  ORB_Core.h \
@@ -14764,6 +14783,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i
@@ -15016,6 +15036,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -15477,6 +15498,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -15859,6 +15881,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -16156,6 +16179,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -16513,6 +16537,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -16938,6 +16963,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -17472,6 +17498,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i
@@ -17725,6 +17752,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -18593,6 +18621,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -18855,6 +18884,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -18970,8 +19000,7 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- IOPC.i \
- Any.h \
+ IOPC.i Any.h \
  Environment.h \
  Environment.i \
  Object.h \
@@ -18988,8 +19017,7 @@ realclean:
  Any.i
 
 .obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp IOPS.h \
- $(ACE_ROOT)/ace/pre.h \
- IOPC.h \
+ $(ACE_ROOT)/ace/pre.h IOPC.h \
  TAO_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -19207,8 +19235,7 @@ realclean:
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- PollableC.i \
+ CDR.i PollableC.i \
  Stub.h \
  Pluggable.h \
  Sequence.h \
@@ -19360,6 +19387,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -19495,8 +19523,8 @@ realclean:
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- PollableC.i PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
+ CDR.i PollableC.i \
+ PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
 
 .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.so .shobj/CONV_FRAMEC.o .shobj/CONV_FRAMEC.so: CONV_FRAMEC.cpp \
  CONV_FRAMEC.h \
@@ -19999,6 +20027,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i
@@ -20245,8 +20274,7 @@ realclean:
  IOPC.i \
  Object_KeyC.h \
  Object_KeyC.i \
- GIOPC.i \
- GIOPS_T.h \
+ GIOPC.i GIOPS_T.h \
  GIOPS_T.i \
  GIOPS_T.cpp \
  GIOPS.i
@@ -20510,8 +20538,7 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  Priority_Mapping_Manager.i \
- TAOC.i \
- TAOS.h \
+ TAOC.i TAOS.h \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -21312,6 +21339,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -21824,6 +21852,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -22523,6 +22552,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -22846,6 +22876,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -23258,6 +23289,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -23413,8 +23445,7 @@ realclean:
  CORBA_String.inl
 
 .obj/ORBInitInfo.o .obj/ORBInitInfo.so .shobj/ORBInitInfo.o .shobj/ORBInitInfo.so: ORBInitInfo.cpp ORBInitInfo.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -23511,8 +23542,7 @@ realclean:
  corbafwd.i \
  PortableInterceptorC.h \
  corbafwd.h \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -23628,8 +23658,7 @@ realclean:
  $(ACE_ROOT)/ace/Message_Queue.i \
  Pluggable.i \
  Protocol_Factory.h \
- params.h \
- params.i \
+ params.h params.i \
  TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h \
@@ -23655,13 +23684,12 @@ realclean:
  Base_Connection_Property.inl \
  Cache_Entries.inl \
  Connection_Cache_Manager.inl \
- Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Interceptor_List.h \
- Interceptor_List.inl ORB_Core.i
+ Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
+ Interceptor_List.h Interceptor_List.inl ORB_Core.i
 
 .obj/ORBInitializer_Registry.o .obj/ORBInitializer_Registry.so .shobj/ORBInitializer_Registry.o .shobj/ORBInitializer_Registry.so: ORBInitializer_Registry.cpp \
  ORBInitializer_Registry.h \
- $(ACE_ROOT)/ace/pre.h \
- TAO_Export.h \
+ $(ACE_ROOT)/ace/pre.h TAO_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -23758,8 +23786,7 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -23813,8 +23840,7 @@ realclean:
  TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  ORBInitializer_Registry.inl \
- ORB.h \
- Services.h \
+ ORB.h Services.h \
  Services.i \
  CORBA_String.h \
  CORBA_String.inl \
@@ -23823,8 +23849,7 @@ realclean:
 
 .obj/PolicyFactory_Registry.o .obj/PolicyFactory_Registry.so .shobj/PolicyFactory_Registry.o .shobj/PolicyFactory_Registry.so: PolicyFactory_Registry.cpp \
  PolicyFactory_Registry.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -23921,8 +23946,7 @@ realclean:
  corbafwd.i \
  PortableInterceptorC.h \
  corbafwd.h \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -24453,14 +24477,14 @@ realclean:
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i
 
 .obj/Cleanup_Func_Registry.o .obj/Cleanup_Func_Registry.so .shobj/Cleanup_Func_Registry.o .shobj/Cleanup_Func_Registry.so: Cleanup_Func_Registry.cpp \
  Cleanup_Func_Registry.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -24558,8 +24582,7 @@ realclean:
  Cleanup_Func_Registry.inl
 
 .obj/IORInfo.o .obj/IORInfo.so .shobj/IORInfo.o .shobj/IORInfo.so: IORInfo.cpp IORInfo.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -24656,8 +24679,7 @@ realclean:
  corbafwd.i \
  PortableInterceptorC.h \
  corbafwd.h \
- DynamicC.h \
- Any.h \
+ DynamicC.h Any.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -24715,6 +24737,138 @@ realclean:
  GIOP_Message_State.i \
  Profile.i \
  MProfile.i
+
+.obj/Object_Ref_Table.o .obj/Object_Ref_Table.so .shobj/Object_Ref_Table.o .shobj/Object_Ref_Table.so: Object_Ref_Table.cpp Object_Ref_Table.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Malloc_Allocator.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc_Allocator.i \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ try_macros.h \
+ orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
+ TAO_Export.h \
+ corbafwd.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ Object.h \
+ corbafwd.h \
+ Abstract_Servant_Base.h \
+ Object_Proxy_Broker.h \
+ Object_Proxy_Impl.h \
+ Object.i
 
 .obj/Services.o .obj/Services.so .shobj/Services.o .shobj/Services.so: Services.cpp \
  Services.h \
@@ -25379,6 +25533,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -25652,6 +25807,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -25951,6 +26107,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -26544,6 +26701,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i
@@ -27107,6 +27265,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -27839,6 +27998,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -27879,8 +28039,7 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- corbafwd.h \
+ $(ACE_ROOT)/ace/OS.i corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -27950,8 +28109,7 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
  TAO_Export.h \
- corbafwd.i \
- IOPC.h \
+ corbafwd.i IOPC.h \
  CDR.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -27964,8 +28122,7 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- IOPC.i \
- PolicyC.h \
+ IOPC.i PolicyC.h \
  CurrentC.h \
  Object.h \
  Abstract_Servant_Base.h \
@@ -27983,12 +28140,10 @@ realclean:
  Environment.h \
  Environment.i \
  PolicyC.i \
- TimeBaseC.h \
- Any.h \
+ TimeBaseC.h Any.h \
  Any.i \
  TimeBaseC.i \
- RTCORBAC.i \
- TAOS.h \
+ RTCORBAC.i TAOS.h \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -28019,8 +28174,8 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- RTCORBAS.h orbconf.h IOPS.h IOPC.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBAS.h \
+ orbconf.h IOPS.h IOPC.h \
  TAO_Export.h \
  CDR.h \
  corbafwd.h \
@@ -29526,6 +29681,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -29945,6 +30101,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i
@@ -30449,6 +30606,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \
@@ -30726,6 +30884,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i
@@ -30983,6 +31142,7 @@ realclean:
  Connection_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h \
  Interceptor_List.h \
  Interceptor_List.inl \
  ORB_Core.i \

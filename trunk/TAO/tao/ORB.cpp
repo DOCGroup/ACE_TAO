@@ -909,7 +909,12 @@ CORBA_ORB::resolve_initial_references (const char *name,
     return this->resolve_rt_current (ACE_TRY_ENV);
 
   CORBA::Object_var result =
-    this->orb_core ()->resolve_rir (name, ACE_TRY_ENV);
+    this->orb_core ()->object_ref_table ().resolve_initial_references (
+      name,
+      ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  result = this->orb_core ()->resolve_rir (name, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Is not one of the well known services, try to find it in the
