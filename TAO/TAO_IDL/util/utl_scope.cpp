@@ -797,19 +797,16 @@ UTL_Scope::call_add (void)
   AST_Decl *result = 0;
   AST_Decl *decl = 0;
 
-  UTL_ScopeActiveIterator *i = 0;
+  UTL_ScopeActiveIterator i (this, 
+                             UTL_Scope::IK_decls);
   UTL_Scope *scope = 0;
 
-  ACE_NEW_RETURN (i,
-                  UTL_ScopeActiveIterator (this, 
-                                           UTL_Scope::IK_decls),
-                  0);
-
-  while(!i->is_done()) 
+  while (!i.is_done ()) 
     {
-      decl = i->item ();
+      decl = i.item ();
       scope = 0;
-      switch (decl->node_type()) 
+
+      switch (decl->node_type ()) 
         {
         case AST_Decl::NT_argument:
           result = add_argument (AST_Argument::narrow_from_decl (decl));
@@ -891,8 +888,9 @@ UTL_Scope::call_add (void)
           scope->call_add ();
         }
 
-      i->next ();
+      i.next ();
     }
+
   return result;
 }
 
