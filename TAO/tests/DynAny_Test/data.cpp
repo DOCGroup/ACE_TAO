@@ -28,7 +28,6 @@ Data::Data (CORBA::ORB_var orb)
     m_ulong1 (123456),                          m_ulong2 (0),
     m_float1 (0.142857f),                       m_float2 (0.0f),
     m_double1 (3.14159),                        m_double2 (0.0),
-    m_longlong1 (-654321),                      m_longlong2 (0),
     m_ulonglong1 (654321),                      m_ulonglong2 (0),
     m_string1 (CORBA::string_dup ("upchuck")),  m_string2 (0),
 
