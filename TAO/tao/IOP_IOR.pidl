@@ -78,7 +78,7 @@ module IOP
   typedef unsigned long ServiceId;
   struct ServiceContext {
     ServiceId          context_id;
-    sequence <octet>   context_data;
+    CORBA::OctetSeq    context_data;
   };
   typedef sequence <ServiceContext> ServiceContextList;
 
