@@ -85,8 +85,6 @@ static u_short port = ACE_DEFAULT_SERVER_PORT;
 // Log options
 static int logflag  = 0; // 0 STDERR, 1 FILE
 static int loglevel = 0; // 0 full , 1 only errors
-static const char * logname = "proactor_test.log";
-
 
 static char * data =
   "GET / HTTP/1.1\r\n"
@@ -151,8 +149,8 @@ MyTask::create_proactor (void)
       ACE_WIN32_Proactor *proactor = 0;
       ACE_NEW (proactor,
                ACE_WIN32_Proactor);
-      ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type = WIN32\n"));
-	
+      ACE_DEBUG ((LM_DEBUG, "(%t) Create Proactor Type = WIN32\n"));
+
 #elif defined (ACE_HAS_AIO_CALLS)
 
       ACE_POSIX_Proactor *proactor = 0;
@@ -162,13 +160,13 @@ MyTask::create_proactor (void)
         case 1:
           ACE_NEW (proactor,
                    ACE_POSIX_AIOCB_Proactor (max_aio_operations));
-          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type = AIOCB\n"));
+          ACE_DEBUG ((LM_DEBUG, "(%t) Create Proactor Type = AIOCB\n"));
           break;
 
         case 2:
           ACE_NEW (proactor,
                    ACE_POSIX_SIG_Proactor);
-          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type = SIG\n"));
+          ACE_DEBUG ((LM_DEBUG, "(%t) Create Proactor Type = SIG\n"));
           break;
 
 #  if defined (sun)
@@ -176,7 +174,7 @@ MyTask::create_proactor (void)
         case 3:
           ACE_NEW (proactor,
                    ACE_SUN_Proactor (max_aio_operations));
-          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type = SUN\n"));
+          ACE_DEBUG ((LM_DEBUG, "(%t) Create Proactor Type = SUN\n"));
           break;
 
 #  endif /* sun */
@@ -184,7 +182,7 @@ MyTask::create_proactor (void)
         default:
           ACE_NEW (proactor,
                    ACE_POSIX_SIG_Proactor);
-          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type = SIG\n"));
+          ACE_DEBUG ((LM_DEBUG, "(%t) Create Proactor Type = SIG\n"));
           break;
         }
 
@@ -1161,14 +1159,14 @@ disable_signal (int sigmin, int sigmax)
 
   for (int i = sigmin; i <= sigmax; i++)
     sigaddset (&signal_set, i);
-	
+
   //  Put the <signal_set>.
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
     ACE_ERROR ((LM_ERROR,
                 "Error:(%P | %t):%p\n",
                 "pthread_sigmask failed"));
 #endif /* ACE_WIN32 */
-	
+
   return 1;
 }
 
