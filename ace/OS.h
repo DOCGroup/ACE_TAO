@@ -1832,7 +1832,6 @@ struct sockaddr_un {
   char  sun_path[108]; // path name.
 };
 
-#     define MAXPATHLEN  1024
 #     define MAXNAMLEN   255
 #     define NSIG (_NSIGS + 1)
 

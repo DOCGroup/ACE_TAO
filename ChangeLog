@@ -1,3 +1,9 @@
+Tue Sep 17 01:35:54 UTC 2002 Don Hinton  <dhinton@ieee.org>
+
+	* ace/OS.h: Remove redundant MAXPATHLEN definition when 
+	  building VxWorks.  Thanks to Rob Andzik <andzik@rtlogic.com>
+	  for pointing this out.
+
 Mon Sep 16 17:36:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Hash_Cache_Map_Manager_T.cpp:
