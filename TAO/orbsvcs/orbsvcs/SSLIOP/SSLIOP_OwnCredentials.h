@@ -43,8 +43,8 @@ namespace TAO
     /**
      * @class OwnCredentials
      *
-     * @brief Credentials representing the our identity, not our
-     *        peer's identity.
+     * @brief Credentials representing our identity, not our peer's
+     *        identity.
      *
      * @c OwnCredentials are a representation of our identity, not our
      * peer's identity.

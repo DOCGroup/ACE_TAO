@@ -1,3 +1,76 @@
+Thu Aug 12 18:45:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.h
+
+	  Added new OpenSSL "SSL" data structure constructor parameter,
+	  and accompanying cached member.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.cpp
+	  (ClientCredentials):
+
+	  Initialize new SSL data structure member with given SSL
+	  argument.
+
+	  (parent_credentials, client_authentication, integrity):
+
+	  Implemented these methods.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
+
+	  Do not widen the retrieved OwnCredentials pointer to a
+	  Credentials pointer.  We really want to retain the narrower
+	  interface for later use.  Furthermore, it is more correct to
+	  store an OwnCredentials reference in an endpoint rather than one
+	  that has been widened to a Credentials reference.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+	  Cosmetic updates.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp
+	  (client_credentials):
+
+	  Pass the underlying SSL data structur to the ClientCredentials
+	  constructor.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.h:
+
+	  The types that were defined in these files are now implemented
+	  in terms of the new TAO::SSLIOP::OpenSSL_st_T<> template.
+	  Reduces code duplication and maintenance burden.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i:
+
+	  Cache and return an OwnCredentials reference, not a wider
+	  Credentials reference.  It is more correct to use the former.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.inl:
+
+	  New template used to implement a "_var" class for OpenSSL data
+	  structures such as "X509, EVP_PKEY" and "SSL".
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h:
+
+	  Corrected typo in documentation.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_SSL.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_SSL.h:
+
+	  New files containing TAO::SSLIOP::SSL_var typdef and
+	  accompanying explicit template instantiations.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.inl:
+
+	  Removed these files.  They are no longer used.
+
 Thu Aug 12 17:52:36 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp (operator==):

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "SSLIOP_ClientCredentials.h"
+#include "SSLIOP_OwnCredentials.h"
 
 
 ACE_RCSID (SSLIOP,
@@ -8,8 +9,12 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
-TAO::SSLIOP::ClientCredentials::ClientCredentials (X509 *cert, EVP_PKEY *evp)
-  : SSLIOP_Credentials (cert, evp)
+TAO::SSLIOP::ClientCredentials::ClientCredentials (
+  X509 * cert,
+  EVP_PKEY *evp,
+  SSL * ssl)
+  : SSLIOP_Credentials (cert, evp),
+    ssl_ (TAO::SSLIOP::_duplicate (ssl))
 {
 }
 
@@ -81,34 +86,53 @@ SecurityLevel3::OwnCredentials_ptr
 TAO::SSLIOP::ClientCredentials::parent_credentials (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    SecurityLevel3::OwnCredentials::_nil ());
+  SecurityLevel3::OwnCredentials_ptr creds =
+    SecurityLevel3::OwnCredentials::_nil ();
+
+  ACE_NEW_THROW_EX (creds,
+                    TAO::SSLIOP::OwnCredentials (
+                      ::SSL_get_certificate (this->ssl_.in ()),
+                      ::SSL_get_privatekey (this->ssl_.in ())),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (creds);
+
+  return creds;
 }
 
 CORBA::Boolean
-TAO::SSLIOP::ClientCredentials::client_authentication (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::ClientCredentials::client_authentication (
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  // If the client presented no certificate (i.e. cert_.ptr() == 0),
+  // the client was not authenticated.  Otherwise, verify the peer's
+  // certificate.
+
+  return
+    this->x509_.in () != 0
+    && SSL_get_verify_result (this->ssl_.in ()) == X509_V_OK;
 }
 
 CORBA::Boolean
 TAO::SSLIOP::ClientCredentials::target_authentication (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
 }
 
 CORBA::Boolean
 TAO::SSLIOP::ClientCredentials::confidentiality (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
 }
 
 CORBA::Boolean
-TAO::SSLIOP::ClientCredentials::integrity (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::ClientCredentials::integrity (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  // TAO's SSLIOP pluggable transport always provides integrity.  Note
+  // that if we 
+
+  return true;
 }

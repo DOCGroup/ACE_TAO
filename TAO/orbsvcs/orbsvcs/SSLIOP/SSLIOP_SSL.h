@@ -2,16 +2,18 @@
 
 //=============================================================================
 /**
- *  @file   SSLIOP_X509.h
+ *  @file   SSLIOP_SSL.h
+ *
+ *  OpenSSL @c SSL data structure specializations and typedefs.
  *
  *  $Id$
  *
- *  @author Ossama Othman <ossama@uci.edu>
+ *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
-#ifndef TAO_SSLIOP_X509_H
-#define TAO_SSLIOP_X509_H
+#ifndef TAO_SSLIOP_SSL_H
+#define TAO_SSLIOP_SSL_H
 
 #include /**/ "ace/pre.h"
 
@@ -23,7 +25,7 @@
 
 #include "SSLIOP_OpenSSL_st_T.h"
 
-#include <openssl/x509.h>
+#include <openssl/ssl.h>
 #include <openssl/crypto.h>
 
 
@@ -31,29 +33,29 @@ namespace TAO
 {
   namespace SSLIOP
   {
-    // OpenSSL @c X509 structure traits specialization.
+    // OpenSSL @c SSL structure traits specialization.
     template <>
-    struct OpenSSL_traits< ::X509 >
+    struct OpenSSL_traits< ::SSL >
     {
       /// OpenSSL lock ID for use in OpenSSL CRYPTO_add() reference
       /// count manipulation function.
-      static const long LOCK_ID = CRYPTO_LOCK_X509;
+      static const long LOCK_ID = CRYPTO_LOCK_SSL;
 
       /// Perform deep copy of the given OpenSSL structure.
-      static ::X509 * copy (::X509 const & st)
+      static ::SSL * copy (::SSL const & st)
       {
-        return ::X509_dup (const_cast< ::X509 *> (&st));
+        return ::SSL_dup (const_cast< ::SSL * > (&st));
       }
 
       /// Decrease the reference count on the given OpenSSL
       /// structure.
-      static void release (::X509 * st)
+      static void release (::SSL * st)
       {
-        ::X509_free (st);
+        ::SSL_free (st);
       }
     };
 
-    typedef OpenSSL_st_var< ::X509 > X509_var;
+    typedef OpenSSL_st_var< ::SSL > SSL_var;
 
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
@@ -61,4 +63,4 @@ namespace TAO
 
 #include /**/ "ace/post.h"
 
-#endif  /* TAO_SSLIOP_X509_H */
+#endif  /* TAO_SSLIOP_SSL_H */

@@ -74,7 +74,7 @@ TAO::SSLIOP::Protocol_Factory::make_acceptor (void)
 
 int
 TAO::SSLIOP::Protocol_Factory::init (int argc,
-                                   char* argv[])
+                                     char* argv[])
 {
   char *certificate_path = 0;
   char *private_key_path = 0;
@@ -472,6 +472,7 @@ TAO::SSLIOP::Protocol_Factory::requires_explicit_endpoint (void) const
 {
   return 0;
 }
+
 
 ACE_STATIC_SVC_DEFINE (TAO_SSLIOP_Protocol_Factory,
                        ACE_TEXT ("SSLIOP_Factory"),

@@ -114,7 +114,7 @@ TAO::SSLIOP::Current::setup (TAO::SSLIOP::Current_Impl *&prev_impl,
 
 void
 TAO::SSLIOP::Current::teardown (TAO::SSLIOP::Current_Impl *prev_impl,
-                              bool &setup_done)
+                                bool &setup_done)
 {
   if (setup_done)
     {
