@@ -25,7 +25,7 @@ parse_args (int argc, char **argv)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
+                           "usage:  %s "
                            "-d "
 			   "-o <iorfile>"
                            "\n",
