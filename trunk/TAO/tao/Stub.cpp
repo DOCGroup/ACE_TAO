@@ -163,7 +163,7 @@ TAO_Stub::hash (CORBA::ULong max,
   ACE_THROW_RETURN (CORBA::INTERNAL (
     CORBA_SystemException::_tao_minor_code (
        TAO_DEFAULT_MINOR_CODE,
-       EINVAL),
+       0),
     CORBA::COMPLETED_NO),
     0);
 }
