@@ -1,3 +1,7 @@
+Sat Oct  3 09:36:09 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_proactor.cpp: Comments.
+
 Sat Oct 03 09:24:45 1998  Susan Liebeskind <shl@cc.gatech.edu>
 
         * ace/Task.h,Thread.h,Thread_Manager.h,Timer_Queue_Adapters.h
