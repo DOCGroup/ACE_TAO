@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+
 <html>
   <head>
     <title>ORB & ORB Core Status</title>
@@ -27,6 +28,17 @@
       Recently Completed Work:
 
       <BLOCKQUOTE>
+	<LI>Tested <code>CORBA_ORB::shutdown()</code> as a manner in
+	which a thread of control can request that
+	<code>CORBA_ORB::run()</code> should return and no longer
+	service requests.  It only honors a
+	<em>wait_for_completion</em> argument of <b>FALSE</b> right
+	now because we haven't fully explored the issues which
+	surround doing all the completion.</li>
+
+	<li>Fixed bugs reported by Steven Wohlever, David Miron,
+	Manojkumar Acharya.</li>
+
 	<li>Created a brief section in <a
 	href="../../TAO-Install.html"><code>$TAO_ROOT/TAO-Install.html</code></a>
 	that <em>briefly</em> documents installation on Unix platforms.  There is
@@ -43,10 +55,13 @@
 	<code>CORBA_ORB::run()</code> should return and no longer
 	service requests.</li>
 
-	<li>Debate details of <code>Svc_Handler</code> modifications
+	<LI>Validated movement of Strategy Connector into
+	ORB&nbsp;Core.</LI>
+
+	<li>Debated details of <code>Svc_Handler</code> modifications
 	with Irfan.</li>
 
-	<li>Test and commit <code>Connector::connect_n</code> changes
+	<li>Tested and commited <code>Connector::connect_n</code> changes
 	to ACE</code>.</li>
 
 	<li>ACE & TAO compiling cleanly using Sun's CC on Solaris and
@@ -57,9 +72,9 @@
 	TAO really uses <code>select</code> vs. <code>recv</code> for
 	<b>-R</b> vs. <b>-T</b>.</li>
 
-	<li>Rename <code>boa.*</code> to <code>poa.*</code>.</li>
+	<li>Renamed <code>boa.*</code> to <code>poa.*</code>.</li>
 
-	<LI>Rename following files:&nbsp;Orb_Core.*&nbsp;->orb_core.*
+	<LI>Renamed following files:&nbsp;Orb_Core.*&nbsp;->orb_core.*
 	&amp;&nbsp;orbobj.* -> corba_orb.*.</LI>
 
 	<LI>The lock used in <code>giop.cpp:626</code> originally
@@ -91,10 +106,11 @@
 	have been eliminated.
 	</li>
 
-	<LI>Remove BOA and ROA names from the ORB.</LI>
+	<LI>Removed BOA and ROA names from the ORB.</LI>
 
-	<LI>Change CORBA_ORB::open() to return an error status (first
-	cut at this already there--needs to be checked out).</LI>
+	<LI>Changed <code>CORBA_ORB::open()</code> to return an error
+	status (first cut at this already there--needs to be checked
+	out).</LI>
 
 	<LI>Put README file in multiCubit test.</li>
 
@@ -109,55 +125,56 @@
 
       </BLOCKQUOTE>
 
+      Current Work:
+
+      <BLOCKQUOTE>
+	<LI>
+	  <p>
+	    Verify that, in the ORB-per-thread concurrency model, it's
+	    possible to have a factory in each thread that creates a
+	    client and returns an object reference to that client
+	    within that thread.  This is different from the model that
+	    Sumedh originally had where the factory was trying to turn
+	    out a client in a separate thread/ORB combination.</p>
+	  <p>
+	    There is no application which attempts this at the moment,
+	    so both a client and a server will need to be
+	    manufactured.  Using existing Cubit-like examples (that
+	    poor app is so weary) should reduce development time to a
+	    couple of hours.</p>
+	  <p>
+	    The real strategy/solution is to make
+	    <code>CORBA::Object</code> not keep a pointer to its orb
+	    sitting around anywhere.  It should only get it when it
+	    needs it.  This should not be difficult to change.</p>
+	</LI>
+
+      </BLOCKQUOTE>
+
       Critical Work:
 
       <BLOCKQUOTE>
-	<li>Make the section in <a
-	href="../../TAO-Install.html"><code>$TAO_ROOT/TAO-Install.html</code></a>
-	that documents installation on Unix platforms more complete.
-	</li>
-
-	<LI>Test <code>CORBA_ORB::shutdown()</code> as a manner
-	in which a thread of control can request that
-	<code>CORBA_ORB::run()</code> should return and no longer
-	service requests.</li>
-
-	<li>Determine if <code>CORBA_ORB::shutdown()</code> honors the
-	<em>wait_for_completion</em> option already (I think it does).
-	No matter which it implements, determine how to implement the
-	other.</li>
 
 	<LI>Add pre-cached connection on client side.  Clients will
 	pass in a comma-separated list of <em>host:port</em>
 	destinations using the <code>CORBA::ORB_init()</code>
 	interface.</LI>
 
-	<LI>
-	  Verify that, in the ORB-per-thread concurrency model, it's
-	  possible to have a factory in each thread that creates a
-	  client and returns an object reference to that client within
-	  that thread.  This is different from the model that Sumedh
-	  originally had where the factory was trying to turn out a
-	  client in a separate thread/ORB combination.
-	  <p>
-	  There is no application which attempts this at the moment,
-	  so both a client and a server will need to be manufactured.
-	  Using existing Cubit-like examples (that poor app is so
-	  weary) should reduce development time to a couple of hours.
-	</LI>
-
-	<LI>Validate movement of Strategy Connector into ORB&nbsp;Core.</LI>
+	<li>Get rid of need to have compile in TSS ORB Core
+	(<code>-DTAO_HAS_TSS_ORBCORE</code>).  Create an ORB Policy
+	Factory which is consulted for the pointers which go into
+	TAO_ORB_Core instances.  Thus, it is the only place that needs
+	to know whether the items should be global or held in
+	TSS.</li>
 
       </BLOCKQUOTE>
 
       Future work:
       <UL>
-
-	<li>Implement the <code>CORBA::ORB::shutdown()</code> method
-	so that it honors the <em>wait_for_completion</em> flag.
-
-	<li>Get rid of need to have compile in TSS ORB Core
-	(<code>-DTAO_HAS_TSS_ORBCORE</code>).</li>
+	<li>Make the section in <a
+	href="../../TAO-Install.html"><code>$TAO_ROOT/TAO-Install.html</code></a>
+	that documents installation on Unix platforms more complete.
+	</li>
 
 	<li>Improve the <code>Service Configurator</code> service
 	entry faking on VxWorks.</li>

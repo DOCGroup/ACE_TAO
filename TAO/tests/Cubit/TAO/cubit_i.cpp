@@ -90,5 +90,5 @@ Cubit_i::Cubit_cube_union (Cubit_oneof &values,
 void Cubit_i::Cubit_please_exit (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Cubit_please_exit: I've been asked to shut down.\n"));
-  TAO_ORB_Core_instance()->orb ()->shutdown (CORBA::B_TRUE);
+  TAO_ORB_Core_instance()->orb ()->shutdown ();
 }

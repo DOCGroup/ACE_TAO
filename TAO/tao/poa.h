@@ -138,6 +138,7 @@ public:
   //   such as maintaining persistent tables keyed by references to
   //   objects that may no longer exist.
     
+#if 0
   // @@ virtual
   void please_shutdown (CORBA::Environment &env);
   // Please Shutdown -- reject all further incoming requests, and
@@ -155,6 +156,7 @@ public:
   // This uses only the public APIs defined above; the function is
   // defined here purely for convenience, to help some applications
   // avoid writing that loop.
+#endif /* 0 */
 
   static CORBA::POA_ptr get_boa (CORBA::ORB_ptr orb,
 				CORBA::Environment &env);
@@ -183,6 +185,7 @@ public:
   // reference.  It's the main way servers distinguish two object
   // references from each other.
     
+#if 0
   /* virtual */
   void clean_shutdown (CORBA::Environment &env);
   // NON-STANDARD CALL.  OA user asks for a clean shutdown of the OA
@@ -195,6 +198,7 @@ public:
   CORBA::Boolean shutting_down (void);
   // NON-STANDARD CALL.  Returns <TRUE> if we're in the process of
   // shutting down.
+#endif /* 0 */
 
   void dispatch (CORBA::OctetSeq &key, 
 		 CORBA::ServerRequest &req, 
