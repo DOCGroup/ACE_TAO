@@ -79,11 +79,11 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& ACE_TRY_ENV)
       if (this->verbose_)
         {
           ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
-                      ACE_static_cast (const char*, link_name_seq[0])));
+                      ACE_static_cast (const char*, link_name_seq[0u])));
         }
 
       CosTrading::Link::LinkInfo_var link_info =
-        link_if->describe_link (link_name_seq[0], ACE_TRY_ENV);
+        link_if->describe_link (link_name_seq[0u], ACE_TRY_ENV);
       ACE_CHECK;
 
       CosTrading::Lookup_ptr lookup_if = link_info->target.in ();
@@ -109,10 +109,10 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& ACE_TRY_ENV)
                 CosTrading::TraderName::allocbuf (2);
 
               ACE_DEBUG ((LM_DEBUG, "*** Query through %s to destination %s.\n",
-                          ACE_static_cast (const char*, link_name_seq[0]),
+                          ACE_static_cast (const char*, link_name_seq[0u]),
                           ACE_static_cast (const char*, link_name_seq2[i])));
 
-              trader_name[0] = CORBA::string_dup (link_name_seq[0]);
+              trader_name[0] = CORBA::string_dup (link_name_seq[0u]);
               trader_name[1] = CORBA::string_dup (link_name_seq2[i]);
               policies.starting_trader (new CosTrading::TraderName
                                         (2, 2, trader_name, 1));
