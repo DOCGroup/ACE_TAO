@@ -5,9 +5,6 @@ Sat Jul 18 10:52:49 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 	Move the Id and added ACE_RCSID.
 	The #line commands changed their line numbers.
 
-	* ace/Svc_Conf_Tokens.h: 
-	Got rid of the Id (maintenance problem).
-
 	* ace/Svc_Conf.l: 
 	* ace/Svc_Conf.y: 
 	Added an ACE_RCSID, and erased a few white spaces at the end.
