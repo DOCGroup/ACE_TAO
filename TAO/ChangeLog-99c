@@ -1,3 +1,12 @@
+Mon Sep  6 08:59:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (init): Removed all the unnecessary uses of
+  
+	  if ((offset = foo ()) != -1)
+	  
+	  because they all seemed unnecessary.  Thanks to David Levine for
+ 	  reporting this.
+
 Mon Sep 06 03:40:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp: Removed a
