@@ -392,8 +392,8 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
   be_interface *reply_handler = new be_interface (reply_handler_name,  // name
                                                   p_intf,             // list of inherited
                                                   1,                  // number of inherited
-                                                  0,                  // list of ancestors
-                                                  0,                  // number of ancestors
+                                                  p_intf,                  // list of ancestors
+                                                  1,                  // number of ancestors
                                                   0);                 // pragmas
   reply_handler->set_name (reply_handler_name);
 
