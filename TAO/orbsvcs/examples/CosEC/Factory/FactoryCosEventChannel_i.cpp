@@ -4,7 +4,7 @@
 #include "FactoryCosEventChannel_i.h"
 
 // @@ Pradeep: remember to use "" not <> in your includes.
-#include <ace/Auto_Ptr.h>
+#include "ace/Auto_Ptr.h"
 
 // @@ Pradeep: if you are using the new TAO_EC_Event_Channel you
 //    *don't* need a scheduler.
@@ -29,8 +29,11 @@ FactoryCosEventChannel_i::FactoryCosEventChannel_i (void)
 
 FactoryCosEventChannel_i::~FactoryCosEventChannel_i (void)
 {
+#if 0
   ACE_DEBUG ((LM_DEBUG,
-              "In FactoryCosEventChannel_i dtor"));
+              "In FactoryCosEventChannel_i %d dtor\n",
+              this));
+#endif
 }
 
 int
@@ -38,7 +41,7 @@ FactoryCosEventChannel_i::init (PortableServer::POA_ptr poa,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_ASSERT (poa != PortableServer::POA::_nil ());
-  this->poa_ = poa;
+  this->poa_ = PortableServer::POA::_duplicate (poa);
 
   // Create the Scheduler servant
   ACE_Config_Scheduler* _sched_servant;
@@ -74,6 +77,7 @@ FactoryCosEventChannel_i::init (PortableServer::POA_ptr poa,
   return 0; // success.
 }
 
+#if 0
 int
 FactoryCosEventChannel_i::activate (ACE_CString& str_channel_id,
                                     CORBA::Environment &ACE_TRY_ENV)
@@ -98,7 +102,7 @@ FactoryCosEventChannel_i::activate (ACE_CString& str_channel_id,
                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  // Give the ownership to the POA.
+
   this->sched_servant_->_remove_ref (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
@@ -194,6 +198,75 @@ FactoryCosEventChannel_i::activate (ACE_CString& str_channel_id,
   this->cosec_ =
     CosEventChannelAdmin::EventChannel::_narrow (obj_cosec.in (),
                                                  ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+}
+#endif
+
+int
+FactoryCosEventChannel_i::activate (ACE_CString& str_channel_id,
+                                    CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_ASSERT (this->poa_ != PortableServer::POA::_nil ());
+
+  this->scheduler_ = this->sched_servant_->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->sched_servant_->_remove_ref (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  /*if (ACE_Scheduler_Factory::server (this->scheduler_.in ()) == -1)
+    return -1;*/
+
+  //Activate the Rtec
+  this->ec_servant_->activate (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->rtec_ = this->ec_servant_->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+ // Give the ownership to the POA.
+  this->ec_servant_->_remove_ref (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+ // Initialize the CosEC servant.
+  RtecScheduler::handle_t supp_handle =
+    this->scheduler_->create ("supplier",
+                              ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->supplier_qos_.insert (1,
+                              ACE_ES_EVENT_ANY,
+                              supp_handle,
+                              1);
+
+  RtecScheduler::handle_t cons_handle =
+    this->scheduler_->create ("consumer",
+                              ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->consumer_qos_.start_disjunction_group ();
+  this->consumer_qos_.insert_source (1, // default = 1
+                                     cons_handle);
+
+  const RtecEventChannelAdmin::ConsumerQOS &consumerqos =
+    this->consumer_qos_.get_ConsumerQOS ();
+
+  const RtecEventChannelAdmin::SupplierQOS &supplierqos =
+    this->supplier_qos_.get_SupplierQOS ();
+
+  if (this->cosec_servant_->init (consumerqos,
+                                  supplierqos,
+                                  this->rtec_.in (),
+                                  ACE_TRY_ENV) != 0)
+    return -1;
+  ACE_CHECK_RETURN (-1);
+
+  // Start the CosEC
+  this->cosec_ = this->cosec_servant_->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+ // Give the ownership to the POA.
+  this->cosec_servant_->_remove_ref (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 }
 

@@ -15,7 +15,7 @@ class FactoryClient
 public:
   // Initialization and termination methods
   FactoryClient (void);
-  ~FactoryClient (void);
+  virtual ~FactoryClient (void);
 
   int init_ORB (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);
   // Initializes the ORB.
@@ -38,8 +38,21 @@ protected:
   createChannel (const char *channel_id,
                  CosEventChannelFactory::ChannelFactory_ptr factory,
                  CORBA::Environment &ACE_TRY_ENV);
-  // create a channel.
+  // Create a channel.
 
+  void destroyChannel (const char *channel_id,
+                       CORBA::Environment &ACE_TRY_ENV);
+  // Destroy the channel.
+
+  void findChannel (const char* channel_id,
+                    CORBA::Environment &ACE_TRY_ENV);
+  // Find a channel.
+
+  void findChannel_Id (CosEventChannelAdmin::EventChannel_ptr channel,
+                       CORBA::Environment &ACE_TRY_ENV);
+  // Find a channel.
+
+  // = Protected Data members.
   const char* factoryName_;
   // The name of the factory registered with the naming service.
 
@@ -154,19 +167,97 @@ FactoryClient::createFactory (CORBA::Environment &ACE_TRY_ENV)
 CosEventChannelAdmin::EventChannel_ptr
 FactoryClient::createChannel (const char *channel_id,
                             CosEventChannelFactory::ChannelFactory_ptr factory,
+                              CORBA::Environment &ACE_TRY_ENV)
+{
+  CosEventChannelAdmin::EventChannel_ptr ec =
+    CosEventChannelAdmin::EventChannel::_nil ();
+
+  ACE_TRY
+    {
+      ec = factory->create (channel_id,
+                            this->use_naming_service,
+                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_ASSERT (ec !=
+                  CosEventChannelAdmin::EventChannel::_nil ());
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Created Cos Event Channel \"%s \"\n",
+                  channel_id));
+    }
+ ACE_CATCH (CORBA::UserException, ue)
+   {
+     ACE_PRINT_EXCEPTION (ue,
+                          "User Exception in createChannel: ");
+     return CosEventChannelAdmin::EventChannel::_nil ();
+   }
+  ACE_CATCH (CORBA::SystemException, se)
+    {
+      ACE_PRINT_EXCEPTION (se,
+                           "System Exception in createChannel: ");
+      return CosEventChannelAdmin::EventChannel::_nil ();
+    }
+  ACE_ENDTRY;
+
+  return ec;
+}
+
+void
+FactoryClient::destroyChannel (const char *channel_id,
+                               CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "Destroying Cos Event Channel \"%s \"\n",
+              channel_id));
+
+  this->factory_->destroy (channel_id,
+                           use_naming_service,
+                           ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
+FactoryClient::findChannel (const char* channel_id,
                             CORBA::Environment &ACE_TRY_ENV)
 {
-  CosEventChannelAdmin::EventChannel_var ec =
-    factory->create (channel_id,
-                     this->use_naming_service,
-                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_DEBUG ((LM_DEBUG,
+              "trying to find the Channel \"%s \"\n",
+              channel_id));
 
-  ACE_ASSERT (ec.in () !=
-              CosEventChannelAdmin::EventChannel::_nil ());
+  CosEventChannelAdmin::EventChannel_var channel =
+    this->factory_->find (channel_id,
+                          ACE_TRY_ENV);
+  ACE_CHECK;
 
-  return ec.in ();
+  ACE_DEBUG ((LM_DEBUG,
+              "find returned %d\n", channel.in ()));
+
+  this->findChannel_Id (channel.in (),
+                        ACE_TRY_ENV);
 }
+
+void
+FactoryClient:: findChannel_Id
+(CosEventChannelAdmin::EventChannel_ptr channel,
+ CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "trying to find the Channel %d \n",
+              channel));
+
+  char *channel_id =
+    this->factory_->find_channel_id (channel,
+                                     ACE_TRY_ENV);
+  ACE_CHECK;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "find returned %s\n", channel_id));
+}
+
+/*
+ * excercise the factory: create 3 Channels and test the factory.
+ */
 
 int
 FactoryClient::run_test (CORBA::Environment &ACE_TRY_ENV)
@@ -174,12 +265,8 @@ FactoryClient::run_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_ASSERT (this->factory_.in () !=
               CosEventChannelFactory::ChannelFactory::_nil ());
 
-  char *channel_id [3] = {"cosec1", "cosec2", "cosec3"};
-  CosEventChannelAdmin::EventChannel_ptr cosec [3];
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Trying to create a Cos Event Channel \"%s \"\n",
-              channel_id[0]));
+  const char *channel_id [3] = {"cosec1", "cosec2", "cosec3"};
+  CosEventChannelAdmin::EventChannel_var cosec [3];
 
   // create the first cosec
   cosec[0] = this->createChannel (channel_id[0],
@@ -187,21 +274,78 @@ FactoryClient::run_test (CORBA::Environment &ACE_TRY_ENV)
                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  // see if it can give us the id?
-  ACE_DEBUG ((LM_DEBUG,
-              "Check to see if it gives us the right id back\n"));
-
-  ACE_CString returned_id =
-    this->factory_->find_channel_id (cosec[0],
-                                     ACE_TRY_ENV);
+ // create the second cosec
+  cosec[1] = this->createChannel (channel_id[1],
+                                  this->factory_,
+                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  // print what we saw..
-  ACE_DEBUG ((LM_DEBUG,
-              "Returned Channel id %s\n",
-              returned_id.fast_rep ()));
+  // create the third cosec
+  cosec[2] = this->createChannel (channel_id[2],
+                                  this->factory_,
+                                  ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-  // this->orb_->run ();
+  // see it we can destroy this one..
+  this->destroyChannel (channel_id[2],
+                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  // see if we can create it again?
+  cosec[2] = this->createChannel (channel_id[2],
+                                  this->factory_,
+                                  ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  // see if it can detect duplicates.
+  this->createChannel (channel_id[2],
+                       this->factory_,
+                       ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  // see if it can give us the id?
+
+  this->findChannel_Id (cosec[0],
+                         ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->findChannel_Id (cosec[1],
+                         ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->findChannel_Id (cosec[2],
+                         ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  // check if we can get the channels from the id.
+  this->findChannel (channel_id[0],
+                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->findChannel (channel_id[1],
+                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->findChannel (channel_id[2],
+                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  //destroy them all.
+  this->destroyChannel (channel_id[0],
+                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->destroyChannel (channel_id[1],
+                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->destroyChannel (channel_id[2],
+                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  // end of testing.
+  ACE_DEBUG ((LM_DEBUG,
+              "Factory testing complete\n"));
   return 0;
 }
 
@@ -238,20 +382,21 @@ main (int argc, char *argv [])
         }
 
       ft.run_test (ACE_TRY_ENV);
-
-      return 0;
+      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, ue)
     {
-      ue.print_exception ("User Exception in FactoryClient: ");
+      ACE_PRINT_EXCEPTION (ue,
+                           "test failed: User Exception in FactoryClient: ");
       return 1;
     }
   ACE_CATCH (CORBA::SystemException, se)
     {
-      se.print_exception ("System Exception in FactoryClient: ");
+      ACE_PRINT_EXCEPTION (se,
+                           "test failed: System Exception in FactoryClient: ");
       return 1;
     }
   ACE_ENDTRY;
 
-  ACE_NOTREACHED (return 0;)
+  return 0;
 }
