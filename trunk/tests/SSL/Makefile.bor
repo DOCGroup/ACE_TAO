@@ -1,0 +1,18 @@
+#
+# $Id$
+# Makefile for building the ACE SSL tests
+#
+
+NAMES = \
+	Thread_Pool_Reactor_SSL_Test
+
+OBJFILES = $(OBJDIR)\$(NAME).obj
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
