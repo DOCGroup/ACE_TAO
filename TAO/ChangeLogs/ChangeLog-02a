@@ -1,3 +1,14 @@
+Fri Aug 03 20:33:51 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/DLL_ORB/Makefile (MAKEFLAGS):
+
+	  Force non-parallel build of this test since the IDL file rules
+	  in both `Makefile.Test_Client_Module' and
+	  `Makefile.Test_Server_Module' cause corruption of the generated
+	  stubs and skeletons when these Makefiles are run in parallel.
+	  Fixes build problems in some of our parallel build enabled
+	  nightly builds.
+
 Fri Aug 03 10:16:37 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/Options.html:

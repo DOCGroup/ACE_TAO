@@ -8,6 +8,13 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
+# Force non-parallel build of this test since the IDL file rules in
+# both `Makefile.Test_Client_Module' and `Makefile.Test_Server_Module'
+#cause corruption of the generated stubs and skeletons when these
+# Makefiles are run in parallel.  Fixes build problems in some of our
+# parallel build enabled nightly builds.
+MAKEFLAGS += -j 1
+
 CLIENT_SRC = client.cpp
 SERVER_SRC = server.cpp
 
