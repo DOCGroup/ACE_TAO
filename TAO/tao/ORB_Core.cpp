@@ -1188,25 +1188,40 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resour
   // each ORB spawned thread must use the resources of the spawning
   // thread...
 
-  if (tss_resources->reactor_ != 0)
+  if (tss_resources)
     {
-      // We'll use the spawning thread's reactor.
-      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
-      if (tss->reactor_ != 0 && TAO_debug_level > 0)
+      if (tss_resources->reactor_ != 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - non nil reactor on thread startup!\n"));
-          if (tss->owns_resources_ != 0 && !tss->inherited_reactor_)
-            delete tss->reactor_;
+          // We'll use the spawning thread's reactor.
+          TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+          if (tss->reactor_ != 0 && TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) non nil reactor on thread startup!\n"));
+
+              if (tss == 0)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%P|%t) %p\n",
+                                   "TAO_ORB_Core::inherit_from_parent_thread"
+                                   " (); no more TSS keys"),
+                                  -1);
+
+              if (tss->owns_resources_ != 0 && !tss->inherited_reactor_)
+                delete tss->reactor_;
+            }
+          tss->reactor_ = tss_resources->reactor_;
+          tss->inherited_reactor_ = 1;
         }
-      tss->reactor_ = tss_resources->reactor_;
-      tss->inherited_reactor_ = 1;
+
+      // this->connection_cache (tss_resources->connection_cache_);
+      // Inherit connection cache?
+
+      return 0;
     }
-
-  // this->connection_cache (tss_resources->connection_cache_);
-  // Inherit connection cache?
-
-  return 0;
+  else
+    {
+      return -1;
+    }
 }
 
 PortableServer::POA_ptr
@@ -1424,6 +1439,12 @@ TAO_ORB_Core::input_cdr_dblock_allocator (void)
   if (this->use_tss_resources_)
     {
       TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+      if (tss == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) %p\n",
+                           "TAO_ORB_Core::input_cdr_dblock_allocator (); "
+                             "no more TSS keys"),
+                          0);
 
       if (tss->input_cdr_dblock_allocator_ == 0)
         {
@@ -1453,6 +1474,12 @@ TAO_ORB_Core::input_cdr_buffer_allocator (void)
   if (this->use_tss_resources_)
     {
       TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+      if (tss == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) %p\n",
+                           "TAO_ORB_Core::input_cdr_buffer_allocator (); "
+                             "no more TSS keys"),
+                          0);
 
       if (tss->input_cdr_buffer_allocator_ == 0)
         {
@@ -1484,6 +1511,12 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
 #endif /* 0 */
     {
       TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+      if (tss == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) %p\n",
+                           "TAO_ORB_Core::output_cdr_dblock_allocator (); "
+                             "no more TSS keys"),
+                          0);
 
       if (tss->output_cdr_buffer_allocator_ == 0)
         {
@@ -1517,6 +1550,12 @@ TAO_ORB_Core::output_cdr_buffer_allocator (void)
 #endif /* 0 */
     {
       TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+      if (tss == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) %p\n",
+                           "TAO_ORB_Core::input_cdr_buffer_allocator (); "
+                             "no more TSS keys"),
+                          0);
 
       if (tss->output_cdr_buffer_allocator_ == 0)
         {
@@ -1595,6 +1634,12 @@ TAO_ORB_Core::reactor (void)
   if (this->use_tss_resources_)
     {
       TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+
+      if (tss == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) %p\n",
+                           "TAO_ORB_Core::reactor (); no more TSS keys"),
+                          0);
 
       if (tss->reactor_ == 0)
         {
