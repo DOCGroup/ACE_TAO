@@ -6,7 +6,7 @@
 //    tests
 //
 // = FILENAME
-//    DLL_Test.cpp
+ //    DLL_Test.cpp
 //
 // = DESCRIPTION
 //    This test illustrates the use of <ACE_DLL> wrapper class.
@@ -19,6 +19,10 @@
 #include "test_config.h" /* Include first to enable ACE_ASSERT. */
 #include "ace/DLL.h"
 #include "ace/Auto_Ptr.h"
+
+# if !defined (ACE_LACKS_PRAGMA_ONCE)
+#   pragma once
+# endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Considering UNIX OS to be default.
 # if defined (ACE_HAS_WIN32)
@@ -71,7 +75,7 @@ Hello *get_hello (void)
   return hello;
 }
 
-typedef Hello *(*TC)(void);
+typedef Hello *(*TC) (void);
 
 int 
 main (void)
@@ -80,18 +84,15 @@ main (void)
 
   ACE_DLL ace_dll_obj;
 
-  // @@ Kirthika, the following code is incorrect since you're
+  // *done*@@ Kirthika, the following code is incorrect since you're
   // trying to do a strcat() on a string literal...  Make
   // sure you ALWAYS run Purify on your code to find errors
   // list this.
-  if (0 != ace_dll_obj.open (ACE_OS::strcat (".obj/DLL_Test",
-                                             ACE_OBJ_SUFFIX)))
+  int retval = ace_dll_obj.open ("./DLL_Test"ACE_OBJ_SUFFIX);
+  if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       // @@ Kirthika, ALWAYS leave a
-                       // space before the '('...  Make sure to 
-                       // fix this elsewhere, as well.
                        ace_dll_obj.error()),
-                       -1);
+                      -1);
 
   TC f = (TC) ace_dll_obj.symbol ("get_hello");
 
@@ -114,7 +115,6 @@ main (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
 template class auto_ptr <Hello>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate auto_ptr <Hello>
