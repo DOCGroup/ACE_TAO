@@ -156,7 +156,6 @@
 // #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SETSCHED
-#define ACE_LACKS_RPC_H
 #define ACE_HAS_POSIX_TIME
 
 #include <pthread.h>
