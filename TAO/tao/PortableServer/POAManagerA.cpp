@@ -29,7 +29,6 @@
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode.h"
-#include "tao/TypeCode_Enumerator.h"
 #include "tao/Enum_TypeCode.h"
 #include "tao/Objref_TypeCode.h"
 #include "tao/Struct_TypeCode.h"
@@ -40,14 +39,16 @@
 #include "tao/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_PortableServer_POAManager_AdapterInactive = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_PortableServer_POAManager_AdapterInactive = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_PortableServer_POAManager_AdapterInactive (
+    CORBA::tk_except,
     "IDL:omg.org/PortableServer/POAManager/AdapterInactive:2.3",
     "AdapterInactive",
     _tao_fields_PortableServer_POAManager_AdapterInactive,
@@ -57,19 +58,19 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_PortableServer_POAManager_AdapterInactive;
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/enum_typecode.cpp:34
+// be/be_visitor_typecode/enum_typecode.cpp:34
 
-static TAO::TypeCode::Enumerator<char const *> const _tao_enumerators_PortableServer_POAManager_State[] =
+static char const * const _tao_enumerators_PortableServer_POAManager_State[] =
   {
-    { "HOLDING" },
-    { "ACTIVE" },
-    { "DISCARDING" },
-    { "INACTIVE" }
+    "HOLDING",
+    "ACTIVE",
+    "DISCARDING",
+    "INACTIVE"
     
   };
 
 static TAO::TypeCode::Enum<char const *,
-                           TAO::TypeCode::Enumerator<char const *> const *,
+                           char const * const *,
                            TAO::Null_RefCount_Policy>
   _tao_tc_PortableServer_POAManager_State (
     "IDL:omg.org/PortableServer/POAManager/State:2.3",
@@ -81,7 +82,7 @@ static TAO::TypeCode::Enum<char const *,
   &_tao_tc_PortableServer_POAManager_State;
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:73
+// be/be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_local_interface,
@@ -99,7 +100,7 @@ namespace PortableServer
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -168,7 +169,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -240,7 +241,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_enum/any_op_cs.cpp:52
+// be/be_visitor_enum/any_op_cs.cpp:52
 
 
 

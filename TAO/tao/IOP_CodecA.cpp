@@ -39,12 +39,14 @@
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_IOP_Codec_InvalidTypeForEncoding = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_IOP_Codec_InvalidTypeForEncoding = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_IOP_Codec_InvalidTypeForEncoding (
+    CORBA::tk_except,
     "IDL:omg.org/IOP/Codec/InvalidTypeForEncoding:1.0",
     "InvalidTypeForEncoding",
     _tao_fields_IOP_Codec_InvalidTypeForEncoding,
@@ -56,12 +58,14 @@ static TAO::TypeCode::Struct<char const *,
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_IOP_Codec_FormatMismatch = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_IOP_Codec_FormatMismatch = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_IOP_Codec_FormatMismatch (
+    CORBA::tk_except,
     "IDL:omg.org/IOP/Codec/FormatMismatch:1.0",
     "FormatMismatch",
     _tao_fields_IOP_Codec_FormatMismatch,
@@ -73,12 +77,14 @@ static TAO::TypeCode::Struct<char const *,
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_IOP_Codec_TypeMismatch = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_IOP_Codec_TypeMismatch = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_IOP_Codec_TypeMismatch (
+    CORBA::tk_except,
     "IDL:omg.org/IOP/Codec/TypeMismatch:1.0",
     "TypeMismatch",
     _tao_fields_IOP_Codec_TypeMismatch,
@@ -109,6 +115,8 @@ namespace IOP
 // be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_IOP_EncodingFormat (
     "IDL:omg.org/IOP/EncodingFormat:1.0",
@@ -126,7 +134,7 @@ namespace IOP
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_IOP_Encoding[] =
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_IOP_Encoding[] =
   {
     { "format", &IOP::_tc_EncodingFormat },
     { "major_version", &CORBA::_tc_octet },
@@ -134,10 +142,12 @@ static TAO::TypeCode::Struct_Field<char const *> _tao_fields_IOP_Encoding[] =
     
   };
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_struct,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_IOP_Encoding (
+    CORBA::tk_struct,
     "IDL:omg.org/IOP/Encoding:1.0",
     "Encoding",
     _tao_fields_IOP_Encoding,
@@ -154,12 +164,14 @@ namespace IOP
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_IOP_CodecFactory_UnknownEncoding = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_IOP_CodecFactory_UnknownEncoding = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_IOP_CodecFactory_UnknownEncoding (
+    CORBA::tk_except,
     "IDL:omg.org/IOP/CodecFactory/UnknownEncoding:1.0",
     "UnknownEncoding",
     _tao_fields_IOP_CodecFactory_UnknownEncoding,
@@ -196,7 +208,7 @@ TAO::Any_Impl_T<IOP::Codec>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -539,7 +551,7 @@ TAO::Any_Impl_T<IOP::CodecFactory>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>

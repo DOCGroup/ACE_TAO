@@ -834,18 +834,11 @@ nobase_include_HEADERS = \
   TypeCode_Default_Case.cpp \
   TypeCode_Default_Case.h \
   TypeCode_Default_Case.inl \
-  TypeCode_Enumerator.cpp \
-  TypeCode_Enumerator.h \
-  TypeCode_Enumerator.inl \
   TypeCode_Non_Default_Case.cpp \
   TypeCode_Non_Default_Case.h \
   TypeCode_Non_Default_Case.inl \
-  TypeCode_Struct_Field.cpp \
   TypeCode_Struct_Field.h \
-  TypeCode_Struct_Field.inl \
-  TypeCode_Value_Field.cpp \
   TypeCode_Value_Field.h \
-  TypeCode_Value_Field.inl \
   Typecode_types.pidl \
   Typecode_typesC.h \
   Typecode_typesC.inl \
@@ -876,8 +869,6 @@ nobase_include_HEADERS = \
   ValueModifier.pidl \
   ValueModifierC.h \
   ValueModifierC.inl \
-  Value_Box_TypeCode.cpp \
-  Value_Box_TypeCode.h \
   Value_TypeCode.cpp \
   Value_TypeCode.h \
   Value_TypeCode.inl \

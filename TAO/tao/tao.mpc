@@ -619,7 +619,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     UShortSeqS.h
     UTF16_BOM_Factory.h
     UTF16_BOM_Translator.h
-    Value_Box_TypeCode.h
     Value_TypeCode.h
     Valuetype_Adapter.h
     Var_Array_Argument_T.h
@@ -661,12 +660,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     TypeCode_Base_Attributes.cpp
     TypeCode_Case.cpp
     TypeCode_Default_Case.cpp
-    TypeCode_Enumerator.cpp
     TypeCode_Non_Default_Case.cpp
-    TypeCode_Struct_Field.cpp
-    TypeCode_Value_Field.cpp
     Union_TypeCode.cpp
-    Value_Box_TypeCode.cpp
     Value_TypeCode.cpp
     orb.idl
   }

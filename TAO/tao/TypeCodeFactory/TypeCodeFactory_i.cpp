@@ -9,11 +9,29 @@
 #include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/SystemException.h"
 
+#include "tao/Alias_TypeCode.h"
+#include "tao/Enum_TypeCode.h"
+#include "tao/Fixed_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
+#include "tao/String_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
+#include "tao/Union_TypeCode.h"
+#include "tao/Value_TypeCode.h"
+
+#include "tao/TypeCode_Struct_Field.h"
+#include "tao/TypeCode_Value_Field.h"
+
+#include "tao/True_RefCount_Policy.h"
+
+
 #include "ace/SString.h"
 #include "ace/Containers_T.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Value_Ptr.h"
+
 #include "ace/os_include/os_ctype.h"
 
 ACE_RCSID (TypeCodeFactory,
@@ -67,41 +85,39 @@ TAO_TypeCodeFactory_i::create_union_tc (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
 
   if (name == 0 || !this->valid_name (name))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
                                           CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
 
   if (id == 0 || !this->valid_id (id))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
                                           CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
 
-  CORBA::Boolean good_disc_type =
+  CORBA::Boolean const good_disc_type =
     this->valid_disc_type (discriminator_type
                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  ACE_CHECK_RETURN (tc);
 
   if (!good_disc_type)
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 20,
                                           CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
 
-  CORBA::ULong len = members.length ();
+  CORBA::ULong const len = members.length ();
   CORBA::ULong dups = 0;
   CORBA::ULong raw_default_index = ACE_UINT32_MAX;
   CORBA::Long default_index = -1;
   CORBA::Octet value = ACE_OCTET_MAX;
-  CORBA::TypeCode_ptr tc_holder = CORBA::TypeCode::_nil ();
-  CORBA::Boolean valid_member = 1;
-  const char *member_name = 0;
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
 
   // No getting around iterating over the members twice. We have
@@ -110,26 +126,26 @@ TAO_TypeCodeFactory_i::create_union_tc (
   // differs from the number of labels.
   for (CORBA::ULong i = 0; i < len; ++i)
     {
-      member_name = members[i].name;
+      CORBA::UnionMember const & member = members[i];
+      char const * const member_name = member.name;
+
       int trybind_status = 0;
 
       if (i > 0)
         {
           // Is this a duplicate case label? If so, we have to adjust
           // the 'length' we encode - a member gets encoded only once.
-          if (ACE_OS::strcmp (member_name,
-                              members[i - 1].name)
-               == 0)
+          if (ACE_OS::strcmp (member_name, members[i - 1].name) == 0)
             {
-              CORBA::Boolean equiv =
-                members[i].type.in ()->equivalent (members[i - 1].type.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+              CORBA::Boolean const equiv =
+                member.type.in ()->equivalent (members[i - 1].type.in ()
+                                               ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK_RETURN (tc);
 
-              // If adjacent names are the same and their types are equivalent,
-              // then they are duplicate case labels. If the types are not
-              // equivalent, then they are separate members with the same name,
-              // which is not allowed.
+              // If adjacent names are the same and their types are
+              // equivalent, then they are duplicate case labels. If
+              // the types are not equivalent, then they are separate
+              // members with the same name, which is not allowed.
               if (equiv)
                 {
                   ++dups;
@@ -138,7 +154,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
                 {
                   ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 17,
                                                       CORBA::COMPLETED_NO),
-                                    CORBA::TypeCode::_nil ());
+                                    tc);
                 }
             }
           else
@@ -164,25 +180,26 @@ TAO_TypeCodeFactory_i::create_union_tc (
         {
           ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 17,
                                               CORBA::COMPLETED_NO),
-                            CORBA::TypeCode::_nil ());
+                            tc);
         }
 
-      tc_holder = members[i].type.in ();
+      CORBA::TypeCode_ptr const tc_holder = member.type.in ();
 
       // Valid member type?
-      valid_member = this->valid_content_type (tc_holder
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+      CORBA::Boolean const valid_member =
+        this->valid_content_type (tc_holder
+                                  ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (tc);
 
       if (!valid_member)
         {
           ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2,
                                                  CORBA::COMPLETED_NO),
-                            CORBA::TypeCode::_nil ());
+                            tc);
         }
 
       // Reset the default index, if we have a default case label.
-      if ((members[i].label >>= CORBA::Any::to_octet (value)) == 1)
+      if ((member.label >>= CORBA::Any::to_octet (value)) == 1)
         {
           if (value == 0)
             {
@@ -196,28 +213,28 @@ TAO_TypeCodeFactory_i::create_union_tc (
         {
           // Else check that the label type is equivalent to the
           // given discriminator type.
-          CORBA::TypeCode_var tmp = members[i].label.type ();
+          CORBA::TypeCode_var const tmp = member.label.type ();
 
-          CORBA::Boolean equiv =
+          CORBA::Boolean const equiv =
             discriminator_type->equivalent (tmp.in ()
                                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+          ACE_CHECK_RETURN (tc);
 
           if (!equiv)
             {
               ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
                                                   CORBA::COMPLETED_NO),
-                                CORBA::TypeCode::_nil ());
+                                tc);
             }
         }
     }
 
-  CORBA::Boolean unique_labels =
+  CORBA::Boolean const unique_labels =
     this->unique_label_values (members,
                                discriminator_type,
                                raw_default_index
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  ACE_CHECK_RETURN (tc);
 
   if (!unique_labels)
     {
@@ -226,20 +243,27 @@ TAO_TypeCodeFactory_i::create_union_tc (
                         CORBA::TypeCode::_nil ());
     }
 
-  TAO_OutputCDR cdr;
-  CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
+//   TAO_OutputCDR cdr;
+//   CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
 
-  cdr << TAO_ENCAP_BYTE_ORDER;
+//   cdr << TAO_ENCAP_BYTE_ORDER;
 
-  cdr << id;
+//   cdr << id;
 
-  cdr << name;
+//   cdr << name;
 
-  cdr << discriminator_type;
+//   cdr << discriminator_type;
 
-  cdr << default_index;
+//   cdr << default_index;
 
-  cdr << len - dups;
+//   cdr << len - dups;
+
+#if 0
+  // Use an ACE::Value_Ptr to provide exception safety and proper
+  // copying semantics.
+  typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
+                                             CORBA::TypeCode_var> > elem_type;
+  ACE_Array_Base<elem_type> cases (len - dups);
 
   for (CORBA::ULong index = 0; index < len; ++index)
     {
@@ -255,7 +279,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
             }
         }
 
-      CORBA::TCKind kind =
+      CORBA::TCKind const kind =
         discriminator_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       if (index == raw_default_index)
@@ -263,37 +287,44 @@ TAO_TypeCodeFactory_i::create_union_tc (
           // This is the default label - we have to find a legal value.
           this->compute_default_label (kind,
                                        index,
-                                       members,
-                                       cdr);
+                                       members //,
+                                       /* cdr */);
         }
       else
         {
-          CORBA::Boolean good_label =
+          CORBA::Boolean const good_label =
             members[index].label.impl ()->marshal_value (cdr);
 
           if (!good_label)
             {
-              return CORBA::TypeCode::_nil ();
+              return tc;  // tc == CORBA::TypeCode::_nil ()
             }
         }
 
-      cdr << members[index].name;
+//       cdr << members[index].name;
 
-      if (members[index].type->offset_map () != 0)
-        {
-          this->update_map (offset_map,
-                            members[index].type.in (),
-                            id,
-                            cdr);
-        }
+//       if (members[index].type->offset_map () != 0)
+//         {
+//           this->update_map (offset_map,
+//                             members[index].type.in (),
+//                             id,
+//                             cdr);
+//         }
 
-      cdr << members[index].type.in ();
+//       cdr << members[index].type.in ();
+//     }
     }
+//   return this->assemble_tc (cdr,
+//                             CORBA::tk_union,
+//                             offset_map
+//                             ACE_ENV_ARG_PARAMETER);
 
-  return this->assemble_tc (cdr,
-                            CORBA::tk_union,
-                            offset_map
-                            ACE_ENV_ARG_PARAMETER);
+#else
+  ACE_UNUSED_ARG (tc);
+
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), tc);
+
+#endif  /* 0 */
 }
 
 CORBA::TypeCode_ptr
@@ -305,34 +336,28 @@ TAO_TypeCodeFactory_i::create_enum_tc (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+
   if (name == 0 || !this->valid_name (name))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
                                           CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
 
   if (id == 0 || !this->valid_id (id))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
                                           CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
-
-  TAO_OutputCDR cdr;
-
-  cdr << TAO_ENCAP_BYTE_ORDER;
-
-  cdr << id;
-
-  cdr << name;
-
-  CORBA::ULong len = members.length ();
-
-  cdr << len;
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
 
+  CORBA::ULong const len = members.length ();
+
+  ACE_Array_Base<CORBA::String_var> enumerators (len);
+  
   for (CORBA::ULong index = 0; index < len; ++index)
     {
       ACE_CString ext_id (members[index]);
@@ -343,16 +368,33 @@ TAO_TypeCodeFactory_i::create_enum_tc (
         {
           ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 17,
                                               CORBA::COMPLETED_NO),
-                            CORBA::TypeCode::_nil ());
+                            tc);
         }
 
-      cdr << members[index].in ();
+      enumerators[index] = members[index].in ();
+
+//       cdr << members[index].in ();
     }
 
-  return this->assemble_tc (cdr,
-                            CORBA::tk_enum,
-                            0
-                            ACE_ENV_ARG_PARAMETER);
+//   return this->assemble_tc (cdr,
+//                             CORBA::tk_enum,
+//                             0
+//                             ACE_ENV_ARG_PARAMETER);
+
+  typedef TAO::TypeCode::Enum<
+    CORBA::String_var,
+    ACE_Array_Base<CORBA::String_var>,
+    TAO::True_RefCount_Policy> typecode_type;
+
+  ACE_NEW_THROW_EX (tc,
+                    typecode_type (id,
+                                   name,
+                                   enumerators,
+                                   len),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (tc);
+
+  return tc;
 }
 
 CORBA::TypeCode_ptr
@@ -427,15 +469,20 @@ TAO_TypeCodeFactory_i::create_wstring_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_fixed_tc (
-    CORBA::UShort /* digits */,
-    CORBA::UShort /* scale */
+    CORBA::UShort digits,
+    CORBA::UShort scale
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO::VMCID,
-                                         CORBA::COMPLETED_NO),
-                    CORBA::TypeCode::_nil ());
+  CORBA::TypeCode_ptr tc;
+  ACE_NEW_THROW_EX (tc,
+                    TAO::TypeCode::Fixed<TAO::True_RefCount_Policy> (digits,
+                                                                     scale),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (tc);
+
+  return tc;
 }
 
 CORBA::TypeCode_ptr
@@ -530,6 +577,8 @@ TAO_TypeCodeFactory_i::create_recursive_tc (
                         CORBA::TypeCode::_nil ());
     }
 
+#if 0
+
   CORBA::TypeCode::OFFSET_MAP *map = 0;
   ACE_NEW_RETURN (map,
                   CORBA::TypeCode::OFFSET_MAP,
@@ -569,6 +618,12 @@ TAO_TypeCodeFactory_i::create_recursive_tc (
                             rec_kind,
                             map
                             ACE_ENV_ARG_PARAMETER);
+
+#else
+
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+
+#endif  /* 0 */
 }
 
 CORBA::TypeCode_ptr
@@ -651,10 +706,10 @@ TAO_TypeCodeFactory_i::create_event_tc (
 
 void
 TAO_TypeCodeFactory_i::compute_default_label (
-    CORBA::TCKind kind,
-    CORBA::ULong skip_slot,
-    const CORBA::UnionMemberSeq &members,
-    TAO_OutputCDR &cdr
+  CORBA::TCKind kind,
+  CORBA::ULong skip_slot,
+  const CORBA::UnionMemberSeq &members //,
+  // TAO_OutputCDR &cdr
   )
 {
   // One to hold the current default value, one to
@@ -685,7 +740,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 #endif /* ACE_LACKS_LONGLONG_T */
   dv.enum_val = 0;
 
-  CORBA::ULong len = members.length ();
+  CORBA::ULong const len = members.length ();
   int success = 0;
 
   // A collision forces us to start over, because the label
@@ -815,37 +870,37 @@ TAO_TypeCodeFactory_i::compute_default_label (
     }
 
   // Add the default value to the encapsulation.
-  switch (kind)
-  {
-    case CORBA::tk_char:
-      cdr << CORBA::Any::from_char (dv.char_val);
-      break;
-    case CORBA::tk_boolean:
-      cdr << CORBA::Any::from_boolean (dv.bool_val);
-      break;
-    case CORBA::tk_short:
-      cdr << dv.short_val;
-      break;
-    case CORBA::tk_ushort:
-      cdr << dv.ushort_val;
-      break;
-    case CORBA::tk_long:
-      cdr << dv.long_val;
-      break;
-    case CORBA::tk_ulong:
-      cdr << dv.ulong_val;
-      break;
-#if !defined (ACE_LACKS_LONGLONG_T)
-    case CORBA::tk_ulonglong:
-      cdr << dv.ulonglong_val;
-      break;
-#endif /* ACE_LACKS_LONGLONG_T */
-    case CORBA::tk_enum:
-      cdr << dv.enum_val;
-      break;
-    default:
-      break;
-  }
+//   switch (kind)
+//   {
+//     case CORBA::tk_char:
+//       cdr << CORBA::Any::from_char (dv.char_val);
+//       break;
+//     case CORBA::tk_boolean:
+//       cdr << CORBA::Any::from_boolean (dv.bool_val);
+//       break;
+//     case CORBA::tk_short:
+//       cdr << dv.short_val;
+//       break;
+//     case CORBA::tk_ushort:
+//       cdr << dv.ushort_val;
+//       break;
+//     case CORBA::tk_long:
+//       cdr << dv.long_val;
+//       break;
+//     case CORBA::tk_ulong:
+//       cdr << dv.ulong_val;
+//       break;
+// #if !defined (ACE_LACKS_LONGLONG_T)
+//     case CORBA::tk_ulonglong:
+//       cdr << dv.ulonglong_val;
+//       break;
+// #endif /* ACE_LACKS_LONGLONG_T */
+//     case CORBA::tk_enum:
+//       cdr << dv.enum_val;
+//       break;
+//     default:
+//       break;
+//   }
 }
 
 CORBA::TypeCode_ptr
@@ -872,18 +927,64 @@ TAO_TypeCodeFactory_i::create_tc_common (
                         CORBA::TypeCode::_nil ());
     }
 
-  TAO_OutputCDR cdr;
+  CORBA::TypeCode_ptr tc;
 
-  cdr << TAO_ENCAP_BYTE_ORDER;
+  if (kind == CORBA::tk_abstract_interface)
+    {
+      typedef TAO::TypeCode::Objref<CORBA::String_var,
+                                    CORBA::tk_abstract_interface,
+                                    TAO::True_RefCount_Policy> typecode_type;
+      ACE_NEW_THROW_EX (tc,
+                        typecode_type (id, name),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (tc);
+    }
+  else if (kind == CORBA::tk_component)
+    {
+      typedef TAO::TypeCode::Objref<CORBA::String_var,
+                                    CORBA::tk_component,
+                                    TAO::True_RefCount_Policy> typecode_type;
+      ACE_NEW_THROW_EX (tc,
+                        typecode_type (id, name),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (tc);
+    }
+  else if (kind == CORBA::tk_local_interface)
+    {
+      typedef TAO::TypeCode::Objref<CORBA::String_var,
+                                    CORBA::tk_local_interface,
+                                    TAO::True_RefCount_Policy> typecode_type;
+      ACE_NEW_THROW_EX (tc,
+                        typecode_type (id, name),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (tc);
+    }
+  else if (kind == CORBA::tk_native)
+    {
+      typedef TAO::TypeCode::Objref<CORBA::String_var,
+                                    CORBA::tk_native,
+                                    TAO::True_RefCount_Policy> typecode_type;
+      ACE_NEW_THROW_EX (tc,
+                        typecode_type (id, name),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (tc);
+    }
+  else if (kind == CORBA::tk_objref)
+    {
+      typedef TAO::TypeCode::Objref<CORBA::String_var,
+                                    CORBA::tk_objref,
+                                    TAO::True_RefCount_Policy> typecode_type;
+      ACE_NEW_THROW_EX (tc,
+                        typecode_type (id, name),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (tc);
+    }
+  else
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::TypeCode::_nil ());
+    }
 
-  cdr << id;
-
-  cdr << name;
-
-  return this->assemble_tc (cdr,
-                            kind,
-                            0
-                            ACE_ENV_ARG_PARAMETER);
+  return tc;
 }
 
 CORBA::TypeCode_ptr
@@ -894,16 +995,14 @@ TAO_TypeCodeFactory_i::string_wstring_tc_common (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_OutputCDR cdr;
+  CORBA::TypeCode_ptr tc;
+  ACE_NEW_THROW_EX (tc,
+                    TAO::TypeCode::String<TAO::True_RefCount_Policy> (kind,
+                                                                      bound),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (tc);
 
-  cdr << TAO_ENCAP_BYTE_ORDER;
-
-  cdr << bound;
-
-  return this->assemble_tc (cdr,
-                            kind,
-                            0
-                            ACE_ENV_ARG_PARAMETER);
+  return tc;
 }
 
 CORBA::TypeCode_ptr
@@ -915,114 +1014,94 @@ TAO_TypeCodeFactory_i::sequence_array_tc_common (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Boolean valid_element =
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+
+  CORBA::Boolean const valid_element =
     this->valid_content_type (element_type
                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  ACE_CHECK_RETURN (tc);
 
   if (!valid_element)
     {
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2,
                                              CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
 
-  TAO_OutputCDR cdr;
-  CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
+  CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (element_type));
 
-  cdr << TAO_ENCAP_BYTE_ORDER;
+  typedef TAO::TypeCode::Sequence<CORBA::TypeCode_var,
+                                  TAO::True_RefCount_Policy> typecode_type;
 
-  if (element_type->offset_map () != 0)
-    {
-      // Arrays can't be recursive.
-      if (kind != CORBA::tk_sequence)
-        {
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                            CORBA::TypeCode::_nil ());
-        }
-
-      this->update_map (offset_map,
-                        element_type,
-                        0,
-                        cdr);
-    }
-
-  cdr << element_type;
-
-  cdr << bound;
-
-  return this->assemble_tc (cdr,
-                            kind,
-                            offset_map
-                            ACE_ENV_ARG_PARAMETER);
+  ACE_NEW_THROW_EX (tc,
+                    typecode_type (kind, tmp, bound),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (tc);
+                           
+  return tc;
 }
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::struct_except_tc_common (
     const char *id,
     const char *name,
-    const CORBA::StructMemberSeq &members,
+    const CORBA::StructMemberSeq & members,
     CORBA::TCKind kind
     ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+
   if (name == 0 || !this->valid_name (name))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
                                           CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
 
   if (id == 0 || !this->valid_id (id))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
                                           CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
 
-  TAO_OutputCDR cdr;
+  // @@ TODO: Re-enable recursive struct TypeCode support.
 
-  cdr << TAO_ENCAP_BYTE_ORDER;
-
-  cdr << id;
-
-  cdr << name;
-
-  // Number of members..
-  CORBA::ULong len = members.length ();
-
-  cdr << len;
-
-  CORBA::TypeCode_ptr member_tc = CORBA::TypeCode::_nil ();
-  CORBA::Boolean valid_member = 1;
-  const char *member_name = 0;
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
-  CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
+//   CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
+
+  CORBA::ULong const len = members.length ();
+
+  ACE_Array_Base<
+    TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                CORBA::TypeCode_var> > fields (len);
 
   for (CORBA::ULong index = 0; index < len; ++index)
     {
       // Valid member type?
-      member_tc = members[index].type.in ();
+      CORBA::TypeCode_ptr const member_tc = members[index].type.in ();
 
-      valid_member = this->valid_content_type (member_tc
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+      CORBA::Boolean const valid_member =
+        this->valid_content_type (member_tc
+                                  ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (tc);
 
       if (!valid_member)
         {
           ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2,
                                                  CORBA::COMPLETED_NO),
-                            CORBA::TypeCode::_nil ());
+                            tc);
         }
 
-      member_name = members[index].name;
+      char const * const member_name = members[index].name;
 
       if (member_name == 0 || !this->valid_name (member_name))
         {
           ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
                                               CORBA::COMPLETED_NO),
-                            CORBA::TypeCode::_nil ());
+                            tc);
         }
 
       ACE_CString ext_id (member_name);
@@ -1033,33 +1112,52 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
         {
           ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 17,
                                               CORBA::COMPLETED_NO),
-                            CORBA::TypeCode::_nil ());
+                            tc);
         }
 
-      cdr << member_name;
+      TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                  CORBA::TypeCode_var> & field = fields[index];
 
-      if (member_tc->offset_map () != 0)
-        {
-          // Exceptions can't be recursive.
-          if (kind != CORBA::tk_struct)
-            {
-              ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                                CORBA::TypeCode::_nil ());
-            }
+      field.name = member_name;
+      field.type = CORBA::TypeCode::_duplicate (member_tc);
 
-          this->update_map (offset_map,
-                            member_tc,
-                            id,
-                            cdr);
-        }
+//       cdr << member_name;
 
-      cdr << member_tc;
+//       if (member_tc->offset_map () != 0)
+//         {
+//           // Exceptions can't be recursive.
+//           if (kind != CORBA::tk_struct)
+//             {
+//               ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
+//                                 tc);
+//             }
+
+//           this->update_map (offset_map,
+//                             member_tc,
+//                             id,
+//                             cdr);
+//         }
+
+//       cdr << member_tc;
     }
 
-  return this->assemble_tc (cdr,
-                            kind,
-                            offset_map
-                            ACE_ENV_ARG_PARAMETER);
+  typedef TAO::TypeCode::Struct<
+    CORBA::String_var,
+    CORBA::TypeCode_var,
+    ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                               CORBA::TypeCode_var> >,
+    TAO::True_RefCount_Policy> typecode_type;
+
+  ACE_NEW_THROW_EX (tc,
+                    typecode_type (kind,
+                                   id,
+                                   name,
+                                   fields,
+                                   len),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (tc);
+
+  return tc;
 }
 
 CORBA::TypeCode_ptr
@@ -1072,62 +1170,60 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+
   if (name == 0 || !this->valid_name (name))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
                                           CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
 
   if (id == 0 || !this->valid_id (id))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
                                           CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
 
-  CORBA::Boolean valid_content =
+  CORBA::Boolean const valid_content =
     this->valid_content_type (underlying_type
                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  ACE_CHECK_RETURN (tc);
 
   if (!valid_content)
     {
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2,
                                              CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
 
-  TAO_OutputCDR cdr;
-  CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
-
-  cdr << TAO_ENCAP_BYTE_ORDER;
-
-  cdr << id;
-
-  cdr << name;
-
-  if (underlying_type->offset_map () != 0)
+  if (kind == CORBA::tk_alias)
     {
-      // Value boxes can't be recursive.
-      if (kind != CORBA::tk_alias)
-        {
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                            CORBA::TypeCode::_nil ());
-        }
+      typedef TAO::TypeCode::Alias<CORBA::String_var,
+                                   CORBA::TypeCode_var,
+                                   CORBA::tk_alias,
+                                   TAO::True_RefCount_Policy> typecode_type;
 
-      this->update_map (offset_map,
-                        underlying_type,
-                        id,
-                        cdr);
+      ACE_NEW_THROW_EX (tc,
+                        typecode_type (id, name, underlying_type),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (tc);
+    }
+  else
+    {
+      typedef TAO::TypeCode::Alias<CORBA::String_var,
+                                   CORBA::TypeCode_var,
+                                   CORBA::tk_value_box,
+                                   TAO::True_RefCount_Policy> typecode_type;
+
+      ACE_NEW_THROW_EX (tc,
+                        typecode_type (id, name, underlying_type),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (tc);
     }
 
-  cdr << underlying_type;
-
-  return this->assemble_tc (cdr,
-                            kind,
-                            offset_map
-                            ACE_ENV_ARG_PARAMETER);
+  return tc;
 }
 
 CORBA::TypeCode_ptr
@@ -1142,72 +1238,56 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+
   if (name == 0 || !this->valid_name (name))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
                                           CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
 
   if (id == 0 || !this->valid_id (id))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
                                           CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+                        tc);
     }
 
-  TAO_OutputCDR cdr;
+  CORBA::ULong const len = members.length ();
 
-  cdr << TAO_ENCAP_BYTE_ORDER;
+  ACE_Array_Base<
+    TAO::TypeCode::Value_Field<CORBA::String_var,
+                               CORBA::TypeCode_var> > fields (len);
 
-  cdr << id;
+  // @@ TODO: Re-enable recursive valuetype TypeCode support.
 
-  cdr << name;
-
-  cdr << type_modifier;
-
-  if (CORBA::is_nil (concrete_base))
-    {
-      cdr << CORBA::tk_null;
-    }
-  else
-    {
-      cdr << concrete_base;
-    }
-
-  CORBA::ULong len = members.length ();
-
-  cdr << len;
-
-  CORBA::TypeCode_ptr member_tc = CORBA::TypeCode::_nil ();
-  CORBA::Boolean valid_member = 1;
-  const char *member_name = 0;
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
-  CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
+//   CORBA::TypeCode::OFFSET_MAP *offset_map = 0;
 
   for (CORBA::ULong index = 0; index < len; ++index)
     {
       // Valid member type?
-      member_tc = members[index].type.in ();
+      CORBA::TypeCode_ptr const member_tc = members[index].type.in ();
 
-      valid_member = this->valid_content_type (member_tc
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+      CORBA::Boolean const valid_member =
+        this->valid_content_type (member_tc
+                                  ACE_ENV_ARG_PARAMETER);
 
       if (!valid_member)
         {
           ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2,
                                                  CORBA::COMPLETED_NO),
-                            CORBA::TypeCode::_nil ());
+                            tc);
         }
 
-      member_name = members[index].name;
+      const char * const member_name = members[index].name;
 
       if (member_name == 0 || !this->valid_name (member_name))
         {
           ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
                                               CORBA::COMPLETED_NO),
-                            CORBA::TypeCode::_nil ());
+                            tc);
         }
 
       ACE_CString ext_id (member_name);
@@ -1218,28 +1298,50 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
         {
           ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 17,
                                               CORBA::COMPLETED_NO),
-                            CORBA::TypeCode::_nil ());
+                            tc);
         }
 
-      cdr << member_name;
+      TAO::TypeCode::Value_Field<CORBA::String_var,
+                                 CORBA::TypeCode_var> & field = fields[index];
 
-      if (member_tc->offset_map () != 0)
-        {
-          this->update_map (offset_map,
-                            member_tc,
-                            id,
-                            cdr);
-        }
+      field.name       = member_name;
+      field.type       = CORBA::TypeCode::_duplicate (member_tc);
+      field.visibility = members[index].access;
 
-      cdr << member_tc;
+//       cdr << member_name;
 
-      cdr << members[index].access;
+//       if (member_tc->offset_map () != 0)
+//         {
+//           this->update_map (offset_map,
+//                             member_tc,
+//                             id,
+//                             cdr);
+//         }
+
+//       cdr << member_tc;
+
+//       cdr << members[index].access;
     }
 
-  return this->assemble_tc (cdr,
-                            kind,
-                            offset_map
-                            ACE_ENV_ARG_PARAMETER);
+  typedef TAO::TypeCode::Value<
+    CORBA::String_var,
+    CORBA::TypeCode_var,
+    ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
+                                              CORBA::TypeCode_var> >,
+    TAO::True_RefCount_Policy> typecode_type;
+
+  ACE_NEW_THROW_EX (tc,
+                    typecode_type (kind,
+                                   id,
+                                   name,
+                                   type_modifier,
+                                   concrete_base,
+                                   fields,
+                                   len),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (tc);
+
+  return tc;
 }
 
 CORBA::Boolean
@@ -1304,24 +1406,17 @@ CORBA::Boolean
 TAO_TypeCodeFactory_i::valid_content_type (CORBA::TypeCode_ptr tc
                                            ACE_ENV_ARG_DECL)
 {
-  CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TCKind const kind =
+    TAO::unaliased_kind (tc
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-
-  CORBA::TypeCode_var tmp = CORBA::TypeCode::_duplicate (tc);
-
-  while (kind == CORBA::tk_alias)
-    {
-      tmp = tmp->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      kind = tmp->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-    }
 
   switch (kind)
   {
     case CORBA::tk_null:
-      return tc->offset_map () != 0;
+      // @todo FIXME
+      ACE_THROW_RETURN (CORBA::INTERNAL (), false);
+      // return tc->offset_map () != 0;
     case CORBA::tk_void:
     case CORBA::tk_except:
       return 0;
@@ -1489,7 +1584,7 @@ CORBA::Boolean
 TAO_TypeCodeFactory_i::valid_disc_type (CORBA::TypeCode_ptr tc
                                         ACE_ENV_ARG_DECL)
 {
-  CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TCKind const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (kind == CORBA::tk_enum
@@ -1508,152 +1603,152 @@ TAO_TypeCodeFactory_i::valid_disc_type (CORBA::TypeCode_ptr tc
   return 0;
 }
 
-CORBA::TypeCode_ptr
-TAO_TypeCodeFactory_i::assemble_tc (TAO_OutputCDR &cdr,
-                                    CORBA::TCKind kind,
-                                    CORBA::TypeCode::OFFSET_MAP *map
-                                    ACE_ENV_ARG_DECL)
-{
-  ACE_Message_Block consolidated_block;
+// CORBA::TypeCode_ptr
+// TAO_TypeCodeFactory_i::assemble_tc (TAO_OutputCDR &cdr,
+//                                     CORBA::TCKind kind,
+//                                     CORBA::TypeCode::OFFSET_MAP *map
+//                                     ACE_ENV_ARG_DECL)
+// {
+//   ACE_Message_Block consolidated_block;
 
-  ACE_CDR::consolidate (&consolidated_block,
-                        cdr.begin ());
+//   ACE_CDR::consolidate (&consolidated_block,
+//                         cdr.begin ());
 
-  CORBA::TypeCode_ptr new_typecode =
-    CORBA::TypeCode::_nil ();
+//   CORBA::TypeCode_ptr new_typecode =
+//     CORBA::TypeCode::_nil ();
 
-  ACE_NEW_THROW_EX (new_typecode,
-                    CORBA::TypeCode (kind,
-                                     consolidated_block.length (),
-                                     consolidated_block.rd_ptr (),
-                                     true,
-                                     0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+//   ACE_NEW_THROW_EX (new_typecode,
+//                     CORBA::TypeCode (kind,
+//                                      consolidated_block.length (),
+//                                      consolidated_block.rd_ptr (),
+//                                      true,
+//                                      0),
+//                     CORBA::NO_MEMORY ());
+//   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-  new_typecode->offset_map (map);
-  return new_typecode;
-}
+//   new_typecode->offset_map (map);
+//   return new_typecode;
+// }
 
-void
-TAO_TypeCodeFactory_i::update_map (
-    CORBA::TypeCode::OFFSET_MAP *&offset_map,
-    CORBA::TypeCode_ptr member_tc,
-    const char *id,
-    TAO_OutputCDR &cdr
-  )
-{
-  ptrdiff_t unaligned_offset =
-    static_cast<ptrdiff_t> (cdr.total_length ());
+// void
+// TAO_TypeCodeFactory_i::update_map (
+//     CORBA::TypeCode::OFFSET_MAP *&offset_map,
+//     CORBA::TypeCode_ptr member_tc,
+//     const char *id,
+//     TAO_OutputCDR &cdr
+//   )
+// {
+//   ptrdiff_t unaligned_offset =
+//     static_cast<ptrdiff_t> (cdr.total_length ());
 
-  CORBA::Long aligned_offset =
-    static_cast<CORBA::Long> (ACE_align_binary (unaligned_offset,
-                                       sizeof (CORBA::Long)));
+//   CORBA::Long aligned_offset =
+//     static_cast<CORBA::Long> (ACE_align_binary (unaligned_offset,
+//                                        sizeof (CORBA::Long)));
 
-  CORBA::TypeCode::OFFSET_MAP *member_offset_map = member_tc->offset_map ();
-  CORBA::TypeCode::OFFSET_LIST *offset_list = 0;
-  CORBA::Long *list_entry = 0;
-  const char *member_id = 0;
-  int no_matching_id = 1;
-  int propagating_recursion = 1;
+//   CORBA::TypeCode::OFFSET_MAP *member_offset_map = member_tc->offset_map ();
+//   CORBA::TypeCode::OFFSET_LIST *offset_list = 0;
+//   CORBA::Long *list_entry = 0;
+//   const char *member_id = 0;
+//   int no_matching_id = 1;
+//   int propagating_recursion = 1;
 
-  // For anything except the immediate product of create_recursive_tc,
-  // the insertion of a member will include an encap length.
-  CORBA::Long member_encap_len_bytes =
-    member_tc->kind_ == ~0 ? 0 : static_cast<CORBA::Long> (sizeof (CORBA::Long));
+//   // For anything except the immediate product of create_recursive_tc,
+//   // the insertion of a member will include an encap length.
+//   CORBA::Long member_encap_len_bytes =
+//     member_tc->kind_ == ~0 ? 0 : static_cast<CORBA::Long> (sizeof (CORBA::Long));
 
-  CORBA::Long tc_kind_bytes =
-    static_cast<CORBA::Long> (sizeof (CORBA::TCKind));
+//   CORBA::Long tc_kind_bytes =
+//     static_cast<CORBA::Long> (sizeof (CORBA::TCKind));
 
-  for (CORBA::TypeCode::OFFSET_MAP_ITERATOR iter (*member_offset_map);
-       ! iter.done ();
-       iter.advance ())
-    {
-      member_id = (*iter).ext_id_;
+//   for (CORBA::TypeCode::OFFSET_MAP_ITERATOR iter (*member_offset_map);
+//        ! iter.done ();
+//        iter.advance ())
+//     {
+//       member_id = (*iter).ext_id_;
 
-      if (offset_map != 0)
-        {
-          no_matching_id = offset_map->find (member_id, offset_list);
-        }
+//       if (offset_map != 0)
+//         {
+//           no_matching_id = offset_map->find (member_id, offset_list);
+//         }
 
-      if (no_matching_id && id != 0)
-        {
-          propagating_recursion = ACE_OS::strcmp (member_id, id);
-        }
+//       if (no_matching_id && id != 0)
+//         {
+//           propagating_recursion = ACE_OS::strcmp (member_id, id);
+//         }
 
-     if (propagating_recursion)
-        {
-          ACE_NEW (offset_list,
-                   CORBA::TypeCode::OFFSET_LIST);
-        }
+//      if (propagating_recursion)
+//         {
+//           ACE_NEW (offset_list,
+//                    CORBA::TypeCode::OFFSET_LIST);
+//         }
 
-      for (CORBA::TypeCode::OFFSET_LIST_ITERATOR list_iter (*(*iter).int_id_);
-           ! list_iter.done ();
-           list_iter.advance ())
-        {
-          list_iter.next (list_entry);
+//       for (CORBA::TypeCode::OFFSET_LIST_ITERATOR list_iter (*(*iter).int_id_);
+//            ! list_iter.done ();
+//            list_iter.advance ())
+//         {
+//           list_iter.next (list_entry);
 
-          if (propagating_recursion)
-            {
-              offset_list->enqueue_tail (*list_entry
-                                         + aligned_offset
-                                         + member_encap_len_bytes
-                                         + tc_kind_bytes);
+//           if (propagating_recursion)
+//             {
+//               offset_list->enqueue_tail (*list_entry
+//                                          + aligned_offset
+//                                          + member_encap_len_bytes
+//                                          + tc_kind_bytes);
 
-              if (offset_map == 0)
-                {
-                  ACE_NEW (offset_map,
-                           CORBA::TypeCode::OFFSET_MAP);
-                }
-            }
-          else
-            {
-              const char *slot =
-                member_tc->buffer_ + static_cast<ptrdiff_t> (*list_entry);
+//               if (offset_map == 0)
+//                 {
+//                   ACE_NEW (offset_map,
+//                            CORBA::TypeCode::OFFSET_MAP);
+//                 }
+//             }
+//           else
+//             {
+//               const char *slot =
+//                 member_tc->buffer_ + static_cast<ptrdiff_t> (*list_entry);
 
-              CORBA::Long recursion_offset =
-                -1 * (aligned_offset
-                      + *list_entry
-                      + tc_kind_bytes               // Member TCKind.
-                      + member_encap_len_bytes      // Member encap length.
-                      + 4                           // Top level encap length.
-                      + tc_kind_bytes);             // Top level TCKind.
+//               CORBA::Long recursion_offset =
+//                 -1 * (aligned_offset
+//                       + *list_entry
+//                       + tc_kind_bytes               // Member TCKind.
+//                       + member_encap_len_bytes      // Member encap length.
+//                       + 4                           // Top level encap length.
+//                       + tc_kind_bytes);             // Top level TCKind.
 
-#if !defined (ACE_ENABLE_SWAP_ON_WRITE)
-              *reinterpret_cast<CORBA::Long *> (const_cast<char *> (slot)) =
-                recursion_offset;
-#else
-              if (! cdr.do_byte_swap ())
-                {
-                  *reinterpret_cast<CORBA::Long *> (const_cast<char *> (slot)) =
-                    recursion_offset;
-                }
-              else
-                {
-                  ACE_CDR::swap_4 (reinterpret_cast<char *> (&recursion_offset),
-                                   const_cast<char *> (slot));
-                }
-#endif /* ACE_ENABLE_SWAP_ON_WRITE */
-            }
-        }
+// #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
+//               *reinterpret_cast<CORBA::Long *> (const_cast<char *> (slot)) =
+//                 recursion_offset;
+// #else
+//               if (! cdr.do_byte_swap ())
+//                 {
+//                   *reinterpret_cast<CORBA::Long *> (const_cast<char *> (slot)) =
+//                     recursion_offset;
+//                 }
+//               else
+//                 {
+//                   ACE_CDR::swap_4 (reinterpret_cast<char *> (&recursion_offset),
+//                                    const_cast<char *> (slot));
+//                 }
+// #endif /* ACE_ENABLE_SWAP_ON_WRITE */
+//             }
+//         }
 
-      if (no_matching_id && offset_map != 0)
-        {
-          char *str = CORBA::string_dup (member_id);
-          int status = offset_map->bind (str, offset_list);
+//       if (no_matching_id && offset_map != 0)
+//         {
+//           char *str = CORBA::string_dup (member_id);
+//           int status = offset_map->bind (str, offset_list);
 
-          if (status != 0)
-            {
-              CORBA::string_free (str);
+//           if (status != 0)
+//             {
+//               CORBA::string_free (str);
 
-              if (propagating_recursion)
-                {
-                  delete offset_list;
-                }
-            }
-        }
-    }
-}
+//               if (propagating_recursion)
+//                 {
+//                   delete offset_list;
+//                 }
+//             }
+//         }
+//     }
+// }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

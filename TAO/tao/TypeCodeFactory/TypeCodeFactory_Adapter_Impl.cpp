@@ -332,6 +332,79 @@ TAO_TypeCodeFactory_Adapter_Impl::create_event_tc (
                               ACE_ENV_ARG_PARAMETER);
 }
 
+// --
+
+bool
+TAO_TypeCodeFactory_Adapter_Impl::extract_typecode (TAO_InputCDR & cdr,
+                                                    CORBA::TypeCode_ptr & /* tc */)
+{
+  CORBA::TCKind kind;
+  if (!(cdr >> kind) || kind >= CORBA::TAO_TC_KIND_COUNT)
+    return false;
+
+  // return TAO::TypeCodeFactory::factory_map[kind] (cdr, tc);
+
+  ACE_ASSERT (0);  // @@ Temporarily unimplemented.
+  return false;
+}
+
+CORBA::TypeCode_ptr
+TAO_TypeCodeFactory_Adapter_Impl::create_enum_tc (
+  char const * /* id */,
+  char const * /* name */,
+  ACE_Array_Base<CORBA::String_var> const & /* enumerators */,
+  CORBA::ULong /* ncases */
+  ACE_ENV_ARG_DECL)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+}
+
+CORBA::TypeCode_ptr
+TAO_TypeCodeFactory_Adapter_Impl::create_struct_except_tc (
+  CORBA::TCKind /* kind */,
+  char const * /* id */,
+  char const * /* name */,
+  ACE_Array_Base<
+    TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                CORBA::TypeCode_var> > const & /* fields */,
+  CORBA::ULong /* nfields */
+  ACE_ENV_ARG_DECL)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+}
+
+CORBA::TypeCode_ptr
+TAO_TypeCodeFactory_Adapter_Impl::create_union_tc (
+  char const * /* id */,
+  char const * /* name */,
+  CORBA::TypeCode_ptr /* discriminant_type */,
+  ACE_Array_Base<TAO::TypeCode::Case<CORBA::String_var,
+                                     CORBA::TypeCode_var> > const & /* cases */,
+  CORBA::ULong /* ncases */,
+  CORBA::Long /* default_index */,
+  char const * /* default_case_name */,
+  CORBA::TypeCode_ptr /* default_case_type */
+  ACE_ENV_ARG_DECL)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+}
+
+CORBA::TypeCode_ptr
+TAO_TypeCodeFactory_Adapter_Impl::create_value_event_tc (
+  CORBA::TCKind /* kind */,
+  char const * /* id */,
+  char const * /* name */,
+  CORBA::ValueModifier /* modifier */,
+  CORBA::TypeCode_ptr /* concrete_base */,
+  ACE_Array_Base<
+    TAO::TypeCode::Value_Field<CORBA::String_var,
+                               CORBA::TypeCode_var> > const & /* fields */,
+  CORBA::ULong /* nfields */
+  ACE_ENV_ARG_DECL)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+}
+
 // *********************************************************************
 
 // Initialization and registration of dynamic service object.

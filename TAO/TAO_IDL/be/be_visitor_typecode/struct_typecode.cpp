@@ -45,7 +45,7 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
                                  + node->flat_name ());
 
   // Generate array containing struct field characteristics.
-  os << "static TAO::TypeCode::Struct_Field<char const *> const ";
+  os << "static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const ";
 
   if (node->nfields () == 0)
     {
@@ -68,12 +68,15 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
   // Generate the TypeCode instantiation.
   os
     << "static TAO::TypeCode::Struct<char const *," << be_nl
-    << "                             TAO::TypeCode::Struct_Field<char const *> const *," << be_nl
-    << "                             CORBA::tk_"
-    << (this->is_exception_ ? "except" : "struct") << "," << be_nl
+    << "                             CORBA::TypeCode_ptr const *," << be_nl
+    << "                             TAO::TypeCode::Struct_Field<char const *,"
+    << be_nl
+    << "                                                         CORBA::TypeCode_ptr const *> const *," << be_nl
     << "                             TAO::Null_RefCount_Policy>"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
+    << "CORBA::tk_" << (this->is_exception_ ? "except" : "struct") << ","
+    << be_nl
     << "\"" << node->repoID () << "\"," << be_nl
     << "\"" << node->original_local_name () << "\"," << be_nl
     << "_tao_fields_" << node->flat_name () << "," << be_nl

@@ -38,15 +38,17 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/value_typecode.cpp:32
+// be/be_visitor_typecode/value_typecode.cpp:32
 
-static TAO::TypeCode::Value_Field<char const *> const * const _tao_fields_PortableInterceptor_ObjectReferenceFactory = 0;
+static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_PortableInterceptor_ObjectReferenceFactory = 0;
 
 static TAO::TypeCode::Value<char const *,
-                            TAO::TypeCode::Value_Field<char const *> const *,
-                            CORBA::tk_value,
+                            CORBA::TypeCode_ptr const *,
+                            TAO::TypeCode::Value_Field<char const *,
+                                                       CORBA::TypeCode_ptr const *> const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_ObjectReferenceFactory (
+    CORBA::tk_value,
     "IDL:omg.org/PortableInterceptor/ObjectReferenceFactory:1.0",
     "ObjectReferenceFactory",
     CORBA::VM_ABSTRACT,
@@ -63,15 +65,17 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/value_typecode.cpp:32
+// be/be_visitor_typecode/value_typecode.cpp:32
 
-static TAO::TypeCode::Value_Field<char const *> const * const _tao_fields_PortableInterceptor_ObjectReferenceTemplate = 0;
+static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_PortableInterceptor_ObjectReferenceTemplate = 0;
 
 static TAO::TypeCode::Value<char const *,
-                            TAO::TypeCode::Value_Field<char const *> const *,
-                            CORBA::tk_value,
+                            CORBA::TypeCode_ptr const *,
+                            TAO::TypeCode::Value_Field<char const *,
+                                                       CORBA::TypeCode_ptr const *> const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_ObjectReferenceTemplate (
+    CORBA::tk_value,
     "IDL:omg.org/PortableInterceptor/ObjectReferenceTemplate:1.0",
     "ObjectReferenceTemplate",
     CORBA::VM_ABSTRACT,
@@ -88,18 +92,19 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       PortableInterceptor_ObjectReferenceTemplateSeq_0 (
         CORBA::tk_sequence,
         &PortableInterceptor::_tc_ObjectReferenceTemplate,
@@ -112,6 +117,8 @@ namespace TAO
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_ObjectReferenceTemplateSeq (
     "IDL:omg.org/PortableInterceptor/ObjectReferenceTemplateSeq:1.0",
@@ -127,7 +134,7 @@ namespace PortableInterceptor
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/any_op_cs.cpp:57
+// be/be_visitor_valuetype/any_op_cs.cpp:57
 
 template<>
 CORBA::Boolean
@@ -183,7 +190,7 @@ operator>>= (
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/any_op_cs.cpp:57
+// be/be_visitor_valuetype/any_op_cs.cpp:57
 
 template<>
 CORBA::Boolean
@@ -239,7 +246,7 @@ operator>>= (
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (

@@ -331,7 +331,9 @@ TAO_DynStruct_i::get_members (ACE_ENV_SINGLE_ARG_DECL)
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
       safe_retval[i].id =
-        CORBA::string_dup (unaliased_tc->member_name (i));
+        CORBA::string_dup (unaliased_tc->member_name (i
+                                                      ACE_ENV_ARG_PARAMETER));
+      ACE_CHECK_RETURN (0);
 
       temp = this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -437,7 +439,8 @@ TAO_DynStruct_i::get_members_as_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
       safe_retval[i].id =
-      CORBA::string_dup (unaliased_tc->member_name (i));
+        CORBA::string_dup (unaliased_tc->member_name (i
+                                                      ACE_ENV_ARG_PARAMETER));
 
       // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
       // Set the flag so the caller can't destroy.
@@ -637,7 +640,8 @@ TAO_DynStruct_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   if (kind == CORBA::tk_except)
     {
-      out_cdr << this->type_->id ();
+      out_cdr << this->type_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
     }
 
   TAO::Any_Impl *field_impl = 0;

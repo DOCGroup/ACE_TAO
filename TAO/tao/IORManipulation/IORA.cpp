@@ -38,19 +38,21 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_TAO_IOP_EmptyProfileList = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_TAO_IOP_EmptyProfileList = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_TAO_IOP_EmptyProfileList (
+    CORBA::tk_except,
     "IDL:TAO_IOP/EmptyProfileList:1.0",
     "EmptyProfileList",
     _tao_fields_TAO_IOP_EmptyProfileList,
     0);
-
+  
 namespace TAO_IOP
 {
   ::CORBA::TypeCode_ptr const _tc_EmptyProfileList =
@@ -60,19 +62,21 @@ namespace TAO_IOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_TAO_IOP_NotFound = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_TAO_IOP_NotFound = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_TAO_IOP_NotFound (
+    CORBA::tk_except,
     "IDL:TAO_IOP/NotFound:1.0",
     "NotFound",
     _tao_fields_TAO_IOP_NotFound,
     0);
-
+  
 namespace TAO_IOP
 {
   ::CORBA::TypeCode_ptr const _tc_NotFound =
@@ -82,19 +86,21 @@ namespace TAO_IOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_TAO_IOP_Duplicate = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_TAO_IOP_Duplicate = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_TAO_IOP_Duplicate (
+    CORBA::tk_except,
     "IDL:TAO_IOP/Duplicate:1.0",
     "Duplicate",
     _tao_fields_TAO_IOP_Duplicate,
     0);
-
+  
 namespace TAO_IOP
 {
   ::CORBA::TypeCode_ptr const _tc_Duplicate =
@@ -104,19 +110,21 @@ namespace TAO_IOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_TAO_IOP_Invalid_IOR = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_TAO_IOP_Invalid_IOR = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_TAO_IOP_Invalid_IOR (
+    CORBA::tk_except,
     "IDL:TAO_IOP/Invalid_IOR:1.0",
     "Invalid_IOR",
     _tao_fields_TAO_IOP_Invalid_IOR,
     0);
-
+  
 namespace TAO_IOP
 {
   ::CORBA::TypeCode_ptr const _tc_Invalid_IOR =
@@ -126,19 +134,21 @@ namespace TAO_IOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_TAO_IOP_MultiProfileList = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_TAO_IOP_MultiProfileList = 0;
 static TAO::TypeCode::Struct<char const *,
-                             TAO::TypeCode::Struct_Field<char const *> const *,
-                             CORBA::tk_except,
+                             CORBA::TypeCode_ptr const *,
+                             TAO::TypeCode::Struct_Field<char const *,
+                                                         CORBA::TypeCode_ptr const *> const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_TAO_IOP_MultiProfileList (
+    CORBA::tk_except,
     "IDL:TAO_IOP/MultiProfileList:1.0",
     "MultiProfileList",
     _tao_fields_TAO_IOP_MultiProfileList,
     0);
-
+  
 namespace TAO_IOP
 {
   ::CORBA::TypeCode_ptr const _tc_MultiProfileList =
@@ -148,7 +158,7 @@ namespace TAO_IOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:73
+// be/be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_local_interface,
@@ -156,7 +166,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_TAO_IOP_TAO_IOR_Property (
     "IDL:TAO_IOP/TAO_IOR_Property:1.0",
     "TAO_IOR_Property");
-
+  
 namespace TAO_IOP
 {
   ::CORBA::TypeCode_ptr const _tc_TAO_IOR_Property =
@@ -166,41 +176,44 @@ namespace TAO_IOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:808
+// be/be_visitor_typecode/typecode_defn.cpp:914
 
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+    TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
       TAO_IOP_TAO_IOR_Manipulation_IORList_0 (
         CORBA::tk_sequence,
         &CORBA::_tc_Object,
         0U);
-
+      
     ::CORBA::TypeCode_ptr const tc_TAO_IOP_TAO_IOR_Manipulation_IORList_0 =
       &TAO_IOP_TAO_IOR_Manipulation_IORList_0;
-
+    
   }
 }
 
 static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            CORBA::tk_alias,
                             TAO::Null_RefCount_Policy>
   _tao_tc_TAO_IOP_TAO_IOR_Manipulation_IORList (
     "IDL:TAO_IOP/TAO_IOR_Manipulation/IORList:1.0",
     "IORList",
     &TAO::TypeCode::tc_TAO_IOP_TAO_IOR_Manipulation_IORList_0);
-
+  
 ::CORBA::TypeCode_ptr const TAO_IOP::TAO_IOR_Manipulation::_tc_IORList =
   &_tao_tc_TAO_IOP_TAO_IOR_Manipulation_IORList;
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:73
+// be/be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_local_interface,
@@ -218,7 +231,7 @@ namespace TAO_IOP
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -303,7 +316,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -388,7 +401,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -473,7 +486,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -558,7 +571,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -643,7 +656,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -652,7 +665,7 @@ TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -712,7 +725,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -721,7 +734,7 @@ TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::to_object (
   ) const
 {
   _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
+  return true;
 }
 
 template<>
@@ -781,7 +794,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 
 

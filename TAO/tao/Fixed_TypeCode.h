@@ -38,8 +38,9 @@ namespace TAO
      * fixed types.
      */
     template <class RefCountPolicy>
-    class Fixed : public CORBA::TypeCode
-      : private RefCountPolicy
+    class Fixed
+      : public CORBA::TypeCode
+      , private RefCountPolicy
     {
     public:
 
@@ -78,8 +79,8 @@ namespace TAO
       virtual CORBA::TCKind kind_i (ACE_ENV_SINGLE_ARG_DECL) const;
       virtual CORBA::TypeCode_ptr get_compact_typecode_i (
         ACE_ENV_SINGLE_ARG_DECL) const;
-      virtual UShort fixed_digits_i (ACE_ENV_SINGLE_ARG_DECL) const;
-      virtual UShort fixed_scale_i (ACE_ENV_SINGLE_ARG_DECL) const;
+      virtual CORBA::UShort fixed_digits_i (ACE_ENV_SINGLE_ARG_DECL) const;
+      virtual CORBA::UShort fixed_scale_i (ACE_ENV_SINGLE_ARG_DECL) const;
 
     private:
 

@@ -33,7 +33,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    template<typename StringType> struct Value_Field;
+    template<typename StringType, typename TypeCodeType> struct Value_Field;
 
     /**
      * @class Value
@@ -45,8 +45,8 @@ namespace TAO
      * @c valuetype or @c event.
      */
     template <typename StringType,
+              typename TypeCodeType,
               class FieldArrayType,
-              CORBA::TCKind Kind,
               class RefCountPolicy>
     class Value
       : public CORBA::TypeCode,
@@ -55,11 +55,12 @@ namespace TAO
     public:
 
       /// Constructor.
-      Value (char const * id,
+      Value (CORBA::TCKind kind,
+             char const * id,
              char const * name,
              CORBA::ValueModifier modifier,
-             CORBA::TypeCode_ptr const * concrete_base,
-             Value_Field<StringType> const * fields,
+             TypeCodeType const & concrete_base,
+             FieldArrayType const & fields,
              CORBA::ULong nfields);
 
       /**
@@ -111,10 +112,12 @@ namespace TAO
 
     private:
 
-      /// Get pointer to the underlying @c Value_Field array.
-      Value_Field<StringType> const * fields (void) const;
-
-    private:
+      /// The kind of TypeCode.
+      /**
+       * The @c kind_ may be either @c CORBA::tk_value or
+       * @c CORBA::tk_event.
+       */
+      CORBA::TCKind const kind_;
 
       /**
        * @c Valuetype Attributes
@@ -138,7 +141,7 @@ namespace TAO
 
       /// The @c TypeCode corresponding to the concrete base
       /// @c valuetype or @c eventtype.
-      CORBA::TypeCode_ptr const * const concrete_base_;
+      TypeCodeType const concrete_base_;
 
       /// The number of fields in the OMG IDL value.
       CORBA::ULong const nfields_;

@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Non_Default_Case
      *
@@ -77,20 +76,22 @@ namespace TAO
      * which is particularly important when marshaling that value into
      * a CDR stream.
      *
-     * The template parameter @a STRING_TYPE is either @c char @c
+     * The template parameter @a StringType is either @c char @c
      * const @c * or @c CORBA::String_var.  The latter is only used
      * when creating @c CORBA::tk_union @c TypeCode dynamically, such
      * as through the TypeCodeFactory.
      */
-    template <typename DISCRIMINATOR_TYPE, typename STRING_TYPE>
-    class Non_Default_Case : public Case<STRING_TYPE>
+    template <typename DiscriminatorType,
+              typename StringType,
+              typename TypeCodeType>
+    class Non_Default_Case : public Case<StringType, TypeCodeType>
     {
     public:
 
       /// Constructor.
-      Non_Default_Case (DISCRIMINATOR_TYPE member_label,
+      Non_Default_Case (DiscriminatorType member_label,
                         char const * member_name,
-                        CORBA::TypeCode_ptr const * member_type);
+                        TypeCodeType member_type);
 
       /**
        * @name @c TAO::TypeCode::Case Methods
@@ -111,7 +112,7 @@ namespace TAO
     private:
 
       /// IDL @c union case/member label value.
-      DISCRIMINATOR_TYPE const label_;
+      DiscriminatorType const label_;
 
     };
 

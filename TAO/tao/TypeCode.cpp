@@ -291,8 +291,7 @@ operator<< (TAO_OutputCDR & cdr,
                         false);
     }
 
-  CORBA::ULong const kind =
-    static_cast<CORBA::ULong> (tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER));
+  CORBA::ULong const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (false);
 
   return (cdr << kind) && tc->tao_marshal (cdr);
@@ -315,7 +314,7 @@ operator>> (TAO_InputCDR & cdr,
                         false);
     }
 
-  return adapter->_tao_make_typecode (cdr, tc);
+  return adapter->extract_typecode (cdr, tc);
 
 }
 
@@ -369,9 +368,11 @@ namespace TAO
     char const tc_bounds_id[]   = "IDL:omg.org/CORBA/TypeCode/Bounds:1.0";
     char const tc_bounds_name[] = "Bounds";
     Struct<char const *,
-           Struct_Field<char const *> const *,
-           CORBA::tk_except,
-           TAO::Null_RefCount_Policy> tc_Bounds (tc_bounds_id,
+           CORBA::TypeCode_ptr const *,
+           Struct_Field<char const *,
+                        CORBA::TypeCode_ptr const *> const *,
+           TAO::Null_RefCount_Policy> tc_Bounds (CORBA::tk_except,
+                                                 tc_bounds_id,
                                                  tc_bounds_name,
                                                  0,
                                                  0);
@@ -379,9 +380,11 @@ namespace TAO
     char const tc_bad_kind_id[]   = "IDL:omg.org/CORBA/TypeCode/BadKind:1.0";
     char const tc_bad_kind_name[] = "BadKind";
     Struct<char const *,
-           Struct_Field<char const *> const *,
-           CORBA::tk_except,
-           TAO::Null_RefCount_Policy> tc_BadKind (tc_bad_kind_id,
+           CORBA::TypeCode_ptr const *,
+           Struct_Field<char const *,
+                        CORBA::TypeCode_ptr const *> const *,
+           TAO::Null_RefCount_Policy> tc_BadKind (CORBA::tk_except,
+                                                  tc_bad_kind_id,
                                                   tc_bad_kind_name,
                                                   0,
                                                   0);
