@@ -1,3 +1,12 @@
+Fri Dec  1 09:46:15 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+          The structured exception handler methods should show up on
+          ACE_LEGACY_MODE builds.  Unfortunately, the change from
+          ACE_LATEST_AND_GRATEST to LEGACY_MODE didn't work here because
+          the LATEST_AND_GREATEST macro was misspelled.
+
 Fri Dec  1 09:30:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/platform_linux.GNU:
@@ -21,9 +30,9 @@ Thu Nov 30 22:49:10 2000  pradeep@cs.wustl.edu  <pradeep@cs.wustl.edu>
 Wed Nov 29 23:55:37 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * apps/drwho/server.cpp:
-        * apps/drwho/BS_Client.cpp:       
+        * apps/drwho/BS_Client.cpp:
           Used casts to quiet VxWorks/LynxOS.
-        * bin/auto_run_tests.lst: 
+        * bin/auto_run_tests.lst:
           Commented out this test - its broken.
 
 Wed Nov 29 09:41:51 2000  Johnny Willemsen <jwillemsen@remedy.nl>

@@ -1612,7 +1612,7 @@ ACE_Log_Msg::thr_desc (ACE_Thread_Descriptor *td)
     td->acquire_release ();
 }
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS) && !defined(ACE_HAS_LATEST_AND_GREATEST)
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS) && defined(ACE_LEGACY_MODE)
 ACE_SEH_EXCEPT_HANDLER
 ACE_Log_Msg::seh_except_selector (void)
 {
@@ -1636,7 +1636,7 @@ ACE_Log_Msg::seh_except_handler (ACE_SEH_EXCEPT_HANDLER n)
 {
   return ACE_OS_Object_Manager::seh_except_handler (n);
 }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && !ACE_HAS_LATEST_AND_GREATEST */
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && ACE_LEGACY_MODE */
 
 // Enable the tracing facility on a per-thread basis.
 
