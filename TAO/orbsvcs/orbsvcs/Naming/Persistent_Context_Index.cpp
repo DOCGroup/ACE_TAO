@@ -90,7 +90,8 @@ TAO_Persistent_Context_Index::bind (const char *poa_id,
 
       if (result == 1)
         {
-          // Entry already existed so bind failed. Free our dynamically allocated memory.
+          // Entry already existed so bind failed. Free our dynamically 
+          // allocated memory.
           this->allocator_->free ((void *) ptr);
           return result;
         }
@@ -123,7 +124,9 @@ TAO_Persistent_Context_Index::TAO_Persistent_Context_Index
 TAO_Persistent_Context_Index::~TAO_Persistent_Context_Index (void)
 {
   delete allocator_;
-  ACE_OS::free (ACE_reinterpret_cast (void*, ACE_const_cast (LPTSTR, index_file_)));
+  ACE_OS::free (ACE_reinterpret_cast (void *, 
+                                      ACE_const_cast (ACE_TCHAR *, 
+                                                      index_file_)));
 }
 
 ACE_Allocator*
