@@ -1,3 +1,9 @@
+Sun Jun  9 15:33:05 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/Date_Time.i:
+
+          Fixed some typos that caused build errors.
+
 Sun Jun  9 08:51:04 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Configuration.{h,cpp}: Added support for the path separator
