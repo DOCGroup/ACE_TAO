@@ -119,6 +119,7 @@ ifdef trader
 FILES += \
         Trader/Admin \
         Trader/Attributes \
+	Trader/Attributes_T \
         Trader/Constraint \
         Trader/Constraint_y \
         Trader/Constraint_l \
@@ -9015,6 +9016,15 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
  Event/Dispatching_Modules.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h Event/ReactorTask.h \
@@ -9032,9 +9042,6 @@ endif
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_List_T.cpp \
  Event/Local_ESTypes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.h \
@@ -9045,15 +9052,11 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
@@ -9063,7 +9066,10 @@ endif
  Event/Event_Channel.h Event/CORBA_Utils_T.h Event/CORBA_Utils_T.i \
  Event/CORBA_Utils_T.cpp Event/Task_Manager.h Event/Task_Manager.i \
  Event/Event_Channel.i Event/Dispatching_Modules.i \
- Event/Memory_Pools.h Event/Memory_Pools.i
+ Event/Memory_Pools.h Event/Memory_Pools.i Event/EC_Gateway.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.cpp
 .obj/Local_ESTypes.o .obj/Local_ESTypes.so .shobj/Local_ESTypes.o .shobj/Local_ESTypes.so: Event/Local_ESTypes.cpp Event/Local_ESTypes.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -10652,7 +10658,12 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.cpp
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i
 .obj/Config_Scheduler.o .obj/Config_Scheduler.so .shobj/Config_Scheduler.o .shobj/Config_Scheduler.so: Sched/Config_Scheduler.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
@@ -10882,9 +10893,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
- Sched/Scheduler_Generic.h Sched/Scheduler.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- Sched/Scheduler.i Sched/Scheduler_Generic.i Sched/Config_Scheduler.h \
+ Sched/Config_Scheduler.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS_T.h \
@@ -10895,6 +10904,11 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler_Generic.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler_Generic.i \
  Sched/Config_Scheduler.i
 .obj/DynSched.o .obj/DynSched.so .shobj/DynSched.o .shobj/DynSched.so: Sched/DynSched.cpp Sched/DynSched.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -12036,7 +12050,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i
 .obj/CC_LockSet.o .obj/CC_LockSet.so .shobj/CC_LockSet.o .shobj/CC_LockSet.so: Concurrency/CC_LockSet.cpp Concurrency/CC_LockSet.h \
- Concurrency/CC_Lock.h $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -12066,6 +12080,7 @@ endif
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -12256,7 +12271,6 @@ endif
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.cpp \
@@ -12488,7 +12502,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlS.i \
- Concurrency/CC_LockSet.h Concurrency/CC_Lock.h
+ Concurrency/CC_LockSet.h
 .obj/Concurrency_Utils.o .obj/Concurrency_Utils.so .shobj/Concurrency_Utils.o .shobj/Concurrency_Utils.so: Concurrency/Concurrency_Utils.cpp \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -14357,7 +14371,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Admin.cpp
+ Trader/Admin.cpp
 .obj/Attributes.o .obj/Attributes.so .shobj/Attributes.o .shobj/Attributes.so: Trader/Attributes.cpp Trader/Attributes.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
@@ -14583,8 +14597,234 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i
+.obj/Attributes_T.o .obj/Attributes_T.so .shobj/Attributes_T.o .shobj/Attributes_T.so: Trader/Attributes_T.cpp Trader/Attributes_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/Message_Queue.cpp \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Connector.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task_T.i \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.i \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
+ $(ACE_ROOT)/ace/Dynamic.h \
+ $(ACE_ROOT)/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Svc_Handler.i \
+ $(ACE_ROOT)/ace/Svc_Handler.cpp \
+ $(ACE_ROOT)/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.cpp \
+ $(ACE_ROOT)/ace/Acceptor.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
+ $(TAO_ROOT)/tao/compat/objbase.h \
+ $(TAO_ROOT)/tao/compat/initguid.h \
+ $(TAO_ROOT)/tao/Align.h \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/params.h \
+ $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/default_client.h \
+ $(TAO_ROOT)/tao/default_client.i \
+ $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.h \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.i \
+ $(TAO_ROOT)/tao/ORB_Strategies_T.cpp \
+ $(TAO_ROOT)/tao/default_server.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/Request.h \
+ $(TAO_ROOT)/tao/Request.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Marshal.h \
+ $(TAO_ROOT)/tao/Marshal.i \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/POA.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/POAS.i \
+ $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/POA.i \
+ $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/Connect.h \
+ $(TAO_ROOT)/tao/Connect.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/Operation_Table.h \
+ $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/IIOP_Object.h \
+ $(TAO_ROOT)/tao/IIOP_Object.i \
+ $(TAO_ROOT)/tao/IIOP_ORB.h \
+ $(TAO_ROOT)/tao/IIOP_ORB.i \
+ $(TAO_ROOT)/tao/IIOP_Interpreter.h \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Server_Request.h \
+ $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/singletons.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp
+ Trader/Attributes.h Trader/Attributes_T.cpp
 .obj/Constraint.o .obj/Constraint.so .shobj/Constraint.o .shobj/Constraint.so: Trader/Constraint.cpp Trader/Constraint.h \
  Trader/Constraint_Nodes.h Trader/Constraint_Visitor.h \
  Trader/Constraint_Tokens.h \
@@ -15489,8 +15729,8 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Constraint_Visitor.h \
- Trader/Constraint_Nodes.h Trader/Constraint_Tokens.h \
+ Trader/Constraint_Visitor.h Trader/Constraint_Nodes.h \
+ Trader/Constraint_Tokens.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/SequencesC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/SequencesC.i
 .obj/Constraint_Interpreter.o .obj/Constraint_Interpreter.so .shobj/Constraint_Interpreter.o .shobj/Constraint_Interpreter.so: Trader/Constraint_Interpreter.cpp \
@@ -15725,8 +15965,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Constraint_Evaluator.h \
- Trader/Property_Evaluator.h
+ Trader/Constraint_Evaluator.h Trader/Property_Evaluator.h
 .obj/Constraint_Nodes.o .obj/Constraint_Nodes.so .shobj/Constraint_Nodes.o .shobj/Constraint_Nodes.so: Trader/Constraint_Nodes.cpp \
  Trader/Constraint_Nodes.h Trader/Constraint_Visitor.h \
  Trader/Constraint_Tokens.h \
@@ -16180,8 +16419,8 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Constraint_Nodes.h \
- Trader/Constraint_Visitor.h Trader/Constraint_Tokens.h \
+ Trader/Constraint_Nodes.h Trader/Constraint_Visitor.h \
+ Trader/Constraint_Tokens.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/SequencesC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/SequencesC.i
 .obj/Dynamic_Property.o .obj/Dynamic_Property.so .shobj/Dynamic_Property.o .shobj/Dynamic_Property.so: Trader/Dynamic_Property.cpp \
@@ -16411,8 +16650,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i
 .obj/Interpreter.o .obj/Interpreter.so .shobj/Interpreter.o .shobj/Interpreter.so: Trader/Interpreter.cpp Trader/Interpreter.h \
  Trader/Constraint.h Trader/Constraint_Nodes.h \
  Trader/Constraint_Visitor.h Trader/Constraint_Tokens.h \
@@ -16865,7 +17103,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Link.cpp Trader/Locking.h
+ Trader/Link.cpp Trader/Locking.h
 .obj/Lookup.o .obj/Lookup.so .shobj/Lookup.o .shobj/Lookup.so: Trader/Lookup.cpp Trader/Lookup.h Trader/Policies.h \
  Trader/Trader.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -17094,10 +17332,10 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Offer_Filter.h \
- Trader/Property_Evaluator.h Trader/Offer_Iterator.h \
- Trader/Property_Filter.h Trader/Constraint_Interpreter.h \
- Trader/Interpreter.h Trader/Constraint.h Trader/Constraint_Nodes.h \
+ Trader/Offer_Filter.h Trader/Property_Evaluator.h \
+ Trader/Offer_Iterator.h Trader/Property_Filter.h \
+ Trader/Constraint_Interpreter.h Trader/Interpreter.h \
+ Trader/Constraint.h Trader/Constraint_Nodes.h \
  Trader/Constraint_Visitor.h Trader/Constraint_Tokens.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/SequencesC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/SequencesC.i \
@@ -17336,7 +17574,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Property_Evaluator.h
+ Trader/Property_Evaluator.h
 .obj/Offer_Id_Iterator.o .obj/Offer_Id_Iterator.so .shobj/Offer_Id_Iterator.o .shobj/Offer_Id_Iterator.so: Trader/Offer_Id_Iterator.cpp \
  Trader/Offer_Id_Iterator.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -17791,8 +18029,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i
 .obj/Offer_Iterator_Collection.o .obj/Offer_Iterator_Collection.so .shobj/Offer_Iterator_Collection.o .shobj/Offer_Iterator_Collection.so: Trader/Offer_Iterator_Collection.cpp \
  Trader/Offer_Iterator_Collection.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
@@ -18247,8 +18484,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i
 .obj/Policies.o .obj/Policies.so .shobj/Policies.o .shobj/Policies.so: Trader/Policies.cpp Trader/Policies.h Trader/Trader.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -18475,8 +18711,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i
 .obj/Policy_Manager.o .obj/Policy_Manager.so .shobj/Policy_Manager.o .shobj/Policy_Manager.so: Trader/Policy_Manager.cpp Trader/Policy_Manager.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -18703,8 +18938,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i
 .obj/Preference_Interpreter.o .obj/Preference_Interpreter.so .shobj/Preference_Interpreter.o .shobj/Preference_Interpreter.so: Trader/Preference_Interpreter.cpp \
  Trader/Preference_Interpreter.h Trader/Interpreter.h \
  Trader/Constraint.h Trader/Constraint_Nodes.h \
@@ -18938,7 +19172,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Constraint_Validator.h
+ Trader/Constraint_Validator.h
 .obj/Property_Evaluator.o .obj/Property_Evaluator.so .shobj/Property_Evaluator.o .shobj/Property_Evaluator.so: Trader/Property_Evaluator.cpp Trader/Trader.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -19166,7 +19400,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Property_Evaluator.h
+ Trader/Property_Evaluator.h
 .obj/Property_Filter.o .obj/Property_Filter.so .shobj/Property_Filter.o .shobj/Property_Filter.so: Trader/Property_Filter.cpp Trader/Property_Filter.h \
  Trader/Trader.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -19394,8 +19628,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i
 .obj/Proxy.o .obj/Proxy.so .shobj/Proxy.o .shobj/Proxy.so: Trader/Proxy.cpp Trader/Proxy.h Trader/Attributes.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
@@ -19622,7 +19855,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Proxy.cpp
+ Trader/Proxy.cpp
 .obj/Query_Only_Offer_Iterator.o .obj/Query_Only_Offer_Iterator.so .shobj/Query_Only_Offer_Iterator.o .shobj/Query_Only_Offer_Iterator.so: Trader/Query_Only_Offer_Iterator.cpp \
  Trader/Query_Only_Offer_Iterator.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -19851,8 +20084,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i
 .obj/Register.o .obj/Register.so .shobj/Register.o .shobj/Register.so: Trader/Register.cpp Trader/Trader.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -20080,8 +20312,8 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Register.h Trader/Offer_Modifier.h \
- Trader/Register.cpp Trader/Property_Evaluator.h
+ Trader/Register.h Trader/Offer_Modifier.h Trader/Register.cpp \
+ Trader/Property_Evaluator.h
 .obj/Register_Offer_Iterator.o .obj/Register_Offer_Iterator.so .shobj/Register_Offer_Iterator.o .shobj/Register_Offer_Iterator.so: Trader/Register_Offer_Iterator.cpp \
  Trader/Register_Offer_Iterator.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -20310,8 +20542,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i
 .obj/Service_Type_Map.o .obj/Service_Type_Map.so .shobj/Service_Type_Map.o .shobj/Service_Type_Map.so: Trader/Service_Type_Map.cpp \
  Trader/Service_Type_Map.h Trader/Trader.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -20540,8 +20771,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Service_Type_Map.cpp \
- Trader/Offer_Id_Iterator.h
+ Trader/Service_Type_Map.cpp Trader/Offer_Id_Iterator.h
 .obj/Service_Type_Repository.o .obj/Service_Type_Repository.so .shobj/Service_Type_Repository.o .shobj/Service_Type_Repository.so: Trader/Service_Type_Repository.cpp \
  Trader/Locking.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -20768,8 +20998,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i
 .obj/Trader.o .obj/Trader.so .shobj/Trader.o .shobj/Trader.so: Trader/Trader.cpp Trader/Trader.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -20997,7 +21226,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Trader_T.h Trader/Service_Type_Map.h \
+ Trader/Trader_T.h Trader/Service_Type_Map.h \
  Trader/Service_Type_Map.cpp Trader/Offer_Id_Iterator.h \
  Trader/Trader_T.cpp Trader/Lookup.h Trader/Policies.h \
  Trader/Offer_Filter.h Trader/Property_Evaluator.h \
@@ -21244,10 +21473,9 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Trader/Attributes.cpp Trader/Service_Type_Map.h \
- Trader/Service_Type_Map.cpp Trader/Offer_Id_Iterator.h \
- Trader/Trader_T.cpp Trader/Lookup.h Trader/Policies.h \
- Trader/Offer_Filter.h Trader/Property_Evaluator.h \
+ Trader/Service_Type_Map.h Trader/Service_Type_Map.cpp \
+ Trader/Offer_Id_Iterator.h Trader/Trader_T.cpp Trader/Lookup.h \
+ Trader/Policies.h Trader/Offer_Filter.h Trader/Property_Evaluator.h \
  Trader/Offer_Iterator.h Trader/Property_Filter.h \
  Trader/Constraint_Interpreter.h Trader/Interpreter.h \
  Trader/Constraint.h Trader/Constraint_Nodes.h \
