@@ -75,8 +75,11 @@ if ($client == -1) {
   $CL->Kill (); $CL->TimedWait (1);
 }
 
-$SV->Terminate ();
-$SV->TimedWait (10);
+$SV->Terminate (); $server = $SV->TimedWait (10);
+if ($server == -1) {
+  print STDERR "ERROR: server could not be terminated\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
 
 unlink $iorfile;
 
