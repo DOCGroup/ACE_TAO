@@ -17,7 +17,7 @@ Cubit_Client::Cubit_Client (void)
     call_count_ (0),
     error_count_ (0),
     cubit_factory_ior_file_ (0),
-    use_naming_service_ (0),
+    use_naming_service_ (1),
     f_handle_ (ACE_INVALID_HANDLE)
 {
 }
@@ -116,8 +116,8 @@ Cubit_Client::parse_args (void)
       case 'x': 
         this->shutdown_ = 1;
         break;
-      case 's': // Use the TAO Naming Service.
-	this->use_naming_service_ = 1;
+      case 's': // Don't use the TAO Naming Service.
+	this->use_naming_service_ = 0;
 	break;
       case '?':
       default:

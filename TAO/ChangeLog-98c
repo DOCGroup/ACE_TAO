@@ -1,3 +1,9 @@
+Wed Feb 25 22:47:16 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/server.cpp (parse_args): Change the
+	meaning of the -s flag to "don't use the naming service" and made
+	using the naming service the default.
+
 Wed Feb 25 21:41:50 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/RT_Task.h: Changed the use of ACE_MT_SYNCH
