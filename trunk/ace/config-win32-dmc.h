@@ -93,6 +93,7 @@
 #define ACE_LACKS_NETDB_H
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_REGEX_H
+#define ACE_LACKS_SYS_MSG_H
 
 # if !defined (ACE_LD_DECORATOR_STR) && defined (_DEBUG)
 #  define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
