@@ -495,14 +495,14 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
       for (;;)
         {
           // Start the call by constructing the request message header.
-          TAO_TRY_SYS_EX (SYSEX1)
+          TAO_TRY_VAR_EX (env, SYSEX1)
             {
               call.start (env);
-              TAO_CHECK_ENV_SYS_EX (SYSEX1);
+              TAO_CHECK_ENV_EX (SYSEX1);
 
               ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
             }
-          TAO_CATCH_SYS (CORBA_SystemException, ex)
+          TAO_CATCH (CORBA_SystemException, ex)
             {
               ACE_MT (ACE_GUARD (ACE_Lock,
                                 guard,
@@ -532,12 +532,12 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
 
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
 
-          TAO_TRY_SYS_EX (SYSEX2)
+          TAO_TRY_VAR_EX (env, SYSEX2)
             {
               status = call.invoke (info->excepts, info->except_count, env);
-              TAO_CHECK_ENV_SYS_EX (SYSEX2);
+              TAO_CHECK_ENV_EX (SYSEX2);
             }
-          TAO_CATCH_SYS (CORBA_SystemException, ex)
+          TAO_CATCH (CORBA_SystemException, ex)
             {
               ACE_MT (ACE_GUARD (ACE_Lock,
                                 guard,
@@ -656,13 +656,13 @@ IIOP_Object::do_static_call (CORBA::Environment &env,
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
 
           // Start the call by constructing the request message header.
-          TAO_TRY_SYS_EX (SYSEX3)
+          TAO_TRY_VAR_EX (env, SYSEX3)
             {
               call.start (env);
-              TAO_CHECK_ENV_SYS_EX (SYSEX3);
+              TAO_CHECK_ENV_EX (SYSEX3);
               ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
             }
-          TAO_CATCH_SYS (CORBA_SystemException, ex)
+          TAO_CATCH (CORBA_SystemException, ex)
             {
               ACE_MT (ACE_GUARD (ACE_Lock,
                                 guard,
