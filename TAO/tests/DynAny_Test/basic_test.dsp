@@ -7,19 +7,19 @@
 CFG=DynAny Basics - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
-!MESSAGE NMAKE /f "DynAny Basics.mak".
-!MESSAGE
+!MESSAGE 
+!MESSAGE NMAKE /f "basic_test.mak".
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
-!MESSAGE NMAKE /f "DynAny Basics.mak" CFG="DynAny Basics - Win32 Debug"
-!MESSAGE
+!MESSAGE 
+!MESSAGE NMAKE /f "basic_test.mak" CFG="DynAny Basics - Win32 Debug"
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "DynAny Basics - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "DynAny Basics - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -76,7 +76,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -187,13 +187,13 @@ SOURCE=.\da_tests.idl
 
 !IF  "$(CFG)" == "DynAny Basics - Win32 Release"
 
-USERDEP__DA_TE="..\..\..\bin\tao_idl.exe"
+USERDEP__DA_TE="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\da_tests.idl
 InputName=da_tests
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\Release\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -225,7 +225,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "DynAny Basics - Win32 Debug"
 
-USERDEP__DA_TE="..\..\..\bin\tao_idl.exe"
+USERDEP__DA_TE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\da_tests.idl
 InputName=da_tests
@@ -261,7 +261,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group

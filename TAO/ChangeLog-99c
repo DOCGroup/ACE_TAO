@@ -1,4 +1,9 @@
-Fri Jun 18 15:12:15 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri Jun 18 15:35:36 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/array_cs.cpp (visit_array): Moved
+	  the generation of the *_array_alloc and *_array_free functions
+	  from the i file to the cpp file.  This is because of the
+	  lameness of namespaces and MSVC export madness.
 
 	* tao/GIOP.cpp (process_server_request): Removed extra
 	  ACE_UNUSED_ARG (response_required) and initialized <request_id>
