@@ -1,3 +1,8 @@
+Thu Dec 31 13:20:17 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosTimeBase.idl: Updated the comments to say
+	  that module TimeBase is a part of the TAO Time Service IDL.
+
 Thu Dec 31 12:39:24 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/Time_Service/Server_i.cpp (parse_args): Changed

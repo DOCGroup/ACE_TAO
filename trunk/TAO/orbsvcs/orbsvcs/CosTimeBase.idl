@@ -14,9 +14,6 @@ module TimeBase {
   // = DESCRIPTION
   //   The standard CORBA Time Service defines a number of data
   //   structures to manipulate and express time.
-  //   TAO does not implement this standard service (yet), but we use
-  //   the standard types.
-  //
 
   typedef unsigned long long TimeT;
   // Time in TimeT is expressed in units of 100 nano seconds (in
@@ -30,20 +27,40 @@ module TimeBase {
   // Minutes of displacement from the Greenwich time.
 
   struct UtcT {
-    // = TITLE
-    //   The UTC time structure.
+    //   Structure of the time value.  The inaccuracy is packed into
+    //   inacclo & inacchi.  The tdf holds the time displacement
+    //   factor.
+    //
+    // = DESCRIPTION
+    //   There is a total of 16 octets in this struct.
+
     TimeT time;
+    // 8 octets
+
     unsigned long inacclo;
+    // 4 octets
+
     unsigned short inacchi;
+    // 2 octets
+
     TdfT tdf;
+    // 2 octets
+
   };
 
-  struct IntervalT {
+   struct IntervalT
+  {
     // = TITLE
-    //   A time interval
+    // This type holds a time interval represented as two TimeT values
+    // corresponding to the lower and upper bound of the interval.
+
     TimeT lower_bound;
+    // Lower bound of the interval.
+
     TimeT upper_bound;
+    // Upper bound of the interval.
   };
+
 };
 
 #endif /* COS_TIME_BASE_IDL */
