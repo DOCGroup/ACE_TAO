@@ -390,7 +390,7 @@ main (int argc, char** argv)
     trader.run ();
   else
     {
-      ACE_ERROR_RETURN ((LM_DEBUG,
+      ACE_ERROR_RETURN ((LM_ERROR,
                          "Failed to initialize the trader.\n"),
                         -1);
     }

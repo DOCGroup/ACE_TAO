@@ -5,7 +5,7 @@
 //    Quoter_Server.cpp
 //
 // = DESCRIPTION
-//    The Server for the Quoter Factory 
+//    The Server for the Quoter Factory
 //
 // = AUTHOR
 //    Darrell Brunsch (brunsch@cs.wustl.edu)
@@ -62,24 +62,24 @@ Quoter_Server::init (int argc,
                     char* argv[],
                     CORBA::Environment &ACE_TRY_ENV)
 {
-  const char *exception_message = "Null Message";  
+  const char *exception_message = "Null Message";
   ACE_TRY
     {
       exception_message = "While ORB Manager init";
       if (this->orb_manager_.init (argc, argv, ACE_TRY_ENV) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, 
-                           "%p\n", 
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
                            "init"),
                           -1);
       ACE_TRY_CHECK;
-  
+
       // Copy them, because parse_args expects them there.
       this->argc_ = argc;
       int i;
 
       // Make a copy of argv since ORB_init will change it.
       this->argv_ = new char *[argc];
-  
+
       for (i = 0; i < argc; i++)
         this->argv_[i] = argv[i];
 
@@ -87,26 +87,26 @@ Quoter_Server::init (int argc,
 
       // Obtain the RootPOA.
       CORBA::Object_var obj = this->orb_manager_.orb()->resolve_initial_references ("RootPOA");
-  
+
       // Get the POA_var object from Object_var.
       exception_message = "While narrowing the root pos";
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-    
+
       // Get the POAManager of the RootPOA.
       exception_message = "While getting the POA Manager";
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-  
-      ACE_NEW_RETURN (quoter_Factory_i_ptr_, 
-                      Quoter_Factory_i(this->num_of_objs_, 
+
+      ACE_NEW_RETURN (quoter_Factory_i_ptr_,
+                      Quoter_Factory_i(this->num_of_objs_,
                                        root_poa.in()),
                       0);
-      
+
       exception_message = "While initing the quoter factory";
-      quoter_Factory_i_ptr_->init (ACE_TRY_ENV);      
+      quoter_Factory_i_ptr_->init (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var quoter_Factory_oid =
@@ -122,12 +122,12 @@ Quoter_Server::init (int argc,
       exception_message = "While quoter_Factor::_this";
       Stock::Quoter_Factory_var quoter_Factory_var = quoter_Factory_i_ptr_->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Stringify the object reference and print it out.
       exception_message = "While object_to_string";
       CORBA::String_var quoter_Factory_ior =
         this->orb_manager_.orb()->object_to_string (quoter_Factory_var.in (), ACE_TRY_ENV);
-  
+
       exception_message = "While activating the POA Manager";
       poa_manager->activate (ACE_TRY_ENV);
 
@@ -142,7 +142,7 @@ Quoter_Server::init (int argc,
       ACE_RETHROW;
     }
   ACE_ENDTRY;
-  
+
   return this->init_naming_service (ACE_TRY_ENV);
 }
 
@@ -153,12 +153,12 @@ Quoter_Server::init (int argc,
 int
 Quoter_Server::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
 {
-  const char *exception_message = "Null Message";  
-  ACE_TRY 
+  const char *exception_message = "Null Message";
+  ACE_TRY
     {
       CORBA::ORB_ptr orb_ptr = TAO_ORB_Core_instance()->orb();
 
-      CORBA::Object_var naming_obj = 
+      CORBA::Object_var naming_obj =
         orb_ptr->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
@@ -167,14 +167,14 @@ Quoter_Server::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
                           -1);
 
       exception_message = "While narrowing naming context";
-      namingContext_var_ = 
+      namingContext_var_ =
         CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       CosNaming::Name quoterContextName (1);
       quoterContextName.length (1);
       quoterContextName[0].id = CORBA::string_dup ("IDL_Quoter");
-      
+
       exception_message = "While binding a new context";
       CosNaming::NamingContext_var quoterNameContext =
         namingContext_var_->bind_new_context (quoterContextName, ACE_TRY_ENV);
@@ -185,7 +185,7 @@ Quoter_Server::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
       CosNaming::Name quoterFactoryContextName (1);
       quoterFactoryContextName.length (1);
       quoterFactoryContextName[0].id = CORBA::string_dup ("Quoter_Factory");
-      
+
       exception_message = "While using factory _this";
       Stock::Quoter_Factory_var quoter_factory_var = quoter_Factory_i_ptr_->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -240,8 +240,9 @@ Quoter_Server::~Quoter_Server (void)
     }
   ACE_CATCHANY
     {
-      ACE_ERROR ((LM_DEBUG, "Could not unbind Quoter Server from the Name Service\n"));
-      ACE_TRY_ENV.print_exception ("~Quoter_Server");
+      ACE_ERROR ((LM_ERROR,
+                  "Could not unbind Quoter Server from the Name Service\n"));
+      ACE_PRINT_EXCEPTION ("~Quoter_Server");
     }
   ACE_ENDTRY;
 

@@ -89,7 +89,7 @@ ttcp_sequence_i::sendStructSeq(const ttcp_sequence::StructSeq& ttcp_seq, CORBA::
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
   this->nbytes_ += ttcp_seq.length()*sizeof(BinStruct) ;
-#ifdef DEBUG
+#if !defined (ACE_NDEBUG)
   ACE_DEBUG ((LM_DEBUG,
               "Bytes received so far = %d\n", this->nbytes_));
 #endif

@@ -354,12 +354,12 @@ int
 be_visitor_operation_ss::gen_check_exception (be_type *, const char * /* env */)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   os->indent ();
   // check if there is an exception
   *os << "ACE_CHECK;\n";
   // << env << ");\n";
-  
+
   return 0;
 }
 
@@ -658,7 +658,7 @@ be_compiled_visitor_operation_ss::gen_demarshal_params (be_operation *node,
       this->has_param_type (node, AST_Argument::dir_INOUT))
     {
       os->indent ();
-      
+
       // demarshal the in and inout arguments
       *os << "if (!(\n" << be_idt;
 
@@ -679,7 +679,7 @@ be_compiled_visitor_operation_ss::gen_demarshal_params (be_operation *node,
       *os << be_uidt_nl << "))\n" << be_idt;
 
       // if marshaling fails, raise exception
-      if (this->gen_raise_exception (bt, "CORBA::MARSHAL", 
+      if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
                                      "",
                                      "ACE_TRY_ENV") == -1)
         {
@@ -690,9 +690,9 @@ be_compiled_visitor_operation_ss::gen_demarshal_params (be_operation *node,
                             -1);
         }
       *os << be_uidt << "\n";
-      
+
     };
-  
+
   return 0;
 }
 
@@ -725,7 +725,7 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
       *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
       *os << "if (!(\n" << be_idt;
     }
-  
+
   if (!this->void_return_type (bt))
     {
       // demarshal the return val and each inout and out argument
@@ -743,11 +743,11 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
                             -1);
         }
     }
-  
+
   if (this->has_param_type (node, AST_Argument::dir_INOUT) ||
       this->has_param_type (node, AST_Argument::dir_OUT))
     {
-      
+
       if (!this->void_return_type (bt))
         // we have already printed the return val. SO put a &&
         *os << " &&\n";
@@ -767,15 +767,15 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
                             -1);
         }
     }
-  
+
   if (!this->void_return_type (bt) ||
       this->has_param_type (node, AST_Argument::dir_INOUT) ||
       this->has_param_type (node, AST_Argument::dir_OUT))
     {
-      
+
       *os << be_uidt_nl << "))\n" << be_idt;
       // if marshaling fails, raise exception
-      if (this->gen_raise_exception (bt, "CORBA::MARSHAL", 
+      if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
                                      "",
                                      "ACE_TRY_ENV") == -1)
         {
@@ -787,6 +787,6 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
         }
       *os << be_uidt << be_uidt << "\n";
     }
-  
+
   return 0;
 }

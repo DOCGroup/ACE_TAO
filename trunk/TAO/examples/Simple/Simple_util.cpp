@@ -229,7 +229,7 @@ Server<Servant>::register_name (void)
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {
       ACE_TRY_ENV.clear ();
-      ACE_ERROR_RETURN ((LM_DEBUG,
+      ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to bind %s \n",
                          name),
                         -1);
@@ -332,7 +332,7 @@ Client<InterfaceObj, Var>::init (const char *name,
 
 
   ACE_DECLARE_NEW_CORBA_ENV;
- 
+
   ACE_TRY
     {
       // Retrieve the ORB.

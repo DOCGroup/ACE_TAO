@@ -447,24 +447,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         arg_shifter.ignore_arg ();
     }
 
-#if defined (DEBUG)
-  // Make it a little easier to debug programs using this code.
-  {
-    TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
-
-    char *value = ACE_OS::getenv ("TAO_ORB_DEBUG");
-
-    if (value != 0)
-      {
-        TAO_debug_level = ACE_OS::atoi (value);
-        if (TAO_debug_level <= 0)
-          TAO_debug_level = 1;
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO_debug_level == %d", TAO_debug_level));
-      }
-  }
-#endif  /* DEBUG */
-
   // Set the endpoint
   ACE_INET_Addr rendezvous;
   if (this->set_endpoint (dotted_decimal_addresses,

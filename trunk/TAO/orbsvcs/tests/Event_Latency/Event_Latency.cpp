@@ -886,7 +886,7 @@ main (int argc, char *argv [])
       // the cost of doing it later.
       ACE_TIMEPROBE_RESET;
 
-#if 1
+#if 0
       CosNaming::Name channel_name (1);
       channel_name.length (1);
       channel_name[0].id = CORBA::string_dup ("EventService");

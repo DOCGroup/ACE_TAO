@@ -72,17 +72,17 @@ int
 main (int argc, char **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  
+
   ACE_TRY
     {
-      
+
       char* ior=0;
-  
+
       // Initialize the ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-  
-      // Parse the command-line arguments to get the IOR 
+
+      // Parse the command-line arguments to get the IOR
       parse_args (argc, argv);
 
       // parse args should catch this, but just in case...
@@ -92,8 +92,8 @@ main (int argc, char **argv)
       // Read the file, and get the IOR
       ACE_HANDLE input_file = ACE_OS::open (iorfile, 0);
       if (input_file == ACE_INVALID_HANDLE)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Cannot open input file for reading IOR: %s\n", 
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open input file for reading IOR: %s\n",
                            iorfile),
                           -1);
       ACE_Read_Buffer ior_buffer (input_file);
@@ -105,16 +105,16 @@ main (int argc, char **argv)
       ior = ACE_OS::strdup (data);
       ior_buffer.alloc ()-> free (data);
       ACE_OS::close (input_file);
-  
+
       CORBA::Object_var object = orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-    
+
       // Narrow the object reference to a File::System
-      File::System_var file_system = File::System::_narrow (object.in (), 
+      File::System_var file_system = File::System::_narrow (object.in (),
                                                             ACE_TRY_ENV);
       // Creat the file filename i.e "test"
-      File::Descriptor_var fd = file_system->open (filename, 
-                                                   O_CREAT | O_RDWR, 
+      File::Descriptor_var fd = file_system->open (filename,
+                                                   O_CREAT | O_RDWR,
                                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -126,13 +126,13 @@ main (int argc, char **argv)
       // write the message to the file
       fd->write (data_sent, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       //seek to the beginning of the file
       fd->lseek (0, SEEK_SET, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Read back the written message
-      File::Descriptor::DataBuffer_var data_received = fd->read (message_length, 
+      File::Descriptor::DataBuffer_var data_received = fd->read (message_length,
                                                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -142,7 +142,7 @@ main (int argc, char **argv)
       ACE_DEBUG((LM_DEBUG,"%s\n",
                  result));
 
-      // close the file 
+      // close the file
       fd->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }

@@ -648,7 +648,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
       || this->n_consumers_ >= ECT_Throughput::MAX_CONSUMERS)
     {
       this->n_consumers_ = 1;
-      ACE_ERROR_RETURN ((LM_DEBUG,
+      ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: number of consumers or "
                          "suppliers out of range, "
                          "reset to default (%d)\n",
@@ -659,7 +659,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
       || this->n_suppliers_ >= ECT_Throughput::MAX_SUPPLIERS)
     {
       this->n_suppliers_ = 1;
-      ACE_ERROR_RETURN ((LM_DEBUG,
+      ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: number of suppliers out of range, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);
@@ -669,7 +669,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
     {
       this->n_suppliers_ = 1;
       this->n_consumers_ = 1;
-      ACE_ERROR_RETURN ((LM_DEBUG,
+      ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: no suppliers or consumers, "
                          "reset to default (%d of each)\n",
                          argv[0], 1), -1);
@@ -678,7 +678,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
   if (this->ec_concurrency_hwm_ <= 0)
     {
       this->ec_concurrency_hwm_ = 1;
-      ACE_ERROR_RETURN ((LM_DEBUG,
+      ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: invalid concurrency HWM, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);
