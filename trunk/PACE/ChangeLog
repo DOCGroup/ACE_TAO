@@ -1,0 +1,14 @@
+Tue May 23 17:59:06 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* docs/todo.txt: 
+	  Currently, all .o files appear in the
+	  ACE_wrappers/pace/pace directory (e.g.: nested
+	  files such as pace/pace/sys/socket.c generate
+	  pace/pace/socket.o. See pace/docs/todo.txt.
+
+	* ACE_wrappers/pace/pace:
+	  Source files added.
+
+	
+	  
+
