@@ -10,7 +10,6 @@ Airplane_Server_i::Airplane_Server_i (void)
   : server_impl_ (0),
     ior_output_file_ (0),
     ir_helper_ (0),
-    register_with_ir_ (0),
     use_ir_ (0)
 {
   // Nothing
@@ -19,7 +18,7 @@ Airplane_Server_i::Airplane_Server_i (void)
 int
 Airplane_Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:ir");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:i");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -27,9 +26,6 @@ Airplane_Server_i::parse_args (void)
       {
       case 'd':  // debug flag.
         TAO_debug_level++;
-        break;
-      case 'r':  // Register restart information with the IR.
-        this->register_with_ir_ = 1;
         break;
       case 'i':  // Use the IR
         this->use_ir_ = 1;
@@ -47,7 +43,6 @@ Airplane_Server_i::parse_args (void)
                            "usage:  %s"
                            " [-d]"
                            " [-i]"
-                           " [-r]"
                            " [-o] <ior_output_file>"
                            "\n",
                            argv_ [0]),
@@ -92,16 +87,11 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
       CORBA::ORB_var orb = this->orb_manager_.orb ();
 
       if (this->use_ir_ == 1)
-        {
-          ACE_NEW_RETURN (this->ir_helper_, IR_Helper (poa_name,
-                                                       child_poa.in (),
-                                                       orb.in (),
-                                                       TAO_debug_level),
-                          -1);
-
-          if (this->register_with_ir_ == 1)
-            this->ir_helper_->register_server ("airplane_server -i");
-        }
+        ACE_NEW_RETURN (this->ir_helper_, IR_Helper (poa_name,
+                                                     child_poa.in (),
+                                                     orb.in (),
+                                                     TAO_debug_level),
+                        -1);
 
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("server");

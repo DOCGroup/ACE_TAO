@@ -70,9 +70,6 @@ private:
   IR_Helper *ir_helper_;
   // Helper class for using the IR.
 
-  int register_with_ir_;
-  // Flag for whether or not to register startup with the IR.
-
   int use_ir_;
   // Flag for whether or not to use the IR.
 };
