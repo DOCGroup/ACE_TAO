@@ -90,8 +90,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -217,9 +216,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
- $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
- MessagingC.i TAO_ExtC.h TAO_ExtC.i \
- $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i MessagingC.i \
+ TAO_ExtC.h TAO_ExtC.i $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i Asynch_Reply_Dispatcher.h \
  Asynch_Timeout_Handler.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.h \
@@ -402,8 +400,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -529,9 +526,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
- $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
- MessagingC.i TAO_ExtC.h TAO_ExtC.i \
- $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i MessagingC.i \
+ TAO_ExtC.h TAO_ExtC.i $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i Asynch_Timeout_Handler.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.h \
  $(TAO_ROOT)/tao/Transport.h \
@@ -592,8 +588,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.i \
- Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/ORB_Core.h \
+ Asynch_Reply_Dispatcher.i $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
@@ -689,8 +684,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -702,9 +696,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- Asynch_Reply_Dispatcher.h Messaging.h MessagingC.h \
- $(TAO_ROOT)/tao/ValueBase.h \
+ $(ACE_ROOT)/ace/Event_Handler.i Asynch_Reply_Dispatcher.h \
+ Messaging.h MessagingC.h $(TAO_ROOT)/tao/ValueBase.h \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -818,9 +811,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
- $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
- MessagingC.i TAO_ExtC.h TAO_ExtC.i \
- $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i MessagingC.i \
+ TAO_ExtC.h TAO_ExtC.i $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.h \
  $(TAO_ROOT)/tao/Transport.h \
@@ -915,8 +907,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1175,8 +1166,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1302,9 +1292,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
- $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
- MessagingC.i TAO_ExtC.h TAO_ExtC.i \
- $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i MessagingC.i \
+ TAO_ExtC.h TAO_ExtC.i $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i Messaging_ORBInitializer.h \
  $(TAO_ROOT)/tao/PortableInterceptorC.h \
  $(TAO_ROOT)/tao/DynamicC.h \
@@ -1443,8 +1432,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1570,9 +1558,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
- $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
- MessagingC.i TAO_ExtC.h TAO_ExtC.i \
- $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i MessagingC.i \
+ TAO_ExtC.h TAO_ExtC.i $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
@@ -1734,8 +1721,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1861,9 +1847,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
- $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
- MessagingC.i TAO_ExtC.h TAO_ExtC.i \
- $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i MessagingC.i \
+ TAO_ExtC.h TAO_ExtC.i $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/PortableServer/PolicyS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -2045,8 +2030,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/TAO_ExtC.o .obj/TAO_ExtC.so .shobj/TAO_ExtC.o .shobj/TAO_ExtC.so: TAO_ExtC.cpp TAO_ExtC.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/TAO_ExtC.o .obj/TAO_ExtC.so .shobj/TAO_ExtC.o .shobj/TAO_ExtC.so: TAO_ExtC.cpp TAO_ExtC.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2076,8 +2060,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2358,8 +2341,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2628,8 +2610,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2817,8 +2798,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \

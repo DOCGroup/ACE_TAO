@@ -1,3 +1,40 @@
+Wed Jul 31 11:28:16 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.h (init_orb_globals):
+
+	  Changed emulated exception macro from the "_WITH_DEFAULTS"
+	  version to the one without it.  This method is used internally
+	  by TAO, meaning that a default CORBA::Environment should never
+	  be used.
+
+	* tao/ORB.cpp (init_orb_globals):
+
+	  Moved code that sets the unexpected handler to
+	  TAO_Singleton_Manager.cpp.  See below for the reason why this
+	  was done.
+
+	* tao/TAO_Singleton_Manager.h (TAO_Singleton_Manager):
+	* tao/TAO_Singleton_Manager.cpp (init):
+
+	  Store a pointer to the old unexpected exception handler so that
+	  it can be restored when TAO is unloaded, for example.
+	  Otherwise, any unexpected exceptions will result in a call to
+	  TAO's unexpected exception handler which may no longer exist if
+	  TAO was unloaded.
+
+	  (fini):
+
+	  Restore the old unexpected exception handler since TAO will no
+	  longer be handling exceptions.  Allow the application to once
+	  again handle unexpected exceptions.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Factory_Map.cpp:
+
+	  Corrected explicit template instantiations to match the hash map
+	  typedef in PG_Factory_Map.h.  Fixes "unresolved symbol" problems
+	  in builds that use explicit template instantiations.  Thanks to
+	  Jai for pointing out the problem.
+
 Wed Jul 31 09:45:01 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/PSS/PSDL_String.h: 
