@@ -42,7 +42,7 @@ namespace TAO
   }
 
   ACE_INLINE bool
-  Profile_Transport_Resolver::blocked (void) const
+  Profile_Transport_Resolver::blocked_connect (void) const
   {
     return this->blocked_;
   }

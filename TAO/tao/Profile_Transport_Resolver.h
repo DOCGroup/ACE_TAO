@@ -109,9 +109,9 @@ namespace TAO
     /// Accessor for the transport reserved for this invocation.
     TAO_Transport *transport (void) const;
 
-    /// Accessor to indicate whether we should deliver a connection
-    /// blocking for completed connections
-    bool blocked (void) const;
+    /// Accessor to indicate whether we should block while
+    /// establishing a connection.
+    bool blocked_connect (void) const;
     //@}
 
     /// Signal to let the resolver know that the transport has been

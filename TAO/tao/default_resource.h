@@ -138,6 +138,7 @@ public:
   virtual TAO_LF_Strategy *create_lf_strategy (void);
 
   virtual void disable_factory (void);
+  virtual bool drop_replies_during_shutdown (void) const;
   //@}
 
 protected:
@@ -243,6 +244,10 @@ private:
 
   /// Resource usage strategy
   Resource_Usage resource_usage_strategy_;
+
+  /// Flag to indicate whether replies should be dropped during ORB
+  /// shutdown.
+  bool drop_replies_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Resource_Factory)

@@ -354,7 +354,7 @@ TAO_Connector::wait_for_connection_completion (
   // If we don't need to block for a transport just set the timeout to
   // be zero.
   ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
-  if (!r->blocked ())
+  if (!r->blocked_connect ())
     {
       timeout = &tmp_zero;
     }
@@ -381,7 +381,7 @@ TAO_Connector::wait_for_connection_completion (
 
   if (result == -1)
     {
-      if (!r->blocked () && errno == ETIME)
+      if (!r->blocked_connect () && errno == ETIME)
         {
           // If we did a non blocking connect, just ignore
           // any timeout errors
@@ -414,9 +414,28 @@ TAO_Connector::wait_for_connection_completion (
         }
     }
 
-  // Connection not ready yet but we can use this transport, if
-  // we need a connected one we will block later to make sure
-  // it is connected
+  // Fix for a subtle problem. What happens if we are supposed to do
+  // blocked connect but the transport is NOT connected? Force close
+  // the connections
+  if (r->blocked_connect () && !transport->is_connected ())
+    {
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Transport_Connector::"
+                    "wait_for_connection_completion, "
+                    "no connected transport for a blocked connection, "
+                    "cancelling connections and reverting things \n"));
+
+      // Forget the return value. We are busted anyway. Try our best
+      // here.
+      (void) this->cancel_svc_handler (transport->connection_handler ());
+      transport = 0;
+      return false;
+    }
+
+  // Connection may not ready for SYNC_NONE cases but we can use this
+  // transport, if we need a connected one we will block later to make
+  // sure it is connected
   return true;
 }
 
