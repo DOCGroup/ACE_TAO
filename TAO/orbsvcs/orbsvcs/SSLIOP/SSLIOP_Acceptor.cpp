@@ -61,73 +61,72 @@ TAO_SSLIOP_Acceptor::~TAO_SSLIOP_Acceptor (void)
 
 // TODO =
 //    2) For V1.[1,2] there are tagged components
-//    3) Create multiple profiles for wild carded endpoints (may be multiple
-//       interfaces over which we can receive requests.  Thus a profile
-//       must be made for each one.
 
 int
 TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                       TAO_MProfile &mprofile)
 {
-  // @@ we only make one for now
+  // Adding this->num_hosts_ to the TAO_MProfile.
   int count = mprofile.profile_count ();
-  if ((mprofile.size () - count) < 1
-      && mprofile.grow (count + 1) == -1)
+  if ((mprofile.size () - count) < this->num_hosts_
+      && mprofile.grow (count + this->num_hosts_) == -1)
     return -1;
 
-  TAO_SSLIOP_Profile *pfile = 0;
-  ACE_NEW_RETURN (pfile,
-                  TAO_SSLIOP_Profile (this->host_.c_str (),
-                                      this->address_.get_port_number (),
-                                      object_key,
-                                      this->address_,
-                                      this->version_,
-                                      this->orb_core_,
-                                      this->ssl_component_.port)
-,
-                  -1);
-
-  if (mprofile.give_profile (pfile) == -1)
+  for (size_t i = 0; i < this->num_hosts_; ++i)
     {
-      pfile->_decr_refcnt ();
-      pfile = 0;
-      return -1;
+      TAO_SSLIOP_Profile *pfile = 0;
+      ACE_NEW_RETURN (pfile,
+                      TAO_SSLIOP_Profile (this->hosts_[i].c_str (),
+                                          this->addrs_[i].get_port_number (),
+                                          object_key,
+                                          this->addrs_[i],
+                                          this->version_,
+                                          this->orb_core_,
+                                          this->ssl_component_.port),
+                      -1);
+
+      if (mprofile.give_profile (pfile) == -1)
+        {
+          pfile->_decr_refcnt ();
+          pfile = 0;
+          return -1;
+        }
+
+      if (this->orb_core_->orb_params ()->std_profile_components () == 0)
+        continue;
+
+      pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
+
+      CONV_FRAME::CodeSetComponentInfo code_set_info;
+      code_set_info.ForCharData.native_code_set  =
+        TAO_DEFAULT_CHAR_CODESET_ID;
+      code_set_info.ForWcharData.native_code_set =
+        TAO_DEFAULT_WCHAR_CODESET_ID;
+      pfile->tagged_components ().set_code_sets (code_set_info);
+
+      pfile->tagged_components ().set_tao_priority (this->priority ());
+
+      IOP::TaggedComponent component;
+      component.tag = IOP::TAG_SSL_SEC_TRANS;
+      // @@???? Check this code, only intended as guideline...
+      TAO_OutputCDR cdr;
+      cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
+      cdr << this->ssl_component_;
+      // TAO extension, replace the contents of the octet sequence with
+      // the CDR stream
+      CORBA::ULong length = cdr.total_length ();
+      component.component_data.length (length);
+      CORBA::Octet *buf = component.component_data.get_buffer ();
+      for (const ACE_Message_Block *i = cdr.begin ();
+           i != 0;
+           i = i->cont ())
+        {
+          ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+          buf += i->length ();
+        }
+
+      pfile->tagged_components ().set_component (component);
     }
-
-  if (this->orb_core_->orb_params ()->std_profile_components () == 0)
-    return 0;
-
-  pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
-
-  CONV_FRAME::CodeSetComponentInfo code_set_info;
-  code_set_info.ForCharData.native_code_set  =
-    TAO_DEFAULT_CHAR_CODESET_ID;
-  code_set_info.ForWcharData.native_code_set =
-    TAO_DEFAULT_WCHAR_CODESET_ID;
-  pfile->tagged_components ().set_code_sets (code_set_info);
-
-  pfile->tagged_components ().set_tao_priority (this->priority ());
-
-  IOP::TaggedComponent component;
-  component.tag = IOP::TAG_SSL_SEC_TRANS;
-  // @@???? Check this code, only intended as guideline...
-  TAO_OutputCDR cdr;
-  cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
-  cdr << this->ssl_component_;
-  // TAO extension, replace the contents of the octet sequence with
-  // the CDR stream
-  CORBA::ULong length = cdr.total_length ();
-  component.component_data.length (length);
-  CORBA::Octet *buf = component.component_data.get_buffer ();
-  for (const ACE_Message_Block *i = cdr.begin ();
-       i != 0;
-       i = i->cont ())
-    {
-      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
-      buf += i->length ();
-    }
-
-  pfile->tagged_components ().set_component (component);
 
   return 0;
 }
@@ -139,8 +138,18 @@ TAO_SSLIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
     ACE_dynamic_cast(const TAO_SSLIOP_Profile *,
                      pfile);
 
-  // compare the port and sin_addr (numeric host address)
-  return profile->object_addr () == this->address_;
+  // Make sure the dynamically cast pointer is valid.
+  if (profile == 0)
+    return 0;
+
+  for (size_t i = 0; i < this->num_hosts_; ++i)
+    {
+      // compare the port and sin_addr (numeric host address)
+      if (profile->object_addr () == this->addrs_[i])
+        return 1;  // Collocated
+    }
+
+  return 0;  // Not collocated
 }
 
 int
@@ -149,6 +158,7 @@ TAO_SSLIOP_Acceptor::close (void)
   int r = this->ssl_acceptor_.close ();
   if (this->TAO_IIOP_Acceptor::close () != 0)
     r = -1;
+
   return r;
 }
 
@@ -159,6 +169,8 @@ TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                            const char *address,
                            const char *options)
 {
+  // Open the non-SSL enabled endpoints, then open the SSL enabled
+  // endpoints.
   if (this->TAO_IIOP_Acceptor::open (orb_core,
 				     major,
 				     minor,
@@ -169,7 +181,8 @@ TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   // The SSL port is set in the parse_options() method. All we have
   // to do is call open_i()
   ACE_INET_Addr addr (this->ssl_component_.port,
-                      this->address_.get_host_addr());
+                      this->addrs_[0].get_host_addr ());
+
   return this->open_i (orb_core, addr);
 }
 
@@ -177,17 +190,22 @@ int
 TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                    const char *options)
 {
+  // Open the non-SSL enabled endpoints, then open the SSL enabled
+  // endpoints.
   if (this->TAO_IIOP_Acceptor::open_default (orb_core, options) == -1)
     return -1;
 
-  // @@ Until we can support multihomed machines correctly we must
-  //    pick the "default interface" and only listen on that IP
-  //    address.
+  // Now that each network interface's hostname has been cached, open
+  // an endpoint on each network interface using the INADDR_ANY
+  // address.
+  ACE_INET_Addr addr;
 
   // this->ssl_component_.port is initialized to zero or it is set in
   // this->parse_options().
-  ACE_INET_Addr addr (this->ssl_component_.port,
-                      this->address_.get_host_addr ());
+  if (addr.set (this->ssl_component_.port,
+                ACE_static_cast(ACE_UINT32, INADDR_ANY),
+                1) != 0)
+    return -1;
 
   return this->open_i (orb_core, addr);
 }
@@ -221,10 +239,13 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
       return -1;
     }
 
-  // @@ Should this be a catastrophic error???
   ACE_INET_Addr ssl_address;
+
+  // We do this make sure the port number the endpoint is listening on
+  // gets set in the addr.
   if (this->ssl_acceptor_.acceptor ().get_local_addr (ssl_address) != 0)
     {
+      // @@ Should this be a catastrophic error???
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "\n\nTAO (%P|%t) SSLIOP_Acceptor::open_i - %p\n\n",
@@ -232,26 +253,23 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
       return -1;
     }
 
+  // Reset the SSL endpoint port to the one chosen by the OS (or by
+  // the user if provided.
   this->ssl_component_.port = ssl_address.get_port_number ();
 
   if (TAO_debug_level > 5)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "\nTAO (%P|%t) SSLIOP_Acceptor::open_i - "
-                  "listening on: <%s:%u>\n",
-                  this->host_.c_str (),
-                  this->ssl_component_.port));
+      for (size_t i = 0; i < this->num_hosts_; ++i)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) SSLIOP_Acceptor::open_i - "
+                      "listening on: <%s:%u>\n",
+                      this->hosts_[i].c_str (),
+                      this->ssl_component_.port));
+        }
     }
-  return 0;
-}
 
-CORBA::ULong
-TAO_SSLIOP_Acceptor::endpoint_count (void)
-{
-  // @@ for now just assume one!
-  // we should take a look at the local address, if it is zero then
-  // get the list of available IP interfaces and return this number.
-  return 1;
+  return 0;
 }
 
 int
