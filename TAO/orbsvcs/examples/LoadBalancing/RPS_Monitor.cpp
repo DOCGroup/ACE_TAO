@@ -2,6 +2,7 @@
 #include "ServerRequestInterceptor.h"
 #include "ace/UUID.h"
 #include "tao/ORB_Constants.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (LoadBalancing,
            RPS_Monitor,
