@@ -1,10 +1,19 @@
+Tue Jun  4 10:03:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Reverted the thr_count()
+	  stuff since we need to reactivate the queue now.
+
+	* ace/Message_Queue*: Changed all the message queue implementations to
+	  use the new ACTIVATED/DEACTIVATED/PULSED implementation of
+ 	  deactivate()/activate().
+
 Tue Jun  4 09:48:34 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/Message_Queue.h:
         * ace/Message_Queue_T.h:
 
           Fixed the signatures of deactivate and deactivate_i to make the
-          appearance of the default parameter 'int pulse' consistent.
+ 	  appearance of the default parameter 'int pulse' consistent.
 
 Tue Jun  4 06:46:27 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 

@@ -311,19 +311,21 @@ public:
    * activated again will return -1 with <errno> == ESHUTDOWN.  If <pulse> is
    * non-0 then only the waiting threads are notified and the queue's state
    * is not changed.  In either case, however, no messages are removed
-   * from the queue.  Returns WAS_INACTIVE if queue was inactive before
-   * the call and WAS_ACTIVE if queue was active before the call.  */
+   * from the queue.  Returns the state of the queue before the call.  */
   virtual int deactivate (int pulse = 0);
 
   /**
    * Reactivate the queue so that threads can enqueue and dequeue
-   * messages again.  Returns WAS_INACTIVE if queue was inactive
-   * before the call and WAS_ACTIVE if queue was active before the
-   * call.
+   * messages again.  Returns the state of the queue before the call.
    */
   virtual int activate (void);
 
-  /// Returns true if <deactivated_> is enabled.
+  /// Returns the current state of the queue, which can either
+  /// be <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
+  virtual int state (void);
+
+  /// Returns true if the state of the queue is <DEACTIVATED>,
+  /// but false if the queue's is <ACTIVATED> or <PULSED>.
   virtual int deactivated (void);
 
   // = Notification hook.
@@ -413,8 +415,7 @@ protected:
    * immediately return -1 with <errno> == ESHUTDOWN.  If <pulse> is
    * non-0 then only the waiting threads are notified and the queue's state
    * is not changed.  In either case, however, no messages are removed
-   * from the queue.  Returns WAS_INACTIVE if queue was inactive before
-   * the call and WAS_ACTIVE if queue was active before the call.  */
+   * from the queue.  Returns the state of the queue before the call.  */
   virtual int deactivate_i (int pulse = 0);
 
   /// Activate the queue.
@@ -457,8 +458,9 @@ protected:
   /// Current number of messages in the queue.
   size_t cur_count_;
 
-  /// Indicates that the queue is inactive.
-  int deactivated_;
+  /// Indicates the state of the queue, which can be
+  /// <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
+  int state_;
 
   /// The notification strategy used when a new message is enqueued.
   ACE_Notification_Strategy *notification_strategy_;
@@ -1132,19 +1134,21 @@ public:
    * activated again will return -1 with <errno> == ESHUTDOWN.  If <pulse> is
    * non-0 then only the waiting threads are notified and the queue's state
    * is not changed.  In either case, however, no messages are removed
-   * from the queue.  Returns WAS_INACTIVE if queue was inactive before
-   * the call and WAS_ACTIVE if queue was active before the call.  */
-  virtual int deactivate (int pulse);
+   * from the queue.  Returns the state of the queue before the call.  */
+  virtual int deactivate (int pulse = 0);
 
   /**
    * Reactivate the queue so that threads can enqueue and dequeue
-   * messages again.  Returns WAS_INACTIVE if queue was inactive
-   * before the call and WAS_ACTIVE if queue was active before the
-   * call.
+   * messages again.  Returns the state of the queue before the call.
    */
   virtual int activate (void);
 
-  /// Returns true if <deactivated_> is enabled.
+  /// Returns the current state of the queue, which can either
+  /// be <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
+  virtual int state (void);
+
+  /// Returns true if the state of the queue is <DEACTIVATED>,
+  /// but false if the queue's is <ACTIVATED> or <PULSED>.
   virtual int deactivated (void);
 
   // = Notification hook.
