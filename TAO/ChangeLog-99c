@@ -1,3 +1,22 @@
+Mon Jun 28 16:18:28 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/README:
+
+	  Documentation updates due to pluggable protocol updates in
+	  MT_Cubit.
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+
+	  Pluggable protocol updates.  MT_Cubit is now non-protocol
+	  specific.  The MT_Cubit server options have been changed.  Use
+	  the `-e' option, documented in MT_Cubit's README file, instead
+	  of `-h' and `-p'.  The default protocol is IIOP if one isn't
+	  specified.
+
 Mon Jun 28 16:15:21 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Consumer_Handler.cpp
