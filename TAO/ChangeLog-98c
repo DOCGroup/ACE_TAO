@@ -1,3 +1,8 @@
+Tue Sep 15 13:51:36 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
+
+	* TAO/orbsvcs/tests/Simple_Naming/client.cpp : 
+	  Added return values to all <execute> methods.
+
 Tue Sep 15 13:10:51 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_global.cpp (IDL_GlobalData): Replaced "/"s with
