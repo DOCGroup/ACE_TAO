@@ -1,3 +1,8 @@
+Mon Oct 27 17:55:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IORManipulation/IORC.cpp:
+	* tao/RTCORBA/RTCORBAC.cpp: Regenerated code again.
+
 Mon Oct 27 17:15:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:

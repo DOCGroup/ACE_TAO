@@ -1764,6 +1764,20 @@ operator>>= (
 // TAO_IDL - Generated from
 // be/be_visitor_sequence/any_op_cs.cpp:54
 
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 // Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
@@ -1817,20 +1831,6 @@ CORBA::Boolean operator>>= (
         TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
         _tao_elem
       );
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
 }
 
 // TAO_IDL - Generated from

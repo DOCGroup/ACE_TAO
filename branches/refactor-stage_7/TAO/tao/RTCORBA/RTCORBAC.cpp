@@ -58,20 +58,20 @@ static const CORBA::Long _oc_RTCORBA_NativePriority[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x4e617469),
-  ACE_NTOHL (0x76655072),
-  ACE_NTOHL (0x696f7269),
-  ACE_NTOHL (0x74793a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x4e617469), 
+  ACE_NTOHL (0x76655072), 
+  ACE_NTOHL (0x696f7269), 
+  ACE_NTOHL (0x74793a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/NativePriority:1.0
     15,
-  ACE_NTOHL (0x4e617469),
-  ACE_NTOHL (0x76655072),
-  ACE_NTOHL (0x696f7269),
+  ACE_NTOHL (0x4e617469), 
+  ACE_NTOHL (0x76655072), 
+  ACE_NTOHL (0x696f7269), 
   ACE_NTOHL (0x74790000),  // name = NativePriority
     CORBA::tk_short,
 
@@ -98,18 +98,18 @@ static const CORBA::Long _oc_RTCORBA_Priority[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x5072696f),
-  ACE_NTOHL (0x72697479),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x5072696f), 
+  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
     9,
-  ACE_NTOHL (0x5072696f),
-  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x5072696f), 
+  ACE_NTOHL (0x72697479), 
   ACE_NTOHL (0x0),  // name = Priority
     CORBA::tk_short,
 
@@ -136,20 +136,20 @@ static const CORBA::Long _oc_RTCORBA_NetworkPriority[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x4e657477),
-  ACE_NTOHL (0x6f726b50),
-  ACE_NTOHL (0x72696f72),
-  ACE_NTOHL (0x6974793a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x4e657477), 
+  ACE_NTOHL (0x6f726b50), 
+  ACE_NTOHL (0x72696f72), 
+  ACE_NTOHL (0x6974793a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/NetworkPriority:1.0
     16,
-  ACE_NTOHL (0x4e657477),
-  ACE_NTOHL (0x6f726b50),
-  ACE_NTOHL (0x72696f72),
+  ACE_NTOHL (0x4e657477), 
+  ACE_NTOHL (0x6f726b50), 
+  ACE_NTOHL (0x72696f72), 
   ACE_NTOHL (0x69747900),  // name = NetworkPriority
     CORBA::tk_long,
 
@@ -176,20 +176,20 @@ static const CORBA::Long _oc_RTCORBA_ThreadpoolId[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x54687265),
-  ACE_NTOHL (0x6164706f),
-  ACE_NTOHL (0x6f6c4964),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x54687265), 
+  ACE_NTOHL (0x6164706f), 
+  ACE_NTOHL (0x6f6c4964), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolId:1.0
     13,
-  ACE_NTOHL (0x54687265),
-  ACE_NTOHL (0x6164706f),
-  ACE_NTOHL (0x6f6c4964),
+  ACE_NTOHL (0x54687265), 
+  ACE_NTOHL (0x6164706f), 
+  ACE_NTOHL (0x6f6c4964), 
   ACE_NTOHL (0x0),  // name = ThreadpoolId
     CORBA::tk_ulong,
 
@@ -216,58 +216,58 @@ static const CORBA::Long _oc_RTCORBA_ThreadpoolLane[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x54687265),
-  ACE_NTOHL (0x6164706f),
-  ACE_NTOHL (0x6f6c4c61),
-  ACE_NTOHL (0x6e653a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x54687265), 
+  ACE_NTOHL (0x6164706f), 
+  ACE_NTOHL (0x6f6c4c61), 
+  ACE_NTOHL (0x6e653a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolLane:1.0
     15,
-  ACE_NTOHL (0x54687265),
-  ACE_NTOHL (0x6164706f),
-  ACE_NTOHL (0x6f6c4c61),
+  ACE_NTOHL (0x54687265), 
+  ACE_NTOHL (0x6164706f), 
+  ACE_NTOHL (0x6f6c4c61), 
   ACE_NTOHL (0x6e650000),  // name = ThreadpoolLane
   3, // member count
     14,
-  ACE_NTOHL (0x6c616e65),
-  ACE_NTOHL (0x5f707269),
-  ACE_NTOHL (0x6f726974),
+  ACE_NTOHL (0x6c616e65), 
+  ACE_NTOHL (0x5f707269), 
+  ACE_NTOHL (0x6f726974), 
   ACE_NTOHL (0x79000000),  // name = lane_priority
     CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     33,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x5254434f),
-    ACE_NTOHL (0x5242412f),
-    ACE_NTOHL (0x5072696f),
-    ACE_NTOHL (0x72697479),
-    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x5254434f), 
+    ACE_NTOHL (0x5242412f), 
+    ACE_NTOHL (0x5072696f), 
+    ACE_NTOHL (0x72697479), 
+    ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
         9,
-    ACE_NTOHL (0x5072696f),
-    ACE_NTOHL (0x72697479),
+    ACE_NTOHL (0x5072696f), 
+    ACE_NTOHL (0x72697479), 
     ACE_NTOHL (0x0),  // name = Priority
         CORBA::tk_short,
 
 
   15,
-  ACE_NTOHL (0x73746174),
-  ACE_NTOHL (0x69635f74),
-  ACE_NTOHL (0x68726561),
+  ACE_NTOHL (0x73746174), 
+  ACE_NTOHL (0x69635f74), 
+  ACE_NTOHL (0x68726561), 
   ACE_NTOHL (0x64730000),  // name = static_threads
     CORBA::tk_ulong,
 
   16,
-  ACE_NTOHL (0x64796e61),
-  ACE_NTOHL (0x6d69635f),
-  ACE_NTOHL (0x74687265),
+  ACE_NTOHL (0x64796e61), 
+  ACE_NTOHL (0x6d69635f), 
+  ACE_NTOHL (0x74687265), 
   ACE_NTOHL (0x61647300),  // name = dynamic_threads
     CORBA::tk_ulong,
 
@@ -287,10 +287,10 @@ namespace RTCORBA
     &_tc_TAO_tc_RTCORBA_ThreadpoolLane;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_structure/structure_cs.cpp:66
 
-void
+void 
 RTCORBA::ThreadpoolLane::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -300,7 +300,7 @@ RTCORBA::ThreadpoolLane::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_RTCORBA_THREADPOOLLANES_CS_)
@@ -360,20 +360,20 @@ static const CORBA::Long _oc_RTCORBA_ThreadpoolLanes[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x54687265),
-  ACE_NTOHL (0x6164706f),
-  ACE_NTOHL (0x6f6c4c61),
-  ACE_NTOHL (0x6e65733a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x54687265), 
+  ACE_NTOHL (0x6164706f), 
+  ACE_NTOHL (0x6f6c4c61), 
+  ACE_NTOHL (0x6e65733a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolLanes:1.0
     16,
-  ACE_NTOHL (0x54687265),
-  ACE_NTOHL (0x6164706f),
-  ACE_NTOHL (0x6f6c4c61),
+  ACE_NTOHL (0x54687265), 
+  ACE_NTOHL (0x6164706f), 
+  ACE_NTOHL (0x6f6c4c61), 
   ACE_NTOHL (0x6e657300),  // name = ThreadpoolLanes
     CORBA::tk_sequence, // typecode kind
   228, // encapsulation length
@@ -382,58 +382,58 @@ static const CORBA::Long _oc_RTCORBA_ThreadpoolLanes[] =
     212, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       39,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x5254434f),
-      ACE_NTOHL (0x5242412f),
-      ACE_NTOHL (0x54687265),
-      ACE_NTOHL (0x6164706f),
-      ACE_NTOHL (0x6f6c4c61),
-      ACE_NTOHL (0x6e653a31),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x5254434f), 
+      ACE_NTOHL (0x5242412f), 
+      ACE_NTOHL (0x54687265), 
+      ACE_NTOHL (0x6164706f), 
+      ACE_NTOHL (0x6f6c4c61), 
+      ACE_NTOHL (0x6e653a31), 
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolLane:1.0
             15,
-      ACE_NTOHL (0x54687265),
-      ACE_NTOHL (0x6164706f),
-      ACE_NTOHL (0x6f6c4c61),
+      ACE_NTOHL (0x54687265), 
+      ACE_NTOHL (0x6164706f), 
+      ACE_NTOHL (0x6f6c4c61), 
       ACE_NTOHL (0x6e650000),  // name = ThreadpoolLane
       3, // member count
             14,
-      ACE_NTOHL (0x6c616e65),
-      ACE_NTOHL (0x5f707269),
-      ACE_NTOHL (0x6f726974),
+      ACE_NTOHL (0x6c616e65), 
+      ACE_NTOHL (0x5f707269), 
+      ACE_NTOHL (0x6f726974), 
       ACE_NTOHL (0x79000000),  // name = lane_priority
             CORBA::tk_alias, // typecode kind for typedefs
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         33,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x5254434f),
-        ACE_NTOHL (0x5242412f),
-        ACE_NTOHL (0x5072696f),
-        ACE_NTOHL (0x72697479),
-        ACE_NTOHL (0x3a312e30),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x5254434f), 
+        ACE_NTOHL (0x5242412f), 
+        ACE_NTOHL (0x5072696f), 
+        ACE_NTOHL (0x72697479), 
+        ACE_NTOHL (0x3a312e30), 
         ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
                 9,
-        ACE_NTOHL (0x5072696f),
-        ACE_NTOHL (0x72697479),
+        ACE_NTOHL (0x5072696f), 
+        ACE_NTOHL (0x72697479), 
         ACE_NTOHL (0x0),  // name = Priority
                 CORBA::tk_short,
 
 
       15,
-      ACE_NTOHL (0x73746174),
-      ACE_NTOHL (0x69635f74),
-      ACE_NTOHL (0x68726561),
+      ACE_NTOHL (0x73746174), 
+      ACE_NTOHL (0x69635f74), 
+      ACE_NTOHL (0x68726561), 
       ACE_NTOHL (0x64730000),  // name = static_threads
             CORBA::tk_ulong,
 
       16,
-      ACE_NTOHL (0x64796e61),
-      ACE_NTOHL (0x6d69635f),
-      ACE_NTOHL (0x74687265),
+      ACE_NTOHL (0x64796e61), 
+      ACE_NTOHL (0x6d69635f), 
+      ACE_NTOHL (0x74687265), 
       ACE_NTOHL (0x61647300),  // name = dynamic_threads
             CORBA::tk_ulong,
 
@@ -463,32 +463,32 @@ static const CORBA::Long _oc_RTCORBA_PriorityModel[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x5072696f),
-  ACE_NTOHL (0x72697479),
-  ACE_NTOHL (0x4d6f6465),
-  ACE_NTOHL (0x6c3a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x5072696f), 
+  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x4d6f6465), 
+  ACE_NTOHL (0x6c3a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/PriorityModel:1.0
   14,
-  ACE_NTOHL (0x5072696f),
-  ACE_NTOHL (0x72697479),
-  ACE_NTOHL (0x4d6f6465),
+  ACE_NTOHL (0x5072696f), 
+  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x4d6f6465), 
   ACE_NTOHL (0x6c000000),  // name = PriorityModel
   2, // member count
   18,
-  ACE_NTOHL (0x434c4945),
-  ACE_NTOHL (0x4e545f50),
-  ACE_NTOHL (0x524f5041),
-  ACE_NTOHL (0x47415445),
+  ACE_NTOHL (0x434c4945), 
+  ACE_NTOHL (0x4e545f50), 
+  ACE_NTOHL (0x524f5041), 
+  ACE_NTOHL (0x47415445), 
   ACE_NTOHL (0x44000000),  // name = CLIENT_PROPAGATED
   16,
-  ACE_NTOHL (0x53455256),
-  ACE_NTOHL (0x45525f44),
-  ACE_NTOHL (0x45434c41),
+  ACE_NTOHL (0x53455256), 
+  ACE_NTOHL (0x45525f44), 
+  ACE_NTOHL (0x45434c41), 
   ACE_NTOHL (0x52454400),  // name = SERVER_DECLARED
   };
 
@@ -543,7 +543,7 @@ TAO::Objref_Traits<RTCORBA::PriorityModelPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_PriorityModelPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -554,7 +554,7 @@ RTCORBA::PriorityModelPolicy::PriorityModelPolicy (void)
 RTCORBA::PriorityModelPolicy::~PriorityModelPolicy (void)
 {}
 
-void
+void 
 RTCORBA::PriorityModelPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   PriorityModelPolicy *_tao_tmp_pointer =
@@ -572,10 +572,10 @@ RTCORBA::PriorityModelPolicy::_narrow (
     {
       return PriorityModelPolicy::_nil ();
     }
-
+  
   PriorityModelPolicy_ptr proxy =
     dynamic_cast<PriorityModelPolicy_ptr> (_tao_objref);
-
+  
   return PriorityModelPolicy::_duplicate (proxy);
 }
 
@@ -586,7 +586,7 @@ RTCORBA::PriorityModelPolicy::_duplicate (PriorityModelPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -641,22 +641,22 @@ static const CORBA::Long _oc_RTCORBA_PriorityModelPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   44,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x5072696f),
-  ACE_NTOHL (0x72697479),
-  ACE_NTOHL (0x4d6f6465),
-  ACE_NTOHL (0x6c506f6c),
-  ACE_NTOHL (0x6963793a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x5072696f), 
+  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x4d6f6465), 
+  ACE_NTOHL (0x6c506f6c), 
+  ACE_NTOHL (0x6963793a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/PriorityModelPolicy:1.0
     20,
-  ACE_NTOHL (0x5072696f),
-  ACE_NTOHL (0x72697479),
-  ACE_NTOHL (0x4d6f6465),
-  ACE_NTOHL (0x6c506f6c),
+  ACE_NTOHL (0x5072696f), 
+  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x4d6f6465), 
+  ACE_NTOHL (0x6c506f6c), 
   ACE_NTOHL (0x69637900),  // name = PriorityModelPolicy
   };
 
@@ -711,7 +711,7 @@ TAO::Objref_Traits<RTCORBA::ThreadpoolPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_ThreadpoolPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -722,7 +722,7 @@ RTCORBA::ThreadpoolPolicy::ThreadpoolPolicy (void)
 RTCORBA::ThreadpoolPolicy::~ThreadpoolPolicy (void)
 {}
 
-void
+void 
 RTCORBA::ThreadpoolPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ThreadpoolPolicy *_tao_tmp_pointer =
@@ -740,10 +740,10 @@ RTCORBA::ThreadpoolPolicy::_narrow (
     {
       return ThreadpoolPolicy::_nil ();
     }
-
+  
   ThreadpoolPolicy_ptr proxy =
     dynamic_cast<ThreadpoolPolicy_ptr> (_tao_objref);
-
+  
   return ThreadpoolPolicy::_duplicate (proxy);
 }
 
@@ -754,7 +754,7 @@ RTCORBA::ThreadpoolPolicy::_duplicate (ThreadpoolPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -809,22 +809,22 @@ static const CORBA::Long _oc_RTCORBA_ThreadpoolPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   41,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x54687265),
-  ACE_NTOHL (0x6164706f),
-  ACE_NTOHL (0x6f6c506f),
-  ACE_NTOHL (0x6c696379),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x54687265), 
+  ACE_NTOHL (0x6164706f), 
+  ACE_NTOHL (0x6f6c506f), 
+  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolPolicy:1.0
     17,
-  ACE_NTOHL (0x54687265),
-  ACE_NTOHL (0x6164706f),
-  ACE_NTOHL (0x6f6c506f),
-  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x54687265), 
+  ACE_NTOHL (0x6164706f), 
+  ACE_NTOHL (0x6f6c506f), 
+  ACE_NTOHL (0x6c696379), 
   ACE_NTOHL (0x0),  // name = ThreadpoolPolicy
   };
 
@@ -879,7 +879,7 @@ TAO::Objref_Traits<RTCORBA::ProtocolProperties>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_ProtocolProperties_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -890,7 +890,7 @@ RTCORBA::ProtocolProperties::ProtocolProperties (void)
 RTCORBA::ProtocolProperties::~ProtocolProperties (void)
 {}
 
-void
+void 
 RTCORBA::ProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   ProtocolProperties *_tao_tmp_pointer =
@@ -908,10 +908,10 @@ RTCORBA::ProtocolProperties::_narrow (
     {
       return ProtocolProperties::_nil ();
     }
-
+  
   ProtocolProperties_ptr proxy =
     dynamic_cast<ProtocolProperties_ptr> (_tao_objref);
-
+  
   return ProtocolProperties::_duplicate (proxy);
 }
 
@@ -922,7 +922,7 @@ RTCORBA::ProtocolProperties::_duplicate (ProtocolProperties_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -966,21 +966,6 @@ RTCORBA::ProtocolProperties::marshal (TAO_OutputCDR &)
   return 0;
 }
 
-//////////////////////////////////////////////////////
-// CDR Encoding Support
-
-CORBA::Boolean
-RTCORBA::ProtocolProperties::_tao_encode (TAO_OutputCDR &)
-{
- return 1;
-}
-
-CORBA::Boolean
-RTCORBA::ProtocolProperties::_tao_decode (TAO_InputCDR &)
-{
-  return 1;
-}
-
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
 
@@ -988,22 +973,22 @@ static const CORBA::Long _oc_RTCORBA_ProtocolProperties[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   43,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x50726f74),
-  ACE_NTOHL (0x6f636f6c),
-  ACE_NTOHL (0x50726f70),
-  ACE_NTOHL (0x65727469),
-  ACE_NTOHL (0x65733a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x50726f74), 
+  ACE_NTOHL (0x6f636f6c), 
+  ACE_NTOHL (0x50726f70), 
+  ACE_NTOHL (0x65727469), 
+  ACE_NTOHL (0x65733a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ProtocolProperties:1.0
     19,
-  ACE_NTOHL (0x50726f74),
-  ACE_NTOHL (0x6f636f6c),
-  ACE_NTOHL (0x50726f70),
-  ACE_NTOHL (0x65727469),
+  ACE_NTOHL (0x50726f74), 
+  ACE_NTOHL (0x6f636f6c), 
+  ACE_NTOHL (0x50726f70), 
+  ACE_NTOHL (0x65727469), 
   ACE_NTOHL (0x65730000),  // name = ProtocolProperties
   };
 
@@ -1028,104 +1013,104 @@ static const CORBA::Long _oc_RTCORBA_Protocol[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x50726f74),
-  ACE_NTOHL (0x6f636f6c),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x50726f74), 
+  ACE_NTOHL (0x6f636f6c), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Protocol:1.0
     9,
-  ACE_NTOHL (0x50726f74),
-  ACE_NTOHL (0x6f636f6c),
+  ACE_NTOHL (0x50726f74), 
+  ACE_NTOHL (0x6f636f6c), 
   ACE_NTOHL (0x0),  // name = Protocol
   3, // member count
     14,
-  ACE_NTOHL (0x70726f74),
-  ACE_NTOHL (0x6f636f6c),
-  ACE_NTOHL (0x5f747970),
+  ACE_NTOHL (0x70726f74), 
+  ACE_NTOHL (0x6f636f6c), 
+  ACE_NTOHL (0x5f747970), 
   ACE_NTOHL (0x65000000),  // name = protocol_type
     CORBA::tk_alias, // typecode kind for typedefs
   60, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x494f502f),
-    ACE_NTOHL (0x50726f66),
-    ACE_NTOHL (0x696c6549),
-    ACE_NTOHL (0x643a312e),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x494f502f), 
+    ACE_NTOHL (0x50726f66), 
+    ACE_NTOHL (0x696c6549), 
+    ACE_NTOHL (0x643a312e), 
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/ProfileId:1.0
         10,
-    ACE_NTOHL (0x50726f66),
-    ACE_NTOHL (0x696c6549),
+    ACE_NTOHL (0x50726f66), 
+    ACE_NTOHL (0x696c6549), 
     ACE_NTOHL (0x64000000),  // name = ProfileId
         CORBA::tk_ulong,
 
 
   24,
-  ACE_NTOHL (0x6f72625f),
-  ACE_NTOHL (0x70726f74),
-  ACE_NTOHL (0x6f636f6c),
-  ACE_NTOHL (0x5f70726f),
-  ACE_NTOHL (0x70657274),
+  ACE_NTOHL (0x6f72625f), 
+  ACE_NTOHL (0x70726f74), 
+  ACE_NTOHL (0x6f636f6c), 
+  ACE_NTOHL (0x5f70726f), 
+  ACE_NTOHL (0x70657274), 
   ACE_NTOHL (0x69657300),  // name = orb_protocol_properties
     CORBA::tk_objref, // typecode kind
   76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     43,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x5254434f),
-    ACE_NTOHL (0x5242412f),
-    ACE_NTOHL (0x50726f74),
-    ACE_NTOHL (0x6f636f6c),
-    ACE_NTOHL (0x50726f70),
-    ACE_NTOHL (0x65727469),
-    ACE_NTOHL (0x65733a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x5254434f), 
+    ACE_NTOHL (0x5242412f), 
+    ACE_NTOHL (0x50726f74), 
+    ACE_NTOHL (0x6f636f6c), 
+    ACE_NTOHL (0x50726f70), 
+    ACE_NTOHL (0x65727469), 
+    ACE_NTOHL (0x65733a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ProtocolProperties:1.0
         19,
-    ACE_NTOHL (0x50726f74),
-    ACE_NTOHL (0x6f636f6c),
-    ACE_NTOHL (0x50726f70),
-    ACE_NTOHL (0x65727469),
+    ACE_NTOHL (0x50726f74), 
+    ACE_NTOHL (0x6f636f6c), 
+    ACE_NTOHL (0x50726f70), 
+    ACE_NTOHL (0x65727469), 
     ACE_NTOHL (0x65730000),  // name = ProtocolProperties
-
+    
   30,
-  ACE_NTOHL (0x7472616e),
-  ACE_NTOHL (0x73706f72),
-  ACE_NTOHL (0x745f7072),
-  ACE_NTOHL (0x6f746f63),
-  ACE_NTOHL (0x6f6c5f70),
-  ACE_NTOHL (0x726f7065),
-  ACE_NTOHL (0x72746965),
+  ACE_NTOHL (0x7472616e), 
+  ACE_NTOHL (0x73706f72), 
+  ACE_NTOHL (0x745f7072), 
+  ACE_NTOHL (0x6f746f63), 
+  ACE_NTOHL (0x6f6c5f70), 
+  ACE_NTOHL (0x726f7065), 
+  ACE_NTOHL (0x72746965), 
   ACE_NTOHL (0x73000000),  // name = transport_protocol_properties
     CORBA::tk_objref, // typecode kind
   76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     43,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x5254434f),
-    ACE_NTOHL (0x5242412f),
-    ACE_NTOHL (0x50726f74),
-    ACE_NTOHL (0x6f636f6c),
-    ACE_NTOHL (0x50726f70),
-    ACE_NTOHL (0x65727469),
-    ACE_NTOHL (0x65733a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x5254434f), 
+    ACE_NTOHL (0x5242412f), 
+    ACE_NTOHL (0x50726f74), 
+    ACE_NTOHL (0x6f636f6c), 
+    ACE_NTOHL (0x50726f70), 
+    ACE_NTOHL (0x65727469), 
+    ACE_NTOHL (0x65733a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ProtocolProperties:1.0
         19,
-    ACE_NTOHL (0x50726f74),
-    ACE_NTOHL (0x6f636f6c),
-    ACE_NTOHL (0x50726f70),
-    ACE_NTOHL (0x65727469),
+    ACE_NTOHL (0x50726f74), 
+    ACE_NTOHL (0x6f636f6c), 
+    ACE_NTOHL (0x50726f70), 
+    ACE_NTOHL (0x65727469), 
     ACE_NTOHL (0x65730000),  // name = ProtocolProperties
-
+    
 };
 
 static CORBA::TypeCode _tc_TAO_tc_RTCORBA_Protocol (
@@ -1142,10 +1127,10 @@ namespace RTCORBA
     &_tc_TAO_tc_RTCORBA_Protocol;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_structure/structure_cs.cpp:66
 
-void
+void 
 RTCORBA::Protocol::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -1155,7 +1140,7 @@ RTCORBA::Protocol::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_RTCORBA_PROTOCOLLIST_CS_)
@@ -1215,20 +1200,20 @@ static const CORBA::Long _oc_RTCORBA_ProtocolList[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x50726f74),
-  ACE_NTOHL (0x6f636f6c),
-  ACE_NTOHL (0x4c697374),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x50726f74), 
+  ACE_NTOHL (0x6f636f6c), 
+  ACE_NTOHL (0x4c697374), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/ProtocolList:1.0
     13,
-  ACE_NTOHL (0x50726f74),
-  ACE_NTOHL (0x6f636f6c),
-  ACE_NTOHL (0x4c697374),
+  ACE_NTOHL (0x50726f74), 
+  ACE_NTOHL (0x6f636f6c), 
+  ACE_NTOHL (0x4c697374), 
   ACE_NTOHL (0x0),  // name = ProtocolList
     CORBA::tk_sequence, // typecode kind
   400, // encapsulation length
@@ -1237,104 +1222,104 @@ static const CORBA::Long _oc_RTCORBA_ProtocolList[] =
     384, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       33,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x5254434f),
-      ACE_NTOHL (0x5242412f),
-      ACE_NTOHL (0x50726f74),
-      ACE_NTOHL (0x6f636f6c),
-      ACE_NTOHL (0x3a312e30),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x5254434f), 
+      ACE_NTOHL (0x5242412f), 
+      ACE_NTOHL (0x50726f74), 
+      ACE_NTOHL (0x6f636f6c), 
+      ACE_NTOHL (0x3a312e30), 
       ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Protocol:1.0
             9,
-      ACE_NTOHL (0x50726f74),
-      ACE_NTOHL (0x6f636f6c),
+      ACE_NTOHL (0x50726f74), 
+      ACE_NTOHL (0x6f636f6c), 
       ACE_NTOHL (0x0),  // name = Protocol
       3, // member count
             14,
-      ACE_NTOHL (0x70726f74),
-      ACE_NTOHL (0x6f636f6c),
-      ACE_NTOHL (0x5f747970),
+      ACE_NTOHL (0x70726f74), 
+      ACE_NTOHL (0x6f636f6c), 
+      ACE_NTOHL (0x5f747970), 
       ACE_NTOHL (0x65000000),  // name = protocol_type
             CORBA::tk_alias, // typecode kind for typedefs
       60, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         30,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x494f502f),
-        ACE_NTOHL (0x50726f66),
-        ACE_NTOHL (0x696c6549),
-        ACE_NTOHL (0x643a312e),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x494f502f), 
+        ACE_NTOHL (0x50726f66), 
+        ACE_NTOHL (0x696c6549), 
+        ACE_NTOHL (0x643a312e), 
         ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/ProfileId:1.0
                 10,
-        ACE_NTOHL (0x50726f66),
-        ACE_NTOHL (0x696c6549),
+        ACE_NTOHL (0x50726f66), 
+        ACE_NTOHL (0x696c6549), 
         ACE_NTOHL (0x64000000),  // name = ProfileId
                 CORBA::tk_ulong,
 
 
       24,
-      ACE_NTOHL (0x6f72625f),
-      ACE_NTOHL (0x70726f74),
-      ACE_NTOHL (0x6f636f6c),
-      ACE_NTOHL (0x5f70726f),
-      ACE_NTOHL (0x70657274),
+      ACE_NTOHL (0x6f72625f), 
+      ACE_NTOHL (0x70726f74), 
+      ACE_NTOHL (0x6f636f6c), 
+      ACE_NTOHL (0x5f70726f), 
+      ACE_NTOHL (0x70657274), 
       ACE_NTOHL (0x69657300),  // name = orb_protocol_properties
             CORBA::tk_objref, // typecode kind
       76, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         43,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x5254434f),
-        ACE_NTOHL (0x5242412f),
-        ACE_NTOHL (0x50726f74),
-        ACE_NTOHL (0x6f636f6c),
-        ACE_NTOHL (0x50726f70),
-        ACE_NTOHL (0x65727469),
-        ACE_NTOHL (0x65733a31),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x5254434f), 
+        ACE_NTOHL (0x5242412f), 
+        ACE_NTOHL (0x50726f74), 
+        ACE_NTOHL (0x6f636f6c), 
+        ACE_NTOHL (0x50726f70), 
+        ACE_NTOHL (0x65727469), 
+        ACE_NTOHL (0x65733a31), 
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ProtocolProperties:1.0
                 19,
-        ACE_NTOHL (0x50726f74),
-        ACE_NTOHL (0x6f636f6c),
-        ACE_NTOHL (0x50726f70),
-        ACE_NTOHL (0x65727469),
+        ACE_NTOHL (0x50726f74), 
+        ACE_NTOHL (0x6f636f6c), 
+        ACE_NTOHL (0x50726f70), 
+        ACE_NTOHL (0x65727469), 
         ACE_NTOHL (0x65730000),  // name = ProtocolProperties
-
+        
       30,
-      ACE_NTOHL (0x7472616e),
-      ACE_NTOHL (0x73706f72),
-      ACE_NTOHL (0x745f7072),
-      ACE_NTOHL (0x6f746f63),
-      ACE_NTOHL (0x6f6c5f70),
-      ACE_NTOHL (0x726f7065),
-      ACE_NTOHL (0x72746965),
+      ACE_NTOHL (0x7472616e), 
+      ACE_NTOHL (0x73706f72), 
+      ACE_NTOHL (0x745f7072), 
+      ACE_NTOHL (0x6f746f63), 
+      ACE_NTOHL (0x6f6c5f70), 
+      ACE_NTOHL (0x726f7065), 
+      ACE_NTOHL (0x72746965), 
       ACE_NTOHL (0x73000000),  // name = transport_protocol_properties
             CORBA::tk_objref, // typecode kind
       76, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         43,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x5254434f),
-        ACE_NTOHL (0x5242412f),
-        ACE_NTOHL (0x50726f74),
-        ACE_NTOHL (0x6f636f6c),
-        ACE_NTOHL (0x50726f70),
-        ACE_NTOHL (0x65727469),
-        ACE_NTOHL (0x65733a31),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x5254434f), 
+        ACE_NTOHL (0x5242412f), 
+        ACE_NTOHL (0x50726f74), 
+        ACE_NTOHL (0x6f636f6c), 
+        ACE_NTOHL (0x50726f70), 
+        ACE_NTOHL (0x65727469), 
+        ACE_NTOHL (0x65733a31), 
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ProtocolProperties:1.0
                 19,
-        ACE_NTOHL (0x50726f74),
-        ACE_NTOHL (0x6f636f6c),
-        ACE_NTOHL (0x50726f70),
-        ACE_NTOHL (0x65727469),
+        ACE_NTOHL (0x50726f74), 
+        ACE_NTOHL (0x6f636f6c), 
+        ACE_NTOHL (0x50726f70), 
+        ACE_NTOHL (0x65727469), 
         ACE_NTOHL (0x65730000),  // name = ProtocolProperties
-
+        
 
     0U,
 
@@ -1391,7 +1376,7 @@ TAO::Objref_Traits<RTCORBA::ServerProtocolPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_ServerProtocolPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1402,7 +1387,7 @@ RTCORBA::ServerProtocolPolicy::ServerProtocolPolicy (void)
 RTCORBA::ServerProtocolPolicy::~ServerProtocolPolicy (void)
 {}
 
-void
+void 
 RTCORBA::ServerProtocolPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServerProtocolPolicy *_tao_tmp_pointer =
@@ -1420,10 +1405,10 @@ RTCORBA::ServerProtocolPolicy::_narrow (
     {
       return ServerProtocolPolicy::_nil ();
     }
-
+  
   ServerProtocolPolicy_ptr proxy =
     dynamic_cast<ServerProtocolPolicy_ptr> (_tao_objref);
-
+  
   return ServerProtocolPolicy::_duplicate (proxy);
 }
 
@@ -1434,7 +1419,7 @@ RTCORBA::ServerProtocolPolicy::_duplicate (ServerProtocolPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -1489,24 +1474,24 @@ static const CORBA::Long _oc_RTCORBA_ServerProtocolPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   45,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65725072),
-  ACE_NTOHL (0x6f746f63),
-  ACE_NTOHL (0x6f6c506f),
-  ACE_NTOHL (0x6c696379),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65725072), 
+  ACE_NTOHL (0x6f746f63), 
+  ACE_NTOHL (0x6f6c506f), 
+  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/ServerProtocolPolicy:1.0
     21,
-  ACE_NTOHL (0x53657276),
-  ACE_NTOHL (0x65725072),
-  ACE_NTOHL (0x6f746f63),
-  ACE_NTOHL (0x6f6c506f),
-  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65725072), 
+  ACE_NTOHL (0x6f746f63), 
+  ACE_NTOHL (0x6f6c506f), 
+  ACE_NTOHL (0x6c696379), 
   ACE_NTOHL (0x0),  // name = ServerProtocolPolicy
   };
 
@@ -1561,7 +1546,7 @@ TAO::Objref_Traits<RTCORBA::ClientProtocolPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_ClientProtocolPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1572,7 +1557,7 @@ RTCORBA::ClientProtocolPolicy::ClientProtocolPolicy (void)
 RTCORBA::ClientProtocolPolicy::~ClientProtocolPolicy (void)
 {}
 
-void
+void 
 RTCORBA::ClientProtocolPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ClientProtocolPolicy *_tao_tmp_pointer =
@@ -1590,10 +1575,10 @@ RTCORBA::ClientProtocolPolicy::_narrow (
     {
       return ClientProtocolPolicy::_nil ();
     }
-
+  
   ClientProtocolPolicy_ptr proxy =
     dynamic_cast<ClientProtocolPolicy_ptr> (_tao_objref);
-
+  
   return ClientProtocolPolicy::_duplicate (proxy);
 }
 
@@ -1604,7 +1589,7 @@ RTCORBA::ClientProtocolPolicy::_duplicate (ClientProtocolPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -1659,24 +1644,24 @@ static const CORBA::Long _oc_RTCORBA_ClientProtocolPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   45,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x436c6965),
-  ACE_NTOHL (0x6e745072),
-  ACE_NTOHL (0x6f746f63),
-  ACE_NTOHL (0x6f6c506f),
-  ACE_NTOHL (0x6c696379),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x436c6965), 
+  ACE_NTOHL (0x6e745072), 
+  ACE_NTOHL (0x6f746f63), 
+  ACE_NTOHL (0x6f6c506f), 
+  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/ClientProtocolPolicy:1.0
     21,
-  ACE_NTOHL (0x436c6965),
-  ACE_NTOHL (0x6e745072),
-  ACE_NTOHL (0x6f746f63),
-  ACE_NTOHL (0x6f6c506f),
-  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x436c6965), 
+  ACE_NTOHL (0x6e745072), 
+  ACE_NTOHL (0x6f746f63), 
+  ACE_NTOHL (0x6f6c506f), 
+  ACE_NTOHL (0x6c696379), 
   ACE_NTOHL (0x0),  // name = ClientProtocolPolicy
   };
 
@@ -1731,7 +1716,7 @@ TAO::Objref_Traits<RTCORBA::PrivateConnectionPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_PrivateConnectionPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1742,7 +1727,7 @@ RTCORBA::PrivateConnectionPolicy::PrivateConnectionPolicy (void)
 RTCORBA::PrivateConnectionPolicy::~PrivateConnectionPolicy (void)
 {}
 
-void
+void 
 RTCORBA::PrivateConnectionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   PrivateConnectionPolicy *_tao_tmp_pointer =
@@ -1760,10 +1745,10 @@ RTCORBA::PrivateConnectionPolicy::_narrow (
     {
       return PrivateConnectionPolicy::_nil ();
     }
-
+  
   PrivateConnectionPolicy_ptr proxy =
     dynamic_cast<PrivateConnectionPolicy_ptr> (_tao_objref);
-
+  
   return PrivateConnectionPolicy::_duplicate (proxy);
 }
 
@@ -1774,7 +1759,7 @@ RTCORBA::PrivateConnectionPolicy::_duplicate (PrivateConnectionPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -1829,24 +1814,24 @@ static const CORBA::Long _oc_RTCORBA_PrivateConnectionPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   48,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x50726976),
-  ACE_NTOHL (0x61746543),
-  ACE_NTOHL (0x6f6e6e65),
-  ACE_NTOHL (0x6374696f),
-  ACE_NTOHL (0x6e506f6c),
-  ACE_NTOHL (0x6963793a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x50726976), 
+  ACE_NTOHL (0x61746543), 
+  ACE_NTOHL (0x6f6e6e65), 
+  ACE_NTOHL (0x6374696f), 
+  ACE_NTOHL (0x6e506f6c), 
+  ACE_NTOHL (0x6963793a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/PrivateConnectionPolicy:1.0
     24,
-  ACE_NTOHL (0x50726976),
-  ACE_NTOHL (0x61746543),
-  ACE_NTOHL (0x6f6e6e65),
-  ACE_NTOHL (0x6374696f),
-  ACE_NTOHL (0x6e506f6c),
+  ACE_NTOHL (0x50726976), 
+  ACE_NTOHL (0x61746543), 
+  ACE_NTOHL (0x6f6e6e65), 
+  ACE_NTOHL (0x6374696f), 
+  ACE_NTOHL (0x6e506f6c), 
   ACE_NTOHL (0x69637900),  // name = PrivateConnectionPolicy
   };
 
@@ -1901,7 +1886,7 @@ TAO::Objref_Traits<RTCORBA::TCPProtocolProperties>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_TCPProtocolProperties_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -1912,7 +1897,7 @@ RTCORBA::TCPProtocolProperties::TCPProtocolProperties (void)
 RTCORBA::TCPProtocolProperties::~TCPProtocolProperties (void)
 {}
 
-void
+void 
 RTCORBA::TCPProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   TCPProtocolProperties *_tao_tmp_pointer =
@@ -1930,10 +1915,10 @@ RTCORBA::TCPProtocolProperties::_narrow (
     {
       return TCPProtocolProperties::_nil ();
     }
-
+  
   TCPProtocolProperties_ptr proxy =
     dynamic_cast<TCPProtocolProperties_ptr> (_tao_objref);
-
+  
   return TCPProtocolProperties::_duplicate (proxy);
 }
 
@@ -1944,7 +1929,7 @@ RTCORBA::TCPProtocolProperties::_duplicate (TCPProtocolProperties_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -1999,24 +1984,24 @@ static const CORBA::Long _oc_RTCORBA_TCPProtocolProperties[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   46,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x54435050),
-  ACE_NTOHL (0x726f746f),
-  ACE_NTOHL (0x636f6c50),
-  ACE_NTOHL (0x726f7065),
-  ACE_NTOHL (0x72746965),
-  ACE_NTOHL (0x733a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x54435050), 
+  ACE_NTOHL (0x726f746f), 
+  ACE_NTOHL (0x636f6c50), 
+  ACE_NTOHL (0x726f7065), 
+  ACE_NTOHL (0x72746965), 
+  ACE_NTOHL (0x733a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/TCPProtocolProperties:1.0
     22,
-  ACE_NTOHL (0x54435050),
-  ACE_NTOHL (0x726f746f),
-  ACE_NTOHL (0x636f6c50),
-  ACE_NTOHL (0x726f7065),
-  ACE_NTOHL (0x72746965),
+  ACE_NTOHL (0x54435050), 
+  ACE_NTOHL (0x726f746f), 
+  ACE_NTOHL (0x636f6c50), 
+  ACE_NTOHL (0x726f7065), 
+  ACE_NTOHL (0x72746965), 
   ACE_NTOHL (0x73000000),  // name = TCPProtocolProperties
   };
 
@@ -2071,7 +2056,7 @@ TAO::Objref_Traits<RTCORBA::GIOPProtocolProperties>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_GIOPProtocolProperties_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -2082,7 +2067,7 @@ RTCORBA::GIOPProtocolProperties::GIOPProtocolProperties (void)
 RTCORBA::GIOPProtocolProperties::~GIOPProtocolProperties (void)
 {}
 
-void
+void 
 RTCORBA::GIOPProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   GIOPProtocolProperties *_tao_tmp_pointer =
@@ -2100,10 +2085,10 @@ RTCORBA::GIOPProtocolProperties::_narrow (
     {
       return GIOPProtocolProperties::_nil ();
     }
-
+  
   GIOPProtocolProperties_ptr proxy =
     dynamic_cast<GIOPProtocolProperties_ptr> (_tao_objref);
-
+  
   return GIOPProtocolProperties::_duplicate (proxy);
 }
 
@@ -2114,7 +2099,7 @@ RTCORBA::GIOPProtocolProperties::_duplicate (GIOPProtocolProperties_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -2169,24 +2154,24 @@ static const CORBA::Long _oc_RTCORBA_GIOPProtocolProperties[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   47,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x47494f50),
-  ACE_NTOHL (0x50726f74),
-  ACE_NTOHL (0x6f636f6c),
-  ACE_NTOHL (0x50726f70),
-  ACE_NTOHL (0x65727469),
-  ACE_NTOHL (0x65733a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x47494f50), 
+  ACE_NTOHL (0x50726f74), 
+  ACE_NTOHL (0x6f636f6c), 
+  ACE_NTOHL (0x50726f70), 
+  ACE_NTOHL (0x65727469), 
+  ACE_NTOHL (0x65733a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/GIOPProtocolProperties:1.0
     23,
-  ACE_NTOHL (0x47494f50),
-  ACE_NTOHL (0x50726f74),
-  ACE_NTOHL (0x6f636f6c),
-  ACE_NTOHL (0x50726f70),
-  ACE_NTOHL (0x65727469),
+  ACE_NTOHL (0x47494f50), 
+  ACE_NTOHL (0x50726f74), 
+  ACE_NTOHL (0x6f636f6c), 
+  ACE_NTOHL (0x50726f70), 
+  ACE_NTOHL (0x65727469), 
   ACE_NTOHL (0x65730000),  // name = GIOPProtocolProperties
   };
 
@@ -2241,7 +2226,7 @@ TAO::Objref_Traits<RTCORBA::UnixDomainProtocolProperties>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_UnixDomainProtocolProperties_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -2252,7 +2237,7 @@ RTCORBA::UnixDomainProtocolProperties::UnixDomainProtocolProperties (void)
 RTCORBA::UnixDomainProtocolProperties::~UnixDomainProtocolProperties (void)
 {}
 
-void
+void 
 RTCORBA::UnixDomainProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   UnixDomainProtocolProperties *_tao_tmp_pointer =
@@ -2270,10 +2255,10 @@ RTCORBA::UnixDomainProtocolProperties::_narrow (
     {
       return UnixDomainProtocolProperties::_nil ();
     }
-
+  
   UnixDomainProtocolProperties_ptr proxy =
     dynamic_cast<UnixDomainProtocolProperties_ptr> (_tao_objref);
-
+  
   return UnixDomainProtocolProperties::_duplicate (proxy);
 }
 
@@ -2284,7 +2269,7 @@ RTCORBA::UnixDomainProtocolProperties::_duplicate (UnixDomainProtocolProperties_
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -2339,28 +2324,28 @@ static const CORBA::Long _oc_RTCORBA_UnixDomainProtocolProperties[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   53,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x556e6978),
-  ACE_NTOHL (0x446f6d61),
-  ACE_NTOHL (0x696e5072),
-  ACE_NTOHL (0x6f746f63),
-  ACE_NTOHL (0x6f6c5072),
-  ACE_NTOHL (0x6f706572),
-  ACE_NTOHL (0x74696573),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x556e6978), 
+  ACE_NTOHL (0x446f6d61), 
+  ACE_NTOHL (0x696e5072), 
+  ACE_NTOHL (0x6f746f63), 
+  ACE_NTOHL (0x6f6c5072), 
+  ACE_NTOHL (0x6f706572), 
+  ACE_NTOHL (0x74696573), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/UnixDomainProtocolProperties:1.0
     29,
-  ACE_NTOHL (0x556e6978),
-  ACE_NTOHL (0x446f6d61),
-  ACE_NTOHL (0x696e5072),
-  ACE_NTOHL (0x6f746f63),
-  ACE_NTOHL (0x6f6c5072),
-  ACE_NTOHL (0x6f706572),
-  ACE_NTOHL (0x74696573),
+  ACE_NTOHL (0x556e6978), 
+  ACE_NTOHL (0x446f6d61), 
+  ACE_NTOHL (0x696e5072), 
+  ACE_NTOHL (0x6f746f63), 
+  ACE_NTOHL (0x6f6c5072), 
+  ACE_NTOHL (0x6f706572), 
+  ACE_NTOHL (0x74696573), 
   ACE_NTOHL (0x0),  // name = UnixDomainProtocolProperties
   };
 
@@ -2415,7 +2400,7 @@ TAO::Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_SharedMemoryProtocolProperties_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -2426,7 +2411,7 @@ RTCORBA::SharedMemoryProtocolProperties::SharedMemoryProtocolProperties (void)
 RTCORBA::SharedMemoryProtocolProperties::~SharedMemoryProtocolProperties (void)
 {}
 
-void
+void 
 RTCORBA::SharedMemoryProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   SharedMemoryProtocolProperties *_tao_tmp_pointer =
@@ -2444,10 +2429,10 @@ RTCORBA::SharedMemoryProtocolProperties::_narrow (
     {
       return SharedMemoryProtocolProperties::_nil ();
     }
-
+  
   SharedMemoryProtocolProperties_ptr proxy =
     dynamic_cast<SharedMemoryProtocolProperties_ptr> (_tao_objref);
-
+  
   return SharedMemoryProtocolProperties::_duplicate (proxy);
 }
 
@@ -2458,7 +2443,7 @@ RTCORBA::SharedMemoryProtocolProperties::_duplicate (SharedMemoryProtocolPropert
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -2513,28 +2498,28 @@ static const CORBA::Long _oc_RTCORBA_SharedMemoryProtocolProperties[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   55,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x53686172),
-  ACE_NTOHL (0x65644d65),
-  ACE_NTOHL (0x6d6f7279),
-  ACE_NTOHL (0x50726f74),
-  ACE_NTOHL (0x6f636f6c),
-  ACE_NTOHL (0x50726f70),
-  ACE_NTOHL (0x65727469),
-  ACE_NTOHL (0x65733a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x53686172), 
+  ACE_NTOHL (0x65644d65), 
+  ACE_NTOHL (0x6d6f7279), 
+  ACE_NTOHL (0x50726f74), 
+  ACE_NTOHL (0x6f636f6c), 
+  ACE_NTOHL (0x50726f70), 
+  ACE_NTOHL (0x65727469), 
+  ACE_NTOHL (0x65733a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/SharedMemoryProtocolProperties:1.0
     31,
-  ACE_NTOHL (0x53686172),
-  ACE_NTOHL (0x65644d65),
-  ACE_NTOHL (0x6d6f7279),
-  ACE_NTOHL (0x50726f74),
-  ACE_NTOHL (0x6f636f6c),
-  ACE_NTOHL (0x50726f70),
-  ACE_NTOHL (0x65727469),
+  ACE_NTOHL (0x53686172), 
+  ACE_NTOHL (0x65644d65), 
+  ACE_NTOHL (0x6d6f7279), 
+  ACE_NTOHL (0x50726f74), 
+  ACE_NTOHL (0x6f636f6c), 
+  ACE_NTOHL (0x50726f70), 
+  ACE_NTOHL (0x65727469), 
   ACE_NTOHL (0x65730000),  // name = SharedMemoryProtocolProperties
   };
 
@@ -2559,20 +2544,20 @@ static const CORBA::Long _oc_RTCORBA_PriorityBand[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x5072696f),
-  ACE_NTOHL (0x72697479),
-  ACE_NTOHL (0x42616e64),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x5072696f), 
+  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x42616e64), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/PriorityBand:1.0
     13,
-  ACE_NTOHL (0x5072696f),
-  ACE_NTOHL (0x72697479),
-  ACE_NTOHL (0x42616e64),
+  ACE_NTOHL (0x5072696f), 
+  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x42616e64), 
   ACE_NTOHL (0x0),  // name = PriorityBand
   2, // member count
     4,
@@ -2581,41 +2566,41 @@ static const CORBA::Long _oc_RTCORBA_PriorityBand[] =
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     33,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x5254434f),
-    ACE_NTOHL (0x5242412f),
-    ACE_NTOHL (0x5072696f),
-    ACE_NTOHL (0x72697479),
-    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x5254434f), 
+    ACE_NTOHL (0x5242412f), 
+    ACE_NTOHL (0x5072696f), 
+    ACE_NTOHL (0x72697479), 
+    ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
         9,
-    ACE_NTOHL (0x5072696f),
-    ACE_NTOHL (0x72697479),
+    ACE_NTOHL (0x5072696f), 
+    ACE_NTOHL (0x72697479), 
     ACE_NTOHL (0x0),  // name = Priority
         CORBA::tk_short,
 
 
   5,
-  ACE_NTOHL (0x68696768),
+  ACE_NTOHL (0x68696768), 
   ACE_NTOHL (0x0),  // name = high
     CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     33,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x5254434f),
-    ACE_NTOHL (0x5242412f),
-    ACE_NTOHL (0x5072696f),
-    ACE_NTOHL (0x72697479),
-    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x5254434f), 
+    ACE_NTOHL (0x5242412f), 
+    ACE_NTOHL (0x5072696f), 
+    ACE_NTOHL (0x72697479), 
+    ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
         9,
-    ACE_NTOHL (0x5072696f),
-    ACE_NTOHL (0x72697479),
+    ACE_NTOHL (0x5072696f), 
+    ACE_NTOHL (0x72697479), 
     ACE_NTOHL (0x0),  // name = Priority
         CORBA::tk_short,
 
@@ -2636,10 +2621,10 @@ namespace RTCORBA
     &_tc_TAO_tc_RTCORBA_PriorityBand;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_structure/structure_cs.cpp:66
 
-void
+void 
 RTCORBA::PriorityBand::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -2649,7 +2634,7 @@ RTCORBA::PriorityBand::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_RTCORBA_PRIORITYBANDS_CS_)
@@ -2709,20 +2694,20 @@ static const CORBA::Long _oc_RTCORBA_PriorityBands[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x5072696f),
-  ACE_NTOHL (0x72697479),
-  ACE_NTOHL (0x42616e64),
-  ACE_NTOHL (0x733a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x5072696f), 
+  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x42616e64), 
+  ACE_NTOHL (0x733a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/PriorityBands:1.0
     14,
-  ACE_NTOHL (0x5072696f),
-  ACE_NTOHL (0x72697479),
-  ACE_NTOHL (0x42616e64),
+  ACE_NTOHL (0x5072696f), 
+  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x42616e64), 
   ACE_NTOHL (0x73000000),  // name = PriorityBands
     CORBA::tk_sequence, // typecode kind
   252, // encapsulation length
@@ -2731,20 +2716,20 @@ static const CORBA::Long _oc_RTCORBA_PriorityBands[] =
     236, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       37,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x5254434f),
-      ACE_NTOHL (0x5242412f),
-      ACE_NTOHL (0x5072696f),
-      ACE_NTOHL (0x72697479),
-      ACE_NTOHL (0x42616e64),
-      ACE_NTOHL (0x3a312e30),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x5254434f), 
+      ACE_NTOHL (0x5242412f), 
+      ACE_NTOHL (0x5072696f), 
+      ACE_NTOHL (0x72697479), 
+      ACE_NTOHL (0x42616e64), 
+      ACE_NTOHL (0x3a312e30), 
       ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/PriorityBand:1.0
             13,
-      ACE_NTOHL (0x5072696f),
-      ACE_NTOHL (0x72697479),
-      ACE_NTOHL (0x42616e64),
+      ACE_NTOHL (0x5072696f), 
+      ACE_NTOHL (0x72697479), 
+      ACE_NTOHL (0x42616e64), 
       ACE_NTOHL (0x0),  // name = PriorityBand
       2, // member count
             4,
@@ -2753,41 +2738,41 @@ static const CORBA::Long _oc_RTCORBA_PriorityBands[] =
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         33,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x5254434f),
-        ACE_NTOHL (0x5242412f),
-        ACE_NTOHL (0x5072696f),
-        ACE_NTOHL (0x72697479),
-        ACE_NTOHL (0x3a312e30),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x5254434f), 
+        ACE_NTOHL (0x5242412f), 
+        ACE_NTOHL (0x5072696f), 
+        ACE_NTOHL (0x72697479), 
+        ACE_NTOHL (0x3a312e30), 
         ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
                 9,
-        ACE_NTOHL (0x5072696f),
-        ACE_NTOHL (0x72697479),
+        ACE_NTOHL (0x5072696f), 
+        ACE_NTOHL (0x72697479), 
         ACE_NTOHL (0x0),  // name = Priority
                 CORBA::tk_short,
 
 
       5,
-      ACE_NTOHL (0x68696768),
+      ACE_NTOHL (0x68696768), 
       ACE_NTOHL (0x0),  // name = high
             CORBA::tk_alias, // typecode kind for typedefs
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         33,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x5254434f),
-        ACE_NTOHL (0x5242412f),
-        ACE_NTOHL (0x5072696f),
-        ACE_NTOHL (0x72697479),
-        ACE_NTOHL (0x3a312e30),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x5254434f), 
+        ACE_NTOHL (0x5242412f), 
+        ACE_NTOHL (0x5072696f), 
+        ACE_NTOHL (0x72697479), 
+        ACE_NTOHL (0x3a312e30), 
         ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
                 9,
-        ACE_NTOHL (0x5072696f),
-        ACE_NTOHL (0x72697479),
+        ACE_NTOHL (0x5072696f), 
+        ACE_NTOHL (0x72697479), 
         ACE_NTOHL (0x0),  // name = Priority
                 CORBA::tk_short,
 
@@ -2848,7 +2833,7 @@ TAO::Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_PriorityBandedConnectionPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -2859,7 +2844,7 @@ RTCORBA::PriorityBandedConnectionPolicy::PriorityBandedConnectionPolicy (void)
 RTCORBA::PriorityBandedConnectionPolicy::~PriorityBandedConnectionPolicy (void)
 {}
 
-void
+void 
 RTCORBA::PriorityBandedConnectionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   PriorityBandedConnectionPolicy *_tao_tmp_pointer =
@@ -2877,10 +2862,10 @@ RTCORBA::PriorityBandedConnectionPolicy::_narrow (
     {
       return PriorityBandedConnectionPolicy::_nil ();
     }
-
+  
   PriorityBandedConnectionPolicy_ptr proxy =
     dynamic_cast<PriorityBandedConnectionPolicy_ptr> (_tao_objref);
-
+  
   return PriorityBandedConnectionPolicy::_duplicate (proxy);
 }
 
@@ -2891,7 +2876,7 @@ RTCORBA::PriorityBandedConnectionPolicy::_duplicate (PriorityBandedConnectionPol
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -2946,28 +2931,28 @@ static const CORBA::Long _oc_RTCORBA_PriorityBandedConnectionPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   55,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x5072696f),
-  ACE_NTOHL (0x72697479),
-  ACE_NTOHL (0x42616e64),
-  ACE_NTOHL (0x6564436f),
-  ACE_NTOHL (0x6e6e6563),
-  ACE_NTOHL (0x74696f6e),
-  ACE_NTOHL (0x506f6c69),
-  ACE_NTOHL (0x63793a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x5072696f), 
+  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x42616e64), 
+  ACE_NTOHL (0x6564436f), 
+  ACE_NTOHL (0x6e6e6563), 
+  ACE_NTOHL (0x74696f6e), 
+  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x63793a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/PriorityBandedConnectionPolicy:1.0
     31,
-  ACE_NTOHL (0x5072696f),
-  ACE_NTOHL (0x72697479),
-  ACE_NTOHL (0x42616e64),
-  ACE_NTOHL (0x6564436f),
-  ACE_NTOHL (0x6e6e6563),
-  ACE_NTOHL (0x74696f6e),
-  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x5072696f), 
+  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x42616e64), 
+  ACE_NTOHL (0x6564436f), 
+  ACE_NTOHL (0x6e6e6563), 
+  ACE_NTOHL (0x74696f6e), 
+  ACE_NTOHL (0x506f6c69), 
   ACE_NTOHL (0x63790000),  // name = PriorityBandedConnectionPolicy
   };
 
@@ -3022,7 +3007,7 @@ TAO::Objref_Traits<RTCORBA::Current>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_Current_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -3033,7 +3018,7 @@ RTCORBA::Current::Current (void)
 RTCORBA::Current::~Current (void)
 {}
 
-void
+void 
 RTCORBA::Current::_tao_any_destructor (void *_tao_void_pointer)
 {
   Current *_tao_tmp_pointer =
@@ -3051,10 +3036,10 @@ RTCORBA::Current::_narrow (
     {
       return Current::_nil ();
     }
-
+  
   Current_ptr proxy =
     dynamic_cast<Current_ptr> (_tao_objref);
-
+  
   return Current::_duplicate (proxy);
 }
 
@@ -3065,7 +3050,7 @@ RTCORBA::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -3120,16 +3105,16 @@ static const CORBA::Long _oc_RTCORBA_Current[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   32,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x43757272),
-  ACE_NTOHL (0x656e743a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x43757272), 
+  ACE_NTOHL (0x656e743a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/Current:1.0
     8,
-  ACE_NTOHL (0x43757272),
+  ACE_NTOHL (0x43757272), 
   ACE_NTOHL (0x656e7400),  // name = Current
   };
 
@@ -3184,7 +3169,7 @@ TAO::Objref_Traits<RTCORBA::Mutex>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_Mutex_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -3195,7 +3180,7 @@ RTCORBA::Mutex::Mutex (void)
 RTCORBA::Mutex::~Mutex (void)
 {}
 
-void
+void 
 RTCORBA::Mutex::_tao_any_destructor (void *_tao_void_pointer)
 {
   Mutex *_tao_tmp_pointer =
@@ -3213,10 +3198,10 @@ RTCORBA::Mutex::_narrow (
     {
       return Mutex::_nil ();
     }
-
+  
   Mutex_ptr proxy =
     dynamic_cast<Mutex_ptr> (_tao_objref);
-
+  
   return Mutex::_duplicate (proxy);
 }
 
@@ -3227,7 +3212,7 @@ RTCORBA::Mutex::_duplicate (Mutex_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -3278,16 +3263,16 @@ static const CORBA::Long _oc_RTCORBA_Mutex[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x4d757465),
-  ACE_NTOHL (0x783a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x4d757465), 
+  ACE_NTOHL (0x783a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/Mutex:1.0
     6,
-  ACE_NTOHL (0x4d757465),
+  ACE_NTOHL (0x4d757465), 
   ACE_NTOHL (0x78000000),  // name = Mutex
   };
 
@@ -3342,12 +3327,12 @@ TAO::Objref_Traits<RTCORBA::RTORB>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*RTCORBA__TAO_RTORB_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_exception/exception_cs.cpp:63
 
 RTCORBA::RTORB::MutexNotFound::MutexNotFound (void)
@@ -3450,21 +3435,21 @@ static const CORBA::Long _oc_RTCORBA_RTORB_MutexNotFound[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   44,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x52544f52),
-  ACE_NTOHL (0x422f4d75),
-  ACE_NTOHL (0x7465784e),
-  ACE_NTOHL (0x6f74466f),
-  ACE_NTOHL (0x756e643a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x52544f52), 
+  ACE_NTOHL (0x422f4d75), 
+  ACE_NTOHL (0x7465784e), 
+  ACE_NTOHL (0x6f74466f), 
+  ACE_NTOHL (0x756e643a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/RTORB/MutexNotFound:1.0
     14,
-  ACE_NTOHL (0x4d757465),
-  ACE_NTOHL (0x784e6f74),
-  ACE_NTOHL (0x466f756e),
+  ACE_NTOHL (0x4d757465), 
+  ACE_NTOHL (0x784e6f74), 
+  ACE_NTOHL (0x466f756e), 
   ACE_NTOHL (0x64000000),  // name = MutexNotFound
   0, // member count
   };
@@ -3480,7 +3465,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_RTORB_MutexNotFound (
 ::CORBA::TypeCode_ptr RTCORBA::RTORB::_tc_MutexNotFound =
   &_tc_TAO_tc_RTCORBA_RTORB_MutexNotFound;
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_exception/exception_cs.cpp:63
 
 RTCORBA::RTORB::InvalidThreadpool::InvalidThreadpool (void)
@@ -3583,23 +3568,23 @@ static const CORBA::Long _oc_RTCORBA_RTORB_InvalidThreadpool[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   48,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x52544f52),
-  ACE_NTOHL (0x422f496e),
-  ACE_NTOHL (0x76616c69),
-  ACE_NTOHL (0x64546872),
-  ACE_NTOHL (0x65616470),
-  ACE_NTOHL (0x6f6f6c3a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x52544f52), 
+  ACE_NTOHL (0x422f496e), 
+  ACE_NTOHL (0x76616c69), 
+  ACE_NTOHL (0x64546872), 
+  ACE_NTOHL (0x65616470), 
+  ACE_NTOHL (0x6f6f6c3a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/RTORB/InvalidThreadpool:1.0
     18,
-  ACE_NTOHL (0x496e7661),
-  ACE_NTOHL (0x6c696454),
-  ACE_NTOHL (0x68726561),
-  ACE_NTOHL (0x64706f6f),
+  ACE_NTOHL (0x496e7661), 
+  ACE_NTOHL (0x6c696454), 
+  ACE_NTOHL (0x68726561), 
+  ACE_NTOHL (0x64706f6f), 
   ACE_NTOHL (0x6c000000),  // name = InvalidThreadpool
   0, // member count
   };
@@ -3621,7 +3606,7 @@ RTCORBA::RTORB::RTORB (void)
 RTCORBA::RTORB::~RTORB (void)
 {}
 
-void
+void 
 RTCORBA::RTORB::_tao_any_destructor (void *_tao_void_pointer)
 {
   RTORB *_tao_tmp_pointer =
@@ -3639,10 +3624,10 @@ RTCORBA::RTORB::_narrow (
     {
       return RTORB::_nil ();
     }
-
+  
   RTORB_ptr proxy =
     dynamic_cast<RTORB_ptr> (_tao_objref);
-
+  
   return RTORB::_duplicate (proxy);
 }
 
@@ -3653,7 +3638,7 @@ RTCORBA::RTORB::_duplicate (RTORB_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -3704,16 +3689,16 @@ static const CORBA::Long _oc_RTCORBA_RTORB[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x5254434f),
-  ACE_NTOHL (0x5242412f),
-  ACE_NTOHL (0x52544f52),
-  ACE_NTOHL (0x423a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x5254434f), 
+  ACE_NTOHL (0x5242412f), 
+  ACE_NTOHL (0x52544f52), 
+  ACE_NTOHL (0x423a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/RTORB:1.0
     6,
-  ACE_NTOHL (0x52544f52),
+  ACE_NTOHL (0x52544f52), 
   ACE_NTOHL (0x42000000),  // name = RTORB
   };
 
@@ -3731,7 +3716,7 @@ namespace RTCORBA
     &_tc_TAO_tc_RTCORBA_RTORB;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -3789,7 +3774,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -3871,7 +3856,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<RTCORBA::PriorityModel>::extract (
         _tao_any,
         RTCORBA::_tc_PriorityModel,
-        _tao_elem
+        _tao_elem 
       );
 }
 
@@ -4082,10 +4067,24 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_structure/any_op_cs.cpp:54
 
-// Copying insertion.
+
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::Protocol>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::Protocol>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}// Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
     const RTCORBA::Protocol &_tao_elem
@@ -4140,24 +4139,24 @@ CORBA::Boolean operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::Protocol>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::Protocol>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_sequence/any_op_cs.cpp:54
 
-// Copying insertion.
+
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}// Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
     const RTCORBA::ProtocolList &_tao_elem
@@ -4210,20 +4209,6 @@ CORBA::Boolean operator>>= (
         RTCORBA::_tc_ProtocolList,
         _tao_elem
       );
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -4709,7 +4694,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -4767,7 +4752,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -5101,8 +5086,22 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_exception/any_op_cs.cpp:50
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::RTORB::MutexNotFound>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::RTORB::MutexNotFound>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void operator<<= (
@@ -5159,22 +5158,22 @@ CORBA::Boolean operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::RTORB::MutexNotFound>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::RTORB::MutexNotFound>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_exception/any_op_cs.cpp:50
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::RTORB::InvalidThreadpool>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::RTORB::InvalidThreadpool>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void operator<<= (
@@ -5231,20 +5230,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::RTORB::InvalidThreadpool>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<RTCORBA::RTORB::InvalidThreadpool>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 // TAO_IDL - Generated from
 // be/be_visitor_sequence/cdr_op_cs.cpp:95
 
@@ -5257,20 +5242,20 @@ CORBA::Boolean operator<< (
   )
 {
   CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
+  
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm << _tao_sequence[i]);
         }
-
+      
       return _tao_marshal_flag;
     }
-
+  
   return 0;
 }
 
@@ -5280,7 +5265,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-
+  
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -5290,28 +5275,28 @@ CORBA::Boolean operator>> (
         {
           return 0;
         }
-
+      
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-
+      
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
+      if (0 >= _tao_seq_len) 
         {
           return 1;
         }
-
+      
       // Retrieve all the elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i]);
         }
-
+      
       return _tao_marshal_flag;
-
+    
     }
-
+  
   return 0;
 }
 
@@ -5329,20 +5314,20 @@ CORBA::Boolean operator<< (
   )
 {
   CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
+  
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm << _tao_sequence[i]);
         }
-
+      
       return _tao_marshal_flag;
     }
-
+  
   return 0;
 }
 
@@ -5368,20 +5353,20 @@ CORBA::Boolean operator<< (
   )
 {
   CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
+  
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm << _tao_sequence[i]);
         }
-
+      
       return _tao_marshal_flag;
     }
-
+  
   return 0;
 }
 
@@ -5391,7 +5376,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-
+  
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -5401,28 +5386,28 @@ CORBA::Boolean operator>> (
         {
           return 0;
         }
-
+      
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-
+      
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
+      if (0 >= _tao_seq_len) 
         {
           return 1;
         }
-
+      
       // Retrieve all the elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i]);
         }
-
+      
       return _tao_marshal_flag;
-
+    
     }
-
+  
   return 0;
 }
 
@@ -5496,7 +5481,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::PriorityModelPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::PriorityModelPolicy
@@ -5516,7 +5501,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::ThreadpoolPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::ThreadpoolPolicy
@@ -5536,7 +5521,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::ProtocolProperties
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::ProtocolProperties
@@ -5611,7 +5596,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::ServerProtocolPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::ServerProtocolPolicy
@@ -5631,7 +5616,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::ClientProtocolPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::ClientProtocolPolicy
@@ -5651,7 +5636,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::PrivateConnectionPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::PrivateConnectionPolicy
@@ -5671,7 +5656,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::TCPProtocolProperties
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::TCPProtocolProperties
@@ -5691,7 +5676,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::GIOPProtocolProperties
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::GIOPProtocolProperties
@@ -5711,7 +5696,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::UnixDomainProtocolProperties
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::UnixDomainProtocolProperties
@@ -5731,7 +5716,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::SharedMemoryProtocolProperties
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::SharedMemoryProtocolProperties
@@ -5800,7 +5785,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::PriorityBandedConnectionPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::PriorityBandedConnectionPolicy
@@ -5820,7 +5805,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::Current
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::Current
@@ -5840,7 +5825,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::Mutex
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::Mutex
@@ -5870,7 +5855,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         RTCORBA::RTORB
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         RTCORBA::RTORB
@@ -5946,7 +5931,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::PriorityModelPolicy
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::PriorityModelPolicy
@@ -5966,7 +5951,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::ThreadpoolPolicy
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::ThreadpoolPolicy
@@ -5986,7 +5971,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::ProtocolProperties
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::ProtocolProperties
@@ -6061,7 +6046,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::ServerProtocolPolicy
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::ServerProtocolPolicy
@@ -6081,7 +6066,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::ClientProtocolPolicy
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::ClientProtocolPolicy
@@ -6101,7 +6086,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::PrivateConnectionPolicy
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::PrivateConnectionPolicy
@@ -6121,7 +6106,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::TCPProtocolProperties
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::TCPProtocolProperties
@@ -6141,7 +6126,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::GIOPProtocolProperties
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::GIOPProtocolProperties
@@ -6161,7 +6146,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::UnixDomainProtocolProperties
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::UnixDomainProtocolProperties
@@ -6181,7 +6166,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::SharedMemoryProtocolProperties
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::SharedMemoryProtocolProperties
@@ -6250,7 +6235,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::PriorityBandedConnectionPolicy
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::PriorityBandedConnectionPolicy
@@ -6270,7 +6255,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::Current
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::Current
@@ -6290,7 +6275,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::Mutex
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::Mutex
@@ -6320,7 +6305,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         RTCORBA::RTORB
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTCORBA::RTORB
@@ -6331,4 +6316,5 @@ CORBA::Boolean operator>> (
         RTCORBA::RTORB \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+
