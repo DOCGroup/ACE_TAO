@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO -lTAO_IORManip
+LDLIBS = -lTAO_IORManip -lTAO
 
 PROG_SRCS = IORTest.cpp
 
@@ -43,7 +43,7 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-LDFLAGS +=  -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
+LDFLAGS =  -L$(ACE_ROOT)/ace -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 .PRECIOUS:

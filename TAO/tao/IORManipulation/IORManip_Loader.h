@@ -15,7 +15,7 @@
 //
 // =========================================================================
 
-#ifndef TAO_IORMANIP_LAODER_H
+#ifndef TAO_IORMANIP_LOADER_H
 #define TAO_IORMANIP_LOADER_H
 #include "ace/pre.h"
 
@@ -61,9 +61,9 @@ TAO_Requires_IORManip_Initializer = TAO_IORManip_Loader::Initializer ();
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
-#define TAO_IORManip_SAFE_INCLUDE
+#define TAO_IORMANIP_SAFE_INCLUDE
 #include "IORC.h"
-#undef TAO_IORManip_SAFE_INCLUDE
+#undef TAO_IORMANIP_SAFE_INCLUDE
 
 #include "ace/post.h"
 #endif /* TAO_IORManip_H */

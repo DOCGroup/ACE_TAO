@@ -1,3 +1,14 @@
+Thu Sep 21 14:13:01 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IORManipulation/IORC.cpp:
+	* tao/IORManipulation/IORC.h:
+	* tao/IORManipulation/IORManip_Loader.h:
+	* tao/IORManipulation/IORManipulation.h:
+	* tao/IORManipulation/IORManipulation.cpp:
+	* tests/IORManipulation/IORTest.cpp:
+	* tests/IORManipulation/Makefile: Fixed a bug with static
+	  builds. Thanks to Carlos for helping out with this.
+
 Thu Sep 21 10:08:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAOACE.dsw:
