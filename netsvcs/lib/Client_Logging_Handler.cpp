@@ -191,8 +191,8 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                                         (char *) &log_record,
                                         (int) length);
  
-      // This is a recv error, incomplete send.  Try once more, then
-      // abandon all hope on this socket.
+      // We go a ``short-read.''  Try once more, then abandon all hope
+      // on this socket.
       if (retrieved != length)
        {
            ACE_DEBUG ((LM_DEBUG,
