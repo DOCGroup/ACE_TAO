@@ -64,7 +64,7 @@ ORBCORE_SRCS = \
 	IIOP_ORB \
 	IIOP_Interpreter \
 	Marshal \
-	Object_Table \
+	Active_Object_Map \
 	Operation_Table \
 	ORB_Core \
 	params \
