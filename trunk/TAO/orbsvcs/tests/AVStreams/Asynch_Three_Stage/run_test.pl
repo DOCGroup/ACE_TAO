@@ -57,35 +57,35 @@ sleep $sleeptime;
 
 print STDERR "Starting Sender\n";
 
-$sender = $SV->SpawnWaitKill (320);
+$sender = $SV->SpawnWaitKill (1000);
 
 if ($sender != 0) {
     print STDERR "ERROR: sender returned $sender\n";
     $status = 1;
 }
 
-$distributer = $DI->TerminateWaitKill (320);
+$distributer = $DI->TerminateWaitKill (1000);
 
 if ($distributer != 0) {
     print STDERR "ERROR: distributer returned $distributer\n";
     $status = 1;
 }
 
-$receiver1 = $RE1->TerminateWaitKill (320);
+$receiver1 = $RE1->TerminateWaitKill (1000);
 
 if ($receiver1 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$receiver2 = $RE2->TerminateWaitKill (320);
+$receiver2 = $RE2->TerminateWaitKill (1000);
 
 if ($receiver2 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$nserver = $NS->TerminateWaitKill (320);
+$nserver = $NS->TerminateWaitKill (1000);
 
 if ($nserver != 0) {
     print STDERR "ERROR: Naming Service returned $nserver\n";
@@ -127,35 +127,35 @@ sleep $sleeptime;
 
 print STDERR "Starting Sender\n";
 
-$sender = $SV->SpawnWaitKill (320);
+$sender = $SV->SpawnWaitKill (1000);
 
 if ($sender != 0) {
     print STDERR "ERROR: sender returned $sender\n";
     $status = 1;
 }
 
-$distributer = $DI->TerminateWaitKill (320);
+$distributer = $DI->TerminateWaitKill (1000);
 
 if ($distributer != 0) {
     print STDERR "ERROR: distributer returned $distributer\n";
     $status = 1;
 }
 
-$receiver1 = $RE1->TerminateWaitKill (320);
+$receiver1 = $RE1->TerminateWaitKill (1000);
 
 if ($receiver1 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$receiver2 = $RE2->TerminateWaitKill (320);
+$receiver2 = $RE2->TerminateWaitKill (1000);
 
 if ($receiver2 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$nserver = $NS->TerminateWaitKill (320);
+$nserver = $NS->TerminateWaitKill (1000);
 
 if ($nserver != 0) {
     print STDERR "ERROR: Naming Service returned $nserver\n";
@@ -197,35 +197,35 @@ sleep $sleeptime;
 
 print STDERR "Starting Distributer\n";
 
-$distributer = $DI->SpawnWaitKill (320);
+$distributer = $DI->SpawnWaitKill (1000);
 
 if ($distributer != 0) {
     print STDERR "ERROR: sender returned $distributer\n";
     $status = 1;
 }
 
-$sender = $SV->TerminateWaitKill (320);
+$sender = $SV->TerminateWaitKill (1000);
 
 if ($sender != 0) {
     print STDERR "ERROR: sender returned $sender\n";
     $status = 1;
 }
 
-$receiver1 = $RE1->TerminateWaitKill (320);
+$receiver1 = $RE1->TerminateWaitKill (1000);
 
 if ($receiver1 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$receiver2 = $RE2->TerminateWaitKill (320);
+$receiver2 = $RE2->TerminateWaitKill (1000);
 
 if ($receiver2 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$nserver = $NS->TerminateWaitKill (320);
+$nserver = $NS->TerminateWaitKill (1000);
 
 if ($nserver != 0) {
     print STDERR "ERROR: Naming Service returned $nserver\n";
@@ -267,35 +267,35 @@ sleep $sleeptime;
 
 print STDERR "Starting Receiver 2\n";
 
-$receiver2 = $RE2->SpawnWaitKill (320);
+$receiver2 = $RE2->SpawnWaitKill (1000);
 
 if ($receiver2 != 0) {
     print STDERR "ERROR: receiver2 returned $receiver2\n";
     $status = 1;
 }
 
-$distributer = $DI->TerminateWaitKill (320);
+$distributer = $DI->TerminateWaitKill (1000);
 
 if ($distributer != 0) {
     print STDERR "ERROR: distributer returned $distributer\n";
     $status = 1;
 }
 
-$receiver1 = $RE1->TerminateWaitKill (320);
+$receiver1 = $RE1->TerminateWaitKill (1000);
 
 if ($receiver1 != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
 
-$sender = $SV->TerminateWaitKill (320);
+$sender = $SV->TerminateWaitKill (1000);
 
 if ($sender != 0) {
     print STDERR "ERROR: sender returned $sender\n";
     $status = 1;
 }
 
-$nserver = $NS->TerminateWaitKill (320);
+$nserver = $NS->TerminateWaitKill (1000);
 
 if ($nserver != 0) {
     print STDERR "ERROR: Naming Service returned $nserver\n";

@@ -41,7 +41,7 @@ sleep $sleeptime;
 
 print STDERR "Starting Client\n";
 
-$client = $CL->SpawnWaitKill (60);
+$client = $CL->SpawnWaitKill (200);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";

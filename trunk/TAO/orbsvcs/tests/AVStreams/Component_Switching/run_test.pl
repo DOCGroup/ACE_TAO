@@ -22,9 +22,9 @@ $makefile = PerlACE::LocalFile ("input");
 unlink $nsior;
 
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
-$SV1  = new PerlACE::Process ("sender", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 1");
-$SV2  = new PerlACE::Process ("sender", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 1");
-$SV3  = new PerlACE::Process ("sender", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 1");
+$SV1  = new PerlACE::Process ("sender", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
+$SV2  = new PerlACE::Process ("sender", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
+$SV3  = new PerlACE::Process ("sender", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 30");
 $RE1 = new PerlACE::Process ("receiver", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s distributer -r receiver1 -f output1");
 $RE2 = new PerlACE::Process ("receiver", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s distributer -r receiver2 -f output2");
 $DI1 = new PerlACE::Process ("distributer", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
@@ -94,7 +94,7 @@ sleep $distributer_time;
 
 print STDERR "\nStarting Distributer 4\n\n";
 
-$distributer4 = $DI4->SpawnWaitKill (120);
+$distributer4 = $DI4->SpawnWaitKill (1500);
 
 if ($distributer4 != 0) {
     print STDERR "ERROR: distributer4 returned $distributer4\n";
