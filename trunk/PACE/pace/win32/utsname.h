@@ -23,7 +23,7 @@ extern "C" {
 # ifndef PACE_UTSNAME
 # define PACE_UTSNAME
 # define PACE_SYS_NMLN 257
-  typedef struct utsname {
+  typedef struct /* utsname */ {
     char sysname[PACE_SYS_NMLN];
     char nodename[PACE_SYS_NMLN];
     char release[PACE_SYS_NMLN];
