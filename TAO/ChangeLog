@@ -1,5 +1,10 @@
+Wed Oct 15 16:30:52 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+          Removed using custom types for idl files which caused problem
+          in parallel build.
+
 Wed Oct 15 16:20:52 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
-        *orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
           Fixed incorrect ACE_RCSID format.
 
 Wed Oct 15 14:20:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
