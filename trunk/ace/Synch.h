@@ -162,8 +162,9 @@ public:
   ~ACE_File_Lock (void);
   // Remove a File lock by releasing it and closing down the <handle_>.
 
-  int remove (void);
-  // Remove a File lock by releasing it and closing down the <handle_>.
+  int remove (int unlink_file = 1);
+  // Remove a File lock by releasing it and closing down the
+  // <handle_>.  If <unlink_file> is non-0 then we unlink the file.
 
   int acquire (short whence = 0, off_t start = 0, off_t len = 1);
   // Note, for interface uniformity with other synchronization

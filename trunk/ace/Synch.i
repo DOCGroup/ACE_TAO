@@ -56,7 +56,7 @@ ACE_File_Lock::release (short whence, off_t start, off_t len)
 }
 
 ACE_INLINE int
-ACE_File_Lock::remove (void)
+ACE_File_Lock::remove (int unlink_file)
 {
 // ACE_TRACE ("ACE_File_Lock::remove");
 
@@ -65,7 +65,8 @@ ACE_File_Lock::remove (void)
   if (this->removed_ == 0)
     {
       this->removed_ = 1;
-      result = ACE_OS::flock_destroy (&this->lock_);
+      result = ACE_OS::flock_destroy (&this->lock_,
+                                      unlink_file);
     }
   return result;
 }
