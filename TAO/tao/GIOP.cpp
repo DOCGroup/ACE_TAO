@@ -1012,28 +1012,24 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
           //                         "Doing the Table Lookup ...\n",
           //                         object_id.c_str ()));
 
-          CORBA::Object_ptr object_reference =
+          CORBA::Object_var object_reference =
             CORBA::Object::_nil ();
 
           // Do the Table Lookup.
           int status =
             orb_core->orb ()->_tao_find_in_IOR_table (object_id,
-                                                      object_reference);
+                                                      object_reference.out ());
 
           // If ObjectID not in table or reference is nil raise
           // OBJECT_NOT_EXIST.
 
-          if (status == -1 || CORBA::is_nil (object_reference))
+          if (status == -1 || CORBA::is_nil (object_reference.in ()))
             ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST ());
 
           // ObjectID present in the table with an associated NON-NULL
           // reference.  Throw a forward request exception.
-
-          CORBA::Object_ptr dup =
-            CORBA::Object::_duplicate (object_reference);
-
           // @@ We could simply write the response at this point...
-          ACE_TRY_THROW (PortableServer::ForwardRequest (dup));
+          ACE_TRY_THROW (PortableServer::ForwardRequest (object_reference.in ()));
         }
 
 #endif /* TAO_NO_IOR_TABLE */
