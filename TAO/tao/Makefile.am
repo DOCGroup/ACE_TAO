@@ -151,7 +151,6 @@ ORB_Core = \
   PICurrent_Copy_Callback.cpp \
   PICurrent_ORBInitializer.cpp \
   PI_ForwardC.cpp \
-  PI_ForwardA.cpp \
   ParameterModeC.cpp \
   Parser_Registry.cpp \
   PolicyA.cpp \

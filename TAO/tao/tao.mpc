@@ -128,7 +128,6 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       RequestInfo_Util.cpp
       ClientRequestInterceptor_Adapter.cpp
       PI_ForwardC.cpp
-      PI_ForwardA.cpp
       PortableInterceptorC.cpp
       PortableInterceptorA.cpp
       PICurrent.cpp
