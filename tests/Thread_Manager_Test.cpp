@@ -9,16 +9,15 @@
 //    Thread_Manager_Test.cpp
 //
 // = DESCRIPTION
-//      This program tests out the group management mechanisms
-//      provided by the ACE_Thread_Manager, including the group signal
-//      handling, group suspension and resumption, and cooperative
-//      thread cancellation mechanisms.
+//      This program tests the group management mechanisms provided by
+//      the <ACE_Thread_Manager>, including the group signal handling,
+//      group suspension and resumption, and cooperative thread
+//      cancellation mechanisms.
 //
 // = AUTHOR
 //    Prashant Jain and Doug C. Schmidt
 // 
 // ============================================================================
-
 
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
@@ -95,6 +94,12 @@ worker (int iterations)
 static const int DEFAULT_THREADS = ACE_MAX_THREADS;
 static const int DEFAULT_ITERATIONS = 100000;
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_TSS<Signal_Catcher>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_TSS<Signal_Catcher>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* ACE_HAS_THREADS */
 
 int
@@ -162,9 +167,3 @@ main (int, char *[])
   ACE_END_TEST;
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_TSS<Signal_Catcher>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_TSS<Signal_Catcher>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

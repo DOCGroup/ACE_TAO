@@ -1,5 +1,30 @@
 Sat Sep 13 12:11:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Thread_Manager.cpp (append_thr): When we append a new
+ 	  Thr_Descriptor make sure to zero-out the cleanup_info_ fields
+ 	  since otherwise horrible things will happen...
+
+	* ace/Reactor: Added a new ACE_Reactor_Handle_Set called
+ 	  suspend_set_ and updated the suspend_i() and resume_i() method
+ 	  to use this set to store the ready bits that are enabled when we
+ 	  suspend and resume and Event_Handler, respectively.  Thanks to
+ 	  Arturo for this suggestion.
+
+	* tests/TSS_Test.cpp (main): Had to move the allocation and
+ 	  deletion of TSS_Error into the ACE_HAS_THREADS section since
+ 	  otherwise this test doesn't work when threading is disabled.
+
+	* tests/Thread_Manager_Test.cpp: Move the template specialization
+ 	  inside of the ACE_HAS_THREADS macro since otherwise this test
+ 	  doesn't work when threading is disabled.
+
+	* ace/Thread_Manager.cpp: Arrgh!  Must initialize the cleanup_info
+ 	  fields to 0 in the constructor for ACE_Thread_Descriptor!  This
+ 	  should fix a nasty bug...
+
+	* tests/Async_Timer_Queue_Test.cpp: Continued to improve the
+ 	  documentation in the test of the ACE_Async_Timer_Queue_Adapter.
+
 	* ace/Timer_Queue_T.cpp (schedule): Oops, must pass &this->mask_
  	  to ACE_Sig_Set rather than this->mask_.
 
