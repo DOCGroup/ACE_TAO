@@ -24,6 +24,7 @@
 // Forward declarations.
 template <class T> class ACE_Unbounded_Set;
 template <class T> class ACE_Unbounded_Set_Iterator;
+template <class T> class ACE_Unbounded_Set_Const_Iterator;
 template <class T> class ACE_Unbounded_Queue;
 template <class T> class ACE_Unbounded_Queue_Iterator;
 template <class T> class ACE_Unbounded_Stack;
@@ -42,6 +43,7 @@ public:
   friend class ACE_Unbounded_Queue_Iterator<T>;
   friend class ACE_Unbounded_Set<T>;
   friend class ACE_Unbounded_Set_Iterator<T>;
+  friend class ACE_Unbounded_Set_Const_Iterator<T>;
   friend class ACE_Unbounded_Stack<T>;
   friend class ACE_Unbounded_Stack_Iterator<T>;
 
