@@ -10,7 +10,7 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$CL = new PerlACE::Process ("test", "");
+$CL = new PerlACE::Process ("Thread_Cancel", "");
 
 print STDERR "Starting Current Test\n";
 

@@ -13,7 +13,7 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 LIBS = -lTAO_RTScheduler
-BIN_UNCHECKED = test
+BIN_UNCHECKED = Thread_Cancel
 
 SRC = $(addsuffix .cpp, $(BIN_UNCHECKED))            
 
@@ -45,7 +45,7 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
-test: $(addprefix $(VDIR),$(CLIENT_OBJS))
+Thread_Cancel: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(POSTLINK)
 
 realclean: clean
