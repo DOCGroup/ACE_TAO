@@ -116,9 +116,8 @@ be_visitor_operation_ih::visit_operation (be_operation *node)
   delete visitor;
 
   //generate the exceptions that are thrown by the operation
-  this->gen_throw_spec (node);
-
-  *os << ";\n\n";
+  //Don't have to do it here. It will be done as part of the argument list generatio
+  //this->gen_throw_spec (node);
 
   return 0;
 }

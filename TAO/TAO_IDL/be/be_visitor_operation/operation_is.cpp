@@ -132,7 +132,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
   delete visitor;
 
   //generate the excetions thrown by the operation
-  this->gen_throw_spec (node);
+  //  this->gen_throw_spec (node);
 
   *os <<be_idt_nl << "{"<<be_idt_nl;
   *os << "//Add your implementation here"<<be_uidt_nl;
