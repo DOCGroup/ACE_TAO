@@ -1,4 +1,13 @@
+Tue Jan 14 13:15:34 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Repository.cpp (remove): Removed an extra call to
+ 	  ACE_OS::dlclose().  This is already being called in the
+ 	  destructor of ACE_Service_Record.  Thanks to Karlheinz for
+ 	  reporting this.
+
 Tue Jan 14 00:18:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* man: Updated all the nroff and html documentation.
 
 	* ace/Timer_Heap: Implemented the spiffy new timer cancellation
  	  algorithm that requires only O(log N) time to remove a timer

@@ -85,8 +85,10 @@ ACE_ReactorEx_Handler_Repository::remove_handler (size_t index,
   // overwrite the ones being removed.
   else
     {
-      this->handles_[index] = this->handles_[--this->max_handlep1_];
-      this->event_handlers_[index] = this->event_handlers_[this->max_handlep1_];
+      this->handles_[index] = 
+	this->handles_[--this->max_handlep1_];
+      this->event_handlers_[index] = 
+	this->event_handlers_[this->max_handlep1_];
     }
 
   return 0;
@@ -313,7 +315,10 @@ ACE_ReactorEx::handle_events (ACE_Time_Value *max_wait_time,
 				    wait_all,
 				    alertable);
 
-  return this->dispatch (wait_status, wait_all, wait_all_callback, dispatch_set);
+  return this->dispatch (wait_status, 
+			 wait_all, 
+			 wait_all_callback, 
+			 dispatch_set);
 }
 
 int
@@ -455,7 +460,8 @@ ACE_ReactorEx::dispatch_handler (int index)
   // Dispatch the handler.
   if (this->handler_rep_.find (index)->handle_signal (0, &sig) == -1)
     {
-      this->handler_rep_.unbind (handle, ACE_Event_Handler::NULL_MASK);
+      this->handler_rep_.unbind 
+	(handle, ACE_Event_Handler::NULL_MASK);
       return -1;
     }
   else
@@ -581,7 +587,8 @@ ACE_ReactorEx_Notify::notify (ACE_Event_Handler *eh,
       ACE_Message_Block *mb = 0;
       ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof ACE_Notification_Buffer), -1);
 
-      ACE_Notification_Buffer *buffer = (ACE_Notification_Buffer *) mb->base ();
+      ACE_Notification_Buffer *buffer = 
+	(ACE_Notification_Buffer *) mb->base ();
       buffer->eh_ = eh;
       buffer->mask_ = mask;
 
