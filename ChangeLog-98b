@@ -1,3 +1,11 @@
+Wed Sep 23 12:15:21 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Stats.*: modified standard deviation calculation to
+          help avoid overflow.  Instead of keep running totals of
+          the sum and sum of squares, it stores each sample in an
+          dynamic structure.  Then, to calculate the standard
+          deviation, each sample is compared with the mean.
+
 Wed Sep 23 11:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
@@ -5,33 +13,32 @@ Wed Sep 23 11:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
           examples/Bounded_Packet_Relay/BPR_Drivers_T.{h,cpp}
 
           Fixed memory leaks uncovered by Purify, added large high water mark
-	  for packet relay's underlying message queue.
-	
+          for packet relay's underlying message queue.
+
 Wed Sep 23 11:28:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/Process_Unix.pm: 
-	  If the exec() call fails we report the name and the arguments of
-	  the program.
+        * bin/Process_Unix.pm:
+          If the exec() call fails we report the name and the arguments of
+          the program.
 
 Wed Sep 23 09:27:21 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/Dirent.cpp: Fixed aCC workaround from 22-Sep so that only
-	  non-g++ compilers on HP-UX see it.
+        * ace/Dirent.cpp: Fixed aCC workaround from 22-Sep so that only
+          non-g++ compilers on HP-UX see it.
 
 Wed Sep 23 02:21:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.42 released.
 
-
 Tue Sep 22 21:34:31 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/Dirent.cpp: Make aCC quit yacking about an empty translation
-	  unit.
+        * ace/Dirent.cpp: Make aCC quit yacking about an empty translation
+          unit.
 
-	* ace/OS.i: Fix up the conditions for readdir_r on differing pthreads
-	  drafts.
+        * ace/OS.i: Fix up the conditions for readdir_r on differing pthreads
+          drafts.
 
-	* ace/config-aix-4.2.x.h: Added ACE_HAS_DIRENT.
+        * ace/config-aix-4.2.x.h: Added ACE_HAS_DIRENT.
 
 Tue Sep 22 21:00:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
@@ -41,12 +48,12 @@ Tue Sep 22 21:00:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
           examples/Bounded_Packet_Relay/bpr_thread.cpp:
 
           More fixes from testing on NT, added more logging features.
-	
+
 Tue Sep 22 17:07:17 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Message_Queue_Notifications_Test.cpp (Watermark_Test):
-	  Repositioned a comma so it compiles on non-threaded platforms.
-	  Thankd to Ossama for noticing this.
+        * tests/Message_Queue_Notifications_Test.cpp (Watermark_Test):
+          Repositioned a comma so it compiles on non-threaded platforms.
+          Thankd to Ossama for noticing this.
 
 Tue Sep 22 17:20:53 1998  James Hu <jxh@entera.com>
 
@@ -59,9 +66,9 @@ Tue Sep 22 17:20:53 1998  James Hu <jxh@entera.com>
 
 Tue Sep 22 16:07:53 1998  Steve Huston  <shuston@riverace.com>
 
-	* bin/Makefile: Will now only build envinfo if make is invoked
-	  with "envinfo=1".  The difference is needed to allow clone to be
-	  built before ACE has been built.
+        * bin/Makefile: Will now only build envinfo if make is invoked
+          with "envinfo=1".  The difference is needed to allow clone to be
+          built before ACE has been built.
 
 Tue Sep 22 13:58:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
