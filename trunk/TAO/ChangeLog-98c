@@ -1,3 +1,9 @@
+Wed Aug  5 16:02:08 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp : 
+		Used TAO_ORB_Manager to do the ORB and POA 
+	  initialization and activation of servants.
+
 Wed Aug  5 15:38:34 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tests/Param_Test/fixed_array.{h,cpp}:

@@ -165,23 +165,15 @@ Cubit_Task::svc (void)
                       -1);
   TAO_TRY
     {
-      this->poa_manager_->activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
       GLOBALS::instance ()->barrier_->wait ();
 
       // Handle requests for this object until we're killed, or one of
       // the methods asks us to exit.
-      if (this->orb_->run () == -1)
+      if (this->orb_manager_.run (TAO_TRY_ENV) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "run"),
                           -1);
-
-      // Shut down the OA.
-      this->poa_->destroy (CORBA::B_TRUE,
-                           CORBA::B_TRUE,
-                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -209,74 +201,18 @@ Cubit_Task::initialize_orb (void)
       int argc = args.argc ();
       char **argv = args.argv ();
 
-      // @@ Naga, can you please try to use the TAO_Object_Manager for
-      // all of this initialization, rather than doing it all by hand?
+      // /*DONE*/@@ Naga, can you please try to use the TAO_Object_Manager for
+      // /*DONE*/all of this initialization, rather than doing it all by hand?
 
-      // Initialize the ORB.
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
-                                    this->orbname_,
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      if (this->orb_manager_.init_child_poa (argc,
+                                             argv,
+                                             "persistent_poa",
+                                             TAO_TRY_ENV) == -1)
+        return -1;
 
-      // Initialize the Object Adapter.
-      CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references ("RootPOA");
 
-      if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
-
-      this->root_poa_ =
-        PortableServer::POA::_narrow (poa_object.in (),
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      this->poa_manager_ =
-        this->root_poa_->the_POAManager (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (CORBA::is_nil (this->poa_manager_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Root poa manager is nil\n"),
-                          -1);
-      CORBA::PolicyList policies (2);
-      policies.length (2);
-
-      // Id Assignment policy
-      policies[0] =
-        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID,
-                                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      // Lifespan policy
-      policies[1] =
-        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT,
-                                                 TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      // We use a different POA, otherwise the user would have to
-      // change the object key each time it invokes the server.
-      this->poa_ =
-        this->root_poa_->create_POA ("Persistent_POA",
-                                     this->poa_manager_.in (),
-                                     policies,
-                                     TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      // Creation of the new POAs over, so destroy the Policy_ptr's.
-      for (CORBA::ULong i = 0;
-           i < policies.length () && TAO_TRY_ENV.exception () == 0;
-           ++i)
-        {
-          CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (TAO_TRY_ENV);
-        }
-      TAO_CHECK_ENV;
-
+      this->orb_ = this->orb_manager_.orb ();
       // Do the argument parsing.
-
       if (this->task_id_ == 0)
         {
           //          ACE_DEBUG ((LM_DEBUG,"parsing the arguments\n"));
@@ -402,9 +338,6 @@ Cubit_Task::create_servants (void)
                            (char *) this->key_,
                            this->task_id_);
 
-          PortableServer::ObjectId_var id =
-            PortableServer::string_to_ObjectId (buffer);
-
           ACE_NEW_RETURN (this->servants_[i],
                           Cubit_i (ts_),
                           -1);
@@ -416,9 +349,9 @@ Cubit_Task::create_servants (void)
                                i),
                               2);
 
-          this->poa_->activate_object_with_id (id.in (),
-                                               this->servants_[i],
-                                               TAO_TRY_ENV);
+          this->orb_manager_.activate_under_child_poa (buffer,
+                                                       this->servants_[i],
+                                                       TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           // Stringify the objref we'll be implementing, and print it
