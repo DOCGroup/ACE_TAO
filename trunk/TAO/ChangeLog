@@ -1,3 +1,10 @@
+Wed Jan  7 11:43:14 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/tao.mpc:
+
+          Added Arg_Traits_T.h so it will get included in MSVC project
+          files, even though it has no corresponding .cpp file.
+
 Wed Jan  7 10:50:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
