@@ -2,9 +2,10 @@
 
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Acceptor.h"
-#include "shared.h"
 
 #if defined (ACE_HAS_STREAM_PIPES)
+
+#include "shared.h"
 
 // Maximum per-process open I/O descriptors.
 const int MAX_HANDLES = 200;
