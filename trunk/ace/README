@@ -11,6 +11,7 @@ Macro					Description
 -----					-----------
 
 ACE_HAS_64BIT_LONGS			Platform has 64bit longs and 32bit ints...
+ACE_HAS_AIX_HIRES_TIMER			Platform has AIX4 ::read_real_time ()
 ACE_HAS_ALLOCA				Compiler/platform supports alloca()
 ACE_HAS_ALLOCA_H			Compiler/platform has <alloca.h>
 ACE_HAS_AUTOMATIC_INIT_FINI 		Compiler/platform correctly calls init()/fini() for shared libraries
