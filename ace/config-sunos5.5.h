@@ -20,6 +20,8 @@
 # elif (__SUNPRO_CC >= 0x420)
 # define ACE_HAS_ANSI_CASTS
 # if (__SUNPRO_CC >= 0x500)
+// string.h and memory.h conflict for memchr definitions
+#   define ACE_LACKS_MEMORY_H
 // Sun C++ 5.0 supports the `using' and `typename' keywords.
 #   define ACE_HAS_TYPENAME_KEYWORD
     /* Explicit instantiation requires the -instances=explicit
