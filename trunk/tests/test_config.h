@@ -232,7 +232,7 @@ ACE_Test_Output::ACE_Test_Output (void)
 #if !defined (ACE_HAS_WINCE)
   this->output_file_ = new OFSTREAM;
 #endif /* ACE_HAS_WINCE */
-  
+
 }
 
 ACE_Test_Output::~ACE_Test_Output (void)
@@ -256,7 +256,7 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
 #endif /* ACE_HAS_WINCE */
     test_dir = ASYS_TEXT ("");
 
-  
+
 
   ACE_OS::sprintf (temp,
                    ASYS_TEXT ("%s%s%s%s"),
@@ -367,5 +367,13 @@ randomize (int array[], size_t size)
       array [size] = temp;
     }
 }
+
+// This shouldn't be done in a header!  But, we don't have any other
+// need for a .cpp file to link into all tests.
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_TEST_CONFIG_H */
