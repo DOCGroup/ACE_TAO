@@ -210,8 +210,8 @@ Test_DynSequence::run_test (void)
       ACE_TRY_CHECK;
       CORBA::Any_var out_any1 = ftc1->to_any (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      DynAnyTests::test_seq* ts_out;
-      *out_any1 >>= ts_out;
+      DynAnyTests::test_seq *ts_out;
+      out_any1.in () >>= ts_out;
 
       if (!ACE_OS::strcmp ((*ts_out)[0], data.m_string1))
         {

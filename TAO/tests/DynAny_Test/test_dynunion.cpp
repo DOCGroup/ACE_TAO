@@ -209,6 +209,7 @@ Test_DynUnion::run_test (void)
       DynamicAny::DynAny_var mem = ftc1->member (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::Short out_s = mem->get_short (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (out_s == data.m_short1)
         {
