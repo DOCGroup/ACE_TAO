@@ -1,3 +1,38 @@
+Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/
+		Proactor.h
+		Asynch_IO.cpp
+ 		Asynch_IO.h
+ 		Makefile
+ 		Proactor.cpp
+ 		Proactor.h
+		config-lynxos.h 
+		config-sunos5.6.h 
+		config-sunos5.7.h	
+		POSIX_Asynch_IO.{h,CPP}
+		POSIX_Proactor.{h,cpp}
+		WIN32_Asynch_IO.{h,cpp}
+		Asynch_IO_Impl.{h,cpp,i}
+		Proactor_Impl.h			
+								
+	Applied Bridge pattern to the POSIX implementation of the Proactor
+	code. ACE_POSIX_AIOCB_Proactor works fine on Solaris
+	2.6. ACE_POSIX_SIG_Proactor works on LynxOS. Take a look at the tests
+	at the $(ACE_ROOT)/examples/Reactor/Proactor/ and the README.
+	
+	* tests/
+		Aio_Platform_Test.cpp
+						
+	*examples/Reactor/Proactor/:
+		test_proactor.cpp
+		test_aiocb.cpp
+		test_aiosig.cpp
+		test_aiosig_ace.cpp
+		README
+
+	Test files for testing out the platforms. 
+
 Mon Feb 15 13:17:15 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.22 released.
