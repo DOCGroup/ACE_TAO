@@ -2309,7 +2309,7 @@ case 145:
 {
           int good_expression = 1;
 
-          tao_yyvsp[0].exval->evaluate (AST_Expression::EK_const);
+          tao_yyvsp[0].exval->evaluate (AST_Expression::EK_positive_int);
 
           AST_Expression::AST_ExprValue *ev = tao_yyvsp[0].exval->ev ();
 

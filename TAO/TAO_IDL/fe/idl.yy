@@ -1214,7 +1214,7 @@ positive_int_expr :
         {
           int good_expression = 1;
 
-          $1->evaluate (AST_Expression::EK_const);
+          $1->evaluate (AST_Expression::EK_positive_int);
 
           AST_Expression::AST_ExprValue *ev = $1->ev ();
 
