@@ -1,3 +1,40 @@
+Wed Dec  6 16:20:36 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Faults/Faults.dsw:
+        * tests/Faults/middle.dsp: (added)
+
+          Added missing project.
+
+        * examples/Buffered_AMI/client.dsp:
+        * examples/Buffered_AMI/server.dsp:
+        * examples/Load_Balancing_persistent/client.dsp:
+        * examples/Load_Balancing_persistent/server.dsp:
+        * examples/Load_Balancing_persistent/service.dsp:
+        * orbsvcs/Event_Service/Event_Service_static.dsp:
+        * orbsvcs/examples/RtEC/MCast/MCast.dsp:
+        * orbsvcs/examples/RtEC/Simple/EC_Simple_Consumer.dsp:
+        * orbsvcs/examples/RtEC/Simple/EC_Simple_Service.dsp:
+        * orbsvcs/examples/RtEC/Simple/EC_Simple_Supplier.dsp:
+        * orbsvcs/tests/CosEvent/Basic/Disconnect.dsp:
+        * orbsvcs/tests/CosEvent/Basic/MT_Disconnect.dsp:
+        * orbsvcs/tests/CosEvent/Basic/Pull_Push_Event.dsp:
+        * orbsvcs/tests/CosEvent/Basic/Push_Event.dsp:
+        * orbsvcs/tests/CosEvent/Basic/Random.dsp:
+        * orbsvcs/tests/CosEvent/Basic/Shutdown.dsp:
+        * orbsvcs/tests/CosEvent/lib/CECTest.dsp:
+        * orbsvcs/tests/LoadBalancing/client.dsp:
+        * orbsvcs/tests/LoadBalancing/server.dsp:
+        * tests/AMI/AMI_Test_Simple_Client.dsp:
+        * tests/Exposed_Policies/Client.dsp:
+        * tests/Exposed_Policies/Server.dsp:
+        * tests/Leader_Followers/client.dsp:
+        * tests/Leader_Followers/server.dsp:
+        * tests/Nested_Event_Loop/client.dsp:
+        * tests/Nested_Event_Loop/server.dsp:
+        * tests/Object_Loader/Test_DLL.dsp:
+
+          Disabled precompiled headers
+
 Wed Dec  6 18:02:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
