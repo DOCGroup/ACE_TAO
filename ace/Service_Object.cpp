@@ -49,7 +49,8 @@ ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
     fini_already_called_ (0)
 {
   ACE_TRACE ("ACE_Service_Type::ACE_Service_Type");
-  this->dll_.set_handle (handle);
+  ACE_DLL &dll = ACE_const_cast <ACE_DLL &> (this->dll_);
+  dll.set_handle (handle);
   this->name (n);
 }
 
