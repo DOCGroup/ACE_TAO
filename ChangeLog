@@ -1,3 +1,9 @@
+Thu Nov 23 18:27:52 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * Makefile:
+          The ACE-INSTALL file is generated in the staging directory,
+          there is no need to generate it locally too.
+
 Thu Nov 23 18:13:32 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * bin/make_release:
