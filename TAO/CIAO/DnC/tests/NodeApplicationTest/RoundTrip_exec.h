@@ -41,9 +41,11 @@ namespace MyImpl
       virtual CORBA::Long cube_long (CORBA::Long data)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
+    /*
     virtual ::NodeAppTest::CCM_LatencyTest*
                         get_latency (ACE_ENV_SINGLE_ARG_DECL)
                 ACE_THROW_SPEC ((CORBA::SystemException));
+    */
 
     // Operations from Components::SessionComponent
     virtual void set_session_context (Components::SessionContext_ptr ctx
@@ -74,10 +76,6 @@ namespace MyImpl
     virtual void ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
-
-  protected:
-    /// Copmponent specific context
-    NodeAppTest::CCM_NodeAppTest_RoundTrip_Context_var context_;
   };
 
   /**

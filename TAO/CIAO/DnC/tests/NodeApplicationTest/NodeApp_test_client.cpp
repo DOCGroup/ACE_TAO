@@ -74,7 +74,7 @@ main (int argc, char *argv[])
       info.executor_dll = "NodeAppTest_RoundTrip_exec";
       info.executor_entrypt = "createRoundTripHome_Impl";
       info.servant_dll = "NodeAppTest_RoundTrip_svnt";
-      info.servant_entrypt = "createRoundTripHome_Servant";
+      info.servant_entrypt = "createNodeAppTest_RoundTripHome_Servant";
 
       // Install the NodeApplication Test component
       ::Components::CCMHome_var home = comserv->install_home (info);
@@ -104,25 +104,13 @@ main (int argc, char *argv[])
                             1);
        }
 
-      // Get the interface from the Component reference
-      ACE_DEBUG ((LM_DEBUG, "Try obtaining RoundTrip ref from Home\n"));
-      NodeAppTest::LatencyTest_var latency_test =
-        roundtrip_var->provide_latency ();
       ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (latency_test.in ()))
-       {
-         ACE_ERROR_RETURN ((LM_DEBUG,
-                            "Nil Interface reference\n"),
-                            1);
-       }
-
 
       // Invoke Operation on the Interface
       ACE_DEBUG ((LM_DEBUG, "Try cube_long operation on the Interface \n"));
       CORBA::Long input = 1L;
       CORBA::Long output =
-        latency_test->cube_long (input ACE_ENV_ARG_PARAMETER);
+        roundtrip_var->cube_long (input ACE_ENV_ARG_PARAMETER);
 
      if (input == output)
        ACE_DEBUG ((LM_DEBUG, "Test succeeded\n"));

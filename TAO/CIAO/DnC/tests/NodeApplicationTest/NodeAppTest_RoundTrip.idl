@@ -20,9 +20,8 @@ module NodeAppTest
      long cube_long (in long param);
   };
 
-  component NodeAppTest_RoundTrip
+  component NodeAppTest_RoundTrip supports LatencyTest
   {
-    provides LatencyTest latency;
   };
 
   home NodeAppTest_RoundTripHome manages NodeAppTest_RoundTrip
