@@ -62,11 +62,18 @@ else
   CXX = icc
 endif
 
+ifndef CXX_VERSION
+  CXX_VERSION := $(shell $(CXX) --version)
+endif
+
+ifeq (8.0,$(findstring 8.0,$(CXX_VERSION)))
+  CFLAGS += -wd1476,1505
+endif
+
 CFLAGS  += -w1
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
-
 
 CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG) -ip
 DCFLAGS += -g
