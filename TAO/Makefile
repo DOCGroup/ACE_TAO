@@ -59,7 +59,7 @@ clone:
 
 CONTROLLED_FILES = TAO
 
-RELEASE_FILES = $(CONTROLLED_FILES)
+RELEASE_FILES = $(CONTROLLED_FILES) \
                 TAO/INSTALL \
                 TAO/orbsvcs/README
 
