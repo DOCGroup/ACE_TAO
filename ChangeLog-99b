@@ -1,7 +1,7 @@
 Thu Apr  8 13:18:22 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/SString.h: Memory is _not_ allocated/freed if <release> is
-	0. 
+	* ace/SString.h: Updated the documentation to show that "Memory is
+	_not_ allocated/freed if <release> is 0". 
 
 Wed Apr  7 20:24:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
