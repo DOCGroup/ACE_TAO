@@ -1,3 +1,10 @@
+Sun Mar 14 18:05:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Param_Test/*.h
+	* tests/Param_Test/*.cpp
+	Made  the changes that are necessary because of  the previous changes to 
+	the tao/Request.* 
+
 Sun Mar 14 14:58:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Request.i
