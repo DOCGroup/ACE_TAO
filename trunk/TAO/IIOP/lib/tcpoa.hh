@@ -194,9 +194,9 @@ class _EXPCLASS TCP_OA : public TOA {
 	TCP_OA			*oa;
 	autorelease <server_endpoint>
 				endpoint;
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
 	CORBA_Boolean		aggressive;
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
     };
 
   private:
@@ -219,12 +219,12 @@ class _EXPCLASS TCP_OA : public TOA {
 				    CORBA_Environment	&env
 				);
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     //
     // Used internally by threaded code to process incoming messages.
     //
     static void			*worker (void *arg);
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
     //
     // Constructor -- build it with a port number to listen to

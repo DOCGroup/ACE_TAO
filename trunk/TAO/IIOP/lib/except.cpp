@@ -24,7 +24,7 @@
 #		include <widec.h>
 #endif
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
 //
 // If POSIX threads are available, set up lock covering refcounts.
 //
@@ -35,7 +35,7 @@ static pthread_mutex_t		except_lock = PTHREAD_MUTEX_INITIALIZER;
 	// stub out these _POSIX_THREAD_SAFE_FUNCTIONS
 #	define	flockfile(f)
 #	define	funlockfile(f)
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 
 
@@ -132,7 +132,7 @@ ULONG
 __stdcall
 CORBA_Exception::AddRef ()
 {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     Critical		region (&except_lock);
 #endif
 
@@ -144,7 +144,7 @@ ULONG
 __stdcall
 CORBA_Exception::Release ()
 {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     Critical		region (&except_lock);
 #endif
 
@@ -153,7 +153,7 @@ CORBA_Exception::Release ()
     if (_refcnt != 0)
 	return _refcnt;
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     region.leave ();
 #endif
 

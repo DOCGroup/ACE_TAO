@@ -69,7 +69,7 @@
 #define	GIOP_HDR_LEN	12		// defined by GIOP 1.0 protocol
 
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
 //
 // This lock covers the mutable info in all IIOP objref data,
 // namely the forwarded-to objref.  It must be held when a client
@@ -77,7 +77,7 @@
 // overwriting data the other's reading or writing.
 //
 static pthread_mutex_t	fwd_info_lock = PTHREAD_MUTEX_INITIALIZER;
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 
 //
@@ -509,7 +509,7 @@ GIOP::Invocation::Invocation (
     do_rsvp			(is_roundtrip),
     stream			(&buffer [0], sizeof buffer)
 {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     //
     // POSIX does not require this to be true, it's an implementation
     // assumption that will at some point be removed but is true on
@@ -520,7 +520,7 @@ GIOP::Invocation::Invocation (
     my_request_id = (CORBA_ULong) pthread_self ();
 #else
     my_request_id = 0;
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 }
 
 GIOP::Invocation::~Invocation ()
@@ -642,9 +642,9 @@ GIOP::Invocation::start (
     assert (endpoint == 0);
     assert (_data != 0);
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     Critical	section (&fwd_info_lock);
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
     if (_data->fwd_profile != 0) {
 	key = &_data->fwd_profile->object_key;
@@ -815,9 +815,9 @@ GIOP::Invocation::invoke (
 	// error reports to applications.
 	//
 	{
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
 	    Critical	section (&fwd_info_lock);
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 	    delete _data->fwd_profile;
 	    _data->fwd_profile = 0;
@@ -1058,9 +1058,9 @@ GIOP::Invocation::invoke (
 	    // be recorded here.  (This is just an optimization, and is
 	    // not related to correctness.)
 	    //
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
 	    Critical	section (&fwd_info_lock);
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 	    delete _data->fwd_profile;
 	    _data->fwd_profile = new IIOP::ProfileBody (obj2->profile);

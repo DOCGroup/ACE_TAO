@@ -23,12 +23,12 @@
 #include	"iiopobj.hh"
 
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
 //
 // If POSIX threads are available, set up lock covering refcounts.
 //
 static pthread_mutex_t		iiopobj_lock = PTHREAD_MUTEX_INITIALIZER;
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 
 
@@ -152,7 +152,7 @@ ULONG
 __stdcall
 IIOP_Object::AddRef ()
 {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     Critical		region (&iiopobj_lock);
 #endif
 
@@ -163,14 +163,14 @@ ULONG
 __stdcall
 IIOP_Object::Release ()
 {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     Critical		region (&iiopobj_lock);
 #endif
 
     if (--_refcount != 0)
 	return _refcount;
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     region.leave ();
 #endif
 

@@ -15,12 +15,12 @@
 #include	"thread.hh"
 
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
 //
 // If POSIX threads are available, set up lock covering refcounts.
 //
 static pthread_mutex_t		principal_lock = PTHREAD_MUTEX_INITIALIZER;
-#endif	// _POSIX_THREADS
+#endif	// ACE_HAS_THREADS
 
 
 void
@@ -61,7 +61,7 @@ ULONG
 __stdcall
 CORBA_Principal::AddRef ()
 {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     Critical		region (&principal_lock);
 #endif
 
@@ -72,14 +72,14 @@ ULONG
 __stdcall
 CORBA_Principal::Release ()
 {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     Critical		region (&principal_lock);
 #endif
 
     if (--_refcount != 0)
 	return _refcount;
 
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_THREADS
     region.leave ();
 #endif
 
