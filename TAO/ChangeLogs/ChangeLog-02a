@@ -1,3 +1,12 @@
+Fri May 12 16:32:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface_cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	  The addition to the _var copy constructor in the entry below
+	  must have perturbed the delicate balance of compiler 
+	  happiness. Now it seems g++ wants a local name instead of
+	  a scoped name for the next line.
+
 Fri May 12 12:13:46 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/corbafwd.h:
