@@ -20,10 +20,12 @@ call run_tests Message_Block_Test
 call run_tests Message_Queue_Notifications_Test
 call run_tests Message_Queue_Test
 call run_tests MM_Shared_Memory_Test
+call run_tests MT_SOCK_Test
 call run_tests Mutex_Test
 call run_tests Naming_Test
 call run_tests Pipe_Test
 call run_tests Priority_Buffer_Test
+call run_tests Priority_Reactor_Test
 call run_tests Priority_Task_Test
 call run_tests Process_Mutex_Test
 call run_tests Process_Strategy_Test
