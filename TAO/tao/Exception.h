@@ -60,7 +60,10 @@ public:
   virtual int _is_a (const char* repository_id) const;
 
   // = To throw the exception (when using the standard mapping.
-  virtual void _raise (void);
+  virtual void _raise (void) = 0;
+
+  // = TAO extension. It makes it easier to write generic code.
+  static CORBA_Exception* _narrow (CORBA_Exception* x);
 
   // = Methods required for memory management support.
   CORBA::ULong _incr_refcnt (void);
@@ -183,6 +186,7 @@ public: \
                   CORBA::ULong code = 0xffff0000L) \
     : CORBA_SystemException (CORBA::_tc_ ## name, code, completed) \
     { } \
+  virtual void _raise (void); \
   static CORBA_##name * _narrow (CORBA_Exception* exception); \
   virtual int _is_a (const char* type_id) const; \
 }
@@ -238,7 +242,8 @@ public:
 
   static CORBA_UnknownUserException* _narrow (CORBA_Exception *ex);
   virtual int _is_a (const char* type_id) const;
-  //
+  virtual void _raise (void);
+
 private:
   CORBA_Any* exception_;
 };
@@ -269,7 +274,8 @@ public:
   // Set the exception to <ex>, taking a reference on it.
 
   CORBA::ExceptionType exception_type (void) const;
-  // return the typecode for the exception
+  // Return if the exception is a user exception or a system
+  // exception.
 
   TAO_CONST CORBA::String exception_id (void) const;
   // return the repository ID for the exception

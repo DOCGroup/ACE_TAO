@@ -28,6 +28,7 @@ CORBA_TypeCode::Bounds::Bounds (void)
 void
 CORBA_TypeCode::Bounds::_raise (void)
 {
+  TAO_RAISE(*this);
 }
 
 CORBA_TypeCode::Bounds*
@@ -55,6 +56,7 @@ CORBA_TypeCode::BadKind::BadKind (void)
 void
 CORBA_TypeCode::BadKind::_raise (void)
 {
+  TAO_RAISE(*this);
 }
 
 CORBA_TypeCode::BadKind*

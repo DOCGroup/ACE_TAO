@@ -1,3 +1,37 @@
+Thu Aug 20 13:58:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/orbconf.h: 
+	* tao/corba.h: 
+	  Exception support is controlled my the TAO_USE_EXCEPTIONS
+	  macro.
+
+	* tao/POAC.h: 
+	* tao/POAC.cpp: 
+	* tao/Typecode.cpp: 
+	  Added the _raise () methods, they use a macro (TAO_RAISE) to
+	  actually throw the exception, the macro expands to nothing if
+	  exceptions are not supported.
+
+	* tao/Exception.h: 
+	* tao/Exception.i: 
+	* tao/Exception.cpp: 
+	  Fixed problems with operator=
+	  The modifier for the CORBA_Environment::exception() would raise
+	  the exception if native C++ exceptions are supported.
+
+	* tao/Connect.h: 
+	* tao/Connect.cpp: 
+	  Use TAO_TRY macros to catch the exceptions in the upcall, this
+	  is in preparation for the support for native C++ exceptions.
+
+	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp: 
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp: 
+	  The compiler generates the _raise() method now.
+
+	* tao/debug.h: 
+	* tao/debug.cpp: 
+	  Removed some _FAR uses.
+
 Thu Aug 20 11:57:04 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/CosPropertyService.idl :
