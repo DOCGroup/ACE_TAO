@@ -45,6 +45,9 @@ class FilterClient
   void run (CORBA::Environment &ACE_TRY_ENV);
   // Run the demo.
 
+  void done (void);
+  // Consumer calls done, We're done.
+
  protected:
   void init_ORB (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);
   // Initializes the ORB.
@@ -129,7 +132,7 @@ class Filter_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushCo
 
  public:
   // = Initialization and Termination code
-  Filter_StructuredPushConsumer (const char *my_name);
+  Filter_StructuredPushConsumer (FilterClient* filter, const char *my_name);
   // Constructor.
 
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin, CORBA::Environment &ACE_TRY_ENV);
@@ -141,6 +144,10 @@ class Filter_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushCo
 
 protected:
   // = Data members
+
+  FilterClient* filter_;
+  // The callback for <done>
+
   ACE_CString my_name_;
   // The name of this consumer.
 
