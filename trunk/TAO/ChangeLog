@@ -1,9 +1,18 @@
+Fri Nov 01 14:38:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/Logging_Service/Logging_Service.dsw:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.dsw:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.dsp:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Logging_Service.dsp:
+	  Renamed Basic_Logging_Service.dsp to Logging_Service.dsp.  This
+	  may fix the unknown project error in the nightly build.
+
 Fri Nov 01 11:09:29 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.cpp:
 	  Changed <execute> method parameter to
 	  ACE_ENV_SINGLE_ARG_DECL_NOT_USED
-	
+
         * orbsvcs/orbsvcs/Notify/Service.h:
           Corrected the comment above the <init> method.
 
@@ -36,7 +45,7 @@ Fri Nov  1 07:25:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tests/MProfile_Connection_Timeout/README:
 	* tests/MProfile_Connection_Timeout/run_test.pl: Added these files
 	  to the test.
-	
+
 	* tests/MProfile_Connection_Timeout/client.cpp:
 	* tests/MProfile_Connection_Timeout/server.cpp:
 	* tests/MProfile_Connection_Timeout/test.idl:
@@ -47,14 +56,14 @@ Fri Nov  1 07:25:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Fri Nov  1 00:44:22 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify/Event_Map_T.h: 
-	  
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+
 	  Fixed compile errors in debian build.
 
 Thu Oct 31 22:33:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* TAOACE.dsw: Added ProtableServer library as a dependency for
-	  Messaging library. 
+	  Messaging library.
 
 	* tests/MProfile_Connection_Timeout/client.bor:
 	* tests/MProfile_Connection_Timeout/server.bor:
@@ -68,27 +77,27 @@ Thu Oct 31 22:33:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.mpc:
 	  MakefileProject creator.
-	  
+
 Thu Oct 31 17:56:55 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/MProfile_Connection_Timeout/client.cpp (run_test):
-	  Cosmetic fixes. 
+	  Cosmetic fixes.
 
 	* tests/MProfile_Connection_Timeout/Makefile: Added the Makefile
 	  for the test.
-	
+
 
 Thu Oct 31 17:33:55 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.inl: 
-	* orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.inl: 	
-	* orbsvcs/orbsvcs/Notify/Event_Map_T.h: 
-	* orbsvcs/orbsvcs/Notify/Event_Map_T.inl: 
-	* orbsvcs/orbsvcs/Notify/Container_T.inl: 	
+	* orbsvcs/orbsvcs/Notify/Dispatch_Observer_T.inl:
+	* orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.inl:
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.inl:
+	* orbsvcs/orbsvcs/Notify/Container_T.inl:
 
 	  Added ACE_TYPENAME for type names qualified by template
-	  parameters. 
-	
+	  parameters.
+
 Thu Oct 31 17:09:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/MProfile_Connection_Timeout:
@@ -139,7 +148,7 @@ Thu Oct 31 15:40:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Thu Oct 31 14:48:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	This is a fix for BUGID 1284. Please see 
+	This is a fix for BUGID 1284. Please see
 
 	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1284 for more
 	details. This fix does the following
@@ -153,12 +162,12 @@ Thu Oct 31 14:48:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  invocation class tries the next endpoint in the profile.
 
 	- If the roundtrip timeout is used, we raise a CORBA::TIMEOUT
-	  exception. 
+	  exception.
 
 	The connection timeout policy if set, overrides the roundtrip
 	timeout policy value. To get the semantics right, the following
-	changes were performed:  
-	
+	changes were performed:
+
 	* tao/Transport_Connector.cpp:
 	* tao/Transport_Connector.h: Added another connect () method with
 	  a timeout value. Made the connect () methods non-pure-virtual,
@@ -166,15 +175,15 @@ Thu Oct 31 14:48:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  compatibility. Further, the pure-virtual method make_connection
 	  () passes a timeout value. This shouldnt break backward
 	  compatibility either.
-	
+
 	* tao/IIOP_Connector.cpp:
 	* tao/IIOP_Connector.h: Added a timeout argument to the
 	  make_connection () method. This method gets called from
 	  TAO_Connector::connect () method which has a timeout. The
 	  implementation of the make_connection () method is now changed
 	  to just use the timeout value that is passed instead of
-	  selecting a timeout value. 
-	  
+	  selecting a timeout value.
+
 	* tao/Invocation.cpp: Selects a timeout from the two possible
 	  alternatives and passes one of the values to the connect ()
 	  call. Based on the timeout value used and the return value
@@ -199,11 +208,11 @@ Thu Oct 31 13:08:23 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Thu Oct 31 12:07:51 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp: 
-	* orbsvcs/orbsvcs/Notify/Sequence/EventBatch.cpp: 
+	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/EventBatch.cpp:
 
 	  Fixed debian build compile warnings.
-	
+
 Thu Oct 31 11:58:24 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/EC_MT_Mcast/MCast.cpp: Fixed compile error in
@@ -218,9 +227,9 @@ Thu Oct 31 10:52:50 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
         * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
 
-          Added checks for successful opening of an ACE_Configuration 
+          Added checks for successful opening of an ACE_Configuration
           section so that subsequent iteration of values or subsections
-          (which will fail) can be skipped. Thanks to Nick Cross 
+          (which will fail) can be skipped. Thanks to Nick Cross
           <nick.cross@prismtechnologies.com> for reporting the bug.
 
 Thu Oct 31 10:50:16 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
@@ -233,23 +242,23 @@ Thu Oct 31 10:50:16 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
 Thu Oct 31 00:46:22 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/Notify/Makefile: 
-	  
-	  Removed the old Throughput test.	  
+	* orbsvcs/tests/Notify/Makefile:
+
+	  Removed the old Throughput test.
 
 Wed Oct 30 19:06:59 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify/Event_Manager.cpp: 
-	* orbsvcs/orbsvcs/Notify/Event.cpp: 	
-	* orbsvcs/orbsvcs/Notify/Types.cpp: 		
-	* orbsvcs/orbsvcs/Notify/Factory.cpp: 		
-	 
+	* orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
+	* orbsvcs/orbsvcs/Notify/Event.cpp:
+	* orbsvcs/orbsvcs/Notify/Types.cpp:
+	* orbsvcs/orbsvcs/Notify/Factory.cpp:
+
 	  Added template instantiations to fix link errors.
-	
+
 
 Wed Oct 30 19:38:20 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV/UDP.cpp (TAO_AV_UDP_Object::handle_input): 
+	* orbsvcs/orbsvcs/AV/UDP.cpp (TAO_AV_UDP_Object::handle_input):
 	  Improve debugging message.
 
 Wed Oct 30 12:49:32 2002  Irfan Pyarali  <irfan@oomworks.com>
@@ -322,13 +331,13 @@ Tue Oct 29 17:50:59 2002  Ossama Othman  <ossama@uci.edu>
 
 Tue Oct 29 19:20:29 2002  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Service.h: 
-	  
+	* orbsvcs/orbsvcs/Notify/Service.h:
+
 	  Make the init (int,char**) method abstract.
 
 Tue Oct 29 11:37:37 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.CosNotification: 
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
 
 	  Generated dependencies. Added the cleanup of the tao_idl
 	  generated files for Notify/Event_Forwarder.idl.
