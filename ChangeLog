@@ -1,3 +1,13 @@
+Tue Jan 11 22:32:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Dev_Poll_Reactor.cpp (remove_handler_i):
+
+	  Release the lock during the "close" upcall.  Fixes a deadlock
+	  that occurred when cancelling a timer during removal of an event
+	  handler from the reactor.  Thanks to gxc <info@socks5cn.com> for
+	  reporting the problem and confirming that this change fixes the
+	  problem.
+
 Wed Jan 12 00:12:03 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* ace/OS_NS_signal.inl:
@@ -5,7 +15,7 @@ Wed Jan 12 00:12:03 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Fixed a compile error with the following checkin "Tue Jan 11
 	  18:14:22 2005  Steve Huston  <shuston@riverace.com>". Not sure
 	  whether this is going to break aCC. The existing code broke
-	  atleast g++ 3.3.4. Need to sync with Steve on this. 
+	  atleast g++ 3.3.4. Need to sync with Steve on this.
 
 Tue Jan 11 18:14:22 2005  Steve Huston  <shuston@riverace.com>
 
@@ -14,7 +24,7 @@ Tue Jan 11 18:14:22 2005  Steve Huston  <shuston@riverace.com>
 	  of ACE_OS::sigaction() vs. sigaction(). Added "::" to the sigaction
 	  type specifiers in the signature to resolve the confusion between
 	  the sigaction type and ACE_OS::sigaction.
-	  
+
 Mon Jan 10 12:41:23 2005  Steve Huston  <shuston@riverace.com>
 
 	* tests/Test_Output.cpp (close): If the output_file_ pointer is
