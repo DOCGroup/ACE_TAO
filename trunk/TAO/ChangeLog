@@ -1,3 +1,8 @@
+Thu Mar 24 16:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/Mcast/Simple/consumer.cpp:
+          Emulated exception fix
+
 Thu Mar 24 13:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/Event_Channel.i:
