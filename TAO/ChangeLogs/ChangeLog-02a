@@ -1,3 +1,9 @@
+Mon Mar 19 14:03:35 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Makefile:
+
+	  New top-level Security Service test suite Makefile.
+
 Mon Mar 19 13:58:44 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
