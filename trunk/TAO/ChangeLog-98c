@@ -1,3 +1,37 @@
+Tue Aug 12 16:23:17 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/any.i: Added a missing replace() method used by overloaded
+ 	operators.
+
+	* tao/{any,cdr}.h: Added conditional ACE_INLINE before the decl
+ 	for a few methods whose usage in other inlined methods appears
+ 	prior to their definition.
+
+	* tao/default_client.cpp: Eliminated names of unused arguments to
+ 	stop the compiler from complaining.
+
+	* tao/server_factory.cpp: Properly scoped return type names for
+ 	several methods.
+
+	* tao/{typecode,decode,deep_copy,debug}.cpp: Bracketed unused
+ 	variables with #if defined(TAO_NEEDS_UNUSED_VARIABLES)/#endif;
+ 	this leaves them around for right now in case they're important.
+
+	* tao/client_factory.i (connector): Properly scoped return type's
+ 	name.
+
+	* tao/{client_factory,default_client}.cpp: Added necessary
+ 	template instantiations.
+
+	* tao/{typecode,cdr}.h: Added conditional ACE_INLINE in front of
+ 	inlined methods to appease the compiler gods.
+
+	* tao/boa.cpp (dispatch): Declared argument unused to get rid of
+ 	warnings.
+
+	* tao/corbacom.h: Moved #include of sequence.h before the decl for
+ 	class CORBA.
+
 Sun Aug 10 10:58:21 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/client_factory: Moved the template specializations from the

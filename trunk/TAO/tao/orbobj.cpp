@@ -127,7 +127,7 @@ CORBA_ORB::Release (void)
 
 // Little convenience function use in parsing arguments
 inline static void
-argvec_shift (int& argc, char *argv[], int numslots)
+argvec_shift (int& argc, char *const *argv, int numslots)
 {
   ACE_OS::memmove (&argv[0],
 		   &argv[numslots],
@@ -181,12 +181,10 @@ CORBA::ORB_init (int &argc,
   // arguments in the vector?
 
   // Prepare a copy of the argument vector
-  //  char *svc_config_argv[]; // @@ Should this be a data member? 
   // XXXASG - compiler doesn't like this
   char **svc_config_argv; // @@ Should this be a data member?
   // Probably, but there's no object in which to scope it.
   int svc_config_argc = 0;
-#if 0 // XXASG : Code is broken. ACE_NEW returns, arg type conflict in argvec_shift
   ACE_NEW_RETURN (svc_config_argv, char *[argc + 1], 0);
 
   // Be certain to copy the program name.
@@ -205,23 +203,23 @@ CORBA::ORB_init (int &argc,
             // @@ Should we dup the string before assigning?
 	    svc_config_argv[svc_config_argc++] = argv[i + 1];
 
-          argvec_shift (argc, argv[i], 2);
+          argvec_shift (argc, &argv[i], 2);
         }
       else if (ACE_OS::strcmp (argv[i], "-OAdaemon") == 0)
         {
           // Be a daemon
           svc_config_argv[svc_config_argc++] = "-b";
 
-          argvec_shift (argc, argv[i], 1);
+          argvec_shift (argc, &argv[i], 1);
         }
       else if (ACE_OS::strcmp (argv[i], "-d") == 0)
         {
           // Turn on debugging
           svc_config_argv[svc_config_argc++] = "-d";
-          argvec_shift (argc, argv[i], 1);
+          argvec_shift (argc, &argv[i], 1);
         }
     }
-#endif /* 0  */
+
 #if defined (DEBUG)
   // Make it a little easier to debug programs using this code.
   {
@@ -338,7 +336,6 @@ CORBA_ORB::BOA_init (int &argc,
   ACE_INET_Addr rendezvous;
   CORBA::Environment env;
 
-#if 0 /* XXXASG- code is broken. argvec_shift arg2 in conflict */
   for (int i = 0; i < argc; )
     {
       // @@ Can you please add comments describing each of these options? --doug
@@ -350,7 +347,7 @@ CORBA_ORB::BOA_init (int &argc,
 	  if (i + 1 < argc)
 	    id = CORBA::string_dup (argv[i + 1]);
 
-          argvec_shift (argc, argv[i], 2);
+          argvec_shift (argc, &argv[i], 2);
         }
       else if (ACE_OS::strcmp (argv[i], "-OAhost") == 0)
 	{
@@ -359,7 +356,7 @@ CORBA_ORB::BOA_init (int &argc,
 	  if (i + 1 < argc)
 	    host = CORBA::string_dup (argv[i + 1]);
 
-          argvec_shift (argc, argv[i], 2);
+          argvec_shift (argc, &argv[i], 2);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAport") == 0)
 	{
@@ -368,7 +365,7 @@ CORBA_ORB::BOA_init (int &argc,
             // @@ We shouldn't limit this to being specified as an int! --cjc
 	    port = ACE_OS::atoi (argv[i + 1]);
 
-          argvec_shift (argc, argv[i], 2);
+          argvec_shift (argc, &argv[i], 2);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAobjdemux") == 0)
 	{
@@ -377,7 +374,7 @@ CORBA_ORB::BOA_init (int &argc,
 	  if (i + 1 < argc)
 	    demux = CORBA::string_dup (argv[i+1]);
 
-          argvec_shift (argc, argv[i], 2);
+          argvec_shift (argc, &argv[i], 2);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OAtablesize") == 0)
 	{
@@ -385,7 +382,7 @@ CORBA_ORB::BOA_init (int &argc,
 	  if (i + 1 < argc)
 	    tablesize = ACE_OS::atoi (argv[i+1]);
 
-          argvec_shift (argc, argv[i], 2);
+          argvec_shift (argc, &argv[i], 2);
 	}
       else if (ACE_OS::strcmp (argv[i], "-OArcvsock") == 0)
 	{
@@ -399,12 +396,11 @@ CORBA_ORB::BOA_init (int &argc,
 	{
           // Specify whether or not threads should be used.
 	  use_threads = CORBA::B_TRUE;
-          argvec_shift (argc, argv[i], 1);
+          argvec_shift (argc, &argv[i], 1);
 	}
       else
 	i++;
     }
-#endif /* 0 */
   
   // create a INET_Addr
   if (ACE_OS::strlen (host) > 0)

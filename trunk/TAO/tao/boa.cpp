@@ -133,14 +133,13 @@ void CORBA_BOA::dispatch (CORBA::OctetSeq &key,
 			  void *context,
 			  CORBA::Environment &env) 
 {
+  ACE_UNUSED_ARG(context);
+  
   TAO_Skeleton skel;  // pointer to function pointer for the operation
   CORBA::Object_ptr obj;  // object that will be looked up based on the key
   CORBA::String  opname;
 
   // Get the skeleton
-
-  // @@ Please add more comments here.  This is a very important part
-  // of the code.
 
   // Find the object based on the key
   if (this->find (key, obj) != -1) 

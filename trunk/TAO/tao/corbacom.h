@@ -133,8 +133,12 @@ class CDR;
 // enum values defined in nvlist.hh, bitwise ORed.
 typedef u_int CORBA_Flags; 
 
+#if !defined(TAO_NEEDS_FULL_SEQUENCE_TEMPLATE)
+#  include "tao/sequence.h"
+#else
 template <class T>
 struct CORBA_SEQUENCE;
+#endif
 
 class ACE_Svc_Export CORBA 
 {

@@ -27,25 +27,25 @@ TAO_Server_Strategy_Factory::TAO_Server_Strategy_Factory (void)
 TAO_Server_Strategy_Factory::~TAO_Server_Strategy_Factory(void)
 {}
 
-CREATION_STRATEGY *
+TAO_Server_Strategy_Factory::CREATION_STRATEGY *
 TAO_Server_Strategy_Factory::creation_strategy (void)
 {
   return 0;
 }
 
-ACCEPT_STRATEGY *
+TAO_Server_Strategy_Factory::ACCEPT_STRATEGY *
 TAO_Server_Strategy_Factory::accept_strategy (void)
 {
   return 0;
 }
 
-CONCURRENCY_STRATEGY *
+TAO_Server_Strategy_Factory::CONCURRENCY_STRATEGY *
 TAO_Server_Strategy_Factory::concurrency_strategy (void)
 {
   return 0;
 }
 
-SCHEDULING_STRATEGY *
+TAO_Server_Strategy_Factory::SCHEDULING_STRATEGY *
 TAO_Server_Strategy_Factory::scheduling_strategy (void)
 {
   return 0;

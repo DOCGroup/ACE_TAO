@@ -881,7 +881,9 @@ CORBA::Long
 CORBA_TypeCode::private_length (CORBA::Environment &env) const
 {
   CDR stream;
+#if defined(TAO_NEEDS_UNUSED_VARIABLES)  
   CORBA::TypeCode_ptr tc = 0;
+#endif /* TAO_NEEDS_UNUSED_VARIABLES */
 
   stream.setup_encapsulation (_buffer, (size_t)_length);
   switch (_kind)

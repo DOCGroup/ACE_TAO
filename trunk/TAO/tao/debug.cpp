@@ -25,7 +25,9 @@
 
 u_int ACE_Svc_Export TAO_debug_level	= 0;
 char * ACE_Svc_Export TAO_debug_filter	= "l";
+#if defined(TAO_NEEDS_UNUSED_VARIABLES)
 static FILE *debug_stream = stderr;
+#endif /* TAO_NEEDS_UNUSED_VARIABLES */
 
 // The rest of this file is not needed without -DDEBUG, and unless the
 // vfprintf () call is available it can't work.
