@@ -3,6 +3,8 @@ Fri Jan 09 07:04:47 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_sunos5_g++.GNU: removed
           -pipe from CC and CXX.  It was already in CCFLAGS.
 
+        * tests/run_tests.vxworks: added Env_Value_Test.
+
 Fri Jan 09 00:14:20 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Connection_Handler_Acceptor.cpp:
