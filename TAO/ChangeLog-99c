@@ -1,3 +1,8 @@
+Thu Aug 05 15:29:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
+	  (main): Unlink the ior file when we are done.
+
 Thu Aug 05 14:57:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Collocation/Coll_Test_Skels.dsp:
