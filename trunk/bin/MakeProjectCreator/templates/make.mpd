@@ -21,6 +21,8 @@ SOEXT         = <%soext%>
 <%endfor%>
 <%foreach(configurations)%>
 CPPFLAGS     += <%pic%>
+<%endfor%>
+<%foreach(platforms)%>
 SHFLAGS       = <%shflags%>
 <%endfor%>
 <%endif%>
