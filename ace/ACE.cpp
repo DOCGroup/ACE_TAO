@@ -26,6 +26,9 @@ const char ACE::hex_chars_[] = "0123456789abcdef";
 // Size of a VM page.
 size_t ACE::pagesize_ = 0;
 
+// Size of allocation granularity.
+size_t ACE::allocation_granularity_ = 0;
+
 int
 ACE::init (void)
 {
@@ -1538,6 +1541,17 @@ ACE::round_to_pagesize (off_t len)
     ACE::pagesize_ = ACE_OS::getpagesize ();
 
   return (len + (ACE::pagesize_ - 1)) & ~(ACE::pagesize_ - 1);
+}
+
+size_t
+ACE::round_to_allocation_granularity (off_t len)
+{
+  ACE_TRACE ("ACE::round_to_allocation_granularity");
+
+  if (ACE::allocation_granularity_ == 0)
+    ACE::allocation_granularity_ = ACE_OS::allocation_granularity ();
+
+  return (len + (ACE::allocation_granularity_ - 1)) & ~(ACE::allocation_granularity_ - 1);
 }
 
 ACE_HANDLE
