@@ -450,6 +450,7 @@ Test_ECG::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier\n"));
 
+      RtecEventChannelAdmin::Observer_Handle observer_handle;
       if (this->rmt_name_ != 0)
         {
           tv.set (5, 0);
@@ -492,7 +493,11 @@ Test_ECG::run (int argc, char* argv[])
           if (orb->run (&tv) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
 
-          ec_impl.add_gateway (&this->ecg_, TAO_TRY_ENV);
+          RtecEventChannelAdmin::Observer_ptr observer = 
+            this->ecg_._this (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+          observer_handle = ec_impl.append_observer (observer,
+                                                     TAO_TRY_ENV);
           TAO_CHECK_ENV;
         }
 
@@ -526,6 +531,12 @@ Test_ECG::run (int argc, char* argv[])
       ready_mon.release ();
 
       ACE_DEBUG ((LM_DEBUG, "activate the  EC\n"));
+
+      if (this->rmt_name_ != 0)
+        {
+          ec_impl.remove_observer (observer_handle, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
 
       // Create the EC internal threads
       ec_impl.activate ();
@@ -580,11 +591,11 @@ Test_ECG::run (int argc, char* argv[])
                                                 this->schedule_file_);
         }
 
+      naming_context->unbind (channel_name, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
       if (this->rmt_name_ != 0)
         {
-          ec_impl.del_gateway (&this->ecg_, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
           this->ecg_.close (TAO_TRY_ENV);
           TAO_CHECK_ENV;
           this->ecg_.shutdown (TAO_TRY_ENV);
@@ -601,8 +612,6 @@ Test_ECG::run (int argc, char* argv[])
       if (orb->run (&tv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
 
-      naming_context->unbind (channel_name, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
     {

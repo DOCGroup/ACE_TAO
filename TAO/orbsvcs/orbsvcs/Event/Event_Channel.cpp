@@ -584,18 +584,20 @@ ACE_EventChannel::destroy (CORBA::Environment &)
 {
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 
-  ACE_ES_GUARD ace_mon (lock_);
-  if (ace_mon.locked () == 0)
-    ACE_ERROR ((LM_ERROR, "ACE_EventChannel::destroy"));
+  {
+    ACE_GUARD (ACE_ES_MUTEX, ace_mon, this->lock_);
 
-  if (destroyed_ != 0)
-    return;
+    if (this->destroyed_ != 0)
+      return;
 
-  destroyed_ = 1;
-  ACE_DEBUG ((LM_DEBUG, "EC (%t) Event Channel shutting down.\n"));
+    this->destroyed_ = 1;
+    ACE_DEBUG ((LM_DEBUG, "EC (%t) Event Channel shutting down.\n"));
+
+  }
+  this->cleanup_observers ();
 
   // Send a shutdown message through the modules.
-  supplier_module_->shutdown ();
+  this->supplier_module_->shutdown ();
 
 #if 0
   // Flush all messages in the channel.
@@ -697,20 +699,31 @@ ACE_EventChannel::del_gateway (TAO_EC_Gateway* gw,
 void
 ACE_EventChannel::update_consumer_gwys (CORBA::Environment& _env)
 {
-  TAO_GUARD_THROW (ACE_ES_MUTEX, ace_mon, this->lock_, _env,
-		   RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+  Observer_Map observers;
+  {
+    TAO_GUARD_THROW (ACE_ES_MUTEX, ace_mon, this->lock_, _env,
+                     RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
 
-  if (this->observers_.current_size () == 0
-      || this->state_ == ACE_EventChannel::SHUTDOWN)
-    return;
+    if (this->observers_.current_size () == 0
+        || this->state_ == ACE_EventChannel::SHUTDOWN)
+      return;
+
+    observers.open (this->observers_.current_size ());
+    for (Observer_Map_Iterator i = this->observers_.begin ();
+         i != this->observers_.end ();
+         ++i)
+      {
+        observers.bind ((*i).ext_id_, (*i).int_id_);
+      }
+  }
 
   // ACE_DEBUG ((LM_DEBUG,
   //              "EC (%t) Event_Channel::update_consumer_gwys\n"));
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
   this->consumer_module_->fill_qos (c_qos);
-  for (Observer_Map_Iterator i = this->observers_.begin ();
-       i != this->observers_.end ();
+  for (Observer_Map_Iterator i = observers.begin ();
+       i != observers.end ();
        ++i)
     {
       (*i).int_id_.observer->update_consumer (c_qos, _env);
@@ -721,20 +734,31 @@ ACE_EventChannel::update_consumer_gwys (CORBA::Environment& _env)
 void
 ACE_EventChannel::update_supplier_gwys (CORBA::Environment& _env)
 {
-  TAO_GUARD_THROW (ACE_ES_MUTEX, ace_mon, this->lock_, _env,
-		   RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+  Observer_Map observers;
+  {
+    TAO_GUARD_THROW (ACE_ES_MUTEX, ace_mon, this->lock_, _env,
+                     RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
 
-  if (this->observers_.current_size () == 0
-      || this->state_ == ACE_EventChannel::SHUTDOWN)
-    return;
+    if (this->observers_.current_size () == 0
+        || this->state_ == ACE_EventChannel::SHUTDOWN)
+      return;
+
+    observers.open (this->observers_.current_size ());
+    for (Observer_Map_Iterator i = this->observers_.begin ();
+         i != this->observers_.end ();
+         ++i)
+      {
+        observers.bind ((*i).ext_id_, (*i).int_id_);
+      }
+  }
 
   // ACE_DEBUG ((LM_DEBUG,
   //            "EC (%t) Event_Channel::update_supplier_gwys\n"));
 
   RtecEventChannelAdmin::SupplierQOS s_qos;
   this->supplier_module_->fill_qos (s_qos);
-  for (Observer_Map_Iterator i = this->observers_.begin ();
-       i != this->observers_.end ();
+  for (Observer_Map_Iterator i = observers.begin ();
+       i != observers.end ();
        ++i)
     {
       (*i).int_id_.observer->update_supplier (s_qos, _env);
