@@ -23,8 +23,8 @@ Cubit_Factory_i::Cubit_Factory_i (const char *key, int numobjs)
 {
   // Create implementation object with user specified key.
 
-  this->my_cubit_ = new Cubit_i_ptr [this->numobjs_];
   this->numobjs_ = numobjs;
+  this->my_cubit_ = new Cubit_i_ptr [this->numobjs_];
 
   static char obj_str [MAXNAMELEN];
 
