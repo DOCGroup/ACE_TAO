@@ -183,7 +183,8 @@ main (int, char *[])
   ACE_START_TEST ("Reactors_Test");
 
 #if defined (ACE_HAS_THREADS)
-  ACE_Service_Config daemon; // We need this to make sure the Reactor Singleton gets deleted!
+  // We need this to make sure the Reactor Singleton gets deleted!
+  ACE_Service_Config daemon; 
   ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
 
   ACE_Reactor *reactor;

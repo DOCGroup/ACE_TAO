@@ -2,9 +2,10 @@ COPYRIGHT INFORMATION FOR ACE
 
 ACE is copyrighted by Douglas C. Schmidt and his research group at
 Washington University, Copyright (c) 1993-1997, all rights reserved.
-You are free to do anything you like with the ACE source code, e.g.,
-including it in commercial software, as long as you include this
-copyright statement along with code built using ACE.
+You are free to do anything you like with the ACE source code (and
+object code produced from the source), e.g., including it in
+commercial software, as long as you include this copyright statement
+along with code built using ACE.
 
 You are under no obligation to freely redistribute any of your source
 code that is built using ACE (be aware that rpc++ is distributed under

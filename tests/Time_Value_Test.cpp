@@ -28,10 +28,11 @@ main (int, char *[])
 
   ACE_Time_Value tv1;
   ACE_Time_Value tv2 (2);
-  ACE_Time_Value tv3 (100);  
+  ACE_Time_Value tv3 (100);
   ACE_Time_Value tv4 (1, 1000000);
   ACE_Time_Value tv5 (2);
   ACE_Time_Value tv6 (1, -1000000);
+  ACE_Time_Value tv7 (2.0);
 
   ACE_ASSERT (tv1 == ACE_Time_Value (0));
   ACE_ASSERT (tv2 < tv3);
@@ -43,6 +44,7 @@ main (int, char *[])
   ACE_ASSERT (tv2 == tv4);
   ACE_ASSERT (tv1 != tv2);
   ACE_ASSERT (tv6 == tv1);
+  ACE_ASSERT (tv5 == tv7);
 
   ACE_END_TEST;
   return 0;

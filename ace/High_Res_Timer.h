@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -20,7 +19,7 @@
 
 #include "ace/ACE.h"
 
-#if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HIRES_TIMER)
+#if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER)
 
 class ACE_Export ACE_High_Res_Timer
   // = TITLE
@@ -95,5 +94,5 @@ private:
 #include "ace/High_Res_Timer.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_HAS_HI_RES_TIMER || ACE_HAS_AIX_HIRES_TIMER */
+#endif /* ACE_HAS_HI_RES_TIMER || ACE_HAS_AIX_HI_RES_TIMER */
 #endif /* ACE_HIGH_RES_TIMER_H */

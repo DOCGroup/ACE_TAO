@@ -55,7 +55,7 @@
 #define ACE_HAS_SIG_ATOMIC_T
 
 // Compiler/platform supports sys_siglist array.
-#define ACE_HAS_SYS_SIGLIST
+// #define ACE_HAS_SYS_SIGLIST
 
 // Compiler/platform defines a union semun for SysV shared memory.
 #define ACE_HAS_SEMUN

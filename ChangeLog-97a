@@ -1,3 +1,56 @@
+Fri Jan 31 02:16:30 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-aix-*.h: Made the default value for
+ 	  ACE_DEFAULT_BASE_ADDR 0x80000000 to work around restrictions
+ 	  with AIX.  Thanks to Rob Jordan <jordan@hursley.ibm.com> for
+ 	  this.
+
+	* examples/Map_Manager: Added a new example of the
+	  Hash_Map_Manager.
+
+	* tests/Map_Manager: Integrated the Hash_Map_Manager into the
+ 	  Map_Manager test and greatly improved the test (e.g., by adding
+ 	  timing).
+
+	* ace: Added a new implementation of the Map_Manager called
+ 	  Hash_Map_Manager.  This, of course, uses hashing rather than
+ 	  linear search.  The result should be a much faster
+ 	  implementation for many types of applications. 
+
+Thu Jan 30 13:55:08 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Map_Manager: Changed the return type of total_size() and
+ 	  current_size() to size_t.
+
+	* ace/OS: Had to remove the ACE_Time_Value (double) constructor
+ 	  since it caused ambiguities with ACE_Time_Value (long).  Thanks
+ 	  to Per Andersson for figuring this out.
+  
+	* include/makeinclude/platform_linux_lxpthread.GNU (CXX): Added
+ 	  -D_REENTRANT to make things work correctly in MT programs.
+  	  Thanks to Marius for this fix.
+
+	* ace/OS.h: Added several extra constructors for ACE_Time_Value so
+ 	  that it won't cause problems with the new ACE_Time_Value
+	  (double) constructor.
+
+	* ace/Log_Record.cpp (ACE_Log_Record): Added an "L" to the 0
+ 	  initial value used for time_stamp_.  Thanks to Marius for
+ 	  reporting this.
+
+	* ace: Added the new config-aix-4.2.x.h file, which supports the
+ 	  AIX4.2 platform.  Thanks to Rob Jordan <jordan@hursley.ibm.com>
+ 	  for this.
+
+	* include/makeinclude/platform_aix4.2.GNU: Added support for the
+ 	  new AIX4.2 platform.  Thanks to Rob Jordan
+ 	  <jordan@hursley.ibm.com> for this.
+ 
+	* ace/OS.h: It's now possible to override ACE_DEFAULT_BASE_ADDR in
+ 	  a config.h file.  This is important for platforms that need to
+ 	  put shared memory segments at particular address ranges.  Thanks
+ 	  to Rob Jordan <jordan@hursley.ibm.com> for suggesting this.
+
 Thu Jan 30 16:01:37 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/{config-aix-4.1.x.h,README}: added ACE_HAS_AIX_HIRES_TIMER,
@@ -42,6 +95,29 @@ Thu Jan 30 06:57:50 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Thanks to Chris Lahey <CLahey@cccis.com> for pointing this out.
 	  Also, return -1 on other than Solaris, Win32, and VxWorks.
 
+Wed Jan 29 22:05:01 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Naming_Test.cpp: Added the prefix "test_" to the bind(),
+ 	  find(), rebind(), and unbind() functions.  This avoids name
+ 	  clashes with the bind() call from the socket API.  Thanks to
+ 	  Marius for this info.
+	  
+	* ace/OS.cpp (ACE_Time_Value): Added a new constructor that makes
+ 	  it possible to construct an ACE_Time_Value from a double.
+  	  Thanks to Brad Flood <BFLOOD@tcs.lmco.com> for this.
+
+	* ace/OS.i (thr_join): If ACE_HAS_THREADS is defined, but none of
+ 	  the threading APIs match (e.g., AIX) then we'll return
+ 	  ACE_NOTSUP_RETURN(-1).  Thanks to Chris Lahey for help with
+ 	  this.
+
+	* include/makeinclude/platform_aix.GNU: Made some changes to the
+ 	  type of dynamic linker and libraries used by AIX 4.1.  Thanks to
+ 	  Chris Lahey for help with this.
+
+	* ace/config-aix-4.1.x.h: Changed from BSD 4.3 to 4.4.  Thanks
+	  to Chris Lahey for help with this.
+
 Wed Jan 29 09:03:48 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h: moved ACE_id_t and ACE_pri_t typedefs out of the
@@ -53,9 +129,9 @@ Wed Jan 29 09:03:48 1997  David L. Levine  <levine@cs.wustl.edu>
 	  comments.
 
 	* examples/Threads/{context_switch_time.cpp,Timer.h,Makefile}:
-	  added context switch timing test.  Currently only works on Suns
-	  because that's the only platform for which ACE has a high-
-	  resolution timer.
+	  added context switch timing test.  Currently only works on
+	  Suns because that's the only platform for which ACE has a
+	  high-resolution timer.
 
 	* Makefile: added chmod of VERSION file in TIMESTAMP macro.
 

@@ -3,7 +3,7 @@
 
 // High_Res_Timer.i
 
-#if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HIRES_TIMER)
+#if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER)
 
 ACE_INLINE
 ACE_High_Res_Timer::ACE_High_Res_Timer (void)
@@ -50,4 +50,4 @@ ACE_High_Res_Timer::elapsed_microseconds (hrtime_t &usecs) const
   usecs = (this->end_ - this->start_) / 1000;
 }
 
-#endif /* ACE_HAS_HI_RES_TIMER || ACE_HAS_AIX_HIRES_TIMER */
+#endif /* ACE_HAS_HI_RES_TIMER || ACE_HAS_AIX_HI_RES_TIMER */

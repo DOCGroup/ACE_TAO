@@ -3435,7 +3435,8 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 }
 
 ACE_INLINE int 
-ACE_OS::thr_join (ACE_hthread_t thr_handle, void **status)
+ACE_OS::thr_join (ACE_hthread_t thr_handle, 
+		  void **status)
 {
   // ACE_TRACE ("ACE_OS::thr_join");
   thr_handle = thr_handle;
@@ -3466,6 +3467,8 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle, void **status)
   // VxWorks could possibly support thread join with
   // ::taskSafe()/::taskUnsafe().  But, a task can only calls those
   // functions on itself.  Until there's really a need . . .
+  ACE_NOTSUP_RETURN (-1);
+#else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -3979,7 +3982,7 @@ ACE_OS::gettimeofday (void)
   tv.tv_usec = long ((_100ns - (tv.tv_sec * (10000 * 1000))) * 10);
 #endif 
 
-#elif defined (ACE_HAS_AIX_HIRES_TIMER)
+#elif defined (ACE_HAS_AIX_HI_RES_TIMER)
   timebasestruct_t tb;
 
   ::read_real_time(&tb, TIMEBASE_SZ);
@@ -5629,7 +5632,7 @@ ACE_OS::gethrtime (void)
   // ACE_TRACE ("ACE_OS::gethrtime");
 #if defined (ACE_HAS_HI_RES_TIMER)
   ACE_OSCALL_RETURN (::gethrtime (), int, -1);
-#elif defined (ACE_HAS_AIX_HIRES_TIMER)
+#elif defined (ACE_HAS_AIX_HI_RES_TIMER)
   timebasestruct_t tb;
 
   ::read_real_time(&tb, TIMEBASE_SZ);

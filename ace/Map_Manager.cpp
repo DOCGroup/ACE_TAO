@@ -34,7 +34,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::dump (void) const
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "max_size_ = %d", this->max_size_));
+  ACE_DEBUG ((LM_DEBUG, "total_size_ = %d", this->total_size_));
   ACE_DEBUG ((LM_DEBUG, "\ncur_size_ = %d", this->cur_size_));
   this->allocator_->dump ();
   this->lock_.dump ();
@@ -46,7 +46,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager (size_t size,
                                                         ACE_Allocator *alloc)
   : search_structure_ (0),
     allocator_ (0),
-    max_size_ (0),
+    total_size_ (0),
     cur_size_ (0)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager");
@@ -59,7 +59,7 @@ template <class EXT_ID, class INT_ID, class LOCK>
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager (ACE_Allocator *alloc)
   : search_structure_ (0),
     allocator_ (0),
-    max_size_ (0),
+    total_size_ (0),
     cur_size_ (0)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager");
@@ -96,6 +96,45 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::~ACE_Map_Manager (void)
   this->close ();
 }
 
+template <class EXT_ID, class INT_ID, class LOCK> int 
+ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::resize_i (size_t size)
+{
+  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::resize_i");
+
+  // If we need to grow buffer, then remove the existing buffer.
+  void *ptr;
+  
+  ACE_ALLOCATOR_RETURN (ptr, 
+			this->allocator_->malloc (size * sizeof (ACE_Map_Entry<EXT_ID, INT_ID>)),
+			-1);
+
+  size_t i;
+  
+  ACE_Map_Entry<EXT_ID, INT_ID> *temp = (ACE_Map_Entry<EXT_ID, INT_ID> *) ptr;
+
+  // Copy over the currently active elements.
+  for (i = 0; i < this->cur_size_; i++)
+    {
+      temp[i] = this->search_structure_[i]; // Structure assignment.
+    }
+  
+  this->total_size_ = size;
+  
+  // Mark the newly allocated elements as being "free".
+  
+  for (i = this->cur_size_; i < this->total_size_; i++)
+    {
+      // Call the constructor for each element in the array.
+      new (&(temp[i])) ACE_Map_Entry<EXT_ID, INT_ID>;
+      temp[i].is_free_ = 1;
+    }
+  
+  this->allocator_->free (this->search_structure_);
+  
+  this->search_structure_ = temp;
+  return 0;  
+}
+
 // Create a new search_structure of size SIZE.
 
 template <class EXT_ID, class INT_ID, class LOCK> int
@@ -111,50 +150,10 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::open (size_t size,
   this->allocator_ = alloc;
 
   // If we need to grow buffer, then remove the existing buffer.
-  if (this->max_size_ < size)
+  if (this->total_size_ < size)
     return this->resize_i (size);
-  return 0;
-}
-
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::resize_i (size_t size)
-{
-  ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::resize_i");
-
-  // If we need to grow buffer, then remove the existing buffer.
-  void *ptr = this->allocator_->malloc (size * sizeof (ACE_Map_Entry<EXT_ID, INT_ID>));
-
-  if (ptr == 0)
-    {
-      errno = ENOMEM;
-      return -1;
-    }
-
-  size_t i;
-  
-  ACE_Map_Entry<EXT_ID, INT_ID> *temp = (ACE_Map_Entry<EXT_ID, INT_ID> *) ptr;
-
-  // Copy over the currently active elements.
-  for (i = 0; i < this->cur_size_; i++)
-    {
-      temp[i] = this->search_structure_[i]; // Structure assignment.
-    }
-  
-  this->max_size_ = size;
-  
-  // Mark the newly allocated elements as being "free".
-  
-  for (i = this->cur_size_; i < this->max_size_; i++)
-    {
-      // Call the constructor for each element in the array.
-      new (&(temp[i])) ACE_Map_Entry<EXT_ID, INT_ID>;
-      temp[i].is_free_ = 1;
-    }
-  
-  this->allocator_->free (this->search_structure_);
-  
-  this->search_structure_ = temp;
-  return 0;  
+  else
+    return 0;
 }
 
 template <class EXT_ID, class INT_ID, class LOCK> int 
@@ -221,15 +220,11 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_bind (const EXT_ID &ext_id,
       return 0;
     }
 
-  // Check if we have reached max_size_
-  else if (this->cur_size_ == this->max_size_)
+  // Check if we have reached total_size_
+  else if (this->cur_size_ == this->total_size_)
     // We are out of room so grow the map
-    if (this->resize_i (this->max_size_ + DEFAULT_SIZE) == -1)
-      {
-        // Out of memory
-        errno = ENOMEM;
-        return -1;
-      }    
+    if (this->resize_i (this->total_size_ + DEFAULT_SIZE) == -1)
+      return -1;
 
   // Insert at the end of the active portion. 
   
@@ -503,7 +498,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind (const EXT_ID &ext_id)
   return this->unbind_i (ext_id) == -1 ? -1 : 0;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int
+template <class EXT_ID, class INT_ID, class LOCK> size_t
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::current_size (void)
 {
   ACE_TRACE ("ACE_Map_Manager::current_size");
@@ -511,12 +506,12 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::current_size (void)
   return this->cur_size_;
 }
 
-template <class EXT_ID, class INT_ID, class LOCK> int
+template <class EXT_ID, class INT_ID, class LOCK> size_t
 ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::total_size (void)
 {
   ACE_TRACE ("ACE_Map_Manager::total_size");
   ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
-  return this->max_size_;
+  return this->total_size_;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Iterator)

@@ -27,7 +27,7 @@ static char value[BUFSIZ];
 static char type[BUFSIZ];
 
 static void
-bind (ACE_Naming_Context &ns_context)
+test_bind (ACE_Naming_Context &ns_context)
 {
   // do the binds
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
@@ -44,7 +44,7 @@ bind (ACE_Naming_Context &ns_context)
 }
 
 static void
-rebind (ACE_Naming_Context &ns_context)
+test_rebind (ACE_Naming_Context &ns_context)
 {
   // do the rebinds
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
@@ -59,7 +59,7 @@ rebind (ACE_Naming_Context &ns_context)
 }
 
 static void
-unbind (ACE_Naming_Context &ns_context)
+test_unbind (ACE_Naming_Context &ns_context)
 {
   // do the unbinds
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
@@ -71,7 +71,7 @@ unbind (ACE_Naming_Context &ns_context)
 }
 
 static void
-find (ACE_Naming_Context &ns_context, int sign, int result)
+test_find (ACE_Naming_Context &ns_context, int sign, int result)
 {
   char temp_val[BUFSIZ];
   char temp_type[BUFSIZ];
@@ -150,23 +150,23 @@ main (int argc, char *argv[])
   ACE_ASSERT (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) != -1);
 
   // Add some bindings to the database
-  bind (*ns_context);
+  test_bind (*ns_context);
   
   // Should find the entries
-  find (*ns_context, 1, 0);
+  test_find (*ns_context, 1, 0);
 
   // Rebind with negative values
-  rebind (*ns_context);
+  test_rebind (*ns_context);
 
   // Should find the entries
-  find (*ns_context, -1, 0);
+  test_find (*ns_context, -1, 0);
 
   // Remove all bindings from database
-  unbind (*ns_context); 
+  test_unbind (*ns_context); 
   
   // Should not find the entries
-  find (*ns_context,  1, -1);
-  find (*ns_context, -1, -1);
+  test_find (*ns_context,  1, -1);
+  test_find (*ns_context, -1, -1);
 
   ACE_OS::sprintf (temp_file, __TEXT ("%s%s%s"),
 		   name_options->namespace_dir (),
