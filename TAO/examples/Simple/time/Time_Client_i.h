@@ -32,7 +32,6 @@ class Time_Client_i
   // = DESCRIPTION
   //   This class implements the interface between the interface
   //   objects and the client .
-
 public:
   // = Initialization and termination methods.
   Time_Client_i (void);
@@ -45,9 +44,8 @@ public:
   // Execute the methods
 
 private:
-
-  Client<Time,Time_var> client;
-  // Instantiate the client object
+  Client<Time, Time_var> client;
+  // Instantiate the client object.
 };
 
 #endif /* TIME_CLIENT_I_H */

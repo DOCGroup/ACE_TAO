@@ -135,7 +135,7 @@ int Server<Servant>::run (CORBA::Environment &env)
 }
 
 template <class Servant>
-void Server<Servant>::register_name ()
+void Server<Servant>::register_name (void)
 {
   namingClient.init (orb_manager_.orb());
   // create the name for the naming service
@@ -209,6 +209,9 @@ int Client<InterfaceObj, Var>::read_ior (char *filename)
 // Parses the command line arguments and returns an error status.
 
 template <class InterfaceObj, class Var>
+// @@ Bala, please look at other ACE/TAO *.cpp files to see how to
+// format the methods correctly (hint, see where the return type goes
+// in the other examples.
 int Client<InterfaceObj, Var>::parse_args (void)
 {
   ACE_Get_Opt get_opts (argc_, argv_, "df:k:x");
@@ -260,6 +263,9 @@ Client<InterfaceObj, Var>::~Client (void)
 }
 
 template <class InterfaceObj, class Var>
+// @@ Bala, please look at other ACE/TAO *.cpp files to see how to
+// format the methods correctly (hint, see where the return type goes
+// in the other examples.
 int Client<InterfaceObj, Var>::init (int argc, char **argv)
 {
   this->argc_ = argc;
@@ -310,6 +316,9 @@ int Client<InterfaceObj, Var>::init (int argc, char **argv)
 }
 
 template <class InterfaceObj, class Var>
+// @@ Bala, please look at other ACE/TAO *.cpp files to see how to
+// format the methods correctly (hint, see where the return type goes
+// in the other examples.
 int Client<InterfaceObj, Var>::shutdown (void )
 {
   // Returns the shutdwon flag
@@ -317,6 +326,9 @@ int Client<InterfaceObj, Var>::shutdown (void )
 }
 
 template <class InterfaceObj, class Var>
+// @@ Bala, please look at other ACE/TAO *.cpp files to see how to
+// format the methods correctly (hint, see where the return type goes
+// in the other examples.
 void  Client<InterfaceObj, Var>::shutdown (int flag)
 {
   // Fills the flag

@@ -28,13 +28,14 @@ template <class Servant>
 class Server
 {
   // = TITLE
-  //   A set of useful class Templates for using the TAO CORBA implementation.
+  //   A set of useful class Templates for using the TAO CORBA
+  //   implementation. 
   //
   // = DESCRIPTION
-  //   A template server definition. This template can be used by 
-  //   single server/client projects for defintion of their server/
-  //   clients. Pl. see the directories time, bank, echo for further
-  //   details of implemenatation.
+  //   A template server definition. This template can be used by
+  //   single server/client projects for defintion of their
+  //   server/clients.  See the directories time, bank, echo for
+  //   further details of implemenatation.
 public:
   // = Initialization and termination methods.
 
@@ -52,8 +53,8 @@ public:
   // interface_name is the name used to register the Servant.
 
   void register_name (void);
-  // after calling init(), this method will register the server with
-  // the TAO Naming Service using the servant_name passed to init().
+  // After calling <init>, this method will register the server with
+  // the TAO Naming Service using the servant_name passed to <init>.
 
   int run (CORBA::Environment &env);
   // Run the orb.
