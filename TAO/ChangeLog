@@ -1,3 +1,19 @@
+Tue Sep  3 14:40:35 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security.dsp:
+	* orbsvcs/orbsvcs/Security_Static.dsp:
+
+	  Removed redundant "-I" preprocessor directives.  They confused
+	  TAO_IDL's preprocessor.  This fixes some Windows build
+	  problems.
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
+
+	  Removed `#pragma prefix""`.  It is no longer needed.
+
+	  Removed commented out inclusioon of `PortableInterceptor.pidl'
+	  file.
+
 Mon Sep  2 18:52:27 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
