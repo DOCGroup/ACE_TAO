@@ -1,3 +1,11 @@
+Sat May 25 15:09:42 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/SLDex.{cpp mak}:
+        * examples/C++NPv2/Server_Shutdown.cpp:
+        * examples/C++NPv2/SLDEX_export.h:
+        * examples/C++NPv2/Makefile: Add new dll for second part of
+          Chapter 5 dynamic (re)config example.
+
 Sat May 25 11:47:33 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp (init):
