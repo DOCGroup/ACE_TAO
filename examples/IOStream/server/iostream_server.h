@@ -19,7 +19,7 @@
 typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 
 // Need to handle brain-dead C++ compilers.
-#if defined (ACE_HAS_TYPENAME_KEYWORD)
+#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 #define ACE_SOCK_IOSTREAM ACE_SOCK_IOStream
 #else
 #define ACE_SOCK_IOSTREAM ACE_SOCK_IOStream, ACE_INET_Addr
