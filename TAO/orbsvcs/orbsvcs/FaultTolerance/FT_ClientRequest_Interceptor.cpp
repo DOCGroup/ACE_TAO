@@ -55,6 +55,7 @@ namespace TAO
   FT_ClientRequest_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    delete this;
   }
 
   void
@@ -100,7 +101,7 @@ namespace TAO
     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    this->tss_resources ()->clean_flag_ = true;
+    this->tss_resources ()->clean_flag_ = false;
   }
 
   void
@@ -322,10 +323,6 @@ namespace TAO
 
                 ftrsc.retention_id = ++this->retention_id_;
                 tss->retention_id_ = ftrsc.retention_id;
-
-                // Generated one already. We don't generate another
-                // till we get a rely for this.
-                tss->clean_flag_ = false;
             }
             else
               {

@@ -605,13 +605,6 @@ project(Reactor Notify Test) : acetest {
   }
 }
 
-project(Reactor Notification Queue Test) : acetest {
-  exename = Reactor_Notification_Queue_Test
-  Source_Files {
-    Reactor_Notification_Queue_Test.cpp
-  }
-}
-
 project(Reactor Dispatch Order Test) : acetest {
   exename = Reactor_Dispatch_Order_Test
   Source_Files {

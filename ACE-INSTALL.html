@@ -179,8 +179,7 @@ supported by the DOC group, Riverace, or OCI. <P>
 
       We've also added some support for
       <A HREF="#mingw">GNU g++ with MinGW</A>,
-      <A HREF="#borland">Borland C++ 5.5, Borland C++ Builder 4.0/5.0/6.0 
-      and Borland C++ BuilderX</A>, and IBM's VisualAge C++ compiler.
+      Borland C++ Builder 4.0 and later, and IBM's VisualAge C++ compiler.
       Since we don't have these compilers we rely on the ACE+TAO users
       community to maintain these ports.  Therefore, please send email
       to the ACE mailing list if you run into problems. <P>
@@ -1207,14 +1206,14 @@ with Borland C++ Builder. <P>
 
 <P><hr align=left width="50%"><P>
 <H4><A NAME="borland">Building and Installing ACE on Win32 with Borland
-C++</A></H4>
+C++Builder</A></H4>
 
 If you are building for a machine without a network card, you may want
 to check <A HREF="#win32nonic">here</A> first. <P>
 
 <OL>
   <LI>Uncompress the ACE distribution into a directory, where it will
-      create an
+create an
       ACE_wrappers directory containing the source.  The ACE_wrappers
       directory will be referred to as ACE_ROOT in the following steps -- so
       ACE_ROOT\ace would be C:\ACE_wrappers\ace if you uncompressed into the
@@ -1241,7 +1240,7 @@ to check <A HREF="#win32nonic">here</A> first. <P>
       <BR>
       <CODE>set ACE_ROOT=C:\ACE_wrappers</CODE><BR>
       <BR>
-  <LI>Set the BCBVER environment vairable to the main version of your Borland C++ compiler.
+  <LI>Set the BCBVER environment vairable to the main version of your BCB compiler.
       Currently 4, 5, and 6 are supported. For example:<BR>
       <BR>
       <CODE>set BCBVER=5</CODE><BR>
@@ -1270,12 +1269,6 @@ variables
       <BR>
       Set the environment variable below to build a version of ACE that is build against the VCL-compatible run-time library. This can only be used with BCB version 4<BR>
       <CODE>set PASCAL=1</CODE><BR>
-      <BR>
-      Set the environment variable below to build a version of ACE using the 
-      C++BuilderX preview compiler. This compiler isn't supported at this moment
-      but by setting this environment variable the new compiler is used and 
-      you can expirement with this compiler.<BR>
-      <CODE>set CBX=1</CODE><BR>
       <BR>
       You can then start the build with the command
       <BR><CODE>make -f Makefile.bor</CODE><BR>
@@ -1308,10 +1301,9 @@ pascal).  To build VCL compatible libraries try
 make -f Makefile.bor
 </CODE></PRE></BLOCKQUOTE> <P>
 
-The Borland C++ Builder 4.0/5.0/6.0 port has been done by <A
-HREF="mailto:jody@atdesk.com">Jody Hagins</A>, <A
-HREF="mailto:chris@kohlhoff.com">Christopher Kohlhoff</A> and <A
-HREF="mailto:jwillemsen@remedy.nl">Johnny Willemsen</A>. <P>
+The Borland C++ Builder 4.0/5.0 port has been done by <A
+HREF="mailto:jody@atdesk.com">Jody Hagins</A> and <A
+HREF="mailto:chris@kohlhoff.com">Christopher Kohlhoff</A>. <P>
 
 <B>ACE TESTS</B><P>
 
@@ -1321,9 +1313,10 @@ Makefile.bor file, that is:<P>
 make -f Makefile.bor
 </CODE></BLOCKQUOTE><P>
 
-Once you build all the tests, you can run the perl script:<P>
+Once you build all the tests, you can run a perl script:<P>
 <BLOCKQUOTE><CODE>run_test.pl -ExeSubDir
-Dynamic\Release</CODE></BLOCKQUOTE><P> in the
+Dynamic\Release</CODE></BLOCKQUOTE><P> or the the batch file:<P>
+<BLOCKQUOTE><CODE>run_tests.bat bor</CODE></BLOCKQUOTE><P> in the
 <code>tests</code> directory to try all the tests. You need to make
 sure the ACE bin directory (in this case ACE_ROOT\bin\Dynamic\Release)
 is on the path before you try to run the tests.<p>
@@ -1453,7 +1446,8 @@ The tests are located in ACE_ROOT\tests.  There is also a workspace in
 that directory to build all the tests (tests.dsw)<P>
 
 Once you build all the tests (Batch Build works well for this), you
-can run perl script <code>run_test.pl</code> in the
+can run perl script <code>run_test.pl</code> or the the batch file <a
+href="tests/run_tests.bat"><code>run_tests.bat</code></a> in the
 <code>tests</code> directory to try all the tests.<p>
 
 <A NAME="win32nonic">

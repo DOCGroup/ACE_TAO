@@ -9,8 +9,7 @@
 #----------------------------------------------------------------------------
 
 DIRS = \
-  GenericFactory \
-  LoadMonitor
+  GenericFactory
 
 
 ifndef TAO_ROOT

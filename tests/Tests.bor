@@ -86,7 +86,6 @@ NAMES = \
    Process_Strategy_Test \
    RB_Tree_Test \
    Reactor_Dispatch_Order_Test \
-   Reactor_Notification_Queue_Test \
    Reactor_Exceptions_Test \
    Reactor_Notify_Test \
    Reactor_Performance_Test \

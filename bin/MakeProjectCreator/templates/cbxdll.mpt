@@ -1,6 +1,0 @@
-conditional_include "idl_compiler_win32"
-conditional_include "common"
-
-type_is_binary  = 1
-type_is_dynamic = 1
-common_defines  = WIN32

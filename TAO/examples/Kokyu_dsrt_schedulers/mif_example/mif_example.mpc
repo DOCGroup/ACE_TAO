@@ -1,5 +1,5 @@
-project(mif_server): kokyu_dsrt_scheduler_server {
-  exename = mif_server
+project(mif_server): taoserver {
+
   includes +=$(TAO_ROOT) \ 
              $(TAO_ROOT)/tao/RTScheduling \
              $(TAO_ROOT)/tao/RTCORBA   \
@@ -24,8 +24,8 @@ project(mif_server): kokyu_dsrt_scheduler_server {
   }
 }
 
-project(mif_client): kokyu_dsrt_scheduler_client {
-  exename = mif_client
+project(mif_client): taoclient {
+
   includes += $(TAO_ROOT)/tao/RTScheduling \
              $(TAO_ROOT)/tao/RTCORBA   \
              $(ACE_ROOT)/Kokyu \

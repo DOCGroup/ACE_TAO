@@ -1,4 +1,4 @@
-// file      : CIDLC/ExecutorMappingGenerator.hpp
+// file      : CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 

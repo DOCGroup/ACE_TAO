@@ -1,11 +1,7 @@
-// file      : CIDLC/ServantHeaderGenerator.cpp
-// author    : Jeff Parsons <j.parsons@vanderbilt.edu>
-// cvs-id    : $Id$
-
+// $Id$
 #include "ServantHeaderGenerator.hpp"
 
 #include "Literals.hpp"
-#include "TypeNameEmitter.hpp"
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
 
@@ -31,6 +27,152 @@ namespace
 
 namespace
 {
+  // Generates the name of an operation's return type.
+  //
+  //
+  class ReturnTypeNameEmitter : public HeaderEmitterBase,
+                                public Traversal::Void,
+                                public Traversal::Boolean,
+                                public Traversal::Long,
+                                public Traversal::String,
+                                public Traversal::LocalInterfaceDecl
+  {
+  public:
+    ReturnTypeNameEmitter (ostream& os_)
+      : HeaderEmitterBase (os_)
+    {
+    }
+
+    virtual void
+    traverse (VoidPtr const&)
+    {
+      os << "void";
+    }
+
+    virtual void
+    traverse (BooleanPtr const&)
+    {
+      os << "::CORBA::Boolean";
+    }
+
+    virtual void
+    traverse (LongPtr const&)
+    {
+      os << "::CORBA::Long";
+    }
+
+    virtual void
+    traverse (StringPtr const&)
+    {
+      os << "char *";
+    }
+
+    virtual void
+    traverse (LocalInterfaceDeclPtr const& i)
+    {
+      os << i->name () << "_ptr";
+    }
+  };
+
+  // Generates the typename of an IN argument.
+  //
+  //
+  class INArgTypeNameEmitter : public HeaderEmitterBase,
+                               public Traversal::Boolean,
+                               public Traversal::Long,
+                               public Traversal::String
+  {
+  public:
+    INArgTypeNameEmitter (ostream& os_)
+      : HeaderEmitterBase (os_)
+    {
+    }
+
+    virtual void
+    traverse (BooleanPtr const&)
+    {
+      os << "::CORBA::Boolean";
+    }
+
+    virtual void
+    traverse (LongPtr const&)
+    {
+      os << "::CORBA::Long";
+    }
+
+    virtual void
+    traverse (StringPtr const&)
+    {
+      os << "const char *";
+    }
+  };
+
+  // Generates the typename of an OUT argument.
+  //
+  //
+  class OUTArgTypeNameEmitter : public HeaderEmitterBase,
+                                public Traversal::Boolean,
+                                public Traversal::Long,
+                                public Traversal::String
+  {
+  public:
+    OUTArgTypeNameEmitter (ostream& os_)
+      : HeaderEmitterBase (os_)
+    {
+    }
+
+    virtual void
+    traverse (BooleanPtr const&)
+    {
+      os << "::CORBA::Boolean_out";
+    }
+
+    virtual void
+    traverse (LongPtr const&)
+    {
+      os << "::CORBA::Long_out";
+    }
+
+    virtual void
+    traverse (StringPtr const&)
+    {
+      os << "::CORBA::String_out";
+    }
+  };
+
+  // Generates the typename of an INOUT argument.
+  //
+  //
+  class INOUTArgTypeNameEmitter : public HeaderEmitterBase,
+                                  public Traversal::Boolean,
+                                  public Traversal::Long,
+                                  public Traversal::String
+  {
+  public:
+    INOUTArgTypeNameEmitter (ostream& os_)
+      : HeaderEmitterBase (os_)
+    {
+    }
+
+    virtual void
+    traverse (BooleanPtr const&)
+    {
+      os << "::CORBA::Boolean &";
+    }
+
+    virtual void
+    traverse (LongPtr const&)
+    {
+      os << "::CORBA::Long &";
+    }
+
+    virtual void
+    traverse (StringPtr const&)
+    {
+      os << "char *&";
+    }
+  };
+
   // Generates parts of the accessor operation for an attribute.
   //
   //

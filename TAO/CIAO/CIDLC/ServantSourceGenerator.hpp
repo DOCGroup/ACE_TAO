@@ -1,7 +1,4 @@
-// file      : CIDLC/ServantSourceGenerator.hpp
-// author    : Jeff Parsons <j.parsons@vanderbilt.edu>
-// cvs-id    : $Id$
-
+// $Id$
 #ifndef SERVANT_SOURCE_GENERATOR_HPP
 #define SERVANT_SOURCE_GENERATOR_HPP
 

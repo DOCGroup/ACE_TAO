@@ -801,13 +801,15 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
   // Artificial scope to limit the duration of the mutex.
   {
-    bool notification_required = false;
+    // int notification_required = 0;
 
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
 
     // No pending notifications.
-    if (this->notify_queue_.is_empty ())
-      notification_required = true;
+
+    // We will send notify for every message..
+    // if (this->notify_queue_.is_empty ())
+    //   notification_required = 1;
 
     ACE_Notification_Buffer *temp = 0;
 
@@ -842,11 +844,6 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
 
     if (notify_queue_.enqueue_tail (temp) == -1)
       return -1;
-
-    if(!notification_required)
-      {
-        return 0;
-      }
   }
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
@@ -896,11 +893,52 @@ ACE_Select_Reactor_Notify::notify_handle (void)
 }
 
 
+// Special trick to unblock <select> when updates occur in somewhere
+// other than the main <ACE_Select_Reactor> thread.  All we do is
+// write data to a pipe that the <ACE_Select_Reactor> is listening on.
+// Thanks to Paul Stephenson for suggesting this approach.
 int
 ACE_Select_Reactor_Notify::is_dispatchable (ACE_Notification_Buffer &buffer)
 {
+   // There is tonnes of code that can be abstracted...
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-  return 1;
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
+
+    ACE_Notification_Buffer *temp;
+
+    ACE_UNUSED_ARG (buffer);
+
+    // If the queue is empty just return 0
+    if (notify_queue_.is_empty ())
+      return 0;
+
+    if (this->notify_queue_.dequeue_head (temp) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("%p\n"),
+                         ACE_LIB_TEXT ("dequeue_head")),
+                        -1);
+    if (temp->eh_ != 0)
+      {
+        // If the queue had a buffer that has an event handler, put
+        // the element  back in the queue and return a 1
+        if (this->notify_queue_.enqueue_head (temp) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_LIB_TEXT ("%p\n"),
+                               ACE_LIB_TEXT ("enque_head")),
+                              -1);
+          }
+
+        return 1;
+      }
+    // Else put the element in the free queue
+    if (free_queue_.enqueue_head (temp) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("%p\n"),
+                         ACE_LIB_TEXT ("enqueue_head")),
+                        -1);
+  }
 #else
   // If eh == 0 then another thread is unblocking the
   // <ACE_Select_Reactor> to update the <ACE_Select_Reactor>'s
@@ -922,9 +960,8 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
   int result = 0;
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-  // Dispatch one message from the notify queue, and put another in
-  // the pipe if one is available.  Remember, the idea is to keep
-  // exactly one message in the pipe at a time.
+
+  // Dispatch all messages that are in the <notify_queue_>.
   {
     // We acquire the lock in a block to make sure we're not
     // holding the lock while delivering callbacks...
@@ -945,23 +982,6 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
                          ACE_LIB_TEXT ("%p\n"),
                          ACE_LIB_TEXT ("enqueue_head")),
                         -1);
-
-    bool write_next_buffer = false;
-    ACE_Notification_Buffer ** next;
-
-    if(!this->notify_queue_.is_empty())
-      {
-        // The queue is not empty, need to queue another message.
-        this->notify_queue_.get (next, 0);
-        write_next_buffer = true;
-      }
-
-    if(write_next_buffer)
-      {
-        (void) ACE::send(
-                         this->notification_pipe_.write_handle(),
-            (char *)*next, sizeof(ACE_Notification_Buffer));
-      }
   }
 
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */

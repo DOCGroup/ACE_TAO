@@ -1,128 +1,28 @@
-Mon Oct 13 08:51:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* ace/ace_wchar.inl: Reverted the change to BUG 1605 that was
-	  applied. The MSDN documentation doesn't suggest a 1 instead of a
-	  -1. Reopening BUG 1605.
-
-Mon Oct 13 12:39:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * tests/Makefile.tests:
-          Fixed typo in Reactor_Notification_Queue_Test
-
-Mon Oct 13 08:36:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * Kokyu/Kokyu_dsrt.h:
-        * Kokyu/DSRT_CV_Dispatcher_Impl_T.h:
-          Fixed fuzz pre/post error.
-
-        * tests/Reactor_Notification_Queue_Test.cpp:
-          Fixed fuzz file mismatch error.
-
-Mon Oct 13 06:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * bin/mpc.pl:
-        * bin/MakeProjectCreator/templates/cbxexe.mpt:
-        * bin/MakeProjectCreator/templates/cbxdll.mpt:
-        * bin/MakeProjectCreator/templates/cbx.mpd:
-        * bin/MakeProjectCreator/modules/CbxProjectCreator.pm:
-          Added first version of cbx generator. This generated project files
-          for the new C++BuilderX development environment. This just sets some
-          of the options and adds all files to the project.
-
-Sun Oct 12 21:07:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* tests/Makefile.tests:
-	* tests/Tests.bor:
-	* tests/run_test.lst:
-	* tests/tests.mpc: Regular exercise for building and running the
-	  test on all the platforms.
-
-Sun Oct 12 19:03:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-
-	* Kokyu/Dispatcher_Task.cpp: Changed the Null lock in the
-	  allocator to Mutex lock.
-
-Sun Oct 12 17:20:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* ace/Select_Reactor_Base.cpp: Fix for [BUG 1268]. Please refer to
-	  bugzilla database at
-
-  	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1268
-
-	  for more details on the source of the problem and the solution
-	  for the same. Thanks to Carlos O'Ryan for providing patches.
-
-	* tests/Reactor_Notification_Queue_Test.cpp:
-	* tests/Reactor_Notification_Queue_Test.dsp:
-	* tests/tests.dsw: New test that stresses the feature of sending
-	  notify messages to the reactor. Thanks to Carlos O'Ryan for
-	  providing the test.
-
-Sun Oct 12 14:08:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-
-	* bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
-	* bin/MakeProjectCreator/config/kokyu_dsrt_scheduler_client.mpb:
-	* bin/MakeProjectCreator/config/kokyu_dsrt_scheduler_server.mpb:
-	  Added MPC base project files for Kokyu DSRT schedulers.
-
-Sun Oct 12 11:48:02 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-
-	* Kokyu/Kokyu.html:
-	* Kokyu/kokyu1.jpg:
-	* Kokyu/kokyu2.jpg:
-	* Kokyu/KokyuEC.jpg: Added some initial documentation on Kokyu.
-
-Sun Oct 12 17:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ACE-INSTALL.html:
-          Removed mentioning of tests/run_tests.bat, it has been removed
-          some time ago and the perl script run_tests.pl is the only one
-          to use. Updated documentation for Borland support. CBuilderX is
-          now supported, but not the new preview compiler that is shipped
-          with CBuilderX.
-
-Sun Oct 12 08:42:32 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-
-	* Kokyu/tests/DSRT_MIF/MIF.cpp:
-	* Kokyu/tests/DSRT_MIF/Makefile:
-	* Kokyu/tests/FIFO/test.cpp:
-	* Kokyu/tests/FIFO/README:
-	* Kokyu/tests/EDF/README:
-	* Kokyu/tests/EDF/test.cpp: Added more output info
-	  statements. Added README for the examples.
-
-Sat Oct 11 23:48:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
-
-	* bin/tao_other_tests.lst:
-
-	  Enabled TAO load balancer infrastructure controlled membership
-	  and CPU load monitor tests.
-
 Sat Oct 11 21:51:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/Kokyu_defs.{h,i,cpp}:
 	* Kokyu/Default_Dispatcher_Impl.cpp: Fixed some minor bugs related
 	  to setting the dispatcher with the correct sched policy.
-
+	
 	* Kokyu/tests/FIFO/test.cpp: Added some output print statements to
-	  print error messages on dispatcher failure.
+	  print error messages on dispatcher failure.	
 
 Sat Oct 11 17:39:09 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Dispatcher_Task.i:
-	* Kokyu/Dispatcher_Task.h:
-	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp:
-	* Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp:
+	* Kokyu/Dispatcher_Task.i: 
+	* Kokyu/Dispatcher_Task.h: 
+	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp: 
+	* Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp: 
 
 	  Add this-> qualification when referencing instance variables in
 	  base class to get rid of compiler warnings in HPUX build.
-
+	
 	* ace/ace_wchar.inl: Fix for BUG 1605. Thanks to Dmitry
 	  Botcharnikov <dimab@garant.ru> and Stephan Bettermann
 	  <sbetterm@erggroup.com> for reporting the problem and suggesting
-	  a solution.  Please see
+	  a solution.  Please see 
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1605
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1605 
 
 	  for a description of the problem.
 
@@ -134,20 +34,20 @@ Sat Oct 11 11:01:05 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Fri Oct 10 22:56:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Kokyu_defs.{h,i,cpp}:
-	* Kokyu/Dispatcher_Task.{i,h,cpp}:
-	* Kokyu/Dispatcher_Impl.h:
-	* Kokyu/Default_Dispatcher_Impl.cpp:
-
+	* Kokyu/Kokyu_defs.{h,i,cpp}: 
+	* Kokyu/Dispatcher_Task.{i,h,cpp}: 
+	* Kokyu/Dispatcher_Impl.h: 
+	* Kokyu/Default_Dispatcher_Impl.cpp: 
+	
 	  Added allocator, sched scope, sched policy, reordering queue
 	  attributes to the Dispatcher_Attributes class. This will make
 	  the dispatcher more configurable.
-
-	* Kokyu/tests/FIFO/test.cpp:
-	* Kokyu/tests/EDF/test.cpp:
-
+	
+	* Kokyu/tests/FIFO/test.cpp: 
+	* Kokyu/tests/EDF/test.cpp: 
+	 
 	  Added command line options to specify the sched policy.
-
+	
 Fri Oct 10 19:52:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.{h,i}:
@@ -263,6 +163,7 @@ Tue Oct 07 06:07:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
           Generate NAME, else nothing happens when building with Borland.
+
 
 Fri Oct 03 22:41:20 2003  Chris Cleeland  <cleeland@ociweb.com>
 
@@ -589,6 +490,7 @@ Tue Sep 16 11:49:19 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Sep 16 11:55:18 2003  Gautam H. Thaker  <gthaker@atl.lmco.com>
 
+
         * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
 
           fix compiler warning due to unintialized pointer
@@ -606,6 +508,7 @@ Tue Sep 16 11:55:18 2003  Gautam H. Thaker  <gthaker@atl.lmco.com>
 
           Changes to support changed LKSCTP API support from 2.6.test.4
           kernel an onward.
+
 
 Tue Sep 16 10:28:02 2003  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -11,7 +11,7 @@
 #----------------------------------------------------------------------------
 MAKEFILE        = Makefile.muf_server
 DEPENDENCY_FILE = .depend.Makefile.muf_server
-BIN_UNCHECKED   = muf_server
+BIN_UNCHECKED   = server
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -33,7 +33,7 @@ FILES = \
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
-LDLIBS = -lTAO_RTScheduler -lKokyu_DSRT_Schedulers -lKokyu -lTAO_RTCORBA -lTAO_PortableServer -lTAO_IORInterceptor -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO -lACE
+LDLIBS = -lTAO_RTScheduler -lKokyu -lKokyu_DSRT_Schedulers -lTAO_RTCORBA -lTAO_PortableServer -lTAO_IORInterceptor -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO -lACE
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
 ACELIB =
@@ -52,11 +52,7 @@ $(TEMPINCDIR):
 
 endif
 
-ifeq ($(rt_corba),1)
 BIN    = $(BIN_UNCHECKED)
-else
-  all: require_warning
-endif
 
 OBJS   = $(addsuffix .o, $(notdir $(FILES)))
 SRC    = $(addsuffix .cpp, $(FILES))
@@ -76,7 +72,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-CPPFLAGS     += -I../../../tao/RTScheduling -I../../../tao/RTCORBA -I../../../orbsvcs -I../../../examples/Kokyu_dsrt_schedulers -I../../../../Kokyu -I../../.. -I../../../tao -I../../../..
+CPPFLAGS     += -I../../../tao/RTScheduling -I../../../tao/RTCORBA -I../../../../Kokyu -I../../../orbsvcs -I../../../examples/Kokyu_dsrt_schedulers -I../../.. -I../../../tao -I../../../..
 ifeq ($(static_libs),1)
   ifneq ($(LIB),)
     CPPFLAGS += -DTAO_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
@@ -90,10 +86,6 @@ TAO_IDLFLAGS += -Gv -Ge 1 -Sc -Wb,pre_include=ace/pre.h -Wb,post_include=ace/pos
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
-require_warning:
-	@echo This project will not be built due to one of the following missing features:
-	@echo rt_corba
-
 ../../../../lib:
 	-@mkdir -p "../../../../lib"
 
@@ -107,13 +99,8 @@ endif
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
-ifndef kylix
 $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
-else
-$(BIN): $(addprefix $(VDIR), $(OBJS))
-	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $^, $@,,
-endif
 
 realclean: clean 
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
