@@ -17,6 +17,11 @@
    // Compiler supports the ssize_t typedef.
 #  define ACE_HAS_SSIZE_T
 
+// When using the preprocessor, Ignore info msg; invalid #pragma
+#  if defined (__IBMCPP__) && (__IBMCPP__ < 400)  // IBM C++ 3.6
+#    define ACE_CC_PREPROCESSOR_ARGS "-E -qflag=w:w"
+#  endif /* (__IBMCPP__) && (__IBMCPP__ < 400) */
+
    // Keep an eye on this as the compiler and standards converge...
 #  define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #  define ACE_LACKS_PRAGMA_ONCE
