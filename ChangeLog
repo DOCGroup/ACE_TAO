@@ -1,3 +1,16 @@
+Wed Jan 21 13:38:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          glibc version 2.3 defines the method isastream, so from this glibc
+          version don't do this anymore in the ACE library by setting then the
+          define ACE_HAS_ISASTREAM_PROTO. On RH9 defining the isastream method
+          within ACE caused errors because there this method has an exception
+          specification. This only appeared when other libraries are used which
+          include stropts.h themselves. Also on SuSE 9 with glibc v2.3 I see
+          that isastream has an exception specification. This fixed [BUGID 1613].
+          Thanks to Jeffrey Graham <jgraham@titan.com> and
+          Akim Boyko <akim@sitech.com.ua> for reporting this.
+
 Wed Jan 21 12:58:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
