@@ -40,7 +40,7 @@ static const long max_queue = LONG_MAX;
 static void *
 consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 {
-  int cur_priority = 27;
+  u_long cur_priority = 27;
   int local_count = 0;
 
   // Keep looping, reading a message out of the queue, until we

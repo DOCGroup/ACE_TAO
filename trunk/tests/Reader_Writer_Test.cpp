@@ -98,7 +98,7 @@ reader (void *)
 
   ACE_DEBUG ((LM_DEBUG, "(%t) reader starting\n"));
   
-  for (int iterations = 1; iterations <= n_iterations; iterations++)
+  for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
       ACE_Read_Guard<ACE_RW_Mutex> g(rw_mutex);
       int n = ++current_readers;
@@ -109,7 +109,7 @@ reader (void *)
 	
       int data = shared_data;
 
-      for (int loop = 1; loop <= n_loops; loop++)
+      for (size_t loop = 1; loop <= n_loops; loop++)
         {
 	  ACE_Thread::yield();
 	  if (shared_data != data)
@@ -137,7 +137,7 @@ writer (void *)
 
   ACE_DEBUG ((LM_DEBUG, "(%t) writer starting\n"));
   
-  for (int iterations = 1; iterations <= n_iterations; iterations++)
+  for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
       ACE_Write_Guard<ACE_RW_Mutex> g(rw_mutex);
 
@@ -153,7 +153,7 @@ writer (void *)
       int self = (int) ACE_Thread::self ();
       shared_data = self;
 
-      for (int loop = 1; loop <= n_loops; loop++)
+      for (size_t loop = 1; loop <= n_loops; loop++)
         {
 	  ACE_Thread::yield();
 	  if (shared_data != self)
