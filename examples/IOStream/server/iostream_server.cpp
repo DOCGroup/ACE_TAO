@@ -1,5 +1,5 @@
-// This is a simple example of using the ACE_IOStream and
-// ACE_streambuf templates to create an object based on ACE_*_Stream
+// This is a simple example of using the ACE_IOStream_T and
+// ACE_Streambuf_T templates to create an object based on ACE_*_Stream
 // classes which mimic a C++ iostream.
 
 #include "ace/Acceptor.h"
@@ -7,11 +7,13 @@
 #include "ace/Service_Config.h"
 #include "ace/IOStream.h"
 
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
+
 // Declare a new type which will case an ACE_SOCK_Stream to behave
 // like an iostream.  The new type (ACE_SOCK_IOStream) can be used
 // anywhere an ACE_SOCK_Stream is used.
 
-typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream ;
+typedef ACE_IOStream_T<ACE_SOCK_Stream> ACE_SOCK_IOStream ;
 
 // Create a service handler object based on our new
 // iostream/SOCK_Stream hybrid.
@@ -101,10 +103,12 @@ public:
 // create handler objects for us.
 
 typedef ACE_Acceptor<Handler, ACE_SOCK_ACCEPTOR> Logging_Acceptor;
+#endif /* !ACE_LACKS_ACE_IOSTREAM */
 
 int 
 main (int argc, char *argv [])
 {
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
   ACE_Service_Config daemon;
 
   // Create an adapter to end the event loop.
@@ -134,13 +138,18 @@ main (int argc, char *argv [])
 
   ACE_DEBUG ((LM_DEBUG, " (%P|%t) shutting down server daemon\n"));
 
+#else
+  ACE_ERROR ((LM_ERROR, "ACE_IOSTREAM not supported on this platform\n"));
+#endif /* !ACE_LACKS_ACE_IOSTREAM */
   return 0;
 }
 
 
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Acceptor <Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_IOStream <ACE_SOCK_Stream>;
-template class ACE_Streambuf <ACE_SOCK_Stream>;
+template class ACE_IOStream_T <ACE_SOCK_Stream>;
+template class ACE_Streambuf_T <ACE_SOCK_Stream>;
 template class ACE_Svc_Handler <ACE_SOCK_IOStream, ACE_INET_Addr, ACE_NULL_SYNCH>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#endif /* !ACE_LACKS_ACE_IOSTREAM */
