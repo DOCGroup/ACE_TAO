@@ -1,3 +1,8 @@
+Fri Sep 17 16:14:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/InterceptorC.cpp: Added #include "tao/varout.h".  Thanks to
+	  David and Marina for pointing this out.
+
 Fri Sep 17 12:05:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Sequence_T.i:
@@ -38,7 +43,7 @@ Thu Sep 16 13:56:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  file, contingent on defintion of
 	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION. This is mainly
 	  for VxWorks to be happy when generating iostream
-	  operators for exceptions. Thanks to David for 
+	  operators for exceptions. Thanks to David for
 	  pointing out this problem.
 
 Thu Sep 16 12:51:35 1999  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -67,7 +72,7 @@ Thu Sep 16 10:52:41 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tests/ORB_init/ORB_init.cpp (main):
 
-	  Do not print the exception since our automatic test scripts look 
+	  Do not print the exception since our automatic test scripts look
 	  for keywords such as "EXCEPTION" to determine if an error
 	  occured.  Instead, the exception's repository ID is printed.
 	  The idea behind this part of the test is to simply verify that
