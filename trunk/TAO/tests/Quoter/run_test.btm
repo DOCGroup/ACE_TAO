@@ -27,12 +27,12 @@ if %1 == /h goto is_h
 if %1 == /? goto is_h
 goto no_h
 :is_h
-echo run_test [/n num] [/leave] [/h] [/ns|sv|ff|cl|gf]
+echo run_test [/n num] [/leave] [/h] [/ns, /sv, /ff, /cl, /gf]
 echo.
 echo /n num              -- runs the client num times
 echo /leave              -- leaves the servers running and their windows open
 echo /h                  -- prints this information
-echo /ns /sv /ff /cl /gf -- Runs each separately
+echo /ns /sv /ff /cl /gf -- Runs only one of the executables
 quit
 :no_h
 
