@@ -1,5 +1,5 @@
 <!--//$Id$  -->
-<!--Made by Tao Lu <lu@dre.vanderbilt.edu>-->
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -34,21 +34,9 @@ This Hello example is contructed in the following ways:
 <h2>Step-By-Step</h2>
 <hr>
 <ul><h3>Hello_Base</h3>
-<li>1. Write an IDL file (<code>Hello_Base.idl</code>) which contains all the interfaces and events common to all the components. The reason we do this is becuse the generated lib of this idl file will be linked in by all the components in the system. To reduce the size of the component lib we have to include only the necesary part. In this example, we have an eventtype <code>timeout</code> and an interface <code>message</code>, which are used by both the Sender and the Receiver, so we put both of them in Hello.idl.</li>
+<li>1. Write an IDL file (<code>Hello_Base.idl</code>) which contains all the interfaces and events common to all the components. The reason we do this is becuse the generated lib of this idl file will be linked in by all the components in the system. To reduce the size of the component lib we have to include only the necesary part. In this example, we have an eventtype <code>timeout</code> and an interface <code>ReadMessage</code>, which are used by both the Sender and the Receiver, so we put both of them in Hello.idl.</li>
 
-<li>2. Use <code>$CIAO_ROOT/bin/generate_component_mpc.pl -n Hello_Base</code> to generate the <a href="http://downloads.ociweb.com/MPC/MakeProjectCreator.pdf">MPC</a> file for ITS_Base. Note: There are only 2 projects in the mpc file, Hello_stub and Hello_svnt.</li>
-
-<li>3. Open the mpc file and follow the instructions below</li>
-<ul>For the project <code>Hello_Base_svnt</code>:
-     <li>Change the parent prject from <code>ciao_svnt</strong> to <code>ciao_server.</strong></li>
-     <li>Delete the <code>IDL_Files</code> and <code>CIDL_Files</code> part.</li>
-     <li>Delete all the files in the <code>Source_File</code> part except <code>Hello_BaseS.cpp.</code></li>
-     <br>
-     <strong>Note:</strong> These steps are needed because that <code>Hello_Base</code> is not a component but libs(stub and skel) which will be used by the component libraries. However, since we generate the mpc file using the <code>generate_component_mpc.pl</code> we have to handcraft the file. The user can hand write this file if he prefer to.
-</ul>
-
-<br>
-<li>4. Follow the instruction from the output of the last step, use the perl script (<code>generate_export_file.pl</code>) to generate the Export files.</li>
+<li>2. Look at the <code>Hello_Base.mpc</code> file to get an idea how the Hello_Base_stub and Hello_Base_svnt projects are organized. <a href="http://downloads.ociweb.com/MPC/MakeProjectCreator.pdf">MPC</a> is a utility we used to generate makefiles or VC project/solution files for all <a href="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</a>, <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a> and <a href="http://www.cs.wustl.edu/~schmidt/CIAO.html">CIAO</a> libraries.</li>
 </ul>
 
 <hr>
@@ -62,40 +50,43 @@ This Hello example is contructed in the following ways:
 </code><br></ul>
 Note:
 <ul>
-<li>I have different directories for <code>Hello_Base/Sender/Receiver</code> respectively.</li>
+<li>I have different directories for <code>"Hello_Base", "Sender", "Receiver"</code> respectively.</li>
 
 <li>For every <code>_stub</code> project, add:<br>
   <code>"libs  += Hello_Base_stub"</code><br>
 
 </ul>
 
-<li>2. Use the export script to generate the export files(3 files per compoennt).</li>
+<li>2. Use the export script to generate the export files. (3 files per component).</li>
 
-<li>3. Write an idl file for every compoent. Here you can put the component specific IDL definitions in this file. In this example we have a interface <code>trigger</code> specific to the Sender.</li>
+<li>3. Write an idl file for every compoent. Here you can put the component specific IDL definitions in this file. In this example we have a interface <code>trigger</code> specific to the Sender. Please note that the Sender component <code>"supports"</code> (IDL keyword) this interface. </li>
 
 <li>4. Write the CIDL file for every component.</li>
 
-<li>5. Write <code>_exec.h</code> and <code>_exec.cpp</code> files which actually implement the compnent.</li>
+<li>5. Write <code>_exec.h</code> and <code>_exec.cpp</code> files which actually implement the component.</li>
 <br>
-Writing all those files could be troublesome to a new CCM user. The best way of learning this is to read the example source code. If you are familliar with CORBA programming, it should not take too much time before you can delcare yourself as a CIAO programmer.
+<br>
+Writing all those files could be troublesome to a new CCM user. The best way of learning this is to read the example source code. If you are familliar with CORBA programming, it should not take too much time before you can declare yourself as a CCM programmer.
 
 <hr>
 
 <h3>The Entry Point</h3>
-After both components are implemented we still need a small program to initialize the process. In Sender.idl there is a Sender specific interface with a single method in it created for this purpose. Hence I created a TAO application called starter. The starter will call on a sepcial trigger interface on the Sender to get the whole process started. The starter program should collocate with Sender because it reads in the ior of the Sender. Please see the the last part of <code>Hello/Sender/Sender.mpc</code> file for detial.
+After both components are implemented we still need a small program to initialize the process. In Sender.idl there is a Sender specific interface with a single method in it created for this purpose. Hence there is a CORBA client application called <code>starter</code>. The <code>starter</code> will make a invocation on a supported interface called <code>trigger</code> on the Sender component to get the whole distributed application started. The <code>starter</code> will first the Sender component object reference through the ior string. Please see the the last part of <code>Hello/Sender/Sender.mpc</code> file for details.
 
 <hr>
 
 <h3>Make</h3>
-<li>Go to the top directory of your workspace and do:<br>
-    <code>$ACE_ROOT/bin/mwc.pl</code>(use -type option if you are on Windows)</li>
-<li>Look at the generated Makefile(*inx) , Solution/workspace file(Windows) and you got it.</li>
+<li>Go to the directory <code>$CIAO_ROOT/examples/Hello</code> and do:<br>
+    <code>$ACE_ROOT/bin/mwc.pl</code> (use -type option if you are using a compiler/IDE other than gnuace -which by default generates GNU makefiles)</li>
+    <br>For example, using <code>$ACE_ROOT/bin/mwc.pl -type vc71</code> if you are using Visual C++ 7.1 IDE.</li>
+<li>Look at the generated Makefile(*unx) , Solution/workspace files(Windows) and you got it.</li>
 
 <hr>
 
 <h3>Assemble</h3>
-Now we can step forward to build the assembly. Here we are going to build the simplest case only, which is 1 Receiver and 1 Sender. If you are interested in CIAO you could try 1 Sender wich multiple Receiver. However, you need to change the Sender.idl to make it <em>pulishes</em> timeout event instead of <em>emits</em> event.
+Now we can step forward to build the assembly. Here we are going to build the simplest case only, which is 1 Receiver and 1 Sender. If you are interested in CIAO you could try 1 Sender with multiple Receiver. However, you need to change the Sender.idl to make it <em>publishes</em> timeout event instead of <em>emits</em> event. 
 
+<br>
 <br>
 
 <li>1. Make a new directory with name <em>descriptors</em> in your workspace</li>
@@ -162,3 +153,4 @@ If you want to get debug information from the component server, please see run_t
 <b>Email: </b><a href="mailto:"</a<ADDRESS>ciao-users@cse.wustl.edu</ADDRESS>
 </body>
 </html>
+
