@@ -62,6 +62,8 @@ ifndef TAO_ORBSVCS
     # which are disabled by Minimum CORBA.
     TAO_ORBSVCS += PortableGroup
 
+    TAO_ORBSVCS += RTCORBAEvent
+
   endif # minimum_corba
 
   ifeq ($(ssl),1)
@@ -113,25 +115,8 @@ ifneq (,$(findstring  RTEvent, $(TAO_ORBSVCS)))
     MKLIST += Makefile.RTEvent
   endif
 endif
-# Backwards compatibility, going away soon.
-ifneq (,$(findstring  Event2, $(TAO_ORBSVCS)))
-  ifeq (,$(findstring Makefile.RTEvent, $(MKLIST)))
-    MKLIST += Makefile.RTEvent
-  endif
-endif
 ifneq (,$(findstring  Sched, $(TAO_ORBSVCS)))
   MKLIST += Makefile.RTSched
-endif
-ifneq (,$(findstring  Event, $(TAO_ORBSVCS)))
-  ifeq (,$(findstring Makefile.RTEvent, $(MKLIST)))
-    MKLIST += Makefile.RTEvent
-  endif
-  ifeq (,$(findstring Makefile.RTSched, $(MKLIST)))
-    MKLIST += Makefile.RTSched
-  endif
-  ifeq (,$(findstring Makefile.RTOLDEvent, $(MKLIST)))
-    MKLIST += Makefile.RTOLDEvent
-  endif
 endif
 ifneq (,$(findstring  Event, $(TAO_ORBSVCS)))
   ifeq (,$(findstring Makefile.RTEvent, $(MKLIST)))
@@ -151,6 +136,9 @@ ifneq (,$(findstring  RTOLDEvent, $(TAO_ORBSVCS)))
 endif
 ifneq (,$(findstring  RTSchedEvent, $(TAO_ORBSVCS)))
   MKLIST += Makefile.RTSchedEvent
+endif
+ifneq (,$(findstring  RTCORBAEvent, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.RTCORBAEvent
 endif
 ifneq (,$(findstring  CosEvent, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosEvent
