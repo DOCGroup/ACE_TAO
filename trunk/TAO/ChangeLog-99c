@@ -1,3 +1,9 @@
+Wed Mar 17 14:47:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/docs/releasenotes/orbcore.html:
+	  Added an entry about the new Context stuff and
+	  removed one about DynAnys being "in progress".
+
 Wed Mar 17 14:26:14 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/tests/ImplRepo/airplane_i.cpp:
