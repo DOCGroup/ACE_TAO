@@ -13,15 +13,17 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-#if defined (__GNUG__)
-# include "ace/config-g++-common.h"
-#endif /* __GNUG__ */
-
 // ********************************************************
 // uncomment next line if you are using FreeBSD 2.1.x[R]
 // #define FreeBSD_2_1
 // ********************************************************
 #define ACE_NETBSD
+
+#define ACE_SIZEOF_LONG_DOUBLE 12
+
+#if defined (__GNUG__)
+# include "ace/config-g++-common.h"
+#endif /* __GNUG__ */
 
 // #define ACE_HAS_BROKEN_NETBSD_MSYNC
 

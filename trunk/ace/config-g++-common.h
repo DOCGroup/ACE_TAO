@@ -42,6 +42,10 @@
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 #endif /* ! EGCS */
 
+#if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
+# define ACE_SIZEOF_LONG_DOUBLE 12
+#endif /* i386 */
+
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
