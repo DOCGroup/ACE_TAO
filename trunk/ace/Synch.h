@@ -1200,11 +1200,12 @@ class ACE_Export ACE_Barrier
   //
   // = DESCRIPTION
   //     This class allows <count> number of threads to synchronize
-  //     their completion (so-called "barrier synchronization").  The
-  //     implementation uses a "sub-barrier generation numbering"
-  //     scheme to avoid overhead and to ensure that all threads exit
-  //     the barrier correct.  This code is based on an article from
-  //     SunOpsis Vol. 4, No. 1 by Richard Marejka
+  //     their completion of (one round of) a task, which is known as
+  //     "barrier synchronization".  The implementation uses a
+  //     "sub-barrier generation numbering" scheme to avoid overhead
+  //     and to ensure that all threads wait to leave the barrier
+  //     correct.  This code is based on an article from SunOpsis
+  //     Vol. 4, No. 1 by Richard Marejka
   //     (Richard.Marejka@canada.sun.com).
 {
 public:

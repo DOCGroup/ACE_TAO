@@ -129,25 +129,40 @@ in ACE:
 	2. They illustrate how to utilize ACE features such as the
 	   Reactor, Service Configurator, Service Initialization,
 	   Concurrency, and IPC components.
-	   
-ACE is currently being used in many commercial products including the
-Bellcore Q.port ATM signaling software product, the Ericsson EOS
-family of telecom switch monitoring applications, the Motorola Iridium
-global mobile communications system, and enterprise-wide electronic
-medical imaging systems for Kodak Health Imaging Systems and Siemens
-medical engineering.
 
+----------------------------------------
+
+Middleware Applications
+
+ACE has been used in research and development projects at many
+universities and companies.  For instance, it has been used to build
+avionics systems at Boeing, telecommunication systems at Bellcore,
+Ericsson, Motorola, and Lucent; medical imaging systems at Siemens and
+Kodak; and many academic research projects.  Two example middleware
+applications provided with the ACE release include:
+
+        1. The ACE ORB (TAO) -- TAO is a real-time implementation of
+           CORBA built using the framework components and patterns
+           provided by ACE. 
+
+        2. JAWS -- JAWS is a high-performance, adaptive Web server
+           built using the components in ACE.
+	   
 ----------------------------------------
 
 OBTAINING ACE
 
-The current ACE release is provided as a tar file that is around 1.8
-Meg compressed using GNU gzip.  ACE may be obtained electronically
-from http://www.cs.wustl.edu/~schmidt/ACE-obtain.html.  This release
-contains the source code, test drivers, and example applications for
-C++ wrapper libraries and the higher-level ACE network programming
-framework developed as part of the ADAPTIVE project at the University
-of California, Irvine and at Washington University, St. Louis.
+The current ACE release is provided as a tar file that is around 3 Meg
+compressed using GNU gzip.  ACE may be obtained electronically from
+http://www.cs.wustl.edu/~schmidt/ACE-obtain.html.  This release
+contains the source code, test drivers, and example applications
+(including JAWS) for C++ wrapper libraries and the higher-level ACE
+network programming framework developed as part of the ADAPTIVE
+project at the University of California, Irvine and at Washington
+University, St. Louis.
+
+You can get The ACE ORB (TAO) in a companion release at
+http://www.cs.wustl.edu/~schmidt/TAO.html.
 
 ----------------------------------------
 
@@ -183,11 +198,12 @@ that describe the ACE wrappers and the ADAPTIVE system in more detail.
 The current release has been tested extensively, but if you find any
 bugs, please report them to me.  
 
-ACE MAILING LIST
+ACE MAILING LIST AND NEWSGROUP
 
 A mailing list is available for discussing bug fixes, enhancements,
 and porting issues regarding ACE.  Please send mail to me at the
 ace-users-request@cs.wustl.edu if you'd like to join the mailing list.
+There is also a USENET newsgroup called comp.soft-sys.ace.
 
 ACKNOWLEDGEMENTS
         
