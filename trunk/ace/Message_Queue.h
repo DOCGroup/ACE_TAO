@@ -72,6 +72,16 @@ public:
   // which case <errno> == <EINTR>, or if the time specified in
   // timeout elapses (in which case <errno> == <EWOULDBLOCK>).
 
+  virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
+                                 ACE_Time_Value *timeout = 0) = 0;
+  // Retrieve the first <ACE_Message_Block> without removing it.  Note
+  // that <timeout> uses <{absolute}> time rather than <{relative}>
+  // time.  If the <timeout> elapses without receiving a message -1 is
+  // returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
+  // deactivated -1 is returned and <errno> is set to <ESHUTDOWN>.
+  // Otherwise, returns -1 on failure, else the number of items still
+  // on the queue.
+
   virtual int enqueue_tail (ACE_Message_Block *new_item,
                             ACE_Time_Value *timeout = 0) = 0;
   // Enqueue a <ACE_Message_Block *> into the tail of the queue.
@@ -137,6 +147,10 @@ public:
 
   virtual int deactivated (void) = 0;
   // Returns true if <deactivated_> is enabled.
+
+  // = Get/set the notification strategy for the <Message_Queue>
+  virtual ACE_Notification_Strategy *notification_strategy (void) = 0;
+  virtual void notification_strategy (ACE_Notification_Strategy *s) = 0;
 
   // = Notification hook.
 
