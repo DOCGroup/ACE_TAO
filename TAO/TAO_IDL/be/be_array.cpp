@@ -468,7 +468,7 @@ be_array::gen_client_stubs (void)
           << this->tao_name ()
           << " (CORBA::tk_sequence, "
           << "sizeof (_oc_" <<  this->tao_name ()
-          << "), (unsigned char *) &_oc_"
+          << "), (char *) &_oc_"
           << this->tao_name ()
           << ", CORBA::B_FALSE);" << nl;
       *cs << "CORBA::TypeCode_ptr "

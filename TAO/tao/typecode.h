@@ -135,8 +135,8 @@ public:
   // with no parameters.
 
   CORBA_TypeCode (CORBA::TCKind kind,
-                  CORBA::ULong length,
-                  CORBA::Octet *buffer,
+                  size_t length,
+                  char *buffer,
                   CORBA::Boolean orb_owns_tc,
 		  CORBA::TypeCode_ptr parent = 0);
   // This constructor is used both for typecode constants and for
@@ -238,10 +238,10 @@ public:
   // This is implemented as a counted set of bytes, in marshaled CDR
   // format.
 
-  CORBA::ULong length_;
+  size_t length_;
   // length of the encapsulated stream
 
-  CORBA::Octet *buffer_;
+  char* buffer_;
   // the encapsulated stream
 
   CORBA::TCKind kind_;
@@ -386,7 +386,7 @@ private:
   CORBA_TypeCode (const CORBA::TypeCode &src);
   CORBA_TypeCode &operator = (const CORBA::TypeCode &src);
 
-  CORBA::Octet *non_aligned_buffer_;
+  char *non_aligned_buffer_;
   // original buffer that may possibly be non-aligned. We still need a
   // handle to the allocated memory so that all of it can be freed by
   // the destructor

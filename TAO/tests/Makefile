@@ -13,7 +13,8 @@
 DIRS  =	Cubit \
 	POA \
 	Param_Test \
-	Thruput
+	Thruput \
+	CDR \
 
 # The following tests have not been updated yet
 # 	Demux_Test

@@ -85,19 +85,19 @@ static const CORBA::Long _oc_string [] =
   0				// ... unbounded string
 };
 static CORBA::TypeCode tc_string (CORBA::tk_string,
-			  sizeof _oc_string,
-			  (u_char *) &_oc_string,
-			  CORBA::B_FALSE);
+				  sizeof _oc_string,
+				  (char*)&_oc_string,
+				  CORBA::B_FALSE);
 TAO_Export CORBA::TypeCode_ptr CORBA::_tc_string = &tc_string;
 
 static const CORBA::Long _oc_wstring [] =
 {	// CDR typecode octets
-  TAO_ENCAP_BYTE_ORDER,				// native endian + padding; "tricky"
+  TAO_ENCAP_BYTE_ORDER,	// native endian + padding; "tricky"
   0				// ... unbounded string
 };
 static CORBA::TypeCode tc_wstring (CORBA::tk_wstring,
 			  sizeof _oc_wstring,
-			  (u_char *) &_oc_wstring,
+			  (char *) &_oc_wstring,
 			  CORBA::B_FALSE);
 TAO_Export CORBA::TypeCode_ptr CORBA::_tc_wstring = &tc_wstring;
 
@@ -137,7 +137,7 @@ static const u_char oc_objref [] =
 
 static CORBA::TypeCode tc_objref (CORBA::tk_objref,
 				 sizeof oc_objref,
-				 (u_char *) &oc_objref,
+				 (char *) &oc_objref,
 				 CORBA::B_FALSE);
 
 TAO_Export CORBA::TypeCode_ptr CORBA::_tc_Object = &tc_objref;

@@ -27,15 +27,26 @@
 
 be_type::be_type (void)
   : tc_name_ (0),
-    type_name_ (0)
+    type_name_ (0),
+    nested_type_name_ (0)
 {
 }
 
 be_type::be_type (AST_Decl::NodeType nt, UTL_ScopedName *n, UTL_StrList *p)
   : AST_Decl (nt, n, p),
     tc_name_ (0),
-    type_name_ (0)
+    type_name_ (0),
+    nested_type_name_ (0)
 {
+}
+
+be_type::~be_type (void)
+{
+  if (this->nested_type_name_ != 0)
+    {
+      delete[] this->nested_type_name_;
+      this->nested_type_name_ = 0;
+    }
 }
 
 // compute the typecode name. The idea is to use the fully scoped name,
@@ -112,7 +123,9 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix)
 
   // thus we need some sort of relative name to be generated
 
-  static char macro [NAMEBUFSIZE];
+  if (this->nested_type_name_ == 0)
+    ACE_NEW_RETURN (this->nested_type_name_, char[NAMEBUFSIZE], 0);
+
   be_decl *def_scope = 0;  // our defining scope
   char // hold the fully scoped name
     def_name [NAMEBUFSIZE],
@@ -123,7 +136,7 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix)
     *use_curr = use_name,
     *use_next;
 
-  ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (this->nested_type_name_, '\0', NAMEBUFSIZE);
   ACE_OS::memset (def_name, '\0', NAMEBUFSIZE);
   ACE_OS::memset (use_name, '\0', NAMEBUFSIZE);
 
@@ -159,8 +172,8 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix)
           // initial prefix matches i.e., they have a common root
           // start by initializing the macro
 
-          //@@          ACE_OS::sprintf (macro, "ACE_NESTED_CLASS (");
-          //@@          ACE_OS::strcat (macro, def_curr); // initialize the first argument
+          //@@          ACE_OS::sprintf (this->nested_type_name_, "ACE_NESTED_CLASS (");
+          //@@          ACE_OS::strcat (this->nested_type_name_, def_curr); // initialize the first argument
 
           def_curr = (def_next ? (def_next+2) : 0); // skip the ::
           use_curr = (use_next ? (use_next+2) : 0); // skip the ::
@@ -180,8 +193,8 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix)
               if (!ACE_OS::strcmp (def_curr, use_curr))
                 {
                   // they have same prefix, append to arg1
-                  //@@    ACE_OS::strcat (macro, "::");
-                  //@@ ACE_OS::strcat (macro, def_curr);
+                  //@@    ACE_OS::strcat (this->nested_type_name_, "::");
+                  //@@ ACE_OS::strcat (this->nested_type_name_, def_curr);
                   def_curr = (def_next ? (def_next+2) : 0); // skip the ::
                   use_curr = (use_next ? (use_next+2) : 0); // skip the ::
                 }
@@ -194,27 +207,27 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix)
             }
 
           // start the 2nd argument of the macro
-          //@@          ACE_OS::strcat (macro, ", ");
+          //@@          ACE_OS::strcat (this->nested_type_name_, ", ");
 
           // copy the remaining def_name (if any left)
           if (def_curr)
-            ACE_OS::strcat (macro, def_curr);
+            ACE_OS::strcat (this->nested_type_name_, def_curr);
 
           // append our local name
-          ACE_OS::strcat (macro, this->local_name ()->get_string ());
+          ACE_OS::strcat (this->nested_type_name_, this->local_name ()->get_string ());
           if (suffix)
-            ACE_OS::strcat (macro, suffix);
-          //@@          ACE_OS::strcat (macro, ")");
-          return macro;
+            ACE_OS::strcat (this->nested_type_name_, suffix);
+          //@@          ACE_OS::strcat (this->nested_type_name_, ")");
+          return this->nested_type_name_;
         } // end of if the root prefixes match
     }
 
   // otherwise just emit our fullname
-  ACE_OS::sprintf (macro, this->fullname ());
+  ACE_OS::sprintf (this->nested_type_name_, this->fullname ());
   if (suffix)
-    ACE_OS::strcat (macro, suffix);
+    ACE_OS::strcat (this->nested_type_name_, suffix);
 
-  return macro;
+  return this->nested_type_name_;
 }
 
 // *****************************

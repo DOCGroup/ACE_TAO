@@ -16,35 +16,7 @@
     <H3>New on this release</H3>
 
     <UL>
-      <LI>
-	When several suppliers are consumers are distributed over the
-	network it could be nice to exploit locality and have a
-	separate Event Channel on each process (or host).
-	Only when an event is required by some remote consumer we need
-	to send it through the network.
-
-	The basic architecture to achieve this seems very simple,
-	each Event Channel has a proxy that connects to the EC peers,
-	providing a "merge" of its (local) consumer subscriptions as
-	its own subscription list.
-
-	Locally the proxy connects as a supplier,
-	publishing all the events it has register for.
-
-	To avoid event looping the events carry a time-to-live field
-	that is decremented each time the event goes through a proxy, 
-	when the TTL gets to zero the event is not propagated by the
-	proxy. 
-
-	In the current release an experimental implementation is
-	provided,
-	it basically hardcodes all the subscriptions and publications,
-	we are researching on how to automatically build the
-	publication list.</LI>
-
-      <LI>
-	We use the COS Time Service types (not the services) to
-	specify time for the Event Service and Scheduling Service.</LI>
+      <LI>Fixed memory leak in</LI>
     </UL>
 
     <H3>Known issues:</H3>
@@ -139,6 +111,38 @@
       please check the README file on
       <CODE>$TAO_ROOT/orbsvcs/tests/EC_Multiple</CODE> for
       further detail.</P>
+
+    <H3>Features in previous releases</H3>
+
+      <LI>
+	When several suppliers are consumers are distributed over the
+	network it could be nice to exploit locality and have a
+	separate Event Channel on each process (or host).
+	Only when an event is required by some remote consumer we need
+	to send it through the network.
+
+	The basic architecture to achieve this seems very simple,
+	each Event Channel has a proxy that connects to the EC peers,
+	providing a "merge" of its (local) consumer subscriptions as
+	its own subscription list.
+
+	Locally the proxy connects as a supplier,
+	publishing all the events it has register for.
+
+	To avoid event looping the events carry a time-to-live field
+	that is decremented each time the event goes through a proxy, 
+	when the TTL gets to zero the event is not propagated by the
+	proxy. 
+
+	In the current release an experimental implementation is
+	provided,
+	it basically hardcodes all the subscriptions and publications,
+	we are researching on how to automatically build the
+	publication list.</LI>
+
+      <LI>
+	We use the COS Time Service types (not the services) to
+	specify time for the Event Service and Scheduling Service.</LI>
 
   </BODY>
 </HTML>

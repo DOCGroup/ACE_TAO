@@ -327,7 +327,7 @@ private:
   CORBA::ULong my_request_id_;
   // Request ID of this operation.
 
-  u_char buffer [CDR::DEFAULT_BUFSIZE];
+  char buffer [CDR::DEFAULT_BUFSIZE];
   // Buffer used for CDR stream.
 
   CDR stream_;

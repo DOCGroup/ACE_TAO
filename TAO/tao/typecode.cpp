@@ -47,8 +47,8 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
 // non-empty parameter lists.  See "corba.hh" for details.
 
 CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
-                                CORBA::ULong length,
-                                CORBA::Octet *buffer,
+                                size_t length,
+                                char *buffer,
                                 CORBA::Boolean orb_owns_tc,
                                 CORBA::TypeCode_ptr parent)
   : length_ (length),
@@ -84,9 +84,6 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
 
   if (!parent_)
     {
-      // No parent. We are free standing.
-      ptr_arith_t temp;
-
       // Allocate a buffer to hold the encapsulated stream. We
       // allocate extra space since we need a buffer that is aligned
       // on a 4 byte word boundary. As a result, it is quite possible
@@ -96,12 +93,13 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       // to remain dangling. Hence we save a handle to the original
       // allocated buffer.
 
-      this->non_aligned_buffer_ = new CORBA::Octet [length + 4];
+      this->non_aligned_buffer_ = new char [length + 4];
 
-      temp = (ptr_arith_t) non_aligned_buffer_;
+      // No parent. We are free standing.
+      ptr_arith_t temp = (ptr_arith_t) non_aligned_buffer_;
       temp += 3;
       temp &= ~0x03;
-      this->buffer_ = (CORBA::Octet *) temp;
+      this->buffer_ = ACE_reinterpret_cast(char*,temp);
 
       (void) ACE_OS::memcpy (this->buffer_, buffer, (size_t) length);
 
@@ -384,8 +382,8 @@ CORBA_TypeCode::skip_typecode (CDR &stream)
         case CORBA::tk_array:
         case CORBA::tk_alias:
         case CORBA::tk_except:
-          return stream.get_ulong (temp) != CORBA::B_FALSE
-            && stream.skip_bytes (temp) != CORBA::B_FALSE;
+          return (stream.get_ulong (temp) != CORBA::B_FALSE
+		  && stream.rd_ptr (temp) != CORBA::B_FALSE);
         }
 
       return CORBA::B_TRUE;
@@ -1173,9 +1171,8 @@ CORBA_TypeCode::private_name (CORBA::Environment &env) const
           {
             this->private_state_->tc_name_known_ = CORBA::B_TRUE;
 
-            // skip past the length field.
-            this->private_state_->tc_name_ = (CORBA::String) (stream.next +
-                                                              CDR::LONG_SIZE);
+            // "Read" the string without copying.
+            stream.get_string (this->private_state_->tc_name_);
 
             return this->private_state_->tc_name_;
           }
@@ -1479,13 +1476,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                   // return the required one.
                   for (CORBA::ULong i = 0; i < mcount; i++)
                     {
-                      // the ith entry will have the name of the ith member
-                      this->private_state_->tc_member_name_list_ [i] = (char *)
-                        (stream.next + 4); // just point to it. The string
-                                           // starts after 4 bytes that encodes
-                                           // the length
                       // now skip this name
-                      if (!stream.skip_string ())
+                      if (!stream.get_string (this->private_state_->tc_member_name_list_ [i]))
                         {
                           env.exception (new CORBA::BAD_TYPECODE
                                          (CORBA::COMPLETED_NO));
@@ -1541,11 +1533,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                   // return the required one.
                   for (CORBA::ULong i = 0; i < mcount; i++)
                     {
-                      // the ith entry will have the name of the ith member
-                      this->private_state_->tc_member_name_list_ [i] = (char *)
-                        (stream.next + 4); // just point to it
-                      if (!stream.skip_string () // skip this name
-                          || (!skip_typecode (stream)  // skip the typecode
+                      if (!stream.get_string (this->private_state_->tc_member_name_list_ [i])
+                          || (!skip_typecode (stream)
                               != CORBA::TypeCode::TRAVERSE_CONTINUE))
                         {
                           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -1621,10 +1610,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                                          (CORBA::COMPLETED_NO));
                           return 0;
                         }
-                      this->private_state_->tc_member_name_list_ [i] = (char *)
-                        (stream.next + 4); // just point to it.
                       // skip typecode for member
-                      if (!stream.skip_string () // skip this name
+                      if (!stream.get_string (this->private_state_->tc_member_name_list_ [i])
                           || (!skip_typecode (stream))) // skip typecode
                         {
                           env.exception (new CORBA::BAD_TYPECODE

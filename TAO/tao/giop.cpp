@@ -82,10 +82,10 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
 {
   ACE_TIMEPROBE ("  -> GIOP::send_request - start");
 
-  char *buf = (char *) stream.buffer;
-  size_t buflen = stream.next - stream.buffer;
+  char *buf = (char *) stream.buffer ();
+  size_t buflen = stream.length ();
 
-  assert (buflen == (stream.length - stream.remaining));
+  // assert (buflen == (stream.length - stream.remaining));
 
   // Patch the message length in the GIOP header; it's always at the
   // same eight byte offset into the message.
@@ -97,28 +97,29 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
   // this particular environment and that isn't handled by the
   // networking infrastructure (e.g. IPSEC).
 
-  *(CORBA::Long *) (stream.buffer + 8) =
+  *(CORBA::Long *) (buf + 8) =
       (CORBA::Long) (buflen - TAO_GIOP_HEADER_LEN);
 
   // Strictly speaking, should not need to loop here because the
   // socket never gets set to a nonblocking mode ... some Linux
   // versions seem to need it though.  Leaving it costs little.
 
-  dump_msg ("send", stream.buffer, buflen);
+  dump_msg ("send", ACE_reinterpret_cast(u_char*,buf), buflen);
 
   ACE_SOCK_Stream &peer = handler->peer ();
 
   while (buflen > 0)
     {
-      if (buflen > stream.length)
+      if (buflen > stream.length ())
         {
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) ?? writebuf, buflen %u > length %u\n",
-                      buflen, stream.length));
+          ACE_DEBUG ((LM_DEBUG,
+		      "(%P|%t) ?? writebuf, buflen %u > length %u\n",
+                      buflen, stream.length ()));
           ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
           return CORBA::B_FALSE;
         }
 
-      ssize_t writelen = peer.send_n ((char _FAR *) buf, buflen);
+      ssize_t writelen = peer.send_n (buf, buflen);
 
 #if defined (DEBUG)
       //      dmsg_filter (6, "wrote %d bytes to connection %d",
@@ -312,12 +313,17 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   // as the "duty factor" goes down because of either long calls or
   // bursty contention during numerous short calls to the same server.
 
-  assert (msg.length > TAO_GIOP_HEADER_LEN);
+  msg.reset ();
 
-  msg.next = msg.buffer;
-  msg.remaining = TAO_GIOP_HEADER_LEN;
+  if (msg.grow (TAO_GIOP_HEADER_LEN) == 0)
+    {
+      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
+      return TAO_GIOP_MessageError;
+    }
 
-  char *bufptr = (char _FAR *) msg.buffer;
+  assert (msg.size () > TAO_GIOP_HEADER_LEN);
+
+  char *bufptr = (char*) msg.buffer ();
   ssize_t len = read_buffer (connection, bufptr, TAO_GIOP_HEADER_LEN);
   // Read the header into the buffer.
 
@@ -354,16 +360,20 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
       return TAO_GIOP_MessageError;
     }
 
+  // Set the end of the message....
+  msg.wr_ptr (TAO_GIOP_HEADER_LEN);
+
+
   // NOTE: if message headers, or whome messages, get encrypted in
   // application software (rather than by the network infrastructure)
   // they should be decrypted here ...
 
   // First make sure it's a GIOP message of any version.
 
-  if (!(msg.buffer [0] == 'G'
-        && msg.buffer [1] == 'I'
-        && msg.buffer [2] == 'O'
-        && msg.buffer [3] == 'P'))
+  if (!(bufptr [0] == 'G'
+        && bufptr [1] == 'I'
+        && bufptr [2] == 'O'
+        && bufptr [3] == 'P'))
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));      // header
       ACE_DEBUG ((LM_DEBUG, "bad header, magic word\n"));
@@ -374,7 +384,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   // Then make sure the major version is ours, and the minor version
   // is one that we understand.
 
-  if (!(msg.buffer [4] == MY_MAJOR && msg.buffer [5] <= MY_MINOR))
+  if (!(bufptr [4] == MY_MAJOR && bufptr [5] <= MY_MINOR))
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));      // header
       ACE_DEBUG ((LM_DEBUG, "bad header, version\n"));
@@ -385,13 +395,14 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   // Get the message type out and adjust the buffer's records to record
   // that we've read everything except the length.
 
-  retval = (TAO_GIOP_MsgType) msg.buffer[7];
-  msg.skip_bytes (8);
+  retval = (TAO_GIOP_MsgType) bufptr[7];
+
+  msg.do_byteswap = (bufptr [6] != TAO_ENCAP_BYTE_ORDER);
 
   // Make sure byteswapping is done if needed, and then read the
   // message size (appropriately byteswapped).
 
-  msg.do_byteswap = (msg.buffer [6] != TAO_ENCAP_BYTE_ORDER);
+  msg.rd_ptr (8);
   msg.get_ulong (message_size);
 
   // Make sure we have the full length in memory, growing the buffer
@@ -402,11 +413,17 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
   assert (message_size <= UINT_MAX);
 
-  if ((TAO_GIOP_HEADER_LEN + message_size) > msg.length)
-    msg.grow ((size_t) (TAO_GIOP_HEADER_LEN + message_size));
+  if (msg.grow (TAO_GIOP_HEADER_LEN + message_size) == 0)
+    {
+      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
+      return TAO_GIOP_MessageError;
+    }
 
-  msg.remaining = (size_t) message_size;
-  bufptr = (char *) & msg.buffer [TAO_GIOP_HEADER_LEN];
+  // The offset from the current position were data writing should
+  // start, since we already read the msg length (4 bytes) starting at
+  // position 8 we need to substract 12 bytes.
+  const int offset = TAO_GIOP_HEADER_LEN - 12;
+  bufptr = (char *)msg.buffer() + offset;
 
   // Read the rest of this message into the buffer.
 
@@ -442,7 +459,11 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
       return TAO_GIOP_MessageError;
     }
 
-  dump_msg ("recv", msg.buffer, (size_t) (message_size + TAO_GIOP_HEADER_LEN));
+  // Set the end of the message....
+  msg.wr_ptr (message_size);
+
+  dump_msg ("recv", ACE_reinterpret_cast(u_char*,msg.buffer()),
+	    (size_t) (message_size + TAO_GIOP_HEADER_LEN));
   ACE_TIMEPROBE ("  -> GIOP::recv_request - done");
   return retval;
 }
@@ -470,7 +491,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
     opname_ (operation),
     do_rsvp_ (is_roundtrip),
     my_request_id_ (0),
-    stream_ (&buffer [0], sizeof buffer),
+    stream_ (buffer, sizeof buffer),
     handler_ (0)
 {
   // The assumption that thread ids are ints is false and horribly
@@ -513,7 +534,7 @@ static const CORBA::Long _oc_opaque [] =
 CORBA::TypeCode
 TC_opaque (CORBA::tk_sequence,
            sizeof _oc_opaque,
-           (u_char *) &_oc_opaque,
+           (char *) &_oc_opaque,
            CORBA::B_FALSE);
 
 // Octet codes for the parameters of the ServiceContextList TypeCode
@@ -579,7 +600,7 @@ static const CORBA::Long _oc_svc_ctx_list [] =
 CORBA::TypeCode
 TC_ServiceContextList (CORBA::tk_sequence,
                        sizeof _oc_svc_ctx_list,
-                       (u_char *) &_oc_svc_ctx_list,
+                       (char *) &_oc_svc_ctx_list,
                        CORBA::B_FALSE);
 
 // The public API involves creating an invocation, starting it, filling
@@ -960,27 +981,17 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
     case TAO_GIOP_USER_EXCEPTION:
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
-        CORBA::String exception_id;
+	char* buf;
 
         // Pull the exception ID out of the marshaling buffer.
         {
-          CORBA::ULong len;
-
-          //
-          // Read "length" field of string, so "next" points
-          // right at the null-terminated ID.  Then get the ID.
-          //
-          if (this->stream_.get_ulong (len) != CORBA::B_TRUE
-              || len > this->stream_.remaining)
+	  if (this->stream_.get_string (buf) == CORBA::B_FALSE)
             {
               send_error (this->handler_);
               env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_YES));
               return TAO_GIOP_SYSTEM_EXCEPTION;
             }
-          exception_id = (CORBA::String) this->stream_.next;
-          this->stream_.skip_bytes (len);
         }
-
         // User and system exceptions differ only in what table of
         // exception typecodes is searched.
         CORBA::ExceptionList *xlist;
@@ -1011,7 +1022,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
                 return TAO_GIOP_SYSTEM_EXCEPTION;
               }
 
-            if (ACE_OS::strcmp ((char *)exception_id, (char *)xid) == 0)
+            if (ACE_OS::strcmp (buf, (char *)xid) == 0)
               {
                 size_t size;
                 CORBA::Exception *exception;
@@ -1037,7 +1048,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
                     delete exception;
                     ACE_DEBUG ((LM_ERROR, "(%P|%t) invoke, unmarshal %s exception %s\n",
                                 (reply_status == TAO_GIOP_USER_EXCEPTION) ? "user" : "system",
-                               exception_id));
+				buf));
                     send_error (this->handler_);
                     return TAO_GIOP_SYSTEM_EXCEPTION;
                   }
@@ -1137,7 +1148,7 @@ CORBA::Boolean
 TAO_GIOP_LocateRequestHeader::init (CDR &msg,
                                     CORBA::Environment &env)
 {
-  return (   msg.get_ulong (this->request_id)
+  return (msg.get_ulong (this->request_id)
           && msg.decode (&TC_opaque,
                          &this->object_key,
                          0,
@@ -1188,23 +1199,24 @@ TAO_GIOP_RequestHeader::init (CDR &msg,
 CORBA::Boolean
 TAO_GIOP::start_message (TAO_GIOP_MsgType type, CDR &msg)
 {
-  msg.next = msg.buffer;                // for reused streams
-  msg.remaining = msg.length;
+  msg.reset ();
 
-  if (msg.bytes_remaining () < TAO_GIOP_HEADER_LEN)
-    return CORBA::B_FALSE;
+  // if (msg.size () < TAO_GIOP_HEADER_LEN)
+  // return CORBA::B_FALSE;
 
-  msg.next [0] = 'G';
-  msg.next [1] = 'I';
-  msg.next [2] = 'O';
-  msg.next [3] = 'P';
+  char* next = msg.buffer ();
 
-  msg.next [4] = MY_MAJOR;
-  msg.next [5] = MY_MINOR;
-  msg.next [6] = TAO_ENCAP_BYTE_ORDER;
-  msg.next [7] = (u_char) type;
+  next [0] = 'G';
+  next [1] = 'I';
+  next [2] = 'O';
+  next [3] = 'P';
 
-  msg.skip_bytes (TAO_GIOP_HEADER_LEN);
+  next [4] = MY_MAJOR;
+  next [5] = MY_MINOR;
+  next [6] = TAO_ENCAP_BYTE_ORDER;
+  next [7] = (u_char) type;
+
+  msg.wr_ptr (TAO_GIOP_HEADER_LEN);
   return CORBA::B_TRUE;
 }
 

@@ -1,5 +1,7 @@
 // ============================================================================
 //
+// $Id$
+//
 // = LIBRARY
 //    TAO
 //
@@ -11,7 +13,8 @@
 //
 //   The original code had a single static decoder function defined on the CDR
 //   class that called traverse to interpret the data types. This version
-//   defines a virtual method "decode" on each class and avoids calling traverse.
+//   defines a virtual method "decode" on each class and avoids
+//   calling traverse.
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
@@ -348,12 +351,11 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
 			// the offset must be such that the indir_stream.next
 			// should point to the TypeCode kind value of the
 			// TypeCode to which we are referring to.
-                        indir_stream.buffer = indir_stream.next
-                          = stream->next + offset;
-                        indir_stream.remaining = indir_stream.length = 8;
+                        indir_stream.setup_encapsulation
+			  (stream->buffer () +  offset, 8);
 
                         // Reject indirections outside parent's scope.
-                        if (indir_stream.next < parent->buffer_)
+                        if (indir_stream.buffer () < ACE_reinterpret_cast(char*,parent->buffer_))
                           continue_decoding = CORBA::B_FALSE;
                       }
 
@@ -386,11 +388,10 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                     if (continue_decoding)
                       {
                         *tcp = new CORBA::TypeCode ((CORBA::TCKind) indir_kind,
-                                                   indir_len,  // length of encapsulation
-                                                   indir_stream.next, // octet buffer
-                                                   CORBA::B_FALSE, // ORB
-								  // doesn't own
-						   parent); // this is our parent
+                                                   indir_len,
+                                                   indir_stream.buffer(),
+                                                   CORBA::B_FALSE,
+						   parent);
 #if 0
                         (*tcp)->parent_ = parent;
                         parent->AddRef ();
@@ -436,13 +437,12 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                       }
                     *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
                                                len,
-					       //                     buffer,
-					       stream->next,
+					       stream->buffer (),
                                                CORBA::B_FALSE,
 					       parent);
 		    // skip length number of bytes in the stream, else we may
 		    // leave the stream in an undefined state
-		    (void) stream->skip_bytes (length);
+		    (void) stream->rd_ptr (length);
 		    //                    (*tcp)->parent_ = parent;
                   }
                 } // end of switch
@@ -567,17 +567,15 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
 
           // ProfileData is encoded as a sequence of octet. So first get the
           // length of the sequence
-          continue_decoding = stream->get_ulong (tmp);
-          assert (stream->remaining >= tmp);
+	  char* buf;
+          continue_decoding = stream->get_encapsulation (buf, tmp);
+          assert (continue_decoding == CORBA::B_TRUE);
 
           // Create the decoding stream from the encapsulation in
           // the buffer, and skip the encapsulation.
           CDR str;
 
-          str.setup_encapsulation (stream->next, (size_t) tmp);
-
-          stream->next += (u_int) tmp;
-          stream->remaining -= (u_int) tmp;
+          str.setup_encapsulation (ACE_reinterpret_cast(char*,buf), tmp);
 
           // @@ (CJC) Does IIOP_Object duplicate 'type_hint' below so that
           // we can safely free it?  It does now!
@@ -631,7 +629,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
                                           0,
                                           env) == CORBA::TypeCode::TRAVERSE_CONTINUE;
 
-          if (str.remaining != 0)
+          if (str.length () != 0)
             {
               env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
               dmsg ("extra data at end of IIOP profile data");
