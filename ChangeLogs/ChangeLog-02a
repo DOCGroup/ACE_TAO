@@ -1,3 +1,9 @@
+Sun Nov  5 14:37:13 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+          Make log files world readable, under Solaris they are created
+          with 600 mode by default.
+
 Sun Nov  5 14:05:13 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/create_vt_dsps.pl:
