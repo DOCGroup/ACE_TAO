@@ -88,7 +88,7 @@ ACE_Sched_Priority_Iterator::policy (void) const
   return this->policy_;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Sched_Priority_Iterator::scope (void) const
 {
   return this->scope_;
@@ -96,12 +96,10 @@ ACE_Sched_Priority_Iterator::scope (void) const
 
 ACE_INLINE
 ACE_Sched_Priority_Iterator::ACE_Sched_Priority_Iterator (const ACE_Sched_Params::Policy &policy,
-							  int scope)
+                                                          int scope)
  : policy_ (policy),
    scope_ (scope)
 {
-  ACE_TRACE ("ACE_Sched_Priority_Iterator::ACE_Sched_Priority_Iterator");
-
   priority_ = ACE_Sched_Params::priority_min (this->policy (), this->scope ());
   this->done_ = 0;
 }
@@ -109,22 +107,21 @@ ACE_Sched_Priority_Iterator::ACE_Sched_Priority_Iterator (const ACE_Sched_Params
 ACE_INLINE
 ACE_Sched_Priority_Iterator::~ACE_Sched_Priority_Iterator (void)
 {
-  ACE_TRACE ("ACE_Sched_Priority_Iterator::~ACE_Sched_Priority_Iterator");
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Sched_Priority_Iterator::more (void) const
 {
   return !this->done_;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Sched_Priority_Iterator::priority (void) const
 {
   return this->priority_;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Sched_Priority_Iterator::next (void)
 {
   if (this->done_)
@@ -132,7 +129,7 @@ ACE_Sched_Priority_Iterator::next (void)
 
   int old_priority = this->priority_;
   priority_ = ACE_Sched_Params::next_priority (this->policy (),
-					       this->priority (),
-					       this->scope ());
+                                               this->priority (),
+                                               this->scope ());
   this->done_ = old_priority == priority_;
 }
