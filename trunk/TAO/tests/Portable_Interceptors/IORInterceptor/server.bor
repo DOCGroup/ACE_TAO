@@ -11,18 +11,21 @@ OBJFILES = \
 	$(OBJDIR)\testS.obj \
 	$(OBJDIR)\server.obj \
 	$(OBJDIR)\test_i.obj \
-	$(OBJDIR)\FOO_IORInterceptor.obj
+	$(OBJDIR)\FOO_IORInterceptor.obj \
 	$(OBJDIR)\FOO_IORInterceptor_ORBInitializer.obj
 
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS)
 
 LIBFILES = \
-        $(ACE_LIB) \
-        $(TAO_LIB) \
-        $(TAO_PORTABLESERVER_LIB)
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB)
 
 IDLFILES = \
-        $(IDLDIR)\test.idl
+	$(IDLDIR)\test.idl
 
 CPPDIR = .
 

@@ -154,6 +154,7 @@ OBJFILES = \
 	$(OBJDIR)\RT_Mutex.obj \
 	$(OBJDIR)\RT_ORB.obj \
 	$(OBJDIR)\RT_ORBInitializer.obj \
+	$(OBJDIR)\RT_ORB_Loader.obj \
 	$(OBJDIR)\RT_Policy_i.obj \
 	$(OBJDIR)\RT_PolicyFactory.obj \
 	$(OBJDIR)\RT_Protocols_Hooks.obj \
