@@ -53,22 +53,19 @@ ACE_Sched_Params::priority_min (const Policy policy,
                       P_MYID /* ignored */,
                       PC_GETCID,
                       (char *) &pcinfo) == -1)
-        {
-          return -1;  // just hope that priority range wasn't configured
-                      // from -1 .. 1
-        }
+	// Just hope that priority range wasn't configured from -1
+	// .. 1
+	return -1; 
 
-      // OK, now we've got the class ID in pcinfo.pc_cid.  In addition,
-      // the maximum configured time-share priority is in ((tsinfo_t *)
-      // pcinfo.pc_clinfo)->ts_maxupri.  The minimum priority is just
-      // the negative of that.
+      // OK, now we've got the class ID in pcinfo.pc_cid.  In
+      // addition, the maximum configured time-share priority is in
+      // ((tsinfo_t *) pcinfo.pc_clinfo)->ts_maxupri.  The minimum
+      // priority is just the negative of that.
 
       return -((tsinfo_t *) pcinfo.pc_clinfo)->ts_maxupri;
     }
   else
-    {
-      return 0;
-    }
+    return 0;
 #elif defined (ACE_HAS_DCETHREADS) || defined(ACE_HAS_PTHREADS) && !defined(ACE_LACKS_SETSCHED)
 
   switch (scope)
@@ -140,9 +137,7 @@ ACE_Sched_Params::priority_max (const Policy policy,
                   P_MYID /* ignored */,
                   PC_GETCID,
                   (char *) &pcinfo) == -1)
-    {
-      return -1;
-    }
+    return -1;
 
   // OK, now we've got the class ID in pcinfo.pc_cid.  In addition,
   // the maximum configured real-time priority is in ((rtinfo_t *)
@@ -277,7 +272,8 @@ ACE_Sched_Params::previous_priority (const Policy policy,
 #elif defined (ACE_HAS_THREADS) && !defined(ACE_LACKS_SETSCHED)
   // including STHREADS, DCETHREADS, and PTHREADS
   const int min = priority_min (policy, scope);
-  return priority > min  ?  priority - 1  :  min;
+
+  return priority > min ? priority - 1 : min;
 #else
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
