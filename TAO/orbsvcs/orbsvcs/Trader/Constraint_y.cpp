@@ -1,4 +1,4 @@
-# line 2 "Trader/constraint.y"
+
   // $Id$
 // ========================================================================
 //
@@ -89,7 +89,7 @@ YYSTYPE *yyv;
 static int yymaxdepth = YYMAXDEPTH;
 # define YYERRCODE 256
 
-# line 133 "Trader/constraint.y"
+
 
 
 //extern int yydebug = 1;
@@ -247,7 +247,7 @@ char * yyreds[] =
 	"factor : TAO_BOOLEAN",
 };
 #endif /* YYDEBUG */
-# line	1 "/usr/ccs/bin/yaccpar"
+
 /*
  * Copyright (c) 1993 by Sun Microsystems, Inc.
  */
@@ -780,117 +780,117 @@ int yyparse()
 	{
 		
 case 1:
-# line 38 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Unary_Constraint(TAO_CONSTRAINT, yypvt[-0].constraint_); } break;
 case 2:
-# line 40 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 3:
-# line 44 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Unary_Constraint(TAO_MIN, yypvt[-0].constraint_); } break;
 case 4:
-# line 46 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Unary_Constraint(TAO_MAX, yypvt[-0].constraint_); } break;
 case 5:
-# line 48 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Unary_Constraint(TAO_WITH, yypvt[-0].constraint_); } break;
 case 6:
-# line 50 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Noop_Constraint(TAO_FIRST); } break;
 case 7:
-# line 52 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Noop_Constraint(TAO_RANDOM); } break;
 case 8:
-# line 56 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_OR, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 9:
-# line 58 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 10:
-# line 62 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_AND, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 11:
-# line 64 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 12:
-# line 68 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_EQ, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 13:
-# line 70 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_NE, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 14:
-# line 72 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_GT, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 15:
-# line 74 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_GE, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 16:
-# line 76 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_LT, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 17:
-# line 78 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_LE, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 18:
-# line 80 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 19:
-# line 84 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_IN, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 20:
-# line 86 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 21:
-# line 90 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_TWIDDLE, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 22:
-# line 92 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 23:
-# line 96 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_PLUS, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 24:
-# line 98 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_MINUS, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 25:
-# line 100 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 26:
-# line 104 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_MULT, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 27:
-# line 106 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Binary_Constraint(TAO_DIV, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 28:
-# line 108 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 29:
-# line 112 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Unary_Constraint(TAO_NOT, yypvt[-0].constraint_); } break;
 case 30:
-# line 114 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 31:
-# line 118 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-1].constraint_; } break;
 case 32:
-# line 120 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Unary_Constraint(TAO_EXIST, yypvt[-0].constraint_); } break;
 case 33:
-# line 122 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 34:
-# line 124 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 35:
-# line 126 "Trader/constraint.y"
+
 { yyval.constraint_ = new TAO_Unary_Constraint(TAO_UMINUS, yypvt[-0].constraint_); } break;
 case 36:
-# line 128 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 37:
-# line 130 "Trader/constraint.y"
+
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
-# line	532 "/usr/ccs/bin/yaccpar"
+
 	}
 	goto yystack;		/* reset registers in driver code */
 }
