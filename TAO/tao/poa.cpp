@@ -102,17 +102,6 @@ CORBA_POA::create (CORBA::OctetSeq &key,
   return new_obj;
 }
 
-// Return the key fed into an object at creation time.
-
-CORBA::OctetSeq *
-CORBA_POA::get_key (CORBA::Object_ptr,
-                    CORBA::Environment &env)
-{
-  // XXX implement me ! ... must have been created by this OA.
-  env.exception (new CORBA_IMP_LIMIT (CORBA::COMPLETED_NO));
-  return 0;
-}
-
 #if 0
 // Used by method code to ask the OA to shut down.
 void

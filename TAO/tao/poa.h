@@ -158,13 +158,6 @@ public:
   // guaranteed to include more than one system.  The names themselves
   // are administered using system-specific mechanisms and policies.
 
-  CORBA::OctetSeq *get_key (CORBA::Object_ptr obj,
-			   CORBA::Environment &env);
-  // NON-STANDARD CALL.  When dispatching a request to an object, you
-  // need to be able to get the object key you used to create the
-  // reference.  It's the main way servers distinguish two object
-  // references from each other.
-    
   void dispatch (CORBA::OctetSeq &key, 
 		 CORBA::ServerRequest &req, 
 		 void *context, 
