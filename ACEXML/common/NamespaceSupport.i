@@ -1,5 +1,7 @@
 // -*- C++ -*-  $Id$
 
+#include "ace/ACE.h"
+
 ACE_TEMPLATE_SPECIALIZATION
 ACEXML_INLINE int
 ACE_Equal_To<ACEXML_String>::operator () (const ACEXML_String &lhs,

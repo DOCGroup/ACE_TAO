@@ -3,6 +3,8 @@
 
 // Typed_SV_Message.i
 
+#include "ace/Global_Macros.h"
+
 template <class T> ACE_INLINE
 ACE_Typed_SV_Message<T>::ACE_Typed_SV_Message (long t, 
 					       int l, 

@@ -145,6 +145,7 @@ friend class ace_dewarn_gplusplus
 #   define ACE_TRACE(X)
 # else
 #   define ACE_TRACE(X) ACE_TRACE_IMPL(X)
+#   include "ace/Trace.h"
 # endif /* ACE_NTRACE */
 
 // ----------------------------------------------------------------

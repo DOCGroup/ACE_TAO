@@ -1,3 +1,14 @@
+Tue Jun 24 15:38:49 UTC 2003  Don Hinton  <dhinton@dresystems.h>
+
+        * ace/Filecache.cpp:
+          Added include of ACE.h.
+
+        * ace/Global_Macros.h:
+          Added include of ace/Trace.h when tracing is turned on.
+
+        * ace/Typed_SV_Message.i:
+          Added include of ace/Global_Macros.h to pick up ACE_TRACE.
+
 Tue Jun 24 15:15:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/os_include/sys/os_socket.h:

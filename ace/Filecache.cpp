@@ -3,6 +3,7 @@
 #include "ace/Filecache.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(ace, Filecache, "$Id$")
 
