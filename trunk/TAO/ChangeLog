@@ -1,6 +1,6 @@
 Sun Dec 14 08:35:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/OBV/Supports/Supports.mpc:
+	* tests/OBV/Supports/Supports_Test.mpc:
 
 	  Prevent this test from compiling since the support for
 	  "supports" is broken.
