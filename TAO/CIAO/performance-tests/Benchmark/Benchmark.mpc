@@ -27,3 +27,10 @@ project(Benchmark_svnt) : ciao_server {
     BenchmarkS.cpp
   }
 }
+
+project (server) : taoserver, strategies {
+  Source_Files {
+    server.cpp
+    LatencyTest.cpp
+  }
+}
