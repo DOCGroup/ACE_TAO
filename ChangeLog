@@ -1,3 +1,8 @@
+Thu Apr 17 15:32:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+	* ace/Configuration.h: Made NULL_String public instead of protected
+	  member variable.
+
 Thu Apr 17 08:23:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Local_Name_Space.h (ACE_NS_String):
