@@ -102,7 +102,6 @@ protected:
 
 private:
   TAO_Policy_Validator *next_;
-  static TAO_Policy_Validator *last_;
 };
 
 #include /**/ "ace/post.h"

@@ -1,135 +1,151 @@
+Thu Mar 25 06:42:49 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Policy_Validator.h:
+        * tao/Policy_Validator.cpp:
+
+          Rewrote the linked list implementation to avoid the use of static
+          pointers and to correctly add additional validators to the list.
+
+        * tests/RTCORBA/Activate_Object_Multiple_ORBs/Activate_Object_Multiple_ORBs.mpc:
+        * tests/RTCORBA/Activate_Object_Multiple_ORBs/run_test.pl:
+        * tests/RTCORBA/Activate_Object_Multiple_ORBs/test.idl:
+        * tests/RTCORBA/Activate_Object_Multiple_ORBs/test.cpp:
+
+          Added a test that, previous to this bug fix, demonstrated the flaw
+          in the TAO_Policy_Validator class.
+
 Wed Mar 24 22:45:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_interface.cpp (gen_operation_table):
+        * TAO_IDL/be/be_interface.cpp (gen_operation_table):
 
-	  Reset the skel_count to be zero for dynamic hash. This is
-	  essential so that we don't count the previous operations when
-	  generating new tables like say for example having two interfaces
-	  in the same IDL file.
+          Reset the skel_count to be zero for dynamic hash. This is
+          essential so that we don't count the previous operations when
+          generating new tables like say for example having two interfaces
+          in the same IDL file.
 
 Wed Mar 24 20:58:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Callback.cpp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Callback.cpp:
 
-	  Fixed a unused variable warning
+          Fixed a unused variable warning
 
 Wed Mar 24 16:32:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Client:
-	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Server:
+        * orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Client:
+        * orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Server:
 
-	  The tests shouldn't compile if RTCosScheduling is not
-	  compiled. Thanks to Mouna Seri <seri@crhc.uiuc.edu> for locating
-	  this problem.
+          The tests shouldn't compile if RTCosScheduling is not
+          compiled. Thanks to Mouna Seri <seri@crhc.uiuc.edu> for locating
+          this problem.
 
 Wed Mar 24 14:27:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp (visit_attribute):
-        
+
           Fixed bug where creation of attribute entries in the IFR was
           not working for local and abstract interfaces.
-          
+
         * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp (describe_i):
-        
+
           Fixed mistake in code opening subsection for each attribute
           under the "attrs" subsection of a component entry in the IFR.
           Thanks to Vincent Seignole <vincent.seignole@wanadoo.fr> for
-          reporting the problem in accessing the name and repository id of 
+          reporting the problem in accessing the name and repository id of
           component attributes. This fix closes [BUGID:1771].
 
 Wed Mar 24 11:02:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Typecode.h:
         * tao.Typecode.i:
-        
+
           Changed the name of the parameter in the offset_map() set
           method from 'map' (which could clash with STL 'map') to
-          'new_map'. Thanks to Garry Shamis <gshamis@yahoo.com> for 
+          'new_map'. Thanks to Garry Shamis <gshamis@yahoo.com> for
           reporting the problem. This closes [BUGID:1774].
 
 Wed Mar 24 11:00:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
 
-	  More fixes like these "Wed Mar 24 07:36:38 2004  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>"
+          More fixes like these "Wed Mar 24 07:36:38 2004  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>"
 
 Wed Mar 24 10:37:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/compiler.html:
+        * docs/compiler.html:
 
-	  Added documentation for how -Ge option behaves by default. Thanks to
-	  Dr. Schmidt and Don Hinton for pointing this out.
+          Added documentation for how -Ge option behaves by default. Thanks to
+          Dr. Schmidt and Don Hinton for pointing this out.
 
 Wed Mar 24 07:36:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
 
-	  Fixed warnings with g++ 3.2.3 which is available in RH
-	  advanced server edition. This doesn't seem to show up
-	  elsewhere. 
+          Fixed warnings with g++ 3.2.3 which is available in RH
+          advanced server edition. This doesn't seem to show up
+          elsewhere.
 
 Wed Mar 24 07:18:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.cpp:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/server.cpp:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/server.cpp:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.cpp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/server.cpp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/server.cpp:
 
-	  Fixed compilation errors when exceptions is set to zero. 
+          Fixed compilation errors when exceptions is set to zero.
 
 Tue Mar 23 21:59:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp (shutdown, destroy):
+        * tao/ORB_Core.cpp (shutdown, destroy):
 
-	  Reverted the portion of the change (Wed Mar 07 19:19:18 2001
-	  Irfan Pyarali  <irfan@cs.wustl.edu>) that moved the
-	  TAO_ORB_Core::destroy_interceptors() call from ORB::destroy() to
-	  ORB::shutdown().  Doing so broke compliance with the CORBA spec
-	  and also caused server side ending interception points to be
-	  called after the corresponding interceptor was destroyed.
-	  Addresses crashes appearing on some platforms.  Note that
-	  applications are required to call ORB::destroy() in order to
-	  prevent interceptors from being leaked.  Calling ORB::destroy()
-	  in order to cleanup interceptors is required by the CORBA spec.
-	  [Bug 1642]
+          Reverted the portion of the change (Wed Mar 07 19:19:18 2001
+          Irfan Pyarali  <irfan@cs.wustl.edu>) that moved the
+          TAO_ORB_Core::destroy_interceptors() call from ORB::destroy() to
+          ORB::shutdown().  Doing so broke compliance with the CORBA spec
+          and also caused server side ending interception points to be
+          called after the corresponding interceptor was destroyed.
+          Addresses crashes appearing on some platforms.  Note that
+          applications are required to call ORB::destroy() in order to
+          prevent interceptors from being leaked.  Calling ORB::destroy()
+          in order to cleanup interceptors is required by the CORBA spec.
+          [Bug 1642]
 
-	* tests/Portable_Interceptors/Makefile:
-	* tests/Portable_Interceptors/Makefile.bor:
-	* tests/Portable_Interceptors/ORB_Shutdown/Makefile:
-	* tests/Portable_Interceptors/ORB_Shutdown/Makefile.bor:
-	* tests/Portable_Interceptors/ORB_Shutdown/ORB_Shutdown.dsw:
-	* tests/Portable_Interceptors/ORB_Shutdown/Portable_Interceptors_ORB_Shutdown.mpc:
-	* tests/Portable_Interceptors/ORB_Shutdown/README:
-	* tests/Portable_Interceptors/ORB_Shutdown/Server_ORBInitializer.cpp:
-	* tests/Portable_Interceptors/ORB_Shutdown/Server_ORBInitializer.h:
-	* tests/Portable_Interceptors/ORB_Shutdown/Server_Request_Interceptor.cpp:
-	* tests/Portable_Interceptors/ORB_Shutdown/Server_Request_Interceptor.h:
-	* tests/Portable_Interceptors/ORB_Shutdown/client.bor:
-	* tests/Portable_Interceptors/ORB_Shutdown/client.cpp:
-	* tests/Portable_Interceptors/ORB_Shutdown/client.dsp:
-	* tests/Portable_Interceptors/ORB_Shutdown/run_test.pl:
-	* tests/Portable_Interceptors/ORB_Shutdown/server.bor:
-	* tests/Portable_Interceptors/ORB_Shutdown/server.cpp:
-	* tests/Portable_Interceptors/ORB_Shutdown/server.dsp:
-	* tests/Portable_Interceptors/ORB_Shutdown/test.idl:
-	* tests/Portable_Interceptors/ORB_Shutdown/test_i.cpp:
-	* tests/Portable_Interceptors/ORB_Shutdown/test_i.h:
+        * tests/Portable_Interceptors/Makefile:
+        * tests/Portable_Interceptors/Makefile.bor:
+        * tests/Portable_Interceptors/ORB_Shutdown/Makefile:
+        * tests/Portable_Interceptors/ORB_Shutdown/Makefile.bor:
+        * tests/Portable_Interceptors/ORB_Shutdown/ORB_Shutdown.dsw:
+        * tests/Portable_Interceptors/ORB_Shutdown/Portable_Interceptors_ORB_Shutdown.mpc:
+        * tests/Portable_Interceptors/ORB_Shutdown/README:
+        * tests/Portable_Interceptors/ORB_Shutdown/Server_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/ORB_Shutdown/Server_ORBInitializer.h:
+        * tests/Portable_Interceptors/ORB_Shutdown/Server_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/ORB_Shutdown/Server_Request_Interceptor.h:
+        * tests/Portable_Interceptors/ORB_Shutdown/client.bor:
+        * tests/Portable_Interceptors/ORB_Shutdown/client.cpp:
+        * tests/Portable_Interceptors/ORB_Shutdown/client.dsp:
+        * tests/Portable_Interceptors/ORB_Shutdown/run_test.pl:
+        * tests/Portable_Interceptors/ORB_Shutdown/server.bor:
+        * tests/Portable_Interceptors/ORB_Shutdown/server.cpp:
+        * tests/Portable_Interceptors/ORB_Shutdown/server.dsp:
+        * tests/Portable_Interceptors/ORB_Shutdown/test.idl:
+        * tests/Portable_Interceptors/ORB_Shutdown/test_i.cpp:
+        * tests/Portable_Interceptors/ORB_Shutdown/test_i.h:
 
-	  New regression test that verifies
-	  ServerRequestInterceptor::destroy() is not prematurely called,
-	  e.g. before ending interception points have been called.
+          New regression test that verifies
+          ServerRequestInterceptor::destroy() is not prematurely called,
+          e.g. before ending interception points have been called.
 
 Tue Mar 23 22:48:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Portable_Interceptors/AMI/Echo_Handler.cpp:
-	* tests/Portable_Interceptors/AMI/Echo_Handler.h:
-	* tests/Portable_Interceptors/AMI/client.cpp:
+        * tests/Portable_Interceptors/AMI/Echo_Handler.cpp:
+        * tests/Portable_Interceptors/AMI/Echo_Handler.h:
+        * tests/Portable_Interceptors/AMI/client.cpp:
 
-	  Huang-Ming reported that interceptors are not invoked during
-	  reply collection process in AMI. To verify the bug report I just
-	  went ahead and improved the above test to check for the missing
-	  test case. Looks like the bug report is false, but the
-	  improvement is good enough to be run in the daily builds.
+          Huang-Ming reported that interceptors are not invoked during
+          reply collection process in AMI. To verify the bug report I just
+          went ahead and improved the above test to check for the missing
+          test case. Looks like the bug report is false, but the
+          improvement is good enough to be run in the daily builds.
 
 Tue Mar 23 13:53:59 2004  Chad Elliott  <elliott_c@ociweb.com>
 

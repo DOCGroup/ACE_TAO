@@ -10,8 +10,6 @@ ACE_RCSID (tao,
            Policy_Validator,
            "$Id$")
 
-TAO_Policy_Validator *TAO_Policy_Validator::last_ = 0;
-
 TAO_Policy_Validator::TAO_Policy_Validator (TAO_ORB_Core &orb_core)
   : orb_core_ (orb_core),
     next_ (0)
@@ -21,11 +19,6 @@ TAO_Policy_Validator::TAO_Policy_Validator (TAO_ORB_Core &orb_core)
 
 TAO_Policy_Validator::~TAO_Policy_Validator (void)
 {
-  if (this == this->last_)
-    {
-      this-> last_ = 0;
-    }
-
   if (this->next_)
     {
       delete this->next_;
@@ -35,28 +28,32 @@ TAO_Policy_Validator::~TAO_Policy_Validator (void)
 void
 TAO_Policy_Validator::add_validator (TAO_Policy_Validator *validator)
 {
-  if (this->last_ == 0)
-    {
-      this->last_ = this->next_ = validator;
-    }
-  else
-    {
-      if (this->last_ == validator)
-        {
-          if (TAO_debug_level > 3)
-            {
-              ACE_DEBUG ((
-                  LM_DEBUG,
-                  ACE_LIB_TEXT ("(%P|%t) Skipping validator [0x%x] ")
-                  ACE_LIB_TEXT ("since it would create a circular list \n"),
-                  validator
-                ));
-            }
+  // The validator we're adding can't be part of another list
+  ACE_ASSERT (validator->next_ == 0);
 
-          return;
+  // Why would we want to add ourself to our list 
+  if (this != validator)
+    {
+      // Get to the end of the list and make sure that the
+      // new validator isn't already part of our list
+      TAO_Policy_Validator* current = this;
+      while (current->next_ != 0)
+        {                        
+          if (current->next_ == validator)
+            {
+              if (TAO_debug_level > 3)
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_LIB_TEXT ("(%P|%t) Skipping validator [0x%x] ")
+                            ACE_LIB_TEXT ("since it would create a circular list\n"),
+                            validator));
+
+              return;
+            }
+          current = current->next_;
         }
 
-      this->last_ = this->last_->next_ = validator;
+      // Add the new validator to the end of the list
+      current->next_ = validator;
     }
 }
 
