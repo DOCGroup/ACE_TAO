@@ -686,7 +686,7 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::schedule (
   ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, lock_, ACE_DynScheduler::FAILED);
+  ACE_GUARD_RETURN (LOCK, ace_mon, lock_, ACE_DynScheduler::FAILED);
 
   RtecScheduler::Anomaly_Severity severity = RtecScheduler::ANOMALY_NONE;
   RtecScheduler::Anomaly_Severity temp_severity = RtecScheduler::ANOMALY_NONE;
