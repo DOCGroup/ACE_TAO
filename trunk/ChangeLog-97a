@@ -1,3 +1,11 @@
+Mon Apr 28 15:42:48 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* apps/JAWS/client/blobby.cpp: updated template specializations.
+
+	* apps/JAWS/stress_testing/global.h: removed #includes of system
+	  headers because ace/OS.h takes care of them.  They were causing
+	  warnings with g++ (because they were #included before OS.h).
+
 Mon Apr 28 14:12:04 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/OS.cpp (thr_create): Hopefully resolved tension
