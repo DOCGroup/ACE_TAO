@@ -2,7 +2,7 @@ Mon Aug 11 06:35:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Kokyu/Makefile:
           Removed windows specific part in this makefile. This gave
-          problems with Cygwin and isn't needed.
+          problems with MinGW and the MSys shell and isn't needed.
 
 Mon Aug 11 01:46:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
