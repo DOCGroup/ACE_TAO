@@ -55,7 +55,6 @@
 #include "be_visitor_sequence/elemtype.cpp"
 #include "be_visitor_sequence/sequence_base.cpp"
 #include "be_visitor_sequence/sequence_ch.cpp"
-#include "be_visitor_sequence/sequence_ci.cpp"
 #include "be_visitor_sequence/sequence_cs.cpp"
 
 ACE_RCSID (be, 

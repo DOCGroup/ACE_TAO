@@ -10,7 +10,6 @@
 
 #include "be_visitor_decl.h"
 #include "be_visitor_sequence/sequence_ch.h"
-#include "be_visitor_sequence/sequence_ci.h"
 #include "be_visitor_sequence/sequence_cs.h"
 #include "be_visitor_sequence/sequence_base.h"
 #include "be_visitor_sequence/buffer_type.h"

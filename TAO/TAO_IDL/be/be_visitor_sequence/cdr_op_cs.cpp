@@ -48,7 +48,8 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     }
 
   if (node->cli_stub_cdr_op_gen ()
-      || node->imported ())
+      || node->imported ()
+      || node->is_local ())
     {
       return 0;
     }

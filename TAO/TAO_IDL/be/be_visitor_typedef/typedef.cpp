@@ -212,8 +212,6 @@ be_visitor_typedef::visit_sequence (be_sequence *node)
       }
     case TAO_CodeGen::TAO_ROOT_CI:
       {
-        be_visitor_sequence_ci visitor (&ctx);
-        status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_ROOT_CS:
