@@ -137,7 +137,8 @@ public:
 
   virtual int send_request (TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
-                            int twoway) = 0;
+                            int twoway,
+                            ACE_Time_Value *max_time_wait) = 0;
   // Default action to be taken for send request.
 
   // = Get and set methods for the ORB Core.
@@ -166,7 +167,7 @@ public:
                               TAO_Reply_Dispatcher *rd);
   // Bind the reply dispatcher with the TMS object.
 
-  virtual int wait_for_reply (void);
+  virtual int wait_for_reply (ACE_Time_Value *max_wait_time);
   // Wait for the reply depending on the strategy.
 
   virtual int handle_client_input (int block = 0);
@@ -413,7 +414,8 @@ public:
   // Shutdown Connector bridge and concreate Connector.
 
   virtual int connect (TAO_Profile *profile,
-                       TAO_Transport *&) = 0;
+                       TAO_Transport *&,
+                       ACE_Time_Value *max_wait_time) = 0;
   // To support pluggable we need to abstract away the connect()
   // method so it can be called from the GIOP code independant of the
   // actual transport protocol in use.

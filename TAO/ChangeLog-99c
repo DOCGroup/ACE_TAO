@@ -1,3 +1,55 @@
+Mon Jul  5 21:20:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connector_Registry.h:
+	* tao/Connector_Registry.cpp:
+	* tao/GIOP.h:
+	* tao/GIOP.cpp:
+	* tao/Wait_Strategy.h:
+	* tao/Wait_Strategy.cpp:
+	* tao/Invocation.h:
+	* tao/Invocation.cpp:
+	* tao/Pluggable.h:
+	* tao/Pluggable.cpp:
+	* tao/Reply_Dispatcher.cpp:
+	* tao/Transport_Mux_Strategy.cpp:
+	* tao/UIOP_Connector.h:
+	* tao/UIOP_Connector.cpp:
+	* tao/UIOP_Transport.h:
+	* tao/UIOP_Transport.cpp:
+	* tao/IIOP_Connector.h:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/IIOP_Transport.cpp:
+	  Added support for timeouts in the ORB.
+	  The Invocation classes keep track of the total time allowed for
+	  the request, this time is used to limit the duration of every
+	  expensive operation (connecting to the server, sending the
+	  request, receiving the reply, etc.).
+	  After each operation the total time is decremented, this is
+	  specially important if the operation requires transparent
+	  rebinds and forwarding.
+
+	* tao/corbafwd.h:
+	* tao/Exception.cpp:
+	* tao/docs/Tags.html:
+	  Added new minor codes to document the timeouts.
+
+	* tests/Makefile:
+	* tests/Timeout/Makefile:
+	* tests/Timeout/README:
+	* tests/Timeout/client.cpp:
+	* tests/Timeout/run_test.pl:
+	* tests/Timeout/server.cpp:
+	* tests/Timeout/test.idl:
+	* tests/Timeout/test_i.cpp:
+	* tests/Timeout/test_i.h:
+	* tests/Timeout/test_i.i:
+	  A simple test for timeouts.
+
+	* tao/Typecode_Constants.cpp:
+	  Fixed memory leak, the CORBA::ORB::_tc_InvalidName type code was 
+	  not released.  Thanks to Marina for reporting this problem.
+
 Mon Jul 05 20:50:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/Scheduling_Service/Scheduling_Service.cpp

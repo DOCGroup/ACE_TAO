@@ -434,7 +434,8 @@ public:
 
   static int send_message (TAO_Transport *transport,
                            TAO_OutputCDR &stream,
-                           TAO_ORB_Core* orb_core);
+                           TAO_ORB_Core* orb_core,
+                           ACE_Time_Value *max_wait_time = 0);
   // Send message, returns TRUE if success, else FALSE.
 
   static void dump_msg (const char *label,
