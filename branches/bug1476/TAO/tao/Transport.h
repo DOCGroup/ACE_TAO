@@ -448,7 +448,7 @@ public:
   bool is_connected (void) const;
 
   /// Perform all the actions when this transport get opened
-  int post_open (size_t id);
+  bool post_open (size_t id);
 
   /// Get the connection handler for this transport
   TAO_Connection_Handler * connection_handler (void);
@@ -953,7 +953,7 @@ private:
 /**
  * @class TAO_Transport_Refcount_Guard
  *
- * @brief Helper class that increments the refount on construction
+ * @brief Helper class that increments the refcount on construction
  *  and decrements the refcount on destruction.
  */
 class TAO_Export TAO_Transport_Refcount_Guard

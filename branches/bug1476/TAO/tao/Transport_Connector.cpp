@@ -260,7 +260,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       // Wait until the connection is ready
       int result =
         this->active_connect_strategy_->wait (
-          base_transport,
+          base_transport, 
           timeout);
 
       if (TAO_debug_level > 2)
@@ -280,24 +280,22 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       // ACE_Svc_Handler and that would prevent a bunch of canypptions
       // in the code. BTW, I would also recommend changing the method
       // name event_handler_i () to event_handler ().
-      result =
-        this->check_connection_closure (
-          base_transport->connection_handler (),
-          result);
+      if (result == -1)
+        {
+          result =
+            this->check_connection_closure (
+              base_transport->connection_handler ());
+        }
 
       // In case of errors.
       if (result == -1)
         {
-          // Give users a clue to the problem.
-          // @@ Johnny the errno here could be completely different
-          // from why the connection failed. We touch the reactor and
-          // the errno could be changed. This is simply misleading at
-          // best !
+          // Report that making the connection failed, don't print errno
+          // because we touched the reactor and errno could be changed
           if (TAO_debug_level > 3)
             ACE_ERROR ((LM_ERROR,
                         "TAO (%P|%t) - Transport_Connector::connect, "
-                        "connection failed (%p)\n",
-                        ACE_TEXT("errno")));
+                        "connection failed.\n"));
           return 0;
         }
 
@@ -341,17 +339,16 @@ TAO_Connector::create_connect_strategy (void)
 
 int
 TAO_Connector::check_connection_closure (
-  TAO_Connection_Handler *svc_handler,
-  int result)
+  TAO_Connection_Handler *svc_handler)
 {
-  int local_result = result;
+  int result = -1;
 
   // Check if the handler has been closed.
   int closed =
     svc_handler->is_closed ();
 
   // In case of failures and close() has not be called.
-  if (local_result == -1 && !closed)
+  if (!closed)
     {
       // First, cancel from connector.
       if (this->cancel_svc_handler (svc_handler) == -1)
@@ -377,8 +374,8 @@ TAO_Connector::check_connection_closure (
           // though wait failed for this thread.
           if (open)
             {
-              // Overwrite the local result.
-              local_result = 0;
+              // Set the result to 0, we have an open connection
+              result = 0;
             }
           else
             {
@@ -391,5 +388,5 @@ TAO_Connector::check_connection_closure (
         }
     }
 
-  return local_result;
+  return result;
 }

@@ -2118,29 +2118,39 @@ TAO_Transport::out_stream (void)
   return this->messaging_object ()->out_stream ();
 }
 
-int
+bool
 TAO_Transport::post_open (size_t id)
 {
+  bool result = false;
+
   this->id_ = id;
   this->is_connected_ = true;
 
   // If the wait strategy wants us to be registered with the reactor
   // then we do so. If registeration is required and it succeeds,
   // #REFCOUNT# becomes two.
-  int result =
+  int register_handler_result =
     this->wait_strategy ()->register_handler ();
 
-  // @@ Johnny, where are you calling schedule_output () if there is
-  // data in the transport?
-  // Registration failures.
-  if (result != 0)
+  if (register_handler_result == 0)
     {
-      // @bala, this line looks tricky, we expect that the caller put
-      // this transport  in the cache, what about this?
-      // @@ Johnny not a problem. If the stuff isn't in cache the
-      // entry will be null and the call will return empty-handled.
-      // Purge from the connection cache.
-      (Void) this->purge_entry ();
+      result = true;
+
+      // When we have data in our outgoing queue schedule ourselves for output
+      if (!this->queue_is_empty_i ())
+        {
+          TAO_Flushing_Strategy *flushing_strategy =
+            this->orb_core ()->flushing_strategy ();
+          (void) flushing_strategy->schedule_output (this);
+        }
+     }
+  else
+    {
+      // Registration failures.
+
+      // Purge from the connection cache, if we are not in the cache, this
+      // just does nothing.
+      (void) this->purge_entry ();
 
       // Close the handler.
       (void) this->close_connection ();
@@ -2150,9 +2160,9 @@ TAO_Transport::post_open (size_t id)
                     "TAO (%P|%t) - TAO_Transport::set_connected, "
                     "could not register the transport "
                     "in the reactor.\n"));
+
     }
 
-  // @@ Johnny, can't you use a bool as a return value?
   return result;
 }
 

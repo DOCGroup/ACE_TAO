@@ -233,6 +233,8 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
           result = 0;
 
           // @@ Johnny why are you setting the result to zero here?
+          // @@ Bala, I do this, else the check_connection_close will close
+          // the connection,
         }
 
       // There are three possibilities when wait() returns: (a)
@@ -241,9 +243,11 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       // (a) and (b).  (c) is tricky since the connection is still
       // pending and may get completed by some other thread.  The
       // following method deals with (c).
-      result =
-        this->check_connection_closure (svc_handler,
-                                        result);
+      if (result == -1)
+        {
+          result =
+            this->check_connection_closure (svc_handler);
+        }
     }
 
   // In case of errors.
