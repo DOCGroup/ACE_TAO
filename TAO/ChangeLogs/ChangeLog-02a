@@ -1,3 +1,20 @@
+Tue Apr 10 14:27:57 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Invocation.h (generate_request_id):
+	* tao/Invocation.cpp (generate_request_id, start):
+	* tao/Asynch_Invocation.h (generate_request_id):
+	* tao/Asynch_Invocation.h (generate_request_id:
+
+	  Backed out the zero-lock request ID optimization.  It causes
+	  improper behavior in the presence of timeouts.
+
+	* tao/ClientRequestInfo.cpp (request_id):
+
+	  Moved the request ID optimization from above into this method
+	  since it also provides a more unique request ID in the case of
+	  interceptors.  Note that the request ID in the case of
+	  interceptors need not be the same as the GIOP request ID [Bug 826].
+
 Tue Apr 10 13:49:16 2001  Ossama Othman  <ossama@uci.edu>
 
 	* examples/PluggableUDP/tests/Makefile:
