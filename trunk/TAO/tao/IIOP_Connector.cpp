@@ -1,13 +1,9 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #include "tao/IIOP_Connector.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Transport_Cache_Manager.h"
@@ -47,8 +43,6 @@ template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connec
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*>
 #pragma instantiate ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Connection_Handler*>
-
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -359,9 +353,8 @@ TAO_IIOP_Connector::init_tcp_properties (void)
 
 #if 0
 
-/*
- * TODO: Needs to be removed
- *
+/**
+ * @todo Needs to be removed
  */
 int
 TAO_IIOP_Connector::preconnect (const char *preconnects)
