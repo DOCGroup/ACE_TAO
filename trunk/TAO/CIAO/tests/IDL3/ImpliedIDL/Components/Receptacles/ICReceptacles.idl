@@ -18,9 +18,11 @@ module EquivReceptacles
       uses multiple foo_interface foo_recep;
     };
   
+  /**
   interface bar
     {
       Foo::foo_recepConnections get_seq ();
       Foo::foo_recepConnection get_struct ();
     };
+   */
 };

@@ -1,3 +1,9 @@
+Mon Aug 16 14:14:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/IDL3/ImpliedIDL/Components/Receptacles/ICReceptacles.idl:
+	  
+	  Do not do the compile the implied data part of the IDL.
+
 Mon Aug 16 12:42:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/Config_Handlers/CAD_Handler.h:
