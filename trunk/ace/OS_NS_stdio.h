@@ -241,6 +241,7 @@ namespace ACE_OS {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 # if defined (ACE_WIN32)
   // = Default Win32 Security Attributes definition.
+  ACE_NAMESPACE_INLINE_FUNCTION
   LPSECURITY_ATTRIBUTES default_win32_security_attributes (LPSECURITY_ATTRIBUTES);
 
   // = Win32 OS version determination function.
@@ -263,7 +264,7 @@ namespace ACE_OS {
 
   /// Translate fopen's mode char to open's mode.  This helper function
   /// is here to avoid maintaining several pieces of identical code.
-  extern ACE_Export
+  ACE_NAMESPACE_INLINE_FUNCTION
   void fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode);
 
   extern ACE_Export OSVERSIONINFO win32_versioninfo_;
@@ -281,7 +282,7 @@ namespace ACE_OS {
   int fprintf (FILE *fp, const wchar_t *format, ...);
 # endif /* ACE_HAS_WCHAR */
 
-  extern ACE_Export
+  ACE_NAMESPACE_INLINE_FUNCTION
   int fputs (const ACE_TCHAR *s,
              FILE *stream);
 
