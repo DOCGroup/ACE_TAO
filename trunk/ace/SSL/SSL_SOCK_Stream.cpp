@@ -135,7 +135,9 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
-  if (timeout == 0)
+  // If SSL has data in the buffer, i.e. SSL_pending() returns a
+  // non-zero value, then don't block on select().
+  if (timeout == 0 || ::SSL_pending (this->ssl_))
     return this->send (buf, len, flags);
 
   int val = 0;
@@ -234,7 +236,8 @@ ssize_t
 ACE_SSL_SOCK_Stream::send_n (const void *buf,
                              size_t len,
                              int flags,
-                             const ACE_Time_Value *timeout) const
+                             const ACE_Time_Value *timeout,
+                             size_t *bt) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send_n");
 
@@ -244,7 +247,8 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
 
   /* This code mimics ACE::send_n */
   // Total number of bytes written.
-  size_t bytes_transferred = 0;
+  size_t temp = 0;
+  size_t &bytes_transferred = ((bt == 0) ? temp : *bt);
 
   // Actual number of bytes written in each <send> attempt
   ssize_t n = 0;
@@ -280,7 +284,8 @@ ssize_t
 ACE_SSL_SOCK_Stream::recv_n (void *buf,
                              size_t len,
                              int flags,
-                             const ACE_Time_Value *timeout) const
+                             const ACE_Time_Value *timeout,
+                             size_t *bt) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv_n");
 
@@ -290,7 +295,9 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf,
         ACE_NOTSUP_RETURN (-1);
     }
 
-  size_t bytes_transferred = 0;
+  size_t temp = 0;
+  size_t &bytes_transferred = ((bt == 0) ? temp : *bt);
+
   ssize_t n = 0;
 
   for (bytes_transferred = 0;

@@ -48,6 +48,8 @@ ACE_SSL_Accept_Handler::handle_close (ACE_HANDLE /* handle */,
 int
 ACE_SSL_Accept_Handler::ssl_accept (void)
 {
+  SSL *ssl = this->ssl_stream_.ssl ();
+
   // A race condition exists where data may be sent over an SSL
   // session after the SSL passive connection is completed but before
   // this event handler is deregistered from the Reactor.
@@ -55,40 +57,21 @@ ACE_SSL_Accept_Handler::ssl_accept (void)
   // being handled by the SSL_accept() call below, resulting in an SSL
   // protocol error (i.e. "SSL_ERROR_SSL" error status).  The
   // following check avoids the race condition.
-  if (SSL_is_init_finished (this->ssl_stream_.ssl ()))
+  if (SSL_is_init_finished (ssl))
     return 0;
 
-  long verify_error = 0;
-
   // The SSL_accept() call is wrapped in a do/while(SSL_pending())
-  // loop to force a full SSL record (SSL is a record-oriented
-  // protocol, not a stream-oriented one) to be read prior to
+  // loop to force the internal SSL buffer to be flushed prior to
   // returning to the Reactor.  This is necessary to avoid some subtle
   // problems where data from another record is potentially handled
   // before the current record is fully handled.
   do
     {
-      int status = ::SSL_accept (this->ssl_stream_.ssl ());
+      int status = ::SSL_accept (ssl);
 
-      status = ::SSL_get_error (this->ssl_stream_.ssl (), status);
-      switch (status)
+      switch (::SSL_get_error (ssl, status))
         {
         case SSL_ERROR_NONE:
-          verify_error =
-            ::SSL_get_verify_result (this->ssl_stream_.ssl ());
-
-          if (verify_error != X509_V_OK)
-            {
-#ifndef ACE_NDEBUG
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) X.509 certificate verification "
-                          "error:%s\n",
-                          ::X509_verify_cert_error_string (verify_error)));
-#endif  /* ACE_NDEBUG */
-
-              return -1;
-            }
-
           return 0;
 
         case SSL_ERROR_WANT_WRITE:
@@ -115,10 +98,10 @@ ACE_SSL_Accept_Handler::ssl_accept (void)
           return -1;
         }
     }
-  while (::SSL_pending (this->ssl_stream_.ssl ()));
+  while (::SSL_pending (ssl));
 
-  // Completed reading an SSL record, but SSL passive connection is
+  // Completed flushing the SSL buffer, but SSL passive connection is
   // still pending completion.
 
-  return 1;  // Have the reactor callback this event handler.
+  return 0;
 }
