@@ -802,6 +802,9 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_DomainManager (
     sizeof (CORBA_DomainManager)
   );
 
+CORBA::TypeCode_ptr _tc_CORBA_DomainManager =
+  &_tc_TAO_tc_CORBA_DomainManager;
+
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, SecConstruction, 11U)
@@ -1580,6 +1583,8 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ConstructionPolicy (
     sizeof (CORBA_ConstructionPolicy)
   );
 
+CORBA::TypeCode_ptr _tc_CORBA_ConstructionPolicy =
+  &_tc_TAO_tc_CORBA_ConstructionPolicy;
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
@@ -1775,13 +1780,16 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_DomainManagerList (
     sizeof (CORBA_DomainManagerList)
   );
 
+CORBA::TypeCode_ptr _tc_CORBA_DomainManagerList =
+  &_tc_TAO_tc_CORBA_DomainManagerList;
+
 void operator<<= (CORBA::Any &_tao_any, CORBA_DomainManager_ptr _tao_elem)
 {
   TAO_OutputCDR stream;
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        CORBA::_tc_DomainManager,
+        _tc_CORBA_DomainManager,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -1798,7 +1806,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManager_ptr 
     _tao_elem = CORBA_DomainManager::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (CORBA::_tc_DomainManager, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (_tc_CORBA_DomainManager, ACE_TRY_ENV);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -1811,7 +1819,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManager_ptr 
     if (stream >> _tao_elem)
     {
       ((CORBA::Any *)&_tao_any)->_tao_replace (
-          CORBA::_tc_DomainManager,
+          _tc_CORBA_DomainManager,
           1,
           _tao_elem,
           CORBA_DomainManager::_tao_any_destructor
@@ -1842,7 +1850,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA_ConstructionPolicy_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        CORBA::_tc_ConstructionPolicy,
+        _tc_CORBA_ConstructionPolicy,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -1859,7 +1867,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ConstructionPolicy
     _tao_elem = CORBA_ConstructionPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (CORBA::_tc_ConstructionPolicy, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (_tc_CORBA_ConstructionPolicy, ACE_TRY_ENV);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -1872,7 +1880,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ConstructionPolicy
     if (stream >> _tao_elem)
     {
       ((CORBA::Any *)&_tao_any)->_tao_replace (
-          CORBA::_tc_ConstructionPolicy,
+          _tc_CORBA_ConstructionPolicy,
           1,
           _tao_elem,
           CORBA_ConstructionPolicy::_tao_any_destructor
@@ -1906,7 +1914,7 @@ void operator<<= (
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        CORBA::_tc_DomainManagerList,
+        _tc_CORBA_DomainManagerList,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin ()
       );
@@ -1918,7 +1926,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA_DomainManagerList *_tao_elem) // n
   TAO_OutputCDR stream;
   stream << *_tao_elem;
   _tao_any._tao_replace (
-      CORBA::_tc_DomainManagerList,
+      _tc_CORBA_DomainManagerList,
       TAO_ENCAP_BYTE_ORDER,
       stream.begin (),
       1,
@@ -1942,7 +1950,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_DomainManage
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (CORBA::_tc_DomainManagerList, ACE_TRY_ENV);
+    CORBA::Boolean result = type->equivalent (_tc_CORBA_DomainManagerList, ACE_TRY_ENV);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -1967,7 +1975,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_DomainManage
       if (stream >> *tmp)
       {
         ((CORBA::Any *)&_tao_any)->_tao_replace (
-            CORBA::_tc_DomainManagerList,
+            _tc_CORBA_DomainManagerList,
             1,
             ACE_static_cast (void *, tmp),
             CORBA_DomainManagerList::_tao_any_destructor
