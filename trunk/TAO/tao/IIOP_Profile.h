@@ -4,17 +4,21 @@
 // ============================================================================
 //
 // = LIBRARY
+//     TAO
 //
 // = FILENAME
+//     IIOP_Profile.h
 //
 // = DESCRIPTION
+//     IIOP profile specific processing
 //
 // = AUTHOR
+//     Fred Kuhns
 //
 // ============================================================================
 
-#ifndef IIOP_PROFILE_H
-#  define IIOP_PROFILE_H
+#ifndef TAO_IIOP_PROFILE_H
+#  define TAO_IIOP_PROFILE_H
 
 // TAO IIOP_Profile concrete Profile definitions
 class TAO_Export TAO_IIOP_Profile : public TAO_Profile
@@ -183,4 +187,4 @@ private:
 
 };
 
-#endif  /* TAO_PROFILE_H */
+#endif  /* TAO_IIOP_PROFILE_H */

@@ -4,17 +4,21 @@
 // ============================================================================
 //
 // = LIBRARY
+//     TAO
 //
 // = FILENAME
+//     IIOP_Transport.h
 //
 // = DESCRIPTION
+//     IIOP Transport specific processing
 //
 // = AUTHOR
+//     Fred Kuhns
 //
 // ============================================================================
 
-#ifndef IIOP_TRANSPORT_H
-#  define IIOP_TRANSPORT_H
+#ifndef TAO_IIOP_TRANSPORT_H
+#  define TAO_IIOP_TRANSPORT_H
 
 class TAO_Transport;
 
@@ -101,4 +105,4 @@ private:
   TAO_Server_Connection_Handler *server_handler_;
 };
 
-#endif  /* IIOP_TRANSPORT_H */
+#endif  /* TAO_IIOP_TRANSPORT_H */

@@ -4,12 +4,16 @@
 // ============================================================================
 //
 // = LIBRARY
+//     TAO
 //
 // = FILENAME
+//     Pluggable.h
 //
 // = DESCRIPTION
+//     Interface for the TAO pluggable protocol frameowrk.
 //
 // = AUTHOR
+//     Fred Kuhns
 //
 // ============================================================================
 

@@ -4,17 +4,21 @@
 // ============================================================================
 //
 // = LIBRARY
+//    TAO
 //
 // = FILENAME
+//    IIOP_Acceptor.h
 //
 // = DESCRIPTION
+//    IIOP specific acceptor processing
 //
 // = AUTHOR
+//    Fred Kuhns
 //
 // ============================================================================
 
-#ifndef TAO_ACCEPTOR_H
-#  define TAO_ACCEPTOR_H
+#ifndef TAO_IIOP_ACCEPTOR_H
+#  define TAO_IIOP_ACCEPTOR_H
 
 #include <tao/corba.h>
 
@@ -52,4 +56,4 @@ private:
 
 };
 
-#endif  /* TAO_ACCEPTOR_H */
+#endif  /* TAO_IIOP_ACCEPTOR_H */
