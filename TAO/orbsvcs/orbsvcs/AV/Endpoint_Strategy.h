@@ -22,6 +22,12 @@
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "tao/TAO.h"
 
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
+#if defined (_MSC_VER)
+# pragma warning (disable : 4250)
+#endif /* _MSC_VER */
+
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Strategy
 // = DESCRIPTION
 //    Base class to define various endpoint strategies
