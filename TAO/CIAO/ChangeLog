@@ -1,3 +1,8 @@
+Thu May 27 22:10:27 2004  Emre Turkay <turkaye@dre.vanderbilt.edu>
+	* DnC/Core/Deployment.idl:
+
+	Added DeploymentPlan::UUID.
+
 Thu May 27 22:02:21 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 	* DnC/Config_Handlers/Plan_Handler.cpp:
 
@@ -8264,12 +8269,4 @@ Mon Jun 17 17:35:31 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
         * docs/imgs/deployment.png:
         * docs/imgs/extended-container.png:
         * docs/imgs/home-config.png: Added CIAO documentation.
-
-
-
-Thu May 27 22:10:27 2004  Emre Turkay <turkaye@dre.vanderbilt.edu>
-	* DnC/Core/Deployment.idl:
-
-	Added DeploymentPlan::UUID.
-
 
