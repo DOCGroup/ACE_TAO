@@ -30,12 +30,12 @@ class FP
 public:
   enum Return_Type
   {
-    EOLINE,
-    EOFILE,
-    SUCCESS,
-    COMMENT,
-    DEFAULT,
-    PARSE_ERROR
+    RT_EOLINE,
+    RT_EOFILE,
+    RT_SUCCESS,
+    RT_COMMENT,
+    RT_DEFAULT,
+    RT_PARSE_ERROR
   };
 };
 
