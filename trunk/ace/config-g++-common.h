@@ -27,7 +27,7 @@
 // For some reason EGCS doesn't define this in its stdlib.
 # define ACE_LACKS_AUTO_PTR
 
-# if __GNUC__ == 2 && __GNUC_MINOR__ >= 91
+# if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 91 )
 #   define ACE_HAS_USING_KEYWORD
     // This is only needed with egcs 1.1 (egcs-2.91.57).  It can't be
     // used with older versions.
@@ -35,6 +35,13 @@
 # else /* This is for gcc 2.8.x */
 # define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 # endif /* __GNUC__ >= 2.91 */
+
+#if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 97 )
+	// gcc 2.97 and higher use libstdc++-v3 and require
+	// the use of the std namespace for using iostreams
+# define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+# undef  ACE_USES_OLD_IOSTREAMS              
+#endif /* __GNUC__ >= 2.97 */
 
 # if __GNUC__ == 2  &&  __GNUC_MINOR__ != 9  &&  __GNUC_MINOR__ != 91
 #   // g++ 2.9 and egcs 2.91 apparently have a bug with this . . .
