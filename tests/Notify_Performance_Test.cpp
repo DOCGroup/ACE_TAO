@@ -57,6 +57,8 @@ public:
 int 
 Handler::handle_exception (ACE_HANDLE handle)
 {
+  ACE_UNUSED_ARG (handle);
+
   return 0;
 }
 
