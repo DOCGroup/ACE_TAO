@@ -20,7 +20,7 @@
 #include <openssl/ssl.h>
 
 class TPC_Logging_Handler
-  : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> {
+  : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> {
 protected:
   ACE_FILE_IO log_file_; // File of log records.
 
@@ -46,7 +46,7 @@ public:
 
 
 class TPC_Logging_Acceptor
-  : public ACE_Acceptor<TPC_Logging_Handler, ACE_SOCK_Acceptor> {
+  : public ACE_Acceptor<TPC_Logging_Handler, ACE_SOCK_ACCEPTOR> {
 protected:
   // The SSL ``context'' data structure.
   SSL_CTX *ssl_ctx_;
@@ -56,7 +56,7 @@ protected:
   SSL *ssl_;
 
 public:
-  typedef ACE_Acceptor<TPC_Logging_Handler, ACE_SOCK_Acceptor>
+  typedef ACE_Acceptor<TPC_Logging_Handler, ACE_SOCK_ACCEPTOR>
           PARENT;
   typedef ACE_SOCK_Acceptor::PEER_ADDR PEER_ADDR;
 
