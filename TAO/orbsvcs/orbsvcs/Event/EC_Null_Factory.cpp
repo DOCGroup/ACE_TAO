@@ -3,7 +3,7 @@
 #include "EC_Null_Factory.h"
 #include "EC_Dispatching.h"
 #include "EC_Filter_Builder.h"
-#include "EC_ConsumerAdmin.h"
+#include "EC_ConsumerAdmin_T.h"
 #include "EC_SupplierAdmin.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_ProxySupplier.h"
@@ -50,7 +50,7 @@ TAO_EC_Null_Factory::destroy_filter_builder (TAO_EC_Filter_Builder *x)
 TAO_EC_ConsumerAdmin*
 TAO_EC_Null_Factory::create_consumer_admin (TAO_EC_Event_Channel *ec)
 {
-  return new TAO_EC_ConsumerAdmin (ec);
+  return new TAO_EC_ConsumerAdmin_Immediate<ACE_NULL_SYNCH> (ec);
 }
 
 void
@@ -184,3 +184,15 @@ TAO_EC_Null_Factory::destroy_supplier_admin_lock (ACE_Lock* x)
 {
   delete x;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class TAO_EC_ConsumerAdmin_Immediate<ACE_NULL_SYNCH>;
+template class TAO_EC_ConsumerAdmin_T<ACE_NULL_SYNCH>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_EC_ConsumerAdmin_Immediate<ACE_NULL_SYNCH>
+#pragma instantiate TAO_EC_ConsumerAdmin_T<ACE_NULL_SYNCH>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

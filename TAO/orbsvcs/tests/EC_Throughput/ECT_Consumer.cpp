@@ -26,7 +26,8 @@ Test_Consumer::Test_Consumer (ECT_Driver *driver,
 void
 Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
                         const char* name,
-                        int event_a, int event_b,
+                        int type_start,
+                        int type_count,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
                         CORBA::Environment& TAO_IN_ENV)
 {
@@ -53,8 +54,10 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
   qos.insert_type (ACE_ES_EVENT_SHUTDOWN, rt_info);
-  qos.insert_type (event_a, rt_info);
-  qos.insert_type (event_b, rt_info);
+  for (int i = 0; i != type_count; ++i)
+    {
+      qos.insert_type (type_start + i, rt_info);
+    }
 
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
@@ -87,7 +90,7 @@ Test_Consumer::disconnect (CORBA::Environment &TAO_IN_ENV)
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 
   // Deactivate the servant
-  PortableServer::POA_var poa = 
+  PortableServer::POA_var poa =
     this->_default_POA (TAO_IN_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
   PortableServer::ObjectId_var id =
@@ -104,7 +107,7 @@ Test_Consumer::dump_results (const char* name)
   this->timer_.elapsed_time (tv);
   double f = 1.0 / (tv.sec () + tv.usec () / 1000000.0);
   double eps = this->recv_count_ * f;
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "ECT_Consumer (%s):\n"
               "    Total time: %d.%08.8d (secs.usecs)\n"
@@ -148,11 +151,6 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
     {
       const RtecEventComm::Event& e = events[i];
 
-      if (e.data.payload.mb () == 0)
-        {
-          // ACE_DEBUG ((LM_DEBUG, "No data in event[%d]\n", i));
-          // continue;
-        }
       if (e.header.type == ACE_ES_EVENT_SHUTDOWN)
         {
           this->shutdown_count_++;
@@ -169,7 +167,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
           ACE_hrtime_t creation;
           ORBSVCS_Time::TimeT_to_hrtime (creation,
                                          e.header.creation_time);
-          
+
           ACE_hrtime_t ec_recv;
           ORBSVCS_Time::TimeT_to_hrtime (ec_recv,
                                          e.header.ec_recv_time);

@@ -15,6 +15,7 @@
 #include "orbsvcs/Event/Module_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Basic_Factory.h"
+#include "orbsvcs/Event/EC_ConsumerAdmin.h"
 #include "ECT_Throughput.h"
 
 ACE_RCSID(EC_Throughput, ECT_Throughput, "$Id$")
@@ -35,12 +36,17 @@ ECT_Throughput::ECT_Throughput (void)
     burst_size_ (100),
     event_size_ (128),
     burst_pause_ (100),
-    event_a_ (ACE_ES_EVENT_UNDEFINED),
-    event_b_ (ACE_ES_EVENT_UNDEFINED + 1),
+    consumer_type_start_ (ACE_ES_EVENT_UNDEFINED),
+    consumer_type_count_ (1),
+    consumer_type_shift_ (0),
+    supplier_type_start_ (ACE_ES_EVENT_UNDEFINED),
+    supplier_type_count_ (1),
+    supplier_type_shift_ (0),
     pid_file_name_ (0),
     active_count_ (0),
     reactive_ec_ (0),
-    new_ec_ (0)
+    new_ec_ (0),
+    ec_concurrency_hwm_ (1)
 {
 }
 
@@ -83,11 +89,16 @@ ECT_Throughput::run (int argc, char* argv[])
                   "  burst size = <%d>\n"
                   "  event size = <%d>\n"
                   "  burst size = <%d>\n"
-                  "  supplier Event A = <%d>\n"
-                  "  supplier Event B = <%d>\n"
+                  "  consumer type start = <%d>\n"
+                  "  consumer type count = <%d>\n"
+                  "  consumer type shift = <%d>\n"
+                  "  supplier type start = <%d>\n"
+                  "  supplier type count = <%d>\n"
+                  "  supplier type shift = <%d>\n"
                   "  pid file name = <%s>\n"
                   "  remote EC = <%d>\n"
-                  "  new EC = <%d>\n",
+                  "  new EC = <%d>\n"
+                  "  concurrency HWM = <%d>\n",
 
                   this->n_consumers_,
                   this->n_suppliers_,
@@ -95,12 +106,17 @@ ECT_Throughput::run (int argc, char* argv[])
                   this->burst_size_,
                   this->event_size_,
                   this->burst_pause_,
-                  this->event_a_,
-                  this->event_b_,
+                  this->consumer_type_start_,
+                  this->consumer_type_count_,
+                  this->consumer_type_shift_,
+                  this->supplier_type_start_,
+                  this->supplier_type_count_,
+                  this->supplier_type_shift_,
 
                   this->pid_file_name_?this->pid_file_name_:"nil",
                   this->reactive_ec_,
-                  this->new_ec_
+                  this->new_ec_,
+                  this->ec_concurrency_hwm_
                   ) );
 
       if (this->pid_file_name_ != 0)
@@ -175,7 +191,7 @@ ECT_Throughput::run (int argc, char* argv[])
                   str.in ()));
 
       // Register the servant with the Naming Context....
-      naming_context->bind (schedule_name, scheduler.in (), TAO_TRY_ENV);
+      naming_context->rebind (schedule_name, scheduler.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
@@ -219,9 +235,11 @@ ECT_Throughput::run (int argc, char* argv[])
             new TAO_EC_Event_Channel (ec_factory.get ());
           ec->activate (TAO_TRY_ENV);
           TAO_CHECK_ENV;
+          ec->consumer_admin ()->busy_hwm (this->ec_concurrency_hwm_);
 
           ec_impl =
             auto_ptr<POA_RtecEventChannelAdmin::EventChannel> (ec);
+
 #else
           ACE_ERROR_RETURN ((LM_ERROR,
                              "The new event channel is not supported "
@@ -321,7 +339,7 @@ ECT_Throughput::run (int argc, char* argv[])
 
 void
 ECT_Throughput::shutdown_consumer (void*,
-                               CORBA::Environment &)
+                                   CORBA::Environment &)
 {
   // int ID =
   //   (ACE_reinterpret_cast(Test_Consumer**,consumer_cookie)
@@ -355,10 +373,13 @@ ECT_Throughput::connect_consumers
                               this->consumers_ + i,
                               this->n_suppliers_));
 
+      int start = this->consumer_type_start_
+        + i * this->consumer_type_shift_;
+
       this->consumers_[i]->connect (scheduler,
                                     buf,
-                                    this->event_a_,
-                                    this->event_b_,
+                                    start,
+                                    this->consumer_type_count_,
                                     channel,
                                     TAO_IN_ENV);
       if (TAO_IN_ENV.exception () != 0) return;
@@ -378,14 +399,15 @@ ECT_Throughput::connect_suppliers
 
       ACE_NEW (this->suppliers_[i], Test_Supplier (this));
 
+      int start = this->supplier_type_start_ + i*this->supplier_type_shift_;
       this->suppliers_[i]->connect (scheduler,
                                     buf,
                                     this->burst_count_,
                                     this->burst_size_,
                                     this->event_size_,
                                     this->burst_pause_,
-                                    this->event_a_,
-                                    this->event_b_,
+                                    start,
+                                    this->supplier_type_count_,
                                     channel,
                                     TAO_IN_ENV);
       if (TAO_IN_ENV.exception () != 0) return;
@@ -444,7 +466,7 @@ ECT_Throughput::dump_results (void)
 int
 ECT_Throughput::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dc:s:u:n:t:b:h:p:m:r");
+  ACE_Get_Opt get_opt (argc, argv, "rdc:s:u:n:t:b:h:l:p:m:w:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -512,14 +534,33 @@ ECT_Throughput::parse_args (int argc, char *argv [])
             char* aux;
                 char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
 
-            this->event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+            this->consumer_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
-            this->event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+            this->consumer_type_count_ = ACE_OS::atoi (arg);
+                arg = ACE_OS::strtok_r (0, ",", &aux);
+            this->consumer_type_shift_ = ACE_OS::atoi (arg);
+          }
+          break;
+
+        case 'l':
+          {
+            char* aux;
+                char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
+
+            this->supplier_type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+                arg = ACE_OS::strtok_r (0, ",", &aux);
+            this->supplier_type_count_ = ACE_OS::atoi (arg);
+                arg = ACE_OS::strtok_r (0, ",", &aux);
+            this->supplier_type_shift_ = ACE_OS::atoi (arg);
           }
           break;
 
         case 'p':
           this->pid_file_name_ = get_opt.optarg;
+          break;
+
+        case 'w':
+          this->ec_concurrency_hwm_ = ACE_OS::atoi (get_opt.optarg);
           break;
 
         case '?':
@@ -533,8 +574,10 @@ ECT_Throughput::parse_args (int argc, char *argv [])
                       "-n <burst size> "
                       "-b <event payload size> "
                       "-t <burst pause (usecs)> "
-                      "-h <eventa,eventb> "
+                      "-h <consumer_start,consumer_count,consumer_shift> "
+                      "-l <supplier_start,supplier_count,supplier_shift> "
                       "-p <pid file name> "
+                      "-w <concurrency HWM> "
                       "-r "
                       "\n",
                       argv[0]));
@@ -601,6 +644,15 @@ ECT_Throughput::parse_args (int argc, char *argv [])
                          "%s: no suppliers or consumers, "
                          "reset to default (%d of each)\n",
                          argv[0], 1), -1);
+    }
+
+  if (this->ec_concurrency_hwm_ <= 0)
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         "%s: invalid concurrency HWM, "
+                         "reset to default (%d)\n",
+                         argv[0], 1), -1);
+      this->ec_concurrency_hwm_ = 1;
     }
 
   return 0;

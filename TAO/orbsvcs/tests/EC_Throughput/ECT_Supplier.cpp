@@ -18,7 +18,9 @@ Test_Supplier::Test_Supplier (ECT_Driver *driver)
      burst_count_ (0),
      burst_size_ (0),
      event_size_ (0),
-     burst_pause_ (0)
+     burst_pause_ (0),
+     type_start_ (ACE_ES_EVENT_UNDEFINED),
+     type_count_ (1)
 {
 }
 
@@ -29,8 +31,8 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
                         int burst_size,
                         int event_size,
                         int burst_pause,
-                        int event_a,
-                        int event_b,
+                        int type_start,
+                        int type_count,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
                         CORBA::Environment &TAO_IN_ENV)
 {
@@ -38,9 +40,9 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
   this->burst_size_ = burst_size;
   this->event_size_ = event_size;
   this->burst_pause_ = burst_pause;
-  this->event_a_ = event_a;
-  this->event_b_ = event_b;
-    
+  this->type_start_ = type_start;
+  this->type_count_ = type_count;
+
   RtecScheduler::handle_t rt_info =
     scheduler->create (name, TAO_IN_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
@@ -71,12 +73,12 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
               this->supplier_id_));
 
   ACE_SupplierQOS_Factory qos;
-  qos.insert (this->supplier_id_,
-              event_a,
-              rt_info, 1);
-  qos.insert (this->supplier_id_,
-              event_b,
-              rt_info, 1);
+  for (int i = 0; i != type_count; ++i)
+    {
+      qos.insert (this->supplier_id_,
+                  type_start + i,
+                  rt_info, 1);
+    }
   qos.insert (this->supplier_id_,
               ACE_ES_EVENT_SHUTDOWN,
               rt_info, 1);
@@ -112,7 +114,7 @@ Test_Supplier::disconnect (CORBA::Environment &TAO_IN_ENV)
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 
   // Deactivate the servant
-  PortableServer::POA_var poa = 
+  PortableServer::POA_var poa =
     this->supplier_._default_POA (TAO_IN_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
   PortableServer::ObjectId_var id =
@@ -166,10 +168,8 @@ Test_Supplier::svc ()
         {
           for (int j = 0; j < this->burst_size_; ++j)
             {
-              if (j % 2 == 0)
-                event[0].header.type = this->event_a_;
-              else
-                event[0].header.type = this->event_b_;
+              event[0].header.type =
+                this->type_start_ + j % this->type_count_;
 
               ACE_hrtime_t now = ACE_OS::gethrtime ();
               ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
@@ -187,7 +187,7 @@ Test_Supplier::svc ()
       this->consumer_proxy ()->push(event, TAO_TRY_ENV);
       TAO_CHECK_ENV;
       this->timer_.stop ();
-      
+
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
     {
@@ -226,7 +226,7 @@ Test_Supplier::dump_results (const char* name)
   int event_count = this->burst_count_ * this->burst_size_ + 1;
   double f = 1.0 / (tv.sec () + tv.usec () / 1000000.0);
   double eps = event_count * f;
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "ECT_Supplier (%s):\n"
               "    Total time: %d.%08.8d (secs.usecs)\n"

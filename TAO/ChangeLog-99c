@@ -1,3 +1,83 @@
+Tue Feb 23 20:10:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: 
+	  Added EC_ObserverStrategy to the set of files for Event2
+
+	* orbsvcs/Event/EC_ConsumerAdmin.h:
+	* orbsvcs/Event/EC_ConsumerAdmin.i:
+	* orbsvcs/Event/EC_ConsumerAdmin.cpp:
+	* orbsvcs/Event/EC_ConsumerAdmin_T.h:
+	* orbsvcs/Event/EC_ConsumerAdmin_T.i:
+	* orbsvcs/Event/EC_ConsumerAdmin_T.cpp:
+	* orbsvcs/Event/EC_SupplierFiltering.cpp:
+	  Implemented delayed and/or immediate removal and additions from
+	  the ConsumerAdmin internal set (of ProxyPushSupplier). This is
+	  important to applications that use reactive dispatching and can
+	  generate disconnections and/or connections to the EC as part of
+	  the consumer upcalls.
+	  This strategies require condition variables and thus the use of
+	  templates to parametrize the locking strategy.
+	  I also added a simple policy to control the level of concurrency 
+	  in the ConsumerAdmin set: the user can specify how many threads
+	  can be concurrently running on the ConsumerAdmin.  If this limit 
+	  is exceeded then the new threads must wait until all the other
+	  threads leave.  At that point the delayed operations are
+	  executed.
+	  This strategy ensures that operations are not delayed forever;
+	  setting the HWM to 1 (the default) ensures that operations are
+	  executed before the next upcall; setting the HWM to a very high
+	  value results in maximum concurrency; this could be a reasonable 
+	  options if periodically there are periods without any activity.
+
+	* orbsvcs/Event/EC_ObserverStrategy.h:
+	* orbsvcs/Event/EC_ObserverStrategy.i:
+	* orbsvcs/Event/EC_ObserverStrategy.cpp:
+	  Added missing destructor.
+	  Minor cosmetic changes.
+
+	* orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/Event/EC_ProxySupplier.cpp:
+	  Added reference counting to this objects.
+
+	* orbsvcs/Event/EC_Busy_Lock.h:
+	* orbsvcs/Event/EC_Busy_Lock.i:
+	* orbsvcs/Event/EC_Busy_Lock.cpp:
+	  A simple adapter that conforms to the ACE_Lock interface. It
+	  invokes the busy() and idle() method on another object to
+	  acquire and release.
+
+	* orbsvcs/Event/EC_Command.h:
+	* orbsvcs/Event/EC_Command.i:
+	* orbsvcs/Event/EC_Command.cpp:
+	  Implemented two simple Command objects that can invoke the
+	  connected_i() and disconnected_i() methods on another class,
+	  this are useful to implement the delayed connection and
+	  disconnection from the EC.
+
+	* orbsvcs/Event/EC_Null_Factory.cpp:
+	* orbsvcs/Event/EC_Basic_Factory.cpp:
+	  Use the new EC_ConsumerAdmin types with the right locking
+	  strategies.
+
+	* tests/EC_Throughput/ECT_Consumer.cpp:
+	* tests/EC_Throughput/ECT_Consumer.h:
+	* tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+	* tests/EC_Throughput/ECT_Consumer_Driver.h:
+	* tests/EC_Throughput/ECT_Supplier.cpp:
+	* tests/EC_Throughput/ECT_Supplier.h:
+	* tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+	* tests/EC_Throughput/ECT_Supplier_Driver.h:
+	* tests/EC_Throughput/ECT_Throughput.cpp:
+	* tests/EC_Throughput/ECT_Throughput.h:
+	  The test is more flexible wrt event types subscribed by each
+	  consumer and published by the suppliers, this could be useful to 
+	  measure how the test scales with the number of consumers and/or
+	  suppliers.
+
+	* orbsvcs/RtecEventComm.idl:
+	* orbsvcs/Event/EC_Event_Channel.cpp:
+	  Minor cosmetic changes.
+
 Tue Feb 23 19:44:20 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_root/root.cpp: 
