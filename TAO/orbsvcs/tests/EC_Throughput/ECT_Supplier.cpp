@@ -546,7 +546,7 @@ Test_Supplier::dump_results (const char* name)
   double eps = event_count * f;
   
   ACE_DEBUG ((LM_DEBUG,
-              "ECT_Consumer (%s):\n"
+              "ECT_Supplier (%s):\n"
               "    Total time: %d.%08.8d (secs.usecs)\n"
               "    Total events: %d\n"
               "    Events per second: %.3f\n",
