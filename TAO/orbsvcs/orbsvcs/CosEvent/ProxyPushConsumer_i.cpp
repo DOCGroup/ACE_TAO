@@ -142,11 +142,8 @@ void
 ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier,
                                             CORBA::Environment &TAO_TRY_ENV)
 {
-  // @@ Pradeep, do you really need this _env variable?  Can you remove it?
-  CORBA::Environment &_env = TAO_TRY_ENV;
-
   if (this->connected ())
-    TAO_THROW (CosEventChannelAdmin::AlreadyConnected ());
+    TAO_THROW_ENV (CosEventChannelAdmin::AlreadyConnected (), TAO_TRY_ENV);
 
   // @@ Pradeep, please make sure to use ACE_NEW and ACE_NEW_RETURN in
   // situations like this to check for new failures.
