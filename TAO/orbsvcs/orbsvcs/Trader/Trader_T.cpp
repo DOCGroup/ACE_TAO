@@ -332,7 +332,7 @@ TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
   ACE_TRY_NEW_ENV
     {
       CORBA::ULong length = dyn_seq.length (ACE_TRY_ENV);
-      ACE_TRY_CHECK_ENV;
+      ACE_TRY_CHECK;
 
       for (CORBA::ULong i = 0; i < length && ! return_value; i++)
         if (functor (dyn_seq, element))
