@@ -1,3 +1,16 @@
+Fri Oct 27 08:56:43 2000  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/Sequence_T.cpp: 
+	* tao/Sequence_T.i:
+
+	  Moved the allocbuf() methods from the .i to the .cpp for
+ 	  TAO_Bounded_Array_Sequence and TAO_Unbounded_Array_Sequence
+ 	  templates.  They cause SunWorkshop 4.2 grief during compiles
+ 	  because the compiler couldn't find a definition for one of the
+ 	  template parameters.  Moving it into .cpp got the compiler
+ 	  unconfused.  This is a workaround for the SunCC 4.2 Compiler
+ 	  patch level 104631-07.
+
 Fri Oct 27 00:28:03 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Forwarding/run_test.pl (run_test): Added a missing
