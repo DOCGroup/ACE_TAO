@@ -7,6 +7,21 @@ Thu Dec 11 13:13:17 1997  David L. Levine  <levine@cs.wustl.edu>
           <Kirill.Rybaltchenko@cern.ch> for reporting this problem and
           verifying the fix on LynxOS, the only affected platform.
 
+        * ace/config-linux-kcc.h,include/makeinclude/platform-linux-kcc.GNU:
+          added linuxthreads support with the linux KAI C++ config.
+          Thanks to Ben Eng <ben@jetpen.com> for the patches.
+
+        * ace/IOStream_T.h: iostream fx emulation now skips whitespaces and
+          flushes when tied.  Thanks to Ben Eng <ben@jetpen.com> for the patch.
+
+        * tests/IOStream_Test.cpp (server): check for double-quote instead
+          of newline as end-of-string character.  Thanks to Ben Eng
+          <ben@jetpen.com> for the patch.
+
+        * tests/SV_Shared_Memory_Test.cpp: renamed "allocator" to
+          "myallocator" to avoid conflict with STL.  Thanks to Ben Eng
+          <ben@jetpen.com> for the patch.
+
         * ace/IOStream_T.cpp: restored ACE_HAS_IOSTREAMH_INCLUSION
           protection around the old g++ munch hack.  There's no need
           to trouble all (g++) platforms with its (4 byte) space penalty.
