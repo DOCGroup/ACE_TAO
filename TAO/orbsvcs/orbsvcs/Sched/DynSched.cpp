@@ -1091,11 +1091,13 @@ ACE_DynScheduler::identify_threads (void)
       }
       else if (task_entries_ [i].rt_info ()->info_type == RtecScheduler::REMOTE_DEPENDANT)
         {
-          // Warn about unresolved remote dependencies
-                  result = ST_UNRESOLVED_REMOTE_DEPENDENCIES;
+          // Warn about unresolved remote dependencies, mark the task entry
+          result = ST_UNRESOLVED_REMOTE_DEPENDENCIES;
+          task_entries_ [i].has_unresolved_remote_dependencies (1);
           ACE_DEBUG (
              (LM_DEBUG,
-              "An operation identified by \"%s\" has unresolved remote dependencies\n.",
+              "Warning: an operation identified by "
+              "\"%s\" has unresolved remote dependencies\n.",
               (const char*) task_entries_ [i].rt_info ()->entry_point));
         }
       else

@@ -1,3 +1,18 @@
+Sun Oct 18 22:05:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
+          orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp
+          orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp
+          orbsvcs/orbsvcs/Sched/DynSched.cpp
+          orbsvcs/orbsvcs/Sched/SchedEntry.{cpp,h,i}
+          orbsvcs/orbsvcs/Sched/Scheduler.h:
+          Propagated warnings for unresolved remote RT_Info dependencies
+	  throughout the call graph in the strategized scheduler, enabled 
+	  schedule table generation even when there are unresolved remote 
+	  dependencies or the utilization bound is exceeded. These changes 
+	  allow iterative development of a schedule with useful scheduler 
+	  warnings in debug mode.
+	
 Sun Oct 18 21:40:23 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
