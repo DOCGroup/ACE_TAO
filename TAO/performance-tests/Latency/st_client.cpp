@@ -7,6 +7,8 @@
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 ACE_RCSID(Latency, st_client, "$Id$")
 
 const char *ior = "file://test.ior";
