@@ -6,7 +6,7 @@
 // This class is compiled only when ACE_COMPILE_TIMEPROBES is defined
 #if defined (ACE_COMPILE_TIMEPROBES)
 
-#include "ace/Malloc.h"
+#include "ace/Containers.h"
 
 // = Event Descriptions
 struct ACE_Event_Descriptions
@@ -99,10 +99,8 @@ public:
     // Default size of the slots in Timeprobe
   };
 
-  ACE_Timeprobe (u_long size = ACE_DEFAULT_TABLE_SIZE,
-                 ACE_Allocator *alloc = 0);
-  // Create Timeprobes with <size> slots, using <alloc> for the
-  // allocator.
+  ACE_Timeprobe (u_long size = ACE_DEFAULT_TABLE_SIZE);
+  // Create Timeprobes with <size> slots
 
   ~ACE_Timeprobe (void);
   // Destructor
@@ -152,9 +150,6 @@ protected:
 
   ACE_timeprobe_t *timeprobes_;
   // Time probe slots
-
-  ACE_Allocator *allocator_;
-  // Pointer to a memory allocator.
 
   ACE_LOCK lock_;
   // Synchronization variable.
