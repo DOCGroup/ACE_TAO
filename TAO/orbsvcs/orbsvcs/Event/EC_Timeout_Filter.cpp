@@ -62,8 +62,7 @@ TAO_EC_Timeout_Filter::filter (const RtecEventComm::EventSet& event,
                                TAO_EC_QOS_Info& qos_info,
                                CORBA::Environment& ACE_TRY_ENV)
 {
-  this->push (event, qos_info, ACE_TRY_ENV);
-  return 1;
+  return 0;
 }
 
 int
@@ -71,8 +70,7 @@ TAO_EC_Timeout_Filter::filter_nocopy (RtecEventComm::EventSet& event,
                                    TAO_EC_QOS_Info& qos_info,
                                    CORBA::Environment& ACE_TRY_ENV)
 {
-  this->push_nocopy (event, qos_info, ACE_TRY_ENV);
-  return 1;
+  return 0;
 }
 
 void

@@ -90,7 +90,7 @@ ifneq (,$(findstring Time,$(TAO_ORBSVCS)))
   #### TAO's Time Service requires its ImplRepo Service.
   ifeq (,$(findstring ImplRepo,$(TAO_ORBSVCS)))
     #### Add ImplRepo
-    TAO_ORBSVCS += "ImplRepo "
+    TAO_ORBSVCS += ImplRepo
   endif # ! ImplRepo
 endif # Time
 
