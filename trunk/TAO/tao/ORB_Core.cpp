@@ -1736,6 +1736,10 @@ int
 TAO_ORB_Table::bind (const char* orb_id,
                      TAO_ORB_Core* orb_core)
 {
+  if (this->first_orb_ == 0)
+    {
+      this->first_orb_ = orb_core;
+    }
   ACE_CString id (orb_id);
   return this->table_.bind (id, orb_core);
 }
@@ -1753,7 +1757,19 @@ int
 TAO_ORB_Table::unbind (const char* orb_id)
 {
   ACE_CString id (orb_id);
-  return this->table_.unbind (id);
+  TAO_ORB_Core *orb_core;
+  int result = this->table_.unbind (id, orb_core);
+  if (result == 0)
+    {
+      if (orb_core == this->first_orb_)
+        {
+          Iterator begin = this->begin ();
+          Iterator end = this->end ();
+          if (begin != end)
+            this->first_orb_ = (*begin).int_id_;
+        }
+    }
+  return result;
 }
 
 // ****************************************************************
@@ -1764,14 +1780,22 @@ TAO_ORB_Core_instance (void)
   // @@ This is a slight violation of layering, we should use
   //    TAO_ORB_Core_instance(), but that breaks during startup.
   TAO_ORB_Table* orb_table = TAO_ORB_Table::instance ();
-  TAO_ORB_Table::Iterator begin = orb_table->begin ();
-  TAO_ORB_Table::Iterator end = orb_table->end ();
-  if (begin == end)
+  if (orb_table->first_orb () == 0)
     {
       int argc = 0;
-      return CORBA::ORB_init (argc, 0, 0)->orb_core_;
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
+        {
+          (void) CORBA::ORB_init (argc, 0, 0, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // @@ What should we do here?
+        }
+      ACE_ENDTRY;
     }
-  return (*begin).int_id_;
+  return orb_table->first_orb ();
 }
 
 // ****************************************************************

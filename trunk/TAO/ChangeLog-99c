@@ -1,3 +1,26 @@
+Fri Jul  2 21:09:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	  We were depending on the fact that the first ORB in the
+	  ORB_Table iterator was the first ORB created, but this is not
+	  guaranteed by the underlying data structures.  We keep track of
+	  the first ORB explicitly now.
+
+	* orbsvcs/examples/Makefile:
+	* orbsvcs/examples/RtEC/Makefile:
+	* orbsvcs/examples/RtEC/Simple/Makefile:
+	* orbsvcs/examples/RtEC/Simple/README:
+	* orbsvcs/examples/RtEC/Simple/ec.conf:
+	* orbsvcs/examples/RtEC/Simple/run_test.pl:
+	* orbsvcs/examples/RtEC/Simple/Service.cpp:
+	* orbsvcs/examples/RtEC/Simple/Supplier.h:
+	* orbsvcs/examples/RtEC/Simple/Supplier.cpp:
+	* orbsvcs/examples/RtEC/Simple/Consumer.h:
+	* orbsvcs/examples/RtEC/Simple/Consumer.cpp:
+	  Added the simplest example i could think of
+
 Fri Jul  2 19:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Config_Scheduler.h
