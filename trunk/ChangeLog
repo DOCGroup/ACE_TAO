@@ -1,3 +1,8 @@
+Mon Nov  3 06:41:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_NS_stdio.h:
+          Added missing ACE_Export to printf() declaration.
+
 Mon Nov  3 06:09:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/MM_Shared_Memory_Test.cpp:

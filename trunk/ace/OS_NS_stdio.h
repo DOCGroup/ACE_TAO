@@ -324,6 +324,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void perror (const ACE_TCHAR *s);
 
+  extern ACE_Export 
   int printf (const char *format, ...);
 
   ACE_NAMESPACE_INLINE_FUNCTION
