@@ -89,3 +89,4 @@ netsvcs/lib/netsvcs
 netsvcs/clients/Naming/Client/Netsvsc_Client_Test_Lib
 netsvcs/clients/Naming/Dump_Restore/Netsvcs_Dump_Restore_Lib
 websvcs/lib/websvcs
+protocols/ace/HTBP/HTBP
