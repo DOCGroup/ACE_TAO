@@ -488,7 +488,7 @@ ACE_Strategy_Scheduler_Factory<STRATEGY>::create (ACE_DynScheduler::Preemption_P
   ACE_NEW_RETURN (the_scheduler, ACE_Strategy_Scheduler (*the_strategy), 0);
 
   return the_scheduler;
-};
+}
   // construct and return a scheduler strategized with
   // an instance of the the parameterized strategy type
 
