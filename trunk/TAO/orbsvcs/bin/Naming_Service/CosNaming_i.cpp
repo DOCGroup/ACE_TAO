@@ -56,7 +56,7 @@ NS_NamingContext::get_context (const CosNaming::Name &name)
    
   // Try narrowing object reference to a context type.
   CosNaming::NamingContext_ptr c;
-  c = CosNaming::NamingContext::_narrow (cont_ref, IT_env);
+  c = CosNaming::NamingContext::_narrow (cont_ref);
   CosNaming::Name rest;
   rest.length (2);
   rest[0] = name[len - 2];
@@ -300,7 +300,7 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
     {
       CosNaming::NamingContext_var cont;
       if (entry.type_ == CosNaming::ncontext)
-	cont = CosNaming::NamingContext::_narrow (item, IT_env);
+	cont = CosNaming::NamingContext::_narrow (item);
       else
 	{
 	  IT_env.clear ();

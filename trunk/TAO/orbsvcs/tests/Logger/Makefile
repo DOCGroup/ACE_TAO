@@ -9,14 +9,14 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS     =  -lTAO
+LDLIBS     =  -lorbsvcs -lTAO
 
-IDL_SRC	= loggerC.cpp loggerS.cpp CosNamingC.cpp
+IDL_SRC	= loggerC.cpp loggerS.cpp
 PROG_SRCS =	$(IDL_SRC) logger_i.cpp ior_multicast.cpp
 
 LSRC = $(PROG_SRCS)
 
-logger_SVR_OBJS = loggerC.o loggerS.o svr.o logger_i.o CosNamingC.o ior_multicast.o
+logger_SVR_OBJS = loggerC.o loggerS.o svr.o logger_i.o ior_multicast.o
 logger_CLT_OBJS = loggerC.o clnt.o
 
 BIN = svr clnt
@@ -39,12 +39,11 @@ TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 DCFLAGS = -g
-LDFLAGS += -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
+LDFLAGS += -L$(TAO_ROOT)/orbsvcs/lib -L$(TAO_ROOT)/tao
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs/lib -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
-$(IDL_SRC): logger.idl CosNaming.idl
+$(IDL_SRC): logger.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl logger.idl
-	$(TAO_ROOT)/TAO_IDL/tao_idl CosNaming.idl
 
 svr:	$(addprefix $(VDIR),$(logger_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)

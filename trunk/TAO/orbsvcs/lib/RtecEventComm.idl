@@ -1,0 +1,57 @@
+//
+// $Id$
+//
+// #include "orb.idl"
+
+module RtecEventComm {
+  exception Disconnected {};
+
+#if 0
+  union EventData switch(short) {
+  case 1: double dval;
+  case 2: string sval;
+  case 3: sequence<octet> bval;
+  default: long lval;
+  };
+#else
+  struct EventData {
+    long x;
+    long y;
+  };
+#endif
+
+  typedef long EventSourceID;
+  // TODO: Use CosTimeService?
+  typedef long Time;
+  typedef long EventType;
+  struct Event {
+    EventSourceID source_;
+    EventType type_;
+    Time time_;
+    EventData data_;
+  };
+  typedef sequence<Event> EventSet;
+
+  interface PushConsumer {
+    void push (in EventSet data) raises(Disconnected);
+    void disconnect_push_consumer(); 
+  };
+
+  interface PushSupplier {
+    void disconnect_push_supplier();
+  };
+
+  interface PullSupplier {
+    Event pull () raises(Disconnected);
+    Event try_pull (out boolean has_event) 
+      raises(Disconnected);
+    void disconnect_pull_supplier(); 
+  };
+
+  interface PullConsumer {
+    void disconnect_pull_consumer();
+  };
+
+};
+
+

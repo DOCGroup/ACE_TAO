@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/orbsvcs/bin/Naming_Service/TAO
+//    TAO/orbsvcs/tests
 //
 // = FILENAME
 //    clnt.h

@@ -1,4 +1,6 @@
-//#include "NS_CosNaming.h"
+//
+// $Id$
+//
 #include "CosNaming_i.h"
 #include <iostream.h>
 
@@ -30,7 +32,7 @@ main (int argc, char ** argv)
   // create an Naming Service object
 
   //  CosNaming_i * name_server = new CosNaming_i;
-NS_NamingContext *naming_context = new NS_NamingContext;
+  NS_NamingContext *naming_context = new NS_NamingContext;
   
   // Stringify the objref we'll be implementing, and print it to
   // stdout.  Someone will take that string and give it to a
@@ -47,7 +49,7 @@ NS_NamingContext *naming_context = new NS_NamingContext;
     }
 
   ACE_OS::puts ((char *) str);
-  ACE_OS::fflush (stdout);
+  // ACE_OS::fflush (stdout);
   dmsg1 ("listening as object '%s'", str);
 
   // Handle requests for this object until we're killed, or one of the
@@ -57,30 +59,3 @@ NS_NamingContext *naming_context = new NS_NamingContext;
 
   return 0;
 }
-
-
-//  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-#if 0
-  NS_NamingContext *c = new NS_NamingContext;
-
-  CosNaming::NamingContext_ptr cont = new TIE_CosNaming_NamingContext 
-    (NS_NamingContext) (c);
-    
-  c->initialize (cont);
-
-  try 
-    {
-      CORBA::Orbix.impl_is_ready ("nameserver", 30000);
-				  //CORBA::Orbix.INFINITE_TIMEOUT);
-      // The server will not time out unless something goes wrong.
-    }
-
-  catch (const CORBA::SystemException& se)
-    {
-      cout << "Unexpected exception: " << endl << &se;
-      return -1;
-    }
-
-  return 0;
-}
-#endif
