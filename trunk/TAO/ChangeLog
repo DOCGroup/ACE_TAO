@@ -1,3 +1,14 @@
+Fri Apr 30 000:35:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        
+          Added generation of 'public:' before generation of pure virtual
+          _add_ref() and _remove_ref() methods necessary for valuetypes
+          that support an abstract interface. They must be public so
+          CORBA::add_ref() and CORBA::remove_ref() can access them.
+          Thanks to Jiang Wei <jiangwei_1976@yahoo.com.cn> for reporting
+          the problem. This fix closes [BUGID:1796].
+
 Thu Apr 29 14:25:44 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Sequence.cpp (check_bounds):
