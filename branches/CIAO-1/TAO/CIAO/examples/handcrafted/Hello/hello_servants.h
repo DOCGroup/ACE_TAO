@@ -21,14 +21,24 @@
 //
 // ===========================================================
 
-#include "helloS.h"
+#include "helloCS.h"
 #include "helloEC.h"
 
 class CIAO_HelloWorld_Servant
   : public virtual POA_HelloWorld,
+  // @@ Perhaps we could implement a common component servant class
+  //    which provide common functionality for operations defined in
+  //    Navigation/Events/Receptacles interfaces.
     public virtual PortableServer::RefCountServantBase
 {
 public:
+  // Ctor.
+  CIAO_HelloWorld_Servant (CCM_HelloWorld_ptr executor_);
+
+  // Dtor.
+  ~CIAO_HelloWorld_Servant (void);
+
+
 
 protected:
   // My Executor.
@@ -36,7 +46,4 @@ protected:
 
   // My Run-time Context.
   CCM_HelloWorld_Context_var context_;
-
-  // Pointer to CIAO::Container
-
 };
