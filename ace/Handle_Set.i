@@ -3,6 +3,7 @@
 
 // Handle_Set.i
 
+#if 0
 ACE_INLINE void 
 ACE_Handle_Set::operator= (const ACE_Handle_Set &rhs)
 {
@@ -21,7 +22,7 @@ ACE_Handle_Set::operator= (const ACE_Handle_Set &rhs)
       this->max_handle_ = ACE_INVALID_HANDLE;
     }
 }
-
+#endif /* 0 */
 // Initialize the bitmask to all 0s and reset the associated fields.
 
 ACE_INLINE void 
