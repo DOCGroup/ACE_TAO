@@ -20,7 +20,7 @@
 
 #include "ace/ACE.h"
 
-#if defined (ACE_HAS_HI_RES_TIMER)
+#if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HIRES_TIMER)
 
 class ACE_Export ACE_High_Res_Timer
   // = TITLE
@@ -53,8 +53,8 @@ public:
   // returns the elapsed (stop - start) time in a timespec_t (sec, nsec)
 #endif /* ACE_HAS_POSIX_TIME */
 
-  unsigned long get_time () const;
-  // returns the elapsed (stop - start) time in microseconds
+  void elapsed_microseconds (hrtime_t &usecs) const;
+  // Sets <usecs> to the elapsed (stop - start) time in microseconds
 
   void print_total (const char *message,
 		    const int iterations = 1,
@@ -95,5 +95,5 @@ private:
 #include "ace/High_Res_Timer.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_HAS_HI_RES_TIMER */
+#endif /* ACE_HAS_HI_RES_TIMER || ACE_HAS_AIX_HIRES_TIMER */
 #endif /* ACE_HIGH_RES_TIMER_H */

@@ -8,7 +8,7 @@
 #include "ace/High_Res_Timer.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_HI_RES_TIMER)
+#if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HIRES_TIMER)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 
@@ -68,7 +68,7 @@ ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE hand
   ACE_OS::write (handle, str, strlen (str));
   ACE_OS::write (handle, buf, strlen (buf));
 #else
-# error must have ACE_HAS_LONGLONG_T with ACE_HAS_HI_RES_TIMER
+# error must have ACE_HAS_LONGLONG_T with ACE_High_Res_Timer
 #endif /* ACE_HAS_LONGLONG_T */
 }
 
@@ -95,7 +95,7 @@ ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE ha
   ACE_OS::write (handle, str, strlen (str));
   ACE_OS::write (handle, buf, strlen (buf));
 #else
-# error must have ACE_HAS_LONGLONG_T with ACE_HAS_HI_RES_TIMER
+# error must have ACE_HAS_LONGLONG_T with ACE_High_Res_Timer
 #endif /* ACE_HAS_LONGLONG_T */
 }
-#endif /* ACE_HAS_HI_RES_TIMER */
+#endif /* ACE_HAS_HI_RES_TIMER || ACE_HAS_AIX_HIRES_TIMER */
