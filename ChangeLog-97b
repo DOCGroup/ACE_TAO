@@ -1,3 +1,39 @@
+Sun Oct 19 18:07:31 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+        * ace: Added new config files for SCO OpenServer with a new initial scheme
+	  to make config files:
+
+	  - The config to SCO OpenServer has been changed to separate OS
+	    specific flags, threads and compiler flags.
+
+	  - For SCO OpenServer the base config file is config-sco-5.0.0.h
+
+	  - Pthreads base files are config-fsu-pthread.h and
+	    config-mit-pthread for FSU and MIT pthreads. 
+
+	  - The compiler file has been named config-gcc-2.7.2.h, this is
+	    base config file for GNU gcc 2.7.2
+
+	  To build a config file for SCO using GNU gcc 2.7.2 would be:
+
+	  #include "ace/config-gcc-2.7.2.h"
+	  #include "ace/config-sco-5.0.0.h"
+
+	  We would obtain ACE config file for SCO OpenServer with GNU gcc
+	  2.7.2 with no threads.  To build a config file for SCO using GNU
+	  gcc 2.7.2 with FSU pthread would be:
+
+	  #include "ace/config-gcc-2.7.2.h"
+	  #include "ace/config-sco-5.0.0.h"
+	  #include "ace/config-fsu-pthread.h"
+
+          Thanks to Arturo Montes <mitosys@colomsat.net.co> for these
+	  changes.
+
+	* ace/OS.i (open): Modified ACE_OS::open() so that it sets errno
+ 	  to EACCES when the requested file is in use.  Thanks to Edan
+ 	  Ayal <edana@vdo.net> for reporting this.
+
 Sun Oct 19 17:55:34 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* etc/purify.solaris2: the contents of my ~/.purify file
