@@ -1067,6 +1067,7 @@ TAO_RSE_Priority_Visitor ()
 // priorities.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
+TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 visit (TAO_Reconfig_Scheduler_Entry &rse)
 {
   if (previous_entry_ == 0)
@@ -1191,11 +1192,14 @@ noncritical_utilization ()
 int
 TAO_MUF_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const void *t)
 {
-  // Convert the passed pointers.
+  // Convert the passed pointers: the double cast is needed to
+  // make Sun C++ 4.2 happy.
   TAO_Reconfig_Scheduler_Entry **first =
-    ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **, s);
+    ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **,
+                          ACE_const_cast (void *, s));
   TAO_Reconfig_Scheduler_Entry **second =
-    ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **, t);
+    ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **,
+                          ACE_const_cast (void *, t));
 
   // Check the converted pointers.
   if (first == 0 || *first == 0)
