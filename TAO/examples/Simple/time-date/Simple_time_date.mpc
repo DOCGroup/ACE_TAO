@@ -27,8 +27,9 @@ project(*server): taoserver {
 }
 
 project(*client): taoclient, namingexe {
-  after += *lib
-  libs  += Time_Date
+  after    += *lib
+  libs     += Time_Date
+  libpaths += .
   Source_Files {
     client.cpp
     Time_Date_Client_i.cpp

@@ -1,3 +1,11 @@
+Wed Apr 14 12:39:37 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Simple/time-date/Simple_time_date.mpc:
+
+          Added . to libpaths for the client project.  This will allow the
+          GNUmakefile to find the library and determine that it's ok to
+          build the client.
+
 Wed Apr 14 10:08:18 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:
