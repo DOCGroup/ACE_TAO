@@ -1,3 +1,12 @@
+Mon Apr 07 12:08:21 1997    <harrison@samba.cs.wustl.edu>
+
+	* ace/Set.cpp: For some reason, VC++ 5.0 doesn't like to have the
+ 	  constructors X::X(X&) and X::X(X*).  We can change the X::X(X*)
+ 	  constructor to take in an extra argument with a default value.
+  	  This seems to have sufficiently satisfied the VC++ 5.0 for the
+ 	  time being.  There were no changes necessary to other Set.cpp
+ 	  code (as the extra argument has a default value).
+
 Mon Apr 07 08:05:03 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-win32.h: enabled ACE_HAS_UNICODE by default.
