@@ -362,12 +362,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_and_return_index (const EXT_ID &
        i != this->occupied_list_id ();
        i = this->search_structure_[i].next ())
     {
-
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
-
       if (this->search_structure_[i].free_)
         continue;
-
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
       if (this->equal (this->search_structure_[i].ext_id_,
