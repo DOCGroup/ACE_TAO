@@ -533,10 +533,6 @@ SOURCE=.\Event\EC_Gateway.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Gateway_UDP.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_Group_Scheduling.h
 # End Source File
 # Begin Source File
@@ -1502,10 +1498,6 @@ SOURCE=.\Event\EC_Filter.i
 # Begin Source File
 
 SOURCE=.\Event\EC_Filter_Builder.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Gateway_UDP.i
 # End Source File
 # Begin Source File
 
