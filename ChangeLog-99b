@@ -1,3 +1,8 @@
+Fri Mar 12 19:13:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.i: 
+	  Implemented ACE_OS::timezone() for LynxOS.
+
 Fri Mar 12 16:31:19 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ACE-INSTALL.html (Linux): added note about non-thread safe
