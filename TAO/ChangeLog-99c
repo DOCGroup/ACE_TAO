@@ -1,3 +1,32 @@
+Sun Aug 29 23:30:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/orbconf.h:
+	  Added TAO_USES_ROBUST_CONNECTION_MGMT macro which sets the
+	  connection purging and recycling feature "on" by default.
+	  Just commenting it out from orbconf.h and building libTAO.so
+	  again will shut"off" the feature.
+
+	* tao/IIOP_Connector.{h,cpp}:
+	* tao/UIOP_Connector.{h,cpp}:
+	  Using the TAO_USES_ROBUST_CONNECTION_MGMT macro made both the
+	  pre-connect-strategy tagged changes and the connection purging
+	  feature co-exist.
+	
+	* tao/Acceptor_Impl.{h,cpp}:
+	  The <accept> and <open> methods behave differently when the
+	  connection purging is "on" and "off". The
+	  <out_of_sockets_handler> method is not used when the feature is
+	  not set.
+
+	* tao/Connector_Registry.{h,cpp}:
+	  The <purge_connections> method is eliminated when the feature is 
+	  not used.
+
+	* tao/Pluggable.h:
+	  The pure virtual <purge_connections> method was appropriately 
+	  not included in the class when the connection purging feature
+	  was not requested.
+	  
 Sun Aug 29 21:53:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Operation_Table.cpp: with ACE_HAS_GNU_REPO, added
