@@ -1,3 +1,15 @@
+Mon Nov 22 11:23:00 2004  Huang-Ming Huang <hh1@cse.wustl.edu>
+  
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.inl
+          Fixed memcpy() undefined problem in VxWorks5.5.1_PPC85XX_DIAB 
+          platform.
+          
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/replace_key.cpp
+          Moved replace_key() from IOGR_Maker.cpp to replace_key.cpp
+          to avoid compiler error in VxWorks5.5.1_PPC85XX_DIAB platform.
+
 Mon Nov 22 11:02:46 2004  Ciju John  <john_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
@@ -155,7 +167,7 @@ Sat Nov 20 09:45:44 2004  Carlos O'Ryan  <coryan@atdesk.com>
         * tests/Sequence_Unit_Tests/testing_counters.hpp:
           Cosmetic fixes.
 
-Fri Nov 19 17:50:00 2004 Huang-Ming Huang <hh1@cse.wustl.edu>
+Fri Nov 19 17:55:00 2004 Huang-Ming Huang <hh1@cse.wustl.edu>
 
         * orbsvcs\orbsvcs\FtRtEvent\EventChannel\Dynamic_Bitset.h
           Remove include <memory.h>
