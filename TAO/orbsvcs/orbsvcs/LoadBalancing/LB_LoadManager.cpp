@@ -18,7 +18,7 @@ ACE_RCSID (LoadBalancing,
            "$Id$")
 
 
-TAO_LB_LoadManager::TAO_LB_LoadManager (void)
+TAO_LB_LoadManager::TAO_LB_LoadManager (void) 
   : reactor_ (0),
     poa_ (),
     monitor_lock_ (),
