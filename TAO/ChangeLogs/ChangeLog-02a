@@ -1,7 +1,7 @@
 Fri Apr  5 19:49:57 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp: Fix for part of
-	  bug #1159. Changed the way we perform a check for malformed GIOP
+	  [Bug 1159]. Changed the way we perform a check for malformed GIOP
 	  message containing a sequence. The procedure we followed was to
 	  extract the length of the sequence, resize the length of
 	  sequence (this involved allocation) into which we need to
