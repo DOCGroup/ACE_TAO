@@ -1,3 +1,8 @@
+Wed Sep  1 19:18:53 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile :  Added the missing AV files to the AV
+	  sources.
+
 Wed Sep  1 17:08:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO/tao/IIOP_Connect.i:
