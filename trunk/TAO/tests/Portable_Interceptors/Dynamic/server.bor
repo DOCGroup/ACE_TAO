@@ -16,7 +16,13 @@ OBJFILES = \
 
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_PORTABLESERVER_LIB)
+LIBFILES = \
+        $(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_PORTABLESERVER_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\test.idl
 
 CPPDIR = .
 
