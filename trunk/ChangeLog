@@ -1,3 +1,16 @@
+Fri Aug 15 10:38:57 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Fixed a missing check for naming the foreach variable when dealing
+          with grouped files.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Moved the setting of LDLIBS or ACE_SHLIBS before including
+          wrapper_macros.GNU.  This should allow for the kylix kludge to
+          work.
+
 Fri Aug 15 15:29:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * apps/JAWS2/JAWS/Parse_Headers.cpp:
@@ -11,9 +24,9 @@ Fri Aug 15 15:29:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Fri Aug 15 09:07:09 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS.{h,i}: Changed "advice" to "map_advice" to avoid a 
-	  keyword naming conflict with AspectC++.  Thanks to Gary Duzan
- 	  <gduzan@bbn.com> for reporting this.
+        * ace/OS.{h,i}: Changed "advice" to "map_advice" to avoid a
+          keyword naming conflict with AspectC++.  Thanks to Gary Duzan
+          <gduzan@bbn.com> for reporting this.
 
 Fri Aug 15 01:49:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -44,17 +57,17 @@ Thu Aug 14 18:31:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Thu Aug 14 10:56:57 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS.h:
-	* ace/SSL/SSL_SOCK_Connector.h:
+        * ace/OS.h:
+        * ace/SSL/SSL_SOCK_Connector.h:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
-	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+        * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
 
-	  Fixed bug where the "counted down" timeout value was not used in
-	  the ACE::select() call.  This fixes a problem where connection
-	  timeouts lasted longer than they should have.  The corrected
-	  behavior now matches the documented behavior.
+          Fixed bug where the "counted down" timeout value was not used in
+          the ACE::select() call.  This fixes a problem where connection
+          timeouts lasted longer than they should have.  The corrected
+          behavior now matches the documented behavior.
 
 Thu Aug 14 04:02:41 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -65,21 +78,21 @@ Thu Aug 14 04:02:41 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Aug 13 19:48:17 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/tests/FIFO/test.cpp: 
-	* Kokyu/tests/EDF/test.cpp: 
-	* Kokyu/Kokyu_defs.h: 
-	* Kokyu/Kokyu_defs.cpp: 
-	* Kokyu/Kokyu.h: 
-	* Kokyu/Kokyu.cpp: 
-	* Kokyu/Dispatcher_Task.cpp: 
-	* Kokyu/Dispatcher_Impl.i: 
-	* Kokyu/Dispatcher_Impl.h: 
-	* Kokyu/Default_Dispatcher_Impl.h: 
-	* Kokyu/Default_Dispatcher_Impl.cpp: 
+        * Kokyu/tests/FIFO/test.cpp:
+        * Kokyu/tests/EDF/test.cpp:
+        * Kokyu/Kokyu_defs.h:
+        * Kokyu/Kokyu_defs.cpp:
+        * Kokyu/Kokyu.h:
+        * Kokyu/Kokyu.cpp:
+        * Kokyu/Dispatcher_Task.cpp:
+        * Kokyu/Dispatcher_Impl.i:
+        * Kokyu/Dispatcher_Impl.h:
+        * Kokyu/Default_Dispatcher_Impl.h:
+        * Kokyu/Default_Dispatcher_Impl.cpp:
 
-	  Separated activation of the dispatcher and setting up of
-	  dispatching lanes. Added an activate () method to the dispatcher
-	  and associated classes. 
+          Separated activation of the dispatcher and setting up of
+          dispatching lanes. Added an activate () method to the dispatcher
+          and associated classes.
 
 Wed Aug 13 23:43:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -128,15 +141,15 @@ Wed Aug 13 15:47:13 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Aug 11 19:19:24 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Global_Macros.h: Updated the documentation to point to
-	  the C++NPv2 and POSA2 books.  Thansk to Valery Salamakha
- 	  <ccapstan@bigpond.net.au> for motivating this change!
+        * ace/Global_Macros.h: Updated the documentation to point to
+          the C++NPv2 and POSA2 books.  Thansk to Valery Salamakha
+          <ccapstan@bigpond.net.au> for motivating this change!
 
 Mon Aug 11 08:39:06 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Koyu_dsrt.h: Removed Kokyu_Export qualification for
-	  template class MUF_Comparator. This was giving compile errors in
-	  Win2K_VC71_NET_DLL build.
+        * Kokyu/Koyu_dsrt.h: Removed Kokyu_Export qualification for
+          template class MUF_Comparator. This was giving compile errors in
+          Win2K_VC71_NET_DLL build.
 
 Mon Aug 11 06:35:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -156,45 +169,45 @@ Mon Aug 11 01:46:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sun Aug 10 14:04:17 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/tests/DSRT_MIF/Makefile: Updated dependencies.
+        * Kokyu/tests/DSRT_MIF/Makefile: Updated dependencies.
 
 Sun Aug 10 13:32:42 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.{h,cpp}: Moved the method
-	  definition of MoreEligible::operator() to the header file to get
-	  rid of MSV compiler errors. I suspect that the nested class
-	  MoreEligible could be causing the problem.
+        * Kokyu/DSRT_Direct_Dispatcher_Impl_T.{h,cpp}: Moved the method
+          definition of MoreEligible::operator() to the header file to get
+          rid of MSV compiler errors. I suspect that the nested class
+          MoreEligible could be causing the problem.
 
-	* Kokyu/DSRT_Sched_Queue_T.{h,cpp}: Moved the method
-	  definition of Guid_Hash::operator() to the header file to get
-	  rid of MSV compiler errors. I suspect that the nested class
-	  could be causing the problem.
+        * Kokyu/DSRT_Sched_Queue_T.{h,cpp}: Moved the method
+          definition of Guid_Hash::operator() to the header file to get
+          rid of MSV compiler errors. I suspect that the nested class
+          could be causing the problem.
 
-	* Kokyu/Kokyu_dsrt.{h,cpp}: Corrected a typo and included
-	  Kokyu_dsrt.i instead of Kokyu.i. Removed Kokyu_Export
-	  qualification for template classes.
+        * Kokyu/Kokyu_dsrt.{h,cpp}: Corrected a typo and included
+          Kokyu_dsrt.i instead of Kokyu.i. Removed Kokyu_Export
+          qualification for template classes.
 
-	* Kokyu/Kokyu_defs.h: Added export qualification for noncopyable
-	  class.
+        * Kokyu/Kokyu_defs.h: Added export qualification for noncopyable
+          class.
 
 Sun Aug 10 09:52:17 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/tests/DSRT_MIF/MIF.dsp:
-	* Kokyu/tests/DSRT_MIF/MIF.dsw:
-	* Kokyu/tests/EDF/Makefile:
-	* Kokyu/tests/FIFO/Makefile:
-	  Added the above files which were missing.
+        * Kokyu/tests/DSRT_MIF/MIF.dsp:
+        * Kokyu/tests/DSRT_MIF/MIF.dsw:
+        * Kokyu/tests/EDF/Makefile:
+        * Kokyu/tests/FIFO/Makefile:
+          Added the above files which were missing.
 
 Sun Aug 10 08:58:18 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/tests/DSRT_MIF/MIF.cpp: Included Synch.h to get rid of
-	  compile errors.
+        * Kokyu/tests/DSRT_MIF/MIF.cpp: Included Synch.h to get rid of
+          compile errors.
 
 Sun Aug 10 08:16:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/DEV.h: Fixed a typo in the definition of
-	  ACE_DEV_STREAM. Thanks to Edan Ayal <edanayal@yahoo.com> for
-	  pointing this out.
+        * ace/DEV.h: Fixed a typo in the definition of
+          ACE_DEV_STREAM. Thanks to Edan Ayal <edanayal@yahoo.com> for
+          pointing this out.
 
 Sun Aug 10 06:17:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -225,11 +238,11 @@ Sat Aug  9 20:55:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sat Aug  9 13:56:37 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Dispatcher_Task.h: Deleted extra qualification for method
-	  prototype declarations to get rid of compiler warnings in
-	  Debian_Full_Reactors build.
+        * Kokyu/Dispatcher_Task.h: Deleted extra qualification for method
+          prototype declarations to get rid of compiler warnings in
+          Debian_Full_Reactors build.
 
-	* Kokyu/Makefile: Updated dependencies.
+        * Kokyu/Makefile: Updated dependencies.
 
 Sat Aug  9 18:23:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -313,12 +326,12 @@ Sat Aug  9 04:21:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Fri Aug  8 23:23:30 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Dispatcher_Task.{h,cpp,i}:
-	  Renamed init() method so that it does not hide the base class
-	  init method.
+        * Kokyu/Dispatcher_Task.{h,cpp,i}:
+          Renamed init() method so that it does not hide the base class
+          init method.
 
-	* Kokyu/Default_Dispatcher_Impl.cpp:
-	  Commented out some debug statements.
+        * Kokyu/Default_Dispatcher_Impl.cpp:
+          Commented out some debug statements.
 
 Sat Aug  9 01:03:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -334,9 +347,9 @@ Sat Aug  9 01:03:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Fri Aug  8 13:26:25 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Dispatcher_Task.{h,cpp}: Changed typo TAO_SYNCH_MUTEX to
-	  ACE_SYNCH_MUTEX to get rid of compile errors in explicit
-	  template instantiation builds.
+        * Kokyu/Dispatcher_Task.{h,cpp}: Changed typo TAO_SYNCH_MUTEX to
+          ACE_SYNCH_MUTEX to get rid of compile errors in explicit
+          template instantiation builds.
 
 Fri Aug  8 11:03:57 2003  Chad Elliott  <elliott_c@ociweb.com>
 
