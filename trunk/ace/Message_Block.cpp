@@ -802,9 +802,13 @@ ACE_Message_Block::release (void)
     destroy_dblock = this->release_i (0);
 
   if (destroy_dblock != 0)
-    ACE_DES_FREE (tmp,
-                  tmp->data_block_allocator ()->free,
-                  ACE_Data_Block);
+    {
+      ACE_Allocator *allocator = tmp->data_block_allocator ();
+      ACE_DES_FREE (tmp,
+                    allocator->free,
+                    ACE_Data_Block);
+    }
+
   return 0;
 }
 
@@ -827,9 +831,12 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
 
           ACE_Data_Block *db = tmp->data_block ();
           if (tmp->release_i (lock) != 0)
-            ACE_DES_FREE (db,
-                          db->data_block_allocator ()->free,
-                          ACE_Data_Block);
+            {
+              ACE_Allocator *allocator = db->data_block_allocator ();
+              ACE_DES_FREE (db,
+                            allocator->free,
+                            ACE_Data_Block);
+            }
         }
       while (mb);
 
@@ -852,9 +859,12 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
   if (this->message_block_allocator_ == 0)
     delete this;
   else
-    ACE_DES_FREE (this,
-                  message_block_allocator_->free,
-                  ACE_Message_Block);
+    {
+      ACE_Allocator *allocator = this->message_block_allocator_;
+      ACE_DES_FREE (this,
+                    allocator->free,
+                    ACE_Message_Block);
+    }
 
   return result;
 }

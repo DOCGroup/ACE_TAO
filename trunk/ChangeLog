@@ -1,3 +1,14 @@
+Wed Aug  1 15:57:35 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Message_Block.cpp (release, release_i):
+
+	  Obtain the pointer to the allocator from the object that will be
+	  destroyed before calling ACE_DES_FREE on the object.  Previously
+	  we were obtaining the allocator after the object was destroyed,
+	  due to the way the ACE_DES_FREE macro works.  Thanks to Hyman
+	  Rosen <hyrosen@mail.com> for reporting the problem, and to
+	  Carlos for suggesting a fix.  [Bug 992]
+
 Wed Aug  1 15:00:21 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Log_Record.{h,i}: Changed msg_data_len() from a "setter"
