@@ -161,7 +161,6 @@ AST_Decl::AST_Decl (NodeType nt,
       this->prefix_ = ACE::strnew (prefix);
     }
 
-  // Keep the name _cxx_ removed, if any.
   if (n != 0)
     {
       this->original_local_name (n->last_component ()->copy ());
@@ -185,7 +184,7 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
   this->pd_name = 0;
 
   // Global scope?
-  if (defined_in () == 0)
+  if (this->defined_in () == 0)
     {
       this->pd_name = n;
       return;
@@ -260,7 +259,9 @@ AST_Decl::compute_full_name (void)
       long second = I_FALSE;
       char *name = 0;
 
-      for (UTL_IdListActiveIterator i (this->name ());!i.is_done ();i.next ())
+      for (UTL_IdListActiveIterator i (this->name ()); 
+           !i.is_done (); 
+           i.next ())
         {
           if (!first)
             {
@@ -296,7 +297,9 @@ AST_Decl::compute_full_name (void)
       first = I_TRUE;
       second = I_FALSE;
 
-      for (UTL_IdListActiveIterator j (this->name ());!j.is_done ();j.next ())
+      for (UTL_IdListActiveIterator j (this->name ()); 
+           !j.is_done (); 
+           j.next ())
         {
           if (!first)
             {
@@ -358,7 +361,9 @@ AST_Decl::compute_repoID (void)
           namelen += 4;
         }
 
-      for (UTL_IdListActiveIterator i (this->name ());!i.is_done ();i.next ())
+      for (UTL_IdListActiveIterator i (this->name ()); 
+           !i.is_done (); 
+           i.next ())
         {
           if (!first)
             {
@@ -371,7 +376,16 @@ AST_Decl::compute_repoID (void)
 
           // Print the identifier.
           name = i.item ()->get_string ();
-          namelen += ACE_OS::strlen (name);
+          size_t item_len = ACE_OS::strlen (name);
+
+          if (ACE_OS::strstr (name, "_cxx_") == name)
+            {
+              namelen += (item_len - ACE_OS::strlen ("_cxx_"));
+            }
+          else
+            {
+              namelen += item_len;
+            }
 
           if (first)
             {
@@ -408,7 +422,9 @@ AST_Decl::compute_repoID (void)
       first = I_TRUE;
       second = I_FALSE;
 
-      for (UTL_IdListActiveIterator j (this->name ());!j.is_done ();j.next ())
+      for (UTL_IdListActiveIterator j (this->name ()); 
+           !j.is_done (); 
+           j.next ())
         {
           if (!first)
             {
@@ -421,8 +437,17 @@ AST_Decl::compute_repoID (void)
 
           // Print the identifier.
           name = j.item ()->get_string ();
-          ACE_OS::strcat (this->repoID_,
-                          name);
+
+          if (ACE_OS::strstr (name, "_cxx_") == name)
+            {
+              ACE_OS::strcat (this->repoID_,
+                              name + ACE_OS::strlen ("_cxx_"));
+            }
+          else
+            {
+              ACE_OS::strcat (this->repoID_,
+                              name);
+            }
 
           if (first)
             {
@@ -862,7 +887,9 @@ AST_Decl::original_local_name (Identifier *local_name)
         == local_name->get_string ())
     {
       // CSting class is good to do this stuff.
-      ACE_CString name_str (local_name->get_string ());
+      ACE_CString name_str (local_name->get_string (),
+                            0,
+                            0);
 
       // Remove _cxx_.
       name_str = name_str.substr (ACE_OS::strlen ("_cxx_"));
