@@ -1415,7 +1415,6 @@ TAO_Resource_Factory::input_cdr_dblock_allocator (void)
           ACE_NEW_RETURN (GLOBAL_APP_ALLOCATED::instance ()->input_cdr_dblock_allocator_,
                           GBL_ALLOCATOR,
                           0);
-          GLOBAL_APP_ALLOCATED::instance ()->own_input_cdr_dblock_allocator_ = 1;
         }
       return GLOBAL_APP_ALLOCATED::instance ()->input_cdr_dblock_allocator_;
       ACE_NOTREACHED (break);
@@ -1425,7 +1424,6 @@ TAO_Resource_Factory::input_cdr_dblock_allocator (void)
           ACE_NEW_RETURN (TSS_APP_ALLOCATED::instance ()->input_cdr_dblock_allocator_,
                           TSS_ALLOCATOR,
                           0);
-          TSS_APP_ALLOCATED::instance ()->own_input_cdr_dblock_allocator_ = 1;
         }
       return TSS_APP_ALLOCATED::instance ()->input_cdr_dblock_allocator_;
       ACE_NOTREACHED (break);
@@ -1444,7 +1442,6 @@ TAO_Resource_Factory::input_cdr_buffer_allocator (void)
           ACE_NEW_RETURN (GLOBAL_APP_ALLOCATED::instance ()->input_cdr_buffer_allocator_,
                           GBL_ALLOCATOR,
                           0);
-          GLOBAL_APP_ALLOCATED::instance ()->own_input_cdr_buffer_allocator_ = 1;
         }
       return GLOBAL_APP_ALLOCATED::instance ()->input_cdr_buffer_allocator_;
     case TAO_TSS:
@@ -1453,7 +1450,6 @@ TAO_Resource_Factory::input_cdr_buffer_allocator (void)
           ACE_NEW_RETURN (TSS_APP_ALLOCATED::instance ()->input_cdr_buffer_allocator_,
                           TSS_ALLOCATOR,
                           0);
-          TSS_APP_ALLOCATED::instance ()->own_input_cdr_buffer_allocator_ = 1;
         }
       return TSS_APP_ALLOCATED::instance ()->input_cdr_buffer_allocator_;
     }
@@ -1482,24 +1478,14 @@ TAO_Resource_Factory::App_Allocated::App_Allocated (void)
     poa_(0),
     alloc_(0),
     input_cdr_dblock_allocator_ (0),
-    input_cdr_buffer_allocator_ (0),
-    own_input_cdr_dblock_allocator_ (0),
-    own_input_cdr_buffer_allocator_ (0)
+    input_cdr_buffer_allocator_ (0)
 {
 }
 
 TAO_Resource_Factory::App_Allocated::~App_Allocated (void)
 {
-  if (this->own_input_cdr_dblock_allocator_)
-    {
-      delete this->input_cdr_dblock_allocator_;
-      this->own_input_cdr_dblock_allocator_ = 0;
-    }
-  if (this->own_input_cdr_buffer_allocator_)
-    {
-      delete this->input_cdr_buffer_allocator_;
-      this->own_input_cdr_buffer_allocator_ = 0;
-    }
+  delete this->input_cdr_dblock_allocator_;
+  delete this->input_cdr_buffer_allocator_;
 }
 
 TAO_Resource_Factory::Pre_Allocated::~Pre_Allocated (void)

@@ -613,11 +613,6 @@ public:
     ACE_Allocator *input_cdr_dblock_allocator_;
     ACE_Allocator *input_cdr_buffer_allocator_;
     // The allocators for the input CDR streams.
-
-    int own_input_cdr_dblock_allocator_;
-    int own_input_cdr_buffer_allocator_;
-    // Set to true if the class should destroy the CDR allocators.
-    // If the allocators are global then it shouldn't
   };
 
 protected:
