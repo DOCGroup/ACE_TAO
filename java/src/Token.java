@@ -55,17 +55,21 @@ public class Token
 
   /**
    * Acquire the token. Note that this will block. The method uses
-   * synchronized blocks internally to avoid race conditions.
+   * synchronized blocks internally to avoid race conditions.  It
+   * ignores thread interrupts.
    *@return 0 if acquires without calling <sleepHook>
    * 1 if <sleepHook> is called.
-   * -1 if failure occurs
-   *@exception InterruptedException exception during wait
+   * -1 if failure occurs (should never happen)
    */
-  public int acquire () throws InterruptedException
+  public int acquire ()
     {
       try
 	{
-	  return this.acquire (null);
+	    while (true) {
+		try {
+		    return this.acquire (null);
+		} catch (InterruptedException e) { }
+	    }
 	}
       catch (TimeoutException e)
 	{
@@ -76,7 +80,7 @@ public class Token
     }
 
   /**
-   * Acquire the token.  
+   * Acquire the token.  Returns failure   
    * Throws a TimeoutException if the token isn't acquired before the
    * given absolute time timeout.
    *@param timeout time (TimeValue) to wait until before throwing a
@@ -84,12 +88,9 @@ public class Token
    * Performs a blocking acquire if the given timeout is null.
    *@return 0 if acquires without calling <sleepHook>
    * 1 if <sleepHook> is called.
-   * -1 if failure occurs
-   *@exception TimeoutException exception if timeout occurs
-   *@exception InterruptedException exception during wait
+   * -1 if failure occurs (timeout)
    */
   public int acquire (TimeValue timeout) 
-      throws InterruptedException, TimeoutException
     {
       int result = 0;
       WaitObject snl = new WaitObject ();
@@ -260,7 +261,8 @@ public class Token
             snl.condition (false);
 	    // Wait until the given absolute time (or until notified
 	    // if the timeout is null)
-	    snl.timedWait (timeout);
+	    try {
+		snl.timedWait (timeout);
         }
         // Restore the nesting level and current owner of the lock
         this.nestingLevel_ = saveNestingLevel;

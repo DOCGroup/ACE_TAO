@@ -76,6 +76,13 @@ public class StreamHead extends Task
     return 0;
   }
 
+  // Will block forever to add the given MessageBlock
+  public int put (MessageBlock mb) 
+  {
+      return this.put (mb, null);
+  }
+
+  // tv is absolute time
   public int put (MessageBlock mb, TimeValue tv)
   {
     int res = 0;

@@ -92,7 +92,7 @@ public abstract class TimedWait
 	long start = System.currentTimeMillis();
 	long waitTime = tv.getMilliTime() - start;
 
-	// Safety check since there is a possibility that it is
+	// Safety check since there is a possibility that it is now
 	// exactly the same time as the tv.  That would cause
 	// waitTime to be 0, and since Java's wait(timeout) blocks
 	// when timeout is 0, it would mean trouble.
@@ -107,7 +107,6 @@ public abstract class TimedWait
 	  if (!condition ()) {
 
 	    long now = System.currentTimeMillis();
-	    long timeSoFar = now - start;
 	    
 	    // Timed out!
 	    if (now >= tv.getMilliTime ()) 
@@ -115,7 +114,7 @@ public abstract class TimedWait
 	    else 
 	      // We still have some time left to wait, so adjust the
 	      // wait_time.
-	      waitTime -= timeSoFar; 
+	      waitTime = tv.getMilliTime() - now; 
 	  }
 	  else
 	    break;  // Condition became true.
