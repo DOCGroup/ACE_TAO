@@ -21,7 +21,7 @@ Wed Nov  5 19:02:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  The above problem now been fixed by doing an additional size
 	  increment on the cloned datablock. We have also added a small
-	  optimzation. We don't always clone the data block. We do it nly
+	  optimzation. We don't always clone the data block. We do it only 
 	  if the size of the source buffer is larger than the size of the
 	  destination buffer. This should lead to a small increase in
 	  performance since we are avoiding an allocation along the
