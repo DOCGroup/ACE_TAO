@@ -1,3 +1,8 @@
+Fri Aug 28 12:30:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/create_ace_build: 
+	  Now it will cleanup dead links on the build directory.
+
 Fri Aug 28 09:45:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Synch: Fixed the constructor of ACE_Null_Condition so that
