@@ -149,9 +149,10 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // Get the right object implementation.
   *os << intf->full_skel_name () << " *_tao_impl =" << be_idt_nl
-      << "ACE_static_cast ("
-      << intf->full_skel_name () << " *, _tao_object_reference);"
-      << be_uidt_nl << be_nl;
+      << "ACE_static_cast (" << be_idt << be_idt_nl
+      << intf->full_skel_name () << " *," << be_nl
+      << "_tao_object_reference" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
 
   // Declare a return type variable.
   be_visitor_context ctx = *this->ctx_;
