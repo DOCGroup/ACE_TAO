@@ -13,29 +13,36 @@
 <H3>New on this release</H3>
 
     <UL>
-      <LI><P>In this release the EC supports atomic updates of
-	  subscriptions and publications.  In previous versions events
-	  could be lost during an update of the subscription list.
+      <LI><P>The copy-on-write semantics has been supported for a
+	  while now.
 	</P>
       </LI>
-      <LI><P>The internal data structures in the event channel have
-	  been strategized, for example, it is possible to use
-	  RB-trees instead of ordered lists.  The benefits are small
-	  at this stage.
-	</P>
-      </LI>
-      <LI><P>New implementation of the serialization protocols. The
-	  new version is based on "internal iterators" (aka Worker).
-	  This implementation can support copy-on-read (already
-	  implemented) and copy-on-write (in progress).
+      <LI><P>The event service library has been divided in several
+	  smaller libraries, so applications only link the required
+	  components.
+	  The base code for the Event Service is located in the
+	  <CODE>TAO_RTEvent</CODE> library.
+	  <CODE>TAO_RTOLDEvent</CODE> contains the old implementation
+	  for the real-time Event Service,
+	  in addition to this the <CODE>TAO_RTSchedEvent</CODE>
+	  contains the components that will support scheduling in the
+	  new Event Service.
+	  This means that applications using only the
+	  <CODE>TAO_RTEvent</CODE> library do not need to link the
+	  scheduling service.
 	</P>
       </LI>
       <LI><P>More details can be found on the <CODE>README</CODE> file
 	  in the <CODE>$TAO_ROOT/orbsvcs/orbsvcs/Event</CODE>
-	  directory, or in
-	  <A HREF="http://www.ece.uci.edu/~coryan/EC/">
-	    my web page
-	  </A>.
+	  directory.
+	</P>
+      </LI>
+      <LI><P>Add strategies to remove unresponsive or dead consumers
+	  and/or suppliers
+	</P>
+      </LI>
+      <LI><P>Lots of bug fixes since the last time this releases notes
+	  where updated.
 	</P>
       </LI>
     </UL>
@@ -109,6 +116,23 @@ this test can be found in the scripts located in <TT>$TAO_ROOT/orbsvcs/tests/EC_
 Features in previous releases</H3>
 
     <UL>
+      <LI><P>In this release the EC supports atomic updates of
+	  subscriptions and publications.  In previous versions events
+	  could be lost during an update of the subscription list.
+	</P>
+      </LI>
+      <LI><P>The internal data structures in the event channel have
+	  been strategized, for example, it is possible to use
+	  RB-trees instead of ordered lists.  The benefits are small
+	  at this stage.
+	</P>
+      </LI>
+      <LI><P>New implementation of the serialization protocols. The
+	  new version is based on "internal iterators" (aka Worker).
+	  This implementation can support copy-on-read (already
+	  implemented) and copy-on-write (in progress).
+	</P>
+      </LI>
       <LI><P>The new EC allows the suppliers and consumers to update
 	  their publications and subscriptions, they can simply call
 	  the corresponding <CODE>connect</CODE> operation.

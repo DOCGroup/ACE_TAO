@@ -1,212 +1,217 @@
+Thu Aug 10 17:45:31 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/releasenotes/ec.html:
+          Update release notes for the real-time Event Service.
+
 Thu Aug 10 17:54:06 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/README: Explained how to set the options
-	  when the NT_Naming_Service is run as an NT service.  Thanks to
- 	  Mike Vitalo <MVitalo@infoglide.com> for contributing this and
- 	  for Ferran Salvado <salvadof@iis.fhg.de> for motivating the
- 	  question.
+        * orbsvcs/Naming_Service/README: Explained how to set the options
+          when the NT_Naming_Service is run as an NT service.  Thanks to
+          Mike Vitalo <MVitalo@infoglide.com> for contributing this and
+          for Ferran Salvado <salvadof@iis.fhg.de> for motivating the
+          question.
 
 Thu Aug 10 17:35:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/Makefile:
+        * orbsvcs/Makefile:
 
-	  I must have overlooked checking this in before. IFR_Service
-	  was added to the list of directories in my workspace but
-	  evidently never checked in. Now it is.
+          I must have overlooked checking this in before. IFR_Service
+          was added to the list of directories in my workspace but
+          evidently never checked in. Now it is.
 
 Thu Aug 10 17:24:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/TAO.dsp:
+        * tao/TAO.dsp:
 
-	  Added BoundsC.i to project.
+          Added BoundsC.i to project.
 
-	* tao/DynAnyC.i:
-	* tao/IORC.i:
-	* tao/ImplRepoC.i:
-	* tao/InterceptorC.i:
-	* tao/InterfaceC.i:
-	* tao/MessagingC.i:
-	* tao/PolicyC.i:
-	* tao/PortableServerC.i:
-	* tao/RTCORBAC.i:
-	* tao/Sequence.cpp:
-	* tao/Sequence.i:
-	* tao/Sequence_T.i:
-	* tao/Services.i:
+        * tao/DynAnyC.i:
+        * tao/IORC.i:
+        * tao/ImplRepoC.i:
+        * tao/InterceptorC.i:
+        * tao/InterfaceC.i:
+        * tao/MessagingC.i:
+        * tao/PolicyC.i:
+        * tao/PortableServerC.i:
+        * tao/RTCORBAC.i:
+        * tao/Sequence.cpp:
+        * tao/Sequence.i:
+        * tao/Sequence_T.i:
+        * tao/Services.i:
 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
 
-	  In the sequence get_buffer operation, in the case where the orphan 
-	  argument is 0 and the buffer has not yet been allocated, we needed
-	  to set the sequence's release_ member to 1 after allocating the buffer.
-	  Otherwise there is a potential memory leak. Thanks to Chad Elliott
-	  <elliott_c@ociweb.com> for getting the ball rolling by tracking this
-	  down in CONV_FRAMEC.i.
+          In the sequence get_buffer operation, in the case where the orphan
+          argument is 0 and the buffer has not yet been allocated, we needed
+          to set the sequence's release_ member to 1 after allocating the buffer.
+          Otherwise there is a potential memory leak. Thanks to Chad Elliott
+          <elliott_c@ociweb.com> for getting the ball rolling by tracking this
+          down in CONV_FRAMEC.i.
 
 Thu Aug 10 16:30:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/FT_Service/FT_CORBA_ServiceC.h (UserException):
-	* orbsvcs/FT_Service/FT_CORBA_ServiceC.cpp:
-	  Changed the class member from TypeCode to repository id.
-	  Also changed the base class constructors to take a
-	  repository id argument insead of a TypeCode. Basically the
-	  continuation of Jeff's changes.
+        * orbsvcs/FT_Service/FT_CORBA_ServiceC.h (UserException):
+        * orbsvcs/FT_Service/FT_CORBA_ServiceC.cpp:
+          Changed the class member from TypeCode to repository id.
+          Also changed the base class constructors to take a
+          repository id argument insead of a TypeCode. Basically the
+          continuation of Jeff's changes.
 
 Thu Aug 10 13:58:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.cpp:
-	* tao/Any.h:
-	* tao/BoundsC.cpp:
-	* tao/BoundsC.h:
-	* tao/DynAnyC.cpp:
-	* tao/Exception.cpp:
-	* tao/Exception.h:
-	* tao/IORC.cpp:
-	* tao/ImplRepoC.cpp:
-	* tao/ImplRepoC.h:
-	* tao/InconsistentTypeCodeC.cpp:
-	* tao/ORB.cpp:
-	* tao/PolicyC.cpp:
-	* tao/PolicyC.h:
-	* tao/PollableC.cpp:
-	* tao/PortableServerC.cpp:
-	* tao/PortableServerC.h:
-	* tao/RTCORBAC.cpp:
-	* tao/Typecode.cpp:
-	* tao/WrongTransactionC.cpp:
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/BoundsC.cpp:
+        * tao/BoundsC.h:
+        * tao/DynAnyC.cpp:
+        * tao/Exception.cpp:
+        * tao/Exception.h:
+        * tao/IORC.cpp:
+        * tao/ImplRepoC.cpp:
+        * tao/ImplRepoC.h:
+        * tao/InconsistentTypeCodeC.cpp:
+        * tao/ORB.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PollableC.cpp:
+        * tao/PortableServerC.cpp:
+        * tao/PortableServerC.h:
+        * tao/RTCORBAC.cpp:
+        * tao/Typecode.cpp:
+        * tao/WrongTransactionC.cpp:
 
-	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
 
-	  Changes to TAO exceptions.
+          Changes to TAO exceptions.
 
-	  Changed the class member from TypeCode to repository id.
-	  Also changed the base class constructors to take a
-	  repository id argument insead of a TypeCode. This will make
-	  exception construction more lightweight and help deal with
-	  the fact that local exceptions have no valid TypeCode.
+          Changed the class member from TypeCode to repository id.
+          Also changed the base class constructors to take a
+          repository id argument insead of a TypeCode. This will make
+          exception construction more lightweight and help deal with
+          the fact that local exceptions have no valid TypeCode.
 
-	  Made the _type() member function virtual, and added overrides
-	  for non-local exceptions generated from IDL files.
+          Made the _type() member function virtual, and added overrides
+          for non-local exceptions generated from IDL files.
 
-	  Added the virtual _type() function to the named system exceptions,
-	  as well as the full complement (copying insertion, non-copying
-	  insertion, and extraction) of Any operators (required by the spec).
+          Added the virtual _type() function to the named system exceptions,
+          as well as the full complement (copying insertion, non-copying
+          insertion, and extraction) of Any operators (required by the spec).
 
-	  Added non-copying any insertion operator for CORBA::Exception
-	  (also required by the spec).
+          Added non-copying any insertion operator for CORBA::Exception
+          (also required by the spec).
 
-	  Thanks to Greg Hall <Greg.Hall@Australia.Boeing.com> for pointing
-	  out the need for Any operators for the named system exceptions.
+          Thanks to Greg Hall <Greg.Hall@Australia.Boeing.com> for pointing
+          out the need for Any operators for the named system exceptions.
 
 Thu Aug 10 11:16:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
 
-	  To pass the value of the response flag to the function
-	  that writes the GIOP header, a local variable called
-	  'flag' was created in generated code. If an argument
-	  to the operation also had the name 'flag', there
-	  were build errors. The name of the local variable has
-	  been changed to '_tao_response_flag'. Also, in ami_cs.cpp,
-	  for a twoway operation, the variable assigned to the
-	  response flag was changed from TAO::SYNC_WITH_TARGET to
-	  TAO_TWOWAY_RESPONSE_FLAG, as it is in operation_cs.cpp.
-	  Finally, cosmetic indenting changes were made to code
-	  generation of the entire operation. Thanks to
-	  Craig Rodrigues <rodrigc@mediaone.net> for reporting
-	  this bug.
+          To pass the value of the response flag to the function
+          that writes the GIOP header, a local variable called
+          'flag' was created in generated code. If an argument
+          to the operation also had the name 'flag', there
+          were build errors. The name of the local variable has
+          been changed to '_tao_response_flag'. Also, in ami_cs.cpp,
+          for a twoway operation, the variable assigned to the
+          response flag was changed from TAO::SYNC_WITH_TARGET to
+          TAO_TWOWAY_RESPONSE_FLAG, as it is in operation_cs.cpp.
+          Finally, cosmetic indenting changes were made to code
+          generation of the entire operation. Thanks to
+          Craig Rodrigues <rodrigc@mediaone.net> for reporting
+          this bug.
 
 Thu Aug 10 11:10:56 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp:
 
-	  When a non-anonymous array is itself typedef'd (giving
-	  us essentially a typedef of a typedef), the IDL compiler
-	  generates some extra code. This code generation was
-	  not guarded by a check for an imported node, so if this
-	  typedef of a typedef is included from another IDL file,
-	  the extra code was generated in both files. The check
-	  has now been added. Thanks to Jean-Christophe Dubois
-	  <jcd@one.com> for reporting this bug.
+          When a non-anonymous array is itself typedef'd (giving
+          us essentially a typedef of a typedef), the IDL compiler
+          generates some extra code. This code generation was
+          not guarded by a check for an imported node, so if this
+          typedef of a typedef is included from another IDL file,
+          the extra code was generated in both files. The check
+          has now been added. Thanks to Jean-Christophe Dubois
+          <jcd@one.com> for reporting this bug.
 
 Thu Aug 10 11:05:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
 
-	  In the usage message output, the sub-options for the
-	  generation of implementation classes were getting put
-	  under the smart proxies option, instead of under the
-	  implementation class option. Thanks to
-	  Craig Rodrigues <rodrigc@mediaone.net> for pointing
-	  this out.
+          In the usage message output, the sub-options for the
+          generation of implementation classes were getting put
+          under the smart proxies option, instead of under the
+          implementation class option. Thanks to
+          Craig Rodrigues <rodrigc@mediaone.net> for pointing
+          this out.
 
 Thu Aug 10 10:51:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/DynAny_Test/test_dynunion.cpp:
+        * tests/DynAny_Test/test_dynunion.cpp:
 
-	  Missed adding an .in() when a _ptr was changed to a _var
-	  on a previous checkin. Thanks to Johnny Willemsen
-	  <johnny.willemsen@meco.nl> for reporting the bug.
+          Missed adding an .in() when a _ptr was changed to a _var
+          on a previous checkin. Thanks to Johnny Willemsen
+          <johnny.willemsen@meco.nl> for reporting the bug.
 
 Thu Aug 10 10:42:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp: Added new files in to the above.
+        * tao/Makefile:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp: Added new files in to the above.
 
 Thu Aug 10 05:35:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/FT_Service/FT_CORBA_ServiceC.cpp:
-	* orbsvcs/FT_Service/FT_CORBA_ServiceC.h:
-	* orbsvcs/FT_Service/FT_CORBA_ServiceC.i:
-	* orbsvcs/FT_Service/FT_CORBA_ServiceS.h:
-	* orbsvcs/FT_Service/FT_CORBA_ServiceS.cpp:
-	* orbsvcs/FT_Service/FT_CORBA_ServiceS.i:
-	* orbsvcs/FT_Service/FT_CORBA_Service.pidl:
-	* orbsvcs/FT_Service/Makefile: The data types and interfaces for
-	  the service layer of the FT specification. Service developers
-	  like DOORS, CASO would be using these files to develop their
-	  service.
+        * orbsvcs/FT_Service/FT_CORBA_ServiceC.cpp:
+        * orbsvcs/FT_Service/FT_CORBA_ServiceC.h:
+        * orbsvcs/FT_Service/FT_CORBA_ServiceC.i:
+        * orbsvcs/FT_Service/FT_CORBA_ServiceS.h:
+        * orbsvcs/FT_Service/FT_CORBA_ServiceS.cpp:
+        * orbsvcs/FT_Service/FT_CORBA_ServiceS.i:
+        * orbsvcs/FT_Service/FT_CORBA_Service.pidl:
+        * orbsvcs/FT_Service/Makefile: The data types and interfaces for
+          the service layer of the FT specification. Service developers
+          like DOORS, CASO would be using these files to develop their
+          service.
 
 Thu Aug 10 05:23:30 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/orbconf.h: Added a macro TAO_HAS_FT_CORBA and #defines for
-	  the revision number of the FT spec.
+        * tao/orbconf.h: Added a macro TAO_HAS_FT_CORBA and #defines for
+          the revision number of the FT spec.
 
-	* tao/ftcorbafwd.h:
-	* tao/ftpoafwd.h: Forward declarations for the data types in the
-	  FT module. This forward declaration helps us to split the data
-	  types and interfaces defined in the FT module in to two pieces,
-	  one that is specific to the ORB core and the rest that are at
-	  the service layer.
+        * tao/ftcorbafwd.h:
+        * tao/ftpoafwd.h: Forward declarations for the data types in the
+          FT module. This forward declaration helps us to split the data
+          types and interfaces defined in the FT module in to two pieces,
+          one that is specific to the ORB core and the rest that are at
+          the service layer.
 
-	* tao/GIOPC.h:
-	* tao/GIOPC.i: Added cdr operators for GIOP::Version.
+        * tao/GIOPC.h:
+        * tao/GIOPC.i: Added cdr operators for GIOP::Version.
 
-	* tao/FT_CORBAC.cpp:
-	* tao/FT_CORBAC.h:
-	* tao/FT_CORBAC.i:
-	* tao/FT_CORBAS.cpp:
-	* tao/FT_CORBAS.h:
-	* tao/FT_CORBAS.i: The client and server side code that is
-	  specific to the ORB core.
+        * tao/FT_CORBAC.cpp:
+        * tao/FT_CORBAC.h:
+        * tao/FT_CORBAC.i:
+        * tao/FT_CORBAS.cpp:
+        * tao/FT_CORBAS.h:
+        * tao/FT_CORBAS.i: The client and server side code that is
+          specific to the ORB core.
 
 Thu Aug 10 04:41:27 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/Event_Service/Event_Service_static.dsw:
-	* orbsvcs/Event_Service/Event_Service_static.dsp: Added a new
-	  project/workspace for static configurations.
+        * orbsvcs/Event_Service/Event_Service_static.dsw:
+        * orbsvcs/Event_Service/Event_Service_static.dsp: Added a new
+          project/workspace for static configurations.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp: Fixed static
-	  configurations.
+        * performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.dsp: Fixed static
+          configurations.
 
 Wed Aug 09 21:41:37 2000  David L. Levine <levine@cs.wustl.edu>
 
