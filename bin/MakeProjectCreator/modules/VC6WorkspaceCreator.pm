@@ -52,10 +52,23 @@ sub write_comps {
   my($projects) = $self->get_projects();
   my($pjs)      = $self->get_project_info();
   my($crlf)     = $self->crlf();
+  my(%names)    = ();
+  my($dupfound) = 0;
 
   foreach my $project (@$projects) {
     my($pi) = $$pjs{$project};
     my($name, $deps) = @$pi;
+    if (defined $names{$name}) {
+      ## Having duplicate project names is an error in a VC6 Workspace.
+      ## We will create the project, but we will warn the user that
+      ## the project has duplicate names and will not load properly.
+      print "WARNING: A project with the following name " .
+            "has already been added: '$name'\n";
+      ++$dupfound;
+    }
+    else {
+      $names{$name} = 1;
+    }
 
     ## Convert all /'s to \
     $project = $self->slash_to_backslash($project);
@@ -84,6 +97,12 @@ sub write_comps {
     }
 
     print $fh "}}}$crlf$crlf";
+  }
+
+  if ($dupfound > 0) {
+    print "WARNING: $dupfound duplicate project" .
+          ($dupfound == 1 ? '' : 's') .
+          " found.  This workspace will not load properly.\n";
   }
 }
 
