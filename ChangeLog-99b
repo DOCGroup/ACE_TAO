@@ -1,3 +1,8 @@
+Tue Apr 20 21:53:32 1999  Joe Hoffert <joeh@cs.wustl.edu>
+
+	* examples/IPC_SAP/TLI_SAP/Makefile: Had inadvertently checked in
+          local changes. Now undoing these changes.
+
 Tue Apr 20 18:25:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/{SOCK,TLI,LSOCK,Asynch}_Acceptor.h: Replaced the use of the
