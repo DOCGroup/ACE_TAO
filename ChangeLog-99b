@@ -1,9 +1,16 @@
+Wed Aug 18 13:16:09 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: clarify that PERL_PATH must include
+          the full path, including the perl.exe filename.  Thanks
+          to Walter Welzel <Walter.Welzel@med.siemens.de> for
+          reporting this.
+
 Wed Aug 18 13:11:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/OS.i:
-	  The new methods to manipulate condition variable attributes
-	  were not compiling on single threaded platforms.
+        * ace/OS.h:
+        * ace/OS.i:
+          The new methods to manipulate condition variable attributes
+          were not compiling on single threaded platforms.
 
 Wed Aug 18 13:09:36 1999  David L. Levine  <levine@cs.wustl.edu>
 
