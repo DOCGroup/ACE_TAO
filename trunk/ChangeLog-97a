@@ -1,3 +1,21 @@
+Tue May 20 13:50:17 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* Released version 4.2.
+
+	* ace/config-hpux-9.x.h: Added a #define for ACE_HAS_BROKEN_ENUM,
+	  ACE_HAS_IP_MULTICAST, and ACE_LACKS_GETPGID.  Thanks to Neil
+	  Cohen for reporting this.  
+
+	* include/makeinclude/platform_sunos5_sunc++_orbix.GNU: Replaced
+ 	  the use of -lITsrv with -lorbixmt.  Thanks to Wei Chiang for
+ 	  this.
+
+	* include/makeinclude/platform_osf1_3.2.GNU: Make sure that all
+ 	  the template repositories are in the same directory to work
+ 	  around problems with the C++ compiler.  Also added -lrt to get
+ 	  the apps and tests to run.  Thanks to Tom Dobridge for this
+ 	  help.
+
 Tue May 20 09:10:18 1997  Nanbor Wang  <nw1@number.wustl.edu>
 
 	* ace/config-freebsd-pthread.h: 
@@ -9,20 +27,6 @@ Tue May 20 09:10:18 1997  Nanbor Wang  <nw1@number.wustl.edu>
 	  number should be between 1 and NSIG.
 	  (sigwait): Changed ifdef (FreeBSD) to ifdef (__FreeBSD__) since
 	  compiler does it for us.	
-
-Tue May 20 09:19:49 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* Released version 4.2.
-
-	* include/makeinclude/platform_sunos5_sunc++_orbix.GNU: Replaced
- 	  the use of -lITsrv with -lorbixmt.  Thanks to Wei Chiang for
- 	  this.
-
-	* include/makeinclude/platform_osf1_3.2.GNU: Make sure that all
- 	  the template repositories are in the same directory to work
- 	  around problems with the C++ compiler.  Also added -lrt to get
- 	  the apps and tests to run.  Thanks to Tom Dobridge for this
- 	  help.
 
 Tue May 20 08:41:11 1997  David L. Levine  <levine@cs.wustl.edu>
 
