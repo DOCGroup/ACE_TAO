@@ -1,3 +1,8 @@
+Fri Aug 30 15:53:18 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/SSL/Makefile: Move the addition of SSL options/flags up to
+          before the hackery of the compile command for AIX.
+
 Fri Aug 30 05:48:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS.i (tempnam):
