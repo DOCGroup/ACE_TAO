@@ -6,7 +6,7 @@
 #include "ace/MEM_SAP.i"
 #endif
 
-ACE_RCSID(ace, IPC_SAP, "$Id$")
+ACE_RCSID(ace, MEM_SAP, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_IPC_SAP)
 
