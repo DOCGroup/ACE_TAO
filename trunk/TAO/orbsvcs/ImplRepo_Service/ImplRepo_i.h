@@ -39,16 +39,18 @@ class IR_Adapter_Activator : public POA_PortableServer::AdapterActivator
   //
   // = DESCRIPTION
   //    Part of the Default Servant/DSI combination that forwards
-  //    arbitrary requests.  This allows for the setting up of child POAs
-  //    with default servants.
+  //    arbitrary requests.  This allows for the setting up of child
+  //    POAs with default servants.
 public:
-  // Constructor
   IR_Adapter_Activator (IR_Forwarder *servant);
+  // Constructor
 
   virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
                                           const char *name,
                                           CORBA_Environment &_env = CORBA_Environment::default_environment ());
 private:
+  // @@ Darrell, please add comments for all of the methods in this file.
+
   IR_Forwarder *servant_;
 };
 
