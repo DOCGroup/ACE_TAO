@@ -107,7 +107,7 @@ TAO_Exclusive_TMS::idle_after_send (TAO_Transport *)
   // No op.
   return 0;
 }
-  
+
 int
 TAO_Exclusive_TMS::idle_after_reply (TAO_Transport *transport)
 {
@@ -133,7 +133,7 @@ TAO_Exclusive_TMS::reply_received (const CORBA::ULong request_id)
   else
     {
       // Error. Request id is not matching.
-      
+
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -143,7 +143,7 @@ TAO_Exclusive_TMS::reply_received (const CORBA::ULong request_id)
       return -1;
     }
 }
- 
+
 // *********************************************************************
 
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_ORB_Core *orb_core)
@@ -174,7 +174,7 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
                                 TAO_Reply_Dispatcher *rd)
 {
   int result = this->dispatcher_table_.bind (request_id, rd);
-  
+
   if (result != 0)
     {
       if (TAO_debug_level > 0)
@@ -197,15 +197,15 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
 {
   // This message state should be the same as the one we have here,
   // which we gave to the Transport to read the message. Just a sanity
-  // check here. 
+  // check here.
   ACE_ASSERT (message_state == this->message_state_);
-  
+
   int result = 0;
   TAO_Reply_Dispatcher *rd = 0;
 
   // Grab the reply dispatcher for this id.
   result = this->dispatcher_table_.unbind (request_id, rd);
-  
+
   if (result != 0)
     {
       if (TAO_debug_level > 0)
@@ -213,7 +213,7 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
                     "(%P | %t):TAO_Muxed_TMS::dispatch_reply: "
                     "unbind dispatcher failed: result = %d\n",
                     result));
-      
+
       return -1;
     }
 
@@ -238,7 +238,7 @@ TAO_Muxed_TMS::get_message_state (void)
                       TAO_GIOP_Message_State (this->orb_core_),
                       0);
     }
-  
+
   return this->message_state_;
 }
 
@@ -254,10 +254,10 @@ TAO_Muxed_TMS::idle_after_send (TAO_Transport *transport)
 {
   if (transport != 0)
     return transport->idle ();
-  
+
   return 0;
 }
-  
+
 int
 TAO_Muxed_TMS::idle_after_reply (TAO_Transport *)
 {
@@ -291,8 +291,8 @@ template class ACE_Hash_Map_Entry<CORBA::ULong,
 
 template class ACE_Hash_Map_Iterator_Base_Ex<CORBA::ULong,
                                              TAO_Reply_Dispatcher *,
-                                             ACE_Hash<unsigned int>, 
-                                             ACE_Equal_To<unsigned int>, 
+                                             ACE_Hash<unsigned int>,
+                                             ACE_Equal_To<unsigned int>,
                                              ACE_SYNCH_MUTEX>;
 
 template class ACE_Hash_Map_Iterator_Ex<CORBA::ULong,
@@ -309,32 +309,15 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong,
 template class ACE_Equal_To <CORBA::ULong>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager_Ex <CORBA::ULong,
-                                             TAO_Reply_Dispatcher *,
-                                             ACE_Hash <CORBA::ULong>,
-                                             ACE_Equal_To <CORBA::ULong>,
-                                             ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex <CORBA::ULong, TAO_Reply_Dispatcher *, ACE_Hash <CORBA::ULong>, ACE_Equal_To <CORBA::ULong>, ACE_SYNCH_MUTEX>
 
-#pragma instantiate ACE_Hash_Map_Entry<CORBA::ULong,
-                                       TAO_Reply_Dispatcher *>
+#pragma instantiate ACE_Hash_Map_Entry<CORBA::ULong, TAO_Reply_Dispatcher *>
 
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<unsigned int,
-                                                  TAO_Reply_Dispatcher *,
-                                                  ACE_Hash<unsigned int>, 
-                                                  ACE_Equal_To<unsigned int>, 
-                                                  ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<unsigned int, TAO_Reply_Dispatcher *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_SYNCH_MUTEX>
 
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<CORBA::ULong,
-                                             TAO_Reply_Dispatcher*,
-                                             ACE_Hash<CORBA::ULong>,
-                                             ACE_Equal_To<CORBA::ULong>,
-                                             ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<CORBA::ULong, TAO_Reply_Dispatcher*, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_SYNCH_MUTEX>
 
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong,
-                                                     TAO_Reply_Dispatcher*,
-                                                     ACE_Hash<CORBA::ULong>,
-                                                     ACE_Equal_To<CORBA::ULong>,
-                                                     ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong, TAO_Reply_Dispatcher*, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_SYNCH_MUTEX>
 
 #pragma instantiate ACE_Equal_To <CORBA::ULong>
 
