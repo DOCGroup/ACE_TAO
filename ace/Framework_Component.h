@@ -56,7 +56,12 @@ public:
   friend class ACE_Framework_Repository;
 
   /// Constructor.
-  ACE_Framework_Component (const void *_this);
+  ACE_Framework_Component (void *_this, 
+                           const ACE_TCHAR *dll_name = 0,
+                           const ACE_TCHAR *name = 0);
+
+  /// Close the contained singleton.
+  virtual void close_singleton (void) = 0;
 
 protected:
   /// Destructor.
@@ -65,6 +70,12 @@ protected:
 private:
   /// Pointer to the actual component.
   const void *this_;
+
+  /// Library associated with this component
+  const ACE_TCHAR *dll_name_;
+
+  /// Component name
+  const ACE_TCHAR *name_;
 };
 
 /**
@@ -108,7 +119,14 @@ public:
 
   /// Insert a new component.  Returns -1 when the repository is full
   /// and 0 on success.
-  int register_component (const ACE_Framework_Component *fc);
+  int register_component (ACE_Framework_Component *fc);
+
+  /// Remove a component.  Returns -1 on error or if component not found
+  /// and 0 on success.
+  int remove_component (const ACE_TCHAR *name);
+
+  /// Remove all components associated with a particular dll.
+  int remove_dll_components (const ACE_TCHAR *dll_name);
 
   /// Return the current size of the repository.
   int current_size (void) const;
@@ -129,7 +147,7 @@ private:
   ACE_Framework_Repository (int size = ACE_Framework_Repository::DEFAULT_SIZE);
 
   /// Contains all the framework components.
-  const ACE_Framework_Component **component_vector_;
+  ACE_Framework_Component **component_vector_;
 
   /// Current number of components.
   int current_size_;

@@ -38,10 +38,13 @@ public:
   // = Initialization and termination methods.
 
   /// Constructor.
-  ACE_Framework_Component_T (const Concrete *concrete);
+  ACE_Framework_Component_T (Concrete *concrete);
 
   /// Destructor.
   ~ACE_Framework_Component_T (void);
+
+  /// Close the contained singleton.
+  void close_singleton (void);
 };
 
 // This macro should be called in the instance() method

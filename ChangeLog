@@ -1,3 +1,50 @@
+Thu May 16 17:54:49 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/Framework_Component_Test.{h,cpp}:
+	* tests/Framework_Component_DLL.{h,cpp}:
+	* tests/Framework_Component_Dll_Export.h:
+	* tests/Makefile.Framework_Component_Dll:
+	* tests/Makefile:
+
+	  Added new library Framework_Component_DLL that contains a
+	  normal service and singleton based on the new ACE_DLL_Singleton
+	  template below, and modified the Framework_Component_Test to load 
+	  it dynamically via the Service Config framework in order to test
+	  the new dll singleton destruction mechanism. 
+
+	* ace/Singleton.{h,cpp,i}:
+
+	  Added new template class ACE_DLL_Singleton_T that uses the 
+	  ACE Framework mechanism below so that objects instantiated
+	  with this template are destroyed automatically by the 
+	  ACE_Framework_Repository prior to being unloaded by ACE_DLL.
+	
+	* ace/DLL.{h,cpp}:
+
+	  Applied changes for main trunk (see ChangeLog entry:
+	  Wed May 15 15:58:07 UTC 2002  Don Hinton  <dhinton@ieee.org> for
+	  details).
+
+	  Added dll_name_ member variable to keep track of the name of the
+	  dll loaded by the instance.  Added a call to 
+	  ACE_Framework_Repository::remove_dll_components() to the close() 
+	  method.
+
+	* ace/Reactor.{h,cpp}:
+	* ace/Proactor.{h,cpp}:
+
+	  Added dll_name() method required by Framework_Component changes
+	  below.
+
+	* ace/Framework_Component.{h,cpp,inl}:
+	* ace/Framework_Component_T.{h,cpp}:
+	
+	  Added name_ and dll_name_ member variable to ACE_Framework_Component
+	  to keep track of the names of the component and library respectively.
+	  Added methods, remove_component() and remove_dll_components(), to 
+	  ACE_Framework_Repository in order to allow the removal of individual
+	  components or all components associated with a particular library.
+
 Tue May 14 19:40:11 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/Proactor_Test.cpp (initiate_write_stream): 

@@ -237,6 +237,68 @@ protected:
   static ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
 };
 
+/**
+ * @class ACE_DLL_Singleton_T
+ *
+ * @brief Same as <ACE_Singleton>, except that it registers for
+ * destruction with the <ACE_Framework_Repository> instead of 
+ * with the <ACE_Object_Manager> directly.
+ *
+ * This version of <ACE_Singleton> can be used if, for example,
+ * in conjuction with the ACE Service Configurator framework to
+ * automatically destoy, via a call to close_singleton(), the 
+ * singltons associated before the DLL is unloaded by 
+ * <ACE_DLL>.  In fact, any DLL managed by ACE_DLL can take
+ * advantage of this feature even if it doesn't use the ACE
+ * Service Configurator framework.
+ *
+ * The only additional requirement is that the contained class
+ * export a dll_name() method.  See <ACE_DLL_Singleton_Adapter_T>
+ * below for a convenient example of how to satisfy this
+ * requirement.
+ *
+ * Usage is the same as for <ACE_Singleton>, but note that if you
+ * you declare a friend, the friend class must still be an
+ * *ACE_Singleton*<T, [ACE_LOCK]>, not an ACE_Unmanaged_Singleton.
+ */
+template <class TYPE, class ACE_LOCK>
+class ACE_DLL_Singleton_T : public ACE_Singleton <TYPE, ACE_LOCK>
+{
+public:
+  /// Global access point to the Singleton.
+  static TYPE *instance (void);
+
+  /// Explicitly delete the Singleton instance.
+  static void close (void);
+
+  static void close_singleton (void) {close ();}
+
+  /// Dump the state of the object.
+  static void dump (void);
+
+  const ACE_TCHAR *dll_name (void) {return this->instance ()->dll_name ();}
+
+protected:
+  /// Default constructor.
+  ACE_DLL_Singleton_T (void);
+
+#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+  /// Pointer to the Singleton instance.
+  static ACE_DLL_Singleton_T<TYPE, ACE_LOCK> *singleton_;
+#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+
+  /// Get pointer to the Singleton instance.
+  static ACE_DLL_Singleton_T<TYPE, ACE_LOCK> *&instance_i (void);
+};
+
+template <class TYPE>
+class ACE_DLL_Singleton_Adapter_T : public TYPE
+{
+public:
+  const ACE_TCHAR *dll_name (void);
+};
+
+
 #if defined (__ACE_INLINE__)
 #include "ace/Singleton.i"
 #endif /* __ACE_INLINE__ */

@@ -353,6 +353,13 @@ ACE_Proactor::close_singleton (void)
     }
 }
 
+const ACE_TCHAR *
+ACE_Proactor::dll_name (void)
+{
+  // this is just a stub for now...
+  return 0;
+}
+
 int
 ACE_Proactor::check_reconfiguration (ACE_Proactor *)
 {
