@@ -577,6 +577,8 @@ Command_Handler::stat_stream (CORBA::Char_out ch,
 CORBA::Boolean 
 Command_Handler::close (void)
 {
+  if (this->video_control_.in () == 0)
+    return CORBA::B_TRUE;
   TAO_TRY
     {
       CORBA::Boolean result;
@@ -592,6 +594,7 @@ Command_Handler::close (void)
       return CORBA::B_FALSE;
     }
   TAO_ENDTRY;
+  return CORBA::B_TRUE;
 }
 
 
