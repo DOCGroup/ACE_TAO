@@ -1,3 +1,11 @@
+Wed Apr 21 09:12:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+	  The activate() function was called with the wrong flag,
+	  ACE_SCHED_FIFO was used, but THR_SCHED_FIFO is the Right
+	  Thing[tm]
+
 Wed Apr 21 03:41:51 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.3.20 released.
