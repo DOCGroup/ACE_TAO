@@ -255,6 +255,11 @@ private:
   CORBA::Boolean valid_disc_type (CORBA::TypeCode_ptr tc,
                                   CORBA::Environment &ACE_TRY_ENV);
 
+  /// A string in a TAO typecode contains padding to give it a
+  /// total size which is a multiple of 4 bytes.
+  void string_pad (TAO_OutputCDR &cdr,
+                   CORBA::ULong slen);
+
   /// Prohibited
   TAO_TypeCodeFactory_i (const TAO_TypeCodeFactory_i &src);
   TAO_TypeCodeFactory_i &operator= (const TAO_TypeCodeFactory_i &src);

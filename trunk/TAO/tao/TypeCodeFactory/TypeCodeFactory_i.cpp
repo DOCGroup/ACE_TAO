@@ -293,12 +293,18 @@ TAO_TypeCodeFactory_i::create_union_tc (
       cdr << members[index].type.in ();
     }
 
+  ACE_Message_Block consolidated_block;
+
+  ACE_CDR::consolidate (&consolidated_block, 
+                        cdr.begin ());
+
   CORBA::TypeCode_ptr union_typecode = 
     CORBA::TypeCode::_nil ();
+
   ACE_NEW_THROW_EX (union_typecode,
                     CORBA_TypeCode (CORBA::tk_union,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
+                                    consolidated_block.length (),
+                                    consolidated_block.base (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -336,7 +342,13 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
   cdr << id;
 
+  this->string_pad (cdr,
+                    ACE_OS::strlen (id) + 1);
+
   cdr << name;
+
+  this->string_pad (cdr,
+                    ACE_OS::strlen (name) + 1);
 
   CORBA::ULong len = members.length ();
 
@@ -357,15 +369,24 @@ TAO_TypeCodeFactory_i::create_enum_tc (
                             CORBA::TypeCode::_nil ());
         }
 
-      cdr << members[index];
+      cdr << members[index].in ();
+
+      this->string_pad (cdr,
+                        ACE_OS::strlen (members[index].in ()) + 1);
     }
+
+  ACE_Message_Block consolidated_block;
+
+  ACE_CDR::consolidate (&consolidated_block, 
+                        cdr.begin ());
 
   CORBA::TypeCode_ptr enum_typecode = 
     CORBA::TypeCode::_nil ();
+
   ACE_NEW_THROW_EX (enum_typecode,
                     CORBA_TypeCode (CORBA::tk_enum,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
+                                    consolidated_block.length (),
+                                    consolidated_block.base (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -415,17 +436,28 @@ TAO_TypeCodeFactory_i::create_alias_tc (
 
   cdr << id;
 
+  this->string_pad (cdr,
+                    ACE_OS::strlen (id) + 1);
+
   cdr << name;
 
+  this->string_pad (cdr,
+                    ACE_OS::strlen (name) + 1);
+
   cdr << original_type;
+
+  ACE_Message_Block consolidated_block;
+
+  ACE_CDR::consolidate (&consolidated_block, 
+                        cdr.begin ());
 
   CORBA::TypeCode_ptr alias_typecode = 
     CORBA::TypeCode::_nil ();
 
   ACE_NEW_THROW_EX (alias_typecode,
                     CORBA_TypeCode (CORBA::tk_alias,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
+                                    consolidated_block.length (),
+                                    consolidated_block.base (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -479,6 +511,7 @@ TAO_TypeCodeFactory_i::create_string_tc (
 
   CORBA::TypeCode_ptr string_typecode = 
     CORBA::TypeCode::_nil ();
+
   ACE_NEW_THROW_EX (string_typecode,
                     CORBA_TypeCode (CORBA::tk_string,
                                     cdr.total_length (),
@@ -506,6 +539,7 @@ TAO_TypeCodeFactory_i::create_wstring_tc (
 
   CORBA::TypeCode_ptr wstring_typecode = 
     CORBA::TypeCode::_nil ();
+
   ACE_NEW_THROW_EX (wstring_typecode,
                     CORBA_TypeCode (CORBA::tk_wstring,
                                     cdr.total_length (),
@@ -558,12 +592,18 @@ TAO_TypeCodeFactory_i::create_sequence_tc (
 
   cdr << bound;
 
+  ACE_Message_Block consolidated_block;
+
+  ACE_CDR::consolidate (&consolidated_block, 
+                        cdr.begin ());
+
   CORBA::TypeCode_ptr sequence_typecode = 
     CORBA::TypeCode::_nil ();
+
   ACE_NEW_THROW_EX (sequence_typecode,
                     CORBA_TypeCode (CORBA::tk_sequence,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
+                                    consolidated_block.length (),
+                                    consolidated_block.base (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -600,12 +640,18 @@ TAO_TypeCodeFactory_i::create_array_tc (
 
   cdr << length;
 
+  ACE_Message_Block consolidated_block;
+
+  ACE_CDR::consolidate (&consolidated_block, 
+                        cdr.begin ());
+
   CORBA::TypeCode_ptr array_typecode = 
     CORBA::TypeCode::_nil ();
+
   ACE_NEW_THROW_EX (array_typecode,
                     CORBA_TypeCode (CORBA::tk_array,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
+                                    consolidated_block.length (),
+                                    consolidated_block.base (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -675,13 +721,18 @@ TAO_TypeCodeFactory_i::create_value_box_tc (
 
   cdr << boxed_type;
 
+  ACE_Message_Block consolidated_block;
+
+  ACE_CDR::consolidate (&consolidated_block, 
+                        cdr.begin ());
+
   CORBA::TypeCode_ptr value_box_typecode = 
     CORBA::TypeCode::_nil ();
 
   ACE_NEW_THROW_EX (value_box_typecode,
                     CORBA_TypeCode (CORBA::tk_value_box,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
+                                    consolidated_block.length (),
+                                    consolidated_block.base (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -984,13 +1035,18 @@ TAO_TypeCodeFactory_i::create_tc_common (
 
   cdr << name;
 
+  ACE_Message_Block consolidated_block;
+
+  ACE_CDR::consolidate (&consolidated_block, 
+                        cdr.begin ());
+
   CORBA::TypeCode_ptr result = 
     CORBA::TypeCode::_nil ();
 
   ACE_NEW_THROW_EX (result,
                     CORBA_TypeCode (kind,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
+                                    consolidated_block.length (),
+                                    consolidated_block.base (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -1031,7 +1087,13 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
   cdr << id;
 
+  this->string_pad (cdr,
+                    ACE_OS::strlen (id) + 1);
+
   cdr << name;
+
+  this->string_pad (cdr,
+                    ACE_OS::strlen (name) + 1);
 
   // Number of members..
   CORBA::ULong len = members.length ();
@@ -1081,15 +1143,24 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
       cdr << member_name;
 
+      this->string_pad (cdr,
+                        ACE_OS::strlen (member_name) + 1);
+
       cdr << tc_holder;
     }
 
+  ACE_Message_Block consolidated_block;
+
+  ACE_CDR::consolidate (&consolidated_block, 
+                        cdr.begin ());
+
   CORBA::TypeCode_ptr new_typecode = 
     CORBA::TypeCode::_nil ();
+
   ACE_NEW_THROW_EX (new_typecode,
                     CORBA_TypeCode (kind,
-                                    cdr.total_length (),
-                                    cdr.buffer (),
+                                    consolidated_block.length (),
+                                    consolidated_block.base (),
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
@@ -1341,6 +1412,18 @@ TAO_TypeCodeFactory_i::valid_disc_type (CORBA::TypeCode_ptr tc,
     }
 
   return 0;
+}
+
+void
+TAO_TypeCodeFactory_i::string_pad (TAO_OutputCDR &cdr,
+                                   CORBA::ULong slen)
+{
+  CORBA::ULong padlen = (4 - (slen % 4)) % 4;
+
+  for (CORBA::ULong i = 0; i < padlen; ++i)
+    {
+      cdr.write_char ('\0');
+    }
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
