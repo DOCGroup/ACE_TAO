@@ -28,6 +28,7 @@
 #include "ace/LOCK_SOCK_Acceptor.h"
 #include "ace/Task_T.h"
 #include "ace/Asynch_IO.h"
+#include "ace/svc_export.h"
 #include "HTTP_Handler.h"
 
 // Forward declaration.
