@@ -67,5 +67,7 @@
 #include "be_visitor_operation/ami_handler_argument_marshal.cpp"
 #include "be_visitor_operation/ami_handler_thru_poa_collocated_sh.cpp"
 #include "be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp"
+#include "be_visitor_operation/ami_exception_holder_operation_ch.cpp"
+#include "be_visitor_operation/ami_exception_holder_operation_cs.cpp"
 
 ACE_RCSID(be, be_visitor_operation, "$Id$")
