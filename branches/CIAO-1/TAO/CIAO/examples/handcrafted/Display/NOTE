@@ -1,0 +1,14 @@
+$Id$ -*- Text -*-
+
+The root directory of this example (the directory this note resides)
+contains only facets and eventtype that are shared by all components
+under various subdirectories.  Therefore, there's no actualy executor
+implementations for these interfaces instead, the example stop at the
+servant glue code library which can be used by the actualy component
+implementation.
+
+I'm not sure, at this point, how we can handle this (where neither
+actualy component definition nor cidl definition are available)
+situation with CIDL compiler.  It looks like we should be able to pass
+a bunch of IDL definitions thru CIDL compiler and get the equivalent
+executor interfaces automatically.  But we'll have to see.
