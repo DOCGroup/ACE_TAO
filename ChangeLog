@@ -9,20 +9,20 @@ Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         
         clean: Cleans up only the objects actually created by the
           current project.  If multiple makefiles exist in the same
-          directory, they no longer need to be completely rebuild because
-          another makefile issued clean.  This will help in large
+          directory, they no longer need to be completely rebuilt because
+          another makefile issued a clean.  This will help in large
           directories like $(ACE_ROOT)tests or
           $(TAO_ROOT)/orbsvcs/orbsvcs.  These objects are cleaned up even
           if a particular feature is not enabled, e.g., rmcast, ssl,
-          Other, etc., as is not dependant on bin/ace_components or the
+          Other, etc., and is not dependant on bin/ace_components or the
           files it maintains.  So, for normal development, prefer clean
           over realclean.
 
         realclean: Cleans up everything, including the removal of the
-          .obj or .shobj directory, and any IDL files, e.g., *C.h, etc.
+          .obj or .shobj directories, and any IDL files, e.g., *C.h, etc.
           Like clean:, it also cleans up objects whether or not the
           feature is currently enabled, thus obviating reverseclean:
-          entirely.  Also removed the multiple $(RM) lines, each clean
+          entirely.  Also removed the multiple $(RM) lines.  Each clean
           target now only invokes $(RM) a single time, and they aren't
           invoked at all in Makefiles that don't actually build anything.
           This reduced the time to run realclean on TAO by about 10%.
@@ -39,7 +39,7 @@ Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           This should fix most of the parallel build autobuild errors.
 
         depend: Now depends on idl_studs, so you no longer have to run
-          both in order, depend will invoke idl_stubs if needed.  It also
+          both in order.  depend will invoke idl_stubs if needed.  It also
           uses $(VDIR) instead of a hard coded .obj/ value, and removes
           the config-*h files even if it's run in the $(ACE_ROOT)/ace
           directory, but leaves config-all.h and a new variable file,
