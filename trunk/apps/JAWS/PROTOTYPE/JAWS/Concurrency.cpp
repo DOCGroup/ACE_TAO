@@ -107,6 +107,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
   JAWS_Data_Block *mb;     // The task message block
 
   // Thread specific message block and data block
+  ACE_DEBUG ((LM_DEBUG, "(%t) Creating DataBlock\n"));
   JAWS_Data_Block *ts_db = new JAWS_Data_Block (*db);
   if (ts_db == 0)
     {
@@ -169,6 +170,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
       handler->message_block ()->release ();
       delete handler; // handler->factory ()->destroy_io_handler (handler);
     }
+  ACE_DEBUG ((LM_DEBUG, "(%t) Deleting DataBlock\n"));
   delete ts_db; // ts_db->release ();
 
   return result;
@@ -205,7 +207,7 @@ JAWS_Dispatcher::policy (JAWS_Dispatch_Policy *p)
 }
 
 int
-JAWS_Thread_Pool_Task::open (long flags, int nthreads, int maxthreads)
+JAWS_Thread_Pool_Task::make (long flags, int nthreads, int maxthreads)
 {
   this->flags_ = flags;
   this->nthreads_ = nthreads;
@@ -246,7 +248,7 @@ JAWS_Thread_Pool_Task::open (long flags, int nthreads, int maxthreads)
 }
 
 int
-JAWS_Thread_Per_Task::open (long flags, int maxthreads)
+JAWS_Thread_Per_Task::make (long flags, int maxthreads)
 {
   this->flags_ = flags;
   this->maxthreads_ = maxthreads;

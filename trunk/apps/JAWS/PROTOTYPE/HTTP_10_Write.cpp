@@ -62,6 +62,9 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
   if (info->type () != JAWS_HTTP_10_Request::GET)
     info->status (JAWS_HTTP_10_Request::STATUS_NOT_IMPLEMENTED);
 
+  if (info->type () == JAWS_HTTP_10_Request::QUIT)
+    info->status (JAWS_HTTP_10_Request::STATUS_QUIT);
+
   if (info->status () != JAWS_HTTP_10_Request::STATUS_OK)
     {
       char *msg =
@@ -77,10 +80,12 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
           for (iter.first (); ! iter.is_done (); iter.next ())
             {
               table->remove (*(iter.key ()));
-              ACE_OS::free (ACE_reinterpret_cast (void *, *(iter.key ())));
-              ACE_OS::free (ACE_reinterpret_cast (void *, *(iter.item ())));
+              ACE_OS::free ((void *) *(iter.key ()));
+              ACE_OS::free ((void *) *(iter.item ()));
             }
-          return 0;
+          int result = (info->status () == JAWS_HTTP_10_Request::STATUS_QUIT);
+          delete info;
+          return -result;
         }
     }
   else
@@ -97,8 +102,8 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
       for (iter.first (); ! iter.is_done (); iter.next ())
         {
           table->remove (*(iter.key ()));
-          ACE_OS::free (ACE_reinterpret_cast (void *, *(iter.key ())));
-          ACE_OS::free (ACE_reinterpret_cast (void *, *(iter.item ())));
+          ACE_OS::free ((void *) *(iter.key ()));
+          ACE_OS::free ((void *) *(iter.item ()));
         }
 
       switch (handler->status ())

@@ -35,5 +35,8 @@ JAWS_Reaper::open (void *)
 int
 JAWS_Reaper::svc (void)
 {
-  return this->concurrency_->wait ();
+  ACE_TRACE ("JAWS_Reaper::svc");
+  int result = this->concurrency_->thr_mgr ()->wait ();
+  ACE_DEBUG ((LM_DEBUG, "(%t) Leaving REAPER\n"));
+  return result;
 }

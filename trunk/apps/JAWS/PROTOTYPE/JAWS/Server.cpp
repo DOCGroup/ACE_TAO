@@ -47,13 +47,13 @@ JAWS_Server::init (int argc, char *argv[])
 
   if (this->concurrency_ == 1)
     {
-      JAWS_Thread_Per_Singleton::instance ()->open (this->flags_,
+      JAWS_Thread_Per_Singleton::instance ()->make (this->flags_,
                                                     this->maxthreads_);
       this->policy_.concurrency (JAWS_Thread_Per_Singleton::instance ());
     }
   else
     {
-      JAWS_Thread_Pool_Singleton::instance ()->open (this->flags_,
+      JAWS_Thread_Pool_Singleton::instance ()->make (this->flags_,
                                                      this->nthreads_,
                                                      this->maxthreads_);
       this->policy_.concurrency (JAWS_Thread_Pool_Singleton::instance ());
@@ -110,13 +110,6 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
   // io->accept (INET_Addr) method!
 
   policy->concurrency ()->put (db);
-
-  char buf[265];
-  do
-    ACE_OS::fprintf (stderr, "%s", "hello: ");
-  while (ACE_OS::fgets (buf, sizeof (buf), stdin) != NULL);
-
-  ACE_OS::closesocket (policy->acceptor ()->get_handle ());
 
   ACE_Thread_Manager::instance ()->wait ();
 

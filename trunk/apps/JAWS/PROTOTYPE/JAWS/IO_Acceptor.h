@@ -78,6 +78,9 @@ public:
   // Get the listener's handle
 
 private:
+  virtual int accept (size_t bytes_to_read = 0);
+
+private:
   JAWS_IO_SOCK_Acceptor acceptor_;
 };
 
@@ -97,6 +100,14 @@ public:
 
   virtual ACE_HANDLE get_handle (void);
   // Get the listener's handle
+
+private:
+
+  virtual int accept (ACE_SOCK_Stream &new_stream,
+                      ACE_Addr *remote_addr = 0,
+                      ACE_Time_Value *timeout = 0,
+                      int restart = 1,
+                      int reset_new_handle = 0) const;
 
 private:
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)

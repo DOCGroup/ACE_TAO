@@ -37,7 +37,10 @@ JAWS_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
 {
   JAWS_TRACE ("JAWS_IO_Handler_Factory::destroy");
   if (handler != 0)
-    delete handler;
+    {
+      delete handler->message_block ();
+      delete handler;
+    }
 }
 
 JAWS_IO_Handler::JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory)
