@@ -24,7 +24,7 @@ enum RB_Tree_Node_Color {RED, BLACK};
 // Class Template: RB_Tree_Node
 //
 // Purpose:        Implements a node in a Red-Black Tree ADT
-// 
+//
 template <class KEY, class T>
 class RB_Tree_Node
 {
@@ -66,7 +66,7 @@ public:
   void right (RB_Tree_Node<KEY, T> * r);
   // mutator for node's right child pointer
 
-private: 
+private:
 
   KEY k_;
   // the key
@@ -90,10 +90,10 @@ private:
 
 // Class Template: RB_Tree
 //
-// Purpose:        Implements a Red-Black Tree ADT, according to 
-//                 T. H. Corman, C. E. Leiserson, and R. L. Rivest, 
+// Purpose:        Implements a Red-Black Tree ADT, according to
+//                 T. H. Corman, C. E. Leiserson, and R. L. Rivest,
 //                 "Introduction to Algorithms" 1990, MIT, chapter 14
-// 
+//
 template <class KEY, class T>
 class RB_Tree
 {
@@ -105,11 +105,15 @@ public:
   RB_Tree (const RB_Tree<KEY, T> &rbt);
   // copy constructor
 
-  ~RB_Tree ();
+  virtual ~RB_Tree ();
   // destructor
 
   void operator = (const RB_Tree<KEY, T> &rbt);
   // assignment operator
+
+  virtual int lessthan (const KEY &k1, const KEY &k2);
+  // lessthan comparison function for keys.
+  // returns 1 if k1 < k2, 0 otherwise
 
   T* find (const KEY &k);
   // Returns a pointer to the item corresponding to the
@@ -126,7 +130,7 @@ public:
   // associated with the existing key.
 
   int remove (const KEY &k);
-  // removes the item associated with the given key from the 
+  // removes the item associated with the given key from the
   // tree and destroys it.  Returns 1 if it found the item
   // and successfully destroyed it, 0 if it did not find the
   // item, or -1 if an error occurred.
@@ -136,7 +140,7 @@ public:
 
 
 // These could all be made private methods by making the corresponding
-// class template instantiations friends, but there are some problems 
+// class template instantiations friends, but there are some problems
 // with this on certain compilers: leave them all public for now
 
 // private:
@@ -181,7 +185,7 @@ public:
 // Class Template: RB_Tree_Iterator
 //
 // Purpose:        Implements an iterator for a Red-Black Tree ADT
-// 
+//
 template <class KEY, class T>
 class RB_Tree_Iterator
 {
@@ -245,4 +249,3 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ! defined (ACE_RB_TREE_H) */
-

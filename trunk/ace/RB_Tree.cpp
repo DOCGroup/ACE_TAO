@@ -31,7 +31,7 @@ template <class KEY, class T>
 RB_Tree_Node<KEY, T>::~RB_Tree_Node ()
 {
   // delete left sub-tree
-  delete left_;  
+  delete left_;
 
   // delete right sub_tree
   delete right_;
@@ -53,12 +53,12 @@ RB_Tree<KEY, T>::RB_Tree ()
 
 template <class KEY, class T>
 RB_Tree<KEY, T>::RB_Tree (const RB_Tree<KEY, T> &rbt)
-  : root_ (0)  
+  : root_ (0)
 {
   // make a deep copy of the passed tree
   RB_Tree_Iterator<KEY, T> iter(rbt);
   for (iter.first (); iter.is_done () == 0; iter.next ())
-  { 
+  {
     insert (*(iter.key ()), *(iter.item ()));
   }
 }
@@ -81,13 +81,21 @@ RB_Tree<KEY, T>::operator = (const RB_Tree<KEY, T> &rbt)
   // make a deep copy of the passed tree
   RB_Tree_Iterator<KEY, T> iter(rbt);
   for (iter.first (); iter.is_done () == 0; iter.next ())
-  { 
+  {
     insert (*(iter.key ()), *(iter.item ()));
   }
 }
   // assignment operator
 
-template <class KEY, class T> T* 
+template <class KEY, class T> int
+RB_Tree<KEY, T>::lessthan (const KEY &k1, const KEY &k2)
+{
+  return k1 < k2;
+}
+  // lessthan comparison function for keys.
+  // returns 1 if k1 < k2, 0 otherwise
+
+template <class KEY, class T> T*
 RB_Tree<KEY, T>::find (const KEY &k)
 {
   // find the closest matching node, if there is one
@@ -96,7 +104,8 @@ RB_Tree<KEY, T>::find (const KEY &k)
   if (current)
   {
     // if a nearest matching node was returned
-    if ((current->key () < k) || (k < current->key ()))
+    if (this->lessthan (current->key (), k)
+        || this->lessthan (k, current->key ()))
     {
       // if the keys differ, there is no match: return 0
       return 0;
@@ -116,20 +125,20 @@ RB_Tree<KEY, T>::find (const KEY &k)
   // Returns a pointer to the item corresponding to the
   // given key, or 0 if it cannot find the key in the tree.
 
-template <class KEY, class T>  T* 
+template <class KEY, class T>  T*
 RB_Tree<KEY, T>::insert (const KEY &k, const T &t)
 {
   // find the closest matching node, if there is one
   RB_Tree_Node<KEY, T> *current = find_node (k);
   if (current)
   {
-    if (current->key () < k)
+    if (this->lessthan (current->key (), k))
     {
       // if a nearest matching node has a key less than the insertion key
       if (current->right ())
       {
         // if there is already a right subtree, complain
-        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  
+        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                            ASYS_TEXT ("\nright subtree already present in "
                                       "RB_Tree<KEY, T>::insert\n")), 0);
       }
@@ -150,19 +159,19 @@ RB_Tree<KEY, T>::insert (const KEY &k, const T &t)
         else
         {
           // else, memory allocation failed
-        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  
+        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                            ASYS_TEXT ("\nmemory allocation to current->right_ failed "
                                       "in RB_Tree<KEY, T>::insert\n")), 0);
         }
       }
     }
-    else if (k < current->key ())
+    else if (this->lessthan (k, current->key ()))
     {
       // if a nearest matching node has a key greater than the insertion key
       if (current->left ())
       {
         // if there is already a left subtree, complain
-        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  
+        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                            ASYS_TEXT ("\nleft subtree already present in "
                                       "RB_Tree<KEY, T>::insert\n")), 0);
       }
@@ -183,7 +192,7 @@ RB_Tree<KEY, T>::insert (const KEY &k, const T &t)
         else
         {
           // else, memory allocation failed
-          ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  
+          ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                            ASYS_TEXT ("\nmemory allocation to current->left_ failed in "
                                       "RB_Tree<KEY, T>::insert\n")), 0);
         }
@@ -206,7 +215,7 @@ RB_Tree<KEY, T>::insert (const KEY &k, const T &t)
     }
     else
     {
-      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  
+      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                          ASYS_TEXT ("\nmemory allocation to root_ failed in "
                                     "RB_Tree<KEY, T>::insert\n")), 0);
     }
@@ -221,24 +230,25 @@ RB_Tree<KEY, T>::insert (const KEY &k, const T &t)
   // the returned pointer addresses the existing item
   // associated with the existing key.
 
-template <class KEY, class T>  int 
+template <class KEY, class T>  int
 RB_Tree<KEY, T>::remove (const KEY &k)
 {
   // find a matching node, if there is one
   RB_Tree_Node<KEY, T> *z = find_node (k);
 
-  if ((z) && (! (z->key () < k)) && (! (k < z->key ())))
+  if ((z) && (! this->lessthan (z->key (), k))
+      && (! this->lessthan (k, z->key ())))
   {
     // there is a matching node: remove and destroy it
-    RB_Tree_Node<KEY, T> *y
+    RB_Tree_Node<KEY, T> *y;
     if ((z->left ()) && (z->right ()))
     {
       y = RB_tree_successor (z);
-    }    
+    }
     else
     {
-      y = z; 
-    }    
+      y = z;
+    }
     if (y->left ())
     {
       x = y->left ();
@@ -285,24 +295,24 @@ RB_Tree<KEY, T>::remove (const KEY &k)
     return 0;
   }
 }
-  // removes the item associated with the given key from the 
+  // removes the item associated with the given key from the
   // tree and destroys it.  Returns 1 if it found the item
   // and successfully destroyed it, 0 if it did not find the
   // item, or -1 if an error occurred.
 
 
-template <class KEY, class T>  void 
+template <class KEY, class T>  void
 RB_Tree<KEY, T>::RB_rotate_right (RB_Tree_Node<KEY, T> * x)
 {
-  if (! x) 
+  if (! x)
   {
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("\nerror: x is a null pointer in "
                                   "RB_Tree<KEY, T>::RB_rotate_right\n")));
   }
   else if (! (x->left()))
   {
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("\nerror: x->left () is a null pointer in "
                            "RB_Tree<KEY, T>::RB_rotate_right\n")));
   }
@@ -338,18 +348,18 @@ RB_Tree<KEY, T>::RB_rotate_right (RB_Tree_Node<KEY, T> * x)
   // method for right rotation of the tree about a given node
 
 
-template <class KEY, class T> void 
+template <class KEY, class T> void
 RB_Tree<KEY, T>::RB_rotate_left (RB_Tree_Node<KEY, T> * x)
 {
-  if (! x) 
+  if (! x)
   {
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("\nerror: x is a null pointer in "
                            "RB_Tree<KEY, T>::RB_rotate_left\n")));
   }
   else if (! (x->right()))
   {
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("\nerror: x->right () is a null pointer "
                            "in RB_Tree<KEY, T>::RB_rotate_left\n")));
   }
@@ -384,7 +394,7 @@ RB_Tree<KEY, T>::RB_rotate_left (RB_Tree_Node<KEY, T> * x)
 }
   // method for left rotation of the tree about a given node
 
-template <class KEY, class T>  void 
+template <class KEY, class T>  void
 RB_Tree<KEY, T>::RB_delete_fixup (RB_Tree_Node<KEY, T> * x)
 {
   while ((x) && (x->parent ()) && (x->color () == RB_Tree_Node<KEY, T>::BLACK))
@@ -462,7 +472,7 @@ RB_Tree<KEY, T>::RB_delete_fixup (RB_Tree_Node<KEY, T> * x)
 }
   // method for restoring Red-Black properties after deletion
 
-template <class KEY, class T> RB_Tree_Node<KEY, T> * 
+template <class KEY, class T> RB_Tree_Node<KEY, T> *
 RB_Tree<KEY, T>::find_node (const KEY &k)
 {
   RB_Tree_Node<KEY, T> *current = root_;
@@ -470,7 +480,7 @@ RB_Tree<KEY, T>::find_node (const KEY &k)
   while (current)
   {
     // while there are more nodes to examine
-    if (current->key () < k)
+    if (this->lessthan (current->key (), k))
     {
       // if the search key is greater than the current node's key
       if (current->right ())
@@ -484,7 +494,7 @@ RB_Tree<KEY, T>::find_node (const KEY &k)
         break;
       }
     }
-    else if (k < current->key ())
+    else if (this->lessthan (k, current->key ()))
     {
       // else if the search key is less than the current node's key
       if (current->left ())
@@ -497,7 +507,7 @@ RB_Tree<KEY, T>::find_node (const KEY &k)
         // if the left subtree is empty, we're done
         break;
       }
-    }    
+    }
     else
     {
       // if the keys match, we're done
@@ -512,7 +522,7 @@ RB_Tree<KEY, T>::find_node (const KEY &k)
   // if the tree is not empty and there is no such match,
   // or 0 if the tree is empty.
 
-template <class KEY, class T> void 
+template <class KEY, class T> void
 RB_Tree<KEY, T>::RB_rebalance (RB_Tree_Node<KEY, T> * x)
 {
   RB_Tree_Node<KEY, T> *y = 0;
@@ -522,7 +532,7 @@ RB_Tree<KEY, T>::RB_rebalance (RB_Tree_Node<KEY, T> * x)
     if (! x->parent ()->parent ())
     {
       // if we got here, something is drastically wrong!
-      ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  
+      ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),
                   ASYS_TEXT ("\nerror: parent's parent is null in "
                              "RB_Tree<KEY, T>::RB_rebalance\n")));
       return;
@@ -539,7 +549,7 @@ RB_Tree<KEY, T>::RB_rebalance (RB_Tree_Node<KEY, T> * x)
         x->parent ()->parent ()->color (RED);
         x = x->parent ()->parent ();
       }
-      else 
+      else
       {
         if (x == x->parent ()->right ())
         {
@@ -565,7 +575,7 @@ RB_Tree<KEY, T>::RB_rebalance (RB_Tree_Node<KEY, T> * x)
         x->parent ()->parent ()->color (RED);
         x = x->parent ()->parent ();
       }
-      else 
+      else
       {
         if (x == x->parent ()->left ())
         {
@@ -584,7 +594,7 @@ RB_Tree<KEY, T>::RB_rebalance (RB_Tree_Node<KEY, T> * x)
 }
   // rebalance the tree after insertion of a node
 
-template <class KEY, class T> RB_Tree_Node<KEY, T> * 
+template <class KEY, class T> RB_Tree_Node<KEY, T> *
 RB_Tree<KEY, T>::RB_tree_successor (RB_Tree_Node<KEY, T> *x) const
 {
   if (x->right ())
@@ -603,7 +613,7 @@ RB_Tree<KEY, T>::RB_tree_successor (RB_Tree_Node<KEY, T> *x) const
 }
   // method to find the successor node of the given node in the tree
 
-template <class KEY, class T> RB_Tree_Node<KEY, T> * 
+template <class KEY, class T> RB_Tree_Node<KEY, T> *
 RB_Tree<KEY, T>::RB_tree_predecessor (RB_Tree_Node<KEY, T> *x) const
 {
   if (x->left ())
@@ -622,7 +632,7 @@ RB_Tree<KEY, T>::RB_tree_predecessor (RB_Tree_Node<KEY, T> *x) const
 }
   // method to find the predecessor node of the given node in the tree
 
-template <class KEY, class T> RB_Tree_Node<KEY, T> * 
+template <class KEY, class T> RB_Tree_Node<KEY, T> *
 RB_Tree<KEY, T>::RB_tree_minimum (RB_Tree_Node<KEY, T> *x) const
 {
   while ((x) && (x->left ()))
@@ -635,7 +645,7 @@ RB_Tree<KEY, T>::RB_tree_minimum (RB_Tree_Node<KEY, T> *x) const
   // method to find the minimum node of the subtree rooted at the given node
 
 
-template <class KEY, class T> RB_Tree_Node<KEY, T> * 
+template <class KEY, class T> RB_Tree_Node<KEY, T> *
 RB_Tree<KEY, T>::RB_tree_maximum (RB_Tree_Node<KEY, T> *x) const
 {
   while ((x) && (x->right ()))
@@ -655,11 +665,11 @@ RB_Tree<KEY, T>::RB_tree_maximum (RB_Tree_Node<KEY, T> *x) const
 
 template <class KEY, class T>
 RB_Tree_Iterator<KEY, T>::RB_Tree_Iterator (const RB_Tree<KEY, T> &tree)
-  : tree_ (tree), node_ (0)  
+  : tree_ (tree), node_ (0)
 {
   // position the iterator at the first node in the tree
   first ();
-}  
+}
   // constructor
 
 template <class KEY, class T>
@@ -670,4 +680,3 @@ RB_Tree_Iterator<KEY, T>::~RB_Tree_Iterator ()
 
 
 #endif /* !defined (ACE_RB_TREE_C) */
-
