@@ -62,8 +62,8 @@ Cubit_Server::init (int argc,
                                          argv,
                                          "child_poa",
                                          env) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "%p\n", 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
                        "init_child_poa"),
                       -1);
 
@@ -107,8 +107,8 @@ Cubit_Server::init_naming_service (CORBA::Environment& env)
   orb = this->orb_manager_.orb ();
   child_poa = this->orb_manager_.child_poa ();
 
-  result = this->my_name_server_.init (orb,
-                                       child_poa);
+  result = this->my_name_server_.init (orb.in (),
+                                       child_poa.in ());
   if (result < 0)
     return result;
   factory = this->factory_impl_._this (env);
