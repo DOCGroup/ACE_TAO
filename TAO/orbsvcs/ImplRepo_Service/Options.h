@@ -14,11 +14,15 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
+#include "Repository_Configuration.h"
+
 #include "tao/ORB.h"
 #include "ace/Singleton.h"
+#include "ace/FILE_Addr.h"
+
+#include "tao/PortableServer/ImplRepoC.h"
 
 // Forward declarations
-class ACE_Configuration;
 class ACE_ARGV;
 
 /**
@@ -27,7 +31,7 @@ class ACE_ARGV;
  * @brief Maintains the global options.
  *
  * This is where all the settings for TAO's Implementation Repository is
- * stored.  
+ * stored.
  */
 class Options
 {
@@ -44,14 +48,25 @@ public:
   /// Service Mode
   int service (void) const;
 
-  /// Debug level for the Implementation Repository.  
+  /// Debug level for the Implementation Repository.
   unsigned int debug (void) const;
 
   /// Returns the file where the IOR should be stored.
   FILE *output_file (void) const;
 
   /// Returns the configuration  object.
-  ACE_Configuration* config (void) const;
+  Repository_Configuration* config (void) const;
+
+  ACE_TCHAR *repository_mode (void);
+
+  /// Returns the file addr.
+  ACE_TCHAR *file_name (void) const;
+
+  /// Converts the activation mode to a const char *. Needed to put
+  /// the activation mode into the XML file or print it out.
+  const char *convert_str (ImplementationRepository::ActivationMode mode);
+
+  ImplementationRepository::ActivationMode convert_mode (const char *mode);
 
   /// Returns the timeout value for program starting.
   const ACE_Time_Value &startup_timeout (void) const;
@@ -84,6 +99,9 @@ private:
   /// Initialize default heap for no persistence.
   int initialize_non_persistence (void);
 
+  /// Initialize XML file persistence
+  int initialize_xml_persistence (const ACE_TCHAR *file_name);
+
   /// Run a service command.
   int run_service_command (const ACE_TCHAR *command);
 
@@ -91,7 +109,13 @@ private:
   int load_registry_options (ACE_ARGV &orb_options);
 
   /// The persistent configuration object.
-  ACE_Configuration* config_;
+  Repository_Configuration* repo_config_;
+
+  /// Mode of the Server Repository: if XML (x) or non-XML (n)
+  ACE_TCHAR *repo_mode_;
+
+  /// The persistent file option.
+  ACE_TCHAR *file_name_;
 
   /// Debug level.
   unsigned int debug_;
@@ -121,4 +145,3 @@ private:
 typedef ACE_Singleton <Options, ACE_Null_Mutex> OPTIONS;
 
 #endif /* OPTIONS_H */
-

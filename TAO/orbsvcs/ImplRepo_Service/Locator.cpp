@@ -11,9 +11,9 @@
 //=============================================================================
 
 #include "Locator.h"
-#include "ImplRepo_i.h"
+#include "ImR_Activator_i.h"
 
-ImR_Locator::ImR_Locator (ImplRepo_i *repo)
+ImR_Locator::ImR_Locator (ImR_Activator_i *repo)
   :  repo_ (repo)
 {
 }
@@ -26,5 +26,3 @@ ImR_Locator::locate (const char *object_key
   ACE_CString key (object_key);
   return this->repo_->find_ior (key ACE_ENV_ARG_PARAMETER);
 }
-
-

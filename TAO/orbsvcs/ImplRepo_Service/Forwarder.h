@@ -8,6 +8,7 @@
  *  @brief  This class implements ImR's forwarding ServantLocator
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+ *  @author Priyanka Gontla <pgontla@doc.ece.uci.edu>
  */
 //=============================================================================
 
@@ -16,14 +17,14 @@
 
 #include "tao/PortableServer/PortableServerC.h"
 
-class ImplRepo_i;
+class ImR_Locator_i;
 
 /**
  * @class ImR_Forwarder:
  *
  * @brief Implementation Repository Forwarder
  *
- * This class is provides a ServantLocator implementation that
+ * This class provides a ServantLocator implementation that
  * is used to handle arbitrary calls and forward them to the
  * correct place.
  */
@@ -31,7 +32,8 @@ class ImR_Forwarder: public PortableServer::ServantLocator
 {
 public:
   /// Constructor
-  ImR_Forwarder (ImplRepo_i *ir_impl);
+  ImR_Forwarder (ImR_Locator_i *ir_impl,
+                 CORBA::ORB_ptr orb);
 
   /// Called before the invocation begins.
   virtual PortableServer::Servant preinvoke (
@@ -53,10 +55,13 @@ public:
 
 private:
   /// Where we find out where to forward to.
-  ImplRepo_i *imr_impl_;
+  ImR_Locator_i *imr_impl_;
 
   /// POA reference.
   PortableServer::Current_var poa_current_var_;
+
+  /// Variable to save the ORB reference passed to the constr.
+  CORBA::ORB_ptr orb_;
 };
 
 #endif /* IMR_FORWARDER_H */

@@ -11,10 +11,12 @@ use PerlACE::Run_Test;
 ################################################################################
 # Program locations
 
-$imr_ior = PerlACE::LocalFile ("imr.ior");
+$imr_locator_ior = PerlACE::LocalFile ("imr_locator.ior");
+$imr_activator_ior = PerlACE::LocalFile ("imr_activator.ior");
 $pfile = PerlACE::LocalFile ("persistence.dat");
 
-$IMR = new PerlACE::Process ("../../../ImplRepo_Service/ImplRepo_Service");
+$IMR_LOCATOR = new PerlACE::Process ("../../../ImplRepo_Service/ImR_Locator");
+$IMR_ACTIVATOR = new PerlACE::Process ("../../../ImplRepo_Service/ImR_Activator");
 
 if ($^O eq "MSWin32") {
     $TAO_IMR = new PerlACE::Process ("../../../../../bin/tao_imr");
@@ -27,18 +29,31 @@ else {
 
 $errors = 0;
 
-unlink $imr_ior;
+unlink $imr_locator_ior;
+unlink $imr_activator_ior;
 unlink $pfile;
 
 ################################################################################
-## Start the implementation Repository 
+## Start the implementation Repository Locator
 
-$IMR->Arguments ("-o $imr_ior -d 0 -p $pfile");
-$IMR->Spawn ();
+$IMR_LOCATOR->Arguments ("-o $imr_locator_ior -d ");
+$IMR_LOCATOR->Spawn ();
 
-if (PerlACE::waitforfile_timed ($imr_ior, 10) == -1) {
-    print STDERR "ERROR: waiting for $imr_ior\n";
-    $IMR->Kill ();
+if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
+    print STDERR "ERROR: waiting for $imr_locator_ior\n";
+    $IMR_LOCATOR->Kill ();
+    exit 1;
+}
+
+## Start the implementation Repository Activator
+
+$IMR_ACTIVATOR->Arguments ("-o $imr_activator_ior -d 0 -p $pfile -ORBInitRef ImR_Locator=file://$imr_locator_ior");
+$IMR_ACTIVATOR->Spawn ();
+
+if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
+    print STDERR "ERROR: waiting for $imr_activator_ior\n";
+    $IMR_ACTIVATOR->Kill ();
+    $IMR_LOCATOR->Kill ();
     exit 1;
 }
 
@@ -47,8 +62,8 @@ if (PerlACE::waitforfile_timed ($imr_ior, 10) == -1) {
 
 print "===== Adding a server\n";
 
-$TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior"
-                    . " add Foo -c foobarbaz");
+$TAO_IMR->Arguments("-ORBInitRef ImR_Locator=file://$imr_locator_ior"
+		    . " add Foo -c foobarbaz");
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
 
@@ -59,7 +74,7 @@ if ($taoimr != 0) {
 
 print "===== Updating a server\n";
 
-$TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior"
+$TAO_IMR->Arguments("-ORBInitRef ImR_Locator=file://$imr_locator_ior"
                     . " update Foo -w foodir");
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
@@ -71,7 +86,7 @@ if ($taoimr != 0) {
 
 print "===== Removing a server\n";
 
-$TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior"
+$TAO_IMR->Arguments("-ORBInitRef ImR_Locator=file://$imr_locator_ior"
                     . " remove Foo");
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
@@ -83,7 +98,7 @@ if ($taoimr != 0) {
 
 print "===== Readding a server\n";
 
-$TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior"
+$TAO_IMR->Arguments("-ORBInitRef ImR_Locator=file://$imr_locator_ior"
                     . " add Foo -c foobarbaz");
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
@@ -96,24 +111,43 @@ if ($taoimr != 0) {
 ################################################################################
 ## Kill the IMR
 
-$iserver = $IMR->TerminateWaitKill (5); 
+$iserver = $IMR_LOCATOR->TerminateWaitKill (5);
 
 if ($iserver != 0) {
     print STDERR "ERROR: IMR returned $iserver\n";
     ++$errors;
 }
 
-unlink $imr_ior;
+unlink $imr_locator_ior;
+
+$iserver = $IMR_ACTIVATOR->TerminateWaitKill (5);
+
+if ($iserver != 0) {
+    print STDERR "ERROR: IMR returned $iserver\n";
+    ++$errors;
+}
+
+unlink $imr_activator_ior;
 
 ################################################################################
 ## Restart the Implementation Repository in locked mode.
 
-$IMR->Arguments ("-o $imr_ior -d 0 -l -p $pfile");
-$IMR->Spawn ();
+$IMR_LOCATOR->Arguments ("-o $imr_locator_ior -d ");
+$IMR_LOCATOR->Spawn ();
 
-if (PerlACE::waitforfile_timed ($imr_ior, 10) == -1) {
-    print STDERR "ERROR: waiting for $imr_ior\n";
-    $IMR->Kill ();
+if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
+    print STDERR "ERROR: waiting for $imr_locator_ior\n";
+    $IMR_LOCATOR->Kill ();
+    exit 1;
+}
+
+$IMR_ACTIVATOR->Arguments ("-o $imr_activator_ior -d 0 -l -p $pfile -ORBInitRef ImR_Locator=file://$imr_locator_ior");
+$IMR_ACTIVATOR->Spawn ();
+
+if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
+    print STDERR "ERROR: waiting for $imr_activator_ior\n";
+    $IMR_ACTIVATOR->Kill ();
+    $IMR_LOCATOR->Kill ();
     exit 1;
 }
 
@@ -122,7 +156,7 @@ if (PerlACE::waitforfile_timed ($imr_ior, 10) == -1) {
 
 print "===== Adding a server (should fail)\n";
 
-$TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior"
+$TAO_IMR->Arguments("-ORBInitRef ImR_Locator=file://$imr_locator_ior"
                     . " add Foo2 -c foobarbaz");
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
@@ -134,7 +168,7 @@ if ($taoimr != 2) {
 
 print "===== Updating a server (should fail)\n";
 
-$TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior"
+$TAO_IMR->Arguments("-ORBInitRef ImR_Locator=file://$imr_locator_ior"
                     . " update Foo -w foodir");
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
@@ -146,7 +180,7 @@ if ($taoimr != 2) {
 
 print "===== Removing a server (should fail)\n";
 
-$TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior"
+$TAO_IMR->Arguments("-ORBInitRef ImR_Locator=file://$imr_locator_ior"
                     . " remove Foo");
 
 $taoimr = $TAO_IMR->SpawnWaitKill (60);
@@ -157,16 +191,25 @@ if ($taoimr != 2) {
 }
 
 ################################################################################
-## Kill the IMR
+## Kill the IMR_LOCATOR and IMR_ACTIVATOR
 
-$iserver = $IMR->TerminateWaitKill (5); 
+$iserver = $IMR_LOCATOR->TerminateWaitKill (5);
 
 if ($iserver != 0) {
     print STDERR "ERROR: IMR returned $iserver\n";
     ++$errors;
 }
 
-unlink $imr_ior;
+unlink $imr_locator_ior;
+
+$iserver = $IMR_ACTIVATOR->TerminateWaitKill (5);
+
+if ($iserver != 0) {
+    print STDERR "ERROR: IMR returned $iserver\n";
+    ++$errors;
+}
+
+unlink $imr_activator_ior;
 unlink $pfile;
 
 exit $errors;
