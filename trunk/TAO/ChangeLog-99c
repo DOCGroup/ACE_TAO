@@ -1,3 +1,10 @@
+Wed Sep  1 14:36:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IORS.h:
+	* tao/IORManipulation.h: Added TAO_Export to all classes.  Thanks
+	  to Dmitry Goldshtain <Goldshtain@bank.gov.ua> for reporting
+	  this.
+
 Wed Sep  1 13:14:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
@@ -30,7 +37,7 @@ Wed Sep  1 12:37:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Needs to include the new Profile file.
 
 	* tao/Invocation.cpp:
-	  If the TAO_USE_PRIORITY_POLICY macro is defined the ORB will use 
+	  If the TAO_USE_PRIORITY_POLICY macro is defined the ORB will use
 	  the profile that matches the current thread priority.
 
 	* tao/Tagged_Components.cpp:
@@ -42,7 +49,7 @@ Wed Sep  1 12:37:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/IIOP_Profile.h:
 	* tao/IIOP_Profile.i:
 	* tao/IIOP_Profile.cpp:
-	  The tagged component access and manipulation code is in the base 
+	  The tagged component access and manipulation code is in the base
 	  class now.
 
 	* tao/Pool_Per_Endpoint.cpp:
