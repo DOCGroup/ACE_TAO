@@ -10,9 +10,12 @@
 # the exceptions macro below to 1, or build with:
 # make exceptions=1
 
-debug = 0
-exceptions =
-optimize = 1
+ifeq (,$(debug))
+  debug=0
+endif
+ifeq (,$(optimize))
+  optimize=1
+endif
 
 CC      = KCC
 CXX     = $(CC)
@@ -25,7 +28,11 @@ DLD     = $(CC)
 LD      = $(CC)
 LIBS    += -Bdynamic -ldl -lpthread -lm
 
-ifndef exceptions
+ifeq (,$(exceptions))
+  exceptions=0
+endif # exceptions
+
+ifeq ($(exceptions),0)
   EXCEPTION = --no_exceptions
 endif # ! exceptions
 

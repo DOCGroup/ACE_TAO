@@ -3648,7 +3648,7 @@ extern "C" {
 #     if !defined (RTLD_LAZY)
 #       define RTLD_LAZY 1
 #     endif /* !RTLD_LAZY */
-#   if defined (__KCC)
+#   if defined (__KCC) && !defined(linux)
 #   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GROUP | RTLD_NODELETE
 #   else
 #   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
@@ -5082,8 +5082,8 @@ private:
   // (ACT).
 };
 
-class ACE_Export ACE_OS 
-  : public ACE_OS_Dirent, 
+class ACE_Export ACE_OS
+  : public ACE_OS_Dirent,
     public ACE_OS_String,
     public ACE_OS_Memory,
     public ACE_OS_TLI
@@ -6232,7 +6232,7 @@ public:
                          struct tm *tm);
 
 # if defined (ACE_LACKS_NATIVE_STRPTIME)
-  static int strptime_getnum (char *buf, int *num, int *bi, 
+  static int strptime_getnum (char *buf, int *num, int *bi,
                               int *fi, int min, int max);
 # endif /* ACE_LACKS_NATIVE_STRPTIME */
 #endif /* ACE_HAS_STRPTIME */
