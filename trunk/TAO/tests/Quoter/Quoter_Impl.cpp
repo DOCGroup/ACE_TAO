@@ -50,7 +50,6 @@ Quoter_Factory_Impl::Quoter_Factory_Impl (size_t num, PortableServer::POA_ptr po
       {
         env.print_exception ("CORBA::ORB::object_to_string");
       }
-      ACE_DEBUG ((LM_DEBUG, "Quoter[0] IOR: %s \n",quoter_ior));
     }
   }
 
