@@ -1,3 +1,23 @@
+Sat Nov 11 11:33:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Xt_Stopwatch/client.cpp:
+	* tests/Xt_Stopwatch/test_i.cpp:
+	* tests/Xt_Stopwatch/test_i.h:
+	* tests/Xt_Stopwatch/Control.h:
+	* tests/Xt_Stopwatch/Control.cpp:
+	* tests/Xt_Stopwatch/Stopwatch_display.h:
+	* tests/Xt_Stopwatch/Stopwatch_display.cpp:
+	* tests/Xt_Stopwatch/Client.h:
+	* tests/Xt_Stopwatch/timer.cpp:
+	* tests/Xt_Stopwatch/timer.h: 
+	* tests/QtTest/client.cpp:  Added #if defined guards in all these
+	  files so that they compile clean even in default configuration. 
+	
+	* tests/Xt_Stopwatch/Makefile: 
+	* tests/QtTest/Makefile: Updated the library names against which
+	  they are linked.
+
+
 Sat Nov 11 07:28:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Propagated the fixes

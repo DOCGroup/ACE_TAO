@@ -17,6 +17,9 @@
 #define _QT_CLIENT_H
 
 #include "testC.h"
+
+#if defined (ACE_HAS_QT)
+
 #include <qapplication.h>
 #include <qvbox.h>
 #include <qslider.h>
@@ -26,7 +29,7 @@ class Client : public QObject
 {
   Q_OBJECT
 public:
-  
+
   Client (CORBA::ORB_ptr orb,
           QApplication &app);
   // ctor
@@ -38,13 +41,13 @@ public:
   // Adds the callbacks to the GUI underneath.....
 
   void show (void);
-  
+
   void parse_args (int argc, char *argv[],
                    CORBA::Environment &ACE_TRY_ENV);
 
   QVBox box_;
   // A box widget..
-  
+
  public slots:
    void remote_call (int val);
    void shutdown_call (void);
@@ -62,8 +65,10 @@ private:
   // The ORB
 
   LCD_Display_var server_;
-  
+
   QApplication *qapp_;
 };
+
+#endif /*ACE_HAS_QT*/
 
 #endif /* _QT_CLIENT_H */
