@@ -160,7 +160,7 @@ Sun Sep 15 13:04:49 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Removed code that stored the stub object's policy list and
 	  TAO_MProfile for use by TAO's IORInterceptor support.  This code
-	  was very broken since it did not manage memory correctly (broken
+	  was very broken since it did not manage memory correctly (broke
 	  when TAO's ORT support was added).  The cached policy list and
 	  TAO_MProfile pointers could easily end up being dangling
 	  pointers.  The IORInfo object now does the right thing, and
