@@ -137,6 +137,7 @@ libACE_OS_la_SOURCES = \
   OS_Dirent.cpp \
   OS_Memory.cpp \
   OS_String.cpp \
+  OS_TLI.cpp \
   Sched_Params.cpp
 
 libACE_Utils_la_SOURCES = \

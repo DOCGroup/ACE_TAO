@@ -14,6 +14,7 @@ OS_FILES = \
   OS_Dirent \
   OS_Memory \
   OS_String \
+  OS_TLI \
   Sched_Params
 UTILS_FILES = \
   ACE \
@@ -550,6 +551,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -558,7 +563,8 @@ endif # GHS
  OS.i \
  Template_Instantiations.cpp
 
-.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp OS.h \
+.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp \
+ OS.h \
  pre.h \
  config-all.h \
  config.h \
@@ -574,6 +580,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -604,6 +614,21 @@ endif # GHS
  OS_String.h \
  OS_String.inl
 
+.obj/OS_Memory.o .obj/OS_Memory.so .shobj/OS_Memory.o .shobj/OS_Memory.so: OS_Memory.cpp \
+ OS_Memory.h \
+ pre.h \
+ config-all.h \
+ config.h \
+ config-linux-lxpthreads.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ace_wchar.h \
+ ACE_export.h \
+ svc_export.h \
+ OS_Export.h \
+ OS_Memory.inl
+
 .obj/OS_String.o .obj/OS_String.so .shobj/OS_String.o .shobj/OS_String.so: OS_String.cpp \
  OS_String.h \
  pre.h \
@@ -618,15 +643,23 @@ endif # GHS
  svc_export.h \
  OS_Export.h \
  OS_String.inl \
- OS.h \
- OS_Dirent.h \
- OS_Dirent.inl \
- Min_Max.h \
- streams.h \
- Basic_Types.h \
- Basic_Types.i \
- Trace.h \
- OS.i
+ OS_Memory.h \
+ OS_Memory.inl
+
+.obj/OS_TLI.o .obj/OS_TLI.so .shobj/OS_TLI.o .shobj/OS_TLI.so: OS_TLI.cpp \
+ OS_TLI.h \
+ pre.h \
+ config-all.h \
+ config.h \
+ config-linux-lxpthreads.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ace_wchar.h \
+ ACE_export.h \
+ svc_export.h \
+ OS_Export.h \
+ OS_TLI.inl
 
 .obj/Sched_Params.o .obj/Sched_Params.so .shobj/Sched_Params.o .shobj/Sched_Params.so: Sched_Params.cpp \
  Sched_Params.h \
@@ -646,6 +679,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -654,7 +691,8 @@ endif # GHS
  OS.i \
  Sched_Params.i
 
-.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp ACE.h \
+.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp \
+ ACE.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -671,6 +709,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -698,6 +740,10 @@ endif # GHS
  Version.h \
  Message_Block.h \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -717,10 +763,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Malloc.i \
@@ -764,6 +806,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -866,6 +912,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -873,7 +923,8 @@ endif # GHS
  Trace.h \
  OS.i
 
-.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp ARGV.h \
+.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
+ ARGV.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -891,6 +942,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -905,6 +960,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -924,10 +983,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -968,6 +1023,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1075,6 +1134,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1090,6 +1153,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -1109,10 +1176,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -1153,6 +1216,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1171,6 +1238,10 @@ endif # GHS
  Functor_T.i \
  Functor_T.cpp \
  Hash_Map_Manager_T.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Hash_Map_Manager_T.i \
  Synch.h \
  SV_Semaphore_Complex.h \
@@ -1186,10 +1257,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Hash_Map_Manager_T.cpp \
  Service_Config.h \
  Service_Object.h \
@@ -1241,7 +1308,8 @@ endif # GHS
  Hash_Map_With_Allocator_T.i \
  Hash_Map_With_Allocator_T.cpp
 
-.obj/Dirent.o .obj/Dirent.so .shobj/Dirent.o .shobj/Dirent.so: Dirent.cpp Dirent.h \
+.obj/Dirent.o .obj/Dirent.so .shobj/Dirent.o .shobj/Dirent.so: Dirent.cpp \
+ Dirent.h \
  pre.h \
  OS_Dirent.h \
  config-all.h \
@@ -1261,6 +1329,10 @@ endif # GHS
  OS.h \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1289,6 +1361,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1344,6 +1420,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1374,6 +1454,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1405,6 +1489,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1419,6 +1507,10 @@ endif # GHS
  Functor_T.i \
  Functor_T.cpp \
  Hash_Map_Manager_T.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Hash_Map_Manager_T.i \
  Synch.h \
  SV_Semaphore_Complex.h \
@@ -1434,10 +1526,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Hash_Map_Manager_T.cpp \
  Service_Config.h \
  Service_Object.h \
@@ -1509,6 +1597,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1525,6 +1617,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -1544,10 +1640,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -1588,6 +1680,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1613,6 +1709,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1741,6 +1841,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1771,6 +1875,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1797,6 +1905,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1805,6 +1917,10 @@ endif # GHS
  OS.i \
  ACE.i \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -1824,10 +1940,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -1875,7 +1987,8 @@ endif # GHS
  Auto_Ptr.i \
  Auto_Ptr.cpp
 
-.obj/Stats.o .obj/Stats.so .shobj/Stats.o .shobj/Stats.so: Stats.cpp Stats.h \
+.obj/Stats.o .obj/Stats.so .shobj/Stats.o .shobj/Stats.so: Stats.cpp \
+ Stats.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -1893,6 +2006,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -1907,6 +2024,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -1926,10 +2047,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -1970,6 +2087,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2048,6 +2169,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2081,6 +2206,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2109,6 +2238,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2197,6 +2330,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2279,6 +2416,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2358,6 +2499,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2372,6 +2517,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -2391,10 +2540,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -2441,6 +2586,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2524,6 +2673,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2608,7 +2761,8 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h
 
-.obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp Synch_T.h \
+.obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp \
+ Synch_T.h \
  pre.h \
  Event_Handler.h \
  ACE.h \
@@ -2627,6 +2781,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2677,6 +2835,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2771,6 +2933,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2801,6 +2967,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2832,6 +3002,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2943,7 +3117,8 @@ endif # GHS
  Method_Request.h \
  Activation_Queue.i
 
-.obj/Process.o .obj/Process.so .shobj/Process.o .shobj/Process.so: Process.cpp OS.h \
+.obj/Process.o .obj/Process.so .shobj/Process.o .shobj/Process.so: Process.cpp \
+ OS.h \
  pre.h \
  config-all.h \
  config.h \
@@ -2959,6 +3134,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -2979,6 +3158,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -2998,10 +3181,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -3044,6 +3223,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3115,7 +3298,8 @@ endif # GHS
  Reactor_Impl.h \
  Process_Manager.i
 
-.obj/Synch.o .obj/Synch.so .shobj/Synch.o .shobj/Synch.so: Synch.cpp Thread.h \
+.obj/Synch.o .obj/Synch.so .shobj/Synch.o .shobj/Synch.so: Synch.cpp \
+ Thread.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -3133,6 +3317,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3177,6 +3365,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3186,7 +3378,8 @@ endif # GHS
  ACE.i \
  Synch_Options.i
 
-.obj/Thread.o .obj/Thread.so .shobj/Thread.o .shobj/Thread.so: Thread.cpp Thread.h \
+.obj/Thread.o .obj/Thread.so .shobj/Thread.o .shobj/Thread.so: Thread.cpp \
+ Thread.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -3204,6 +3397,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3233,6 +3430,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3296,7 +3497,8 @@ endif # GHS
  Auto_Ptr.i \
  Auto_Ptr.cpp
 
-.obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp Thread.h \
+.obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp \
+ Thread.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -3314,6 +3516,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3360,6 +3566,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3371,6 +3581,10 @@ endif # GHS
  Message_Block.h \
  Malloc.h \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -3388,10 +3602,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -3457,6 +3667,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3551,6 +3765,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3586,6 +3804,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3714,6 +3936,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3740,6 +3966,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3754,6 +3984,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -3773,10 +4007,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -3838,6 +4068,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -3857,6 +4091,10 @@ endif # GHS
  ACE.i \
  Malloc.h \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -3876,10 +4114,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Malloc.i \
@@ -3981,6 +4215,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4130,6 +4368,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4226,6 +4468,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4341,6 +4587,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4437,6 +4687,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4555,6 +4809,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4686,6 +4944,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4807,6 +5069,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4900,6 +5166,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4924,6 +5194,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4950,6 +5224,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -4977,6 +5255,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5105,6 +5387,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5118,7 +5404,8 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/LSOCK.o .obj/LSOCK.so .shobj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp LSOCK.h \
+.obj/LSOCK.o .obj/LSOCK.so .shobj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp \
+ LSOCK.h \
  pre.h \
  SOCK.h \
  ACE.h \
@@ -5137,6 +5424,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5181,6 +5472,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5201,15 +5496,15 @@ endif # GHS
  Time_Value.h \
  SOCK_Acceptor.i \
  UNIX_Addr.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  UNIX_Addr.i \
  LSOCK_Stream.h \
  LSOCK.h \
  LSOCK.i \
- LSOCK_Stream.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ LSOCK_Stream.i
 
 .obj/LSOCK_CODgram.o .obj/LSOCK_CODgram.so .shobj/LSOCK_CODgram.o .shobj/LSOCK_CODgram.so: LSOCK_CODgram.cpp \
  LSOCK_CODgram.h \
@@ -5232,6 +5527,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5281,6 +5580,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5302,15 +5605,15 @@ endif # GHS
  SOCK_Connector.i \
  LSOCK_Stream.h \
  UNIX_Addr.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  UNIX_Addr.i \
  LSOCK.h \
  LSOCK.i \
  LSOCK_Stream.i \
- LSOCK_Connector.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ LSOCK_Connector.i
 
 .obj/LSOCK_Dgram.o .obj/LSOCK_Dgram.so .shobj/LSOCK_Dgram.o .shobj/LSOCK_Dgram.so: LSOCK_Dgram.cpp \
  LSOCK_Dgram.h \
@@ -5333,6 +5636,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5379,6 +5686,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5397,16 +5708,17 @@ endif # GHS
  SOCK_IO.i \
  SOCK_Stream.i \
  UNIX_Addr.h \
- UNIX_Addr.i \
- LSOCK.h \
- LSOCK.i \
- LSOCK_Stream.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ UNIX_Addr.i \
+ LSOCK.h \
+ LSOCK.i \
+ LSOCK_Stream.i
 
-.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp SOCK.h \
+.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp \
+ SOCK.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -5424,6 +5736,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5466,6 +5782,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5485,6 +5805,10 @@ endif # GHS
  SOCK_Stream.i \
  Time_Value.h \
  SOCK_Acceptor.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Synch.h \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
@@ -5498,11 +5822,7 @@ endif # GHS
  Thread.h \
  Thread.i \
  Atomic_Op.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ Synch_T.cpp
 
 .obj/SOCK_CODgram.o .obj/SOCK_CODgram.so .shobj/SOCK_CODgram.o .shobj/SOCK_CODgram.so: SOCK_CODgram.cpp \
  SOCK_CODgram.h \
@@ -5525,6 +5845,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5569,6 +5893,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5613,6 +5941,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5670,6 +6002,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5714,6 +6050,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5754,6 +6094,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5797,6 +6141,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5837,6 +6185,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5855,7 +6207,8 @@ endif # GHS
  SOCK_IO.i \
  SOCK_Stream.i
 
-.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp Addr.h \
+.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp \
+ Addr.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -5872,6 +6225,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5903,6 +6260,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5937,6 +6298,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -5972,6 +6337,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6008,6 +6377,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6035,6 +6408,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6063,6 +6440,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6098,6 +6479,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6110,10 +6495,15 @@ endif # GHS
  Addr.i \
  INET_Addr.h \
  INET_Addr.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ATM_Addr.h \
  ATM_Addr.i
 
-.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp DEV.h \
+.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp \
+ DEV.h \
  pre.h \
  IO_SAP.h \
  ACE.h \
@@ -6132,6 +6522,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6168,6 +6562,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6208,6 +6606,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6231,7 +6633,8 @@ endif # GHS
  Log_Record.i \
  DEV_Connector.i
 
-.obj/DEV_IO.o .obj/DEV_IO.so .shobj/DEV_IO.o .shobj/DEV_IO.so: DEV_IO.cpp DEV_IO.h \
+.obj/DEV_IO.o .obj/DEV_IO.so .shobj/DEV_IO.o .shobj/DEV_IO.so: DEV_IO.cpp \
+ DEV_IO.h \
  pre.h \
  DEV.h \
  IO_SAP.h \
@@ -6251,6 +6654,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6273,7 +6680,8 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp FIFO.h \
+.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp \
+ FIFO.h \
  pre.h \
  IPC_SAP.h \
  ACE.h \
@@ -6292,6 +6700,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6327,6 +6739,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6364,6 +6780,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6401,6 +6821,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6438,6 +6862,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6473,6 +6901,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6491,7 +6923,8 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp FILE.h \
+.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp \
+ FILE.h \
  pre.h \
  IO_SAP.h \
  ACE.h \
@@ -6510,6 +6943,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6549,6 +6986,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6566,11 +7007,11 @@ endif # GHS
  Malloc_Base.h \
  FILE.i \
  FILE_IO.i \
- FILE_Connector.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ FILE_Connector.i
 
 .obj/FILE_IO.o .obj/FILE_IO.so .shobj/FILE_IO.o .shobj/FILE_IO.so: FILE_IO.cpp \
  FILE_IO.h \
@@ -6593,6 +7034,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6634,6 +7079,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6649,7 +7098,8 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/IO_SAP.o .obj/IO_SAP.so .shobj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp IO_SAP.h \
+.obj/IO_SAP.o .obj/IO_SAP.so .shobj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp \
+ IO_SAP.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -6667,6 +7117,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6698,6 +7152,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6716,7 +7174,8 @@ endif # GHS
  IOStream_T.i \
  IOStream_T.cpp
 
-.obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp Pipe.h \
+.obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp \
+ Pipe.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -6734,6 +7193,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6785,6 +7248,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6860,6 +7327,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6874,7 +7345,8 @@ endif # GHS
  SString.i \
  Malloc_Base.h
 
-.obj/SPIPE.o .obj/SPIPE.so .shobj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp SPIPE.h \
+.obj/SPIPE.o .obj/SPIPE.so .shobj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp \
+ SPIPE.h \
  pre.h \
  IPC_SAP.h \
  ACE.h \
@@ -6893,6 +7365,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6932,6 +7408,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -6976,6 +7456,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7020,6 +7504,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7057,6 +7545,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7085,6 +7577,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7120,6 +7616,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7153,6 +7653,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7185,6 +7689,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7198,7 +7706,8 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp TLI.h \
+.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp \
+ TLI.h \
  pre.h \
  IPC_SAP.h \
  ACE.h \
@@ -7217,6 +7726,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7226,7 +7739,11 @@ endif # GHS
  ACE.i \
  IPC_SAP.i \
  Addr.h \
- Addr.i
+ Addr.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
 
 .obj/TLI_Acceptor.o .obj/TLI_Acceptor.so .shobj/TLI_Acceptor.o .shobj/TLI_Acceptor.so: TLI_Acceptor.cpp \
  TLI_Acceptor.h \
@@ -7249,6 +7766,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7262,7 +7783,11 @@ endif # GHS
  Time_Value.h \
  TLI_Stream.h \
  INET_Addr.h \
- INET_Addr.i
+ INET_Addr.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
 
 .obj/TLI_Connector.o .obj/TLI_Connector.so .shobj/TLI_Connector.o .shobj/TLI_Connector.so: TLI_Connector.cpp \
  Handle_Set.h \
@@ -7283,6 +7808,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7299,7 +7828,11 @@ endif # GHS
  Addr.h \
  Addr.i \
  INET_Addr.h \
- INET_Addr.i
+ INET_Addr.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
 
 .obj/TLI_Stream.o .obj/TLI_Stream.so .shobj/TLI_Stream.o .shobj/TLI_Stream.so: TLI_Stream.cpp \
  TLI_Stream.h \
@@ -7322,6 +7855,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7335,7 +7872,8 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i
 
-.obj/TTY_IO.o .obj/TTY_IO.so .shobj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp TTY_IO.h \
+.obj/TTY_IO.o .obj/TTY_IO.so .shobj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp \
+ TTY_IO.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -7352,6 +7890,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7399,6 +7941,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7406,6 +7952,12 @@ endif # GHS
  Trace.h \
  OS.i \
  Addr.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
+ ACE.h \
+ ACE.i \
  UNIX_Addr.i
 
 .obj/UPIPE_Acceptor.o .obj/UPIPE_Acceptor.so .shobj/UPIPE_Acceptor.o .shobj/UPIPE_Acceptor.so: UPIPE_Acceptor.cpp \
@@ -7429,6 +7981,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7440,6 +7996,10 @@ endif # GHS
  Message_Block.h \
  Malloc.h \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -7459,10 +8019,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -7588,6 +8144,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7599,6 +8159,10 @@ endif # GHS
  Message_Block.h \
  Malloc.h \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -7618,10 +8182,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -7745,6 +8305,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7756,6 +8320,10 @@ endif # GHS
  Message_Block.h \
  Malloc.h \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -7775,10 +8343,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -7902,6 +8466,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -7926,6 +8494,10 @@ endif # GHS
  MEM_SAP.h \
  Malloc.h \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -7945,10 +8517,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -8005,6 +8573,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8045,6 +8617,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8069,6 +8645,10 @@ endif # GHS
  MEM_SAP.h \
  Malloc.h \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -8088,10 +8668,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -8129,7 +8705,8 @@ endif # GHS
  MEM_Addr.i \
  MEM_Connector.i
 
-.obj/MEM_IO.o .obj/MEM_IO.so .shobj/MEM_IO.o .shobj/MEM_IO.so: MEM_IO.cpp MEM_IO.h \
+.obj/MEM_IO.o .obj/MEM_IO.so .shobj/MEM_IO.o .shobj/MEM_IO.so: MEM_IO.cpp \
+ MEM_IO.h \
  pre.h \
  SOCK.h \
  ACE.h \
@@ -8148,6 +8725,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8166,6 +8747,10 @@ endif # GHS
  MEM_SAP.h \
  Malloc.h \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -8185,10 +8770,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -8244,6 +8825,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8252,6 +8837,10 @@ endif # GHS
  OS.i \
  ACE.i \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -8271,10 +8860,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -8323,6 +8908,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8341,6 +8930,10 @@ endif # GHS
  MEM_SAP.h \
  Malloc.h \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -8360,10 +8953,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -8398,7 +8987,8 @@ endif # GHS
  MEM_IO.i \
  MEM_Stream.i
 
-.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp DLL.h \
+.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp \
+ DLL.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -8415,6 +9005,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8449,6 +9043,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8590,6 +9188,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8598,6 +9200,10 @@ endif # GHS
  OS.i \
  ACE.i \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -8617,10 +9223,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -8719,6 +9321,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8870,6 +9476,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8921,6 +9531,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -8977,6 +9591,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9118,6 +9736,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9144,6 +9766,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9156,6 +9782,10 @@ endif # GHS
  ACE.h \
  ACE.i \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -9175,10 +9805,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -9247,6 +9873,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9261,6 +9891,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -9280,10 +9914,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -9398,6 +10028,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9407,6 +10041,10 @@ endif # GHS
  ACE.i \
  Malloc.h \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -9426,10 +10064,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -9495,6 +10129,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9504,6 +10142,10 @@ endif # GHS
  ACE.i \
  Malloc.h \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -9523,10 +10165,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -9578,6 +10216,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9587,6 +10229,10 @@ endif # GHS
  ACE.i \
  Malloc.h \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -9606,10 +10252,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -9687,7 +10329,8 @@ endif # GHS
  Strategies.i \
  Message_Queue.i
 
-.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp Task.h \
+.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp \
+ Task.h \
  pre.h \
  Service_Object.h \
  Shared_Object.h \
@@ -9707,6 +10350,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9843,6 +10490,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9922,7 +10573,8 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h
 
-.obj/Malloc.o .obj/Malloc.so .shobj/Malloc.o .shobj/Malloc.so: Malloc.cpp Malloc.h \
+.obj/Malloc.o .obj/Malloc.so .shobj/Malloc.o .shobj/Malloc.so: Malloc.cpp \
+ Malloc.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -9940,6 +10592,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -9948,6 +10604,10 @@ endif # GHS
  OS.i \
  ACE.i \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -9967,10 +10627,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -10016,6 +10672,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10048,6 +10708,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10128,6 +10792,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10136,6 +10804,10 @@ endif # GHS
  OS.i \
  ACE.i \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -10155,10 +10827,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -10205,6 +10873,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10214,6 +10886,10 @@ endif # GHS
  ACE.i \
  Malloc.h \
  Malloc_Base.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -10233,10 +10909,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -10301,6 +10973,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10329,6 +11005,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10360,6 +11040,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10390,6 +11074,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10494,6 +11182,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10614,6 +11306,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10718,6 +11414,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10820,6 +11520,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -10925,6 +11629,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -11029,6 +11737,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -11125,6 +11837,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -11156,6 +11872,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -11173,6 +11893,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -11192,10 +11916,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -11289,6 +12009,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -11402,6 +12126,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -11437,6 +12165,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -11453,6 +12185,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -11472,10 +12208,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -11552,6 +12284,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -11570,6 +12306,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -11589,10 +12329,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -11686,6 +12422,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -11712,6 +12452,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -11728,6 +12472,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -11747,10 +12495,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -11831,6 +12575,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -11854,6 +12602,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -11873,10 +12625,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -11921,6 +12669,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -11938,6 +12690,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -11957,10 +12713,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \
@@ -12003,6 +12755,10 @@ endif # GHS
  OS_Dirent.inl \
  OS_String.h \
  OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
  Min_Max.h \
  streams.h \
  Basic_Types.h \
@@ -12021,6 +12777,10 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -12040,10 +12800,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.i \
  Singleton.cpp \
  Object_Manager.h \

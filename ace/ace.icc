@@ -79,6 +79,7 @@ option
                         source type (cpp) "OS_Dirent.cpp"
                         source type (cpp) "OS_Memory.cpp"
                         source type (cpp) "OS_String.cpp"
+                        source type (cpp) "OS_TLI.cpp"
                         source type (cpp) "Parse_Node.cpp"
                         source type (cpp) "Pipe.cpp"
                         source type (cpp) "Proactor.cpp"

@@ -95,6 +95,7 @@ OBJFILES = \
         $(OBJDIR)\OS_Dirent.obj \
         $(OBJDIR)\OS_Memory.obj \
         $(OBJDIR)\OS_String.obj \
+        $(OBJDIR)\OS_TLI.obj \
 	$(OBJDIR)\Pair.obj \
 	$(OBJDIR)\Parse_Node.obj \
 	$(OBJDIR)\Pipe.obj \

@@ -465,6 +465,24 @@ extern "C"
 }
 
 // ============================================================================
+// Fundamental types
+// ============================================================================
+
+#if defined (ACE_WIN32)
+
+typedef HANDLE ACE_HANDLE;
+typedef SOCKET ACE_SOCKET;
+# define ACE_INVALID_HANDLE INVALID_HANDLE_VALUE
+
+#else /* ! ACE_WIN32 */
+
+typedef int ACE_HANDLE;
+typedef ACE_HANDLE ACE_SOCKET;
+# define ACE_INVALID_HANDLE -1
+
+#endif /* ACE_WIN32 */
+
+// ============================================================================
 // Miscellaneous macros
 // ============================================================================
 
