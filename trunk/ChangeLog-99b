@@ -1,3 +1,8 @@
+Tue May 11 15:43:30 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: added ACE_THR_PRI_OTHER_DEF for NT, because
+          MT_Cubit uses it.
+
 Tue May 11 14:45:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Conn_Test.cpp: fixed use of status on platforms that lack fork.
