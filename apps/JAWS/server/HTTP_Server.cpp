@@ -69,6 +69,16 @@ HTTP_Server::parse_args (int argc,
             this->throttle_ = 1;
           }
 	break;
+      case 'f':
+        if (ACE_OS::strcmp (get_opt.optarg, "THR_BOUND") == 0)
+          {
+          }
+        else if (ACE_OS::strcmp (get_opt.optarg, "THR_DAEMON") == 0)
+          {
+          }
+        else if (ACE_OS::strcmp (get_opt.optarg, "THR_DETACHED") == 0)
+          {
+          }
       case 'i':
 	// SYNCH  -> synchronous I/O
 	// ASYNCH -> asynchronous I/O
@@ -210,12 +220,6 @@ HTTP_Server::thread_per_request (void)
 {
   int grp_id = -1;
 
-#if 0
-  ::thr_create (0, 0,
-                Thread_Per_Request_Task::REAPER, (void *) this,
-                THR_NEW_LWP, 0);
-#endif
-
   // thread per request
   if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1,
                             PF_INET, this->backlog_) == -1)
@@ -276,16 +280,10 @@ Thread_Per_Request_Task::open (void *args)
   if (args != 0)
     grp_id = (int *) args;
 
-#if defined (ACE_WIN32)
   if (*grp_id == -1)
     status = *grp_id = this->activate (THR_DETACHED | THR_NEW_LWP);
   else
     status = this->activate (THR_DETACHED | THR_NEW_LWP, 1, 0, -1, *grp_id, 0);
-#else
-  status = ::thr_create (0, 0,
-                         Thread_Per_Request_Task::DEBUG_TPR, (void *) this,
-                         THR_DETACHED | THR_DAEMON | THR_NEW_LWP, 0);
-#endif
 
   if (status == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Per_Request_Task::open"),
@@ -303,31 +301,6 @@ Thread_Per_Request_Task::svc (void)
   HTTP_Handler *handler = factory.create_http_handler ();
   handler->open (this->handle_, *mb);
   mb->release ();
-  return 0;
-}
-
-void *
-Thread_Per_Request_Task::DEBUG_TPR (void *task)
-{
-  Thread_Per_Request_Task *tpr_task = (Thread_Per_Request_Task *) task;
-  tpr_task->svc ();
-  tpr_task->close (0);
-  // ::thr_exit (0);
-  return 0;
-}
-
-void *
-Thread_Per_Request_Task::REAPER (void *task)
-{
-  Thread_Per_Request_Task *tpr_task = (Thread_Per_Request_Task *) task;
-  tpr_task = tpr_task;
-
-#if !defined (ACE_WIN32)
-  while (1)
-    if (::thr_join(0, 0, 0) == 0)
-      ACE_DEBUG ((LM_DEBUG, " (%t) REAPER joined a thread\n"));
-#endif
-
   return 0;
 }
 
