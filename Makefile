@@ -82,18 +82,14 @@ RELEASE_LIB_FILES = \
 		ACE_wrappers/ace \
 		ACE_wrappers/include \
 
-ifeq ($(PWD),)
-  PWD := $(shell pwd)
-endif
-
 #### If creating the "official" ACE release, update the timestamp in VERSION.
 #### Detect if we are doing that by looking at the PWD.
 #### To disable this feature, add "TIMESTAMP=" to the make command line.
-ifeq ($(PWD),/home/cs/faculty/schmidt/adaptive/ACE_wrappers)
+ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
   TIMESTAMP = perl -pi -e 'BEGIN {chop ($$date=`/usr/bin/date`);} \
                            s/(, released ).*/$$1$$date./' VERSION; \
               cvs commit -m'make release: updated timestamp' VERSION; \
-	      chmod 644 VERSION; \
+	      chmod 644 VERSION;
 else
   TIMESTAMP =
 endif
