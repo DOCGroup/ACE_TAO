@@ -59,31 +59,32 @@ public:
   // this method will attempt to return the associated
   // parameter value
   //
-  // Safe to call without checking for a current argument
+  // Safe to call without checking that a current arg exists
   //
-  // A char* to 'value' is returned:
+  // In the following examples, a pointer to the char* "value" is ret
   //
   // eg: main -foobar value, main -FooBar value
   //     main -FOOBARvalue
   //
   //     all of the above will all match the <flag> == -FooBar
-  //     and will return a char* to 'value'
+  //     and will return a char* to "value"
   //
-  //     main -foobar 4 would succeed and return a char* to '4'
-  //     main -foobar -4 wound not succeed (-4 is not a parameter)
+  //     main -foobar 4 would succeed and return a char* to "4"
+  //     main -foobar -4 does not succeed (-4 is not a parameter)
   //          but instead, would return 0
   //
   // 0 is returned:
   //     If the current argument does not match flag
   //     If there is no parameter found after a 'matched' flag
   //
-  // If the flag is mateched and the flag and paramter DO NOT RUN
+  // If the flag is matched and the flag and paramter DO NOT RUN
   // together, the flag is consumed, the parameter is returned,
-  // and the new current argument is the paramter value.
-  // ie '-foobarflag  VALUE
+  // and the new current argument is the parameter value.
+  // ie '-foobarflag  VALUE' leaves the new cur arg == "VALUE"
   //
-  // If the flag is matched and the flag and parameter DO RUN
-  // together '-foobarflagVALUE, the flag is NOT consumed
+  // If the flag is matched and the flag and parameter RUN
+  // together '-foobarflagVALUE', the flag is NOT consumed
+  // and the cur arg is left pointing to the entire flag/value pair
 
   int cur_arg_strncasecmp (const char* flag);
   // Check if the current argument matches (case insensitive) <flag>
