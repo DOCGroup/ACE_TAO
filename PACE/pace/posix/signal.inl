@@ -152,13 +152,14 @@ PACE_INLINE
 int
 pace_sigwait (const pace_sigset_t * set, int * sig)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
+#if (PACE_SUNOS)
+  *sig = sigwait ((pace_sigset_t *)set);
+  if (*sig == -1)
+    return -1;
+  return 0;
+#else
   return sigwait (set, sig);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
-  PACE_UNUSED_ARG (set);
-  PACE_UNUSED_ARG (sig);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+#endif /* PACE_SUNOS */
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
