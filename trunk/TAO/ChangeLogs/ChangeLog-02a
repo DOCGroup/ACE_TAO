@@ -1,3 +1,7 @@
+Sun Jul 01 07:43:58 2001  Balachandran  <bala@cs.wustl.edu>
+
+        * TAO version 1.1.18 released.
+
 Fri Jun 29 16:57:47 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/Reliable_Oneways/client.cpp:
