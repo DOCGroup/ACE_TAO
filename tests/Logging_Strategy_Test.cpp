@@ -10,7 +10,15 @@
 //
 // = DESCRIPTION
 //     This program tests the <ACE_Logging_Strategy> class in various ways
-//     and also illustrates many of the features of the <ACE_Log_Msg>
+//     and also illustrates many of the features of the <ACE_Log_Msg>.
+//     The test works as follows:
+//     -Load the inserted arguments;
+//     -Remove existent log_files with the file_name specified by the user;
+//     -Generate 1000 messages to create the DEBUG statements to be stored in
+//      the files;
+//     -Counts the created log_files and if it was specified a maximum number
+//      of log_files, compare and verify if they are the same.
+//     -Verify the order of the files with the order argument.
 //
 // = AUTHOR
 //    Orlando Ribeiro <oribeiro@inescporto.pt>
@@ -56,7 +64,7 @@ cdecl_decoration (ACE_TCHAR const *func_name)
 #endif /* __BORLANDC__ */
 }
 
-/ Global variables.
+// Global variables.
 static ACE_TCHAR *file_name;
 static int max_size_files = 0;
 static int max_num_files = 0;
