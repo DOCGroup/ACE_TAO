@@ -1,3 +1,12 @@
+Thu Apr 29 11:37:12 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/SSL/SSL_Context.cpp: Add #include "ace/Guard_T.h" so AIX Visual
+	  Age C++ can see ACE_Guard.
+
+	* tests/Refcounted_Auto_Ptr_Test.cpp: Add #include "ace/Null_Mutex.h"
+	  so AIX Visual Age C++ can see ACE_Null_Mutex when instantiating
+	  templates.
+
 Thu Apr 29 11:25:49 2004  Steve Huston  <shuston@riverace.com>
 
 	These are all to quiet the 64-bit compiler on Win64.
