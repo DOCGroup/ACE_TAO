@@ -512,18 +512,14 @@ ACE_OS::set_sched_params (const ACE_Scheduling_Params &scheduling_params)
   // Set the priority class of this process to the real-time process class.
   if (! ::SetPriorityClass (::GetCurrentProcess (),
                             scheduling_params.priority ().os_priority_class ()))
-    {
-      return -1;
-    }
+    return -1;
 
   // Set the thread priority on the current thread.
   ACE_hthread_t my_thread_id;
   ACE_OS::thr_self (my_thread_id);
-  if (! ACE_OS::thr_setprio (my_thread_id,
-                             scheduling_params.priority ().os_default_thread_priority ()))
-    {
-      return -1;
-    }
+  if (ACE_OS::thr_setprio (my_thread_id,
+			   scheduling_params.priority ().os_default_thread_priority ()) == -1)
+    return -1;
 
 
 #elif defined (VXWORKS)
