@@ -32,7 +32,7 @@ ACE_TSS<TYPE>::~ACE_TSS (void)
   // We can't call <ACE_OS::thr_keyfree> until *all* of the threads
   // that are using that key have done an <ACE_OS::thr_key_detach>.
   // Otherwise, we'll end up with "dangling TSS pointers."
-  ACE_OS::thr_key_detach (this);
+  ACE_OS::thr_key_detach (this->key_, this);
 }
 
 template <class TYPE> TYPE *
