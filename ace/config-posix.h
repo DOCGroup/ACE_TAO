@@ -54,13 +54,15 @@
 # endif /* ACE_HAS_PTHREADS_STD */
 #endif /* _POSIX_THREADS */
 
-
-
 #if defined(_POSIX_MESSAGE_PASSING) && (_POSIX_MESSAGE_PASSING-0 != -1 )
 # if !defined(ACE_HAS_POSIX_MESSAGE_PASSING)
 #  define ACE_HAS_POSIX_MESSAGE_PASSING
 # endif /* ACE_HAS_POSIX_MESSAGE_PASSING */
 #endif /* _POSIX_MESSAGE_PASSING */
+
+#if defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)
+#  define ACE_HAS_SNPRINTF
+#endif /* _XOPEN_SOURCE */
 
 #endif /* ACE_CONFIG_POSIX_H */
 

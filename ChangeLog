@@ -1,3 +1,14 @@
+Fri Dec 13 18:10:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.cpp (wchar snprintf, sprintf): Change the selection for
+          ability to use vswprintf from ACE_HAS_XPG4_MULTIBYTE_CHAR to
+          _XOPEN_SOURCE >= 500. vswprintf came in at XPG5 (and C99).
+
+        * ace/config-hpux-11.00.h: Enable ACE_HAS_SNPRINTF if
+          _INCLUDE_HPUX_SOURCE is set after including stdsyms.h.
+
+        * ace/config-posix.h: Set ACE_HAS_SNPRINTF if _XOPEN_SOURCE >= 500.
+
 Thu Dec 12 20:11:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Timer_Heap_T.cpp (cancel): Release the queue lock before
