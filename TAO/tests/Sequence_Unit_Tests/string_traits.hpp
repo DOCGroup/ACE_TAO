@@ -44,6 +44,12 @@ struct string_traits_decorator
     std::transform(begin, end, dst, &derived::duplicate);
   }
 
+  inline static void release_range(
+      char_type ** begin, char_type ** end)
+  {
+    std::for_each(begin, end, &derived::release);
+  }
+
   inline static char_type const * initialize_if_zero(char_type * & element)
   {
     if (element == 0)
