@@ -779,7 +779,11 @@ be_interface::gen_operation_table (const char *flat_name,
                               + 1],
                         -1);
 
-        ACE_RANDR_TYPE seed = ACE_OS::time();
+        // This degree of randomness is necessary because there was an obscure
+        // chance of even this arriving at colliding filenames on multiprocessor
+        // machines when the IDL compiler was run at exactly the same time.
+        ACE_RANDR_TYPE seed = (ACE_static_cast(ACE_RANDR_TYPE, ACE_OS::time())
+                               + ACE_static_cast(ACE_RANDR_TYPE, ACE_OS::getpid ()));
         ACE_OS::sprintf (temp_file,
                          "%s%d.%s.gperf",
                          idl_global->temp_dir (),
