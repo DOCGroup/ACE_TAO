@@ -16,12 +16,12 @@
 #include "ace/pre.h"
 
 #include "ace/SOCK.h"
+#include "tao/Transport.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Connection_Cache_Manager.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -70,37 +70,19 @@ public:
   /// Destructor
   virtual ~TAO_Connection_Handler (void);
 
-  void cache_map_entry (
-      TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *entry);
-
-  /// Set/Get the Cache Map entry
-  TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
-
-  /// Make ourselves ready for use
-  int make_idle (void);
-
-  /// recache ourselves in the cache
-  int recache_handler (TAO_Connection_Descriptor_Interface *);
-
-  /// Increment the reference count
-  void incr_ref_count (void);
-
-  /// Decrement the reference count
-  void decr_ref_count (void);
-
   /// Get and set method for the flag that indicates whether the
   /// handler has been registered with the reactor or not.
   CORBA::Boolean is_registered (void);
   void is_registered (CORBA::Boolean);
 
+  /// Return the underlying transport object
+  TAO_Transport *transport (void);
+
+  /// Set the underlying transport object
+  void transport (TAO_Transport* transport);
+
   /// Get the underlying handle
   virtual ACE_HANDLE fetch_handle (void) = 0;
-
-  /// Purge our entry from the Connection Cache
-  int purge_entry (void);
-
-  /// Mark an entry unusable
-  void mark_invalid (void);
 
 protected:
 
@@ -128,15 +110,11 @@ private:
   /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core *orb_core_;
 
+  /// Transport object reference
+  TAO_Transport* transport_;
+
   /// Cached tss resources of the ORB that activated this object.
   TAO_ORB_Core_TSS_Resources *tss_resources_;
-
-  /// Reference count to the number of external references -- ie. the
-  /// count of the number of places our references are being held.
-  u_long ref_count_;
-
-  /// The cache map entry -- where we are in the Connection Cache
-  TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
 
   /// Are we registered with the reactor?
   CORBA::Boolean is_registered_;

@@ -1,3 +1,123 @@
+Fri Mar 16 18:25:54 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Cache_Entries.h:
+        * tao/Cache_Entries.inl:
+        * tao/Cache_Entries.cpp:     
+          Modified the Cache_Entries to support caching the Transport
+          instead of the Connection_Handler. [Bug 814]
+
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.inl:
+        * tao/Connection_Handler.cpp:
+          Removed the reference counting altogether.  The lifecycle of the
+          connection handler now follows the reactor. [Bug 814]
+
+        * tao/IIOP_Connection_Handler.h: 
+        * tao/IIOP_Connection_Handler.i:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.inl:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * tao/Strategies/UIOP_Connection_Handler.inl:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.h:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.i:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+          Removed the transport data member.  The transport may exist
+          independently of the Connection_Handler.  The connection handler
+          now allocats the transport on the heap and maintains a reference
+          to it. [Bug 814]
+
+        * tao/IIOP_Connector.h:
+        * tao/IIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connector.h:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.h:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.h:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+          Make connection based on transport. [Bug 814]
+
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.h:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+          Removed obsolete methods and added methods to transition the
+          handler state (called by the connection handler) and to return
+          the protocol specific connection handler as a
+          TAO_Connection_Handler. [Bug 814]
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+          Maintain a collection of transports instead of connection
+          handlers. [Bug 814]
+
+        * tao/Makefile.bor:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Updated file information for Windows based compilers. [Bug 814]
+
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+          Removed redundant methods and added new ones to support caching of
+          the transport within the orb core. [Bug 814]
+
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
+        * tao/Transport_Cache_Manager.cpp:
+          Renamed the Connection_Cache_Manager.* to
+          Transport_Cache_Manager.*  The functionality is similar, just
+          replace the TAO_Connection_Handler with TAO_Transport.
+          [Bug 814]
+
+        * tao/Transport_Descriptor_Interface.h:
+        * tao/Transport_Descriptor_Interface.inl:
+        * tao/Transport_Descriptor_Interface.cpp:
+          Renamed the Connection_Descriptor_Interface.* to
+          Transport_Descriptor_Interface.*  The functionality was unchanged.
+          [Bug 814]
+
+        * tao/Private_Transport_Descriptor.h:
+        * tao/Private_Transport_Descriptor.inl:
+        * tao/Private_Transport_Descriptor.cpp:
+          Renamed the Private_Connection_Descriptor.* to
+          Private_Transport_Descriptor.*  The functionality was unchanged.
+          [Bug 814]
+
+        * tao/Base_Transport_Property.h:
+        * tao/Base_Transport_Property.inl:
+        * tao/Base_Transport_Property.cpp:
+          Renamed the Base_Connection_Property.* to
+          Base_Transport_Property.*  The functionality was unchanged.
+          [Bug 814]
+
+        * tao/Acceptor_Impl.cpp:
+        * tao/Asynch_Invocation.cpp:
+        * tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/Asynch_Reply_Dispatcher.h:
+        * tao/Asynch_Reply_Dispatcher.i:
+        * tao/Connector_Registry.cpp:
+        * tao/Connector_Registry.h:
+        * tao/Exclusive_TMS.cpp:
+        * tao/Invocation.cpp:
+        * tao/Muxed_TMS.cpp:
+        * tao/Pluggable.h:
+        * tao/Protocols_Hooks.h:
+          Modifications to reflect method changes in the connection handler
+          and transport classes. [Bug 814]
+
+        * */Makefile:
+          Updated the dependencies to reflect the renaming of the 12 files.
+          [Bug 814]
+
+
 Fri Mar 16 15:48:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/PluggableUDP/DIOP/Makefile:

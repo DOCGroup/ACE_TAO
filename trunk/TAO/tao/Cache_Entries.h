@@ -15,7 +15,7 @@
 #define TAO_CACHE_ENTRIES_H
 #include "ace/pre.h"
 
-#include "tao/Connection_Descriptor_Interface.h"
+#include "tao/Transport_Descriptor_Interface.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,8 +28,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Connection_Handler;
-class Tao_Base_Connection_Property;
+class TAO_Transport;
 
 #ifdef index
 #undef index
@@ -38,12 +37,12 @@ class Tao_Base_Connection_Property;
 /**
  * @class TAO_Cache_IntId
  *
- * @brief Helper class for TAO_Connection_Cache_Manager
+ * @brief Helper class for TAO_Transport_Cache_Manager
  *
  * Helper class that wraps the <value> part of the Map or
- * table holding the Connection state.: unifies data items, so
+ * table holding the Transport state.: unifies data items, so
  * they can be stored together as a <value> for a <key> in a
- * table holding the state of the Connection Cache.
+ * table holding the state of the Transport Cache.
  */
 class TAO_Export TAO_Cache_IntId
 {
@@ -56,7 +55,7 @@ public:
   TAO_Cache_IntId (void);
 
   /// Constructor.
-  TAO_Cache_IntId (TAO_Connection_Handler *handler);
+  TAO_Cache_IntId (TAO_Transport *transport);
 
   /// Copy constructor.
   TAO_Cache_IntId (const TAO_Cache_IntId & rhs);
@@ -65,7 +64,7 @@ public:
   ~TAO_Cache_IntId (void);
 
   /// Assignment operator (does copy memory).
-  void operator= (const TAO_Cache_IntId &rhs);
+  TAO_Cache_IntId& operator= (const TAO_Cache_IntId &rhs);
 
   /// Equality comparison operator (must match both id_ and kind_).
   int operator== (const TAO_Cache_IntId &rhs) const;
@@ -73,11 +72,11 @@ public:
   /// Inequality comparison operator.
   int operator!= (const TAO_Cache_IntId &rhs) const;
 
-  /// Return the underlying handler
-  TAO_Connection_Handler *handler (void);
+  /// Return the underlying transport
+  TAO_Transport *transport (void);
 
-  /// Return the underlying handler
-  const TAO_Connection_Handler *handler (void) const;
+  /// Return the underlying transport
+  const TAO_Transport *transport (void) const;
 
   void recycle_state (ACE_Recyclable_State new_state);
 
@@ -86,8 +85,8 @@ public:
 
 private:
 
-  /// The connection handler that needs to be cached.
-  TAO_Connection_Handler *handler_;
+  /// The transport that needs to be cached.
+  TAO_Transport *transport_;
 
   /// The state of the handle
   ACE_Recyclable_State recycle_state_;
@@ -97,10 +96,10 @@ private:
 /**
  * @class TAO_Cache_ExtId
  *
- * @brief Helper class for TAO_Connection_Cache_Manager: unifies
+ * @brief Helper class for TAO_Transport_Cache_Manager: unifies
  * several  data items, so they can be stored together as a
  * <value> for a <key> in a hash table holding the state of the
- * Connection Cache.
+ * Transport Cache.
  *
  */
 class TAO_Export TAO_Cache_ExtId
@@ -112,7 +111,7 @@ public:
   TAO_Cache_ExtId (void);
 
   /// Constructor.
-  TAO_Cache_ExtId (TAO_Connection_Descriptor_Interface *prop);
+  TAO_Cache_ExtId (TAO_Transport_Descriptor_Interface *prop);
 
   /// Copy constructor.
   TAO_Cache_ExtId (const TAO_Cache_ExtId & rhs);
@@ -122,7 +121,7 @@ public:
 
   // = Assignment and comparison operators.
   /// Assignment operator (does copy memory).
-  void operator= (const TAO_Cache_ExtId &rhs);
+  TAO_Cache_ExtId& operator= (const TAO_Cache_ExtId &rhs);
 
   /// Equality comparison operator (must match both id_ and kind_).
   int operator== (const TAO_Cache_ExtId &rhs) const;
@@ -142,26 +141,26 @@ public:
   CORBA::ULong index (void) const;
 
   /// Set the index value. This calls should not be used by any users
-  /// but for the TAO_Connection_Cache_Manager class.
+  /// but for the TAO_Transport_Cache_Manager class.
   void index (CORBA::ULong index);
 
   // = Accessors
   /// Get the underlying the property pointer
-  TAO_Connection_Descriptor_Interface *property (void) const;
+  TAO_Transport_Descriptor_Interface *property (void) const;
 
 private:
   // = Data members.
 
   /// A property object that we represent.
-  TAO_Connection_Descriptor_Interface *connection_property_;
+  TAO_Transport_Descriptor_Interface *transport_property_;
 
-  /// Do we need to delete connection_propert_?
+  /// Do we need to delete transport_propert_?
   CORBA::Boolean is_delete_;
 
   /**
    * This is a supplementary index. Would be set to zero by
-   * default. Would be altered by the Connection_Cache of TAO. Please
-   * see the documentation of TAO_Connection_Cache_Manager for
+   * default. Would be altered by the Transport_Cache of TAO. Please
+   * see the documentation of TAO_Transport_Cache_Manager for
    * details.
    */
   CORBA::ULong index_;

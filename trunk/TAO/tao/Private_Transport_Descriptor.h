@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   Private_Connection_Descriptor.h
+ *  @file   Private_Transport_Descriptor.h
  *
  *  $Id$
  *
@@ -23,10 +23,10 @@
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-#include "tao/Connection_Descriptor_Interface.h"
+#include "tao/Transport_Descriptor_Interface.h"
 
-class TAO_Export TAO_Private_Connection_Descriptor:
-  public TAO_Connection_Descriptor_Interface
+class TAO_Export TAO_Private_Transport_Descriptor:
+  public TAO_Transport_Descriptor_Interface
 {
   // = TITLE
   //   Concrete connection descriptor.
@@ -34,35 +34,35 @@ class TAO_Export TAO_Private_Connection_Descriptor:
   // = DESCRIPTION
   //
   //   Holds info necessary to identify private connections and
-  //   store/look them up in the Connection Cache.  (For description
-  //   of private connections see RTCORBA::PrivateConnectionPolicy.)
+  //   store/look them up in the Transport Cache.  (For description
+  //   of private connections see RTCORBA::PrivateTransportPolicy.)
   //
 public:
 
   // = Initialization and termination methods.
 
-  TAO_Private_Connection_Descriptor (TAO_Endpoint *endpoint,
-                                     long object_id,
-                                     CORBA::Boolean flag = 0);
+  TAO_Private_Transport_Descriptor (TAO_Endpoint *endpoint,
+                                    long object_id,
+                                    CORBA::Boolean flag = 0);
 
-  virtual ~TAO_Private_Connection_Descriptor (void);
+  virtual ~TAO_Private_Transport_Descriptor (void);
 
 
-  // = Abstract TAO_Connection_Descriptor methods to be implemented by
+  // = Abstract TAO_Transport_Descriptor methods to be implemented by
   // subclasses.
 
-  virtual  TAO_Connection_Descriptor_Interface *duplicate (void);
+  virtual  TAO_Transport_Descriptor_Interface *duplicate (void);
 
   virtual CORBA::Boolean is_equivalent (
-      const TAO_Connection_Descriptor_Interface *other_prop);
+      const TAO_Transport_Descriptor_Interface *other_prop);
 
   virtual u_long hash (void) const;
 
 private:
 
   // Descriptor should not be copied, except using the <duplicate> method.
-  ACE_UNIMPLEMENTED_FUNC (TAO_Private_Connection_Descriptor (const TAO_Private_Connection_Descriptor&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Private_Connection_Descriptor&))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Private_Transport_Descriptor (const TAO_Private_Transport_Descriptor&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Private_Transport_Descriptor&))
 
   /**
    * Unique identifier of the object to which private connection
@@ -73,7 +73,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Private_Connection_Descriptor.inl"
+# include "tao/Private_Transport_Descriptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_RT_CORBA == 1 */

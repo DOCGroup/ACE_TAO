@@ -79,7 +79,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
     return -1;
 
   // The service handler has been activated. Now cache the handler.
-  if (sh->add_handler_to_cache () == -1)
+  if (sh->add_transport_to_cache () == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) Could not add the handler to Cache \n")));
@@ -95,15 +95,6 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
                          f->server_connection_thread_count ());
 
   // reactive concurrency model
-
-  // Bump the reference count. This helps keeping track of the number
-  // of places the handler is registered with. This is particularly
-  // helpful when it is needed to explicitly remove them from the
-  // reactor prior to shutting down the ORB.  This is particularly
-  // important for dynamically loaded ORBs where an application level
-  // reactor, such as the Singleton reactor, is used instead of an ORB
-  // created one.
-  sh->incr_ref_count ();
 
   // Also set the flag in the connection handler to indicate whether
   // the handler has been registered with the reactor

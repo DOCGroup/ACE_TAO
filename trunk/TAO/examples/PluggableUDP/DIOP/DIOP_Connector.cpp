@@ -10,7 +10,7 @@
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
-#include "tao/Base_Connection_Property.h"
+#include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 #include "ace/Strategies_T.h"
 
@@ -104,7 +104,7 @@ TAO_DIOP_Connector::close (void)
 }
 
 int
-TAO_DIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
+TAO_DIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
                              TAO_Transport *&transport,
                              ACE_Time_Value * /*max_wait_time*/,
                              CORBA::Environment &)

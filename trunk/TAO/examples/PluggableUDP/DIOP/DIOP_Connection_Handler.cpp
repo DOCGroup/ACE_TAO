@@ -11,8 +11,8 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "DIOP_Transport.h"
 #include "DIOP_Endpoint.h"
-#include "tao/Connection_Cache_Manager.h"
-#include "tao/Base_Connection_Property.h"
+#include "tao/Transport_Cache_Manager.h"
+#include "tao/Base_Transport_Property.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DIOP_Connection_Handler.i"
@@ -25,8 +25,7 @@ ACE_RCSID(tao, DIOP_Connect, "$Id$")
 TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_DIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    transport_ (this, 0, 0),
-    refcount_ (1),
+    pending_upcalls_ (1),
     tcp_properties_ (0)
 {
   // This constructor should *never* get called, it is just here to
@@ -43,28 +42,35 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core
                                                           void *arg)
   : TAO_DIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    transport_ (this, orb_core, flag),
-    refcount_ (1),
+    pending_upcalls_ (1),
     tcp_properties_ (ACE_static_cast
                      (TAO_DIOP_Properties *, arg))
 {
+  TAO_DIOP_Transport* specific_transport = 0;
+  ACE_NEW(specific_transport,
+          TAO_DIOP_Transport(this, orb_core, 0));
+
+  // store this pointer (indirectly increment ref count)
+  this->transport(specific_transport);
+  TAO_Transport::release (specific_transport);
 }
 
 
 TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler (void)
 {
-  // If the socket has not already been closed.
-  if (this->get_handle () != ACE_INVALID_HANDLE)
-    {
-      // Cannot deal with errors, and therefore they are ignored.
-      this->transport_.send_buffered_messages ();
-    }
-  else
-    {
-      // Dequeue messages and delete message blocks.
-      this->transport_.dequeue_all ();
-    }
-
+  if (this->transport () != 0) {
+    // If the socket has not already been closed.
+    if (this->get_handle () != ACE_INVALID_HANDLE)
+      {
+        // Cannot deal with errors, and therefore they are ignored.
+        this->transport ()->send_buffered_messages ();
+      }
+    else
+      {
+        // Dequeue messages and delete message blocks.
+        this->transport ()->dequeue_all ();
+      }
+  }
   // @@ Frank: Added from DIOP_Connect.cpp
   this->handle_cleanup ();
 
@@ -134,7 +140,7 @@ TAO_DIOP_Connection_Handler::open (void*)
     return -1;
 #endif  ! ACE_LACKS_TCP_NODELAY
 
-  if (this->transport_.wait_strategy ()->non_blocking ())
+  if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
         return -1;
@@ -256,8 +262,8 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                  handle,
                  rm));
 
-  --this->refcount_;
-  if (this->refcount_ == 0 &&
+  --this->pending_upcalls_;
+  if (this->pending_upcalls_ == 0 &&
       this->is_registered ())
     {
       // @@ Frank: Added reactor check.  not sure if this is right?
@@ -276,17 +282,22 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
       if (this->get_handle () != ACE_INVALID_HANDLE)
         {
           // Send the buffered messages first
-          this->transport_.send_buffered_messages ();
-
-          this->peer ().close ();
+          this->transport ()->send_buffered_messages ();
 
           // Purge the entry too
-          this->mark_invalid ();
+          this->transport ()->mark_invalid ();
+
+          // Signal the transport that we will no longer have
+          // a reference to it.  This will eventually call
+          // TAO_Transport::release ().
+          this->transport (0);
+
+          this->peer ().close ();
         }
 
-      // Decrement the reference count
-      this->decr_ref_count ();
-
+      // Follow usual Reactor-style lifecycle semantics and commit
+      // suicide.
+      delete this;
 
     }
 
@@ -322,16 +333,7 @@ TAO_DIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 
 
 int
-TAO_DIOP_Connection_Handler::close (u_long)
-{
-  this->decr_ref_count ();
-
-  return 0;
-}
-
-
-int
-TAO_DIOP_Connection_Handler::add_handler_to_cache (void)
+TAO_DIOP_Connection_Handler::add_transport_to_cache (void)
 {
   ACE_INET_Addr addr;
 
@@ -344,11 +346,11 @@ TAO_DIOP_Connection_Handler::add_handler_to_cache (void)
                               0);
 
   // Construct a property object
-  TAO_Base_Connection_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (&endpoint);
 
   // Add the handler to Cache
-  return this->orb_core ()->connection_cache ().cache_handler (&prop,
-                                                               this);
+  return this->orb_core ()->transport_cache ().cache_transport (&prop,
+                                                                this->transport ());
 }
 
 // @@ Frank: Hopefully this isn't needed
@@ -372,19 +374,19 @@ TAO_DIOP_Connection_Handler::process_listen_point_list (
                                   0);
 
       // Construct a property object
-      TAO_Base_Connection_Property prop (&endpoint);
+      TAO_Base_Transport_Property prop (&endpoint);
 
       // Mark the connection as bidirectional
       prop.set_bidir_flag (1);
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      int retval = this->recache_handler (&prop);
+      int retval = this->transport ()->recache_transport (&prop);
       if (retval == -1)
         return retval;
 
       // Make the handler idle and ready for use
-      this->make_idle ();
+      this->transport ()->make_idle ();
     }
 
   return 0;
@@ -402,10 +404,10 @@ int
 TAO_DIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
                                              ACE_Time_Value *max_wait_time)
 {
-  this->refcount_++;
+  this->pending_upcalls_++;
 
   // Call the transport read the message
-  int result = this->transport_.read_process_message (max_wait_time);
+  int result = this->transport ()->read_process_message (max_wait_time);
 
   // Now the message has been read
   if (result == -1 && TAO_debug_level > 0)
@@ -417,9 +419,7 @@ TAO_DIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
     }
 
   // The upcall is done. Bump down the reference count
-  --this->refcount_;
-  if (this->refcount_ == 0)
-    this->decr_ref_count ();
+  --this->pending_upcalls_;
 
   if (result == -1)
     return result;

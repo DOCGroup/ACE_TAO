@@ -15,9 +15,8 @@ ACE_RCSID(tao, Connection_Handler, "$Id$")
 
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   :orb_core_ (orb_core),
+   transport_ (0),
    tss_resources_ (orb_core->get_tss_resources ()),
-   ref_count_ (1),
-   cache_map_entry_ (0),
    is_registered_ (0)
 {
 }
@@ -29,52 +28,8 @@ TAO_Connection_Handler::~TAO_Connection_Handler (void)
   // nobody tries to access these
   this->orb_core_ = 0;
   this->tss_resources_ = 0;
-  this->cache_map_entry_ = 0;
+  TAO_Transport::release (this->transport_);
 }
-
-
-int
-TAO_Connection_Handler::purge_entry (void)
-{
-  int retval =
-    this->orb_core_->connection_cache ().purge_entry (this->cache_map_entry_);
-
-  this->cache_map_entry_ = 0;
-
-  // Decrement our reference count as we have been removed from the
-  // cache map.
-  this->decr_ref_count ();
-
-  return retval;
-}
-
-void
-TAO_Connection_Handler::mark_invalid (void)
-{
-  if (this->cache_map_entry_)
-    this->cache_map_entry_->int_id_.recycle_state
-      (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
-}
-
-
-int
-TAO_Connection_Handler::make_idle (void)
-{
-  return
-    this->orb_core_->connection_cache ().make_idle (this->cache_map_entry_);
-}
-
-int
-TAO_Connection_Handler::recache_handler (TAO_Connection_Descriptor_Interface *desc)
-{
-  // First purge our entry
-  this->orb_core_->connection_cache ().purge_entry (this->cache_map_entry_);
-
-  // Then add ourselves to the cache
-  return this->orb_core_->connection_cache ().cache_handler (desc,
-                                                             this);
-}
-
 
 
 int
@@ -165,4 +120,14 @@ TAO_Connection_Handler::svc_i (void)
                  ACE_TEXT ("TAO (%P|%t) TAO_Connection_Handler::svc_i end\n")));
 
   return result;
+}
+
+void
+TAO_Connection_Handler::transport (TAO_Transport* transport)
+{
+  if (this->transport_ != 0) {
+    this->transport_->connection_handler_closing ();
+  }
+
+  this->transport_ = TAO_Transport::_duplicate (transport);
 }

@@ -130,7 +130,7 @@ int
 TAO_Muxed_TMS::idle_after_send (void)
 {
   if (this->transport_ != 0)
-    return this->transport_->idle ();
+    return this->transport_->make_idle ();
 
   return 0;
 }

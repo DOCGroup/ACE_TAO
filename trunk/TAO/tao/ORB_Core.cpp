@@ -156,7 +156,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     ior_interceptors_ (),
     parser_registry_ (),
-    connection_cache_ (),
+    transport_cache_ (),
     bidir_giop_policy_ (0)
 {
 #if defined(ACE_MVS)
@@ -1071,10 +1071,10 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
             this,
             this->orb_params ()->preconnects ());
 
-  // Open the Connection Cache
-  // @@ This seems to be a nice place to configure the connection
+  // Open the Transport Cache
+  // @@ This seems to be a nice place to configure the transport
   // cache for the number of allowed entries
-  this->connection_cache_.open (this);
+  this->transport_cache_.open (this);
 
   // As a last step perform initializations of the service callbacks
   this->services_callbacks_init ();
@@ -1204,9 +1204,9 @@ TAO_ORB_Core::fini (void)
 
   ACE_Handle_Set handle_set;
 
-  // Close the connection cache and return the handle set that needs
+  // Close the transport cache and return the handle set that needs
   // to be de-registered from the reactor.
-  this->connection_cache_.close (handle_set);
+  this->transport_cache_.close (handle_set);
 
   // Shutdown all open connections that are registered with the ORB
   // Core.  Note that the ACE_Event_Handler::DONT_CALL mask is NOT
@@ -1550,8 +1550,6 @@ TAO_ORB_Core::inherit_from_parent_thread (
       tss->inherited_reactor_ = 1;
     }
 #endif /* 0 */
-  // this->connection_cache (tss_resources->connection_cache_);
-  // Inherit connection cache?
   return 0;
 }
 
@@ -2831,7 +2829,7 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
     output_cdr_msgblock_allocator_ (0),
     input_cdr_dblock_allocator_ (0),
     input_cdr_buffer_allocator_ (0),
-    connection_cache_ (0),
+    transport_cache_ (0),
     event_loop_thread_ (0),
     client_leader_thread_ (0),
     leader_follower_condition_variable_ (0),
@@ -2864,8 +2862,8 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
     this->input_cdr_buffer_allocator_->remove ();
   delete this->input_cdr_buffer_allocator_;
 
-  // UNIMPLEMENTED delete this->connection_cache_;
-  this->connection_cache_ = 0;
+  // UNIMPLEMENTED delete this->transport_cache_;
+  this->transport_cache_ = 0;
 
   delete this->leader_follower_condition_variable_;
   this->leader_follower_condition_variable_ = 0;

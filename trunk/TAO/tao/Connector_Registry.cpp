@@ -7,7 +7,7 @@
 #include "tao/Endpoint.h"
 #include "tao/Environment.h"
 #include "tao/debug.h"
-#include "tao/Connection_Descriptor_Interface.h"
+
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.i"
@@ -264,7 +264,7 @@ TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
 
 
 int
-TAO_Connector_Registry::connect (TAO_Connection_Descriptor_Interface *desc,
+TAO_Connector_Registry::connect (TAO_Transport_Descriptor_Interface *desc,
                                  TAO_Transport *&transport,
                                  ACE_Time_Value *max_wait_time,
                                  CORBA::Environment &ACE_TRY_ENV)
