@@ -396,7 +396,9 @@ public:
   // Return the ID of the "owner" thread.
 
   void owner (ACE_thread_t new_owner);
-  // Transfers ownership of the ReactorEx to the <new_owner>
+  // Transfers ownership of the ReactorEx to the <new_owner>. The
+  // transfer will not complete until all threads are ready (just like
+  // the handle set).
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
@@ -432,6 +434,12 @@ private:
 
   int update_state (void);
   // Update the state of the handler repository
+
+  int new_owner (void);
+  // Check to see if we have a new owner
+
+  int change_owner (void);
+  // Set owner to new owner
 
   void wakeup_all_threads (void);
   // Wake up all threads in WaitForMultipleObjects so that they can
@@ -485,6 +493,9 @@ private:
   // waits on the notify handle. Note that the ownership can be
   // transferred.
 
+  ACE_thread_t new_owner_;
+  // The owner to be of the ReactorEx
+
   ACE_thread_t change_state_thread_;
   // This is the thread which is responsible for the changing the
   // state of the <ReactorEx> handle set
@@ -492,6 +503,9 @@ private:
   ACE_HANDLE atomic_wait_array_ [2];
   // This is an array of ACE_HANDLEs which keep track of the <lock_>
   // and <ok_to_wait_> handles
+
+  int closed_for_business_;
+  // This flag is used to keep track of whether we are already closed.
 };
 
 #else /* NOT win32 */

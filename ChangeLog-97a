@@ -1,3 +1,30 @@
+Tue Feb 18 03:50:10 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/ReactorEx: 
+
+	  (a) Added a closed_for_business_ flag so that handle_events()
+ 	      cannot be called after the ReactorEx has been closed down.
+
+	  (b) Transfer of ownership of the ReactorEx to a new owner has
+ 	      changed. The transfer will not complete until all threads
+ 	      are ready for it (just like the handle set).
+  	      ReactorEx->update_state() now looks out for changes in
+ 	      ownership.
+
+	* examples/Reactor/ReactorEx/test_MT.cpp:
+	  
+	  (a) The test now terminates and number of iterations can be
+	      specified on the command line.
+	      
+	  (b) Graceful shutdown of ReactorEx is now exercised in the
+ 	      test. This is a change for the earlier infinite loop. This
+ 	      also shows how to gracefully close ReactorEx which is being
+	      shared by multiple threads.
+
+	  (c) Timers were added to the test.
+
+	* ace/config{win32}: Added flag ACE_LACKS_LINEBUFFERED_STREAMBUF.
+
 Mon Feb 17 22:37:35 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/Log_Msg.h (ACE_RETURN): Modified all ACE_RETURN macros to
