@@ -91,7 +91,7 @@ Gen_Perf::sort_set (char *union_set, int len)
 {
   for (int i = 0, j = len - 1; i < j; i++)
     {
-      char curr, tmp;
+      short curr, tmp;
 
       for (curr = i + 1, tmp = union_set[curr];
            curr > 0
@@ -111,7 +111,7 @@ Gen_Perf::hash (List_Node *key_node)
   int sum = option[NOLENGTH] ? 0 : key_node->length;
 
   for (char *ptr = key_node->keysig; *ptr; ptr++)
-      sum += Vectors::asso_values[*ptr];
+      sum += Vectors::asso_values[(int) *ptr];
 
   key_node->hash_value = sum;
   return sum;
@@ -127,7 +127,7 @@ Gen_Perf::hash (List_Node *key_node)
 inline int
 Gen_Perf::affects_prev (char c, List_Node *curr)
 {
-  int original_char = Vectors::asso_values[c];
+  int original_char = Vectors::asso_values[(int) c];
   int total_iterations;
 
   if (!option[FAST])
@@ -146,7 +146,7 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
     {
       int collisions = 0;
 
-      Vectors::asso_values[c] = Vectors::asso_values[c] +
+      Vectors::asso_values[c] = Vectors::asso_values[(int) c] +
         (option.jump () ? option.jump () : ACE_OS::rand ()) & option.asso_max () - 1;
 
       // Iteration Number array is a win, O(1) intialization time!
@@ -171,7 +171,7 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
     }
 
   // Restore original values, no more tries.
-  Vectors::asso_values[c] = original_char;
+  Vectors::asso_values[(int) c] = original_char;
   // If we're this far it's time to try the next character....
   return 1;
 }
@@ -205,7 +205,7 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
                       " by changing asso_value['%c'] (char #%d) to %d\n",
                       *temp,
                       temp - union_set + 1,
-                      Vectors::asso_values[*temp]));
+                      Vectors::asso_values[(int) *temp]));
         // Good, doesn't affect previous hash values, we'll take it.
         return 0;
       }

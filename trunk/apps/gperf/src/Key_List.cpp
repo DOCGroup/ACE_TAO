@@ -409,7 +409,7 @@ Key_List::occurrence (List_Node *ptr)
   int value = 0;
 
   for (char *temp = ptr->keysig; *temp; temp++)
-    value += Vectors::occurrences[*temp];
+    value += Vectors::occurrences[(int) *temp];
 
   return value;
 }
@@ -421,7 +421,7 @@ inline void
 Key_List::determined (List_Node *ptr)
 {
   for (char *temp = ptr->keysig; *temp; temp++)
-    Key_List::determined_[*temp] = 1;
+    Key_List::determined_[(int) *temp] = 1;
 }
 
 // Returns TRUE if PTR's key set is already completely determined.
@@ -432,7 +432,7 @@ Key_List::already_determined (List_Node *ptr)
   int is_determined = 1;
 
   for (char *temp = ptr->keysig; is_determined && *temp; temp++)
-    is_determined = determined_[*temp];
+    is_determined = determined_[(int) *temp];
 
   return is_determined;
 }
