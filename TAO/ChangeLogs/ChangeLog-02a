@@ -1,3 +1,46 @@
+Sat Jul 22 16:30:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/tests/InterfaceRepo/InterfaceRepo.dsw:
+
+	  Added new project to workspace.
+
+	* orbsvcs/tests/InterfaceRepo/Makefile:
+
+	  Added Persistence_Test to list of directories.
+
+	* orbsvcs/tests/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+
+	  Fixed some g++ build warnings.
+
+	* orbsvcs/tests/tests/InterfaceRepo/IFR_Test/IFR_Test.dsp:
+
+	  Modified directories for Intermediate and Output files (MSVC) to
+	  be consistent with the way we do it in other projects.
+
+	* orbsvcs/tests/tests/InterfaceRepo/IFR_Test/README:
+
+	  Minor changes.
+
+	* orbsvcs/tests/tests/InterfaceRepo/IFR_Test/run_test.pl:
+
+	  Fixed addition of locking option to IFR service process
+	  command string. The option wasn't getting picked up.
+
+	* orbsvcs/tests/tests/InterfaceRepo/Persistence_Test/Makefile:
+	* orbsvcs/tests/tests/InterfaceRepo/Persistence_Test/Persistence_Test.dsp:
+	* orbsvcs/tests/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+	* orbsvcs/tests/tests/InterfaceRepo/Persistence_Test/Ptest.h:
+	* orbsvcs/tests/tests/InterfaceRepo/Persistence_Test/README:
+	* orbsvcs/tests/tests/InterfaceRepo/Persistence_Test/run_test.pl:
+	* orbsvcs/tests/tests/InterfaceRepo/Persistence_Test/test.cpp:
+
+	  New files for IFR persistence test.
+
+	* docs/releasenotes/index.html:
+
+	  Added item about persistence test and removed some completed
+	  items from Future Work.
+
 2000-07-22  Yamuna Krishnamurthy  <yamuna@danzon.cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
