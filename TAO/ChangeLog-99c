@@ -1,3 +1,67 @@
+Sun Nov 21 19:15:10 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be.h:
+        * orbsvcs/orbsvcs/CosEvent_Utilities.h:
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h:
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Log/BasicLog_i.h:
+        * orbsvcs/orbsvcs/Log/Iterator_i.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+        * tao/BoundsC.h:
+        * tao/Buffering_Constraint_Policy.h:
+        * tao/CONV_FRAMEC.h:
+        * tao/CONV_FRAMES.h:
+        * tao/CONV_FRAMES_T.h:
+        * tao/Client_Priority_Policy.h:
+        * tao/CurrentC.h:
+        * tao/DomainC.h:
+        * tao/DomainS_T.h:
+        * tao/DynAnyC.h:
+        * tao/IOPC.h:
+        * tao/IOPS.h:
+        * tao/IOPS_T.h:
+        * tao/IORC.h:
+        * tao/IORS.h:
+        * tao/InconsistentTypeCodeC.h:
+        * tao/InterceptorC.h:
+        * tao/InterceptorS.h:
+        * tao/InterfaceC.h:
+        * tao/MessagingC.h:
+        * tao/MessagingS.h:
+        * tao/MessagingS_T.h:
+        * tao/Messaging_Policy_i.h:
+        * tao/ObjectIDList.h:
+        * tao/POAC.h:
+        * tao/POAS.h:
+        * tao/POA_CORBA.h:
+        * tao/PollableC.h:
+        * tao/PollableS.h:
+        * tao/PollableS_T.h:
+        * tao/Services.h:
+        * tao/TAOC.h:
+        * tao/TAOS.h:
+        * tao/TAOS_T.h:
+        * tao/TimeBaseC.h:
+        * tao/TimeBaseS_T.h:
+        * tao/WrongTransactionC.h:
+        * tao/corbafwd.h:
+        
+          MSVC 5 doesn't support the #pragma warning(push/pop) commands,
+          so changed them to be conditionally compiled in MSVC 6 or higher.
+
+        * orbsvcs/orbsvcs/Log/BasicLog_i.h:
+        * orbsvcs/orbsvcs/Log/Log_i.h:
+
+          There is a bug in MSVC 5 that doesn't allow namespace :: to be
+          used within a default parameter, so had to make sure that a using
+          directive was put before it (see MS KB article Q167350).
+
 Sat Nov 20 20:40:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_{ch, cs}.cpp:

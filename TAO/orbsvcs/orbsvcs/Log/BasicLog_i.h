@@ -27,11 +27,18 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
 #pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
 class LogMgr_i;
+
+// Bug in MSVC 5, See KB article Q167350
+#if defined (_MSC_VER) && (_MSC_VER == 1100)
+using DsLogAdmin::wrap;
+#endif /* (_MSC_VER) && (_MSC_VER == 1100) */
 
 class BasicLog_i : public Log_i,
                    public POA_DsLogAdmin::BasicLog,
@@ -65,7 +72,7 @@ public:
   // Used to access the hash map that holds all the Logs created.
 };
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

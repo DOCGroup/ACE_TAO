@@ -300,7 +300,9 @@ TAO_CodeGen::start_client_header (const char *fname)
         << "#endif /* TAO_EXPORT_NESTED_CLASSES */\n\n";
 
       *this->client_header_ << "#if defined(_MSC_VER)\n"
+                            << "#if (_MSC_VER >= 1200)\n"
                             << "#pragma warning(push)\n"
+                            << "#endif /* _MSC_VER >= 1200 */\n"
                             << "#pragma warning(disable:4250)\n"
                             << "#endif /* _MSC_VER */\n\n";
 
@@ -508,7 +510,9 @@ TAO_CodeGen::start_server_header (const char *fname)
                             << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
 
       *this->server_header_ << "#if defined(_MSC_VER)\n"
+                            << "#if (_MSC_VER >= 1200)\n"
                             << "#pragma warning(push)\n"
+                            << "#endif /* _MSC_VER >= 1200 */\n"
                             << "#pragma warning(disable:4250)\n"
                             << "#endif /* _MSC_VER */\n\n";
 
@@ -598,7 +602,9 @@ TAO_CodeGen::start_server_template_header (const char *fname)
       this->server_template_header_->print ("#define %s\n\n", macro_name);
 
       *this->server_template_header_ << "#if defined(_MSC_VER)\n"
+                                     << "#if (_MSC_VER >= 1200)\n"
                                      << "#pragma warning(push)\n"
+                                     << "#endif /* _MSC_VER >= 1200 */\n"
                                      << "#pragma warning(disable:4250)\n"
                                      << "#endif /* _MSC_VER */\n\n";
 
@@ -957,7 +963,7 @@ TAO_CodeGen::end_client_header (void)
     idl_global->be_get_client_inline_fname (1) << "\"\n";
   *this->client_header_ << "#endif /* defined INLINE */\n\n";
 
-  *this->client_header_ << "#if defined(_MSC_VER)\n"
+  *this->client_header_ << "#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
                         << "#pragma warning(pop)\n"
                         << "#endif /* _MSC_VER */\n";
 
@@ -979,7 +985,7 @@ TAO_CodeGen::end_server_header (void)
     idl_global->be_get_server_inline_fname (1) << "\"\n";
   *this->server_header_ << "#endif /* defined INLINE */\n\n";
 
-  *this->server_header_ << "#if defined(_MSC_VER)\n"
+  *this->server_header_ << "#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
                         << "#pragma warning(pop)\n"
                         << "#endif /* _MSC_VER */\n";
 
@@ -1048,7 +1054,7 @@ TAO_CodeGen::end_server_template_header (void)
     idl_global->be_get_server_template_skeleton_fname (1) << "\")\n";
   *this->server_template_header_ << "#endif /* defined REQUIRED PRAGMA */\n\n";
 
-  *this->server_template_header_ << "#if defined(_MSC_VER)\n"
+  *this->server_template_header_ << "#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
                                  << "#pragma warning(pop)\n"
                                  << "#endif /* _MSC_VER */\n";
 

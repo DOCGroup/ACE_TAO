@@ -27,6 +27,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// Bug in MSVC 5, See KB article Q167350
+#if defined (_MSC_VER) && (_MSC_VER == 1100)
+using DsLogAdmin::wrap;
+#endif /* (_MSC_VER) && (_MSC_VER == 1100) */
+
 class Log_i : public virtual POA_DsLogAdmin::Log
 {
   // = TITLE

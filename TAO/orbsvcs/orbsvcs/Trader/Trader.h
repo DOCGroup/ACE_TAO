@@ -43,7 +43,9 @@
 #include "orbsvcs/orbsvcs_export.h"
 
 #if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
 #pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
@@ -479,7 +481,7 @@ operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
 int operator== (const CosTrading::Admin::OctetSeq& left,
                 const CosTrading::Admin::OctetSeq& right);
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
