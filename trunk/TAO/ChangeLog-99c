@@ -1,3 +1,9 @@
+Thu Feb 25 14:44:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/Event/Timer_Module.cpp:
+	  Fixed a typo, still another timeprobe error - not sure
+	  what was intended, will email doc_group.
+
 Thu Feb 25 12:41:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO/performance-tests/Cubit/Orbix: Updated the Makefiles to
