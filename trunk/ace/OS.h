@@ -3702,11 +3702,12 @@ extern int t_errno;
   // trouble when introducing member functions with the same name.
   // Thanks to Thilo Kielmann" <kielmann@informatik.uni-siegen.de> for
   // this fix.
-#     undef sigwait
 #     if defined  (__DECCXX_VER)
-    // cxx on Digital Unix 4.0 needs this declaration.  With it,
-    // ::_Psigwait () works with cxx -pthread.  g++ does _not_ need it.
-    extern "C" int _Psigwait __((const sigset_t *set, int *sig));
+#       undef sigwait
+        // cxx on Digital Unix 4.0 needs this declaration.  With it,
+        // ::_Psigwait () works with cxx -pthread.  g++ does _not_
+        // need it.
+        extern "C" int _Psigwait __((const sigset_t *set, int *sig));
 #     endif /* __DECCXX_VER */
 #   elif !defined (ACE_HAS_SIGWAIT)
   extern "C" int sigwait (sigset_t *set);
