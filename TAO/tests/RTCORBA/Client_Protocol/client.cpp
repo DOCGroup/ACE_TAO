@@ -75,7 +75,6 @@ exception_test (Test_ptr server,
      }
   ACE_CATCH (CORBA::INV_POLICY, ex)
     {
-      ACE_DEBUG ((LM_DEBUG, msg));
       ACE_DEBUG ((LM_DEBUG,
                   "INV_POLICY exception is caught as expected.\n"));
     }

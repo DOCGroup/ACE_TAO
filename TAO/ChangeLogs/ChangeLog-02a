@@ -1,3 +1,9 @@
+Mon Apr 16 16:45:19 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tests/RTCORBA/Client_Protocol/client.cpp:
+	  This test was printing a misleading error message.
+	  The problem has now been fixed.
+
 Mon Apr 16 13:34:31 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* examples/PluggableUDP/DIOP/README: Generalize this a bit so that
