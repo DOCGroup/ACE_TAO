@@ -1,3 +1,9 @@
+Mon Sep 23 13:43:11 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Fixed a bug with the per-project workspaces.
+
 Mon Sep 23 13:00:13 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Log_Msg_NT_Event_Log.{h,cpp}: Made the #ifdefs consistent
