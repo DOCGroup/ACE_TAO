@@ -30,6 +30,7 @@
 
 
 #include "RTCORBA.h"
+#include "tao/CDR.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
@@ -57,7 +58,7 @@ namespace TAO
 
 
 //////////////////////////////////////////////////////
-// CDR Encoding Support
+// CDR Encoding Support hand crafted
 
 CORBA::Boolean
 RTCORBA::ProtocolProperties::_tao_encode (TAO_OutputCDR &)
@@ -75,7 +76,7 @@ RTCORBA::ProtocolProperties::_tao_decode (TAO_InputCDR &)
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_NativePriority[] =
 {
@@ -115,7 +116,7 @@ namespace RTCORBA
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_Priority[] =
 {
@@ -153,7 +154,7 @@ namespace RTCORBA
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_NetworkPriority[] =
 {
@@ -193,7 +194,7 @@ namespace RTCORBA
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_ThreadpoolId[] =
 {
@@ -233,7 +234,7 @@ namespace RTCORBA
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_ThreadpoolLane[] =
 {
@@ -377,7 +378,7 @@ void RTCORBA::ThreadpoolLanes::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_ThreadpoolLanes[] =
 {
@@ -480,7 +481,7 @@ namespace RTCORBA
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_PriorityModel[] =
 {
@@ -566,7 +567,7 @@ TAO::Objref_Traits<RTCORBA::PriorityModelPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -679,7 +680,7 @@ RTCORBA::PriorityModelPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_PriorityModelPolicy[] =
 {
@@ -755,7 +756,7 @@ TAO::Objref_Traits<RTCORBA::ThreadpoolPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -868,7 +869,7 @@ RTCORBA::ThreadpoolPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_ThreadpoolPolicy[] =
 {
@@ -944,7 +945,7 @@ TAO::Objref_Traits<RTCORBA::ProtocolProperties>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1053,7 +1054,7 @@ RTCORBA::ProtocolProperties::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_ProtocolProperties[] =
 {
@@ -1093,7 +1094,7 @@ namespace RTCORBA
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_Protocol[] =
 {
@@ -1280,7 +1281,7 @@ void RTCORBA::ProtocolList::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_ProtocolList[] =
 {
@@ -1462,7 +1463,7 @@ TAO::Objref_Traits<RTCORBA::ServerProtocolPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1575,7 +1576,7 @@ RTCORBA::ServerProtocolPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_ServerProtocolPolicy[] =
 {
@@ -1653,7 +1654,7 @@ TAO::Objref_Traits<RTCORBA::ClientProtocolPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1766,7 +1767,7 @@ RTCORBA::ClientProtocolPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_ClientProtocolPolicy[] =
 {
@@ -1844,7 +1845,7 @@ TAO::Objref_Traits<RTCORBA::PrivateConnectionPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -1957,7 +1958,7 @@ RTCORBA::PrivateConnectionPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_PrivateConnectionPolicy[] =
 {
@@ -2035,7 +2036,7 @@ TAO::Objref_Traits<RTCORBA::TCPProtocolProperties>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -2148,7 +2149,7 @@ RTCORBA::TCPProtocolProperties::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_TCPProtocolProperties[] =
 {
@@ -2226,7 +2227,7 @@ TAO::Objref_Traits<RTCORBA::GIOPProtocolProperties>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -2339,7 +2340,7 @@ RTCORBA::GIOPProtocolProperties::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_GIOPProtocolProperties[] =
 {
@@ -2417,7 +2418,7 @@ TAO::Objref_Traits<RTCORBA::UnixDomainProtocolProperties>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -2530,7 +2531,7 @@ RTCORBA::UnixDomainProtocolProperties::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_UnixDomainProtocolProperties[] =
 {
@@ -2612,7 +2613,7 @@ TAO::Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -2725,7 +2726,7 @@ RTCORBA::SharedMemoryProtocolProperties::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_SharedMemoryProtocolProperties[] =
 {
@@ -2771,7 +2772,7 @@ namespace RTCORBA
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_PriorityBand[] =
 {
@@ -2921,7 +2922,7 @@ void RTCORBA::PriorityBands::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_PriorityBands[] =
 {
@@ -3066,7 +3067,7 @@ TAO::Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -3179,7 +3180,7 @@ RTCORBA::PriorityBandedConnectionPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_PriorityBandedConnectionPolicy[] =
 {
@@ -3261,7 +3262,7 @@ TAO::Objref_Traits<RTCORBA::Current>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -3374,7 +3375,7 @@ RTCORBA::Current::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_Current[] =
 {
@@ -3444,7 +3445,7 @@ TAO::Objref_Traits<RTCORBA::Mutex>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -3553,7 +3554,7 @@ RTCORBA::Mutex::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_Mutex[] =
 {
@@ -3623,7 +3624,7 @@ TAO::Objref_Traits<RTCORBA::RTORB>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -3734,7 +3735,7 @@ CORBA::TypeCode_ptr RTCORBA::RTORB::MutexNotFound::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_RTORB_MutexNotFound[] =
 {
@@ -3872,7 +3873,7 @@ CORBA::TypeCode_ptr RTCORBA::RTORB::InvalidThreadpool::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_RTORB_InvalidThreadpool[] =
 {
@@ -4010,7 +4011,7 @@ RTCORBA::RTORB::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_RTCORBA_RTORB[] =
 {
@@ -5772,7 +5773,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_RTCORBA_PriorityBands_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
