@@ -151,7 +151,7 @@ public:
     add_consumer(consumer_impl1_3,
                  "consumer1_3",
                  tv,
-                 cons1_3_types,
+                 cons1_3_types[0],
                  RtecScheduler::VERY_HIGH_CRITICALITY,
                  RtecScheduler::VERY_HIGH_IMPORTANCE
                  ACE_ENV_ARG_PARAMETER
@@ -296,7 +296,7 @@ main (int argc, char* argv[])
 
 int parse_args (int argc, char *argv[])
 {
-ACE_Get_Opt get_opts (argc, argv, "cs:o:");
+ACE_Get_Opt get_opts (argc, argv, "s:o:");
 int c;
 
 while ((c = get_opts ()) != -1)

@@ -235,7 +235,7 @@ public:
     ACE_Time_Value tv(1,200000); //period DEBUG: set to much longer period
     add_supplier_with_timeout(supplier_impl1_1,
                               "supplier1_1",
-                              supp1_1_types,
+                              supp1_1_types[0],
                               timeout_consumer_impl1_1,
                               "supplier1_1_timeout_consumer",
                               tv,
@@ -277,19 +277,29 @@ public:
     add_consumer_with_supplier(consumer_impl1_1, //deleted in consumer
                                "consumer1_1",
                                tv,
-                               cons1_1_types,
+                               cons1_1_types[0],
                                RtecScheduler::VERY_LOW_CRITICALITY,
                                RtecScheduler::VERY_LOW_IMPORTANCE,
                                supplier_impl1_2,
                                "supplier1_2",
-                               supp1_2_types
+                               supp1_2_types[0]
                                ACE_ENV_ARG_PARAMETER
                                );
     ACE_CHECK;
 
+    EventType_Vector types(4);
+    for(RtecEventComm::EventType type = ACE_ES_EVENT_UNDEFINED+2;
+        type <= ACE_ES_EVENT_UNDEFINED+9; type++)
+      {
+        types.push_back(type);
+      }
+
+    add_dummy_supplier(types);
+    ACE_CHECK;
+
     Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
-  }
+  } //start()
 };
 
 int parse_args (int argc, char *argv[]);
@@ -423,7 +433,7 @@ main (int argc, char* argv[])
 
 int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "cs:o:i:");
+  ACE_Get_Opt get_opts (argc, argv, "s:o:i:");
   int c;
   //these used for handline '-i':
   const char* input_file;

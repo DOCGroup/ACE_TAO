@@ -17,6 +17,8 @@
 class Kokyu_EC : public POA_RtEventChannelAdmin::RtSchedEventChannel
 {
 public:
+    typedef ACE_Vector<RtecEventComm::EventType> EventType_Vector;
+
     Kokyu_EC(void);
 
     virtual ~Kokyu_EC(void);
@@ -29,13 +31,10 @@ public:
 
     int init(const char* schedule_discipline, PortableServer::POA_ptr poa);
 
-    typedef ACE_Vector<RtecEventComm::EventType> EventType_Vector;
-
-  //To specify a consumer of one type of event, set both types to the same value
     virtual RtEventChannelAdmin::handle_t register_consumer (
         const char * entry_point,
         const RtEventChannelAdmin::SchedInfo & info,
-        EventType_Vector& types,
+        RtecEventComm::EventType type,
         RtecEventComm::PushConsumer_ptr consumer,
         RtecEventChannelAdmin::ProxyPushSupplier_out proxy_supplier
         ACE_ENV_ARG_DECL
@@ -47,11 +46,10 @@ public:
         , RtecScheduler::SYNCHRONIZATION_FAILURE
       ));
 
-  //To specify a supplier of one type of event, set both types to the same value
     virtual RtEventChannelAdmin::handle_t register_supplier (
         const char * entry_point,
         RtecEventComm::EventSourceID source,
-        EventType_Vector& types,
+        RtecEventComm::EventType type,
         RtecEventComm::PushSupplier_ptr supplier,
         RtecEventChannelAdmin::ProxyPushConsumer_out proxy_consumer
         ACE_ENV_ARG_DECL
@@ -95,7 +93,7 @@ public:
     void add_supplier_with_timeout(
                                    Supplier * supplier_impl,
                                    const char * supp_entry_point,
-                                   EventType_Vector& supp_types,
+                                   RtecEventComm::EventType supp_type,
                                    Timeout_Consumer * timeout_consumer_impl,
                                    const char * timeout_entry_point,
                                    ACE_Time_Value period,
@@ -131,7 +129,7 @@ public:
     void add_supplier(
                       Supplier * supplier_impl,
                       const char * entry_point,
-                      EventType_Vector& types
+                      RtecEventComm::EventType type
                       ACE_ENV_ARG_DECL
                       )
       ACE_THROW_SPEC ((
@@ -146,12 +144,12 @@ public:
                                     Consumer * consumer_impl,
                                     const char * cons_entry_point,
                                     ACE_Time_Value cons_period,
-                                    EventType_Vector& cons_types,
+                                    RtecEventComm::EventType cons_type,
                                     RtecScheduler::Criticality_t cons_crit,
                                     RtecScheduler::Importance_t cons_imp,
                                     Supplier * supplier_impl,
                                     const char * supp_entry_point,
-                                    EventType_Vector& supp_types
+                                    RtecEventComm::EventType supp_type
                                     ACE_ENV_ARG_DECL
                                     )
       ACE_THROW_SPEC ((
@@ -166,11 +164,21 @@ public:
                       Consumer * consumer_impl,
                       const char * entry_point,
                       ACE_Time_Value period,
-                      EventType_Vector& types,
+                      RtecEventComm::EventType cons_type,
                       RtecScheduler::Criticality_t crit,
                       RtecScheduler::Importance_t imp
                       ACE_ENV_ARG_DECL
                       )
+      ACE_THROW_SPEC ((
+                       CORBA::SystemException
+                       , RtecScheduler::UNKNOWN_TASK
+                       , RtecScheduler::INTERNAL
+                       , RtecScheduler::SYNCHRONIZATION_FAILURE
+                       ));
+
+    void add_dummy_supplier(EventType_Vector& types
+                            ACE_ENV_ARG_DECL
+                            )
       ACE_THROW_SPEC ((
                        CORBA::SystemException
                        , RtecScheduler::UNKNOWN_TASK
