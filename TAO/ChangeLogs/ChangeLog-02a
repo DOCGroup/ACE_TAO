@@ -1,3 +1,12 @@
+Tue Jun 12 16:16:17 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.h:
+        * tao/RTPortableServer/RTPortableServerC.i:
+          Added some more files that were missed in previous check in.
+          It turns out that cvs ignores *C.* when reporting unadded 
+          files, but these should be the last ones.
+
 Tue Jun 12 16:11:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/RTCORBA/RTCORBAC.cpp:
