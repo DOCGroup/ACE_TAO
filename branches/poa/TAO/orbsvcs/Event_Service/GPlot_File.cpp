@@ -7,7 +7,7 @@
 //
 // = AUTHOR
 //    Tim Harrison
-// 
+//
 // ============================================================================
 
 #include "GPlot_File.h"
@@ -47,7 +47,7 @@ ACE_GPlot_File::open (const char *filename)
 	    // Error.
 	    {
 	      ACE_OS::fclose (read_file);
-	      ACE_ERROR_RETURN 
+	      ACE_ERROR_RETURN
 		((LM_ERROR, "Error reading GPlot file %s.\n", filename_), -1);
 	    }
 	} while (result != EOF);
@@ -166,6 +166,8 @@ ACE_GPlot_File::set (long entry, float value)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Map_Entry<long, char *>;
+template class ACE_Map_Iterator_Base<long, char *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<long, char *, ACE_Null_Mutex>;
+template class ACE_Map_Reverse_Iterator<long, char *, ACE_Null_Mutex>;
 template class ACE_Map_Manager<long, char *, ACE_Null_Mutex>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

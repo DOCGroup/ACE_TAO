@@ -221,12 +221,15 @@ try { CORBA::Environment TAO_TRY_ENV;
 #define TAO_TRY_ENV __env
 
 // I would like to experiment with this idea in the future....
-// #define TAO_TRY_VAR(X) \
-// do { CORBA::Environment &TAO_TRY_ENV = X; \
-// int TAO_TRY_FLAG = 1; \
-// TAO_TRY_LABEL: \
-// if (TAO_TRY_FLAG) \
-// do {
+#if 0 /* g++ on VxWorks didn't like the backslashes at the end of comment
+         lines . . . */
+#define TAO_TRY_VAR(X) \
+do { CORBA::Environment &TAO_TRY_ENV = X; \
+int TAO_TRY_FLAG = 1; \
+TAO_TRY_LABEL: \
+if (TAO_TRY_FLAG) \
+do {
+#endif /* 0 */
 
 // The first "do" scope is for the env.
 // The second "do" scope is for the TAO_CHECK_ENV continues.

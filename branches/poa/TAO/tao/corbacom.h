@@ -27,15 +27,15 @@
 // configure fixed one-byte alignment policy, since some fixed policy
 // needs to apply throughout an ORB.
 
-#if	defined (_MSC_VER)
-#	pragma	pack (push, 1)		// VC++, stack 1-byte alignment policy
+#if     defined (_MSC_VER)
+#       pragma  pack (push, 1)          // VC++, stack 1-byte alignment policy
 
-#	ifdef	_DEBUG			// convert from VC++ convention ...
-#		define	DEBUG		// ... to normal convention
-#	endif
+#       ifdef   _DEBUG                  // convert from VC++ convention ...
+#               define  DEBUG           // ... to normal convention
+#       endif
 
-#elif	defined (__BORLANDC__)
-#	pragma option -a		// BC++, use 1 byte alignment
+#elif   defined (__BORLANDC__)
+#       pragma option -a                // BC++, use 1 byte alignment
 
 #endif
 
@@ -217,14 +217,14 @@ public:
   // CORBA "Long" (and its unsigned cousin) are 32 bits, just like on
   // almost all C/C++ compilers.
 
-#  if	SIZEOF_LONG == 4
+#  if   SIZEOF_LONG == 4
   typedef long Long;
   typedef u_long ULong;
 #  else
   // just assume "int" is 4 bytes long ...
   typedef int Long;
   typedef u_int ULong;
-#  endif	/* SIZEOF_LONG != 4 */
+#  endif        /* SIZEOF_LONG != 4 */
 
   // 94-9-32 Appendix A, also the OMG C++ mapping, stipulate that 64
   // bit integers are "LongLong".
@@ -234,13 +234,13 @@ public:
   //
   // NOTE:  those are IDL extensions, not yet standard.
 
-#  if	SIZEOF_LONG_LONG == 8
+#  if   SIZEOF_LONG_LONG == 8
   typedef long long LongLong;
   typedef unsigned long long ULongLong;
-#  elif	SIZEOF_LONG == 8
+#  elif SIZEOF_LONG == 8
   typedef long LongLong;
   typedef u_long ULongLong;
-#  elif	defined (_MSC_VER) && _MSC_VER >= 900
+#  elif defined (_MSC_VER) && _MSC_VER >= 900
   typedef __int64 LongLong;
   typedef unsigned __int64 ULongLong;
 #  else
@@ -250,8 +250,8 @@ public:
   // can cope with the loss of range it can define conversion
   // operators itself.
 
-#    define	NONNATIVE_LONGLONG
-#    if	defined (TAO_WORDS_BIGENDIAN)
+#    define     NONNATIVE_LONGLONG
+#    if defined (TAO_WORDS_BIGENDIAN)
   struct LongLong { Long h, l; };
   struct ULongLong { Long h, l; };
 #    else
@@ -275,10 +275,10 @@ public:
   //
   // NOTE:  that is an IDL extension, not yet standard.
 
-#  if	SIZEOF_LONG_DOUBLE == 16
+#  if   SIZEOF_LONG_DOUBLE == 16
   typedef long double LongDouble;
 #  else
-#    define	NONNATIVE_LONGDOUBLE
+#    define     NONNATIVE_LONGDOUBLE
   struct LongDouble
   {
     char ld[16];
@@ -410,11 +410,11 @@ public:
   //
   // NOTE:  those are IDL extensions, not yet standard.
 
-#if defined(VXWORKS) && defined(ghs)
+#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
   typedef short WChar;
-#else
+#else  /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
   typedef wchar_t WChar;
-#endif
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
   typedef WChar *WString;
 
   typedef WChar &WChar_out; // out type for WChar
@@ -659,7 +659,7 @@ public:
   TAO_SYSTEM_EXCEPTION(BAD_CONTEXT);
   TAO_SYSTEM_EXCEPTION(OBJ_ADAPTER);
   TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);
-#undef	TAO_SYSTEM_EXCEPTION
+#undef  TAO_SYSTEM_EXCEPTION
 
   static TypeCode_ptr _tc_Bounds;
   static TypeCode_ptr _tc_BadKind;
@@ -712,8 +712,8 @@ extern "C" TAO_Export const TAO_IID IID_POA;
 // NOTE: stub APIs are nonportable, and must be explicitly #included
 // by code emitted from an IDL compiler.
 
-#if	defined (_MSC_VER)
-#	pragma pack (pop)		// VC++, goes back to other padding rules
+#if     defined (_MSC_VER)
+#       pragma pack (pop)               // VC++, goes back to other padding rules
 #endif /* VC++ */
 
 // BC++ we leave with 1-byte padding rules...

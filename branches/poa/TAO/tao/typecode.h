@@ -83,19 +83,19 @@ public:
   CORBA::TCKind  kind (CORBA::Environment &) const;
   // For all TypeCode kinds, returns the "kind" of the typecode
 
-  TAO_CONST CORBA::String id (CORBA::Environment &) const;
+  const char *id (CORBA::Environment &) const;
   // For tk_{objref,struct,union,enum,alias,except}. Returns the
   // repository ID, raises BadKind.
 
-  TAO_CONST CORBA::String name (CORBA::Environment &) const;
+  const char *name (CORBA::Environment &) const;
   // returns name (), raises (BadKind)
 
   CORBA::ULong member_count (CORBA::Environment &) const;
   // returns member_count (), raises (BadKind). Useful for tk_struct,
   // tk_union, tk_enum, tk_alias, and tk_except.
 
-  TAO_CONST CORBA::String member_name (CORBA::ULong index,
-                                       CORBA::Environment &) const;
+  const char *member_name (CORBA::ULong index,
+                           CORBA::Environment &) const;
   // returns member_name (...), raises (BadKind, Bounds); Useful for
   // tk_struct, tk_union, tk_enum, tk_alias, and tk_except.
 
@@ -124,20 +124,6 @@ public:
 
   CORBA::ULong TAO_discrim_pad_size (CORBA::Environment &);
   // Calculates the padded size of discriminant type TAO Extension
-
-  // =Following three are deprecated
-
-  CORBA::ULong param_count (CORBA::Environment &) const;
-  // Deprecated, CORBA 1.2, not fully usable. Returns the number of
-  // parameters that the typecode takes.
-
-  CORBA::ULong ulong_param (CORBA::ULong n,
-                            CORBA::Environment &) const;
-
-  CORBA::TypeCode_ptr typecode_param (CORBA::ULong n,
-                                      CORBA::Environment &) const;
-  // Internal utilities, pending CORBA 2.0 IFR APIs; just enough to
-  // make array and sequence typecode interpretation cheap
 
   // = Creation/refcounting
 
@@ -233,6 +219,20 @@ public:
   ULONG  Release (void);
   TAO_HRESULT  QueryInterface (REFIID riid,
                                void **ppv);
+  // =Following three are deprecated
+
+  CORBA::ULong param_count (CORBA::Environment &) const;
+  // Deprecated, CORBA 1.2, not fully usable. Returns the number of
+  // parameters that the typecode takes.
+
+  CORBA::ULong ulong_param (CORBA::ULong n,
+                            CORBA::Environment &) const;
+
+  CORBA::TypeCode_ptr typecode_param (CORBA::ULong n,
+                                      CORBA::Environment &) const;
+  // Internal utilities, pending CORBA 2.0 IFR APIs; just enough to
+  // make array and sequence typecode interpretation cheap
+
   // private:
   //
   // = The guts of the typecode implementation class
@@ -265,11 +265,11 @@ private:
                                 CORBA::Environment &env) const;
   // Compares the typecodes.
 
-  TAO_CONST CORBA::String private_id (CORBA::Environment &) const;
+  const char *private_id (CORBA::Environment &) const;
   // For tk_{objref,struct,union,enum,alias,except}. Returns the
   // repository ID, raises BadKind.
 
-  TAO_CONST CORBA::String private_name (CORBA::Environment &) const;
+  const char *private_name (CORBA::Environment &) const;
   // returns name (), raises (BadKind)
 
   CORBA::ULong private_member_count (CORBA::Environment &) const;
@@ -281,9 +281,10 @@ private:
   // returns member_type (...), raises (BadKind, Bounds); Useful for
   // tk_struct, tk_union, and tk_except
 
-  //  CORBA::TypeCode_ptr private_member_label (CORBA::ULong index,
-  //                                  CORBA::Environment &) const;
-  // returns member_label (...), raises (BadKind, Bounds); Useful for tk_union
+  const char *private_member_name (CORBA::ULong index,
+                                    CORBA::Environment &) const;
+  // returns member_name (...), raises (BadKind, Bounds); Useful for tk_union,
+  // tk_struct, tk_except, and tk_enum
 
   CORBA::Any_ptr private_member_label (CORBA::ULong n,
                                        CORBA::Environment&) const;
@@ -295,7 +296,7 @@ private:
   CORBA::Long private_default_index (CORBA::Environment &) const;
   // returns the default index for the tk_union. Raises (BadKind);
 
-  CORBA::Long privatelength_ (CORBA::Environment &) const;
+  CORBA::Long private_length (CORBA::Environment &) const;
   // returns length, raises (BadKind). Used for tk_string,
   // tk_sequence, and tk_array
 
@@ -313,16 +314,60 @@ private:
   CORBA::ULong private_discrim_pad_size (CORBA::Environment &);
   // Calculates the padded size of discriminant type TAO Extension
 
+  // = All the private helpers testing for equality of typecodes
+
+  CORBA::Boolean private_equal_objref (CORBA::TypeCode_ptr tc,
+                                       CORBA::Environment &env) const;
+  // test equality for typecodes of objrefs
+
+  CORBA::Boolean private_equal_struct (CORBA::TypeCode_ptr tc,
+                                       CORBA::Environment &env) const;
+  // test equality for typecodes of structs
+
+  CORBA::Boolean private_equal_union (CORBA::TypeCode_ptr tc,
+                                      CORBA::Environment &env) const;
+  // test equality for typecodes of unions
+
+  CORBA::Boolean private_equal_enum (CORBA::TypeCode_ptr tc,
+                                     CORBA::Environment &env) const;
+  // test equality for typecodes of enums
+
+  CORBA::Boolean private_equal_string (CORBA::TypeCode_ptr tc,
+                                       CORBA::Environment &env) const;
+  // test equality for typecodes of strings
+
+  CORBA::Boolean private_equal_wstring (CORBA::TypeCode_ptr tc,
+                                        CORBA::Environment &env) const;
+  // test equality for typecodes of wide strings
+
+  CORBA::Boolean private_equal_sequence (CORBA::TypeCode_ptr tc,
+                                         CORBA::Environment &env) const;
+  // test equality for typecodes of sequences
+
+  CORBA::Boolean private_equal_array (CORBA::TypeCode_ptr tc,
+                                      CORBA::Environment &env) const;
+  // test equality for typecodes of array
+
+  CORBA::Boolean private_equal_alias (CORBA::TypeCode_ptr tc,
+                                      CORBA::Environment &env) const;
+  // test equality for typecodes of typedefs
+
+  CORBA::Boolean private_equal_except (CORBA::TypeCode_ptr tc,
+                                       CORBA::Environment &env) const;
+  // test equality for typecodes of exceptions
+
   u_int refcount_;
   // if refcount reaches 0, free this typecode
 
   ACE_SYNCH_MUTEX lock_;
   // Protect access to the reference count.
 
-  CORBA::Boolean _delete_flag;
-  // indicates if we are freeing ourselves
+  CORBA::Boolean delete_flag_;
+  // indicates if we are freeing ourselves. This flag serves as an indication
+  // to the children that they can delete themselves and their children if this
+  // flag is set.
 
-  CORBA::Boolean _orb_owns;
+  CORBA::Boolean orb_owns_;
   // TAO's approach differs from the SunSoft IIOP. Constant typecodes
   // are owned by the ORB and get freed only when the ORB dies.
 
@@ -374,6 +419,7 @@ public:
   CORBA::Boolean tc_name_known_;
   CORBA::Boolean tc_member_count_known_;
   CORBA::Boolean tc_member_type_list_known_;
+  CORBA::Boolean tc_member_name_list_known_;
   CORBA::Boolean tc_member_label_list_known_;
   CORBA::Boolean tc_discriminator_type_known_;
   CORBA::Boolean tc_default_index_used_known_;
@@ -388,6 +434,7 @@ public:
   CORBA::String  tc_name_;
   CORBA::ULong   tc_member_count_;
   CORBA::TypeCode_ptr *tc_member_type_list_;
+  char **tc_member_name_list_;
   CORBA::Any_ptr *tc_member_label_list_;
   CORBA::TypeCode_ptr tc_discriminator_type_;
   CORBA::Long   tc_default_index_used_;
@@ -396,37 +443,7 @@ public:
   CORBA::ULong  tc_size_;
   CORBA::ULong  tc_alignment_;
   CORBA::ULong  tc_discrim_pad_size_;
+
 };
-
-#if 0
-// =TypeCode constants, which are always accessible in all ORB runtimes.
-
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Null;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Void;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Short;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Long;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_LongLong;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_UShort;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_ULong;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_ULongLong;
-
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Float;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Double;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_LongDouble;
-
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Boolean;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Octet;
-
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Char;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_String;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_WChar;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_WString;
-
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Any;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_TypeCode;
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Principal;
-
-extern TAO_Export CORBA::TypeCode_ptr _tc_CORBA_Object;
-#endif /* 0 */
 
 #endif /* TAO_TYPECODE_H */
