@@ -89,10 +89,10 @@ public:
   bool operator< (const TYPE &rhs) const;
 
   /// Atomically assign rhs to <value_>.
-  void operator= (const TYPE &rhs);
+  ACE_INLINE ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &operator= (const TYPE &rhs);
 
   /// Atomically assign <rhs> to <value_>.
-  void operator= (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs);
+  ACE_INLINE ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &operator= (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs);
 
   /// Explicitly return <value_>.
   TYPE value (void) const;
