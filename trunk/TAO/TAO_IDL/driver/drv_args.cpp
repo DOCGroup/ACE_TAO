@@ -122,7 +122,9 @@ DRV_usage (void)
   cerr << GTDEVEL (" -hc\t\t\tClient's header file name ending. Default is C.h\n");
   cerr << GTDEVEL (" -hs\t\t\tServer's header file name ending. Default is S.h\n");
   cerr << GTDEVEL (" -hT\t\t\tServer's template hdr file name ending. Default is S_T.h\n");
-  cerr << GTDEVEL (" -H dynamic_hash\t\tTo force dynamic-hashed operation lookup strategy. Default is perfect hashing\n");
+  cerr << GTDEVEL (" -H dynamic_hash\t\tTo force dynamic hashed operation lookup strategy. Default is perfect hashing\n");
+  cerr << GTDEVEL (" -H linear_search\t\tTo force linear searchoperation lookup strategy\n");
+  cerr << GTDEVEL (" -H binary_search\t\tTo force binary search operation lookup strategy\n");
   cerr << GTDEVEL (" -o <output_dir>\tOutput directory for the generated files. Default is current directory\n");
   cerr << GTDEVEL (" -ss\t\t\tServer's skeleton file name ending. Default is S.cpp\n");
   cerr << GTDEVEL (" -sT\t\t\tServer's template skeleton file name ending. Default is S_T.cpp\n");
@@ -522,7 +524,8 @@ DRV_parse_args (long ac, char **av)
   // have been selected, let us make sure that it exists and will
   // work. 
   if ((cg->lookup_strategy () == TAO_CodeGen::TAO_PERFECT_HASH) || \
-      (cg->lookup_strategy () == TAO_CodeGen::TAO_BINARY_SEARCH))
+      (cg->lookup_strategy () == TAO_CodeGen::TAO_BINARY_SEARCH) || \
+      (cg->lookup_strategy () == TAO_CodeGen::TAO_LINEAR_SEARCH))
     {
       // Testing whether GPERF works or no.
       int return_value = DRV_check_gperf ();
@@ -531,8 +534,10 @@ DRV_parse_args (long ac, char **av)
           // If gperf_path is an absolute path, try to call this
           // again with 
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO_IDL: warning, gperf could not be executed, using Dynamic Hash OpLookup instead of Perfect Hashing\n"
-                      "To use Perfect Hashing\n"
+                      "TAO_IDL: warning, GPERF could not be executed\n",
+                      "Perfect Hashing or Binary/Linear Search cannot be done without GPERF\n"
+                      "Now, using Dynamic Hashing..\n",
+                      "To use Perfect Hashing or Binary/Linear Search strategy\n"
                       "\t-Build gperf at $ACE_ROOT/apps/gperf/src\n"
                       "\t-Set the environment variable $ACE_ROOT appropriately or add $ACE_ROOT/bin to the PATH\n"
                       "\t-Refer to Operation Lookup section in the TAO IDL User Guide ($TAO_ROOT/docs/compiler.html) for more details\n"));
@@ -545,8 +550,9 @@ DRV_parse_args (long ac, char **av)
   // If GPERF is not there, we cannot use PERFECT_HASH strategy. Let
   // us go for DYNAMIC_HASH.
   if ((cg->lookup_strategy () == TAO_CodeGen::TAO_PERFECT_HASH) || 
-      (cg->lookup_strategy () == TAO_CodeGen::TAO_BINARY_SEARCH))
-    cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
+      (cg->lookup_strategy () == TAO_CodeGen::TAO_BINARY_SEARCH) ||
+      (cg->lookup_strategy () == TAO_CodeGen::TAO_LINEAR_SEARCH))
+      cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
 #endif /* ACE_HAS_GPERF */    
 
   // make sure that we are not suppressing TypeCode generation and asking for
