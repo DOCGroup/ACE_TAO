@@ -30,6 +30,8 @@
     // This is only needed with egcs 1.1 (egcs-2.91.57).  It can't be
     // used with older versions.
 #   define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+# else /* This is for gcc 2.8.x */
+# define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 # endif /* __GNUC__ >= 2.91 */
 
 # if __GNUC__ == 2  &&  __GNUC_MINOR__ != 9  &&  __GNUC_MINOR__ != 91
@@ -56,7 +58,7 @@
 
 #else  /* ! egcs */
   // Plain old g++.
-# define ACE_LACKS_PLACEMENT_OPERATOR_NEW
+# define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 # define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 # define ACE_HAS_GNUG_PRE_2_8
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
