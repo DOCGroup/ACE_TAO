@@ -488,8 +488,8 @@ server (void *arg)
 static void
 handler (int signum)
 {
-  // Print the signal number and exit.
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) %S\n"), signum));
+  // No printout here, to be safe.  Signal handlers must not acquire
+  // locks, etc.
   ACE_OS::exit (0);
 }
 
