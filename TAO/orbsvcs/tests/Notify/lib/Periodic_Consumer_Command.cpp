@@ -255,6 +255,8 @@ TAO_NS_Periodic_Consumer_Command::handle_deactivate (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_NS_Periodic_Consumer_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
 {
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
   TAO_NS_Periodic_Consumer* consumer = this->consumer ();
 
   if (consumer == 0)
@@ -285,6 +287,10 @@ TAO_NS_Periodic_Consumer_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
       ACE_DEBUG ((LM_DEBUG, "Consumeris_equivanent other exception.", this->name_.c_str ()));
     }
   ACE_ENDTRY;
+
+#else
+  return;
+#endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
 void
