@@ -18,8 +18,7 @@ ACE_RCSID(Event_Service, Event_Service, "$Id$")
 
 int main (int argc, char *argv[])
 {
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_EC_Default_Factory);
+  TAO_EC_Default_Factory::init_svcs ();
 
   Event_Service event_service;
   return event_service.run (argc, argv);
