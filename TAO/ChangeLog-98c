@@ -1,3 +1,25 @@
+Tue Jul 14 21:25:19 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/tests/Trading/Makefile:
+	* orbsvcs/tests/Trading/Offer_Exporter.{h,cpp}: 
+	* orbsvcs/tests/Trading/Offer_Importer.{h,cpp}:
+	* orbsvcs/tests/Trading/Offer_Importer.h:
+	* orbsvcs/tests/Trading/Service_Type_Exporter.{h,cpp}:
+	* orbsvcs/tests/Trading/TT_Info.{h,cpp}:
+	* orbsvcs/tests/Trading/colocated_test.cpp:
+	* orbsvcs/tests/Trading/export_test.cpp:
+ 	* orbsvcs/tests/Tradingimport_test.cpp: 
+	These tests now copmile with egcs. In addition, Added modify and
+	withdraw_using_constraint tests, and the "quiet" flag, which will
+	staunch the usual barrage of output by not printing the contents
+	of offers and service types.
+
+	* orbsvcs/Trading_Service/Trading_Service.cpp: compiles with
+	egcs. 
+
+	* orbsvcs/orbsvcs/Trader/*.*: Compiles with egcs. Improved the
+	modify method. 
+
 Tue Jul 14 19:15:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: 
