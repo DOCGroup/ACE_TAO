@@ -1,54 +1,60 @@
+Thu May 20 18:54:01 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Deployment.idl:
+
+          Updated the IDL for Component Data Model changes.
+
 Thu May 20 14:44:48 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCCM/DiffServ/Controller/Controller.cpp: 
+	* tests/RTCCM/DiffServ/Controller/Controller.cpp:
 
 	  No RT-isms necessary anymore.
 
 Thu May 20 14:31:20 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCCM/DiffServ/descriptors/rtsvc.conf: 
+	* tests/RTCCM/DiffServ/descriptors/rtsvc.conf:
 
 	  This file is no longer needed.
-	
-	* tests/RTCCM/DiffServ/descriptors/run_test.pl: 
+
+	* tests/RTCCM/DiffServ/descriptors/run_test.pl:
 
 	  No need to specify rtsvc.conf file.
 
-	* tools/RTComponentServer/RTComponentServer.cpp (main): 
+	* tools/RTComponentServer/RTComponentServer.cpp (main):
 
 	  No need to check that multiple priorities are supported.  Some
 	  servers can do with one priority.
 
 Thu May 20 13:40:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCCM/DiffServ/Sender/Sender.mpc: 
-	* tests/RTCCM/DiffServ/Sender/Custom_Network_Priority_Mapping.cpp: 
+	* tests/RTCCM/DiffServ/Sender/Sender.mpc:
+	* tests/RTCCM/DiffServ/Sender/Custom_Network_Priority_Mapping.cpp:
 
 	  Simply refer to the same files in TAO/tests/RTCORBA/Diffserv
 	  instead of making a copy here.
 
 	* tests/RTCCM/DiffServ/Receiver/Receiver_exec.cpp:
-	* tests/RTCCM/DiffServ/Sender/Sender_exec.cpp: 
-	* tests/RTCCM/DiffServ/descriptors/run_test.pl: 
+	* tests/RTCCM/DiffServ/Sender/Sender_exec.cpp:
+	* tests/RTCCM/DiffServ/descriptors/run_test.pl:
 
 	  Minor fixes.
 
 Thu May 20 11:34:33 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tools/ComponentServer/ComponentServer.cpp: 
-	* tools/Assembly_Deployer/Assembly_Deployer.cpp: 
+	* tools/ComponentServer/ComponentServer.cpp:
+	* tools/Assembly_Deployer/Assembly_Deployer.cpp:
 
-	  Added missing include file.	  
+	  Added missing include file.
 
-	* tests/RTCCM/DiffServ/descriptors/run_test.pl: 
+	* tests/RTCCM/DiffServ/descriptors/run_test.pl:
 
 	  Added new assembly deployer option.
 
-	* tests/RTCCM/DiffServ/descriptors/rtsvc.conf: 
+	* tests/RTCCM/DiffServ/descriptors/rtsvc.conf:
 
 	  Added FIFO scheduling option.
 
-	* tests/RTCCM/DiffServ/Controller/Controller.cpp (svc): 
+	* tests/RTCCM/DiffServ/Controller/Controller.cpp (svc):
 
 	  Minor fixes.
 

@@ -1,11 +1,6 @@
-//$Id$
+// $Id$
 #include <orb.idl>
-
-module CORBA {
-  typedef sequence <unsigned long> ULongSeq;
-  typedef sequence <string> StringSeq;
-};
-
+#include "tao/ULongSeq.pidl"
 
 module Deployment {
 
@@ -79,7 +74,6 @@ module Deployment {
 
   typedef sequence < Property > Properties;
 
-
   struct Domain {
     string UUID;
     string label;
@@ -107,6 +101,7 @@ module Deployment {
     boolean exclusiveProvider;
     boolean exclusiveUser;
     boolean optional;
+    CCMComponentPortKind kind;
   };
 
   typedef sequence < ComponentPortDescription > ComponentPortDescriptions;
@@ -123,54 +118,31 @@ module Deployment {
     string UUID;
     string specificType;
     ::CORBA::StringSeq supportedType;
-    string idlFile;
+    ::CORBA::StringSeq idlFile;
     Properties configProperty;
-    Properties infoProperty;
     ComponentPortDescriptions port;
     ComponentPropertyDescriptions property;
+    Properties infoProperty;
   };
 
   struct Requirement {
     string resourceType;
-    Properties property;
     string name;
+    Properties property;
   };
 
   typedef sequence < Requirement > Requirements;
 
-  // @@Issue 6392@@ Newly added
-  struct ResourceDeploymentDescription {
-    string requirementName;
-    string resourceName;
-    any resourceValue;
-  };
-
-  typedef sequence < ResourceDeploymentDescription > ResourceDeploymentDescriptions;
-
-  struct ArtifactDeploymentDescription {
-    string name;
-    ::CORBA::StringSeq location;
-    string node;
-    ::CORBA::StringSeq source;
-    Properties execParameter;
-    Requirements deployRequirement;
-    ResourceDeploymentDescriptions deployedResource; // Issue 6392
-  };
-
-  typedef sequence < ArtifactDeploymentDescription > ArtifactDeploymentDescriptions;
-
   struct MonolithicDeploymentDescription {
     string name;
     ::CORBA::StringSeq source;
-    // @@Issue 5957@@ changed the following 
-    CORBA::ULongSeq artifact;
+    ::CORBA::ULongSeq artifactRef;
     Properties execParameter;
     Requirements deployRequirement;
   };
 
   typedef sequence < MonolithicDeploymentDescription > MonolithicDeploymentDescriptions;
 
-  // @@Issue 6392@@ added new
   enum ResourceUsageKind {
     None,
     InstanceUsesResource,
@@ -179,9 +151,6 @@ module Deployment {
     ResourceUsesPort
   };
 
-  typedef sequence < ResourceUsageKind > ResourceUsageKinds;
-
-  // @@Issue 6392@@ added new
   struct InstanceResourceDeploymentDescription {
     ResourceUsageKind resourceUsage;
     string requirementName;
@@ -195,25 +164,35 @@ module Deployment {
     string name;
     string node;
     ::CORBA::StringSeq source;
+    unsigned long implementationRef;
     Properties configProperty;
-    // @@Issue 5957, 6392@@ added the following
-    CORBA::ULongSeq implementation;
     InstanceResourceDeploymentDescriptions deployedResource;
     InstanceResourceDeploymentDescriptions deployedSharedResource;
   };
 
   typedef sequence < InstanceDeploymentDescription > InstanceDeploymentDescriptions;
 
+  struct ComponentExternalPortEndpoint {
+    string portName;
+  };
+
+  typedef sequence < ComponentExternalPortEndpoint > ComponentExternalPortEndpoints;
+
   struct PlanSubcomponentPortEndpoint {
     string portName;
     boolean provider;
-    // following newly added
-    CORBA::ULongSeq instance;
+    CCMComponentPortKind kind;
+    unsigned long instanceRef;
   };
 
   typedef sequence < PlanSubcomponentPortEndpoint > PlanSubcomponentPortEndpoints;
 
-  // @@Issue 6392@@ added new
+  struct ExternalReferenceEndpoint {
+    string location;
+  };
+
+  typedef sequence < ExternalReferenceEndpoint > ExternalReferenceEndpoints;
+
   struct ConnectionResourceDeploymentDescription {
     string targetName;
     string requirementName;
@@ -223,18 +202,6 @@ module Deployment {
 
   typedef sequence < ConnectionResourceDeploymentDescription > ConnectionResourceDeploymentDescriptions;
 
-  struct ComponentExternalPortEndpoint {
-    string portName;
-  };
-
-  typedef sequence < ComponentExternalPortEndpoint > ComponentExternalPortEndpoints;
-
-  struct ExternalReferenceEndpoint {
-    string location;
-  };
-
-  typedef sequence < ExternalReferenceEndpoint > ExternalReferenceEndpoints;
-
   struct PlanConnectionDescription {
     string name;
     ::CORBA::StringSeq source;
@@ -242,7 +209,6 @@ module Deployment {
     ComponentExternalPortEndpoints externalEndpoint;
     PlanSubcomponentPortEndpoints internalEndpoint;
     ExternalReferenceEndpoints externalReference;
-    // newly added
     ConnectionResourceDeploymentDescriptions deployedResource;
   };
 
@@ -250,8 +216,7 @@ module Deployment {
 
   struct PlanSubcomponentPropertyReference {
     string propertyName;
-    // @@Issue 5967@@
-    CORBA::ULongSeq instance;
+    unsigned long instanceRef;
   };
 
   typedef sequence < PlanSubcomponentPropertyReference > PlanSubcomponentPropertyReferences;
@@ -271,9 +236,28 @@ module Deployment {
 
   typedef sequence < ImplementationDependency > ImplementationDependencies;
 
+  struct ResourceDeploymentDescription {
+    string requirementName;
+    string resourceName;
+    any resourceValue;
+  };
+
+  typedef sequence < ResourceDeploymentDescription > ResourceDeploymentDescriptions;
+
+  struct ArtifactDeploymentDescription {
+    string name;
+    ::CORBA::StringSeq location;
+    string node;
+    ::CORBA::StringSeq source;
+    Properties execParameter;
+    Requirements deployRequirement;
+    ResourceDeploymentDescriptions deployedResource;
+  };
+
+  typedef sequence < ArtifactDeploymentDescription > ArtifactDeploymentDescriptions;
+
   struct DeploymentPlan {
     string label;
-    string UUID;    // Issue 6047
     ComponentInterfaceDescription realizes;
     MonolithicDeploymentDescriptions implementation;
     InstanceDeploymentDescriptions instance;
@@ -281,157 +265,7 @@ module Deployment {
     PlanPropertyMappings externalProperty;
     ImplementationDependencies dependsOn;
     ArtifactDeploymentDescriptions artifact;
-    Properties infoProperty;    // Issue 5967
-  };
-
-  struct ComponentPackageDescription;
-
-  typedef sequence < ComponentPackageDescription > ComponentPackageDescriptions;
-
-  struct ComponentPackageReference {
-    // @@Issue 6047@@ Newly added two fields below
-    string requiredUUID;
-    string requiredName;
-    string requiredType;
-  };
-
-  typedef sequence < ComponentPackageReference > ComponentPackageReferences;
-
-  struct SubcomponentInstantiationDescription {
-    string name;
-    ComponentPackageDescriptions package;
-    Properties configProperty;
-    Requirements selectRequirement;
-    ComponentPackageReferences reference;
-  };
-
-  typedef sequence < SubcomponentInstantiationDescription > SubcomponentInstantiationDescriptions;
-
-  struct SubcomponentPortEndpoint {
-    string portName;
-    unsigned long instance;
-  };
-
-  typedef sequence < SubcomponentPortEndpoint > SubcomponentPortEndpoints;
-
-  struct AssemblyConnectionDescription {
-    string name;
-    Requirements deployRequirement;
-    ComponentExternalPortEndpoints externalEndpoint;
-    SubcomponentPortEndpoints internalEndpoint;
-    ExternalReferenceEndpoints externalReference;
-  };
-
-  typedef sequence < AssemblyConnectionDescription > AssemblyConnectionDescriptions;
-
-  struct SubcomponentPropertyReference {
-    string propertyName;
-    // changed the type of the field below
-    unsigned long instance;
-  };
-
-  typedef sequence < SubcomponentPropertyReference > SubcomponentPropertyReferences;
-
-  struct AssemblyPropertyMapping {
-    string name;
-    string externalName;
-    SubcomponentPropertyReferences delegatesTo;
-  };
-
-  typedef sequence < AssemblyPropertyMapping > AssemblyPropertyMappings;
-
-  struct ComponentAssemblyDescription {
-    SubcomponentInstantiationDescriptions instance;
-    AssemblyConnectionDescriptions connection;
-    AssemblyPropertyMappings externalProperty;
-  };
-
-  typedef sequence < ComponentAssemblyDescription > ComponentAssemblyDescriptions;
-
-  struct NamedImplementationArtifact;
-
-  typedef sequence < NamedImplementationArtifact > NamedImplementationArtifacts;
-
-  struct ImplementationArtifactDescription {
-    string label;
-    string UUID;
-    string location;
-    Properties execParameter;
     Properties infoProperty;
-    Requirements deployRequirement;
-    NamedImplementationArtifacts dependsOn;
-  };
-
-  struct NamedImplementationArtifact {
-    string name;
-    ImplementationArtifactDescription referencedArtifact;
-  };
-
-  struct MonolithicImplementationDescription {
-    Properties execParameter;
-    Requirements deployRequirement;
-    NamedImplementationArtifacts primaryArtifact;
-  };
-
-  typedef sequence < MonolithicImplementationDescription > MonolithicImplementationDescriptions;
-
-  struct Capability {
-    string name;
-    ::CORBA::StringSeq resourceType;
-    SatisfierProperties property;
-  };
-
-  typedef sequence < Capability > Capabilities;
-
-  // added (issue 6392). All the fields are supposed to have
-  // cardinality 0 or 1. Thus, a bounded sequence could be better
-  struct ImplementationRequirement {
-    ::CORBA::StringSeq resourcePort;
-    ::CORBA::StringSeq componentPort;
-    ResourceUsageKinds resourceUsage;
-    // Inherited attributes from requirement
-    string resourceType;
-    string name;
-  };
-
-  typedef sequence < ImplementationRequirement > ImplementationRequirements; 
-
-  struct ComponentImplementationDescription {
-    string label;
-    string UUID;
-    ComponentInterfaceDescription implements;
-    ComponentAssemblyDescriptions assemblyImpl;
-    MonolithicImplementationDescriptions monolithicImpl;
-    Properties infoProperty; // issue 5967
-    Properties configProperty;
-    Capabilities capability;
-    ImplementationDependencies dependsOn;
-  };
-
-  struct PackagedComponentImplementation {
-    string name;
-    ComponentImplementationDescription referencedImplementation;
-  };
-
-  typedef sequence < PackagedComponentImplementation > PackagedComponentImplementations;
-
-  struct ComponentPackageDescription {
-    string label;
-    string UUID;
-    ComponentInterfaceDescription realizes;
-    Properties configProperty;
-    Properties infoProperty;
-    PackagedComponentImplementations implementation;
-  };
-
-  struct PackageConfiguration {
-    string label;
-    string UUID;
-    ::CORBA::ULongSeq specializedConfigRef;
-    ComponentPackageDescriptions basePackage;
-    ComponentPackageReferences reference;
-    Requirements selectRequirement;
-    Properties configProperty;
   };
 
   exception ResourceNotAvailable {
@@ -556,7 +390,7 @@ module Deployment {
   };
 
   exception PackageError {
-    string label;
+    string source;
     string reason;
   };
 
@@ -569,22 +403,172 @@ module Deployment {
   exception InvalidReference {
   };
 
+  struct PackageConfiguration;
+
+  typedef sequence < PackageConfiguration > PackageConfigurations;
+
+  struct ComponentPackageDescription;
+
+  typedef sequence < ComponentPackageDescription > ComponentPackageDescriptions;
+
+  struct ComponentPackageReference {
+    string requiredUUID;
+    string requiredName;
+    string requiredType;
+  };
+
+  typedef sequence < ComponentPackageReference > ComponentPackageReferences;
+
+  struct SubcomponentInstantiationDescription {
+    string name;
+    ComponentPackageDescriptions package;
+    Properties configProperty;
+    Requirements selectRequirement;
+    ComponentPackageReferences reference;
+  };
+
+  typedef sequence < SubcomponentInstantiationDescription > SubcomponentInstantiationDescriptions;
+
+  struct SubcomponentPortEndpoint {
+    string portName;
+    unsigned long instanceRef;
+  };
+
+  typedef sequence < SubcomponentPortEndpoint > SubcomponentPortEndpoints;
+
+  struct AssemblyConnectionDescription {
+    string name;
+    Requirements deployRequirement;
+    ComponentExternalPortEndpoints externalEndpoint;
+    SubcomponentPortEndpoints internalEndpoint;
+    ExternalReferenceEndpoints externalReference;
+  };
+
+  typedef sequence < AssemblyConnectionDescription > AssemblyConnectionDescriptions;
+
+  struct SubcomponentPropertyReference {
+    string propertyName;
+    unsigned long instanceRef;
+  };
+
+  typedef sequence < SubcomponentPropertyReference > SubcomponentPropertyReferences;
+
+  struct AssemblyPropertyMapping {
+    string name;
+    string externalName;
+    SubcomponentPropertyReferences delegatesTo;
+  };
+
+  typedef sequence < AssemblyPropertyMapping > AssemblyPropertyMappings;
+
+  struct ComponentAssemblyDescription {
+    SubcomponentInstantiationDescriptions instance;
+    AssemblyConnectionDescriptions connection;
+    AssemblyPropertyMappings externalProperty;
+  };
+
+  typedef sequence < ComponentAssemblyDescription > ComponentAssemblyDescriptions;
+
+  struct NamedImplementationArtifact;
+
+  typedef sequence < NamedImplementationArtifact > NamedImplementationArtifacts;
+
+  struct ImplementationArtifactDescription {
+    string label;
+    string UUID;
+    ::CORBA::StringSeq location;
+    Properties execParameter;
+    Requirements deployRequirement;
+    NamedImplementationArtifacts dependsOn;
+    Properties infoProperty;
+  };
+
+  struct NamedImplementationArtifact {
+    string name;
+    ImplementationArtifactDescription referencedArtifact;
+  };
+
+  typedef sequence < ResourceUsageKind > ResourceUsageKinds;
+
+  struct ImplementationRequirement {
+    ResourceUsageKinds resourceUsage;
+    string resourcePort;
+    string componentPort;
+    string resourceType;
+    string name;
+    Properties property;
+  };
+
+  typedef sequence < ImplementationRequirement > ImplementationRequirements;
+
+  struct MonolithicImplementationDescription {
+    Properties execParameter;
+    NamedImplementationArtifacts primaryArtifact;
+    ImplementationRequirements deployRequirement;
+  };
+
+  typedef sequence < MonolithicImplementationDescription > MonolithicImplementationDescriptions;
+
+  struct Capability {
+    string name;
+    ::CORBA::StringSeq resourceType;
+    SatisfierProperties property;
+  };
+
+  typedef sequence < Capability > Capabilities;
+
+  struct ComponentImplementationDescription {
+    string label;
+    string UUID;
+    ComponentInterfaceDescription implements;
+    ComponentAssemblyDescriptions assemblyImpl;
+    MonolithicImplementationDescriptions monolithicImpl;
+    Properties configProperty;
+    Capabilities capability;
+    ImplementationDependencies dependsOn;
+    Properties infoProperty;
+  };
+
+  struct PackagedComponentImplementation {
+    string name;
+    ComponentImplementationDescription referencedImplementation;
+  };
+
+  typedef sequence < PackagedComponentImplementation > PackagedComponentImplementations;
+
+  struct ComponentPackageDescription {
+    string label;
+    string UUID;
+    ComponentInterfaceDescription realizes;
+    Properties configProperty;
+    PackagedComponentImplementations implementation;
+    Properties infoProperty;
+  };
+
+  struct PackageConfiguration {
+    string label;
+    string UUID;
+    PackageConfigurations specializedConfig;
+    ComponentPackageDescriptions basePackage;
+    ComponentPackageReferences reference;
+    Requirements selectRequirement;
+    Properties configProperty;
+  };
+
   interface RepositoryManager {
-    void installPackage (in string name, in string label, in string location)
+    void installPackage (in string installationName, in string location)
       raises (NameExists, PackageError);
-    void createPackage (in string name, in string label, in ComponentPackageDescription package, in string baseLocation)
+    void createPackage (in string installationName, in PackageConfiguration package, in string baseLocation, in boolean replace)
       raises (NameExists, PackageError);
-    PackageConfiguration findConfigurationByName (in string label)
+    PackageConfiguration findPackageByName (in string name)
       raises (NoSuchName);
-    ::CORBA::StringSeq getAllNames ();
+    PackageConfiguration findPackageByUUID (in string UUID)
+      raises (NoSuchName);
     ::CORBA::StringSeq findNamesByType (in string type);
+    ::CORBA::StringSeq getAllNames ();
     ::CORBA::StringSeq getAllTypes ();
-    void createConfiguration (in string nname, in string bname, in Properties cp, in Requirements sr)
-      raises (NoSuchName, NameExists);
-    void updateConfiguration (in string name, in Properties cp, in Requirements sr)
+    void deletePackage (in string installationName)
       raises (NoSuchName);
-    void deleteConfiguration (in string name, in boolean deletePackage)
-      raises (NoSuchName, LastConfiguration);
   };
 
   struct RequirementSatisfier {
