@@ -26,7 +26,7 @@ module_base           := cidlc
 module_prefix         :=
 module_suffix         :=
 
-CXX_PREPROCESS_FLAGS  += -I$(root) $(UTILITY_CPP_FLAGS) $(BOOST_CPP_FLAGS)
+CXX_PREPROCESS_FLAGS  += -I.. -I$(root) $(UTILITY_CPP_FLAGS) $(BOOST_CPP_FLAGS)
 
 CXX_LINK_LIBS         += -L$(root)/CCF/CIDL              \
                          -lCIDL                          \

@@ -1,3 +1,11 @@
+Mon Jan 19 10:08:15 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CIDLC/Makefile.alt:
+	* CIDLC/cidlc.cpp:
+
+	  Added --version command line option to CIDL compiler. Thanks 
+	  to Craig Rodrigues for the suggestion.
+
 Thu Jan 15 20:17:17 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Documentation/Build.html:
