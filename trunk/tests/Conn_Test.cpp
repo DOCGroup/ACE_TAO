@@ -420,6 +420,7 @@ server (void *arg)
   return 0;
 }
 
+#if !defined (ACE_WIN32) && !defined (VXWORKS)
 static void
 handler (int signum)
 {
@@ -428,7 +429,6 @@ handler (int signum)
   ACE_OS::exit (0);
 }
 
-#if !defined (ACE_WIN32) && !defined (VXWORKS)
 // Spawn threads.
 
 static void
