@@ -43,7 +43,7 @@ public interface EventHandler
 {
   /** 
    * Called when timer expires.
-   *@param tv Time Value for which timer was set
+   *@param tv Time Value at which the event occured 
    *@param obj An arbitrary object that was passed to the Timer Queue
    * (Asynchronous Completion Token)
    */

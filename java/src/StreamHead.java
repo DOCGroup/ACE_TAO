@@ -72,7 +72,7 @@ public class StreamHead extends Task
 	f &= ~TaskFlags.ACE_FLUSHR;
       }
     if ((f & TaskFlags.ACE_FLUSHW) != 0)
-      return this.reply (mb, new TimeValue ());
+      return this.reply (mb, null);
     return 0;
   }
 

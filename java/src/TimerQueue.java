@@ -40,7 +40,7 @@ class TimerNode
   // Argument to pass to <handleTimeout>.
 
   public TimeValue timerValue_;
-  // Time until the timer expires.
+  // Time when the timer expires.  (absolute time)
 
   public TimeValue interval_;
   // If this is a periodic timer this holds the time until the next
@@ -124,29 +124,26 @@ public class TimerQueue implements Runnable
 	this.eventLoopRunning_ = true;
 
 	TimeValue timeout = null;
-	TimeValue earliest = null;
 
 	for (;;)
 	  {
 	    synchronized (this.obj_) 
 	      {
-		earliest = this.earliestTime ();
-		if (earliest != null)
-		  timeout = TimeValue.minus (earliest, TimeValue.getTimeOfDay ());
-		else
-		  timeout = new TimeValue ();
+		timeout = this.earliestTime ();
+
 		try
 		  {
 		    // Extract the earliest time from the queue and do a timed wait
+		    // Note that this does a blocking wait if timeout is null 
 		    this.obj_.timedWait (timeout);
 		
-		    // We have been notified. Check to see if we need to
-		    // restart the wait with a different timeout
+		    // We have been notified. 
 		    if (this.reset_)
 		      {
 			this.reset_ = false;
 			this.obj_.condition (false);
-			timeout = TimeValue.minus (this.earliestTime (), TimeValue.getTimeOfDay ());
+			// Don't need to change the timer since it's an absolute
+			// time value.
 		      }
 		  }
 		catch (TimeoutException e)
@@ -196,7 +193,7 @@ public class TimerQueue implements Runnable
    *@param handler Event Handler that is to be scheduled with the timer
    *@param obj Object that is passed back to the Event Handler when
    * timeout occurs (Asynchronous Completion Token)
-   *@param delta amount of time for which to schedule the timer
+   *@param delta amount of time for which to schedule the timer (relative time)
    *@return id of the timer scheduled
    */
   public int scheduleTimer (EventHandler handler,
@@ -217,23 +214,25 @@ public class TimerQueue implements Runnable
    *@param handler Event Handler that is to be scheduled with the timer
    *@param arg Object that is passed back to the Event Handler when
    * timeout occurs (Asynchronous Completion Token)
-   *@param timeout amount of time for which to schedule the timer
+   *@param delta amount of time for which to schedule the timer (relative time)
    *@param interval amount of time to use to reschedule the timer
    *@return id of the timer scheduled
    */
   public int scheduleTimer (EventHandler handler,
 			    Object arg,
-			    TimeValue timeout,
+			    TimeValue delta,
 			    TimeValue interval)
   {
 
     // Increment the sequence number (it will wrap around).
     this.timerId_++;
 
-    ACE.DEBUG("scheduleTimer (" + this.timerId_ + "): " + timeout + ", " + interval);
+    ACE.DEBUG("scheduleTimer (" + this.timerId_ + "): " + 
+	      delta + ", " + interval);
 
+    // futureTime is the current time of day plus the given delta
+    TimeValue futureTime = TimeValue.relativeTimeOfDay (delta);
 
-    TimeValue futureTime = TimeValue.plus (timeout, TimeValue.getTimeOfDay ());
     TimerNode node = new TimerNode (handler, 
 				    arg,
 				    futureTime,

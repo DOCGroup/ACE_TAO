@@ -60,7 +60,7 @@ public class StreamTail extends Task
       default:
 	mb.msgType (MessageType.MB_IOCNAK);
       }
-    return this.reply (mb, new TimeValue ());
+    return this.reply (mb, null);
   }
 
   // Perform flush algorithm as though we were the driver
@@ -77,7 +77,7 @@ public class StreamTail extends Task
     if ((f & TaskFlags.ACE_FLUSHR) != 0)
       {
 	this.sibling ().flush (TaskFlags.ACE_FLUSHALL);
-	return this.reply (mb, new TimeValue ());
+	return this.reply (mb, null);
       }
     return 0;
   }
