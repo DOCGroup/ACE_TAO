@@ -1,3 +1,10 @@
+Tue Aug 17 10:03:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * ace/ACE.cpp:
+
+          Added ACE_UNUSED_ARG() to is_sock_error() for non-WIN32
+          builds.
+
 Tue Aug 17 09:43:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * bin/msvc_static_order.lst:
