@@ -51,6 +51,7 @@ clone:
 RELEASE_FILES = ACE_wrappers/ACE-categories \
 	        ACE_wrappers/ACE-install.sh \
 	        ACE_wrappers/ACE-lessons.html \
+		ACE_wrappers/ASNMP \
 	        ACE_wrappers/BIBLIOGRAPHY \
 	        ACE_wrappers/ChangeLog-97b \
 	        ACE_wrappers/ChangeLog-97a \
