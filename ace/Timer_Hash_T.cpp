@@ -242,7 +242,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::~ACE_Timer_Hash_T (void)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::~ACE_Timer_Hash_T");
-  ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
+  ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->lock_));
 
   delete iterator_;
 
