@@ -40,7 +40,7 @@ main (int argc, char **argv)
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (obj, env);
+    PortableServer::POA::_narrow (obj.in(), env);
 //       
   if (env.exception () != 0)
     {
