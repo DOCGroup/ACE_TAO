@@ -283,7 +283,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
   // Assign thread (VxWorks task) names to test that feature.
   ACE_thread_t *thread_name;
   ACE_NEW_RETURN (thread_name,
@@ -313,13 +313,13 @@ run_main (int, ACE_TCHAR *[])
 
       stack_size[i] = 40000;
     }
-#endif /* VXWORKS */
+#endif /* VXWORKS && !ACE_HAS_PTHREADS */
 
   int grp_id = thr_mgr->spawn_n
                  (
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
                   thread_name,
-#endif /* VXWORKS */
+#endif /* VXWORKS && !ACE_HAS_PTHREADS */
                   n_threads,
                   (ACE_THR_FUNC) worker,
                   reinterpret_cast <void *> (n_iterations),
@@ -414,7 +414,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) main thread finished\n")));
 
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
   for (i = 0; i < n_threads - 1; ++i)
     {
       delete [] thread_name[i];
@@ -423,7 +423,7 @@ run_main (int, ACE_TCHAR *[])
     }
   delete [] thread_name;
   delete [] stack_size;
-#endif /* VXWORKS */
+#endif /* VXWORKS && !ACE_HAS_PTHREADS */
 
   delete thread_start;
   thread_start = 0;
