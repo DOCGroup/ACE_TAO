@@ -73,17 +73,20 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Manager 
 {
   // = TITLE
-  //     Define a map abstraction that associates <EXT_ID>s with
-  //     <INT_ID>s.  
+  //     Define a map abstraction that efficiently associates
+  //     <EXT_ID>s with <INT_ID>s.
   //     
   // = DESCRIPTION
   //     This implementation of a map uses a hash table.  Therefore,
   //     this class expects that the <EXT_ID> contains a method called
-  //     <hash>.  In addition, the <EXT_ID> must support <operator==>
-  //     (both of these constraints can be alleviated via template
-  //     specialization).  This class uses an ACE_Allocator to
-  //     allocate memory The user can make this a persistant class by
-  //     providing an ACE_Allocator with a persistable memory pool
+  //     <hash>.  In addition, the <EXT_ID> must support <operator==>.
+  //     Both of these constraints can be alleviated via template
+  //     specialization, as shown in the $ACE_ROOT/tests/Conn_Test.cpp
+  //     test.
+  //
+  //     This class uses an <ACE_Allocator> to allocate memory.  The
+  //     user can make this a persistent class by providing an
+  //     <ACE_Allocator> with a persistable memory pool.
 public:
   friend class ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>;
   friend class ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>;

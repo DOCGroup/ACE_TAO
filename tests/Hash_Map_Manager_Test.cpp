@@ -51,7 +51,10 @@ HASH_STRING_ENTRY::ACE_Hash_Map_Entry (ASYS_TCHAR *const &ext_id,
     next_ (next),
     prev_ (prev)
 {
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Creating `%s' and `%s'\n"), ext_id_, int_id_));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Creating `%s' and `%s'\n"),
+              ext_id_,
+              int_id_));
 }
 
 HASH_STRING_ENTRY::ACE_Hash_Map_Entry (HASH_STRING_ENTRY *next,
@@ -69,7 +72,10 @@ HASH_STRING_ENTRY::~ACE_Hash_Map_Entry (void)
   ASYS_TCHAR *value = int_id_;
 
   if (key != 0 && value != 0)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Freeing `%s' and `%s'\n"), key, value));
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("Freeing `%s' and `%s'\n"),
+                key,
+                value));
   ACE_OS::free (key);
   ACE_OS::free (value);
 }
@@ -91,7 +97,7 @@ HASH_STRING_MAP::equal (ASYS_TCHAR *const &id1, ASYS_TCHAR *const &id2)
 
 #else
 
-// Do this if we don't have template specialization
+// Do this if we don't have template specialization.  It's not as efficient
 
 #include "Hash_Map_Manager_Test.h"      // Dumb_String is in here
 
@@ -162,8 +168,8 @@ Dumb_String::operator ASYS_TCHAR * (void) const
   return s_;
 }
 
-// Note that in this version, you will not get the Creating and Freeing
-// diagnostic messages.
+// Note that in this version, you will not get the Creating and
+// Freeing diagnostic messages.
 
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
@@ -175,16 +181,20 @@ struct String_Table
 
 static String_Table string_table[] =
 {
-  { ASYS_TEXT ("hello"),
+  { 
+    ASYS_TEXT ("hello"),
     ASYS_TEXT ("guten Tag")
   },
-  { ASYS_TEXT ("goodbye"),
+  { 
+    ASYS_TEXT ("goodbye"),
     ASYS_TEXT ("auf wiedersehen")
   },
-  { ASYS_TEXT ("funny"),
+  { 
+    ASYS_TEXT ("funny"),
     ASYS_TEXT ("lustig")
   },
-  { 0,
+  { 
+    0,
     0
   }
 };

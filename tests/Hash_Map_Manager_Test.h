@@ -20,8 +20,8 @@
 class Dumb_String
 {
   // = DESCRIPTION
-  //     Desperate times call for desperate measures.  Bug your compiler
-  //     vendor to support template specialization.
+  //     Desperate times call for desperate measures.  Bug your
+  //     compiler vendor to support template specialization.
 public:
   Dumb_String (char *s = 0);
   // Default constructor
