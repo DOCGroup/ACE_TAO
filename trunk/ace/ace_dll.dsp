@@ -5319,10 +5319,6 @@ SOURCE=.\WIN32_Proactor.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ws2tcpip.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\XtReactor.h
 # End Source File
 # End Group
