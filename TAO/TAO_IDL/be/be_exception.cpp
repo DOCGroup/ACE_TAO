@@ -153,7 +153,16 @@ be_exception::gen_iostream_op_impl (TAO_OutStream *os)
   *os << "ostream & operator<< (ostream &os, const "
       << this->full_name ()<< " &_tao_aggregate)" << be_nl;
   *os << "{" << be_idt_nl;
+  *os << "CORBA::TypeCode_ptr tc = _tao_aggregate._type ();" << be_nl;
+  *os << "if (tc)" << be_idt_nl;
+  *os << "{" << be_idt_nl;
+  *os << "os << tc->name () << \" (\";" << be_uidt_nl;
+  *os << "}" << be_uidt_nl;
   *os << "os << _tao_aggregate._id ();" << be_nl;
+  *os << "if (tc)" << be_idt_nl;
+  *os << "{" << be_idt_nl;
+  *os << "os << \")\";" << be_uidt_nl;
+  *os << "}" << be_uidt_nl;
   *os << "return os;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
   *os << "#endif /* ACE_LACKS_IOSTREAM_TOTALLY */" << be_nl << be_nl;
