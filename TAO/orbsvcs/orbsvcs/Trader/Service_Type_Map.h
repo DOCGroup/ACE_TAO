@@ -19,6 +19,7 @@
 
 #include "Trader.h"
 #include "Monitor.h"
+#include "stl.h"
 
 class TAO_Offer_Id_Iterator;
 
@@ -180,7 +181,7 @@ public:
     friend TAO_Service_Type_Map<LOCK_TYPE>;
   public:
     
-    ~Random_Offer_Iterator (void);
+    ~Random_Offer_Locator (void);
     // Release all the read locks acquire by the constructor.
     
     CosTrading::Offer* get_offer (HUGE_NUMBER id);
