@@ -75,7 +75,7 @@ ACE_FILE::truncate (off_t length)
 }
 
 off_t
-ACE_FILE::seek (long offset, int startpos)
+ACE_FILE::seek (off_t offset, int startpos)
 {
   return ACE_OS::lseek (this->get_handle (),
                         offset,
