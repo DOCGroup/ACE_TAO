@@ -10,23 +10,25 @@ module RtecEventChannelAdmin {
   exception TypeError {};
 
   struct Dependency {
-    RtecEventComm::Event event_;
+    RtecEventComm::Event event;
     RtecScheduler::handle_t rt_info;
   };
   typedef sequence<Dependency> DependencySet;
 
   struct ConsumerQOS {
     DependencySet dependencies;
+    boolean is_gateway;
   };
 
   struct Publication {
-    RtecEventComm::Event event_;
-    RtecScheduler::Dependency_Info dependency_info_;
+    RtecEventComm::Event event;
+    RtecScheduler::Dependency_Info dependency_info;
   };
   typedef sequence<Publication> PublicationSet;
 
   struct SupplierQOS {
-    PublicationSet publications_;
+    PublicationSet publications;
+    boolean is_gateway;
   };
 
   interface ProxyPushConsumer: RtecEventComm::PushConsumer {
