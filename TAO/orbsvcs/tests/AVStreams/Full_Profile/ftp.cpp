@@ -254,7 +254,7 @@ Client::init (int argc,char **argv)
         }
       else
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "file %s could not be opened\n",
+          ACE_ERROR_RETURN ((LM_ERROR, "ERROR: file %s could not be opened\n",
                                        this->filename_), -1);
         }
     }
