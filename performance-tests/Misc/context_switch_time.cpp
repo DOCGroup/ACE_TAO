@@ -49,6 +49,7 @@ static const char usage [] = "[-? |\n"
                              "       [-n to spawn a new LWP with each thread\n"
                              "[<iterations>]]";
 
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_main.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"

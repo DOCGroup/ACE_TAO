@@ -6,6 +6,7 @@
 //      Irfan Pyarali <irfan@cs.wustl.edu> and
 //      Nanbor Wang <nanbor@cs.wustl.edu>
 // == == == == == == == == == == == == == == == == == == == == == == ==
+#include "ace/OS_NS_string.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Acceptor.h"

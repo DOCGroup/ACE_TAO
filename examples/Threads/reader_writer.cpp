@@ -13,6 +13,9 @@ ACE_RCSID(Threads, reader_writer, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Guard_T.h"
+#include "ace/RW_Mutex.h"
+
 // Default number of iterations.
 static int n_iterations = 1000;
 
