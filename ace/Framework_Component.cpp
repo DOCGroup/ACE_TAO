@@ -64,10 +64,10 @@ ACE_Framework_Repository::close (void)
       for (int i = this->current_size_ - 1; i >= 0; i--)
         if (this->component_vector_[i])
           {
-            ACE_Framework_Component *s = 
+            ACE_Framework_Component *s =
               ACE_const_cast (ACE_Framework_Component *,
                               this->component_vector_[i]);
- 
+
             this->component_vector_[i] = 0;
             if (s)
               s->close_singleton ();
@@ -130,9 +130,9 @@ ACE_Framework_Repository::register_component (ACE_Framework_Component *fc)
     if (this->component_vector_[i] &&
         fc->this_ == this->component_vector_[i]->this_)
       {
-        ACE_ERROR_RETURN ((LM_ERROR, 
-                           ACE_LIB_TEXT ("AFR::register_component: error, "
-                                         "compenent already registered\n")),
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_LIB_TEXT ("AFR::register_component: error, ")
+                           ACE_LIB_TEXT ("compenent already registered\n")),
                           -1);
       }
 
@@ -190,9 +190,9 @@ ACE_Framework_Repository::remove_dll_components_i (const ACE_TCHAR *dll_name)
     if (this->component_vector_[i] &&
         ACE_OS_String::strcmp (this->component_vector_[i]->dll_name_, dll_name) == 0)
       {
-        ACE_DEBUG ((LM_DEBUG, 
-                    ACE_LIB_TEXT ("AFR::remove_dll_components_i (%s) "
-                                  "component \"%s\"\n"),
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("AFR::remove_dll_components_i (%s) ")
+                    ACE_LIB_TEXT ("component \"%s\"\n"),
                     dll_name, this->component_vector_[i]->name_));
         delete this->component_vector_[i];
         this->component_vector_[i] = 0;
@@ -243,7 +243,7 @@ ACE_Framework_Repository::compact (void)
               this->component_vector_[start_hole++] =
                 this->component_vector_[++end_hole];
             }
-          // Since start_hole is now one past the last 
+          // Since start_hole is now one past the last
           // active slot.
           this->current_size_ = start_hole;
         }
