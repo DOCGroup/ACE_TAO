@@ -1,3 +1,10 @@
+Tue Jul 13 10:39:57 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* ace/Containers_T.h,i: Altered private member list_ of
+	  DLList_Iterator to be a pointer rather than a reference. This
+	  allows the reset method to work because it was overwriting the
+	  contents of list_ rather than iterating over a different list
+
 Tue Jul 13 09:14:31 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Cached_Connect_Strategy_T.cpp (dtor): Added ACE_TYPENAME
