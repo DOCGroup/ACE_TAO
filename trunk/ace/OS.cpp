@@ -5297,18 +5297,25 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                        name4,
                        ACE_UNIQUE_NAME_LEN);
 
-  if (ACE_OS::mutex_init (&rw->lock_, type, name1, arg) == 0
-      && ACE_OS::cond_init (&rw->waiting_readers_, type, name2, arg) == 0
-      && ACE_OS::cond_init (&rw->waiting_writers_, type, name3, arg) == 0
-      && ACE_OS::cond_init (&rw->waiting_important_writer_, type, name4, arg) == 0)
-  {
-      // Success!
-      rw->ref_count_ = 0;
-      rw->num_waiting_writers_ = 0;
-      rw->num_waiting_readers_ = 0;
-      rw->important_writer_ = 0;
-
-      result = 0;
+  ACE_condattr_t attributes;
+  if (ACE_OS::condattr_init (attributes, type) == 0)
+    {
+      if (ACE_OS::mutex_init (&rw->lock_, type, name1, arg) == 0
+          && ACE_OS::cond_init (&rw->waiting_readers_,
+                                attributes, name2, arg) == 0
+          && ACE_OS::cond_init (&rw->waiting_writers_,
+                                attributes, name3, arg) == 0
+          && ACE_OS::cond_init (&rw->waiting_important_writer_,
+                                attributes, name4, arg) == 0)
+        {
+          // Success!
+          rw->ref_count_ = 0;
+          rw->num_waiting_writers_ = 0;
+          rw->num_waiting_readers_ = 0;
+          rw->important_writer_ = 0;
+          result = 0;
+        }
+      ACE_OS::condattr_destroy (attributes);
     }
 
   if (result == -1)
@@ -5352,6 +5359,30 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
   ACE_UNUSED_ARG (cv);
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_THREADS */
+}
+
+// @@ The following functions could be inlined if i could figure where 
+// to put it among the #ifdefs!
+int
+ACE_OS::condattr_init (ACE_condattr_t &attributes,
+                       int type)
+{
+  attributes.type = type;
+  return 0;
+}
+
+int
+ACE_OS::condattr_destroy (ACE_condattr_t &)
+{
+  return 0;
+}
+
+int
+ACE_OS::cond_init (ACE_cond_t *cv,
+                   ACE_condatttr_t &attributes,
+                   LPCTSTR name, void *arg)
+{
+  return ACE_OS::cond_init (cv, attributes.type, name, arg);
 }
 
 int

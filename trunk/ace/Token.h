@@ -176,7 +176,14 @@ public:
 
   struct ACE_Token_Queue_Entry
   {
-    ACE_Token_Queue_Entry (ACE_Thread_Mutex &m, ACE_thread_t t_id);
+    ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
+                           ACE_thread_t t_id);
+    // Constructor
+
+    ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
+                           ACE_thread_t t_id,
+                           ACE_Condition_Attributes &attributes);
+    // Constructor using a pre-allocated attributes
 
     int wait (ACE_Time_Value *timeout, ACE_Thread_Mutex &lock);
     // Entry blocks on the token.
@@ -253,6 +260,9 @@ private:
 
   int signal_all_threads_;
   // Whether we are "signaling" all threads or not.
+
+  ACE_Condition_Attributes attributes_;
+  // The attributes for the condition variables, optimizes lock time.
 };
 
 #if defined (__ACE_INLINE__)
