@@ -20,7 +20,7 @@ TAO_LoadBalancing_ReplicationManager_i::TAO_LoadBalancing_ReplicationManager_i
   : poa_ (),
     lock_ (),
     object_group_map_ (),
-    property_manager_ (),
+    property_manager_ (this->object_group_map_),
     generic_factory_ (this->property_manager_,
                       this->object_group_map_),
     object_group_manager_ (this->property_manager_,
@@ -457,8 +457,8 @@ TAO_LoadBalancing_ReplicationManager_i::init (
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      this->object_group_map_.poa (this->poa_.in ());
       this->generic_factory_.poa (this->poa_.in ());
-      this->object_group_manager_.poa (this->poa_.in ());
     }
   ACE_CATCHANY
     {

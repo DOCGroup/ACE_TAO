@@ -24,10 +24,25 @@
 
 #include "orbsvcs/LoadBalancingC.h"
 
+/**
+ * @class TAO_LB_PropertyManager
+ *
+ * @brief Class that implements the LoadBalancing::PropertyManager
+ *        interface.
+ *
+ * Only the default and type-specific properties are housed in this
+ * class.  The properties used at creation time of an object group and
+ * those set dynamically after object group creation are stored in the
+ * TAO_LB_ObjectGroup_Map_Entry structure.  However, the
+ * PropertyManager is still used to manage those properties.
+ */
 class TAO_LB_PropertyManager
   : public virtual LoadBalancing::PropertyManager
 {
 public:
+
+  /// Constructor.
+  TAO_LB_PropertyManager (TAO_LB_ObjectGroup_Map &object_group_map);
 
   /**
    * @name TAO_LoadBalancer::PropertyManager methods
@@ -103,7 +118,7 @@ public:
    * Return the properties currently in use by the given object
    * group.  These properties include those that were set dynamically,
    * type-specific properties that weren't overridden, properties that
-   * were used when the Replica was created, and default properties
+   * were used when the replica was created, and default properties
    * that weren't overridden.
    */
   virtual LoadBalancing::Properties * get_properties (
@@ -168,17 +183,12 @@ public:
     LoadBalancing::Properties,
     ACE_Hash<const char *>,
     ACE_Equal_To<const char *>,
-    TAO_SYNCH_MUTEX> Type_Prop_Table;
-
-  /// Properties used when a given object group was created.
-  typedef ACE_Hash_Map_Manager_Ex<
-    PortableServer::ObjectId,
-    LoadBalancing::Properties,
-    TAO_ObjectId_Hash,
-    ACE_Equal_To<PortableServer::ObjectId>,
-    TAO_SYNCH_MUTEX> Dynamic_Prop_Table;
+    ACE_Null_Mutex> Type_Prop_Table;
 
 private:
+
+  /// Table that maps ObjectId to Object Group related information.
+  TAO_LB_ObjectGroup_Map &object_group_map_;
 
   /// Default properties.
   LoadBalancing::Properties default_properties_;
@@ -186,8 +196,9 @@ private:
   /// Table of type-specific object group properties.
   Type_Prop_Table type_properties_;
 
-  /// Table of object group properties used at run-time.
-  Dynamic_Prop_Table dynamic_properties_;
+  /// Lock used to synchronize access to the default properties and
+  /// the type-specific properties.
+  TAO_SYNCH_MUTEX lock_;
 
 };
 

@@ -24,7 +24,7 @@ TAO_LB_GenericFactory::TAO_LB_GenericFactory (
 CORBA::Object_ptr
 TAO_LB_GenericFactory::create_object (
     const char * type_id,
-    const LoadBalancing::Criteria & /* the_criteria */,
+    const LoadBalancing::Criteria &the_criteria,
     LoadBalancing::GenericFactory::FactoryCreationId_out
       factory_creation_id,
     CORBA::Environment &ACE_TRY_ENV)
@@ -35,14 +35,31 @@ TAO_LB_GenericFactory::create_object (
                    LoadBalancing::InvalidProperty,
                    LoadBalancing::CannotMeetCriteria))
 {
-  LoadBalancing::Properties_var properties =
-    this->property_manager_.get_type_properties (type_id,
-                                                 ACE_TRY_ENV);
+//   LoadBalancing::Properties_var properties =
+//     this->property_manager_.get_type_properties (type_id,
+//                                                  ACE_TRY_ENV);
+//   ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  // Make sure the criteria for the object group being created are
+  // valid.
+  this->property_manager_.validate_properties (the_criteria, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  // Extract the initial number of replicas to create.
+  LoadBalancing::InitialNumberReplicas initial_number_replicas =
+    this->property_manager_.get_initial_number_replicas (type_id,
+                                                         the_criteria,
+                                                         ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  // Extract the factory information for each of the replicas.
+  LoadBalancing::FactoryInfos factory_infos =
+    this->property_manager_.get_factory_infos (type_id,
+                                               the_criteria,
+                                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   CORBA::ULong factory_infos_count = factory_infos.length ();
-
-  const CORBA::UShort initial_number_replicas = 3;  // @@ REMOVE ME!
 
   // If the number of factories is less than the initial number of
   // replicas, then the desired number of replicas cannot possibly be
@@ -82,11 +99,11 @@ TAO_LB_GenericFactory::create_object (
   object_group_entry->object_group =
     CORBA::Object::_duplicate (object_group.in ());
 
-  if (this->property_manager_.infrastructure_controlled_membership ())
-    {
-      this->populate_object_group (object_group_entry, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-    }
+//   if (this->property_manager_.infrastructure_controlled_membership ())
+//     {
+//       this->populate_object_group (object_group_entry, ACE_TRY_ENV);
+//       ACE_CHECK_RETURN (CORBA::Object::_nil ());
+//     }
 
   // Allocate a new FactoryCreationId for use as an "out" parameter.
   LoadBalancing::GenericFactory::FactoryCreationId *tmp = 0;
@@ -101,8 +118,6 @@ TAO_LB_GenericFactory::create_object (
 
   factory_creation_id = tmp;
 
-  // Only increment the next FactoryCreationId if the object group was
-  // successfully created.
   *tmp <<= fcid;
 
   // Now associate the ObjectId with the ObjectGroup reference.  In
@@ -141,9 +156,15 @@ TAO_LB_GenericFactory::delete_object (
     {
       // Successfully extracted the FactoryCreationId.  Now find the
       // object group map corresponding to it.
+
+      // The ObjectId for the newly created object group is comprised
+      // solely of the FactoryCreationId.
+      PortableServer::ObjectId_var oid;
+      this->get_ObjectId (fcid, oid.out ());      
+
       TAO_LB_ObjectGroup_Map_Entry *object_group = 0;
 
-      if (this->object_group_map_.find (fcid, object_group) == -1)
+      if (this->object_group_map_.find (oid.in (), object_group) == -1)
         ACE_THROW (LoadBalancing::ObjectNotFound ());
 
       TAO_LB_ReplicaInfo_Set &replica_infos = object_group->replica_infos;
@@ -178,7 +199,7 @@ TAO_LB_GenericFactory::delete_object (
       }
 
       // Now delete the ObjectGroup from the set of ObjectGroups.
-      this->object_group_map_.unbind (fcid);
+      this->object_group_map_.unbind (oid.in ());
 
       delete object_group;
     }
