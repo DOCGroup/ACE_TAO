@@ -4,6 +4,10 @@
 #define ACE_CONFIG_WINCE_H
 #include "ace/pre.h"
 
+#ifndef ACE_CONFIG_WIN32_H
+#error Use config-win32.h in config.h instead of this header
+#endif /* ACE_CONFIG_WIN32_H */
+
 #if !defined (UNDER_CE)
 #error Define UNDER_CE to version (i.e. 300 = 3.0)
 #endif /* UNDER_CE */
@@ -225,6 +229,8 @@ typedef long off_t;
 #if !defined (ACE_HAS_MFC)
 inline void *operator new (unsigned int, void *p) { return p; }
 #endif /* ACE_HAS_MFC */
+
+#define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WINCE_H */

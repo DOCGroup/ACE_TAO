@@ -3,11 +3,13 @@
 
 // The following configuration file contains defines for Green Hills compilers.
 
-#ifndef ACE_WIN32_GHS_H
-#define ACE_WIN32_GHS_H
+#ifndef ACE_CONFIG_WIN32_GHS_H
+#define ACE_CONFIG_WIN32_GHS_H
 #include "ace/pre.h"
 
-#if defined (ghs)
+#ifndef ACE_CONFIG_WIN32_H
+#error Use config-win32.h in config.h instead of this header
+#endif /* ACE_CONFIG_WIN32_H */
 
 #ifndef WIN32
 #  define WIN32
@@ -22,7 +24,6 @@
 #undef _DLL
 #define ACE_OS_HAS_DLL 0
 
-# include "ace/config-win32-common.h"
 //Green Hills Native x86 does not support structural exceptions
 # undef ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
 # undef ACE_HAS_WCHAR
@@ -41,9 +42,7 @@
 # undef ACE_LACKS_AUTO_PTR
 // Microsoft's standard cpp library auto_ptr doesn't have reset ().
 # define ACE_AUTO_PTR_LACKS_RESET
-// In earlier versions, the following line appeared in OS.cpp,
-// but has been moved to config-win32.h. Since ghs does not use
-// config-win32.h, the line must appear here.
+
 #define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
 // This section below was extracted from config-win32-msvc
@@ -63,7 +62,6 @@
 # define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION 1
 # define ACE_HAS_MUTABLE_KEYWORD 1
 # define ACE_HAS_NONCONST_SELECT_TIMEVAL 1
-# define ACE_HAS_ONE_DEFINITION_RULE 1
 # define ACE_HAS_SIG_ATOMIC_T 1
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 //# if (__BORLANDC__ <= 0x540)
@@ -104,7 +102,6 @@
 # if !defined (ACE_LD_DECORATOR_STR) && defined (_DEBUG)
 #  define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
 # endif
-#endif /* defined(ghs) */
 
 #include "ace/post.h"
-#endif /* ACE_WIN32_GHS_H */
+#endif /* ACE_CONFIG_WIN32_GHS_H */
