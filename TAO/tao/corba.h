@@ -244,7 +244,7 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/default_client.i"
 #include "tao/default_server.i"
 #include "tao/Connect.i"
-#include "tao/CORBA.i"
+#include "tao/CORBA_Cls.i"
 #include "tao/Request.i"
 #endif /* __ACE_INLINE__ */
 
