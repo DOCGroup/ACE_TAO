@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -101,6 +103,11 @@ public:
 
   virtual char *gen_name (void);
   // Helper to create_name, also used by the traits visitor.
+
+protected:
+
+  virtual void compute_tc_name (void);
+  // Computes the fully scoped typecode name.
 
 private:
   const char *smart_fwd_helper_name (AST_Decl *elem_scope,

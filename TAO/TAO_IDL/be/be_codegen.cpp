@@ -828,8 +828,8 @@ TAO_CodeGen::start_anyop_source (const char *fname)
                        << be_global->be_get_client_hdr_fname (1)
                        << "\"";
 
-  this->gen_standard_include (this->anyop_source_,
-                              "tao/Typecode.h");
+
+  this->gen_typecode_includes (this->anyop_source_);
 
   return 0;
 }
@@ -1420,9 +1420,15 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // If not included here, it will appear in *C.cpp, if TCs not suppressed.
   this->gen_cond_file_include (
       idl_global->typecode_seen_,
-      "tao/Typecode.h",
+      "tao/TypeCode.h",
       this->client_header_
     );
+
+  this->gen_cond_file_include (
+      idl_global->any_seen_
+      | idl_global->typecode_seen_,
+      "tao/TypeCode_Constants.h",
+      this->client_header_);
 
   // This is true if we have an 'any' in the IDL file.
   // If not included here, it will appear in *C.cpp, if Anys not suppressed.
@@ -1555,8 +1561,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
       || (!idl_global->typecode_seen_
           && !be_global->gen_anyop_files ())))
     {
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Typecode.h");
+      this->gen_typecode_includes (this->client_stubs_);
     }
 
   // The UserException::_tao_{en,de}code() methods can throw a
@@ -1571,7 +1576,6 @@ TAO_CodeGen::gen_stub_src_includes (void)
       this->gen_standard_include (this->client_stubs_,
                                   "tao/SystemException.h");
     }
-
 
   // Includes whatever Any template classes that may be needed.
   this->gen_any_file_includes ();
@@ -1661,7 +1665,7 @@ TAO_CodeGen::gen_skel_src_includes (void)
   this->gen_standard_include (this->server_skeletons_,
                               "tao/Object_T.h");
   this->gen_standard_include (this->server_skeletons_,
-                              "tao/Typecode.h");
+                              "tao/TypeCode.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/DynamicC.h");
   this->gen_standard_include (this->server_skeletons_,
@@ -1981,4 +1985,63 @@ TAO_CodeGen::gen_cond_file_include (bool condition_green,
       this->gen_standard_include (stream,
                                   filepath);
     }
+}
+
+void
+TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
+{
+//   this->gen_standard_include (stream,
+//                               "tao/TypeCode.h");
+
+
+
+  this->gen_standard_include (stream,
+                              "tao/Null_RefCount_Policy.h");
+
+  this->gen_standard_include (stream,
+                              "tao/TypeCode_Constants.h");
+
+  // Just assume we're going to need alias TypeCodes since there is
+  // currently no alias_seen_ or typedef_seen_ flag in idl_global.
+  this->gen_standard_include (stream,
+                              "tao/Alias_TypeCode.h");
+
+  this->gen_cond_file_include (idl_global->enum_seen_,
+                               "tao/TypeCode_Non_Default_Case.h",
+                               stream);
+
+  this->gen_cond_file_include (idl_global->enum_seen_,
+                               "tao/Enum_TypeCode.h",
+                               stream);
+
+  this->gen_cond_file_include (idl_global->interface_seen_,
+//                                idl_global->abstract_iface_seen_
+//                                | idl_global->non_local_iface_seen_
+//                                | idl_global->local_iface_seen_
+//                                | idl_global->base_object_seen_,
+                               "tao/Objref_TypeCode.h",
+                               stream);
+
+  this->gen_cond_file_include (idl_global->seq_seen_,
+                               "tao/Sequence_TypeCode.h",
+                               stream);
+
+  this->gen_cond_file_include (idl_global->string_seen_,
+                               "tao/String_TypeCode.h",
+                               stream);
+
+  this->gen_cond_file_include (
+      idl_global->exception_seen_
+      | idl_global->fixed_size_arg_seen_ // Could be a struct
+      | idl_global->var_size_arg_seen_,  // Could be a struct
+      "tao/Struct_TypeCode.h",
+      stream);
+
+  this->gen_cond_file_include (idl_global->union_seen_,
+                               "tao/Union_TypeCode.h",
+                               stream);
+
+  this->gen_cond_file_include (idl_global->valuetype_seen_,
+                               "tao/Value_TypeCode.h",
+                               stream);
 }

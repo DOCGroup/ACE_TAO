@@ -25,6 +25,7 @@
 #include "be_field.h"
 #include "be_interface.h"
 #include "be_component.h"
+#include "be_home.h"
 #include "be_module.h"
 #include "be_predefined_type.h"
 #include "be_sequence.h"
@@ -47,7 +48,14 @@
 #include "be_visitor_typecode/typecode_decl.cpp"
 #include "be_visitor_typecode/typecode_defn.cpp"
 
-ACE_RCSID (be, 
-           be_visitor_typecode, 
-           "$Id$")
+#include "be_visitor_typecode/alias_typecode.cpp"
+#include "be_visitor_typecode/enum_typecode.cpp"
+#include "be_visitor_typecode/objref_typecode.cpp"
+#include "be_visitor_typecode/struct_typecode.cpp"
+#include "be_visitor_typecode/union_typecode.cpp"
+#include "be_visitor_typecode/value_typecode.cpp"
 
+
+ACE_RCSID (be,
+           be_visitor_typecode,
+           "$Id$")

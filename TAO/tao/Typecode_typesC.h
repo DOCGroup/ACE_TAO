@@ -121,7 +121,7 @@ namespace CORBA
     // This symbol is not defined by CORBA 3.0.  It's used to speed up
     // dispatch based on TCKind values, and lets many important ones
     // just be table lookups.  It must always be the last enum value!!
-    , TC_KIND_COUNT
+    , TAO_TC_KIND_COUNT
   };
   
   typedef TCKind &TCKind_out;

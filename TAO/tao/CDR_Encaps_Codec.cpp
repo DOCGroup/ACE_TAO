@@ -8,11 +8,12 @@
 #include "OctetSeqC.h"
 #include "Any.h"
 #include "Any_Impl.h"
-#include "Typecode.h"
+#include "TypeCode.h"
 #include "Marshal.h"
 #include "Any_Unknown_IDL_Type.h"
 #include "SystemException.h"
 #include "ORB_Constants.h"
+#include "TypeCode_Constants.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"

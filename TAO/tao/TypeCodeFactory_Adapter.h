@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -31,6 +31,18 @@ namespace CORBA
   class UnionMemberSeq;
   class ValueMemberSeq;
 }
+
+namespace TAO
+{
+  namespace TypeCode
+  {
+    template<typename STRING_TYPE> class Case;
+    template<typename STRING_TYPE> class Enumerator;
+    template<typename STRING_TYPE> class Struct_Field;
+    template<typename STRING_TYPE> class Value_Field;
+  }
+}
+
 
 /**
  * @class TAO_TypeCodeFactory_Adapter
@@ -195,6 +207,52 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
+  // --
+
+  // Factory methods that has no corresponding TypeCodeFactory IDL,
+  // i.e. it is TAO-specific.
+
+  virtual bool _tao_make_typecode (TAO_InputCDR & cdr,
+                                   CORBA::TypeCode *& tc);
+
+  virtual CORBA::TypeCode_ptr _tao_create_enum_tc (
+    CORBA::TCKind,
+    char const * id,
+    char const * name,
+    TAO::TypeCode::Enumerator<char const *> const *,
+    CORBA::ULong ncases
+    ACE_ENV_ARG_DECL) = 0;
+
+  virtual CORBA::TypeCode_ptr _tao_create_struct_except_tc (
+    CORBA::TCKind,
+    char const * id,
+    char const * name,
+    TAO::TypeCode::Struct_Field<char const *> const * fields,
+    CORBA::ULong nfields
+    ACE_ENV_ARG_DECL) = 0;
+
+    virtual CORBA::TypeCode_ptr _tao_create_union_tc (
+      char const * id,
+      char const * name,
+      CORBA::TypeCode_ptr * discriminant_type,
+      TAO::TypeCode::Case<char const *> const *,
+      CORBA::ULong ncases,
+      CORBA::Long default_index,
+      char const * default_case_name,
+      CORBA::TypeCode_ptr * default_case_type
+      ACE_ENV_ARG_DECL) = 0;
+
+  virtual CORBA::TypeCode_ptr _tao_create_value_event_tc (
+    CORBA::TCKind,
+    char const * id,
+    char const * name,
+    CORBA::ValueModifier modifier,
+    CORBA::TypeCode_ptr const * concrete_base,
+    TAO::TypeCode::Value_Field<char const *> const * fields,
+    CORBA::ULong nfields
+    ACE_ENV_ARG_DECL) = 0;
+
 };
 
 #include /**/ "ace/post.h"

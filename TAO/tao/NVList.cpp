@@ -7,7 +7,7 @@
 
 #include "tao/SystemException.h"
 #include "tao/BoundsC.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/Marshal.h"
 #include "tao/CORBA_String.h"
 #include "tao/Any_Impl.h"
