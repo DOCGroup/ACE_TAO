@@ -1,3 +1,9 @@
+Tue Nov 30 20:22:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* CIDLC/ServantSourceGenerator.cpp (namespace): 
+
+	  Fixes for VC6.
+
 Wed Nov 24 09:47:58 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/OEP/Display/NavDisplayGUI_exec/DetailView.cpp:
