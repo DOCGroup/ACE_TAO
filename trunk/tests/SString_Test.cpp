@@ -273,9 +273,9 @@ run_main (int, ACE_TCHAR *[])
     // Set 1 for ACE_SString, which is not tested
     ACE_SString sstr;
 
-    char *str = "What_a_day_it_has_been";
+    const char *str = "What_a_day_it_has_been";
 
-    sstr.rep (str);
+    sstr.rep (ACE_const_cast (char *, str));
 
     ACE_SString tmp =
       sstr.substring (2, 300);
