@@ -43,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -58,7 +58,6 @@ namespace TAO
 
 // Traits specializations for PortableServer::ServantLocator.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantLocator_ptr
 TAO::Objref_Traits<PortableServer::ServantLocator>::duplicate (
     PortableServer::ServantLocator_ptr p
@@ -67,7 +66,6 @@ TAO::Objref_Traits<PortableServer::ServantLocator>::duplicate (
   return PortableServer::ServantLocator::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableServer::ServantLocator>::release (
     PortableServer::ServantLocator_ptr p
@@ -76,14 +74,12 @@ TAO::Objref_Traits<PortableServer::ServantLocator>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantLocator_ptr
 TAO::Objref_Traits<PortableServer::ServantLocator>::nil (void)
 {
   return PortableServer::ServantLocator::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableServer::ServantLocator>::marshal (
     PortableServer::ServantLocator_ptr p,
@@ -152,6 +148,12 @@ PortableServer::ServantLocator::_duplicate (ServantLocator_ptr obj)
   return obj;
 }
 
+void
+PortableServer::ServantLocator::_tao_release (ServantLocator_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 PortableServer::ServantLocator::_is_a (
     const char *value
@@ -197,7 +199,7 @@ PortableServer::ServantLocator::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

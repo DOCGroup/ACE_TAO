@@ -43,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -56,7 +56,6 @@ namespace TAO
 
 // Traits specializations for PortableServer::Current.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::Current_ptr
 TAO::Objref_Traits<PortableServer::Current>::duplicate (
     PortableServer::Current_ptr p
@@ -65,7 +64,6 @@ TAO::Objref_Traits<PortableServer::Current>::duplicate (
   return PortableServer::Current::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableServer::Current>::release (
     PortableServer::Current_ptr p
@@ -74,14 +72,12 @@ TAO::Objref_Traits<PortableServer::Current>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::Current_ptr
 TAO::Objref_Traits<PortableServer::Current>::nil (void)
 {
   return PortableServer::Current::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableServer::Current>::marshal (
     PortableServer::Current_ptr p,
@@ -221,7 +217,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_Current_NoContext (
     0
   );
 
-::CORBA::TypeCode_ptr PortableServer::Current::_tc_NoContext =
+::CORBA::TypeCode_ptr const PortableServer::Current::_tc_NoContext =
   &_tc_TAO_tc_PortableServer_Current_NoContext;
 
 PortableServer::Current::Current (void)
@@ -283,6 +279,12 @@ PortableServer::Current::_duplicate (Current_ptr obj)
   return obj;
 }
 
+void
+PortableServer::Current::_tao_release (Current_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 PortableServer::Current::_is_a (
     const char *value
@@ -328,7 +330,7 @@ PortableServer::Current::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -52,7 +52,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // TAO specific stuff.
 namespace CORBA
@@ -98,8 +98,8 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
 #define _CORBA_POLICY__ARG_TRAITS_CS_
-
-  ACE_TEMPLATE_SPECIALIZATION
+  
+  template<>
   class TAO_Export Arg_Traits<CORBA::Policy>
     : public
         Object_Arg_Traits_T<
@@ -115,8 +115,8 @@ namespace TAO
 
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_CS_
-
-  ACE_TEMPLATE_SPECIALIZATION
+  
+  template<>
   class TAO_Export Arg_Traits<CORBA::InterfaceDef>
     : public
         Object_Arg_Traits_T<
@@ -137,7 +137,6 @@ namespace TAO
 
 // Traits specializations for CORBA::DomainManager.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::DomainManager_ptr
 TAO::Objref_Traits<CORBA::DomainManager>::duplicate (
     CORBA::DomainManager_ptr p
@@ -146,7 +145,6 @@ TAO::Objref_Traits<CORBA::DomainManager>::duplicate (
   return CORBA::DomainManager::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::DomainManager>::release (
     CORBA::DomainManager_ptr p
@@ -155,14 +153,12 @@ TAO::Objref_Traits<CORBA::DomainManager>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::DomainManager_ptr
 TAO::Objref_Traits<CORBA::DomainManager>::nil (void)
 {
   return CORBA::DomainManager::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::DomainManager>::marshal (
     CORBA::DomainManager_ptr p,
@@ -173,7 +169,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -193,21 +189,21 @@ TAO::Collocation_Proxy_Broker *
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-
+  
   if (this->the_TAO_DomainManager_Proxy_Broker_ == 0)
     {
       CORBA_DomainManager_setup_collocation ();
     }
-
+  
   TAO::Arg_Traits< CORBA::Policy>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::PolicyType>::in_arg_val _tao_policy_type (policy_type);
-
+  
   TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_policy_type
     };
-
+  
   TAO::Invocation_Adapter _tao_call (
       this,
       _the_tao_operation_signature,
@@ -216,10 +212,10 @@ TAO::Collocation_Proxy_Broker *
       17,
       this->the_TAO_DomainManager_Proxy_Broker_
     );
-
+  
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (_tao_retval.excp ());
-
+  
   return _tao_retval.retn ();
 }
 
@@ -291,6 +287,12 @@ CORBA::DomainManager::_duplicate (DomainManager_ptr obj)
   return obj;
 }
 
+void
+CORBA::DomainManager::_tao_release (DomainManager_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 CORBA::DomainManager::_is_a (
     const char *value
@@ -335,7 +337,6 @@ CORBA::DomainManager::marshal (TAO_OutputCDR &cdr)
 
 // Traits specializations for CORBA::ConstructionPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ConstructionPolicy_ptr
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::duplicate (
     CORBA::ConstructionPolicy_ptr p
@@ -344,7 +345,6 @@ TAO::Objref_Traits<CORBA::ConstructionPolicy>::duplicate (
   return CORBA::ConstructionPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::release (
     CORBA::ConstructionPolicy_ptr p
@@ -353,14 +353,12 @@ TAO::Objref_Traits<CORBA::ConstructionPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ConstructionPolicy_ptr
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::nil (void)
 {
   return CORBA::ConstructionPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::marshal (
     CORBA::ConstructionPolicy_ptr p,
@@ -490,6 +488,12 @@ CORBA::ConstructionPolicy::_duplicate (ConstructionPolicy_ptr obj)
     }
   
   return obj;
+}
+
+void
+CORBA::ConstructionPolicy::_tao_release (ConstructionPolicy_ptr obj)
+{
+  CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -739,7 +743,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

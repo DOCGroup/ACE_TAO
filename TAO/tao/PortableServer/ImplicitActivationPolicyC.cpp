@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -57,7 +57,6 @@ namespace TAO
 
 // Traits specializations for PortableServer::ImplicitActivationPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ImplicitActivationPolicy_ptr
 TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::duplicate (
     PortableServer::ImplicitActivationPolicy_ptr p
@@ -66,7 +65,6 @@ TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::duplicate (
   return PortableServer::ImplicitActivationPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::release (
     PortableServer::ImplicitActivationPolicy_ptr p
@@ -75,14 +73,12 @@ TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ImplicitActivationPolicy_ptr
 TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::nil (void)
 {
   return PortableServer::ImplicitActivationPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::marshal (
     PortableServer::ImplicitActivationPolicy_ptr p,
@@ -149,6 +145,12 @@ PortableServer::ImplicitActivationPolicy::_duplicate (ImplicitActivationPolicy_p
     }
   
   return obj;
+}
+
+void
+PortableServer::ImplicitActivationPolicy::_tao_release (ImplicitActivationPolicy_ptr obj)
+{
+  CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -218,7 +220,7 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::ImplicitActivatio
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

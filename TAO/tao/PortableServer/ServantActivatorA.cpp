@@ -70,7 +70,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantActivator (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_ServantActivator =
+  ::CORBA::TypeCode_ptr const _tc_ServantActivator =
     &_tc_TAO_tc_PortableServer_ServantActivator;
 }
 

@@ -63,7 +63,7 @@ static CORBA::TypeCode _tc_TAO_tc_TimeBase_TimeT (
 
 namespace TimeBase
 {
-  ::CORBA::TypeCode_ptr _tc_TimeT =
+  ::CORBA::TypeCode_ptr const _tc_TimeT =
     &_tc_TAO_tc_TimeBase_TimeT;
 }
 
@@ -118,7 +118,7 @@ static CORBA::TypeCode _tc_TAO_tc_TimeBase_InaccuracyT (
 
 namespace TimeBase
 {
-  ::CORBA::TypeCode_ptr _tc_InaccuracyT =
+  ::CORBA::TypeCode_ptr const _tc_InaccuracyT =
     &_tc_TAO_tc_TimeBase_InaccuracyT;
 }
 
@@ -154,7 +154,7 @@ static CORBA::TypeCode _tc_TAO_tc_TimeBase_TdfT (
 
 namespace TimeBase
 {
-  ::CORBA::TypeCode_ptr _tc_TdfT =
+  ::CORBA::TypeCode_ptr const _tc_TdfT =
     &_tc_TAO_tc_TimeBase_TdfT;
 }
 
@@ -240,7 +240,7 @@ static CORBA::TypeCode _tc_TAO_tc_TimeBase_UtcT (
 
 namespace TimeBase
 {
-  ::CORBA::TypeCode_ptr _tc_UtcT =
+  ::CORBA::TypeCode_ptr const _tc_UtcT =
     &_tc_TAO_tc_TimeBase_UtcT;
 }
 
@@ -321,7 +321,7 @@ static CORBA::TypeCode _tc_TAO_tc_TimeBase_IntervalT (
 
 namespace TimeBase
 {
-  ::CORBA::TypeCode_ptr _tc_IntervalT =
+  ::CORBA::TypeCode_ptr const _tc_IntervalT =
     &_tc_TAO_tc_TimeBase_IntervalT;
 }
 

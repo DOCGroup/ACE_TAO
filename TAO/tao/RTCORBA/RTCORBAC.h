@@ -57,9 +57,11 @@
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
 #include "tao/Encodable.h"
-#include "tao/PolicyC.h"
 
 #include "tao/IOPC.h"
+#include "tao/TimeBaseC.h"
+#include "tao/PolicyC.h"
+
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
@@ -81,13 +83,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-  
+
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -97,102 +99,102 @@ namespace TAO
 
 namespace RTCORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
-  
+
   typedef CORBA::Short NativePriority;
   typedef CORBA::Short_out NativePriority_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NativePriority;
-  
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_NativePriority;
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
-  
+
   typedef CORBA::Short Priority;
   typedef CORBA::Short_out Priority_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Priority;
-  
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Priority;
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const RTCORBA::Priority minPriority = 0;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const RTCORBA::Priority maxPriority = 32767;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
-  
+
   typedef CORBA::Long NetworkPriority;
   typedef CORBA::Long_out NetworkPriority_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NetworkPriority;
-  
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_NetworkPriority;
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
-  
+
   typedef CORBA::ULong ThreadpoolId;
   typedef CORBA::ULong_out ThreadpoolId_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadpoolId;
-  
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ThreadpoolId;
+
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
-  
+
   struct ThreadpoolLane;
-  
+
   typedef
     TAO_Fixed_Var_T<
         ThreadpoolLane
       >
     ThreadpoolLane_var;
-  
+
   typedef
     ThreadpoolLane &
     ThreadpoolLane_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_RTCORBA_Export ThreadpoolLane
   {
     typedef ThreadpoolLane_var _var_type;
-    
+
     static void _tao_any_destructor (void *);
     RTCORBA::Priority lane_priority;
     CORBA::ULong static_threads;
     CORBA::ULong dynamic_threads;
   };
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadpoolLane;
-  
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ThreadpoolLane;
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_RTCORBA_THREADPOOLLANES_CH_)
 #define _RTCORBA_THREADPOOLLANES_CH_
-  
+
   class ThreadpoolLanes;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         ThreadpoolLanes,
@@ -236,7 +238,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadpoolLanes;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ThreadpoolLanes;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -257,7 +259,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityModel;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PriorityModel;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -297,6 +299,8 @@ namespace RTCORBA
     
     // The static operations.
     static PriorityModelPolicy_ptr _duplicate (PriorityModelPolicy_ptr obj);
+    
+    static void _tao_release (PriorityModelPolicy_ptr obj);
     
     static PriorityModelPolicy_ptr _narrow (
         CORBA::Object_ptr obj
@@ -356,7 +360,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -384,7 +388,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityModelPolicy;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PriorityModelPolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -429,6 +433,8 @@ namespace RTCORBA
     
     // The static operations.
     static ThreadpoolPolicy_ptr _duplicate (ThreadpoolPolicy_ptr obj);
+    
+    static void _tao_release (ThreadpoolPolicy_ptr obj);
     
     static ThreadpoolPolicy_ptr _narrow (
         CORBA::Object_ptr obj
@@ -478,7 +484,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -506,7 +512,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ThreadpoolPolicy;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ThreadpoolPolicy;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -548,6 +554,8 @@ namespace RTCORBA
     // The static operations.
     static ProtocolProperties_ptr _duplicate (ProtocolProperties_ptr obj);
     
+    static void _tao_release (ProtocolProperties_ptr obj);
+    
     static ProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -566,7 +574,7 @@ namespace RTCORBA
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -597,7 +605,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProtocolProperties;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ProtocolProperties;
   
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
@@ -633,7 +641,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Protocol;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Protocol;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -686,7 +694,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProtocolList;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ProtocolList;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -731,6 +739,8 @@ namespace RTCORBA
     
     // The static operations.
     static ServerProtocolPolicy_ptr _duplicate (ServerProtocolPolicy_ptr obj);
+    
+    static void _tao_release (ServerProtocolPolicy_ptr obj);
     
     static ServerProtocolPolicy_ptr _narrow (
         CORBA::Object_ptr obj
@@ -780,7 +790,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -808,7 +818,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerProtocolPolicy;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ServerProtocolPolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -853,6 +863,8 @@ namespace RTCORBA
     
     // The static operations.
     static ClientProtocolPolicy_ptr _duplicate (ClientProtocolPolicy_ptr obj);
+    
+    static void _tao_release (ClientProtocolPolicy_ptr obj);
     
     static ClientProtocolPolicy_ptr _narrow (
         CORBA::Object_ptr obj
@@ -902,7 +914,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -930,7 +942,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ClientProtocolPolicy;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ClientProtocolPolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -976,6 +988,8 @@ namespace RTCORBA
     // The static operations.
     static PrivateConnectionPolicy_ptr _duplicate (PrivateConnectionPolicy_ptr obj);
     
+    static void _tao_release (PrivateConnectionPolicy_ptr obj);
+    
     static PrivateConnectionPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1014,7 +1028,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1042,7 +1056,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PrivateConnectionPolicy;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PrivateConnectionPolicy;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -1082,6 +1096,8 @@ namespace RTCORBA
     
     // The static operations.
     static TCPProtocolProperties_ptr _duplicate (TCPProtocolProperties_ptr obj);
+    
+    static void _tao_release (TCPProtocolProperties_ptr obj);
     
     static TCPProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
@@ -1227,7 +1243,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1255,7 +1271,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TCPProtocolProperties;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_TCPProtocolProperties;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -1296,6 +1312,8 @@ namespace RTCORBA
     // The static operations.
     static GIOPProtocolProperties_ptr _duplicate (GIOPProtocolProperties_ptr obj);
     
+    static void _tao_release (GIOPProtocolProperties_ptr obj);
+    
     static GIOPProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1314,7 +1332,7 @@ namespace RTCORBA
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1342,7 +1360,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_GIOPProtocolProperties;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_GIOPProtocolProperties;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -1382,6 +1400,8 @@ namespace RTCORBA
     
     // The static operations.
     static UnixDomainProtocolProperties_ptr _duplicate (UnixDomainProtocolProperties_ptr obj);
+    
+    static void _tao_release (UnixDomainProtocolProperties_ptr obj);
     
     static UnixDomainProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
@@ -1443,7 +1463,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1471,7 +1491,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_UnixDomainProtocolProperties;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_UnixDomainProtocolProperties;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -1511,6 +1531,8 @@ namespace RTCORBA
     
     // The static operations.
     static SharedMemoryProtocolProperties_ptr _duplicate (SharedMemoryProtocolProperties_ptr obj);
+    
+    static void _tao_release (SharedMemoryProtocolProperties_ptr obj);
     
     static SharedMemoryProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
@@ -1698,7 +1720,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1726,7 +1748,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SharedMemoryProtocolProperties;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_SharedMemoryProtocolProperties;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -1767,6 +1789,8 @@ namespace RTCORBA
     // The static operations.
     static UserDatagramProtocolProperties_ptr _duplicate (UserDatagramProtocolProperties_ptr obj);
     
+    static void _tao_release (UserDatagramProtocolProperties_ptr obj);
+    
     static UserDatagramProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1806,7 +1830,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -1834,7 +1858,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_UserDatagramProtocolProperties;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_UserDatagramProtocolProperties;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -1874,6 +1898,8 @@ namespace RTCORBA
     
     // The static operations.
     static StreamControlProtocolProperties_ptr _duplicate (StreamControlProtocolProperties_ptr obj);
+    
+    static void _tao_release (StreamControlProtocolProperties_ptr obj);
     
     static StreamControlProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
@@ -2019,7 +2045,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -2047,7 +2073,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_StreamControlProtocolProperties;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_StreamControlProtocolProperties;
   
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
@@ -2079,7 +2105,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityBand;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PriorityBand;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -2132,7 +2158,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityBands;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PriorityBands;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -2177,6 +2203,8 @@ namespace RTCORBA
     
     // The static operations.
     static PriorityBandedConnectionPolicy_ptr _duplicate (PriorityBandedConnectionPolicy_ptr obj);
+    
+    static void _tao_release (PriorityBandedConnectionPolicy_ptr obj);
     
     static PriorityBandedConnectionPolicy_ptr _narrow (
         CORBA::Object_ptr obj
@@ -2226,7 +2254,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -2254,7 +2282,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityBandedConnectionPolicy;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PriorityBandedConnectionPolicy;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -2295,6 +2323,8 @@ namespace RTCORBA
     // The static operations.
     static Current_ptr _duplicate (Current_ptr obj);
     
+    static void _tao_release (Current_ptr obj);
+    
     static Current_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2334,7 +2364,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -2362,7 +2392,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Current;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Current;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -2402,6 +2432,8 @@ namespace RTCORBA
     
     // The static operations.
     static Mutex_ptr _duplicate (Mutex_ptr obj);
+    
+    static void _tao_release (Mutex_ptr obj);
     
     static Mutex_ptr _narrow (
         CORBA::Object_ptr obj
@@ -2452,7 +2484,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -2480,7 +2512,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Mutex;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Mutex;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -2520,6 +2552,8 @@ namespace RTCORBA
     
     // The static operations.
     static RTORB_ptr _duplicate (RTORB_ptr obj);
+    
+    static void _tao_release (RTORB_ptr obj);
     
     static RTORB_ptr _narrow (
         CORBA::Object_ptr obj
@@ -2605,7 +2639,7 @@ namespace RTCORBA
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_MutexNotFound;
+    static ::CORBA::TypeCode_ptr const _tc_MutexNotFound;
 
 #endif /* end #if !defined */
     
@@ -2752,7 +2786,7 @@ namespace RTCORBA
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_InvalidThreadpool;
+    static ::CORBA::TypeCode_ptr const _tc_InvalidThreadpool;
 
 #endif /* end #if !defined */
     
@@ -2868,7 +2902,7 @@ namespace RTCORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -2896,7 +2930,7 @@ namespace RTCORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RTORB;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_RTORB;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -2913,7 +2947,7 @@ namespace TAO
 #if !defined (_RTCORBA_PRIORITYMODELPOLICY__TRAITS_CH_)
 #define _RTCORBA_PRIORITYMODELPOLICY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::PriorityModelPolicy>
   {
     static ::RTCORBA::PriorityModelPolicy_ptr duplicate (
@@ -2934,7 +2968,7 @@ namespace TAO
 #if !defined (_RTCORBA_THREADPOOLPOLICY__TRAITS_CH_)
 #define _RTCORBA_THREADPOOLPOLICY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::ThreadpoolPolicy>
   {
     static ::RTCORBA::ThreadpoolPolicy_ptr duplicate (
@@ -2955,7 +2989,7 @@ namespace TAO
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES__TRAITS_CH_)
 #define _RTCORBA_PROTOCOLPROPERTIES__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::ProtocolProperties>
   {
     static ::RTCORBA::ProtocolProperties_ptr duplicate (
@@ -2976,7 +3010,7 @@ namespace TAO
 #if !defined (_RTCORBA_SERVERPROTOCOLPOLICY__TRAITS_CH_)
 #define _RTCORBA_SERVERPROTOCOLPOLICY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::ServerProtocolPolicy>
   {
     static ::RTCORBA::ServerProtocolPolicy_ptr duplicate (
@@ -2997,7 +3031,7 @@ namespace TAO
 #if !defined (_RTCORBA_CLIENTPROTOCOLPOLICY__TRAITS_CH_)
 #define _RTCORBA_CLIENTPROTOCOLPOLICY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::ClientProtocolPolicy>
   {
     static ::RTCORBA::ClientProtocolPolicy_ptr duplicate (
@@ -3018,7 +3052,7 @@ namespace TAO
 #if !defined (_RTCORBA_PRIVATECONNECTIONPOLICY__TRAITS_CH_)
 #define _RTCORBA_PRIVATECONNECTIONPOLICY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::PrivateConnectionPolicy>
   {
     static ::RTCORBA::PrivateConnectionPolicy_ptr duplicate (
@@ -3039,7 +3073,7 @@ namespace TAO
 #if !defined (_RTCORBA_TCPPROTOCOLPROPERTIES__TRAITS_CH_)
 #define _RTCORBA_TCPPROTOCOLPROPERTIES__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::TCPProtocolProperties>
   {
     static ::RTCORBA::TCPProtocolProperties_ptr duplicate (
@@ -3060,7 +3094,7 @@ namespace TAO
 #if !defined (_RTCORBA_GIOPPROTOCOLPROPERTIES__TRAITS_CH_)
 #define _RTCORBA_GIOPPROTOCOLPROPERTIES__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::GIOPProtocolProperties>
   {
     static ::RTCORBA::GIOPProtocolProperties_ptr duplicate (
@@ -3081,7 +3115,7 @@ namespace TAO
 #if !defined (_RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES__TRAITS_CH_)
 #define _RTCORBA_UNIXDOMAINPROTOCOLPROPERTIES__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::UnixDomainProtocolProperties>
   {
     static ::RTCORBA::UnixDomainProtocolProperties_ptr duplicate (
@@ -3102,7 +3136,7 @@ namespace TAO
 #if !defined (_RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES__TRAITS_CH_)
 #define _RTCORBA_SHAREDMEMORYPROTOCOLPROPERTIES__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::SharedMemoryProtocolProperties>
   {
     static ::RTCORBA::SharedMemoryProtocolProperties_ptr duplicate (
@@ -3123,7 +3157,7 @@ namespace TAO
 #if !defined (_RTCORBA_USERDATAGRAMPROTOCOLPROPERTIES__TRAITS_CH_)
 #define _RTCORBA_USERDATAGRAMPROTOCOLPROPERTIES__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::UserDatagramProtocolProperties>
   {
     static ::RTCORBA::UserDatagramProtocolProperties_ptr duplicate (
@@ -3144,7 +3178,7 @@ namespace TAO
 #if !defined (_RTCORBA_STREAMCONTROLPROTOCOLPROPERTIES__TRAITS_CH_)
 #define _RTCORBA_STREAMCONTROLPROTOCOLPROPERTIES__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::StreamControlProtocolProperties>
   {
     static ::RTCORBA::StreamControlProtocolProperties_ptr duplicate (
@@ -3165,7 +3199,7 @@ namespace TAO
 #if !defined (_RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY__TRAITS_CH_)
 #define _RTCORBA_PRIORITYBANDEDCONNECTIONPOLICY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::PriorityBandedConnectionPolicy>
   {
     static ::RTCORBA::PriorityBandedConnectionPolicy_ptr duplicate (
@@ -3186,7 +3220,7 @@ namespace TAO
 #if !defined (_RTCORBA_CURRENT__TRAITS_CH_)
 #define _RTCORBA_CURRENT__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::Current>
   {
     static ::RTCORBA::Current_ptr duplicate (
@@ -3207,7 +3241,7 @@ namespace TAO
 #if !defined (_RTCORBA_MUTEX__TRAITS_CH_)
 #define _RTCORBA_MUTEX__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::Mutex>
   {
     static ::RTCORBA::Mutex_ptr duplicate (
@@ -3228,7 +3262,7 @@ namespace TAO
 #if !defined (_RTCORBA_RTORB__TRAITS_CH_)
 #define _RTCORBA_RTORB__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::RTORB>
   {
     static ::RTCORBA::RTORB_ptr duplicate (

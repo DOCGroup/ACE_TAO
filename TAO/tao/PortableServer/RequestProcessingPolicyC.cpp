@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -57,7 +57,6 @@ namespace TAO
 
 // Traits specializations for PortableServer::RequestProcessingPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::RequestProcessingPolicy_ptr
 TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::duplicate (
     PortableServer::RequestProcessingPolicy_ptr p
@@ -66,7 +65,6 @@ TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::duplicate (
   return PortableServer::RequestProcessingPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::release (
     PortableServer::RequestProcessingPolicy_ptr p
@@ -75,14 +73,12 @@ TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::RequestProcessingPolicy_ptr
 TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::nil (void)
 {
   return PortableServer::RequestProcessingPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::marshal (
     PortableServer::RequestProcessingPolicy_ptr p,
@@ -149,6 +145,12 @@ PortableServer::RequestProcessingPolicy::_duplicate (RequestProcessingPolicy_ptr
     }
   
   return obj;
+}
+
+void
+PortableServer::RequestProcessingPolicy::_tao_release (RequestProcessingPolicy_ptr obj)
+{
+  CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -218,7 +220,7 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::RequestProcessing
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -124,6 +124,8 @@ namespace PortableServer
     // The static operations.
     static POAManager_ptr _duplicate (POAManager_ptr obj);
     
+    static void _tao_release (POAManager_ptr obj);
+    
     static POAManager_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -187,7 +189,7 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_AdapterInactive;
+    static ::CORBA::TypeCode_ptr const _tc_AdapterInactive;
 
 #endif /* end #if !defined */
     
@@ -207,7 +209,7 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_State;
+    static ::CORBA::TypeCode_ptr const _tc_State;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -272,7 +274,7 @@ namespace PortableServer
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -300,7 +302,7 @@ namespace PortableServer
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_POAManager;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_POAManager;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -317,7 +319,7 @@ namespace TAO
 #if !defined (_PORTABLESERVER_POAMANAGER__TRAITS_CH_)
 #define _PORTABLESERVER_POAMANAGER__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::POAManager>
   {
     static ::PortableServer::POAManager_ptr duplicate (

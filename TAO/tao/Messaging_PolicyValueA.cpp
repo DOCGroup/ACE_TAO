@@ -115,7 +115,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_PolicyValue (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_PolicyValue =
+  ::CORBA::TypeCode_ptr const _tc_PolicyValue =
     &_tc_TAO_tc_Messaging_PolicyValue;
 }
 
@@ -229,7 +229,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_PolicyValueSeq (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_PolicyValueSeq =
+  ::CORBA::TypeCode_ptr const _tc_PolicyValueSeq =
     &_tc_TAO_tc_Messaging_PolicyValueSeq;
 }
 

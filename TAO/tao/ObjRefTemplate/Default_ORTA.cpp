@@ -73,7 +73,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_Default_ORT_ObjectReferenceTemplate (
 
 namespace TAO_Default_ORT
 {
-  ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplate =
+  ::CORBA::TypeCode_ptr const _tc_ObjectReferenceTemplate =
     &_tc_TAO_tc_TAO_Default_ORT_ObjectReferenceTemplate;
 }
 

@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -57,7 +57,6 @@ namespace TAO
 
 // Traits specializations for PortableServer::ThreadPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ThreadPolicy_ptr
 TAO::Objref_Traits<PortableServer::ThreadPolicy>::duplicate (
     PortableServer::ThreadPolicy_ptr p
@@ -66,7 +65,6 @@ TAO::Objref_Traits<PortableServer::ThreadPolicy>::duplicate (
   return PortableServer::ThreadPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableServer::ThreadPolicy>::release (
     PortableServer::ThreadPolicy_ptr p
@@ -75,14 +73,12 @@ TAO::Objref_Traits<PortableServer::ThreadPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ThreadPolicy_ptr
 TAO::Objref_Traits<PortableServer::ThreadPolicy>::nil (void)
 {
   return PortableServer::ThreadPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableServer::ThreadPolicy>::marshal (
     PortableServer::ThreadPolicy_ptr p,
@@ -149,6 +145,12 @@ PortableServer::ThreadPolicy::_duplicate (ThreadPolicy_ptr obj)
     }
   
   return obj;
+}
+
+void
+PortableServer::ThreadPolicy::_tao_release (ThreadPolicy_ptr obj)
+{
+  CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -218,7 +220,7 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::ThreadPolicyValue
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

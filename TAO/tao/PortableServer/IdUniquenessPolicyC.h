@@ -101,7 +101,7 @@ namespace PortableServer
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IdUniquenessPolicyValue;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_IdUniquenessPolicyValue;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -141,6 +141,8 @@ namespace PortableServer
     
     // The static operations.
     static IdUniquenessPolicy_ptr _duplicate (IdUniquenessPolicy_ptr obj);
+    
+    static void _tao_release (IdUniquenessPolicy_ptr obj);
     
     static IdUniquenessPolicy_ptr _narrow (
         CORBA::Object_ptr obj
@@ -190,7 +192,7 @@ namespace PortableServer
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -218,7 +220,7 @@ namespace PortableServer
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IdUniquenessPolicy;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_IdUniquenessPolicy;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -235,7 +237,7 @@ namespace TAO
 #if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_IDUNIQUENESSPOLICY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::IdUniquenessPolicy>
   {
     static ::PortableServer::IdUniquenessPolicy_ptr duplicate (

@@ -130,6 +130,8 @@ namespace IOP
     // The static operations.
     static Codec_ptr _duplicate (Codec_ptr obj);
     
+    static void _tao_release (Codec_ptr obj);
+    
     static Codec_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -193,7 +195,7 @@ namespace IOP
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_InvalidTypeForEncoding;
+    static ::CORBA::TypeCode_ptr const _tc_InvalidTypeForEncoding;
 
 #endif /* end #if !defined */
     
@@ -243,7 +245,7 @@ namespace IOP
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_FormatMismatch;
+    static ::CORBA::TypeCode_ptr const _tc_FormatMismatch;
 
 #endif /* end #if !defined */
     
@@ -293,7 +295,7 @@ namespace IOP
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
+    static ::CORBA::TypeCode_ptr const _tc_TypeMismatch;
 
 #endif /* end #if !defined */
     
@@ -348,7 +350,7 @@ namespace IOP
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -376,7 +378,7 @@ namespace IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Codec;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Codec;
   
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
@@ -387,7 +389,7 @@ namespace IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EncodingFormat;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_EncodingFormat;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -425,7 +427,7 @@ namespace IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Encoding;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Encoding;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -465,6 +467,8 @@ namespace IOP
     
     // The static operations.
     static CodecFactory_ptr _duplicate (CodecFactory_ptr obj);
+    
+    static void _tao_release (CodecFactory_ptr obj);
     
     static CodecFactory_ptr _narrow (
         CORBA::Object_ptr obj
@@ -529,7 +533,7 @@ namespace IOP
     // TAO_IDL - Generated from
     // be\be_visitor_typecode/typecode_decl.cpp:44
     
-    static ::CORBA::TypeCode_ptr _tc_UnknownEncoding;
+    static ::CORBA::TypeCode_ptr const _tc_UnknownEncoding;
 
 #endif /* end #if !defined */
     
@@ -546,7 +550,7 @@ namespace IOP
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -574,7 +578,7 @@ namespace IOP
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodecFactory;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_CodecFactory;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -591,7 +595,7 @@ namespace TAO
 #if !defined (_IOP_CODEC__TRAITS_CH_)
 #define _IOP_CODEC__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits< ::IOP::Codec>
   {
     static ::IOP::Codec_ptr duplicate (
@@ -612,7 +616,7 @@ namespace TAO
 #if !defined (_IOP_CODECFACTORY__TRAITS_CH_)
 #define _IOP_CODECFACTORY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits< ::IOP::CodecFactory>
   {
     static ::IOP::CodecFactory_ptr duplicate (

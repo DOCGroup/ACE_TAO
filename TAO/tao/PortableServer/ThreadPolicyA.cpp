@@ -84,7 +84,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ThreadPolicyValue (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_ThreadPolicyValue =
+  ::CORBA::TypeCode_ptr const _tc_ThreadPolicyValue =
     &_tc_TAO_tc_PortableServer_ThreadPolicyValue;
 }
 
@@ -123,7 +123,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ThreadPolicy (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_ThreadPolicy =
+  ::CORBA::TypeCode_ptr const _tc_ThreadPolicy =
     &_tc_TAO_tc_PortableServer_ThreadPolicy;
 }
 

@@ -64,7 +64,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_ProfileId (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_ProfileId =
+  ::CORBA::TypeCode_ptr const _tc_ProfileId =
     &_tc_TAO_tc_IOP_ProfileId;
 }
 
@@ -152,7 +152,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_TaggedProfile (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_TaggedProfile =
+  ::CORBA::TypeCode_ptr const _tc_TaggedProfile =
     &_tc_TAO_tc_IOP_TaggedProfile;
 }
 
@@ -266,7 +266,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_TaggedProfileSeq (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_TaggedProfileSeq =
+  ::CORBA::TypeCode_ptr const _tc_TaggedProfileSeq =
     &_tc_TAO_tc_IOP_TaggedProfileSeq;
 }
 
@@ -403,7 +403,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_IOR (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_IOR =
+  ::CORBA::TypeCode_ptr const _tc_IOR =
     &_tc_TAO_tc_IOP_IOR;
 }
 
@@ -440,7 +440,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_ComponentId (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_ComponentId =
+  ::CORBA::TypeCode_ptr const _tc_ComponentId =
     &_tc_TAO_tc_IOP_ComponentId;
 }
 
@@ -528,7 +528,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_TaggedComponent (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_TaggedComponent =
+  ::CORBA::TypeCode_ptr const _tc_TaggedComponent =
     &_tc_TAO_tc_IOP_TaggedComponent;
 }
 
@@ -646,7 +646,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_MultipleComponentProfile (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_MultipleComponentProfile =
+  ::CORBA::TypeCode_ptr const _tc_MultipleComponentProfile =
     &_tc_TAO_tc_IOP_MultipleComponentProfile;
 }
 
@@ -760,7 +760,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_TaggedComponentList (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_TaggedComponentList =
+  ::CORBA::TypeCode_ptr const _tc_TaggedComponentList =
     &_tc_TAO_tc_IOP_TaggedComponentList;
 }
 
@@ -874,7 +874,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_TaggedComponentSeq (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_TaggedComponentSeq =
+  ::CORBA::TypeCode_ptr const _tc_TaggedComponentSeq =
     &_tc_TAO_tc_IOP_TaggedComponentSeq;
 }
 
@@ -911,7 +911,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_ServiceId (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_ServiceId =
+  ::CORBA::TypeCode_ptr const _tc_ServiceId =
     &_tc_TAO_tc_IOP_ServiceId;
 }
 
@@ -1001,7 +1001,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_ServiceContext (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_ServiceContext =
+  ::CORBA::TypeCode_ptr const _tc_ServiceContext =
     &_tc_TAO_tc_IOP_ServiceContext;
 }
 
@@ -1117,7 +1117,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_ServiceContextList (
 
 namespace IOP
 {
-  ::CORBA::TypeCode_ptr _tc_ServiceContextList =
+  ::CORBA::TypeCode_ptr const _tc_ServiceContextList =
     &_tc_TAO_tc_IOP_ServiceContextList;
 }
 

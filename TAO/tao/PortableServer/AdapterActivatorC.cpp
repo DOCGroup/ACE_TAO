@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -57,7 +57,6 @@ namespace TAO
 
 // Traits specializations for PortableServer::AdapterActivator.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::AdapterActivator_ptr
 TAO::Objref_Traits<PortableServer::AdapterActivator>::duplicate (
     PortableServer::AdapterActivator_ptr p
@@ -66,7 +65,6 @@ TAO::Objref_Traits<PortableServer::AdapterActivator>::duplicate (
   return PortableServer::AdapterActivator::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableServer::AdapterActivator>::release (
     PortableServer::AdapterActivator_ptr p
@@ -75,14 +73,12 @@ TAO::Objref_Traits<PortableServer::AdapterActivator>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::AdapterActivator_ptr
 TAO::Objref_Traits<PortableServer::AdapterActivator>::nil (void)
 {
   return PortableServer::AdapterActivator::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableServer::AdapterActivator>::marshal (
     PortableServer::AdapterActivator_ptr p,
@@ -151,6 +147,12 @@ PortableServer::AdapterActivator::_duplicate (AdapterActivator_ptr obj)
   return obj;
 }
 
+void
+PortableServer::AdapterActivator::_tao_release (AdapterActivator_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 PortableServer::AdapterActivator::_is_a (
     const char *value
@@ -192,7 +194,7 @@ PortableServer::AdapterActivator::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

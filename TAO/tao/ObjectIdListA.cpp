@@ -63,7 +63,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_ObjectId (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ORB_ObjectId =
+  ::CORBA::TypeCode_ptr const _tc_ORB_ObjectId =
     &_tc_TAO_tc_CORBA_ORB_ObjectId;
 }
 
@@ -128,7 +128,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_ObjectIdList (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_ORB_ObjectIdList =
+  ::CORBA::TypeCode_ptr const _tc_ORB_ObjectIdList =
     &_tc_TAO_tc_CORBA_ORB_ObjectIdList;
 }
 

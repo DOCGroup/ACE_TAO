@@ -66,7 +66,7 @@ static CORBA::TypeCode _tc_TAO_tc_CONV_FRAME_CodeSetId (
 
 namespace CONV_FRAME
 {
-  ::CORBA::TypeCode_ptr _tc_CodeSetId =
+  ::CORBA::TypeCode_ptr const _tc_CodeSetId =
     &_tc_TAO_tc_CONV_FRAME_CodeSetId;
 }
 
@@ -130,7 +130,7 @@ static CORBA::TypeCode _tc_TAO_tc_CONV_FRAME_CodeSetIdSeq (
 
 namespace CONV_FRAME
 {
-  ::CORBA::TypeCode_ptr _tc_CodeSetIdSeq =
+  ::CORBA::TypeCode_ptr const _tc_CodeSetIdSeq =
     &_tc_TAO_tc_CONV_FRAME_CodeSetIdSeq;
 }
 
@@ -250,7 +250,7 @@ static CORBA::TypeCode _tc_TAO_tc_CONV_FRAME_CodeSetComponent (
 
 namespace CONV_FRAME
 {
-  ::CORBA::TypeCode_ptr _tc_CodeSetComponent =
+  ::CORBA::TypeCode_ptr const _tc_CodeSetComponent =
     &_tc_TAO_tc_CONV_FRAME_CodeSetComponent;
 }
 
@@ -506,7 +506,7 @@ static CORBA::TypeCode _tc_TAO_tc_CONV_FRAME_CodeSetComponentInfo (
 
 namespace CONV_FRAME
 {
-  ::CORBA::TypeCode_ptr _tc_CodeSetComponentInfo =
+  ::CORBA::TypeCode_ptr const _tc_CodeSetComponentInfo =
     &_tc_TAO_tc_CONV_FRAME_CodeSetComponentInfo;
 }
 
@@ -596,7 +596,7 @@ static CORBA::TypeCode _tc_TAO_tc_CONV_FRAME_CodeSetContext (
 
 namespace CONV_FRAME
 {
-  ::CORBA::TypeCode_ptr _tc_CodeSetContext =
+  ::CORBA::TypeCode_ptr const _tc_CodeSetContext =
     &_tc_TAO_tc_CONV_FRAME_CodeSetContext;
 }
 

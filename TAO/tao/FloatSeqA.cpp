@@ -69,7 +69,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_FloatSeq (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_FloatSeq =
+  ::CORBA::TypeCode_ptr const _tc_FloatSeq =
     &_tc_TAO_tc_CORBA_FloatSeq;
 }
 

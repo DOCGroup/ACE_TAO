@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -57,7 +57,6 @@ namespace TAO
 
 // Traits specializations for PortableServer::ServantRetentionPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantRetentionPolicy_ptr
 TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::duplicate (
     PortableServer::ServantRetentionPolicy_ptr p
@@ -66,7 +65,6 @@ TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::duplicate (
   return PortableServer::ServantRetentionPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::release (
     PortableServer::ServantRetentionPolicy_ptr p
@@ -75,14 +73,12 @@ TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableServer::ServantRetentionPolicy_ptr
 TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::nil (void)
 {
   return PortableServer::ServantRetentionPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::marshal (
     PortableServer::ServantRetentionPolicy_ptr p,
@@ -149,6 +145,12 @@ PortableServer::ServantRetentionPolicy::_duplicate (ServantRetentionPolicy_ptr o
     }
   
   return obj;
+}
+
+void
+PortableServer::ServantRetentionPolicy::_tao_release (ServantRetentionPolicy_ptr obj)
+{
+  CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -218,7 +220,7 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::ServantRetentionP
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -80,7 +80,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager_State (
     0
   );
 
-::CORBA::TypeCode_ptr PortableServer::POAManager::_tc_State =
+::CORBA::TypeCode_ptr const PortableServer::POAManager::_tc_State =
   &_tc_TAO_tc_PortableServer_POAManager_State;
 
 // TAO_IDL - Generated from
@@ -117,7 +117,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager (
 
 namespace PortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_POAManager =
+  ::CORBA::TypeCode_ptr const _tc_POAManager =
     &_tc_TAO_tc_PortableServer_POAManager;
 }
 
