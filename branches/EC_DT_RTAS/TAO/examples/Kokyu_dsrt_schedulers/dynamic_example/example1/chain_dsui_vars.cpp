@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 #include <datastream_common.h>
 #include <dsui_types.h>
 #include "chain_dsui_families.h"
@@ -57,7 +57,7 @@ int chain_table_offset= 1;
 family_t *chain_family_table[chain_NUM_FAMILIES] = {
 	
 	&TEST_ONE,
-	&WORKER_GROUP,
 	&MAIN_GROUP,
+	&WORKER_GROUP,
 };
 

@@ -57,7 +57,7 @@ int fan_table_offset= 1;
 family_t *fan_family_table[fan_NUM_FAMILIES] = {
 	
 	&TEST_ONE,
-	&WORKER_GROUP,
 	&MAIN_GROUP,
+	&WORKER_GROUP,
 };
 

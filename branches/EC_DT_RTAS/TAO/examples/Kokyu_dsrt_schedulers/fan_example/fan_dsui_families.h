@@ -22,7 +22,7 @@
 /* DSUI Family: WORKER_GROUP
  * "Description"
  */
-#define WORKER_GROUP_FAM 2
+#define WORKER_GROUP_FAM 3
 #define NUM_EVENTS_WORKER_GROUP 9
 #define NUM_COUNTERS_WORKER_GROUP 0
 #define NUM_HISTOGRAMS_WORKER_GROUP 0
@@ -42,7 +42,7 @@
 /* DSUI Family: MAIN_GROUP
  * "Description"
  */
-#define MAIN_GROUP_FAM 3
+#define MAIN_GROUP_FAM 2
 #define NUM_EVENTS_MAIN_GROUP 9
 #define NUM_COUNTERS_MAIN_GROUP 0
 #define NUM_HISTOGRAMS_MAIN_GROUP 0
