@@ -21,7 +21,6 @@ BIN =   Aio_Platform_Test \
         Cached_Conn_Test \
         Capabilities_Test \
         CDR_File_Test \
-	CDR_Array_Test \
         CDR_Test \
         Collection_Test \
         Conn_Test \
@@ -113,6 +112,11 @@ else
   #### is empty).
   BIN2 += Tokens_Test
 endif # ! Token
+
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+BIN += \
+  CDR_Array_Test
+endif
 
 PSRC=$(addsuffix .cpp,$(BIN))
 
