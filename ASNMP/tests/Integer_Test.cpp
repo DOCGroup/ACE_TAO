@@ -42,7 +42,9 @@ DAMAGES.
 #include "asnmp/integer.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, Integer_Test, "$Id$")
+ACE_RCSID (tests,
+           Integer_Test,
+           "$Id$")
 
 static long l = LONG_MAX, nl = LONG_MIN;  // limits.h
 static unsigned long ul = ULONG_MAX, def = 0;
@@ -71,13 +73,13 @@ static void TestInteger32()
 #if !defined (ACE_WIN32)
    // constructors
    SnmpInt32 i1;
-   ACE_ASSERT(i1 == def);
+   ACE_ASSERT(i1 == ACE_static_cast (long, def));
    SnmpInt32 i2(l);
    ACE_ASSERT(i2 == l);
    SnmpInt32 i3(nl);
    ACE_ASSERT(i3 == nl);
    SnmpInt32 i4(ul);
-   ACE_ASSERT(i4 == ul);
+   ACE_ASSERT(i4 == ACE_static_cast (long, ul));
    SnmpInt32 i5(i);
    ACE_ASSERT(i5 == i);
    SnmpInt32 i6(ni);
@@ -111,9 +113,9 @@ static void TestInteger32()
   i1 = def; // unsigned long
   ACE_ASSERT(i1 == def);
   i1 = us; // unsigned short
-  ACE_ASSERT(i1 == us);
+  ACE_ASSERT(i1 == ACE_static_cast (long, us));
   i1 = si; // unsigned short
-  ACE_ASSERT(i1 == si);
+  ACE_ASSERT(i1 == ACE_static_cast (long, si))
  #endif /*ACE_WIN32*/
 }
 
