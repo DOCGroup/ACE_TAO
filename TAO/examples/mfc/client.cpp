@@ -1,8 +1,8 @@
 // $Id$
 
-#include "tao\corba.h"
-#include "W32_TestC.h"
-#include "tao\PortableServer\POA.h"
+#include "tao/corba.h"
+#include "w32_testC.h"
+#include "tao/PortableServer/POA.h"
 
 int
 main (int argc, char *argv[])
