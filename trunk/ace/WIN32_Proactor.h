@@ -198,13 +198,16 @@ public:
 
   virtual int handle_events (ACE_Time_Value &wait_time);
   // Dispatch a single set of events.  If <wait_time> elapses before
-  // any events occur, return.  Return 0 on success, non-zero (-1) on
-  // timeouts/errors and errno is set accordingly.
+  // any events occur, return 0.  Return 1 on success i.e., when a
+  // completion is dispatched, non-zero (-1) on errors and errno is
+  // set accordingly. 
 
   virtual int handle_events (void);
   // Block indefinitely until at least one event is dispatched.
-  // Return 0 on success, non-zero (-1) on timeouts/errors and errno
-  // is set accordingly.
+  // Dispatch a single set of events.  If <wait_time> elapses before
+  // any events occur, return 0.  Return 1 on success i.e., when a
+  // completion is dispatched, non-zero (-1) on errors and errno is
+  // set accordingly. 
 
   virtual int post_completion (ACE_WIN32_Asynch_Result *result);
   // Post a result to the completion port of the Proactor.  If errors
@@ -315,7 +318,8 @@ protected:
 
   virtual int handle_events (unsigned long milli_seconds);
   // Dispatch a single set of events.  If <milli_seconds> elapses
-  // before any events occur, return.
+  // before any events occur, return 0. Return 1 if a completion is
+  // dispatched. Return -1 on errors.  
 
   void application_specific_code (ACE_WIN32_Asynch_Result *asynch_result,
 				  u_long bytes_transferred,
