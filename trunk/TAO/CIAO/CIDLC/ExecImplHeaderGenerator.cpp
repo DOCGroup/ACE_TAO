@@ -773,7 +773,7 @@ namespace
     }
 
     virtual void
-    returns (SemanticGraph::HomeFactory& hf)
+    returns (SemanticGraph::HomeFactory&)
     {
       os << STRS[COMP_EC] << "_ptr" << endl;
     }
@@ -849,7 +849,7 @@ namespace
     }
 
     virtual void
-    returns (SemanticGraph::HomeFinder& t)
+    returns (SemanticGraph::HomeFinder&)
     {
       os << STRS[COMP_EC] << "_ptr" << endl;
     }
