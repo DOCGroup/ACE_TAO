@@ -51,5 +51,13 @@ private:
 #include "ace/Test_and_Set.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "ace/Test_and_Set.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("Test_and_Set.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
 #include "ace/post.h"
 #endif /* ACE_TEST_AND_SET_H */

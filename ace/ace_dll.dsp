@@ -3470,25 +3470,6 @@ SOURCE=.\Template_Instantiations.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Test_and_Set.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Thread.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -6238,6 +6219,11 @@ SOURCE=.\Synch_T.cpp
 # Begin Source File
 
 SOURCE=.\Task_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Test_and_Set.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

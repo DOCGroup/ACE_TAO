@@ -26,6 +26,9 @@
 
 #include "ace/FILE_Addr.h"
 
+// Used in the FILE_IO.h file...
+#include "ace/ACE.h"
+
 class ACE_Export ACE_FILE_IO : public ACE_FILE
 {
   // = TITLE

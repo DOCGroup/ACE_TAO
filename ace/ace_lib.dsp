@@ -3407,25 +3407,6 @@ SOURCE=.\Template_Instantiations.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Test_and_Set.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Thread.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -6175,6 +6156,11 @@ SOURCE=.\Synch_T.cpp
 # Begin Source File
 
 SOURCE=.\Task_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Test_and_Set.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
