@@ -190,14 +190,18 @@ protected:
   // defined elsewhere were referenced in this scope
 
   // Add to decls. Node represents a local declaration
-  void                          add_to_scope(AST_Decl *e);
+  // The new decl e is inserted before ex if ex is not 0
+  void                          add_to_scope(AST_Decl *e,
+                                             AST_Decl *ex = 0);
 
   // Add to local types. Node represents a local manifest type
   void                          add_to_local_types(AST_Decl *e);
 
   // Add to referenced nodes set.
+  // If pos is not -1 it will be inserted at the the given position
   void                          add_to_referenced(AST_Decl *e,
-                                                  idl_bool recursive);
+                                                  idl_bool recursive,
+                                                  AST_Decl *ex = 0);
 
   // Has this node been referenced here already?
   idl_bool                      referenced(AST_Decl *e);

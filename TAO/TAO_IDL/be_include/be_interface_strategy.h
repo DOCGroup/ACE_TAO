@@ -7,16 +7,13 @@
 //    TAO IDL
 //
 // = FILENAME
-//    be_interface.h
+//    be_interface_strategy.h
 //
 // = DESCRIPTION
-//    Extension of class AST_Interface that provides additional means for C++
-//    mapping of an interface.
+//    Strategy to cover differences between operations, e.g.
+//    the sendc_ and raise_ operations in the AMI spec.
 //
 // = AUTHOR
-//    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and
-//    Aniruddha Gokhale,
 //    Michael Kircher
 //
 // ============================================================================
@@ -31,7 +28,7 @@ class be_interface;
 // This class serves as a strategy base class for the differences
 // in generating e.g. ami reply handlers.
 
-class be_interface_type_strategy
+class be_interface_strategy
 {
 public:
   enum Strategy_Kind {
@@ -40,10 +37,10 @@ public:
       AMI_EXCEPTION_HOLDER
   };
 
-  be_interface_type_strategy (be_interface *node,
+  be_interface_strategy (be_interface *node,
                               Strategy_Kind strategy_type);
 
-  virtual ~be_interface_type_strategy ();
+  virtual ~be_interface_strategy ();
 
   virtual const char *local_name (void) = 0;
   // return the local name
@@ -125,11 +122,13 @@ protected:
   // Current cached collocated name.
 
   Strategy_Kind strategy_type_;
-  // 
+  // The type of strategy
 };
 
+// @@ Michael: Deprecated due to new AMI design
+#if 0
 class be_interface_prefix_suffix_strategy
-  : public be_interface_type_strategy
+  : public be_interface_strategy
 {
 public:
   // begin overridden methods.
@@ -170,42 +169,16 @@ protected:
   const char *suffix_;
   // The suffix to the interface
 };
-
-
-class be_interface_ami_handler_strategy
-  : public be_interface_prefix_suffix_strategy
-{
-public:
-  // begin overridden methods.
-  be_interface_ami_handler_strategy (be_interface *node);
-
-  virtual ~be_interface_ami_handler_strategy ();
-
-  // overridden methods.
-  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state);
-};
-
-
-class be_interface_ami_exception_holder_strategy
-  : public be_interface_prefix_suffix_strategy
-{
-public:
-  // begin overridden methods.
-  be_interface_ami_exception_holder_strategy (be_interface *node);
-
-  virtual ~be_interface_ami_exception_holder_strategy ();
-
-  // overridden methods.
-  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state);
-};
+#endif /* 0 */
 
 
 class be_interface_default_strategy
-  : public be_interface_type_strategy
+  : public be_interface_strategy
 {
 public:
   // begin overridden methods.
-  be_interface_default_strategy (be_interface *node);
+  be_interface_default_strategy (be_interface *node,
+                                 Strategy_Kind strategy_type = DEFAULT);
 
   virtual ~be_interface_default_strategy ();
 
@@ -230,8 +203,34 @@ public:
   virtual const char *local_coll_name (int);
   // retrieve the fully qualified collocated class name.
 
-  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state);
+  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state);
   // end of overridden methods
+};
+
+
+class be_interface_ami_handler_strategy
+  : public be_interface_default_strategy
+{
+public:
+  be_interface_ami_handler_strategy (be_interface *node);
+
+  virtual ~be_interface_ami_handler_strategy ();
+
+  // overridden methods.
+  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state);
+};
+
+
+class be_interface_ami_exception_holder_strategy
+  : public be_interface_default_strategy
+{
+public:
+  be_interface_ami_exception_holder_strategy (be_interface *node);
+
+  virtual ~be_interface_ami_exception_holder_strategy ();
+
+  // overridden methods.
+  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state);
 };
 
 #endif  // if !defined

@@ -120,6 +120,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << be_uidt << be_uidt_nl
       << ");" << be_uidt << "\n";
 
+#if 0
   if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_TIE_SH)
     {
       if (node->traverse_inheritance_graph (be_visitor_interface_tie_sh::ami_handler_method_helper, os) == -1)
@@ -132,6 +133,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
         }
     }
   else
+#endif /* 0 */
     {
       if (node->traverse_inheritance_graph (be_visitor_interface_tie_sh::method_helper, os) == -1)
         {

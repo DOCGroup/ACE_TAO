@@ -25,6 +25,7 @@
 #include "be_scope.h"
 #include "be_decl.h"
 #include "ast_operation.h"
+#include "be_operation_strategy.h"
 
 class AST_Type;
 class UTL_StrList;
@@ -48,6 +49,9 @@ public:
                 UTL_StrList *p);
   // constructor
 
+  ~be_operation ();
+  // destructor
+
   int void_return_type ();
   // Returns 1 if the operation has a void return type.
 
@@ -64,6 +68,20 @@ public:
 
   // Visiting
   virtual int accept (be_visitor *visitor);
+
+  be_operation_strategy *set_strategy (be_operation_strategy *new_strategy);
+  
+  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
+                                    int is_extra_state = 0);
+  // decide on the next state
+
+  int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
+  // returns true if we have to genrate extra code.
+
+  be_operation *hidden_operation ();
+  // returns the operation node which contains extra data,
+  // e.g. special marshalling information, this was needed for the 
+  // AMI implementationb
 
   // Narrowing
   DEF_NARROW_METHODS3 (be_operation, AST_Operation, be_scope, be_decl);
@@ -83,6 +101,11 @@ protected:
 
   int has_native_;
   // Is any argument of type native.
+
+  be_operation_strategy *strategy_;
+  // Member for holding the strategy for covering
+  // differences between various operations, e.g. sendc_, raise_
+  // operations in the AMI spec.
 };
 
 #endif

@@ -30,7 +30,8 @@ ACE_RCSID(be, be_operation, "$Id$")
  */
 be_operation::be_operation (void)
   : argument_count_ (-1),
-    has_native_ (0)
+    has_native_ (0),
+    strategy_ (new be_operation_default_strategy (this))
 {
 }
 
@@ -40,9 +41,19 @@ be_operation::be_operation (AST_Type *rt, AST_Operation::Flags fl,
     AST_Decl (AST_Decl::NT_op, n, p),
     UTL_Scope (AST_Decl::NT_op),
     argument_count_ (-1),
-    has_native_ (0)
+    has_native_ (0),
+    strategy_ (new be_operation_default_strategy (this))
 {
 }
+
+
+be_operation::~be_operation (void)
+{
+  // We know that it cannot be 0, but..
+  if (!this->strategy_)
+    delete this->strategy_;
+}
+
 
 // compute total number of members
 int
@@ -171,6 +182,38 @@ be_operation::accept (be_visitor *visitor)
 {
   return visitor->visit_operation (this);
 }
+
+be_operation_strategy *
+be_operation::set_strategy (be_operation_strategy *new_strategy)
+{
+  be_operation_strategy *old = this->strategy_;
+
+  if (new_strategy != 0)
+    this->strategy_ = new_strategy;
+
+  return old;
+}
+
+
+TAO_CodeGen::CG_STATE
+be_operation::next_state (TAO_CodeGen::CG_STATE current_state,
+                          int is_extra_state)
+{
+  return this->strategy_->next_state (current_state, is_extra_state); 
+}
+
+int
+be_operation::has_extra_code_generation (TAO_CodeGen::CG_STATE current_state)
+{
+  return this->strategy_->has_extra_code_generation (current_state);
+}
+
+be_operation*
+be_operation::hidden_operation ()
+{
+  return this->strategy_->hidden_operation ();
+}
+
 
 // Narrowing
 IMPL_NARROW_METHODS3 (be_operation, AST_Operation, be_scope, be_decl)

@@ -57,16 +57,21 @@
 #include "be_visitor_operation/rettype_pre_invoke_cs.h"
 #include "be_visitor_operation/ami_ch.h"
 #include "be_visitor_operation/ami_cs.h"
+#include "be_visitor_operation/ami_handler_reply_stub_operation_ch.h"
+#include "be_visitor_operation/ami_handler_skeleton_cs.h"
+#include "be_visitor_operation/ami_exception_holder_operation_cs.h"
+
+#if 0
 #include "be_visitor_operation/ami_arglist.h"
 #include "be_visitor_operation/ami_handler_arglist.h"
 #include "be_visitor_operation/ami_handler_operation_ch.h"
 #include "be_visitor_operation/ami_handler_operation_cs.h"
 #include "be_visitor_operation/ami_handler_operation_ss.h"
-#include "be_visitor_operation/ami_handler_skeleton_cs.h"
 #include "be_visitor_operation/ami_handler_argument_marshal.h"
 #include "be_visitor_operation/ami_handler_thru_poa_collocated_sh.h"
 #include "be_visitor_operation/ami_handler_thru_poa_collocated_ss.h"
 #include "be_visitor_operation/ami_exception_holder_operation_ch.h"
-#include "be_visitor_operation/ami_exception_holder_operation_cs.h"
+
+#endif /* 0 */
 
 #endif // TAO_BE_VISITOR_OPERATION_H

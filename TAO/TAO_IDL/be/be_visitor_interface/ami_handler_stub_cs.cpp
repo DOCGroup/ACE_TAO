@@ -43,7 +43,7 @@ be_visitor_interface_ami_handler_stub_cs::~be_visitor_interface_ami_handler_stub
 int
 be_visitor_interface_ami_handler_stub_cs::visit_interface (be_interface *node)
 {
-  be_interface_type_strategy *old_strategy =  
+  be_interface_strategy *old_strategy =  
     node->set_strategy (new be_interface_ami_handler_strategy (node));
 
   // output stream.

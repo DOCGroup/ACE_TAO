@@ -24,7 +24,7 @@
 ACE_RCSID(be, be_interface_strategy, "$Id$")
 
 
-be_interface_type_strategy::be_interface_type_strategy (be_interface *node,
+be_interface_strategy::be_interface_strategy (be_interface *node,
                                                         Strategy_Kind strategy_type)
   : local_name_(0),
     full_name_(0),
@@ -40,7 +40,7 @@ be_interface_type_strategy::be_interface_type_strategy (be_interface *node,
 {
 }
 
-be_interface_type_strategy::~be_interface_type_strategy ()
+be_interface_strategy::~be_interface_strategy ()
 {
   if (this->local_name_ != 0)
     delete [] this->local_name_;
@@ -63,7 +63,7 @@ be_interface_type_strategy::~be_interface_type_strategy ()
 // Interface Type Strategy Base Class
 
 const char *
-be_interface_type_strategy::relative_skel_name (const char *skel_name)
+be_interface_strategy::relative_skel_name (const char *skel_name)
 // relative skeleton name
 {
   return be_interface::relative_name (this->full_skel_name (),
@@ -74,7 +74,7 @@ be_interface_type_strategy::relative_skel_name (const char *skel_name)
 
 // compute stringified fully qualified collocated class name.
 void
-be_interface_type_strategy::compute_coll_names (int type,
+be_interface_strategy::compute_coll_names (int type,
                                                 const char *prefix,
                                                 const char *suffix)
 {
@@ -193,7 +193,7 @@ be_interface_type_strategy::compute_coll_names (int type,
 
 
 void
-be_interface_type_strategy::compute_names (const char *name,
+be_interface_strategy::compute_names (const char *name,
                                            const char *prefix,
                                            const char *suffix,
                                            char *&new_name)
@@ -249,7 +249,7 @@ be_interface_type_strategy::compute_names (const char *name,
 
 
 TAO_OutStream *
-be_interface_type_strategy::get_out_stream ()
+be_interface_strategy::get_out_stream ()
 {
   // Codegen singleton.
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -259,17 +259,19 @@ be_interface_type_strategy::get_out_stream ()
 }
 
 const char *
-be_interface_type_strategy::get_out_stream_fname ()
+be_interface_strategy::get_out_stream_fname ()
 {
   return idl_global->be_get_server_skeleton_fname ();
 }
 
 int
-be_interface_type_strategy::strategy_type ()
+be_interface_strategy::strategy_type ()
 {
   return strategy_type_;
 }
 
+// @@ Michael: Deprecated due to new AMI design
+#if 0
 // ****************************************************************
 // Prefix Suffix Strategy
 
@@ -277,7 +279,7 @@ be_interface_prefix_suffix_strategy::be_interface_prefix_suffix_strategy (be_int
                                                                           Strategy_Kind strategy_type,
                                                                           const char *prefix,
                                                                           const char *suffix)
-: be_interface_type_strategy (node, strategy_type),
+: be_interface_strategy (node, strategy_type),
   prefix_(prefix),
   suffix_(suffix)
 {
@@ -377,14 +379,14 @@ be_interface_prefix_suffix_strategy::local_coll_name (int type)
   return this->local_coll_name_;
 }
 
+#endif 0
+
 // ****************************************************************
 // AMI Hander Strategy
 
 be_interface_ami_handler_strategy::be_interface_ami_handler_strategy (be_interface *node)
-  : be_interface_prefix_suffix_strategy (node, 
-                                         AMI_HANDLER,
-                                         "AMI_",
-                                         "Handler")
+  : be_interface_default_strategy (node, 
+                                   AMI_HANDLER)
 {
 }
 
@@ -410,10 +412,8 @@ be_interface_ami_handler_strategy::next_state (TAO_CodeGen::CG_STATE current_sta
 // AMI Exception Holder Strategy
 
 be_interface_ami_exception_holder_strategy::be_interface_ami_exception_holder_strategy (be_interface *node)
-  : be_interface_prefix_suffix_strategy (node, 
-                                         AMI_EXCEPTION_HOLDER,
-                                         "AMI_",
-                                         "ExceptionHolder")
+  : be_interface_default_strategy (node, 
+                                   AMI_EXCEPTION_HOLDER)
 
 {
 }
@@ -434,8 +434,9 @@ be_interface_ami_exception_holder_strategy::next_state (TAO_CodeGen::CG_STATE cu
 // ****************************************************************
 // Default Strategy
 
-be_interface_default_strategy::be_interface_default_strategy (be_interface *node)
-  : be_interface_type_strategy (node, DEFAULT)
+be_interface_default_strategy::be_interface_default_strategy (be_interface *node,
+                                                              Strategy_Kind strategy_kind)
+  : be_interface_strategy (node, strategy_kind)
 {
 }
 

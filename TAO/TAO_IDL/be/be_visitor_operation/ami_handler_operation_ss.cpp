@@ -195,7 +195,7 @@ be_visitor_operation_ami_handler_operation_ss::visit_operation (be_operation *no
 
   // declare variables for arguments
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DECL_CS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DECL_CS);
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
     {
@@ -233,6 +233,7 @@ be_visitor_operation_ami_handler_operation_ss::visit_operation (be_operation *no
         *os << "get_";
     }
   
+#if 0
   *os << node->local_name () << " (" << be_idt << "\n";
 
   if (!this->void_return_type (bt))
@@ -240,12 +241,15 @@ be_visitor_operation_ami_handler_operation_ss::visit_operation (be_operation *no
     os->indent ();
     *os << "_tao_retval,\n";
   }
+#endif /* 0 */
 
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_CS);
+#if 0
   if (this->has_param_type (node, AST_Argument::dir_INOUT)
       || this->has_param_type (node, AST_Argument::dir_OUT))
     ctx.sub_state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_HAS_ARGUMENTS);
+#endif /* 0 */
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
     {

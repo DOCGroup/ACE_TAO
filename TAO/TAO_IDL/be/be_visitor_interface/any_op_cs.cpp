@@ -59,7 +59,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
     to_do = 2;
   else
     to_do = 1;
-  be_interface_type_strategy *old_strategy = 0;
+  be_interface_strategy *old_strategy = 0;
 
   for (i = 0; i < to_do; i++)
     {
@@ -98,7 +98,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       if (idl_global->ami_call_back () == I_TRUE)
       {
         // AMI Handler stuff
-        be_interface_type_strategy *old_strategy =
+        be_interface_strategy *old_strategy =
           node->set_strategy (new be_interface_ami_handler_strategy (node));
 
         os->indent ();
