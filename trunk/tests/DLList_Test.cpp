@@ -116,17 +116,11 @@ main (int, ASYS_TCHAR *[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_DLList<STRING>;
-template class ACE_Double_Linked_List_Iterator_Base <ACE_DLList_Node>;
-template class ACE_Double_Linked_List_Iterator <ACE_DLList_Node>;
-template class ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>;
 template class ACE_DLList_Iterator<STRING>;
 template class ACE_DLList_Reverse_Iterator<STRING>;
 template class ACE_Static_Allocator<8192>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_DLList<STRING>
-#pragma instantiate ACE_Double_Linked_List_Iterator_Base <ACE_DLList_Node>
-#pragma instantiate ACE_Double_Linked_List_Iterator <ACE_DLList_Node>
-#pragma instantiate ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>
 #pragma instantiate ACE_DLList_Iterator<STRING>
 #pragma instantiate ACE_DLList_Reverse_Iterator<STRING>
 #pragma instantiate ACE_Static_Allocator<8192>
