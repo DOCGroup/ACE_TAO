@@ -1,3 +1,10 @@
+Thu Aug 28 07:10:54 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Added the reverseclean target as best as it could be supported by
+          MPC.
+
 Thu Aug 28 06:33:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ASNMP/tests/Address_Test.cpp:
@@ -19,9 +26,9 @@ Thu Aug 28 04:24:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Aug 27 20:34:19 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Kokyu_defs.h: Added export qualification to
-	  Dispatcher_Attributes class to fix link error in
-	  Win2K_VC71_NET_DLL build.
+        * Kokyu/Kokyu_defs.h: Added export qualification to
+          Dispatcher_Attributes class to fix link error in
+          Win2K_VC71_NET_DLL build.
 
 Wed Aug 27 17:52:44 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -35,11 +42,11 @@ Wed Aug 27 17:52:44 2003  George Edwards <g.edwards@vanderbilt.edu>
 
 Wed Aug 27 15:18:49 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* include/makeinclude/wrapper_macros.GNU (CCFLAGS):
+        * include/makeinclude/wrapper_macros.GNU (CCFLAGS):
 
-	  Do not add "-Wno-uninitialized" to GNU C++ compiler flags.  It
-	  is no longer needed to avoid (apparently) bogus warnings.
-	  Keeping it around hides potentially real problems.
+          Do not add "-Wno-uninitialized" to GNU C++ compiler flags.  It
+          is no longer needed to avoid (apparently) bogus warnings.
+          Keeping it around hides potentially real problems.
 
 Wed Aug 27 14:23:00 2003  Chad Elliott  <elliott_c@ociweb.com>
 
