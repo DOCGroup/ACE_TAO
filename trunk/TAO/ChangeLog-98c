@@ -5,6 +5,9 @@ Wed May 20 21:25:33 1998  David L. Levine  <levine@cs.wustl.edu>
           reinterpret cast.  Wrapped and unreachable return with
           ACE_NOTREACHED.
 
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: started migration
+          to ACE_Stats.
+
 Wed May 20 16:44:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/tests/NestedUpcall/{server,client}.dsp: Updated settings.
