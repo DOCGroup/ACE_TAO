@@ -27,8 +27,6 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Containers.h"
 
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
 #include "cubitC.h"
 #include "cubit_i.h"
 #include "Globals.h"
@@ -276,9 +274,6 @@ private:
   int init_orb (void);
   // initialize the ORB.
 
-  int get_cubit_from_naming (void);
-  // initialize the naming service.
-
   void read_ior (void);
   // reads the cubit ior from a file.
 
@@ -347,12 +342,6 @@ private:
   u_int error_count_;
   // number of calls that failed.
 
-  CosNaming::NamingContext_var mt_cubit_context_;
-  // Object reference to the cubit context "MT_Cubit".
-
-  TAO_Naming_Client my_name_client_;
-  // Naming Client intermediary to naming service stuff.
-
   JITTER_ARRAY *my_jitter_array_;
   // ACE Unbounded set holding the latency values for all the
   // requests of this thread.
@@ -365,9 +354,6 @@ private:
 
   CORBA::ORB_var orb_;
   // ORB pointer.
-
-  u_int naming_success_;
-  // flag indicating the success of naming service.
 
   ACE_timer_t latency_;
   // aggregate latency of the requests.

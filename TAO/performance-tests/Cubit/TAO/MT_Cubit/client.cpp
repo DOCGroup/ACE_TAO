@@ -656,7 +656,6 @@ Client_i::do_priority_inversion_test (void)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) <<<<<<< starting test on %D\n"));
   GLOBALS::instance ()->num_of_objs = 1;
-  GLOBALS::instance ()->use_name_service = 0;
 
   for (int j = 0; j < this->argc_; j++)
     if (ACE_OS::strcmp (this->argv_[j], "-u") == 0)
