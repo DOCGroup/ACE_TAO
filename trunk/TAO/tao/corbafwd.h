@@ -314,6 +314,17 @@ typedef CORBA_TypeCodeFactory *CORBA_TypeCodeFactory_ptr;
 
 #endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
+class CORBA_StringSeq;
+class CORBA_StringSeq_var;
+class CORBA_StringSeq_out;
+class CORBA_WStringSeq;
+class CORBA_WStringSeq_var;
+class CORBA_WStringSeq_out;
+
+class OctetSeq;
+class OctetSeq_var;
+class OctetSeq_out;
+
 class CORBA_Bounds;
 typedef CORBA_Bounds *CORBA_Bounds_ptr;
 
@@ -328,6 +339,8 @@ typedef void (*TAO_Skeleton)(
   );
 
 // forward declare sequences.
+class TAO_Unbounded_String_Sequence;
+class TAO_Unbounded_WString_Sequence;
 template <class T> class TAO_Unbounded_Sequence;
 template <class T,class T_var> class TAO_Unbounded_Object_Sequence;
 
@@ -412,7 +425,21 @@ TAO_NAMESPACE CORBA
   typedef CORBA_WString_var WString_var;
   typedef CORBA_WString_out WString_out;
 
+  /// String sequence typedefs
+
+  typedef CORBA_StringSeq StringSeq;
+  typedef CORBA_StringSeq_var StringSeq_var;
+  typedef CORBA_StringSeq_out StringSeq_out;
+
+  typedef CORBA_WStringSeq WStringSeq;
+  typedef CORBA_WStringSeq_var WStringSeq_var;
+  typedef CORBA_WStringSeq_out WStringSeq_out;
+
+  /// Octet sequence typedef
+
   typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
+  typedef TAO_Unbounded_Sequence<Octet> OctetSeq_var;
+  typedef TAO_Unbounded_Sequence<Octet> OctetSeq_out;
 
   // = various CORBA defined classes.
   typedef CORBA_Any Any;

@@ -43,6 +43,16 @@ Echo_Client_Request_Interceptor::name (CORBA::Environment &)
 }
 
 void
+Echo_Client_Request_Interceptor::send_poll (
+                PortableInterceptor::ClientRequestInfo_ptr,
+                CORBA::Environment &
+                )
+      ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Do nothing
+}
+
+void
 Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
                                                CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -64,6 +74,17 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
                   "the arg is %d\n",
                   param));
     }
+}
+
+void 
+Echo_Client_Request_Interceptor::receive_other (
+               PortableInterceptor::ClientRequestInfo_ptr,
+               CORBA::Environment &
+               )
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableInterceptor::ForwardRequest))
+{
+  // Do nothing
 }
 
 void
@@ -276,3 +297,29 @@ Echo_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequ
 
 }
 #endif /* (TAO_HAS_INTERCEPTORS == 1) */
+
+void 
+Echo_Server_Request_Interceptor::receive_request_service_contexts (
+            PortableInterceptor::ServerRequestInfo_ptr,
+            CORBA::Environment &
+            )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest
+                   ))
+{
+  // Do nothing
+}
+  
+void
+Echo_Server_Request_Interceptor::send_other (
+                           PortableInterceptor::ServerRequestInfo_ptr,
+                           CORBA::Environment &
+                           )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableInterceptor::ForwardRequest
+      ))
+{
+  // Do Nothing
+}

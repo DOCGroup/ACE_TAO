@@ -40,6 +40,10 @@ public:
 
   // Canonical name of the interceptor.
 
+  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr
+                          TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
                              CORBA::Environment &ACE_TRY_ENVV =
                              TAO_default_environment ())
@@ -50,6 +54,11 @@ public:
                               CORBA::Environment &ACE_TRY_ENV =
                               TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
   virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
                                   CORBA::Environment &ACE_TRY_ENV =
@@ -91,6 +100,12 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
+  virtual void receive_request_service_contexts (
+        PortableInterceptor::ServerRequestInfo_ptr
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableInterceptor::ForwardRequest));
+
   virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
                            CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment ())
@@ -101,6 +116,11 @@ public:
                                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
+
+  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr
+                           TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableInterceptor::ForwardRequest));
 
 private:
   const char *myname_;

@@ -42,7 +42,7 @@ TAO_DynamicAny_Loader::Initializer (void)
 {
   ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_DynamicAny_Loader);
-  
+
   return 0;
 }
 
@@ -53,4 +53,3 @@ ACE_STATIC_SVC_DEFINE (TAO_DynamicAny_Loader,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_DynamicAny, TAO_DynamicAny_Loader)
-

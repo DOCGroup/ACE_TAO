@@ -1,8 +1,33 @@
-// -*- IDL -*- $Id$:
+// -*- IDL -*-
+//
+// $Id$:
+
+// ================================================================
+//
+//   This file was used to generate the code in DynamicC.* The command
+//   used to generate code is:
+//
+//     tao_idl
+//          -Ge 1 \
+//          -DCORBA3 \
+//          -Wb,export_macro=TAO_Export \
+//          -Wb,export_include="tao/corbafwd.h" \
+//          -Wb,pre_include="ace/pre.h" \
+//          -Wb,post_include="ace/post.h" \
+//          Dynamic.pidl
+//
+//   Patches for changes to the generated code are available in the
+//   `diffs' directory.
+// ================================================================
+
+
 // The following is from 99-12-04 Portable Interceptors spec.
 
 // File: Dynamic.idl
 // Used primarily for Interceptors
+
+
+#include "orb.idl"
 
 #ifndef _DYNAMIC_IDL_
 #define _DYNAMIC_IDL_
@@ -11,11 +36,6 @@
 #define local
 #endif
 
-#include "orb.idl"
-// necessary toget CORBA::TypeCode generated
-
-// @@ Kirthika, why are many types that should be under CORBA module
-//    are now in Dynamic module?
 
 module Dynamic {
 
@@ -35,15 +55,12 @@ module Dynamic {
 
   typedef sequence<Parameter> ParameterList;
 
-  //typedef CORBA::StringSeq ContextList;
-  typedef sequence<string> ContextList;
-  // replaced as CORBA::StringSeq has yetto make it to TAO
+  typedef CORBA::StringSeq ContextList;
 
   typedef CORBA::TypeCode TypeCode;
   typedef sequence<TypeCode> ExceptionList;
 
-  //  typedef CORBA::StringSeq RequestContext;
-   typedef sequence<string> RequestContext;
+  typedef CORBA::StringSeq RequestContext;
 
 };
 #endif // _DYNAMIC_IDL_
