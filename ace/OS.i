@@ -290,6 +290,63 @@ ACE_Time_Value::ACE_Time_Value (long sec, long usec)
   this->normalize ();
 }
 
+// Returns number of seconds.
+
+ACE_INLINE long
+ACE_Time_Value::sec (void) const
+{
+  ACE_TRACE ("ACE_Time_Value::sec");
+  return this->tv_.tv_sec;
+}
+
+// Sets the number of seconds.
+
+ACE_INLINE void
+ACE_Time_Value::sec (long sec)
+{
+  ACE_TRACE ("ACE_Time_Value::sec");
+  this->tv_.tv_sec = sec;
+}
+
+// Converts from Time_Value format into milli-seconds format.
+
+ACE_INLINE long
+ACE_Time_Value::msec (void) const
+{
+  ACE_TRACE ("ACE_Time_Value::msec");
+  return this->tv_.tv_sec * 1000 + this->tv_.tv_usec / 1000;
+}
+
+// Converts from milli-seconds format into Time_Value format.
+
+ACE_INLINE void
+ACE_Time_Value::msec (long milliseconds)
+{
+  ACE_TRACE ("ACE_Time_Value::msec");
+  // Convert millisecond units to seconds;
+  this->tv_.tv_sec = milliseconds / 1000;
+  // Convert remainder to microseconds;
+  this->tv_.tv_usec = (milliseconds - (this->tv_.tv_sec * 1000)) * 1000;
+}
+
+// Returns number of micro-seconds.
+
+ACE_INLINE long
+ACE_Time_Value::usec (void) const
+{
+  ACE_TRACE ("ACE_Time_Value::usec");
+  return this->tv_.tv_usec;
+}
+
+// Sets the number of micro-seconds.
+
+ACE_INLINE void
+ACE_Time_Value::usec (long usec)
+{
+  ACE_TRACE ("ACE_Time_Value::usec");
+  this->tv_.tv_usec = usec;
+}
+
 // True if tv1 > tv2.
 
 ACE_INLINE int
@@ -358,63 +415,6 @@ ACE_Time_Value::ACE_Time_Value (const ACE_Time_Value &tv)
   : tv_ (tv.tv_)
 {
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
-}
-
-// Returns number of seconds.
-
-ACE_INLINE long
-ACE_Time_Value::sec (void) const
-{
-  ACE_TRACE ("ACE_Time_Value::sec");
-  return this->tv_.tv_sec;
-}
-
-// Sets the number of seconds.
-
-ACE_INLINE void
-ACE_Time_Value::sec (long sec)
-{
-  ACE_TRACE ("ACE_Time_Value::sec");
-  this->tv_.tv_sec = sec;
-}
-
-// Converts from Time_Value format into milli-seconds format.
-
-ACE_INLINE long
-ACE_Time_Value::msec (void) const
-{
-  ACE_TRACE ("ACE_Time_Value::msec");
-  return this->tv_.tv_sec * 1000 + this->tv_.tv_usec / 1000;
-}
-
-// Converts from milli-seconds format into Time_Value format.
-
-ACE_INLINE void
-ACE_Time_Value::msec (long milliseconds)
-{
-  ACE_TRACE ("ACE_Time_Value::msec");
-  // Convert millisecond units to seconds;
-  this->tv_.tv_sec = milliseconds / 1000;
-  // Convert remainder to microseconds;
-  this->tv_.tv_usec = (milliseconds - (this->tv_.tv_sec * 1000)) * 1000;
-}
-
-// Returns number of micro-seconds.
-
-ACE_INLINE long
-ACE_Time_Value::usec (void) const
-{
-  ACE_TRACE ("ACE_Time_Value::usec");
-  return this->tv_.tv_usec;
-}
-
-// Sets the number of micro-seconds.
-
-ACE_INLINE void
-ACE_Time_Value::usec (long usec)
-{
-  ACE_TRACE ("ACE_Time_Value::usec");
-  this->tv_.tv_usec = usec;
 }
 
 // True if tv1 < tv2.
