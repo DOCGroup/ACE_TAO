@@ -24,6 +24,8 @@ static_libs = 1
 ifneq ($(shell uname -s),LynxOS)
   CROSS-COMPILE = 1
 
+  PACE_SYSNAME = LynxOS
+
   #### The following may need to be customized for your host or target type.
   #### Or, you can source the appropriate (for your shell) Lynx SETUP file
   #### before running "make".
