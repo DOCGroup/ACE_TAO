@@ -1,3 +1,8 @@
+Tue Apr  1 15:52:41 2003  Steve Huston  <shuston@riverace.com>
+
+	* tests/Multicast_Test.cpp: If the platform doesn't support IP
+	  multicast, log an info message, not an error.
+
 Tue Apr  1 10:06:57 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Driver.pm:
