@@ -11,8 +11,8 @@
 
 Client_Task::Client_Task (const char *ior,
                           int iterations,
-			  CORBA::ORB_ptr corb,
-			  ACE_Thread_Manager *thr_mgr)
+                          CORBA::ORB_ptr corb,
+                          ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr),
     input_ (ior),
     niterations (iterations),
@@ -31,12 +31,12 @@ Client_Task::svc (void)
       ior += input_;
 
       CORBA::Object_var tmp =
-	this->corb_->string_to_object (ior.c_str()
-				       ACE_ENV_ARG_PARAMETER);
+        this->corb_->string_to_object (ior.c_str()
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Roundtrip_var rt =
-	Test::Roundtrip::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        Test::Roundtrip::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (rt.in ()))
