@@ -21,7 +21,7 @@
 #if !defined (_Notification_Receiver_i_H)
 #define _Notification_Receiver_i_H
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 #include "Event_Comm.hh"
 
 class Notification_Receiver_i

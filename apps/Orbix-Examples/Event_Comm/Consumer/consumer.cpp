@@ -7,7 +7,7 @@
 #include "Notification_Receiver_Handler.h"
 #include "Input_Handler.h"
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
 class Consumer : public ACE_Event_Handler
 {
@@ -49,17 +49,17 @@ Consumer::handle_signal (int signum, siginfo_t *, ucontext_t *)
   this->ih_->consumer_initiated_shutdown (1);
 
   // Shut down the event loop.
-  ACE_Service_Config::end_reactor_event_loop ();
+  ACE_Reactor::end_event_loop();
   return 0;
 }
 
 // Run the event loop until someone calls
-// calls ACE_Service_Config::end_reactor_event_loop().
+// calls ACE_Reactor::end_event_loop().
 
 void
 Consumer::run (void)
 {
-  if (ACE_Service_Config::run_reactor_event_loop () == -1)
+  if (ACE_Reactor::run_event_loop() == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "run_reactor_event_loop"));
 }
 
@@ -83,7 +83,7 @@ Consumer::Consumer (int argc, char *argv[])
 	ACE_ERROR ((LM_ERROR, "%p\n%a", "open", 1));
     }
 
-  if (ACE_Service_Config::reactor ()->register_handler (SIGINT, this) == -1)
+  if (ACE_Reactor::instance()->register_handler (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 }
 

@@ -25,7 +25,7 @@
 #include "Notification_Receiver_i.h"
 #include "Notifier_i.h"
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 #define nil 0
 
 // Tie the Notification_Receiver and Notifier implementation classes

@@ -11,7 +11,7 @@
 #include "Notifier_Handler.h"
 #include "Input_Handler.h"
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
 class Supplier : public ACE_Event_Handler
 {
@@ -48,14 +48,14 @@ int
 Supplier::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG, "%S\n", signum));
-  ACE_Service_Config::end_reactor_event_loop ();
+  ACE_Reactor::end_event_loop();
   return 0;
 }
 
 void
 Supplier::run (void)
 {
-  if (ACE_Service_Config::run_reactor_event_loop () == -1)
+  if (ACE_Reactor::run_event_loop() == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "run_reactor_event_loop"));
 }
 
@@ -85,7 +85,7 @@ Supplier::Supplier (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "starting up server %s\n",
 	     CORBA::Orbix.myImplementationName ()));
 
-  if (ACE_Service_Config::reactor ()->register_handler (SIGINT, this) == -1)
+  if (ACE_Reactor::instance()->register_handler (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 }
 

@@ -4,7 +4,7 @@
 #include "Notifier_Handler.h"
 #include "Input_Handler.h"
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
 int
 Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
@@ -24,7 +24,7 @@ Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   } ENDTRY;
 
   // Don't execute a callback here otherwise we'll recurse indefinitely!
-  if (ACE_Service_Config::reactor ()->remove_handler 
+  if (ACE_Reactor::instance()->remove_handler 
       (this, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "remove_handler"));
 
@@ -41,7 +41,7 @@ Input_Handler::Input_Handler (Notifier_Handler *notifier,
   // Register ourselves with the ACE_Reactor so that input events 
   // cause our handle_input() method to be dispatched automatically.
 
-  if (ACE_Service_Config::reactor ()->register_handler (this, 
+  if (ACE_Reactor::instance()->register_handler (this, 
 						 ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 
@@ -94,7 +94,7 @@ Input_Handler::handle_input (ACE_HANDLE h)
 
   if (ACE_OS::strcmp (buf, "quit") == 0)
     // Tell the main event loop to shutdown. 
-    ACE_Service_Config::end_reactor_event_loop ();
+    ACE_Reactor::end_event_loop();
   else
     {
       // Use the notifier to notify Consumers.
