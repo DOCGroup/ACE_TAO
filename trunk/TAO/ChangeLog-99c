@@ -1,3 +1,10 @@
+Thu May 20 21:09:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DomainC.cpp:
+	  Added #include "tao/POA_CORBA.h" so we can compile on
+	  IBM OpenEdition. Thanks to Jim Rogers <jrogers@viasoft.com>
+	  for pointing this out.
+
 Thu May 20 20:29:16 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB.i (orb_core): Added accessor.
