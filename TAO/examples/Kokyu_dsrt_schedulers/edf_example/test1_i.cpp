@@ -16,10 +16,13 @@ void
 Simple_Server1_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+
 /*DTTIME
   record the entering service time on the server side.
-  Thirteenth Time.
+  Thirteenth Time. 
 */
+  DSUI_EVENT_LOG (TEST_ONE, START_SERVICE, 1, 0, NULL);
+
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
@@ -124,6 +127,7 @@ Simple_Server1_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL_NOT_US
   recording the finishing service time on the server side.
   Fourteenth Time.
 */
+  DSUI_EVENT_LOG (TEST_ONE, STOP_SERVICE, 1,0,NULL);
 }
 
 void
