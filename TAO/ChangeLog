@@ -1,3 +1,9 @@
+Wed Sep 29 07:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+          Fixed pre/post includes.
+
 Tue Sep 28 20:55:26 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/bounded_reference_allocation_traits.hpp:
