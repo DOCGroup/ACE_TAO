@@ -65,7 +65,7 @@ public:
   // Set the rate.
 
   void set_cbr_rate (int);
-  // Set CBR rate.
+  // Set CBR rate in cells per second.
 
   ATM_QoS get_qos (void);
   // Get ATM_QoS struct.
