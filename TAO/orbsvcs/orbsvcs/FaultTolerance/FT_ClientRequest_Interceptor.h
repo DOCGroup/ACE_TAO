@@ -88,8 +88,7 @@ private:
 
   void group_version_context (PortableInterceptor::ClientRequestInfo_ptr ri
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    PortableInterceptor::ForwardRequest));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void request_service_context (PortableInterceptor::ClientRequestInfo_ptr ri
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)

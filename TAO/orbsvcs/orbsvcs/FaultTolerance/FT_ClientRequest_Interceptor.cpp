@@ -93,7 +93,7 @@ TAO_FT_ClientRequest_Interceptor::receive_other (
 
 void
 TAO_FT_ClientRequest_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr 
+    PortableInterceptor::ClientRequestInfo_ptr
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
@@ -323,8 +323,10 @@ TAO_FT_ClientRequest_Interceptor::request_service_context (
 
 
 TimeBase::TimeT
-TAO_FT_ClientRequest_Interceptor::request_expiration_time (CORBA::Policy *policy
-                                                           ACE_ENV_ARG_DECL)
+TAO_FT_ClientRequest_Interceptor::request_expiration_time (
+    CORBA::Policy *policy
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FT::RequestDurationPolicy_var p;
 
