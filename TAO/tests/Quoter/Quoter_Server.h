@@ -28,7 +28,7 @@
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "tao/tao.h"
 
-class Quoter_Server : public TAO_ORB_Manager
+class Quoter_Server 
 {
   // =TITLE
   //   Defines a Quoter Server class that implements the functionality
@@ -46,7 +46,7 @@ public:
   ~Quoter_Server (void);
   // Destructor
 
-  int init (int argc, char **argv, CORBA::Environment& env);
+  int init (int argc, char *argv[], CORBA::Environment& env);
   // Initialize the Quoter_Server state - parsing arguments and ...
 
   int run (CORBA::Environment& env);
@@ -70,25 +70,18 @@ private:
   FILE* ior_output_file_;
   // File to output the cubit factory IOR.
 
+  CosNaming::NamingContext_var namingContext_var_;
+  // Naming Service context
+
+  Quoter_Factory_Impl  quoter_Factory_Impl_;
+  // Instantiate the Quoter Factory
+
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
-
-  TAO_Naming_Server my_name_server_;
-  // An instance of the name server used for registering the factory
-  // objects.
 
   Quoter_Factory_Impl factory_impl_;
   // Implementation object of the cubit factory.
        
-  Stock::Quoter_Factory_var factory;
-  // Factory_var to register with NamingService.
-
-  CosNaming::NamingContext_var quoter_context_;
-  // Naming context for the cubit_factory.
-
-  CosNaming::NamingContext_var naming_context_;
-  // Naming context for the Naming Service.
-
   int argc_;
   // Number of commandline arguments.
 
