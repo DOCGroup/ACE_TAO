@@ -1,7 +1,5 @@
 dnl
-dnl $Id$
-
-AC_REVISION($Revision 0.78 $)dnl
+AC_REVISION($Id$)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -223,7 +221,6 @@ ACE_COMPILATION_OPTIONS
 dnl Configure the TAO directory if it exists.
 dnl TAO_CONFIGURATION_OPTIONS
 
-
 # Autoconf's AC_OBJEXT and AC_EXEEXT macros only works for C compilers!
 # Libtool's setup macro calls AC_OBJEXT and AC_EXEEXT without setting
 # the test language to C.  We do it before any libtool setup macros are
@@ -252,10 +249,10 @@ case "$target" in
     LIBS="$LIBS -lcompat"
     ;;
   *osf3.2*)
-    LIBS="$LIBS -lmach -lsys5 -lcxx -lc -lrt"
+    LIBS="$LIBS -lmach -lsys5 -lcxx -lc"
     ;;
   *osf4.0* | *osf5.0*)
-    LIBS="$LIBS -lmach -lrt"
+    LIBS="$LIBS -lmach"
     ;;
   *psos*)
     LIBS="$LIBS -lm"
@@ -7239,7 +7236,8 @@ the following information:
 
   ACE \`configure' Script Information
   ==================================
-  RCS ID: \$Id$
+  [RCS] translit([$Id$], $")   dnl @@ Ignore the following quote:"
+
   C++ Compiler:       $CXX
   C++ Preprocessor:   $CXXCPP
   C++ Flags:          $CXXFLAGS
@@ -7503,18 +7501,6 @@ AC_OUTPUT([
   netsvcs/lib/Makefile
   netsvcs/servers/Makefile
   tests/Makefile
-dnl  TAO/Makefile
-dnl  TAO/TAO_IDL/Makefile
-dnl  TAO/TAO_IDL/ast/Makefile
-dnl  TAO/TAO_IDL/be/Makefile
-dnl  TAO/TAO_IDL/be_include/Makefile
-dnl  TAO/TAO_IDL/driver/Makefile
-dnl  TAO/TAO_IDL/fe/Makefile
-dnl  TAO/TAO_IDL/include/Makefile
-dnl  TAO/TAO_IDL/narrow/Makefile
-dnl  TAO/TAO_IDL/util/Makefile
-dnl  TAO/tao/Makefile
-dnl  TAO/tao-config
  ],
  [
   echo ""
