@@ -5,6 +5,9 @@ Tue Mar 09 21:54:39 1999  David L. Levine  <levine@cs.wustl.edu>
           in the default case, when ACE_COMPONENTS isn't set.
           Thanks to Carlos for noticing this.
 
+        * examples/Naming/Makefile: suppress build if ACE_COMPONENTS
+          is defined and doesn't contain Other.
+
 Tue Mar  9 20:56:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * include/makeinclude/rules.nested.GNU:
