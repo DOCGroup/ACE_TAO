@@ -1,3 +1,7 @@
+Sat Mar 07 16:06:46 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE version 4.4.32, released Sat Mar 07 16:06:46 1998.
+
 Fri Mar 06 08:37:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/ace_ld: made perl4-compatible.  Thanks to
