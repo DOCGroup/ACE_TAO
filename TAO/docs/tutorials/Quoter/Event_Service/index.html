@@ -12,8 +12,8 @@
 
     <h3>TAO's COS Event Service</h3>
 
-    <P>Poll the value of stocks constantly just to
-      check if it has changed is not a efficient or scalable
+    <P>To poll the values of stocks constantly just to
+      check if they have changed is not an efficient or scalable
       solution.
       We want to be informed when the price changes so we can take
       appropriate action.
@@ -24,9 +24,9 @@
     <H3>Defining the Event Type</H3>
 
     <P>We need to define an IDL <CODE>struct</CODE> that will carry
-      our event data,
-      of course we want to include the stock price, its symbol and
-      maybe its full name on the event:
+      our event data.
+      Of course we want to include the stock price, its symbol and
+      maybe its full name in the event:
     </P>
 <PRE>
   struct Event {
@@ -50,7 +50,7 @@
 
     <P>Connecting as a consumer is a similar process, but we will use
       the more traditional inheritance based approach instead of TIE.
-      First let us defined the consumer object:
+      First let us define the consumer object:
     </P>
 <PRE>
 class Stock_Consumer : public POA_CosEventComm::PushConsumer {
@@ -70,8 +70,8 @@ public:
       for example, because it was shut down before the Consumer got a
       chance to disconnect itself.
       The <CODE>push()</CODE> method is invoked by the Events Service
-      whenever some event is sent by a supplier,
-      let's take a look at this method.
+      whenever some event is sent by a supplier.
+      Let's take a look at this method.
       First we need to extract the event data from the any:
     </P>
 <PRE>
@@ -83,11 +83,11 @@ Stock_Consumer::push (const CORBA::Any& data,
   if ((data >>= event) == 0)
     return; // Invalid event
 </PRE>
-    <P>notice that the extraction can fail, anys can stored all IDL
-      data types, and only at extraction time the types are checked.
-      Also notice that we use a pointer to the event,
+    <P>Notice that the extraction can fail:  anys can store all IDL
+      data types, and only at extraction time are the types checked.
+      Also notice that we use a pointer to the event;
       the CORBA rules are that variable sized structures,
-      i.e. structures that contain elements of variable size,
+      i.e., structures that contain elements of variable size,
       such as strings,
       are extracted by reference.
       We do <STRONG>not</STRONG> need to manage this memory,
@@ -105,17 +105,17 @@ Stock_Consumer::push (const CORBA::Any& data,
     <P>So what was the <CODE>CORBA::Environment</CODE> about? After
       all it was not used.  TAO services must support platforms
       without support for native C++ exceptions.  On those platforms
-      the CORBA specification defines a <EM>alternate mapping</EM>
+      the CORBA specification defines an <EM>alternate mapping</EM>
       where all the operations use an extra argument to return any
       exceptions.
-      Notice that the TAO IDL compiler supports both mappings, we have
+      Notice that the TAO IDL compiler supports both mappings.  We have
       been using the standard one so far!  It is only in some services
       and callback objects that the alternate mapping becomes apparent.
     </P>
     <P>Notice that on platforms with native C++ exception support we
       can safely ignore the extra argument,
       and use the usual mechanisms to catch and throw exceptions.
-      Unfortunately we must declare the extra argument, the TAO team
+      Unfortunately we must declare the extra argument.  The TAO team
       is working on solutions to that problem.
       For more information on how to use the alternative mapping and
       how to write portable code for both environments check
@@ -128,8 +128,8 @@ Stock_Consumer::push (const CORBA::Any& data,
       mechanisms.
     </P>
     <P>Going back to our example,
-      when the event channel disconnects we receive a callback too,
-      at that point we want to forget about the original connection:
+      when the event channel disconnects we receive a callback, too.
+      At that point we want to forget about the original connection:
     </P>
 <PRE>
 void
@@ -139,11 +139,11 @@ Stock_Consumer::disconnect_push_consumer (CORBA::Environment &)
 }
 </PRE>
     <P>But why do we need to have a connection to the event channel in
-      the first place? All we want is to receive events.  The
+      the first place?  All we want is to receive events.  The
       connection to the event channel will let you disconnect
       gracefully, so the event channel does not have to maintain
-      resources for old consumers,
-      for example,
+      resources for old consumers.
+      For example,
       we could implement a method such as:
     </P>
 <PRE>
@@ -157,10 +157,10 @@ Stock_Consumer::disconnect ()
 
     <H4>How to connect to the event channel</H4>
 
-    <P>Connecting to the event channel is a 3 step process,
-      first we obtain a factory used by all the consumers that want to
-      connect,
-      next we obtain a supplier proxy, so we can report when
+    <P>Connecting to the event channel is a 3 step process.
+      First we obtain a factory used by all the consumers that want to
+      connect.
+      Next we obtain a supplier proxy, so we can report when
       we do not want any more events.
       Finally we connect to the proxy to start receiving events.
     </P>
@@ -198,7 +198,7 @@ Stock_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 
     <H3>Notifying the Price Changes</H3>
 
-    <P>We will now examine how do the suppliers generate events.
+    <P>We will now examine how the suppliers generate events.
       Let us look at an implementation of the
       <CODE>Modify_Stock</CODE> interface:
     </P>
@@ -218,12 +218,12 @@ private:
   CosEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
 };
 </PRE>
-    <P>Notice how we use the IDL structure to maintain the data, this
+    <P>Notice how we use the IDL structure to maintain the data.  This
       is just to make the code a little shorter.
       The <CODE>consumer_proxy_</CODE> object is just like
       the <CODE>supplier_proxy_</CODE> discussed above,
       except that we also use it to send the events.
-      Let start of the <CODE>set_price()</CODE> method will look like
+      The start of the <CODE>set_price()</CODE> method will look like
       this:
     </P>
 <PRE>
@@ -233,7 +233,7 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 {
    this->data_.price = new_price;
 </PRE>
-    <P>Next we prepare the event, the COS Events Service uses a CORBA
+    <P>Next we prepare the event.  The COS Events Service uses a CORBA
       any to send all the data, like this:
     </P>
 <PRE>
@@ -249,9 +249,9 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 
     <H3>Connecting to the Event Service as a Supplier</H3>
 
-    <P>Sending the event was easy, connecting to the Event Channel
-      as a supplier is very similar to the connection as a consumer,
-      we will need a <CODE>CosEventComm::PushSupplier</CODE> object.
+    <P>Sending the event was easy.  Connecting to the Event Channel
+      as a supplier is very similar to the connection as a consumer.
+      We will need a <CODE>CosEventComm::PushSupplier</CODE> object.
       This is a good application of the TIE objects:
     </P>
 <PRE>
@@ -266,7 +266,7 @@ private:
 };
 </PRE>
     <P>The <CODE>PushSupplier_tie</CODE> is a template generated by
-      the IDL compiler, it implements the
+      the IDL compiler.  It implements the
       <CODE>CosEventComm::PushSupplier</CODE> interface,
       but it actually just forwards all the calls to its single
       template argument.
@@ -281,8 +281,8 @@ POA_CosEventComm::PushSupplier_tie < T >::disconnect_push_supplier ()
 }
 </PRE>
     <P>The <CODE>ptr_</CODE> field is actually a pointer to the
-      template argument.
-      So we don't have to implement a separate class just to receive a
+      template argument,
+      so we don't have to implement a separate class just to receive a
       disconnect callback, we can use the same
       <CODE>Modify_Stock_i</CODE> class to do it.
     </P>
@@ -324,7 +324,7 @@ void
 Quoter_Stock_i::disconnect_push_supplier (CORBA::Environment &)
   throw (CORBA::SystemException)
 {
-  // Forget about the consumer it is not there anymore
+  // Forget about the consumer.  It is not there anymore
   this->consumer_proxy_ =
     CosEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
@@ -357,7 +357,7 @@ Quoter_Stock_i::disconnect_push_supplier (CORBA::Environment &)
 
     <H4>Testing</H4>
 
-    <P>To test your changes you need to run three programs,
+    <P>To test your changes you need to run four programs,
       first TAO's Naming Service:
 <PRE>
 $ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
@@ -365,7 +365,7 @@ $ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
     <P>The CORBA Event Service
     </P>
 <PRE>
-$ $TAO_ROOT/orbsvcs/CosEvent_Service/CosEvent_Service -ORBSvcConf ec.conf
+$ $TAO_ROOT/orbsvcs/CosEvent_Service/CosEvent_Service
 </PRE>
 
     <P>Now you can run your client:
@@ -407,7 +407,7 @@ $ server ZZZZ YYYY < stock_list2.txt
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Sat Nov 27 15:47:01 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Tue Nov 30 18:14:44 CST 1999
+Last modified: Sun Apr  1 13:59:59 PDT 2001
 <!-- hhmts end -->
   </body>
 </html>
