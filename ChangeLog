@@ -1,3 +1,9 @@
+Sat Dec 15 09:30:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Configuration.cpp: Make the return code of enumerate_values()
+	  consistent with enumerate_sections().  Thanks to Kevin Burge
+ 	  <kevin.burge@systemware.com> for reporting this.
+
 Fri Dec 14 21:36:29 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/ace.icc: Adjusted file list as a result of split-apart
