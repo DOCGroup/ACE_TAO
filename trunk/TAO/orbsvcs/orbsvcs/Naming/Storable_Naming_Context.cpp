@@ -94,14 +94,14 @@ TAO_Storable_ExtId::operator= (const TAO_Storable_ExtId &rhs)
   kind_ = rhs.kind_;
 }
 
-int
+bool
 TAO_Storable_ExtId::operator== (const TAO_Storable_ExtId &rhs) const
 {
   return (ACE_OS::strcmp (id_.in(), rhs.id_.in()) == 0)
     && (ACE_OS::strcmp (kind_.in(), rhs.kind_.in()) == 0);
 }
 
-int
+bool
 TAO_Storable_ExtId::operator!= (const TAO_Storable_ExtId &rhs) const
 {
   return (ACE_OS::strcmp (id_.in(), rhs.id_.in()) != 0)
