@@ -587,6 +587,12 @@ Cubit_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
+  // Parse command line and verify parameters.
+  if (this->parse_args () == -1)
+    {
+      return 1;
+    }
+
   // retrieve the ORB
   CORBA::ORB_init (this->argc_,
                    this->argv_,
@@ -596,12 +602,6 @@ Cubit_Client::init (int argc, char **argv)
   if (this->env_.exception () != 0)
     {
       this->env_.print_exception ("ORB initialization");
-      return 1;
-    }
-
-  // Parse command line and verify parameters.
-  if (this->parse_args () == -1)
-    {
       return 1;
     }
 
@@ -666,8 +666,8 @@ int
 main (int argc, char **argv)
 {
   Cubit_Client cubit_client;
-
-  if (cubit_client.init (argc, argv) == -1)
+ 
+  if (cubit_client.init (argc, argv) != 0)
     return 1;
   else
     return cubit_client.run ();
