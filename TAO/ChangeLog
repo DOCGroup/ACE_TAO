@@ -1,3 +1,7 @@
+Tue May 20 16:56:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ObjectKey_Table.cpp: Added explicit template instantiation. 
+
 Tue May 20 13:56:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1482_Regression/Makefile:
