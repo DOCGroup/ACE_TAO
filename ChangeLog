@@ -1,3 +1,10 @@
+Thu Sep 28 09:01:19 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-g++-common.h:
+
+	  Reverted my g++ 2.95 updates.  They work on all platforms but
+	  the cross-compiler used for VxWorks.
+
 Wed Sep 27 16:17:36 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/IOStream.h:
