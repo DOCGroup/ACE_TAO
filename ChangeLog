@@ -1,18 +1,28 @@
+Mon Aug 16 12:14:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+	* bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+	* bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
+
+	  Changed the names of the Deployment libraries. Arranged the
+	  dependencies in such a manner so that it is easier to use it in
+	  the application.
+
 Mon Aug 16 09:27:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
-    * bin/msvc_mpc_auto_compile.pl:
+        * bin/msvc_mpc_auto_compile.pl:
     
-      Added MSVC 7.1 compatibility through '-vc7' option.
+           Added MSVC 7.1 compatibility through '-vc7' option.
     
-    * bin/msvc_static_compile.pl:
+        * bin/msvc_static_compile.pl:
     
-      Added MSVC 7.1 compatibility through '-vc7' option.
-      Added support for MPC '-name_modifier' option.
+          Added MSVC 7.1 compatibility through '-vc7' option. Added
+	  support for MPC '-name_modifier' option.  
       
-    * bin/msvc_static_compile.lst:
+        * bin/msvc_static_compile.lst:
     
-      Removed projectfile extensions to be able to generate these 
-      dynamically from 'msvc_static_compile.pl'.
+          Removed projectfile extensions to be able to generate these
+	  dynamically from 'msvc_static_compile.pl'. 
 
 Sat Aug 14 19:38:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
