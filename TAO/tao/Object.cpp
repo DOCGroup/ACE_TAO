@@ -270,7 +270,12 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
     {
       TAO_THROW(CORBA::NO_IMPLEMENT ());
     }
-  request = new CORBA::Request (this, operation, arg_list, result, req_flags);
+  request = new CORBA::Request (this, 
+                                operation, 
+                                arg_list, 
+                                result, 
+                                req_flags,
+                                TAO_IN_ENV);
 }
 
 CORBA::Request_ptr
@@ -278,7 +283,9 @@ CORBA_Object::_request (const CORBA::Char *operation,
                         CORBA::Environment &TAO_IN_ENV)
 {
   TAO_IN_ENV.clear ();
-  return new CORBA::Request (this, operation);
+  return new CORBA::Request (this, 
+                             operation,
+                             TAO_IN_ENV);
 }
 
 CORBA::InterfaceDef_ptr

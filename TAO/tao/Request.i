@@ -34,44 +34,51 @@ CORBA_Request::_nil (void)
 ACE_INLINE CORBA::Object_ptr 
 CORBA_Request::target (void) const 
 { 
-  return target_; 
+  return this->target_; 
 }
 
 // Return the operation name for the request.
 ACE_INLINE const CORBA::Char *
 CORBA_Request::operation (void) const 
 {
-  return opname_; 
+  return this->opname_; 
 }
 
 // Return the arguments for the request.
 ACE_INLINE CORBA::NVList_ptr 
 CORBA_Request::arguments (void) 
 { 
-  return args_; 
+  return this->args_; 
 }
 
 // Return the result for the request.
 ACE_INLINE CORBA::NamedValue_ptr 
 CORBA_Request::result (void) 
 {
-  return result_; 
+  return this->result_; 
 }
 
 // Return the exceptions resulting from this request.
 ACE_INLINE CORBA::ExceptionList_ptr 
 CORBA_Request::exceptions (void) 
 { 
-  return &exceptions_; 
+  return &this->exceptions_; 
+}
+
+// Return the request's contexts
+ACE_INLINE CORBA::ContextList_ptr
+CORBA_Request::contexts (void)
+{
+  return &this->contexts_;
 }
 
 // Return the <Environment> for this request.
-/*ACE_INLINE CORBA::Environment *
+ACE_INLINE CORBA::Environment *
 CORBA_Request::env (void) 
 {
-  return &env_; 
+  return &this->env_; 
 }
-*/
+
 // The argument manipulation helper functions
 
 ACE_INLINE CORBA_Any &

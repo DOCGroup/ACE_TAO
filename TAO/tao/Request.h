@@ -28,6 +28,7 @@
 #include "tao/corbafwd.h"
 #include "tao/NVList.h"
 #include "tao/Environment.h"
+#include "tao/Context.h"
 
 class TAO_Export CORBA_Request
 {
@@ -54,7 +55,11 @@ public:
   CORBA::ExceptionList_ptr exceptions (void);
   // Return the exceptions resulting from this request.
 
-  //CORBA_Environment *env (void);
+  CORBA::ContextList_ptr contexts (void);
+  // Return a list of the request's contexts. Since TAO does
+  // not implement Contexts, this will always be 0.
+
+  CORBA::Environment_ptr env (void);
   // Return the <Environment> for this request.
 
   // Argument manipulation helper functions.
@@ -121,10 +126,14 @@ private:
                  const CORBA::Char *op,
                  CORBA::NVList_ptr args,
                  CORBA::NamedValue_ptr result,
-                 CORBA::Flags flags);
+                 CORBA::Flags flags,
+                 CORBA::Environment &TAO_IN_ENV =
+                   CORBA::default_environment ());
 
   CORBA_Request (CORBA::Object_ptr obj,
-                 const CORBA::Char *op);
+                 const CORBA::Char *op,
+                 CORBA::Environment &TAO_IN_ENV =
+                   CORBA::default_environment ());
 
   ~CORBA_Request (void);
 
@@ -143,11 +152,14 @@ private:
   CORBA::Flags flags_;
   // invocation flags
 
-  // CORBA_Environment env_;
+  CORBA::Environment env_;
   // holds exceptions
 
   CORBA::ExceptionList exceptions_;
   // list of exceptions raised by the operation
+
+  CORBA::ContextList contexts_;
+  // List of the request's contexts
 
   CORBA::ULong refcount_;
   // reference counting

@@ -42,10 +42,12 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
                               const CORBA::Char *op,
                               CORBA::NVList_ptr args,
                               CORBA::NamedValue_ptr result,
-                              CORBA::Flags flags)
+                              CORBA::Flags flags,
+                              CORBA::Environment &TAO_IN_ENV)
   : args_ (args),
     result_ (result),
     flags_ (flags),
+    env_ (TAO_IN_ENV),
     refcount_ (1)
 {
   target_ = CORBA::Object::_duplicate (obj);
@@ -53,8 +55,10 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
 }
 
 CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
-                              const CORBA::Char *op)
+                              const CORBA::Char *op,
+                              CORBA::Environment &TAO_IN_ENV)
   : flags_ (0),
+    env_ (TAO_IN_ENV),
     refcount_ (1)
 {
   target_ = CORBA::Object::_duplicate (obj);
