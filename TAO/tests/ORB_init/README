@@ -56,14 +56,10 @@ test.  The correct output is:
         from a second call to CORBA::ORB_init() after the
         first ORB with the same ORBid was destroyed.
 
-        (18804|1024) EXCEPTION, 
-        Successfully caught CORBA system exception "UNKNOWN"
-        after the last ORB was released.
 
-        The exception follows.  It is safe to ignore it.
-
-        system exception, ID 'IDL:omg.org/CORBA/UNKNOWN:1.0'
-        TAO exception, minor code = 54410000 (unknown location; unspecified errno), completed = NO
-
+        Successfully caught CORBA system exception after the
+        last ORB was released with the following repository ID:
+          IDL:omg.org/CORBA/UNKNOWN:1.0
+        This exception was expected.  It is safe to ignore it.
 
         ORB_init test completed successfully.
