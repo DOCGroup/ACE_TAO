@@ -186,11 +186,14 @@
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 #if defined (_REENTRANT)
-  /* Comment out the following defines if you want to disable threading. */
+  /* If you want to disable threading comment out the
+     following defines until you get to the comment:
+     // End of threading #defines. 
+  */
   // Compile using multi-thread libraries.
 # if !defined (ACE_MT_SAFE)
 #   define ACE_MT_SAFE 1
-# endif
+# endif /* ACE_MT_SAFE */
 
 # define ACE_HAS_THREADS
 
@@ -219,7 +222,7 @@
 # define ACE_HAS_THR_YIELD
 # define ACE_LACKS_PTHREAD_YIELD
 
-  /* End of threading #defines */
+// End of threading #defines.
 #endif /* _REENTRANT */
 
 // Platform supports ACE_TLI timod STREAMS module.
