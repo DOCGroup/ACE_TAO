@@ -1,0 +1,84 @@
+<!-- $Id$ -->
+<HTML>
+<BODY>
+Java ACE is a collection of Java packages containing classes that have been 
+converted from the C++ version of the 
+<A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ADAPTIVE Communication 
+Environment</A> (ACE).
+<P>
+The C++ version of ACE is a large object-oriented network programming toolkit 
+which contains over 125,000 lines of C++ code and uses advanced C++ features 
+like templates.
+</P>
+<P>The goal of converting ACE from C++ to Java is to provide a portable 
+programming toolkit with a similar interface and functionality to the original
+ version of ACE. This allows new and current users of C++ ACE an easy transition
+to Java and also adds significant value to programming concurrent Java 
+networking applications. Note that applications written using Java ACE can 
+communicate seamlessly over sockets with applications written using C++ ACE.
+</P>
+<P>
+The following diagram illustrates the architecture of the Java version of ACE:
+</P>
+
+<P ALIGN="CENTER">
+<IMG SRC="images/java-ace.gif" WIDTH="735" HEIGHT="339" ALIGN="BOTTOM" BORDER="0">
+</P>
+
+<P>
+The Java ACE architecture has fewer components than the diagram illustrating 
+the architecture for the 
+<A HREF="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">C++ version 
+of ACE </A>. This reduction in size occurs for two reasons. First, the Java 
+Virtual Machine (JVM) handles many of the portability issues provided by C++ 
+ACE. Therefore, the OS adaptation layer is unnecessary. Second,
+Java doesn't support certain OS features provided by Win32, UNIX, and other 
+OS platforms that C++ ACE is ported to.  For example, Java doesn't support 
+shared memory and memory-mapped files and therefore the memory management 
+wrappers (such as <CODE>Mem_Map</CODE> and <CODE>Shared_Malloc</CODE>) are 
+omitted from Java ACE.
+</P>
+
+<P>
+The process of converting ACE from C++ to Java provided us with an excellent 
+source of insights on the strengths and weaknesses of using Java for 
+industrial-strength software system frameworks. We've written a paper 
+documenting our 
+<A HREF="http://www.cs.wustl.edu/~schmidt/C++2java.html">experiences</A> 
+converting the C++ version of ACE to Java.
+</P>
+
+<H3>Copyright Information for Java ACE</H3>
+
+<P>
+Java ACE is copyrighted by 
+<A HREF="http://www.cs.wustl.edu/~schmidt">Douglas C. Schmidt</A> and his 
+research group at 
+<A HREF="http://www.wustl.edu">Washington University</A>.
+You are free to do anything you like with the Java ACE source code such 
+as including it in commercial software, as long as you include this copyright 
+statement along with code built using Java ACE. 
+</P>
+<P>
+You are under no obligation to freely redistribute any of your source
+code that is built using Java ACE. Please note, however, that you may
+not do anything to the Java ACE code that will prevent it from being
+distributed freely (such as copyrighting it yourself). Naturally, I am not
+responsible for any problems caused by using Java ACE.
+</P>
+<P>
+My goal is to see Java ACE continue to evolve and become a more
+comprehensive, robust, and well-documented Java toolkit that is freely
+available to researchers and developers. If you have any
+improvements, suggestions, and or comments, I'd like to hear about it.
+</P>
+<P>
+Thanks, 
+</P>
+<P>
+Douglas C. Schmidt
+<BR>
+<A HREF="mailto@schmidt@cs.wustl.edu">schmidt@cs.wustl.edu</A>
+</P>
+</BODY>
+</HTML>

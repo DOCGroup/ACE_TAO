@@ -1,0 +1,19 @@
+project: rt_server, strategies {
+  depends  += Common
+  libs     += RTCORBA_Common
+  includes += ../Common
+
+  Source_Files {
+    server.cpp
+  }
+}
+
+project: rt_client, strategies {
+  depends  += Common
+  libs     += RTCORBA_Common
+  includes += ../Common
+
+  Source_Files {
+    client.cpp
+  }
+}
