@@ -101,7 +101,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
   for (int i = 0; argv[i] != 0; i++)
     {
 #if !defined (ACE_LACKS_ENV)
-      ACE_TCHAR *temp;
+      ACE_TCHAR *temp = 0;
 
       // Account for environment variables.
       if (this->substitute_env_args_
@@ -128,7 +128,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
   for (j = 0; argv[j] != 0; j++)
     {
 #if !defined (ACE_LACKS_ENV)
-      ACE_TCHAR *temp;
+      ACE_TCHAR *temp = 0;
 
       // Account for environment variables.
       if (this->substitute_env_args_

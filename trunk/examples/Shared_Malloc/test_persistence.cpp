@@ -11,12 +11,12 @@
 
 ACE_RCSID(Shared_Malloc, test_persistence, "$Id$")
 
-typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
+typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> TEST_MALLOC;
 typedef ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_LIFO_ITERATOR;
 typedef ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_FIFO_ITERATOR;
 
 // Shared memory manager.
-static MALLOC *shmem_allocator = 0;
+static TEST_MALLOC *shmem_allocator = 0;
 
 // Backing store name.
 static char backing_store[MAXPATHLEN + 1] = "";
@@ -75,7 +75,7 @@ public:
 
   ~GUI_Handler (void)
   {
-    MALLOC::MEMORY_POOL &pool =
+    TEST_MALLOC::MEMORY_POOL &pool =
       shmem_allocator->memory_pool ();
     pool.sync ();
   }
@@ -314,7 +314,7 @@ main (int argc, char *argv[])
     }
 
   ACE_NEW_RETURN (shmem_allocator,
-                  MALLOC (backing_store),
+                  TEST_MALLOC (backing_store),
                   -1);
 
   GUI_Handler handler;
