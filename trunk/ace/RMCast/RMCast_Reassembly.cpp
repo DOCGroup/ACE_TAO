@@ -8,11 +8,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (__ACE_INLINE__)
-#include "RMCast_Reassembly.i"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID(ace, RMCast_Reassembly, "$Id$")
+ACE_RCSID(RMCast, RMCast_Reassembly, "$Id$")
 
 ACE_RMCast_Reassembly::
 ACE_RMCast_Reassembly (void)

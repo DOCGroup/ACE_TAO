@@ -11,7 +11,7 @@
 # include "RMCast_Reordering.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_Reordering, "$Id$")
+ACE_RCSID(RMCast, RMCast_Reordering, "$Id$")
 
 ACE_RMCast_Reordering::~ACE_RMCast_Reordering (void)
 {

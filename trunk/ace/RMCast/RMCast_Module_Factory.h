@@ -63,9 +63,5 @@ public:
   virtual void destroy (ACE_RMCast_Module *) = 0;
 };
 
-#if defined (__ACE_INLINE__)
-#include "RMCast_Module_Factory.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_MODULE_FACTORY_H */

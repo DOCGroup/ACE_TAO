@@ -5,10 +5,6 @@
 
 #include "RMCast_Worker.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "RMCast_Worker.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(RMCast, RMCast_Worker, "$Id$")
 
 template<class KEY, class ITEM>

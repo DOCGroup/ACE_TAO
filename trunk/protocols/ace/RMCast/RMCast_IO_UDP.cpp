@@ -17,7 +17,7 @@
 #include "ace/os_include/arpa/os_inet.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(ace, RMCast_IO_UDP, "RMCast_IO_UDP.cpp,v 1.12 2000/12/20 22:00:33 oci Exp")
+ACE_RCSID(RMCast, RMCast_IO_UDP, "RMCast_IO_UDP.cpp,v 1.12 2000/12/20 22:00:33 oci Exp")
 
 ACE_RMCast_IO_UDP::~ACE_RMCast_IO_UDP (void)
 {

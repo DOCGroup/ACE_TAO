@@ -7,7 +7,7 @@
 #include "RMCast_Partial_Message.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_Partial_Message, "$Id$")
+ACE_RCSID(RMCast, RMCast_Partial_Message, "$Id$")
 
 ACE_RMCast_Partial_Message::
 ACE_RMCast_Partial_Message (ACE_UINT32 message_size)

@@ -11,7 +11,7 @@
 #include "RMCast_Fragment.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_Fragment, "$Id$")
+ACE_RCSID(RMCast, RMCast_Fragment, "$Id$")
 
 ACE_RMCast_Fragment::
 ACE_RMCast_Fragment (void)

@@ -8,7 +8,7 @@
 # include "RMCast_Module.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_Module, "$Id$")
+ACE_RCSID(RMCast, RMCast_Module, "$Id$")
 
 ACE_RMCast_Module::~ACE_RMCast_Module (void)
 {
