@@ -15,6 +15,8 @@
 
 #include "server.h"
 
+ACE_RCSID(Quoter, server, "$Id$")
+
 Quoter_Server::Quoter_Server (void)
   : num_of_objs_ (1),
     quoter_Factory_Impl_ptr_ (0)

@@ -24,6 +24,8 @@
 #include "tests/test_config.h"
 #include "ace/Process.h"
 
+ACE_RCSID(Reactor, NestedUpCalls_Test, "$Id$")
+
 int
 main (int, char *[])
 {

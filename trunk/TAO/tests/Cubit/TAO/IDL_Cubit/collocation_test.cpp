@@ -4,6 +4,8 @@
 #include "client_i.h"
 #include "server_i.h"
 
+ACE_RCSID(IDL_Cubit, collocation_test, "$Id$")
+
 #define ACE_THREAD_MANAGER ACE_Thread_Manager::instance ()
 
 void *

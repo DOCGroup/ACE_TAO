@@ -17,6 +17,8 @@
 #include "orbsvcs/LifeCycleServiceC.h"
 #include "Generic_Factory.h"
 
+ACE_RCSID(Quoter, Generic_Factory, "$Id$")
+
 static const char usage [] = "[-? |\n[-O[RBport] ORB port number]]";
 
 Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server (void)

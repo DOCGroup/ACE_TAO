@@ -3,6 +3,8 @@
 #include "cubit.h"
 
 
+ACE_RCSID(tpr, cubitS, "$Id$")
+
 #define Cubit_dispatch_impl
 
 unsigned char Cubit_dispatch::dispatch (CORBA::Request &IT_r, 

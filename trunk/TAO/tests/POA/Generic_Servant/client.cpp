@@ -20,6 +20,8 @@
 #include "tao/Timeprobe.h"
 #include "FooC.h"
 
+ACE_RCSID(Generic_Servant, client, "$Id$")
+
 static char *IOR = 0;
 static int iterations = 1;
 static int oneway = 0;

@@ -11,6 +11,8 @@
 
 #include "ace/SString.h"
 
+ACE_RCSID(Demux_Test, server, "$Id$")
+
 void print_exception (const CORBA_Exception     *x,
 		      const char                  *info,
 		      FILE                        *stream

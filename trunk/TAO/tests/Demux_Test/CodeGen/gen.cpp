@@ -2,6 +2,8 @@
 
 #include "tao.h"
 
+ACE_RCSID(CodeGen, gen, "$Id$")
+
 static long GenDistinctString(ACE_Unbounded_Queue<ACE_CString> &, int);
 static long GenRand(int, int);
 static long IsPresent(ACE_Unbounded_Queue<ACE_CString> &, int, ACE_CString &);

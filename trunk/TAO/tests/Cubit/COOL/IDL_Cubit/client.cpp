@@ -27,6 +27,8 @@
 #include "cubit.H"
 #include "sk_cubit.H"
 
+ACE_RCSID(IDL_Cubit, client, "$Id$")
+
 // Constants
 u_int _debug_level = 0;
 const u_int DEFAULT_PORT = 3000;

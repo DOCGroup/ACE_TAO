@@ -1,5 +1,5 @@
 // $Id$
-//
+
 //===================================================================
 //  = LIBRARY
 //      TAO/tests/POA/Default_Servant/client
@@ -18,6 +18,8 @@
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "FileC.h"
+
+ACE_RCSID(Default_Servant, client, "$Id$")
 
 static char *ior = 0;
 static char *filename = "test";

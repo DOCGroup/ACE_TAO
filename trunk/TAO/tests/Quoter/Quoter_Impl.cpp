@@ -16,6 +16,7 @@
 #include "tao/corba.h"
 #include "Quoter_Impl.h"
 
+ACE_RCSID(Quoter, Quoter_Impl, "$Id$")
 
 // Constructor.  Create all the quoter factories.
 

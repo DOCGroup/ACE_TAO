@@ -21,6 +21,8 @@
 #include "Servant_Locator.h"
 #include "MyFooServant.h"
 
+ACE_RCSID(Forwarding, Servant_Locator, "$Id$")
+
 MyFooServantLocator::MyFooServantLocator (CORBA::ORB_ptr orb_ptr,
                                           CORBA::Object_ptr forward_to_ptr)
   : orb_var_ (CORBA::ORB::_duplicate (orb_ptr)), 

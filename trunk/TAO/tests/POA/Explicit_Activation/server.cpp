@@ -24,6 +24,8 @@
 #include "tao/Timeprobe.h"
 #include "MyFooServant.h"
 
+ACE_RCSID(Explicit_Activation, server, "$Id$")
+
 int
 main (int argc, char **argv)
 {

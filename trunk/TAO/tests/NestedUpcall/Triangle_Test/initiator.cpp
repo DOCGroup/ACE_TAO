@@ -1,4 +1,3 @@
-// -*- c++ -*-
 // $Id$
 
 // ============================================================================
@@ -20,6 +19,8 @@
 
 #include "ace/Read_Buffer.h"
 #include "initiator.h"
+
+ACE_RCSID(Triangle_Test, initiator, "$Id$")
 
 Initiator_Server::Initiator_Server (void)
   : object_A_key_ (0),

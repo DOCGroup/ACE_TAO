@@ -1,4 +1,3 @@
-// -*- c++ -*-
 // $Id$
 
 // ============================================================================
@@ -23,6 +22,7 @@
 #include "client.h"
 #include "local_server.h"
 
+ACE_RCSID(MT_Client_Test, client, "$Id$")
 
 MT_Client_Task::MT_Client_Task (int argc, char **argv,
 				int client_number)

@@ -19,6 +19,8 @@
 #include <pbroker/corba/lifecycl/impldecl.h>
 #include "cubit_i.h"
 
+ACE_RCSID(IDL_Cubit, cubit_i, "$Id$")
+
 // Declare the Implementation 
 XPS_DECLARE_IMPLEMENTATION_ID(Cubit_Factory_iId,"Cubit_Factory_iId")
 XPS_DECLARE_IMPLEMENTATION(Cubit_Factory_decl,Cubit_Factory_iId,Cubit_Factory)

@@ -2,6 +2,7 @@
 
 #include "tao.h"
 
+ACE_RCSID(CodeGen, client, "$Id$")
 
 // Generate the client side include file "client.i". This file has a table of
 // function pointers to the the different operations of the

@@ -18,6 +18,8 @@
 
 #include "param_test_i.h"
 
+ACE_RCSID(Param_Test, server, "$Id$")
+
 // Parses the command line arguments and returns an error status.
 static FILE *ior_output_file = 0;
 

@@ -16,6 +16,8 @@
 
 #include "MyFooServant.h"
 
+ACE_RCSID(Generic_Servant, MyFooServant, "$Id$")
+
 // Constructor
 MyFooServant::MyFooServant (CORBA::ORB_ptr orb,
 			    PortableServer::POA_ptr poa,

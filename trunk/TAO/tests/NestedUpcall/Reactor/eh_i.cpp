@@ -3,6 +3,8 @@
 #include "tao/corba.h"
 #include "eh_i.h"
 
+ACE_RCSID(Reactor, eh_i, "$Id$")
+
 // CTOR
 EventHandler_i::EventHandler_i (void)
 {

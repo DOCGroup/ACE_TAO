@@ -19,6 +19,8 @@
 
 #include "tao/corba.h"
 
+ACE_RCSID(CDR, tc, "$Id$")
+
 // In this version of TAO typecodes are based on CDR, we have to
 // verify that CDR offers the services needed for Typecode...
 

@@ -24,6 +24,8 @@
 #include "sk_cubit.H"
 #include "sk_cubit.C"
 
+ACE_RCSID(IDL_Cubit, server, "$Id$")
+
 void print_exception (const CORBA_Environment &env,
 		      const char * str)
 {

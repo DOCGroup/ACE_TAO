@@ -27,6 +27,8 @@
 
 #include "cubit_i.h"
 
+ACE_RCSID(server, svr, "$Id$")
+
 // Global Variables
 static CORBA::String key = (CORBA::String) "Cubit";
 

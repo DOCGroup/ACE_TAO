@@ -16,6 +16,8 @@
 #include "tao/corba.h"
 #include "param_test_i.h"
 
+ACE_RCSID(Param_Test, param_test_i, "$Id$")
+
 // ********* class Coffee_i ****************
 // Constructor
 

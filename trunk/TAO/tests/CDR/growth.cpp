@@ -23,6 +23,8 @@
 #include "tao/corba.h"
 #include "tao/debug.h"
 
+ACE_RCSID(CDR, growth, "$Id$")
+
 static int
 test_write (TAO_OutputCDR &cdr, int n)
 {

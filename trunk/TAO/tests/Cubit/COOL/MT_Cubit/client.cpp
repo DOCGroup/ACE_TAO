@@ -15,6 +15,8 @@
 
 #include "client.h"
 
+ACE_RCSID(MT_Cubit, client, "$Id$")
+
 int
 initialize (void)
 {

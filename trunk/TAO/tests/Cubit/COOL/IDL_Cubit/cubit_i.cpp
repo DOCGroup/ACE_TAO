@@ -19,6 +19,8 @@
 #include <corba/eoa.H>
 #include <corba/eorb.H>
 
+ACE_RCSID(IDL_Cubit, cubit_i, "$Id$")
+
 extern void print_exception (const CORBA_Environment &env, const char * str);
 
 // Constructor

@@ -2,6 +2,8 @@
 
 #include "Database_i.h"
 
+ACE_RCSID(DSI, Database_i, "$Id$")
+
 DatabaseImpl::Simpler_Malloc::Simpler_Malloc (void)
   : MALLOC (ACE_DEFAULT_BACKING_STORE)
 {

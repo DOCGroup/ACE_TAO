@@ -1,4 +1,5 @@
 // $Id$
+
 /*
  ****************************************************************
  *
@@ -14,6 +15,7 @@
  *
  ****************************************************************
  */
+
 /*  Everything is relative from 
 /vobs/chorus_work/merge1/mvme177/appl/include/chorus
 */
@@ -39,6 +41,7 @@
 //#include <p_boardInfo.H>
 #include "pccTimer.h"
 
+ACE_RCSID(MT_Cubit, pccTimer, "$Id$")
 
 static unsigned int quartz;
 static unsigned int timer_reload_value;

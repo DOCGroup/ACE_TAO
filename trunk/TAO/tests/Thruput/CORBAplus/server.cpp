@@ -24,6 +24,8 @@
 #include "ttcp_i.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(CORBAplus, server, "$Id$")
+
 char Usage[] = "\
 Usage: server [TAO options] [options] \n\
 Common options:\n\

@@ -17,6 +17,8 @@
 #include "tao/corba.h"
 #include "Factory_Finder.h"
 
+ACE_RCSID(Quoter, Factory_Finder, "$Id$")
+
 static const char usage [] = "[-? |\n[-O[RBport] ORB port number]]";
 
 Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server (void)

@@ -2,6 +2,8 @@
 
 #include "server_i.h"
 
+ACE_RCSID(IDL_Cubit, server_i, "$Id$")
+
 Cubit_Server::Cubit_Server (void)
   : num_of_objs_ (1),
     use_naming_service_ (1),

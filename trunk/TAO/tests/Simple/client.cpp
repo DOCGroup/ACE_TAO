@@ -2,6 +2,8 @@
 
 #include "client_impl.h"
 
+ACE_RCSID(Simple, client, "$Id$")
+
 // This function runs the test.
 
 int

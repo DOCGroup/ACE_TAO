@@ -19,6 +19,8 @@
 #include "ttcpC.h"
 #include "ttcp_decl.h"
 
+ACE_RCSID(TAO, utils, "$Id$")
+
 // the error function.
 // displays the error message and exits
 int err (CORBA::String s)

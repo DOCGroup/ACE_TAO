@@ -19,6 +19,8 @@
 
 #include "helper.h"
 
+ACE_RCSID(Param_Test, helper, "$Id$")
+
 Generator::Generator (void)
 {
 }

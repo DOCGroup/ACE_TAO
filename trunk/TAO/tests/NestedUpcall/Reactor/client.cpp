@@ -7,6 +7,8 @@
 #include "eh_i.h"
 #include "orbsvcs/CosNamingC.h"
 
+ACE_RCSID(Reactor, client, "$Id$")
+
 #define quote(x) #x
 
 // Constructor.

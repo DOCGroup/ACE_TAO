@@ -20,6 +20,8 @@
 #include "tao/corba.h"
 #include "Object_A_Impl.h"
 
+ACE_RCSID(Triangle_Test, Object_A_Impl, "$Id$")
+
 // CTOR
 Object_A_Impl::Object_A_Impl (void)
 : finish_two_way_call_ (0)

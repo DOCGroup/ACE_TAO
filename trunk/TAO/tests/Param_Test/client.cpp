@@ -24,6 +24,8 @@
 #include "results.h"
 #include "client.h"
 
+ACE_RCSID(Param_Test, client, "$Id$")
+
 // Constructor.p
 template <class T>
 Param_Test_Client<T>::Param_Test_Client (CORBA::ORB_ptr orb,

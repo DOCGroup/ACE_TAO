@@ -6,6 +6,8 @@
 #include "ttcp_i.h"
 #include "ttcp_decl.h"
 
+ACE_RCSID(COOL, ttcp_i, "$Id$")
+
 /* the ttcp_i class implementation */
 ttcp_sequence_i::ttcp_sequence_i (const char *obj_name)
 {

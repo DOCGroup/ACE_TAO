@@ -23,6 +23,8 @@
 #include "tests/test_config.h"
 #include "ace/Process.h"
 
+ACE_RCSID(IDL_Cubit, IDL_Cubit_Test, "$Id$")
+
 int
 main (int, char *[])
 {

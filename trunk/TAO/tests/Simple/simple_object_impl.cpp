@@ -3,6 +3,8 @@
 #include "simple_object_impl.h"
 #include "tao/corba.h"
 
+ACE_RCSID(Simple, simple_object_impl, "$Id$")
+
 // Constructor
 
 Simple_Impl::Simple_Impl (const char *)

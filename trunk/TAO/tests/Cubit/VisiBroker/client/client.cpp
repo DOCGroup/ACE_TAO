@@ -17,6 +17,8 @@
 #include "cubitC.h"
 #include "Profile_Timer.h"
 
+ACE_RCSID(client, client, "$Id$")
+
 int LOOP_COUNT;
 char SERVER_HOST [1024];
 

@@ -2,6 +2,8 @@
 
 #include "tao.h"
 
+ACE_RCSID(CodeGen, skel, "$Id$")
+
 long GenServerHeader(ACE_Unbounded_Queue<ACE_CString> &arr, int limit)
 {
   fstream hdr;

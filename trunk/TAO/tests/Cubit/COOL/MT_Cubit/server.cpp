@@ -25,6 +25,8 @@
 #include "sk_cubit.C"
 #include "ace/OS.h"
 
+ACE_RCSID(MT_Cubit, server, "$Id$")
+
 CORBA_BOA_ptr boa;
 
 int

@@ -12,6 +12,8 @@
 
 #include "ace/streams.h"
 
+ACE_RCSID(Demux_Test, client, "$Id$")
+
 void print_exception (const CORBA_Exception     *x,
                       const char                  *info,
                       FILE                        *stream

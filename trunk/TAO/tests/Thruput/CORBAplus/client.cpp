@@ -26,6 +26,8 @@
 #include "ttcp.h"
 #include "ttcp_decl.h"
 
+ACE_RCSID(CORBAplus, client, "$Id$")
+
 int print_usage (void);
 
 char Usage[] =

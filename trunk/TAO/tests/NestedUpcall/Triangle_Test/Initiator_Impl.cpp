@@ -1,4 +1,3 @@
-// -*- c++ -*-
 // $Id$
 
 // ============================================================================
@@ -20,6 +19,8 @@
 
 #include "tao/corba.h"
 #include "Initiator_Impl.h"
+
+ACE_RCSID(Triangle_Test, Initiator_Impl, "$Id$")
 
 // CTOR
 Initiator_Impl::Initiator_Impl (Object_A_ptr object_A_ptr,

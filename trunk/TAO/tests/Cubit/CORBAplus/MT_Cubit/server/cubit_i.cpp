@@ -13,6 +13,8 @@
 #include "pbroker/corba/environ.h"
 #include "cubit_i.h"
 
+ACE_RCSID(server, cubit_i, "$Id$")
+
 Cubit_i::Cubit_i (const char *obj_name)
 {
 }

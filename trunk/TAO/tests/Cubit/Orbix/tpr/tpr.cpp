@@ -2,6 +2,10 @@
 
 #include "tpr.h"
 
+ACE_RCSID(tpr, tpr, "$Id$")
+
+ACE_RCSID(tpr, tpr, "$Id$")
+
 void *
 worker(void *vp)
 {

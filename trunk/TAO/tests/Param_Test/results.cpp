@@ -18,6 +18,8 @@
 
 #include "results.h"
 
+ACE_RCSID(Param_Test, results, "$Id$")
+
 Results::Results (void)
 {
 }
