@@ -410,7 +410,9 @@ ACE_SVC_FACTORY_DEFINE (ACE_Client_Logging_Acceptor)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor<ACE_Client_Logging_Handler, LOGGING_ACCEPTOR>;
+template class ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Acceptor<ACE_Client_Logging_Handler, LOGGING_ACCEPTOR>
+#pragma instantiate ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
