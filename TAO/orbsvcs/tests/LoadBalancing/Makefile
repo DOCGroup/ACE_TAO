@@ -14,10 +14,11 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO_LoadBalancing -lTAO_PortableServer -lTAO
 
-IDLFILES = Hash_ReplicaC Hash_ReplicaS
+IDL_FILES = Hash_Replica
+IDL_SRC = Hash_ReplicaC.cpp Hash_ReplicaS.cpp
 BIN_UNCHECKED = client server
 
-SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) $(IDLFILES) Hash_ReplicaControl Hash_Replica_i)
+SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) Hash_ReplicaControl Hash_Replica_i) $(IDL_SRC)
 
 CLIENT_OBJS = client.o Hash_ReplicaC.o
 SERVER_OBJS = server.o Hash_ReplicaControl.o Hash_Replica_i.o $(addsuffix .o, $(IDLFILES))
