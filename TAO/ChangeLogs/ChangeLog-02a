@@ -1,3 +1,8 @@
+Thu Apr 25 14:25:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/RTCORBA/Explicit_Binding/client.cpp: Yet another ugly hack
+	  to get around bug 1197.
+
 Thu Apr 25 14:59:31 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* docs/configurations.html: Added "Single ORB" to clarify that

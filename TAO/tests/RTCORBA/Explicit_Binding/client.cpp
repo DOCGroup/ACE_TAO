@@ -183,8 +183,6 @@ main (int argc, char *argv[])
                     "contain what's expected.\n"));
   */
       // Testing over.  Shut down Server ORB.
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n  Testing over - shutting down\n"));
       protocols[0].protocol_type = TAO_TAG_SHMEM_PROFILE;
       policy_list[0] =
         rt_orb->create_client_protocol_policy (protocols
@@ -195,8 +193,14 @@ main (int argc, char *argv[])
                                             CORBA::SET_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n  Testing over - shutting down\n"));
+      ACE_OS::sleep (2);
       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_OS::sleep (2);
     }
   ACE_CATCHANY
     {
