@@ -1,3 +1,11 @@
+Tue Apr  8 18:46:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+
+          Added generation of virtual marshal() method to correspond to
+          the recent addition of this method to interface code generation.
+
 Tue Apr 08 17:45:50 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_component/component_ch.cpp
