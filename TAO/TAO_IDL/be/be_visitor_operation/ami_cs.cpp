@@ -14,8 +14,9 @@
 //    Visitor generating code for Operation in the stubs file.
 //
 // = AUTHOR
-//    Aniruddha Gokhale and Alexander Babu Arulanthu
-//    <alex@cs.wustl.edu>
+//    Aniruddha Gokhale,
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
+//    Michael Kircher
 //
 // ============================================================================
 
@@ -98,7 +99,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
         *os << "get_";
     }
 
-   *os << node->local_name ()->get_string ();
+  *os << node->local_name ()->get_string ();
 
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)
@@ -115,6 +116,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
                         -1);
     }
   delete visitor;
+  visitor = 0;
 
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.
@@ -178,22 +180,6 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
         }
       *os << be_uidt_nl << "\n";
 
-#if 0
-      // do any pre marshal and invoke processing with return type. This
-      // includes allocating memory, initialization.
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_PRE_INVOKE_CS);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (bt->accept (visitor) == -1))
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_ami_cs::"
-                             "visit_operation - "
-                             "codegen for retval pre invoke failed\n"),
-                            -1);
-        }
-#endif /* 0 */
       // Generate the code for marshaling in the parameters and transmitting
       // them.
       if (this->gen_marshal_and_invoke (node, bt) == -1)
@@ -446,9 +432,9 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
     {
       // now check if we are a "get" or "set" operation
       if (node->nmembers () == 1) // set
-        *os << "_set_";
+        *os << "set_";
       else
-        *os << "_get_";
+        *os << "get_";
     }
 
     *os << node->local_name () << "_reply_stub," << be_nl;
