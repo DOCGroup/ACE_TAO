@@ -110,3 +110,7 @@ Parse_HTTP_Request::init (const char *request)
   else
     this->error_ = BAD_REQUEST;
 }
+
+#if !defined (ACE_HAS_INLINED_OSCALLS)
+# include "HTTPU/parse_http_response.i"
+#endif /* ACE_HAS_INLINED_OS_CALLS */

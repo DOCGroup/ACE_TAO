@@ -80,3 +80,7 @@ HTTP_Request::dump (void)
   this->request_.dump ();
   ACE_DEBUG ((LM_DEBUG, "===== END entera_HTTP_Request::dump =====\n"));
 }
+
+#if !defined (ACE_HAS_INLINED_OSCALLS)
+#   include "HTTPU/http_request.i"
+# endif /* ACE_HAS_INLINED_OSCALLS */

@@ -4,8 +4,9 @@
 #define HTTPU_PARSE_HTTP_RESPONSE_H
 
 #include "ace/OS.h"
+#include "HTTPU/http_export.h"
 
-class Parse_HTTP_Response
+class HTTPU_Export Parse_HTTP_Response
 {
 public:
   Parse_HTTP_Response (const char *response = 0);
@@ -13,19 +14,17 @@ public:
 
   void init (const char *response);
 
-  int code (void) const { return this->code_; }
-  const char *code_str (void) const
-    { return this->code_str_ ? this->code_str_ : "200"; }
+  int code (void) const;
+  const char *code_str (void) const;
 
-  int major_version (void) const { return this->major_version_; }
-  int minor_version (void) const { return this->minor_version_; }
+  int major_version (void) const;
+  int minor_version (void) const;
 
-  const char *version (void) const
-    { return this->version_ ? this->version_ : "HTTP/0.9"; }
+  const char *version (void) const;
 
   enum { HTTPU_OK, NO_MEMORY, BAD_RESPONSE };
 
-  int error (void) { return this->error_; }
+  int error (void) const;
   // 0 -> ok
 
 private:
@@ -39,5 +38,14 @@ private:
   int error_;
 
 };
+
+#if defined (ACE_HAS_INLINED_OSCALLS)
+#   if defined (ACE_INLINE)
+#     undef ACE_INLINE
+#   endif /* ACE_INLINE */
+#   define ACE_INLINE inline
+#   include "HTTPU/parse_http_response.i"
+# endif /* ACE_HAS_INLINED_OSCALLS */
+
 
 #endif /* !defined (HTTPU_PARSE_HTTP_RESPONSE_H) */
