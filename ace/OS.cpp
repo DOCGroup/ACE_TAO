@@ -1114,7 +1114,7 @@ ACE_TSS_Cleanup::exit (void * /* status */)
          iter.next (key_info) != 0;
          iter.advance ())
       {
-        if (key_info->key_ == 0) continue;
+        if (key_info->key_ == ACE_OS::NULL_key) continue;
 
         // If the key's ACE_TSS_Info in-use bit for this thread was set,
         // unset it and decrement the key's thread_count_.
@@ -1198,7 +1198,7 @@ ACE_TSS_Cleanup::free_all_key_left (void)
     key_arr [idx++] = key_info->key_;
 
   for (int i = 0; i < idx; i++)
-    if (key_arr[i] != 0)
+    if (key_arr[i] != ACE_OS::NULL_key)
       ACE_OS::thr_keyfree (key_arr[i]);
 
   return 0;
@@ -1264,7 +1264,7 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
       // "Remove" the TSS_Info table entry by zeroing out its key_ and
       // destructor_ fields.
       ACE_TSS_Info &info = this->table_ [key];
-      info.key_ = 0;
+      info.key_ = ACE_OS::NULL_key;
       info.destructor_ = 0;
       return 0;
     }
