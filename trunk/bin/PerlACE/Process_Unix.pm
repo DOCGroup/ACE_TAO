@@ -82,7 +82,7 @@ sub Arguments
     if (@_ != 0) {
         $self->{ARGUMENTS} = shift;
     }
-	
+
     return $self->{ARGUMENTS};
 }
 
@@ -95,7 +95,7 @@ sub CommandLine ()
     if (defined $self->{ARGUMENTS}) {
         $commandline .= ' '.$self->{ARGUMENTS};
     }
-	
+
     if ($PerlACE::Process::chorus == 1) {
         $commandline = "rsh " 
                        . $PerlACE::Process::chorushostname 
@@ -119,12 +119,12 @@ sub Spawn ()
     if ($self->{RUNNING} == 1) {
         print STDERR "ERROR: Cannot Spawn: <$self->{EXECUTABLE}> ",
                      "already running\n";
-	return -1;
+        return -1;
     }
 
     if (!defined $self->{EXECUTABLE}) {
         print STDERR "ERROR: Cannot Spawn: No executable specified\n";
-	    return -1;
+            return -1;
     }
 
     FORK:
@@ -148,6 +148,7 @@ sub Spawn ()
             print STDERR "ERROR: Can't fork <" . $self->CommandLine () . ">: $!\n";
         }
     }
+    $self->{RUNNING} = 1;
 }
 
 sub WaitKill ($)
@@ -160,9 +161,8 @@ sub WaitKill ($)
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
         $self->Kill (); 
-        # Don't need to Wait since we are on Win32
     }
-	
+    
     $self->{RUNNING} = 0;
 
     return $status;
@@ -189,7 +189,6 @@ sub Terminate ()
   
     if ($self->{RUNNING}) {
         kill ('TERM', $self->{PROCESS});
-        # print STDERR "Process_Unix::Kill 'TERM' $self->{PROCESS}\n";
     }
 }
 
@@ -199,17 +198,17 @@ sub Kill ()
   
     if ($self->{RUNNING}) {
         kill ('KILL', $self->{PROCESS});
-        # print STDERR "Process_Unix::Kill 'TERM' $self->{PROCESS}\n";
+        waitpid ($self->{PROCESS}, 0);
     }
+
+    $self->{RUNNING} = 0;
 }
 
 sub Wait ()
 {
     my $self = shift;
     
-    if ($self->{RUNNING}) {
-       waitpid ($self->{PROCESS}, 0);
-    }
+    waitpid ($self->{PROCESS}, 0);
 }
 
 sub TimedWait
