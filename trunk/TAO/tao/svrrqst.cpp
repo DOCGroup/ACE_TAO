@@ -1,4 +1,6 @@
-// @(#)svrrqst.cpp	1.9 95/11/04
+// $Id$
+
+// @(#)svrrqst.cpp      1.9 95/11/04
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
@@ -67,7 +69,7 @@ IIOP_ServerRequest::Release (void)
 
 TAO_HRESULT
 IIOP_ServerRequest::QueryInterface (REFIID riid,
-				    void **ppv)
+                                    void **ppv)
 {
   ACE_ASSERT (refcount_ > 0);
   *ppv = 0;
@@ -89,7 +91,7 @@ IIOP_ServerRequest::QueryInterface (REFIID riid,
 
 void
 IIOP_ServerRequest::params (CORBA::NVList_ptr list,
-			    CORBA::Environment &env)
+                            CORBA::Environment &env)
 {
   env.clear ();
 
@@ -102,7 +104,7 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
       CORBA::NamedValue_ptr nv = list->item (i, env);
 
       if (ACE_BIT_DISABLED (nv->flags (), CORBA::ARG_IN | CORBA::ARG_INOUT))
-	continue;
+        continue;
 
       // First, make sure the memory into which we'll be unmarshaling
       // exists, and is the right size.
@@ -149,7 +151,7 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
   if (incoming_->bytes_remaining () != 0)
     {
       dmsg1 ("params (), %d bytes remaining (error)",
-	     incoming_->bytes_remaining ());
+             incoming_->bytes_remaining ());
       env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
     }
 }
@@ -160,7 +162,7 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
 
 void
 IIOP_ServerRequest::result (CORBA::Any_ptr value,
-			    CORBA::Environment &env)
+                            CORBA::Environment &env)
 {
   env.clear ();
 
@@ -176,8 +178,8 @@ IIOP_ServerRequest::result (CORBA::Any_ptr value,
 
 void
 IIOP_ServerRequest::exception (CORBA::ExceptionType type,
-			       CORBA::Any_ptr value,
-			       CORBA::Environment &env)
+                               CORBA::Any_ptr value,
+                               CORBA::Environment &env)
 {
   if (!params_ || retval_ || exception_)
     env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
@@ -328,11 +330,11 @@ IIOP_ServerRequest::marshal (CORBA::Environment &env,  // exception reporting
         }
 
       // ... Followed by "inout" and "out" parameters, left to right
-      for (u_int i = 0;
+      for (i = 0;
            i < this->params_->count ();
            i++)
         {
-          CORBA::NamedValue_ptr	nv = this->params_->item (i, env);
+          CORBA::NamedValue_ptr nv = this->params_->item (i, env);
           CORBA::Any_ptr any;
 
           if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
