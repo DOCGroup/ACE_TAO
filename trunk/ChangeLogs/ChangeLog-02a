@@ -3,12 +3,16 @@ Wed Jun  5 13:54:03 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	* ace/DLL_Manager.{h,cpp}:
 	* ace/Framework_Component.cpp:
 
-	  Made ACE_DLL_Manager a true singleton instead of using the 
-	  ACE_*Singleton templates, thus avoiding a problem with 
-	  multiple instantiations by broken compilers.  Thanks to 
-	  Chris Kohlhoff <chris@kohloff.com> for this suggestion.
+	  Made ACE_DLL_Manager a true singleton instead of using the
+ 	  ACE_*Singleton templates, thus avoiding a problem with multiple
+ 	  instantiations by broken compilers.  Thanks to Chris Kohlhoff
+ 	  <chris@kohloff.com> for this suggestion.
 
 Wed Jun  5 08:33:25 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Timer_Queue_T.h (class ACE_Timer_Queue_T): Clarify that the
+	  second calculate_timeout() method doesn't use a lock.  Thanks to
+ 	  Johnny Chen <jchen@informatica.com> for motivating this.
 
 	* ace/Process_Manager.cpp (handle_signal): Added a check for
 	  i == -1.  Thanks to Dimitrije Jankovic <djankov99@yahoo.com>
