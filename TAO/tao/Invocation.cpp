@@ -307,7 +307,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Set the unique request ID associated with this request.
-  this->op_details_.request_id (this->generate_request_id ());
+  this->op_details_.request_id (this->transport_->tms ()->request_id ());
 
   // Make sure that you have the right object key
   this->target_spec_.target_specifier (this->profile_->object_key ());
@@ -387,64 +387,6 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
       ACE_THROW (CORBA::MARSHAL ());
     }
 }
-
-CORBA::ULong
-TAO_GIOP_Invocation::generate_request_id (void) const
-{
-  // The request ID must be unique across all outstanding requests.
-  // To avoid synchronization overhead, the address of this Invocation
-  // object is used as the request ID.  This guarantees that the
-  // request ID is unique without being forced to acquire a lock.
-  //
-  // For 64-bit platforms, we right shift 8 bits and then use the
-  // lower 32 bits of that shifted value.  Rather than losing the
-  // upper 32 bits of significant digits by taking the lower 32 bits,
-  // we only lose the upper 24 by doing the shift.  Basically, the
-  // resulting request ID will comprised of bits 8 through 39.  This is
-  // made possible by the fact that this Invocation object is large
-  // enough to increase the likelihood that those bits (0 through 39)
-  // are unique.  In particular, this->buffer_ is 512 bytes
-  // (ACE_CDR::DEFAULT_BUFSIZE) long by default; implying that
-  // dropping the lower 8 bits of the this Invocation object's 64 bit
-  // address (i.e. 256 bytes) is not a problem.
-
-  CORBA::ULong id = 0;
-
-  // 32 bit address
-  if (sizeof (this) == 4)
-    id = ACE_reinterpret_cast (CORBA::ULong, this);
-
-  // 64 bit address -- bits 8 through 39  (see notes above!)
-  // In this case, we make sure this object is large enough to safely
-  // do the right shift.  This is necessary since the size of the
-  // buffer that makes this object is configurable.
-  else if (sizeof (this) == 8
-           && sizeof (*this) > 256 /* 2 << 8 */)
-    id =
-      (ACE_reinterpret_cast (CORBA::ULong, this) >> 8) & 0xFFFFFFFFu;
-
-  // 64 bit address -- lower 32 bits
-  // 
-  else if (sizeof (this) == 8)
-    id = ACE_reinterpret_cast (CORBA::ULong, this) & 0xFFFFFFFFu;
-
-  // @@ The following request ID generator prevents the
-  //    PortableInterceptor::ClientRequestInterceptor::send_request()
-  //    interception point from occuring before the call to connect,
-  //    thus preventing us from adding an optimization that itself
-  //    prevents a connection from being unnecessarily performed.
-  //    Thus, the ClientRequestInfo object is forced to have its own
-  //    request ID generator in order to make it possible to implement
-  //    the above optimization.
-  //
-  //    Ideally, this request ID generator should go away, especially
-  //    since it adds a lock to the critical path.
-  else    // Fallback
-    id = this->transport_->tms ()->request_id ();
-
-  return id;
-}
-
 
 // Send request.
 int
