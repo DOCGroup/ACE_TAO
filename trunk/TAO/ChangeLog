@@ -1,3 +1,8 @@
+Thu Mar 10 15:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/include/ast.h:
+          Removed checks for _MSC_VER >= 1200, just check for _MSC_VER
+
 Thu Mar 10 15:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
