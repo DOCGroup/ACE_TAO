@@ -1,3 +1,8 @@
+Sat Mar  2 20:37:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.bor:
+          Added TAO_Messaging library
+
 Sat Mar  2 14:32:32 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/performance-tests/RTEvent/lib/ORB_Holder.h (ORB_Holder) :
@@ -12,7 +17,7 @@ Sat Mar  2 14:32:32 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	  Add  ACE_DECLARE_NEW_CORBA_ENV.
 
 	* orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.h (SyncScope_Setup):
-	  Change ACE_ENV_ARG_DECL to ACE_ENV_ARG_DECL_WITH_DEFAULTS. 
+	  Change ACE_ENV_ARG_DECL to ACE_ENV_ARG_DECL_WITH_DEFAULTS.
 
 Sat Mar  2 19:26:34 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
