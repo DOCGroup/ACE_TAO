@@ -1,6 +1,7 @@
 #include "LifespanPolicy.h"
 #include "LifespanPolicyValue.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Service_Config.h"
 
 #define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"
@@ -42,30 +43,32 @@ namespace TAO
         case ::PortableServer::TRANSIENT :
           {
             this->value_ =
-              ACE_Dynamic_Service<Transient_Lifespan_Policy>::instance ("Transient_Lifespan_Policy");
+              ACE_Dynamic_Service<LifespanPolicyValue>::instance ("Transient_Lifespan_Policy");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_Transient_Lifespan_Policy);
+                  ACE_TEXT("dynamic Transient_Lifespan_Policy Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_Transient_Lifespan_Policy()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<Transient_Lifespan_Policy>::instance ("Transient_Lifespan_Policy");
+                  ACE_Dynamic_Service<LifespanPolicyValue>::instance ("Transient_Lifespan_Policy");
               }
             break;
           }
         case ::PortableServer::PERSISTENT :
           {
             this->value_ =
-              ACE_Dynamic_Service<Persistent_Lifespan_Policy>::instance ("Persistent_Lifespan_Policy");
+              ACE_Dynamic_Service<LifespanPolicyValue>::instance ("Persistent_Lifespan_Policy");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_Persistent_Lifespan_Policy);
+                  ACE_TEXT("dynamic Persistent_Lifespan_Policy Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_Persistent_Lifespan_Policy()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<Persistent_Lifespan_Policy>::instance ("Persistent_Lifespan_Policy");
+                  ACE_Dynamic_Service<LifespanPolicyValue>::instance ("Persistent_Lifespan_Policy");
               }
 
             break;
