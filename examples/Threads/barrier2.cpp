@@ -49,11 +49,11 @@ private:
 
   // = Not needed for this test.
   virtual int open (void *) { return 0; }
-  virtual int close (u_long) 
+  virtual int close (u_long)
   {
     ACE_DEBUG ((LM_DEBUG,
                 "(%t) in close of worker\n"));
-    return 0; 
+    return 0;
   }
 
   int nt_;
@@ -258,7 +258,7 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
                         "put"));
 #if defined (delay_put)
           // this sleep helps to shutdown correctly -> was an error!
-	  ACE_OS::sleep (1); 
+	  ACE_OS::sleep (1);
 #endif /* delay_put */
 	}
       return -1;
@@ -278,7 +278,7 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_THREADS;
 
@@ -309,7 +309,7 @@ template class Worker_Task<ACE_Null_Barrier>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #else
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

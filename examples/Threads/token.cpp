@@ -30,7 +30,7 @@ My_Task::My_Task (int n)
   this->thr_mgr ()->wait ();
 }
 
-void 
+void
 My_Task::sleep_hook (void *)
 {
   ACE_DEBUG ((LM_ERROR, "(%u) blocking, My_Task::sleep_hook () called\n",
@@ -39,7 +39,7 @@ My_Task::sleep_hook (void *)
 
 // Test out the behavior of the ACE_Token class.
 
-int 
+int
 My_Task::svc (void)
 {
   for (size_t i = 0; i < 100; i++)
@@ -60,16 +60,16 @@ My_Task::svc (void)
   return 0;
 }
 
-int 
-main (int argc, char *argv[])
+int
+main (int argc, ACE_TCHAR *argv[])
 {
-  My_Task tasks (argc > 1 ? atoi (argv[1]) : 4);
+  My_Task tasks (argc > 1 ? ACE_OS::atoi (argv[1]) : 4);
 
   return 0;
 }
 #else
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "your platform doesn't support threads\n"), -1);
 }

@@ -498,7 +498,7 @@ test_timeout (int n_iterations)
 }
 
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   int n_iterations = determine_iterations ();
 
@@ -544,7 +544,7 @@ template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<u_long> *>;
 
 #else
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

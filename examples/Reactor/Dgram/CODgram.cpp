@@ -2,10 +2,10 @@
 
 // Exercise the <ACE_SOCK_CODgram> wrapper along with the
 // <ACE_Reactor>.  This test simply ping-pongs datagrams back and
-// forth between the peer1 and peer2 processes.  This test can 
+// forth between the peer1 and peer2 processes.  This test can
 // be run in two ways:
 //
-// 1. Stand-alone -- e.g.,  
+// 1. Stand-alone -- e.g.,
 //
 //    % ./CODgram
 //
@@ -19,7 +19,7 @@
 //
 //    # Peer1
 //    % ./CODgram 10003 tango.cs.wustl.edu 10002 peer2
-//  
+//
 //    which will run peer1 and peer2 in different processes
 //    on the same or different machines.  Note that you MUST
 //    give the name "peer1" as the final argument to one and
@@ -120,9 +120,9 @@ Dgram_Endpoint::handle_timeout (const ACE_Time_Value &,
 
 static int
 run_test (u_short localport,
-          const char *remotehost,
+          const ACE_TCHAR *remotehost,
           u_short remoteport,
-          const char *peer)
+          const ACE_TCHAR *peer)
 {
   ACE_INET_Addr remote_addr (remoteport,
                              remotehost);
@@ -143,7 +143,7 @@ run_test (u_short localport,
   size_t len = ACE_OS::strlen (buf);
 
   // "peer1" is the "initiator."
-  if (ACE_OS::strncmp (peer, "peer1", 5) == 0)
+  if (ACE_OS::strncmp (peer, ACE_TEXT("peer1"), 5) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) sending data\n"));
@@ -187,18 +187,18 @@ run_test (u_short localport,
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   // Estabish call backs and socket names.
 
   port1 = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
-  const char *remotehost = argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
+  const ACE_TCHAR *remotehost = argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
   const u_short port2 = argc > 3 ? ACE_OS::atoi (argv[3]) : port1 + 1;
 
   // Providing the fourth command line argument indicates we don't
   // want to spawn a new process.  On Win32, we use this to exec the
   // new program.
-  if (argc > 4)                 
+  if (argc > 4)
     run_test (port1,
               remotehost,
               port2,
@@ -221,7 +221,7 @@ main (int argc, char *argv[])
 
       // This has no effect on NT and will spawn a process that exec
       // the above run_test function.
-      options.creation_flags (ACE_Process_Options::NO_EXEC); 
+      options.creation_flags (ACE_Process_Options::NO_EXEC);
 
       ACE_Process new_process;
 
@@ -234,14 +234,14 @@ main (int argc, char *argv[])
           run_test (port1,
                     remotehost,
                     port2,
-                    "peer1");
+                    ACE_TEXT("peer1"));
           break;
 
         default:
           run_test (port2,
                     remotehost,
                     port1,
-                    "peer2");
+                    ACE_TEXT("peer2"));
           new_process.wait ();
           break;
         }

@@ -54,8 +54,8 @@ Test_Task::Test_Task (void)
 
   this->handled_ = 0;
   Test_Task::current_count_++;
-  ACE_DEBUG ((LM_DEBUG, 
-	      "Test_Task constructed, current_count_ = %d\n", 
+  ACE_DEBUG ((LM_DEBUG,
+	      "Test_Task constructed, current_count_ = %d\n",
 	      Test_Task::current_count_));
 }
 
@@ -68,21 +68,21 @@ Test_Task::~Test_Task (void)
 	      Test_Task::current_count_));
 }
 
-int 
+int
 Test_Task::open (void *args)
 {
   r_ = ACE_reinterpret_cast (ACE_Reactor *, args);
   return ACE_Task<ACE_MT_SYNCH>::activate (THR_NEW_LWP);
 }
 
-int 
+int
 Test_Task::close (u_long)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock_, -1);
 
   Test_Task::current_count_--;
   ACE_DEBUG ((LM_DEBUG,
-              "Test_Task::close () current_count_ = %d.\n", 
+              "Test_Task::close () current_count_ = %d.\n",
 	      Test_Task::current_count_));
   return 0;
 }
@@ -117,7 +117,7 @@ Test_Task::svc (void)
   return 0;
 }
 
-int 
+int
 Test_Task::handle_input (ACE_HANDLE)
 {
   this->handled_++;
@@ -126,7 +126,7 @@ Test_Task::handle_input (ACE_HANDLE)
     {
       ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock_, -1);
       Test_Task::done_cnt_++;
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  " (%t) Test_Task: handle_input! done_cnt_ = %d.\n",
 		  Test_Task::done_cnt_));
     }
@@ -165,14 +165,14 @@ dispatch (void *arg)
   ACE_NOTREACHED (return 0);
 }
 
-extern "C" void 
+extern "C" void
 handler (int)
 {
   done = 1;
 }
 
-int 
-main (int argc, char **)
+int
+main (int argc, ACE_TCHAR **)
 {
   if (argc > 1)
     {
@@ -232,7 +232,7 @@ main (int argc, char **)
       *out_stream << flush;
       out_stream->close ();
     }
-  
+
   // Bail out here so that we don't call the destructors for the tasks..
   ACE_OS::exit (0);
   /* NOTREACHED */
@@ -241,10 +241,10 @@ main (int argc, char **)
 }
 
 #else
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
-  ACE_ERROR ((LM_ERROR, 
+  ACE_ERROR ((LM_ERROR,
               "threads not supported on this platform\n"));
   return 0;
 }

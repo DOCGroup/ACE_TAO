@@ -51,16 +51,16 @@ private:
   // Close hook.
 };
 
-int 
-Thread_Pool::close (u_long) 
-{ 
+int
+Thread_Pool::close (u_long)
+{
   ACE_DEBUG ((LM_DEBUG,
               "(%t) worker thread closing down\n"));
   return 0;
 }
 
-Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr, 
-			  int n_threads) 
+Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
+			  int n_threads)
   : ACE_Task<ACE_MT_SYNCH> (thr_mgr)
 {
   // Create the pool of worker threads.
@@ -74,22 +74,22 @@ Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
 Thread_Pool::~Thread_Pool (void)
 {
 }
-  
+
 // Simply enqueue the Message_Block into the end of the queue.
 
 int
 Thread_Pool::put (ACE_Message_Block *mb,
                   ACE_Time_Value *tv)
-{ 
-  return this->putq (mb, tv); 
+{
+  return this->putq (mb, tv);
 }
 
 // Iterate <n_iterations> time printing off a message and "waiting"
 // for all other threads to complete this iteration.
 
-int 
-Thread_Pool::svc (void) 
-{  
+int
+Thread_Pool::svc (void)
+{
   // Note that the <ACE_Task::svc_run> method automatically adds us to
   // the Thread_Manager when the thread begins.
 
@@ -99,7 +99,7 @@ Thread_Pool::svc (void)
   // message with a length == 0, which signals us to quit.
 
   for (;; count++)
-    {       
+    {
       ACE_Message_Block *mb;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -108,7 +108,7 @@ Thread_Pool::svc (void)
 
       if (this->getq (mb) == -1)
 	{
-	  ACE_ERROR ((LM_ERROR, 
+	  ACE_ERROR ((LM_ERROR,
 		      "(%t) in iteration %d, got result -1, exiting\n",
                       count));
           break;
@@ -117,7 +117,7 @@ Thread_Pool::svc (void)
       int length = mb->length ();
 
       if (length > 0)
-	ACE_DEBUG ((LM_DEBUG, 
+	ACE_DEBUG ((LM_DEBUG,
 		    "(%t) in iteration %d, length = %d, text = \"%*s\"\n",
 		    count,
                     length,
@@ -129,7 +129,7 @@ Thread_Pool::svc (void)
 
       if (length == 0)
 	{
-	  ACE_DEBUG ((LM_DEBUG, 
+	  ACE_DEBUG ((LM_DEBUG,
 		      "(%t) in iteration %d, got NULL message, exiting\n",
 		      count));
 	  break;
@@ -157,7 +157,7 @@ producer (Thread_Pool &thread_pool)
 
       if (manual)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "(%t) enter a new message for the task pool..."));
           n = ACE_OS::read (ACE_STDIN,
                             mb->rd_ptr (),
@@ -202,8 +202,8 @@ producer (Thread_Pool &thread_pool)
           // Send a shutdown message to the waiting threads and exit.
 	  for (int i = thread_pool.thr_count (); i > 0; i--)
 	    {
-	      ACE_DEBUG ((LM_DEBUG, 
-			  "(%t) EOF, enqueueing NULL block for thread = %d\n", 
+	      ACE_DEBUG ((LM_DEBUG,
+			  "(%t) EOF, enqueueing NULL block for thread = %d\n",
 			  i));
 
 	      // Enqueue a NULL message to flag each consumer to
@@ -225,25 +225,25 @@ producer (Thread_Pool &thread_pool)
     }
 }
 
-int 
-main (int argc, char *argv[])
+int
+main (int argc, ACE_TCHAR *argv[])
 {
   int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_THREADS;
   n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : n_iterations;
   manual = argc > 3 ? 1 : 0;
-  
+
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) argc = %d, threads = %d\n", 
+              "(%t) argc = %d, threads = %d\n",
 	      argc,
               n_threads));
 
   // Create the worker tasks.
-  Thread_Pool thread_pool (ACE_Thread_Manager::instance (), 
+  Thread_Pool thread_pool (ACE_Thread_Manager::instance (),
                            n_threads);
 
   // Create work for the worker tasks to process in their own threads.
   producer (thread_pool);
-    
+
   ACE_DEBUG ((LM_DEBUG,
               "(%t) waiting for threads to exit in Thread_Pool destructor...\n"));
   // Wait for all the threads to reach their exit point.
@@ -256,8 +256,8 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR,
               "threads not supported on this platform\n"));

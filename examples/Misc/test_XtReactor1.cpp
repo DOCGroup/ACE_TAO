@@ -55,7 +55,7 @@ public:
     return 0;
   }
 
-  void put (char c) 
+  void put (char c)
   {
     if (msg_.length () == 0)
       reactor_->register_handler (this,
@@ -63,7 +63,7 @@ public:
 
     if (msg_.wr_ptr () < msg_.end ())
       {
-	*msg_.wr_ptr () = c; 
+	*msg_.wr_ptr () = c;
 	msg_.wr_ptr (1);
       }
     else
@@ -79,7 +79,7 @@ private:
 class Stdin : public ACE_Event_Handler
 {
 public:
-  Stdin (Stdout *out) 
+  Stdin (Stdout *out)
     : out_ (out) {}
 
   ACE_HANDLE get_handle () const { return ACE_STDIN; }
@@ -106,15 +106,15 @@ private:
   Stdout *out_;
 };
 
-static void 
+static void
 ActivateCB (Widget, XtPointer, XtPointer)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Button pushed!\n"));
 }
 
-int 
-main (int argc, char**argv)
+int
+main (int argc, ACE_TCHAR**argv)
 {
   // The worlds most useless user interface
   Widget top_level = XtVaAppInitialize (NULL,
@@ -148,8 +148,8 @@ main (int argc, char**argv)
                             ACE_Event_Handler::READ_MASK);
 
   // Print a message every 10 seconds.
-  if (reactor.schedule_timer (stdin_, 0, 
-			      ACE_Time_Value (10), 
+  if (reactor.schedule_timer (stdin_, 0,
+			      ACE_Time_Value (10),
 			      ACE_Time_Value (10)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -165,8 +165,8 @@ main (int argc, char**argv)
   return 0;
 }
 #else
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "XT not configured for this platform\n"),

@@ -5,7 +5,7 @@
 
 ACE_RCSID(Naming, test_multiple_contexts, "$Id$")
 
-int main (int, char *[])
+int main (int, ACE_TCHAR *[])
 {
   static u_long ACE_DEFAULT_BASE_ADDR_1 = (1 * 64 * 1024 * 1024);
   static u_long ACE_DEFAULT_BASE_ADDR_2 = (2 * 64 * 1024 * 1024);
@@ -28,38 +28,38 @@ int main (int, char *[])
   ACE_Name_Options *name_options1 =
     ns_ptr1->name_options ();
 
-  char address_arg1[BUFSIZ];
-  char address_arg2[BUFSIZ];
+  ACE_TCHAR address_arg1[BUFSIZ];
+  ACE_TCHAR address_arg2[BUFSIZ];
   ACE_OS::sprintf (address_arg1,
-                   "-b%ld",
+                   ACE_TEXT("-b%ld"),
                    ACE_DEFAULT_BASE_ADDR_1);
 
-  const char *m_argv[] =
+  const ACE_TCHAR *m_argv[] =
   {
-    "MyName1",
-    "-cNODE_LOCAL",
+    ACE_TEXT("MyName1"),
+    ACE_TEXT("-cNODE_LOCAL"),
     address_arg1,
     NULL
   };
   int m_argc =
-    sizeof (m_argv) / sizeof (char *) -1;
+    sizeof (m_argv) / sizeof (ACE_TCHAR *) -1;
 
   ACE_OS::sprintf (address_arg2,
-                   "-b%ld",
+                   ACE_TEXT("-b%ld"),
                    ACE_DEFAULT_BASE_ADDR_2);
-  const char *n_argv[] =
+  const ACE_TCHAR *n_argv[] =
   {
-    "MyName2",
-    "-cNODE_LOCAL",
+    ACE_TEXT("MyName2"),
+    ACE_TEXT("-cNODE_LOCAL"),
     address_arg2,
     NULL
   };
 
   int n_argc =
-    sizeof (n_argv) / sizeof (char *) -1;
+    sizeof (n_argv) / sizeof (ACE_TCHAR *) -1;
 
   name_options->parse_args (m_argc,
-                            (char **) m_argv);
+                            (ACE_TCHAR **) m_argv);
   i = ns_ptr->open (ACE_Naming_Context::NODE_LOCAL);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -70,7 +70,7 @@ int main (int, char *[])
     return -1;
 
   name_options1->parse_args (n_argc,
-                             (char **) n_argv);
+                             (ACE_TCHAR **) n_argv);
 
   i = ns_ptr1->open (ACE_Naming_Context::NODE_LOCAL);
 

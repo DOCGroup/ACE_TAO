@@ -17,7 +17,7 @@ ACE_RCSID(Ntalker, ntalker, "$Id$")
 // Network interface to subscribe to.  This is hardware specific.  use
 // netstat(1M) to find whether your interface is le0 or ie0
 
-static const char *INTERFACE = 0;
+static const ACE_TCHAR *INTERFACE = 0;
 static const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
 static const u_short UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
 
@@ -27,9 +27,9 @@ class Handler : public ACE_Event_Handler
   //     Handle both multicast and stdin events.
 public:
   // = Initialization and termination methods.
-  Handler (u_short udp_port, 
+  Handler (u_short udp_port,
 	   const char *ip_addr,
-	   const char *interface,
+      const ACE_TCHAR *interface,
 	   ACE_Reactor &);
   // Constructor.
 
@@ -118,7 +118,7 @@ Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "STDIN_Events handle removed from reactor.\n"));
-      if (ACE_Reactor::instance ()->remove_handler 
+      if (ACE_Reactor::instance ()->remove_handler
           (this, ACE_Event_Handler::READ_MASK) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
@@ -139,18 +139,18 @@ Handler::~Handler (void)
                 "unsubscribe fails"));
 }
 
-Handler::Handler (u_short udp_port, 
+Handler::Handler (u_short udp_port,
 		  const char *ip_addr,
-		  const char *interface,
+        const ACE_TCHAR *interface,
 		  ACE_Reactor &reactor)
 {
   // Create multicast address to listen on.
 
   ACE_INET_Addr sockmc_addr (udp_port, ip_addr);
-  
+
   // subscribe to multicast group.
 
-  if (this->mcast_.subscribe (sockmc_addr, 1, interface) == -1) 
+  if (this->mcast_.subscribe (sockmc_addr, 1, interface) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "can't subscribe to multicast group"));
@@ -163,7 +163,7 @@ Handler::Handler (u_short udp_port,
   else if (reactor.register_handler (this->mcast_.get_handle (),
                                      this,
                                      ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "can't register with Reactor\n"));
   // Register the STDIN handler.
@@ -176,9 +176,9 @@ Handler::Handler (u_short udp_port,
 }
 
 static void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "i:u");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:u"));
 
   int c;
 
@@ -198,12 +198,12 @@ parse_args (int argc, char *argv[])
       }
 }
 
-int 
-main (int argc, char *argv[])
+int
+main (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
 
-  Handler handler (UDP_PORT, 
+  Handler handler (UDP_PORT,
                    MCAST_ADDR,
                    INTERFACE,
                    *ACE_Reactor::instance ());
@@ -216,12 +216,12 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int 
-main (int, char *argv[])
+int
+main (int, ACE_TCHAR *argv[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "error: %s must be run on a platform that support IP multicast\n",
-                     argv[0]), 
+                     argv[0]),
                     0);
 }
 #endif /* ACE_HAS_IP_MULTICAST */

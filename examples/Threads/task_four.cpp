@@ -10,7 +10,7 @@
 //
 // There are two main ACE_Tasks in this sample:
 //
-// Invoker_Task - is run from main (). It's purpose is to run a number of 
+// Invoker_Task - is run from main (). It's purpose is to run a number of
 //                ACE_Tasks of type Worker_Task. The number can be specified
 //                on the command line.
 //                After starting the tasks, the Invoker_Task groups all the tasks
@@ -64,7 +64,7 @@ class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
 public:
   Worker_Task (ACE_Thread_Manager *thr_mgr,
 	       size_t n_threads,
-	       size_t n_iterations);  
+	       size_t n_iterations);
   virtual int svc (void);
   // Does a small work...
   virtual int open (void * = NULL);
@@ -92,17 +92,17 @@ Worker_Task::close (u_long)
   return 0;
 }
 
-Worker_Task::Worker_Task (ACE_Thread_Manager *thr_mgr, 
+Worker_Task::Worker_Task (ACE_Thread_Manager *thr_mgr,
                           size_t n_threads,
                           size_t n_iterations)
   : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
     index_ (Worker_Task::workers_count_++),
-    n_threads_ (n_threads), 
+    n_threads_ (n_threads),
     n_iterations_ (n_iterations)
 {
 }
- 
-int 
+
+int
 Worker_Task::open (void *)
 {
   // Create the pool of worker threads.
@@ -114,14 +114,14 @@ Worker_Task::open (void *)
                          this);
 }
 
-int 
+int
 Worker_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               " (%t) in worker %d\n",
               index_));
 
-  for (size_t iterations = 1; 
+  for (size_t iterations = 1;
        iterations <= this->n_iterations_;
        iterations++)
     {
@@ -138,13 +138,13 @@ Worker_Task::svc (void)
   return 0;
 }
 
-Invoker_Task::Invoker_Task (ACE_Thread_Manager *thr_mgr, 
+Invoker_Task::Invoker_Task (ACE_Thread_Manager *thr_mgr,
 			    size_t n_tasks,
 			    size_t n_threads,
-			    size_t n_iterations)           
+			    size_t n_iterations)
   : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
-    n_tasks_ (n_tasks), 
-    n_threads_ (n_threads), 
+    n_tasks_ (n_tasks),
+    n_threads_ (n_threads),
     n_iterations_ (n_iterations)
 {
   // Create a single worker thread.
@@ -158,26 +158,26 @@ Invoker_Task::Invoker_Task (ACE_Thread_Manager *thr_mgr,
                 "%p\n",
                 "activate failed"));
 }
-  
+
 // Iterate <n_iterations> time printing off a message and "waiting"
 // for all other threads to complete this iteration.
 
-int 
-Invoker_Task::svc (void) 
-{  
+int
+Invoker_Task::svc (void)
+{
   // Note that the ACE_Task::svc_run () method automatically adds us
   // to the Thread_Manager when the thread begins.
 
   ACE_Thread_Manager *thr_mgr =
     ACE_Thread_Manager::instance ();
   Worker_Task **worker_task;
-   
+
   ACE_NEW_RETURN (worker_task,
                   Worker_Task *[n_tasks_],
                   -1);
   size_t task;
 
-  for (task = 0; 
+  for (task = 0;
        task < this->n_tasks_;
        task++)
     {
@@ -185,10 +185,10 @@ Invoker_Task::svc (void)
                   " (%t) in task %d\n",
                   task + 1));
 
-      ACE_NEW_RETURN (worker_task[task], 
+      ACE_NEW_RETURN (worker_task[task],
 		      Worker_Task (thr_mgr,
                                    n_threads_,
-                                   n_iterations_), 
+                                   n_iterations_),
 		      -1);
 
       if (worker_task[task]->open () == -1)
@@ -199,10 +199,10 @@ Invoker_Task::svc (void)
     }
 
   // Set all tasks to be one group
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               " (%t) setting tasks group id\n"));
 
-  for (task = 0; 
+  for (task = 0;
        task < this->n_tasks_;
        task++)
     if (thr_mgr->set_grp (worker_task[task],
@@ -229,7 +229,7 @@ Invoker_Task::svc (void)
 
   // Wait for 3 more second and then resume every thread in the group.
   ACE_OS::sleep (ACE_Time_Value (2));
-  
+
   ACE_DEBUG ((LM_DEBUG,
               " (%t) resuming group\n"));
 
@@ -250,8 +250,8 @@ Invoker_Task::svc (void)
 static const size_t DEFAULT_TASKS = 4;
 static const size_t DEFAULT_ITERATIONS = 5;
 
-int 
-main (int argc, char *argv[])
+int
+main (int argc, ACE_TCHAR *argv[])
 {
   size_t n_tasks = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_TASKS;
   size_t n_threads = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_THREADS;
@@ -261,10 +261,10 @@ main (int argc, char *argv[])
   // have special manager for the Invoker_Task.
   ACE_Thread_Manager invoker_manager;
 
-  Invoker_Task invoker (&invoker_manager, 
-			n_tasks, 
+  Invoker_Task invoker (&invoker_manager,
+			n_tasks,
 			n_threads,
-			n_iterations); 
+			n_iterations);
 
   // Wait for 1 second and then suspend the invoker task
   ACE_OS::sleep (1);
@@ -295,8 +295,8 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR,
               "threads not supported on this platform\n"));
