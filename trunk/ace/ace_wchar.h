@@ -24,7 +24,7 @@
 // These macros have been deprecated and should be replaced by their
 // ACE_TEXT_* equivalents.  These macros are just hacks and may not
 // completely provide the old functionality.
-#if !defined (ACE_ONLY_LATEST_AND_GREATEST)
+#if defined (ACE_LEGACY_MODE)
 // Convert the old unicode indicators
 # if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 #   define ACE_USES_WCHAR
@@ -63,7 +63,7 @@ typedef char TCHAR;
 #   endif /* ACE_HAS_UNICODE && UNICODE */
 # endif /* ACE_WIN32 */
 
-#endif /* ACE_ONLY_LATEST_AND_GREATEST */
+#endif /* ACE_LEGACY_MODE */
 
 #if defined (ACE_HAS_WCHAR)
 # if defined (VXWORKS)

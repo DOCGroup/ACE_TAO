@@ -27,21 +27,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // ============================================================================
-// Turn latest-and-greatest ACE features on/off.
-// If you need to use "legacy" settings, add ACE_ONLY_LATEST_AND_GREATEST 0
-// to your config.h file.
-// ============================================================================
-
-#if defined (ACE_ONLY_LATEST_AND_GREATEST) && \
-    (ACE_ONLY_LATEST_AND_GREATEST == 0)
-#  undef ACE_ONLY_LATEST_AND_GREATEST
-#else
-#  if !defined (ACE_ONLY_LATEST_AND_GREATEST)
-#    define ACE_ONLY_LATEST_AND_GREATEST
-#  endif /* !defined (ACE_ONLY_LATEST_AND_GREATEST) */
-#endif /* ACE_ONLY_LATEST_AND_GREATEST disabled */
-
-// ============================================================================
 // RCSID Macros
 // ============================================================================
 

@@ -2,11 +2,11 @@
 
 // <HACK ON>
 #include "ace/config-all.h"
-#if !defined (ACE_ONLY_LATEST_AND_GREATEST)
+#if defined (ACE_LEGACY_MODE)
 // This silly include breaks a cycle when compiling in backwards
 // compatibility mode
 #  include "ace/Thread_Exit.h"
-#endif  /* ACE_ONLY_LATEST_AND_GREATEST */
+#endif  /* ACE_LEGACY_MODE */
 // </HACK OFF>
 
 #include "ace/Thread_Control.h"

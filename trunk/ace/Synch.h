@@ -1344,12 +1344,12 @@ public:
 // Include the templates here.
 #include "ace/Synch_T.h"
 
-#if !defined (ACE_ONLY_LATEST_AND_GREATEST)
+#if defined (ACE_LEGACY_MODE)
 # include "ace/File_Lock.h"
 # include "ace/Process_Semaphore.h"
 # include "ace/Process_Mutex.h"
 # include "ace/RW_Process_Mutex.h"
-#endif  /* ACE_ONLY_LATEST_AND_GREATEST */
+#endif  /* ACE_LEGACY_MODE */
 
 template <class ACE_LOCK>
 class ACE_Guard;

@@ -1,3 +1,20 @@
+Fri Sep 22 14:49:19 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.h:
+        * ace/README:
+        * ace/Synch.h:
+        * ace/Thread_Control.cpp:
+        * ace/Thread_Control.h:
+        * ace/ace_wchar.h:
+        * ace/config-all.h:
+
+          Replaced ACE_ONLY_LATEST_AND_GREATEST with ACE_LEGACY_MODE
+          since we wanted to change our usage of it (and this should
+          be a bit clearer).
+
+          To enable some legacy code, just define ACE_LEGACY_MODE
+          in config.h.
+
 Fri Sep 22 14:24:14 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * apps/JAWS/remora/app/Remora_Export.h:

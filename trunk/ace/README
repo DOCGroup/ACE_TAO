@@ -914,6 +914,10 @@ ACE_LACKS_WILDCARD_BIND                 The bind() call will not
 ACE_LACKS_WRITEV                        Platform doesn't define
                                         writev, so use our own
 
+ACE_LEGACY_MODE                         When defined, it will enable some code that is
+                                        used to provide some support for backwards
+                                        compatibility.  
+
 ACE_NEEDS_DEV_IO_CONVERSION             Necessary with some compilers
                                         to pass ACE_TTY_IO as
                                         parameter to DEV_Connector.
@@ -934,6 +938,12 @@ ACE_NEEDS_SCHED_H                       Platform needs to #include
                                         <sched.h>
                                         to get thread scheduling
                                         defs.
+
+ACE_ONLY_LATEST_AND_GREATEST            A macro that indicates that the "latest and greatest"
+                                        features of ACE/TAO should be turned on.  It has been
+                                        replaced by ACE_LEGACY_MODE, which has the opposite
+                                        meaning but serves the same purpose.
+
 ACE_WSTRING_HAS_USHORT_SUPPORT          If a platform has wchar_t as a separate type, 
                                         then ACE_WString doesn't have a constructor that
                                         understands an ACE_USHORT16 string.  So this 
