@@ -177,10 +177,12 @@ int have_asynchio (void)
 #endif /* _POSIX_ASYNC_IO_ */
 
 #else  /* _POSIX_ASYNCHRONOUS_IO is not defined*/
-int have_asynchio (void) {
+int have_asynchio (void)
+{
   ACE_DEBUG ((LM_DEBUG,
               "_POSIX_ASYNCHRONOUS_IO itself is not defined\n"));
-  return 0; }
+  return 0;
+}
 #endif /* _POSIX_ASYNCHRONOUS_IO */
 
 int
