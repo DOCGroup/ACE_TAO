@@ -22,8 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Event_Handler.h"
-
-class ACE_DLL;
+#include "ace/DLL.h"
 
 #define ACE_Component ACE_Service_Object
 /**
@@ -56,7 +55,6 @@ public:
 
 // Forward decl.
 class ACE_Service_Type_Impl;
-class ACE_DLL;
 
 /**
  * @class ACE_Service_Type
@@ -125,7 +123,7 @@ private:
   const ACE_Service_Type_Impl *type_;
 
   /// ACE_DLL representing the shared object file (non-zero if dynamically linked).
-  const ACE_DLL &dll_;
+  const ACE_DLL dll_;
 
   /// 1 if svc is currently active, otherwise 0.
   int active_;
