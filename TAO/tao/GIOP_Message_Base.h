@@ -54,15 +54,15 @@ public:
   /// Dtor
   virtual ~TAO_GIOP_Message_Base (void);
 
-  /// Initialize the underlying state object based on the <major> and
-  /// <minor> revision numbers
+  /// Initialize the underlying state object based on the @a major and
+  /// @a minor revision numbers
   virtual void init (CORBA::Octet major,
                      CORBA::Octet minor);
 
   /// Reset the messaging the object
   virtual void reset (void);
 
-  /// Write the RequestHeader in to the <cdr> stream. The underlying
+  /// Write the RequestHeader in to the @a cdr stream. The underlying
   /// implementation of the mesaging should do the right thing.
   virtual int generate_request_header (TAO_Operation_Details &op,
                                        TAO_Target_Specification &spec,

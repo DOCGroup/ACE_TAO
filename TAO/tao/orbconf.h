@@ -233,7 +233,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 // Define if your processor does not store words with the most significant
 // byte first.
 
-// @todo: It seems to be that this definition of TAO_ENCAP_BYTE_ORDER
+// @todo It seems to be that this definition of TAO_ENCAP_BYTE_ORDER
 // should be  removed. We have an equivalent ACE definition in
 // ACE_CDR_BYTE_ORDER. Today both of them are consistent. It would be
 // a havoc if oneday this consistency is gone..
@@ -809,7 +809,7 @@ enum TAO_Policy_Scope
 #endif /* TAO_DEF_GIOP_MINOR */
 
 
-// @@todo: this needs to be deprecated. Use TAO_MAXBUFSIZE instead.
+// @@todo this needs to be deprecated. Use TAO_MAXBUFSIZE instead.
 #if !defined (TAO_CONNECTION_HANDLER_STACK_BUF_SIZE)
 #   define TAO_CONNECTION_HANDLER_STACK_BUF_SIZE 1024
 #endif /*TAO_CONNECTION_HANDLER_STACK_BUF_SIZE */

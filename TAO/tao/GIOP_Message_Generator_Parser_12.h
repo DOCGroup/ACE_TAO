@@ -37,7 +37,7 @@ class TAO_Export TAO_GIOP_Message_Generator_Parser_12:
 {
 public:
 
-  /// Write the request header in to <msg>
+  /// Write the request header in to @a msg
   virtual int write_request_header (
       const TAO_Operation_Details &opdetails,
       TAO_Target_Specification &spec,
@@ -51,7 +51,7 @@ public:
       TAO_OutputCDR &msg
     );
 
-  /// Write the reply header in to <output>
+  /// Write the reply header in to @a output
   virtual int write_reply_header (
       TAO_OutputCDR &output,
       TAO_Pluggable_Reply_Params_Base &reply
@@ -59,7 +59,7 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Writes the locate _reply message in to the <output>
+  /// Writes the locate _reply message in to the @a output
   virtual int write_locate_reply_mesg (
       TAO_OutputCDR &output,
       CORBA::ULong request_id,

@@ -39,7 +39,7 @@ class ACE_Allocator;
  * of outgoing messages.  This queue is drained by the pluggable
  * protocols framework, normally under control of the ACE_Reactor, but
  * other configurations are conceivable.  The elements in the queue
- * may may removed early, for example, because the application can
+ * may be removed early, for example, because the application can
  * specify timeouts for each message, or because the underlying
  * connection is broken.
  *
@@ -58,10 +58,10 @@ class ACE_Allocator;
  * be deallocated by the sending thread when it finishes.
  * Oneways and asynchronous calls are another story.
  *
- * @todo: Change the ORB to allocate oneway and AMI buffer from global
- *        memory, to avoid the data copy in this path.  What happens
- *        if the there is no queueing?  Can we check that before
- *        allocating the memory?
+ * @todo Change the ORB to allocate oneway and AMI buffer from global
+ *       memory, to avoid the data copy in this path.  What happens
+ *       if the there is no queueing?  Can we check that before
+ *       allocating the memory?
  *
  */
 class TAO_Export TAO_Queued_Message : public TAO_LF_Invocation_Event
@@ -83,7 +83,7 @@ public:
    *
    * The following methods are used to manipulate this implicit list.
    *
-   * @todo: We should implement this as a base template, something
+   * @todo We should implement this as a base template, something
    *        like:<BR>
    * template<class T> Intrusive_Node {<BR>
    * public:<BR><BR>
@@ -190,14 +190,14 @@ public:
 
 protected:
   /*
-   * Allocator that was used to create <this> object on the heap. If the
-   * allocator is null then <this> is on stack.
+   * Allocator that was used to create @c this object on the heap. If the
+   * allocator is null then @a this is on stack.
    */
   ACE_Allocator *allocator_;
 
   /*
-   * A flag that acts as a boolean to indicate whether <this> is on
-   * stack or heap. A non-zero value indicates that <this> was created
+   * A flag that acts as a boolean to indicate whether @a this is on
+   * stack or heap. A non-zero value indicates that @a this was created
    * on  heap.
    */
   int is_heap_created_;
