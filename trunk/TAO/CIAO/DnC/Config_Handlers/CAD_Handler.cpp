@@ -52,7 +52,8 @@ void CAD_Handler::process_ComponentAssemblyDescription
           this, &CAD_Handler::process_property));
       else
         {
-          break;
+          this->iter_->previousNode ();
+          return;
         }
     }
 

@@ -91,8 +91,8 @@ XMLString::transcode (node_name)));
           this->id_map_));
       else
         {
-          // ??? How did we get here ???
-          ACE_THROW (CORBA::INTERNAL());
+          this->iter_->previousNode ();
+          return;
         }
     }
   return;

@@ -33,8 +33,8 @@ void CPR_Handler::process_ComponentPackageReference
         (process_string(this->iter_, node_name, "requiredType", cpr.requiredType));
       else
         {
-          // ??? How did we get here ???
-          ACE_THROW (CORBA::INTERNAL());
+          this->iter_->previousNode ();
+          return;
         }
     }
 }

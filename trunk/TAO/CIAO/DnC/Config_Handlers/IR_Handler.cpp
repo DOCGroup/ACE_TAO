@@ -48,6 +48,11 @@ void IR_Handler::process_ImplementationRequirement
                                                        node_name, "Property", ir.property,
                                                        &Property_Handler::process_Property,
                                                        this->id_map_));
+      else
+        {
+          this->iter_->previousNode ();
+          return;
+        }
     }
 }
 
