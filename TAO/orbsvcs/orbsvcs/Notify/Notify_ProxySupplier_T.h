@@ -46,9 +46,6 @@ public:
   virtual ~TAO_Notify_ProxySupplier (void);
   // Destructor
 
-  void init (CORBA::Environment &ACE_TRY_ENV);
-  // Init
-
   // = Notify_Event_Listener methods
   virtual void dispatch_event (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV);
 

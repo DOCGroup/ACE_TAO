@@ -124,7 +124,8 @@ TAO_Notify_CosEC_ProxyPushConsumer_i::~TAO_Notify_CosEC_ProxyPushConsumer_i (voi
 void
 TAO_Notify_CosEC_ProxyPushConsumer_i::init (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->notify_proxy_.init (ACE_TRY_ENV);
+  // Pass the default id.
+  this->notify_proxy_.init (0, ACE_TRY_ENV);
 }
 
 void

@@ -65,6 +65,9 @@ public:
   void deactivate_proxy_pushconsumer (PortableServer::Servant servant, CORBA::Environment &ACE_TRY_ENV);
   // Deactivate servant from <proxy_pushconsumer_POA_>.
 
+  void proxy_pushconsumer_destroyed (CosNotifyChannelAdmin::ProxyID proxyID);
+  // This id is no longer in use.It can be reused by <proxy_pushconsumer_ids_>
+
   // = Interface methods
   virtual CosNotifyChannelAdmin::AdminID MyID (
     CORBA::Environment &ACE_TRY_ENV

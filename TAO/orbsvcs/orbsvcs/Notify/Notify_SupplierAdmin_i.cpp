@@ -23,6 +23,14 @@ TAO_Notify_SupplierAdmin_i::~TAO_Notify_SupplierAdmin_i (void)
 {
   if (this->is_destroyed_ == 0)
     this->cleanup_i ();
+
+  this->my_channel_->supplier_admin_destroyed (this->myID_);
+}
+
+void
+TAO_Notify_SupplierAdmin_i::proxy_pushconsumer_destroyed (CosNotifyChannelAdmin::ProxyID proxyID)
+{
+  this->proxy_pushconsumer_ids_.put (proxyID);
 }
 
 void
@@ -164,7 +172,7 @@ TAO_Notify_SupplierAdmin_i::obtain_sequence_proxy_pushconsumer_i (CosNotifyChann
 
   PortableServer::ServantBase_var proxy_pushconsumer_var (seq_proxy_pushconsumer);
 
-  seq_proxy_pushconsumer->init (ACE_TRY_ENV);
+  seq_proxy_pushconsumer->init (proxy_id, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return this->resource_manager_->
@@ -184,7 +192,7 @@ TAO_Notify_SupplierAdmin_i::obtain_struct_proxy_pushconsumer_i (CosNotifyChannel
 
   PortableServer::ServantBase_var proxy_pushconsumer_var (struct_proxy_pushconsumer);
 
-  struct_proxy_pushconsumer->init (ACE_TRY_ENV);
+  struct_proxy_pushconsumer->init (proxy_id, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return this->resource_manager_->
@@ -203,7 +211,7 @@ TAO_Notify_SupplierAdmin_i::obtain_proxy_pushconsumer_i (CosNotifyChannelAdmin::
 
   PortableServer::ServantBase_var proxy_pushconsumer_var (proxy_pushconsumer);
 
-  proxy_pushconsumer->init (ACE_TRY_ENV);
+  proxy_pushconsumer->init (proxy_id, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return this->resource_manager_->

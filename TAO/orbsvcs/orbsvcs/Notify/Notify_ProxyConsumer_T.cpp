@@ -22,12 +22,8 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::~TAO_Notify_ProxyConsumer (void)
 {
   if (!is_destroyed_)
     this->cleanup_i ();
-}
 
-template <class SERVANT_TYPE> void
-TAO_Notify_ProxyConsumer<SERVANT_TYPE>::init (CORBA::Environment& /*ACE_TRY_ENV*/)
-{
-  // No-Op.
+  this->myadmin_->proxy_pushconsumer_destroyed (this->myID_);
 }
 
 template <class SERVANT_TYPE> CORBA::Boolean
