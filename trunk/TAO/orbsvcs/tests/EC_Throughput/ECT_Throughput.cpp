@@ -13,7 +13,6 @@
 #include "orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/Module_Factory.h"
-#include "ECT_Scheduler_Info.h"
 #include "ECT_Throughput.h"
 
 ACE_RCSID(EC_Throughput, ECT_Throughput, "$Id$")
@@ -151,6 +150,7 @@ ECT_Throughput::run (int argc, char* argv[])
 #if 1
       ACE_Config_Scheduler scheduler_impl;
 #else
+#include "ECT_Scheduler_Info.h"
       ACE_Runtime_Scheduler scheduler_impl (
 	runtime_configs_size,
         runtime_configs,
