@@ -1,0 +1,18 @@
+//$Id$
+
+// This interface abstracts a counter. It provides methods
+// for increasing and getting the value of the counter.
+interface Counter
+{
+  void increment ();
+  // Increases the counter value.
+
+  long get_count ();
+  // Decreases the counter value.
+
+  void reset ();
+  // Sets the counter value to zero.
+
+  oneway void shutdown ();
+  // Shuts down the ORB on which this obj is running.
+};
