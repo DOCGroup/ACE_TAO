@@ -12,8 +12,6 @@ ACE_Pair<T1, T2>::ACE_Pair (const T1 &t1,
 
 template <class T1, class T2> ACE_INLINE
 ACE_Pair<T1, T2>::ACE_Pair (void)
-  : first_ (),
-    second_ ()
 {
 }
 

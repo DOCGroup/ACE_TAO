@@ -140,7 +140,7 @@ public:
   typedef T value_type;
   typedef ACE_Iterator_Impl<T> implementation;
 
-  ACE_Iterator (implementation *impl);
+  ACE_Iterator (ACE_Iterator_Impl<T> *impl);
   // Constructor.  
 
   ACE_Iterator (const ACE_Iterator<T> &rhs);
@@ -171,12 +171,12 @@ public:
   ACE_Iterator<T> operator-- (int);
   // Postfix reverse.
 
-  implementation &impl (void);
+  ACE_Iterator_Impl<T> &impl (void);
   // Accessor to implementation object.    
 
 protected:
 
-  implementation *implementation_;
+  ACE_Iterator_Impl<T> *implementation_;
   // Implementation pointer.    
 };
 
@@ -196,7 +196,7 @@ public:
   typedef T value_type;
   typedef ACE_Reverse_Iterator_Impl<T> implementation;
 
-  ACE_Reverse_Iterator (implementation *impl);
+  ACE_Reverse_Iterator (ACE_Reverse_Iterator_Impl<T> *impl);
   // Constructor.  
 
   ACE_Reverse_Iterator (const ACE_Reverse_Iterator<T> &rhs);
@@ -227,12 +227,12 @@ public:
   ACE_Reverse_Iterator<T> operator-- (int);
   // Postfix reverse.
 
-  implementation &impl (void);
+  ACE_Reverse_Iterator_Impl<T> &impl (void);
   // Accessor to implementation object.    
 
 protected:
 
-  implementation *implementation_;
+  ACE_Reverse_Iterator_Impl<T> *implementation_;
   // Implementation pointer.    
 };
 
@@ -380,12 +380,12 @@ protected:
   // = Protected no-op constructor.
   ACE_Map (void);
 
-  virtual iterator_implementation *begin_impl (void) = 0;
-  virtual iterator_implementation *end_impl (void) = 0;
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void) = 0;
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void) = 0;
   // Return forward iterator.
 
-  virtual reverse_iterator_implementation *rbegin_impl (void) = 0;
-  virtual reverse_iterator_implementation *rend_impl (void) = 0;
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void) = 0;
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void) = 0;
   // Return reverse iterator.
 
 private:
@@ -410,7 +410,7 @@ public:
   // = Traits.
   typedef IMPLEMENTATION implementation;
 
-  ACE_Map_Impl_Iterator_Adapter (const implementation &impl);
+  ACE_Map_Impl_Iterator_Adapter (const IMPLEMENTATION &impl);
   // Constructor.  
 
   virtual ~ACE_Map_Impl_Iterator_Adapter (void);
@@ -431,12 +431,12 @@ public:
   virtual void minus_minus (void);
   // Reverse.
 
-  implementation &impl (void);
+  IMPLEMENTATION &impl (void);
   // Accessor to implementation object.
 
 protected:
-
-  implementation implementation_;
+  
+  IMPLEMENTATION implementation_;
   // All implementation details are forwarded to this class.  
 };
 
@@ -455,7 +455,7 @@ public:
   // = Traits.
   typedef IMPLEMENTATION implementation;
 
-  ACE_Map_Impl_Reverse_Iterator_Adapter (const implementation &impl);
+  ACE_Map_Impl_Reverse_Iterator_Adapter (const IMPLEMENTATION &impl);
   // Constructor.  
 
   virtual ~ACE_Map_Impl_Reverse_Iterator_Adapter (void);
@@ -476,18 +476,18 @@ public:
   virtual void minus_minus (void);
   // Reverse.
 
-  implementation &impl (void);
+  IMPLEMENTATION &impl (void);
   // Accessor to implementation object.
 
 protected:
 
-  implementation implementation_;
+  IMPLEMENTATION implementation_;
   // All implementation details are forwarded to this class.  
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE, class IMPLEMENTATION>
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY>
 class ACE_Map_Impl : public ACE_Map<KEY, VALUE>
 {
   // = TITLE  
@@ -498,8 +498,8 @@ class ACE_Map_Impl : public ACE_Map<KEY, VALUE>
 public:
 
   // = Traits.
-  typedef ACE_Map_Impl_Iterator_Adapter<value_type, IMPLEMENTATION::iterator, IMPLEMENTATION::ENTRY> iterator_impl;
-  typedef ACE_Map_Impl_Reverse_Iterator_Adapter<value_type, IMPLEMENTATION::reverse_iterator, IMPLEMENTATION::ENTRY> reverse_iterator_impl;
+  typedef ACE_Map_Impl_Iterator_Adapter<value_type, ITERATOR, ENTRY> iterator_impl;
+  typedef ACE_Map_Impl_Reverse_Iterator_Adapter<value_type, REVERSE_ITERATOR, ENTRY> reverse_iterator_impl;
   typedef IMPLEMENTATION implementation;
 
   // = Initialization and termination methods.
@@ -619,29 +619,29 @@ public:
   virtual void dump (void) const;
   // Dump the state of an object.
 
-  implementation &impl (void);
+  IMPLEMENTATION &impl (void);
   // Accessor to implementation object.
 
 protected:
 
-  implementation implementation_;
+  IMPLEMENTATION implementation_;
   // All implementation details are forwarded to this class.
 
   // = STL styled iterator factory functions.
 
-  virtual iterator_implementation *begin_impl (void);
-  virtual iterator_implementation *end_impl (void);
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void);
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void);
   // Return forward iterator.
 
-  virtual reverse_iterator_implementation *rbegin_impl (void);
-  virtual reverse_iterator_implementation *rend_impl (void);
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void);
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void);
   // Return reverse iterator.
 
 private:
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Map_Impl (const ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Map_Impl (const ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY> &))
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -659,7 +659,7 @@ public:
   // = Traits.
   typedef ACE_Active_Map_Manager<VALUE>::iterator implementation;
 
-  ACE_Active_Map_Manager_Iterator_Adapter (const implementation &impl);
+  ACE_Active_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
   // Constructor.  
 
   virtual ~ACE_Active_Map_Manager_Iterator_Adapter (void);
@@ -680,12 +680,12 @@ public:
   virtual void minus_minus (void);
   // Reverse.
   
-  implementation &impl (void);
+  ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl (void);
   // Accessor to implementation object.
 
 protected:
 
-  implementation implementation_;
+  ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> implementation_;
   // All implementation details are forwarded to this class.  
 };
 
@@ -704,7 +704,7 @@ public:
   // = Traits.
   typedef ACE_Active_Map_Manager<VALUE>::reverse_iterator implementation;
 
-  ACE_Active_Map_Manager_Reverse_Iterator_Adapter (const implementation &impl);
+  ACE_Active_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
   // Constructor.  
 
   virtual ~ACE_Active_Map_Manager_Reverse_Iterator_Adapter (void);
@@ -725,12 +725,12 @@ public:
   virtual void minus_minus (void);
   // Reverse.
 
-  implementation &impl (void);
+  ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl (void);
   // Accessor to implementation object.
 
 protected:
 
-  implementation implementation_;
+  ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> implementation_;
   // All implementation details are forwarded to this class.  
 };
 
@@ -869,7 +869,7 @@ public:
   virtual void dump (void) const;
   // Dump the state of an object.
 
-  implementation &impl (void);
+  ACE_Active_Map_Manager<ACE_Pair<KEY, VALUE> > &impl (void);
   // Accessor to implementation object.
 
   KEY_ADAPTER &key_adapter (void);
@@ -885,7 +885,7 @@ protected:
                       expanded_value *&internal_value);
   // Unbind helper.
   
-  implementation implementation_;
+  ACE_Active_Map_Manager<ACE_Pair<KEY, VALUE> > implementation_;
   // All implementation details are forwarded to this class.
 
   KEY_ADAPTER key_adapter_;
@@ -893,12 +893,12 @@ protected:
 
   // = STL styled iterator factory functions.
 
-  virtual iterator_implementation *begin_impl (void);
-  virtual iterator_implementation *end_impl (void);
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void);
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void);
   // Return forward iterator.
 
-  virtual reverse_iterator_implementation *rbegin_impl (void);
-  virtual reverse_iterator_implementation *rend_impl (void);
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void);
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void);
   // Return reverse iterator.
 
 private:
@@ -923,7 +923,7 @@ public:
   // = Traits.
   typedef ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator implementation;
 
-  ACE_Hash_Map_Manager_Ex_Iterator_Adapter (const implementation &impl);
+  ACE_Hash_Map_Manager_Ex_Iterator_Adapter (const ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
   // Constructor.  
 
   virtual ~ACE_Hash_Map_Manager_Ex_Iterator_Adapter (void);
@@ -944,12 +944,12 @@ public:
   virtual void minus_minus (void);
   // Reverse.
 
-  implementation &impl (void);
+  ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl (void);
   // Accessor to implementation object.
 
 protected:
 
-  implementation implementation_;
+  ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
   // All implementation details are forwarded to this class.  
 };
 
@@ -968,7 +968,7 @@ public:
   // = Traits.
   typedef ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator implementation;
 
-  ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (const implementation &impl);
+  ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (const ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
   // Constructor.  
 
   virtual ~ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (void);
@@ -989,12 +989,12 @@ public:
   virtual void minus_minus (void);
   // Reverse.
 
-  implementation &impl (void);
+  ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl (void);
   // Accessor to implementation object.
 
 protected:
 
-  implementation implementation_;
+  ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
   // All implementation details are forwarded to this class.  
 };
 
@@ -1132,7 +1132,7 @@ public:
   virtual void dump (void) const;
   // Dump the state of an object.
 
-  implementation &impl (void);
+  ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl (void);
   // Accessor to implementation object.
 
   KEY_GENERATOR &key_generator (void);
@@ -1140,7 +1140,7 @@ public:
 
 protected:
 
-  implementation implementation_;
+  ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
   // All implementation details are forwarded to this class.
 
   KEY_GENERATOR key_generator_;
@@ -1148,12 +1148,12 @@ protected:
 
   // = STL styled iterator factory functions.
 
-  virtual iterator_implementation *begin_impl (void);
-  virtual iterator_implementation *end_impl (void);
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void);
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void);
   // Return forward iterator.
 
-  virtual reverse_iterator_implementation *rbegin_impl (void);
-  virtual reverse_iterator_implementation *rend_impl (void);
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void);
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void);
   // Return reverse iterator.
 
 private:
@@ -1178,7 +1178,7 @@ public:
   // = Traits.
   typedef ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator implementation;
 
-  ACE_Map_Manager_Iterator_Adapter (const implementation &impl);
+  ACE_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
   // Constructor.  
 
   virtual ~ACE_Map_Manager_Iterator_Adapter (void);
@@ -1199,12 +1199,12 @@ public:
   virtual void minus_minus (void);
   // Reverse.
 
-  implementation &impl (void);
+  ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl (void);
   // Accessor to implementation object.
 
 protected:
 
-  implementation implementation_;
+  ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> implementation_;
   // All implementation details are forwarded to this class.  
 };
 
@@ -1223,7 +1223,7 @@ public:
   // = Traits.
   typedef ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator implementation;
 
-  ACE_Map_Manager_Reverse_Iterator_Adapter (const implementation &impl);
+  ACE_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
   // Constructor.  
 
   virtual ~ACE_Map_Manager_Reverse_Iterator_Adapter (void);
@@ -1244,12 +1244,12 @@ public:
   virtual void minus_minus (void);
   // Reverse.
 
-  implementation &impl (void);
+  ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl (void);
   // Accessor to implementation object.
 
 protected:
 
-  implementation implementation_;
+  ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> implementation_;
   // All implementation details are forwarded to this class.  
 };
 
@@ -1387,7 +1387,7 @@ public:
   virtual void dump (void) const;
   // Dump the state of an object.
 
-  implementation &impl (void);
+  ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex> &impl (void);
   // Accessor to implementation object.
 
   KEY_GENERATOR &key_generator (void);
@@ -1395,7 +1395,7 @@ public:
 
 protected:
 
-  implementation implementation_;
+  ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex> implementation_;
   // All implementation details are forwarded to this class.
 
   KEY_GENERATOR key_generator_;
@@ -1403,12 +1403,12 @@ protected:
 
   // = STL styled iterator factory functions.
 
-  virtual iterator_implementation *begin_impl (void);
-  virtual iterator_implementation *end_impl (void);
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void);
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void);
   // Return forward iterator.
 
-  virtual reverse_iterator_implementation *rbegin_impl (void);
-  virtual reverse_iterator_implementation *rend_impl (void);
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void);
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void);
   // Return reverse iterator.
 
 private:

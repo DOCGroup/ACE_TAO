@@ -1,3 +1,10 @@
+Sat Feb 06 00:46:27 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Map: Damm stupid broken g++ (2.7) has deformed my beautiful
+	  code based on typedefs and forced me to use their basic form.  I
+	  hate this shit!  However, users should continue to use the
+	  typedefs provided as I do in the Map_Test.
+	  
 Fri Feb 05 21:57:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Map_T: Added a new Map mini framework to ACE.  The classes

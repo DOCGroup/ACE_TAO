@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/Containers.h"
 #include "ace/Map_T.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Synch.h"
@@ -29,7 +30,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-// Key type.
+// Key data type.
 typedef ACE_Array<char> KEY;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -183,7 +184,7 @@ functionality_test (MAP &map,
        i < iterations; 
        ++i)
     {
-      original_keys[i].size (sizeof i / sizeof KEY::TYPE);
+      original_keys[i].size (sizeof i / sizeof (KEY::TYPE));
       ACE_OS::memcpy (&original_keys[i][0],
                       &i, 
                       sizeof i);      
@@ -452,6 +453,8 @@ main (int argc, ASYS_TCHAR *argv[])
   return 0;
 }
 
+#if 0
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
@@ -490,3 +493,4 @@ template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>;
 #pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif
