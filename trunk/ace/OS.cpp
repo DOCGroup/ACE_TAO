@@ -2388,7 +2388,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   if (stacksize == 0) stacksize = 20000;
 
-  ACE_hthread_t tid = ::taskSpawn (0, priority,
+  ACE_hthread_t tid = ::taskSpawn (0, 
+                                   priority,
                                    (int) flags,
                                    (int) stacksize,
                                    ACE_THREAD_FUNCTION,

@@ -1,3 +1,10 @@
+Sun Jan 18 16:08:36 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Task: Modified the signature to the activate() method so
+ 	  that it's possible to pass in an array of stack pointers and
+ 	  stack sizes.  Thanks to Thomas Venturella <tventurell@mdc.com>
+ 	  for requesting this.
+
 Sun Jan 18 15:54:16 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
 	* ace/Timer_Wheel_T.h:
