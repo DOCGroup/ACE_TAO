@@ -325,6 +325,19 @@ TAO_ORB_Core::typecode_factory (const CORBA::Object_ptr tf)
   this->typecode_factory_ = tf;
 }
 
+ACE_INLINE CORBA::Object_ptr
+TAO_ORB_Core::resolve_dynanyfactory (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_,
+                    CORBA::Object::_nil ());
+  if (CORBA::is_nil (this->dynany_factory_))
+    {
+      this->resolve_dynanyfactory_i (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
+  return CORBA::Object::_duplicate (this->dynany_factory_);
+}
+
 // ****************************************************************
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)

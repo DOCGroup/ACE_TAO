@@ -82,12 +82,10 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/ReceiverC.o .obj/ReceiverC.so .shobj/ReceiverC.o .shobj/ReceiverC.so: ReceiverC.cpp ReceiverC.h \
+.obj/ReceiverC.o .obj/ReceiverC.o .obj/ReceiverC.o .obj/ReceiverC.o: ReceiverC.cpp ReceiverC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -240,8 +238,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynAnyC.h \
- $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
@@ -383,8 +379,6 @@ realclean: clean
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
- $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -401,14 +395,13 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i ReceiverC.i
+ $(TAO_ROOT)/tao/MessagingS.i \
+ ReceiverC.i
 
-.obj/ReceiverS.o .obj/ReceiverS.so .shobj/ReceiverS.o .shobj/ReceiverS.so: ReceiverS.cpp ReceiverS.h ReceiverC.h \
+.obj/ReceiverS.o .obj/ReceiverS.o .obj/ReceiverS.o .obj/ReceiverS.o: ReceiverS.cpp ReceiverS.h ReceiverC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -561,8 +554,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynAnyC.h \
- $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
@@ -704,8 +695,6 @@ realclean: clean
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
- $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -722,15 +711,13 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i ReceiverC.i \
- ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i
+ $(TAO_ROOT)/tao/MessagingS.i \
+ ReceiverC.i ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i
 
-.obj/BroadcasterC.o .obj/BroadcasterC.so .shobj/BroadcasterC.o .shobj/BroadcasterC.so: BroadcasterC.cpp BroadcasterC.h \
+.obj/BroadcasterC.o .obj/BroadcasterC.o .obj/BroadcasterC.o .obj/BroadcasterC.o: BroadcasterC.cpp BroadcasterC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -883,8 +870,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynAnyC.h \
- $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
@@ -1026,8 +1011,6 @@ realclean: clean
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
- $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1044,15 +1027,14 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i ReceiverC.h \
- ReceiverC.i BroadcasterC.i
+ $(TAO_ROOT)/tao/MessagingS.i \
+ ReceiverC.h ReceiverC.i BroadcasterC.i
 
-.obj/BroadcasterS.o .obj/BroadcasterS.so .shobj/BroadcasterS.o .shobj/BroadcasterS.so: BroadcasterS.cpp BroadcasterS.h ReceiverS.h \
- ReceiverC.h $(TAO_ROOT)/tao/corba.h \
+.obj/BroadcasterS.o .obj/BroadcasterS.o .obj/BroadcasterS.o .obj/BroadcasterS.o: BroadcasterS.cpp BroadcasterS.h ReceiverS.h \
+ ReceiverC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1205,8 +1187,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynAnyC.h \
- $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
@@ -1348,8 +1328,6 @@ realclean: clean
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
- $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1366,17 +1344,15 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i ReceiverC.i \
- ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i \
+ $(TAO_ROOT)/tao/MessagingS.i \
+ ReceiverC.i ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i \
  BroadcasterC.h BroadcasterC.i BroadcasterS_T.h BroadcasterS_T.i \
  BroadcasterS_T.cpp BroadcasterS.i
 
-.obj/Receiver_i.o .obj/Receiver_i.so .shobj/Receiver_i.o .shobj/Receiver_i.so: Receiver_i.cpp Receiver_i.h ReceiverS.h ReceiverC.h \
+.obj/Receiver_i.o .obj/Receiver_i.o .obj/Receiver_i.o .obj/Receiver_i.o: Receiver_i.cpp Receiver_i.h ReceiverS.h ReceiverC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1529,8 +1505,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynAnyC.h \
- $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
@@ -1672,8 +1646,6 @@ realclean: clean
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
- $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1690,16 +1662,14 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i ReceiverC.i \
- ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i
+ $(TAO_ROOT)/tao/MessagingS.i \
+ ReceiverC.i ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i
 
-.obj/Broadcaster_i.o .obj/Broadcaster_i.so .shobj/Broadcaster_i.o .shobj/Broadcaster_i.so: Broadcaster_i.cpp Broadcaster_i.h BroadcasterS.h \
+.obj/Broadcaster_i.o .obj/Broadcaster_i.o .obj/Broadcaster_i.o .obj/Broadcaster_i.o: Broadcaster_i.cpp Broadcaster_i.h BroadcasterS.h \
  ReceiverS.h ReceiverC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1852,8 +1822,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynAnyC.h \
- $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
@@ -1995,8 +1963,6 @@ realclean: clean
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
- $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2013,18 +1979,17 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i ReceiverC.i \
- ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i \
+ $(TAO_ROOT)/tao/MessagingS.i \
+ ReceiverC.i ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i \
  BroadcasterC.h BroadcasterC.i BroadcasterS_T.h BroadcasterS_T.i \
  BroadcasterS_T.cpp BroadcasterS.i \
  $(TAO_ROOT)/tao/TAO.h
 
-.obj/Client_i.o .obj/Client_i.so .shobj/Client_i.o .shobj/Client_i.so: Client_i.cpp Client_i.h Receiver_i.h ReceiverS.h \
- ReceiverC.h $(TAO_ROOT)/tao/corba.h \
+.obj/Client_i.o .obj/Client_i.o .obj/Client_i.o .obj/Client_i.o: Client_i.cpp Client_i.h Receiver_i.h ReceiverS.h \
+ ReceiverC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2177,8 +2142,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynAnyC.h \
- $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
@@ -2320,8 +2283,6 @@ realclean: clean
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
- $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2338,8 +2299,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i ReceiverC.i \
- ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i \
+ $(TAO_ROOT)/tao/MessagingS.i \
+ ReceiverC.i ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i \
  BroadcasterC.h BroadcasterC.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
@@ -2347,13 +2308,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Server_i.o .obj/Server_i.so .shobj/Server_i.o .shobj/Server_i.so: Server_i.cpp Server_i.h Broadcaster_i.h BroadcasterS.h \
+.obj/Server_i.o .obj/Server_i.o .obj/Server_i.o .obj/Server_i.o: Server_i.cpp Server_i.h Broadcaster_i.h BroadcasterS.h \
  ReceiverS.h ReceiverC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2506,8 +2465,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynAnyC.h \
- $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
@@ -2649,8 +2606,6 @@ realclean: clean
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
- $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2667,20 +2622,18 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i ReceiverC.i \
- ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i \
+ $(TAO_ROOT)/tao/MessagingS.i \
+ ReceiverC.i ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i \
  BroadcasterC.h BroadcasterC.i BroadcasterS_T.h BroadcasterS_T.i \
  BroadcasterS_T.cpp BroadcasterS.i \
  $(TAO_ROOT)/tao/TAO.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Client_i.h Receiver_i.h ReceiverS.h ReceiverC.h \
+.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp Client_i.h Receiver_i.h ReceiverS.h ReceiverC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2833,8 +2786,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynAnyC.h \
- $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
@@ -2976,8 +2927,6 @@ realclean: clean
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
- $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2994,20 +2943,18 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i ReceiverC.i \
- ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i \
+ $(TAO_ROOT)/tao/MessagingS.i \
+ ReceiverC.i ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i \
  BroadcasterC.h BroadcasterC.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  $(TAO_ROOT)/tao/TAO.h
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Server_i.h Broadcaster_i.h BroadcasterS.h \
+.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp Server_i.h Broadcaster_i.h BroadcasterS.h \
  ReceiverS.h ReceiverC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3160,8 +3107,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynAnyC.h \
- $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
@@ -3303,8 +3248,6 @@ realclean: clean
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation.i \
- $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
- $(TAO_ROOT)/tao/DynAny_i.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3321,8 +3264,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i ReceiverC.i \
- ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i \
+ $(TAO_ROOT)/tao/MessagingS.i \
+ ReceiverC.i ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i \
  BroadcasterC.h BroadcasterC.i BroadcasterS_T.h BroadcasterS_T.i \
  BroadcasterS_T.cpp BroadcasterS.i \
  $(TAO_ROOT)/tao/TAO.h

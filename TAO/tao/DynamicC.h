@@ -13,7 +13,7 @@
 #include "tao/corbafwd.h"
 #include "tao/Any.h"
 #include "tao/IOPC.h"
-#include "tao/DynAnyC.h"
+// #include "tao/DynAnyC.h"
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"
@@ -56,7 +56,7 @@ TAO_NAMESPACE  Dynamic
 
   struct Parameter;
   class Parameter_var;
-  
+
   struct TAO_Export Parameter
   {
 
@@ -77,18 +77,18 @@ TAO_NAMESPACE  Dynamic
     Parameter_var (Parameter *);
     Parameter_var (const Parameter_var &); // copy constructor
     ~Parameter_var (void); // destructor
-    
+
     Parameter_var &operator= (Parameter *);
     Parameter_var &operator= (const Parameter_var &);
     Parameter *operator-> (void);
     const Parameter *operator-> (void) const;
-    
+
     operator const Parameter &() const;
     operator Parameter &();
     operator Parameter &() const;
     operator Parameter *&(); // variable-size types only
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const Parameter &in (void) const;
     Parameter &inout (void);
     Parameter *&out (void);
@@ -110,7 +110,7 @@ TAO_NAMESPACE  Dynamic
     operator Parameter *&();
     Parameter *&ptr (void);
     Parameter *operator-> (void);
-    
+
   private:
     Parameter *&ptr_;
     // assignment from T_var not allowed
@@ -121,7 +121,7 @@ TAO_NAMESPACE  Dynamic
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMIC_PARAMETERLIST_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMIC_PARAMETERLIST_CH_
 
@@ -129,9 +129,9 @@ TAO_NAMESPACE  Dynamic
     {
     public:
       // = Initialization and termination methods.
-      
+
       _TAO_Unbounded_Sequence_Dynamic_ParameterList (void); // Default constructor.
-      _TAO_Unbounded_Sequence_Dynamic_ParameterList (CORBA::ULong maximum); 
+      _TAO_Unbounded_Sequence_Dynamic_ParameterList (CORBA::ULong maximum);
       _TAO_Unbounded_Sequence_Dynamic_ParameterList (CORBA::ULong maximum,
         CORBA::ULong length,
         Parameter *data,
@@ -148,7 +148,7 @@ TAO_NAMESPACE  Dynamic
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
       // Implement the TAO_Base_Sequence methods (see Sequence.h)
-      
+
       Parameter *get_buffer (CORBA::Boolean orphan = 0);
       const Parameter *get_buffer (void) const;
       void replace (CORBA::ULong max,
@@ -160,32 +160,32 @@ TAO_NAMESPACE  Dynamic
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
 #if !defined (_DYNAMIC_PARAMETERLIST_CH_)
 #define _DYNAMIC_PARAMETERLIST_CH_
 
   class ParameterList;
   class ParameterList_var;
-  
+
   // *************************************************************
   // ParameterList
   // *************************************************************
-  
-  class TAO_Export ParameterList : public 
+
+  class TAO_Export ParameterList : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     _TAO_Unbounded_Sequence_Dynamic_ParameterList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<Parameter>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     ParameterList (void); // default ctor
     ParameterList (CORBA::ULong max); // uses max size
     ParameterList (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      Parameter *buffer, 
+      CORBA::ULong max,
+      CORBA::ULong length,
+      Parameter *buffer,
       CORBA::Boolean release=0
     );
     ParameterList (const ParameterList &); // copy ctor
@@ -197,7 +197,7 @@ TAO_NAMESPACE  Dynamic
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-  
+
 #endif /* end #if !defined */
 
 
@@ -215,19 +215,19 @@ TAO_NAMESPACE  Dynamic
     ParameterList_var (ParameterList *);
     ParameterList_var (const ParameterList_var &); // copy constructor
     ~ParameterList_var (void); // destructor
-    
+
     ParameterList_var &operator= (ParameterList *);
     ParameterList_var &operator= (const ParameterList_var &);
     ParameterList *operator-> (void);
     const ParameterList *operator-> (void) const;
-    
+
     operator const ParameterList &() const;
     operator ParameterList &();
     operator ParameterList &() const;
     operator ParameterList *&(); // variable-size base types only
-    
+
     Parameter &operator[] (CORBA::ULong index);
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     const ParameterList &in (void) const;
     ParameterList &inout (void);
     ParameterList *&out (void);
@@ -257,7 +257,7 @@ TAO_NAMESPACE  Dynamic
     ParameterList *&ptr (void);
     ParameterList *operator-> (void);
     Parameter &operator[] (CORBA::ULong index);
-    
+
   private:
     ParameterList *&ptr_;
     // assignment from T_var not allowed
@@ -275,25 +275,25 @@ TAO_NAMESPACE  Dynamic
 
   class ContextList;
   class ContextList_var;
-  
+
   // *************************************************************
   // ContextList
   // *************************************************************
-  
-  class TAO_Export ContextList : public 
+
+  class TAO_Export ContextList : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     ContextList (void); // default ctor
     ContextList (CORBA::ULong max); // uses max size
     ContextList (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      char * *buffer, 
+      CORBA::ULong max,
+      CORBA::ULong length,
+      char * *buffer,
       CORBA::Boolean release=0
     );
     ContextList (const ContextList &); // copy ctor
@@ -305,7 +305,7 @@ TAO_NAMESPACE  Dynamic
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-  
+
 #endif /* end #if !defined */
 
 
@@ -323,19 +323,19 @@ TAO_NAMESPACE  Dynamic
     ContextList_var (ContextList *);
     ContextList_var (const ContextList_var &); // copy constructor
     ~ContextList_var (void); // destructor
-    
+
     ContextList_var &operator= (ContextList *);
     ContextList_var &operator= (const ContextList_var &);
     ContextList *operator-> (void);
     const ContextList *operator-> (void) const;
-    
+
     operator const ContextList &() const;
     operator ContextList &();
     operator ContextList &() const;
     operator ContextList *&(); // variable-size base types only
-    
+
     TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     const ContextList &in (void) const;
     ContextList &inout (void);
     ContextList *&out (void);
@@ -365,7 +365,7 @@ TAO_NAMESPACE  Dynamic
     ContextList *&ptr (void);
     ContextList *operator-> (void);
     TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-    
+
   private:
     ContextList *&ptr_;
     // assignment from T_var not allowed
@@ -385,7 +385,7 @@ TAO_NAMESPACE  Dynamic
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMIC_EXCEPTIONLIST_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMIC_EXCEPTIONLIST_CH_
 
@@ -393,7 +393,7 @@ TAO_NAMESPACE  Dynamic
     {
     public:
       // = Initialization and termination methods.
-      
+
       _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList (void);
       _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList (CORBA::ULong maximum);
       _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList (CORBA::ULong maximum,
@@ -412,38 +412,38 @@ TAO_NAMESPACE  Dynamic
       CORBA::TypeCode* *get_buffer (CORBA::Boolean orphan = 0);
       const CORBA::TypeCode* *get_buffer (void) const;
       virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
-      
+
     };
 
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
 #if !defined (_DYNAMIC_EXCEPTIONLIST_CH_)
 #define _DYNAMIC_EXCEPTIONLIST_CH_
 
   class ExceptionList;
   class ExceptionList_var;
-  
+
   // *************************************************************
   // ExceptionList
   // *************************************************************
-  
-  class TAO_Export ExceptionList : public 
+
+  class TAO_Export ExceptionList : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode,CORBA::TypeCode_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     ExceptionList (void); // default ctor
     ExceptionList (CORBA::ULong max); // uses max size
     ExceptionList (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      CORBA::TypeCode_ptr *buffer, 
+      CORBA::ULong max,
+      CORBA::ULong length,
+      CORBA::TypeCode_ptr *buffer,
       CORBA::Boolean release=0
     );
     ExceptionList (const ExceptionList &); // copy ctor
@@ -455,7 +455,7 @@ TAO_NAMESPACE  Dynamic
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-  
+
 #endif /* end #if !defined */
 
 
@@ -473,19 +473,19 @@ TAO_NAMESPACE  Dynamic
     ExceptionList_var (ExceptionList *);
     ExceptionList_var (const ExceptionList_var &); // copy constructor
     ~ExceptionList_var (void); // destructor
-    
+
     ExceptionList_var &operator= (ExceptionList *);
     ExceptionList_var &operator= (const ExceptionList_var &);
     ExceptionList *operator-> (void);
     const ExceptionList *operator-> (void) const;
-    
+
     operator const ExceptionList &() const;
     operator ExceptionList &();
     operator ExceptionList &() const;
     operator ExceptionList *&(); // variable-size base types only
-    
+
     TAO_Pseudo_Object_Manager<TypeCode,TypeCode_var> operator[] (CORBA::ULong index);
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     const ExceptionList &in (void) const;
     ExceptionList &inout (void);
     ExceptionList *&out (void);
@@ -515,7 +515,7 @@ TAO_NAMESPACE  Dynamic
     ExceptionList *&ptr (void);
     ExceptionList *operator-> (void);
     TAO_Pseudo_Object_Manager<TypeCode,TypeCode_var> operator[] (CORBA::ULong index);
-    
+
   private:
     ExceptionList *&ptr_;
     // assignment from T_var not allowed
@@ -533,25 +533,25 @@ TAO_NAMESPACE  Dynamic
 
   class RequestContext;
   class RequestContext_var;
-  
+
   // *************************************************************
   // RequestContext
   // *************************************************************
-  
-  class TAO_Export RequestContext : public 
+
+  class TAO_Export RequestContext : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     RequestContext (void); // default ctor
     RequestContext (CORBA::ULong max); // uses max size
     RequestContext (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      char * *buffer, 
+      CORBA::ULong max,
+      CORBA::ULong length,
+      char * *buffer,
       CORBA::Boolean release=0
     );
     RequestContext (const RequestContext &); // copy ctor
@@ -563,7 +563,7 @@ TAO_NAMESPACE  Dynamic
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-  
+
 #endif /* end #if !defined */
 
 
@@ -581,19 +581,19 @@ TAO_NAMESPACE  Dynamic
     RequestContext_var (RequestContext *);
     RequestContext_var (const RequestContext_var &); // copy constructor
     ~RequestContext_var (void); // destructor
-    
+
     RequestContext_var &operator= (RequestContext *);
     RequestContext_var &operator= (const RequestContext_var &);
     RequestContext *operator-> (void);
     const RequestContext *operator-> (void) const;
-    
+
     operator const RequestContext &() const;
     operator RequestContext &();
     operator RequestContext &() const;
     operator RequestContext *&(); // variable-size base types only
-    
+
     TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     const RequestContext &in (void) const;
     RequestContext &inout (void);
     RequestContext *&out (void);
@@ -623,7 +623,7 @@ TAO_NAMESPACE  Dynamic
     RequestContext *&ptr (void);
     RequestContext *operator-> (void);
     TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-    
+
   private:
     RequestContext *&ptr_;
     // assignment from T_var not allowed
@@ -664,7 +664,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Dynamic::Reques
 
 #ifndef __ACE_INLINE__
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Dynamic::ParameterMode &); // 
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Dynamic::ParameterMode &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Dynamic::ParameterMode &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Dynamic::Parameter &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Dynamic::Parameter &);

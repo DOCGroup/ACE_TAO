@@ -52,7 +52,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/TypeCodeFactory_skel.o .obj/TypeCodeFactory_skel.so .shobj/TypeCodeFactory_skel.o .shobj/TypeCodeFactory_skel.so: TypeCodeFactory_skel.cpp \
+.obj/TypeCodeFactory_skel.o .obj/TypeCodeFactory_skel.o .obj/TypeCodeFactory_skel.o .obj/TypeCodeFactory_skel.o: TypeCodeFactory_skel.cpp \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -60,8 +60,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -173,11 +171,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/DynAnyC.i \
- $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/PortableServerC.h \
@@ -319,7 +315,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/Object_Adapter.i
 
-.obj/TypeCodeFactory_i.o .obj/TypeCodeFactory_i.so .shobj/TypeCodeFactory_i.o .shobj/TypeCodeFactory_i.so: TypeCodeFactory_i.cpp TypeCodeFactory_i.h \
+.obj/TypeCodeFactory_i.o .obj/TypeCodeFactory_i.o .obj/TypeCodeFactory_i.o .obj/TypeCodeFactory_i.o: TypeCodeFactory_i.cpp TypeCodeFactory_i.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -327,8 +323,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -440,16 +434,15 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/DynAnyC.i \
- $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServerC.i \
- $(TAO_ROOT)/tao/Servant_Base.i TCF_Export.h \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ TCF_Export.h \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Principal.i \
@@ -509,7 +502,7 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Marshal.i
 
-.obj/TCF_Loader.o .obj/TCF_Loader.so .shobj/TCF_Loader.o .shobj/TCF_Loader.so: TCF_Loader.cpp \
+.obj/TCF_Loader.o .obj/TCF_Loader.o .obj/TCF_Loader.o .obj/TCF_Loader.o: TCF_Loader.cpp \
  $(TAO_ROOT)/tao/ORB.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -517,8 +510,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -666,8 +657,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/DynAnyC.h \
- $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/ValueBase.h \
@@ -686,7 +675,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/ORB.i TCF_Loader.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ TCF_Loader.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
  $(TAO_ROOT)/tao/Object_Loader.i \
  TCF_Export.h TypeCodeFactory_i.h \

@@ -17,7 +17,6 @@
 #include "tao/Typecode.h"
 #include "tao/NVList.h"
 #include "tao/Stub.h"
-#include "tao/DynAny_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
@@ -904,6 +903,9 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_IORMANIPULATION) == 0)
     return this->resolve_ior_manipulation (ACE_TRY_ENV);
 
+  else if (ACE_OS::strcmp (name, TAO_OBJID_DYNANYFACTORY) == 0)
+    return this->orb_core ()->resolve_dynanyfactory (ACE_TRY_ENV);
+
   else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
     {
       CORBA::Object_var obj =
@@ -1102,61 +1104,6 @@ CORBA_ORB::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
                                           CORBA::COMPLETED_NO));
     }
 }
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-// Dynamic Any factory functions.
-
-CORBA_DynAny_ptr
-CORBA_ORB::create_dyn_any       (const CORBA_Any& any,
-                                 CORBA::Environment& ACE_TRY_ENV)
-{
-  return TAO_DynAny_i::create_dyn_any (any, ACE_TRY_ENV);
-}
-
-CORBA_DynAny_ptr
-CORBA_ORB::create_basic_dyn_any (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& ACE_TRY_ENV)
-{
-  return TAO_DynAny_i::create_dyn_any (tc, ACE_TRY_ENV);
-}
-
-CORBA_DynStruct_ptr
-CORBA_ORB::create_dyn_struct    (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& ACE_TRY_ENV)
-{
-  return TAO_DynAny_i::create_dyn_struct (tc, ACE_TRY_ENV);
-}
-
-CORBA_DynSequence_ptr
-CORBA_ORB::create_dyn_sequence  (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& ACE_TRY_ENV)
-{
-  return TAO_DynAny_i::create_dyn_sequence (tc, ACE_TRY_ENV);
-}
-
-CORBA_DynArray_ptr
-CORBA_ORB::create_dyn_array     (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& ACE_TRY_ENV)
-{
-  return TAO_DynAny_i::create_dyn_array (tc, ACE_TRY_ENV);
-}
-
-CORBA_DynUnion_ptr
-CORBA_ORB::create_dyn_union     (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& ACE_TRY_ENV)
-{
-  return TAO_DynAny_i::create_dyn_union (tc, ACE_TRY_ENV);
-}
-
-CORBA_DynEnum_ptr
-CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& ACE_TRY_ENV)
-{
-  return TAO_DynAny_i::create_dyn_enum (tc, ACE_TRY_ENV);
-}
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // ****************************************************************
 

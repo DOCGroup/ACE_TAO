@@ -30,7 +30,7 @@
 int main (int argc, char* argv[])
 {
   Driver driver;
-  
+
   // initialize the driver
   if (driver.init (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -133,7 +133,7 @@ Driver::parse_args (int argc, char* argv[])
                           -1);
       }
 
-  // Indicates successful parsing of command line.        
+  // Indicates successful parsing of command line.
   return 0;
 }
 
@@ -146,7 +146,7 @@ Driver::run (void)
     {
       case TEST_DYNANY:
         {
-          Test_Wrapper<Test_DynAny>* wrapper = 
+          Test_Wrapper<Test_DynAny>* wrapper =
             new Test_Wrapper<Test_DynAny> (new Test_DynAny (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
@@ -154,7 +154,7 @@ Driver::run (void)
         break;
       case TEST_DYNARRAY:
         {
-          Test_Wrapper<Test_DynArray>* wrapper = 
+          Test_Wrapper<Test_DynArray>* wrapper =
             new Test_Wrapper<Test_DynArray> (new Test_DynArray (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
@@ -162,7 +162,7 @@ Driver::run (void)
         break;
       case TEST_DYNENUM:
         {
-          Test_Wrapper<Test_DynEnum>* wrapper = 
+          Test_Wrapper<Test_DynEnum>* wrapper =
             new Test_Wrapper<Test_DynEnum> (new Test_DynEnum (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
@@ -170,7 +170,7 @@ Driver::run (void)
         break;
       case TEST_DYNSEQUENCE:
         {
-          Test_Wrapper<Test_DynSequence>* wrapper = 
+          Test_Wrapper<Test_DynSequence>* wrapper =
             new Test_Wrapper<Test_DynSequence> (new Test_DynSequence (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
@@ -178,7 +178,7 @@ Driver::run (void)
         break;
       case TEST_DYNSTRUCT:
         {
-          Test_Wrapper<Test_DynStruct>* wrapper = 
+          Test_Wrapper<Test_DynStruct>* wrapper =
             new Test_Wrapper<Test_DynStruct> (new Test_DynStruct (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
@@ -186,7 +186,7 @@ Driver::run (void)
         break;
       case TEST_DYNUNION:
         {
-          Test_Wrapper<Test_DynUnion>* wrapper = 
+          Test_Wrapper<Test_DynUnion>* wrapper =
             new Test_Wrapper<Test_DynUnion> (new Test_DynUnion (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
@@ -240,4 +240,3 @@ template class Test_Wrapper<Test_DynUnion>;
 #pragma instantiate Test_Wrapper<Test_DynStruct>
 #pragma instantiate Test_Wrapper<Test_DynUnion>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
