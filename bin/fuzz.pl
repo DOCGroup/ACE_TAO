@@ -20,7 +20,7 @@ use Getopt::Std;
 # - Guards in .h files
 # - no global functions
 # - other commit_check checks, tabs, trailing spaces.
-# - _narrow() should always have TAO_ENV_ARG_PARAMETER
+# - _narrow() should always have ACE_ENV_ARG_PARAMETER
 # - Using ACE_TRY_NEW_ENV (Nanbor suggests using ACE_DECLARE_NEW_CORBA_ENV)
 #
 # And others in ACE_Guidelines and Design Rules
@@ -631,7 +631,7 @@ sub check_for_bad_ace_trace()
 
 
 
-# This test checks missing TAO_ENV_ARG_PARAMETER when using
+# This test checks missing ACE_ENV_ARG_PARAMETER when using
 # resolve_initial_references
 sub check_for_missing_rir_env ()
 {
@@ -666,14 +666,14 @@ sub check_for_missing_rir_env ()
                         $in_rir = 1;
                     }
 
-                    if (m/TAO_ENV_ARG_PARAMETER/) {
+                    if (m/ACE_ENV_ARG_PARAMETER/) {
                         $found_env = 1;
                     }
 
                     if ($in_rir == 1 && m/\;\s*$/) {
                         $in_rir = 0;
                         if ($found_env != 1) {
-                            print_error ("Missing TAO_ENV_ARG_PARAMETER in"
+                            print_error ("Missing ACE_ENV_ARG_PARAMETER in"
                                          . " resolve_initial_references"
                                          . " in $file ($line)");
                         }
