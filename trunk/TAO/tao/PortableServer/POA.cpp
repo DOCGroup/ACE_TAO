@@ -2990,6 +2990,7 @@ TAO_POA::locate_servant_i (const char *operation,
     }
 #else
   ACE_UNUSED_ARG (operation);
+  ACE_UNUSED_ARG (wait_occurred_restart_call);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Failure
