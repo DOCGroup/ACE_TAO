@@ -32,8 +32,6 @@ Mon Mar 18 15:34:26 2002  Boris Kolpackov  <bosk@ipmce.ru>
 	* TAO_IDL/be/be_visitor_operation/operation.cpp:
 	  Valuetype-related minor bug fixes.
 
-
-
 Sat Mar 16 09:07:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAOACE.dsw: Added Messaging DLL as a dependency to the
