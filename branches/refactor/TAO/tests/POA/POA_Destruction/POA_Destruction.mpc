@@ -1,0 +1,3 @@
+project(POA Destruction): server {
+  exename = POA_Destruction
+}
