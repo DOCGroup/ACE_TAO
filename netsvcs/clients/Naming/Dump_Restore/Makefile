@@ -1,53 +1,62 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Makefile for the ACE Dump-Restore Name_Server utility
+#       Makefile for the ACE Dump-Restore Name_Server utility
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
-BIN   	= main 
-LIB   	= libDump_Restore.a
-SHLIB 	= libDump_Restore.$(SOEXT)
+FILES   = Dump_Restore
 
-FILES	= Dump_Restore
+PSRC    = $(addsuffix .cpp,$(BIN))
+OBJ     = $(SRC:%.cpp=$(VDIR)%.o)
 
-PSRC   	= $(addsuffix .cpp,$(BIN))
-OBJ   	= $(SRC:%.cpp=$(VDIR)%.o)
-
-LSRC   	= $(addsuffix .cpp,$(FILES))
-LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
-SHOBJ	= $(addsuffix .so,$(FILES))
+LSRC    = $(addsuffix .cpp,$(FILES))
+LOBJ    = $(LSRC:%.cpp=$(VDIR)%.o)
+SHOBJ   = $(addsuffix .so,$(FILES))
 
 LIBS    += $(ACELIB)
 
-LDLIBS 	= -lDump_Restore
- 
+LDLIBS  = -lDump_Restore
+
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
+BIN2    = main
+LIB2    = libDump_Restore.a
+SHLIB2  = libDump_Restore.$(SOEXT)
+
+#### If the ACE library wasn't built with sufficient components, don't
+#### try to build here.
+ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
+ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
+  BIN = $(BIN2)
+  LIB = $(LIB2)
+  SHLIB = $(SHLIB2)
+endif # Other
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
-include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Dependencies
+#       Dependencies
 #----------------------------------------------------------------------------
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 

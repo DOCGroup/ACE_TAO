@@ -10,23 +10,24 @@
 
 LDLIBS  = -lnetsvcs
 VLDLIBS = $(LDLIBS:%=%$(VAR))
+LSRC = $(addsuffix .cpp,$(BIN))
+
+BIN2 = main
+
+#### If the ACE library wasn't built with sufficient components, don't
+#### try to build here.
+ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
+ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
+  ifeq (Token,$(findstring Token,$(ACE_BUILD_COMPONENTS)))
+    BIN = $(BIN2)
+  endif # ! Token
+endif # ! Other
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-#### If the ACE library wasn't built with Token and Other components, don't
-#### try to build the server.
-ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
-ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
-  ifeq (Token,$(findstring Token,$(ACE_BUILD_COMPONENTS)))
-    BIN = main
-    LSRC = $(addsuffix .cpp,$(BIN))
-  endif # ! Token
-endif # ! Other
-
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
