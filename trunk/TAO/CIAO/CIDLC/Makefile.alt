@@ -10,14 +10,15 @@ $(call include, $(root)/Config.rules)
 
 $(call include, $(UTILITY_ROOT)/BuildRules/Executable.pre.rules)
 
-cxx_translation_units := DescriptorGenerator.cpp      \
-                         ExecutorMappingGenerator.cpp \
-                         RepositoryIdGenerator.cpp    \
-			 SizeTypeCalculator.cpp       \
-                         ServantGenerator.cpp         \
-                         ServantHeaderGenerator.cpp   \
-                         ServantSourceGenerator.cpp   \
-                         TypeNameEmitter.cpp          \
+#DescriptorGenerator.cpp      \
+#RepositoryIdGenerator.cpp    \
+#SizeTypeCalculator.cpp       \
+#ServantGenerator.cpp         \
+#ServantHeaderGenerator.cpp   \
+#ServantSourceGenerator.cpp   \
+#TypeNameEmitter.cpp          \
+
+cxx_translation_units := ExecutorMappingGenerator.cpp \
                          cidlc.cpp
 
 module_base           := cidlc
@@ -26,12 +27,12 @@ module_suffix         :=
 
 CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
 
-CXX_LINK_LIBS         += -L$(root)/CCF/IDL2              \
-                         -lIDL2                          \
+CXX_LINK_LIBS         += -L$(root)/CCF/CIDL              \
+                         -lCIDL                          \
                          -L$(root)/CCF/IDL3              \
                          -lIDL3                          \
-                         -L$(root)/CCF/CIDL              \
-                         -lCIDL                          \
+                         -L$(root)/CCF/IDL2              \
+                         -lIDL2                          \
                          -L$(root)/CCF/CodeGenerationKit \
                          -lCodeGenerationKit             \
                          -L$(root)/CCF/CompilerElements  \

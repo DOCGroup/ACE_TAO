@@ -4,836 +4,1251 @@
 
 #include "ExecutorMappingGenerator.hpp"
 
-#include <map>
+#include <set>
 #include <ostream>
 #include <fstream>
 
-#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/SemanticGraph.hpp"
 #include "CCF/CIDL/Traversal.hpp"
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
 #include "CCF/CodeGenerationKit/IndentationIDL.hpp"
 #include "CCF/CodeGenerationKit/IndentationImplanter.hpp"
 
-using std::cout;
-using std::endl;
 using std::string;
-using std::make_pair;
+using std::ostream;
+using std::endl;
+
 
 using namespace CCF::CIDL;
-using namespace SyntaxTree;
+using namespace CCF::CIDL::SemanticGraph;
 
 namespace
 {
-  class Declarations
+  class Context
   {
   public:
-    bool
-    add (HomeDefPtr const& h)
+    Context (TranslationUnit& tu)
+        : tu_ (tu)
     {
-      return homes_.insert (h).second;
     }
 
-    bool
-    add (ComponentDefPtr const& c)
+    TranslationUnit&
+    tu () const
     {
-      return components_.insert (c).second;
-    }
-
-    bool
-    add (CompositionPtr const& cs, ComponentDefPtr const& cn)
-    {
-      return compositions_.insert (make_pair(cs, cn)).second;
-    }
-
-    bool
-    add (UnconstrainedInterfaceDeclPtr const& i)
-    {
-      return interfaces_.insert (i).second;
+      return tu_;
     }
 
   public:
     bool
-    find (HomeDefPtr const& h) const
+    add (Home& h)
     {
-      return homes_.find (h) != homes_.end ();
+      return homes_.insert (&h).second;
     }
 
     bool
-    find (ComponentDefPtr const& c) const
+    add (Component& c)
     {
-      return components_.find (c) != components_.end ();
+      return components_.insert (&c).second;
     }
 
     bool
-    find (CompositionPtr const& c) const
+    add (UnconstrainedInterface& i)
     {
-      return compositions_.find (c) != compositions_.end ();
+      return interfaces_.insert (&i).second;
     }
 
     bool
-    find (UnconstrainedInterfaceDeclPtr const& i) const
+    add (Composition& c)
     {
-      return interfaces_.find (i) != interfaces_.end ();
-    }
-
-  public:
-    ComponentDefPtr
-    resolve (CompositionPtr const& c) const
-    {
-      CompositionMap::const_iterator i = compositions_.find (c);
-      if (i != compositions_.end ())
-      {
-        return i->second;
-      }
-      else
-      {
-        return ComponentDefPtr (0);
-      }
+      return compositions_.insert (&c).second;
     }
 
   public:
     bool
-    contains_suborder (Order const& o) const
+    find (Home& h) const
     {
-      for (UnconstrainedInterfaceDeclSet::const_iterator i =
-           interfaces_.begin ();
-           i != interfaces_.end ();
-           i++)
-      {
-        if (o.suborder ((*i)->order ())) return true;
-      }
+      return homes_.find (&h) != homes_.end ();
+    }
 
-      for (ComponentDefSet::const_iterator i = components_.begin ();
-           i != components_.end ();
-           i++)
-      {
-        if (o.suborder ((*i)->order ())) return true;
-      }
+    bool
+    find (Component& c) const
+    {
+      return components_.find (&c) != components_.end ();
+    }
 
-      for (HomeDefSet::const_iterator i = homes_.begin ();
-           i != homes_.end ();
-           i++)
-      {
-        if (o.suborder ((*i)->order ())) return true;
-      }
+    bool
+    find (UnconstrainedInterface& i) const
+    {
+      return interfaces_.find (&i) != interfaces_.end ();
+    }
 
-      for (CompositionMap::const_iterator i = compositions_.begin ();
-           i != compositions_.end ();
-           i++)
-      {
-        if (o.suborder (i->first->order ())) return true;
-      }
-
-      return false;
+    bool
+    find (Composition& c) const
+    {
+      return compositions_.find (&c) != compositions_.end ();
     }
 
   private:
-    typedef
-    std::map <CompositionPtr, ComponentDefPtr, CompositionOrderComparator>
-    CompositionMap;
+    typedef std::set<Home*> Homes;
+    typedef std::set<Component*> Components;
+    typedef std::set<UnconstrainedInterface*> Interfaces;
+    typedef std::set<Composition*> Compositions;
 
-    HomeDefSet homes_;
-    ComponentDefSet components_;
-    CompositionMap compositions_;
-    UnconstrainedInterfaceDeclSet interfaces_;
+    TranslationUnit& tu_;
+
+    Homes homes_;
+    Components components_;
+    Interfaces interfaces_;
+    Compositions compositions_;
+  };
+
+  class Traverser
+  {
+  protected:
+    Traverser (Context& c)
+        : ctx (c)
+    {
+    }
+
+    Context& ctx;
+  };
+
+  struct Collector : Traverser
+  {
+  protected:
+    Collector (Context& c)
+        : Traverser (c)
+    {
+    }
+
+    bool
+    exist (ScopedName const& name)
+    {
+      return !ctx.tu ().lookup (name).empty ();
+    }
+  };
+
+  //
+  //
+  //
+  struct ComponentCollector : Traversal::Component, Collector
+  {
+    ComponentCollector (Context& c)
+        : Collector (c)
+    {
+    }
+
+    virtual void
+    traverse (Type& c)
+    {
+      SimpleName name (c.name ());
+      ScopedName scope (c.scoped_name ().scope_name ());
+
+      ScopedName monolith (scope, "CCM_" + name);
+      ScopedName context (scope, "CCM_" + name + "_Context");
+
+      // Check if mapping has already been provided.
+      //
+      if (exist (context) || exist (monolith)) return;
+
+      if(ctx.add (c))
+      {
+        // Collect inherited components and provides interfaces.
+        //
+        Traversal::Component::traverse (c);
+      }
+    }
   };
 
 
   //
   //
   //
-  class HomeCollector : public Traversal::HomeDef
+  struct HomeCollector : Traversal::Home, Collector
   {
-  public:
-    HomeCollector (Declarations& declarations)
-        : declarations_ (declarations)
+    HomeCollector (Context& c)
+        : Collector (c)
     {
     }
 
     virtual void
-    traverse (HomeDefPtr const& h)
+    traverse (Type& h)
     {
-      ScopedName n (h->name ());
+      SimpleName name (h.name ());
+      ScopedName scope (h.scoped_name ().scope_name ());
 
-      ScopedName main (n.scope (), "CCM_" + n.simple ());
-      ScopedName expl (n.scope (), "CCM_" + n.simple () + "Explicit");
-      ScopedName impl (n.scope (), "CCM_" + n.simple () + "Implicit");
+      ScopedName main (scope, "CCM_" + name);
+      ScopedName expl (scope, "CCM_" + name + "Explicit");
+      ScopedName impl (scope, "CCM_" + name + "Implicit");
 
       // Check if mapping has already been provided.
-      if (h->table ().exist (main) ||
-          h->table ().exist (expl) ||
-          h->table ().exist (impl)) return;
+      //
+      if (exist (main) || exist (expl) || exist (impl)) return;
 
-      if (declarations_.add (h))
+      if(ctx.add (h))
       {
         // Note that I don't go after components that inherited home manages
         // because it will be handled by component inheritance tree.
         //
-        if (h->inherits ()) traverse (h->inherits ().resolve ());
+        Traversal::Home::traverse (h);
       }
     }
-
-  private:
-    Declarations& declarations_;
   };
 
+
   //
   //
   //
-  class ComponentCollector : public Traversal::ComponentDef
+  struct InterfaceCollector : Traversal::UnconstrainedInterface, Collector
   {
-  public:
-    ComponentCollector (Declarations& declarations)
-        : declarations_ (declarations)
+    InterfaceCollector (Context& c)
+        : Collector (c)
     {
     }
 
     virtual void
-    pre (ComponentDefPtr const& c)
+    traverse (Type& i)
     {
-      ScopedName n (c->name ());
+      SimpleName name (i.name ());
+      ScopedName scope (i.scoped_name ().scope_name ());
 
-      ScopedName monolith (n.scope (), "CCM_" + n.simple ());
-      ScopedName context (n.scope (), "CCM_" + n.simple () + "_Context");
+      ScopedName mapping (scope, "CCM_" + name);
 
       // Check if mapping has already been provided.
-      if (c->table ().exist (context) ||
-          c->table ().exist (monolith)) return;
-
-      if (declarations_.add (c))
-      {
-        if (c->inherits ())
-        {
-          traverse (c->inherits ().resolve ());
-        }
-      }
-    }
-
-  private:
-    Declarations& declarations_;
-  };
-
-  //
-  //
-  //
-  class InterfaceCollector : public Traversal::UnconstrainedInterfaceDecl
-  {
-  public:
-    InterfaceCollector (Declarations& declarations)
-        : declarations_ (declarations)
-    {
-    }
-
-    virtual void
-    traverse (UnconstrainedInterfaceDeclPtr const& i)
-    {
-      ScopedName orig (i->name ());
-      ScopedName mapping (orig.scope (), "CCM_" + orig.simple ());
-
-      // Check if mapping has already been provided.
-      if (i->table ().exist (mapping)) return;
+      //
+      if (exist (mapping)) return;
 
       // Add to the list if it's not already there.
-      declarations_.add (i);
+      //
+      ctx.add (i);
     }
-
-  private:
-    Declarations& declarations_;
   };
 
-
-  //
-  //
-  //
-  class HomeExecutorCollector : public Traversal::HomeExecutor
+  struct CompositionCollector : Traversal::Composition, Collector
   {
-  public:
-    HomeExecutorCollector (Declarations& declarations,
-                           Traversal::Dispatcher* home_collector,
-                           Traversal::Dispatcher* component_collector)
-        : declarations_ (declarations),
-          home_collector_ (home_collector),
-          component_collector_ (component_collector)
+    CompositionCollector (Context& c)
+        : Collector (c)
     {
     }
 
     virtual void
-    traverse (HomeExecutorPtr const& he)
+    traverse (Type& c)
     {
-      HomeDefPtr home (he->implements ());
-      home_collector_->dispatch (home);
-
-      ComponentDefPtr component (home->manages ());
-      component_collector_->dispatch (component);
-
-      CompositionPtr composition (
-        he->scope ()->dynamic_type<SyntaxTree::Composition> ());
-      declarations_.add (composition, component);
-    }
-
-  private:
-    Declarations& declarations_;
-
-    Traversal::Dispatcher* home_collector_;
-    Traversal::Dispatcher* component_collector_;
-  };
-
-
-  //
-  //
-  //
-  class TypeNameEmitter : public Traversal::BuiltInTypeDecl,
-                          public Traversal::TypeDecl
-  {
-  public:
-    TypeNameEmitter (std::ostream& os_)
-        : os (os_)
-    {
-    }
-
-    virtual void
-    traverse (BuiltInTypeDeclPtr const& t)
-    {
-      os << t->name ().simple ();
-    }
-
-    virtual void
-    traverse (TypeDeclPtr const& t)
-    {
-      os << t->name ();
-    }
-
-  private:
-    std::ostream& os;
-  };
-
-
-  //
-  //
-  //
-  class ComponentEmitter : public Traversal::ComponentDef
-  {
-  public:
-    ComponentEmitter (Declarations const& declarations)
-        : declarations_ (declarations)
-    {
-    }
-
-    virtual void
-    traverse (ComponentDefPtr const& c)
-    {
-      if (declarations_.find (c))
+      // Add to the list if it's not already there.
+      //
+      if (ctx.add (c))
       {
-        Traversal::ComponentDef::traverse (c);
+        Traversal::Composition::traverse (c);
       }
     }
+  };
+
+  struct Emitter : Traverser
+  {
+  protected:
+    Emitter (Context& c, ostream& os_)
+        : Traverser (c), os (os_)
+    {
+    }
+
+  protected:
+    ostream& os;
+  };
+
+
+  //
+  //
+  //
+  struct TypeNameEmitter : Traversal::FundamentalType,
+                           Traversal::Type,
+                           Emitter
+  {
+    TypeNameEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
+    {
+    }
+
+    virtual void
+    traverse (SemanticGraph::FundamentalType& t)
+    {
+      os << t.name ();
+    }
+
+    virtual void
+    traverse (SemanticGraph::Type& t)
+    {
+      os << t.scoped_name ();
+    }
+  };
+
+
+  struct NameMangler : Traversal::Nameable, Emitter
+  {
+    NameMangler (Context& c,
+                 ostream& os,
+                 string const& prefix,
+                 string const& suffix = "")
+        : Emitter (c, os), prefix_ (prefix), suffix_ (suffix)
+    {
+    }
+
+    virtual void
+    traverse (Type& t)
+    {
+      ScopedName n (t.scoped_name ());
+      os << n.scope_name () << "::" << prefix_ << n.simple_name () << suffix_;
+    }
 
   private:
-    Declarations const& declarations_;
+    string prefix_, suffix_;
+  };
+
+
+  //
+  //
+  //
+  struct ComponentEmitter : Traversal::Component, Emitter
+  {
+  protected:
+    ComponentEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
+    {
+    }
+
+    virtual void
+    traverse (Type& c)
+    {
+      if (ctx.find (c))
+      {
+        Component::traverse (c);
+      }
+    }
   };
 
 
   // MonolithEmitter generates what spec calls 'Monolithic Component
   // Executor'.
   //
-  class MonolithEmitter : public Traversal::ComponentDef,
-                          public Traversal::AttributeDecl,
-                          public Traversal::ProvidesDecl,
-                          public Traversal::ConsumesDecl
+  struct MonolithEmitter : ComponentEmitter
   {
-  public:
-    MonolithEmitter (std::ostream& os_,
-                     Traversal::Dispatcher* type_name_emitter)
-        : AttributeDecl (type_name_emitter),
-          os (os_)
+    MonolithEmitter (Context& c, ostream& os)
+        : ComponentEmitter (c, os),
+          monolith_name_emitter (c, os, "CCM_"),
+          attribute (c, os),
+          consumer (c, os),
+          provider (c, os),
+          type_name_emitter (c, os)
     {
+      edge_traverser (inherits);
+      edge_traverser (defines);
+
+      inherits.node_traverser (monolith_name_emitter);
+
+      defines.node_traverser (attribute);
+      defines.node_traverser (consumer);
+      defines.node_traverser (provider);
+
+      attribute.edge_traverser (belongs);
+      consumer.edge_traverser (belongs);
+      provider.edge_traverser (provider_belongs);
+
+      belongs.node_traverser (type_name_emitter);
+      provider_belongs.node_traverser (monolith_name_emitter);
     }
 
     virtual void
-    pre (ComponentDefPtr const& c)
+    pre (Type&)
     {
-      os << "local interface CCM_" << c->name ().simple () << " : ";
+      os << "local interface ";
+    }
 
-      ComponentDefRef cr = c->inherits ();
+    virtual void
+    name (Type& c)
+    {
+      os << "CCM_" << c.name ();
+    }
 
-      if (cr)
-      {
-        os << cr.name ().scope () << "::CCM_" << cr.name ().simple ();
-      }
-      else
-      {
-        os << "::Components::EnterpriseComponent";
-      }
+    virtual void
+    inherits_pre (Type&)
+    {
+      os << " : ";
+    }
 
-      for (SyntaxTree::ComponentDef::Iterator i = c->supports_begin ();
-           i != c->supports_end ();
-           i++)
-      {
-        os << ", " << i->name ();
-      }
+    virtual void
+    inherits_none (Type&)
+    {
+      os << " : ::Components::EnterpriseComponent";
+    }
 
+    virtual void
+    supports_pre (Type&)
+    {
+      os << ", ";
+    }
+
+    virtual void
+    names_pre (Type&)
+    {
       os << "{";
     }
 
     virtual void
-    pre (AttributeDeclPtr const& a)
+    names_post (Type&)
+    {
+      os << "}";
+    }
+
+    virtual void
+    post (Type&)
+    {
+      os << ";";
+    }
+
+    virtual void
+    comma (Type&)
+    {
+      os << ", ";
+    }
+
+  private:
+    struct Attribute : Traversal::Attribute, Emitter
+    {
+      Attribute (Context& c, ostream& os)
+          : Emitter (c, os)
+      {
+      }
+
+      virtual void
+      pre (Type& )
+      {
+        os << "attribute ";
+      }
+
+      virtual void
+      name (Type& a)
+      {
+        os << " " << a.name ();
+      }
+
+      virtual void
+      post (Type&)
+      {
+        os << ";";
+      }
+    };
+
+
+    struct Consumer : Traversal::ConsumerSet, Emitter
+    {
+      Consumer (Context& c, ostream& os)
+          : Emitter (c, os)
+      {
+      }
+
+      virtual void
+      returns (Type&)
+      {
+        os << "void";
+      }
+
+      virtual void
+      name (Type& c)
+      {
+        os << " push_" << c.name ();
+      }
+
+      virtual void
+      receives_pre (Type&)
+      {
+        os << " (in ";
+      }
+
+      virtual void
+      receives_post (Type&)
+      {
+        os << " e)";
+      }
+
+      virtual void
+      post (Type&)
+      {
+        os << ";";
+      }
+    };
+
+
+    struct Provider : Traversal::ProviderGet, Emitter
+    {
+      Provider (Context& c, ostream& os)
+          : Emitter (c, os)
+      {
+      }
+
+      virtual void
+      name (Type& c)
+      {
+        os << " get_" << c.name ();
+      }
+
+      virtual void
+      receives_pre (Type&)
+      {
+        os << " (";
+      }
+
+      virtual void
+      receives_post (Type&)
+      {
+        os << ")";
+      }
+
+      virtual void
+      post (Type&)
+      {
+        os << ";";
+      }
+    };
+
+    Traversal::Inherits inherits;
+    Traversal::Defines defines;
+
+    NameMangler monolith_name_emitter;
+
+    Attribute attribute;
+    Consumer consumer;
+    Provider provider;
+
+    Traversal::Belongs belongs;
+    Traversal::Belongs provider_belongs;
+
+    TypeNameEmitter type_name_emitter;
+  };
+
+
+  // ContextEmitter generates component context interface.
+  //
+  //
+  struct ContextPortEmitter : Traversal::UserGet,
+                              Traversal::PublisherSet,
+                              Traversal::EmitterSet,
+                              Emitter
+  {
+    ContextPortEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
+    {
+    }
+
+
+    // User.
+    //
+    virtual void
+    name (SemanticGraph::User& u)
+    {
+      os << " get_connection_" << u.name ();
+    }
+
+    virtual void
+    receives_pre (SemanticGraph::User&)
+    {
+      os << " (";
+    }
+
+    virtual void
+    receives_post (SemanticGraph::User&)
+    {
+      os << ")";
+    }
+
+    virtual void
+    post (SemanticGraph::User&)
+    {
+      os << ";";
+    }
+
+
+    // Publisher.
+    //
+    virtual void
+    returns (SemanticGraph::Publisher&)
+    {
+      os << "void";
+    }
+
+    virtual void
+    name (SemanticGraph::Publisher& p)
+    {
+      os << " push_" << p.name ();
+    }
+
+    virtual void
+    receives_pre (SemanticGraph::Publisher&)
+    {
+      os << " (in ";
+    }
+
+    virtual void
+    receives_post (SemanticGraph::Publisher&)
+    {
+      os << " e)";
+    }
+
+    virtual void
+    post (SemanticGraph::Publisher&)
+    {
+      os << ";";
+    }
+
+
+    // Emitter.
+    //
+    virtual void
+    returns (SemanticGraph::Emitter&)
+    {
+      os << "void";
+    }
+
+    virtual void
+    name (SemanticGraph::Emitter& e)
+    {
+      os << " push_" << e.name ();
+    }
+
+    virtual void
+    receives_pre (SemanticGraph::Emitter&)
+    {
+      os << " (in ";
+    }
+
+    virtual void
+    receives_post (SemanticGraph::Emitter&)
+    {
+      os << " e)";
+    }
+
+    virtual void
+    post (SemanticGraph::Emitter&)
+    {
+      os << ";";
+    }
+  };
+
+
+  struct ContextEmitter : ComponentEmitter
+  {
+    ContextEmitter (Context& c, ostream& os)
+        : ComponentEmitter (c, os), name_emitter (c, os, "CCM_", "_Context")
+    {
+      edge_traverser (inherits);
+      inherits.node_traverser (name_emitter);
+    }
+
+    virtual void
+    pre (Type&)
+    {
+      os << "local interface ";
+    }
+
+    virtual void
+    name (Type& c)
+    {
+      os << "CCM_" << c.name () << "_Context";
+    }
+
+    virtual void
+    inherits_pre (Type&)
+    {
+      os << " : ";
+    }
+
+    virtual void
+    inherits_none (Type&)
+    {
+      //@@ This should be ::Components::CCMContext when we start using
+      //   proper mapping.
+      //
+      os << " : ::Components::SessionContext";
+    }
+
+    virtual void
+    names_pre (Type&)
+    {
+      os << "{";
+    }
+
+    virtual void
+    names_post (Type&)
+    {
+      os << "}";
+    }
+
+    virtual void
+    post (Type&)
+    {
+      os << ";";
+    }
+
+  private:
+    Traversal::Inherits inherits;
+    NameMangler name_emitter;
+  };
+
+
+  //
+  //
+  //
+  struct HomeEmitter : Traversal::Home, Emitter
+  {
+    HomeEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
+    {
+    }
+
+    virtual void
+    traverse (Type& h)
+    {
+      if (ctx.find (h))
+      {
+        Home::traverse (h);
+      }
+    }
+  };
+
+
+  // HomeExplicitEmitter generates home explicit interface
+  //
+  //
+  struct ExplicitPortEmitter : Traversal::Attribute,
+                               Traversal::Operation,
+                               Traversal::HomeFactory,
+                               Emitter
+  {
+    ExplicitPortEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
+    {
+    }
+
+    // Attribute.
+    //
+
+    virtual void
+    pre (SemanticGraph::Attribute&)
     {
       os << "attribute ";
     }
 
     virtual void
-    post (AttributeDeclPtr const& a)
+    name (SemanticGraph::Attribute& a)
     {
-      os << " " << a->name ().simple () << ";";
+      os << " " << a.name ();
     }
 
     virtual void
-    traverse (ProvidesDeclPtr const& p)
+    post (SemanticGraph::Attribute&)
     {
-      ScopedName n = p->type ()->name ();
-
-      os << n.scope () << "::CCM_" << n.simple ()
-         << " get_" << p->name ().simple () << " ();";
+      os << ";";
     }
 
-    virtual void
-    traverse (ConsumesDeclPtr const& p)
-    {
-      os << "void push_" << p->name ().simple () << " ("
-         << "in " << p->type()->name () << " ev);";
-    }
 
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
-      os << "};" << endl;
-    }
-
-  private:
-    std::ostream& os;
-  };
-
-  // ContextEmitter generates component context interface.
-  //
-  //
-  class ContextEmitter : public Traversal::ComponentDef,
-                         public Traversal::UsesDecl,
-                         public Traversal::PublishesDecl,
-                         public Traversal::EmitsDecl
-  {
-  public:
-    ContextEmitter (std::ostream& os_) : os (os_) {}
-
-    virtual void
-    pre (ComponentDefPtr const& c)
-    {
-      os << "local interface CCM_" << c->name ().simple () << "_Context : ";
-
-      ComponentDefRef cr = c->inherits ();
-
-      if (cr)
-      {
-        ScopedName name (cr.name ());
-        os << name.scope () << "::CCM_" << name.simple () << "_Context";
-      }
-      else
-      {
-        //@@ (diego) Not clear to me which to use...  I use this one to
-        // make examples work...
-        //os << "::Components::CCMContext";
-        os << "::Components::SessionContext";
-      }
-
-      os << "{";
-    }
-
-    virtual void
-    traverse (UsesDeclPtr const& d)
-    {
-      os << d->type ()->name ()
-         << " get_connection_" << d->name ().simple () << " ();";
-    }
-
-    virtual void
-    traverse (PublishesDeclPtr const& d)
-    {
-      os << "void push_" << d->name ().simple () << " ("
-         << "in " << d->type ()->name () << " ev);";
-    }
-
-    virtual void
-    traverse (EmitsDeclPtr const& d)
-    {
-      os << "void push_" << d->name ().simple () << " ("
-         << "in " << d->type ()->name () << " ev);";
-    }
-
-    virtual void
-    post (ComponentDefPtr const& c)
-    {
-      os << "};" << endl;
-    }
-
-  private:
-    std::ostream& os;
-  };
-
-
-  //
-  //
-  //
-  class HomeEmitter : public Traversal::HomeDef
-  {
-  public:
-    HomeEmitter (Declarations const& declarations)
-        : declarations_ (declarations)
-    {
-    }
-
-    virtual void
-    traverse (HomeDefPtr const& h)
-    {
-      if (declarations_.find (h))
-      {
-        Traversal::HomeDef::traverse (h);
-      }
-    }
-
-  private:
-    Declarations const& declarations_;
-  };
-
-  // HomeExplicitEmitter generates home explicit interface
-  //
-  //
-  class HomeExplicitEmitter : public Traversal::OperationParameter,
-                              public Traversal::Comma,
-                              public Traversal::HomeFactoryDecl,
-                              public Traversal::OperationDecl,
-                              public Traversal::AttributeDecl,
-                              public Traversal::HomeDef
-  {
-  public:
-    HomeExplicitEmitter (std::ostream& os_,
-                         Traversal::Dispatcher* type_name_emitter)
-        : OperationParameter (type_name_emitter,
-                              type_name_emitter,
-                              type_name_emitter),
-
-          OperationDecl (type_name_emitter),
-          AttributeDecl (type_name_emitter),
-          os (os_)
-    {
-    }
-
-    virtual void
-    pre (HomeDefPtr const& h)
-    {
-      os << "local interface CCM_" << h->name ().simple () << "Explicit : ";
-
-      HomeDefRef hr = h->inherits ();
-
-      if (hr)
-      {
-        ScopedName name (hr.name ());
-        os << name.scope () << "::CCM_" << name.simple () << "Explicit";
-      }
-      else
-      {
-        os << "::Components::HomeExecutorBase";
-      }
-
-      for (SyntaxTree::HomeDef::Iterator i = h->supports_begin ();
-           i != h->supports_end ();
-           i++)
-      {
-        os << ", " << i->name ();
-      }
-
-      os << "{";
-
-    }
-
-    virtual void
-    post (HomeDefPtr const& h)
-    {
-      os << "};" << endl;
-    }
-
-    //
-    // OperationParameter
+    // Operation.
     //
 
     virtual void
-    post (OperationParameterPtr const& op)
+    name (SemanticGraph::Operation& o)
     {
-      os << " " << op->name ();
+      os << " " << o.name ();
     }
 
     virtual void
-    traverse (CommaPtr const& s)
+    receives_pre (SemanticGraph::Operation&)
+    {
+      os << " (";
+    }
+
+    virtual void
+    receives_post (SemanticGraph::Operation&)
+    {
+      os << ")";
+    }
+
+    virtual void
+    raises_pre (SemanticGraph::Operation&)
+    {
+      os << " raises (";
+    }
+
+    virtual void
+    raises_post (SemanticGraph::Operation&)
+    {
+      os << ")";
+    }
+
+    virtual void
+    post (SemanticGraph::Operation&)
+    {
+      os << ";";
+    }
+
+    virtual void
+    comma (SemanticGraph::Operation&)
     {
       os << ", ";
     }
 
-    //
-    // HomeFactory
+
+    // HomeFactory.
     //
 
     virtual void
-    type (HomeFactoryDeclPtr const& d)
+    returns (SemanticGraph::HomeFactory&)
     {
       os << "::Components::EnterpriseComponent ";
     }
 
     virtual void
-    name (HomeFactoryDeclPtr const& d)
+    name (SemanticGraph::HomeFactory& hf)
     {
-      os << d->name ().simple () << " (";
+      os << " " << hf.name ();
     }
 
     virtual void
-    post (HomeFactoryDeclPtr const& d)
+    receives_pre (SemanticGraph::HomeFactory&)
     {
-      os << ");";
-    }
-
-    //
-    // Operation
-    //
-
-    virtual void
-    name (OperationDeclPtr const& d)
-    {
-      os << " " << d->name ().simple () << " (";
+      os << " (";
     }
 
     virtual void
-    pre (OperationParameterPtr const& op)
+    receives_post (SemanticGraph::HomeFactory&)
     {
-      os << op->direction () << " ";
+      os << ")";
     }
 
     virtual void
-    post (OperationDeclPtr const& d)
+    raises_pre (SemanticGraph::HomeFactory&)
     {
-      os << ");";
-    }
-
-    //
-    // Attribute
-    //
-
-    virtual void
-    pre (AttributeDeclPtr const& a)
-    {
-      os << "attribute ";
+      os << " raises (";
     }
 
     virtual void
-    post (AttributeDeclPtr const& a)
+    raises_post (SemanticGraph::HomeFactory&)
     {
-      os << " " << a->name ().simple () << ";";
+      os << ")";
+    }
+
+    virtual void
+    post (SemanticGraph::HomeFactory&)
+    {
+      os << ";";
+    }
+
+    virtual void
+    comma (SemanticGraph::HomeFactory&)
+    {
+      os << ", ";
+    }
+  };
+
+  struct ParameterEmitter : Traversal::Parameter, public Emitter
+  {
+    ParameterEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
+    {
+    }
+
+    virtual void
+    pre (Type& p)
+    {
+      os << p.direction () << " ";
+    }
+
+    virtual void
+    name (Type& p)
+    {
+      os << " " << p.name ();
+    }
+  };
+
+  struct HomeExplicitEmitter : HomeEmitter
+  {
+    HomeExplicitEmitter (Context& c, ostream& os)
+        : HomeEmitter (c, os), name_emitter (c, os, "CCM_", "Explicit")
+    {
+      edge_traverser (inherits);
+      inherits.node_traverser (name_emitter);
+    }
+
+    virtual void
+    pre (Type&)
+    {
+      os << "local interface ";
+    }
+
+    virtual void
+    name (Type& h)
+    {
+      os << "CCM_" << h.name () << "Explicit";
+    }
+
+    virtual void
+    inherits_pre (Type&)
+    {
+      os << " : ";
+    }
+
+    virtual void
+    inherits_none (Type&)
+    {
+      os << " : ::Components::HomeExecutorBase";
+    }
+
+    virtual void
+    supports_pre (Type&)
+    {
+      os << ", ";
+    }
+
+    virtual void
+    names_pre (Type&)
+    {
+      os << "{";
+    }
+
+    virtual void
+    names_post (Type&)
+    {
+      os << "}";
+    }
+
+    virtual void
+    post (Type&)
+    {
+      os << ";";
+    }
+
+    virtual void
+    comma (Type&)
+    {
+      os << ", ";
     }
 
   private:
-    std::ostream& os;
+    Traversal::Inherits inherits;
+    NameMangler name_emitter;
   };
 
 
   // HomeImplicitEmitter generates home implicit interface
   //
   //
-  class HomeImplicitEmitter : public Traversal::HomeDef
+  struct HomeImplicitEmitter : HomeEmitter
   {
-  public:
-    HomeImplicitEmitter (std::ostream& os_) : os (os_) {}
-
-    virtual void
-    pre (HomeDefPtr const& h)
+    HomeImplicitEmitter (Context& c, ostream& os)
+        : HomeEmitter (c, os)
     {
-      os << "local interface " << "CCM_" << h->name ().simple () << "Implicit"
-         << "{"
-         << "::Components::EnterpriseComponent "
-         << "create () raises (::Components::CCMException);";
     }
 
     virtual void
-    post (HomeDefPtr const& h)
+    pre (Type&)
     {
-      os << "};" << endl;
+      os << "local interface ";
     }
 
-  private:
-    std::ostream& os;
+    virtual void
+    name (Type& h)
+    {
+      os << "CCM_" << h.name () << "Implicit";
+    }
+
+    virtual void
+    names (Type& h)
+    {
+      os<< "{"
+        << "::Components::EnterpriseComponent "
+        << "create () raises (::Components::CCMException);"
+        << "}";
+    }
+
+    virtual void
+    post (Type&)
+    {
+      os << ";";
+    }
   };
 
 
   // HomeMainEmitter generates home main interface
   //
   //
-  class HomeMainEmitter : public Traversal::HomeDef
+  struct HomeMainEmitter : HomeEmitter
   {
-  public:
-    HomeMainEmitter (std::ostream& os_) : os (os_) {}
-
-    virtual void
-    traverse (HomeDefPtr const& h)
+    HomeMainEmitter (Context& c, ostream& os)
+        : HomeEmitter (c, os)
     {
-      SimpleName name = h->name ().simple ();
-
-      os << "local interface CCM_" << name << " : "
-         << "CCM_" << name << "Explicit, "
-         << "CCM_" << name << "Implicit"
-         << "{"
-         << "};" << endl;
     }
 
-  private:
-    std::ostream& os;
+    virtual void
+    pre (Type&)
+    {
+      os << "local interface ";
+    }
+
+    virtual void
+    name (Type& h)
+    {
+      os << "CCM_" << h.name ();
+    }
+
+    virtual void
+    inherits (Type& h)
+    {
+      os << " : "
+         << "CCM_" << h.name () << "Explicit, "
+         << "CCM_" << h.name () << "Implicit";
+    }
+
+    virtual void
+    names (Type&)
+    {
+      os << "{}";
+    }
+
+    virtual void
+    post (Type&)
+    {
+      os << ";";
+    }
   };
 
   //
   //
   //
-  class IncludeEmitter : public Traversal::PrincipalTranslationRegion,
-                         public Traversal::UserIncludeTranslationRegion,
-                         public Traversal::SysIncludeTranslationRegion,
-                         public Traversal::ImpliedIncludeTranslationRegion
+  struct ModuleEmitter : Traversal::Module, Emitter
   {
-  public:
-    IncludeEmitter (std::ostream& os_) : os (os_) {}
-
-    virtual void
-    traverse (ImpliedIncludeTranslationRegionPtr const& r)
-    {
-      os << "#include <" << r->file_path ().string () << ">" << endl;
-    }
-
-    virtual void
-    traverse (UserIncludeTranslationRegionPtr const& r)
-    {
-      os << "#include \"" << r->file_path ().string () << "\"" << endl;
-    }
-
-    virtual void
-    traverse (SysIncludeTranslationRegionPtr const& r)
-    {
-      os << "#include <" << r->file_path ().string () << ">" << endl;
-    }
-
-  private:
-    std::ostream& os;
-  };
-
-  //
-  //
-  //
-  class ModuleEmitter : public Traversal::Module
-  {
-  public:
-    ModuleEmitter (std::ostream& os_,
-                   Declarations const& declarations)
-        : os (os_),
-          declarations_ (declarations)
+    ModuleEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
     {
     }
 
-  public:
-
     virtual void
-    traverse (ModulePtr const& m)
+    traverse (Type& m)
     {
-      if (declarations_.contains_suborder (m->order ()))
+      if (has_elements (m))
       {
         Traversal::Module::traverse (m);
       }
     }
 
     virtual void
-    pre (ModulePtr const& m)
+    pre (Type&)
     {
-      os << "module " << m->name ().simple () << "{";
+      os << "module ";
     }
 
     virtual void
-    post (ModulePtr const& m)
+    name (Type& m)
     {
-      os << "};" << endl;
+      os << m.name ();
+    }
+
+    virtual void
+    names_pre (Type&)
+    {
+      os << "{";
+    }
+
+    virtual void
+    names_post (Type&)
+    {
+      os << "}";
+    }
+
+    virtual void
+    post (Type&)
+    {
+      os << ";";
     }
 
   private:
-    std::ostream& os;
-    Declarations const& declarations_;
+
+    template <typename T>
+    struct Finder : T, Traverser
+    {
+      Finder (Context& c, bool& r)
+          : Traverser (c), r_ (r)
+      {
+      }
+
+      virtual void
+      traverse (typename T::Type& t)
+      {
+        if (ctx.find (t)) r_ = true;
+      }
+
+    private:
+      bool& r_;
+    };
+
+    bool
+    has_elements (Type& m)
+    {
+      bool r;
+
+      Traversal::Module module;
+      Traversal::Defines defines;
+
+      module.edge_traverser (defines);
+
+      Finder<Traversal::Composition> composition (ctx, r);
+      Finder<Traversal::UnconstrainedInterface> interface (ctx, r);
+      Finder<Traversal::Component> component (ctx, r);
+      Finder<Traversal::Home> home (ctx, r);
+
+      defines.node_traverser (module);
+      defines.node_traverser (composition);
+      defines.node_traverser (interface);
+      defines.node_traverser (component);
+      defines.node_traverser (home);
+
+      module.traverse (m);
+
+      return r;
+    }
   };
 
   //
   //
   //
-  class InterfaceEmitter : public Traversal::UnconstrainedInterfaceDecl
+  struct InterfaceEmitter : Traversal::UnconstrainedInterface, Emitter
   {
-  public:
-    InterfaceEmitter (std::ostream& os_,
-                      Declarations const& declarations)
-        : os (os_),
-          declarations_ (declarations)
+    InterfaceEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
     {
     }
 
-  public:
     virtual void
-    traverse (UnconstrainedInterfaceDeclPtr const& i)
+    traverse (Type& i)
     {
-      if (declarations_.find (i))
+      if (ctx.find (i))
       {
-        os << "local interface CCM_" << i->name ().simple ()
-           << " : " << i->name ().simple ()
-           << "{};" << endl;
+        Traversal::UnconstrainedInterface::traverse (i);
       }
     }
 
-  private:
-    std::ostream& os;
-    Declarations const& declarations_;
+    virtual void
+    pre (Type&)
+    {
+      os << "local interface ";
+    }
+
+    virtual void
+    name (Type& i)
+    {
+      os << "CCM_" << i.name ();
+    }
+
+    virtual void
+    inherits (Type& i)
+    {
+      os << " : " << i.name ();
+    }
+
+    virtual void
+    names_pre (Type&)
+    {
+      os << "{";
+    }
+
+    virtual void
+    names_post (Type&)
+    {
+      os << "}";
+    }
+
+    virtual void
+    post (Type&)
+    {
+      os << ";";
+    }
   };
+
 
   //
   //
   //
-  class CompositionEmitter : public Traversal::Composition
+  struct CompositionEmitter : Traversal::Composition, Emitter
   {
-  public:
-    CompositionEmitter (std::ostream& os_,
-                        Declarations const& declarations)
-        : os (os_),
-          declarations_ (declarations)
+    CompositionEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
     {
     }
 
-  public:
-
     virtual void
-    traverse (CompositionPtr const& c)
+    traverse (Type& c)
     {
-      if (declarations_.find (c))
+      if (ctx.find (c))
       {
         Traversal::Composition::traverse (c);
       }
     }
 
     virtual void
-    pre (CompositionPtr const& c)
+    pre (Type&)
     {
-      ComponentDefPtr component (declarations_.resolve (c));
-      ScopedName name (component->name ());
+      os << "module ";
+    }
 
-      SyntaxTree::Composition::Category::Value category = c->category ();
+    virtual void
+    name (Type& m)
+    {
+      os << m.name ();
+    }
 
-      os << "module " << c->name ().simple ()
-         << "{";
+    virtual void
+    names_pre (Type&)
+    {
+      os << "{";
+    }
 
-      os << "local interface " << name.simple () << "Context : "
+    virtual void
+    names_post (Type&)
+    {
+      os << "}";
+    }
+
+    virtual void
+    post (Type&)
+    {
+      os << ";";
+    }
+  };
+
+
+  struct ComponentExecutorEmitter : Traversal::ComponentExecutor, Emitter
+  {
+    ComponentExecutorEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
+    {
+    }
+
+    virtual void
+    pre (Type&)
+    {
+      os << "local interface ";
+    }
+
+    virtual void
+    name (Type& i)
+    {
+      //@@ need to check if spec prescribes this name.
+      //
+      os << i.name () << "Context";
+    }
+
+    virtual void
+    manages (Type& i)
+    {
+      /*
+        os << "local interface " << name.simple () << "Context : "
          << name.scope () << "::CCM_" << name.simple () << "_Context, ";
 
       switch (category)
@@ -848,20 +1263,40 @@ namespace
           os << "::Components::SessionContext";
           break;
         }
-      }
-
-      os << "{};" << endl;
+      */
     }
 
     virtual void
-    post (CompositionPtr const& c)
+    post (Type&)
     {
-      os << "};" << endl;
+      os << "{};";
+    }
+  };
+
+
+  //
+  //
+  //
+  struct IncludesEmitter : Traversal::QuoteIncludes,
+                           Traversal::BracketIncludes,
+                           Emitter
+  {
+    IncludesEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
+    {
     }
 
-  private:
-    std::ostream& os;
-    Declarations const& declarations_;
+    virtual void
+    traverse (SemanticGraph::QuoteIncludes& qi)
+    {
+      os << "#include \"" << qi.file ().string () << "\"" << endl;
+    }
+
+    virtual void
+    traverse (SemanticGraph::BracketIncludes& bi)
+    {
+      os << "#include <" << bi.file ().string () << ">" << endl;
+    }
   };
 }
 
@@ -894,23 +1329,20 @@ options (CL::Description& d)
 
 
 void ExecutorMappingGenerator::
-generate (CommandLine const& cl,
-          TranslationUnitPtr const& u)
+generate (CommandLine const& cl, TranslationUnit& tu, fs::path file_path)
 {
-  fs::path file_path = u->principal_translation_region ()->file_path ();
-
   fs::ofstream ofs;
 
   if (!file_path.empty ())
   {
-    string file_name = file_path.leaf ();
+    string file_name (file_path.leaf ());
 
-    string suffix = cl.get_value ("lem-file-suffix", "_exec.idl");
-    string expr = cl.get_value (
-      "lem-file-regex",
-      "/(\\.(idl|cidl))?$/" + suffix + "/");
+    string suffix (cl.get_value ("lem-file-suffix", "_exec.idl"));
 
-    string lem_file_name = regex::perl_s (file_name, expr);
+    string expr (cl.get_value (
+                   "lem-file-regex", "/(\\.(idl|cidl))?$/" + suffix + "/"));
+
+    string lem_file_name (regex::perl_s (file_name, expr));
 
     fs::path lem_file_path (lem_file_name);
 
@@ -924,17 +1356,18 @@ generate (CommandLine const& cl,
     }
   }
 
-  std::ostream& os = ofs.is_open ()
-    ? static_cast<std::ostream&> (ofs)
-    : static_cast<std::ostream&> (std::cout);
+  ostream& os = ofs.is_open ()
+    ? static_cast<ostream&> (ofs)
+    : static_cast<ostream&> (std::cout);
 
   // Set auto-indentation for os
   Indentation::Implanter<Indentation::IDL> guard (os);
 
-  Declarations declarations;
+  Context ctx (tu);
 
   if (cl.get_value ("lem-force-all", false))
   {
+    /*
     InterfaceCollector iface (declarations);
     Traversal::ProvidesDecl provides (&iface);
 
@@ -967,87 +1400,264 @@ generate (CommandLine const& cl,
     unit.add_content_delegate (&region);
 
     unit.dispatch (u);
+    */
   }
   else
   {
-    InterfaceCollector iface (declarations);
-    Traversal::ProvidesDecl provides (&iface);
-
-    ComponentCollector component (declarations);
-    component.add_scope_delegate (&provides);
-
-    HomeCollector home (declarations);
-
-    HomeExecutorCollector home_executor (declarations, &home, &component);
-
-    Traversal::Composition composition;
-    composition.add_scope_delegate (&home_executor);
-
-    Traversal::Scope scope;
-    scope.add_scope_delegate (&composition);
-    scope.add_scope_delegate (&scope);
-
-    Traversal::Module module;
-    module.add_scope_delegate (&composition);
-
-    Traversal::FileScope file_scope;
-    file_scope.add_scope_delegate (&module);
-    file_scope.add_scope_delegate (&composition);
-
-    Traversal::PrincipalTranslationRegion region (&file_scope);
-
     Traversal::TranslationUnit unit;
-    unit.add_content_delegate (&region);
 
-    unit.dispatch (u);
+    // Layer 1
+    //
+    Traversal::ContainsPrincipal contains_principal;
+
+    unit.edge_traverser (contains_principal);
+
+    //--
+    Traversal::TranslationRegion region;
+
+    contains_principal.node_traverser (region);
+
+
+    // Layer 2
+    //
+    Traversal::ContainsRoot contains_root;
+    Traversal::Includes includes;
+
+    region.edge_traverser (contains_root);
+    region.edge_traverser (includes);
+
+    //--
+    Traversal::Root root;
+
+    contains_root.node_traverser (root);
+    includes.node_traverser (region);
+
+
+    // Layer 3
+    //
+    Traversal::Defines defines;
+    root.edge_traverser (defines);
+
+    //--
+    Traversal::Module module;
+    CompositionCollector composition (ctx);
+
+    defines.node_traverser (module);
+    defines.node_traverser (composition);
+
+
+    // Layer 4
+    //
+    Traversal::Defines composition_defines;
+
+    module.edge_traverser (defines);
+    composition.edge_traverser (composition_defines);
+
+    //--
+    Traversal::ComponentExecutor component_executor;
+    Traversal::HomeExecutor home_executor;
+
+    composition_defines.node_traverser (component_executor);
+    composition_defines.node_traverser (home_executor);
+
+    // Layer 5
+    //
+    Traversal::Implements component_executor_implements;
+    Traversal::Implements home_executor_implements;
+
+    component_executor.edge_traverser (component_executor_implements);
+    home_executor.edge_traverser (home_executor_implements);
+
+    //--
+    ComponentCollector component (ctx);
+    HomeCollector home (ctx);
+
+    component_executor_implements.node_traverser (component);
+    home_executor_implements.node_traverser (home);
+
+
+    // Layer 6
+    //
+    Traversal::Defines component_defines;
+    Traversal::Inherits component_inherits;
+    Traversal::Inherits home_inherits;
+
+    component.edge_traverser (component_defines);
+    component.edge_traverser (component_inherits);
+    home.edge_traverser (home_inherits);
+
+    //--
+
+    Traversal::Provider provider;
+
+    component_defines.node_traverser (provider);
+    component_inherits.node_traverser (component);
+    home_inherits.node_traverser (home);
+
+
+    // Layer 7
+    //
+    Traversal::Belongs provider_belongs;
+    provider.edge_traverser (provider_belongs);
+
+    //
+    InterfaceCollector interface (ctx);
+
+    provider_belongs.node_traverser (interface);
+
+
+    // end
+
+    unit.traverse (tu);
   }
 
   {
-    TypeNameEmitter type_name (os);
-
-    MonolithEmitter monolith (os, &type_name);
-    ContextEmitter context (os);
-
-    ComponentEmitter component (declarations);
-    component.add_delegate (&monolith);
-    component.add_delegate (&context);
-
-    HomeImplicitEmitter home_implicit (os);
-    HomeExplicitEmitter home_explicit (os, &type_name);
-    HomeMainEmitter home_main (os);
-
-    HomeEmitter home (declarations);
-    home.add_delegate (&home_implicit);
-    home.add_delegate (&home_explicit);
-    home.add_delegate (&home_main);
-
-    InterfaceEmitter iface (os, declarations);
-    CompositionEmitter composition (os, declarations);
-
-    ModuleEmitter module (os, declarations);
-
-    module.add_scope_delegate (&iface);
-    module.add_scope_delegate (&component);
-    module.add_scope_delegate (&home);
-    module.add_scope_delegate (&composition);
-    module.add_scope_delegate (&module);
-
-    Traversal::FileScope file_scope;
-    file_scope.add_scope_delegate (&module);
-    file_scope.add_scope_delegate (&iface);
-    file_scope.add_scope_delegate (&component);
-    file_scope.add_scope_delegate (&home);
-    file_scope.add_scope_delegate (&composition);
-
-
-    Traversal::TranslationRegion region (&file_scope);
-
-    IncludeEmitter include (os);
-
     Traversal::TranslationUnit unit;
-    unit.add_content_delegate (&include);
-    unit.add_content_delegate (&region);
 
-    unit.dispatch (u);
+    // Layer 1
+    //
+    Traversal::ContainsPrincipal contains_principal;
+
+    unit.edge_traverser (contains_principal);
+
+    //--
+    Traversal::TranslationRegion principal_region;
+
+    contains_principal.node_traverser (principal_region);
+
+
+    // Layer 2
+    //
+    Traversal::TranslationRegion included_region;
+
+    // Inclusion handling is somewhat tricky because we want
+    // to print only top-level #include's.
+    //
+
+    Traversal::ContainsRoot contains_root;
+    Traversal::QuoteIncludes quote_includes;
+    Traversal::BracketIncludes bracket_includes;
+    IncludesEmitter includes_emitter (ctx, os);
+
+
+    principal_region.edge_traverser (includes_emitter);
+    principal_region.edge_traverser (quote_includes);
+    principal_region.edge_traverser (bracket_includes);
+    principal_region.edge_traverser (contains_root);
+
+    included_region.edge_traverser (quote_includes);
+    included_region.edge_traverser (bracket_includes);
+    included_region.edge_traverser (contains_root);
+
+
+    //--
+    Traversal::Root root;
+
+    contains_root.node_traverser (root);
+    quote_includes.node_traverser (included_region);
+    bracket_includes.node_traverser (included_region);
+
+
+    // Layer 3
+    //
+    Traversal::Defines defines;
+    root.edge_traverser (defines);
+
+    //--
+    ModuleEmitter module (ctx, os);
+
+    CompositionEmitter composition (ctx, os);
+
+    InterfaceEmitter interface (ctx, os);
+
+    MonolithEmitter component_monolith (ctx, os);
+    ContextEmitter component_context (ctx, os);
+
+    HomeImplicitEmitter home_implicit (ctx, os);
+    HomeExplicitEmitter home_explicit (ctx, os);
+    HomeMainEmitter home_main (ctx, os);
+
+    defines.node_traverser (module);
+
+    defines.node_traverser (composition);
+
+    defines.node_traverser (interface);
+
+    defines.node_traverser (component_monolith);
+    defines.node_traverser (component_context);
+
+    defines.node_traverser (home_implicit);
+    defines.node_traverser (home_explicit);
+    defines.node_traverser (home_main);
+
+    // Layer 4
+    //
+
+    Traversal::Supports supports;
+
+    Traversal::Defines composition_defines;
+
+    Traversal::Defines component_context_defines;
+
+    Traversal::Defines home_explicit_defines;
+
+    module.edge_traverser (defines);
+
+    composition.edge_traverser (composition_defines);
+
+    component_monolith.edge_traverser (supports);
+    component_context.edge_traverser (component_context_defines);
+
+    home_explicit.edge_traverser (supports);
+    home_explicit.edge_traverser (home_explicit_defines);
+
+    //--
+    TypeNameEmitter type (ctx, os);
+    ComponentExecutorEmitter component_executor (ctx, os);
+
+    ContextPortEmitter port_context (ctx, os);
+    ExplicitPortEmitter port_explicit (ctx, os);
+
+    supports.node_traverser (type);
+
+    composition_defines.node_traverser (component_executor);
+
+    component_context_defines.node_traverser (port_context);
+
+    home_explicit_defines.node_traverser (port_explicit);
+
+
+    // Layer 5
+    //
+    Traversal::Belongs belongs;
+    Traversal::Receives receives;
+    Traversal::Raises raises;
+
+    port_context.edge_traverser (belongs);
+    port_explicit.edge_traverser (belongs);
+    port_explicit.edge_traverser (raises);
+
+    port_explicit.edge_traverser (receives);
+
+    //--
+    ParameterEmitter parameter (ctx, os);
+
+    belongs.node_traverser (type);
+    receives.node_traverser (parameter);
+    raises.node_traverser (type);
+
+    // Layer 6
+    //
+    parameter.edge_traverser (belongs);
+
+
+    // end
+
+    //@@ this hack is needed to support special Components.idl
+    //   handling.
+    //
+    os << "#include <Components.idl>" << endl;
+
+    unit.traverse (tu);
   }
 }

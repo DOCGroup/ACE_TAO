@@ -1,9 +1,15 @@
-// $Id$
+// file      : CIDLC/cidlc.cpp
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+#include <vector>
+#include <iostream>
+
+#include "CCF/CompilerElements/Context.hpp"
 #include "CCF/CompilerElements/FileSystem.hpp"
+#include "CCF/CompilerElements/Diagnostic.hpp"
 #include "CCF/CompilerElements/TokenStream.hpp"
 #include "CCF/CompilerElements/Preprocessor.hpp"
-#include "CCF/CompilerElements/Diagnostic.hpp"
-#include "CCF/CompilerElements/Context.hpp"
 
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 #include "CCF/CodeGenerationKit/CommandLineParser.hpp"
@@ -11,27 +17,29 @@
 
 #include "CCF/CIDL/LexicalAnalyzer.hpp"
 #include "CCF/CIDL/Parser.hpp"
-#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/SemanticGraph.hpp"
 #include "CCF/CIDL/SemanticAction/Impl/Factory.hpp"
 
 #include "ExecutorMappingGenerator.hpp"
+/*
+
+@@ temporarily disabled
+
 #include "ServantGenerator.hpp"
 #include "RepositoryIdGenerator.hpp"
 #include "DescriptorGenerator.hpp"
 #include "SizeTypeCalculator.hpp"
-
-#include <iostream>
+*/
 
 using std::cerr;
 using std::endl;
 
-using namespace CCF;
-using namespace CIDL;
-using namespace SyntaxTree;
+using namespace CCF::CIDL;
+using namespace SemanticGraph;
 
-int main (int argc, char* argv[])
+int
+main (int argc, char* argv[])
 {
-
   try
   {
     // Parsing command line options and arguments
@@ -47,18 +55,30 @@ int main (int argc, char* argv[])
     }
 
     ExecutorMappingGenerator lem_gen;
+
+    /*
+
+    @@ temporarily disabled
+
     ServantGenerator svnt_gen (cl);
     RepositoryIdGenerator repid_gen;
     DescriptorGenerator desc_gen;
     SizeTypeCalculator sizetype_calc;
+    */
 
     if (cl.get_value ("help", false) || cl.get_value ("help-html", false))
     {
       CL::Description d (argv[0]);
 
       lem_gen.options (d);
+
+      /*
+
+      @@ temporarily disabled
+
       svnt_gen.options (d);
       desc_gen.options (d);
+      */
 
       d.add_option (CL::OptionDescription (
                       "trace-semantic-actions",
@@ -87,7 +107,6 @@ int main (int argc, char* argv[])
 
       return 0;
     }
-
 
     fs::ifstream ifs;
     ifs.exceptions (ios_base::badbit | ios_base::failbit);
@@ -120,123 +139,59 @@ int main (int argc, char* argv[])
     //   get after eof.
     ifs.exceptions (ios_base::iostate (0));
 
-    std::istream& is =
-      ifs.is_open () ? static_cast<std::istream&> (ifs)
-                     : static_cast<std::istream&> (std::cin);
+    std::istream& is = ifs.is_open ()
+      ? static_cast<std::istream&> (ifs)
+      : static_cast<std::istream&> (std::cin);
 
-    InputStreamAdapter isa (is);
-    Preprocessor pp (isa);
+    CCF::InputStreamAdapter isa (is);
+    CCF::Preprocessor pp (isa);
 
     if (cl.get_value ("preprocess-only", false))
     {
       while (true)
       {
-        Preprocessor::int_type i = pp.next ();
+        CCF::Preprocessor::int_type i = pp.next ();
 
         if (pp.eos (i)) break;
 
-        Preprocessor::char_type c = pp.to_char_type (i);
+        CCF::Preprocessor::char_type c = pp.to_char_type (i);
 
-        std::cout << c ;
+        std::cout << c;
       }
-
       return 0;
     }
 
+    //}
 
-    Diagnostic::Stream diagnostic_stream;
-
+    Diagnostic::Stream dout;
 
     LexicalAnalyzer lexer (pp);
+
     TokenList token_stream;
 
     //@@ bad token comparison
     for (TokenPtr token = lexer.next ();; token = lexer.next ())
     {
+      // cerr << token << endl;
       token_stream.push_back (token);
       if (ReferenceCounting::strict_cast<EndOfStream> (token) != 0) break;
     }
 
-    if (token_stream.size () == 1)
+    if (token_stream.size () < 2)
     {
       cerr << "no tokens produced so nothing to parse" << endl;
       return 0;
     }
 
-    TranslationUnitPtr unit (new TranslationUnit);
+    TranslationUnit tu;
 
-    //-----------------------------------------------------------------
-    //@@ exeprimental code
-
-    //Create .builtin region
-    {
-      TranslationRegionPtr builtin (
-        new TranslationRegion (fs::path (".builtin"),
-                               unit->table (),
-                               unit->create_order ()));
-      unit->insert (builtin);
-
-      // Inject built-in types into the file scope of this
-      // translation region
-
-      ScopePtr s = builtin->scope ();
-
-      s->insert (BuiltInTypeDeclPtr (new ObjectDecl           (s)));
-      s->insert (BuiltInTypeDeclPtr (new ValueBaseDecl        (s)));
-      s->insert (BuiltInTypeDeclPtr (new AnyDecl              (s)));
-      s->insert (BuiltInTypeDeclPtr (new BooleanDecl          (s)));
-      s->insert (BuiltInTypeDeclPtr (new CharDecl             (s)));
-      s->insert (BuiltInTypeDeclPtr (new DoubleDecl           (s)));
-      s->insert (BuiltInTypeDeclPtr (new FloatDecl            (s)));
-      s->insert (BuiltInTypeDeclPtr (new LongDecl             (s)));
-      s->insert (BuiltInTypeDeclPtr (new LongDoubleDecl       (s)));
-      s->insert (BuiltInTypeDeclPtr (new LongLongDecl         (s)));
-      s->insert (BuiltInTypeDeclPtr (new OctetDecl            (s)));
-      s->insert (BuiltInTypeDeclPtr (new ShortDecl            (s)));
-      s->insert (BuiltInTypeDeclPtr (new StringDecl           (s)));
-      s->insert (BuiltInTypeDeclPtr (new UnsignedLongDecl     (s)));
-      s->insert (BuiltInTypeDeclPtr (new UnsignedLongLongDecl (s)));
-      s->insert (BuiltInTypeDeclPtr (new UnsignedShortDecl    (s)));
-      s->insert (BuiltInTypeDeclPtr (new VoidDecl             (s)));
-      s->insert (BuiltInTypeDeclPtr (new WcharDecl            (s)));
-      s->insert (BuiltInTypeDeclPtr (new WstringDecl          (s)));
-    }
-
-    //Create implied #include <Components.idl>
-    {
-      TranslationRegionPtr builtin (
-        new ImpliedIncludeTranslationRegion (fs::path ("Components.idl"),
-                                             unit->table (),
-                                             unit->create_order ()));
-      unit->insert (builtin);
-
-      ScopePtr fs = builtin->scope ();
-      ModulePtr m (new Module (SimpleName("Components"), fs));
-      fs->insert (m);
-
-      LocalInterfaceDefPtr i (
-        new LocalInterfaceDef (SimpleName ("EnterpriseComponent"),
-                               m,
-                               ScopedNameSet ()));
-
-      m->insert (i);
-    }
-
-    TranslationRegionPtr tr (
-      new PrincipalTranslationRegion (file_path,
-                                      unit->table (),
-                                      unit->create_order ()));
-    unit->insert (tr);
-
-
-    CompilerElements::Context context;
+    // Initialize compilation context.
+    //
+    CCF::CompilerElements::Context context;
     context.set ("file-path", file_path);
+    context.set ("trace-semantic-action",
+                 cl.get_value ("trace-semantic-actions", false));
 
-    bool trace = cl.get_value ("trace-semantic-actions", false);
-
-    context.set ("idl2::semantic-action::trace", trace);
-    context.set ("idl3::semantic-action::trace", trace);
-    context.set ("cidl::semantic-action::trace", trace);
 
     // Extract include search paths.
     //
@@ -262,51 +217,63 @@ int main (int argc, char* argv[])
 
     // Instantiate semantic actions factory.
     //
+    SemanticAction::Impl::Factory actions (context, dout, tu);
 
-    SemanticAction::Impl::Factory actions (context, diagnostic_stream, tr);
+    Parser parser (context, dout, lexer, actions);
 
-    //-----------------------------------------------------------------
+    //@@ should be able to use CIDL here. Or better yet get rid of this
+    //   function completely.
+    //
+    CCF::IDL2::Parsing::parse (token_stream.begin (),
+                               token_stream.end (),
+                               parser.start ());
 
-    Parser parser (context, diagnostic_stream, lexer, actions);
-
-    IDL2::Parsing::parse (token_stream.begin (),
-                          token_stream.end (),
-                          parser.start ());
-
-    if (diagnostic_stream.error_count () != 0) return -1;
+    if (dout.error_count () != 0) return -1;
 
     // Generate executor mapping.
     {
-      lem_gen.generate (cl, unit);
+      lem_gen.generate (cl, tu, file_path);
     }
+
+    /*
+
+    @@ temporarily disabled
 
     // Calculate the size type of everything in the AST.
     // This must be executed before the servant code generator.
     {
-      sizetype_calc.calculate (unit);
+      sizetype_calc.calculate (tu);
     }
 
     // Generate servant code.
     {
-      svnt_gen.generate (unit);
+      svnt_gen.generate (tu);
     }
 
     // Compute repository IDs in a separate pass.
     {
-      repid_gen.generate (unit);
+      repid_gen.generate (tu);
     }
 
     // Generate descriptor code.
     {
-      desc_gen.generate (cl, unit);
+      desc_gen.generate (cl, tu);
     }
+
+    */
+
   }
-  catch (Declaration::NotInScope const&)
+  catch (std::bad_cast const&)
   {
-    cerr << "exception: " << "Declaration::NotInScope" << endl;
+    cerr << "bad cast exception" << endl;
+  }
+  catch (InvalidName const&)
+  {
+    cerr << "invalid name exception" << endl;
   }
   catch (...)
   {
-    cerr << "exception: " << "unknown" << endl;
+    cerr << "caught unknown exception" << endl;
+    return -1;
   }
 }

@@ -1,3 +1,19 @@
+Mon Dec 22 16:50:18 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CIDLC/ExecutorMappingGenerator.cpp:
+	* CIDLC/ExecutorMappingGenerator.hpp:
+
+	  New version of local executor mapping generator.
+	
+	* CIDLC/cidlc.cpp:
+
+	  New version of CIDL compiler driver with temporarily disabled
+	  generators that require porting.
+
+	* CIDLC/Makefile.alt:
+
+	  Temporarily disabled generators that require porting.
+
 Mon Dec 22 16:26:21 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF:
