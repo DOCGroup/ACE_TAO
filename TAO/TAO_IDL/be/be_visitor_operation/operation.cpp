@@ -220,7 +220,6 @@ be_visitor_operation::gen_environment_decl (int argument_emitted,
   TAO_CodeGen::CG_STATE cgs = this->ctx_->state ();
 
   if (node->argument_count () > 0
-      || cgs == TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH
       || cgs == TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH
       || cgs == TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS)
     {

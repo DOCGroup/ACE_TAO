@@ -74,8 +74,6 @@ public:
       TAO_INTERFACE_CH,
       TAO_INTERFACE_SMART_PROXY_CH,
       TAO_INTERFACE_SMART_PROXY_CS,
-      TAO_INTERFACE_INTERCEPTORS_CH,
-      TAO_INTERFACE_INTERCEPTORS_CS,
       TAO_INTERFACE_INTERCEPTORS_SH,
       TAO_INTERFACE_INTERCEPTORS_SS,
 
@@ -108,10 +106,6 @@ public:
       TAO_OPERATION_ARGLIST_CH,               // parameter list in op signature
       TAO_OPERATION_ARGLIST_SH,               // ... for server header
 
-      TAO_OPERATION_INTERCEPTORS_ARGLIST_CH,  // private member list list for request info
-      TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH,   // private member list list for request info
-      TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS,   // arglist for request info obj instantiation
-      TAO_OPERATION_INTERCEPTORS_ARGLIST_CS,   // private member list list for request info                                                                         // ... for client source
       TAO_OPERATION_INTERCEPTORS_PARAMLIST,   // create the paramlist on demand
       TAO_OPERATION_INTERCEPTORS_EXCEPTLIST,  // create the exceptionlist on demand
       TAO_OPERATION_INTERCEPTORS_ARGLIST_SH,  // private member list list for request info
@@ -123,13 +117,10 @@ public:
       // in client/server  header
       TAO_OPERATION_ARGLIST_PROXY_IMPL_XS,
 
-      TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH,
 
       TAO_OPERATION_ARGLIST_IH,               // ... for implementation header
       TAO_OPERATION_ARGLIST_IS,               // ... for implementation header
       TAO_OPERATION_ARGLIST_COLLOCATED_SH,    // ... for collocated server
-      // before sending over the wire
-      TAO_OPERATION_ARG_PRE_INVOKE_CS,        // preprocessing of arguments
       //   variable to do_static_call
       TAO_OPERATION_ARG_INVOKE_CS,            // passing argument variable to do_static_call
       //   after do_static_call
@@ -140,7 +131,6 @@ public:
       TAO_OPERATION_ARG_UPCALL_SS,            // variables to upcall
       TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS, // variables to upcall for
       // collocated op
-      TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS, // Interceptor args
       TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS, // Interceptor args
 
       TAO_OBV_OPERATION_ARGLIST_CH,           // parameter list in obv op signature

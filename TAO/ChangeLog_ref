@@ -1,3 +1,26 @@
+Tue Aug 12 10:53:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_visitor_argument.h:
+
+          Second pass at removing code now unused due to the
+          refactoring changes.
+
+        * TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_argument/pre_invoke_cs.h:
+        * TAO_IDL/be_include/be_visitor_argument/request_info_ch.h:
+        * TAO_IDL/be_include/be_visitor_argument/request_info_cs.h:
+
+          Second pass at removing files containing visitors no longer
+          used due to the refactoring changes.
+
 Tue Aug 12 10:15:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * be/be_visitor_argument.cpp:
