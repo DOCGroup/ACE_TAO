@@ -1,5 +1,18 @@
 Mon Oct  4 08:31:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/Shared_Malloc/test_persistence.cpp: Enhanced the
+ 	  list_employees() method so that it'll print the contents of
+ 	  ACE_Malloc<> in FIFO and LIFO order.
+
+	* ace/Malloc[_T].{h,cpp}: Added a new iterator for ACE_Malloc<>
+	  called ACE_Malloc_FIFO_Iterator, which prints out the
+ 	  ACE_Name_Node entries in FIFO order.  In addition, renamed
+ 	  ACE_Malloc_Iterator to be ACE_Malloc_LIFO_Iterator because it
+ 	  prints the ACE_Name_Node entries in LIFO order.  Also added a
+ 	  #define of ACE_Malloc_Iterator to ACE_Malloc_LIFO_Iterator to
+ 	  ensure backwards compatibility.  Thanks to Wenli Bai
+ 	  <bai@gsao.med.ge.com> for this enhancements.
+
 	* tests/MM_Shared_Memory_Test.cpp: Fixed the test so that it should
 	  work correctly for platforms that use either processes or
  	  threads.  Also, make sure to call remove() on the

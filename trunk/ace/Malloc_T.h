@@ -238,7 +238,14 @@ private:
 
 // Forward declaration.
 template <ACE_MEM_POOL_1, class ACE_LOCK>
-class ACE_Malloc_Iterator;
+class ACE_Malloc_LIFO_Iterator;
+
+// Ensure backwards compatibility...
+#define ACE_Malloc_Iterator ACE_Malloc_LIFO_Iterator
+
+// Forward declaration.
+template <ACE_MEM_POOL_1, class ACE_LOCK>
+class ACE_Malloc_FIFO_Iterator;
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Malloc
@@ -253,7 +260,8 @@ class ACE_Malloc
   //     MEMORY_POOL strategies and different types of ACE_LOCK
   //     strategies.
 public:
-  friend class ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>;
+  friend class ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>;
+  friend class ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>;
   typedef ACE_MEM_POOL MEMORY_POOL;
   typedef ACE_MEM_POOL_OPTIONS MEMORY_POOL_OPTIONS;
 
@@ -418,30 +426,30 @@ private:
 };
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
-class ACE_Malloc_Iterator
+class ACE_Malloc_LIFO_Iterator
 {
   // = TITLE
-  //     Iterator for names stored in Malloc'd memory.
+  //     LIFO iterator for names stored in Malloc'd memory.
   //
   // = DESCRIPTION
-  //     Does not allows deletions while iteration is occurring.
+  //     Does not support deletions while iteration is occurring.
 public:
   // = Initialization method.
-  ACE_Malloc_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
-                       const char *name = 0);
+  ACE_Malloc_LIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
+                            const char *name = 0);
   // if <name> = 0 it will iterate through everything else only
   // through those entries whose <name> match.
 
-  ~ACE_Malloc_Iterator (void);
+  ~ACE_Malloc_LIFO_Iterator (void);
 
   // = Iteration methods.
+
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
 
   int next (void *&next_entry);
   // Pass back the next <entry> in the set that hasn't yet been
   // visited.  Returns 0 when all items have been seen, else 1.
-
-  int done (void) const;
-  // Returns 1 when all items have been seen, else 0.
 
   int next (void *&next_entry, 
             const char *&name);
@@ -452,6 +460,66 @@ public:
   int advance (void);
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+  ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc_;
+  // Malloc we are iterating over.
+
+  ACE_Name_Node *curr_;
+  // Keeps track of how far we've advanced...
+
+  ACE_Read_Guard<ACE_LOCK> guard_;
+  // Lock Malloc for the lifetime of the iterator.
+
+  const char *name_;
+  // Name that we are searching for.
+};
+
+template <ACE_MEM_POOL_1, class ACE_LOCK>
+class ACE_Malloc_FIFO_Iterator
+{
+  // = TITLE
+  //     FIFO iterator for names stored in Malloc'd memory.
+  //
+  // = DESCRIPTION
+  //     Does not support deletions while iteration is occurring.
+public:
+  // = Initialization method.
+  ACE_Malloc_FIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
+                            const char *name = 0);
+  // if <name> = 0 it will iterate through everything else only
+  // through those entries whose <name> match.
+
+  ~ACE_Malloc_FIFO_Iterator (void);
+
+  // = Iteration methods.
+
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
+
+  int next (void *&next_entry);
+  // Pass back the next <entry> in the set that hasn't yet been
+  // visited.  Returns 0 when all items have been seen, else 1.
+
+  int next (void *&next_entry, 
+            const char *&name);
+  // Pass back the next <entry> (and the <name> associated with it) in
+  // the set that hasn't yet been visited.  Returns 0 when all items
+  // have been seen, else 1.
+
+  int advance (void);
+  // Move forward by one element in the set.  Returns 0 when all the
+  // items in the set have been seen, else 1.
+
+  int start (void);
+  // Go to the starting element that was inserted first. Returns 0
+  // when there is no item in the set, else 1.
 
   void dump (void) const;
   // Dump the state of an object.
