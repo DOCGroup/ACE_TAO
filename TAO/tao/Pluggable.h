@@ -147,30 +147,33 @@ public:
 
   void input_cdr_stream (TAO_InputCDR *cdr);
   // Set the CDR stream for reading the input message.
-  
+
   TAO_InputCDR *input_cdr_stream (void) const;
   // Get the CDR stream for reading the input message.
 
+  void destroy_cdr_stream (TAO_InputCDR *) const;
+  // Release a CDR stream, simply pass it to the RMS...
+
   // = State of the incoming message.
-  
+
   void message_size (CORBA::ULong message_size);
   // Set the total size of the incoming message. (This does not
   // include the header size). This inits the <message_offset> setting
-  // it to zero.  
-  
+  // it to zero.
+
   CORBA::ULong message_size (void) const;
   // Get the total size of the incoming message.
-  
+
   CORBA::ULong message_offset (void) const;
   // Get the current offset of the incoming message.
-  
+
   int incr_message_offset (CORBA::Long bytes_transferred);
   // Update the offset of the incoming message. Returns 0 on success
   // -1 on failure.
 
   void message_received (int received);
   // Set the flag to indicate whether the input message was read fully
-  // or no. 
+  // or no.
 
   int message_received (void) const;
   // Get the flag.
@@ -179,7 +182,7 @@ public:
 
   // void orb_core (TAO_ORB_Core *orb_core);
   // Set it.
-  
+
   TAO_ORB_Core *orb_core (void) const;
   // Get it.
 
@@ -187,20 +190,20 @@ public:
 
   // void rms (TAO_Request_Mux_Strategy *rms);
   // Set the RMS object.
-  
+
   TAO_Request_Mux_Strategy * rms (void) const;
   // Get the RMS used by this Transport object.
-  
+
   TAO_Wait_Strategy *wait_strategy (void) const;
   // Return the Wait strategy used by the Transport.
 
   CORBA::ULong request_id (void);
-  // Get request id for the current invocation from the RMS object. 
-  
+  // Get request id for the current invocation from the RMS object.
+
   int bind_reply_dispatcher (CORBA::ULong request_id,
                               TAO_Reply_Dispatcher *rd);
   // Bind the reply dispatcher with the RMS object.
-                 
+
   virtual int wait_for_reply (void);
   // Wait for the reply depending on the strategy.
 
@@ -210,7 +213,7 @@ public:
   // Read and handle the reply. Returns 0 when there is Short Read on
   // the connection. Returns 1 when the full reply is read and
   // handled. Returns -1 on errors.
-  // If <block> is 1, then reply is read in a blocking manner. 
+  // If <block> is 1, then reply is read in a blocking manner.
 
   virtual int register_handler (void);
   // Register the handler with the reactor. Will be called by the Wait
@@ -218,40 +221,43 @@ public:
   // implementation out here returns -1 setting <errno> to ENOTSUP.
 
   virtual int suspend_handler (void);
-  // Suspend the handler from the reactor. Will be called by the Wait 
+  // Suspend the handler from the reactor. Will be called by the Wait
   // Strategy if Reactor is used  for that strategy. Default
   // implementation out here returns -1 setting <errno> to ENOTSUP.
 
   virtual int resume_handler (void);
   // Resume the handler from the reactor. This will be called by the
   // Wait Strategies, if Reactor is used in the strategy. Default
-  // implementation out here returns -1 setting <errno> to ENOTSUP. 
+  // implementation out here returns -1 setting <errno> to ENOTSUP.
+
+  virtual int handle_close (void);
+  // The connection was closed, let everybody know about it....
 
 protected:
   // = States for the input message.
-  
+
   CORBA::ULong message_size_;
   // Total length of the whole message. This does not include the
   // header length.
-  
+
   CORBA::ULong message_offset_;
   // Current offset of the input message.
 
   int message_received_;
   // Flag to indicate whether the input message has been received
   // fully or not.
-  
-    
+
+
   TAO_Request_Mux_Strategy *rms_;
   // Strategy to decide whether multiple requests can be sent over the
   // same connection or the connection is exclusive for a request.
-  
+
   TAO_Wait_Strategy *ws_;
-  // Strategy for waiting for the reply after sending the request. 
+  // Strategy for waiting for the reply after sending the request.
 
   TAO_ORB_Core *orb_core_;
   // Global orbcore resource.
-  
+
   TAO_GIOP_Version version_;
   // Version information found in the incoming message.
 };

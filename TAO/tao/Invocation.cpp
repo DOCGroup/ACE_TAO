@@ -393,6 +393,8 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
     {
       // send_request () closed the connection, we just have to forget
       // about the hint.
+      this->transport_ = 0;
+
       this->profile_->reset_hint ();
 
       return TAO_INVOKE_RESTART;
@@ -683,10 +685,6 @@ int
 TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Just send the request, without trying to wait for the reply.
-  int retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (retval);
-
   // Give the CDR stream for reading the input.
   this->transport_->input_cdr_stream (&this->inp_stream_);
 
@@ -697,16 +695,23 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   this->rd_.request_id (this->request_id_);
 
   // Bind.
-  retval = this->transport_->bind_reply_dispatcher (this->request_id_,
-                                                    &this->rd_);
+  int retval = this->transport_->bind_reply_dispatcher (this->request_id_,
+                                                        &this->rd_);
   if (retval == -1)
     {
       // @@ What is the right way to handle this error?
       this->close_connection ();
       ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
-                                         CORBA::COMPLETED_MAYBE),
+                                         CORBA::COMPLETED_NO),
                         TAO_INVOKE_EXCEPTION);
     }
+
+  // Just send the request, without trying to wait for the reply.
+  retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (retval);
+
+  if (retval != TAO_INVOKE_OK)
+    return retval;
 
   // This blocks until the response is read.  In the current version,
   // there is only one client thread that ever uses this connection,

@@ -999,8 +999,8 @@ int
 TAO_ORB_Core::unset_leader_wake_up_follower (void)
   // sets the leader_available flag to false and tries to wake up a follower
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                    this->leader_follower_lock (), -1);
+  //  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+  //                    this->leader_follower_lock (), -1);
 
   this->unset_leader_thread ();
 

@@ -70,7 +70,7 @@ TAO_Muxed_RMS::set_cdr_stream (TAO_InputCDR *Cdr)
 
 
 void
-TAO_Muxed_RMS::destroy_cdr_stream (void)
+TAO_Muxed_RMS::destroy_cdr_stream (TAO_InputCDR *)
 {
   // @@ Implement.
   // delete cdr;
@@ -132,7 +132,7 @@ TAO_Exclusive_RMS::set_cdr_stream (TAO_InputCDR *cdr)
 
 // NOOP function.
 void
-TAO_Exclusive_RMS::destroy_cdr_stream (void)
+TAO_Exclusive_RMS::destroy_cdr_stream (TAO_InputCDR *)
 {
   this->cdr_ = 0;
 }

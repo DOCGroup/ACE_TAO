@@ -69,7 +69,7 @@ public:
   virtual TAO_InputCDR *get_cdr_stream (void);
   // Get the CDR stream.
 
-  virtual void destroy_cdr_stream (void) = 0;
+  virtual void destroy_cdr_stream (TAO_InputCDR *) = 0;
   // Destroy the CDR stream.
 
 protected:
@@ -115,7 +115,7 @@ public:
   // virtual TAO_InputCDR *cdr_stream (void);
   // Get the CDR stream.
 
-  virtual void destroy_cdr_stream (void);
+  virtual void destroy_cdr_stream (TAO_InputCDR *);
   // Delete the cdr stream.
 
 protected:
@@ -159,7 +159,7 @@ public:
   // virtual TAO_InputCDR *cdr_stream (void);
   // Get the CDR stream.
 
-  virtual void destroy_cdr_stream (void);
+  virtual void destroy_cdr_stream (TAO_InputCDR *);
   // NO-OP function.
 
 protected:
