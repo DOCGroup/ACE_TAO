@@ -1,3 +1,9 @@
+Mon Sep 16 18:23:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DLL_ORB/Test_Client_Module.bor:
+        * tests/DLL_ORB/Test_Server_Module.bor:
+          Fixed for static build.
+
 Sun Sep 15 13:39:51 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Time/Timer_Helper.h:
@@ -66,7 +72,7 @@ Sun Sep 15 13:04:49 2002  Ossama Othman  <ossama@uci.edu>
 	   IORInterceptor interception points have been called, the
 	   IORInfo object is no longer valid.  Throw an exception in that
 	   case.
-	  
+
 	* tao/PortableServer/IORInfo.inl:
 
 	  New file containing TAO_IORInfo inlined methods.
