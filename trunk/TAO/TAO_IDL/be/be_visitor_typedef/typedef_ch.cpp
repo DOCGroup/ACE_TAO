@@ -201,8 +201,8 @@ be_visitor_typedef_ch::visit_array (be_array *node)
           << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_forany")
           << " " << tdef->nested_type_name (scope, "_forany") << ";" << be_nl;
-      *os << "typedef " << bt->fwd_helper_name () << "_life "
-          << tdef->fwd_helper_name () << "_life;" << be_nl;
+      *os << "typedef " << bt->fwd_helper_name () << "_life tao_"
+          << tdef->local_name () << "_life;" << be_nl;
 
       // The _alloc, _dup, copy, and free methods
 
@@ -311,12 +311,12 @@ be_visitor_typedef_ch::visit_interface (be_interface *node)
       << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
 
   // typedef the _life
-  *os << "typedef " << bt->fwd_helper_name () << "_life "
-      << tdef->fwd_helper_name () << "_life;" << be_nl;
+  *os << "typedef " << bt->fwd_helper_name () << "_life tao_"
+      << tdef->local_name () << "_life;" << be_nl;
 
   // typedef the _cast
-  *os << "typedef " << bt->fwd_helper_name () << "_cast "
-      << tdef->fwd_helper_name () << "_cast;";
+  *os << "typedef " << bt->fwd_helper_name () << "_cast tao_"
+      << tdef->local_name () << "_cast;";
 
   return 0;
 }
@@ -574,8 +574,8 @@ be_visitor_typedef_ch::visit_valuetype (be_valuetype *node)
       << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
 
   // typedef the _life
-  *os << "typedef " << bt->fwd_helper_name () << "_life "
-      << tdef->fwd_helper_name () << "_life;";
+  *os << "typedef " << bt->fwd_helper_name () << "_life tao_"
+      << tdef->local_name () << "_life;";
 
   return 0;
 }
