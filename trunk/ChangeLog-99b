@@ -1,3 +1,12 @@
+Fri May 21 10:10:13 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ACE-INSTALL.html: 
+
+	  Updated information about building egcs' C++ shared libraries
+	  with an example, and emphasized the fact that the
+	  `--enable-shared' configuration option is not an egcs run-time
+	  option.
+
 Fri May 21 09:15:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/config-sunos5.5.h:
