@@ -275,6 +275,14 @@ protected:
    */
   int gen_typecode_ptr (be_type * node);
 
+  /// Generate the base type TypeCode name.
+  /**
+   * Generate the fully qualified base TypeCode name.  Predominantly
+   * useful for TypeCodes that contain base/content TypeCodes
+   * (e.g. alias, sequence, etc).
+   */
+  int gen_base_typecode_name (be_type * base);
+
 private:
 
   //

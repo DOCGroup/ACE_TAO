@@ -52,32 +52,8 @@ TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
     << "\"" << node->original_local_name () << "\"," << be_nl
     << "&";
 
-  if (base->is_nested ()
-      && base->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-    {
-      be_module * const module =
-        be_module::narrow_from_scope (base->defined_in ());
-
-      ACE_ASSERT (module);
-
-      for (UTL_IdListActiveIterator i (module->name ());
-           !i.is_done ();
-           i.next ())
-        {
-          char * const module_name  = i.item ()->get_string ();
-
-          if (ACE_OS::strcmp (module_name, "") != 0)
-            {
-              os << "::";
-            }
-
-          os << module_name;
-        }
-
-      os << "::_tao_tc_" << base->flat_name ();
-    }
-  else
-    os << "&" << base->tc_name ();
+  int const success = this->gen_base_typecode_name (base);
+  ACE_ASSERT (success == 0);
 
   os << ");" << be_uidt_nl
      << be_uidt_nl;
