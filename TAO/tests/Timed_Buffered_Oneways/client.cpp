@@ -254,7 +254,7 @@ main (int argc, char **argv)
 
       // Get an object reference from the argument string.
       object = orb->string_to_object (IOR,
-                                    ACE_TRY_ENV);
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a <test> reference.
