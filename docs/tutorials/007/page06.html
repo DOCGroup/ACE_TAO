@@ -154,22 +154,39 @@ close() method.&nbsp; Since we already have a handle_close()</FONT>
 us, we'll just forward the request on to that</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; object.</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+
 <BR><FONT FACE="Arial,Helvetica">int Client_Handler::close(u_long flags)</FONT>
 <BR><FONT FACE="Arial,Helvetica">{</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Down in the depths of our baseclass, this will eventually cause us</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+to be destroyed.&nbsp; Since all of the destructors are virtual, everything</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+gets cleaned up nicely.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*/</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 this->handle_close(ACE_INVALID_HANDLE,0);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 /*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-After we've taken care of ourselves, call the baseclass method</FONT>
+Don't forward the close() to the baseclass!&nbsp; handle_close() above
+has</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-to do any other necessary cleanup.</FONT>
+already taken care of delete'ing.&nbsp; Forwarding close() would cause
+that</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+to happen again and things would get really ugly at that point!</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 */</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-return inherited::close();</FONT>
-<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+return 0;</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT>
+
+
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; In the open() method, we
