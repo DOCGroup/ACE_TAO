@@ -944,7 +944,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   ACE_CHECK_RETURN (stub);
 
   mp->give_profile (pfile);
-                    
+
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id, mp, this->orb_core_),
                     CORBA::NO_MEMORY (CORBA::COMPLETED_MAYBE));
@@ -1410,7 +1410,7 @@ CORBA_ORB::ior_string_to_object (const char *str,
   int byte_order = *(mb.rd_ptr ());
   mb.rd_ptr (1);
   mb.wr_ptr (len);
-  TAO_InputCDR stream (&mb, byte_order);
+  TAO_InputCDR stream (&mb, byte_order, this->orb_core_);
 
   CORBA::Object_ptr objref = CORBA::Object::_nil ();
   stream >> objref;

@@ -70,7 +70,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
 }
 
 void
-IIOP_ServerRequest::parse_header_std (CORBA::Environment &env)
+IIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
 {
   // Tear out the service context ... we currently ignore it, but it
   // should probably be passed to each ORB service as appropriate
@@ -120,12 +120,12 @@ IIOP_ServerRequest::parse_header_std (CORBA::Environment &env)
     }
 
   if (!hdr_status)
-    env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
 
 }
 
 void
-IIOP_ServerRequest::parse_header_lite (CORBA::Environment &env)
+IIOP_ServerRequest::parse_header_lite (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_InputCDR& input = *this->incoming_;
 
@@ -159,7 +159,7 @@ IIOP_ServerRequest::parse_header_lite (CORBA::Environment &env)
     }
 
   if (!hdr_status)
-    env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
 }
 
 
@@ -256,7 +256,7 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       CORBA::Any_ptr any = nv->value ();
       CORBA::TypeCode_var tc = any->type ();
 
-      // @@ (JP) The following code depends on the fact that 
+      // @@ (JP) The following code depends on the fact that
       // TO_InputCDR does not contain chained message blocks.
       char *begin, *end;
 
@@ -264,7 +264,7 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       begin = this->incoming_->rd_ptr ();
 
       // Skip over the next aregument.
-      CORBA::TypeCode::traverse_status status = 
+      CORBA::TypeCode::traverse_status status =
         this->incoming_->skip (tc.in (), env);
 
       if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -297,10 +297,10 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       any->_tao_replace (tc.in (),
                          cdr,
                          0,
-                         env);  
-  
-      // Now we can release the original.                         
-      ACE_Message_Block::release (cdr);      
+                         env);
+
+      // Now we can release the original.
+      ACE_Message_Block::release (cdr);
     }
 
   // If any data is left over, it'd be context values ... else error.

@@ -1,3 +1,25 @@
+Tue Mar 30 09:51:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.cpp:
+	  Missing ORB_Core argument in the InputCDR for
+	  ior_string_to_object.
+
+	* tao/GIOP.cpp:
+	  Improved error messages.
+
+	* tao/Server_Request.cpp:
+	  Use ACE_TRY macros to throw exceptions.
+
+	* tao/ORB_Core.cpp:
+	  We cannot cache the allocators because the ORB_Core_instance
+	  will not be TSS in the future.
+
+	* tests/MT_Client/server.conf:
+	  Use global resources.
+
+	* tests/MT_Client/client.cpp:
+	  Use ACE_PRINT_EXCEPTION to print the exception.
+
 Mon Mar 29 22:42:31 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* tao/Connect.cpp : Used CORBA::string_dup () in handle_message ().
