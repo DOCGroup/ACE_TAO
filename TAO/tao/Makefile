@@ -40,7 +40,8 @@ PUB_HDRS = \
   Reply_Dispatcher \
   IORC \
   IORS \
-  IORManipulation
+  IORManipulation \
+  BoundC
 
 POA_FILES = \
   Object_Adapter \
