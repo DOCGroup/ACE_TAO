@@ -50,27 +50,6 @@
         </P>
       </LI>
 
-      <LI><P><B>EC:</B> The Event Channel must be profiled,
-          quantified, etc.
-          Now that we have a single threaded event channel this task
-          is much easier, the points to investigate are:
-        </P>
-        <P>
-        <UL>
-          <LI> How many data copies does the EC make? Can we reduce it
-            to zero?
-          </LI>
-          <LI> How many memory allocations?
-            Can they be replaced by memory pools?
-          </LI>
-          <LI>How many locks? Can we strategize locks?
-            Can we share a single lock for the whole dispatch?
-          </LI>
-        </UL>
-        <BR>[ASSIGNED TO:] Carlos
-        </P>
-      </LI>
-
     </OL>
 
     <HR>
@@ -232,13 +211,6 @@
 
     <H4>New features and Bug fixes</H4>
     <OL>
-      <LI><P><B>EC:</B>Implement fragmentation and reassembly of UDP
-          messages. This is important for an effective implementation
-          of the multicast version of the EC. The classes affected
-          include <CODE>UDP_Receiver</CODE> and <CODE>UDP_Sender</CODE>.
-        </P>
-      </LI>
-
       <LI><P><B>EC:</B> Some applications are both suppliers and
           consumers of events,
           they may be interested in all the
@@ -1004,6 +976,38 @@ encapsulation format.
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P><B>EC:</B>Implement fragmentation and reassembly of UDP
+          messages. This is important for an effective implementation
+          of the multicast version of the EC. The classes affected
+          include <CODE>UDP_Receiver</CODE> and <CODE>UDP_Sender</CODE>.
+          <BR>[DONE]
+        </P>
+      </LI>
+
+      <LI><P><B>EC:</B> The Event Channel must be profiled,
+          quantified, etc.
+          Now that we have a single threaded event channel this task
+          is much easier, the points to investigate are:
+        </P>
+        <P>
+        <UL>
+          <LI> How many data copies does the EC make? Can we reduce it
+            to zero?
+          </LI>
+          <LI> How many memory allocations?
+            <BR>[RESULT: 8]
+            <BR>Can they be replaced by memory pools?
+          </LI>
+          <LI>How many locks?
+            <BR>[RESULT: 29 (single threaded), 31 MT]
+            <BR>Can we strategize locks?
+            <BR>Can we share a single lock for the whole dispatch?
+          </LI>
+        </UL>
+        <BR>[ASSIGNED TO:] Carlos
+        </P>
+      </LI>
+
       <LI><P>The TypeCode internal (private) state needs locking, double
           checked locking is needed to avoid excessive overhead, there
           is potential for memory leaks if this locking is not used.
