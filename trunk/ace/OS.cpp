@@ -10,10 +10,6 @@
 # include "ace/OS.i"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
-# include "ace/Synch_T.h" /* for ACE_TSS */
-#endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
-
 ACE_RCSID(ace, OS, "$Id$")
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -1396,7 +1392,11 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 // initial values.
 ACE_thread_t ACE_OS::NULL_thread;
 ACE_hthread_t ACE_OS::NULL_hthread;
-ACE_thread_key_t ACE_OS::NULL_key;
+#if defined (ACE_HAS_TSS_EMULATION)
+  ACE_thread_key_t ACE_OS::NULL_key = ACE_static_cast (ACE_thread_key_t, -1);
+#else  /* ! ACE_HAS_TSS_EMULATION */
+  ACE_thread_key_t ACE_OS::NULL_key;
+#endif /* ! ACE_HAS_TSS_EMULATION */
 
 #if defined (CHORUS)
 KnCap ACE_OS::actorcaps_[ACE_CHORUS_MAX_ACTORS];
@@ -1510,15 +1510,14 @@ ACE_TSS_Info::dump (void)
 //  ACE_TRACE ("ACE_TSS_Info::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("key_ = %u"), this->key_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ndestructor_ = %u"), this->destructor_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntss_obj_ = %u"), this->tss_obj_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("key_ = %u\n"), this->key_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("destructor_ = %u\n"), this->destructor_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("tss_obj_ = %u\n"), this->tss_obj_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-// moved class ACE_TSS_Keys declaration
-// to OS.h so it can be visible to the
-// single file of template instantiations
+// Moved class ACE_TSS_Keys declaration to OS.h so it can be visible
+// to the single file of template instantiations.
 
 ACE_TSS_Keys::ACE_TSS_Keys (void)
 {
@@ -1558,6 +1557,7 @@ int
 ACE_TSS_Keys::test_and_clear (const ACE_thread_key_t key)
 {
   ACE_KEY_INDEX (key_index, key);
+
   u_int word, bit;
   find (key_index, word, bit);
 
@@ -1624,8 +1624,11 @@ private:
   ACE_TSS_TABLE table_;
   // Table of <ACE_TSS_Info>'s.
 
-  ACE_TSS<ACE_TSS_Keys> in_use_;
-  // Array, per thread (in TSS), of whether each TSS key is in use.
+  ACE_thread_key_t in_use_;
+  // Key for the thread-specific array of whether each TSS key is in use.
+
+  ACE_TSS_Keys *tss_keys ();
+  // Accessor for this threads ACE_TSS_Keys instance.
 
 #if defined (ACE_HAS_TSS_EMULATION)
   ACE_thread_key_t in_use_key_;
@@ -1654,7 +1657,7 @@ ACE_TSS_Cleanup::exit (void * /* status */)
 {
   // ACE_TRACE ("ACE_TSS_Cleanup::exit");
 
-  ACE_TSS_Info *key_info = table_;
+  ACE_TSS_TABLE_ITERATOR key_info = table_;
   ACE_TSS_Info info_arr[ACE_DEFAULT_THREAD_KEYS];
   int info_ix = 0;
 
@@ -1670,11 +1673,12 @@ ACE_TSS_Cleanup::exit (void * /* status */)
          i < ACE_DEFAULT_THREAD_KEYS;
          ++key_info, ++i)
       {
-        if (! key_info->key_in_use ()) continue;
+        if (key_info->key_ == ACE_OS::NULL_key  ||
+            ! key_info->key_in_use ()) continue;
 
         // If the key's ACE_TSS_Info in-use bit for this thread was set,
         // unset it and decrement the key's thread_count_.
-        if (! in_use_->test_and_clear (key_info->key_))
+        if (! tss_keys ()->test_and_clear (key_info->key_))
           {
             --key_info->thread_count_;
           }
@@ -1746,7 +1750,7 @@ ACE_TSS_Cleanup::free_all_keys_left (void)
   // something might be wrong.
 {
   ACE_thread_key_t key_arr[ACE_DEFAULT_THREAD_KEYS];
-  ACE_TSS_Info *key_info = table_;
+  ACE_TSS_TABLE_ITERATOR key_info = table_;
   unsigned int idx = 0;
   unsigned int i;
 
@@ -1778,27 +1782,28 @@ ACE_TSS_Cleanup::free_all_keys_left (void)
   return 0;
 }
 
+extern "C" void
+ACE_TSS_Cleanup_keys_destroyer (void *tss_keys)
+{
+  delete ACE_reinterpret_cast (ACE_TSS_Keys *, tss_keys);
+}
+
 ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)
   : table_ ()
-  , in_use_ ()
+  , in_use_ (ACE_OS::NULL_key)
 #if defined (ACE_HAS_TSS_EMULATION)
     // ACE_TSS_Emulation::total_keys () provides the value of the next
     // key to be created.
   , in_use_key_ (ACE_TSS_Emulation::total_keys ())
 #endif /* ACE_HAS_TSS_EMULATION */
 {
-// ACE_TRACE ("ACE_TSS_Cleanup::ACE_TSS_Cleanup");
-
-#if defined (ACE_HAS_TSS_EMULATION)
-  // Use in_use_ so that ACE_TSS_Cleanup's own TSS key is created.
-  (void) in_use_.ts_object ();
-#endif /* ACE_HAS_TSS_EMULATION */
+  // ACE_TRACE ("ACE_TSS_Cleanup::ACE_TSS_Cleanup");
 }
 
 ACE_TSS_Cleanup *
 ACE_TSS_Cleanup::instance (void)
 {
-// ACE_TRACE ("ACE_TSS_Cleanup::instance");
+  // ACE_TRACE ("ACE_TSS_Cleanup::instance");
 
   // Create and initialize thread-specific key.
   if (ACE_TSS_Cleanup::instance_ == 0)
@@ -1808,7 +1813,7 @@ ACE_TSS_Cleanup::instance (void)
 
       // Now, use the Double-Checked Locking pattern to make sure we
       // only create the ACE_TSS_Cleanup instance once.
-      if (instance_ == 0)
+      if (ACE_TSS_Cleanup::instance_ == 0)
         {
           ACE_NEW_RETURN (ACE_TSS_Cleanup::instance_, ACE_TSS_Cleanup, 0);
         }
@@ -1854,8 +1859,8 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
       // Don't bother to check <in_use_> if the program is shutting
       // down.  Doing so will cause a new ACE_TSS object getting
       // created again.
-      if (!ACE_OS_Object_Manager::shutting_down ()
-          && !in_use_->test_and_clear (info.key_))
+      if (! ACE_OS_Object_Manager::shutting_down ()
+          && ! tss_keys ()->test_and_clear (info.key_))
         --info.thread_count_;
 
       info.key_ = ACE_OS::NULL_key;
@@ -1871,7 +1876,7 @@ ACE_TSS_Cleanup::detach (void *inst)
 {
   ACE_TSS_CLEANUP_GUARD
 
-  ACE_TSS_Info *key_info = table_;
+  ACE_TSS_TABLE_ITERATOR key_info = table_;
   int success = 0;
   int ref_cnt = 0;
 
@@ -1916,7 +1921,7 @@ ACE_TSS_Cleanup::key_used (ACE_thread_key_t key)
 {
   // If the key's ACE_TSS_Info in-use bit for this thread is not set,
   // set it and increment the key's thread_count_.
-  if (! in_use_->test_and_set (key))
+  if (! tss_keys ()->test_and_set (key))
     {
       ACE_TSS_CLEANUP_GUARD
 
@@ -1935,18 +1940,56 @@ ACE_TSS_Cleanup::dump (void)
 {
   // Iterate through all the thread-specific items and dump them all.
 
-  ACE_TSS_Info *key_info = table_;
+  ACE_TSS_TABLE_ITERATOR key_info = table_;
   for (unsigned int i = 0;
        i < ACE_DEFAULT_THREAD_KEYS;
        ++key_info, ++i)
     key_info->dump ();
 }
 
+ACE_TSS_Keys *
+ACE_TSS_Cleanup::tss_keys ()
+{
+  if (in_use_ == ACE_OS::NULL_key)
+    {
+      ACE_TSS_CLEANUP_GUARD
+      // Double-check;
+      if (in_use_ == ACE_OS::NULL_key)
+        {
+          // Initialize in_use_ with a new key.
+          if (ACE_OS::thr_keycreate (&in_use_,
+                                     &ACE_TSS_Cleanup_keys_destroyer))
+            return 0; // Major problems, this should *never* happen!
+        }
+    }
+
+  ACE_TSS_Keys *ts_keys = 0;
+  if (ACE_OS::thr_getspecific (in_use_,
+        ACE_reinterpret_cast (void **, &ts_keys)) == -1)
+    return 0; // This should not happen!
+
+  if (ts_keys == 0)
+    {
+      ACE_NEW_RETURN (ts_keys, ACE_TSS_Keys, 0);
+      // Store the dynamically allocated pointer in thread-specific
+      // storage.
+      if (ACE_OS::thr_setspecific (in_use_,
+            ACE_reinterpret_cast (void *, ts_keys)) == -1)
+        {
+          delete ts_keys;
+          return 0; // Major problems, this should *never* happen!
+        }
+    }
+
+  return ts_keys;
+}
+
 # if defined (ACE_HAS_TSS_EMULATION)
 u_int ACE_TSS_Emulation::total_keys_ = 0;
 
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
-ACE_TSS_Emulation::tss_destructor_ [ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX] = { 0 };
+ACE_TSS_Emulation::tss_destructor_[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX]
+ = { 0 };
 
 #if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 
@@ -2092,12 +2135,6 @@ ACE_TSS_Emulation::tss_close ()
 }
 
 # endif /* ACE_HAS_TSS_EMULATION */
-
-# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_TSS<ACE_TSS_Keys>;
-# elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#   pragma instantiate ACE_TSS<ACE_TSS_Keys>
-# endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* WIN32 || ACE_HAS_TSS_EMULATION */
 
@@ -3459,6 +3496,7 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
     ACE_KEY_INDEX (key_index, key);
+
     if (key_index >= ACE_TSS_Emulation::total_keys ())
       {
         errno = EINVAL;
