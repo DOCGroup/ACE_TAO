@@ -29,6 +29,7 @@ ACE_Dirent::ACE_Dirent (void)
 
 ACE_INLINE 
 ACE_Dirent::ACE_Dirent (const char *dirname) 
+  : dirp_ (0)
 {
   if (this->open (dirname) == -1)
     ACE_ERROR ((LM_ERROR,
