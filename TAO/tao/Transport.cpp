@@ -179,7 +179,7 @@ dump_iov (iovec *iov, int iovcnt, int id,
                   id, location,
                   i, iovcnt,
                   iov_len));
-      
+
       size_t len;
       for (size_t offset = 0; offset < iov_len; offset += len)
         {
@@ -463,10 +463,47 @@ TAO_Transport::send_synchronous_message_i (TAO_Stub *stub,
 
     ACE_GUARD_RETURN (TAO_REVERSE_SYNCH_MUTEX, ace_mon, reverse, -1);
     result = flushing_strategy->flush_message (this,
-                                               &synch_message);
-
+                                               &synch_message,
+                                               max_wait_time);
   }
-  ACE_ASSERT (synch_message.all_data_sent () != 0);
+  if (result == -1&& errno == ETIME)
+    {
+      if (this->head_ != &synch_message)
+        {
+          synch_message.remove_from_list (this->head_, this->tail_);
+        }
+
+      else
+        {
+          // This is a timeout, there is only one nasty case: the
+          // message has been partially sent!  We simply cannot take
+          // the message out of the queue, because that would corrupt
+          // the connection.
+          //
+          // What we do is replace the queued message with an
+          // asynchronous message, that contains only what remains of
+          // the timed out request.  If you think about sending
+          // CancelRequests in this case: there is no much point in
+          // doing that: the receiving ORB would probably ignore it,
+          // and figuring out the request ID would be a bit of a
+          // nightmare.
+          //
+
+          synch_message.remove_from_list (this->head_, this->tail_);
+          TAO_Queued_Message *queued_message = 0;
+          ACE_NEW_RETURN (queued_message,
+                          TAO_Asynch_Queued_Message (
+                              synch_message.current_block ()),
+                          -1);
+          queued_message->push_front (this->head_, this->tail_);
+        }
+    }
+
+  else
+    {
+      ACE_ASSERT (synch_message.all_data_sent () != 0);
+    }
+
   ACE_ASSERT (synch_message.next () == 0);
   ACE_ASSERT (synch_message.prev () == 0);
   return result;

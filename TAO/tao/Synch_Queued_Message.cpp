@@ -16,6 +16,12 @@ TAO_Synch_Queued_Message::~TAO_Synch_Queued_Message (void)
 {
 }
 
+const ACE_Message_Block *
+TAO_Synch_Queued_Message::current_block (void) const
+{
+  return this->current_block_;
+}
+
 size_t
 TAO_Synch_Queued_Message::message_length (void) const
 {

@@ -53,6 +53,8 @@ public:
   /// Destructor
   virtual ~TAO_Synch_Queued_Message (void);
 
+  const ACE_Message_Block *current_block (void) const;
+
   /** Implement the Template Methods from TAO_Queued_Message
    */
   //@{

@@ -39,7 +39,7 @@ void
 TAO_Queued_Message::send_failure (void)
 {
   this->send_failure_ = 1;
-  
+
   if (this->callback_ != 0)
     {
       this->callback_->send_failed ();
@@ -81,4 +81,23 @@ TAO_Queued_Message::push_back (TAO_Queued_Message *&head,
   this->prev_ = tail;
   this->next_ = 0;
   tail = this;
+}
+
+void
+TAO_Queued_Message::push_front (TAO_Queued_Message *&head,
+                                TAO_Queued_Message *&tail)
+{
+  if (head == 0)
+    {
+      tail = this;
+      head = this;
+      this->next_ = 0;
+      this->prev_ = 0;
+      return;
+    }
+
+  head->prev_ = this;
+  this->next_ = head;
+  this->prev_ = 0;
+  head = this;
 }

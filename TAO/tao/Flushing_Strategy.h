@@ -58,7 +58,8 @@ public:
   /// Wait until msg is sent out.  Potentially other messages are
   /// flushed too, for example, because there are ahead in the queue.
   virtual int flush_message (TAO_Transport *transport,
-                             TAO_Queued_Message *msg) = 0;
+                             TAO_Queued_Message *msg,
+                             ACE_Time_Value *max_wait_time) = 0;
 
   /// Wait until the transport has no messages queued.
   virtual int flush_transport (TAO_Transport *transport) = 0;

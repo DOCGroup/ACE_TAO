@@ -21,7 +21,8 @@ TAO_Block_Flushing_Strategy::cancel_output (TAO_Transport *)
 
 int
 TAO_Block_Flushing_Strategy::flush_message (TAO_Transport *transport,
-                                            TAO_Queued_Message *msg)
+                                            TAO_Queued_Message *msg,
+                                            ACE_Time_Value *)
 {
   while (!msg->all_data_sent ())
     {
