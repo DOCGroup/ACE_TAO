@@ -1,3 +1,8 @@
+Sat Sep  8 09:34:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Logging_Strategy_Test.cpp: Fixed a typo that was giving
+	  compile errors in VXWORKS builds.
+
 Fri Sep  7 16:40:37 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/OS.h: 
