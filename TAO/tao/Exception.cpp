@@ -329,6 +329,15 @@ CORBA_SystemException::_tao_print_system_exception (FILE *) const
         case TAO_INVOCATION_RECV_REQUEST_MINOR_CODE:
           location = "failed to recv request response";
           break;
+        case TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL:
+          location = "all protocols failed to parse the IOR";
+          break;
+        case TAO_NULL_POINTER_MINOR_CODE:
+          location = "attempt to use null pointer";
+          break;
+        case TAO_MPROFILE_CREATION_ERROR:
+          location = "error during MProfile creation";
+          break;
         default:
           location = "unknown location";
         }
