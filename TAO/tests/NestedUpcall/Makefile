@@ -2,8 +2,6 @@
 #
 #	$Id$
 #
-#	Top-level Makefile for the ACE-ified Sun Ref. implementation
-#	of IIOP ORB
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -49,6 +47,8 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs 
 
+.PRECIOUS: ReactorC.h ReactorC.i ReactorC.cpp
+.PRECIOUS: ReactorS.h ReactorS.i ReactorS.cpp
 
 server:	$(addprefix $(VDIR),$(NESTEDUPCALLS_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)

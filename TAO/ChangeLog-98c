@@ -1,3 +1,15 @@
+Tue May 26 09:40:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Makefile: 
+	  NestedUpcall was not on the list.
+
+	* tests/NestedUpcall/Makefile: 
+	  Added a .PRECIOUS directive.
+
+	* tests/NestedUpcall/Reactor.idl: 
+	  The file was full of ^M (i.e. it was using DOS end-of-line)
+	  characters; that was confusing the IDL compiler.
+
 Tue May 26 01:46:23 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Timeprobe.h: Broke up this file in small pieces.  The time
