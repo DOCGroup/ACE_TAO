@@ -13,8 +13,23 @@ package ACE.ServiceConfigurator;
 
 import java.io.*;
 import java.util.*;
+import java.net.*;
 import ACE.OS.*;
 
+/**
+ * <hr>
+ * <h2>SYNOPSIS</h2>
+ *<blockquote>
+ *     Provides a repository for loaded Java classes
+ *</blockquote>
+ *
+ * <h2>DESCRIPTION</h2>
+ *<blockquote>
+ * This class provides a means to load Java classes explicitly at
+ * runtime. Note that since the class makes use of the Java
+ * ClassLoader, this class can not be used in a Java applet.
+ *</blockquote>
+ */
 public class ServiceRepository
 {
   /**
@@ -22,7 +37,27 @@ public class ServiceRepository
    */
   public ServiceRepository ()
   {
-    this.loader_ = new ServiceLoader ();
+    this.loader_ = new ServiceLoader (null);
+  }
+
+  /**
+   * Create a Service Repository passing in the context. Note that
+   * this can cause problems for the default system loader since it will
+   * try to load all the system classes using the context specified.
+   *@param context Context to use when loading classes.
+   */
+  public ServiceRepository (String context)
+  {
+    this.loader_ = new ServiceLoader (context);
+  }
+
+  /**
+   * Set the context
+   *@param context Context to use when loading classes.
+   */
+  public void context (String c)
+  {
+    this.loader_.context (c);
   }
 
   /**
@@ -39,29 +74,96 @@ public class ServiceRepository
     return this.loader_.loadClass (name, true);
   }
 
+  /**
+   * Load a Java Class across the network. The method tries to load
+   * the bytes for the class and then create the Class from these
+   * bytes. 
+   *@param url URL of the class to load
+   *@return Class corresponding to the url
+   */
+  public Class load (URL url) throws ClassNotFoundException
+  {
+    return this.loader_.loadClass (url, true);
+  }
+
   private ServiceLoader loader_;
 }
 
 class ServiceLoader extends ClassLoader
 {
-  public ServiceLoader ()
+  public ServiceLoader (String context)
   {
     super ();
-    this.getClassPath ();
+    if (context == null)
+      this.getClassPath ();
+    else
+      this.context_ = context;
   }
-  
+
+  public void context (String c)
+  {
+    this.context_ = c;
+  }
+
   // Load a compiled class file into runtime
   public Class loadClass (String name, boolean resolve) throws ClassNotFoundException
   {
     Class newClass;
-    try
+    if (this.context_ == null)
       {
+	try
+	  {
+	    // Try to load it the class by reading in the bytes.
+	    // Note that we are not catching ClassNotFoundException here
+	    // since our caller will catch it.
+	    try
+	      {
+		byte[] buf = bytesForClass (name);
+		newClass = defineClass (buf, 0, buf.length);
+		//	    ACE.DEBUG ("Loaded class: "+ name);
+	    
+		// Check if we need to load other classes referred to by this class.
+		if (resolve)
+		  resolveClass (newClass);
+	      }
+	    catch (ClassNotFoundException e)
+	      {
+		//	    ACE.DEBUG ("Using default loader for class: "+ name);
+		// Try default system loader
+		if ((newClass = findSystemClass (name)) != null)
+		  return newClass;
+		else 
+		  throw (e);   // Rethrow the exception
+	      }
+	  }
+	catch (IOException e)
+	  {
+	    throw new ClassNotFoundException (e.toString ());
+	  }
+      }
+    else
+      {
+	System.out.println ("Fetching over the net");
+	System.out.println ("Context: " + this.context_);
 	// Try to load it the class by reading in the bytes.
 	// Note that we are not catching ClassNotFoundException here
 	// since our caller will catch it.
 	try
 	  {
-	    byte[] buf = bytesForClass (name);
+	    URL url = new URL (this.context_ + name);
+	    URLConnection urlConnection = url.openConnection ();
+
+	    // Get the input stream associated with the URL connection and
+	    // pipe it to a newly created DataInputStream
+	    DataInputStream i = new DataInputStream (urlConnection.getInputStream ());
+
+	    // Allocate a buffer big enough to hold the contents of the
+	    // data we are about to read
+	    byte [] buf = new byte [urlConnection.getContentLength ()];
+
+	    // Now read all the data into the buffer
+	    i.readFully (buf);
+
 	    newClass = defineClass (buf, 0, buf.length);
 	    //	    ACE.DEBUG ("Loaded class: "+ name);
 	    
@@ -69,15 +171,42 @@ class ServiceLoader extends ClassLoader
 	    if (resolve)
 	      resolveClass (newClass);
 	  }
-	catch (ClassNotFoundException e)
+	catch (IOException e)
 	  {
-	    //	    ACE.DEBUG ("Using default loader for class: "+ name);
-	    // Try default system loader
-	    if ((newClass = findSystemClass (name)) != null)
-	      return newClass;
-	    else 
-	      throw (e);   // Rethrow the exception
+	    throw new ClassNotFoundException (e.toString ());
 	  }
+      }
+    return newClass;
+  }
+
+  // Load a compiled class file across the network
+  public Class loadClass (URL url, boolean resolve) throws ClassNotFoundException
+  {
+    Class newClass = null;
+    // Try to load it the class by reading in the bytes.
+    // Note that we are not catching ClassNotFoundException here
+    // since our caller will catch it.
+    try
+      {
+	URLConnection urlConnection = url.openConnection ();
+
+	// Get the input stream associated with the URL connection and
+	// pipe it to a newly created DataInputStream
+	DataInputStream i = new DataInputStream (urlConnection.getInputStream ());
+
+	// Allocate a buffer big enough to hold the contents of the
+	// data we are about to read
+	byte [] buf = new byte [urlConnection.getContentLength ()];
+
+	// Now read all the data into the buffer
+	i.readFully (buf);
+
+	newClass = defineClass (buf, 0, buf.length);
+	//	    ACE.DEBUG ("Loaded class: "+ name);
+	    
+	// Check if we need to load other classes referred to by this class.
+	if (resolve)
+	  resolveClass (newClass);
       }
     catch (IOException e)
       {
@@ -113,9 +242,9 @@ class ServiceLoader extends ClassLoader
 				    ".class");
 
 	// Check if file exists, is a normal file and is readable
-	if (classFile.exists () && 
+	if (true) /*classFile.exists () && 
 	    classFile.isFile () &&
-	    classFile.canRead ())
+	    classFile.canRead ()) */
 	  {    
 	    // Set up the stream
 	    FileInputStream in = new FileInputStream (classFile);
@@ -148,4 +277,6 @@ class ServiceLoader extends ClassLoader
 
   private String fileSeparator_;
   // Platform-dependent file separator (e.g., / or \)
+
+  private String context_ = null;
 }
