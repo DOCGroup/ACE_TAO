@@ -208,6 +208,12 @@ TAO_StructDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
 
       impl = TAO_IFR_Service_Utils::path_to_idltype (path,
                                                      this->repo_);
+      ACE_CHECK_RETURN (0);
+      if (0 == impl)
+      {
+        ACE_THROW(CORBA::OBJECT_NOT_EXIST());
+        ACE_CHECK_RETURN (0);
+      }
 
       retval[k].type = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
