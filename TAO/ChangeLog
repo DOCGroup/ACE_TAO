@@ -1,3 +1,10 @@
+Mon Dec 15 19:46:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.inl:
+
+	  #include Consumer.h to get arounda compile error in aCC. Thanks
+	  to Pierre Pacchioni for suggesting the fix.
+
 Mon Dec 15 13:34:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/default_resource.cpp:
