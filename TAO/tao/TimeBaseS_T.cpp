@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:705
+// be\be_codegen.cpp:684
 
 #ifndef _TAO_IDL_ORIG_TIMEBASES_T_CPP_
 #define _TAO_IDL_ORIG_TIMEBASES_T_CPP_
@@ -34,7 +34,7 @@
 #include "TimeBaseS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "TimeBaseS_T.i"
+#include "TimeBaseS_T.inl"
 #endif /* !defined INLINE */
 
 
