@@ -43,7 +43,7 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Server<Account_Manager_i>;
+template class Server<AccountManager_i>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate Server<Account_Manager_i>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

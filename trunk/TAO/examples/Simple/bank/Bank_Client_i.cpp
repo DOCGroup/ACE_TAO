@@ -148,7 +148,7 @@ Bank_Client_i::test_for_overdraft (CORBA::Environment &ACE_TRY_ENV)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Client<Bank,Bank_var>;
+template class Client<Bank::AccountManager,Bank::AccountManager_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate Client<Bank,Bank_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
