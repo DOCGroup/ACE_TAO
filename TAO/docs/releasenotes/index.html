@@ -16,22 +16,19 @@ Information is available on the following topics related to the <A HREF="http://
 release</A> of <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
 <UL>
 <LI>
-<A HREF="orbcore.html">ORB &amp; ORB Core</A></LI>
+<A HREF="orbcore.html">ORB Core</A></LI>
 
 <LI>
 <A HREF="#idl">IDL Compiler</A></LI>
-
-<LI>
-<A HREF="ec.html">Event Channel</A></LI>
-
-<LI>
-<A HREF="#apps">Test &amp; Example Applications</A></LI>
 
 <LI>
 <A HREF="#poa">Portable Object Adapter</A></LI>
 
 <LI>
 <A HREF="#nservices">CORBA Naming Service</A></LI>
+
+<LI>
+<A HREF="ec.html">CORBA Event Service</A></LI>
 
 <LI>
 <A HREF="#tservices">CORBA Trader Service</A></LI>
@@ -46,13 +43,14 @@ release</A> of <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
 <A HREF="#av">CORBA Audio/Video Control Service</A></LI>
 
 <LI>
+<A HREF="#apps">Test &amp; Example Applications</A></LI>
+
+<LI>
 <A HREF="#ace">ORB-related ACE Changes</A></LI>
 
 <LI>
 <A HREF="#dove">The DOVE Demo</A></LI>
 
-<LI>
-<A HREF="#vc">How to add IDL files into your Visual C++ projects</A></LI>
 </UL>
 <!--#include virtual="orbcore.html" -->
 <HR>
@@ -233,66 +231,7 @@ of size/performance/determinism will be made.
 <LI>
 Tweak the IDL compiler to generate code that's more easily integrated back
 into the ORB Core, e.g., POA, etc. This will depend largely on our ability
-to generalize the changes necessary to generated code.</LI>
-</UL>
-
-<HR><!--#include virtual="ec.html" -->
-<HR>
-<H3>
-<A NAME="apps"></A>Test &amp; Example Applications</H3>
-Point of contact: <A HREF="mailto:naga@cs.wustl.edu">Nagarajan Surendran</A>
-
-<P>Current Status:
-
-<P>The TAO IDL_Cubit test application makes use of the Naming Service and
-the server holds a TAO_Naming_Server component.Just running server and
-client is enough to test the application.
-
-<P>The various tests in the tests/POA test the different features of the
-Portable Object Adapter interface like Explicit Activation, On Demand Activation,etc..
-
-<P>Future work:
-
-<P>Developing a one-buttoned test for all the different TAO tests similar
-to the ACE-one buttoned test.
-
-<P>MT_Cubit:
-
-<P>Current status:
-
-<P>The TAO MT_Cubit test application is meant to serve as a starting point
-for real-time tests on the TAO system. It comprises the following parts:
-<UL>
-<LI>
-<I>Server.</I> The server creates multiple CORBA objects (servants), each
-with different real-time priorities. This priority is implemented by using
-real-time thread support provided by the operating system. Thus, requests
-sent to a high-priority servant are handled by a high-priority real-time
-thread, and those sent to a lower priority servant are handled by correspondingly
-lower priority threads.</LI>
-
-<LI>
-<I>Client.</I> The client component binds to the servants, and sends a
-stream of CORBA requests to the servants. It measures the response time,
-i.e. the time taken for the request to complete successfully. In particular,
-it measures the time taken for requests sent to the high priority servant
-to complete. The volume of lower priority requests is configurable. The
-client is thus able to measure the performance of the high-priority servant
-in the presence of competition from several lower-priority servants.</LI>
-</UL>
-Clearly, if the ORB endsystem handles the priorities of the various requests
-correctly, increasing the volume of lower priority requests should not
-affect the performance seen by the higher priority requests. The application
-thus serves as a tool to measure and confirm this behavior.
-
-<P>Future work:
-<UL>
-<LI>
-Study the impacts of scheduling &amp; concurrency strategies on performance.</LI>
-
-<LI>
-Evolve into a testbed for discovering sources of performance non-determinism
-&amp; priority inversion.</LI>
+to generalize the changes necessary to generated code.</LI><P>
 </UL>
 
 <HR>
@@ -333,6 +272,7 @@ Provide extensions of the specification to ensure real-time delivery of
 messages.</LI>
 </UL>
 
+<HR><!--#include virtual="ec.html" -->
 <HR>
 <H3>
 <A NAME="nservices"></A>CORBA Naming Service</H3>
@@ -470,8 +410,66 @@ Implementing the CORBA Stream controller for the above audio/video player</LI>
 
 <HR>
 <H3>
+<A NAME="apps"></A>Test &amp; Example Applications</H3>
+Point of contact: <A HREF="mailto:naga@cs.wustl.edu">Nagarajan Surendran</A>
+
+<P>Current Status:
+
+<P>The TAO IDL_Cubit test application makes use of the Naming Service and
+the server holds a TAO_Naming_Server component.Just running server and
+client is enough to test the application.
+
+<P>The various tests in the tests/POA test the different features of the
+Portable Object Adapter interface like Explicit Activation, On Demand Activation,etc..
+
+<P>Future work:
+
+<P>Developing a one-buttoned test for all the different TAO tests similar
+to the ACE-one buttoned test.
+
+<P>MT_Cubit:
+
+<P>Current status:
+
+<P>The TAO MT_Cubit test application is meant to serve as a starting point
+for real-time tests on the TAO system. It comprises the following parts:
+<UL>
+<LI>
+<I>Server.</I> The server creates multiple CORBA objects (servants), each
+with different real-time priorities. This priority is implemented by using
+real-time thread support provided by the operating system. Thus, requests
+sent to a high-priority servant are handled by a high-priority real-time
+thread, and those sent to a lower priority servant are handled by correspondingly
+lower priority threads.</LI>
+
+<LI>
+<I>Client.</I> The client component binds to the servants, and sends a
+stream of CORBA requests to the servants. It measures the response time,
+i.e. the time taken for the request to complete successfully. In particular,
+it measures the time taken for requests sent to the high priority servant
+to complete. The volume of lower priority requests is configurable. The
+client is thus able to measure the performance of the high-priority servant
+in the presence of competition from several lower-priority servants.</LI>
+</UL>
+Clearly, if the ORB endsystem handles the priorities of the various requests
+correctly, increasing the volume of lower priority requests should not
+affect the performance seen by the higher priority requests. The application
+thus serves as a tool to measure and confirm this behavior.
+
+<P>Future work:
+<UL>
+<LI>
+Study the impacts of scheduling &amp; concurrency strategies on performance.</LI>
+
+<LI>
+Evolve into a testbed for discovering sources of performance non-determinism
+&amp; priority inversion.</LI>
+</UL>
+
+<HR>
+<H3>
 <A NAME="ace"></A>ORB-related ACE Changes</H3>
-Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A>
+Points of contact: <A HREF="mailto:nanbor@cs.wustl.edu">Nanbor Wang</A>
 and <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyrarli</A>
 
 <P>Recently Completed Work:
@@ -575,61 +573,7 @@ type code information. Future work includes:
 Enhancing MIB functionality</LI>
 </UL>
 
-<HR>
-<H3>
-<A NAME="#VC"></A>How to add IDL files into your Visual C++ projects</H3>
-Point of contact: <A HREF="mailto:nw1@cs.wustl.edu">Nanbor Wang</A>.
-
-<P>Each IDL file generates .h, .i and .cpp files. Here is an example of
-adding an IDL file named foobar.idl into a VC project.
-<OL>
-<LI>
-Create/open the workspace. Create server project and client project if
-you haven't had them ready. Add the IDL file &lt;foobar.idl> and other
-non-IDL generated files into both client and server projects.</LI>
-
-<LI>
-Added foobarC.h, foobarC.i, foobarC.cpp, foobarS.h, foobarS.i, and foobarS.cpp
-into the server project and foobarC.h, foobarC.i, and foobarC.cpp into
-the client project.</LI>
-
-<LI>
-Now open the project setting window (Project -> Setting... or just press
-Alt-F7.) Select the IDL files in both client and server projects. Choose
-to set the setting for "All Configuration." Make sure the "Exclude from
-build" under the "General" tab is unchecked.</LI>
-
-<LI>
-Click on the "Custom Build" tab. Add this entry as the build command for
-IDL files:</LI>
-
-<PRE>..\..\..\TAO_IDL\tao_idl $(InputName).idl</PRE>
-Notice that your absolute path to TAO_IDL may vary.
-<LI>
-Now add the following entries as "Output file(s)."</LI>
-
-<PRE>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)S.h
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)S.i
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)S.cpp
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)C.h
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)C.i
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(InputName)C.cpp</PRE>
-Add only one entry in each line.
-<LI>
-We are all set. Click OK.</LI>
-
-<LI>
-Add foobarC.cpp to client project and foobarC.cpp and foobarS.cpp to server
-project.</LI>
-</OL>
-Notice that these procedures only setup the IDL compiler to perform correctly.
-
-<P>p.s. If anyone knows how to set a default setting in VC so we don't
-need to perform these procedures every time a new project gets set up,
-please let us know. Thanks.
-
-<P>
-<HR>
+<P><HR>
 
 <P>Back to the TAO <A HREF="../index.html">documentation index</A>.&nbsp;<!--#include virtual="/~schmidt/cgi-sig.html" -->
 </BODY>
