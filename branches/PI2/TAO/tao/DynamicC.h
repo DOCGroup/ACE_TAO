@@ -9,13 +9,8 @@
 
 #ifndef _TAO_IDL_DYNAMICC_H_
 #define _TAO_IDL_DYNAMICC_H_
-
 //Added
-#include "ace/pre.h"
 #include "tao/corbafwd.h"
-#include "tao/IOPC.h"
-#include "tao/DynAnyC.h"
-#include "tao/Typecode.h"
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"
@@ -742,6 +737,5 @@ TAO_NAMESPACE_CLOSE // module Dynamic
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-//Added
-#include "ace/post.h"
+
 #endif /* ifndef */
