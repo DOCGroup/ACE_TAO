@@ -1,3 +1,20 @@
+Sun Mar 06 21:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Service_Context_Manipulation/client.cpp:
+          When an exception is caught, print out that it is caught in the
+          client.
+
+        * tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp:
+          When an exception is caught, print out that it is caught in the
+          server.
+
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+          In the send_reply() don't call get_reply_service_context for
+          the _is_a operation because there is no service context created
+          for it. This change is needed because a side effect of the
+          skeleton refactoring is that interceptors are called more spec
+          compliant
+
 Sun Mar 06 21:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_1559/client.cpp:
