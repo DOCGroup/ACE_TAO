@@ -86,7 +86,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
   // the accept is here the first time used and if an
   // error occurs, it will occur here. Later no check
   // for errors will be done.
-  if (pt->accept (visitor) == -1)
+  if (bt->accept (visitor) == -1)
   {
      ACE_ERROR_RETURN ((LM_ERROR,
                         "(%N:%l) be_visitor_sequence_ch::"
@@ -126,20 +126,20 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
       *os << "TAO_Object_Manager<";
     }
 
-  *os << pt->name () << ","
-      << pt->name () << "_var>"
+  *os << bt->name () << ","
+      << bt->name () << "_var>"
       << " operator[] (CORBA::ULong index) const;"
       << "// Read-write accessor." << be_nl;
 
   // allocbuf
   *os << "static ";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << " **allocbuf (CORBA::ULong length); "
       << "// Allocate storage for a sequence.." << be_nl;
 
   // freebuf
   *os << "static void freebuf (";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << " **buffer);" << be_nl;
 
   // allocate_buffer
@@ -150,12 +150,12 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
   *os << "virtual void _deallocate_buffer (void);" << be_nl;
 
   // get_buffer
-  pt->accept(visitor);
+  bt->accept(visitor);
   *os << "* *get_buffer (CORBA::Boolean orphan = 0);" << be_nl;
 
   // get_buffer
   *os << "const ";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << "* *get_buffer (void) const;" << be_nl;
 
   // _shrink_buffer
