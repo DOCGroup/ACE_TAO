@@ -1,3 +1,33 @@
+Thu May 20 22:56:01 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/Reply_Dispatcher.cpp
+	* tao/Reply_Dispatcher.h
+	* tao/Request_Mux_Strategy.cpp
+	* tao/Request_Mux_Strategy.h
+	* tao/Wait_Strategy.cpp
+	* tao/Wait_Strategy.h
+	 Removed IIOP from their names.
+	* tao/Pluggable.cpp: 
+	* tao/Pluggable.h: 
+
+	* tao/IIOP_Transport.cpp: 
+	* tao/Invocation.h: 
+
+	* tao/GIOP.h: 
+	* tao/GIOP.cpp: Fixed <dump_msg> call to be able print any
+	<message_type> string correctly. Also defined a static const
+	called <tao_specific_message_types> which will tell how many TAO
+	specific message types we have. These TAO specific types will have
+	negative values in the enum type.
+
+	Also added a message type <Fragment> which belongs to GIOP 1.1.
+
+	* tao/Connect.cpp: Initializing <message_size> just before the
+	recv_messg> call. This solved the problem I had earlier regarding
+	not able to make more than one invocation on the server.
+
+	* tests/MT_Client/client.cpp: Added more calls to the server.
+
 Wed May 19 22:55:48 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
   	* tao/Makefile
