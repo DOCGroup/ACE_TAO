@@ -32,7 +32,9 @@ class TAO_AV_Export TAO_AV_Endpoint_Reactive_Strategy
   //    Reactive strategy base class
 
 protected:
-  TAO_AV_Endpoint_Reactive_Strategy (TAO_ORB_Manager *orb_manager);
+  // Constructor
+
+  TAO_AV_Endpoint_Reactive_Strategy (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
   // Constructor
 
   virtual ~TAO_AV_Endpoint_Reactive_Strategy (void);
@@ -46,6 +48,8 @@ protected:
 
   virtual int activate_vdev (CORBA::Environment &env);
   // activates the vdev with the POA
+
+
 
   virtual int activate_mediactrl (CORBA::Environment &env);
   // activates the media controller with the POA
@@ -62,8 +66,12 @@ protected:
   // Bridge method to create a media_ctrl, a la Acceptor. Applications
   // can override this
 
-  TAO_ORB_Manager *orb_manager_;
-  // ORB manager, used to activate the objects
+
+  char* activate_with_poa (PortableServer::Servant servant, CORBA::Environment &env);
+  
+  CORBA::ORB_ptr orb_;
+  
+  PortableServer::POA_var poa_;
 
 };
 // ----------------------------------------------------------------------
@@ -76,7 +84,8 @@ class TAO_AV_Export TAO_AV_Endpoint_Reactive_Strategy_A
   //    Reactive strategy
 
 public:
-  TAO_AV_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager);
+
+  TAO_AV_Endpoint_Reactive_Strategy_A (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
   // Constructor
 
   virtual ~TAO_AV_Endpoint_Reactive_Strategy_A (void);
@@ -101,8 +110,9 @@ class TAO_AV_Export TAO_AV_Endpoint_Reactive_Strategy_B
   // = DESCRIPTION
   //    Reactive strategy
 public:
-  TAO_AV_Endpoint_Reactive_Strategy_B (TAO_ORB_Manager *);
-  // Constructor.
+
+  TAO_AV_Endpoint_Reactive_Strategy_B (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
+  // Constructor
 
   virtual ~TAO_AV_Endpoint_Reactive_Strategy_B (void);
   // Destructor.
@@ -132,7 +142,7 @@ public:
   virtual ~TAO_AV_Child_Process ();
   // Destructor
 
-  int init (int argc, char **argv);
+  int init (int argc, char **argv, CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
   // Initializes the ORB, creates and activates the
   // T_StreamEndpoint, T_VDev, T_MediaCtrl in the POA
 
@@ -146,6 +156,9 @@ protected:
   // Creates the objects and inserts them into the Naming
   // Service, so the parent can pick the IOR's and
   // return them to the client
+
+  char* activate_with_poa (PortableServer::Servant servant, CORBA::Environment &env);
+  //activate the servant with the poa
 
   int unbind_names (void);
   // Removes the vdev and streamendpoint names from the naming service.
@@ -174,9 +187,6 @@ protected:
   // Bridge method to create a media_ctrl, a la Acceptor. Applications
   // can override this
 
-  TAO_ORB_Manager orb_manager_;
-  // The ORB Manager
-
   CosNaming::NamingContext_var naming_context_;
   // The root Naming Context of the TAO naming service
 
@@ -200,6 +210,11 @@ protected:
 
   char host_[MAXHOSTNAMELEN];
   // Name of the host.
+
+  CORBA::ORB_ptr orb_;
+  
+  PortableServer::POA_ptr poa_;
+
 };
 
 // ----------------------------------------------------------------------
