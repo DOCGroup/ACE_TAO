@@ -1,29 +1,59 @@
+Sat Apr  7 21:13:48 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp:
+          Separate the path for synchronous and asynchronous requests more
+          cleanly.
+          Merge the close_connection() changes from the main trunk, the
+          ORB was dead-locking on me.
+          Improve output for sent iovectors, now it is only generated if
+          TAO_debug_level==2 and the Log_Msg is locked to prevent other
+          threads from dumping the same messages.
+
+        * tao/Transport.cpp (drain_queue_i):
+          New method used by the synchronous path to send data ASAP.
+
+        * tao/Invocation.h:
+        * tao/Invocation.cpp (invoke):
+          Clarify the semantics of the <twoway_flag> argument, actually it
+          means that the ORB should wait until the data is delivered to
+          the wire.
+          Oneway invocations with the SYNC_WITH_TRANSPORT policy should
+          block until the data is delivered to the wire.
+
+        * tao/GIOP_Message_Handler.cpp:
+          Only print the full contents of the received data when the debug
+          level is *exactly* 2.
+
+        * tests/Big_Oneways/Session.cpp:
+          Fill up the messages with a repeating pattern, this is useful
+          during debugging.
+
 Thu Apr 05 10:36:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Queued_Message.h:
-	  Remove the declaration of the done() method, the semantics were
-	  not clear and it was removed a couple of iterations ago.
+          Remove the declaration of the done() method, the semantics were
+          not clear and it was removed a couple of iterations ago.
 
         * tao/Block_Flushing_Strategy.cpp:
         * tao/Reactive_Flushing_Strategy.cpp:
-	  Wait until all_data_sent() returns.
+          Wait until all_data_sent() returns.
 
         * tao/Transport.cpp:
-	  Cleanup handle_output() no need to loop, the drain_queue()
-	  method does that.
-	  After trying to send a message and blocking the send_message_i()
-	  method was not updating the new Asynch_Queued_Message with the
-	  number of bytes sent.
-	  drain_queue() loop was too complicated for its own sake.
-        
-	* tests/Big_Oneways/Session.h:
+          Cleanup handle_output() no need to loop, the drain_queue()
+          method does that.
+          After trying to send a message and blocking the send_message_i()
+          method was not updating the new Asynch_Queued_Message with the
+          number of bytes sent.
+          drain_queue() loop was too complicated for its own sake.
+
+        * tests/Big_Oneways/Session.h:
         * tests/Big_Oneways/Test.idl:
         * tests/Big_Oneways/Session.cpp:
-	  Add methods to prime the connections among multiple clients.
+          Add methods to prime the connections among multiple clients.
 
         * tests/Big_Oneways/server.cpp:
-	  Increase timeout for initial session registration.  Important
-	  for manual executions.
+          Increase timeout for initial session registration.  Important
+          for manual executions.
 
 Wed Apr  4 10:53:27 2001  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -47,6 +47,11 @@ Session::svc (void)
       Test::Payload payload (this->payload_size_);
       payload.length (this->payload_size_);
 
+      for (CORBA::ULong j = 0; j != this->payload_size_; ++j)
+        {
+          payload[j] = j % 256;
+        }
+
       // Get the number of peers just once.
       CORBA::ULong session_count =
         this->other_sessions_.length ();
@@ -115,6 +120,7 @@ Session::validate_connections (CORBA::Environment &ACE_TRY_ENV)
           ACE_CATCHANY {} ACE_ENDTRY;
         }
     }
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) connections are ready\n"));
 }
 
 void
