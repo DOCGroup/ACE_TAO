@@ -57,13 +57,15 @@ main (int argc, char *argv[])
 {
   TAO_TRY
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, TAO_TRY_ENV);
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, 0, TAO_TRY_ENV);
+
       TAO_CHECK_ENV;
 
       // Initialize the Object Adapter
       CORBA::Object_var poa_object = 
-	orb->resolve_initial_references("RootPOA");
-      if (CORBA::is_nil(poa_object.in()))
+	orb->resolve_initial_references ("RootPOA");
+      if (CORBA::is_nil (poa_object.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize the POA.\n"),
 			  1);
@@ -87,7 +89,7 @@ main (int argc, char *argv[])
 
       // We use a different POA, otherwise the user would have to
       // change the object key each time it invokes the server.
-      PortableServer::POA_var good_poa =
+      PortableServer::POA_var poa =
 	root_poa->create_POA ("RootPOA_is_BAD",
 			      poa_manager.in (),
 			      policies,
@@ -102,13 +104,14 @@ main (int argc, char *argv[])
 
       PortableServer::ObjectId_var id = 
 	PortableServer::string_to_ObjectId ("factory");
-      good_poa->activate_object_with_id (id.in (),
+      poa->activate_object_with_id (id.in (),
 					 &factory_impl,
 					 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       CORBA::Object_var obj = 
-	good_poa->id_to_reference (id.in (), TAO_TRY_ENV);
+	poa->id_to_reference (id.in (),
+                              TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       CORBA::String_var str =
@@ -125,8 +128,10 @@ main (int argc, char *argv[])
       // Handle requests for this object until we're killed, or one of
       // the methods asks us to exit.
       if (orb->run () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
-
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "run"),
+                          -1);
       root_poa->destroy (CORBA::B_TRUE, 
 			 CORBA::B_TRUE, 
 			 TAO_TRY_ENV);
