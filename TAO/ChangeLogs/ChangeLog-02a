@@ -1,3 +1,13 @@
+Tue Nov 13 20:58:02 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/md5.h: Changed comments from C++ style
+	  to C style in C file.
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: 
+	  Default initialized variables.
+	* orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
+	  Default initialized variable.
+	* orbsvcs/orbsvcs/AV/UDP.cpp: Removed unused variable.
+
 Tue Nov 13 19:23:24 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * orbsvcs/tests/Concurrency/Makefile:
