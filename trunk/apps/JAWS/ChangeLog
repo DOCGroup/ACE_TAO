@@ -6,6 +6,12 @@ Wed Jul  9 13:08:00 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 	* clients/Caching/http_client.cpp (main): Added a comment block at
 	  the top of the file.
 
+	* server/HTTP_Handler.cpp and IO.cpp: Changes that were needed
+	  since JAWS_File is now integrated into ACE (as ACE_Filecache).
+
+	* server/HTTP_Server.*: Attempting to track down memory leak.
+	  This code may be in a state a flux for the next week or so.
+
 Mon Jul  7 23:40:13 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* clients/WebSTONE/src/webclient.c: Removed a bunch of THREAD
