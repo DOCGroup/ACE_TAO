@@ -24,8 +24,8 @@ ACE_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::~ACE_Caching_St
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES> int
-ACE_Svc_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::clear_cache (CONTAINER &container,
+template <class KEY, class VALUE, class CONTAINER,  class ITERATOR, class ATTRIBUTES> int
+ACE_Svc_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cache (CONTAINER &container,
                                                                                   ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,
                                                                                   const unsigned int purge_percent,
                                                                                   unsigned int &entries)
@@ -63,22 +63,19 @@ ACE_Svc_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::clear_cache
   return 0;
 }
 
-template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES> void
-ACE_Svc_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::minimum (CONTAINER &container,
-                                                                              KEY *&key,
-                                                                              VALUE *&value)
+template <class KEY, class VALUE, class CONTAINER,  class ITERATOR, class ATTRIBUTES> void
+ACE_Svc_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ITERATOR,  ATTRIBUTES>::minimum (CONTAINER &container,
+                                                                                         KEY *&key,
+                                                                                         VALUE *&value)
 {
-  typedef ACE_TYPENAME CONTAINER::ITERATOR ITERATOR;
-  typedef ACE_TYPENAME CONTAINER::ENTRY ITEM;
-
   ITERATOR iter (container);
   ATTRIBUTES  min = 0;
-  ITEM *item = 0;
 
+  ITERATOR end = container.end ();
   // The iterator moves thru the container searching for the entry with the
   // lowest ATTRIBUTES.
   for (min = (*iter).int_id_.second (), key = &(*iter).ext_id_, value = &(*iter).int_id_;
-       iter.next (item) != 0;
+       iter != end;
        ++iter)
     {
       // Ah! an item with lower ATTTRIBUTES...
@@ -94,8 +91,8 @@ ACE_Svc_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::minimum (CO
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES> int
-ACE_Handler_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::clear_cache (CONTAINER &container,
+template <class KEY, class VALUE, class CONTAINER,  class ITERATOR, class ATTRIBUTES> int
+ACE_Handler_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ITERATOR,  ATTRIBUTES>::clear_cache (CONTAINER &container,
                                                                                       ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,
                                                                                       const unsigned int purge_percent,
                                                                                       unsigned int &entries)
@@ -132,20 +129,17 @@ ACE_Handler_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::clear_c
   return 0;
 }
 
-template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES> void
-ACE_Handler_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::minimum (CONTAINER &container,
+template <class KEY, class VALUE, class CONTAINER,  class ITERATOR, class ATTRIBUTES> void
+ACE_Handler_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ITERATOR,  ATTRIBUTES>::minimum (CONTAINER &container,
                                                                                   KEY *&key,
                                                                                   VALUE *&value)
 {
-  typedef ACE_TYPENAME CONTAINER::ITERATOR ITERATOR;
-  typedef ACE_TYPENAME CONTAINER::ENTRY ITEM;
-
   ITERATOR iter (container);
   ATTRIBUTES  min = 0;
-  ITEM *item = 0;
 
+  ITERATOR end = container.end ();
   for (min = (*iter).int_id_->caching_attributes (), key = &(*iter).ext_id_, value = &(*iter).int_id_;
-       iter.next (item) != 0;
+       iter != end;
        ++iter)
     {
       // Ah! an item with lower ATTTRIBUTES...
@@ -163,8 +157,8 @@ ACE_Handler_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::minimum
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES> int
-ACE_Null_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::clear_cache (CONTAINER &container,
+template <class KEY, class VALUE, class CONTAINER,  class ITERATOR, class ATTRIBUTES> int
+ACE_Null_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ITERATOR,  ATTRIBUTES>::clear_cache (CONTAINER &container,
                                                                                    ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,
                                                                                    const unsigned int purge_percent,
                                                                                    unsigned int &entries)
@@ -177,10 +171,10 @@ ACE_Null_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::clear_cach
   return 0;
 }
 
-template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES> void
-ACE_Null_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::minimum (CONTAINER &container,
-                                                                               KEY *&key,
-                                                                               VALUE *&value)
+template <class KEY, class VALUE, class CONTAINER,  class ITERATOR, class ATTRIBUTES> void
+ACE_Null_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ITERATOR,  ATTRIBUTES>::minimum (CONTAINER &container,
+                                                                                          KEY *&key,
+                                                                                          VALUE *&value)
 {
  ACE_UNUSED_ARG (container);
  ACE_UNUSED_ARG (key);
