@@ -110,7 +110,7 @@ namespace TAO
                         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
                         TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
 
-    /// Invoke the target
+    /// Invoke the target, and used by the generated code.
     /**
      * The implementation decides whether the target is remote or
      * collocated and takes the right decision.

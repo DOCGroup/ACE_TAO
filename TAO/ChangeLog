@@ -1,3 +1,18 @@
+Sun Nov  2 15:45:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Collocated_Invocation.h:
+	* tao/Invocation_Adapter.cpp:
+	* tao/Invocation_Adapter.h:
+	* tao/Invocation_Base.h:
+	* tao/LocateRequest_Invocation.h:
+	* tao/LocateRequest_Invocation_Adapter.cpp:
+	* tao/LocateRequest_Invocation_Adapter.h:
+	* tao/Remote_Invocation.cpp:
+	* tao/Remote_Invocation.h:
+	* tao/Synch_Invocation.h:
+
+	  Added and improved doxygen documentation.
+
 Sat Nov  1 14:58:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Sync_Strategies.cpp:
