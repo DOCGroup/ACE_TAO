@@ -152,6 +152,14 @@ public:
   int set_peer_control_addr (ACE_Addr *peer_control_addr);
   ACE_Addr *get_peer_control_addr (void);
 
+  int set_local_sec_addr (char** local_sec_addr, int size);
+  char** get_local_sec_addr (void);
+  int num_local_sec_addrs (void);
+
+  int set_peer_sec_addr (char** peer_sec_addr, int size);
+  char** get_peer_sec_addr (void);
+  int num_peer_sec_addrs (void);
+  
   int set_local_addr (ACE_Addr *local_addr);
   ACE_Addr *get_local_addr (void);
   char *get_local_addr_str (void);
@@ -232,6 +240,10 @@ protected:
 
   int is_multicast_;
   ACE_Addr *peer_addr_;
+  char** local_sec_addr_;
+  int num_local_sec_addrs_;
+  char** peer_sec_addr_;
+  int num_peer_sec_addrs_;
   ACE_Addr *peer_control_addr_;
   ACE_Addr *local_addr_;
   ACE_Addr *local_control_addr_;

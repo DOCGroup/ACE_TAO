@@ -15,6 +15,10 @@
 #include "orbsvcs/AV/QoS_UDP.h"
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 
+#if defined (ACE_HAS_SCTP)
+#include "orbsvcs/AV/SCTP_SEQ.h"
+#endif // ACE_HAS_SCTP
+
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 
@@ -251,7 +255,6 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                   {
                     if (entry->handler () != 0)
                       {
-
                         //Yamuna:PLEASE CHECK THIS LATER
 #if defined ACE_HAS_RAPI || defined (ACE_HAS_WINSOCK2_GQOS)
                         // For IN flows on the A side we should remove the handlers from the reactor.
@@ -799,6 +802,37 @@ TAO_AV_Core::load_default_transport_factories (void)
   this->transport_factories_.insert (udp_qos_item);
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 
+#if defined ACE_HAS_SCTP
+  const char *sctp_seq_factory_str = "SCTP_SEQ_Factory";
+
+  TAO_AV_Transport_Factory *sctp_seq_factory = 0;
+  TAO_AV_Transport_Item *sctp_seq_item = 0;
+
+  sctp_seq_factory =
+        ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (sctp_seq_factory_str);
+  if (sctp_seq_factory == 0)
+    {
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_WARNING,
+                    "(%P|%t) WARNING - No %s found in Service Repository."
+                    "  Using default instance.\n",
+                    "SCTP SEQ Factory"));
+
+      ACE_NEW_RETURN (sctp_seq_factory,
+		      TAO_AV_SCTP_SEQ_Factory,
+		      -1);
+    }
+  else sctp_seq_factory->ref_count = 1;
+
+  ACE_NEW_RETURN (sctp_seq_item,
+                  TAO_AV_Transport_Item ("SCTP_SEQ_Factory"),
+                  -1);
+
+  sctp_seq_item->factory (sctp_seq_factory);
+
+  this->transport_factories_.insert (sctp_seq_item);
+#endif /* ACE_HAS_SCTP */
+
   return 0;
 }
 
@@ -911,6 +945,35 @@ TAO_AV_Core::load_default_flow_protocol_factories (void)
   this->flow_protocol_factories_.insert (udp_qos_flow_item);
 
 #endif /* defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS) */
+
+#if defined ACE_HAS_SCTP
+
+  const char *sctp_seq_flow = "SCTP_SEQ_Flow_Factory";
+  TAO_AV_Flow_Protocol_Factory *sctp_seq_flow_factory = 0;
+  TAO_AV_Flow_Protocol_Item *sctp_seq_flow_item = 0;
+
+  sctp_seq_flow_factory =
+    ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (sctp_seq_flow);
+  if (sctp_seq_flow_factory == 0)
+    {
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_WARNING,
+                    "(%P|%t) WARNING - No %s found in Service Repository."
+                    "  Using default instance.\n",
+                    "SCTP SEQ Flow Factory"));
+
+      ACE_NEW_RETURN (sctp_seq_flow_factory,
+                      TAO_AV_SCTP_SEQ_Flow_Factory,
+                      -1);
+    }
+  else sctp_seq_flow_factory->ref_count = 1;
+
+  ACE_NEW_RETURN (sctp_seq_flow_item, TAO_AV_Flow_Protocol_Item ("SCTP_SEQ_Flow_Factory"), -1);
+  sctp_seq_flow_item->factory (sctp_seq_flow_factory);
+
+  this->flow_protocol_factories_.insert (sctp_seq_flow_item);
+
+#endif /* ACE_HAS_SCTP */
 
   TAO_AV_Flow_Protocol_Factory *tcp_flow_factory = 0;
   TAO_AV_Flow_Protocol_Item *tcp_item = 0;
