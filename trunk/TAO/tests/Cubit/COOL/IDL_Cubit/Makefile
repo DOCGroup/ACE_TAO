@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+# $Id$
 #
 #	Makefile for the CHORUS COOL Cubit tests
 #----------------------------------------------------------------------------
@@ -8,7 +8,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-IDL_SRC = cubit.cpp cubit.H sk_cubit.C sk_cubit.H 
+IDL_SRC = cubit.cpp cubit.H sk_cubit.C sk_cubit.H
 
 SRC = $(IDL_SRC) cubit_i.cpp server.cpp client.cpp tmplinst.cpp
 
@@ -16,33 +16,37 @@ SVR_OBJS = cubit_i.o server.o cubit.o tmplinst.o
 
 CLT_OBJS = client.o cubit.o tmplinst.o
 
-LDLIBS	 = -lm -lOrb-mt -lposix4 
-
-VLDLIBS	 = $(LDLIBS:%=%$(VAR))
-
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
-include		$(WRAPPER_ROOT)/include/makeinclude/wrapper_macros.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/macros.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.lib.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.bin.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
 #	CHORUS related macros and target settings.
 #----------------------------------------------------------------------------
 
-CHORUS_BINDIR    = $(CHORUS_ROOT)/bin
-CHORUS_LIBDIR    = $(CHORUS_ROOT)/lib
-CHORUS_INCDIR    = $(CHORUS_ROOT)/include
+CHORUS_BINDIR = $(CHORUS_ROOT)/bin
+CHORUS_LIBDIR = $(CHORUS_ROOT)/lib
+CHORUS_INCDIR = $(CHORUS_ROOT)/include
 
 CPPFLAGS += -I$(CHORUS_INCDIR) -I$(CHORUS_ROOT)
-LDFLAGS  += -L$(CHORUS_LIBDIR) -R $(CHORUS_LIBDIR) -L$(ACE)/ace
-IDLFLAGS = --stub-header --stub-impl --skeleton-header --skeleton-impl --no-local --binding Cubit Cubit_i --binding Cubit_Factory Cubit_Factory_i 
+LDFLAGS  += -L$(CHORUS_LIBDIR) -R$(CHORUS_LIBDIR) -L$(ACE)/ace
+IDLFLAGS = --stub-header --stub-impl --skeleton-header --skeleton-impl --no-local --binding Cubit Cubit_i --binding Cubit_Factory Cubit_Factory_i
+
+ifdef CHORUS
+  LDLIBS += -lOrb
+else
+  LDLIBS += -lOrb-mt $(MATHLIB)
+endif
+
+VLDLIBS = $(LDLIBS:%=%$(VAR)) $(ACELIB) $(LIBS)
 
 #----------------------------------------------------------------------------
 #	Local targets

@@ -8,7 +8,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-IDL_SRC = cubit.cpp cubit.H sk_cubit.C sk_cubit.H 
+IDL_SRC = cubit.cpp cubit.H sk_cubit.C sk_cubit.H
 
 SRC = $(IDL_SRC) \
 	cubit_impl.cpp \
@@ -24,41 +24,43 @@ SVR_OBJS = cubit_impl.o \
 CLT_OBJS = Task_Client.o \
 	client.o \
 	cubit.o \
-	Util_Thread.o 
+	Util_Thread.o
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
-include		$(WRAPPER_ROOT)/include/makeinclude/wrapper_macros.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/macros.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.lib.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.bin.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
 #	CHORUS related macros and target settings.
 #----------------------------------------------------------------------------
-CHORUS_BINDIR    = $(CHORUS_ROOT)/bin
-CHORUS_LIBDIR    = $(CHORUS_ROOT)/lib
-CHORUS_INCDIR    = $(CHORUS_ROOT)/include
 
-CPPFLAGS += -I$(CHORUS_INCDIR) -I$(CHORUS_ROOT) 
+CHORUS_BINDIR = $(CHORUS_ROOT)/bin
+CHORUS_LIBDIR = $(CHORUS_ROOT)/lib
+CHORUS_INCDIR = $(CHORUS_ROOT)/include
+
+CPPFLAGS += -I$(CHORUS_INCDIR) -I$(CHORUS_ROOT)
 LDFLAGS  += -L$(CHORUS_LIBDIR) -R$(CHORUS_LIBDIR) -L$(ACE)/ace
 IDLFLAGS = --stub-header --stub-impl --skeleton-header --skeleton-impl --no-local --no-any --binding Cubit Cubit_Impl
 
-# pccTimer will eventually get integrated into ACE.  It is specific for ClassiX on VME
+# pccTimer will eventually get integrated into ACE.  It is specific for
+# ClassiX on VME
 ifdef CHORUS
-	SRC += pccTimer.cpp
-	CLT_OBJS += pccTimer.o
-	LDLIBS += -lOrb
+  SRC += pccTimer.cpp
+  CLT_OBJS += pccTimer.o
+  LDLIBS += -lOrb
 else
-	LDLIBS += -lsocket -lACE -lposix4 -lOrb-mt
+  LDLIBS += -lOrb-mt
 endif
 
-VLDLIBS	 = $(LDLIBS:%=%$(VAR))
+VLDLIBS = $(LDLIBS:%=%$(VAR)) $(ACELIB) $(LIBS)
 
 #----------------------------------------------------------------------------
 #	Local targets
