@@ -1,3 +1,9 @@
+Mon Mar 19 15:28:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput: Added a space between the svc conf
+	  file and the option "-m". This could be the problem that has
+	  been dodging the builds for quite sometime.
+
 Mon Mar 19 11:37:43 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp (main): 
