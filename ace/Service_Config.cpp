@@ -390,6 +390,8 @@ ACE_Service_Config::process_directive (const ASYS_TCHAR directive[])
   ACE_TRACE ("ACE_Service_Config::process_directives");
   ACE_UNUSED_ARG (directive);
 
+  ace_yyrestart (0);
+
   // Place <directive> into a buffer that the YY_INPUT macro knows how
   // to process correctly.
   ace_yydirective = directive;
