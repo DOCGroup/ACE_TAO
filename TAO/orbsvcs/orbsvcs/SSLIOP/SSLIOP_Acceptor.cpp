@@ -100,6 +100,21 @@ int
 TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                       TAO_MProfile &mprofile)
 {
+  // Sanity check.
+  if (this->endpoint_count_ == 0)
+    return -1;
+
+  // If RT_CORBA is enabled, only one IIOP profile is created for
+  // <mprofile> and all IIOP endpoints are added into that profile.
+  // If RT_CORBA is not enabled, we create a separate profile for each
+  // endpoint.
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  return create_rt_mprofile (object_key, mprofile);
+
+#else  /* TAO_HAS_RT_CORBA == 1 */
+
   // Adding this->endpoint_count_ to the TAO_MProfile.
   int count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
@@ -138,8 +153,6 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
         TAO_DEFAULT_WCHAR_CODESET_ID;
       pfile->tagged_components ().set_code_sets (code_set_info);
 
-      pfile->tagged_components ().set_tao_priority (this->priority ());
-
       IOP::TaggedComponent component;
       component.tag = IOP::TAG_SSL_SEC_TRANS;
       // @@???? Check this code, only intended as guideline...
@@ -163,23 +176,136 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
     }
 
   return 0;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 }
 
 int
-TAO_SSLIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
+TAO_SSLIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
+                                         TAO_MProfile &mprofile)
 {
-  const TAO_SSLIOP_Profile *profile =
-    ACE_dynamic_cast (const TAO_SSLIOP_Profile *,
-                      pfile);
+  size_t index = 0;
+  TAO_Profile *pfile = 0;
+  TAO_SSLIOP_Profile *ssliop_profile = 0;
+
+  // First see if <mprofile> already contains a IIOP profile.
+  for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
+    {
+      pfile = mprofile.get_profile (i);
+      if (pfile->tag () == TAO_TAG_IIOP_PROFILE)
+      {
+        ssliop_profile = ACE_dynamic_cast (TAO_SSLIOP_Profile *,
+                                           pfile);
+        if (ssliop_profile == 0)
+          return -1;
+        break;
+      }
+    }
+
+  // If <mprofile> doesn't contain SSLIOP_Profile, we need to create
+  // one.
+  if (ssliop_profile == 0)
+    {
+      ACE_NEW_RETURN (ssliop_profile,
+                      TAO_SSLIOP_Profile (this->hosts_[0].c_str (),
+                                          this->addrs_[0].get_port_number (),
+                                          object_key,
+                                          this->addrs_[0],
+                                          this->version_,
+                                          this->orb_core_,
+                                          this->ssl_component_.port),
+                      -1);
+
+      TAO_SSLIOP_Endpoint *ssliop_endp =
+        ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
+                          ssliop_profile->endpoint ());
+
+      ssliop_endp->priority (this->priority ());
+      ssliop_endp->iiop_endpoint ()->priority (this->priority ());
+
+      if (mprofile.give_profile (ssliop_profile) == -1)
+        {
+          ssliop_profile->_decr_refcnt ();
+          ssliop_profile = 0;
+          return -1;
+        }
+
+      if (this->orb_core_->orb_params ()->std_profile_components () == 0)
+        {
+          ssliop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
+
+          CONV_FRAME::CodeSetComponentInfo code_set_info;
+          code_set_info.ForCharData.native_code_set  =
+            TAO_DEFAULT_CHAR_CODESET_ID;
+          code_set_info.ForWcharData.native_code_set =
+            TAO_DEFAULT_WCHAR_CODESET_ID;
+          ssliop_profile->tagged_components ().set_code_sets (code_set_info);
+
+          IOP::TaggedComponent component;
+          component.tag = IOP::TAG_SSL_SEC_TRANS;
+          // @@???? Check this code, only intended as guideline...
+          TAO_OutputCDR cdr;
+          cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
+          cdr << this->ssl_component_;
+          // TAO extension, replace the contents of the octet sequence with
+          // the CDR stream
+          CORBA::ULong length = cdr.total_length ();
+          component.component_data.length (length);
+          CORBA::Octet *buf = component.component_data.get_buffer ();
+          for (const ACE_Message_Block *i = cdr.begin ();
+               i != 0;
+               i = i->cont ())
+            {
+              ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+              buf += i->length ();
+            }
+
+          ssliop_profile->tagged_components ().set_component (component);
+        }
+
+          index = 1;
+    }
+  // Add any remaining endpoints to the SSLIOP_Profile.
+  for (;
+       index < this->endpoint_count_;
+       ++index)
+    {
+      TAO_SSLIOP_Endpoint *ssl_endp = 0;
+      TAO_IIOP_Endpoint *iiop_endp = 0;
+      ACE_NEW_RETURN (iiop_endp,
+                      TAO_IIOP_Endpoint (this->hosts_[index].c_str (),
+                                         this->addrs_[index].get_port_number (),
+                                         this->addrs_[index]),
+                      -1);
+      iiop_endp->priority (this->priority_);
+
+      ACE_NEW_RETURN (ssl_endp,
+                      TAO_SSLIOP_Endpoint (this->ssl_component_.port,
+                                           iiop_endp),
+                      -1);
+
+      ssl_endp->priority (this->priority_);
+      ssliop_profile->add_endpoint (ssl_endp);
+    }
+
+  return 0;
+}
+
+int
+TAO_SSLIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
+{
+  const TAO_SSLIOP_Endpoint *endp =
+    ACE_dynamic_cast (const TAO_SSLIOP_Endpoint *,
+                      endpoint);
 
   // Make sure the dynamically cast pointer is valid.
-  if (profile == 0)
+  if (endp == 0)
     return 0;
 
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
       // compare the port and sin_addr (numeric host address)
-      if (profile->object_addr () == this->addrs_[i])
+      if (endp->iiop_endpoint ()->object_addr () == this->addrs_[i])
         return 1;  // Collocated
     }
 

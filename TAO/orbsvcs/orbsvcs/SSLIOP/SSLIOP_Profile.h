@@ -31,9 +31,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SSLIOPC.h"
+#include "SSLIOP_Endpoint.h"
 #include "tao/IIOP_Profile.h"
-#include "SSLIOP_Export.h"
 
 class TAO_SSLIOP_Client_Connection_Handler;
 
@@ -81,25 +80,29 @@ public:
   ~TAO_SSLIOP_Profile (void);
   // Destructor is to be called only through <_decr_refcnt>.
 
-  CORBA::UShort ssl_port (void) const;
-  // The port used for SSL communication.
+  virtual TAO_Endpoint *endpoint (void);
+  // Head of the list of endpoints for this profile.
 
-  TAO_SSLIOP_Client_Connection_Handler *&ssl_hint (void);
-  //  This is a hint for which connection handler to use.
+  void add_endpoint (TAO_SSLIOP_Endpoint *endp);
+  //
 
   // = Please see Profile.h for the documentation of these methods.
   virtual int decode (TAO_InputCDR& cdr);
+  virtual int encode (TAO_OutputCDR &stream) const;
+  // Encode this profile in a stream, i.e. marshal it.
   virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
-  virtual void reset_hint (void);
 
 private:
-  SSLIOP::SSL ssl_component_;
-  // Cache the SSL tagged component in a decoded format. Notice that
-  // we do not need to marshal this object!
 
-  TAO_SSLIOP_Client_Connection_Handler *ssl_hint_;
-  // Pointer to a connection handler which we successfully used
-  // already.
+  int encode_endpoints (void);
+  // Encodes endpoints from this profile into a tagged component.
+
+  int decode_endpoints (void);
+  // Decodes endpoints of this profile from a tagged component.
+
+
+  TAO_SSLIOP_Endpoint ssl_endpoint_;
+  //
 };
 
 #if defined (__ACE_INLINE__)

@@ -53,4 +53,10 @@ TAO_UIOP_Endpoint::reset_hint (void)
     this->hint_->cleanup_hint ((void **) &this->hint_);
 }
 
+TAO_Endpoint *
+TAO_UIOP_Endpoint::next (void)
+{
+  return this->next_;
+}
+
 #endif  /* TAO_HAS_UIOP == 1 */

@@ -44,6 +44,7 @@ class TAO_Export TAO_IIOP_Endpoint : public TAO_Endpoint
 public:
 
   friend class TAO_IIOP_Profile;
+  friend class TAO_SSLIOP_Profile;
 
   TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
                      int use_dotted_decimal_addresses);

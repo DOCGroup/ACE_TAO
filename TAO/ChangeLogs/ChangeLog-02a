@@ -1,3 +1,67 @@
+Fri Sep 15 20:39:49 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/IIOP_Endpoint.h:
+
+	  Added a friend.
+
+	* tao/IIOP_Endpoint.cpp
+	* tao/IIOP_Endpoint.i
+	* tao/UIOP_Endpoint.cpp
+	* tao/SHMIOP_Endpoint.cpp
+	* tao/SHMIOP_Endpoint.i:
+
+	  Moved <next> method from .i to .cpp because it's virtual.
+
+	* tao/IIOP_Profile.h:
+
+	  - Removed unused data member <orb_core>.
+	  - Made some members protected rather than private, so that they
+	  are accessable to SSLIOP implementation.
+
+	* tao/IIOP_Profile.cpp (decode_endpoints)
+	* tao/UIOP_Profile.cpp (decode_endpoints)
+	* tao/SHMIOP_Profile.cpp (decode_endpoints):
+
+	  Reversed the order of the loop to start from the end of the
+	  endpoint sequence to preserve the ordering of the endpoints
+	  within the profile.
+
+	* tao/Tagged_Components.i (unique_tag):
+
+	  Added TAO_TAG_SSL_ENDPOINTS to the list.
+
+	* tao/UIOP_Endpoint.i:
+
+	  Fixed warning.
+
+	* tao/UIOP_Profile.h:
+
+	  Removed unused data member.
+
+	* tao/corbafwd.h:
+
+	  Added TAO_TAG_SSL_ENDPOINTS.
+
+	* orbsvcs/orbsvcs/SSLIOP_Acceptor.cpp
+	* orbsvcs/orbsvcs/SSLIOP_Acceptor.h
+	* orbsvcs/orbsvcs/SSLIOP_Connector.cpp
+	* orbsvcs/orbsvcs/SSLIOP_Connector.h
+	* orbsvcs/orbsvcs/SSLIOP_Endpoint.cpp
+	* orbsvcs/orbsvcs/SSLIOP_Endpoint.h
+	* orbsvcs/orbsvcs/SSLIOP_Endpoint.i
+	* orbsvcs/orbsvcs/SSLIOP_Profile.cpp
+	* orbsvcs/orbsvcs/SSLIOP_Profile.h
+	* orbsvcs/orbsvcs/SSLIOP_Profile.i
+	* orbsvcs/orbsvcs/ssl_endpoints.cpp
+	* orbsvcs/orbsvcs/ssl_endpoints.h
+	* orbsvcs/orbsvcs/ssl_endpoints.i
+	* orbsvcs/orbsvcs/ssl_endpoints.pidl
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
+
+	  Updated SSLIOP to use new pluggable protocol framework
+	  component Endpoint.  For details on Endpoint see:
+	  Wed Sep 13 19:15:01 2000  Marina Spivak  <marina@cs.wustl.edu>
+
 Fri Sep 15 16:37:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:

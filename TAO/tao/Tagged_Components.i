@@ -46,6 +46,7 @@ TAO_Tagged_Components::unique_tag (IOP::ComponentId tag) const
           || tag == IOP::TAG_CODE_SETS
           || tag == IOP::TAG_POLICIES
           || tag == TAO_TAG_ENDPOINTS
+          || tag == TAO_TAG_SSL_ENDPOINTS
           // || tag == IOP::TAG_ALTERNATE_IIOP_ADDRESS
           || tag == IOP::TAG_ASSOCIATION_OPTIONS
           || tag == IOP::TAG_SEC_NAME

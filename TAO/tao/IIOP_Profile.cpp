@@ -302,6 +302,9 @@ TAO_IIOP_Profile::parse_string (const char *string,
   ACE_OS::strncpy (tmp.inout (), start, length_host);
   tmp[length_host] = '\0';
 
+  ACE_OS::strncpy (tmp.inout (), start, length);
+  tmp[length] = '\0';
+
   this->endpoint_.host_ = tmp._retn ();
 
   ACE_INET_Addr host_addr;
@@ -644,6 +647,7 @@ TAO_IIOP_Profile::decode_endpoints (void)
 
       // Extract endpoints sequence.
       TAO_IIOPEndpointSequence endpoints;
+
       if ((in_cdr >> endpoints) == 0)
         return 0;
 
@@ -651,9 +655,13 @@ TAO_IIOP_Profile::decode_endpoints (void)
       // extracted as part of the standard iiop decoding.
       this->endpoint_.priority (endpoints[0].priority);
 
-      // Start with the second endpoint, because the first endpoint is
-      // always extracted through standard iiop profile body.
-      for (CORBA::ULong i = 1; i < endpoints.length (); ++i)
+      // The first endpoint is always extracted through standard
+      // profile body, so skip it.  Also, start from the end of
+      // the sequence to preserve endpoint order, since "add_endpoint"
+      // reverses the order of endpoints.
+      for (CORBA::ULong i = endpoints.length () - 1;
+           i > 0;
+           --i)
         {
           TAO_IIOP_Endpoint *endpoint = 0;
           ACE_NEW_RETURN (endpoint,

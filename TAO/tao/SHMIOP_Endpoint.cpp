@@ -17,7 +17,7 @@ ACE_RCSID(tao, SHMIOP_Endpoint, "$Id$")
 
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
                                           int use_dotted_decimal_addresses)
-  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE), 
+  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE),
     host_ (),
     port_ (0),
     object_addr_ (addr.get_remote_addr ()),
@@ -30,7 +30,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
                                           CORBA::UShort port,
                                           const ACE_INET_Addr &addr)
-  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE), 
+  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE),
     host_ (),
     port_ (port),
     object_addr_ (addr),
@@ -42,7 +42,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
 }
 
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (void)
-  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE), 
+  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE),
     host_ (),
     port_ (0),
     object_addr_ (),
@@ -54,7 +54,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (void)
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
                                           CORBA::UShort port,
                                           CORBA::Short priority)
-  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE), 
+  : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE),
     host_ (),
     port_ (port),
     object_addr_ (),
@@ -134,6 +134,12 @@ TAO_SHMIOP_Endpoint::reset_hint (void)
 {
   if (this->hint_)
     this->hint_->cleanup_hint ((void **) &this->hint_);
+}
+
+TAO_Endpoint *
+TAO_SHMIOP_Endpoint::next (void)
+{
+  return this->next_;
 }
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

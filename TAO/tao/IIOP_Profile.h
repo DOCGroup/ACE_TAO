@@ -31,7 +31,6 @@
 #include "tao/IIOP_Endpoint.h"
 
 #include "ace/Synch.h"
-//#include "ace/INET_Addr.h"
 
 class TAO_IIOP_Client_Connection_Handler;
 
@@ -138,6 +137,8 @@ private:
   int decode_endpoints (void);
   // Decodes endpoints of this profile from a tagged component.
 
+protected:
+
   TAO_IIOP_Endpoint endpoint_;
   // Head of the list of endpoints for this profile.
 
@@ -148,11 +149,10 @@ private:
   // Flag indicating whether endpoints have already been encoded,
   // saving us from repeatedly encoding them over and over.
 
+private:
+
   TAO_ObjectKey object_key_;
   // object_key associated with this profile.
-
-  TAO_ORB_Core *orb_core_;
-  // ORB Core.
 
   IOP::TaggedProfile tagged_profile_;
   // Our tagged profile

@@ -60,7 +60,7 @@ TAO_SHMIOP_Endpoint::hint (void)
 ACE_INLINE CORBA::ULong
 TAO_SHMIOP_Endpoint::hash (void)
 {
-  return 
+  return
     ACE::hash_pjw (this->host_.in ())
     + this->port_;
 }
@@ -68,13 +68,7 @@ TAO_SHMIOP_Endpoint::hash (void)
 ACE_INLINE CORBA::Boolean
 TAO_SHMIOP_Endpoint::is_equivalent (const TAO_SHMIOP_Endpoint *other_endpoint)
 {
-  return 
+  return
     this->port_ == other_endpoint->port_
     && ACE_OS::strcmp (this->host_.in (), other_endpoint->host_.in ()) == 0;
-}
-
-ACE_INLINE TAO_Endpoint *
-TAO_SHMIOP_Endpoint::next (void)
-{
-  return this->next_;
 }
