@@ -365,6 +365,7 @@ main (int argc, char *argv[])
   spawn ();
 
   ACE_END_TEST;
+  return 0;
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
