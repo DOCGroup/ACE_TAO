@@ -1,3 +1,14 @@
+Mon Apr 14 21:32:24 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp (handle_client):
+	  ACE_OS::sprintf instead of sprintf.
+
+	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp
+	  (svc): declare "t" as time_t instead of long.
+
+	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+	  reporting both of these.
+
 Mon Apr 14 00:02:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Process.cpp: Replaced the use of ACE_OS::fork(void) with
