@@ -765,7 +765,7 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::advance (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
+ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
 ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)");
@@ -776,7 +776,7 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>&
+ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
 ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)");
@@ -787,8 +787,8 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
   return retv;
 }
 
+ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>&
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)");
