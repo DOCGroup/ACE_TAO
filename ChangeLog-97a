@@ -1,5 +1,8 @@
 Tue Jun 17 04:58:38 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
+	* ace/ace.{mdp,mak}: Added Timer_{Hash,Heap,List,Wheel}.cpp
+	  into workspace and project.
+
 	* ace/Timer_Queue_T.h: Added include file "ace/Synch_T.h" to avoid
  	  compilation errors in SC 4.1.  We didn't notice this because
  	  most of us have moved to SC 4.2.  Don't know why this didn't
