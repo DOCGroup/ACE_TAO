@@ -1,3 +1,9 @@
+Tue Jun 22 08:40:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/be_global.cpp (prep_be_arg):
+        
+          Fixed unused arg warning.
+
 Tue Jun 22 08:04:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Exception.cpp:

@@ -198,7 +198,7 @@ BE_GlobalData::parse_args (long &i, char **av)
 
 // Does nothing in this backend.
 void
-BE_GlobalData::prep_be_arg (char *s)
+BE_GlobalData::prep_be_arg (char *)
 {
 }
 
