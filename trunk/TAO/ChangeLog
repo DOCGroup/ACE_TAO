@@ -1,3 +1,26 @@
+Wed Sep 22 21:39:48 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+	  Add test for freebuf(), this motivated the changes below.
+	  Add test for to verify that index checking works.
+
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+	  Enable the implementation of allocbuf() and freebuf().
+
+	* tests/Sequence_Unit_Tests/allocation_traits.hpp:
+	  Because freebuf() has such crazy requirements for sequences of
+	  reference-like types I had to implement special allocators for
+	  those types.  Basically they decorate the normal allocators and
+	  call the ::release_range() and ::zero_range() traits in the
+	  element type.
+
+	* tests/Sequence_Unit_Tests/generic_sequence.hpp:
+	  Improved the documentation.
+	  Moved the zeroing-out of buffers to the allocation traits.
+
+	* tests/Sequence_Unit_Tests/string_traits.hpp:
+	  Add trait to release all the strings in a (buffer) range.
+
 Wed Sep 22 20:41:44 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
