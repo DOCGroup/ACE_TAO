@@ -3349,7 +3349,6 @@ template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mu
 template class ACE_Hash_Map_Iterator_Base<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
 template class ACE_Write_Guard<ACE_Lock>;
 template class ACE_Read_Guard<ACE_Lock>;
-template class ACE_Guard<ACE_Lock>;
 template class ACE_Unbounded_Set<TAO_POA *>;
 template class ACE_Unbounded_Set_Iterator<TAO_POA *>;
 template class TAO_Object_Manager<CORBA::Policy>;
@@ -3389,7 +3388,6 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base<ACE_CString, TAO_POA *, ACE_Null_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_Lock>
 #pragma instantiate ACE_Read_Guard<ACE_Lock>
-#pragma instantiate ACE_Guard<ACE_Lock>
 #pragma instantiate ACE_Unbounded_Set<TAO_POA *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_POA *>
 #pragma instantiate TAO_Object_Manager<CORBA::Policy>
