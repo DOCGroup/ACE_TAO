@@ -35,9 +35,9 @@ Session::svc (void)
   /// Automatically decrease the reference count at the end of the
   /// thread
   PortableServer::ServantBase_var auto_decrement (this);
+  CORBA::ULong i = 0;
 
   ACE_DECLARE_NEW_CORBA_ENV;
-
   ACE_TRY
     {
       // Use the same payload over and over
@@ -48,7 +48,7 @@ Session::svc (void)
       CORBA::ULong session_count =
         this->other_sessions_.length ();
 
-      for (CORBA::ULong i = 0; i != this->message_count_; ++i)
+      for (; i != this->message_count_; ++i)
         {
 #if 0
           if (i % 500 == 0)
@@ -81,6 +81,10 @@ Session::svc (void)
     }
   ACE_CATCHANY
     {
+      ACE_ERROR ((LM_ERROR,
+                          "(%P|%t) ERROR: Session::svc, "
+                          "send %d messages out of %d\n",
+                          i, message_count_));
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Session::svc - ");
       return -1;
     }
