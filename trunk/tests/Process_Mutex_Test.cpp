@@ -178,6 +178,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
                       children[i].getpid ()));
+
+          // Give the newly spawned child process a chance to start...
+          // David Levine thinks this sleep() is required because
+          // calling ::waitpid () before a fork'ed child has actually
+          // been created may be a problem on some platforms.  It's
+          // not enough for fork() to have returned to the parent.
+          ACE_OS::sleep (1);
         }
 
       for (i = 0; i < n_processes; i++)
