@@ -1,3 +1,99 @@
+Thu May 17 08:53:33 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/Options.html:
+
+          Updated documentation on -ORBConnectionCachingStrategy,
+          -ORBConnectionCachePurgePercentage.  Added documentation on
+          -ORBConnectionCacheMax option.
+
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/Acceptor_Impl.cpp:
+        * tao/Connector_Registry.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/Resource_Factory.cpp:
+        * tao/Resource_Factory.h:
+        * tao/Transport.cpp:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/default_resource.cpp:
+        * tao/default_resource.h:
+        * tao/orbconf.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Strategies/advanced_resource.cpp:
+        * tao/Strategies/advanced_resource.h:
+
+          Updated the code to use the purging strategy on the ORB_Core.  The
+          purging strategy replaces the transport cache in the ORB_Core and
+          implements pass-through methods to get to the purging strategies
+          transport cache.  These pass-through methods keep track of the
+          transport usage.
+
+        * tao/Connection_Purging_Strategy.cpp:
+        * tao/Connection_Purging_Strategy.h:
+        * tao/Connection_Purging_Strategy.inl:
+        * tao/LRU_Connection_Purging_Strategy.cpp:
+        * tao/LRU_Connection_Purging_Strategy.h:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.h:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.h:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.h:
+
+          New connection purging files.
+
+        * tao/Makefile:
+        * tao/Makefile.bor:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/Strategies/Makefile:
+        * tao/Strategies/Makefile.bor:
+        * tao/Strategies/TAO_Strategies.dsp:
+        * tao/Strategies/TAO_Strategies_Static.dsp:
+
+          Added the new files to the makefiles and workspace files.
+
+        * tests/BiDirectional/test_i.cpp:
+        * tests/BiDirectional_NestedUpcall/test_i.cpp:
+
+          Replaced usage of the ORB_Core's transport_cache with the
+          purging_strategy.
+
+        * tests/Connection_Purging/Makefile:
+        * tests/Connection_Purging/Makefile.bor:
+        * tests/Connection_Purging/client.bor:
+        * tests/Connection_Purging/client.cpp:
+        * tests/Connection_Purging/client.dsp:
+        * tests/Connection_Purging/client.fifo.conf:
+        * tests/Connection_Purging/client.lfu.conf:
+        * tests/Connection_Purging/client.lru.conf:
+        * tests/Connection_Purging/client.null.conf:
+        * tests/Connection_Purging/run_test.pl:
+        * tests/Connection_Purging/server.bor:
+        * tests/Connection_Purging/server.cpp:
+        * tests/Connection_Purging/server.dsp:
+        * tests/Connection_Purging/server_shmiop.conf:
+        * tests/Connection_Purging/test.dsw:
+        * tests/Connection_Purging/test.idl:
+        * tests/Connection_Purging/test_i.cpp:
+        * tests/Connection_Purging/test_i.h:
+
+          Updated this test to reflect the current connection purging
+          strategies.
+
+        * */Makefile*:
+
+          Updated all of the TAO makefile dependencies.
+
 Thu May 17 07:34:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Leader_Follower.cpp: Fixed a fuzz error.
