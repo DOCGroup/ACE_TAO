@@ -2,6 +2,11 @@ Wed Sep 16 11:41:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/High_Res_Timer.cpp: added ACE_HAS_POWERPC_TIMER support.
 
+        * tests/High_Res_Timer_Test.cpp: added this new test.
+
+        * tests/Makefile,run_tests.{bat,psosim,sh,vxworks}:
+          added High_Res_Timer_Test.
+
 Wed Sep 16 11:28:47 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp: In
