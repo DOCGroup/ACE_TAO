@@ -1,54 +1,60 @@
+Sun Jul 04 15:41:34 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * many Makefiles: call ace_components via sh, instead of
+          directly in the make $(shell) command.  This allows it
+          to work on platforms that don't have /bin/sh, such as NT.
+
 Sun Jul  4 14:43:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/Options.html:
-	* docs/configurations.html:
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf:
-	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
-	* tao/Client_Strategy_Factory.cpp:
-	* tao/Client_Strategy_Factory.h:
-	* tao/Stub.cpp:
-	* tao/default_client.cpp:
-	* tao/default_client.h:
-	* tests/MT_Client/client.conf:
-	  Changed the name of the -ORBIIOPProfileLock option to
-	  -ORBProfileLock, leave the old option there with a warning for
-	  backwards compatibility.
+        * docs/Options.html:
+        * docs/configurations.html:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf:
+        * performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+        * tao/Client_Strategy_Factory.cpp:
+        * tao/Client_Strategy_Factory.h:
+        * tao/Stub.cpp:
+        * tao/default_client.cpp:
+        * tao/default_client.h:
+        * tests/MT_Client/client.conf:
+          Changed the name of the -ORBIIOPProfileLock option to
+          -ORBProfileLock, leave the old option there with a warning for
+          backwards compatibility.
 
 Sat Jul  3 19:06:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/lex.yy.cpp:
-	* TAO_IDL/fe/lex.yy.cpp.diff:
-	  Initialized some pointers at declaration to avoid
-	  Linux/egcs warnings.
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+          Initialized some pointers at declaration to avoid
+          Linux/egcs warnings.
 
 Sat Jul  3 18:00:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_sunsoft.cpp:
-	  Added a check in printing char literal for '. Like \,
-	  isprint() sees this as a printable character, and it is
-	  not stored in AST_Expression with its escape backslash.
-	  Thanks to Bala for pointing out this case.
+        * TAO_IDL/be/be_sunsoft.cpp:
+          Added a check in printing char literal for '. Like \,
+          isprint() sees this as a printable character, and it is
+          not stored in AST_Expression with its escape backslash.
+          Thanks to Bala for pointing out this case.
 
 Sat Jul  3 17:44:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/fe/lex.yy.cpp:
-	* TAO_IDL/fe/lex.yy.cpp.diff:
-	  The scan_obv_token() function was bypassing the keyword
-	  table lookup before assigning. Since 'public' and 
-	  'private' are in the keyword lookup table, they were
-	  getting mapped as identifiers without the _cxx_ prepend,
-	  since they are also OBV tokens.
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+          The scan_obv_token() function was bypassing the keyword
+          table lookup before assigning. Since 'public' and
+          'private' are in the keyword lookup table, they were
+          getting mapped as identifiers without the _cxx_ prepend,
+          since they are also OBV tokens.
 
 Sat Jul  3 16:41:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/fe/lex.yy.cpp:
-	  Fixed a previous change to one of the lex rules for
-	  float that wasn't quite right. Thanks to Bala for
-	  finding the case where it still didn't work.
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+          Fixed a previous change to one of the lex rules for
+          float that wasn't quite right. Thanks to Bala for
+          finding the case where it still didn't work.
 
 Sat Jul 03 14:40:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -58,11 +64,11 @@ Sat Jul 03 14:40:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
           added -o option for file name in which to write servant ior,
           added -s <CONFIG | reconfig> option to specify whether service
           uses config or reconfig scheduler implementation.
-	
+
         * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp
           orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp: replaced TAO
-	  try macros with ACE try macros.
-	
+          try macros with ACE try macros.
+
 Sat Jul 03 14:04:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Makefile, orbsvcs/orbsvcs/Makefile: call ace_components
