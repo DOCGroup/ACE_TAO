@@ -652,6 +652,7 @@ get_options (int argc, char *argv [])
 int
 main (int argc, char *argv [])
 {
+  ACE_High_Res_Timer::get_env_global_scale_factor ();
   if (get_options (argc, argv)) ACE_OS::exit (-1);
 
   if (ACE_OS::sched_params (
