@@ -1,3 +1,23 @@
+Thu May 27 18:28:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_Basic_Impl.cpp:
+        
+          Modified constructor to put CORBA::tk_null in the kind_
+          member if the TypeCode_ptr argument is null (which would be
+          the case if an application tries to insert a basic type
+          into an Any before initializing an ORB), avoid the crash
+          that would result from accessing a null TypeCode_ptr.
+          Extractions from this Any will fail, since the check for
+          type code equivalence will catch the null TypeCode_ptr
+          and return false. It would be nice to throw BAD_TYPECODE
+          when we see Any insertion before ORB initialization, but
+          unfortunately there is no way to do it so that (1) the
+          application can catch it and (2) it will work with
+          emulated exceptions. Thanks to David Fleeman
+          <dfleeman@prime.cs.ohiou.edu> for catching this bug,
+          which resurfaced due to the overhaul of the Any_Basic_Impl
+          class about 8 months ago.
+
 Thu May 27 11:56:27 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/tao_idl.cpp:
