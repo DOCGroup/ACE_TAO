@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Handle_Ops.h
@@ -11,12 +13,19 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_HANDLE_OPS_H
 #define ACE_HANDLE_OPS_H
+
 #include "ace/pre.h"
 
+#include "ace/ACE_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/OS.h"
+
 
 class ACE_Export ACE_Handle_Ops
 {
@@ -40,4 +49,5 @@ public:
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"
+
 #endif /* ACE_HANDLE_OPS_H */

@@ -14,7 +14,6 @@
 #define ACE_OS_ERRNO_H
 #include "ace/pre.h"
 
-#include "ace/config.h"
 #include "ace/OS_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

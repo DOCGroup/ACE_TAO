@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,9 +13,10 @@
 
 #ifndef ACE_BASED_POINTER_T_H
 #define ACE_BASED_POINTER_T_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"              // Need ACE_Export
+#include "ace/config-all.h"
 
 #if defined (_MSC_VER)
 // Suppress warning e.g. "return type for
@@ -195,4 +196,5 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
+
 #endif /* ACE_BASED_POINTER_T_H */

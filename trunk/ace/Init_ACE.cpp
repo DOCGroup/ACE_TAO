@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Init_ACE.h"
 
 #include "ace/Object_Manager.h"
@@ -8,10 +6,13 @@
 #include "ace/Init_ACE.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-ACE_RCSID(ace, Init_ACE, "$Id$")
+ACE_RCSID (ace,
+           Init_ACE,
+           "$Id$")
 
-  // Static data members.
-  u_int ACE_Init_ACE::init_fini_count_ = 0;
+// Static data members.
+unsigned int ACE_Init_ACE::init_fini_count_ = 0;
+
 int
 ACE_Init_ACE::init (void)
 {

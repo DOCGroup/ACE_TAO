@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Flag_Manip.h
@@ -6,19 +8,22 @@
  *
  *  This class includes the functions used for the Flag Manipulation.
  *
- *  @author Priyanka Gontla <pgontla@ece.uci.edu>
+ *  @author Priyanka Gontla <pgontla@doc.ece.uci.edu>
  */
 //=============================================================================
 
 #ifndef ACE_FLAG_MANIP_H
 #define ACE_FLAG_MANIP_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS.h"
 
 class ACE_Export ACE_Flag_Manip
 {

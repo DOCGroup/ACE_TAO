@@ -15,15 +15,16 @@
 #define ACE_CAPABILITIES_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
-#include "ace/Synch.h"
-#include "ace/Hash_Map_Manager.h"
-#include "ace/Containers.h"
-#include "ace/SString.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Synch.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/Containers.h"
+#include "ace/SString.h"
 
 /**
  * @class ACE_CapEntry

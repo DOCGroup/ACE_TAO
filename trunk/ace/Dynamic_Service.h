@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,9 +13,15 @@
 
 #ifndef ACE_DYNAMIC_SERVICE_H
 #define ACE_DYNAMIC_SERVICE_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Dynamic_Service_Base.h"
 
 class ACE_Service_Object;
@@ -54,4 +60,5 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
+
 #endif /* ACE_DYNAMIC_SERVICE_H */

@@ -1,4 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
+//===========================================================================
 /**
  * @file Copy_Disabled.h
  *
@@ -6,12 +8,14 @@
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
+//===========================================================================
 
 #ifndef ACE_COPY_DISABLED_H
 #define ACE_COPY_DISABLED_H
+
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -52,4 +56,5 @@ private:
 };
 
 #include "ace/post.h"
+
 #endif /* ACE_FUNCTOR_H */

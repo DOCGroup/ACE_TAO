@@ -1,4 +1,4 @@
-/* This may look like C, but it's really -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -17,9 +17,10 @@
 
 #ifndef ACE_ENV_VALUE_T_H
 #define ACE_ENV_VALUE_T_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"             // Need to get ACE_static_cast definition
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,8 +33,6 @@
  *
  * Reads a variable from the user enviroment, providing a default
  * value.
- * = AUTHOR
- * Chris Cleeland, Carlos O'Ryan
  */
 template <class T>
 class ACE_Env_Value

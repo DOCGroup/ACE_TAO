@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -10,15 +10,16 @@
  */
 //=============================================================================
 
-#ifndef CACHING_STRATEGIES_H
-#define CACHING_STRATEGIES_H
+#ifndef ACE_CACHING_STRATEGIES_H
+#define ACE_CACHING_STRATEGIES_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 #include "ace/Caching_Utility_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#define  ACE_LACKS_PRAGMA_ONCE
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
@@ -33,8 +34,9 @@
  *
  * @brief This class is an abstract base class for a caching strategy.
  *
- * This class consists of all the interfaces a caching strategy should have and
- * is used in association with the ACE_Caching_Strategy_Adaptor.
+ * This class consists of all the interfaces a caching strategy should
+ * have and is used in association with the
+ * ACE_Caching_Strategy_Adaptor.
  */
 template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_Caching_Strategy
@@ -100,7 +102,8 @@ public:
  * part of the External Polymorphism pattern.
  */
 template <class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION>
-class ACE_Caching_Strategy_Adapter : public ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+class ACE_Caching_Strategy_Adapter
+  : public ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 {
 
 public:
@@ -189,7 +192,6 @@ private:
 template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_LRU_Caching_Strategy
 {
-
 public:
 
   // Traits.
@@ -534,4 +536,5 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* CACHING_STRATEGIES_H */
+
+#endif /* ACE_CACHING_STRATEGIES_H */

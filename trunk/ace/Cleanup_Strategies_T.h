@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,10 +15,10 @@
 #define CLEANUP_STRATEGIES_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#define  ACE_LACKS_PRAGMA_ONCE
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // For linkers that cant grok long names.

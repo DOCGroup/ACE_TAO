@@ -1,10 +1,11 @@
 // $Id$
 
-// We need this to get the status of ACE_NTRACE...
 
-#include "ace/config-all.h"
+#include "ace/Trace.h"
 
-ACE_RCSID(ace, Trace, "$Id$")
+ACE_RCSID (ace,
+           Trace,
+           "$Id$")
 
 // Turn off tracing for the duration of this file.
 #if defined (ACE_NTRACE)
@@ -12,7 +13,6 @@ ACE_RCSID(ace, Trace, "$Id$")
 #endif /* ACE_NTRACE */
 #define ACE_NTRACE 1
 
-#include "ace/Trace.h"
 #include "ace/Log_Msg.h"
 
 // = Static initialization.

@@ -13,9 +13,15 @@
 
 #ifndef ACE_DYNAMIC_SERVICE_BASE_H
 #define ACE_DYNAMIC_SERVICE_BASE_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 
 /**
  * @class ACE_Dynamic_Service_Base

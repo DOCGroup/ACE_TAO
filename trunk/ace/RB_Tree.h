@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,7 +15,7 @@
 #define ACE_RB_TREE_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/Global_Macros.h"
 #include "ace/Functor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

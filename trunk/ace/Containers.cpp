@@ -1,9 +1,10 @@
 // $Id$
 
-#include "ace/OS.h"
 #include "ace/Containers.h"
 
-ACE_RCSID(ace, Containers, "$Id$")
+ACE_RCSID (ace,
+           Containers,
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Containers.i"

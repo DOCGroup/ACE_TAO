@@ -16,12 +16,13 @@
 #define ACE_OS_DIRENT_H
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
 #include "ace/OS_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS_Errno.h"
 
 #if !defined (ACE_WIN32) && !defined (ACE_PSOS) && !defined (ACE_HAS_WINCE)
 # include /**/ <sys/types.h>

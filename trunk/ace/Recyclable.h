@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -12,13 +12,12 @@
 #ifndef ACE_RECYCLABLE_H
 #define ACE_RECYCLABLE_H
 #include "ace/pre.h"
-#include "ace/config-all.h"
 
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 
 /// States of a recyclable object.
@@ -50,7 +49,6 @@ enum ACE_Recyclable_State
  *
  *
  */
-
 class ACE_Export ACE_Recyclable
 {
 public:
