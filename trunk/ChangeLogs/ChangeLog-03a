@@ -1,3 +1,9 @@
+Tue Nov  5 21:54:40 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/run_tests.lst:
+	* tests/run_tests_remote.lst: Removed these files, since they
+	  served no purpose other than adding to the noise.
+
 Tue Nov  5 15:51:29 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/INET_Addr.cpp (set_addr): Add missing ';' in the IPv6 case.
