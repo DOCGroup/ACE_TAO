@@ -16,7 +16,7 @@
 
 // main () has three arguments, so we can't use
 // ACE_HAS_NONSTATIC_OBJECT_MANAGER.  We don't need it, anyways.
-#include "ace/config.h"
+#include "ace/inc_user_config.h"
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 # undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
@@ -27,13 +27,13 @@
 #include "ace/Env_Value_T.h"
 
 int
-main (int argc, char *[], char* environ[])
+main (int argc, char *[], char* envp[])
 {
   if (argc == 1)
     {
       // No arguments means we're the initial test
       ACE_Process_Options options (1);
-      options.setenv (environ);
+      options.setenv (envp);
 
       options.command_line ("Env_Value_Test run_as_test");
 
