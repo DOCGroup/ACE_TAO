@@ -1,5 +1,8 @@
 Sun May 16 21:07:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* rules.tao.GNU: Merged the stub and skeleton rules for flick
+	  compiler together.
+
 	* TAO_IDL/Makefile:
 	* TAO_IDL/fe/Makefile.am: lex.yy.cpp needs to be patched with
 	  lex.yy.cpp.diff.
