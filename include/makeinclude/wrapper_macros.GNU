@@ -313,7 +313,7 @@ endif # g++
 # have the right contents in any type of builds. If not, folks please
 # feel to revert it to the way things were in rev 4.114.
 ifndef OBJDIRS
-  OBJDIRS = $(basename $(VDIR))
+  OBJDIRS = $(VDIR)
 endif # OBJDIRS
 
 ifndef OBJEXT
@@ -567,7 +567,7 @@ ifdef shared_libs
       LIB           =
 #      OBJEXT        = so
       ifndef VXWORKS
-        VDIR        = $(basename $(VSHDIR))
+        VDIR        = $(VSHDIR)
         ifeq ($(BIN),)
           #### No executables are being built, so don't create .obj/.
           OBJDIRS     = $(VSHDIR)
@@ -584,11 +584,11 @@ else # ! shared_libs
   ifdef static_libs
     #### Don't build shared libs.
     BUILD           = $(VLIB) $(VBIN)
-    OBJDIRS         = $(basename $(VDIR))
+    OBJDIRS         = $(VDIR)
     PIC             =
     SHLIB           =
     SOEXT           = o
-    VSHDIR          = $(basename $(VDIR))
+    VSHDIR          = $(VDIR)
     VLDLIBS         = $(LDLIBS:%.so=%.o)
   else # ! static_libs
     #### Don't build any libs.
