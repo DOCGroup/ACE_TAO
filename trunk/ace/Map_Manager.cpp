@@ -696,7 +696,7 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm, int tail)
-  : ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> (mm, tail)
+  : ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> (mm, (tail == 0 ? 1 : 0))
 {
   ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator");
   if (tail == 0 && this->map_man_->search_structure_ != 0)
@@ -762,7 +762,7 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Reverse_Iterator (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm, int head)
-  : ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> (mm, (head == 0 ? 1 : 0))
+  : ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> (mm, head)
 {
   ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Reverse_Iterator");
   if (head == 0 && this->map_man_->search_structure_ != 0)
