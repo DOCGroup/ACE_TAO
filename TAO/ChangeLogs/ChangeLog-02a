@@ -1,3 +1,8 @@
+Fri Mar  3 11:01:32 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (my_factory): fixed a bug. Thanks to
+	Rob Ruff <rruff@scires.com> and Sandro ? <doro.s@flashnet.it> for reporting it.
+
 Fri Mar  3 01:06:49 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Fixed a missing link ~naga/av.html
@@ -38,8 +43,8 @@ Thu Mar  2 21:03:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/TAOC.cpp:
 	* tao/TimeBaseC.h:
 	* tao/TimeBaseC.cpp:
-	  Replaced the Any operators with new versions using 
-	  compiled marshaling, and added the new CORBA 2.3 
+	  Replaced the Any operators with new versions using
+	  compiled marshaling, and added the new CORBA 2.3
 	  overload for the extraction operator having an rhs of
 	  pointer to const. Also put back some CDR stream
 	  operators into Interceptor needed by the new Any
@@ -82,7 +87,7 @@ Wed Mar  1 21:36:38 2000  Darrell Brunsch <brunsch@uci.edu>
         * tao/POAC.i:
 
           Carlos accidentally spilled a little bit of his life-supplying
-          coffee this morning and it finally caught up with him.  He 
+          coffee this morning and it finally caught up with him.  He
           missed the &'s in the operator>> for AdapterInactive.
 
 Wed Mar  1 18:01:37 2000  Carlos O'Ryan  <coryan@uci.edu>
