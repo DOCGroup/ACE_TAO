@@ -114,13 +114,13 @@ setup_timeouts (CORBA::ORB_ptr orb,
   // Obtain PolicyCurrent.
   CORBA::Object_var object = orb->resolve_initial_references ("PolicyCurrent",
                                                               ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // Narrow down to correct type.
   CORBA::PolicyCurrent_var policy_current =
     CORBA::PolicyCurrent::_narrow (object.in (),
                                    ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   TimeBase::TimeT rt_timeout = 10000 * timeout;
 
@@ -152,13 +152,13 @@ setup_buffering_constraints (CORBA::ORB_ptr orb,
   // Obtain PolicyCurrent.
   CORBA::Object_var object = orb->resolve_initial_references ("PolicyCurrent",
                                                               ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // Narrow down to correct type.
   CORBA::PolicyCurrent_var policy_current =
     CORBA::PolicyCurrent::_narrow (object.in (),
                                    ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // Setup the none sync scope policy, i.e., the ORB will buffer
   // oneways.
