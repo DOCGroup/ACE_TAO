@@ -29,7 +29,7 @@ Criteria_Evaluator::~Criteria_Evaluator ()
 LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *
 Criteria_Evaluator::getInitialization (CORBA::Environment &ACE_TRY_ENV)
 {
-  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair_ptr sequence_ptr = 0;
+  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *sequence_ptr = 0;
 
   CORBA::Any *any_ptr =
     this->getCriteriaMember ("initialization");
