@@ -236,7 +236,7 @@ y.tab: fe/idl.yy
 		cp /tmp/$(USER).Y fe/y.tab.cpp
 		cp /tmp/$(USER).YH fe/y.tab.h
 		$(RM) -f /tmp/$(USER).Y /tmp/$(USER).YH y.tab.c y.tab.h
-
+		(cd fe ; patch <y.tab.cpp.diff)
 
 tags:
 	rm -f TAGS
