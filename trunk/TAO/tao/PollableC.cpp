@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be/be_codegen.cpp:338
 
 
 #include "PollableC.h"
@@ -47,6 +47,7 @@
 namespace TAO
 {
 }
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
@@ -89,7 +90,7 @@ TAO::Objref_Traits<CORBA::Pollable>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*CORBA__TAO_Pollable_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -110,10 +111,27 @@ CORBA::Pollable::_narrow (
     {
       return Pollable::_nil ();
     }
-
+  
   Pollable_ptr proxy =
     dynamic_cast<Pollable_ptr> (_tao_objref);
+  
+  return Pollable::_duplicate (proxy);
+}
 
+CORBA::Pollable_ptr
+CORBA::Pollable::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return Pollable::_nil ();
+    }
+  
+  Pollable_ptr proxy =
+    dynamic_cast<Pollable_ptr> (_tao_objref);
+  
   return Pollable::_duplicate (proxy);
 }
 
@@ -124,7 +142,7 @@ CORBA::Pollable::_duplicate (Pollable_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -198,7 +216,7 @@ TAO::Objref_Traits<CORBA::DIIPollable>::tao_nil (void)
   return CORBA::DIIPollable::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::DIIPollable>::tao_marshal (
     CORBA::DIIPollable_ptr p,
@@ -222,6 +240,23 @@ CORBA::DIIPollable::~DIIPollable (void)
 
 CORBA::DIIPollable_ptr
 CORBA::DIIPollable::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return DIIPollable::_nil ();
+    }
+  
+  DIIPollable_ptr proxy =
+    dynamic_cast<DIIPollable_ptr> (_tao_objref);
+  
+  return DIIPollable::_duplicate (proxy);
+}
+
+CORBA::DIIPollable_ptr
+CORBA::DIIPollable::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -297,7 +332,7 @@ CORBA::DIIPollable::marshal (TAO_OutputCDR &)
 
 // Traits specializations for CORBA::PollableSet.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PollableSet_ptr
 TAO::Objref_Traits<CORBA::PollableSet>::tao_duplicate (
     CORBA::PollableSet_ptr p
@@ -306,7 +341,7 @@ TAO::Objref_Traits<CORBA::PollableSet>::tao_duplicate (
   return CORBA::PollableSet::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::PollableSet>::tao_release (
     CORBA::PollableSet_ptr p
@@ -315,14 +350,14 @@ TAO::Objref_Traits<CORBA::PollableSet>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::PollableSet_ptr
 TAO::Objref_Traits<CORBA::PollableSet>::tao_nil (void)
 {
   return CORBA::PollableSet::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::PollableSet>::tao_marshal (
     CORBA::PollableSet_ptr p,
@@ -532,6 +567,23 @@ CORBA::PollableSet::_narrow (
 }
 
 CORBA::PollableSet_ptr
+CORBA::PollableSet::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return PollableSet::_nil ();
+    }
+  
+  PollableSet_ptr proxy =
+    dynamic_cast<PollableSet_ptr> (_tao_objref);
+  
+  return PollableSet::_duplicate (proxy);
+}
+
+CORBA::PollableSet_ptr
 CORBA::PollableSet::_duplicate (PollableSet_ptr obj)
 {
   if (! CORBA::is_nil (obj))
@@ -583,7 +635,7 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
+// be/be_visitor_root/root.cpp:1725
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

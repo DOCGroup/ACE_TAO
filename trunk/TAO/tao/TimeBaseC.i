@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -56,7 +56,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (

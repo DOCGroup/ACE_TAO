@@ -241,6 +241,7 @@ OBJFILES = \
 	$(OBJDIR)\Thread_Lane_Resources.obj \
 	$(OBJDIR)\Thread_Lane_Resources_Manager.obj \
 	$(OBJDIR)\TimeBaseC.obj \
+	$(OBJDIR)\TimeBaseA.obj \
 	$(OBJDIR)\Transport.obj \
 	$(OBJDIR)\Transport_Acceptor.obj \
 	$(OBJDIR)\Transport_Cache_Manager.obj \

@@ -30,7 +30,6 @@
 
 
 #include "IOP_CodecC.h"
-#include "Typecode.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -48,6 +47,7 @@
 namespace TAO
 {
 }
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
@@ -90,12 +90,12 @@ TAO::Objref_Traits<IOP::Codec>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*IOP__TAO_Codec_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_exception/exception_cs.cpp:63
 
 IOP::Codec::InvalidTypeForEncoding::InvalidTypeForEncoding (void)
@@ -529,6 +529,23 @@ IOP::Codec::_narrow (
 }
 
 IOP::Codec_ptr
+IOP::Codec::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return Codec::_nil ();
+    }
+  
+  Codec_ptr proxy =
+    dynamic_cast<Codec_ptr> (_tao_objref);
+  
+  return Codec::_duplicate (proxy);
+}
+
+IOP::Codec_ptr
 IOP::Codec::_duplicate (Codec_ptr obj)
 {
   if (! CORBA::is_nil (obj))
@@ -743,7 +760,7 @@ IOP::Encoding::_tao_any_destructor (
 
 // Traits specializations for IOP::CodecFactory.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IOP::CodecFactory_ptr
 TAO::Objref_Traits<IOP::CodecFactory>::tao_duplicate (
     IOP::CodecFactory_ptr p
@@ -752,7 +769,7 @@ TAO::Objref_Traits<IOP::CodecFactory>::tao_duplicate (
   return IOP::CodecFactory::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<IOP::CodecFactory>::tao_release (
     IOP::CodecFactory_ptr p
@@ -761,14 +778,14 @@ TAO::Objref_Traits<IOP::CodecFactory>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 IOP::CodecFactory_ptr
 TAO::Objref_Traits<IOP::CodecFactory>::tao_nil (void)
 {
   return IOP::CodecFactory::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<IOP::CodecFactory>::tao_marshal (
     IOP::CodecFactory_ptr p,
@@ -935,6 +952,23 @@ IOP::CodecFactory::_tao_any_destructor (void *_tao_void_pointer)
 
 IOP::CodecFactory_ptr
 IOP::CodecFactory::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return CodecFactory::_nil ();
+    }
+  
+  CodecFactory_ptr proxy =
+    dynamic_cast<CodecFactory_ptr> (_tao_objref);
+  
+  return CodecFactory::_duplicate (proxy);
+}
+
+IOP::CodecFactory_ptr
+IOP::CodecFactory::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )

@@ -101,6 +101,7 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       DomainC.cpp
       DomainA.cpp
       TimeBaseC.cpp
+      TimeBaseA.cpp
       Principal.cpp
       Sequence.cpp
       MProfile.cpp
