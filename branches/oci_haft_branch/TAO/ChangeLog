@@ -1,12 +1,64 @@
+Tues Oct  7 08:44:52 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * tao/Utils/Server_Main.h:
+        * tao/Utils/Server_Main.cpp:
+          New files: Rename ServantMain.
+          Eliminate use of TAO_ORB_Manager.
+          Improve shutdown process.
+          ServantMain wll be retired as soon as the switch-over is complete.
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.h:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * orbsvcs/Fault_Notifier/Fault_Notifier_Main.cpp:
+        * orbsvcs/tests/FT_App/FTAPP_FactoryRegistry_Main.cpp:
+        * orbsvcs/tests/FT_App/FTAPP_Notifier_Main.cpp:
+        * orbsvcs/tests/FT_App/FTApp_Analyzer_Main.cpp:
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+        * orbsvcs/tests/FT_App/FT_Replica.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * orbsvcs/tests/FT_App/FactoryRegistry_i.h:
+        * orbsvcs/tests/FT_App/FactoryRegistry_i.cpp:
+        * orbsvcs/tests/FT_App/StubBatchConsumer.h:
+        * orbsvcs/tests/FT_App/StubBatchConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.h:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.h:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.h:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+          Switch from ServantMain to Server_Main
+          Respond to style issues raised during code review and Bala's @@ notes.
+          Fix shutdown race condition that caused unit test failures.
+
+
+        * orbsvcs/tests/FT_App/run_test_notifier.pl:
+          Reduce the timeouts for processes that we "know" will be gone.
+          It makes the test fail faster when something goes wrong.
+
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+          Add run_test_basic.pl as a documentation file.
+          Remove redundant comments.
+
+        These changes were made in the oci_haft branch.
+
+
 Mon Oct  6 17:18:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
-	  
-	  Improper copy from the main trunk here. 
-	
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
-	  
-	  Fixed a wrong delete that cuased the ORB to crash.
+    * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+
+      Improper copy from the main trunk here.
+
+    * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+
+      Fixed a wrong delete that cuased the ORB to crash.
 
 Thu Oct  2 15:12:50 2003  Steve Totten  <totten_s@ociweb.com>
 
