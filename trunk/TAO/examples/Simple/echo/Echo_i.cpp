@@ -40,10 +40,10 @@ Echo_i::echo_list (const char *,
   Echo::List_var list;
 
   {
-    Echo_List *tmp
-      ACE_NEW_RETURN (tmp,
-                      Echo::List (3),
-                      0);
+    Echo::List *tmp;
+    ACE_NEW_RETURN (tmp,
+                    Echo::List (3),
+                    0);
     // Pass ownership to the _var, pitty that ACE_NEW_RETURN cannot
     // assign to T_vars directly.
     list = tmp;
