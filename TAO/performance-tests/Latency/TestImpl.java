@@ -10,7 +10,7 @@ public class TestImpl extends _TestImplBase {
     return stamp;
   }
   public void shutdown () {
-    orb_.shutdown ();
+      // orb_.shutdown ();
   }
 
   private org.omg.CORBA.ORB orb_;
