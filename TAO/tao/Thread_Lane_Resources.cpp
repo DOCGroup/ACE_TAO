@@ -8,7 +8,9 @@ ACE_RCSID(tao, Thread_Lane_Resources, "$Id$")
 #include "tao/Acceptor_Registry.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Leader_Follower.h"
+#include "Connector_Registry.h"
 #include "ace/Reactor.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Thread_Lane_Resources.i"
@@ -18,6 +20,7 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (TAO_ORB_Core &orb_core,
                                                       TAO_New_Leader_Generator *new_leader_generator)
   : orb_core_ (orb_core),
     acceptor_registry_ (0),
+    connector_registry_ (0),
     transport_cache_ (0),
     leader_follower_ (0),
     new_leader_generator_ (new_leader_generator)
@@ -30,6 +33,7 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (TAO_ORB_Core &orb_core,
 
 TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources (void)
 {
+
 }
 
 TAO_Transport_Cache_Manager &
@@ -59,9 +63,15 @@ TAO_Thread_Lane_Resources::acceptor_registry (void)
   // Double check.
   if (this->acceptor_registry_ == 0)
     {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, *this->acceptor_registry_);
+      // @@todo: Wouldnt this crash big time if you happen to
+      // dereference a  null-pointer? Needs fixing.
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        ace_mon,
+                        this->lock_,
+                        *this->acceptor_registry_);
       if (this->acceptor_registry_ == 0)
         {
+          // @@ Not exception safe code
           // Get the resource factory.
           TAO_Resource_Factory &resource_factory =
             *this->orb_core_.resource_factory ();
@@ -74,6 +84,46 @@ TAO_Thread_Lane_Resources::acceptor_registry (void)
 
   return *this->acceptor_registry_;
 }
+
+TAO_Connector_Registry *
+TAO_Thread_Lane_Resources::connector_registry (ACE_ENV_SINGLE_ARG_DECL)
+{
+  // Double check.
+  if (this->connector_registry_ == 0)
+    {
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        ace_mon,
+                        this->lock_,
+                        0);
+
+      if (this->connector_registry_ == 0)
+        {
+          // Ask it to create a new acceptor registry.
+          this->connector_registry_ =
+            this->orb_core_.resource_factory ()->get_connector_registry ();
+
+          if (this->connector_registry_ == 0)
+            ACE_THROW_RETURN (CORBA::INITIALIZE (
+                                CORBA::SystemException::_tao_minor_code (
+                                  TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE,
+                                  0),
+                                CORBA::COMPLETED_NO),
+                      0);
+        }
+
+      if (this->connector_registry_->open (&this->orb_core_) != 0)
+        ACE_THROW_RETURN (CORBA::INITIALIZE (
+                            CORBA::SystemException::_tao_minor_code (
+                              TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE,
+                              0),
+                            CORBA::COMPLETED_NO),
+                          0);
+
+    }
+
+  return this->connector_registry_;
+}
+
 
 TAO_Leader_Follower &
 TAO_Thread_Lane_Resources::leader_follower (void)
@@ -94,6 +144,8 @@ TAO_Thread_Lane_Resources::leader_follower (void)
 
   return *this->leader_follower_;
 }
+
+
 
 int
 TAO_Thread_Lane_Resources::open_acceptor_registry (int ignore_address
@@ -117,6 +169,14 @@ TAO_Thread_Lane_Resources::open_acceptor_registry (int ignore_address
 void
 TAO_Thread_Lane_Resources::finalize (void)
 {
+  // Close connectors before acceptors!
+  // Ask the registry to close all registered connectors.
+  if (this->connector_registry_ != 0)
+    {
+      this->connector_registry_->close_all ();
+      delete this->connector_registry_;
+    }
+
   // Ask the registry to close all registered acceptors.
   if (this->acceptor_registry_ != 0)
     {

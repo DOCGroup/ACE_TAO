@@ -1562,6 +1562,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 #define TAO_GUARD_FAILURE                          (0x10U << 7)
 #define TAO_POA_BEING_DESTROYED                    (0x11U << 7)
 #define TAO_POA_INACTIVE                           (0x12U << 7)
+#define TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE  (0x13U << 7)
 // *Don't* use TAO_<location>_MINOR_CODE greater than 0x1FU!
 
 // errno encoding:  bottom 7 bits.
@@ -1620,10 +1621,10 @@ operator<< (TAO_OutputCDR&, const TAO_opaque&);
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, TAO_opaque&);
 
-TAO_Export CORBA::Boolean 
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &, const CORBA::TCKind &);
 
-TAO_Export CORBA::Boolean 
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, CORBA::TCKind &);
 
 class TAO_ObjectKey;

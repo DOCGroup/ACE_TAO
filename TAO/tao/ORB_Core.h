@@ -228,7 +228,7 @@ public:
   //@}
 
   ///Get the connector registry
-  TAO_Connector_Registry *connector_registry (void);
+  TAO_Connector_Registry *connector_registry (ACE_ENV_SINGLE_ARG_DECL);
 
   ///Get the IOR parser registry
   TAO_Parser_Registry *parser_registry (void);
@@ -1001,10 +1001,6 @@ protected:
 
   /// Synchronize internal state...
   TAO_SYNCH_MUTEX lock_;
-
-  /// The connector registry which all active connectors must register
-  /// themselves with.
-  TAO_Connector_Registry *connector_registry_;
 
   TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager_;
 
