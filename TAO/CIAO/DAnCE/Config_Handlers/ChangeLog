@@ -1,12 +1,44 @@
+Tue Sep 28 14:43:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
+	* DAnCE/Config_Handlers/ccd.cpp:
+	* DAnCE/Config_Handlers/ccd.hpp:
+
+	  Newly generated XSC code.
+	
+ 	* DAnCE/Config_Handlers/ADD_Handler.cpp:
+	* DAnCE/Config_Handlers/ADD_Handler.h:
+	* DAnCE/Config_Handlers/Any_Handler.cpp:
+	* DAnCE/Config_Handlers/CCD_Handler.cpp:
+	* DAnCE/Config_Handlers/CPD_Handler.cpp:
+	* DAnCE/Config_Handlers/CPD_Handler.h:
+	* DAnCE/Config_Handlers/CRDD_Handler.cpp:
+	* DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.cpp:
+	* DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.h:
+	* DAnCE/Config_Handlers/Config_Handlers.mpc:
+	* DAnCE/Config_Handlers/MDD_Handler.cpp:
+	* DAnCE/Config_Handlers/MDD_Handler.h:
+	* DAnCE/Config_Handlers/PCD_Handler.cpp:
+	* DAnCE/Config_Handlers/RDD_Handler.cpp:
+	* DAnCE/Config_Handlers/RDD_Handler.h:
+	* DAnCE/Config_Handlers/Req_Handler.cpp:
+	* DAnCE/Config_Handlers/Singleton_IDREF_Map.cpp:
+	* DAnCE/Config_Handlers/Singleton_IDREF_Map.h:
+
+	  Updated files. Not everything is dandy. We still have issues
+	  with IDREF's. Need to talk with Boris. Lots of work remains to
+	  be done. Everything compiles fine.
+
 Mon Sep 27 15:42:12 2004  Jules White <jules@dre.vanderbilt.edu>
   
-  * DAnCE/Config_Handlers/ID_Handler.h:
-  * DAnCE/Config_Handlers/IDD_Handler.h:
-  * DAnCE/Config_Handlers/ADD_Handler.h:
-  * DAnCE/Config_Handlers/RDD_Handler.h:
-  * DAnCE/Config_Handelrs/ComponentPropertyDescription_Handler.h:
+        * DAnCE/Config_Handlers/ID_Handler.h:
+	* DAnCE/Config_Handlers/IDD_Handler.h:
+	* DAnCE/Config_Handlers/ADD_Handler.h:
+	* DAnCE/Config_Handlers/RDD_Handler.h:
+	* DAnCE/Config_Handelrs/ComponentPropertyDescription_Handler.h:
   
-  Removed references to Base_Handler.
+          Removed references to Base_Handler.
 
 Sat Sep 25 14:56:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 

@@ -49,19 +49,23 @@ namespace CIAO
             CORBA::string_dup ((*s).c_str ());
         }
 
-     if (desc.idlFile_p ())
-       {
-         CORBA::ULong len =
-           toconfig.supportedType.length ();
+      ComponentInterfaceDescription::idlFile_iterator
+        eidl = desc.end_idlFile ();
 
-         if (!desc.idlFile ().empty ())
-           {
-             toconfig.supportedType.length (len + 1);
-             toconfig.idlFile [len] =
-               CORBA::string_dup (desc.idlFile ().c_str ());
-           }
-       }
+      for (ComponentInterfaceDescription::idlFile_iterator sidl=
+             desc.begin_idlFile ();
+           sidl != eidl;
+           ++sidl)
+        {
+          // @@ Another n^2 algorithm
+          CORBA::ULong len =
+            toconfig.idlFile.length ();
 
+          toconfig.idlFile.length (len + 1);
+
+          toconfig.idlFile [len] =
+            (*sidl).c_str ();
+        }
 
      ComponentInterfaceDescription::configProperty_iterator pend =
        desc.end_configProperty ();
@@ -81,38 +85,25 @@ namespace CIAO
                                          toconfig.configProperty [len]);
        }
 
-
-     /*******************************
-     * Will need to rework the ones in the bottom like the above.
-     *
-     */
-
-     //Create the handler for the
-     //<ComponentPortDescriptions>.
-     CPD_Handler cpd_handler;
-
-
-    //Iterate through each of the XSC Component
-    //Port Descriptions and use the CPD_Handler
-    //to propogate their values into the <port>
-    //sequence of <Deployment::ComponentInterfaceDescription>
     for (ComponentInterfaceDescription::port_iterator
            port (desc.begin_port ());
            port != desc.end_port ();
            ++port)
       {
-        toconfig.port.length (toconfig.port.length () + 1);
+        CORBA::ULong len =
+          toconfig.port.length ();
 
-        cpd_handler.get_ComponentPortDescription (
-                     toconfig.port [toconfig.port.length () - 1],
-                     *port);
+        toconfig.port.length (len + 1);
+
+        CPD_Handler::component_port_description (
+          toconfig.port[len],
+          *port);
       }
 
-
-     //If there is a
-     //<CIAO::ConfigHandlers::ComponentPropertyDescription>
-     //then propogate its value to the
-     //<Deployment::ComponentInterfaceDescription>.
+#if 0
+    // @@ MAJO: I don't think we need to handle this now, since they
+    // are not needed for this round. IOW, we don't really understand
+    // how to use this stuff ;)
      if (desc.property_p ())
        {
          //Create the ComponentPropertyDescription handler.
@@ -152,7 +143,7 @@ namespace CIAO
                   toconfig.infoProperty.length () + 1);
          toconfig.infoProperty [toconfig.infoProperty.length () - 1] = prop;
        }
-
+#endif /*if 0*/
 
      return 1;
     }

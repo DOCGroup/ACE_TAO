@@ -5,66 +5,90 @@
 #include "ADD_Handler.h"
 #include "Property_Handler.h"
 #include "Req_Handler.h"
-
-
+#include "Singleton_IDREF_Map.h"
 
 namespace CIAO
 {
   namespace Config_Handlers
   {
-
-    MDD_Handler::MDD_Handler (void)
-    {
-    }
-
-    MDD_Handler::~MDD_Handler (void)
-    {
-    }
-
-
     void
-    MDD_Handler::get_MonolithicDeploymentDescription (
-        Deployment::MonolithicDeploymentDescription& toconfig,
-        MonolithicDeploymentDescription& desc)
+    MDD_Handler::mono_deployment_description (
+        const MonolithicDeploymentDescription& desc,
+        Deployment::MonolithicDeploymentDescription& toconfig)
     {
+      toconfig.name =
+        CORBA::string_dup (desc.name ().c_str ());
 
-      toconfig.name=
-           CORBA::string_dup (desc.name ().c_str ());
+      MonolithicDeploymentDescription::source_const_iterator me =
+        desc.end_source ();
 
-      toconfig.source.length (
-        toconfig.source.length () + 1);
-
-      toconfig.source[toconfig.source.length () - 1] =
-        CORBA::string_dup (desc.source ().c_str ());
-
-      ADD_Handler artifact_handler;
-      ACE_TString artifact_id;
-
-      for (MonolithicDeploymentDescription::artifact_iterator
-             item (desc.begin_artifact ());
-           item != desc.end_artifact ();
-           ++item)
+      for (MonolithicDeploymentDescription::source_const_iterator se =
+             desc.begin_source ();
+           se != me;
+           ++se)
         {
-          toconfig.artifactRef.length (
-            toconfig.artifactRef.length () + 1);
+          CORBA::ULong len =
+            toconfig.source.length ();
 
-          artifact_id = item->id ().c_str ();
-          artifact_handler.get_ref (
-            artifact_id,
-            toconfig.artifactRef[toconfig.artifactRef.length () - 1]);
+          toconfig.source.length (len + 1);
 
+          toconfig.source[len] =
+            CORBA::string_dup ((*se).c_str ());
         }
 
-      if (desc.execParameter_p ())
+      MonolithicDeploymentDescription::artifact_const_iterator ae =
+        desc.end_artifact ();
+
+      for (MonolithicDeploymentDescription::artifact_const_iterator
+             ab = desc.begin_artifact ();
+           ae != ab;
+           ++ab)
         {
-          Property_Handler handler;
-          toconfig.execParameter.length (
-            toconfig.execParameter.length () + 1);
-          handler.get_Property (
-            toconfig.execParameter[toconfig.execParameter.length () - 1],
-            desc.execParameter ());
+          CORBA::ULong tmp = 0;
+
+#if 0
+          ACE_CString cstr = *ab;
+
+
+          // @@ MAJO: What should be do
+          bool r =
+            Singleton_IDREF_Map::instance ()->find_ref (cstr,
+                                                        tmp);
+
+          if (!r)
+            // @@MAJO: What should we do if find_ref fails?
+            continue;
+#endif /*if 0*/
+
+
+
+          CORBA::ULong len =
+            toconfig.artifactRef.length ();
+
+          toconfig.artifactRef.length (len + 1);
+
+          toconfig.artifactRef[len] = tmp;
         }
 
+      MonolithicDeploymentDescription::execParameter_const_iterator epce =
+        desc.end_execParameter ();
+
+      for (MonolithicDeploymentDescription::execParameter_const_iterator epcb =
+             desc.begin_execParameter ();
+           epcb != epce;
+           ++epcb)
+        {
+          CORBA::ULong len =
+            toconfig.execParameter.length ();
+
+          toconfig.execParameter.length (len + 1);
+
+          Property_Handler::get_property ((*epcb),
+                                          toconfig.execParameter[len]);
+        }
+
+#if 0
+      // @@ MAJO: Don't know how to handle this
       if (desc.deployRequirement_p ())
         {
                                   Req_Handler handler;
@@ -74,8 +98,7 @@ namespace CIAO
             toconfig.deployRequirement[toconfig.deployRequirement.length () - 1],
             desc.deployRequirement ());
         }
-
-
+#endif /*if 0*/
     }
 
   }

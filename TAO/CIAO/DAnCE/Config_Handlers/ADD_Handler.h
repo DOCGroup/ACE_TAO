@@ -12,9 +12,7 @@
 #define CIAO_CONFIG_HANDLERS_ADD_Handler_H
 #include /**/ "ace/pre.h"
 
-
 #include "Config_Handlers_Export.h"
-#include "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,16 +43,12 @@ namespace CIAO
     *       // @@ Jules, why Any type?
     * descriptor files, to the  corresponding CORBA IDL Any type.
     */
-    class Config_Handlers_Export ADD_Handler 
+    class Config_Handlers_Export ADD_Handler
     {
     public:
-      ADD_Handler (void);
-      virtual ~ADD_Handler (void);
-
-      void get_ArtifactDeploymentDescription (
-          Deployment::ArtifactDeploymentDescription& toconfig,
-          ArtifactDeploymentDescription& desc);
-
+      static void artifact_deployment_descr (
+          const ArtifactDeploymentDescription& desc,
+          ::Deployment::ArtifactDeploymentDescription &dest);
     };
   }
 }

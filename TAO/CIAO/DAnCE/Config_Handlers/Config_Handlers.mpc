@@ -27,6 +27,7 @@ project (XSC_Config_Handlers) : ciao_deployment_stub {
     CPD_Handler.cpp
     DataType_Handler.cpp
     MDD_Handler.cpp
+    Singleton_IDREF_Map.cpp
     Req_Handler.cpp
     CPD_Handler.cpp
     Any_Handler.cpp
@@ -39,7 +40,6 @@ project (XSC_Config_Handlers) : ciao_deployment_stub {
     PSPE_Handler.cpp
     ERE_Handler.cpp
     CRDD_Handler.cpp
-    Base_Handler.cpp
     ADD_Handler.cpp
     ComponentPropertyDescription_Handler.cpp
     RDD_Handler.cpp

@@ -6,7 +6,7 @@ namespace CIAO
   namespace Config_Handlers
   {
     // ComponentInterfaceDescription
-    // 
+    //
 
     ComponentInterfaceDescription::
     ComponentInterfaceDescription ()
@@ -21,9 +21,6 @@ namespace CIAO
     label_ (s.label_.get () ? new ::XMLSchema::string< char > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< char > (*s.UUID_) : 0),
     specificType_ (s.specificType_.get () ? new ::XMLSchema::string< char > (*s.specificType_) : 0),
-    idlFile_ (s.idlFile_.get () ? new ::XMLSchema::string< char > (*s.idlFile_) : 0),
-    property_ (s.property_.get () ? new ::CIAO::Config_Handlers::ComponentPropertyDescription (*s.property_) : 0),
-    infoProperty_ (s.infoProperty_.get () ? new ::CIAO::Config_Handlers::Property (*s.infoProperty_) : 0),
     contentLocation_ (s.contentLocation_.get () ? new ::XMLSchema::string< char > (*s.contentLocation_) : 0),
     regulator__ ()
     {
@@ -37,7 +34,13 @@ namespace CIAO
         ++i) add_supportedType (*i);
       }
 
-      if (idlFile_.get ()) idlFile_->container (this);
+      idlFile_.reserve (s.idlFile_.size ());
+      {
+        for (idlFile_const_iterator i (s.idlFile_.begin ());
+        i != s.idlFile_.end ();
+        ++i) add_idlFile (*i);
+      }
+
       configProperty_.reserve (s.configProperty_.size ());
       {
         for (configProperty_const_iterator i (s.configProperty_.begin ());
@@ -52,8 +55,20 @@ namespace CIAO
         ++i) add_port (*i);
       }
 
-      if (property_.get ()) property_->container (this);
-      if (infoProperty_.get ()) infoProperty_->container (this);
+      property_.reserve (s.property_.size ());
+      {
+        for (property_const_iterator i (s.property_.begin ());
+        i != s.property_.end ();
+        ++i) add_property (*i);
+      }
+
+      infoProperty_.reserve (s.infoProperty_.size ());
+      {
+        for (infoProperty_const_iterator i (s.infoProperty_.begin ());
+        i != s.infoProperty_.end ();
+        ++i) add_infoProperty (*i);
+      }
+
       if (contentLocation_.get ()) contentLocation_->container (this);
     }
 
@@ -77,8 +92,13 @@ namespace CIAO
         ++i) add_supportedType (*i);
       }
 
-      if (s.idlFile_.get ()) idlFile (*(s.idlFile_));
-      else idlFile_ = ::std::auto_ptr< ::XMLSchema::string< char > > (0);
+      idlFile_.clear ();
+      idlFile_.reserve (s.idlFile_.size ());
+      {
+        for (idlFile_const_iterator i (s.idlFile_.begin ());
+        i != s.idlFile_.end ();
+        ++i) add_idlFile (*i);
+      }
 
       configProperty_.clear ();
       configProperty_.reserve (s.configProperty_.size ());
@@ -96,11 +116,21 @@ namespace CIAO
         ++i) add_port (*i);
       }
 
-      if (s.property_.get ()) property (*(s.property_));
-      else property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPropertyDescription > (0);
+      property_.clear ();
+      property_.reserve (s.property_.size ());
+      {
+        for (property_const_iterator i (s.property_.begin ());
+        i != s.property_.end ();
+        ++i) add_property (*i);
+      }
 
-      if (s.infoProperty_.get ()) infoProperty (*(s.infoProperty_));
-      else infoProperty_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (0);
+      infoProperty_.clear ();
+      infoProperty_.reserve (s.infoProperty_.size ());
+      {
+        for (infoProperty_const_iterator i (s.infoProperty_.begin ());
+        i != s.infoProperty_.end ();
+        ++i) add_infoProperty (*i);
+      }
 
       if (s.contentLocation_.get ()) contentLocation (*(s.contentLocation_));
       else contentLocation_ = ::std::auto_ptr< ::XMLSchema::string< char > > (0);
@@ -110,7 +140,7 @@ namespace CIAO
 
 
     // ComponentInterfaceDescription
-    // 
+    //
     bool ComponentInterfaceDescription::
     label_p () const
     {
@@ -145,7 +175,7 @@ namespace CIAO
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     bool ComponentInterfaceDescription::
     UUID_p () const
     {
@@ -180,7 +210,7 @@ namespace CIAO
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     bool ComponentInterfaceDescription::
     specificType_p () const
     {
@@ -215,7 +245,7 @@ namespace CIAO
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::supportedType_iterator ComponentInterfaceDescription::
     begin_supportedType ()
     {
@@ -266,42 +296,58 @@ namespace CIAO
     }
 
     // ComponentInterfaceDescription
-    // 
-    bool ComponentInterfaceDescription::
-    idlFile_p () const
+    //
+    ComponentInterfaceDescription::idlFile_iterator ComponentInterfaceDescription::
+    begin_idlFile ()
     {
-      return idlFile_.get () != 0;
+      return idlFile_.begin ();
     }
 
-    ::XMLSchema::string< char > const& ComponentInterfaceDescription::
-    idlFile () const
+    ComponentInterfaceDescription::idlFile_iterator ComponentInterfaceDescription::
+    end_idlFile ()
     {
-      return *idlFile_;
+      return idlFile_.end ();
     }
 
-    ::XMLSchema::string< char >& ComponentInterfaceDescription::
-    idlFile ()
+    ComponentInterfaceDescription::idlFile_const_iterator ComponentInterfaceDescription::
+    begin_idlFile () const
     {
-      return *idlFile_;
+      return idlFile_.begin ();
+    }
+
+    ComponentInterfaceDescription::idlFile_const_iterator ComponentInterfaceDescription::
+    end_idlFile () const
+    {
+      return idlFile_.end ();
     }
 
     void ComponentInterfaceDescription::
-    idlFile (::XMLSchema::string< char > const& e)
+    add_idlFile (::XMLSchema::string< char > const& e)
     {
-      if (idlFile_.get ())
+      if (idlFile_.capacity () < idlFile_.size () + 1)
       {
-        *idlFile_ = e;
+        ::std::vector< ::XMLSchema::string< char > > v;
+        v.reserve (idlFile_.size () + 1);
+
+        while (idlFile_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::string< char >& t = idlFile_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          idlFile_.pop_back ();
+        }
+
+        idlFile_.swap (v);
       }
 
-      else
-      {
-        idlFile_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
-        idlFile_->container (this);
-      }
+      idlFile_.push_back (e);
+      idlFile_.back ().container (this);
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::configProperty_iterator ComponentInterfaceDescription::
     begin_configProperty ()
     {
@@ -352,7 +398,7 @@ namespace CIAO
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::port_iterator ComponentInterfaceDescription::
     begin_port ()
     {
@@ -403,77 +449,109 @@ namespace CIAO
     }
 
     // ComponentInterfaceDescription
-    // 
-    bool ComponentInterfaceDescription::
-    property_p () const
+    //
+    ComponentInterfaceDescription::property_iterator ComponentInterfaceDescription::
+    begin_property ()
     {
-      return property_.get () != 0;
+      return property_.begin ();
     }
 
-    ::CIAO::Config_Handlers::ComponentPropertyDescription const& ComponentInterfaceDescription::
-    property () const
+    ComponentInterfaceDescription::property_iterator ComponentInterfaceDescription::
+    end_property ()
     {
-      return *property_;
+      return property_.end ();
     }
 
-    ::CIAO::Config_Handlers::ComponentPropertyDescription& ComponentInterfaceDescription::
-    property ()
+    ComponentInterfaceDescription::property_const_iterator ComponentInterfaceDescription::
+    begin_property () const
     {
-      return *property_;
+      return property_.begin ();
     }
 
-    void ComponentInterfaceDescription::
-    property (::CIAO::Config_Handlers::ComponentPropertyDescription const& e)
+    ComponentInterfaceDescription::property_const_iterator ComponentInterfaceDescription::
+    end_property () const
     {
-      if (property_.get ())
-      {
-        *property_ = e;
-      }
-
-      else
-      {
-        property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPropertyDescription > (new ::CIAO::Config_Handlers::ComponentPropertyDescription (e));
-        property_->container (this);
-      }
-    }
-
-    // ComponentInterfaceDescription
-    // 
-    bool ComponentInterfaceDescription::
-    infoProperty_p () const
-    {
-      return infoProperty_.get () != 0;
-    }
-
-    ::CIAO::Config_Handlers::Property const& ComponentInterfaceDescription::
-    infoProperty () const
-    {
-      return *infoProperty_;
-    }
-
-    ::CIAO::Config_Handlers::Property& ComponentInterfaceDescription::
-    infoProperty ()
-    {
-      return *infoProperty_;
+      return property_.end ();
     }
 
     void ComponentInterfaceDescription::
-    infoProperty (::CIAO::Config_Handlers::Property const& e)
+    add_property (::CIAO::Config_Handlers::ComponentPropertyDescription const& e)
     {
-      if (infoProperty_.get ())
+      if (property_.capacity () < property_.size () + 1)
       {
-        *infoProperty_ = e;
+        ::std::vector< ::CIAO::Config_Handlers::ComponentPropertyDescription > v;
+        v.reserve (property_.size () + 1);
+
+        while (property_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::ComponentPropertyDescription& t = property_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          property_.pop_back ();
+        }
+
+        property_.swap (v);
       }
 
-      else
-      {
-        infoProperty_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (new ::CIAO::Config_Handlers::Property (e));
-        infoProperty_->container (this);
-      }
+      property_.push_back (e);
+      property_.back ().container (this);
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
+    ComponentInterfaceDescription::infoProperty_iterator ComponentInterfaceDescription::
+    begin_infoProperty ()
+    {
+      return infoProperty_.begin ();
+    }
+
+    ComponentInterfaceDescription::infoProperty_iterator ComponentInterfaceDescription::
+    end_infoProperty ()
+    {
+      return infoProperty_.end ();
+    }
+
+    ComponentInterfaceDescription::infoProperty_const_iterator ComponentInterfaceDescription::
+    begin_infoProperty () const
+    {
+      return infoProperty_.begin ();
+    }
+
+    ComponentInterfaceDescription::infoProperty_const_iterator ComponentInterfaceDescription::
+    end_infoProperty () const
+    {
+      return infoProperty_.end ();
+    }
+
+    void ComponentInterfaceDescription::
+    add_infoProperty (::CIAO::Config_Handlers::Property const& e)
+    {
+      if (infoProperty_.capacity () < infoProperty_.size () + 1)
+      {
+        ::std::vector< ::CIAO::Config_Handlers::Property > v;
+        v.reserve (infoProperty_.size () + 1);
+
+        while (infoProperty_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Property& t = infoProperty_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          infoProperty_.pop_back ();
+        }
+
+        infoProperty_.swap (v);
+      }
+
+      infoProperty_.push_back (e);
+      infoProperty_.back ().container (this);
+    }
+
+    // ComponentInterfaceDescription
+    //
     bool ComponentInterfaceDescription::
     contentLocation_p () const
     {
@@ -555,7 +633,7 @@ namespace CIAO
         else if (n == "idlFile")
         {
           ::XMLSchema::string< char > t (e);
-          idlFile (t);
+          add_idlFile (t);
         }
 
         else if (n == "configProperty")
@@ -573,13 +651,13 @@ namespace CIAO
         else if (n == "property")
         {
           ::CIAO::Config_Handlers::ComponentPropertyDescription t (e);
-          property (t);
+          add_property (t);
         }
 
         else if (n == "infoProperty")
         {
           ::CIAO::Config_Handlers::Property t (e);
-          infoProperty (t);
+          add_infoProperty (t);
         }
 
         else if (n == "contentLocation")
@@ -588,7 +666,7 @@ namespace CIAO
           contentLocation (t);
         }
 
-        else 
+        else
         {
         }
       }
@@ -602,4 +680,3 @@ namespace CIAO
   {
   }
 }
-

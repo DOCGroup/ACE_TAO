@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 #ifndef BASIC_DEPLOYMENT_DATA_HPP
 #define BASIC_DEPLOYMENT_DATA_HPP
 
@@ -158,7 +158,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // kind
-      // 
+      //
       public:
       bool kind_p () const;
       ::CIAO::Config_Handlers::TCKind const& kind () const;
@@ -187,7 +187,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // short
-      // 
+      //
       public:
       bool short_p () const;
       ::XMLSchema::short_ const& short_ () const;
@@ -198,7 +198,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::short_ > short__;
 
       // long
-      // 
+      //
       public:
       bool long_p () const;
       ::XMLSchema::int_ const& long_ () const;
@@ -209,7 +209,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::int_ > long__;
 
       // ushort
-      // 
+      //
       public:
       bool ushort_p () const;
       ::XMLSchema::unsignedShort const& ushort () const;
@@ -220,7 +220,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedShort > ushort_;
 
       // ulong
-      // 
+      //
       public:
       bool ulong_p () const;
       ::XMLSchema::unsignedInt const& ulong () const;
@@ -231,7 +231,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedInt > ulong_;
 
       // float
-      // 
+      //
       public:
       bool float_p () const;
       ::XMLSchema::float_ const& float_ () const;
@@ -242,7 +242,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::float_ > float__;
 
       // double
-      // 
+      //
       public:
       bool double_p () const;
       ::XMLSchema::double_ const& double_ () const;
@@ -253,7 +253,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::double_ > double__;
 
       // boolean
-      // 
+      //
       public:
       bool boolean_p () const;
       ::XMLSchema::boolean const& boolean () const;
@@ -264,7 +264,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::boolean > boolean_;
 
       // octet
-      // 
+      //
       public:
       bool octet_p () const;
       ::XMLSchema::unsignedByte const& octet () const;
@@ -275,7 +275,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedByte > octet_;
 
       // objref
-      // 
+      //
       public:
       bool objref_p () const;
       ::XMLSchema::string< char > const& objref () const;
@@ -286,7 +286,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > objref_;
 
       // enum
-      // 
+      //
       public:
       bool enum_p () const;
       ::XMLSchema::string< char > const& enum_ () const;
@@ -297,7 +297,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > enum__;
 
       // string
-      // 
+      //
       public:
       bool string_p () const;
       ::XMLSchema::string< char > const& string () const;
@@ -308,7 +308,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > string_;
 
       // longlong
-      // 
+      //
       public:
       bool longlong_p () const;
       ::XMLSchema::long_ const& longlong () const;
@@ -319,7 +319,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::long_ > longlong_;
 
       // ulonglong
-      // 
+      //
       public:
       bool ulonglong_p () const;
       ::XMLSchema::unsignedLong const& ulonglong () const;
@@ -330,7 +330,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::unsignedLong > ulonglong_;
 
       // longdouble
-      // 
+      //
       public:
       bool longdouble_p () const;
       ::XMLSchema::double_ const& longdouble () const;
@@ -341,7 +341,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::double_ > longdouble_;
 
       // fixed
-      // 
+      //
       public:
       bool fixed_p () const;
       ::XMLSchema::string< char > const& fixed () const;
@@ -352,7 +352,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > fixed_;
 
       // typecode
-      // 
+      //
       public:
       bool typecode_p () const;
       ::CIAO::Config_Handlers::DataType const& typecode () const;
@@ -381,7 +381,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // type
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
       ::CIAO::Config_Handlers::DataType& type ();
@@ -391,7 +391,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > type_;
 
       // value
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataValue const& value () const;
       ::CIAO::Config_Handlers::DataValue& value ();
@@ -420,7 +420,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -430,7 +430,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // value
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Any const& value () const;
       ::CIAO::Config_Handlers::Any& value ();
@@ -459,7 +459,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -469,7 +469,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // label
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& label () const;
       ::XMLSchema::string< char >& label ();
@@ -537,7 +537,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -547,7 +547,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // kind
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::SatisfierPropertyKind const& kind () const;
       ::CIAO::Config_Handlers::SatisfierPropertyKind& kind ();
@@ -557,7 +557,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierPropertyKind > kind_;
 
       // value
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Any const& value () const;
       ::CIAO::Config_Handlers::Any& value ();
@@ -587,7 +587,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -597,7 +597,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // resourceType
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& resourceType () const;
       ::XMLSchema::string< char >& resourceType ();
@@ -607,7 +607,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > resourceType_;
 
       // property
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::SatisfierProperty const& property () const;
       ::CIAO::Config_Handlers::SatisfierProperty& property ();
@@ -637,7 +637,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -647,7 +647,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // resourceType
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& resourceType () const;
       ::XMLSchema::string< char >& resourceType ();
@@ -657,7 +657,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > resourceType_;
 
       // node
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Node const& node () const;
       ::CIAO::Config_Handlers::Node& node ();
@@ -667,7 +667,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Node > node_;
 
       // property
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::SatisfierProperty const& property () const;
       ::CIAO::Config_Handlers::SatisfierProperty& property ();
@@ -698,7 +698,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // resourceType
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& resourceType () const;
       ::XMLSchema::string< char >& resourceType ();
@@ -708,7 +708,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > resourceType_;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -718,7 +718,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // property
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Property const& property () const;
       ::CIAO::Config_Handlers::Property& property ();
@@ -748,7 +748,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // requirementName
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& requirementName () const;
       ::XMLSchema::string< char >& requirementName ();
@@ -758,7 +758,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > requirementName_;
 
       // resourceName
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& resourceName () const;
       ::XMLSchema::string< char >& resourceName ();
@@ -768,7 +768,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > resourceName_;
 
       // resourceValue
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Any const& resourceValue () const;
       ::CIAO::Config_Handlers::Any& resourceValue ();
@@ -798,7 +798,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -808,19 +808,22 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // source
-      // 
+      //
       public:
-      ::XMLSchema::string< char > const& source () const;
-      ::XMLSchema::string< char >& source ();
-      void source (::XMLSchema::string< char > const& );
+      typedef ::std::vector< ::XMLSchema::string< char > >::iterator source_iterator;
+      typedef ::std::vector< ::XMLSchema::string< char > >::const_iterator source_const_iterator;
+      source_iterator begin_source ();
+      source_iterator end_source ();
+      source_const_iterator begin_source () const;
+      source_const_iterator end_source () const;
+      void add_source (::XMLSchema::string< char > const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::string< char > > source_;
+      ::std::vector< ::XMLSchema::string< char > > source_;
 
       // node
-      // 
+      //
       public:
-      bool node_p () const;
       ::XMLSchema::string< char > const& node () const;
       ::XMLSchema::string< char >& node ();
       void node (::XMLSchema::string< char > const& );
@@ -829,7 +832,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > node_;
 
       // location
-      // 
+      //
       public:
       typedef ::std::vector< ::XMLSchema::string< char > >::iterator location_iterator;
       typedef ::std::vector< ::XMLSchema::string< char > >::const_iterator location_const_iterator;
@@ -843,40 +846,49 @@ namespace CIAO
       ::std::vector< ::XMLSchema::string< char > > location_;
 
       // execParameter
-      // 
+      //
       public:
-      bool execParameter_p () const;
-      ::CIAO::Config_Handlers::Property const& execParameter () const;
-      ::CIAO::Config_Handlers::Property& execParameter ();
-      void execParameter (::CIAO::Config_Handlers::Property const& );
+      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
+      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
+      execParameter_iterator begin_execParameter ();
+      execParameter_iterator end_execParameter ();
+      execParameter_const_iterator begin_execParameter () const;
+      execParameter_const_iterator end_execParameter () const;
+      void add_execParameter (::CIAO::Config_Handlers::Property const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::Property > execParameter_;
+      ::std::vector< ::CIAO::Config_Handlers::Property > execParameter_;
 
       // deployRequirement
-      // 
+      //
       public:
-      bool deployRequirement_p () const;
-      ::CIAO::Config_Handlers::Requirement const& deployRequirement () const;
-      ::CIAO::Config_Handlers::Requirement& deployRequirement ();
-      void deployRequirement (::CIAO::Config_Handlers::Requirement const& );
+      typedef ::std::vector< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
+      typedef ::std::vector< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      deployRequirement_iterator begin_deployRequirement ();
+      deployRequirement_iterator end_deployRequirement ();
+      deployRequirement_const_iterator begin_deployRequirement () const;
+      deployRequirement_const_iterator end_deployRequirement () const;
+      void add_deployRequirement (::CIAO::Config_Handlers::Requirement const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::vector< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // deployedResource
-      // 
+      //
       public:
-      bool deployedResource_p () const;
-      ::CIAO::Config_Handlers::ResourceDeploymentDescription const& deployedResource () const;
-      ::CIAO::Config_Handlers::ResourceDeploymentDescription& deployedResource ();
-      void deployedResource (::CIAO::Config_Handlers::ResourceDeploymentDescription const& );
+      typedef ::std::vector< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::iterator deployedResource_iterator;
+      typedef ::std::vector< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
+      deployedResource_iterator begin_deployedResource ();
+      deployedResource_iterator end_deployedResource ();
+      deployedResource_const_iterator begin_deployedResource () const;
+      deployedResource_const_iterator end_deployedResource () const;
+      void add_deployedResource (::CIAO::Config_Handlers::ResourceDeploymentDescription const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceDeploymentDescription > deployedResource_;
+      ::std::vector< ::CIAO::Config_Handlers::ResourceDeploymentDescription > deployedResource_;
 
       // id
-      // 
+      //
       public:
       bool id_p () const;
       ::XMLSchema::ID< char > const& id () const;
@@ -888,7 +900,7 @@ namespace CIAO
 
       public:
       ArtifactDeploymentDescription (::XMLSchema::string< char > const& name__,
-      ::XMLSchema::string< char > const& source__);
+      ::XMLSchema::string< char > const& node__);
 
       ArtifactDeploymentDescription (::XSCRT::XML::Element< char > const&);
       ArtifactDeploymentDescription (ArtifactDeploymentDescription const& s);
@@ -906,7 +918,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -916,17 +928,21 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // source
-      // 
+      //
       public:
-      ::XMLSchema::string< char > const& source () const;
-      ::XMLSchema::string< char >& source ();
-      void source (::XMLSchema::string< char > const& );
+      typedef ::std::vector< ::XMLSchema::string< char > >::iterator source_iterator;
+      typedef ::std::vector< ::XMLSchema::string< char > >::const_iterator source_const_iterator;
+      source_iterator begin_source ();
+      source_iterator end_source ();
+      source_const_iterator begin_source () const;
+      source_const_iterator end_source () const;
+      void add_source (::XMLSchema::string< char > const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::string< char > > source_;
+      ::std::vector< ::XMLSchema::string< char > > source_;
 
       // artifact
-      // 
+      //
       public:
       typedef ::std::vector< ::XMLSchema::IDREF< char > >::iterator artifact_iterator;
       typedef ::std::vector< ::XMLSchema::IDREF< char > >::const_iterator artifact_const_iterator;
@@ -940,29 +956,35 @@ namespace CIAO
       ::std::vector< ::XMLSchema::IDREF< char > > artifact_;
 
       // execParameter
-      // 
+      //
       public:
-      bool execParameter_p () const;
-      ::CIAO::Config_Handlers::Property const& execParameter () const;
-      ::CIAO::Config_Handlers::Property& execParameter ();
-      void execParameter (::CIAO::Config_Handlers::Property const& );
+      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
+      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
+      execParameter_iterator begin_execParameter ();
+      execParameter_iterator end_execParameter ();
+      execParameter_const_iterator begin_execParameter () const;
+      execParameter_const_iterator end_execParameter () const;
+      void add_execParameter (::CIAO::Config_Handlers::Property const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::Property > execParameter_;
+      ::std::vector< ::CIAO::Config_Handlers::Property > execParameter_;
 
       // deployRequirement
-      // 
+      //
       public:
-      bool deployRequirement_p () const;
-      ::CIAO::Config_Handlers::Requirement const& deployRequirement () const;
-      ::CIAO::Config_Handlers::Requirement& deployRequirement ();
-      void deployRequirement (::CIAO::Config_Handlers::Requirement const& );
+      typedef ::std::vector< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
+      typedef ::std::vector< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      deployRequirement_iterator begin_deployRequirement ();
+      deployRequirement_iterator end_deployRequirement ();
+      deployRequirement_const_iterator begin_deployRequirement () const;
+      deployRequirement_const_iterator end_deployRequirement () const;
+      void add_deployRequirement (::CIAO::Config_Handlers::Requirement const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::vector< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // id
-      // 
+      //
       public:
       bool id_p () const;
       ::XMLSchema::ID< char > const& id () const;
@@ -973,8 +995,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::ID< char > > id_;
 
       public:
-      MonolithicDeploymentDescription (::XMLSchema::string< char > const& name__,
-      ::XMLSchema::string< char > const& source__);
+      MonolithicDeploymentDescription (::XMLSchema::string< char > const& name__);
 
       MonolithicDeploymentDescription (::XSCRT::XML::Element< char > const&);
       MonolithicDeploymentDescription (MonolithicDeploymentDescription const& s);
@@ -1029,7 +1050,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // resourceUsage
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage () const;
       ::CIAO::Config_Handlers::ResourceUsageKind& resourceUsage ();
@@ -1039,7 +1060,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceUsageKind > resourceUsage_;
 
       // requirementName
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& requirementName () const;
       ::XMLSchema::string< char >& requirementName ();
@@ -1049,7 +1070,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > requirementName_;
 
       // resourceName
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& resourceName () const;
       ::XMLSchema::string< char >& resourceName ();
@@ -1059,7 +1080,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > resourceName_;
 
       // resourceValue
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Any const& resourceValue () const;
       ::CIAO::Config_Handlers::Any& resourceValue ();
@@ -1090,7 +1111,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -1100,7 +1121,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // node
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& node () const;
       ::XMLSchema::string< char >& node ();
@@ -1110,7 +1131,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > node_;
 
       // source
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& source () const;
       ::XMLSchema::string< char >& source ();
@@ -1120,7 +1141,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > source_;
 
       // implementation
-      // 
+      //
       public:
       ::XMLSchema::IDREF< char > const& implementation () const;
       ::XMLSchema::IDREF< char >& implementation ();
@@ -1130,7 +1151,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::IDREF< char > > implementation_;
 
       // configProperty
-      // 
+      //
       public:
       bool configProperty_p () const;
       ::CIAO::Config_Handlers::Property const& configProperty () const;
@@ -1141,7 +1162,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // deployedResource
-      // 
+      //
       public:
       bool deployedResource_p () const;
       ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& deployedResource () const;
@@ -1152,7 +1173,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedResource_;
 
       // deployedSharedResource
-      // 
+      //
       public:
       bool deployedSharedResource_p () const;
       ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& deployedSharedResource () const;
@@ -1163,7 +1184,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedSharedResource_;
 
       // id
-      // 
+      //
       public:
       bool id_p () const;
       ::XMLSchema::ID< char > const& id () const;
@@ -1234,7 +1255,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -1244,7 +1265,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // specificType
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& specificType () const;
       ::XMLSchema::string< char >& specificType ();
@@ -1254,7 +1275,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > specificType_;
 
       // supportedType
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& supportedType () const;
       ::XMLSchema::string< char >& supportedType ();
@@ -1264,7 +1285,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > supportedType_;
 
       // provider
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& provider () const;
       ::XMLSchema::string< char >& provider ();
@@ -1274,7 +1295,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > provider_;
 
       // exclusiveProvider
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& exclusiveProvider () const;
       ::XMLSchema::string< char >& exclusiveProvider ();
@@ -1284,7 +1305,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > exclusiveProvider_;
 
       // exclusiveUser
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& exclusiveUser () const;
       ::XMLSchema::string< char >& exclusiveUser ();
@@ -1294,7 +1315,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > exclusiveUser_;
 
       // optional
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& optional () const;
       ::XMLSchema::string< char >& optional ();
@@ -1304,7 +1325,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > optional_;
 
       // kind
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::CCMComponentPortKind const& kind () const;
       ::CIAO::Config_Handlers::CCMComponentPortKind& kind ();
@@ -1339,7 +1360,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -1349,7 +1370,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // type
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
       ::CIAO::Config_Handlers::DataType& type ();
@@ -1378,7 +1399,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // portName
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& portName () const;
       ::XMLSchema::string< char >& portName ();
@@ -1406,7 +1427,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // portName
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& portName () const;
       ::XMLSchema::string< char >& portName ();
@@ -1416,7 +1437,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > portName_;
 
       // provider
-      // 
+      //
       public:
       bool provider_p () const;
       ::XMLSchema::string< char > const& provider () const;
@@ -1427,7 +1448,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > provider_;
 
       // kind
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::CCMComponentPortKind const& kind () const;
       ::CIAO::Config_Handlers::CCMComponentPortKind& kind ();
@@ -1437,7 +1458,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::CCMComponentPortKind > kind_;
 
       // instance
-      // 
+      //
       public:
       ::XMLSchema::IDREF< char > const& instance () const;
       ::XMLSchema::IDREF< char >& instance ();
@@ -1467,7 +1488,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // location
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& location () const;
       ::XMLSchema::string< char >& location ();
@@ -1495,7 +1516,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // targetName
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& targetName () const;
       ::XMLSchema::string< char >& targetName ();
@@ -1505,7 +1526,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > targetName_;
 
       // requirementName
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& requirementName () const;
       ::XMLSchema::string< char >& requirementName ();
@@ -1515,7 +1536,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > requirementName_;
 
       // resourceName
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& resourceName () const;
       ::XMLSchema::string< char >& resourceName ();
@@ -1525,7 +1546,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > resourceName_;
 
       // resourceValue
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Any const& resourceValue () const;
       ::CIAO::Config_Handlers::Any& resourceValue ();
@@ -1556,7 +1577,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -1566,7 +1587,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // source
-      // 
+      //
       public:
       bool source_p () const;
       ::XMLSchema::string< char > const& source () const;
@@ -1577,7 +1598,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > source_;
 
       // deployRequirement
-      // 
+      //
       public:
       bool deployRequirement_p () const;
       ::CIAO::Config_Handlers::Requirement const& deployRequirement () const;
@@ -1588,7 +1609,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // externalEndpoint
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::iterator externalEndpoint_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::const_iterator externalEndpoint_const_iterator;
@@ -1602,7 +1623,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > externalEndpoint_;
 
       // internalEndpoint
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint >::iterator internalEndpoint_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint >::const_iterator internalEndpoint_const_iterator;
@@ -1616,7 +1637,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint > internalEndpoint_;
 
       // externalReference
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::iterator externalReference_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::const_iterator externalReference_const_iterator;
@@ -1630,7 +1651,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint > externalReference_;
 
       // deployedResource
-      // 
+      //
       public:
       bool deployedResource_p () const;
       ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& deployedResource () const;
@@ -1659,7 +1680,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // requiredType
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& requiredType () const;
       ::XMLSchema::string< char >& requiredType ();
@@ -1687,7 +1708,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -1697,7 +1718,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // resourceType
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& resourceType () const;
       ::XMLSchema::string< char >& resourceType ();
@@ -1707,7 +1728,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > resourceType_;
 
       // property
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::SatisfierProperty const& property () const;
       ::CIAO::Config_Handlers::SatisfierProperty& property ();
@@ -1737,7 +1758,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // resourceUsage
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage () const;
       ::CIAO::Config_Handlers::ResourceUsageKind& resourceUsage ();
@@ -1747,7 +1768,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceUsageKind > resourceUsage_;
 
       // resourcePort
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& resourcePort () const;
       ::XMLSchema::string< char >& resourcePort ();
@@ -1757,7 +1778,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > resourcePort_;
 
       // componentPort
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& componentPort () const;
       ::XMLSchema::string< char >& componentPort ();
@@ -1767,7 +1788,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > componentPort_;
 
       // resourceType
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& resourceType () const;
       ::XMLSchema::string< char >& resourceType ();
@@ -1777,7 +1798,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > resourceType_;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -1787,7 +1808,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // property
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::Property const& property () const;
       ::CIAO::Config_Handlers::Property& property ();
@@ -1820,7 +1841,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // requiredUUID
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& requiredUUID () const;
       ::XMLSchema::string< char >& requiredUUID ();
@@ -1830,7 +1851,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > requiredUUID_;
 
       // requiredName
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& requiredName () const;
       ::XMLSchema::string< char >& requiredName ();
@@ -1840,7 +1861,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > requiredName_;
 
       // requiredType
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& requiredType () const;
       ::XMLSchema::string< char >& requiredType ();
@@ -1870,7 +1891,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // portName
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& portName () const;
       ::XMLSchema::string< char >& portName ();
@@ -1880,7 +1901,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > portName_;
 
       // instance
-      // 
+      //
       public:
       ::XMLSchema::IDREF< char > const& instance () const;
       ::XMLSchema::IDREF< char >& instance ();
@@ -1909,7 +1930,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -1919,7 +1940,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // deployRequirement
-      // 
+      //
       public:
       bool deployRequirement_p () const;
       ::CIAO::Config_Handlers::Requirement const& deployRequirement () const;
@@ -1930,7 +1951,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // externalEndpoint
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::iterator externalEndpoint_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::const_iterator externalEndpoint_const_iterator;
@@ -1944,7 +1965,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > externalEndpoint_;
 
       // internalEndpoint
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::SubcomponentPortEndpoint >::iterator internalEndpoint_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::SubcomponentPortEndpoint >::const_iterator internalEndpoint_const_iterator;
@@ -1958,7 +1979,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::SubcomponentPortEndpoint > internalEndpoint_;
 
       // externalReference
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::iterator externalReference_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::const_iterator externalReference_const_iterator;
