@@ -58,6 +58,13 @@ TAO_DIOP_Transport::event_handler_i (void)
   return this->connection_handler_;
 }
 
+TAO_Pluggable_Messaging *
+TAO_DIOP_Transport::messaging_object (void)
+{
+  return this->messaging_object_;
+}
+
+
 ssize_t
 TAO_DIOP_Transport::send_i (const ACE_Message_Block *message_block,
                             const ACE_Time_Value * /*max_wait_time*/,
@@ -352,71 +359,6 @@ TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
 }
 
 
-void
-TAO_DIOP_Transport::start_request (TAO_ORB_Core * /*orb_core*/,
-                                   TAO_Target_Specification & /*spec */,
-                                   TAO_OutputCDR & /*output */,
-                                   CORBA::Environment & /*ACE_TRY_ENV*/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // @@ This method should NO longer be required..
-
-  /*  if (this->client_mesg_factory_->write_protocol_header
-      (TAO_PLUGGABLE_MESSAGE_REQUEST,
-       output) == 0)
-       ACE_THROW (CORBA::MARSHAL ());*/
-}
-
-
-void
-TAO_DIOP_Transport::start_locate (TAO_ORB_Core * /*orb_core*/,
-                                  TAO_Target_Specification &spec,
-                                  TAO_Operation_Details &opdetails,
-                                  TAO_OutputCDR &output,
-                                  CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  if (this->messaging_object_->generate_locate_request_header (opdetails,
-                                                               spec,
-                                                               output) == -1)
-    ACE_THROW (CORBA::MARSHAL ());
-}
-
-
-CORBA::Boolean
-TAO_DIOP_Transport::send_request_header (TAO_Operation_Details &opdetails,
-                                         TAO_Target_Specification &spec,
-                                         TAO_OutputCDR &msg)
-{
-// @@ Frank: No Bi Dir DIOP yet..
-/*
-  // Check whether we have a Bi Dir DIOP policy set, whether the
-  // messaging objects are ready to handle bidirectional connections
-  // and also make sure that we have not recd. or sent any information
-  // regarding this before...
-  if (this->orb_core ()->bidir_giop_policy () &&
-      this->messaging_object_->is_ready_for_bidirectional () &&
-      this->bidirectional_flag () < 0)
-    {
-      this->set_bidir_context_info (opdetails);
-
-      // Set the flag to 0
-      this->bidirectional_flag (0);
-    }
-
-  // Modify the request id if we have BiDirectional client/server
-  // setup
-  opdetails.modify_request_id (this->bidirectional_flag ());
-*/
-  // We are going to pass on this request to the underlying messaging
-  // layer. It should take care of this request
-  if (this->messaging_object_->generate_request_header (opdetails,
-                                                        spec,
-                                                        msg) == -1)
-    return 0;
-
-  return 1;
-}
 
 int
 TAO_DIOP_Transport::messaging_init (CORBA::Octet major,
