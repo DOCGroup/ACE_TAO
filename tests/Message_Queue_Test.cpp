@@ -464,7 +464,7 @@ main (int argc, ACE_TCHAR *argv[])
   }
   else {
     ACE_Message_Block *b;
-    ACE_Time_Value tv (ACE_OS::gettimeofday());   // Now
+    ACE_Time_Value tv (ACE_OS::gettimeofday ());   // Now
     if (q1.dequeue_head (b, &tv) != -1) {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Dequeued from empty queue!\n")));
       status = 1;
