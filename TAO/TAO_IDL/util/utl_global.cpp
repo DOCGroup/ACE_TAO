@@ -89,6 +89,7 @@ IDL_GlobalData::dsf::dsf (void)
     valuetype_seen_ (0),
     abstract_iface_seen_ (0),
     local_iface_seen_ (0),
+    non_local_iface_seen_ (0),
     basic_type_seen_ (0),
     ambiguous_type_seen_ (0),
     enum_seen_ (0),
@@ -223,12 +224,13 @@ IDL_GlobalData::IDL_GlobalData (void)
   ACE_SET_BITS (this->decls_seen_masks.valuetype_seen_,         cursor << 1);
   ACE_SET_BITS (this->decls_seen_masks.abstract_iface_seen_,    cursor << 2);
   ACE_SET_BITS (this->decls_seen_masks.local_iface_seen_,       cursor << 4);
-  ACE_SET_BITS (this->decls_seen_masks.basic_type_seen_,        cursor << 5);
-  ACE_SET_BITS (this->decls_seen_masks.ambiguous_type_seen_,    cursor << 6);
-  ACE_SET_BITS (this->decls_seen_masks.enum_seen_,              cursor << 7);
-  ACE_SET_BITS (this->decls_seen_masks.string_seen_,            cursor << 8);
-  ACE_SET_BITS (this->decls_seen_masks.array_seen_,             cursor << 9);
-  ACE_SET_BITS (this->decls_seen_masks.aggregate_seen_,         cursor << 10);
+  ACE_SET_BITS (this->decls_seen_masks.non_local_iface_seen_,   cursor << 5);
+  ACE_SET_BITS (this->decls_seen_masks.basic_type_seen_,        cursor << 6);
+  ACE_SET_BITS (this->decls_seen_masks.ambiguous_type_seen_,    cursor << 7);
+  ACE_SET_BITS (this->decls_seen_masks.enum_seen_,              cursor << 8);
+  ACE_SET_BITS (this->decls_seen_masks.string_seen_,            cursor << 9);
+  ACE_SET_BITS (this->decls_seen_masks.array_seen_,             cursor << 10);
+  ACE_SET_BITS (this->decls_seen_masks.aggregate_seen_,         cursor << 11);
 
   ACE_SET_BITS (this->decls_seen_masks.seq_seen_,               cursor << 21);
   ACE_SET_BITS (this->decls_seen_masks.iface_seq_seen_,         cursor << 22);

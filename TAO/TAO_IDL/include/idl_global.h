@@ -275,6 +275,7 @@ public:
     ACE_UINT64 valuetype_seen_;
     ACE_UINT64 abstract_iface_seen_;
     ACE_UINT64 local_iface_seen_;
+    ACE_UINT64 non_local_iface_seen_;
     ACE_UINT64 basic_type_seen_;
     ACE_UINT64 ambiguous_type_seen_;
     ACE_UINT64 enum_seen_;

@@ -31,7 +31,10 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // For arg/return type helper template classes.
+  // For arg/return type helper template classes. This must come before
+  // the check for an imported or undefined node because such a node
+  // could still be used in an operation and thus cause the use of
+  // an arg helper template class.
   if (node->seen_in_operation ())
     {
       os->gen_ifdef_macro (node->flat_name (), "arg_traits_tmplinst");
@@ -52,6 +55,15 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
       os->gen_endif ();
     }
 
+  // If one of these is true we can skip the rest.
+  if (node->imported () || !node->is_defined ())
+    {
+      this->this_mode_generated (node, I_TRUE);
+      return 0;
+    }
+
+  // Interfaces can contain declarations of structs, unions, sequences
+  // or arrays.
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -60,62 +72,57 @@ be_visitor_tmplinst_cs::visit_interface (be_interface *node)
                         -1);
     }
 
-  if (node->imported ())
-    {
-      this->this_mode_generated (node, I_TRUE);
-      return 0;
-    }
+  // For the traits template class.
+  *os << be_nl << be_nl
+      << this->prefix_ << " TAO::Objref_Traits<" << node->name ()
+      << ">" << this->suffix_;
 
-  // For traits template class.
-  // @@@ (JP) This condition may change or go away once we 
-  // regenerate the ORB hand-crafted code.
-  if (!node->is_defined ())
+  // For the _var and _out typedefs.
+  *os << be_nl << be_nl
+      << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+      << "TAO_Objref_Var_T<" << this->linebreak_ << be_idt << be_idt_nl
+      << node->name () << "," << this->linebreak_ << be_nl
+      << "TAO::Objref_Traits<" << node->name () << ">" << this->linebreak_ 
+      << be_uidt_nl
+      << ">" << this->suffix_ << be_uidt << be_uidt_nl << be_uidt_nl
+      << this->prefix_<< this->linebreak_ << be_idt << be_idt_nl
+      << "TAO_Objref_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
+      << node->name () << "," << this->linebreak_ << be_nl
+      << "TAO::Objref_Traits<" << node->name () << ">" << this->linebreak_ 
+      << be_uidt_nl
+      << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+
+  // Called by _narrow() for non-local interfaces.
+  if (!node->is_local ())
     {
       *os << be_nl << be_nl
-          << this->prefix_ << " TAO::Objref_Traits<" << node->name ()
-          << ">" << this->suffix_;
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+          << "TAO::Narrow_Utils<" << node->name () << ">" 
+          << this->suffix_ << be_uidt << be_uidt;
     }
 
-  // For _var and _out template classes.
-  if (node->is_defined ())
+  if (be_global->gen_smart_proxies ())
     {
-      *os << be_nl << be_nl
-          << this->prefix_<< this->linebreak_ << be_idt << be_idt_nl
-          << "TAO_Objref_Var_T<" << this->linebreak_ << be_idt << be_idt_nl
-          << node->name () << "," << this->linebreak_ << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">" << this->linebreak_ 
-          << be_uidt_nl
-          << ">" << this->suffix_ << be_uidt << be_uidt_nl << be_uidt_nl
-          << this->prefix_<< this->linebreak_ << be_idt << be_idt_nl
-          << "TAO_Objref_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
-          << node->name () << "," << this->linebreak_ << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">" << this->linebreak_ 
-          << be_uidt_nl
-          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+      // Its necessary to take care of the nested case.
+      // The smart proxy classes are in the same scope as the proxy.
+      be_decl* scope = 
+        be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-      if (be_global->gen_smart_proxies ())
+      *os << be_nl << be_nl
+          << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
+          << "TAO_Singleton<" << this->linebreak_ << be_idt << be_idt_nl
+          << scope->full_name ();
+
+      // Only if there exists any nesting "::" is needed!
+      if (node->is_nested ())
         {
-          // Its necessary to take care of the nested case.
-          // The smart proxy classes are in the same scope as the proxy.
-          be_decl* scope = 
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-          *os << be_nl << be_nl
-              << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
-              << "TAO_Singleton<" << this->linebreak_ << be_idt << be_idt_nl
-              << scope->full_name ();
-
-          // Only if there exists any nesting "::" is needed!
-          if (node->is_nested ())
-            {
-              *os << "::";
-            }
-
-          *os <<"TAO_" << node->flat_name ()
-              << "_Proxy_Factory_Adapter," << this->linebreak_ << be_nl
-              << "TAO_SYNCH_RECURSIVE_MUTEX" << this->linebreak_ << be_uidt_nl
-              << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+          *os << "::";
         }
+
+      *os <<"TAO_" << node->flat_name ()
+          << "_Proxy_Factory_Adapter," << this->linebreak_ << be_nl
+          << "TAO_SYNCH_RECURSIVE_MUTEX" << this->linebreak_ << be_uidt_nl
+          << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
     }
 
   // For Any impl template class.

@@ -1,3 +1,19 @@
+Sun Sep  7 15:01:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp (visit_interface):
+
+          Added generation of TAO::Narrow_Utils explicit template 
+          instantiation for non-local interfaces, and more detailed
+          comments for all the code generation in this method.
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Assigned a slot in the declarations-seen bit vector for
+          non-local interfaces, along with code to initialize it
+          and set it.
+
 Fri Sep  5 20:51:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Bind_Dispatcher_Guard.h:
