@@ -18,6 +18,7 @@
 # include "tao/IIOP_Connection_Handler.i"
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/os_include/netinet/os_tcp.h"
 
 ACE_RCSID (tao,
            IIOP_Connection_Handler,

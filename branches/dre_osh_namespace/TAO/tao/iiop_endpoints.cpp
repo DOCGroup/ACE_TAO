@@ -14,6 +14,8 @@
 #include "iiop_endpoints.i"
 #endif /* !defined INLINE */
 
+#include "ace/os_include/arpa/os_inet.h"
+
 static const CORBA::Long _oc_TAO_IIOP_Endpoint_Info[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order

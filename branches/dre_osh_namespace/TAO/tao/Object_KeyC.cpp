@@ -43,6 +43,8 @@
 #include "Object_KeyC.i"
 #endif /* !defined INLINE */
 
+#include "ace/os_include/arpa/os_inet.h"
+
 // TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:56
 

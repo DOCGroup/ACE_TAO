@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if 0
+#if !defined (DO_NOT_INCLUDE_OS_H)
 #include "ace/Cleanup.h"
 #include "ace/Object_Manager_Base.h"
 #include "ace/OS_main.h"
