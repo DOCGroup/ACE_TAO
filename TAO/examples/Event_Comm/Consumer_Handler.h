@@ -41,7 +41,7 @@ public:
   Consumer_Handler (void);
   // Constructor.
 
- ~Consumer_Handler (void);
+ virtual ~Consumer_Handler (void);
   // Destructor
 
   int init (int argc, char *argv[]);
