@@ -219,9 +219,10 @@ Thu Jan 06 22:26:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  term fix is to separate out the two concerns (a) can the call be
 	  buffered and (b) are we expecting a response.
 
-	* tao/Transport_Mux_Strategy.cpp (dispatch_reply): Once we receive
-	  our reply, we need to mark the transport as being available for
-	  reuse again.
+	* tao/Transport_Mux_Strategy.cpp
+	  (TAO_Exclusive_TMS::dispatch_reply): Once we receive our reply,
+	  we need to mark the transport as being available for reuse
+	  again.
 
 	* tao: Renamed TAO_RelativeRoundtripTimeoutPolicy_i to
 	  TAO_RelativeRoundtripTimeoutPolicy.
