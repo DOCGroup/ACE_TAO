@@ -187,8 +187,24 @@ sub write_comps {
   }
   print $fh $crlf;
 
-  ## Backward compatibility.  This should eventually be removed.
-  print $fh "reverseclean: realclean$crlf";
+  ## This target should always be the last target printed into the workspace
+  print $fh "%:$crlf";
+  foreach my $project (@lprj) {
+    print $fh "\t\$(KEEP_GOING)\@";
+    if (defined $dirprj{$project}) {
+      print $fh "cd ", dirname($project),
+                " && \$(MAKE) -f ", basename($project), " \$(\@)", $crlf;
+    }
+    else {
+      print $fh "\$(MAKE) -f $project \$(\@)$crlf";
+    }
+  }
+  if ($need_dirs) {
+    foreach my $dir (@dirs) {
+      print $fh "\t\$(KEEP_GOING)\@cd $dir && \$(MAKE) \$(\@)$crlf";
+    }
+  }
+
 }
 
 1;
