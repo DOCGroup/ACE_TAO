@@ -51,3 +51,9 @@ ACE_INET_Addr::hash (void) const
   return this->get_ip_address () + this->get_port_number ();
 }
 
+ACE_INLINE int
+ACE_INET_Addr::operator < (const ACE_INET_Addr &rhs)
+{
+  return this->get_ip_address () < rhs.get_ip_address ()
+    || this->get_port_number () < rhs.get_port_number ();
+}

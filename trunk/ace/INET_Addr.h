@@ -177,6 +177,12 @@ public:
   // Return the 4-byte IP address, converting it into host byte
   // order.
 
+  int operator < (const ACE_INET_Addr &rhs);
+  // Returns true if <this> is less than <rhs>.  In this context,
+  // "less than" is defined in terms of IP address and TCP port
+  // number.  This operator makes it possible to use <ACE_INET_Addr>s
+  // in STL maps.
+
   int operator == (const ACE_INET_Addr &SAP) const;
   // Compare two addresses for equality.  The addresses are considered
   // equal if they contain the same IP address and port number.
