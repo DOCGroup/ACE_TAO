@@ -11,7 +11,7 @@
 
 ACE_RCSID(ace, TSS_T, "$Id$")
 
-#if defined (__ACE_INLINE__)
+#if !defined (__ACE_INLINE__)
 #include "ace/TSS_T.inl"
 #endif /* __ACE_INLINE__ */
 
@@ -68,6 +68,7 @@ ACE_TSS<TYPE>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
+#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))  
 #if defined (ACE_HAS_THR_C_DEST)
 extern "C" void ACE_TSS_C_cleanup(void *); // defined in Synch.cpp
 #endif /* ACE_HAS_THR_C_DEST */
@@ -675,5 +676,7 @@ ACE_TSS_Read_Guard<ACE_LOCK>::dump (void) const
   ACE_TSS_Guard<ACE_LOCK>::dump ();
 #endif /* ACE_HAS_DUMP */
 }
+
+#endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */  
 
 #endif /* ACE_TSS_T_C */

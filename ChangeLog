@@ -1,3 +1,14 @@
+Tue Aug  5 01:17:55 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/TSS_T.cpp:
+          Rolled back part of the fix from Mon Aug  4 21:02:12 UTC 2003
+          Don Hinton  <dhinton@dresystems.com>.  Some of the cpp still
+          needs to be ifdef'd out for single threaded builds.
+
+        * ace/Timer_Queue_Adapters.cpp:
+          Added #include Condition_Recursive_Thread_Mutex.h needed on some
+          Windows builds.
+
 Mon Aug  4 21:02:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/TSS_T.{h,cpp}:
