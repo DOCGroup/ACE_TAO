@@ -13,6 +13,7 @@ ACE_RCSID(ace, Atomic_Op, "$Id$")
 
 long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::increment_fn_) (volatile long *) = 0;
 long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::decrement_fn_) (volatile long *) = 0;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange_fn_) (volatile long *, long) = 0;
 long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange_add_fn_) (volatile long *, long) = 0;
 
 void
@@ -22,12 +23,14 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::init_functions (void)
     {
       increment_fn_ = single_cpu_increment;
       decrement_fn_ = single_cpu_decrement;
+      exchange_fn_ = single_cpu_exchange;
       exchange_add_fn_ = single_cpu_exchange_add;
     }
   else
     {
       increment_fn_ = multi_cpu_increment;
       decrement_fn_ = multi_cpu_decrement;
+      exchange_fn_ = multi_cpu_exchange;
       exchange_add_fn_ = multi_cpu_exchange_add;
     }
 }
@@ -68,6 +71,20 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_decrement (volatile long *valu
   unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
   asm( "xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp - 1;
+#else /* __GNUC__ && ACE_HAS_PENTIUM */
+  ACE_UNUSED_ARG (value);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+}
+
+long
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_exchange (volatile long *value,
+                                                            long rhs)
+{
+#if defined (__GNUC__) && defined (ACE_HAS_PENTIUM)
+  unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
+  asm( "xchg %0, (%1)" : "+r"(rhs) : "r"(addr) );
+  return rhs;
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
@@ -130,6 +147,21 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_decrement (volatile long *value
   unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
   asm( "lock ; xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp - 1;
+#else /* __GNUC__ && ACE_HAS_PENTIUM */
+  ACE_UNUSED_ARG (value);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+}
+
+long
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_exchange (volatile long *value,
+                                                           long rhs)
+{
+#if defined (__GNUC__) && defined (ACE_HAS_PENTIUM)
+  unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
+  // The XCHG instruction automatically follows LOCK semantics
+  asm( "xchg %0, (%1)" : "+r"(rhs) : "r"(addr) );
+  return rhs;
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);

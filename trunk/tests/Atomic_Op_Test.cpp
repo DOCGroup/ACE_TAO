@@ -61,11 +61,21 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_ASSERT (foo == 5);
   ACE_ASSERT (result == 5);
 
-  foo = 5L;
-  ACE_ASSERT (foo == 5);
+  foo = 7;
+  ACE_ASSERT (foo == 7);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <long> assignment %D\n")));
+  int i;
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      foo = 1;
+      foo = 2;
+      foo = 3;
+      foo = 4;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> assignment %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <long> increment %D\n")));
-  int i;
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
       ++foo;
@@ -135,6 +145,16 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   bar = 5L;
   ACE_ASSERT (bar == 5);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <int> assignment %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      bar = 1;
+      bar = 2;
+      bar = 3;
+      bar = 4;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> assignment %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <int> increment %D\n")));
   for (i = 0; i < TEST_ITERATIONS; ++i)

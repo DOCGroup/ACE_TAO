@@ -117,14 +117,22 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator< (long rhs) const
 ACE_INLINE void
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (long rhs)
 {
-  this->value_ = rhs;
+#if defined (WIN32)
+  ::InterlockedExchange (ACE_const_cast (long *, &this->value_), rhs);
+#else /* WIN32 */
+  (*exchange_fn_) (&this->value_, rhs);
+#endif /* WIN32 */
 }
 
 ACE_INLINE void
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (
    const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs)
 {
-  this->value_ = rhs.value_;
+#if defined (WIN32)
+  ::InterlockedExchange (ACE_const_cast (long *, &this->value_), rhs.value_);
+#else /* WIN32 */
+  (*exchange_fn_) (&this->value_, rhs.value_);
+#endif /* WIN32 */
 }
 
 ACE_INLINE long
