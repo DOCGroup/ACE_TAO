@@ -2589,7 +2589,7 @@ ACE_INLINE int
 ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 {
   long ip_addr = ACE_OS::inet_addr (host_name);
-  if (ip_addr == (long) htonl ((ACE_UINT32) -1)
+  if (ip_addr == (long) htonl ((ACE_UINT32) ~0)
       // Broadcast addresses are weird...
       && ACE_OS::strcmp (host_name, "255.255.255.255") != 0)
     return 0;

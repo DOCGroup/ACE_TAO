@@ -12,6 +12,7 @@ Map_Manager_Test
 Mem_Map_Test
 Message_Queue_Test
 MM_Shared_Memory_Test
+@echo The following test runs for about 1 minute
 Mutex_Test
 Naming_Test
 Pipe_Test
@@ -21,6 +22,7 @@ Reactor_Timer_Test
 Reactors_Test
 Reader_Writer_Test
 Recursive_Mutex_Test
+Service_Config_Test
 SPIPE_Test
 SString_Test
 SV_Shared_Memory_Test
