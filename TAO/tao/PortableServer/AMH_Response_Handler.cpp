@@ -43,11 +43,11 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
         ACE_DECLARE_NEW_CORBA_ENV;
         ACE_TRY
           {
-            CORBA::NO_RESPONSE exception (CORBA::SystemException::_tao_minor_code
+            CORBA::NO_RESPONSE ex (CORBA::SystemException::_tao_minor_code
                                                  (TAO_AMH_REPLY_LOCATION_CODE,
                                                   EFAULT),
                                             CORBA::COMPLETED_NO);
-            this->_tao_rh_send_exception (exception ACE_ENV_ARG_PARAMETER);
+            this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
         ACE_CATCHALL
