@@ -1,5 +1,5 @@
 // $Id$
-//
+
 //===============================================================================
 //
 //
@@ -7,7 +7,7 @@
 //     client.cpp
 //
 // = DESCRIPTION
-//     This is a simple foo client implementation
+//     This is a simple foo client implementation.
 //
 // = AUTHOR
 //     Irfan Pyarali
@@ -18,7 +18,7 @@
 #include "ace/Get_Opt.h"
 #include "FooC.h"
 
-static char *ior = 0;
+static char *IOR = 0;
 
 static int
 parse_args (int argc, char **argv)
@@ -30,7 +30,7 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'k':
-        ior = get_opts.optarg;
+        IOR = get_opts.optarg;
         break;
       case '?':
       default:
@@ -42,7 +42,7 @@ parse_args (int argc, char **argv)
                           -1);
       }
 
-  if (ior == 0)
+  if (IOR == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please specify the IOR for the servant"), -1);
 
@@ -63,33 +63,37 @@ main (int argc, char **argv)
       return -1;
     }
 
+  // Initialize options based on command-line arguments.
   parse_args (argc, argv);
 
-  // Get an object reference from the argument string
-  CORBA::Object_var object = orb->string_to_object (ior, env);
+  // Get an object reference from the argument string.
+  CORBA::Object_var object = orb->string_to_object (IOR, env);
+
   if (env.exception () != 0)
     {
       env.print_exception ("CORBA::ORB::string_to_object");
       return -1;
     }
 
-  // Try to narrow the object reference to a Foo reference
+  // Try to narrow the object reference to a Foo reference.
   Foo_var foo = Foo::_narrow (object.in (), env);
+
   if (env.exception () != 0)
     {
       env.print_exception ("Foo::_narrow");
       return -1;
     }
 
-  // Invoke the doit method of the foo reference
+  // Invoke the doit() method of the foo reference.
   CORBA::Long result = foo->doit (env);
+
   if (env.exception () != 0)
     {
       env.print_exception ("Foo::doit");
       return -1;
     }
 
-  // Print the result of doit () method of the foo reference
+  // Print the result of doit () method of the foo reference.
   cout << result << endl;
 
   return 0;

@@ -8,7 +8,6 @@ server fails.
 It will be fixed soon.
 !!!!!!!!!!!!   BUG   !!!!!!!!!!!
 
-
 This application demostrates various operations that can be used for
 explicit activation of Servant objects.
 
