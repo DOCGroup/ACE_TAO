@@ -115,11 +115,11 @@ ACE_Object_Manager::at_exit_i (void *object,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Queue<ACE_Object_Manager::ACE_Cleanup_Info>;
-template class ACE_Unbounded_Queue_Iterator<ACE_Object_Manager::ACE_Cleanup_Info>;
-template class ACE_Node<ACE_Object_Manager::ACE_Cleanup_Info>;
+template class ACE_Unbounded_Queue<ACE_Cleanup_Info>;
+template class ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>;
+template class ACE_Node<ACE_Cleanup_Info>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Queue<ACE_Object_Manager::ACE_Cleanup_Info>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Object_Manager::ACE_Cleanup_Info>
-#pragma instantiate ACE_Node<ACE_Object_Manager::ACE_Cleanup_Info>
+#pragma instantiate ACE_Unbounded_Queue<ACE_Cleanup_Info>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>
+#pragma instantiate ACE_Node<ACE_Cleanup_Info>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
