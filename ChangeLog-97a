@@ -1,3 +1,13 @@
+Sat Jan 25 12:50:24 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Updated all the cond_timedwait() and cond_wait()
+ 	  methods so that they decrement the count of waiters by one even
+ 	  when errors occur.  Thanks to Irfan for finding this.
+
+	* ace/Map_Manager.cpp: Updated the ACE_Map_Iterator code so that
+ 	  it no longer crashes if the Map has been closed.  Thanks to
+	  Slawomir Kuzniar <kuzniar@Bear.COM> for reporting this.
+
 Sat Jan 25 11:34:56 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/SOCK_Connector.cpp (complete): Added a sleep of zero seconds
