@@ -126,12 +126,16 @@ be_visitor_interface_interceptors_ss::gen_abstract_ops_helper (
 
       if (d->node_type () == AST_Decl::NT_op)
         {
+          // We pass the node's is_abstract flag to the operation
+          // constructor so we will get the right generated operation
+          // body if we are regenerating an operation from an
+          // abstract interface in a concrete interface or component.
           AST_Operation *op = AST_Operation::narrow_from_decl (d);
           be_operation new_op (op->return_type (),
                                op->flags (),
                                0,
                                op->is_local (),
-                               op->is_abstract ());
+                               node->is_abstract ());
           new_op.set_defined_in (node);
           be_visitor_interface::add_abstract_op_args (op,
                                                       new_op);
