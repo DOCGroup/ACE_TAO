@@ -332,7 +332,10 @@ public:
    */
   int copy (const char *buf);
 
-  /// Normalizes data in the top-level <Message_Block> to align with the base.
+  /// Normalizes data in the top-level <Message_Block> to align with the base,
+  /// i.e., it "shifts" the data pointed to by <rd_ptr> down to the <base> and
+  /// then readjusts <rt_ptr> to point to <base> and <wr_ptr> to point
+  /// to <base> + the length of the moved data.  
   void crunch (void);
 
   /// Resets the Message Block data to contain nothing, i.e., sets the
