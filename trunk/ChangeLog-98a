@@ -1,3 +1,13 @@
+Mon Dec 29 18:53:35 1997  James C Hu  <jxh@cs.wustl.edu>
+
+	* ace/Filecache.h: Added an enum type, ACE_Filecache_Flag, which
+	  gets passed into the ACE_Filecache_Handle constuctor to help
+	  determine whether or not to use memory mapping (on Windows NT,
+	  we sometimes do not want to memory map).
+
+	* ace/Filecache.cpp: Required modifications to accomodate the
+	  ACE_Filecache_Flag parameter.
+
 Mon Dec 29 13:57:43 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/XtReactor.cpp:
