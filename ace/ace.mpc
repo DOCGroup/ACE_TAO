@@ -138,6 +138,7 @@ project : acelib, core {
       LSOCK_Connector.cpp
       LSOCK_Dgram.cpp
       LSOCK_Stream.cpp
+      Multihomed_INET_Addr.cpp
       SOCK.cpp
       SOCK_Acceptor.cpp
       SOCK_CODgram.cpp
@@ -147,6 +148,9 @@ project : acelib, core {
       SOCK_Dgram_Bcast.cpp
       SOCK_Dgram_Mcast.cpp
       SOCK_IO.cpp
+      SOCK_SEQPACK_Acceptor.cpp
+      SOCK_SEQPACK_Association.cpp
+      SOCK_SEQPACK_Connector.cpp
       SOCK_Stream.cpp
     }
 
