@@ -7,8 +7,8 @@
  */
 //============================================================
 
-#ifndef SENDER_EXEC_H
-#define SENDER_EXEC_H
+#ifndef SENDER_EXEC_2_H
+#define SENDER_EXEC_2_H
 
 #include "SwapExecC.h"
 #include "SenderEC.h"
@@ -17,6 +17,9 @@
 
 namespace Sender_Impl
 {
+  class SenderSwap_exec_i;
+
+
   class SENDER_EXEC_Export Sender_exec_2_i :
       public virtual Sender_Exec,
       public virtual TAO_Local_RefCounted_Object
@@ -30,7 +33,7 @@ namespace Sender_Impl
     }
 
     /// Secondary construction.
-    Sender_exec_2_i (const char* local_message
+    Sender_exec_2_i (const char* local_message,
                      SenderSwap_exec_i *e)
       : message_ (CORBA::string_dup (local_message))
       , base_exec_ (e)
@@ -127,6 +130,6 @@ namespace Sender_Impl
 }
 
 extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-createSenderExec_Impl (SenderSwap_exec_i *p);
+createSenderExec_Impl (Sender_Impl::SenderSwap_exec_i *p);
 
 #endif /* SENDER_EXEC_H */

@@ -15,11 +15,14 @@
 #include "Sender_exec_export.h"
 #include "tao/LocalObject.h"
 #include "ace/DLL.h"
+#include "ciao/CCM_EventC.h"
 
 namespace Sender_Impl
 {
+  class SenderSwap_exec_i;
 
-  typedef ::Components::EnterpriseComponent_ptr (*ExecFactory) (void);
+
+  typedef ::Components::EnterpriseComponent_ptr (*ExecFactory) (SenderSwap_exec_i *);
 
   /**
    * @class Sender_exec_i
@@ -44,12 +47,12 @@ namespace Sender_Impl
     etherealize (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    void  consumers (::Components::ConsumerDescriptions_ptr p)
+    void  consumers (::Components::ConsumerDescriptions *p)
     {
       this->consumers_ = p;
     }
 
-    ::Components::ConsumerDescriptions_ptr consumers (void)
+    ::Components::ConsumerDescriptions *consumers (void)
     {
       return this->consumers_._retn ();
     }

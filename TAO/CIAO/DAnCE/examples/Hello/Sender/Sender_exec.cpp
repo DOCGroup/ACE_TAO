@@ -69,8 +69,7 @@ Sender_Impl::SenderSwap_exec_i::incarnate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         second_dll.symbol (second_exe_entrypt);
       Components::EnterpriseComponent_var second_executor =
         second_exec_creator (this);
-
-      --count;
+      --count_;
       return second_executor._retn ();
     }
 }

@@ -1,6 +1,7 @@
 //$Id$
 
 #include "Sender_exec_2.h"
+#include "Sender_exec.h"
 
 char*
 Sender_Impl::Message_Impl_2::get_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -89,7 +90,7 @@ Sender_Impl::Sender_exec_2_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
     this->context_->get_CCM_object ();
 
   Hello::Sender_var sender =
-    Hello::Sender::_narrow (comp_object.in ()
+    Hello::Sender::_narrow (o.in ()
                             ACE_ENV_ARG_PARAMETER);
 
   for (CORBA::ULong cnt = 0;
@@ -97,7 +98,7 @@ Sender_Impl::Sender_exec_2_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
        ++cnt)
     {
       sender->connect_consumer (c[cnt]->name (),
-                                c[cnt]
+                                (*c)[cnt]->consumer ()
                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
@@ -130,10 +131,10 @@ Sender_Impl::Sender_exec_2_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-createSenderExec_Impl (SenderSwap_exec_i *p)
+createSenderExec_Impl (Sender_Impl::SenderSwap_exec_i *p)
 {
-  Sender_exec_2_i *tmp =
-    new Sender_Impl::Sender_exec_1_i ();
+  Sender_Impl::Sender_exec_2_i *tmp =
+    new Sender_Impl::Sender_exec_2_i ();
 
   tmp->swap_exec (p);
 

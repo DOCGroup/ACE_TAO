@@ -305,8 +305,6 @@ namespace Sender_Impl
         return ret;
       }
 
-      ACE_DEBUG ((LM_DEBUG, "looked up the facet correctly\n"));
-
       CIAO::Port_Activator_T<
           CIAO_GLUE_Hello::ReadMessage_Servant,
           ::Hello::CCM_ReadMessage,
@@ -333,19 +331,13 @@ namespace Sender_Impl
       this),
       CORBA::NO_MEMORY ());
 
-      ACE_DEBUG ((LM_DEBUG, "created the port activator\n"));
-
       CIAO::Servant_Activator *sa = 
       this->container_->ports_servant_activator ();
-
-      ACE_DEBUG ((LM_DEBUG, "got the servant activator\n"));
 
       if (!sa->register_port_activator (tmp))
       {
         return 0;
       }
-
-      ACE_DEBUG ((LM_DEBUG, "registered the port activator\n"));
 
       ::CORBA::Object_var obj =
       this->container_->generate_reference (
