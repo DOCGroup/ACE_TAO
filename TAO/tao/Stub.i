@@ -69,6 +69,7 @@ STUB_Object::STUB_Object (char *repository_id)
     use_locate_request_ (0),
     first_locate_request_ (0)
 {
+  ACE_UNUSED_ARG (repository_id);
   this->profile_lock_ptr_ = 
     TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
 }
@@ -103,6 +104,7 @@ STUB_Object::STUB_Object (char *repository_id,
     use_locate_request_ (0),
     first_locate_request_ (0)
 {
+  ACE_UNUSED_ARG (repository_id);
 
   this->profile_lock_ptr_ =  
     TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
@@ -124,17 +126,16 @@ STUB_Object::STUB_Object (char *repository_id,
     use_locate_request_ (0),
     first_locate_request_ (0)
 {
+  ACE_UNUSED_ARG (repository_id);
+
   // @@ XXX need to verify type and deal with wrong types
 
   this->profile_lock_ptr_ =  
     TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
 
   base_profiles_.set (1);
-  
   base_profiles_.add_profile (profile);
-  
   this->set_profile_in_use_i (this->base_profiles_.get_next ());  
-
 }
 
 ACE_INLINE
@@ -151,6 +152,8 @@ STUB_Object::STUB_Object (char *repository_id,
     use_locate_request_ (0),
     first_locate_request_ (0)
 {
+  ACE_UNUSED_ARG (repository_id);
+
   // @@ XXX need to verify type and deal with wrong types
 
   // @@ does this need to be freed?
