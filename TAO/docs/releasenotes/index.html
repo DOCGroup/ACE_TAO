@@ -172,9 +172,9 @@ Point of contact: <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>
 <P>Current status:
 <UL>
 <LI>
-The current Event Channel is running under Orbix, fully distributed, the
-main test has three processes, one runs the EC itself, one a Supplier and
-yet another a Consumer.</LI>
+The current Event Channel is working on TAO,
+the Scheduling Service still has some problems,
+apparently related to the IDL compiler.</LI>
 
 <LI>
 The configuration runs can be done even on the distributed scenario, using
@@ -187,20 +187,43 @@ Obviously the information is generated on the config runs and linked into
 the program.</LI>
 
 <LI>
-We are using an implementation of the standard <A HREF="#naming">Naming
-Service</A> for Orbix.</LI>
+TAO <A HREF="#naming">Naming Service</A> is used to locate the various
+services: the Event Channel itself, the Scheduling Service, etc.</LI>
+
 </UL>
 Future work:
 <UL>
-<LI>
-Port to TAO (once IDL compiler is available and stable).</LI>
 
 <LI>
-The Scheduling Service is completely independant of the EC and the configuration
-of suppliers or consumers. I think it would be convenient to have a library
-and binaries for it, including a tool to dump the results in a C++ compilable
-form.</LI>
+When several suppliers are consumers are distributed over the network
+it could be nice to exploit locality and have a separate Event
+Channel on each process (or host).
+Only when an event is required by some remote consumer we need to send
+it through the network.
+
+The basic architecture to achieve this seems very simple,
+each Event Channel connects as another supplier to its peers,
+providing a "merge" of its (local) suppliers QoS as its own QoS
+specification,
+the channel also registers as a consumer,
+using an analogous QoS, this time looking at its consumers.
+
+It is not clear how to avoid event looping and how to propagate the
+QoS yet,
+we plan to build some experiments on this scenario,
+hand crafting the QoS if necessary and evolve from there.</LI>
+
+<LI>
+We should be able to download the schedule to the interested parties,
+without need for a separate link phase. This will simplify and
+speed up the developing cycle,
+but requires a (small) amount of dynamic memory allocation.
+It could be interesting to "save" the schedule computation in some
+persistent form, so startup cost are lower too.</LI>
+
 </UL>
+
+
 
 <HR>
 <H3>
