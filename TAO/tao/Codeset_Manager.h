@@ -2,7 +2,7 @@
 
 //=============================================================================
 /*
- *  @file     Codeset_Manager.h
+ *  @file     TAO_Codeset_Manager.h
  *
  *  $Id$
  *
@@ -21,6 +21,53 @@
 
 class TAO_ServerRequest;
 class TAO_Tagged_Components;
+class TAO_Codeset_Transport_Factory;
+
+// ****************************************************************
+
+class TAO_Export TAO_Codeset_Item
+{
+public:
+  /// creator method, the codeset name can only be set when the
+  /// object is created.
+  TAO_Codeset_Item (const char *name);
+
+  /// destructor that deallocates the factory object if the
+  /// CodeSet_Item retains ownership.
+  ~TAO_Codeset_Item (void);
+
+  /// return a reference to the character representation of the codeset
+  /// factories name.
+  const char *codeset_name (void);
+
+  /// return a pointer to the codeset factory.
+  TAO_Codeset_Translator_Factory *factory (void);
+
+  /// set the factory pointer's value.
+  void factory (TAO_Codeset_Translator_Factory *factory);
+
+private:
+  // Prohibited
+  ACE_UNIMPLEMENTED_FUNC (TAO_Codeset_Item (const TAO_Codeset_Item&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Codeset_Item&))
+
+private:
+  /// factory name.
+  char *name_;
+
+  /// pointer to factory object.
+  TAO_Codeset_Translator_Factory *factory_;
+};
+
+// typedefs for containers containing the list of codesets
+// factories for character and wide character.
+typedef ACE_Unbounded_Set<TAO_Codeset_Item*>
+        TAO_CodesetFactorySet;
+
+// Iterators
+typedef ACE_Unbounded_Set_Iterator<TAO_Codeset_Item*>
+        TAO_CodesetFactorySetItor;
+
 
 class TAO_Export TAO_Codeset_Manager
 {
@@ -30,8 +77,7 @@ public:
   static CONV_FRAME::CodeSetId default_char_codeset;
   static CONV_FRAME::CodeSetId default_wchar_codeset;
 
-  TAO_Codeset_Manager (CONV_FRAME::CodeSetComponentInfo* );
-
+  TAO_Codeset_Manager ();
   ~TAO_Codeset_Manager();
 
   ///  Called by an object of TAO_Acceptor to set NCS and CCS values for
@@ -50,12 +96,15 @@ public:
   /// at this time Transport has the TCS for Char and WChar
   void generate_service_context ( TAO_Operation_Details&, TAO_Transport & );
 
+
+  void set_ncs_c (CONV_FRAME::CodeSetId ncs);
+  void set_ncs_w (CONV_FRAME::CodeSetId ncs, int maxbytes = 0);
+  int add_char_translator (const char *name);
+  int add_wchar_translator (const char *name);
+
+  void configure_codeset_factories();
+
 private:
-  ACE_UNIMPLEMENTED_FUNC ( TAO_Codeset_Manager() )
-
-  // initialize the Codeset data members for characters and wide characters
-    //  int init (const CONV_FRAME::CodeSetComponentInfo &);
-
   // Compute the TCS for Char/WChar asper the CORBA Specification
   CONV_FRAME::CodeSetId computeTCS (CONV_FRAME::CodeSetComponent &,
                                     CONV_FRAME::CodeSetComponent & );
@@ -72,10 +121,23 @@ private:
                               CONV_FRAME::CodeSetId);
 
 
-  CONV_FRAME::CodeSetComponentInfo* codeset_info_;
+  int init_codeset_factories_i (TAO_CodesetFactorySet&,
+				CONV_FRAME::CodeSetComponent&);
 
-protected:
+  TAO_Codeset_Translator_Factory * get_char_trans (CONV_FRAME::CodeSetId,
+						   CONV_FRAME::CodeSetId);
 
+  TAO_Codeset_Translator_Factory * get_wchar_trans (CONV_FRAME::CodeSetId,
+						    CONV_FRAME::CodeSetId);
+
+  TAO_Codeset_Translator_Factory * get_translator_i (TAO_CodesetFactorySet&,
+						     CONV_FRAME::CodeSetId,
+						     CONV_FRAME::CodeSetId);
+
+  CONV_FRAME::CodeSetComponentInfo codeset_info_;
+
+  TAO_CodesetFactorySet char_factories_;
+  TAO_CodesetFactorySet wchar_factories_;
 };
 
 #endif /* TAO_CODESET_MANAGER_H */

@@ -1,3 +1,27 @@
+Tue Mar 25 20:55:15 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Codeset_Manager.cpp:
+        * tao/Codeset_Manager.h:
+        * tao/Resource_Factory.cpp:
+        * tao/Resource_Factory.h:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/default_resource.cpp:
+        * tao/default_resource.h:
+
+          Moved ownership of the Codeset Translator Factories from the
+          resource factory to the Codeset Manager. This eliminates a
+          dependancy on the ORB Core from the critical path.
+
+          Fixed the encoding of codeset service contexts so the byte order
+          is included in the encapsulation.
+
+          Modified the interaction with the CDR classes to enable the
+          configuration of the maximum number of bytes to use when
+          encoding wchar data. Thanks to Chen Jian <jchen@huawei.com> for
+          identifying this need.
+
 Tue Mar 25 16:28:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:

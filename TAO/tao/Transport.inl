@@ -146,15 +146,7 @@ ACE_INLINE void
 TAO_Transport::wchar_translator (TAO_Codeset_Translator_Factory *tf)
 {
   this->wchar_translator_ = tf;
-  if (tf)
-    this->wchar_allowed_ = 1;
   this->tcs_set_ = 1;
-}
-
-ACE_INLINE void
-TAO_Transport::wchar_allowed (CORBA::Boolean allowed)
-{
-  this->wchar_allowed_ = allowed;
 }
 
 /// CodeSet negotiation
