@@ -913,7 +913,7 @@ TAO_DynUnion_i::label_match (const CORBA_Any &my_any,
   // member_label() calls.
   CORBA::TypeCode_var tc = my_any.type ();
 
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc,
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in (),
                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
