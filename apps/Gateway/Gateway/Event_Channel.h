@@ -22,6 +22,12 @@
 #include "Consumer_Dispatch_Set.h"
 #include "Event_Forwarding_Discriminator.h"
 
+#if defined (ACE_HAS_THREADS)
+typedef ACE_Thread_Mutex REF_COUNT_MUTEX;
+#else
+typedef ACE_Null_Mutex REF_COUNT_MUTEX;
+#endif /* ACE_HAS_THREADS */
+
 typedef ACE_Null_Mutex MAP_MUTEX;
 
 class ACE_Svc_Export ACE_Event_Channel_Options
@@ -31,6 +37,15 @@ class ACE_Svc_Export ACE_Event_Channel_Options
 public:
   ACE_Event_Channel_Options (void);
   // Initialization.
+
+  ~ACE_Event_Channel_Options (void);
+  // Termination.
+
+  ACE_Lock_Adapter<REF_COUNT_MUTEX> *locking_strategy_;
+  // Points to the locking strategy used for serializing access to the
+  // reference count in <ACE_Message_Block>.  If it's 0, then there's
+  // no locking strategy and we're using a REACTIVE concurrency
+  // strategy.
 
   int performance_window_;
   // Number of seconds after connection establishment to report
@@ -62,7 +77,7 @@ public:
   // Enabled if we are playing the role of the Connector.
 };
 
-class ACE_Svc_Export ACE_Event_Channel : public ACE_Task<ACE_MT_SYNCH>
+class ACE_Svc_Export ACE_Event_Channel : public ACE_Task<ACE_SYNCH>
   // = TITLE
   //    Define a generic Event_Channel.
   //
@@ -129,13 +144,6 @@ private:
 			      const void *arg);
   // Periodically callback to perform timer-based performance
   // profiling.
-
-  ACE_Lock *message_block_locking_strategy (void);
-  // The strategy for locking <ACE_Message_Block> reference counting.
-  // This is NULL if our threading strategy is REACTIVE, else it
-  // points to the ACE_Lock_Adapter<ACE_Thread_Mutex> defined below.
-
-  ACE_Lock_Adapter<ACE_Thread_Mutex> *lock_adapter_;
 
   Proxy_Handler_Connector connector_;
   // Used to establish the connections actively.

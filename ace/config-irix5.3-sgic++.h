@@ -10,6 +10,9 @@
 
 #define IRIX5
 
+// Platform supports getpagesize() call.
+#define ACE_HAS_GETPAGESIZE
+
 #define ACE_NEEDS_SYSTIME_H
 #define ACE_HAS_SIGWAIT
 

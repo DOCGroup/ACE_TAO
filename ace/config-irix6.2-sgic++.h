@@ -24,6 +24,9 @@
 // ACE supports threads.
 #define ACE_HAS_THREADS
 
+// Platform supports getpagesize() call.
+#define ACE_HAS_GETPAGESIZE
+
 //Sockets may be called in multi-threaded programs
 #define ACE_HAS_MT_SAFE_SOCKETS
 

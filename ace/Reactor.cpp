@@ -685,8 +685,8 @@ ACE_Reactor::notify (ACE_Event_Handler *eh,
 
   n = this->notify_handler_.notify (eh, mask, timeout);
 #else
-  ACE_UNUSED_ARGS (eh);
-  ACE_UNUSED_ARGS (mask);
+  ACE_UNUSED_ARG (eh);
+  ACE_UNUSED_ARG (mask);
 #endif /* ACE_MT_SAFE */
   return n == -1 ? -1 : 0;
 }

@@ -138,7 +138,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
 // memory.
 int
 ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
-					    off_t &file_offset)
+						 off_t &file_offset)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::commit_backing_store_name");
 
@@ -209,7 +209,8 @@ ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
 
   off_t file_offset;
 
-  if (this->commit_backing_store_name (rounded_bytes, file_offset) == -1)
+  if (this->commit_backing_store_name (rounded_bytes, 
+				       file_offset) == -1)
     return 0;
 
   if (this->map_file (file_offset) == -1)
@@ -417,8 +418,7 @@ ACE_Shared_Memory_Pool::in_use (off_t &offset,
   shmid_ds buf;
 
   for (counter = 0; 
-       counter < this->max_segments_
-	 && st[counter].used_ == 1;
+       counter < this->max_segments_ && st[counter].used_ == 1;
        counter++)
     {
       if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
@@ -448,8 +448,8 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
   else
     {
       int shmid = ACE_OS::shmget (st[counter].key_,
-			    rounded_bytes,
-			    this->file_perms_ | IPC_CREAT | IPC_EXCL);
+				  rounded_bytes,
+				  this->file_perms_ | IPC_CREAT | IPC_EXCL);
       if (shmid == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "shmget"), 0);
 

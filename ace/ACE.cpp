@@ -9,6 +9,9 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Reactor.h"
 
+// Size of a VM page.
+size_t ACE::pagesize_ = ACE_PAGE_SIZE;
+
 int
 ACE::register_stdin_handler (ACE_Event_Handler *eh,
 			     ACE_Reactor *reactor,
@@ -622,7 +625,19 @@ size_t
 ACE::round_to_pagesize (off_t len)
 {
   ACE_TRACE ("ACE::round_to_pagesize");
-  return (len + (ACE_PAGE_SIZE - 1)) & ~(ACE_PAGE_SIZE - 1);
+
+  if (ACE::pagesize_ == 0)
+    {
+#if defined (ACE_WIN32)
+      SYSTEM_INFO sys_info;
+      ::GetSystemInfo (&sys_info);
+      ACE::pagesize_ = (size_t) sys_info.dwPageSize;
+#elif defined (ACE_HAS_GETPAGESIZE)
+      ACE::pagesize_ = (size_t) ::getpagesize ();
+#endif /* ACE_WIN32 */
+    }
+
+  return (len + (ACE::pagesize_ - 1)) & ~(ACE_::pagesize_ - 1);
 }
 
 ACE_HANDLE 
