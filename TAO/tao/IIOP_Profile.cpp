@@ -198,10 +198,13 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
         this->endpoint_.host_ = CORBA::string_dup (tmp_host);
     }
 
-  TAO::ObjectKey &ok = ACE_const_cast (TAO::ObjectKey&,
-                                       this->ref_object_key_->object_key ());
+  TAO::ObjectKey ok;
+
   TAO::ObjectKey::decode_string_to_sequence (ok,
                                              okd + 1);
+
+  (void) this->orb_core ()->object_key_table ().bind (ok,
+                                                      this->ref_object_key_);
 }
 
 CORBA::Boolean

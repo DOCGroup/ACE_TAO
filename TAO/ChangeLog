@@ -1,3 +1,12 @@
+Mon May 12 10:24:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IIOP_Profile.cpp  (parse_string_i): 
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/SHMIOP_Profile.cpp:
+	* tao/Strategies/UIOP_Profile.cpp: Fixed a memory management
+	  problem with parse_string_i () method that lead to crashes in
+	  our daily builds.
+
 Mon May 12 16:15:27 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * examples/AMH/Sink_Server/client.bor:
