@@ -340,6 +340,9 @@ main (int argc, char *argv[])
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       // Initialize the naming services
       TAO_Naming_Client my_name_client;
       if (my_name_client.init (orb.in ()) != 0)

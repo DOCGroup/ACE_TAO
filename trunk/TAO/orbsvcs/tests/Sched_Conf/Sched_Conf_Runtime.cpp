@@ -42,6 +42,9 @@ main (int argc, char *argv[])
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       // Store a pointer to the local run-time scheduler.
       RtecScheduler::Scheduler_ptr runtime_scheduler = 
       ACE_Scheduler_Factory::server ();
