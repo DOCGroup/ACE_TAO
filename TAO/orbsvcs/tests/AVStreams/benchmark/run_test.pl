@@ -15,18 +15,18 @@ $sleeptime = 6;
 $status = 0;
 local $nsior = "ns.ior";
 
+$name_server_prog = "..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."Naming_Service".$DIR_SEPARATOR."Naming_Service".$EXE_EXT;
+$server_prog = ".".$DIR_SEPARATOR."server".$EXE_EXT;
+$client_prog = ".".$DIR_SEPARATOR."client".$EXE_EXT;
+
+
 # variables for parameters
 
 sub name_server
 {
     my $args = "-o $nsior";
-    my $prog = "..".$DIR_SEPARATOR
-      ."..".$DIR_SEPARATOR
-	."..".$DIR_SEPARATOR
-	  ."Naming_Service".$DIR_SEPARATOR
-	."Naming_Service ".$EXE_EXT;
-    print ("\nNaming_Service $args\n");
-    $NS = Process::Create ($prog, $args);
+    print ("\n$name_server_prog $args\n");
+    $NS = Process::Create ($name_server_prog, $args);
     if (ACE::waitforfile_timed ($nsior, 5) == -1) {
       print STDERR "ERROR: cannot find naming service IOR file\n";
       $NS->Kill (); $NS->TimedWait (1);
@@ -39,7 +39,7 @@ sub server
 {
     my $args = "-ORBInitRef NameService=file://$nsior";
     print ("\nServer: $args\n");
-    $SV = Process::Create (".".$DIR_SEPARATOR."server".$EXE_EXT, $args);
+    $SV = Process::Create ($server_prog, $args);
 }
 
 
@@ -47,7 +47,7 @@ sub client
 {
     my $args = "-ORBInitRef NameService=file://$nsior";
     print ("\nclient: $args\n");
-    $CL = Process::Create (".".$DIR_SEPARATOR."client".$EXE_EXT, $args);
+    $CL = Process::Create ($client_prog, $args);
 }
 
 name_server ();

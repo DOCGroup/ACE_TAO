@@ -1248,7 +1248,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                       ACE_ENDTRY;
                       ACE_CHECK_RETURN (0);
                       CORBA::String_var fep_a_name, fep_b_name;
-                      CORBA::String temp_name;
+                      char *temp_name;
                       flowname_any = fep_a->get_property_value ("FlowName",
                                                                 ACE_TRY_ENV);
                       flowname_any.in () >>= temp_name;
@@ -2758,7 +2758,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
       this->peer_ = AVStreams::VDev::_duplicate (the_peer_dev);
 
       CORBA::Any_var anyptr;
-      CORBA::String media_ctrl_ior;
+      char *media_ctrl_ior;
       anyptr = this->peer_->get_property_value ("Related_MediaCtrl",
                                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -4220,7 +4220,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep,
       // get my format value
       CORBA::Any_var format_ptr;
       CORBA::String_var my_format, peer_format;
-      CORBA::String temp_format;
+      char *temp_format;
 
       exception_message = "TAO_FlowEndPoint::is_fep_compatible - Format";
       format_ptr = this->get_property_value ("Format",
