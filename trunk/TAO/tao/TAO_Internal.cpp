@@ -136,10 +136,11 @@ TAO_Internal::open_services (int &argc, char **argv)
         }
       else if ((current_arg = arg_shifter.get_the_parameter ("-ORBServiceConfigLoggerKey")))
         {
-          svc_config_argv.add ("-k");
- 
-          svc_config_argv.add (current_arg);
- 
+          svc_config_argv.length (len + 2);  // 2 arguments to add
+
+          svc_config_argv[len] = CORBA::string_dup ("-k");
+          svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
+
           arg_shifter.consume_arg ();
         }
       // Can't interpret this argument.  Move on to the next argument.

@@ -232,6 +232,10 @@ SOURCE=.\RT_Stub_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RTCORBA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RTCORBAC.cpp
 # End Source File
 # Begin Source File
@@ -317,6 +321,10 @@ SOURCE=.\RT_Stub.h
 # Begin Source File
 
 SOURCE=.\RT_Stub_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RTCORBA.h
 # End Source File
 # Begin Source File
 
