@@ -21,5 +21,5 @@ ARFLAGS         = cruvZ
 # so there is no need for ranlib
 RANLIB          = /usr/bin/true
 SOFLAGS         = -shared  # -use_ld_input $(ACELIB)
-SOBUILD         = /bin/rm -f $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
+SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
