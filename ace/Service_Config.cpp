@@ -861,7 +861,7 @@ ACE_Service_Config::run_reactorEx_event_loop (ACE_Time_Value &tv)
       int result = ACE_Service_Config::reactorEx ()->handle_events (tv);
       if (ACE_Service_Config::reconfig_occurred_)
 	ACE_Service_Config::reconfigure ();
-      else if (result <= 0)
+      else if (result == -1)
 	return result;
     }
 
