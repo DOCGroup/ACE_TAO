@@ -1,3 +1,9 @@
+Fri Apr  2 13:05:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* NEWS:
+
+	  Updated with the latest developments just prior to BFO.
+
 Thu Apr  1 22:54:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release: 
@@ -1861,7 +1867,7 @@ Sat Feb 28 15:56:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Feb 27 12:33:10 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-        * ace\Event_Handler.cpp (add_reference and remove_reference):
+        * ace/Event_Handler.cpp (add_reference and remove_reference):
 
           Previously, add_reference() and remove_reference() were called
           on a event handler only if the reference counting policy was
@@ -4161,6 +4167,7 @@ Sat Jan 17 19:38:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/INET_Addr_Test_IPV6.cpp:
         * tests/Proactor_Test_IPV6.cpp:
         * tests/SOCK_Send_Recv_Test_IPV6.cpp:
+
           Fixed incorrect doxygen file tag.
 
 Sat Jan 17 19:35:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>

@@ -1,3 +1,9 @@
+Fri Apr  2 13:05:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* NEWS:
+
+	  Updated with the latest developments just prior to BFO.
+	
 Thu Apr  1 10:19:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CodeSets/libs/UCS4_UTF16/CodeSets_Libs_UCS4_UTF16.bor:
@@ -1574,9 +1580,9 @@ Thu Feb 26 17:39:51 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
         * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp:
-          Removed checking for duplicate service context id explicitly while adding
-          new service contexts which could degrade the performance in the common
-          execution path.
+          Removed checking for duplicate service context id explicitly
+	  while adding  new service contexts which could degrade the
+	  performance in the common execution path.
 
 Thu Feb 26 10:10:40 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
@@ -1747,12 +1753,14 @@ Mon Feb 23 16:05:12 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 Mon Feb 23 15:43:01 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
-          Changed the processing of service contexts from receive_request_service_contexts()
-          to receive_request(), this allows to filter out the requests which do not need the
-          burden of service contexts processing.
+          Changed the processing of service contexts from
+	  receive_request_service_contexts() to receive_request(), this
+	  allows to filter out the requests which do not need the burden
+	  of service contexts processing. 
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
-          Changed to use FTRTEC specific message log facility instead of ACE_DEBUG.
+          Changed to use FTRTEC specific message log facility instead of
+	  ACE_DEBUG. 
 
         * orbsvcs/orbsvcs/FtRtEvent/Utils/Log.h:
           Removed used macros.
@@ -1991,13 +1999,14 @@ Thu Feb 19 13:06:45 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.cpp:
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.cpp:
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.h:
-        Fixed compilation problem in emulated exception mode.
+
+          Fixed compilation problem in emulated exception mode.
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
-        Fixed variable hiding warning in Sun Forte8 build.
+          Fixed variable hiding warning in Sun Forte8 build.
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
-        Fixed variable might be used uninitialized warning in cygwin build.
+          Fixed variable might be used uninitialized warning in cygwin build.
 
 Thu Feb 19 11:42:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -2403,12 +2412,12 @@ Wed Feb 11 14:07:00 2004  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp (init):
         * orbsvcs/orbsvcs/Notify/Admin.cpp (subscribed_types):
 
-          Corrected the implementation to add the caller's <subscribed_types> to
-          the Admin Object's types. This solves the problem that if a
-          proxy's connect_structured_push_consumer() is called *AFTER*
-          the proxy's subscription_change(), then the subscriptions do not work.
-          Thanks to Richard G. Hash <richard.hash@openspirit.com> fpr
-          reporting this problem.
+          Corrected the implementation to add the caller's
+	  <subscribed_types> to the Admin Object's types. This solves the
+	  problem that if a proxy's connect_structured_push_consumer() is
+	  called *AFTER* the proxy's subscription_change(), then the
+	  subscriptions do not work. Thanks to Richard G. Hash
+	  <richard.hash@openspirit.com> for reporting this problem.
 
         * orbsvcs/orbsvcs/Notify/Properties.cpp:
         * orbsvcs/orbsvcs/Notify/Properties.h:
@@ -2418,9 +2427,11 @@ Wed Feb 11 14:07:00 2004  Pradeep Gore  <pradeep@oomworks.com>
         * docs/releasenotes/notify.html:
 
           Added the -NoUpdates option to the Notification svc.conf
-          options. e.g. static TAO_CosNotify_Service " -ListenerThreads 1 -NoUpdates"
-          If this option is specified, the subscription_change/offer_change messages are NOT sent to proxy
-          objects.
+          options. e.g. static TAO_CosNotify_Service " -ListenerThreads 1
+	  -NoUpdates".  If this option is specified, the
+	  subscription_change/offer_change messages are NOT sent to proxy
+	  objects. 
+	
           This option is useful to turn off entire updates for applications
           that do not reply on subscription_change/offer_change messages.
           Thanks to Richard G. Hash <richard.hash@openspirit.com> for
