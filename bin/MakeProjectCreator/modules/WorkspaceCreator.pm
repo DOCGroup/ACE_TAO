@@ -413,9 +413,13 @@ sub handle_scoped_unknown {
   my($line)   = shift;
   my($status) = 1;
   my($error)  = undef;
+  my($dupchk) = undef;
 
   if ($type eq $aggregated) {
     $line = $self->{'scoped_basedir'} . ($line ne '.' ? "/$line" : '');
+    my(%dup) = ();
+    @dup{@{$self->{'project_files'}}} = ();
+    $dupchk = \%dup;
   }
 
   if (-d $line) {
@@ -447,9 +451,23 @@ sub handle_scoped_unknown {
       @files = @acceptable;
     }
 
-    foreach my $file (@files) {
-      $self->{'scoped_assign'}->{$file} = $flags;
-      push(@{$self->{'project_files'}}, $file);
+    if (defined $dupchk) {
+      foreach my $file (@files) {
+        if (exists $$dupchk{$file}) {
+          $self->warning("Duplicate mpc file ($file) added by an " .
+                         'aggregate workspace.  It will be ignored.');
+        }
+        else {
+          $self->{'scoped_assign'}->{$file} = $flags;
+          push(@{$self->{'project_files'}}, $file);
+        }
+      }
+    }
+    else {
+      foreach my $file (@files) {
+        $self->{'scoped_assign'}->{$file} = $flags;
+        push(@{$self->{'project_files'}}, $file);
+      }
     }
   }
   else {
@@ -458,8 +476,14 @@ sub handle_scoped_unknown {
       ($status, $error) = $self->aggregated_workspace($line);
     }
     else {
-      $self->{'scoped_assign'}->{$line} = $flags;
-      push(@{$self->{'project_files'}}, $line);
+      if (defined $dupchk && exists $$dupchk{$line}) {
+        $self->warning("Duplicate mpc file ($line) added by an " .
+                       'aggregate workspace.  It will be ignored.');
+      }
+      else {
+        $self->{'scoped_assign'}->{$line} = $flags;
+        push(@{$self->{'project_files'}}, $line);
+      }
     }
   }
   $self->{'handled_scopes'}->{$type} = 1;

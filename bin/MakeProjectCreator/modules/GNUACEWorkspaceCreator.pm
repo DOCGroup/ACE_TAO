@@ -118,7 +118,8 @@ sub write_comps {
     ## targets can be built in parallel because we add the local
     ## dependencies.
     foreach my $project (@lprj) {
-      print $fh $crlf, $$pjs{$project}->[0], ':';
+      print $fh $crlf, '.PHONY: ', $$pjs{$project}->[0],
+                $crlf, $$pjs{$project}->[0], ':';
       if (defined $targnum{$project}) {
         foreach my $number (@{$targnum{$project}}) {
           print $fh ' ', $$pjs{$list[$number]}->[0];
