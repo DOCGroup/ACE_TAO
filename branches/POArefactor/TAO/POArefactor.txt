@@ -1,3 +1,8 @@
+Wed Sep 15 12:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Policy_Set.cpp:
+          Removed workaround for vc5, that compiler is not supported anymore.
+
 Wed Sep 15 12:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Thread_Policy_Value.{h,cpp}:
