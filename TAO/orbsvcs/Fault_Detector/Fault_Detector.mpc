@@ -1,6 +1,5 @@
 project : taoserver, orbsvcsexe, fault_tolerance {
   exename  = Fault_Detector
-  after += FaultDetector
   Source_Files {
     Fault_Detector_i.cpp
     Fault_Detector_Main.cpp
