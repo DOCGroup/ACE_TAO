@@ -198,11 +198,13 @@ public:
   void handle_inheritence (int);
 
   /// Cause the specified handle to be passed to a child process
-  /// when it's spawned.
+  /// when it runs a new program image.
   /**
-   * Has meaning mainly for Win32. The handle value will be included
-   * in the spawned process's command line as @arg +H @arg handle.
-   * The passed handle value will be duplicated if on Win32 less than NT4.
+   * The specified handle value will be included in the spawned
+   * process's command line as @arg +H @arg handle, if a new
+   * program is spawned (always on Win32; else if NO_EXEC is not
+   * set in creation flags).  The passed handle value will be
+   * duplicated if on Win32 less capable than NT.
    * @return 0 if success, -1 if failure.
    */
   int pass_handle (ACE_HANDLE);
@@ -517,6 +519,30 @@ protected:
   ACE_Handle_Set handles_passed_;
   /// Handle duplicates made for the child process.
   ACE_Handle_Set dup_handles_;
+};
+
+
+/**
+ * @class ACE_Managed_Process
+ *
+ * @brief A process easily managed by ACE_Process_Manager.
+ *
+ * @arg ACE_Managed_Process is just an @arg ACE_Process with an
+ * @arg unmanage method that deletes the instance.
+ * This class is only valid for use as a dynamically-allocated object!
+ */
+class ACE_Export ACE_Managed_Process : public ACE_Process
+{
+public:
+  virtual void unmanage (void);
+  // Cleanup by deleting <this>.
+
+private:
+  virtual ~ACE_Managed_Process (void);
+  // Make sure that we're allocated dynamically!
+
+  friend class ace_dewarn_gplusplus;
+  // Keep G++ happy...
 };
 
 #include "ace/SString.h"
