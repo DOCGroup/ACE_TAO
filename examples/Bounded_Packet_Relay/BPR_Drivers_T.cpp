@@ -29,6 +29,7 @@
 // #include BPR_Drivers.h instead of BPR_Drivers_T.h
 // to avoid problems with circular includes
 #include "BPR_Drivers.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Bounded_Packet_Relay, BPR_Drivers_T, "$Id$")
 
