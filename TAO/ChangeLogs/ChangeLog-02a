@@ -1,3 +1,62 @@
+Fri Jun  1 11:28:41 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+
+          Moved the is_child() method from class be_decl to
+          class AST_Decl, so it can be used by tao_ifr.
+
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/include/ast_constant.h:
+
+          Added a ifr_added_ flag to class AST_Constant, similar 
+          to the one added recently to class AST_Type.
+
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/include/ast_type.h:
+
+          Added accessor/mutator methods for the flags ifr_added_
+          and ifr_fwd_added_.
+
+        * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+
+          Cosmetic change.
+
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Service/be_global.h:
+        * orbsvcs/IFR_Service/be_produce.cpp:
+        * orbsvcs/IFR_Service/drv_args_ifr.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
+
+          - Added command line option to suppress processing of
+            included IDL files (default is to process them).
+
+          - Changed the logic of tao_ifr's handling of forward
+            declared interfaces.
+
+          - Changed behavior of tao_ifr to remove an existing
+            IFR entry, if it detects a clash. Essentially, the
+            question of how to determine if there is an actual
+            error in redefinition of an interface, or if we are
+            defining a forward declared interface from another
+            IDL file has been resolved by adopting the behavior
+            of the IFR loaders of other ORB vendors.
+
+          Bug reports and feature requests all thanks to
+          Philippe Merle <Philippe.Merle@lifl.fr>, who is testing
+          the TAO IFR's compatibility with CorbaScript.
+
 Fri Jun  1 11:45:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/tests/Simple_Naming/run_test.pl:
