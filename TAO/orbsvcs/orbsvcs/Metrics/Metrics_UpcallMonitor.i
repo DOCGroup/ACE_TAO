@@ -5,12 +5,12 @@
 #ifndef METRICS_UPCALL_MONITOR_I
 #define METRICS_UPCALL_MONITOR_I
 
-//# if defined (METRICS_USES_OP_CANCELLATION) 
+//# if defined (METRICS_USES_OP_CANCELLATION)
 //# undef METRICS_USES_OP_CANCELLATION
 //# endif /* METRICS_USES_OP_CANCELLATION */
 
-# if ! defined (METRICS_USES_OP_CANCELLATION) 
-#   define METRICS_USES_OP_CANCELLATION 
+# if ! defined (METRICS_USES_OP_CANCELLATION)
+#   define METRICS_USES_OP_CANCELLATION
 # endif /* ! METRICS_USES_OP_CANCELLATION */
 
 
@@ -36,10 +36,14 @@ TAO_Metrics_UpcallMonitor::~TAO_Metrics_UpcallMonitor ()
 
 ACE_INLINE void
 TAO_Metrics_UpcallMonitor::
-report_made_deadline (RtecScheduler::handle_t handle,
-                      CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL_0))
+report_made_deadline (
+        RtecScheduler::handle_t handle
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , Metrics::INTERNAL_0
+      ))
 {
   CORBA::ULong count = 0;
   MONITOR_MAP_ENTRY *entry;
@@ -58,10 +62,14 @@ report_made_deadline (RtecScheduler::handle_t handle,
 
 ACE_INLINE void
 TAO_Metrics_UpcallMonitor::
-report_missed_deadline (RtecScheduler::handle_t handle,
-                        CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL_1))
+report_missed_deadline (
+        RtecScheduler::handle_t handle
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , Metrics::INTERNAL_1
+      ))
 {
   CORBA::ULong count = 0;
   MONITOR_MAP_ENTRY *entry;
@@ -80,12 +88,17 @@ report_missed_deadline (RtecScheduler::handle_t handle,
 // Get the aggregate QoS statistics collected so far by the monitor.
 
 ACE_INLINE void
-TAO_Metrics_UpcallMonitor::get_aggregate_QoS (RtecScheduler::handle_t handle,
-                                              Metrics::QoSParameter_t_out qos,
-                                              CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL_2,
-                     Metrics::INTERNAL_3))
+TAO_Metrics_UpcallMonitor::
+get_aggregate_QoS (
+        RtecScheduler::handle_t handle,
+        Metrics::QoSParameter_t_out qos
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , Metrics::INTERNAL_2
+        , Metrics::INTERNAL_3
+      ))
 {
   CORBA::ULong made_count = 0;
   CORBA::ULong missed_count = 0;
@@ -122,13 +135,17 @@ TAO_Metrics_UpcallMonitor::get_aggregate_QoS (RtecScheduler::handle_t handle,
 // passed set.
 
 ACE_INLINE void
-TAO_Metrics_UpcallMonitor::get_aggregate_QoS_set (
-      const Metrics::Handle_Set_t & handle_set,
-      Metrics::QoSParameter_Set_out qos_set,
-      CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL_4,
-                     Metrics::INTERNAL_5))
+TAO_Metrics_UpcallMonitor::
+get_aggregate_QoS_set (
+        const Metrics::Handle_Set_t & handle_set,
+        Metrics::QoSParameter_Set_out qos_set
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , Metrics::INTERNAL_4
+        , Metrics::INTERNAL_5
+      ))
 {
   CORBA::ULong made_count = 0;
   CORBA::ULong missed_count = 0;
@@ -179,11 +196,16 @@ TAO_Metrics_UpcallMonitor::get_aggregate_QoS_set (
 // Resets the aggregate QoS information for the given operation.
 
 ACE_INLINE void
-TAO_Metrics_UpcallMonitor::reset_statistics (RtecScheduler::handle_t handle,
-                                             CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL_7,
-                     Metrics::INTERNAL_8))
+TAO_Metrics_UpcallMonitor::
+reset_statistics (
+        RtecScheduler::handle_t handle
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , Metrics::INTERNAL_7
+        , Metrics::INTERNAL_8
+      ))
 {
   CORBA::ULong count = 0;
 
@@ -201,7 +223,7 @@ TAO_Metrics_UpcallMonitor::reset_statistics (RtecScheduler::handle_t handle,
 
 // Accessor for map of operation handle to a count of deadlines missed.
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Metrics_UpcallMonitor::MONITOR_MAP &
 TAO_Metrics_UpcallMonitor::missed_map ()
 {
@@ -210,7 +232,7 @@ TAO_Metrics_UpcallMonitor::missed_map ()
 
 // Accessor for map of operation handle to a count of deadlines made.
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Metrics_UpcallMonitor::MONITOR_MAP &
 TAO_Metrics_UpcallMonitor::made_map ()
 {
@@ -244,7 +266,7 @@ report_made_deadline (RtecScheduler::handle_t handle,
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_0))
 {
-  monitor_.report_made_deadline (handle, ACE_TRY_ENV);
+  monitor_.report_made_deadline (handle);
 }
 
 // Reports an unsuccessful upcall.
@@ -256,7 +278,7 @@ report_missed_deadline (RtecScheduler::handle_t handle,
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_1))
 {
-  monitor_.report_missed_deadline (handle, ACE_TRY_ENV);
+  monitor_.report_missed_deadline (handle);
 }
 
 
@@ -270,7 +292,7 @@ TAO_Metrics_ReportingUpcallMonitor::get_aggregate_QoS (RtecScheduler::handle_t h
                      Metrics::INTERNAL_2,
                      Metrics::INTERNAL_3))
 {
-  monitor_.get_aggregate_QoS (handle, qos, ACE_TRY_ENV);
+  monitor_.get_aggregate_QoS (handle, qos);
 }
 
 
@@ -286,7 +308,7 @@ TAO_Metrics_ReportingUpcallMonitor::get_aggregate_QoS_set (
                      Metrics::INTERNAL_4,
                      Metrics::INTERNAL_5))
 {
-  monitor_.get_aggregate_QoS_set (handle_set, qos_set, ACE_TRY_ENV);
+  monitor_.get_aggregate_QoS_set (handle_set, qos_set);
 }
 
 
@@ -300,7 +322,7 @@ TAO_Metrics_ReportingUpcallMonitor::reset_statistics (RtecScheduler::handle_t ha
                      Metrics::INTERNAL_7,
                      Metrics::INTERNAL_8))
 {
-  monitor_.reset_statistics (handle, ACE_TRY_ENV);
+  monitor_.reset_statistics (handle);
 }
 
 

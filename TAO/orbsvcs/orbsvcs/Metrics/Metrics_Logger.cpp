@@ -52,7 +52,7 @@ TAO_Metrics_Logger::TAO_Metrics_Logger (int generate_events,
     }
 #endif /* METRICS_LOGGER_SENDS_EVENTS */
 
-  if (generate_log_) 
+  if (generate_log_)
     {
       if (log_filename_)
         {
@@ -67,7 +67,7 @@ TAO_Metrics_Logger::TAO_Metrics_Logger (int generate_events,
 #endif
               return;
             }
-          
+
           if (generate_export_file_)
           {
              export_file_ = ACE_OS::fopen ("remote_logger_export.excel", "w+");
@@ -105,7 +105,7 @@ TAO_Metrics_Logger::TAO_Metrics_Logger (int generate_events,
 
 TAO_Metrics_Logger::~TAO_Metrics_Logger ()
 {
-  if (generate_log_) 
+  if (generate_log_)
     {
       if (log_filename_)
         {
@@ -123,7 +123,7 @@ TAO_Metrics_Logger::~TAO_Metrics_Logger ()
         {
 //        ACE_OS::fclose (log_file_);
        	}
-    } 
+    }
 
 #if defined (METRICS_LOGGER_SENDS_EVENTS)
   if (this->generate_events_)
@@ -209,13 +209,16 @@ TAO_Metrics_Logger::svc (void)
 // Sends a banner to be written to the log file and to the visualization browser.
 
 void
-TAO_Metrics_Logger::send_banner (const char *banner,
-                          CORBA::Environment &ACE_TRY_ENV)
+TAO_Metrics_Logger::
+send_banner (
+        const char * banner
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ))
 {
-  //Added to remove Linux warning (Boeing Extension)
-  ACE_UNUSED_ARG(ACE_TRY_ENV);
-
-  // Package up the data and put it on the task queue.
+   // Package up the data and put it on the task queue.
 
   TAO_Metrics_Logger_Data *data;
   ACE_NEW (data,
@@ -234,7 +237,7 @@ TAO_Metrics_Logger::send_banner (const char *banner,
       ACE_ERROR ((LM_ERROR,
                   "TAO_Metrics_Logger::send_banner putq failed"));
 #endif
-    } 
+    }
 }
 
 void
@@ -306,7 +309,7 @@ TAO_Metrics_Logger::log_aggregate_QoS (const Metrics::QoSParameter_Set & qos_par
       ACE_ERROR ((LM_ERROR,
                   "TAO_Metrics_Logger::log_aggregate_QoS putq failed"));
 #endif
-    } 
+    }
 #endif
 }
 
@@ -339,10 +342,10 @@ TAO_Metrics_Logger::process_aggregate_QoS (const Metrics::QoSParameter_Set & qos
   if (this->generate_events_)
     {
       this->qos_data_.hrt_deadlines_missed = 0;
-      this->qos_data_.hrt_deadlines_made = 0; 
-      this->qos_data_.hrt_operations_cancelled = 0; 
+      this->qos_data_.hrt_deadlines_made = 0;
+      this->qos_data_.hrt_operations_cancelled = 0;
       this->qos_data_.srt_deadlines_missed = 0;
-      this->qos_data_.srt_deadlines_made = 0; 
+      this->qos_data_.srt_deadlines_made = 0;
       this->qos_data_.srt_operations_cancelled = 0;
     }
 #endif /* METRICS_LOGGER_SENDS_EVENTS */
@@ -354,20 +357,20 @@ TAO_Metrics_Logger::process_aggregate_QoS (const Metrics::QoSParameter_Set & qos
         {
           if (qos_params [i].is_hrt)
 	    {
-              this->qos_data_.hrt_deadlines_missed += 
+              this->qos_data_.hrt_deadlines_missed +=
                 qos_params [i].deadlines_missed;
-              this->qos_data_.hrt_deadlines_made += 
+              this->qos_data_.hrt_deadlines_made +=
                 qos_params [i].deadlines_made;
-              this->qos_data_.hrt_operations_cancelled += 
+              this->qos_data_.hrt_operations_cancelled +=
                 qos_params [i].operations_cancelled;
 	    }
           else
 	    {
-              this->qos_data_.srt_deadlines_missed += 
+              this->qos_data_.srt_deadlines_missed +=
                 qos_params [i].deadlines_missed;
-              this->qos_data_.srt_deadlines_made += 
+              this->qos_data_.srt_deadlines_made +=
                 qos_params [i].deadlines_made;
-              this->qos_data_.srt_operations_cancelled += 
+              this->qos_data_.srt_operations_cancelled +=
                 qos_params [i].operations_cancelled;
 	    }
 	}
@@ -425,7 +428,7 @@ TAO_Metrics_Logger::process_aggregate_QoS (const Metrics::QoSParameter_Set & qos
 }
 
 
-// Binds the names of various timeprobes to their identifiers so 
+// Binds the names of various timeprobes to their identifiers so
 // that ids alone can be used (for efficiency) in passing data.
 
 void
@@ -522,7 +525,7 @@ TAO_Metrics_Logger::log_timeprobe_data (const Metrics::TimeprobeParameter_Set &
       ACE_ERROR ((LM_ERROR,
                   "TAO_Metrics_Logger::log_timeprobe_data putq failed"));
 #endif
-    } 
+    }
 }
 
 
@@ -537,7 +540,7 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
       {
          //        log_file_ = ACE_OS::fopen (log_filename_, "a+");
       }
-      
+
       ACE_OS::fprintf (log_file_,
                        "\n\n\n"
                        "Interval (usec):       %9lu  \n\n"
@@ -554,7 +557,7 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
                        // We can get away with it here for now since the intervals are small enough to not roll over.
                        (u_long) ACE_U64_TO_U32(interval)/10 );
    }
-   
+
 #if defined (METRICS_LOGGER_SENDS_EVENTS)
    Metrics::Time queue_time = 0;
    Metrics::Time hrt_op_time = 0;
@@ -595,7 +598,7 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
          if (probe_name_map_.find (timeprobe_params [i].probe_id, probe_name) == 0
              && probe_name != 0)
          {
-            if (timeprobe_params [i].cross_thread_probe && 
+            if (timeprobe_params [i].cross_thread_probe &&
                 timeprobe_params [i].is_full_interval)
             {
                if (generate_totals_)
@@ -701,7 +704,7 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
          }
          else
          {
-            if (timeprobe_params [i].cross_thread_probe && 
+            if (timeprobe_params [i].cross_thread_probe &&
                 timeprobe_params [i].is_full_interval)
             {
                if (generate_totals_)
@@ -780,7 +783,7 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
                ACE_OS::strcat(format_spec, " ");
                ACE_OS::strcat(format_spec, ACE_UINT64_FORMAT_SPECIFIER);
                ACE_OS::strcat(format_spec, " *** Cross Thread Event ***\n");
-               
+
                ACE_OS::strcpy(export_spec, " [id: %lu] \t ");
                ACE_OS::strcat(export_spec, ACE_UINT64_FORMAT_SPECIFIER);
                ACE_OS::strcat(export_spec, " \t ");
@@ -819,7 +822,7 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
    {
       CORBA::Any any;
 
-          util_data_.hrt_op_utilization = 
+          util_data_.hrt_op_utilization =
             ACE_static_cast (
               CORBA::Double,
               ACE_UINT64_DBLCAST_ADAPTER (hrt_op_time))
@@ -827,7 +830,7 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
                 CORBA::Double,
                 ACE_UINT64_DBLCAST_ADAPTER (interval));
 
-          util_data_.srt_op_utilization = 
+          util_data_.srt_op_utilization =
             ACE_static_cast (
               CORBA::Double,
               ACE_UINT64_DBLCAST_ADAPTER (srt_op_time))
@@ -835,7 +838,7 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
                 CORBA::Double,
                 ACE_UINT64_DBLCAST_ADAPTER (interval));
 
-          util_data_.queue_utilization = 
+          util_data_.queue_utilization =
             ACE_static_cast (
               CORBA::Double,
               ACE_UINT64_DBLCAST_ADAPTER (queue_time))

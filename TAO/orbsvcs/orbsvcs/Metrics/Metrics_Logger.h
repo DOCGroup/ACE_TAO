@@ -114,10 +114,19 @@ public:
   virtual int svc (void);
   // Active object loop for processing logged data.
 
+  virtual void send_banner (
+        const char * banner
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+/*
   void send_banner (const char *banner,
                     CORBA::Environment &ACE_TRY_ENV =
                         CORBA::Environment::default_environment ());
   // Sends a banner to be written to the log file and to the visualization browser.
+*/
 
   void process_banner (const char *banner);
   // Writes banner to the log file and/or to the visualization browser.

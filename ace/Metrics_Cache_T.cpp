@@ -3,7 +3,7 @@
 #ifndef METRICS_CACHE_CPP
 #define METRICS_CACHE_CPP
 
-#define ACE_BUILD_DLL
+//#define ACE_BUILD_DLL
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
