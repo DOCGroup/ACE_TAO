@@ -78,6 +78,17 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)
 
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DTAO_PSDL_BUILD_DLL
+endif
+endif
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS     += -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+endif
+endif
+
 # Extra dependencies not caught by make depend.
 MKLIST = Makefile.datastore Makefile.parser
 

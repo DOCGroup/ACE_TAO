@@ -313,9 +313,9 @@ TAO_ECG_UDP_Sender::send_cdr_stream (const RtecUDPAdmin::UDP_Addr& udp_addr,
   // ACE_ASSERT (max_fragment_payload != 0);
 
 #if defined (ACE_HAS_BROKEN_DGRAM_SENDV)
-  const int TAO_WRITEV_MAX = IOV_MAX - 1;
+  const int TAO_WRITEV_MAX = ACE_IOV_MAX - 1;
 #else
-  const int TAO_WRITEV_MAX = IOV_MAX;
+  const int TAO_WRITEV_MAX = ACE_IOV_MAX;
 #endif /* ACE_HAS_BROKEN_DGRAM_SENDV */
   iovec iov[TAO_WRITEV_MAX];
 
