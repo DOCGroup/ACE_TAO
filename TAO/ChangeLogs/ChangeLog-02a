@@ -1,3 +1,7 @@
+Fri Apr  5 15:57:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Condition.inl: Fixed a compile error with SunCC. 
+
 Fri Apr  5 09:22:57 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/BiDir_GIOP/BiDirPolicy_Validator.cpp: Added a check for
