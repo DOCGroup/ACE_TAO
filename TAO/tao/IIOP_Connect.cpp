@@ -118,7 +118,6 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
 {
 #if !defined (ACE_LACKS_SOCKET_BUFSIZ)
 
-  // @@ Pointers to size in the calls below used to be int*.
   if (this->peer ().set_option (SOL_SOCKET,
                                 SO_SNDBUF,
                                 (void *) &tcp_properties_->send_buffer_size,
@@ -367,15 +366,29 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 
 // ****************************************************************
 
-//    transport obj.
+TAO_IIOP_Client_Connection_Handler::
+TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager* t)
+  : TAO_IIOP_Handler_Base (t),
+    transport_ (this, 0),
+    orb_core_ (0),
+    lite_flag_ (0),
+    tcp_properties_ (0)
+{
+  // This constructor should *never* get called.  See comments in .h
+  ACE_ASSERT (this->orb_core_ != 0);
+}
+
 TAO_IIOP_Client_Connection_Handler::
 TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
                                     TAO_ORB_Core* orb_core,
-                                    CORBA::Boolean flag)
+                                    CORBA::Boolean flag,
+                                    void *arg)
   : TAO_IIOP_Handler_Base (t),
     transport_ (this, orb_core),
     orb_core_ (orb_core),
-    lite_flag_ (flag)
+    lite_flag_ (flag),
+    tcp_properties_ (ACE_static_cast
+                     (TAO_IIOP_Handler_Base::TCP_Properties *, arg))
 {
   // Set the lite flag in the client transport
   this->transport_.use_lite (flag);
@@ -398,38 +411,28 @@ TAO_IIOP_Client_Connection_Handler::~TAO_IIOP_Client_Connection_Handler (void)
 int
 TAO_IIOP_Client_Connection_Handler::open (void *)
 {
-  // @@ TODO: This flags should be set using the RT CORBA policies...
-
-  // Here is where we could enable all sorts of things such as
-  // nonblock I/O, sock buf sizes, TCP no-delay, etc.
-
 #if !defined (ACE_LACKS_SOCKET_BUFSIZ)
-  int sndbufsize =
-    this->orb_core_->orb_params ()->sock_sndbuf_size ();
-  int rcvbufsize =
-    this->orb_core_->orb_params ()->sock_rcvbuf_size ();
 
   if (this->peer ().set_option (SOL_SOCKET,
                                 SO_SNDBUF,
-                                ACE_reinterpret_cast (void *, &sndbufsize),
-                                sizeof (sndbufsize)) == -1
+                                (void *) &tcp_properties_->send_buffer_size,
+                                sizeof (int)) == -1
       && errno != ENOTSUP)
     return -1;
   else if (this->peer ().set_option (SOL_SOCKET,
                                      SO_RCVBUF,
-                                     ACE_reinterpret_cast (void *, &rcvbufsize),
-                                     sizeof (rcvbufsize)) == -1
+                                     (void *) &tcp_properties_->recv_buffer_size,
+                                     sizeof (int)) == -1
            && errno != ENOTSUP)
     return -1;
 #endif /* ACE_LACKS_SOCKET_BUFSIZ */
 
 #if !defined (ACE_LACKS_TCP_NODELAY)
-  int nodelay =
-    this->orb_core_->orb_params ()->nodelay ();
+
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
-                                (void *) &nodelay,
-                                sizeof (nodelay)) == -1)
+                                (void *) &tcp_properties_->no_delay,
+                                sizeof (int)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("NODELAY failed\n")),
                       -1);

@@ -1129,6 +1129,13 @@ TAO_Policy_Manager_Impl::server_protocol (TAO_ServerProtocolPolicy *server_proto
   this->server_protocol_ = server_protocol;
 }
 
+void
+TAO_Policy_Manager_Impl::client_protocol (TAO_ClientProtocolPolicy *client_protocol)
+{
+  CORBA::release (this->client_protocol_);
+  this->client_protocol_ = client_protocol;
+}
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 // ****************************************************************
