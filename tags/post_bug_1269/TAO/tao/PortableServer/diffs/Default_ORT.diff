@@ -1,0 +1,43 @@
+--- orig/Default_ORTC.h	2002-08-23 11:04:47.000000000 -0700
++++ Default_ORTC.h	2002-08-23 11:06:26.000000000 -0700
+@@ -27,13 +27,13 @@
+ #define _TAO_IDL_ORIG_DEFAULT_ORTC_H_
+ 
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++#include "tao/corbafwd.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+-#include "ObjectReferenceTemplateC.h"
++#include "tao/ObjectReferenceTemplateC.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
+--- orig/Default_ORTC.cpp	2002-08-23 11:04:47.000000000 -0700
++++ Default_ORTC.cpp	2002-08-23 11:08:50.000000000 -0700
+@@ -25,15 +25,8 @@
+ 
+ #include "Default_ORTC.h"
+ 
+-#include "tao/Stub.h"
+-#include "tao/Invocation.h"
+-#include "tao/PortableInterceptor.h"
+-
+-#if TAO_HAS_INTERCEPTORS == 1
+-#include "tao/RequestInfo_Util.h"
+-#include "tao/ClientRequestInfo_i.h"
+-#include "tao/ClientInterceptorAdapter.h"
+-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
++#include "tao/Any.h"
++#include "tao/ValueFactory.h"
+ 
+ #if defined (__BORLANDC__)
+ #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
+@@ -611,4 +604,3 @@
+       return 0;
+     }
+ }
+-
