@@ -1,3 +1,8 @@
+Wed Jun 02 16:11:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/TTY_IO.cpp (control): Commented out odd baud rates (56000,
+	  128000, 256000) which don't seem to be supported on FreeBSD.
+
 Wed Jun 02 00:07:44 1999    <alex@cs.wustl.edu>
 
        * tao/test_cancel.dsp
@@ -8,13 +13,13 @@ Wed Jun 02 00:07:44 1999    <alex@cs.wustl.edu>
        * tao/test_proactor.dsw
        * tao/test_timeout.dsp
 
-       * examples/Reactor/Proactor/test_cancel.cpp: 
-       * examples/Reactor/Proactor/README: 
+       * examples/Reactor/Proactor/test_cancel.cpp:
+       * examples/Reactor/Proactor/README:
        * examples/Reactor/Proactor/Makefile:
 
 	Related to ChangeLog : Tue Jun  1 16:48:58 1999  Alexander Babu
-	Arulanthu  <alex@cs.wustl.edu> 
-				
+	Arulanthu  <alex@cs.wustl.edu>
+
 Tue Jun  1 21:44:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* include/makeinclude/platform_linux_lxpthread.GNU:
@@ -24,11 +29,11 @@ Tue Jun  1 21:44:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Tue Jun  1 16:48:58 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	   Ported <ACE_Asynch_Operation::cancel> to POSIX platforms based
-	   on <aio_cancel> API. Made the return values  consistent in both 
-	   WIN32 and POSIX platforms as follows. 
+	   on <aio_cancel> API. Made the return values  consistent in both
+	   WIN32 and POSIX platforms as follows.
 
 	 All completion notifications for the I/O operations will occur
-	 normally. 
+	 normally.
 
 	 = Return Values:
 
@@ -45,11 +50,11 @@ Tue Jun  1 16:48:58 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* ace/POSIX_Asynch_IO.h
 	* ace/POSIX_Proactor.h
 	* ace/WIN32_Asynch_IO.cpp:
-	* ace/POSIX_Proactor.cpp: 
+	* ace/POSIX_Proactor.cpp:
 
 	* ace/config-linux-lxpthreads.h: Enabled the ACE_HAS_AIO_CALLS
 	flag for this platform.
-	
+
 
 Tue Jun  1 15:02:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
