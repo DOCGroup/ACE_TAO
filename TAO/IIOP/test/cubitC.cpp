@@ -40,14 +40,14 @@ Cubit_ptr Cubit::_nil()
 // CUBE OCTET
 //
 
-static const paramdata Cubit_cube_octet_params [] = 
+static const TAO_Param_Data Cubit_cube_octet_params [] = 
 {
    { _tc_CORBA_Octet, PARAM_RETURN, 0 },
    { _tc_CORBA_Octet, PARAM_IN, 0 }
 };
     
 
-static const calldata Cubit_cube_octet_calldata = 
+static const TAO_Call_Data Cubit_cube_octet_calldata = 
 {
    "cube_octet", CORBA_B_TRUE,
       2, &Cubit_cube_octet_params [0],
@@ -80,13 +80,13 @@ Cubit::Cubit_cube_octet (CORBA_Octet       o,
 // CUBE SHORT
 //
 
-static const paramdata Cubit_cube_short_params [] = 
+static const TAO_Param_Data Cubit_cube_short_params [] = 
 {
    { _tc_CORBA_Short, PARAM_RETURN, 0 },
    { _tc_CORBA_Short, PARAM_IN, 0 }
 };
 
-static const calldata Cubit_cube_short_calldata = 
+static const TAO_Call_Data Cubit_cube_short_calldata = 
 {
    "cube_short", CORBA_B_TRUE,
       2, &Cubit_cube_short_params [0],
@@ -119,13 +119,13 @@ Cubit::Cubit_cube_short (CORBA_Short       s,
 // CUBE LONG
 //
 
-static const paramdata Cubit_cube_long_params [] = 
+static const TAO_Param_Data Cubit_cube_long_params [] = 
 {
    { _tc_CORBA_Long, PARAM_RETURN, 0 },
    { _tc_CORBA_Long, PARAM_IN, 0 }
 };
 
-static const calldata Cubit_cube_long_calldata = 
+static const TAO_Call_Data Cubit_cube_long_calldata = 
 {
    "cube_long", CORBA_B_TRUE,
       2, &Cubit_cube_long_params [0],
@@ -193,13 +193,13 @@ CORBA_TypeCode_ptr TC_Cubit_Many = &_tc_Cubit_Many;
 // CUBE STRUCT
 //
 
-static const paramdata Cubit_cube_struct_params [] = 
+static const TAO_Param_Data Cubit_cube_struct_params [] = 
 {
    { &_tc_Cubit_Many, PARAM_RETURN, sizeof (Cubit_Many) },
    { &_tc_Cubit_Many, PARAM_IN, 0 }
 };
 
-static const calldata Cubit_cube_struct_calldata = 
+static const TAO_Call_Data Cubit_cube_struct_calldata = 
 {
    "cube_struct", CORBA_B_TRUE,
       2, &Cubit_cube_struct_params [0],
@@ -320,13 +320,13 @@ static CORBA_TypeCode _tc_Cubit_oneof (tk_union,
                                        CORBA_B_FALSE);
 CORBA_TypeCode_ptr TC_Cubit_oneof = &_tc_Cubit_oneof;
 
-static const paramdata Cubit_cube_union_params [] = 
+static const TAO_Param_Data Cubit_cube_union_params [] = 
 {
    { &_tc_Cubit_oneof, PARAM_RETURN, sizeof (Cubit_oneof) },
    { &_tc_Cubit_oneof, PARAM_IN, 0 }
 };
 
-static const calldata Cubit_cube_union_calldata = 
+static const TAO_Call_Data Cubit_cube_union_calldata = 
 {
    "cube_union", CORBA_B_TRUE,
       2, &Cubit_cube_union_params [0],
@@ -359,7 +359,7 @@ Cubit::Cubit_cube_union (Cubit_oneof		&values,
 // PLEASE EXIT
 //
 
-static const calldata Cubit_please_exit_calldata = 
+static const TAO_Call_Data Cubit_please_exit_calldata = 
 {
    "please_exit", CORBA_B_FALSE,
       0, 0,

@@ -43,7 +43,7 @@ is_a_skel (CORBA_ServerRequest &req,
 struct method_db
 {
    CORBA_String opname;
-   skeleton skel_ptr;
+   TAO_Skeleton skel_ptr;
 };
 
 static const method_db cubit_operations[] = {
@@ -58,10 +58,10 @@ static const method_db cubit_operations[] = {
 };
    
 
-void initialize_method_db (TAO_Dynamic_Operation_Table *the_optable)
+void initialize_method_db (TAO_Dynamic_Hash_OpTable *the_optable)
 {
    for (int ndx = 0; ndx < 7; ndx++)
-      the_optable->register_op(cubit_operations[ndx].opname, 
-                               cubit_operations[ndx].skel_ptr);
+      the_optable->bind(cubit_operations[ndx].opname, 
+                        cubit_operations[ndx].skel_ptr);
    
 }
