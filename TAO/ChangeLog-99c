@@ -1,7 +1,7 @@
 Sun May 02 14:32:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time_Utilities.i (Time_Value_to_TimeT):
-          added static of ACE_ONE_SECOND_IN_NSECS to ACE_UINT32
+          added static cast of ACE_ONE_SECOND_IN_NSECS to ACE_UINT32
           so that it will compile with ACE_LACKS_U_LONGLONG_T.
 
 Sun May 02 14:02:23 1999  David L. Levine  <levine@cs.wustl.edu>

@@ -1,3 +1,9 @@
+Sun May 02 14:36:43 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: Added ghs back to the list of compilers for which
+          ACE_NOTREACHED disappears.  It was causing warnings for
+          many ACE and TAO files.
+
 Sun May 02 08:21:13 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (pthread_sigmask): added ACE_UNUSED_ARGs to
