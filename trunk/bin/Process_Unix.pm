@@ -1,8 +1,6 @@
 # $Id$
 package Process;
 
-$EXE_EXT = "";
-
 use POSIX "sys_wait_h";
 
 sub Create
