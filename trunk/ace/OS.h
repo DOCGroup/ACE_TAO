@@ -3926,9 +3926,11 @@ public:
   static int sprintf (wchar_t *buf,
                       const wchar_t *format,
                       ...);
+#if 0
   static int sprintf (wchar_t *buf,
                       const char *format,
                       ...);
+#endif /* 0 */
   static int vsprintf (wchar_t *buffer,
                        const wchar_t *format,
                        va_list argptr);

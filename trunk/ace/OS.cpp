@@ -473,6 +473,7 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
   return result;
 }
 
+#if 0
 int
 ACE_OS::sprintf (wchar_t *buf, const char *format, ...)
 {
@@ -485,6 +486,7 @@ ACE_OS::sprintf (wchar_t *buf, const char *format, ...)
   va_end (ap);
   return result;
 }
+#endif /* 0 */
 
 #endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
