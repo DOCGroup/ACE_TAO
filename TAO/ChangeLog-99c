@@ -1,3 +1,73 @@
+Fri Feb 12 21:20:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO/orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+	* TAO/orbsvcs/orbsvcs/Time/TAO_TIO.cpp:
+	* TAO/orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
+	* TAO/orbsvcs/orbsvcs/Log/Logger_i.cpp:
+	* TAO/orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp:
+	* TAO/orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+	* TAO/orbsvcs/orbsvcs/Trader/Offer_Iterators.{h,cpp}:
+	* TAO/orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+	* TAO/orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+	* TAO/orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
+	* TAO/orbsvcs/orbsvcs/Trader/Offer_Iterators_T.h:
+	* TAO/orbsvcs/orbsvcs/Trader/Trader_T.h:
+	* TAO/orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+	* TAO/orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
+	* TAO/orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+	* TAO/orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp:
+	* TAO/orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp:
+	* TAO/orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp:
+	* TAO/orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	* TAO/orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+	* TAO/orbsvcs/LifeCycle_Service/Criteria_Evaluator.h:
+	* TAO/orbsvcs/LifeCycle_Service/Life_Cycle_Service.cpp:
+	* TAO/orbsvcs/Time_Service/IR_Helper.cpp:
+	* TAO/orbsvcs/Time_Service/Server_i.cpp:
+	* TAO/orbsvcs/Time_Service/Clerk_i.cpp:
+	* TAO/orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	* TAO/orbsvcs/tests/Simple_Naming/client.cpp:
+	* TAO/orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+	* TAO/orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+	* TAO/orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+	* TAO/orbsvcs/tests/Concurrency/CC_tests.cpp:
+	* TAO/orbsvcs/tests/Concurrency/CC_naming_service.cpp:
+	* TAO/orbsvcs/tests/Concurrency/CC_command.tab.cpp:
+	* TAO/orbsvcs/tests/Trading/TT_Info.h:
+	* TAO/orbsvcs/tests/Trading/Simple_Dynamic.h:
+	* TAO/examples/Callback_Quoter/Consumer_Signal_Handler.cpp:
+	* TAO/examples/Callback_Quoter/Consumer_i.cpp:
+	* TAO/examples/Callback_Quoter/Supplier_Timer_Handler.cpp:
+	* TAO/examples/Callback_Quoter/Notifier_i.cpp:
+	* TAO/examples/POA/Forwarding/Servant_Locator.cpp:
+	* TAO/examples/POA/Generic_Servant/MyFooServant.cpp:
+	* TAO/examples/Simple/bank/Account_i.cpp:
+	* TAO/examples/Simple/bank/Server_i.cpp:
+	* TAO/examples/Simple/bank/Client_i.cpp:
+	* TAO/examples/Simple/chat/Broadcaster_i.cpp:
+	* TAO/examples/Simple/echo/Echo_i.cpp:
+	* TAO/examples/Simple/time/Time_i.cpp:
+	* TAO/examples/Simple/grid/Grid_i.cpp:
+	* TAO/tests/OctetSeq/OctetSeq.cpp:
+	* TAO/tests/NestedUpcall/Reactor/reactor_i.cpp:
+	* TAO/tests/NestedUpcall/Reactor/eh_i.cpp:
+	* TAO/tests/NestedUpcall/Traingle_Test/Object_A_i.cpp:
+	* TAO/tests/NestedUpcall/Traingle_Test/Object_B_i.cpp:
+	* TAO/tests/NestedUpcall/Traingle_Test/Initiator_i.cpp:
+	* TAO/tests/NestedUpcall/Traingle_Test/initiator.cpp:
+
+	  This takes care of the g++ unused arg warnings for all except
+	  IDL-generated code. I'm sure there are some mistakes in here,
+	  and I may have missed a file or two. I'll build what I can before
+	  I go tonight, but there will still be a few mistakes, I'm sure.
+
+	  Carlos warned me the other day about files with the same name,
+	  even if in different projects. I noticed that we have
+	  TAO/orbsvcs/Time_Service/Server_i.cpp          and
+	  TAO/examples/Simple/bank/Server_i.cpp.
+	  I don't even want to think about how many files we have named
+	  client.cpp ;-).
+
 Fri Feb 12 17:30:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
@@ -38,7 +108,7 @@ Fri Feb 12 17:12:33 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
 	* TAO_IDL/be/be_visitor_union_branch/public_cs.cpp:
 	* TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
-          Fixed g++ unused arg warnings.
+          Fixed g++ unused arg warnings for the TAO_IDL files.
 
 Fri Feb 12 16:16:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
