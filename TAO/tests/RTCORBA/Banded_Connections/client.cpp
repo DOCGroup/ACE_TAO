@@ -73,7 +73,7 @@ parse_args (int argc, char *argv[])
                           -1);
       }
 
-  if (client_priority1 < 0 
+  if (client_priority1 < 0
       || client_priority2 < 0
       || client_priority3 < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -205,11 +205,11 @@ main (int argc, char *argv[])
         orb->string_to_object (ior1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      Test_var client_propagated_obj = 
+      Test_var client_propagated_obj =
         Test::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (check_for_nil (client_propagated_obj.in (), 
-                         "client_propagated_obj") 
+      if (check_for_nil (client_propagated_obj.in (),
+                         "client_propagated_obj")
           == -1)
         return 1;
 
@@ -217,11 +217,11 @@ main (int argc, char *argv[])
       object = orb->string_to_object (ior2, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      Test_var server_declared_obj = 
+      Test_var server_declared_obj =
         Test::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (check_for_nil (server_declared_obj.in (), 
-                         "server_declared_obj") 
+      if (check_for_nil (server_declared_obj.in (),
+                         "server_declared_obj")
           == -1)
         return 1;
 
@@ -234,32 +234,32 @@ main (int argc, char *argv[])
       // Should get INV_POLICY exception.
       ACE_DEBUG ((LM_DEBUG,
                   "\n     Test 4\n"));
-      
+
       RTCORBA::PriorityBands false_bands;
       false_bands.length (2);
       false_bands[0].low = 10000;
       false_bands[0].high = 10005;
-      false_bands[1].low = 26;
-      false_bands[1].high = 30;
+      false_bands[1].low = 26000;
+      false_bands[1].high = 30000;
       CORBA::PolicyList policies;
       policies.length (1);
       policies[0] =
-        rt_orb->create_priority_banded_connection_policy 
+        rt_orb->create_priority_banded_connection_policy
         (false_bands,
          ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       object =
         client_propagated_obj->_set_policy_overrides (policies,
                                                       CORBA::SET_OVERRIDE,
                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      client_propagated_obj = 
+      client_propagated_obj =
         Test::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (check_for_nil (client_propagated_obj.in (), 
-                         "client_propagated_obj") 
+      if (check_for_nil (client_propagated_obj.in (),
+                         "client_propagated_obj")
           == -1)
         return 1;
 
@@ -276,18 +276,18 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       policies[0] = policy;
-      
+
       object =
         client_propagated_obj->_set_policy_overrides (policies,
                                                       CORBA::SET_OVERRIDE,
                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
-      client_propagated_obj = 
+
+      client_propagated_obj =
         Test::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (check_for_nil (client_propagated_obj.in (), 
-                         "client_propagated_obj") 
+      if (check_for_nil (client_propagated_obj.in (),
+                         "client_propagated_obj")
           == -1)
         return 1;
 
@@ -299,7 +299,7 @@ main (int argc, char *argv[])
       client_propagated_obj->test_method (client_priority1,
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       current->the_priority (client_priority2, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -330,7 +330,7 @@ main (int argc, char *argv[])
         get_server_priority (server_declared_obj.in (),
                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
-        
+
       server_declared_obj->test_method (server_priority,
                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
