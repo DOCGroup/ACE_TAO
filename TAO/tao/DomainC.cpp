@@ -56,7 +56,7 @@ CORBA_DomainManager_ptr CORBA_DomainManager::_unchecked_narrow (
     );
 }
 
-CORBA_DomainManager_ptr 
+CORBA_DomainManager_ptr
 CORBA_DomainManager::_duplicate (CORBA_DomainManager_ptr obj)
 {
   if (!CORBA::is_nil (obj))
@@ -75,13 +75,13 @@ CORBA::Policy_ptr CORBA_DomainManager::get_domain_policy (
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "get_domain_policy",
       istub->orb_core ()
     );
-  
+
 
   for (;;)
   {
@@ -109,7 +109,7 @@ CORBA::Policy_ptr CORBA_DomainManager::get_domain_policy (
 
     }
     break;
-    
+
   }
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
   if (!(
@@ -168,7 +168,7 @@ CORBA::ConstructionPolicy_ptr CORBA::ConstructionPolicy::_unchecked_narrow (
     );
 }
 
-CORBA::ConstructionPolicy_ptr 
+CORBA::ConstructionPolicy_ptr
 CORBA::ConstructionPolicy::_duplicate (CORBA::ConstructionPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
@@ -185,18 +185,18 @@ void CORBA::ConstructionPolicy::make_domain_manager (
   // @@ TODO this method will require some modifications once the
   // interface repository is implemented. The modifications are
   // documented with @@ comments.
-  
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INV_OBJREF ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "make_domain_manager",
       istub->orb_core ()
     );
-  
+
 
   for (;;)
   {
@@ -229,9 +229,9 @@ void CORBA::ConstructionPolicy::make_domain_manager (
 
     }
     break;
-    
+
   }
-  
+
 }
 
 CORBA::Boolean CORBA::ConstructionPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -263,13 +263,13 @@ CORBA_DomainManagerList::CORBA_DomainManagerList (CORBA::ULong max) // uses max 
   : TAO_Unbounded_Object_Sequence<CORBA_DomainManager> (max)
 {}
 
-CORBA_DomainManagerList::CORBA_DomainManagerList (CORBA::ULong max, 
-                                                  CORBA::ULong length, 
-                                                  CORBA_DomainManager_ptr *buffer, 
+CORBA_DomainManagerList::CORBA_DomainManagerList (CORBA::ULong max,
+                                                  CORBA::ULong length,
+                                                  CORBA_DomainManager_ptr *buffer,
                                                   CORBA::Boolean release)
-  : TAO_Unbounded_Object_Sequence<CORBA_DomainManager> (max, 
-                                                        length, 
-                                                        buffer, 
+  : TAO_Unbounded_Object_Sequence<CORBA_DomainManager> (max,
+                                                        length,
+                                                        buffer,
                                                         release)
 {}
 
@@ -332,8 +332,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManager_ptr 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class TAO_Object_Field_T<CORBA_DomainManager>;
+  template class TAO_Unbounded_Object_Sequence<CORBA_DomainManager>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA_DomainManager>
+# pragma instantiate TAO_Object_Field_T<CORBA_DomainManager>
+# pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_DomainManager>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #if ! defined (TAO_HAS_MINIMUM_CORBA)
@@ -391,7 +393,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ConstructionPolicy
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class TAO_Object_Field_T<CORBA_ConstructionPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA_ConstructionPolicy>
+# pragma instantiate TAO_Object_Field_T<CORBA_ConstructionPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */
@@ -407,7 +409,7 @@ void operator<<= (
   ACE_TRY_NEW_ENV
   {
     _tao_any.replace (CORBA::_tc_DomainManagerList, _tao_any_val, 1, ACE_TRY_ENV); // copy the value
-    ACE_TRY_CHECK; 
+    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
@@ -464,4 +466,3 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManagerList 
   ACE_ENDTRY;
   return 0;
 }
-
