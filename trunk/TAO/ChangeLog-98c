@@ -1,3 +1,7 @@
+Thu Jul 17 16:54:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.6, released Thu Jul 17 16:54:38 1997.
+
 Thu Jul 17 16:43:23 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/{optable,objtable}.cpp: Updated the explicit template
