@@ -141,7 +141,7 @@ TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Transport_Cache_Manager::bind_i, "
-                  " size is [%d] \n",
+                  "size is [%d]\n",
                   this->current_size ()));
     }
 
@@ -368,7 +368,7 @@ TAO_Transport_Cache_Manager::purge_entry_i (HASH_MAP_ENTRY *&entry)
     return 0;
 
   // Remove the entry from the Map
- int retval = this->cache_map_.unbind (entry);
+  int retval = this->cache_map_.unbind (entry);
 
   // Set the entry pointer to zero
   entry = 0;

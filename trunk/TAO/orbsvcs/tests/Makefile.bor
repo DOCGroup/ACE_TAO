@@ -5,6 +5,7 @@
 
 DIRS = \
         AVStreams \
+        Bug_1393_Regression \
         Concurrency \
         CosEvent \
 	FaultTolerance \

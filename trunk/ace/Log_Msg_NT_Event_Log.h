@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
+#if defined ACE_HAS_LOG_MSG_NT_EVENT_LOG
 
 #include "ace/Log_Msg_Backend.h"
 
@@ -62,7 +62,7 @@ private:
   HANDLE evlog_handle_;
 };
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
+#endif /* ACE_HAS_LOG_MSG_NT_EVENT_LOG */
 
 #include "ace/post.h"
 #endif /* ACE_LOG_MSG_NT_EVENT_LOG_H */

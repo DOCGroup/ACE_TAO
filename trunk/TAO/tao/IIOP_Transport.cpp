@@ -111,8 +111,8 @@ TAO_IIOP_Transport::recv_i (char *buf,
     {
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv_i, "),
-                  ACE_TEXT ("read failure - %m"),
+                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv_i, ")
+                  ACE_TEXT ("read failure - %m\n"),
                   this->id ()));
     }
 
@@ -388,7 +388,7 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
                                       *acceptor) == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          "TAO (%P|%t) - IIOP_Transport::set_bidir_info, ",
+                          "TAO (%P|%t) - IIOP_Transport::set_bidir_info, "
                           "error getting listen_point \n"));
 
               return;
@@ -448,7 +448,7 @@ TAO_IIOP_Transport::get_listen_point (
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) Could not resolve local ")
-                         ACE_TEXT ("host address in ")
+                           ACE_TEXT ("host address in ")
                            ACE_TEXT ("get_listen_point()\n")),
                           -1);
       }

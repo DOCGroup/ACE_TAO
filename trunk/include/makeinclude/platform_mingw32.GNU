@@ -10,16 +10,7 @@
 # See also http://www.mingw.org.
 #
 # You will also need a GNU Make for win32 (so you can actualy
-# USE this file :-). Tested with make/sh from cygwin.
-#
-# Tested with:
-#
-#	mingw-runtime-0.5-20010221
-#	w32api-0.5-20010301
-#	gcc-2.95.2-20001116
-#	binutils-2.10.91-20010114
-#	ld-2.10.91-20010126
-#	libbfd-2.10.91-20010121
+# USE this file :-). Tested with MSYS from MinGW
 #
 # Caveat:
 #
@@ -40,10 +31,16 @@ TCPU = pentiumpro
 #TCPU = i486
 #TCPU = i386
 
+mingw32 = 1
+
 # MingW doesn't allow to add the version number of ACE to the dll name
 # because fe ace.dll.5.2.3 isn't a valid dll name
 SONAME=
 SOVERSION=
 
-mingw32 = 1
+# Disable auto-import warnings. The MingW linker has a problem with imports
+# See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435
+# for the details why to do this.
+LDFLAGS += -Wl,--enable-auto-import
+
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU

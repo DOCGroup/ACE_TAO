@@ -606,9 +606,11 @@ supported by the DOC group, Riverace, or OCI. <P>
       1.8.8/1.8.9 and g++ compilers that are distributed with
       VxWorks/Tornado.  An anonymous contributor has also
       provided <a href="os-patches/vxworks-5.1.txt">notes for using
-      ACE with VxWorks 5.1.</a><P>
+      ACE with VxWorks 5.1.</a>. It is not possible to use VxWorks 5.4
+      and earlier with ACE anymore because the compilers delivered with 
+      5.4 and earlier don't support the C++ features ACE needs.<P>
 
-      Tornado II/VxWorks 5.4 support IP multicast.  That is not enabled
+      Tornado 2.2/VxWorks 5.5 support IP multicast.  That is not enabled
       by default in ACE for VxWorks, because it probably depends on
       kernel configuration.  To enable it, add
       <code>#define ACE_HAS_IP_MULTICAST</code> to your
@@ -643,7 +645,7 @@ supported by the DOC group, Riverace, or OCI. <P>
             by the presence of a static in the Wind River/g++ iostream.h.
             ACE hides this and provides an easy-to-use workaround in the
             very unlikely situation where it becomes a problem.
-            Please see ace/config-vxworks5.2-g++.h for more information.<P>
+            Please see ace/config-vxworks5.x.h for more information.<P>
       </OL>
 
       In addition, as noted <A HREF="#g++">below</A> following the
@@ -909,8 +911,8 @@ option available with
       for reporting the problem with ACE_Singleton on g++, and for
       helping to find and implement these solutions.<P>
 
-  <LI>On VxWorks only, g++ (thru version 2.7.2, distributed
-      with Tornado 1.0.1/VxWorks 5.3.1), for x86 targets,
+  <LI>On VxWorks only, g++ (thru version 2.9.6, distributed
+      with Tornado 2.2/VxWorks 5.5), for x86 targets,
       -fno-implicit-templates is broken.  In addition, -O2
       is not supported on some targets.<P>
 </UL>
@@ -2398,10 +2400,13 @@ below.</p>
 </ol>
 <h3>Borland C++</h3>
 <p>Support for building TAO's SSLIOP pluggable protocol with Borland C++
-   does exist. E-mail the
-    <a href="mailto:ace-users@cs.wustl.edu">ace-users</a> mailing list to
-    obtain instructions that detail how to build it using Borland C++.
-    These instructions will soon be integrated into this web page.</p>
+   does exist. First get a patch for the Open SSL makefile from <A
+   HREF="http://www.tenermerx.com/tao_bcb/index.html">
+   http://www.tenermerx.com/tao_bcb/index.html</A>. Then build the OpenSSL
+   library. When you use the DLL version of ACE+TAO you have to build a DLL
+   version of OpenSSL. Then you must set the environment variable SSL_ROOT 
+   to the location of your OpenSSL and then build ACE and TAO as normally.
+</p>
 
 
 <HR><P>

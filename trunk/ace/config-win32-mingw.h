@@ -11,7 +11,7 @@
 #include "ace/pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
-#error Use config-win32.h in config.h instead of this header
+#  error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
 #define ACE_CC_NAME ACE_LIB_TEXT ("g++")
@@ -37,8 +37,8 @@
 #define ACE_LACKS_MODE_MASKS
 #define ACE_HAS_USER_MODE_MASKS
 
-#if (__MINGW32_MAJOR_VERSION == 0) && (__MINGW32_MINOR_VERSION < 5)
-#error You need a newer version (>= 0.5) of mingw32/w32api
+#if (__MINGW32_MAJOR_VERSION < 2)
+#  error You need a newer version (>= 2.0) of mingw32/w32api
 #endif
 
 #define ACE_LACKS_STRRECVFD
@@ -60,37 +60,6 @@
 #endif
 
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
-
-#if ( __W32API_MAJOR_VERSION < 1) || ((__W32API_MAJOR_VERSION == 1) && (__W32API_MINOR_VERSION <= 5))
-
-// The MingW32 w32api version 1.50 and lower don't define these types and methods
-// but we need it in the Win32_Asynch_IO.cpp
-
-extern "C" {
-
-   typedef void *PVOID,*LPVOID;
-
-   /* FIXME for __WIN64 */
-   #ifndef  __ptr64
-   #define __ptr64
-   #endif
-   typedef void* __ptr64 PVOID64;
-
-   //
-   // Define segement buffer structure for scatter/gather read/write.
-   //
-   typedef union _FILE_SEGMENT_ELEMENT {
-              PVOID64 Buffer;
-              ULONGLONG Alignment;
-   }FILE_SEGMENT_ELEMENT, *PFILE_SEGMENT_ELEMENT;
-
-
-   BOOL WINAPI ReadFileScatter(HANDLE,FILE_SEGMENT_ELEMENT*,DWORD,LPDWORD,LPOVERLAPPED);
-
-   BOOL WINAPI WriteFileGather(HANDLE,FILE_SEGMENT_ELEMENT*,DWORD,LPDWORD,LPOVERLAPPED);
-}
-
-#endif
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MINGW_H */

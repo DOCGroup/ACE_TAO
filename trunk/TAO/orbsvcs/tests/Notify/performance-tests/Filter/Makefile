@@ -12,8 +12,8 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-BIN = Structured_Supplier Structured_Consumer \
-      Sequence_Supplier Sequence_Consumer
+BIN2 = Structured_Supplier Structured_Consumer \
+       Sequence_Supplier Sequence_Consumer
 
 IDL_FILES = go
 IDL_SRC = goC.cpp goS.cpp
@@ -37,8 +37,17 @@ SRC = Structured_Supplier.cpp common.cpp \
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I../../lib
 LDLIBS = -lTAO_NotifyTests -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
-
 TAO_IDLFLAGS += -Ge 1
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Notify,$(findstring Notify,$(TAO_ORBSVCS)))
+  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+    BIN = $(BIN2)
+  endif # Naming
+endif # Notify
+
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------

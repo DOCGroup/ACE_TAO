@@ -197,6 +197,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // actually warn about it without the case.
   ACE_Time_Value tv8 (ACE_static_cast (long, 2.5));
 
+  // Test assignment operator, tv9 and tv6 must be the same after this
+  ACE_Time_Value tv9;
+  tv9 = tv6;
+
   ACE_ASSERT (tv1 == ACE_Time_Value (0));
   ACE_ASSERT (tv2 < tv3);
   ACE_ASSERT (tv2 <= tv2);
@@ -209,6 +213,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_ASSERT (tv6 == tv1);
   ACE_ASSERT (tv5 == tv7);
   ACE_ASSERT (tv7 == tv8); // That's right!  See above . . .
+  ACE_ASSERT (tv9 == tv6);
 
 #if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
   if (test_ace_u_longlong () != 0)

@@ -265,6 +265,14 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
       RtecEventComm::PushConsumer::_duplicate (push_consumer);
     this->qos_ = qos;
 
+  // AVE-WEB test. Try to validate the connection to the consumer
+ ACE_DEBUG ((LM_DEBUG, "Before validate connection \n"));
+  CORBA::PolicyList_var pols;
+  this->consumer_->_validate_connection(pols);
+  ACE_CHECK;
+ ACE_DEBUG ((LM_DEBUG, "After validate connection \n"));
+
+
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
     ACE_DEBUG ((LM_DEBUG, "Building filters for consumer <%x>\n",
                 this));

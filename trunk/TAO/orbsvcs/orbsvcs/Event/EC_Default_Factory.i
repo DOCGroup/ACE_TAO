@@ -20,6 +20,8 @@ TAO_EC_Default_Factory::TAO_EC_Default_Factory (void)
      consumer_control_ (TAO_EC_DEFAULT_CONSUMER_CONTROL),
      supplier_control_ (TAO_EC_DEFAULT_SUPPLIER_CONTROL),
      consumer_control_period_ (TAO_EC_DEFAULT_CONSUMER_CONTROL_PERIOD),
-     supplier_control_period_ (TAO_EC_DEFAULT_SUPPLIER_CONTROL_PERIOD)
+     supplier_control_period_ (TAO_EC_DEFAULT_SUPPLIER_CONTROL_PERIOD),
+     consumer_control_timeout_ (0, TAO_EC_DEFAULT_CONSUMER_CONTROL_TIMEOUT),
+     supplier_control_timeout_ (0, TAO_EC_DEFAULT_SUPPLIER_CONTROL_TIMEOUT)
 {
 }

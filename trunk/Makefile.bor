@@ -16,21 +16,8 @@ DIRS = \
         ACEXML \
         ACEXML\tests
 
-!elif $(BUILD) == nightlybuild
-
-DIRS = \
-	ace \
-	apps	\
-	netsvcs \
-	tests \
-        examples \
-        performance-tests \
-        ACEXML \
-        ACEXML\tests \
-        TAO
-
 !else
-!error Please set your BUILD variable to either "nightlybuild" or "all".
+!error Please set your BUILD variable to either "all".
 !endif
 
 

@@ -41,11 +41,11 @@ class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_i
  * Implementation of the CORBA::TypeCodeFactory interface
  */
 public:
-  TAO_TypeCodeFactory_i (void);
   /// ctor
+  TAO_TypeCodeFactory_i (void);
 
-  ~TAO_TypeCodeFactory_i (void);
   /// dtor
+  ~TAO_TypeCodeFactory_i (void);
 
   /// = LocalObject methods
   static TAO_TypeCodeFactory_i *_narrow (

@@ -9,6 +9,8 @@
 
 ACE_RCSID(SV_Message_Queues, TMQ_Server, "$Id$")
 
+#if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
+
 // Must be global for signal Message...
 static ACE_Typed_SV_Message_Queue<Message_Data> ace_sv_message_queue
   (SRV_KEY, ACE_Typed_SV_Message_Queue<Message_Data>::ACE_CREATE);
@@ -65,3 +67,14 @@ template class ACE_Typed_SV_Message<Message_Data>;
 #pragma instantiate ACE_Typed_SV_Message_Queue<Message_Data>
 #pragma instantiate ACE_Typed_SV_Message<Message_Data>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#else
+
+int main (int, char *[])
+{
+  ACE_ERROR ((LM_ERROR,
+              "SYSV IPC, or SYSV SHMEM is not supported on this platform\n"));
+  return 0;
+}
+#endif /* ACE_HAS_SYSV_IPC && !ACE_LACKS_SYSV_SHMEM */
+

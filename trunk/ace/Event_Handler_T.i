@@ -19,7 +19,7 @@ template<class T> ACE_INLINE ACE_HANDLE
 ACE_Event_Handler_T<T>::get_handle (void) const
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::get_handle");
-  return this->get_handle_ == 0 ? -1 : (this->op_handler_->*get_handle_) ();
+  return this->get_handle_ == 0 ? ACE_INVALID_HANDLE : (this->op_handler_->*get_handle_) ();
 }
 
 template<class T> ACE_INLINE void

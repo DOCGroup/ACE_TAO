@@ -78,7 +78,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
           CORBA::ULong msecs =
             ACE_static_cast (CORBA::ULong, microseconds / 1000);
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) Timeout is <%u>\n"),
+                      ACE_TEXT ("TAO (%P|%t) - Timeout is <%u>\n"),
                       msecs));
         }
     }

@@ -94,7 +94,7 @@ TAO_Connection_Handler::svc_i (void)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) TAO_Connection_Handler::svc_i begin\n")));
+                ACE_TEXT ("TAO (%P|%t) - TAO_Connection_Handler::svc_i begin\n")));
 
   // Here we simply synthesize the "typical" event loop one might find
   // in a reactive handler, except that this can simply block waiting
@@ -342,7 +342,7 @@ TAO_Connection_Handler::handle_input_eh (
     {
       ACE_HANDLE handle = eh->get_handle ();
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) Connection_Handler[%d]::handle_input, "
+                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input, "
                   "handle = %d/%d, refcount = %d, retval = %d\n",
                   t_id, handle, h, refcount, return_value));
     }

@@ -565,5 +565,9 @@ typedef unsigned long long ACE_UINT64;
 # define ACE_DISABLES_THREAD_LIBRARY_CALLS 0
 #endif /* ACE_DISABLES_THREAD_LIBRARY_CALLS */
 
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
+#  define ACE_HAS_LOG_MSG_NT_EVENT_LOG
+#endif /* !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */

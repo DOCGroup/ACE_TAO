@@ -29,8 +29,8 @@ public:
   // = Initialization and termination methods.
   Handler (u_short udp_port,
 	   const char *ip_addr,
-      const ACE_TCHAR *interface,
-	   ACE_Reactor &);
+      const ACE_TCHAR *a_interface,
+	   ACE_Reactor & );
   // Constructor.
 
   ~Handler (void);
@@ -141,7 +141,7 @@ Handler::~Handler (void)
 
 Handler::Handler (u_short udp_port,
 		  const char *ip_addr,
-        const ACE_TCHAR *interface,
+        const ACE_TCHAR *a_interface,
 		  ACE_Reactor &reactor)
 {
   // Create multicast address to listen on.
@@ -150,11 +150,12 @@ Handler::Handler (u_short udp_port,
 
   // subscribe to multicast group.
 
-  if (this->mcast_.subscribe (sockmc_addr, 1, interface) == -1)
-    ACE_ERROR ((LM_ERROR,
+  if (this->mcast_.subscribe (sockmc_addr, 1, a_interface) == -1)
+  {
+  	  ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "can't subscribe to multicast group"));
-
+  }
   // Disable loopbacks.
   // if (this->mcast_.set_option (IP_MULTICAST_LOOP, 0) == -1 )
   //   ACE_OS::perror (" can't disable loopbacks " ), ACE_OS::exit (1);

@@ -5,6 +5,8 @@
 
 ACE_RCSID(SV_Shared_Memory, SV_Shared_Memory_Test, "$Id$")
 
+#if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
+
 static void
 client (void)
 {
@@ -51,12 +53,22 @@ main (int, char *argv[])
     {
     case -1:
       ACE_OS::perror (argv[0]), ACE_OS::exit (1);
-    case 0: 
-      ACE_OS::sleep (1); 
+    case 0:
+      ACE_OS::sleep (1);
       client ();
     default:
       server ();
     }
   return 0;
 }
+
+#else
+
+int main (int, char *[])
+{
+  ACE_ERROR ((LM_ERROR,
+              "SYSV IPC, or SYSV SHMEM is not supported on this platform\n"));
+  return 0;
+}
+#endif /* ACE_HAS_SYSV_IPC && !ACE_LACKS_SYSV_SHMEM/
 

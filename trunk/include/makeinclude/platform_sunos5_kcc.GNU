@@ -9,11 +9,11 @@ exceptions = 1
 
 # I(kitty) don't know anything about this combination. Making it explicit.
 # XXX: Get the flags from the Kai web-site and fill it in.
-templates = "explicit"
+templates = explicit
 
 # Turn on the proper flags for explicit template instantiation.
 #
-ifeq ("$(templates)","explicit")
+ifeq ($(templates),explicit)
   ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
     TEMPLATES_FLAG=
   endif

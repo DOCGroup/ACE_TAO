@@ -81,8 +81,8 @@ public:
   /// Shutdown the Module.
   ~ACE_Module (void);
 
-  /// Create an initialized module with <module_name> as its identity
-  /// and <reader> and <writer> as its tasks.
+  /// Create an initialized module with @a module_name as its identity
+  /// and @a reader and @a writer as its tasks.
   ACE_Module (const ACE_TCHAR *module_name,
               ACE_Task<ACE_SYNCH_USE> *writer = 0,
               ACE_Task<ACE_SYNCH_USE> *reader = 0,
@@ -136,7 +136,7 @@ public:
    */
   void reader (ACE_Task<ACE_SYNCH_USE> *q, int flags = M_DELETE_READER);
 
-  /// Set and get pointer to sibling <ACE_Task> in an <ACE_Module>
+  /// Set and get pointer to sibling ACE_Task in an ACE_Module
   ACE_Task<ACE_SYNCH_USE> *sibling (ACE_Task<ACE_SYNCH_USE> *orig);
 
   // = Identify the module

@@ -153,6 +153,10 @@ private:
   /// The consumer and supplier control periods in usecs
   int consumer_control_period_;
   int supplier_control_period_;
+
+  /// The consumer and supplier control timeout in usecs
+  ACE_Time_Value consumer_control_timeout_;
+  ACE_Time_Value supplier_control_timeout_;
 };
 
 #if defined (__ACE_INLINE__)
