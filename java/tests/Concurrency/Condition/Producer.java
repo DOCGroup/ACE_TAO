@@ -6,7 +6,7 @@
 
 package tests.Concurrency.Condition;
 
-import ACE.Reactor.TimeValue;
+import ACE.ASX.TimeValue;
 import java.util.Random;
 
 public class Producer implements Runnable
