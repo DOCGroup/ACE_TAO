@@ -1,5 +1,9 @@
 Thu Aug 10 04:41:27 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* orbsvcs/Event_Service/Event_Service_static.dsw:
+	* orbsvcs/Event_Service/Event_Service_static.dsp: Added a new
+	  project/workspace for static configurations.
+
 	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
 	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp: Fixed static
 	  configurations.
