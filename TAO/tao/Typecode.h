@@ -358,6 +358,11 @@ private:
   CORBA::Long private_default_index (CORBA_Environment &ACE_TRY_ENV =
                                        TAO_default_environment ()) const;
 
+  /// Acquires no lock so it can be called internally from blocks
+  /// which have a lock.
+  CORBA::Long private_default_index_i (CORBA_Environment &ACE_TRY_ENV =
+                                         TAO_default_environment ()) const;
+
   /// returns length, raises (BadKind). Used for tk_string,
   /// tk_sequence, and tk_array
   CORBA::Long private_length (CORBA_Environment &ACE_TRY_ENV =
