@@ -68,6 +68,10 @@ Gateway::handle_signal (int signum, siginfo_t *, ucontext_t *)
   if (signum > 0)
     ACE_DEBUG ((LM_DEBUG, "(%t) %S\n", signum));
 
+  if (ACE_Service_Config::reactor ()->remove_handler 
+      (ACE_STDIN, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "remove_handler"), -1);
+
   // Shut down the main event loop.
   ACE_Service_Config::end_reactor_event_loop ();
   return 0;
@@ -76,10 +80,6 @@ Gateway::handle_signal (int signum, siginfo_t *, ucontext_t *)
 int
 Gateway::handle_input (ACE_HANDLE h)
 {
-  if (ACE_Service_Config::reactor ()->remove_handler 
-      (ACE_STDIN, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "remove_handler"), -1);
-
   char buf[BUFSIZ];
   // Consume the input...
   ACE_OS::read (h, buf, sizeof (buf));
