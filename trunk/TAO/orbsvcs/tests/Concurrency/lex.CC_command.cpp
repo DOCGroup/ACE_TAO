@@ -456,6 +456,7 @@ char *ace_cc_yytext;
  *
  * ============================================================================
  */
+#define ACE_CC_YY_NO_UNPUT 1
 #line 20 "CC_command.l"
 #include "CC_command.h"
 #include "CC_command.tab.h"
