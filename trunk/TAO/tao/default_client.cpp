@@ -111,7 +111,7 @@ TAO_Default_Client_Strategy_Factory::create_client_creation_strategy (void)
 
 #if defined (TAO_USES_STATIC_SERVICE) || defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
 ACE_STATIC_SVC_DEFINE (TAO_Default_Client_Strategy_Factory,
-		       ASYS_TEXT ("TAO_Default_Client_Strategy_Factory"),
+		       ASYS_TEXT ("Client_Strategy_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Default_Client_Strategy_Factory),
 		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
