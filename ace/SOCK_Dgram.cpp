@@ -95,7 +95,7 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
   ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
 
   if (this->shared_open (local, protocol_family) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_SOCK_Dgram"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("ACE_SOCK_Dgram")));
 }
 
 // Here's the general-purpose open routine.

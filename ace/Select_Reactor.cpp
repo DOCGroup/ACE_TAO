@@ -411,8 +411,8 @@ ACE_Select_Reactor_Handler_Repository_Iterator::dump (void) const
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository_Iterator::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "rep_ = %u", this->rep_));
-  ACE_DEBUG ((LM_DEBUG, "current_ = %d", this->current_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("rep_ = %u"), this->rep_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("current_ = %d"), this->current_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -423,19 +423,19 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) max_handlep1_ = %d, max_size_ = %d\n",
+              ASYS_TEXT ("(%t) max_handlep1_ = %d, max_size_ = %d\n"),
               this->max_handlep1_, this->max_size_));
-  ACE_DEBUG ((LM_DEBUG, "["));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("[")));
 
   ACE_Event_Handler *eh = 0;
 
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (this);
        iter.next (eh) != 0;
        iter.advance ())
-    ACE_DEBUG ((LM_DEBUG, " (eh = %x, eh->handle_ = %d)",
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (eh = %x, eh->handle_ = %d)"),
                 eh, eh->get_handle ()));
 
-  ACE_DEBUG ((LM_DEBUG, " ]"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" ]")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -574,7 +574,7 @@ ACE_Select_Reactor_Token::dump (void) const
   ACE_TRACE ("ACE_Select_Reactor_Token::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -620,7 +620,7 @@ ACE_Select_Reactor_Token::sleep_hook (void)
 {
   ACE_TRACE ("ACE_Select_Reactor_Token::sleep_hook");
   if (this->select_reactor_->notify () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "sleep_hook failed"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("sleep_hook failed")));
 }
 
 #endif /* ACE_MT_SAFE */
@@ -631,7 +631,7 @@ ACE_Select_Reactor_Notify::dump (void) const
   ACE_TRACE ("ACE_Select_Reactor_Notify::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "select_reactor_ = %x", this->select_reactor_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("select_reactor_ = %x"), this->select_reactor_));
   this->notification_pipe_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -755,7 +755,7 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
               break;
             default:
               // Should we bail out if we get an invalid mask?
-              ACE_ERROR ((LM_ERROR, "invalid mask = %d\n", buffer.mask_));
+              ACE_ERROR ((LM_ERROR, ASYS_TEXT ("invalid mask = %d\n"), buffer.mask_));
             }
           if (result == -1)
             buffer.eh_->handle_close (ACE_INVALID_HANDLE,
@@ -1024,8 +1024,8 @@ ACE_Select_Reactor::ACE_Select_Reactor (ACE_Sig_Handler *sh,
   ACE_TRACE ("ACE_Select_Reactor::ACE_Select_Reactor");
 
   if (this->open (ACE_Select_Reactor::DEFAULT_SIZE, 0, sh, tq) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n",
-                "ACE_Select_Reactor::open failed inside ACE_Select_Reactor::CTOR"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Select_Reactor::open failed inside ACE_Select_Reactor::CTOR")));
 }
 
 // Initialize ACE_Select_Reactor.
@@ -1050,8 +1050,8 @@ ACE_Select_Reactor::ACE_Select_Reactor (size_t size,
   ACE_TRACE ("ACE_Select_Reactor::ACE_Select_Reactor");
 
   if (this->open (size, rs, sh, tq) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n",
-                "ACE_Select_Reactor::open failed inside ACE_Select_Reactor::CTOR"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Select_Reactor::open failed inside ACE_Select_Reactor::CTOR")));
 }
 
 // Close down the ACE_Select_Reactor instance, detaching any remaining
@@ -1800,7 +1800,7 @@ ACE_Select_Reactor::dump (void) const
   this->handler_rep_.dump ();
   this->signal_handler_->dump ();
   ACE_DEBUG ((LM_DEBUG,
-              "delete_signal_handler_ = %d\n",
+              ASYS_TEXT ("delete_signal_handler_ = %d\n"),
               this->delete_signal_handler_));
 
   ACE_HANDLE h;
@@ -1808,37 +1808,37 @@ ACE_Select_Reactor::dump (void) const
   for (ACE_Handle_Set_Iterator handle_iter_wr (this->wait_set_.wr_mask_);
        (h = handle_iter_wr ()) != ACE_INVALID_HANDLE;
        ++handle_iter_wr)
-    ACE_DEBUG ((LM_DEBUG, "write_handle = %d\n", h));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("write_handle = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_rd (this->wait_set_.rd_mask_);
        (h = handle_iter_rd ()) != ACE_INVALID_HANDLE;
        ++handle_iter_rd)
-    ACE_DEBUG ((LM_DEBUG, "read_handle = %d\n", h));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("read_handle = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_ex (this->wait_set_.ex_mask_);
        (h = handle_iter_ex ()) != ACE_INVALID_HANDLE;
        ++handle_iter_ex)
-    ACE_DEBUG ((LM_DEBUG, "except_handle = %d\n", h));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("except_handle = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_wr_ready (this->ready_set_.wr_mask_);
        (h = handle_iter_wr_ready ()) != ACE_INVALID_HANDLE;
        ++handle_iter_wr_ready)
-    ACE_DEBUG ((LM_DEBUG, "write_handle_ready = %d\n", h));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("write_handle_ready = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_rd_ready (this->ready_set_.rd_mask_);
        (h = handle_iter_rd_ready ()) != ACE_INVALID_HANDLE;
        ++handle_iter_rd_ready)
-    ACE_DEBUG ((LM_DEBUG, "read_handle_ready = %d\n", h));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("read_handle_ready = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_ex_ready (this->ready_set_.ex_mask_);
        (h = handle_iter_ex_ready ()) != ACE_INVALID_HANDLE;
        ++handle_iter_ex_ready)
-    ACE_DEBUG ((LM_DEBUG, "except_handle_ready = %d\n", h));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("except_handle_ready = %d\n"), h));
 
-  ACE_DEBUG ((LM_DEBUG, "restart_ = %d\n", this->restart_));
-  ACE_DEBUG ((LM_DEBUG, "\nrequeue_position_ = %d\n", this->requeue_position_));
-  ACE_DEBUG ((LM_DEBUG, "\ninitialized_ = %d\n", this->initialized_));
-  ACE_DEBUG ((LM_DEBUG, "\nowner_ = %d\n", this->owner_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("restart_ = %d\n"), this->restart_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nrequeue_position_ = %d\n"), this->requeue_position_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ninitialized_ = %d\n"), this->initialized_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nowner_ = %d\n"), this->owner_));
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   this->notify_handler_.dump ();

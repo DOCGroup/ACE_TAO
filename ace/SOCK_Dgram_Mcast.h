@@ -38,7 +38,7 @@ public:
 
   int subscribe (const ACE_INET_Addr &mcast_addr,
 		 int reuse_addr = 1,
-		 const char *net_if = 0,
+		 const ASYS_TCHAR *net_if = 0,
 		 int protocol_family = PF_INET,
 		 int protocol = 0);
   // Join a multicast group by telling the network interface device
@@ -95,7 +95,7 @@ private:
 		int flags = 0) const;
 
   int make_multicast_address (const ACE_INET_Addr &mcast_addr,
-			      const char *net_if = "le0");
+			      const ASYS_TCHAR *net_if = ASYS_TEXT ("le0"));
   // Initialize a multicast address.
 
   ACE_INET_Addr mcast_addr_;
