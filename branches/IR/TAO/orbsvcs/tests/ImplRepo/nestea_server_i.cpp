@@ -105,7 +105,7 @@ Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
                           -1);
 
           if (this->register_with_ir_ == 1)
-            this->ir_helper_->register_server ("nestea_server -i");
+            this->ir_helper_->register_server ("nestea_server -i -ORBImplRepoIOR file://implrepo.ior");
         }
 
       PortableServer::ObjectId_var id =
@@ -115,7 +115,7 @@ Nestea_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
         this->orb_manager_.child_poa ()->id_to_reference (id.in (),
                                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+ 
       if (this->use_ir_ == 1)
         {
           this->ir_helper_->change_object (server_obj.inout (), ACE_TRY_ENV);
