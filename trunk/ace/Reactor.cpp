@@ -1522,7 +1522,7 @@ ACE_Reactor::dispatch (int number_of_active_handles,
       if (this->dispatch_timer_handlers () == -1)
 	// State has changed or timer queue has failed, exit inner
 	// loop.
-	; 
+	break; 
       else if (number_of_active_handles <= 0)
 	// Bail out since we got here since select() was interrupted.
 	{
@@ -1530,6 +1530,8 @@ ACE_Reactor::dispatch (int number_of_active_handles,
 	    {
 	      ACE_Sig_Handler::sig_pending (0);
 	      
+	      // If any HANDLES are activated as a result of signals they
+	      // should be dispatched since they may be time critical...
 	      number_of_active_handles = this->any_ready (dispatch_set);
 	    }
 	  else
@@ -1537,14 +1539,11 @@ ACE_Reactor::dispatch (int number_of_active_handles,
 	}
       else if (this->dispatch_notification_handlers 
 	       (number_of_active_handles, dispatch_set) == -1)
-	; // State has changed, exit inner loop.
+	break; // State has changed, exit inner loop.
       else if (this->dispatch_io_handlers 
 	       (number_of_active_handles, dispatch_set) == -1)
 	// State has changed exit inner loop.
-	; 
-
-      // If any HANDLES are activated as a result of signals they
-      // should be dispatched since they may be time critical...
+	break; 
 
     }
   while (number_of_active_handles > 0);

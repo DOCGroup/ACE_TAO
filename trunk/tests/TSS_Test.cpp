@@ -66,7 +66,7 @@ worker (void *c)
 
   int count = int (c);
 
-  ACE_thread_key_t key = 0;
+  ACE_thread_key_t key = ACE_OS::NULL_key;
   int *ip = 0;
 
   // Make one key that will be available when the thread exits so that
@@ -119,7 +119,8 @@ worker (void *c)
 	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, cout_lock, 0));
 	ACE_ASSERT (TSS_Error->flags () == ITERATIONS);
       }
-      key = 0;
+
+      key = ACE_OS::NULL_key;
 
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));

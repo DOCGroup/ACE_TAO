@@ -25,7 +25,7 @@ public:
   ACE_Server_Logging_Handler (ACE_Thread_Manager * = 0);
 
   virtual int open (void * = 0);
-  // Hook called by Server_Logging_Acceptor when connection is
+  // Hook called by <Server_Logging_Acceptor> when connection is
   // established.
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
@@ -341,7 +341,7 @@ ACE_Thr_Server_Logging_Acceptor::parse_args (int argc, char *argv[])
 
 int
 ACE_Thr_Server_Logging_Acceptor::init (int argc, 
-			       char *argv[])
+				       char *argv[])
 {
   ACE_TRACE ("ACE_Thr_Server_Logging_Acceptor::init");
 

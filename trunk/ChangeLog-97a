@@ -1,3 +1,37 @@
+Tue Feb 18 16:41:02 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* include/makeinclude: Added minor enhancements to rules.local.GNU
+ 	  and wrapper_macros.GNU so that it works with MVS.  Thanks to
+ 	  Chuck Gehr <gehr@sweng.stortek.com> for this.
+
+	* include/makeinclude: Added a new platform_mvs.GNU file that
+ 	  supports builds on MVS!  Thanks to Chuck Gehr
+ 	  <gehr@sweng.stortek.com> for this.
+
+	* tests/TSS_Test.cpp (worker): To get TSS_Test.cpp to compile on
+	  MVS we changed line 69 from:
+
+	  ACE_thread_key_t key = 0;
+ 
+          to:
+ 
+          ACE_thread_key_t key = ACE_OS::NULL_key;
+ 
+          and line 122 from:
+ 
+          key = 0;
+ 
+          to:
+ 
+          key = ACE_OS::NULL_key;
+
+	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
+ 	  this.
+
+	* ace/Reactor.cpp (dispatch): Fixed the dispatching logic so that
+ 	  we bail out as soon as we discover that our state has changed.
+  	  Thus, we'll recompute the fd_sets used for select().
+
 Tue Feb 18 19:02:53 1997    <irfan@cha-cha.cs.wustl.edu>
 
 	* ace/ReactorEx: 
