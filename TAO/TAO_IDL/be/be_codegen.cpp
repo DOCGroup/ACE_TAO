@@ -483,7 +483,14 @@ TAO_CodeGen::start_server_header (const char *fname)
       this->gen_standard_include (this->server_header_,
                                   "tao/PortableServer/Direct_Object_Proxy_Impl.h");
 
-      *this->server_header_ << "#if defined(_MSC_VER)\n"
+      if (be_global->gen_amh_classes ())
+        {
+          this->gen_standard_include (this->server_header_,
+                                      "tao/TAO_AMH_Response_Handler.h");
+        }
+
+      *this->server_header_ << be_nl
+                            << "#if defined(_MSC_VER)\n"
                             << "#if (_MSC_VER >= 1200)\n"
                             << "#pragma warning(push)\n"
                             << "#endif /* _MSC_VER >= 1200 */\n"
