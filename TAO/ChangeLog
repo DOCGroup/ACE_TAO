@@ -1,3 +1,8 @@
+Mon Mar 10 08:22:01 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.bor: Fixed this BCB
+          makefile for the BCB5 Static build.
+
 Mon Mar 10 07:56:12 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/nslist/Makefile.bor: Adding missing libraries to link with
