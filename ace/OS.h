@@ -4104,6 +4104,24 @@ extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
     // Associates the TSS destructor with the key.  Does _not_ check
     // for a valid key.
 
+    static void tss_allocate ()
+      {
+#if defined (VXWORKS)
+        if ((void **) taskIdCurrent->spare4 == 0)
+          {
+            (void **) taskIdCurrent->spare4 =
+              new (void *)[THREAD_KEYS_MAX];
+          }
+#endif /* VXWORKS */
+      }
+
+    static void tss_deallocate ()
+      {
+#if defined (VXWORKS)
+        delete [] (void **) taskIdCurrent->spare4;
+#endif /* VXWORKS */
+      }
+
   private:
     enum { THREAD_KEYS_MAX = ACE_DEFAULT_THREAD_KEYS };
     // Maximum number of TSS keys allowed over the life of the program.
