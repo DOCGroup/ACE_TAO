@@ -1,22 +1,38 @@
+Wed May 19 07:20:35 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Conditionally use the .NOTPARALLEL rule based on the existence and
+          time stamp of generated files in addition to the time stamp on the
+          generation tool (if applicable).  In situations where the
+          generated files are up-to-date, using -j<n> will actually be
+          beneficial instead of ignored.
+
+        * include/makeinclude/rules.local.GNU:
+
+          Switch to using depgen.pl instead of g++dep.  It is accurate and
+          tremendously faster than g++dep.  The dependency generation tool
+          can be controlled by setting the DEPGEN make macro.
+
 Tue May 18 16:55:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_dirent.cpp (ACE_SCANDIR_COMPARATOR):
-	* ace/OS_NS_stdlib.h (ACE_COMPARE_FUNC): For Windows with Microsoft
-	  Visual C++ compiler, explicitly specify __cdecl calling convention
-	  so it remains correct even if built with a different default
-	  calling convention. Thanks to Ivan Murphy <Ivan.Murphy@siemens.com>
-	  for this fix.
+        * ace/OS_NS_dirent.cpp (ACE_SCANDIR_COMPARATOR):
+        * ace/OS_NS_stdlib.h (ACE_COMPARE_FUNC): For Windows with Microsoft
+          Visual C++ compiler, explicitly specify __cdecl calling convention
+          so it remains correct even if built with a different default
+          calling convention. Thanks to Ivan Murphy <Ivan.Murphy@siemens.com>
+          for this fix.
 
 Tue May 18 11:26:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/tests.mpc: Replaced the "exename" lines for ACE_Test,
-	  ACE_Init_Test, and FIFO_Test. Somehow they got lost...
+        * tests/tests.mpc: Replaced the "exename" lines for ACE_Test,
+          ACE_Init_Test, and FIFO_Test. Somehow they got lost...
 
 Tue May 18 11:07:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
-	  Removed arguments from ACE_OS::tempnam() call, forcing it to use
-	  the defaults and select the char* variant.
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+          Removed arguments from ACE_OS::tempnam() call, forcing it to use
+          the defaults and select the char* variant.
 
 Tue May 18 14:28:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
