@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#include "iorParser.h"
+#include "ior-handler.h"
 
 IorHandler parser;
 
