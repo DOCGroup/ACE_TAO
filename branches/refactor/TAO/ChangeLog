@@ -1,3 +1,14 @@
+Thu Mar 27 18:55:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Sequence.cpp:
+        * tao/Sequence.h:
+
+          Cosmetic changes.
+
+        * tao/TAO.dsp:
+
+          Added newly created inline files to the project.
+
 Thu Mar 27 03:00:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_predefined_type.cpp:
