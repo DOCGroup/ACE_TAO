@@ -33,7 +33,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 }
 // Listing 1
 #if defined (ACE_HAS_SIG_C_FUNC)
-extern "C"
+extern "C" {
 #endif
 // Listing 3 code/ch11
 static void my_sighandler (int signo)
@@ -49,6 +49,9 @@ static void my_sighandler (int signo)
 
   ACE_OS::sleep (10);
 }
+#if defined (ACE_HAS_SIG_C_FUNC)
+}
+#endif
 // Listing 3
 // Listing 2 code/ch11
 static void register_actions ()
