@@ -1,3 +1,8 @@
+Tue Jan 05 14:32:11 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object.i (_narrow): _narrow must increase the reference
+ 	  count on the object.
+
 Tue Jan 05 14:21:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAO_Internal.cpp (open_services): Added insertion of
