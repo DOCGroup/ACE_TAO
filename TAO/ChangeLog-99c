@@ -1,3 +1,8 @@
+Fri Sep 10 16:07:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/RTCP.cpp (handle_input): Changed to use our
+	  own fmod method.
+
 Fri Sep 10 15:48:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
@@ -14,16 +19,16 @@ Fri Sep 10 14:36:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Fri Sep 10 12:50:12 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB.h: 
+	* tao/ORB.h:
 	* tao/ORB.cpp: Added a method create_exception_tc  within
-	  CORBA_ORB interface.  
+	  CORBA_ORB interface.
 
 Fri Sep 10 12:18:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
 	* orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
 	  Use the -Ge 1 option to generate the CORBA::Environment
-	  option. Thanks to Joerg Pommnitz <pommnitz@darmstadt.gmd.de> for 
+	  option. Thanks to Joerg Pommnitz <pommnitz@darmstadt.gmd.de> for
 	  pointing out this problem.
 
 Thu Sep  9 21:30:45 1999  Ossama Othman  <othman@cs.wustl.edu>
