@@ -1,3 +1,8 @@
+Sun Feb 29 17:52:11 UTC 2004  Johnny Willemsen  <jwillemsem@remedy.nl>
+
+	* orbsvcs/performance-tests/LoadBalancing/client.cpp:
+	  Fixed unused variable warning
+
 Sun Feb 29 10:15:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Makefile*:
@@ -25,22 +30,22 @@ Sun Feb 29 10:34:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  All these Makefiles were busted. They don't build in our daily
 	  builds. The check for ORBSVCS_COMPONENTS was done in the wrong
 	  place. I remember Thomas Lockhart mentioning about some of these
-	  things. I think he had caught all of this already. 
-	
+	  things. I think he had caught all of this already.
+
 
 Sun Feb 29 08:40:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Makefile*:
 
 	  Regenerated it again since there were a few errors the last
-	  time. 
+	  time.
 
 Sun Feb 29 08:28:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Makefile*:
 
   	  Regenerated dependencies using old g++-dep script.
-	
+
 Sun Feb 29 08:26:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Makefile*:
