@@ -1,3 +1,9 @@
+Thu Nov  1 16:21:51 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* bin/auto_run_tests.pl: Added snippet of code that puts the
+	current directory ('.') in the PATH environment variable since
+	auto_run_tests.pl depends on the current directory being there.
+
 Thu Nov 1 15:49:04  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* include/makeinclude/platform_osf1_4.x_cxx.GNU: Moved the
