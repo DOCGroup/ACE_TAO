@@ -1,0 +1,70 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay -i NavDisplay"
+
+project(NavDisplay_stub): ciao_client {
+  depends += HUDisplay_stub
+  sharedname = NavDisplay_stub
+  idlflags += -Wb,stub_export_macro=NAVDISPLAY_STUB_Export -Wb,stub_export_include=NavDisplay_stub_export.h -Wb,skel_export_macro=NAVDISPLAY_SVNT_Export -Wb,skel_export_include=NavDisplay_svnt_export.h
+  dllflags   = NAVDISPLAY_STUB_BUILD_DLL
+
+  IDL_Files {
+    NavDisplay.idl
+  }
+
+  Source_Files {
+    NavDisplayC.cpp
+  }
+}
+
+project(NavDisplay_svnt) : ciao_server {
+  depends += HUDisplay_svnt NavDisplay_stub
+  sharedname  = NavDisplay_svnt
+  libs    += NavDisplay_stub HUDisplay_stub HUDisplay_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=NAVDISPLAY_SVNT_Export -Wb,export_include=NavDisplay_svnt_export.h
+  dllflags = NAVDISPLAY_SVNT_BUILD_DLL
+
+  Source_Files {
+    NavDisplayEC.cpp
+    NavDisplayS.cpp
+  }
+
+  Define_Custom(CIDL) {
+    automatic = 1
+    command = ..\..\..\..\bin\cidlc --lem-file-suffix "E.idl" --
+    inputext    = cidl
+    source_outputext = _svnt.cpp
+    generic_outputext = E.idl
+  }
+
+  CIDL_Files {
+    NavDisplay.cidl
+  }
+
+  IDL_Files {
+    NavDisplayE.idl
+  }
+
+  Source_Files {
+    NavDisplay_svnt.cpp
+  }
+}
+
+
+project(NavDisplay_exec) : ciao_server {
+  depends   += NavDisplay_svnt
+  sharedname = NavDisplay_exec
+  libs      += NavDisplay_stub NavDisplay_svnt HUDisplay_stub HUDisplay_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=NAVDISPLAY_EXEC_Export -Wb,export_include=NavDisplay_exec_export.h
+  dllflags   = NAVDISPLAY_EXEC_BUILD_DLL
+
+  IDL_Files {
+    NavDisplayEI.idl
+  }
+
+  Source_Files {
+    NavDisplayEIC.cpp
+    NavDisplay_exec.cpp
+  }
+}
