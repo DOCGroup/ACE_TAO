@@ -43,7 +43,7 @@ class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
   //   The IIOP-specific bridge class for the concrete acceptor.
   //
 public:
-  TAO_IIOP_Acceptor (CORBA::Boolean flag);
+  TAO_IIOP_Acceptor (CORBA::Boolean flag = 0);
   // Constructor.
 
   ~TAO_IIOP_Acceptor (void);

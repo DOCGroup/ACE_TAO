@@ -338,10 +338,11 @@ typedef ACE_Cached_Connect_Strategy<TAO_UIOP_Client_Connection_Handler,
         TAO_CACHED_CONNECT_STRATEGY;
 #endif /* ! TAO_USES_ROBUST_CONNECTION_MGMT */
 
-TAO_UIOP_Connector::TAO_UIOP_Connector (void)
+TAO_UIOP_Connector::TAO_UIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_UIOP_PROFILE),
     base_connector_ (),
-    orb_core_ (0)
+    orb_core_ (0),
+    lite_flag_ (flag)
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
     ,
     cached_connect_strategy_ (0),
@@ -488,19 +489,31 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
       return -1;
     }
 
-  const TAO_GIOP_Version& version = uiop_profile->version ();
-  
-  if (uiop_profile->hint ()->init_mesg_protocol (version.major,
-                                                 version.minor) == 0)
+  transport = result->transport ();
+  int ret_val = 0;
+  if (lite_flag_)
+    {
+      ret_val = result->init_mesg_protocol (TAO_DEF_GIOP_LITE_MAJOR,
+                                            TAO_DEF_GIOP_LITE_MINOR);
+    }
+  else
+    {
+      // Now that we have the client connection handler object we need to
+      // set the right messaging protocol for the connection handler.
+      const TAO_GIOP_Version& version = uiop_profile->version ();
+      ret_val = uiop_profile->hint ()->init_mesg_protocol (version.major,
+                                                           version.minor);
+    }
+  if (ret_val == -1)
     {
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ASYS_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
         }
+      return -1;
     }
-  transport = result->transport ();
-
+  
   return 0;
 }
 

@@ -56,7 +56,7 @@ template class TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
+TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_UIOP_PROFILE),
     base_acceptor_ (),
     creation_strategy_ (0),
@@ -64,7 +64,8 @@ TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
     accept_strategy_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    unlink_on_close_ (1)
+    unlink_on_close_ (1),
+    lite_flag_ (flag)
 {
 }
 
@@ -196,7 +197,8 @@ TAO_UIOP_Acceptor::open_i (TAO_ORB_Core *orb_core,
   this->orb_core_ = orb_core;
 
   ACE_NEW_RETURN (this->creation_strategy_,
-                  TAO_UIOP_CREATION_STRATEGY (this->orb_core_),
+                  TAO_UIOP_CREATION_STRATEGY (this->orb_core_,
+                                              this->lite_flag_),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,

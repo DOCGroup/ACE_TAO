@@ -33,11 +33,7 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
-
-
-// BALA Temporray include
-#include "tao/GIOP_Message_Acceptors.h"
-#include "tao/GIOP_Message_Connectors.h"
+#include "tao/Pluggable_Messaging.h"
 
 // Forward Decls
 class TAO_ORB_Core;
@@ -109,7 +105,7 @@ protected:
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
 
-  TAO_GIOP_Message_Connectors *mesg_factory_;
+  TAO_Pluggable_Messaging_Interface *mesg_factory_;
   // The Connector messaging factory
 };
 
@@ -157,10 +153,8 @@ protected:
   TAO_UIOP_Server_Transport transport_;
   // @@ New transport object reference.
 
-  //@@Added by Bala for the time being. This would change to the
-  // actual factory at a later date
-  TAO_GIOP_Message_Acceptors acceptor_factory_;
-  // /////////////////////
+  TAO_Pluggable_Messaging_Interface *acceptor_factory_;
+  // Messaging acceptor factory
 
   // = Event Handler overloads
 
@@ -185,6 +179,9 @@ protected:
 
   u_long refcount_;
   // Reference count, to avoid early deletes...
+  
+   CORBA::Boolean lite_flag_;
+  // Should we use GIOP or GIOPlite
 };
 
 #if defined (__ACE_INLINE__)
