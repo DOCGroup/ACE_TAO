@@ -1,3 +1,13 @@
+Mon Jun  5 09:54:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/y.tab.cpp:
+	  Added a null pointer check to module definition code
+	  in the yacc file, so that bad IDL inside the module
+	  will not cause a crash after the error message is
+	  output.
+
 Sun Jun  4 18:00:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/TypeCode.cpp:
