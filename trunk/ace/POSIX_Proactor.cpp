@@ -721,38 +721,10 @@ ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor (ACE_POSIX_Asynch_Result *r
 ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (void)
 {
   // Make the sigset_t consisting of the completion signals.
-  if (sigemptyset (&this->RT_completion_signals_) < 0)
+  if (sigemptyset (&this->RT_completion_signals_) == -1)
     ACE_ERROR ((LM_ERROR,
                 "Error:%p\n",
                 "Couldn't init the RT completion signal set"));
-
-  if (sigaddset (&this->RT_completion_signals_, ACE_SIGRTMIN) < 0)
-    ACE_ERROR ((LM_ERROR,
-                "Error:%p\n",
-                "Couldnt init the RT completion signal set"));
-
-  // Mask them.
-  if (sigprocmask (SIG_BLOCK, &RT_completion_signals_, 0) < 0)
-    ACE_ERROR ((LM_ERROR,
-                "Error:%p\n",
-                "Couldnt mask the RT completion signals"));
-
-  // Setting up the handler(actually Null handler) for these signals.
-  struct sigaction reaction;
-  sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
-  reaction.sa_flags = SA_SIGINFO;    // Realtime flag.
-#if defined (SA_SIGACTION)
-  // Lynx says, it is better to set this bit to be portable.
-  reaction.sa_flags &= SA_SIGACTION;
-#endif /* SA_SIGACTION */
-  reaction.sa_sigaction = 0;         // No handler.
-  int sigaction_return = sigaction (ACE_SIGRTMIN,
-                                    &reaction,
-                                    0);
-  if (sigaction_return == -1)
-    ACE_ERROR ((LM_ERROR,
-                "Error:%p\n",
-                "Proactor couldnt do sigaction for the RT SIGNAL"));
 }
 
 
@@ -790,8 +762,12 @@ ACE_POSIX_SIG_Proactor::post_completion (ACE_POSIX_Asynch_Result *result)
   sigval value;
   value.sival_ptr = (void *) result;
   
+  // Register the signal number with the Proactor. 
+  if (this->register_aio_with_proactor (result) == -1)
+    return -1;
+  
   // Queue the signal.
-  if (sigqueue (pid, ACE_SIGRTMIN, value) == -1)
+  if (sigqueue (pid, result->signal_number (), value) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:(%P | %t):%p",
                        "<sigqueue> failed\n"),
@@ -886,8 +862,11 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
   
   // No errors, RT compleion signal is received.
   
-  // We deal only with the signal number ACE_SIGRTMIN.
-  if (result_sigwait != ACE_SIGRTMIN)
+  // We deal only with the signal numbers that have been registered
+  // already. 
+  int member = sigismember (&this->RT_completion_signals_,
+                            result_sigwait); 
+  if (member != 1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:(%P | %t)::%p\n",
                        "ACE_POSIX_SIG_Proactor::handle_events:"
@@ -968,6 +947,58 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
   // Success
   return 1;
 }
+
+int
+ACE_POSIX_SIG_Proactor::register_aio_with_proactor (ACE_POSIX_Asynch_Result *result)
+{
+  // Nothing to do if this signal is already there in the signal set,
+  // that has been already masked out.
+  int member = sigismember (&this->RT_completion_signals_,
+                            result->signal_number ());
+  if (member == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%N:%l:(%P | %t)::%p\n",
+                       "ACE_POSIX_SIG_Proactor::register_aio_with_proactor:"
+                       "sigismember failed"),
+                      -1);
+  // Return if it is already there.
+  if (member == 1)
+    return 0;
+  
+  // Add the signal number to the signal set.
+  if (sigaddset (&this->RT_completion_signals_, result->signal_number ()) < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error:%p\n",
+                       "Couldnt init the RT completion signal set"),
+                      -1);
+  
+  // Mask them.
+  if (sigprocmask (SIG_BLOCK, &RT_completion_signals_, 0) < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error:%p\n",
+                       "Couldnt mask the RT completion signals"),
+                      -1);
+ 
+  // Set up the handler(actually Null handler) for this real-time
+  // signal. 
+  struct sigaction reaction;
+  sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
+  reaction.sa_flags = SA_SIGINFO;    // Realtime flag.
+#if defined (SA_SIGACTION)
+  // Lynx says, it is better to set this bit, to be portable. 
+  reaction.sa_flags &= SA_SIGACTION;
+#endif /* SA_SIGACTION */
+  reaction.sa_sigaction = 0;         // No handler function.
+  int sigaction_return = sigaction (result->signal_number (),
+                                    &reaction,
+                                    0);
+  if (sigaction_return == -1)
+    ACE_ERROR ((LM_ERROR,
+                "Error:%p\n",
+                "Proactor couldnt do sigaction for the RT SIGNAL"));
+  return 0;
+}
+
 
 // *********************************************************************
 
