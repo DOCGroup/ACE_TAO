@@ -64,7 +64,7 @@ public:
       ));
 
     // = Data members
-    PortableServer::POA_ptr default_POA_;
+    PortableServer::POA_var default_POA_;
     // The default POA.
 
     CosNotifyChannelAdmin::ProxyPushConsumer_var consumer_proxy_;

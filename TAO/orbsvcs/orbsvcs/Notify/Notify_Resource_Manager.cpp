@@ -281,7 +281,7 @@ TAO_Notify_Resource_Manager::create_generic_childPOA_i (const char* child_poa_na
                                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
-  PortableServer::POAManager_ptr manager =
+  PortableServer::POAManager_var manager =
     poa->the_POAManager (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 

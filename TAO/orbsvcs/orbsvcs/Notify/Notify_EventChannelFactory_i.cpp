@@ -150,7 +150,7 @@ TAO_Notify_EventChannelFactory_i::get_event_channel (CosNotifyChannelAdmin::Chan
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
 
-  return CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ());
+  return CosNotifyChannelAdmin::EventChannel::_narrow (obj.in (), ACE_TRY_ENV);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

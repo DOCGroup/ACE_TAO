@@ -96,9 +96,13 @@ TAO_Notify_ConsumerAdmin_i::subscription_change (const CosNotification::EventTyp
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_Notify_ConsumerAdmin_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 {
-  return CosNotifyChannelAdmin::ConsumerAdmin
-    ::_narrow (this->resource_manager_->
-               servant_to_reference (this->my_POA_.in (), this, ACE_TRY_ENV));
+  CORBA::Object_var obj = this->resource_manager_->
+    servant_to_reference (this->my_POA_.in (), this, ACE_TRY_ENV);
+
+  ACE_CHECK_RETURN (CosNotifyChannelAdmin::ConsumerAdmin::_nil ());
+
+  return CosNotifyChannelAdmin::ConsumerAdmin::_narrow (obj.in (),
+                                                        ACE_TRY_ENV);
 }
 
 TAO_Notify_Event_Manager*
