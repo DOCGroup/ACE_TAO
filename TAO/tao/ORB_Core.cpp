@@ -344,6 +344,23 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
       ////////////////////////////////////////////////////////////////
       // continue with the 'parameter' flags                        //
       ////////////////////////////////////////////////////////////////
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBSvcConfDirective")))
+        {
+          // This is used to pass arguments to the Service
+          // Configurator using the "command line" to provide
+          // configuration information rather than using a svc.conf
+          // file.  Pass the "-S" to the service configurator.
+          this->svc_config_argv_[this->svc_config_argc_++] =
+            CORBA::string_dup ("-S");
+
+          // Pass the next argument.
+          this->svc_config_argv_[this->svc_config_argc_++] =
+            CORBA::string_dup (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
+
       else if ((current_arg =
                 arg_shifter.get_the_parameter ("-ORBSvcConf")))
         {
@@ -765,22 +782,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                 ("-ORBCDRTradeoff")))
         {
           cdr_tradeoff = ACE_OS::atoi (current_arg);
-
-          arg_shifter.consume_arg ();
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBSvcConfDirective")))
-        {
-          // This is used to pass arguments to the Service
-          // Configurator using the "command line" to provide
-          // configuration information rather than using a svc.conf
-          // file.  Pass the "-S" to the service configurator.
-          this->svc_config_argv_[this->svc_config_argc_++] =
-            CORBA::string_dup ("-S");
-
-          // Pass the next argument.
-          this->svc_config_argv_[this->svc_config_argc_++] =
-            CORBA::string_dup (current_arg);
 
           arg_shifter.consume_arg ();
         }
