@@ -446,6 +446,7 @@ ACE_Service_Config::process_directives (void)
               // Keep track of the number of errors.
               result += ACE_Service_Config::process_directives_i ();
             }
+          ACE_OS::fclose (fp);
         }
     }
 
