@@ -1786,7 +1786,9 @@ protected:
 #  else
 // If we are on Solaris we can just reuse the existing implementations
 // of these synchronization types.
+#if !defined (ACE_LACKS_RWLOCK_T)
 typedef rwlock_t ACE_rwlock_t;
+#endif /* !ACE_LACKS_RWLOCK_T */
 #    if !defined (ACE_HAS_POSIX_SEM)
 typedef sema_t ACE_sema_t;
 #    endif /* !ACE_HAS_POSIX_SEM */
@@ -1797,7 +1799,9 @@ typedef sema_t ACE_sema_t;
 typedef thread_t ACE_thread_t;
 typedef thread_key_t ACE_thread_key_t;
 typedef mutex_t ACE_mutex_t;
+#if !defined (ACE_LACKS_RWLOCK_T)
 typedef rwlock_t ACE_rwlock_t;
+#endif /* !ACE_LACKS_RWLOCK_T */
 #  if !defined (ACE_HAS_POSIX_SEM)
 typedef sema_t ACE_sema_t;
 #  endif /* !ACE_HAS_POSIX_SEM */
@@ -2097,7 +2101,7 @@ protected:
   // Value is -1 if writer has the lock, else this keeps track of the
   // number of readers holding the lock.
 };
-#elif !defined (ACE_HAS_STHREADS)
+#elif defined (ACE_HAS_STHREADS)
 #include /**/ <synch.h>
 typedef rwlock_t ACE_rwlock_t;
 #endif /* ACE_LACKS_RWLOCK_T */

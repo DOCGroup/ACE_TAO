@@ -27,6 +27,7 @@ HREF="ACE.FAQ.html">FAQ</A> before building and installing ACE.
 
 <UL>
 <LI><A HREF="#platforms">Supported Platforms and Compilers</A>
+<LI><A HREF="#g++">Compiling ACE with GNU C++</A>
 <LI><A HREF="#aceinstall">Building and Installing ACE</A>
 <LI><A HREF="#svcsinstall">Building and Installing ACE Network Services</A>
 <LI><A HREF="#advanced">Advanced Topics</A>
@@ -321,15 +322,30 @@ If you use the GNU GCC C++ compiler please note the following: <P>
 	  upgrade to G++ 2.7.2 or greater. <P>
 
 	<LI> Make sure to update your gcc <code>config.status</code>
-          file - this specifies whether your gcc install uses, for
-	  example, Solaris's <code>/usr/ccs/bin</code> binary utils or
-	  GNU binary utils. <code>config.status</code> is an output
-          of <code>configure</code>; it is preferable to use the
-          <code>--prefix</code> option to <code>configure</code> instead
-          of hacking its output.<P>
+        file.  This file is produced when installing gcc; it specifies
+        where to install the binary files that gcc uses.  For example,
+        it specifies whether to use Solaris's
+        <code>/usr/ccs/bin</code> binary utils or GNU binary
+        utils.  The <code>config.status</code> file is an output of
+        the gcc <code>configure</code> script; it is preferable to use
+        the <code>--prefix</code> option to <code>configure</code> instead
+        of hacking its output.<P>
 
-        <LI> Make sure that the linker invoked by GCC produces code
-	  that initializes static objects.  Please see GCC's
+        <LI> If you are getting weird link errors when building libACE
+             on Solaris you are probably using the GNU linker.  Try using
+              the Sun linker (/usr/ccs/bin/ld) instead.  Note that gcc
+            first looks for the GNU linker if it is installed along
+            with gcc.  The only way to not use the GNU linker is to 
+            delete it from the installation or to build your own
+            compiler with no linker. Be aware that you still need the
+            libraries and includes of gcc. <P>
+
+         <LI> Don't get too confused about contradictory statements in
+             the gcc documentation. It was written by different
+             people... <P>
+
+        <LI> Make sure that the linker invoked by gcc produces code
+	  that initializes static objects.  Please see gcc's
 	  documentation for using <CODE>collect2</CODE>.<P>
 
 	<LI> By default, gcc (thru version 2.7.2, at least) uses

@@ -1,5 +1,10 @@
 Sun Jan  4 10:11:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* build/SunOS5.5/ace/OS: Revised a bunch of #ifdefs so that we can
+ 	  selectively enable the ACE rwlock emulation, even if we're
+ 	  compiling with ACE_HAS_STHREADS in order to get the native
+ 	  Solaris semaphores.
+
 	* apps/Gateway/Peer/Makefile: Tweaked the Makefile rules to fix
  	  some minor problems.  Thanks to David Levine for showing the
  	  way...
