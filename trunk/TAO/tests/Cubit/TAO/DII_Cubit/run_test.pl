@@ -10,14 +10,16 @@ require Process;
 $client_port = 0;
 $server_port = 0;
 $iorfile = "theior";
+$sleeptime = 5;
 
-$SV = Process::Create ("..$DIR_SEPARATOR"."IDL_Cubit".
-		       $DIR_SEPARATOR."server".$Process::EXE_EXT, 
+$SV = Process::Create ("..$DIR_SEPARATOR"
+		       ."IDL_Cubit".$DIR_SEPARATOR.
+		       "server".$Process::EXE_EXT.
                        " -ORBport ".$server_port.
 		       " -ORBobjrefstyle url".
-		       " -s -f $iorfile");
+		       " -s -o $iorfile");
 
-sleep (2);
+sleep $sleeptime;
 
 $status = system ("client".$Process::EXE_EXT.
 		  " -ORBport $client_port".

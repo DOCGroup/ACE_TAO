@@ -8,18 +8,19 @@ unshift @INC, '../../../../bin';
 require Process;
 
 $NS_ior = "NameService.ior";
-$sleeptime = 3;
+$sleeptime = 5;
 
 $NS = Process::Create ("..".$DIR_SEPARATOR.
 		       "..".$DIR_SEPARATOR.
-		       "Naming_Service".$DIR_SEPARATOR
-		       "Naming_Service".
-		       $Process::EXE_EXT." -o $NS_ior ");
+		       "Naming_Service".$DIR_SEPARATOR.
+		       "Naming_Service".$Process::EXE_EXT.
+		       " -o $NS_ior ");
+
 sleep $sleeptime;
 
 $ES = Process::Create ("..".$DIR_SEPARATOR.
 		       "..".$DIR_SEPARATOR.
-		       "Event_Service".
+		       "Event_Service".$DIR_SEPARATOR.
 		       "Event_Service".$Process::EXE_EXT);
 
 sleep $sleeptime;
