@@ -23,7 +23,8 @@ test_i::method (CORBA::ULong work,
   ACE_THROW_SPEC (())
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Server: Working for %d milli seconds @ %T\n"));
+              "Server: Working for %d milli seconds @ %T\n",
+              work));
 
   // Time required to process this request. <work> is time units in
   // milli seconds.
