@@ -1,3 +1,22 @@
+Wed Jun 24 13:34:32 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
+
+        * tests/CLASSIX/*
+	  Attached "CLASSIX_" to all the file names in this directory
+	  Added Imakefile
+
+	* ace/CLASSIX/CLASSIX_Select_Reactor.* 
+	  test/CLASSIX/CLD_Connector_Test.cpp
+	  get_current_info() is now renamed to current_info() in compliant with 	  ACE_Reactor_Impl class.
+
+Wed Jun 24 08:17:25 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
+
+	* Renamed ace/CLASSIX/CLASSIX_Reactor.* to ace/CLASSIX/CLASSIX_Select_R          eactor.* and adjst other files accordingly.
+
+        * ace/CLASSIX/CLASSIX_Reactor.*
+          make naming reference consistenet: all the references to
+          ACE_CLASSIX_Reactor are now to ACE_CLASSIX_Select_Reactor
+ 
+
 Wed Jun 24 02:39:35 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.16 released.
@@ -10,15 +29,21 @@ Wed Jun 24 00:00:44 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* examples/ASX/Event_Server/Event_Server/event_server.cpp (main):
  	  Cleaned up the code a bit.
 
+
 Wed Jun 24 06:54:00 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
+
 	* Attached "CLASSIX_" to all the file names in ace/CLASSIX.
+
         * Modified include statments in ace/CLASSIX/* to reflect the
           name changes.
+
         * Added Makefile in ace/CLASSIX
+
         * ace/CLASSIX/CLASSIX_Reactor.h:
           ACE_CLASSIX_Reactor_Notify is now derived from ACE_Reactor_Notify
 	  The private data member, select_reactor_, is now an
           ACE_CLASSIX_Reactor class instead of an ACE_Select_Reactor class. 
+
         * ace/CLASSIX/CLASSIX_Reactor.cpp:
  	  in open() 
 	  uses ACE_dynamic_cast() to cast <theReactor>
