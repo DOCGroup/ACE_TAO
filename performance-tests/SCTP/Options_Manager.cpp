@@ -4,8 +4,6 @@
 
 extern "C" {
 #include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
 };
 
 // make sure that the code compiles cleanly even if SCTP is not
