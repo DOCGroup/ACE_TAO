@@ -26,7 +26,7 @@
  * @class ACE_Dirent_Selector
  *
  * @brief Define a portable C++ directory-entry iterator based on the
- * POSIX @param scandir API.
+ * POSIX scandir API.
  */
 class ACE_Export ACE_Dirent_Selector
 {
@@ -40,14 +40,14 @@ public:
   /// Return the length of the list of matching directory entries.
   int length (void) const;
 
-  /// Return the entry at <index>.
+  /// Return the entry at @a index.
   dirent *operator[] (const int index) const;
 
   /// Free up resources.
   int close (void);
 
-  /// Open the director <dir> and populate the <namelist_> array with
-  /// directory entries that match the <selector> and <comparator>.
+  /// Open the directory @a dir and populate the <namelist_> array with
+  /// directory entries that match the @a selector and @a comparator.
   int open (const ACE_TCHAR *dir,
             int (*selector)(const dirent *d) = 0,
             int (*comparator)(const dirent **d1, const dirent **d2) = 0);

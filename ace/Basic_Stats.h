@@ -48,10 +48,10 @@ public:
 
   /// Dump all the samples
   /**
-   * Prints out the results, using @param msg as a prefix for each
-   * message and scaling all the numbers by @a scale_factor.
-   * The latter is useful because high resolution timer samples are
-   * acquired in clock ticks, but often presented in microseconds.
+   * Prints out the results, using @a msg as a prefix for each message and
+   * scaling all the numbers by @a scale_factor. The latter is useful because
+   * high resolution timer samples are acquired in clock ticks, but often
+   * presented in microseconds.
    */
   void dump_results (const ACE_TCHAR *msg,
                      ACE_UINT32 scale_factor) const;
