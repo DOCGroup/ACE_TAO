@@ -126,6 +126,12 @@
             ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
             </pre><p>
 
+        <strong>NOTE:</strong> It's very important to ensure than an
+        inline function will not be used before its definition is seen.
+        Therefore, the inline functions in the .i file should be arranged
+        properly.  Some compilers, such as <code>g++</code> with the
+        <code>-Wall</code> option, will issue warnings for violations.<p>
+
     <li>Never use <strong><code>delete</code></strong> to deallocate
         memory that was allocated with <strong><code>malloc</code></strong>.
         Similarly, never associate <strong><code>free</code></strong> with
@@ -142,7 +148,17 @@
         use <strong>0</strong> instead.  The language allows any pointer to
         be compared or assigned with <strong>0</strong>.  The definition
         of <strong>NULL</strong> is implementation dependent, so it is
-        difficult to use portably without casting.
+        difficult to use portably without casting.<p>
+
+    <li>If a class has any virtual functions, and its destructor is
+        declared explicitly in the class, then the destructor should
+        <strong>always</strong> be virtual as well.  And to support
+        compiler activities such as generation of virtual tables and,
+        in some cases, template instantiation, the virtual destructor
+        should <strong>not be inline</strong>.  (Actually, any non-pure
+        virtual function could be made non-inline for this purpose.  But,
+        for convenience, if its performance is not critical, it's usually
+        easiest just to make the virtual destructor non-inline.)<p>
   </ul>
 
   <li><strong>I/O</strong><p>
@@ -165,6 +181,19 @@
       instead of using one of the specific mutexes, such as
       <strong><code>ACE_Thread_Mutex</code></strong>.  This provides
       portability between threaded and non-threaded platforms.<p>
+
+  <li>Avoid creating a static instance of user-defined (class) type.
+      Instead, either create is as an
+      <strong><code>ACE_Singleton</code></strong> or as an
+      <strong><code>ACE_Cleanup</code></strong> object.  See the
+      <strong>ACE</strong>
+      <a href="../ace/Singleton.h"><code>Singleton.h</code></a>,
+      <a href="../ace/Object_Manager.h"><code>Object_Manager.h</code></a>, and
+      <a href="../ace/Managed_Object.h"><code>Managed_Object.h</code></a>
+      header files for more information.<p>
+
+      Static instances of built-in types, such as
+      <strong><code>int</code></strong> or any pointer type, are fine.<p>
 </ul><p>
 
 
