@@ -1,3 +1,12 @@
+Thu Mar 20 18:29:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/PortableServerC.cpp:
+
+          Added more missing explicit template instantiations associated
+          with Any operators for sequences. Thanks to Phil Mesnier
+          <mesnier_p@ociweb.com> for pointing out the ones I missed.
+
 Thu Mar 20 12:28:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
