@@ -1,23 +1,28 @@
+Tue Jan  2 14:22:21 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_run_tests.lst:
+          Add the DII version of Param_Test to the nightly builds.
+
 Tue Jan  2 10:25:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Cached_Connect_Strategy_T.cpp: Added the patch provided by
-	  Edan Ayal <edan@bandwiz.com> for
-	  ACE_Bounded_Cached_Connect_Strategy::find_or_create_svc_handler_i (). 
+        * ace/Cached_Connect_Strategy_T.cpp: Added the patch provided by
+          Edan Ayal <edan@bandwiz.com> for
+          ACE_Bounded_Cached_Connect_Strategy::find_or_create_svc_handler_i ().
 
 Mon Jan 01 16:35:00 2000  Michael Kircher  <Micahel.Kircher@mchp.siemens.de>
 
-	* tests/Reader_Writer_Test.cpp: Added a #ifdef to check for native
-	  RW lock support. If the platform supports native RW locks we should
-	  not report a failure on upgrading, because native RW locks do not
-	  support upgrading, only our RW lock emulation does this.
-	  Thanks to Frank and Doug for pointing out this failure.
+        * tests/Reader_Writer_Test.cpp: Added a #ifdef to check for native
+          RW lock support. If the platform supports native RW locks we should
+          not report a failure on upgrading, because native RW locks do not
+          support upgrading, only our RW lock emulation does this.
+          Thanks to Frank and Doug for pointing out this failure.
 
 Sun Dec 31 14:12:08 2000  Ossama Othman  <ossama@uci.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added TAO's "ForwardRequest" PortableInterceptor test to the
-	  list of tests to run.
+          Added TAO's "ForwardRequest" PortableInterceptor test to the
+          list of tests to run.
 
 Sun Dec 31 13:59:02 2000  David L. Levine <levine@cs.wustl.edu>
 
@@ -73,7 +78,7 @@ Sat Dec 30 11:12:08 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
         * ace/Message_Block_T.cpp: Added patches provided by J. Russell
           Noseworthy <rnosewor@objectsciences.com> for SPRO 5.1. The patch
           to config-sunos-5.5.h has not been applied as it breaks builds
-	  on SunCC 5.0.
+          on SunCC 5.0.
 
 Fri Dec 29 17:08:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -236,30 +241,30 @@ Thu Dec 21 05:50:51 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 >>>>>>> 4.1393
 
 <<<<<<< ChangeLog
-	* ace/Timer_Wheel_T.cpp (expire): Fixed a mistake where
-	  next_earliest_time should have been next_earliest.  Thanks to
- 	  Keith Brown <kalbrown@ix.netcom.com> for reporting this.
+        * ace/Timer_Wheel_T.cpp (expire): Fixed a mistake where
+          next_earliest_time should have been next_earliest.  Thanks to
+          Keith Brown <kalbrown@ix.netcom.com> for reporting this.
 
-	* examples/IPC_SAP/SOCK_SAP/Makefile.bor: Reenable CPP-inserver-fancy.cpp
-	  now that it compiles!  Thanks to Johnny Willemsen
- 	  <johnny.willemsen@meco.nl> for confirming this.
+        * examples/IPC_SAP/SOCK_SAP/Makefile.bor: Reenable CPP-inserver-fancy.cpp
+          now that it compiles!  Thanks to Johnny Willemsen
+          <johnny.willemsen@meco.nl> for confirming this.
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp (handle_events): Added
-	  casts for (SOCKET) when using FD_SET to work around problems
- 	  with Borland.  Thanks to Johnny Willemsen
- 	  <johnny.willemsen@meco.nl> for reporting this.
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp (handle_events): Added
+          casts for (SOCKET) when using FD_SET to work around problems
+          with Borland.  Thanks to Johnny Willemsen
+          <johnny.willemsen@meco.nl> for reporting this.
 
-	* ace/Message_Block.h (ACE_Dynamic_Message_Strategy): Fixed a bunch
-	  of non-const accessor methods to be const.  Thanks to Johnny
- 	  Willemsen <johnny.willemsen@meco.nl> for reporting this.
+        * ace/Message_Block.h (ACE_Dynamic_Message_Strategy): Fixed a bunch
+          of non-const accessor methods to be const.  Thanks to Johnny
+          Willemsen <johnny.willemsen@meco.nl> for reporting this.
 
-	* examples/Naming/Makefile (BIN2): Added the test_open.cpp file
-	  to the Makefile.  Thanks to Johnny Willemsen
- 	  <johnny.willemsen@meco.nl> for reporting this.
+        * examples/Naming/Makefile (BIN2): Added the test_open.cpp file
+          to the Makefile.  Thanks to Johnny Willemsen
+          <johnny.willemsen@meco.nl> for reporting this.
 
-	* docs/tutorials/016/page02.html: Clarify that signal() or
-	  broadcast() don't release the mutex.  Thanks to Mike Curtis
- 	  <mccurry@my-deja.com> for pointing this out.
+        * docs/tutorials/016/page02.html: Clarify that signal() or
+          broadcast() don't release the mutex.  Thanks to Mike Curtis
+          <mccurry@my-deja.com> for pointing this out.
 
 =======
         * examples/Naming/Makefile (BIN2): Added the test_open.cpp file
