@@ -25,6 +25,10 @@ void
 ACE_Thread_Manager::dump (void) const
 {
   ACE_TRACE ("ACE_Thread_Manager::dump");
+  // Cast away const-ness of this in order to use its non-const lock_.
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
+                     ((ACE_Thread_Manager *) this)->lock_));
+
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_DEBUG ((LM_DEBUG, "\ngrp_id_ = %d", this->grp_id_));
@@ -65,7 +69,9 @@ ACE_Thread_Descriptor::dump (void) const
 }
 
 ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
-  : thr_id_ (ACE_OS::NULL_thread),
+  : task_ (0),
+    thr_id_ (ACE_OS::NULL_thread),
+    thr_handle_ (ACE_OS::NULL_hthread),
     grp_id_ (0),
     thr_state_ (ACE_THR_IDLE)
 {
@@ -136,19 +142,14 @@ ACE_Thread_Manager::resize (size_t size)
   
   ACE_NEW_RETURN (temp, ACE_Thread_Descriptor[size], -1);
 
-  size_t i;
-
-  for (i = 0; i < this->max_table_size_; i++)
+  for (size_t i = 0; i < this->max_table_size_; i++)
     temp[i] = this->thr_table_[i]; // Structure assignment.
-
-  for (; i < size; i++)
-    temp[i].cleanup_info_.cleanup_hook_ = 0;  // Zero unused table slots.
 
   this->max_table_size_ = size;
 
   delete [] this->thr_table_;
-
   this->thr_table_ = temp;
+
   return 0;
 }
 
@@ -206,7 +207,6 @@ ACE_Thread_Manager *
 ACE_Thread_Manager::instance (ACE_Thread_Manager *tm)
 {
   ACE_TRACE ("ACE_Thread_Manager::instance");
-
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
 			    *ACE_Static_Object_Lock::instance (), 0));
 
@@ -240,7 +240,6 @@ int
 ACE_Thread_Manager::close (void)
 {
   ACE_TRACE ("ACE_Thread_Manager::close");
-
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (this->thr_table_ != 0)
@@ -486,14 +485,16 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   if (result != 0)
     {
       // _Don't_ clobber errno here!  result is either 0 or -1, and
-      // ACE_OS::thr_create () already set errno!  D. Levine 28 Mar
-      // 1997 errno = result;
+      // ACE_OS::thr_create () already set errno!    D. Levine 28 Mar 1997
+      // errno = result;
       return -1;
     }
   else
-    return this->append_thr (*t_id, *t_handle, 
-			     ACE_THR_SPAWNED, 
-			     grp_id, task);
+    {
+      return this->append_thr (*t_id, *t_handle, 
+                               ACE_THR_SPAWNED, 
+                               grp_id, task);
+    }
 }
 
 // Create a new thread running <func>.  *Must* be called with the
@@ -773,6 +774,7 @@ int
 ACE_Thread_Manager::kill_thr (int i, int arg)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill_thr");
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
   int signum = (int) arg;
 
@@ -1121,14 +1123,32 @@ int
 ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Thread_Manager::wait");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
 #if defined (ACE_HAS_THREADS)
-  while (this->current_count_ > 0)
-    {
-      if (this->zero_cond_.wait (timeout) == -1)
-        return -1;
-    }
+  size_t threads_waited_on;
+
+  // Just hold onto the guard while waiting.
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+    threads_waited_on = this->current_count_;
+
+    while (this->current_count_ > 0)
+      {
+        if (this->zero_cond_.wait (timeout) == -1)
+          return -1;
+      }
+  }
+  // Let go of the guard, giving other threads a chance to run.
+
+  // Yield (twice) for each thread that we had to wait on.  This
+  // should give each of those threads a chance to clean up.  The
+  // problem arises because the threads that signalled zero_cond_ may
+  // not have had a chance to run after that, and therefore may not
+  // have finished cleaning themselves up.  This isn't a guaranteed
+  // fix, of course, but that would be very complicated.
+  for (size_t i = 0; i < 2 * threads_waited_on; ++i)
+    ACE_OS::thr_yield ();
 #else
   ACE_UNUSED_ARG (timeout);
 #endif /* ACE_HAS_THREADS */
@@ -1358,7 +1378,6 @@ int
 ACE_Thread_Manager::set_grp (ACE_Task_Base *task, int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::set_grp");
-
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   for (size_t i = 0; i < this->current_count_; i++)
@@ -1371,7 +1390,6 @@ int
 ACE_Thread_Manager::get_grp (ACE_Task_Base *task, int &grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::get_grp");
-
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   ACE_FIND (this->find_task (task), index);
