@@ -56,13 +56,17 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -216,9 +220,13 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -346,7 +354,6 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -372,10 +379,9 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \

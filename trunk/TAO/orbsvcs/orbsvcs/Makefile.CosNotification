@@ -143,13 +143,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  Notify/Notify_ID_Pool_T.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -297,9 +301,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -427,7 +435,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -453,10 +460,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -529,11 +535,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -542,7 +553,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -680,9 +690,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -810,7 +824,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -836,10 +849,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -938,11 +950,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -951,7 +968,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -1089,9 +1105,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -1219,7 +1239,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -1245,10 +1264,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -1354,13 +1372,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -1511,9 +1533,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -1641,7 +1667,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -1667,10 +1692,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -1775,13 +1799,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -1927,9 +1955,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -2057,7 +2089,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -2083,10 +2114,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -2189,11 +2219,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotificationS.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2202,7 +2237,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -2340,9 +2374,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -2470,7 +2508,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -2496,10 +2533,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -2603,13 +2639,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -2755,9 +2795,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -2885,7 +2929,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -2911,10 +2954,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -3016,13 +3058,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -3168,9 +3214,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -3298,7 +3348,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -3324,10 +3373,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -3430,11 +3478,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotificationS.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3443,7 +3496,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -3581,9 +3633,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -3711,7 +3767,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -3737,10 +3792,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -3844,13 +3898,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -3996,9 +4054,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -4126,7 +4188,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -4152,10 +4213,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -4255,13 +4315,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  Notify/Notify_ID_Pool_T.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -4409,9 +4473,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -4539,7 +4607,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -4565,10 +4632,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -4634,13 +4700,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -4790,9 +4860,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -4920,7 +4994,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -4946,10 +5019,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -5023,11 +5095,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotificationS.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5036,7 +5113,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -5174,9 +5250,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -5304,7 +5384,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -5330,10 +5409,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -5403,11 +5481,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5416,7 +5499,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -5554,9 +5636,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -5684,7 +5770,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -5710,10 +5795,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -5733,10 +5817,15 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Trader/Constraint_Tokens.h \
  $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5745,7 +5834,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -5883,9 +5971,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -6013,7 +6105,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -6039,10 +6130,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -6097,13 +6187,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -6277,9 +6371,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -6379,7 +6477,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -6405,10 +6502,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -6425,11 +6521,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6438,7 +6539,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -6576,9 +6676,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -6706,7 +6810,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -6732,10 +6835,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -6760,11 +6862,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotifyCommC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6773,7 +6880,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -6911,9 +7017,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -7041,7 +7151,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -7067,10 +7176,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -7097,11 +7205,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7110,7 +7223,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -7248,9 +7360,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -7378,7 +7494,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -7404,10 +7519,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -7441,11 +7555,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7454,7 +7573,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -7592,9 +7710,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -7722,7 +7844,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -7748,10 +7869,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -7807,13 +7927,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Module.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -8029,9 +8153,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -8100,7 +8228,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -8126,10 +8253,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -8173,13 +8299,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -8389,9 +8519,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -8460,7 +8594,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -8486,10 +8619,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -8519,13 +8651,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -8668,9 +8804,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -8798,7 +8938,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -8824,10 +8963,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -8872,11 +9010,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -8885,7 +9028,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -9023,9 +9165,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -9153,7 +9299,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -9179,10 +9324,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -9233,11 +9377,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  ESF/ESF_Proxy_Collection.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -9246,7 +9395,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -9384,9 +9532,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -9514,7 +9666,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -9540,10 +9691,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -9594,13 +9744,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -9743,9 +9897,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -9873,7 +10031,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -9899,10 +10056,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -9946,13 +10102,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -10095,9 +10255,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -10225,7 +10389,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -10251,10 +10414,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -10283,13 +10445,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -10459,9 +10625,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -10566,7 +10736,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -10592,10 +10761,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -10639,13 +10807,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -10791,9 +10963,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -10917,7 +11093,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -10943,10 +11118,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -11060,13 +11234,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -11212,9 +11390,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -11338,7 +11520,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -11364,10 +11545,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -11384,18 +11564,22 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_Default_Collection_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  Notify/notify_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  Notify/Notify_Collection_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -11543,9 +11727,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -11669,7 +11857,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -11695,10 +11882,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -11738,13 +11924,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Arg_Shifter.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -11897,9 +12087,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -12023,7 +12217,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -12049,10 +12242,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -12106,11 +12298,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -12119,7 +12316,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -12257,9 +12453,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -12387,7 +12587,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -12413,10 +12612,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -12430,11 +12628,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_Buffering_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -12443,7 +12646,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -12581,9 +12783,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -12711,7 +12917,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -12737,10 +12942,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -12772,13 +12976,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -12989,9 +13197,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -13060,7 +13272,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -13086,10 +13297,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -13118,13 +13328,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -13267,9 +13481,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -13397,7 +13615,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -13423,10 +13640,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -13452,10 +13668,15 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Trader/Constraint_Nodes.h Trader/Constraint_Tokens.h \
  $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -13464,7 +13685,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -13602,9 +13822,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -13732,7 +13956,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -13758,10 +13981,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -13777,13 +13999,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Trader/Interpreter_Utils.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -13955,9 +14181,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -14057,7 +14287,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -14083,10 +14312,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -14112,10 +14340,15 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Trader/Constraint_Tokens.h \
  $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -14124,7 +14357,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -14262,9 +14494,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -14392,7 +14628,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -14418,10 +14653,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -14434,13 +14668,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/Constraint_l.o .obj/Constraint_l.so .shobj/Constraint_l.o .shobj/Constraint_l.so: Trader/Constraint_l.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -14587,9 +14825,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -14717,7 +14959,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -14743,10 +14984,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -14783,13 +15023,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/Constraint_y.o .obj/Constraint_y.so .shobj/Constraint_y.o .shobj/Constraint_y.so: Trader/Constraint_y.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -14936,9 +15180,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -15066,7 +15314,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -15092,10 +15339,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -15133,11 +15379,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Trader/Interpreter_Utils_T.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -15146,7 +15397,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -15284,9 +15534,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -15414,7 +15668,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -15440,10 +15693,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -15467,13 +15719,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -15645,9 +15901,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -15747,7 +16007,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -15773,10 +16032,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -15787,11 +16045,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -15800,7 +16063,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -15938,9 +16200,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -16068,7 +16334,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -16094,10 +16359,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -16141,11 +16405,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotificationS.h CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -16154,7 +16423,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -16292,9 +16560,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -16422,7 +16694,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -16448,10 +16719,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -16507,11 +16777,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotificationS.h CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -16520,7 +16795,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -16658,9 +16932,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -16788,7 +17066,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -16814,10 +17091,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -16864,11 +17140,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosNotifyCommS.h CosNotificationS.h CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -16877,7 +17158,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -17015,9 +17295,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -17145,7 +17429,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -17171,10 +17454,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -17223,11 +17505,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -17236,7 +17523,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -17374,9 +17660,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -17504,7 +17794,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -17530,10 +17819,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -17577,11 +17865,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  CosEventCommS.h CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -17590,7 +17883,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -17728,9 +18020,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -17858,7 +18154,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -17884,10 +18179,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -17929,14 +18223,18 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
 .obj/CosTradingS.o .obj/CosTradingS.so .shobj/CosTradingS.o .shobj/CosTradingS.so: CosTradingS.cpp CosTradingS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosTradingC.h \
+ $(ACE_ROOT)/ace/pre.h CosTradingC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -17945,7 +18243,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -18083,9 +18380,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -18213,7 +18514,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -18239,10 +18539,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -18281,14 +18580,19 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
 .obj/CosTradingReposS.o .obj/CosTradingReposS.so .shobj/CosTradingReposS.o .shobj/CosTradingReposS.so: CosTradingReposS.cpp CosTradingReposS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosTradingS.h CosTradingC.h \
+ $(ACE_ROOT)/ace/pre.h CosTradingS.h \
+ CosTradingC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -18297,7 +18601,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -18435,9 +18738,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -18565,7 +18872,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -18591,10 +18897,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -18637,11 +18942,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/CosNotificationC.o .obj/CosNotificationC.so .shobj/CosNotificationC.o .shobj/CosNotificationC.so: CosNotificationC.cpp CosNotificationC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -18650,7 +18960,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -18788,9 +19097,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -18918,7 +19231,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -18944,10 +19256,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -18958,11 +19269,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosNotifyChannelAdminC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -18971,7 +19287,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -19109,9 +19424,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -19239,7 +19558,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -19265,10 +19583,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -19282,11 +19599,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/CosNotifyCommC.o .obj/CosNotifyCommC.so .shobj/CosNotifyCommC.o .shobj/CosNotifyCommC.so: CosNotifyCommC.cpp CosNotifyCommC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -19295,7 +19617,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -19433,9 +19754,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -19563,7 +19888,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -19589,10 +19913,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -19604,11 +19927,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/CosNotifyFilterC.o .obj/CosNotifyFilterC.so .shobj/CosNotifyFilterC.o .shobj/CosNotifyFilterC.so: CosNotifyFilterC.cpp CosNotifyFilterC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -19617,7 +19945,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -19755,9 +20082,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -19885,7 +20216,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -19911,10 +20241,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -19926,11 +20255,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/CosEventCommC.o .obj/CosEventCommC.so .shobj/CosEventCommC.o .shobj/CosEventCommC.so: CosEventCommC.cpp CosEventCommC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -19939,7 +20273,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -20077,9 +20410,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -20207,7 +20544,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -20233,10 +20569,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -20247,11 +20582,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
  CosEventChannelAdminC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -20260,7 +20600,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -20398,9 +20737,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -20528,7 +20871,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -20554,10 +20896,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -20568,11 +20909,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/CosTradingC.o .obj/CosTradingC.so .shobj/CosTradingC.o .shobj/CosTradingC.so: CosTradingC.cpp CosTradingC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -20581,7 +20927,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -20719,9 +21064,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -20849,7 +21198,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -20875,10 +21223,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -20888,11 +21235,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/CosTradingReposC.o .obj/CosTradingReposC.so .shobj/CosTradingReposC.o .shobj/CosTradingReposC.so: CosTradingReposC.cpp CosTradingReposC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -20901,7 +21253,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
  $(ACE_ROOT)/ace/OS_String.inl \
@@ -21039,9 +21390,13 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -21169,7 +21524,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/Priority_Mapping.h \
@@ -21195,10 +21549,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
+ $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
