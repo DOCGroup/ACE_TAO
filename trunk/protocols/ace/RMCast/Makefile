@@ -90,8 +90,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/RMCast_Module.o .obj/RMCast_Module.so .shobj/RMCast_Module.o .shobj/RMCast_Module.so: RMCast_Module.cpp RMCast_Module.h \
  $(ACE_ROOT)/ace/pre.h \
- RMCast.h \
- $(ACE_ROOT)/ace/OS.h \
+ RMCast.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -119,8 +118,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/RMCast_Module_Factory.o .obj/RMCast_Module_Factory.so .shobj/RMCast_Module_Factory.o .shobj/RMCast_Module_Factory.so: RMCast_Module_Factory.cpp \
  RMCast_Module_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
- RMCast.h \
- $(ACE_ROOT)/ace/OS.h \
+ RMCast.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -800,8 +798,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/RMCast_Resend_Worker.o .obj/RMCast_Resend_Worker.so .shobj/RMCast_Resend_Worker.o .shobj/RMCast_Resend_Worker.so: RMCast_Resend_Worker.cpp \
  RMCast_Resend_Worker.h \
  $(ACE_ROOT)/ace/pre.h \
- RMCast.h \
- $(ACE_ROOT)/ace/OS.h \
+ RMCast.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

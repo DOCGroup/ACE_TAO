@@ -4043,7 +4043,19 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i \
  OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl
+ OS_Log_Msg_Attributes.inl \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i
 
 .obj/File_Lock.o .obj/File_Lock.so .shobj/File_Lock.o .shobj/File_Lock.so: File_Lock.cpp \
  File_Lock.h \
@@ -13043,7 +13055,6 @@ endif # GHS
  Service_Manager.i \
  Service_Repository.h \
  Service_Repository.i \
- Svc_Conf_Lexer_Guard.h \
  Containers.h \
  Containers.i \
  Containers_T.h \
@@ -13845,6 +13856,11 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Object_Manager.h \
+ Object_Manager.i \
+ Managed_Object.h \
+ Managed_Object.i \
+ Managed_Object.cpp \
  Svc_Conf.h \
  Obstack.h \
  Obstack_T.h \
@@ -13938,7 +13954,8 @@ endif # GHS
  Service_Types.h \
  Service_Types.i \
  DLL.h \
- Parse_Node.i
+ Parse_Node.i \
+ Svc_Conf_Lexer_Guard.h
 
 .obj/Svc_Conf_y.o .obj/Svc_Conf_y.so .shobj/Svc_Conf_y.o .shobj/Svc_Conf_y.so: Svc_Conf_y.cpp \
  ARGV.h \
