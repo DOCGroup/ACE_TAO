@@ -745,20 +745,22 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
        iterator != this->children_.end ();
        ++iterator)
     {
-      TAO_POA *child_poa = (*iterator).int_id_;
+      TAO_POA * const child_poa = (*iterator).int_id_;
 
-      // Get the adapter template related to the ChildPOA
-      PortableInterceptor::ObjectReferenceTemplate *child_at =
-        child_poa->get_adapter_template_i ();
+      TAO::ORT_Adapter * const adapter = child_poa->ORT_adapter_i ();
 
-      // In case no ORT library is linked we get zero
-      if (child_at != 0)
+      // In case no ORT library is linked we get zero.
+      if (adapter != 0)
         {
+          // Get the ObjectReferenceTemplate for the child POA.
+          PortableInterceptor::ObjectReferenceTemplate * const ort =
+            adapter->get_adapter_template ();
+
           // Add it to the sequence of object reference templates that
           // will be destroyed.
           array_obj_ref_template.size (i + 1);
 
-          array_obj_ref_template[i] = child_at;
+          array_obj_ref_template[i] = ort;
         }
 
       child_poa->adapter_state_ =
@@ -844,17 +846,21 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
     {
       TAO::ORT_Array my_array_obj_ref_template;
 
-      // Get the adapter template
-      PortableInterceptor::ObjectReferenceTemplate *adapter =
-        this->get_adapter_template_i ();
+      TAO::ORT_Adapter * const ort_adapter =
+        this->ORT_adapter_i ();
 
-      if (adapter != 0)
+      // In case no ORT library is linked we get zero.
+      if (ort_adapter != 0)
         {
-          // Add it to the sequence of object reference templates, we just notify
-          // for ourselves that we are now non_existent, our childs will do it
-          // for themselves.
+          // Get the ObjectReferenceTemplate.
+          PortableInterceptor::ObjectReferenceTemplate * const ort =
+            ort_adapter->get_adapter_template ();
+
+          // Add it to the sequence of object reference templates, we
+          // just notify for ourselves that we are now non_existent,
+          // our childs will do it for themselves.
           array_obj_ref_template.size (1);
-          array_obj_ref_template[0] = adapter;
+          array_obj_ref_template[0] = ort;
         }
 
       // According to the ORT spec, after a POA is destroyed, its state
@@ -874,6 +880,9 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                                    this->adapter_state_
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
+
+      if (ort_adapter != 0)
+        ort_adapter->release (array_obj_ref_template[0]);
     }
   else
     {

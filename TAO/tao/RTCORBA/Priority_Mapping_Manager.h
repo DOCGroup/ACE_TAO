@@ -85,7 +85,8 @@ private:
   TAO_Priority_Mapping *mapping_;
 };
 
-class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager_var : public TAO_Base_var
+class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager_var
+  : private TAO_Base_var
 {
 public:
   TAO_Priority_Mapping_Manager_var (void); // default constructor
