@@ -603,6 +603,8 @@ ACE_CHECK_LACKS_HEADERS(time.h)
 
 ACE_CHECK_LACKS_HEADERS(termios.h)
 
+ACE_CHECK_LACKS_HEADERS(wctype.h)
+
 
 
 AC_CHECK_HEADER([sys/systeminfo.h],[],[])
