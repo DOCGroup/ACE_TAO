@@ -96,7 +96,10 @@ TAO_LoadBalancer::init (int argc,
 //     strategy = &this->minimum_dispersion_;
 
   ACE_NEW (this->balancer_,
-           TAO_LoadBalancing_ReplicationManager_i (this->root_poa_.in ()));
+           TAO_LoadBalancing_ReplicationManager_i);
+
+  this->balancer_->init (this->root_poa_.in (), ACE_TRY_ENV);
+  ACE_CHECK;
 
   CORBA::Object_var obj =
     this->balancer_->_this (ACE_TRY_ENV);

@@ -62,6 +62,8 @@ TAO_LoadBalancing_ReplicationManager_i::register_load_monitor (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+
 }
 
 LoadBalancing::LoadMonitor_ptr
@@ -388,18 +390,24 @@ TAO_LoadBalancing_ReplicationManager_i::replica (
   return this->balancing_strategy_->replica (entry, ACE_TRY_ENV);
 }
 
-int
+void
 TAO_LoadBalancing_ReplicationManager_i::init (
-  PortableServer::POA_ptr root_poa)
+  PortableServer::POA_ptr root_poa,
+  CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_TRY_NEW_ENV
-    {
+//   ACE_TRY_NEW_ENV
+//     {
       // Create a new transient servant manager object in the child
       // POA.
       PortableServer::ServantManager_ptr tmp;
-      ACE_NEW_RETURN (tmp,
-                      TAO_LB_ReplicaLocator (this),
-                      -1);
+      ACE_NEW_THROW_EX (tmp,
+                        TAO_LB_ReplicaLocator (this),
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_CHECK;
 
       PortableServer::ServantManager_var servant_manager =
         tmp;
@@ -411,13 +419,13 @@ TAO_LoadBalancing_ReplicationManager_i::init (
         root_poa->create_request_processing_policy (
           PortableServer::USE_SERVANT_MANAGER,
           ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       PortableServer::ServantRetentionPolicy_var retention =
         root_poa->create_servant_retention_policy (
           PortableServer::NON_RETAIN,
           ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       // Create the PolicyList containing the policies necessary for
       // the POA to support ServantLocators.
@@ -434,42 +442,43 @@ TAO_LoadBalancing_ReplicationManager_i::init (
       // The ServantManager will be the ReplicaLocator.
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
+
       this->poa_ = root_poa->create_POA ("TAO_LB_ReplicationManager_POA",
                                          poa_manager.in (),
                                          policy_list,
                                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       // Activate the child POA.
       poa_manager->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       request->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       retention->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       // Now set the ReplicaLocator as the child POA's Servant
       // Manager.
       this->poa_->set_servant_manager (servant_manager.in (),
                                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       this->object_group_map_.poa (this->poa_.in ());
       this->generic_factory_.poa (this->poa_.in ());
-    }
-  ACE_CATCHANY
-    {
-      // @@ Should we do anything here?
+//     }
+//   ACE_CATCHANY
+//     {
+//       // @@ Should we do anything here?
 
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) TAO_LB_ReplicationManager_i::init:");
+//       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+//                            "(%P|%t) TAO_LB_ReplicationManager_i::init:");
 
-      return -1;
-    }
-  ACE_ENDTRY;
+//       return -1;
+//     }
+//   ACE_ENDTRY;
 
-  return 0;
+//   return 0;
 }
