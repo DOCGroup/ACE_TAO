@@ -219,19 +219,26 @@ main (int argc, char *argv[])
       // Implicit activation
       CIAO::Simple_Server_var server = servant->_this ();
 
-      CORBA::String_var str =
-        orb->object_to_string (server.in ()
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      write_IOR (str.in ());
+      CORBA::String_var str;
+      Components::CCMObject_var temp;
 
       if (create_component != 0)
         {
-          Components::CCMObject_var temp
-            = server->get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+          temp = server->get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          str = orb->object_to_string (temp.in ()
+                                       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+      else
+        {
+          str = orb->object_to_string (server.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      write_IOR (str.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "Running the simple generic server...\n"));
