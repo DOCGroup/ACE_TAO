@@ -1,8 +1,14 @@
+Sat Apr 26 21:20:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_Acceptor.cpp (accept): Fixed how the accept acquite the
+	  connecting (remote) port number.  Thanks to Steve Huston for
+	  calling this to my attention.
+
 Sat Apr 26 12:00:36 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/DSRT_Scheduler.cpp:
 	  Corrected calculation for priority range.
-	
+
 	* Kokyu/tests/DSRT_MIF/MIF.cpp:
 	  Modifications to set the priority of thread based on the value
 	  returned from the scheduler.
@@ -11,7 +17,7 @@ Sat Apr 26 08:25:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
 	* performance-tests/SCTP/SOCK_STREAM_clt.cpp: Fixed compile
-	  errors. 
+	  errors.
 
 Sat Apr 26 10:42:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
