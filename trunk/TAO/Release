@@ -33,8 +33,6 @@ CONTROLLED_FILES = TAO/COPYING* \
 		   TAO/tao-config.1.in \
 		   TAO/tao-config.in \
 		   TAO/taoConf.sh.in \
-	           TAO/tao_targets.GNU \
-		   TAO/taoconfig.mk \
 		   TAO/tests \
 		   TAO/utils
 
