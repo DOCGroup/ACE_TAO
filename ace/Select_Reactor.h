@@ -893,16 +893,16 @@ protected:
   // Enqueue ourselves into the list of waiting threads at the
   // appropriate point specified by <requeue_position_>.
 
+  friend class ACE_Select_Reactor_Notify;
+  friend class ACE_Select_Reactor_Handler_Repository;
+
+private:
   int release_token (void);
   // Release the token lock when a Win32 structured exception occurs.
 
   int handle_events_i (ACE_Time_Value *max_wait_time = 0);
   // Stops the VC++ compiler from bitching about exceptions and destructors
 
-  friend class ACE_Select_Reactor_Notify;
-  friend class ACE_Select_Reactor_Handler_Repository;
-
-private:
   ACE_Select_Reactor (const ACE_Select_Reactor &);
   ACE_Select_Reactor &operator = (const ACE_Select_Reactor &);
   // Deny access since member-wise won't work...
