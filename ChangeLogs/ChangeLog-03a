@@ -1,3 +1,15 @@
+Thu Oct  4 06:39:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/config-sunos5.5.h: Added ACE_LACKS_MKSTEMP as SunOS 5.5 does
+	  not support mkstemp (). 
+	
+	* ace/config-sunos5.6.h: Undefined ACE_LACKS_MKSTEMP as Sun 5.6
+	  and above support it. 
+
+	  Thanks to Don Hinton <dhinton@swan.fr> for reporting this
+	  problem and Chad Elliott for testing this out on a Sun OS 5.5
+	  box. 
+
 Wed Oct  3 16:37:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/CDR_Stream.cpp (read_1): Reverted this change "Wed Oct  3

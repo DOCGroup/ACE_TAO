@@ -107,6 +107,10 @@
 
 #endif /* defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510 */
 
+// SunOS 5.6 and above support mkstemp
+#undef ACE_LACKS_MKSTEMP
+
+
 // SunOS 5.6 has AIO calls.
 #if !defined (ACE_HAS_AIO_CALLS)
 #define ACE_HAS_AIO_CALLS
