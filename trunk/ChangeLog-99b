@@ -1,3 +1,9 @@
+Tue Jul 13 22:16:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/ACEutils.pm:
+	  Wait for non empty files, sometimes the process creates the
+	  files but does not have enough time to fill its contents.
+
 Tue Jul 13 21:32:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* acconfig.h:
