@@ -15,45 +15,66 @@
 
 #include "tao_util.h"
 
+
+// constructor
+TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
+                                  PortableServer::POA_ptr root_poa,
+                                  PortableServer::POAManager_ptr poa_manager)
+  : orb_ (orb),
+    root_poa_ (root_poa),
+    poa_manager_ (poa_manager)
+{
+}
+
 // Initialize the ORB, using the supplied command line arguments.  the
 // poa_name is a user-supplied string that is used to name the POA
 // created.
-
 int
 TAO_ORB_Manager::init (int argc,
                        char **argv,
                        CORBA::Environment &env)
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
-                                0,
-                                env);
-  TAO_CHECK_ENV_RETURN (env, 1);
+  if (CORBA::is_nil (this->orb_.in ()))
+    {
+      this->orb_ = CORBA::ORB_init (argc,
+                                    argv,
+                                    0,
+                                    env);
+      TAO_CHECK_ENV_RETURN (env, 1);
+    }
 
-  // Get the POA from the ORB.
-  CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references ("RootPOA");
+  if (CORBA::is_nil (this->root_poa_.in ()))
+    {
+      // Get the POA from the ORB.
+      CORBA::Object_var poa_object =
+        this->orb_->resolve_initial_references ("RootPOA");
+      
+      if (CORBA::is_nil (poa_object.in ()))
+        ACE_ERROR_RETURN ( (LM_ERROR,
+                            " (%P|%t) Unable to initialize the POA.\n"),
+                           1);
+      
+      // Get the POA object.
+      this->root_poa_ =
+        PortableServer::POA::_narrow (poa_object.in (), env);
+      
+      TAO_CHECK_ENV_RETURN (env, 1);
+    }
 
-  if (CORBA::is_nil (poa_object.in ()))
-    ACE_ERROR_RETURN ( (LM_ERROR,
-                       " (%P|%t) Unable to initialize the POA.\n"),
-                      1);
-
-  // Get the POA object.
-  this->root_poa_ =
-    PortableServer::POA::_narrow (poa_object.in (), env);
-
-  TAO_CHECK_ENV_RETURN (env, 1);
-
-  // Get the POA_Manager.
-  this->poa_manager_ =
-    this->root_poa_->the_POAManager (env);
-
-  TAO_CHECK_ENV_RETURN (env, 1);
-
+  if (CORBA::is_nil (this->poa_manager_.in ()))
+    {
+      
+      // Get the POA_Manager.
+      this->poa_manager_ =
+        this->root_poa_->the_POAManager (env);
+      
+      TAO_CHECK_ENV_RETURN (env, 1);
+    }
+      
   return 0;
 }
 
+// activate servant in the poa
 CORBA::String
 TAO_ORB_Manager::activate (PortableServer::Servant servant,
                            CORBA_Environment &env)
@@ -77,10 +98,10 @@ TAO_ORB_Manager::activate (PortableServer::Servant servant,
   return str;
 }
 
-// @@ Sumedh, shouldn't run() take an ACE_Time_Value * so users can do
-// timed run()'s?!
+// enter the orb event loop
 int
-TAO_ORB_Manager::run (CORBA::Environment &env)
+TAO_ORB_Manager::run (CORBA_Environment &env,
+                      ACE_Time_Value *tv)
 {
   this->poa_manager_->activate (env);
 
@@ -92,18 +113,22 @@ TAO_ORB_Manager::run (CORBA::Environment &env)
                        "run"),
                        1);
 
-  // @@ Sumedh, should the destroy() be done here, or in the
-  // destructor?  Doesn't this make it impossible to call run()
-  // multiple times (see comments about ACE_Time_Value above...)?
-  this->root_poa_->destroy (CORBA::B_TRUE,
-                            CORBA::B_TRUE,
-                            env);
   TAO_CHECK_ENV_RETURN (env, 1);
   return 0;
 }
 
+// return the corba orb reference
 CORBA::ORB_ptr
 TAO_ORB_Manager::orb (void)
 {
-  return this->orb_;
+  return CORBA_ORB::_duplicate (this->orb_);
+}
+
+TAO_ORB_Manager::~TAO_ORB_Manager ()
+{
+  CORBA::Environment env;
+  if (! CORBA::is_nil (this->root_poa_.in ()))
+    this->root_poa_->destroy (CORBA::B_TRUE,
+                              CORBA::B_TRUE,
+                              env);
 }
