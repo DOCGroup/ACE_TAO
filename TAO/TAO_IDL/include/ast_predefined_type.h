@@ -76,7 +76,7 @@ class TAO_IDL_FE_Export AST_PredefinedType : public virtual AST_ConcreteType
 {
 public:
   // Enum for all the different predefined types.
-  enum PredefinedType 
+  enum PredefinedType
     {
         PT_long         // Predefined type "long"
       , PT_ulong        // Predefined type "unsigned long"
@@ -101,8 +101,8 @@ public:
   // Constructor(s).
   AST_PredefinedType (void);
 
-  AST_PredefinedType (PredefinedType t, 
-                      UTL_ScopedName *n, 
+  AST_PredefinedType (PredefinedType t,
+                      UTL_ScopedName *n,
                       UTL_StrList *p);
 
   virtual ~AST_PredefinedType (void);
@@ -115,7 +115,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_PredefinedType);
 
   // AST Dumping
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

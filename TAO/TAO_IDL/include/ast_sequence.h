@@ -102,7 +102,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_Sequence);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

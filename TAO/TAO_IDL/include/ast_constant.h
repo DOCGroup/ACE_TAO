@@ -85,15 +85,15 @@ public:
   // Constructor(s).
   AST_Constant (void);
 
-  AST_Constant (AST_Expression::ExprType et, 
+  AST_Constant (AST_Expression::ExprType et,
                 AST_Decl::NodeType nt,
-                AST_Expression *ev, 
-                UTL_ScopedName *n, 
+                AST_Expression *ev,
+                UTL_ScopedName *n,
                 UTL_StrList *p);
 
-  AST_Constant (AST_Expression::ExprType et, 
+  AST_Constant (AST_Expression::ExprType et,
                 AST_Expression *ev,
-                UTL_ScopedName *n, 
+                UTL_ScopedName *n,
                 UTL_StrList *p);
 
   // Destructor.
@@ -113,7 +113,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_Constant);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

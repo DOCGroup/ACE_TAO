@@ -73,7 +73,7 @@ class TAO_IDL_FE_Export AST_UnionLabel
 {
 public:
   // Define kind of label.
-  enum UnionLabel 
+  enum UnionLabel
     {
         UL_default              // Label is "default".
       , UL_label                // Regular label.
@@ -84,7 +84,7 @@ public:
   // Constructor(s) and destructor.
   AST_UnionLabel (void);
 
-  AST_UnionLabel (UnionLabel lk, 
+  AST_UnionLabel (UnionLabel lk,
                   AST_Expression *lv);
 
   virtual ~AST_UnionLabel (void);
@@ -95,7 +95,7 @@ public:
   AST_Expression *label_val (void);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

@@ -16,7 +16,7 @@ public:
   AST_Native (void);
   // Default constructor.
 
-  AST_Native (UTL_ScopedName *n, 
+  AST_Native (UTL_ScopedName *n,
               UTL_StrList *p);
   // Constructor that initializes the scoped name.
 
@@ -28,7 +28,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_Native);
 
   // AST Dumping.
-  virtual void dump(ostream &o);
+  virtual void dump(ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

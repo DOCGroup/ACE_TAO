@@ -76,7 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-class TAO_IDL_FE_Export AST_Enum : public virtual AST_ConcreteType, 
+class TAO_IDL_FE_Export AST_Enum : public virtual AST_ConcreteType,
                                    public virtual UTL_Scope
 {
 public:
@@ -98,7 +98,7 @@ public:
   DEF_NARROW_FROM_SCOPE(AST_Enum);
 
   // AST Dumping.
-  virtual void dump (ostream &);
+  virtual void dump (ACE_OSTREAM_TYPE &);
 
   // Look up an AST_EnumVal by value
   virtual AST_EnumVal *lookup_by_value (const AST_Expression *v);

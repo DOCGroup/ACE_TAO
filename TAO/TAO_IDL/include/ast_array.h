@@ -70,7 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Representation of array declaration:
 // An array is a combination of a list of dimensions and a base type
 
-class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType 
+class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType
 {
 public:
   // Operations.
@@ -93,7 +93,7 @@ public:
 
   AST_Expression **dims (void);
 
-  void set_dims (AST_Expression **, 
+  void set_dims (AST_Expression **,
                  unsigned long);
 
   AST_Type *base_type (void);
@@ -105,7 +105,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_Array);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

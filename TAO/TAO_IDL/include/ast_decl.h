@@ -152,8 +152,8 @@ public:
   // Constructor(s).
   AST_Decl (void);
 
-  AST_Decl (NodeType type, 
-            UTL_ScopedName *n, 
+  AST_Decl (NodeType type,
+            UTL_ScopedName *n,
             UTL_StrList *pragmas,
             idl_bool anonymous = I_FALSE);
 
@@ -185,7 +185,7 @@ public:
 
   UTL_ScopedName *name (void);
 
-  UTL_ScopedName *compute_name (const char *prefix, 
+  UTL_ScopedName *compute_name (const char *prefix,
                                 const char *suffix);
   // Variation of the <name>. Computes scoped name string, applying
   // prefix and suffix to the local name component.
@@ -194,7 +194,7 @@ public:
 
   Identifier *local_name (void);
 
-  Identifier *compute_local_name (const char *prefix, 
+  Identifier *compute_local_name (const char *prefix,
                                   const char *sufix);
   // Apply prefix and suffix to the local name and return.
 
@@ -238,7 +238,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_Decl);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

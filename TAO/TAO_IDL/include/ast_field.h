@@ -84,10 +84,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Field : public virtual AST_Decl
 {
 public:
-  enum Visibility 
+  enum Visibility
     {
-      vis_NA, 
-      vis_PUBLIC, 
+      vis_NA,
+      vis_PUBLIC,
       vis_PRIVATE
     };
 
@@ -97,14 +97,14 @@ public:
   AST_Field (void);
 
   AST_Field (AST_Type *field_type,
-             UTL_ScopedName *n, 
-             UTL_StrList *p, 
+             UTL_ScopedName *n,
+             UTL_StrList *p,
              Visibility vis = vis_NA);
 
-  AST_Field (AST_Decl::NodeType nt, 
+  AST_Field (AST_Decl::NodeType nt,
              AST_Type *field_type,
-             UTL_ScopedName *n, 
-             UTL_StrList *p, 
+             UTL_ScopedName *n,
+             UTL_StrList *p,
              Visibility vis = vis_NA);
 
   virtual ~AST_Field (void);
@@ -119,7 +119,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_Field);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
