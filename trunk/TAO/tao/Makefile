@@ -877,6 +877,7 @@ realclean:
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Forwarding_Servant.h
 .obj/POAC.o .obj/POAC.so .shobj/POAC.o .shobj/POAC.so: POAC.cpp \
  $(TAO_ROOT)/tao/POAC.h \
@@ -2456,12 +2457,11 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Pluggable.i \
- $(TAO_ROOT)/tao/Acceptor_Registry.i \
- $(TAO_ROOT)/tao/Stub.h \
- $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/ORB.h \
- $(TAO_ROOT)/tao/IOR_LookupTable.h \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2473,10 +2473,6 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -2488,6 +2484,38 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/GIOP.i \
+ $(TAO_ROOT)/tao/Acceptor_Registry.i \
+ $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/MProfile.h \
+ $(TAO_ROOT)/tao/MProfile.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/IOR_LookupTable.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/IORManipulation.h \
@@ -2497,8 +2525,6 @@ realclean:
  $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/CDR.h \
- $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/IORC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAC.h \
@@ -2531,34 +2557,9 @@ realclean:
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/GIOP.h \
- $(TAO_ROOT)/tao/GIOP.i \
- $(TAO_ROOT)/tao/Protocol_Factory.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
- $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -9429,16 +9430,37 @@ realclean:
  $(TAO_ROOT)/tao/Acceptor_Registry.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(TAO_ROOT)/tao/GIOP.h \
+ $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Acceptor_Registry.i \
  $(TAO_ROOT)/tao/Connector_Registry.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -9458,8 +9480,6 @@ realclean:
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -9496,25 +9516,6 @@ realclean:
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Manager.i \
- $(TAO_ROOT)/tao/Resource_Factory.h \
- $(TAO_ROOT)/tao/Protocol_Factory.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(TAO_ROOT)/tao/GIOP.h \
- $(TAO_ROOT)/tao/GIOP.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
