@@ -16,7 +16,8 @@ Notify_Service::Notify_Service (void)
     ior_output_file_ (0),
     notify_factory_name_ (NOTIFY_KEY),
     notify_channel_name_ (NOTIFY_CHANNEL_NAME),
-    register_event_channel_ (0)
+    register_event_channel_ (0),
+    nthreads_ (0)
 {
   // No-Op.
 }
@@ -59,6 +60,16 @@ Notify_Service::init_ORB  (int& argc, char *argv [],
   poa_manager->activate (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
+  if (this->nthreads_ > 0) // we have chosen to run in a thread pool.
+    {
+      ACE_DEBUG ((LM_DEBUG, "Running %d server threads\n", this->nthreads_));
+      worker_.orb (this->orb_.in ());
+
+      if (worker_.activate (THR_NEW_LWP | THR_JOINABLE,
+                            this->nthreads_) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot activate client threads\n"), -1);
+    }
   return 0;
 }
 
@@ -221,7 +232,10 @@ Notify_Service::run (void)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: Running the Notification Service\n",
               __FILE__));
-  if (this->orb_->run () == -1)
+
+  if (this->nthreads_ > 0)
+    worker_.thr_mgr ()->wait ();
+  else if (this->orb_->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
 
   return 0;
@@ -312,6 +326,11 @@ Notify_Service::parse_args(int argc, char *argv[])
 
           arg_shifter.consume_arg ();
         }
+      else if ((current_arg = arg_shifter.get_the_parameter ("-Notify_TPReactor")))
+        {
+          this->nthreads_ = ACE_OS::atoi (current_arg);
+          arg_shifter.consume_arg ();
+        }
       else if (arg_shifter.cur_arg_strncasecmp ("-?") == 0)
         {
           ACE_DEBUG((LM_DEBUG,
@@ -321,6 +340,7 @@ Notify_Service::parse_args(int argc, char *argv[])
                      "-Channel -ChannelName channel_name\n"
                      "default: %s -Factory NotifyEventChannelFactory "
                      "-NameSvc -Channel NotifyEventChannel\n",
+                     "-Notify_TPReactor [threads]\n",
                      argv[0], argv[0]));
 
           arg_shifter.consume_arg ();
@@ -334,6 +354,27 @@ Notify_Service::parse_args(int argc, char *argv[])
     }
     return 0;
 }
+
+/*****************************************************************/
+
+Worker::Worker (void)
+{
+}
+
+void
+Worker::orb (CORBA::ORB_ptr orb)
+{
+  orb_ = CORBA::ORB::_duplicate (orb);
+}
+
+int
+Worker::svc (void)
+{
+  this->orb_->run ();
+  return 0;
+}
+
+// ****************************************************************
 
 int
 main (int argc, char *argv[])

@@ -1,3 +1,19 @@
+Wed Dec  6 23:52:48 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
+	  The <init> method was creating a "event listener" task instead of a
+	  "event source" task. This was causing the cmd line options to break.
+	* orbsvcs/Notify_Service/Notify_Service.{h.cpp}:
+	  Added a new option to specify worker threads when the Notify
+	  Service is run with a TP reactor.
+	* orbsvcs/Notify_Service/README:
+	  Updated the usage section to show how the "-Notify_TPReactor"option.
+	* orbsvcs/orbsvcs/Notify/README:
+	  Updated with some explaination of the various MT options for the 
+	  Notify.
+	  Thanks to Sarabjeet Duhra <sarabjeet_duhra@hp.com> for
+	  reporting the problem with the -MTListenerEval option
+	
 Wed Dec  6 16:20:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Faults/Faults.dsw:

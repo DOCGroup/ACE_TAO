@@ -38,7 +38,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID pro
     TAO_Notify_Factory::get_event_manager_objects_factory ();
 
   this->filter_eval_task_ =
-    event_manager_objects_factory->create_listener_eval_task (ACE_TRY_ENV);
+    event_manager_objects_factory->create_source_eval_task (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Get hold of the admin properties.
