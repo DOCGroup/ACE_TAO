@@ -1,3 +1,9 @@
+Sat Aug  9 06:17:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Process_Mutex.cpp:
+          Readded explicit template instantiation of
+          ACE_GUARD<ACE_PROCESS_MUTEX> and #includes needed to compile it.
+
 Sat Aug  9 05:16:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/platform_g++_common.GNU:
