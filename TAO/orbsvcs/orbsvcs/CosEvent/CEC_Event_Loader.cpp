@@ -371,7 +371,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                   ACE_OS::fprintf (pidf,
                                    "%ld\n",
                                    static_cast<long> (ACE_OS::getpid ()));
-		  ACE_OS::fclose (pidf);
+                  ACE_OS::fclose (pidf);
                 }
             }
 
