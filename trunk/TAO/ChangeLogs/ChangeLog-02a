@@ -1,3 +1,11 @@
+Tue Apr 10 11:05:22 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Sequence.i:
+
+	  Backed out the optimized growth change.  It is apparently more
+	  controversial than I thought since it takes control of sequence
+	  growth away from the user.
+
 Tue Apr 10 11:03:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:

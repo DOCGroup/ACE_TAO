@@ -100,38 +100,8 @@ TAO_Unbounded_Base_Sequence::length (CORBA::ULong length)
 {
   if (length > this->maximum_)
     {
-      // At least double the size of the buffer each time the length
-      // is extended.  This reduces the number of allocations, and
-      // copies accompanying those allocations signifantly for large
-      // numbers of small sequence length increases.
-      //
-      // Here is an example of the resulting buffer sizes during eigth
-      // iterations:
-      //
-      //  desired length    maximum    allocation and copy
-      //  --------------    -------    -------------------
-      //        1              1              yes
-      //        2              2              yes
-      //        3              4              yes
-      //        4              4              NO!
-      //        5              8              yes
-      //        6              8              NO!
-      //        7              8              NO!
-      //        8              8              NO!
-      //
-      // In this example, the number of allocations was reduced from 8
-      // to 4.  Similarly, the number of copies was reduced from 28 to
-      // 7.
-
-      // Double the length.  Notice that the left shift eventually
-      // causes "new_maximum" to potentially become less than
-      // "this->length_".  This isn't a problem since the new maximum
-      // (and length) will just become "length".
-      CORBA::ULong new_maximum = this->length_ << 2;
-      new_maximum = (length > new_maximum ? length : new_maximum);
-
-      this->_allocate_buffer (new_maximum);
-      this->maximum_ = new_maximum;
+      this->_allocate_buffer (length);
+      this->maximum_ = length;
       this->release_ = 1;
     }
   else if (length < this->length_)
