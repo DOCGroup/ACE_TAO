@@ -1660,8 +1660,7 @@ CORBA::ORB_init (int &argc,
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
 #if TAO_HAS_INTERCEPTORS == 1
-  oc->pi_current ()->initialize (oc,
-                                 orb_init_info_temp->slot_count ());
+  oc->pi_current ()->initialize (orb_init_info_temp->slot_count ());
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   // Invalidate the ORBInitInfo instance to prevent future

@@ -25,6 +25,7 @@ OBJFILES = \
 	$(OBJDIR)\Operation_Table.obj \
 	$(OBJDIR)\ORB_Manager.obj \
 	$(OBJDIR)\ImplRepo_i.obj \
+	$(OBJDIR)\PICurrent_Guard.obj \
 	$(OBJDIR)\POA.obj \
 	$(OBJDIR)\POAManager.obj \
 	$(OBJDIR)\POA_Cached_Policies.obj \

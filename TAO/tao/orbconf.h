@@ -732,6 +732,11 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # endif /* TAO_HAS_MINIMUM_CORBA */
 #endif
 
+// Proprietary FT interception-point support is disabled by default.
+#ifndef TAO_HAS_EXTENDED_FT_INTERCEPTORS
+# define TAO_HAS_EXTENDED_FT_INTERCEPTORS 0
+#endif  /* !TAO_HAS_EXTENEDED_FT_INTERCEPTORS */
+
 // Define the policy types as literals, so they can be used in switch
 // statements
 
