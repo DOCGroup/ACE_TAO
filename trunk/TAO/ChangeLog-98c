@@ -1,47 +1,57 @@
+Fri Jul 03 21:51:44 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp (parse_args):
+          reset n_suppliers_ to 1, if <= 0, before the ACE_ERROR_RETURN
+          instead of after.  (supplier_task): cast event_count_ to
+          CORBA::ULong to avoid signed/unsigned comparison.
+
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp (push_consumer):
+          commented out unused local "ID".
+
 Fri Jul  3 19:54:03 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/orbconf.h: Changed the TAO_NAMESPACE_STORAGE_CLASS macros to 
-	  work better with namespaces on MSVC.
+        * tao/orbconf.h: Changed the TAO_NAMESPACE_STORAGE_CLASS macros to
+          work better with namespaces on MSVC.
 
 Fri Jul  3 18:40:46 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
-	Debugged and tested directed queries.
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
+        Debugged and tested directed queries.
 
-	* orbsvcs/tests/Trading/Offer_Importer.{h,cpp}:
-	* orbsvcs/tests/Trading/import_test.cpp:
-	Added code to test directed queries.
+        * orbsvcs/tests/Trading/Offer_Importer.{h,cpp}:
+        * orbsvcs/tests/Trading/import_test.cpp:
+        Added code to test directed queries.
 
 Fri Jul 03 17:30:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* orbsvcs/tests/Simulator/README: Added more documentation.
+        * orbsvcs/tests/Simulator/README: Added more documentation.
 
-	* orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java: Register
-	  now only for notification events.
+        * orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java: Register
+          now only for notification events.
 
-	* orbsvcs/tests/Simulator/DOVEMIB/AnyAnalyser.{h,cpp}: support time stamps.
+        * orbsvcs/tests/Simulator/DOVEMIB/AnyAnalyser.{h,cpp}: support time stamps.
 
-	* orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.{h,cpp}: support time stamps. 
+        * orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.{h,cpp}: support time stamps.
 
-	* orbsvcs/tests/Simulator/DOVEMIB/PrintVisitor.{h,cpp}: support time stamps
+        * orbsvcs/tests/Simulator/DOVEMIB/PrintVisitor.{h,cpp}: support time stamps
 
-	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.{h, cpp}: moved 
-	  a lot of connection management into the new DOVE Supplier.
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.{h, cpp}: moved
+          a lot of connection management into the new DOVE Supplier.
 
-	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.dsp: Added the DOVE
-	  Suplier files.
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.dsp: Added the DOVE
+          Suplier files.
 
-	* orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.{h,cpp}: All
-	  the connection management with the event service is done here.
-	  A standardized interface is now supported, thanks to 
-	  Kevin Stanley <kstanley1@mdc.com>.
+        * orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.{h,cpp}: All
+          the connection management with the event service is done here.
+          A standardized interface is now supported, thanks to
+          Kevin Stanley <kstanley1@mdc.com>.
 
 Fri Jul 03 16:38:12 1998  Steve Huston  <shuston@riverace.com>
 
-	* tao/Sequence.h (TAO_Unbounded_Sequence<CORBA::Octet>) Removed the
-	  template type specification from constructor names so that this
-	  compiles on AIX xlC as well as Sun C++ and HPUX aCC.
+        * tao/Sequence.h (TAO_Unbounded_Sequence<CORBA::Octet>) Removed the
+          template type specification from constructor names so that this
+          compiles on AIX xlC as well as Sun C++ and HPUX aCC.
 
 Fri Jul 03 13:58:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -49,9 +59,9 @@ Fri Jul 03 13:58:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Jul  3 13:05:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Data.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
-	  Fixed template instantiations.
+        * orbsvcs/tests/EC_Throughput/ECT_Data.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+          Fixed template instantiations.
 
 Fri Jul 03 11:36:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -61,16 +71,16 @@ Fri Jul 03 11:36:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Jul 03 11:34:38 1998  Carlos O'Ryan  <coryan@JIG>
 
-	* orbsvcs/tests/EC_Throughput/Makefile: 
-	  Added new object files to the Makefile.
+        * orbsvcs/tests/EC_Throughput/Makefile:
+          Added new object files to the Makefile.
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
-	  Protected against null publication or subscription list.
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+          Protected against null publication or subscription list.
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  Removed a possible race condition in consumer
-	  disconnections. Thanks to Thomas Venturella <tventurell@mdc.com>
-	  for the last two fixes.
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Removed a possible race condition in consumer
+          disconnections. Thanks to Thomas Venturella <tventurell@mdc.com>
+          for the last two fixes.
 
 Fri Jul 03 08:40:28 1998  Steve Huston  <shuston@riverace.com>
 
