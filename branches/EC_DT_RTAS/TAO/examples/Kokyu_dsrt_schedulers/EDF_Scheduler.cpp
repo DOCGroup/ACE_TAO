@@ -380,7 +380,7 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
   //Fill the guid in the SC Qos struct
     int my_ip = get_ip_addr();
     if(my_ip < 0) return;
-    long long_guid = (long) int_guid+ my_ip*2000;
+    long long_guid = (long) int_guid+ my_ip*100000;
 #ifdef KOKYU_DSRT_LOGGING
     ACE_DEBUG((LM_DEBUG,"The long guid is %d\n",long_guid));
 #endif
@@ -804,9 +804,9 @@ EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
       guid.length (sc_qos_ptr->guid.length ());
       guid_copy (guid, sc_qos_ptr->guid);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T):Importance = %d in recvd service context\n",
-                  importance));
+//      ACE_DEBUG ((LM_DEBUG,
+//                  "(%t|%T):Importance = %d in recvd service context\n",
+//                  importance));
     }
 
   ACE_OS::memcpy (&int_guid,
