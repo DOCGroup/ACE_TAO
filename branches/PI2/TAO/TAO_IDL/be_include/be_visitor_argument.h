@@ -35,4 +35,7 @@
 #include "be_visitor_argument/post_invoke_cs.h"
 #include "be_visitor_argument/request_info_ch.h"
 #include "be_visitor_argument/request_info_cs.h"
+#include "be_visitor_argument/request_info_sh.h"
+#include "be_visitor_argument/request_info_ss.h"
+
 #endif /* _BE_VISITOR_ARGUMENT_H */
