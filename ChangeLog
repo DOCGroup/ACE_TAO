@@ -1,3 +1,10 @@
+Tue Mar 26 13:55:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS.i (operator *=): Explicitly promote sec() to double before
+	  multiplying it to prevent problems with overflow.  Thanks to
+ 	  Eric Page <Eric_S_Page@raytheon.com> for reporting this.  This
+	  fixes BugId [1174].
+
 Tue Mar 26 06:50:58 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Synch.h (ACE_Null_Mutex): Added a dummy "lock_" variable
