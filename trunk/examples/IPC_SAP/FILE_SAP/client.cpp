@@ -7,7 +7,7 @@
 
 ACE_RCSID(FILE_SAP, client, "$Id$")
 
-int 
+int
 main (int argc, char *argv[])
 {
   if (argc < 3 || argc > 3)
@@ -23,7 +23,7 @@ main (int argc, char *argv[])
   ACE_FILE_Connector con;
 
   if (con.connect (cli_file,
-                   ACE_FILE_Addr (argv[1]), 
+                   ACE_FILE_Addr (argv[1]),
 		   0,
                    ACE_Addr::sap_any, 0,
 		   O_RDWR|O_APPEND|O_CREAT, 0666) == -1)
@@ -49,7 +49,7 @@ main (int argc, char *argv[])
   else
     ACE_OS::printf ("fileinfo : mode = %o\nno of links = %lu\nsize = %lu\n",
                     fileinfo.mode_ & 0777,
-                    fileinfo.nlink_,
+                    ACE_static_cast(unsigned long,fileinfo.nlink_),
                     fileinfo.size_);
 
   off_t fpos = cli_file.position ();
@@ -62,7 +62,7 @@ main (int argc, char *argv[])
   else
     ACE_OS::printf ("current filepointer is at %ld\n",
                     fpos);
-    
+
   if (cli_file.position (0,
                          SEEK_SET) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
