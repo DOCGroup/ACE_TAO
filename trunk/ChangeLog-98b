@@ -1,3 +1,10 @@
+Fri May 22 20:01:40 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: moved ACE_IO_Vector declaration ahead of OS.i #include.
+
+        * ace/OS.i (ACE_IO_Vector::buffer): added static cast of new_buffer
+          to char *.
+
 Fri May 22 12:20:11 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace: Other parts of ACE were modified to use the new
@@ -16,7 +23,7 @@ Fri May 22 12:20:11 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
           the expenses and slow emulations.  If you want to use WSASend()
           and WSARecv(), switch over to ACE_IO_Vector. It will work on
           both Win32 and non-Win32 platforms.
-        
+
 Fri May 22 07:53:03 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-pthread.h: removed two
