@@ -2204,6 +2204,8 @@ struct_type
                                         s->is_local (),
                                         s->is_abstract ()
                                       );
+              AST_Structure::fwd_redefinition_helper (d,
+                                                      s);
               (void) s->fe_add_structure (d);
             }
 
@@ -2392,7 +2394,10 @@ union_type
                                                         s->is_abstract ());
                 }
 
-                (void) s->fe_add_union (u);
+              AST_Structure *st = AST_Structure::narrow_from_decl (u);
+              AST_Structure::fwd_redefinition_helper (st,
+                                                      s);
+              (void) s->fe_add_union (u);
             }
 
           /*
