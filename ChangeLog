@@ -1,3 +1,8 @@
+Mon Nov 10 16:37:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Reactor/WFMO_Reactor/Removals.cpp:
+	  Added #include ace/Event.h to get ACE_Event
+
 Mon Nov 10 04:37:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/fuzz.pl:
