@@ -221,10 +221,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << ");" << be_uidt_nl << be_nl;
     }
 
-  // The _tao_QueryInterface method.
-  *os << "virtual void *_tao_QueryInterface (ptrdiff_t type);"
-      << be_nl << be_nl;
-
   // The _interface_repository_id method.
   *os << "virtual const char* _interface_repository_id (void) const;";
 

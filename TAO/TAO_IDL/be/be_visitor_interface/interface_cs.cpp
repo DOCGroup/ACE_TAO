@@ -477,66 +477,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  // Generating _tao_QueryInterface method.
-  *os << "void *" << node->full_name ()
-      << "::_tao_QueryInterface (ptrdiff_t type)" << be_nl
-      << "{" << be_idt_nl
-      << "void *retv = 0;" << be_nl << be_nl
-      << "if ";
-
-  if (node->traverse_inheritance_graph (
-          be_interface::queryinterface_helper,
-          os
-        ) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "_tao_QueryInterface method codegen failed\n"),
-                        -1);
-    }
-
-  *os << "(type == ACE_reinterpret_cast ("
-      << be_idt << be_idt << be_idt << be_idt << be_idt << be_idt_nl
-      << " ptrdiff_t," << be_nl;
-
-  if (node->is_abstract ())
-    {
-      *os << " &CORBA::AbstractBase";
-    }
-  else
-    {
-      *os << " &CORBA::Object";
-    }
-
-  *os << "::_tao_class_id)" << be_uidt_nl
-      << " )" << be_uidt << be_uidt << be_uidt << be_uidt_nl
-      << "{" << be_idt_nl
-      << "retv =" << be_idt_nl
-      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << "void *," << be_nl
-      << "ACE_static_cast (";
-
-  if (node->is_abstract ())
-    {
-      *os << "CORBA::AbstractBase_ptr";
-    }
-  else
-    {
-      *os << "CORBA::Object_ptr";
-    }
-
-  *os << ", this)" << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
-
-  *os << "if (retv != 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "this->_add_ref ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "return retv;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   *os << "const char* " << node->full_name ()
       << "::_interface_repository_id (void) const"
       << be_nl
@@ -759,7 +699,8 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
       if (be_global->gen_smart_proxies ())
         {
           *os << "return TAO_" << node->flat_name ()
-              << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);"
+              << "_PROXY_FACTORY_ADAPTER::instance ()->"
+              << "create_proxy (default_proxy);"
               << be_uidt_nl;
         }
       else
@@ -775,19 +716,16 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
       *os << be_idt;
     }
 
-  // Local  & lazily evaluated _unchecked_narrow.
-  *os << "return" << be_idt_nl
-      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << node->local_name () << "_ptr," << be_nl
-      << "obj->_tao_QueryInterface (" << be_idt << be_idt_nl
-      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << "ptrdiff_t," << be_nl
-      << "&" << node->local_name () << "::_tao_class_id" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl;
+  *os << "{" << be_idt_nl
+      << node->name () << "_ptr p =" << be_idt_nl
+      << "dynamic_cast<" << node->name () << "_ptr> (obj);" 
+      << be_uidt_nl << be_nl
+      << "p->_add_ref ();" << be_nl << be_nl
+      << "return p;" << be_uidt_nl
+      << "}" << be_uidt << be_uidt;
 
-  *os << "}" << be_nl << be_nl;
+  *os << be_nl
+      << "}" << be_nl << be_nl;
 }
 
 void
