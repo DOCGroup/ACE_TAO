@@ -55,6 +55,12 @@ TAO_Base_Sequence::TAO_Base_Sequence (const TAO_Base_Sequence &rhs)
 {
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_Base_Sequence::release (void) const
+{
+  return this->release_;
+}
+
 ACE_INLINE TAO_Base_Sequence &
 TAO_Base_Sequence::operator= (const TAO_Base_Sequence &rhs)
 {
