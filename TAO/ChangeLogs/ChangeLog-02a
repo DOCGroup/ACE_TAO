@@ -1,3 +1,25 @@
+Mon Apr 30 19:17:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+
+          If the member is an interface, the CDR extraction
+          operator for the union extracts it straight into
+          a _var. In the IDL_Test file full.idl, the interface
+          member is undefined, and VxWorks balks. The target
+          of the member extraction was modified to be 
+          foo_var.inout(), which it should have been anyway.
+
+        * tests/IDL_Test/fwd.idl:
+        * tests/IDL_Test/full.idl:
+
+          If modules are nested, VxWorks gives a typedef error,
+          thinking that mod1::mod2::foo_ptr and
+          POA_mod1::mod2::foo_ptr are the same. Since the 
+          nested modules are not essential to the test, and
+          rather than disable the test for VxWorks, one layer
+          of modules was taken out of the mutually dependent
+          IDL files.
+
 Mon Apr 30 18:49:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_root/root_sth.cpp:
