@@ -1,3 +1,12 @@
+Wed Dec 24 12:51:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/Gateway/Gateway/Config_Files.cpp:
+        * apps/Gateway/Gateway/File_Parser.cpp:
+        * apps/Gateway/Gateway/File_Parser.h:
+        * apps/Gateway/Gateway/Gateway.cpp:
+          Added RT_ to the members of the Return_Type enum. Tru64 has a
+          define SUCCESS and this clashed with the enum member SUCCESS.
+
 Wed Dec 24 12:35:41 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-osf1-4.0.h:
