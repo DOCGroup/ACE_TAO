@@ -1,3 +1,8 @@
+Wed Dec 10  9:39:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Tests.bor:
+          Added TSS_Static_Test
+
 Tue Dec  9 13:00:30 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/DependencyEditor.pm:
