@@ -50,6 +50,11 @@ public:
 
   virtual void activate_tasks (CORBA::Environment &);
   // Activate the suppliers at different priorities
+
+private:
+  int same_events_;
+  // If set then both low priority and high priority suppliers
+  // generate the same events.
 };
 
 #endif /* EC_INVERSION_H */
