@@ -248,6 +248,42 @@ struct TAO_Export Version
   CORBA::Octet minor;
 };
 
+class  TAO_Export Version_var
+{
+public:
+  Version_var (void);
+  Version_var (Version *);
+  Version_var (const Version_var &);
+  // Fixed-size types only.
+  Version_var (const Version &);
+  ~Version_var (void);
+
+  Version_var &operator= (Version *);
+  Version_var &operator= (const Version_var &);
+  // Fixed-size types only.
+  Version_var &operator= (const Version &);
+  Version *operator-> (void);
+  const Version *operator-> (void) const;
+
+  operator const Version &() const;
+  operator Version &();
+  operator Version &() const;
+
+  // in, inout, out, _retn
+  const Version &in (void) const;
+  Version &inout (void);
+  Version &out (void);
+  Version _retn (void);
+  Version *ptr (void) const;
+
+private:
+  Version *ptr_;
+};
+
+typedef Version &Version_out;
+
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Version;
+
 }
 TAO_NAMESPACE_CLOSE // module GIOP
 
