@@ -26,12 +26,12 @@
 #if defined (ACE_HAS_THREADS)
 
 struct Tester_Args
-  // = TITLE
-  //     These arguments are passed into each test thread.
+// = TITLE
+//     These arguments are passed into each test thread.
 {
   Tester_Args (ACE_Barrier &tb, int i)
     : tester_barrier_ (tb), 
-      n_iterations_ (i) {}
+    n_iterations_ (i) {}
 
   ACE_Barrier &tester_barrier_;
   // Reference to the tester barrier.  This controls each miteration of
@@ -47,7 +47,7 @@ struct Tester_Args
 static void *
 tester (Tester_Args *args)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ()); // Insert thread into thread_manager
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ()); // Insert thread into thread_manager
   ACE_NEW_THREAD;
 
   for (int iterations = 1; 
@@ -78,13 +78,13 @@ main (int, char *[])
   
   Tester_Args args (tester_barrier, n_iterations);
 
-  if (ACE_Service_Config::thr_mgr ()->spawn_n 
+  if (ACE_Thread_Manager::instance ()->spawn_n 
       (n_threads, ACE_THR_FUNC (tester), 
        (void *) &args, THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
   // Wait for all the threads to reach their exit point.
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */

@@ -33,7 +33,7 @@ client (void *arg)
 {
 #if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
   // Insert thread into thr_mgr
-  ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());  
+  ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());  
   ACE_NEW_THREAD;
 #endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 
@@ -97,7 +97,7 @@ server (void *arg)
 {
 #if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
   // Insert thread into thr_mgr
-  ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());  
+  ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());  
   ACE_NEW_THREAD;
 #endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 
@@ -233,16 +233,16 @@ spawn (void)
 	  ACE_OS::wait ();
 	}
 #elif defined (ACE_HAS_THREADS)
-      if (ACE_Service_Config::thr_mgr ()->spawn 
+      if (ACE_Thread_Manager::instance ()->spawn 
 	  (ACE_THR_FUNC (server), (void *) &peer_acceptor, THR_NEW_LWP | THR_DETACHED) == -1)
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
-      if (ACE_Service_Config::thr_mgr ()->spawn 
+      if (ACE_Thread_Manager::instance ()->spawn 
 	  (ACE_THR_FUNC (client), (void *) &server_addr, THR_NEW_LWP | THR_DETACHED) == -1)
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
       // Wait for the threads to exit.
-      ACE_Service_Config::thr_mgr ()->wait ();
+      ACE_Thread_Manager::instance ()->wait ();
 #else
       ACE_ERROR ((LM_ERROR, "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
 #endif /* ACE_HAS_THREADS */	

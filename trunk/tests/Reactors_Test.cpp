@@ -145,7 +145,7 @@ worker (void *args)
 {
   ACE_NEW_THREAD;
 
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
 
   ACE_Reactor *reactor = (ACE_Reactor *) args;
 
@@ -193,24 +193,24 @@ main (int, char *[])
 
   for (int i = 0; i < MAX_TASKS; i++)
     {
-      tt1[i].open (ACE_Service_Config::reactor ());
+      tt1[i].open (ACE_Reactor::instance());
       tt2[i].open (reactor);
     }
 
-  if (ACE_Service_Config::thr_mgr ()->spawn 
-      (ACE_THR_FUNC (worker), (void *) ACE_Service_Config::reactor (), 
+  if (ACE_Thread_Manager::instance ()->spawn 
+      (ACE_THR_FUNC (worker), (void *) ACE_Reactor::instance(), 
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
-  else if (ACE_Service_Config::thr_mgr ()->spawn 
+  else if (ACE_Thread_Manager::instance ()->spawn 
       (ACE_THR_FUNC (worker), (void *) reactor, 
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
   reactor->close ();
   // Note that the destructor of ACE_Service_Config daemon will close
-  // down the ACE_Service_Config::reactor().
+  // down the ACE_Reactor::instance().
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */

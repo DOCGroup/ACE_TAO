@@ -55,7 +55,7 @@ public:
 static void *
 run_thread (void *vp)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
   Test_Params *tp = (Test_Params *) vp;
   ACE_Token_Collection collection (1, tp->collection_name_);
@@ -145,7 +145,7 @@ run_test (ACE_Token_Proxy *A,
   tp3.token2_ = R;
 
   // Spawn off three threads.
-  ACE_Thread_Manager *mgr = ACE_Service_Config::thr_mgr ();
+  ACE_Thread_Manager *mgr = ACE_Thread_Manager::instance ();
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
 		 (void *) &tp1, THR_BOUND | THR_SUSPENDED) == -1)

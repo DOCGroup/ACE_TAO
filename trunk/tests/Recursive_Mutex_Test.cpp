@@ -53,7 +53,7 @@ recursive_worker (size_t nesting_level,
 static void *
 worker (void *arg)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 
   ACE_Recursive_Thread_Mutex *rm = (ACE_Recursive_Thread_Mutex *) arg;
@@ -70,10 +70,10 @@ main (int, char *[])
 
 #if defined (ACE_HAS_THREADS)
   ACE_Recursive_Thread_Mutex rm;
-  ACE_Service_Config::thr_mgr ()->spawn_n (n_threads, 
+  ACE_Thread_Manager::instance ()->spawn_n (n_threads, 
 					   ACE_THR_FUNC (worker), 
 					   (void *) &rm);
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_ERROR, 
 	      "ACE doesn't support support process mutexes on this platform (yet)\n"));

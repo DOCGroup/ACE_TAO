@@ -95,12 +95,12 @@ static int
 worker (void)
 {
   ACE_NEW_THREAD;
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
 
-  ACE_Service_Config::reactor ()->owner (ACE_OS::thr_self());
+  ACE_Reactor::instance()->owner (ACE_OS::thr_self());
 
   for (;;)
-    if (ACE_Service_Config::reactor ()->handle_events () == -1)
+    if (ACE_Reactor::instance()->handle_events () == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "(%t) error return\n"), -1);
 
   return 0;
@@ -118,9 +118,9 @@ main (int argc, char *argv[])
   u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
   ACE_DEBUG ((LM_DEBUG, "Starting tracing\n"));
   ACE_LOG_MSG->start_tracing ();
-  //  ACE_Service_Config::reactor (new My_Reactor);
-  ACE_Service_Config::reactor (&reactor);
-  ACE_Thread_Manager *thr_mgr = ACE_Service_Config::thr_mgr ();
+  //  ACE_Reactor::instance(new My_Reactor);
+  ACE_Reactor::instance (&reactor);
+  ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
   ACE_INET_Addr local_addr (port);
   ACE_INET_Addr remote_addr (port,
@@ -128,7 +128,7 @@ main (int argc, char *argv[])
 
   MemoryEx ex (local_addr);
 
-  if (ACE_Service_Config::reactor ()->register_handler 
+  if (ACE_Reactor::instance()->register_handler 
       (&ex, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n%a", "register_handler", 1), -1);
 

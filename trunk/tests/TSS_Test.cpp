@@ -61,7 +61,7 @@ cleanup (void *ptr)
 static void *
 worker (void *c)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 
   int count = int (c);
@@ -150,7 +150,7 @@ extern "C" void
 handler (int signum)
 {
   ACE_DEBUG ((LM_DEBUG, "signal = %S\n", signum));
-  ACE_Service_Config::thr_mgr ()->exit (0);
+  ACE_Thread_Manager::instance ()->exit (0);
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
@@ -165,19 +165,19 @@ main (int, char *[])
   ACE_START_TEST ("TSS_Test");
   
 #if defined (ACE_HAS_THREADS)
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
 
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  if (ACE_Service_Config::thr_mgr ()->spawn_n (ACE_MAX_THREADS, 
+  if (ACE_Thread_Manager::instance ()->spawn_n (ACE_MAX_THREADS, 
 					       ACE_THR_FUNC (&worker), 
 					       (void *) ITERATIONS,
 					       THR_BOUND | THR_DETACHED) == -1)
     ACE_OS::perror ("ACE_Thread_Manager::spawn_n");
 
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_ERROR, 
 	      "threads are not supported on this platform\n"));

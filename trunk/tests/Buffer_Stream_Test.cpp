@@ -222,7 +222,7 @@ main (int, char *[])
 
   // Barrier synchronization: wait for the threads to exit, then exit
   // ourselves.
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */

@@ -75,7 +75,7 @@ Supplier_Task::open (void *)
   else if (this->activate (THR_BOUND))
     // Make this an Active Object.
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "activate failed"), -1);
-  else if (ACE_Service_Config::reactor ()->register_handler 
+  else if (ACE_Reactor::instance()->register_handler 
       (this->pipe_.write_handle (), this, ACE_Event_Handler::WRITE_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler failed"), -1);
   else
@@ -87,7 +87,7 @@ Supplier_Task::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Supplier_Task::close\n"));
 
-  if (ACE_Service_Config::reactor ()->remove_handler
+  if (ACE_Reactor::instance()->remove_handler
       (this->pipe_.write_handle (), ACE_Event_Handler::WRITE_MASK) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "remove_handler failed"));
   return 0;
@@ -109,13 +109,13 @@ Supplier_Task::svc (void)
 
   // Allow an unlimited number of iterations per
   // <ACE_Reactor::notify>.
-  ACE_Service_Config::reactor ()->max_notify_iterations (-1);
+  ACE_Reactor::instance()->max_notify_iterations (-1);
 
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) notifying reactor\n"));
       // Notify the Reactor.
-      if (ACE_Service_Config::reactor ()->notify (this) == -1)
+      if (ACE_Reactor::instance()->notify (this) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
 
       // Wait for our <handle_exception> method to release the
@@ -127,13 +127,13 @@ Supplier_Task::svc (void)
   ACE_DEBUG ((LM_DEBUG, "(%t) **** starting limited notifications test\n"));
 
   // Only allow 1 iteration per <ACE_Reactor::notify>
-  ACE_Service_Config::reactor ()->max_notify_iterations (1);
+  ACE_Reactor::instance()->max_notify_iterations (1);
 
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) notifying reactor\n"));
       // Notify the Reactor.
-      if (ACE_Service_Config::reactor ()->notify (this) == -1)
+      if (ACE_Reactor::instance()->notify (this) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
 
       // Wait for our <handle_exception> method to release the
@@ -188,7 +188,7 @@ main (int, char *[])
       for (int iteration = 1; !shutdown; iteration++)
 	{
 	  // Use a timeout to inform the Reactor when to shutdown.
-	  switch (ACE_Service_Config::reactor ()->handle_events (timeout))
+	  switch (ACE_Reactor::instance()->handle_events (timeout))
 	    {
 	    case -1:
 	      ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "reactor"), -1);

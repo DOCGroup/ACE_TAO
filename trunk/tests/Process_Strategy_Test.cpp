@@ -228,7 +228,7 @@ Options::parse_args (int argc, char *argv[])
 #if !defined (ACE_LACKS_EXEC)
       ACE_NEW_RETURN (this->concurrency_strategy_, 
 		      ACE_Process_Strategy<Counting_Service> 
-		      (1, this, ACE_Service_Config::reactor ()),
+		      (1, this, ACE_Reactor::instance()),
 		      -1);
       break;
 #else
@@ -238,7 +238,7 @@ Options::parse_args (int argc, char *argv[])
 #if defined (ACE_HAS_THREADS)
       ACE_NEW_RETURN (this->concurrency_strategy_, 
 		      ACE_Thread_Strategy<Counting_Service> 
-		      (ACE_Service_Config::thr_mgr (),
+			  (ACE_Thread_Manager::instance (),
 		       THR_NEW_LWP, 1),
 		      -1);
       break;
@@ -249,17 +249,17 @@ Options::parse_args (int argc, char *argv[])
       // Settle for the purely Reactive strategy.
       ACE_NEW_RETURN (this->concurrency_strategy_, 
 		      ACE_Reactive_Strategy<Counting_Service> 
-		      (ACE_Service_Config::reactor ()),
+		      (ACE_Reactor::instance()),
 		      -1);
       break;
     }
 
 #if !defined (ACE_WIN32) && !defined (VXWORKS)
   // Register to handle <SIGCHLD> when a child exits.
-  if (ACE_Service_Config::reactor ()->register_handler (SIGCHLD, this) == -1)
+  if (ACE_Reactor::instance()->register_handler (SIGCHLD, this) == -1)
     return -1;
 #endif /* !defined (ACE_WIN32) && !defined (VXWORKS) */
-  if (ACE_Service_Config::reactor ()->register_handler (SIGINT, this) == -1)
+  if (ACE_Reactor::instance()->register_handler (SIGINT, this) == -1)
     return -1;
   return 0;
 }
@@ -293,7 +293,7 @@ Options::handle_signal (int signum, siginfo_t *, ucontext_t *)
       break;
 
     case SIGINT:
-      ACE_Service_Config::end_reactor_event_loop ();
+      ACE_Reactor::end_event_loop();
       break;
     }
 
@@ -453,7 +453,7 @@ client (void *arg)
 {
 #if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
   // Insert thread into thr_mgr
-  ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());  
+	ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());  
   ACE_NEW_THREAD;
 #endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 
@@ -540,7 +540,7 @@ server (void *)
 {
 #if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
   // Insert thread into thr_mgr
-  ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());  
+	ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());  
   ACE_NEW_THREAD;
 #endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 
@@ -548,8 +548,8 @@ server (void *)
 
   // Run the main event loop, but only wait for up to 3 seconds (this
   // is used to shutdown the server.
-  ACE_Service_Config::reactor ()->owner (ACE_Thread::self ());
-  ACE_Service_Config::run_reactor_event_loop (timeout);
+  ACE_Reactor::instance()->owner (ACE_Thread::self ());
+  ACE_Reactor::run_event_loop(timeout);
 
   // Remove the filename.
   ACE_OS::unlink (OPTIONS::instance ()->filename ());
@@ -573,7 +573,7 @@ main (int argc, char *argv[])
 
   // Bind acceptor to any port and then find out what the port was.
   if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any,
-		     ACE_Service_Config::reactor (),
+		     ACE_Reactor::instance(),
 		     0,
 		     0,
 		     OPTIONS::instance ()->concurrency_strategy ()) == -1
@@ -606,20 +606,20 @@ main (int argc, char *argv[])
 	  /* NOTREACHED */
 	}
 #elif defined (ACE_HAS_THREADS)
-      if (ACE_Service_Config::thr_mgr ()->spawn 
+      if (ACE_Thread_Manager::instance ()->spawn 
 	  (ACE_THR_FUNC (server), 
 	   (void *) 0,
 	   THR_NEW_LWP | THR_DETACHED) == -1)
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
-      if (ACE_Service_Config::thr_mgr ()->spawn 
+      if (ACE_Thread_Manager::instance ()->spawn 
 	  (ACE_THR_FUNC (client), 
 	   (void *) &server_addr, 
 	   THR_NEW_LWP | THR_DETACHED) == -1)
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
       // Wait for the threads to exit.
-      ACE_Service_Config::thr_mgr ()->wait ();
+	  ACE_Thread_Manager::instance ()->wait ();
 #else
       ACE_ERROR ((LM_ERROR, 
       "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
