@@ -7,8 +7,8 @@ University of California at Irvine.
 Everett Anderson <eea1@cec.wustl.edu>
 Alexander Babu Arulanthu <alex@cs.wustl.edu>
 Shawn Atkins <sma1@cs.wustl.edu>
-Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
-Krishnakumar Balasubramanian <kitty@cs.wustl.edu>
+Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
+Krishnakumar Balasubramanian <kitty@dre.vanderbilt.edu>
 Matt Braun <mjb2@cs.wustl.edu>
 Darrell Brunsch <brunsch@uci.edu>
 Dante J. Cannarozzi <djc2@cs.wustl.edu>
@@ -48,7 +48,7 @@ Balachandran Natarajan <bala@dre.vanderbilt.edu>
 Kirthika Parameswaran <kirthika@cs.wustl.edu>
 Krishnakumar Pathayapura <krish@cs.wustl.edu>
 Carlos O'Ryan <coryan@uci.edu>
-Ossama Othman <ossama@uci.edu>
+Ossama Othman <ossama@dre.vanderbilt.edu>
 Jeff Parsons <j.parsons@vanderbilt.edu>
 Irfan Pyarali <irfan@cs.wustl.edu>
 Diego Sevilla Ruiz <dsevilla@ditec.um.es>
@@ -1754,6 +1754,7 @@ Jerome Waibel <schrom@schlund.de>
 Stephan Frenzel <stephan.frenzel@realtech.de>
 Bruce Jones <BRUCE.JONES@cubic.com>
 Tim Hawes <thawes@althusius.net>
+Philip Leishman <leishman@rheinmetall-de.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
@@ -1779,4 +1780,4 @@ for instructions on submitting suggestions or fixes.
         Thanks,
 
                 Douglas C. Schmidt
-                schmidt@uci.edu
+                d.schmidt@vanderbilt.edu
