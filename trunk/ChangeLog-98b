@@ -18,6 +18,9 @@ Tue Jun 30 09:27:25 1998  David L. Levine  <levine@cs.wustl.edu>
           call to destructor, because the one in the parent class will never
           get called because head_ is always 0.
 
+        * tests/Message_Queue_Test.cpp: added performance tests and
+          tests of ACE_Message_Queue_Vx.
+
 Tue Jun 30 03:39:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Synch.h (ACE_RW_Process_Mutex): This class no longer needs
