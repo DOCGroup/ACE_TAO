@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -275,7 +275,7 @@ AST_Union::lookup_enum(AST_UnionBranch *b)
       }
       if (fb->label() != NULL &&
 	  fb->label()->label_kind() == AST_UnionLabel::UL_label &&
-	  fb->label()->label_val() == l->label_val()) {
+	  fb->label()->label_val()->compare (l->label_val())) {
 	idl_global->err()->error2(UTL_Error::EIDL_MULTIPLE_BRANCH, this, b);
 	delete i;
 	return b;
@@ -303,7 +303,7 @@ AST_Union::lookup_branch(AST_UnionBranch *branch)
   if (l != NULL) {
     if (l->label_kind() == AST_UnionLabel::UL_default)
       return lookup_default();
-    if (pd_udisc_type == AST_Expression::EV_any)	
+    if (pd_udisc_type == AST_Expression::EV_any)
       /* CONVENTION: indicates enum discr */
       return lookup_enum(branch);
     return lookup_label(branch);
