@@ -597,7 +597,7 @@ friend class ace_dewarn_gplusplus
   // be replaced by the ACE_Malloc stuff shortly...
 #   define ACE_ALLOC_HOOK_DEFINE(CLASS) \
   void *CLASS::operator new (size_t bytes) { return ::new char[bytes]; } \
-  void CLASS::operator delete (void *ptr) { delete (ptr); }
+  void CLASS::operator delete (void *ptr) { delete [] ((char *) ptr); }
 # else
 #   define ACE_ALLOC_HOOK_DECLARE struct __Ace {} /* Just need a dummy... */
 #   define ACE_ALLOC_HOOK_DEFINE(CLASS)
