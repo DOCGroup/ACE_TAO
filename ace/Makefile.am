@@ -181,6 +181,7 @@ libACE_Utils_la_SOURCES = \
   Method_Request.cpp \
   Object_Manager.cpp \
   Registry.cpp \
+  String_Base_Const.cpp \
   SString.cpp \
   Stats.cpp \
   Sample_History.cpp
@@ -494,6 +495,7 @@ TEMPLATE_FILES = \
   Strategies_T.cpp \
   Stream.cpp \
   Stream_Modules.cpp \
+  String_Base.cpp \
   Svc_Handler.cpp \
   Synch_T.cpp \
   Task_T.cpp \
@@ -710,6 +712,8 @@ HEADER_FILES = \
   SPIPE_Addr.h \
   SPIPE_Connector.h \
   SPIPE_Stream.h \
+  String_Base_Const.h \
+  String_Base.h \
   SString.h \
   SUN_Proactor.h \
   SV_Message.h \
@@ -938,6 +942,7 @@ INLINE_FILES = \
   SPIPE_Addr.i \
   SPIPE_Connector.i \
   SPIPE_Stream.i \
+  String_Base.i \
   SString.i \
   SUN_Proactor.i \
   SV_Message.i \

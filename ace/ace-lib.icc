@@ -143,6 +143,7 @@ option
                  source type(cpp) "SPIPE_Addr.cpp"
                  source type(cpp) "SPIPE_Connector.cpp"
                  source type(cpp) "SPIPE_Stream.cpp"
+                 source type(cpp) "String_Base_Const.cpp"
                  source type(cpp) "SString.cpp"
                  source type(cpp) "Stats.cpp"
                  source type(cpp) "Strategies.cpp"
