@@ -208,9 +208,6 @@ private:
   /// request/response?
   virtual int is_ready_for_bidirectional (void);
 
-  /// Are there any more messages that needs processing
-  virtual int more_messages (void);
-
   /// Creates a new node for the queue with a message block in the
   /// node of size <sz>..
   TAO_Queued_Data *make_queued_data (size_t sz);
