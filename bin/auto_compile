@@ -47,11 +47,8 @@ $MODULE='ACE_wrappers';
 
 @RUN_LIST =
     ( 'tests , run_tests.sh',
-      'TAO/tests/Cubit/TAO/IDL_Cubit , run_test.pl',
-      'TAO/tests/Cubit/TAO/DII_Cubit , run_test.pl',
       'TAO/tests/Param_Test , run_test.pl',
       'TAO/tests/Param_Test , run_test.pl -i dii',
-      'TAO/tests/Simple/time , run_test.pl',
       'TAO/tests/NestedUpcall/Reactor , run_test.pl',
       'TAO/tests/NestedUpcall/Triangle_Test , run_test.pl',
       'TAO/tests/NestedUpcall/MT_Client_Test , run_test.pl',
@@ -61,7 +58,7 @@ $MODULE='ACE_wrappers';
       'TAO/orbsvcs/tests/EC_Custom_Marshal , run_test.pl',
       'TAO/orbsvcs/tests/EC_Multiple , run_test.pl',
       'TAO/orbsvcs/tests/Property , run_test.pl',
-      'TAO/tests/Cubit/TAO/MT_Cubit , run_test.pl' );
+      'TAO/orbsvcs/performance-tests/Cubit/TAO/IDL_Cubit', 'run_test.pl');
 
 # We obtain our revision to report errors.
 $REVISION='$Revision$';
@@ -171,28 +168,37 @@ chdir('build/' . $BUILD)
 $ENV{'ACE_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD;
 $ENV{'TAO_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD . '/TAO';
 
+@failures = ();
 foreach $i (@BUILD_LIST) {
     $date = localtime;
     print LOG "$CMD: make for $i started at ", $date, "\n";
     open(MAKE, "make -k optimize=1 shared_libs_only=1 -C $i 2>&1 |")
 	|| mydie "cannot start make for $i";
-    $make_errors = 0;
+
+    local $current_dir = $i;
+    local $last_error = "";
     while (<MAKE>) {
-	if (m/^make: \*\*\*/ || m/^make\[[0-9]+\]: \*\*\*/) {
-	    $make_errors = 1;
-	}
 	print LOG $_;
+	chop;
+	if (m/^make(\[0-9+\])?: Entering/) {
+	    s/^make(\[0-9+\])?: Entering directory //;
+	    s%^$ENV{'ACE_ROOT'}/%%;
+	    $current_dir = $_;
+	}
+	if (m/^make(\[0-9+\])?: \*\*\*/) {
+	    if ($last_error ne $current_dir) {
+		push @failures, "Error while compiling in $current_dir \n";
+		$last_error = $current_dir;
+	    }
+	}
     }
-    close(MAKE)
-	|| mydie "errors while running make in $i";
+    if (close(MAKE) == 0) {
+	push @failures, "errors while running make in $i";
+    }
     $date = localtime;
     print LOG "$CMD: make for $i finished at ", $date, "\n";
-    if ($make_errors == 1) {
-	mydie "errors detected in $i compilation";
-    }
 }
 
-@failures = ();
 foreach $i (@RUN_LIST) {
     local @test_info = split (/\ \,\ /, $i);
     local $directory = $test_info[0];
