@@ -1,3 +1,8 @@
+Tue Aug 28 11:07:26 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/MEM_Stream_Test.cpp: Be sure to close the stream from the
+          client end.
+
 Mon Aug 27 20:16:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/run_test.lst: Removed the MEM_Stream_Test from the daily
