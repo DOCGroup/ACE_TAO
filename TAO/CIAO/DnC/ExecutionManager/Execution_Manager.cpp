@@ -174,8 +174,8 @@ main (int argc, char *argv[])
                       -1);
 
       // Implicit activation
-      CIAO::ExecutionManagerDaemon_var daemon = daemon_servant->_this ();
       PortableServer::ServantBase_var safe_daemon (daemon_servant);
+      CIAO::ExecutionManagerDaemon_var daemon = daemon_servant->_this ();
 
       // Now register daemon with IOR table and write its IOR.
       CORBA::String_var str = orb->object_to_string (daemon.in ()
@@ -210,6 +210,12 @@ main (int argc, char *argv[])
       // Run the main event loop for the ORB.
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK
+
+      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

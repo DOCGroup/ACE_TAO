@@ -1,3 +1,15 @@
+Mon Jun 14 15:01:08 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        *  DnC/RepositoryManager/Repository_Manager.cpp:
+        *  DnC/ExecutionManager/Execution_Manager.cpp
+        *  DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        *  DnC/DomainApplicationManager/Deployment_Configuration.cpp
+
+           Fixed memory leak problems. Now ExecutionManager "process" should
+           have no memomry leak at all. Further test will be on "NodeDaemon"
+           process, which will detect memory management problem for NodeApplicationManager
+           as well.
+
 Mon Jun 14 14:24:08 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         *  DnC/NodeManager/Node_Daemon.cpp:

@@ -81,10 +81,14 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           // corresponding child plan as input, which returns a
           // NodeApplicationManager object reference.
 
+          Deployment::ApplicationManager_var tmp_app_manager =
+            my_node_manager->preparePlan (artifacts.child_plan_
+					                                ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
           Deployment::NodeApplicationManager_var app_manager
-	      = Deployment::NodeApplicationManager::_narrow
-	      (my_node_manager->preparePlan (artifacts.child_plan_
-					     ACE_ENV_ARG_PARAMETER));
+	          = Deployment::NodeApplicationManager::_narrow (tmp_app_manager.in ()
+                                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (app_manager.in ()))
@@ -144,14 +148,19 @@ get_plan_info (void)
         {
           // Check if there is a corresponding NodeManager instance existing
           // If not present return false
-          if (this->deployment_config_.get_node_manager
-              (this->plan_.instance [index].node.in ()) == 0)
+          ::Deployment::NodeManager_var mgr = 
+              this->deployment_config_.get_node_manager
+               (this->plan_.instance [index].node.in ());
+
+          if (CORBA::is_nil (mgr.in ()))
             return 0; /* Failure */
 
           // Add this unique node_name to the list of NodeManager names
-          this->node_manager_names_.push_back
-            (CORBA::string_dup
-             (this->plan_.instance [index].node.in ()));
+         // this->node_manager_names_.push_back
+         //   (CORBA::string_dup
+          //   (this->plan_.instance [index].node.in ()));
+
+          this->node_manager_names_.push_back(this->plan_.instance [index].node.in ());
 
           // Increment the number of plans
           ++ num_plans;
