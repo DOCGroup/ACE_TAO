@@ -1,3 +1,11 @@
+Wed Jun  2 11:51:57 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/ExecutionManager/Execution_Manager.cpp:
+        * DnC/ExecutionManager/ExecutionManager_Impl.cpp:
+
+          Fixed hashtable used within the ExcutionManager to check for
+          duplicates in the right manner.
+
 Wed Jun  2 10:31:27 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/tests/Config_Handlers/handler_test.mpb:
