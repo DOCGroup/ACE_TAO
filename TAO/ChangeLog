@@ -1,3 +1,15 @@
+Tue Oct 15 20:05:48 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/run_test.pl:
+
+	  Use TerminateWaitKill() instead of WaitKill() when terminating
+	  the LoadManager binary.  The LoadManager handles the SIGTERM and
+	  SIGINT signals to allow for graceful shutdown in order to clean
+	  up remote resources.  TerminateWaitKill() sends a SIGTERM signal
+	  (as opposed to SIGKILL) to the process in question, thus
+	  giving the LoadManager the chance to shutdown gracefully.  This
+	  addresses a bogus exit status from the LoadManager binary.
+
 Tue Oct 15 19:49:53 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.h:
