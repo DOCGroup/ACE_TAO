@@ -1,3 +1,18 @@
+Tue Dec 19 14:21:12 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+
+        * orbsvcs/IFR_Service/Container_i.cpp:
+        * orbsvcs/IFR_Service/Container_i.h:
+        * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+
+          Fixed bug in Container::contents() where an InterfaceDef
+          container would include attributes and operations in its 
+          results only if the exclude_inherited flag was 0.
+
+        * orbsvcs/IFR_Service/OperationDef_i.cpp:
+
+          Removed unnecessary temporary variable in 
+          OperationDef::params(), and made cosmetic changes.
+
 Tue Dec 19 11:47:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/Protocols_Hooks.cpp : 
