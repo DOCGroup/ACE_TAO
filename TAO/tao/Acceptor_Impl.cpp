@@ -77,9 +77,23 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
   TAO_Server_Strategy_Factory *f =
     this->orb_core_->server_factory ();
 
+  // thread-per-connection concurrency model
+
   if (f->activate_server_connections ())
     return sh->activate (f->server_connection_thread_flags (),
                          f->server_connection_thread_count ());
+
+  // reactive concurrency model
+
+  // Keep track of open connections so that they can be explicitly
+  // removed from the reactor prior to shutting down the ORB.  This is
+  // particularly important for dynamically loaded ORBs where an
+  // application level reactor, such as the Singleton reactor, is used
+  // instead of an ORB created one.  Register the handle (not handler)
+  // associated with the connection that was just accepted with the
+  // ORB Core.
+  if (this->orb_core_->register_handle (sh->get_handle ()) != 0)
+    return -1;
 
   return this->orb_core_->reactor ()->register_handler
     (sh, ACE_Event_Handler::READ_MASK);

@@ -121,7 +121,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     transport_sync_strategy_ (0),
     svc_config_argc_ (0),
     svc_config_argv_ (0),
-    refcount_ (1)
+    refcount_ (1),
+    handle_set_ ()
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
@@ -1279,6 +1280,19 @@ TAO_ORB_Core::fini (void)
       this->acceptor_registry_->close_all ();
       delete this->acceptor_registry_;
     }
+
+  // Shutdown all open connections that are registered with the ORB
+  // Core.  Note that the ACE_Event_Handler::DONT_CALL mask is NOT
+  // used here since the reactor should invoke each handle's
+  // corresponding ACE_Event_Handler::handle_close() method to ensure
+  // that the connection is shutdown gracefully.
+
+  // @@ Will the Server_Strategy_Factory still be around by the time
+  //    this method is invoked?  Specifically, is it possible that
+  //    the Server_Strategy_Factory will already have been unloaded?
+  if (this->server_factory ()->activate_server_connections () == 0)
+    (void) this->reactor ()->remove_handler (this->handle_set_,
+                                             ACE_Event_Handler::ALL_EVENTS_MASK);
 
   TAO_Internal::close_services ();
 
