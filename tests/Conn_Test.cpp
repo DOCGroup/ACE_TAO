@@ -316,7 +316,9 @@ struct Client_Info
   ACE_INET_Addr *server_addr_;
   CONNECTOR *connector_;
   STRAT_CONNECTOR *strat_connector_;
+#if defined (ACE_HAS_THREADS)
   ACE_Barrier *barrier_;
+#endif /* ACE_HAS_THREADS */
 };
 
 static void *
@@ -327,14 +329,18 @@ client_connections (void *arg)
   // Run the timed-blocking test.
   timed_blocking_connect (*info->connector_, *info->server_addr_);
 
+#if defined (ACE_HAS_THREADS)
   // Wait for other threads to join us.
   info->barrier_->wait ();
+#endif /* ACE_HAS_THREADS */
 
   // Run the blocking test.
   blocking_connect (*info->connector_, *info->server_addr_);
 
+#if defined (ACE_HAS_THREADS)
   // Wait for other threads to join us.
   info->barrier_->wait ();
+#endif /* ACE_HAS_THREADS */
 
   // Run the cached blocking test.
   cached_connect (*info->strat_connector_, *info->server_addr_);
@@ -351,9 +357,6 @@ client (void *arg)
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
 			     ACE_DEFAULT_SERVER_HOST);
 
-  int n_threads = ACE_MAX_THREADS;
-  ACE_Barrier barrier (n_threads);
-
   CONNECTOR connector;
 
   NULL_CREATION_STRATEGY creation_strategy;
@@ -368,6 +371,11 @@ client (void *arg)
   info.server_addr_ = &server_addr;
   info.connector_ = &connector;
   info.strat_connector_ = &strat_connector;
+
+#if defined (ACE_HAS_THREADS)
+
+  int n_threads = ACE_MAX_THREADS;
+  ACE_Barrier barrier (n_threads);
   info.barrier_ = &barrier;
 
   ACE_Thread_Manager client_manager;
@@ -380,6 +388,13 @@ client (void *arg)
   
   // Wait for the threads to exit.
   client_manager.wait ();
+
+#else  /* ACE_HAS_THREADS */
+
+  client_connections (&info);
+
+#endif /* ACE_HAS_THREADS */
+
   return 0;
 }
 
