@@ -1,0 +1,8 @@
+#
+# Makefile for building the ACE RMCast examples
+#
+
+DIRS = \
+        Send_File
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

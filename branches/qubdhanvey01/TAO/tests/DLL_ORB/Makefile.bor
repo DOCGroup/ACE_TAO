@@ -1,0 +1,7 @@
+#
+# Makefile for building the DLL_Orb test executables
+#
+
+MAKEFILES = test_client_module.bor test_server_module.bor server.bor client.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
