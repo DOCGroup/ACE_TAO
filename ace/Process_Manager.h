@@ -40,13 +40,14 @@ private:
   // Default ctor/dtor.
 
   int delete_process_;
-  // Do we need to delete the Process, or just close() it?
+  // Keeps track of whether we need to delete the Process or just
+  // <close> it?
 
   ACE_Process *process_;
   // Describes the process itself.
 
   ACE_Event_Handler *exit_notify_;
-  // function to call when process exits
+  // function to call when this process exits.
 
   void dump (void) const;
   // Dump the state of an object.
