@@ -2,6 +2,9 @@
 
 project(*Server): taoserver, valuetype {
   exename = server
+  // This is just a dummy_lable to prevent the test from being compiled
+  // in MPC builds
+  requires += dummy_label
   libs += TAO_Strategies
   libpaths += ../../../../ace,../../../tao,../../../tao/PortableServer,../../../tao/Valuetype,../../../tao/IORInterceptor,../../../tao/ObjRefTemplate,../../../tao/Strategies
   Source_Files {
@@ -19,6 +22,9 @@ project(*Server): taoserver, valuetype {
 
 project(*Client): taoclient, taoserver, valuetype {
   exename = client
+  // This is just a dummy_lable to prevent the test from being compiled
+  // in MPC builds
+  requires += dummy_label
   libpaths += ../../../../ace,../../../tao,../../../tao/PortableServer,../../../tao/Valuetype,../../../tao/IORInterceptor,../../../tao/ObjRefTemplate,../../../tao/Strategies
   Source_Files {
     client.cpp
