@@ -63,8 +63,9 @@ Tue Nov 14 14:19:42 2000  Darrell Brunsch <brunsch@uci.edu>
           In ACE_Log_Record::print, changed the call to ACE_OS::fprintf
           to use ACE_TEXT("%s") as the second argument instead of just
           "%s".  This should make logging under ACE_USES_UNICODE readable.
-          Thanks to James Buck <jim@nowsol.com> for reporting the problem
-          and submitting this patch.
+          Thanks to James Buck <jim@nowsol.com> and Nick Pratt 
+          <npratt@microstrategy.com> for both reporting this problem and 
+          submitting patches.
 
 Tue Nov 14 09:19:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
