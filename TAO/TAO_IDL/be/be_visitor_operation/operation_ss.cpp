@@ -353,15 +353,17 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
           || bt->base_node_type () == AST_Decl::NT_array)
         {
                     *os << "_tao_retval._retn ();";
-                    *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+                    *os << be_nl <<"#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
                     *os << be_nl << " ri.result (_tao_retval_info);"
-                        << be_nl << "_tao_retval = _tao_retval_info;" <<be_nl;
+                        << be_nl << "_tao_retval = _tao_retval_info;" <<be_nl
+                        << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
         }
       else
         {
           *os << "_tao_retval;";
-          *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
-          *os << be_nl << " ri.result (_tao_retval_info);" << be_nl;
+          *os << be_nl <<"#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+          *os << be_nl << " ri.result (_tao_retval_info);" << be_nl
+              << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
         }
 /*
       *os << "// Update the result" << be_nl
@@ -385,7 +387,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << "TAO_INTERCEPTOR_CHECK;\n\n";
 
   // do postinvoke, and check for exception.
-
+ *os << be_nl <<"#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
   *os << be_uidt_nl
       << " _tao_vfr.send_reply (&ri, ACE_TRY_ENV);"<<be_nl
       << "TAO_INTERCEPTOR_CHECK;" << be_uidt_nl
