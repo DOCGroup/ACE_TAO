@@ -82,16 +82,13 @@ sub new {
 sub basename {
   my($self) = shift;
   my($file) = shift;
-  for(my $i = length($file) - 1; $i >= 0; --$i) {
-    my($ch) = substr($file, $i, 1);
-    if ($ch eq '/' || $ch eq '\\') {
-      ## The template file may use this value (<%basename_found%>)
-      ## to determine whether a basename removed the directory or not
-      $self->{'values'}->{'basename_found'} = 1;
-      return substr($file, $i + 1);
-    }
+
+  if ($file =~ s/.*[\/\\]//) {
+    $self->{'values'}->{'basename_found'} = 1;
   }
-  delete $self->{'values'}->{'basename_found'};
+  else {
+    delete $self->{'values'}->{'basename_found'};
+  }
   return $file;
 }
 
@@ -323,7 +320,7 @@ sub process_foreach {
   my($index)  = $self->{'foreach'}->{'count'};
   my($text)   = $self->{'foreach'}->{'text'}->[$index];
   my($status) = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
   my(@values) = ();
   my($names)  = $self->create_array($self->{'foreach'}->{'names'}->[$index]);
   my($name)   = $self->{'foreach'}->{'name'}->[$index];
@@ -418,7 +415,7 @@ sub handle_end {
   my($self)        = shift;
   my($name)        = shift;
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
   my($end)         = pop(@{$self->{'sstack'}});
   pop(@{$self->{'lstack'}});
 
@@ -605,7 +602,7 @@ sub handle_foreach {
   my($val)         = shift;
   my($name)        = 'endfor';
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
 
   push(@{$self->{'lstack'}}, $self->get_line_number());
   if (!$self->{'if_skip'}) {
@@ -802,7 +799,7 @@ sub process_name {
   my($line)        = shift;
   my($length)      = 0;
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
 
   if ($line eq '') {
   }
@@ -957,7 +954,7 @@ sub parse_line {
   my($ih)          = shift;
   my($line)        = shift;
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
   my($length)      = length($line);
   my($name)        = 0;
   my($startempty)  = ($line eq '' ? 1 : 0);

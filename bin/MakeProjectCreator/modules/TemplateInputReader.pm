@@ -45,7 +45,7 @@ sub parse_line {
   my($ih)          = shift;
   my($line)        = shift;
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
   my($current)     = $self->{'current'};
 
   if ($line eq '') {

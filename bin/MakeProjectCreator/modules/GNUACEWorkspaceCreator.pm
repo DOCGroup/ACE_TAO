@@ -23,9 +23,8 @@ use vars qw(@ISA);
 # Data Section
 # ************************************************************
 
-my(@targets)  = ('all', 'debug', 'profile', 'optimize',
-                 'install', 'deinstall', 'clean', 'realclean',
-                 'clobber', 'depend', 'rcs_info', 'idl_stubs',
+my(@targets)  = ('install', 'deinstall', 'clean', 'realclean',
+                 'depend', 'idl_stubs',
                 );
 
 # ************************************************************
@@ -79,94 +78,57 @@ sub write_comps {
   my($pjs)      = $self->get_project_info();
   my(@list)     = $self->number_target_deps($projects, $pjs, \%targnum);
 
-  ## Only use the list if there is more than one project
-  if ($#list > 0) {
-    my($count) = 0;
+  ## Print out the info for using -k
+  print $fh $crlf .
+            "MAKE_OPTIONS=\$(shell echo \$(MAKEFLAGS) | sed 's/--unix *//; s/ .*//')$crlf" .
+            "ifeq (\$(findstring k,\$(MAKE_OPTIONS)),k)$crlf" .
+            "  KEEP_GOING = 1$crlf" .
+            "else$crlf" .
+            "  KEEP_GOING = 0$crlf" .
+            "endif$crlf";
 
-    ## Print out the info for using -k
+  ## Print out the "all" target
+  print $fh $crlf . 'all:';
+  foreach my $project (@list) {
+    print $fh " $$pjs{$project}->[0]";
+  }
+
+  ## Print out all other targets here
+  print $fh "$crlf$crlf@targets:$crlf";
+  foreach my $project (@list) {
+    print $fh "\t-\@\$(MAKE) -f " . basename($project) . ' -C ' .
+              dirname($project) . " \$(\@);$crlf";
+  }
+
+  ## Print out each target separately
+  foreach my $project (@list) {
+    print $fh $crlf . $$pjs{$project}->[0] . ':';
+    if (defined $targnum{$project}) {
+      foreach my $number (@{$targnum{$project}}) {
+        print $fh " $$pjs{$list[$number]}->[0]";
+      }
+    }
+    my($cmd) = "\@\$(MAKE) -f " . basename($project) . ' -C ' . dirname($project) . $crlf;
     print $fh $crlf .
-              "MAKE_OPTIONS=\$(shell echo \$(MAKEFLAGS) | sed 's/--unix *//; s/ .*//')$crlf" .
-              "ifeq (\$(findstring k,\$(MAKE_OPTIONS)),k)$crlf" .
-              "  KEEP_GOING = 1$crlf" .
+              "ifeq (\$(KEEP_GOING),1)$crlf" .
+              "\t-$cmd" .
               "else$crlf" .
-              "  KEEP_GOING = 0$crlf" .
+              "\t$cmd" .
               "endif$crlf";
-
-    $count = $#list + 1;
-
-    ## Print the targets for each of the above projects
-    foreach my $target (@targets) {
-      my($tlen) = length($target);
-      my($cutoff) = int((80 - ($tlen + 1)) / ($tlen + 8));
-      my($splitter) = 0;
-      print $fh "$crlf$crlf$target:";
-      for(my $i = 0; $i < $count; ++$i) {
-        print $fh " $target." . $$pjs{$list[$i]}->[0];
-        ++$splitter;
-        if ($i != $count - 1 && $splitter == $cutoff) {
-          print $fh " \\$crlf " . (' ' x $tlen);
-          $splitter = 0;
-        }
-      }
-    }
-    print $fh $crlf;
-
-    ## Print out each of the individual targets
-    foreach my $project (@list) {
-      my($pjname) = $$pjs{$project}->[0];
-      print $fh "$crlf$pjname: all.$pjname$crlf" .
-                ".PHONY: $pjname$crlf$crlf" .
-                "%.$pjname:";
-      if (defined $targnum{$project}) {
-        foreach my $number (@{$targnum{$project}}) {
-          print $fh ' %.' .
-                    $$pjs{$list[$number]}->[0];
-        }
-      }
-      my($cmd) = "\@\$(MAKE) -f " . basename($project) . ' -C ' . dirname($project) . " \$(*);$crlf";
-      print $fh $crlf .
-                "ifeq (\$(KEEP_GOING),1)$crlf" .
-                "\t-$cmd" .
-                "else$crlf" .
-                "\t$cmd" .
-                "endif$crlf";
-    }
-
-    ## Print out the reverseclean target
-    {
-      my($target) = "reverseclean";
-      my($tlen) = length($target);
-      my($rlen) = length("realclean");
-      my($cutoff) = int((80 - ($rlen + 1)) / ($rlen + 8));
-      my($splitter) = 0;
-      print $fh "$crlf$crlf$target:";
-      for(my $i = $count - 1; $i >= 0; --$i) {
-        print $fh ' realclean.' . $$pjs{$list[$i]}->[0];
-        ++$splitter;
-        if ($i != 0 && $splitter == $cutoff) {
-          print $fh " \\$crlf " . (' ' x $tlen);
-          $splitter = 0;
-        }
-      }
-    }
-    print $fh "$crlf$crlf";
-  }
-  else {
-    ## Otherwise, just list the call to make without a for loop
-    my($dir)  = dirname($list[0]);
-    my($base) = basename($list[0]);
-    print $fh "TARGETS_NESTED = @targets$crlf" .
-              $crlf .
-              "\$(TARGETS_NESTED):$crlf" .
-              "\t\@\$(MAKE) -f $base " . ($dir ne '.' ? "-C $dir " : '') .
-              "\$(\@);$crlf$crlf" .
-              $$pjs{$list[0]}->[0] . ": all$crlf$crlf" .
-              "reverseclean:$crlf" .
-              "\t\@\$(MAKE) -f $base " . ($dir ne '.' ? "-C $dir " : '') .
-              "realclean$crlf$crlf";
   }
 
-  print $fh "project_name_list:$crlf";
+  ## Print out the reverseclean target
+  {
+    print $fh $crlf . 'reverseclean:' . $crlf;
+    
+    foreach my $project (reverse @list) {
+      print $fh "\t-\@\$(MAKE) -f " . basename($project) . ' -C ' .
+                dirname($project) . " realclean$crlf";
+    }
+  }
+
+  ## Print out the project_name_list target
+  print $fh $crlf . "project_name_list:$crlf";
   foreach my $project (sort @list) {
     print $fh "\t\@echo $$pjs{$project}->[0]$crlf";
   }

@@ -278,7 +278,7 @@ sub parse_exclude {
     }
     elsif ($line =~ /^}/) {
       $status = 1;
-      $errorString = '';
+      $errorString = undef;
       last;
     }
     else {
@@ -321,6 +321,32 @@ sub handle_scoped_unknown {
   if (-d $line) {
     my(@files) = ();
     $self->search_for_files([ $line ], \@files, $$flags{'implicit'});
+
+    ## If we are generating implicit projects within a scope, then
+    ## we need to remove directories and the parent directories for which
+    ## there is an mpc file.  Otherwise, the projects will be added
+    ## twice.
+    if ($$flags{'implicit'}) {
+      my(%remove) = ();
+      foreach my $file (@files) {
+        if ($file =~ /\.mpc$/) {
+          my($exc) = $file;
+          do {
+            $exc = dirname($exc);
+            $remove{$exc} = 1;
+          } while($exc ne '.');
+        }
+      }
+
+      my(@acceptable) = ();
+      foreach my $file (@files) {
+        if (!defined $remove{$file}) {
+          push(@acceptable, $file);
+        }
+      }
+      @files = @acceptable;
+    }
+
     foreach my $file (@files) {
       $self->{'scoped_assign'}->{$file} = $flags;
       push(@{$self->{'project_files'}}, $file);
@@ -439,7 +465,7 @@ sub generate_default_components {
 
 sub get_default_workspace_name {
   my($self) = shift;
-  my($name) = $self->get_current_input();
+  my($name) = $self->{'current_input'};
 
   if ($name eq '') {
     $name = $self->base_directory();
@@ -486,7 +512,7 @@ sub write_workspace {
   my($creator)   = shift;
   my($addfile)   = shift;
   my($status)    = 1;
-  my($error)     = '';
+  my($error)     = undef;
   my($duplicates) = 0;
 
   if ($self->get_toplevel()) {
@@ -840,7 +866,7 @@ sub generate_project_files {
             }
 
             ## Write our per project workspace
-            my($error) = '';
+            my($error) = undef;
             ($status, $error) = $self->write_workspace($creator);
             if (!$status) {
               $self->error($error);
@@ -1207,7 +1233,7 @@ sub number_target_deps {
 sub optionError {
   my($self) = shift;
   my($str)  = shift;
-  $self->warning($self->get_current_input() . ": $str.");
+  $self->warning("$self->{'current_input'}: $str.");
 }
 
 
@@ -1442,7 +1468,8 @@ sub get_validated_ordering {
               $self->warning("'$name' references '$dep' which has " .
                              "not been processed.");
             }
-            $deps =~ s/\s*"$dep"\s*/ /g;
+            my($reg) = $self->escape_regex_special($dep);
+            $deps =~ s/\s*"$reg"\s*/ /g;
           }
         }
       }
