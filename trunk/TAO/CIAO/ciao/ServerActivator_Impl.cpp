@@ -72,16 +72,12 @@ CIAO::ServerActivator_Impl::init (const char *server_location,
                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (spawn_delay); // @@ We need to use this argumetn
-                                // later to determine is a
-                                // ComponentServer has been spawned
-                                // successfully.
 
   if (server_location == 0)
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
 
-  if (spawn_delay_ == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
+  if (spawn_delay != 0)
+    this->spawn_delay_ = spawn_delay;
 
   // Initialize svc.conf map
   if (this->init_svcconf_map (svc_conf_map) != 0)
