@@ -1,3 +1,7 @@
+Tue May 06 07:43:29 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Containers.cpp (dequeue_head): fixed typos in variable names.
+
 Tue May  6 00:00:54 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/Message_Block.cpp: Added template specialization for
