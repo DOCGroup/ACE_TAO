@@ -190,13 +190,13 @@ public:
 
 protected:
   // = Dynamic linking hooks.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Called when service is linked.
 
   virtual int fini (void);
   // Called when service is unlinked.
 
-  virtual int info (char **strp, size_t length) const;
+  virtual int info (ACE_TCHAR **strp, size_t length) const;
   // Called to determine info about the service.
 
   // = Scheduling hooks.
@@ -204,7 +204,7 @@ protected:
   virtual int resume (void);
 
 private:
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse svc.conf arguments.
 
   void alloc (void);
