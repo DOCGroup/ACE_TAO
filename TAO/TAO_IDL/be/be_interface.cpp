@@ -553,7 +553,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
-  *ci << "this->ptr_ = " << name () << "::_duplicate (p.ptr ());\n";
+  *ci << "this->ptr_ = " << interface_full_name << "::_duplicate (p.ptr ());\n"; 
   ci->decr_indent ();
   *ci << "}" << nl;
   *ci << "return *this;\n";

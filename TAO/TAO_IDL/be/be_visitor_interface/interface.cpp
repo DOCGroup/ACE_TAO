@@ -382,10 +382,6 @@ be_visitor_interface::visit_operation (be_operation *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_AMI_HANDLER_CH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH);
-      break;
-
     case TAO_CodeGen::TAO_INTERFACE_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
       break;
@@ -416,6 +412,11 @@ be_visitor_interface::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
       break;
+      
+    case TAO_CodeGen::TAO_AMI_HANDLER_CH:
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH);
+      break;
+
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:

@@ -450,6 +450,9 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_AMI_HANDLER_CH:
       return new be_visitor_interface_ami_handler_ch (new_ctx);
       
+    case TAO_CodeGen::TAO_AMI_HANDLER_STUB_CH:
+      return new be_visitor_interface_ami_handler_stub_ch (new_ctx);
+      
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST:
       return new be_visitor_operation_ami_handler_arglist (new_ctx);
       
@@ -583,13 +586,17 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_OPERATION_AMI_CS:
       return new be_interpretive_visitor_operation_ami_cs (new_ctx);
 
-    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST:
+    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CH:
+    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CS:
       return new be_visitor_operation_ami_arglist (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_ARG_AMI:
       return new be_visitor_operation_argument (new_ctx);
       
-    case TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST:
+    case TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST_CH:
+      return new be_visitor_args_ami_arglist (new_ctx);
+
+    case TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST_CS:
       return new be_visitor_args_ami_arglist (new_ctx);
       
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH:
@@ -737,13 +744,17 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_OPERATION_AMI_CH:
       return new be_visitor_operation_ami_ch (new_ctx);
 
-    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST:
+    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CH:
+    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CS:
       return new be_visitor_operation_ami_arglist (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_ARG_AMI:
       return new be_visitor_operation_argument (new_ctx);
 
-    case TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST:
+    case TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST_CH:
+      return new be_visitor_args_ami_arglist (new_ctx);
+
+    case TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST_CS:
       return new be_visitor_args_ami_arglist (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH:

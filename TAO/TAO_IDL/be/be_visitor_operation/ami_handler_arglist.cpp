@@ -40,6 +40,82 @@ be_visitor_operation_ami_handler_arglist::be_visitor_operation_ami_handler_argli
 {
 }
 
+// Visit the scope and its elements. 
+// This implementation is the same as
+// <be_visitor_scope::visit_scope>. The variation is that it calls the
+// <post_process>  only if the return value of the <accept> is 1. We
+// need to do this since we have to differentiate between an argument
+// that was printed and an argument that was skipped in the signature.
+
+int
+be_visitor_operation_ami_handler_arglist::visit_scope (be_scope *node)
+{
+  // Proceed if the number of members in our scope is greater than 0. 
+  if (node->nmembers () > 0)
+    {
+      // initialize an iterator to iterate thru our scope
+      UTL_ScopeActiveIterator *si;
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (node,
+                                               UTL_Scope::IK_decls),
+                      -1);
+      this->elem_number_ = 0;
+      // continue until each element is visited
+      while (!si->is_done ())
+        {
+          AST_Decl *d = si->item ();
+          if (!d)
+            {
+              delete si;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_scope::visit_scope - "
+                                 "bad node in this scope\n"), -1);
+
+            }
+          be_decl *bd = be_decl::narrow_from_decl (d);
+          // set the scope node as "node" in which the code is being
+          // generated so that elements in the node's scope can use it
+          // for code generation
+
+          this->ctx_->scope (node->decl ());
+
+          // set the node to be visited
+          this->ctx_->node (bd);
+          this->elem_number_++;
+
+          // Do any pre processing using the next item info. 
+          if (this->pre_process (bd) == -1)
+            {
+              delete si;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_scope::visit_scope - "
+                                 "pre processing failed\n"), -1);
+            }
+
+          // Send the visitor.
+          int visitor_result = 0;
+          if (bd == 0 ||  (visitor_result = bd->accept (this)) == -1)
+            {
+              delete si;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_scope::visit_scope - "
+                                 "codegen for scope failed\n"), -1);
+
+            }
+
+          // Do any post processing using this item info.
+          if (visitor_result == 1)
+            this->post_process (bd);
+          
+          // Next argument.
+          si->next ();
+        } // end of while loop
+      delete si;
+    } // end of if
+
+  return 0;
+}
+
 be_visitor_operation_ami_handler_arglist::~be_visitor_operation_ami_handler_arglist (void)
 {
 }
@@ -61,13 +137,12 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  // No argument for exception. What will you do if you get the
-  // exception from the call back method?
+  // No exception argument.
 
   // Arglist is over.
   *os << be_uidt_nl << ")" << be_uidt;
 
-  // @@ No THROW SPECs. You can do anything if the call back guy
+  // @@ No THROW SPECs. You cannot do anything if the call back guy
   //    throws an exception. But I am not too sure about
   //    this. (Alex). 
   switch (this->ctx_->state ())
@@ -151,7 +226,11 @@ be_visitor_operation_ami_handler_arglist::visit_argument (be_argument *node)
                          "Bad visitor\n"),
                         -1);
     }
-  if (node->accept (visitor) == -1)
+
+  // Pass the visitor.
+
+  int result = node->accept (visitor);
+  if (result == -1)
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -161,7 +240,7 @@ be_visitor_operation_ami_handler_arglist::visit_argument (be_argument *node)
                         -1);
     }
   delete visitor;
-  return 0;
+  return result;
 }
 
 int

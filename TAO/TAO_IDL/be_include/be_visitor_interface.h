@@ -44,4 +44,5 @@
 #include "be_visitor_interface/ami_handler_fwd_ch.h"
 #include "be_visitor_interface/ami_handler_fwd_ci.h"
 #include "be_visitor_interface/ami_handler_ch.h"
+#include "be_visitor_interface/ami_handler_stub_ch.h"
 #endif /* _BE_VISITOR_INTERFACE_H */

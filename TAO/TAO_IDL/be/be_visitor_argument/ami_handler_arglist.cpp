@@ -72,6 +72,7 @@ be_visitor_args_ami_handler_arglist::visit_argument (be_argument *node)
                          "cannot accept visitor\n"),
                         -1);
     }
+  
   // Print the variable name only if the type was printed already. 
   if (result)
     *os << " " << node->local_name () << ",\n";
