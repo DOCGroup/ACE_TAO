@@ -1,18 +1,23 @@
+Sat Aug 25 20:58:22 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/FILE_IO.i (send_n): Changed to use ACE::write_n to send the
+	  chain of Message_Blocks.  Thanks to Doug for pointing this out.
+
 Sat Aug 25 10:16:21 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/Svc_Handler_Test.cpp (main): The destructor of svc_handler
 	  will close file_io, so we don't need to do it explicitly!
 
-	* ace/Log_Msg.cpp (log): Changed range check from 
-	
+	* ace/Log_Msg.cpp (log): Changed range check from
+
 	  this->msg_ + ACE_Log_Record::MAXLOGMSGLEN
-	  
+
 	  to
-	  
-	  this->msg_ + sizeof this->msg_ 
-	  
+
+	  this->msg_ + sizeof this->msg_
+
 	  to correspond to the change below.
-	  
+
 	* ace/Log_Msg.h (ACE_Log_Msg): Increased the size of the buffer
 	  used to store log records to account for the NUL-terminator.
 
@@ -24,35 +29,35 @@ Sat Aug 25 09:00:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp:
 	* ace/TP_Reactor.h (ACE_TP_Reactor): Fixed  a warning in KCC
-	  builds.  
+	  builds.
 
 Sat Aug 25 08:42:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Configuration_Import_Export.cpp: Fixed warnings with g++. I
 	  am not sure how this fix will be accepted on different
 	  compilers.  Things are always dicy when you want to delete a
-	  void *. 
+	  void *.
 
 Fri Aug 24 23:29:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Added File_IO test to our daily builds. 
+	* bin/auto_run_tests.lst: Added File_IO test to our daily builds.
 
 Fri Aug 24 23:12:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.h: 
+	* ace/WFMO_Reactor.h:
 	* ace/WFMO_Reactor.cpp (dispatch_notify): Fixed a compile error on
-	  MSVC.  
+	  MSVC.
 
 Fri Aug 24 23:07:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Configuration_Import_Export.cpp: Fixed a compile error with
-	  g++. 
+	  g++.
 
 Fri Aug 24 21:55:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * ace/QoS/QoS_Session_Impl.cpp:
           Check for null parameters in rsvp_callback().
-          Thanks to Yamuna Krishnamurthy <yamuna@cs.wustl.edu>. 
+          Thanks to Yamuna Krishnamurthy <yamuna@cs.wustl.edu>.
 
 Fri Aug 24 20:32:39 2001  Steve Huston  <shuston@riverace.com>
 
@@ -108,7 +113,7 @@ Fri Aug 24 16:10:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	Fri Aug 24 14:59:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * ace/TP_Reactor.cpp (dispatch_socket_events): Cosmetic changes. 
+        * ace/TP_Reactor.cpp (dispatch_socket_events): Cosmetic changes.
 
 	Fri Aug 24 14:19:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -133,12 +138,12 @@ Fri Aug 24 16:10:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  timer value <= current time. Changed the expire () method to use
 	  this method to get dispatch information.
 
-	* ace/Timer_Queue.h: Added a template specialisation for 
-	  ACE_Timer_Node_Dispatch_Info_T. 
+	* ace/Timer_Queue.h: Added a template specialisation for
+	  ACE_Timer_Node_Dispatch_Info_T.
 
 	* ace/Timer_Queue.cpp: Added template instantiations for the
-	  specialisation. 
-	  
+	  specialisation.
+
 	* ace/TP_Reactor.h:
 	* ace/TP_Reactor.cpp: Added a new method handle_timer_events ()
 	  that would handles timer events.
@@ -163,21 +168,21 @@ Fri Aug 24 16:10:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* ace/TP_Reactor.i:
 	* ace/TP_Reactor.cpp (handle_events): Fixed a bug with
 	  handle_events (ACE_Time_Value &). This should be calling the
-	  handle_events () of the TP_Reactor and not the select reactor. 
-	 
+	  handle_events () of the TP_Reactor and not the select reactor.
+
 	  Added a whole slew of new methods that basically allows us to do
-	  this 
+	  this
 	    - handle one event at a time
-	   
+
 	    - once the thread knows the event that needs handling it should
 	      release the token before dispatching the events
-	   
+
 	  The new methods that have been added are
-	  
+
 	    - handle_signals (), which handle signals that interrupted the
 	      select (). The implementation of this method is busted. The
 	      implementation has been copied from the existing setup
-	    
+
 	    - handle_notify_events (), which handles one notify on the
 	      notify_pipe at a time
 
@@ -214,7 +219,7 @@ Fri Aug 24 16:10:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Fri Aug 24 14:25:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Massimo Pichini <massimo@webbridges.it> to the
-	  hall of fame.  
+	  hall of fame.
 
 Fri Aug 24 13:40:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -227,7 +232,7 @@ Fri Aug 24 10:17:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* ace/Log_Msg.cpp (log_hexdump): Added a patch provided by Massimo
 	  Pichini <massimo@webbridges.it>. This prevents overflows with
 	  long strings that are used in printing hexdumps. Previously we
-	  had a buffer of 80 bytes on the stack. 
+	  had a buffer of 80 bytes on the stack.
 
 Fri Aug 24 10:03:29 2001  Steve Huston  <shuston@riverace.com>
 
@@ -255,7 +260,7 @@ Thu Aug 23 09:17:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (file): Reduced the number of bytes copied in
 	  ACE_Log_Msg::file () and ACE_Log_Msg::msg () by one. Thanks to
-	  Alain Decamps <Alain.Decamps@PIDPA.be> for pointing this out. 
+	  Alain Decamps <Alain.Decamps@PIDPA.be> for pointing this out.
 
 Thu Aug 23 08:11:22 2001  Steve Huston  <shuston@riverace.com>
 
@@ -263,7 +268,7 @@ Thu Aug 23 08:11:22 2001  Steve Huston  <shuston@riverace.com>
           Prepend ACE_OS:: to atoi to work with both narrow and wide chars.
 
 Thu Aug 23 08:03:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
- 
+
         * ace/QoS/QoS_Session_Impl.cpp:
           Improve debugging messages.  Return -1 inside rsvp_callback()
           if flowspec type is unknown.
@@ -279,7 +284,7 @@ Wed Aug 22 19:04:57 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* tests/Logging_Strategy_Test.cpp: Enable this test to work
 	  on platforms that don't support DLLs.  Thanks to Edan Ayal
  	  <edana@bandwiz.com> for suggestion this and providing the code.
-	
+
 	* tests/Logging_Strategy_Test.cpp (parse_args): Changed 'n' for 'N'
 	  since that controls the max number of log files.  Thanks to Edan
  	  Ayal <edana@bandwiz.com> for reporting this.
