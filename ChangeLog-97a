@@ -1,3 +1,19 @@
+Thu Mar 27 21:10:59 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/IOStream.h: only use built-in ipfx{0,1} () with __GNUC__,
+	  because that's the only compiler we know of that has them.
+	  Thanks to Carlos O'Ryan <coryan@mat.puc.cl> for pointing this
+	  out, and to James CE Johnson <jcej@lads.com> for providing the fix.
+
+	* ace/OS.i: rearranged order of ACE_Time_Value functions (moved
+	  set ()'s up, moved arithmetic operators down) so that they are
+	  defined before use.
+
+	* apps/Gateway/{Gateway,Peer}/Makefile: added -lGateway to LIBS to
+	  pick up its template instantiations during links.
+
+	* apps/Gateway/Peer/Peer.cpp: added template instantations.
+
 Thu Mar 27 14:10:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.h: Added two new accessors to ACE_Time_Value:
