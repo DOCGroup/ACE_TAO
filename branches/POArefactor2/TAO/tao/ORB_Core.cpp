@@ -2681,6 +2681,13 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
                     ior_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
                   ACE_TRY_CHECK;
                 }
+              else
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%P|%t) %p\n"),
+                              ACE_TEXT ("ORB Core unable to find the IORInterceptor ")
+                              ACE_TEXT ("Adapter Factory instance")));
+                }
             }
           ACE_CATCHANY
             {
@@ -2752,7 +2759,7 @@ TAO_ORB_Core_instance (void)
       if (orb_table->first_orb () == 0)
         {
           // Calling CORBA::ORB_init() returns a duplicated ORB
-          // reference, so make sure that reference is stored in an
+            // reference, so make sure that reference is stored in an
           // ORB_var so that no leak occurs.  The duplicate ORB
           // reference isn't needed outside the scope of this function
           // since the corresponding ORB Core instance will still
