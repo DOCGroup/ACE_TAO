@@ -1,3 +1,9 @@
+Wed Jul 12 16:31:51 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/types.h:
+
+	  Fixed PACE_TCHAR.
+
 Wed Jul 12 16:10:39 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/fcntl.h
