@@ -349,6 +349,7 @@ TAO_Transport::connection_handler_closing (void)
     }
 }
 
+// @@TODO: Ideally the following should be inline.
 int
 TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 {
@@ -370,8 +371,12 @@ int
 TAO_Transport::make_idle (void)
 {
   return this->transport_cache_manager ().make_idle (this->cache_map_entry_);
+}
 
-  return -1;
+int
+TAO_Transport::update_transport (void)
+{
+  return this->transport_cache_manager ().update_entry (this->cache_map_entry_);
 }
 
 
@@ -697,6 +702,9 @@ TAO_Transport::close_connection_shared (int purge,
 
 
   int retval = 0;
+
+  // Set the event handler in the connection close wait state.
+  (void) eh->connection_close_wait ();
 
   // NOTE: If the wait strategy is in blocking mode, then there is no
   // chance that it could be inside the reactor. We can safely skip
