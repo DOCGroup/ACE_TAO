@@ -1,3 +1,38 @@
+Sun Jan 24 00:48:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service/Ping.idl:
+        * orbsvcs/ImplRepo_Service/ImplRepo.idl:
+        * orbsvcs/orbsvcs/Ping.idl:
+        * orbsvcs/orbsvcs/ImplRepo.idl:
+          Moved IDL files from ImplRepo to orbsvcs.
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/ImplRepo_Service/implrepo.dsp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * orbsvcs/tests/ImplRepo/IR_Helper.h:
+        * orbsvcs/tests/ImplRepo/IR_Helper.cpp:
+        * orbsvcs/tests/ImplRepo/Repository_Test.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_client.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_server.dsp:
+          Changed because of the above move.
+
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+        * orbsvcs/Time_Service/IR_Helper.cpp:
+        * orbsvcs/Time_Service/IR_Helper.h:
+        * orbsvcs/Time_Service/Server_i.cpp:
+        * orbsvcs/Time_Service/Time_Service_Clerk.dsp:
+        * orbsvcs/Time_Service/Time_Service_Server.dsp:
+          Changed because the IR IDL files moved, and also fixed various 
+          warnings on NT (mainly just changing TAO_CHECK_ENV_RETURNs to 
+          TAO_CHECK_ENV - since it looks like the result was the same).
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+          Only one test now runs at a time.
+
+        * orbsvcs/tests/Time/Time_Service_Test.dsp: 
+        * orbsvcs/tests/Time/run_test.pl:
+          Fixed various problems on NT.
+
 Sat Jan 23 22:29:12 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * docs/implrepo.html:
