@@ -198,6 +198,7 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       TAO_Internal.cpp
       TAO_Server_Request.cpp
       Typecode_Constants.cpp
+      Typecode_typesC.cpp
       PredefinedType_Seq_Tmplinst.cpp
       TypeCodeFactory_Adapter.cpp
       Wait_Strategy.cpp
