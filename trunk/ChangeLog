@@ -1,3 +1,15 @@
+Wed May  5 09:13:46 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* ace/ace.mpc:
+	* ace/Auto_Functor.h:
+	* ace/Auto_Functor.inl:
+	* ace/Auto_Functor.cpp:
+	  Moved from TAO/tao, this class provides auto_ptr<>-like
+	  functionality, what to do on destruction is controlled by a
+	  functor.  So, you could write auto_ptr<> and
+	  ACE_Auto_Array_Ptr<> in terms of it, and many other similar
+	  classes.
+
 Tue May  4 18:32:49 2004  Steve Huston  <shuston@riverace.com>
 
 	* apps/mkcsregdb/mkcsregdb.cpp: Added #includes to pick up missing
