@@ -19,7 +19,9 @@ int Dispatch_Command::can_be_deleted (void) const
 ACE_INLINE
 void Dispatch_Command::destroy (void)
 {
-   delete this;
+  //@@what if it was allocated thru an allocator?
+  //may be this should be left as a  pure virtual
+  delete this;
 }
 
 ACE_INLINE

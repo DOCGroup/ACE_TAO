@@ -121,6 +121,7 @@ namespace Kokyu
   class Kokyu_Export Dispatcher_Factory
     {
     public:
+      //@@ Should we return auto_ptr<Dispatcher> instead?
       static Dispatcher* create_dispatcher (const ConfigInfoSet&);
     };
 } //end of namespace

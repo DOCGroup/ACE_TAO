@@ -25,11 +25,11 @@ Default_Dispatcher_Impl::init_i (const ConfigInfoSet& config_info_set)
 
   this->ntasks_ = size;
 
-  Dispatcher_Task_Auto_Ptr * tmp=0;
-  ACE_NEW_RETURN (tmp, Dispatcher_Task_Auto_Ptr[ntasks_], -1);
+  Dispatcher_Task_Auto_Ptr * tasks_array=0;
+  ACE_NEW_RETURN (tasks_array, Dispatcher_Task_Auto_Ptr[ntasks_], -1);
 
   ACE_DEBUG ((LM_DEBUG, "after new on task array\n" ));
-  tasks_.reset(tmp);
+  tasks_.reset(tasks_array);
 
   ACE_DEBUG ((LM_DEBUG, "task array auto_ptr set\n" ));
 
@@ -41,9 +41,9 @@ Default_Dispatcher_Impl::init_i (const ConfigInfoSet& config_info_set)
   for (;i<size && iter.next (config);iter.advance ())
     {
       ACE_DEBUG ((LM_DEBUG, "iter = %d\n", i));
-      Dispatcher_Task* tmp2=0;
-      ACE_NEW_RETURN (tmp2, Dispatcher_Task (*config), -1);
-      tasks_[i++].reset (tmp2);
+      Dispatcher_Task* task=0;
+      ACE_NEW_RETURN (task, Dispatcher_Task (*config), -1);
+      tasks_[i++].reset (task);
     }
 
   this->activate ();
