@@ -208,7 +208,7 @@ main (int argc, char *argv[])
         }
   ACE_OS::printf ( ACE_TEXT ("The Server has generated %s\n"),ior_output_file);
 
-  CPULoad::calibrate(10);
+  CPULoad::calibrate(5);
 
 //print out the start time of the program.
   ACE_Time_Value start_time=ACE_OS::gettimeofday();
