@@ -3,7 +3,7 @@ Fri Dec  3 14:20:17 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* tao/default_resource.cpp (init_protocol_factories):
 
 	  Added missing argument in call to ACE_ERROR.  Thanks to Chris
-	  Hafey for reporting this.  [Bug 385]
+	  Hafey <chris@stentorsoft.com> for reporting this.  [Bug 385]
 
 Fri Dec  3 13:26:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -13,10 +13,9 @@ Fri Dec  3 13:26:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 Fri Dec  3 12:37:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_visitor_union.cdr_op_ci.cpp
-	  For union implicit default case, the discriminant of the
-	  decoded union must be set to the default value. Thanks to
-	  Christopher Kohlhoff <chris@kohlhoff.com> for reporting
-	  this bug.
+	  For union implicit default case, the discriminant of the decoded
+ 	  union must be set to the default value. Thanks to Christopher
+ 	  Kohlhoff <chris@kohlhoff.com> for reporting this bug.
 
 	* TAO_IDL/be/be_exception.cpp:
 	* TAO_IDL/be/be_visitor_array/any_op_ch.cpp:
