@@ -4,6 +4,9 @@ Fri Aug  7 23:18:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Updated the new ACE_CC_NAME macros (and friends) so they work
 	  with egcs (and hopefully g++).
 
+	* tests/MT_SOCK_Test.cpp: 
+	  Removed double comma in function call.
+
 Fri Aug  7 21:39:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/INET_Addr.cpp: 
