@@ -65,7 +65,6 @@ public:
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
                                TAO_MProfile &mprofile);
   virtual int is_collocated (const TAO_Profile* profile);
-  virtual CORBA::ULong endpoint_count (void);
 
 private:
   int open_i (TAO_ORB_Core* orb_core,
@@ -77,7 +76,7 @@ private:
 
 private:
   TAO_SSLIOP_BASE_ACCEPTOR ssl_acceptor_;
-  // the concrete acceptor, as a pointer to it's base class.
+  // The concrete acceptor, as a pointer to it's base class.
 
   TAO_SSLIOP_CREATION_STRATEGY *creation_strategy_;
   TAO_SSLIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
@@ -85,7 +84,7 @@ private:
   // Acceptor strategies.
 
   SSLIOP::SSL ssl_component_;
-  // The SSL component
+  // The SSL component.
 };
 
 #if defined(__ACE_INLINE__)
