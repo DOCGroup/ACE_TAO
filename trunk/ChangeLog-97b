@@ -1,8 +1,23 @@
-Mon Oct 20 22:34:46 1997    <irfan@TWOSTEP>
+Tue Oct 21 00:07:47 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
+	* ace/Thread_Manager.{h,cpp}:  Added a parameter <size> to
+	  Thread_Manager's constructor with default value 0.  This
+	  parameter is currently unused and put in for backward
+	  compatibility.
+	  (open):  Putting back this method for backward compatibility.
+	  This is currently a no-op.  Thanks to David for reporting this.
+
+Mon Oct 20 22:34:46 1997    <irfan@TWOSTEP>
+ 
 	* ace/OS.i (open): Moved Win32 specific errno mappings from open()
  	  to ACE_FAIL_RETURN. Also updated the wide-character version of
  	  open().
+
+Mon Oct 20 22:23:42 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* tests/Sigset_Ops_Test.cpp (main): It is not legal too for
+	  sigismember to return 0 if we pass an invalid signal to it.
+	  Thanks to Stephen Coy <stevec@magna.com.au> for fixing this.
 
 Mon Oct 20 14:07:37 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
