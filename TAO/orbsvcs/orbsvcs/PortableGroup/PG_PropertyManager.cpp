@@ -2,6 +2,7 @@
 
 #include "PG_PropertyManager.h"
 #include "PG_ObjectGroupManager.h"
+#include "PG_Property_Utils.h"
 
 ACE_RCSID (PortableGroup,
            PG_PropertyManager,
@@ -25,6 +26,23 @@ TAO_PG_PropertyManager::set_default_properties (
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
+  // First verify that the "Factories" property is not in the
+  // Properties sequence.  According to the spec, it is not allowed to
+  // be set as part of the default properties.
+  PortableGroup::Name factories;
+  factories.length (1);
+  factories[0].id = CORBA::string_dup ("org.omg.pg.Factories");
+
+  CORBA::ULong len = props.length ();
+  for (CORBA::ULong i = 0; i < len; ++i)
+    {
+      PortableGroup::Property property = props[i];
+
+      if (property.nam == factories)
+        ACE_THROW (PortableGroup::InvalidProperty (property.nam,
+                                                   property.val));
+    }
+
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
   this->default_properties_ = props;
@@ -126,12 +144,12 @@ TAO_PG_PropertyManager::get_type_properties (
 
   // Set the length to the length of the largest of the two property
   // sequences.  The idea is to keep the cost of the incremental
-  // growth that may occur in this->override_properties() to a
+  // growth that may occur in TAO_PG::override_properties() to a
   // minimum.
   properties->length (props_len);
 
   *tmp_properties = this->default_properties_;
-  this->override_properties (type_properties, *tmp_properties);
+  TAO_PG::override_properties (type_properties, *tmp_properties);
 
   return properties._retn ();
 }
@@ -172,6 +190,25 @@ TAO_PG_PropertyManager::set_properties_dynamically (
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
+#if 0
+  // First verify that the "InitialNumberMembers" property is not in
+  // the Properties sequence.  According to the spec, it is not
+  // allowed to be set as part of the default properties.
+  PortableGroup::Name factories;
+  factories.length (1);
+  factories[0].id = CORBA::string_dup ("org.omg.pg.InitialNumberMembers");
+
+  CORBA::ULong len = props.length ();
+  for (CORBA::ULong i = 0; i < len; ++i)
+    {
+      PortableGroup::Property property = props[i];
+
+      if (property.nam == factories)
+        ACE_THROW (PortableGroup::InvalidProperty (property.nam,
+                                                   property.val));
+    }
+#endif  /* 0 */
+
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
@@ -231,7 +268,7 @@ TAO_PG_PropertyManager::get_properties (
 
   // Set the length to the length of the largest of the three property
   // sequences.  The idea is to keep the cost of the incremental
-  // growth that may occur in this->override_properties() to a
+  // growth that may occur in TAO_PG::override_properties() to a
   // minimum.
   properties->length (properties_len);
 
@@ -239,10 +276,10 @@ TAO_PG_PropertyManager::get_properties (
   *tmp_properties = this->default_properties_;
 
   // Override default properties with type-specific properties.
-  this->override_properties (*type_properties, *tmp_properties);
+  TAO_PG::override_properties (*type_properties, *tmp_properties);
 
   // Now override with the dynamic (object group) properties.
-  this->override_properties (dynamic_properties.in (), *tmp_properties);
+  TAO_PG::override_properties (dynamic_properties.in (), *tmp_properties);
 
   return properties._retn ();
 }
@@ -291,57 +328,6 @@ TAO_PG_PropertyManager::remove_properties (
   // were placed in the "new_properties" variable.  Now copy that
   // variable.
   properties = new_properties;
-}
-
-
-void
-TAO_PG_PropertyManager::override_properties (
-    const PortableGroup::Properties & overrides,
-    PortableGroup::Properties &properties)
-{
-  const CORBA::ULong num_overrides = overrides.length ();
-  if (num_overrides == 0)
-    return;
-
-  const CORBA::ULong old_length = properties.length ();
-
-  const CORBA::ULong new_length =
-    (num_overrides > old_length ? num_overrides : old_length);
-
-  properties.length (new_length);
-
-  // @@ Slow O(n^2) operation.  Note that it may be slower than O(n^2)
-  //    if the length of the property sequence must be increased
-  //    on-the-fly due to the allocations and copies incurred by such
-  //    an operation.
-  for (CORBA::ULong i = 0; i < num_overrides; ++i)
-    {
-      const PortableGroup::Property &override = overrides[i];
-
-      CORBA::ULong j = 0;
-      for ( ; j < old_length; ++j)
-        if (properties[j].nam == override.nam)
-          {
-            properties[j].val = override.val;
-            break;
-          }
-
-      // No property to override.  Append the override.
-      if (j == old_length)
-        {
-          // @@ Slow incremental growth!  In order to set the length
-          //    only once, i.e. a priori, instead of multiple times a
-          //    searches in the override list and the property list
-          //    must be performed to determine how many additional
-          //    properties from the override list must be appended to
-          //    the properties list.  Depending on the size of each
-          //    list, such an operation may be just as slow as this
-          //    operation.
-          const CORBA::ULong current_length = properties.length ();
-          properties.length (current_length + 1);
-          properties[current_length] = override;
-        }
-    }
 }
 
 
