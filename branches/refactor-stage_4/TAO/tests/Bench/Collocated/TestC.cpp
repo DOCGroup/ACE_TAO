@@ -31,7 +31,7 @@
 
 #include "TestC.h"
 #include "tao/Stub.h"
-#include "tao/Invocation_Base.h"
+#include "tao/Invocation_Adapter.h"
 #include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"
 
@@ -138,10 +138,10 @@ Test::tao_Hello_cast::tao_upcast (
 ///// Function pointer for collocation factory initialization
 //////////////////////////////////////////////////////////
 
-Test::_TAO_Hello_Proxy_Broker *
-(*Test__TAO_Hello_Proxy_Broker_Factory_function_pointer) (
+TAO::Collocation_Proxy_Broker *
+(*Test__TAO_Hello_Collocation_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
-  );
+  ) = 0;
 
 ////////////////////////////////////////////////////////////////////
 ///// Function pointer for collocation factory initialization end
@@ -176,8 +176,8 @@ char * Test::Hello::get_string (
       &_tao_retval
     };
 
-  TAO::Invocation_Base _tao_call (
-      _collocated_tao_target_,
+  TAO::Invocation_Adapter _tao_call (
+      this,
       _tao_signature,
       1,
       "get_string",
@@ -201,12 +201,18 @@ void Test::Hello::shutdown (
     CORBA::SystemException
   ))
 {
+  if (!this->is_evaluated ())
+    {
+      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+    }
+
   if (this->the_TAO_Hello_Proxy_Broker_ == 0)
     {
       Test_Hello_setup_collocation (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
+
   TAO::Arg_Traits<void>::stub_ret_val _tao_retval;
 
   TAO::Argument *_tao_signature [] =
@@ -214,8 +220,8 @@ void Test::Hello::shutdown (
       &_tao_retval
     };
 
-  TAO::Invocation_Base _tao_call (
-      _collocated_tao_target_,
+  TAO::Invocation_Adapter _tao_call (
+      this,
       _tao_signature,
       1,
       "shutdown",
@@ -239,7 +245,7 @@ Test::Hello::Test_Hello_setup_collocation (int collocated)
 {
   if (collocated)
     this->the_TAO_Hello_Proxy_Broker_ =
-      ::Test__TAO_Hello_Proxy_Broker_Factory_function_pointer (this);
+      ::Test__TAO_Hello_Collocation_Proxy_Broker_Factory_function_pointer (this);
 }
 
 Test::Hello::~Hello (void)
@@ -322,7 +328,7 @@ Test::Hello::_unchecked_narrow (
           !CORBA::is_nil (stub->servant_orb_var ().ptr ()) &&
           stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects () &&
           obj->_is_collocated () &&
-          Test__TAO_Hello_Proxy_Broker_Factory_function_pointer != 0
+          Test__TAO_Hello_Collocation_Proxy_Broker_Factory_function_pointer != 0
         )
         {
           ACE_NEW_RETURN (

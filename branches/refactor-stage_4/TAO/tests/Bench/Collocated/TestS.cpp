@@ -37,6 +37,7 @@
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Operation_Table.h"
 #include "tao/TAO_Server_Request.h"
+#include "tao/Argument.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
 #include "tao/Stub.h"
@@ -50,6 +51,8 @@
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/Dynamic_Service.h"
+#include "tao/Basic_Arguments.h"
+#include "tao/UB_String_Arguments.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus
@@ -186,77 +189,90 @@ static TAO_Test_Hello_Perfect_Hash_OpTable tao_Test_Hello_optable;
 POA_Test::_TAO_Hello_Strategized_Collocation_Proxy_Broker *
 POA_Test::_TAO_Hello_Strategized_Collocation_Proxy_Broker::the_TAO_Hello_Strategized_Collocation_Proxy_Broker (void)
 {
-  static POA_Test::_TAO_Hello_Strategized_Proxy_Broker strategized_proxy_broker;
+  static POA_Test::_TAO_Hello_Strategized_Collocation_Proxy_Broker strategized_proxy_broker;
   return &strategized_proxy_broker;
 }
 
 POA_Test::_TAO_Hello_Strategized_Collocation_Proxy_Broker::_TAO_Hello_Strategized_Collocation_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
-    {
-      this->proxy_cache_[i] = 0;
-    }
 }
 
 POA_Test::_TAO_Hello_Strategized_Collocation_Proxy_Broker::~_TAO_Hello_Strategized_Collocation_Proxy_Broker (void)
 {
-  for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
-    {
-      delete this->proxy_cache_[i];
 
-      // Hack to prevent bug mentioned in 1204. Refer to 1204
-      // for details..
-      this->proxy_cache_[i] = 0;
-    }
 }
 
-TAO::Collocated_Strategy
-POA_Test::_TAO_Hello_Strategized_Collocation_Proxy_Broker::strategy (
+TAO::Collocation_Strategy
+POA_Test::_TAO_Hello_Strategized_Collocation_Proxy_Broker::get_strategy (
     CORBA::Object *obj
     ACE_ENV_ARG_DECL)
 {
-  int strategy =
-    TAO_ORB_Core::collocation_strategy (obj ACE_ENV_ARG_PARAMETER);
+  TAO::Collocation_Strategy strategy =
+    TAO_ORB_Core::collocation_strategy_new (obj ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TAO_CS_REMOTE_STRATEGY);
 
-  return strategy;
+  return  strategy;
 }
 
 void
 POA_Test::_TAO_Hello_Strategized_Collocation_Proxy_Broker::dispatch (
     CORBA::Object *obj,
-    Argument **arg,
+    CORBA::Object_out forward_obj,
+    TAO::Argument **arg,
     int num_args,
     const char *op,
     int op_len,
-    Collocation_Strategy strategy
+    TAO::Collocation_Strategy strategy
     ACE_ENV_ARG_DECL)
 {
-  switch ((int) strategy)
-    {
-    case TAO::TAO_CS_THRU_POA_STRATEGY:
-      // Here is where we need table lookups
-      if (ACE_OS::strcmp (op,
-                          "get_string") == 0)
-        {
-          POA_Test::_TAO_Hello_ThruPOA_Proxy_Impl::get_string (
-                                                               obj,
-                                                               arg,
-                                                               num_args,
-                                                               op,
-                                                               op_len
-                                                               ACE_ENV_ARG_DECL);
-          ACE_CHECK;
 
-        }
-      else if (ACE_OS::strcmp (op,
-                               "shutdown") == 0)
+  ACE_TRY
+    {
+      switch ((int) strategy)
         {
+        case TAO::TAO_CS_THRU_POA_STRATEGY:
+          // Here is where we need table lookups
+          if (ACE_OS::strcmp (op,
+                              "get_string") == 0)
+            {
+              POA_Test::_TAO_Hello_ThruPOA_Proxy_Impl::get_string (obj,
+                                                                   forward_obj,
+                                                                   arg,
+                                                                   num_args
+                                                                   ACE_ENV_ARG_DECL);
+              ACE_TRY_CHECK;
+
+            }
+          else if (ACE_OS::strcmp (op,
+                                   "shutdown") == 0)
+            {
+              POA_Test::_TAO_Hello_ThruPOA_Proxy_Impl::shutdown (obj,
+                                                                 forward_obj,
+                                                                 arg,
+                                                                 num_args
+                                                                 ACE_ENV_ARG_DECL);
+              ACE_TRY_CHECK;
+            }
+          break;
+        default:
+          ACE_THROW (CORBA::INTERNAL ());
         }
-      break;
-    default:
-      ACE_THROW (CORBA::INTERNAL ());
     }
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+  ACE_CATCH (PortableServer::ForwardRequest, forward_request)
+    {
+      forward_obj =
+        CORBA::Object::_duplicate (forward_request.forward_reference.in ());
+      return;
+    }
+#else
+  ACE_CATCHANY
+    {
+      ACE_UNUSED_ARG (forward_obj);
+      ACE_RE_THROW;
+    }
+#endif /* TAO_HAS_MINIMUM_CORBA */
+  ACE_ENDTRY;
 }
 
 //
@@ -266,24 +282,23 @@ POA_Test::_TAO_Hello_Strategized_Collocation_Proxy_Broker::dispatch (
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_ss.cpp:598
 
-Test::_TAO_Hello_Proxy_Broker *
-Test__TAO_Hello_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
+TAO::Collocation_Proxy_Broker *
+Test__TAO_Hello_Collocation_Proxy_Broker_Factory_function (CORBA::Object_ptr )
 {
-  ACE_UNUSED_ARG (obj);
-  return ::POA_Test::_TAO_Hello_Strategized_Proxy_Broker::the_TAO_Hello_Strategized_Proxy_Broker();
+  return ::POA_Test::_TAO_Hello_Strategized_Collocation_Proxy_Broker::the_TAO_Hello_Strategized_Collocation_Proxy_Broker();
 }
 
 int
-Test__TAO_Hello_Proxy_Broker_Factory_Initializer (size_t)
+Test__TAO_Hello_Collocation_Proxy_Broker_Factory_Initializer (size_t)
 {
-  Test__TAO_Hello_Proxy_Broker_Factory_function_pointer =
-    Test__TAO_Hello_Proxy_Broker_Factory_function;
+  Test__TAO_Hello_Collocation_Proxy_Broker_Factory_function_pointer =
+    Test__TAO_Hello_Collocation_Proxy_Broker_Factory_function;
 
   return 0;
 }
 
-static int Test__TAO_Hello_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  Test__TAO_Hello_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, Test__TAO_Hello_Proxy_Broker_Factory_Initializer));
+static int Test__TAO_Hello_Collocation_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
+  Test__TAO_Hello_Collocation_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t, Test__TAO_Hello_Collocation_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -301,68 +316,69 @@ POA_Test::_TAO_Hello_ThruPOA_Proxy_Impl::_TAO_Hello_ThruPOA_Proxy_Impl (void)
 // TAO_IDL - Generated from
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
-void
+/*static*/void
 POA_Test::_TAO_Hello_ThruPOA_Proxy_Impl::get_string (
-    CORBA::Object *_collocated_tao_target_,
-    TAO::Argument **args,
-    int args_number
-    ACE_ENV_ARG_DECL)
+     CORBA::Object *obj,
+     CORBA::Object_out forward,
+     TAO::Argument **arg,
+     int num_args
+     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
-  /*  CORBA::String_var _tao_retval;
-  ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      _collocated_tao_target_->_stubobj ()->servant_orb_var ()->orb_core ()
-    );
-  CORBA::Object_var forward_to;
+      obj->_stubobj ()->servant_orb_var ()->orb_core ()
+      );
+
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->object_key (),
+      obj->_stubobj ()->object_key (),
       "get_string",
-      forward_to.out ()
+      forward
       ACE_ENV_ARG_PARAMETER
-    );
-  ACE_CHECK_RETURN (_tao_retval._retn ());
+      );
+  ACE_CHECK;
 
   servant_upcall.pre_invoke_collocated_request (
       ACE_ENV_SINGLE_ARG_PARAMETER
-    );
-  ACE_CHECK_RETURN (_tao_retval._retn ());
-
-  return ACE_reinterpret_cast (
-      POA_Test::Hello_ptr,
-      servant_upcall.servant ()->_downcast (
-          "IDL:Test/Hello:1.0"
-        )
-    )->get_string (
-
-        ACE_ENV_SINGLE_ARG_PARAMETER
       );
-  */
+  ACE_CHECK;
+
+  ((TAO::Arg_Traits<CORBA::Char *>::stub_ret_val *)arg[0])->arg ()
+    = ACE_reinterpret_cast (
+          POA_Test::Hello_ptr,
+          servant_upcall.servant ()->_downcast (
+                                                "IDL:Test/Hello:1.0"
+                                                )
+          )->get_string (
+                         ACE_ENV_SINGLE_ARG_PARAMETER
+                         );
+
+  ACE_CHECK;
 }
 
 // TAO_IDL - Generated from
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
-/*void POA_Test::_TAO_Hello_ThruPOA_Proxy_Impl::shutdown (
-    CORBA::Object *_collocated_tao_target_
-    ACE_ENV_ARG_DECL
-  )
+/*static*/void
+POA_Test::_TAO_Hello_ThruPOA_Proxy_Impl::shutdown (
+   CORBA::Object *obj,
+   CORBA::Object_out forward,
+   TAO::Argument **arg,
+   int num_args
+   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
 
-  TAO_Object_Adapter::Servant_Upcall servant_upcall (
-.
-      _collocated_tao_target_->_stubobj ()->servant_orb_var ()->orb_core ()
+   TAO_Object_Adapter::Servant_Upcall servant_upcall (
+       obj->_stubobj ()->servant_orb_var ()->orb_core ()
     );
-  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_stubobj ()->object_key (),
+      obj->_stubobj ()->object_key (),
       "shutdown",
-      forward_to.out ()
+      forward
       ACE_ENV_ARG_PARAMETER
     );
   ACE_CHECK;
@@ -381,8 +397,9 @@ POA_Test::_TAO_Hello_ThruPOA_Proxy_Impl::get_string (
 
         ACE_ENV_SINGLE_ARG_PARAMETER
       );
+  ACE_CHECK;
 }
-*/
+
 //
 //           End ThruPOA Proxy Implementation
 ///////////////////////////////////////////////////////////////////////
@@ -422,102 +439,12 @@ void POA_Test::Hello::get_string_skel (
       );
   CORBA::String_var _tao_retval;
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-
-  TAO_ServerRequestInterceptor_Adapter _tao_vfr (
-      _tao_server_request.orb_core ()->server_request_interceptors (),
-      _tao_server_request.interceptor_count ()
-    );
-
-  TAO_ServerRequestInfo_Test_Hello_get_string _tao_ri (
-      _tao_server_request,
-      _tao_upcall,
-      _tao_impl
-      ACE_ENV_ARG_PARAMETER
-    );
-
-  ACE_TRY
-    {
-      {
-        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                           1  /* Copy TSC to RSC */);
-
-        _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        if (!_tao_vfr.location_forwarded ())
-          {
-
-#endif /* TAO_HAS_INTERCEPTORS */
             _tao_retval =
             _tao_impl->get_string (
 
                 ACE_ENV_SINGLE_ARG_PARAMETER
               );
             TAO_INTERCEPTOR_CHECK;
-
-#if (TAO_HAS_INTERCEPTORS == 1)
-
-          }
-      }
-
-      if (!_tao_vfr.location_forwarded ())
-        {
-          char * _tao_retval_info = _tao_retval._retn ();
-          _tao_ri.result (_tao_retval_info);
-          _tao_retval = _tao_retval_info;
-          _tao_ri.reply_status (PortableInterceptor::SUCCESSFUL);
-          _tao_vfr.send_reply (&_tao_ri ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-    }
-  ACE_CATCHANY
-    {
-      _tao_ri.exception (&ACE_ANY_EXCEPTION);
-      _tao_vfr.send_exception (
-          &_tao_ri
-          ACE_ENV_ARG_PARAMETER
-        );
-      ACE_TRY_CHECK;
-
-      PortableInterceptor::ReplyStatus _tao_status =
-        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
-          || _tao_status == PortableInterceptor::USER_EXCEPTION)
-        {
-          ACE_RE_THROW;
-        }
-    }
-
-# if defined (ACE_HAS_EXCEPTIONS) \
-     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
-  ACE_CATCHALL
-    {
-      CORBA::UNKNOWN ex;
-
-      _tao_ri.exception (&ex);
-      _tao_vfr.send_exception (
-          &_tao_ri
-          ACE_ENV_ARG_PARAMETER
-        );
-      ACE_TRY_CHECK;
-
-      PortableInterceptor::ReplyStatus _tao_status =
-        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
-        ACE_TRY_THROW (ex);
-    }
-# endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply ();
 
@@ -555,99 +482,11 @@ void POA_Test::Hello::shutdown_skel (
   _tao_server_request.argument_flag (0);
 
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-
-  TAO_ServerRequestInterceptor_Adapter _tao_vfr (
-      _tao_server_request.orb_core ()->server_request_interceptors (),
-      _tao_server_request.interceptor_count ()
-    );
-
-  TAO_ServerRequestInfo_Test_Hello_shutdown _tao_ri (
-      _tao_server_request,
-      _tao_upcall,
-      _tao_impl
-      ACE_ENV_ARG_PARAMETER
-    );
-
-  ACE_TRY
-    {
-      {
-        TAO_PICurrent_Guard _tao_pi_guard (_tao_ri.server_request (),
-                                           1  /* Copy TSC to RSC */);
-
-        _tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        if (!_tao_vfr.location_forwarded ())
-          {
-
-#endif /* TAO_HAS_INTERCEPTORS */
-
             _tao_impl->shutdown (
 
                 ACE_ENV_SINGLE_ARG_PARAMETER
               );
             TAO_INTERCEPTOR_CHECK;
-
-#if (TAO_HAS_INTERCEPTORS == 1)
-
-          }
-      }
-
-      if (!_tao_vfr.location_forwarded ())
-        {
-          _tao_ri.reply_status (PortableInterceptor::SUCCESSFUL);
-          _tao_vfr.send_reply (&_tao_ri ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-    }
-  ACE_CATCHANY
-    {
-      _tao_ri.exception (&ACE_ANY_EXCEPTION);
-      _tao_vfr.send_exception (
-          &_tao_ri
-          ACE_ENV_ARG_PARAMETER
-        );
-      ACE_TRY_CHECK;
-
-      PortableInterceptor::ReplyStatus _tao_status =
-        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
-          || _tao_status == PortableInterceptor::USER_EXCEPTION)
-        {
-          ACE_RE_THROW;
-        }
-    }
-
-# if defined (ACE_HAS_EXCEPTIONS) \
-     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
-  ACE_CATCHALL
-    {
-      CORBA::UNKNOWN ex;
-
-      _tao_ri.exception (&ex);
-      _tao_vfr.send_exception (
-          &_tao_ri
-          ACE_ENV_ARG_PARAMETER
-        );
-      ACE_TRY_CHECK;
-
-      PortableInterceptor::ReplyStatus _tao_status =
-        _tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)
-        ACE_TRY_THROW (ex);
-    }
-# endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-
-  ACE_ENDTRY;
-  ACE_CHECK;
-#endif /* TAO_HAS_INTERCEPTORS */
 
   if (_tao_server_request.response_expected ()
       && !_tao_server_request.sync_with_server ())

@@ -64,6 +64,10 @@
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:48
+namespace TAO
+{
+  class Collocation_Proxy_Broker;
+}
 
 TAO_NAMESPACE  Test
 {
@@ -78,19 +82,9 @@ TAO_NAMESPACE  Test
   typedef Hello *Hello_ptr;
   struct tao_Hello_life;
 
-  typedef
-    TAO_Objref_Var_T<
-        Hello,
-        tao_Hello_life
-      >
-    Hello_var;
+  typedef  TAO_Objref_Var_T<Hello>  Hello_var;
 
-  typedef
-    TAO_Objref_Out_T<
-        Hello,
-        tao_Hello_life
-      >
-    Hello_out;
+  typedef TAO_Objref_Out_T<Hello> Hello_out;
 
   struct  tao_Hello_life
   {
@@ -119,9 +113,6 @@ TAO_NAMESPACE  Test
 
 #if !defined (_TEST_HELLO_CH_)
 #define _TEST_HELLO_CH_
-
-  class _TAO_Hello_Proxy_Broker;
-  class _TAO_Hello_Remote_Proxy_Broker;
 
   class  Hello
     : public virtual CORBA::Object
@@ -228,7 +219,7 @@ TAO_NAMESPACE_CLOSE // module Test
 // be/be_visitor_root/root.cpp:76
 
 extern
-Test::_TAO_Hello_Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker *
 (*Test__TAO_Hello_Collocation_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
