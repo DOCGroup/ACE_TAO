@@ -1,3 +1,10 @@
+Mon Apr 14 09:16:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+
+	  Removed declaration and definition of Any operators for ObjectId.
+
 Mon Apr 14 09:06:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_sequence.cpp:

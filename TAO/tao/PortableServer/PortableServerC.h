@@ -3075,12 +3075,12 @@ TAO_NAMESPACE_CLOSE // module PortableServer
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
-
+/*
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, const PortableServer::ObjectId &); // copying version
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ObjectId*); // noncopying version
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ObjectId *&); // deprecated
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableServer::ObjectId *&);
-
+*/
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, const PortableServer::POAList &); // copying version
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::POAList*); // noncopying version
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POAList *&); // deprecated

@@ -7457,7 +7457,7 @@ operator>>= (
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
-
+#if 0
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const PortableServer::ObjectId &_tao_sequence
@@ -7542,7 +7542,7 @@ CORBA::Boolean operator>> (
 
   return 0;
 }
-
+#endif
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
