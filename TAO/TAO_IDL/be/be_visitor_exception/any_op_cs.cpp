@@ -49,11 +49,9 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl 
+  *os << be_nl << be_nl 
       << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  // Any <<= and >>= operators.
 
   // Copying insertion operator.
 
@@ -245,7 +243,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "}" << be_nl
       << "ACE_ENDTRY;" << be_nl << be_nl
       << "return 0;" << be_uidt_nl
-      << "}\n\n";
+      << "}";
 
   // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)

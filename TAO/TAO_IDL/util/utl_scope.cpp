@@ -71,6 +71,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
+#include "ast_eventtype.h"
+#include "ast_eventtype_fwd.h"
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
@@ -504,6 +506,30 @@ UTL_Scope::add_valuetype_fwd (AST_ValueTypeFwd *i)
   return i;
 }
 
+AST_EventType *
+UTL_Scope::add_eventtype (AST_EventType *i)
+{
+  if (i == 0)
+    {
+      return 0;
+    }
+
+  i->set_added (I_TRUE);
+  return i;
+}
+
+AST_EventTypeFwd *
+UTL_Scope::add_eventtype_fwd (AST_EventTypeFwd *i)
+{
+  if (i == 0)
+    {
+      return 0;
+    }
+
+  i->set_added (I_TRUE);
+  return i;
+}
+
 AST_Component *
 UTL_Scope::add_component (AST_Component *i)
 {
@@ -883,6 +909,18 @@ UTL_Scope::fe_add_valuetype (AST_ValueType *)
 
 AST_ValueTypeFwd *
 UTL_Scope::fe_add_valuetype_fwd (AST_ValueTypeFwd *)
+{
+  return 0;
+}
+
+AST_EventType *
+UTL_Scope::fe_add_eventtype (AST_EventType *)
+{
+  return 0;
+}
+
+AST_EventTypeFwd *
+UTL_Scope::fe_add_eventtype_fwd (AST_EventTypeFwd *)
 {
   return 0;
 }
@@ -1444,6 +1482,11 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
                 {
                   d = AST_InterfaceFwd::narrow_from_decl (d)->full_definition ();
                 }
+              else if (nt == AST_Decl::NT_struct_fwd
+                       || nt == AST_Decl::NT_union_fwd)
+                {
+                  d = AST_StructureFwd::narrow_from_decl (d)->full_definition ();
+                }
 
               return d;
             }
@@ -1550,7 +1593,9 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
           // We have to look in the inherited interfaces as well.
           // Look before parent scopes.
           if (pd_scope_node_type == AST_Decl::NT_interface
-              || pd_scope_node_type == AST_Decl::NT_valuetype)
+              || pd_scope_node_type == AST_Decl::NT_valuetype
+              || pd_scope_node_type == AST_Decl::NT_component
+              || pd_scope_node_type == AST_Decl::NT_eventtype)
             {
               d = look_in_inherited (e,
                                      treat_as_ref);

@@ -28,18 +28,18 @@ be_visitor_sequence_ch::gen_bounded_wstr_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
   const char * class_name = node->instance_name ();
 
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   os->gen_ifdef_AHETI();
   os->gen_ifdef_macro (class_name);
-  os->indent ();
 
-  *os << "class TAO_EXPORT_MACRO " << class_name << be_idt_nl
+  *os << be_nl << be_nl 
+      << "class " << be_global->stub_export_macro () 
+      << " " << class_name << be_idt_nl
       << ": public TAO_Bounded_Base_Sequence" << be_uidt_nl
       << "{" << be_nl
-      << "public:" << be_idt_nl
-      << "// = Initialization and termination methods." << be_nl;
+      << "public:" << be_idt_nl;
 
   // constructor
   *os << class_name << " (void);" << be_nl;
@@ -101,12 +101,12 @@ be_visitor_sequence_ch::gen_bounded_wstr_sequence (be_sequence *node)
       << "CORBA::ULong ol" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl;
 
-  *os << "};" << be_nl;
+  *os << "};";
 
-  os->gen_endif (); // endif macro
+  os->gen_endif ();
 
-  // generate #endif for AHETI
-  os->gen_endif_AHETI();
+  // generate #endif for AHETI.
+  os->gen_endif_AHETI ();
 
   return 0;
 }

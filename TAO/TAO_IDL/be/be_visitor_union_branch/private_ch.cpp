@@ -97,18 +97,23 @@ be_visitor_union_branch_private_ch::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl;
+
   // Not a typedef and bt is defined inside the union.
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))
     {
       // Case of anonymous array in union
       *os << "_" << bt->local_name () << "_slice *" << ub->local_name ()
-          << "_;" << be_nl;
+          << "_;";
     }
   else
     {
       *os << bt->nested_type_name (bu, "_slice") << " *" << ub->local_name ()
-          << "_;" << be_nl;
+          << "_;";
     }
 
   return 0;
@@ -142,8 +147,13 @@ be_visitor_union_branch_private_ch::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl;
+
   *os << bt->nested_type_name (bu) << " " << ub->local_name ()
-      << "_;" << be_nl;
+      << "_;";
 
   return 0;
 }
@@ -176,8 +186,13 @@ be_visitor_union_branch_private_ch::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl;
+
   *os << bt->nested_type_name (bu, "_var")
-      << " *" << ub->local_name () << "_;" << be_nl;
+      << " *" << ub->local_name () << "_;";
 
   return 0;
 }
@@ -210,8 +225,13 @@ be_visitor_union_branch_private_ch::visit_interface_fwd (be_interface_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl;
+
   *os << bt->nested_type_name (bu, "_var")
-      << " *" << ub->local_name () << "_;" << be_nl;
+      << " *" << ub->local_name () << "_;";
 
   return 0;
 }
@@ -244,8 +264,13 @@ be_visitor_union_branch_private_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl;
+
   *os << bt->nested_type_name (bu, "_var")
-      << " *" << ub->local_name () << "_;" << be_nl;
+      << " *" << ub->local_name () << "_;";
 
   return 0;
 }
@@ -278,8 +303,13 @@ be_visitor_union_branch_private_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl;
+
   *os << bt->nested_type_name (bu, "_var")
-      << " *" << ub->local_name () << "_;" << be_nl;
+      << " *" << ub->local_name () << "_;";
 
   return 0;
 }
@@ -314,27 +344,32 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl;
+
   if (node->pt () == AST_PredefinedType::PT_object)
     {
       *os << bt->name () << "_var"
-          << " *" << ub->local_name () << "_;" << be_nl;
+          << " *" << ub->local_name () << "_;";
     }
   else if (node->pt () == AST_PredefinedType::PT_pseudo)
     {
       *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
-          << "_;" << be_nl;
+          << "_;";
     }
   else if (node->pt () == AST_PredefinedType::PT_any)
     {
       // Cannot have an object inside of a union. In addition, an Any is a
       // variable data type.
       *os << bt->nested_type_name (bu) << " *" << ub->local_name ()
-          << "_;" << be_nl;
+          << "_;";
     }
   else
     {
       *os << bt->nested_type_name (bu) << " " << ub->local_name ()
-          << "_;" << be_nl;
+          << "_;";
     }
 
   return 0;
@@ -368,10 +403,15 @@ be_visitor_union_branch_private_ch::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl;
+
   // C++ doesn't allow object instances inside unions, so we need a
   // pointer.
   *os << bt->nested_type_name (bu) << " *" << ub->local_name ()
-      << "_;" << be_nl;
+      << "_;";
 
   return 0;
 }
@@ -393,13 +433,18 @@ be_visitor_union_branch_private_ch::visit_string (be_string *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl;
+
   if (node->width () == (long) sizeof (char))
     {
-      *os << "char *" << ub->local_name () << "_;" << be_nl;
+      *os << "char *" << ub->local_name () << "_;";
     }
   else
     {
-      *os << "CORBA::WChar *" << ub->local_name () << "_;" << be_nl;
+      *os << "CORBA::WChar *" << ub->local_name () << "_;";
     }
 
   return 0;
@@ -433,17 +478,22 @@ be_visitor_union_branch_private_ch::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl;
+
   // If we are variable sized, we need a pointer type.
   if (node->size_type () == AST_Type::VARIABLE
       || node->has_constructor ())
     {
       *os << bt->nested_type_name (bu) << " *" << ub->local_name ()
-          << "_;" << be_nl;
+          << "_;";
     }
   else
     {
       *os << bt->nested_type_name (bu) << " " << ub->local_name ()
-          << "_;" << be_nl;
+          << "_;";
     }
 
   return 0;
@@ -498,10 +548,15 @@ be_visitor_union_branch_private_ch::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl;
+
   // C++ doesn't allow object instances inside unions, so we need a
   // pointer.
   *os << bt->nested_type_name (bu) << " *" << ub->local_name ()
-      << "_;" << be_nl;
+      << "_;";
 
   return 0;
 }

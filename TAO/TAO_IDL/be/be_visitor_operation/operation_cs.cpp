@@ -76,7 +76,8 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       return 0;
     }
 
-  os->indent ();
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Retrieve the operation return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
@@ -121,6 +122,8 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                          "codegen for argument list failed\n"),
                         -1);
     }
+
+  *os << be_nl;
 
   // @@@ (JP) No collocation for abstract interface operations yet. We
   // are generating the code as if there were no proxies, and using
@@ -245,15 +248,15 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           be_decl *decl = be_decl::narrow_from_decl (d);
 
           *os << "," << be_nl
-              << decl->local_name();
+              << decl->local_name ();
         }
 
       if (!be_global->exception_support ())
         {
-          *os << " ACE_ENV_ARG_PARAMETER";
+          *os << be_nl << "ACE_ENV_ARG_PARAMETER";
         }
 
-      *os << be_uidt_nl << ");" << be_uidt << be_uidt_nl << "}\n\n";
+      *os << be_uidt_nl << ");" << be_uidt << be_uidt_nl << "}";
     }
 
   return 0;

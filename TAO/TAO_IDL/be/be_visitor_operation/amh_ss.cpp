@@ -80,8 +80,8 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 
       *os << be_nl
           << "TAO_InputCDR &_tao_in ="
-          << " _tao_server_request.incoming ();\n" << be_nl
-          << "if (!(1" << be_idt_nl;
+          << " _tao_server_request.incoming ();" << be_nl << be_nl
+          << "if (!(" << be_idt << be_idt;
 
       // Marshal each in and inout argument.
       be_visitor_context marshal_ctx = *this->ctx_;
@@ -90,6 +90,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 
       be_visitor_args_marshal_ss marshal_visitor (&marshal_ctx);
       marshal_visitor.set_fixed_direction (AST_Argument::dir_IN);
+      int i = 0;
 
       for (UTL_ScopeActiveIterator sj (node, UTL_Scope::IK_decls);
            !sj.is_done ();
@@ -104,7 +105,10 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
               continue;
             }
 
-          *os << "&& ";
+          if (i++ != 0)
+            {
+              *os << " &&";
+            }
 
           if (marshal_visitor.visit_argument (argument) == -1)
             {
@@ -114,11 +118,9 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
                                  "codegen for demarshal failed\n"),
                                 -1);
             }
-
-          *os << be_nl;
         }
 
-      *os << "))" << be_nl;
+      *os << be_uidt_nl << "))" << be_nl;
 
       // If marshaling fails, raise exception.
       if (this->gen_raise_exception (0,
@@ -130,7 +132,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
                             -1);
         }
 
-      *os << be_uidt << "\n";
+      *os << be_uidt_nl;
     }
 
   if (this->generate_shared_section (node, os) == -1)
@@ -145,11 +147,12 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
     visitor.set_fixed_direction (AST_Argument::dir_IN);
 
     for (UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
-         !i.is_done ();
-         i.next ())
+         !i.is_done ();)
       {
         be_argument *argument =
           be_argument::narrow_from_decl (i.item ());
+
+        i.next ();
 
         if (argument == 0
             || argument->direction () == AST_Argument::dir_OUT)
@@ -167,11 +170,9 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
                                "codegen for upcall args failed\n"),
                               -1);
           }
-
-        *os << be_nl;
       }
 
-    *os << "ACE_ENV_ARG_PARAMETER";
+    *os << be_nl << "ACE_ENV_ARG_PARAMETER";
   }
 
   if (this->generate_shared_epilogue (os) == -1)
@@ -230,9 +231,9 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
 
   *os << be_nl
       << "TAO_InputCDR &_tao_in ="
-      << " _tao_server_request.incoming ();\n"
-      << be_nl
-      << "if (!(\n" << be_idt;
+      << " _tao_server_request.incoming ();"
+      << be_nl << be_nl
+      << "if (!(" << be_idt_nl;
 
   {
     be_visitor_context ctx (*this->ctx_);
@@ -258,7 +259,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
                         -1);
     }
 
-  *os << be_uidt << "\n";
+  *os << be_uidt_nl;
 
   if (this->generate_shared_section (node, os) == -1)
     {
@@ -281,8 +282,8 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
                                                        TAO_OutStream *os,
                                                        const char *skel_prefix)
 {
-  *os << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -307,7 +308,6 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
   delete [] buf;
   buf = 0;
 
-  os->indent ();
   *os << "void" << be_nl
       << amh_skel_name.c_str () << "::"
       << skel_prefix
@@ -327,8 +327,8 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
   *os << amh_skel_name.c_str () << " *_tao_impl =" << be_idt_nl
       << "ACE_static_cast (" << be_idt << be_idt_nl
       << amh_skel_name.c_str () << " *," << be_nl
-      << "_tao_object_reference" << be_uidt << be_uidt_nl
-      << ");\n" << be_uidt;
+      << "_tao_object_reference" << be_uidt_nl
+      << ");" << be_uidt << be_uidt;
 
   return 0;
 }
@@ -354,14 +354,19 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
   buf = 0;
 
   *os << be_nl << response_handler_name.c_str ()
-      << "_var _tao_rh =" << be_idt_nl
-      << "new " << response_handler_implementation_name.c_str ()
-      << " (_tao_server_request);\n" << be_uidt;
+      << "_ptr _tao_rh_ptr;" << be_nl
+      << "ACE_NEW (" << be_idt << be_idt_nl
+      << "_tao_rh_ptr," << be_nl
+      << response_handler_implementation_name.c_str ()
+      << " (_tao_server_request)" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << response_handler_name.c_str () << "_var _tao_rh = _tao_rh_ptr;" 
+      << be_nl;
 
   // Make the upcall.
   *os << be_nl << "_tao_impl->"
-      << node->local_name () << " (_tao_rh.in ()"
-      << be_idt << be_idt_nl;
+      << node->local_name () << " (" << be_idt << be_idt_nl
+      << "_tao_rh.in ()";
 
   return 0;
 }
@@ -371,7 +376,7 @@ be_visitor_amh_operation_ss::generate_shared_epilogue (TAO_OutStream *os)
 {
   *os << be_uidt_nl << ");"
       << be_uidt << be_uidt_nl
-      << "}\n\n";
+      << "}";
 
   return 0;
 }

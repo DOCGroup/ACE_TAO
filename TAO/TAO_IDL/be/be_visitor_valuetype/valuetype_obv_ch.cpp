@@ -30,7 +30,9 @@ ACE_RCSID (be_visitor_valuetype,
 // Valuetype visitor for client header
 // ******************************************************
 
-be_visitor_valuetype_obv_ch::be_visitor_valuetype_obv_ch (be_visitor_context *ctx)
+be_visitor_valuetype_obv_ch::be_visitor_valuetype_obv_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_valuetype (ctx)
 {
 }
@@ -52,10 +54,13 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ ;
+
   // OBV_ class maps only to a typedef if we are optimizing accessors.
   if (node->opt_accessor ())
     {
-      *os << "typedef " << node->full_name () << " ";
+      *os << be_nl << be_nl << "typedef " << node->full_name () << " ";
 
       if (!node->is_nested ())
         {
@@ -69,7 +74,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // STEP 1: Generate the class name and the class name we inherit.
       os->gen_ifdef_macro (node->flat_name (), "_OBV");
 
-      *os << "// OBV_ class" << be_nl;
+      *os << be_nl << be_nl << "// OBV_ class" << be_nl;
       *os << "class " << be_global->stub_export_macro() << " ";;
 
       if (!node->is_nested())
@@ -118,7 +123,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << inherited->full_name();
         }  // end of for loop
 
-      if (obv_need_ref_counter (node))
+      if (this->obv_need_ref_counter (node))
         {
           *os << "," << be_nl;
 
@@ -173,7 +178,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         }
 
       *os << be_uidt_nl;
-      *os << "};" << be_nl;
+      *os << "};";
 
       os->gen_endif ();
     }
@@ -217,13 +222,13 @@ void
 be_visitor_valuetype_obv_ch::begin_public (void)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "public:" << be_idt_nl;
+  *os << "public:" << be_idt;
 }
 
 void
 be_visitor_valuetype_obv_ch::begin_private (void)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << be_uidt_nl;
-  *os << "protected:" << be_idt_nl;
+  *os << be_uidt_nl << be_nl;
+  *os << "protected:" << be_idt;
 }

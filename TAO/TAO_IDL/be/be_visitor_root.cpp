@@ -30,6 +30,11 @@
 #include "be_union_fwd.h"
 #include "be_valuetype.h"
 #include "be_valuetype_fwd.h"
+#include "be_eventtype.h"
+#include "be_eventtype_fwd.h"
+#include "be_component.h"
+#include "be_component_fwd.h"
+#include "be_home.h"
 #include "be_helper.h"
 #include "be_extern.h"
 
@@ -47,6 +52,11 @@
 #include "be_visitor_union_fwd.h"
 #include "be_visitor_valuetype.h"
 #include "be_visitor_valuetype_fwd.h"
+#include "be_visitor_eventtype.h"
+#include "be_visitor_eventtype_fwd.h"
+#include "be_visitor_component.h"
+#include "be_visitor_component_fwd.h"
+#include "be_visitor_home.h"
 #include "be_visitor_context.h"
 
 #include "be_visitor_root/root.cpp"

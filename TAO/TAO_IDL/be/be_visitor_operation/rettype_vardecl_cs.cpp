@@ -54,10 +54,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_array (be_array *node)
       bt = node;
     }
 
-  os->indent ();
-
   *os << bt->name () << "_var _tao_retval;";
-  *os << be_nl;
 
   return 0;
 }
@@ -77,11 +74,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_enum (be_enum *node)
       bt = node;
     }
 
-  os->indent ();
-
   *os << bt->name () << " _tao_retval = (" << bt->name () << ")0;";
-
-  *os << be_nl << be_nl;
 
   return 0;
 }
@@ -101,20 +94,16 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface (be_interface *node)
       bt = node;
     }
 
-  os->indent ();
-
   if (node->is_defined ())
     {
       *os << bt->name () << "_var _tao_retval ("
-          << bt->name () << "::_nil ());\n\n";
+          << bt->name () << "::_nil ());";
     }
   else
     {
       *os << bt->name () << "_var _tao_retval ("
-          << " tao_" << node->flat_name () << "_nil ());\n\n";
+          << " tao_" << node->flat_name () << "_nil ());";
     }
-
-  *os << be_nl;
 
   return 0;
 }
@@ -136,20 +125,16 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface_fwd (
       bt = node;
     }
 
-  os->indent ();
-
   if (node->is_defined ())
     {
       *os << bt->name () << "_var _tao_retval ("
-          << bt->name () << "::_nil ());\n\n";
+          << bt->name () << "::_nil ());";
     }
   else
     {
       *os << bt->name () << "_var _tao_retval ("
-          << " tao_" << node->flat_name () << "_nil ());\n\n";
+          << " tao_" << node->flat_name () << "_nil ());";
     }
-
-  *os << be_nl;
 
   return 0;
 }
@@ -169,10 +154,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype (be_valuetype *node)
       bt = node;
     }
 
-  os->indent ();
-
-  *os << "::" << bt->name () << "_var _tao_retval;\n\n"
-      << be_nl;
+  *os << "::" << bt->name () << "_var _tao_retval;";
 
   return 0;
 }
@@ -192,9 +174,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype_fwd (be_valuetype_fwd *
       bt = node;
     }
 
-  os->indent ();
-  *os << "::" << bt->name () << "_var _tao_retval;\n\n"
-      << be_nl;
+  *os << "::" << bt->name () << "_var _tao_retval;";
 
   return 0;
 }
@@ -215,8 +195,6 @@ be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (
     {
       bt = node;
     }
-
-  os->indent ();
 
   switch (node->pt ())
     {
@@ -248,8 +226,6 @@ be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (
       break;
     }
 
-  *os << be_nl;
-
   return 0;
 }
 
@@ -270,9 +246,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_sequence (be_sequence *node)
       bt = node;
     }
 
-  os->indent ();
-
-  *os << bt->name () << "_var _tao_retval;\n" << be_nl;
+  *os << bt->name () << "_var _tao_retval;";
 
   return 0;
 }
@@ -281,8 +255,6 @@ int
 be_visitor_operation_rettype_vardecl_cs::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-
-  os->indent ();
 
   if (node->width () == (long) sizeof (char))
     {
@@ -293,7 +265,6 @@ be_visitor_operation_rettype_vardecl_cs::visit_string (be_string *node)
       *os << "CORBA::WString_var _tao_retval;";
     }
 
-  *os << be_nl << be_nl;
   return 0;
 }
 
@@ -312,20 +283,17 @@ be_visitor_operation_rettype_vardecl_cs::visit_structure (be_structure *node)
       bt = node;
     }
 
-  os->indent ();
-
   // Based on whether we are variable or not, we return a pointer or the
   // aggregate type.
   if (node->size_type () == AST_Type::VARIABLE)
     {
-      *os << bt->name () << "_var _tao_retval;" << be_nl;
+      *os << bt->name () << "_var _tao_retval;";
     }
   else
     {
       *os << bt->name () << " _tao_retval;" << be_nl;
       // @@ This seems like a waste of time!
-      *os << "ACE_OS::memset (&_tao_retval, 0, sizeof (_tao_retval));"
-          << be_nl;
+      *os << "ACE_OS::memset (&_tao_retval, 0, sizeof (_tao_retval));";
     }
 
   return 0;
@@ -364,8 +332,6 @@ be_visitor_operation_rettype_vardecl_cs::visit_union (be_union *node)
       bt = node;
     }
 
-  os->indent ();
-
   // Based on whether we are variable or not, we return a pointer or the
   // aggregate type.
   if (node->size_type () == AST_Type::VARIABLE)
@@ -377,6 +343,40 @@ be_visitor_operation_rettype_vardecl_cs::visit_union (be_union *node)
       *os << bt->name () << " _tao_retval;";
     }
 
-  *os << be_nl;
   return 0;
 }
+
+int
+be_visitor_operation_rettype_vardecl_cs::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
+int
+be_visitor_operation_rettype_vardecl_cs::visit_eventtype_fwd (
+    be_eventtype_fwd *node
+  )
+{
+  return this->visit_valuetype_fwd (node);
+}
+
+int
+be_visitor_operation_rettype_vardecl_cs::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_operation_rettype_vardecl_cs::visit_component_fwd (
+    be_component_fwd *node
+  )
+{
+  return this->visit_interface_fwd (node);
+}
+
+int
+be_visitor_operation_rettype_vardecl_cs::visit_home (be_home *node)
+{
+  return this->visit_interface (node);
+}
+

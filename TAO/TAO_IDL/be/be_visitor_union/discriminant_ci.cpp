@@ -67,15 +67,15 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
                         -1);
     }
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
     {
-      // only if all cases are not covered AND there is no explicit
-      // default, we get the _default () method
-      *os << "// the implicit _default () method" << be_nl;
-      *os << "ACE_INLINE void " << be_nl
+      // Only if all cases are not covered AND there is no explicit
+      // default, we get the _default () method.
+      *os << "ACE_INLINE" << be_nl
+          << "void " << be_nl
           << bu->name () << "::_default ()" << be_nl
           << "{" << be_idt_nl
           << "this->disc_ = ";
@@ -102,25 +102,27 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
       // The function value_to_name() takes care of adding
       // any necessary scoping to the output.
       *os << node->value_to_name (dv.u.enum_val);
-      *os << ";" << be_uidt_nl << "}\n\n";
+      *os << ";" << be_uidt_nl << "}" << be_nl << be_nl;
     }
 
   // the set method
-  *os << "// accessor to set the discriminant" << be_nl
-      << "ACE_INLINE void" << be_nl
+  *os << "// Accessor to set the discriminant." << be_nl
+      << "ACE_INLINE" << be_nl
+      << "void" << be_nl
       << bu->name () << "::_d (" << bt->name ()
       << " discval)" << be_nl
       << "{" << be_idt_nl
       << "this->disc_ = discval;" << be_uidt_nl
-      << "}" << be_nl;
+      << "}" << be_nl << be_nl;
 
   // the get method
-  *os << "// accessor to get the discriminant" << be_nl
-      << "ACE_INLINE " << bt->name () << be_nl
+  *os << "// Accessor to get the discriminant." << be_nl
+      << "ACE_INLINE" << be_nl
+      << bt->name () << be_nl
       << bu->name () << "::_d (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->disc_;" << be_uidt_nl
-      << "}\n\n";
+      << "}";
 
   return 0;
 }
@@ -131,7 +133,8 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
   )
 {
   be_union *bu =
-    this->ctx_->be_node_as_union ();  // get the enclosing union backend
+    this->ctx_->be_node_as_union ();
+
   be_type *bt;
 
   if (this->ctx_->alias ())
@@ -157,7 +160,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
                         -1);
     }
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
@@ -165,8 +168,8 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
       // Only if all cases are not covered AND there is no explicit
       // default, we get the _default () method.
 
-      *os << "// the implicit _default () method" << be_nl;
-      *os << "ACE_INLINE void " << be_nl
+      *os << "ACE_INLINE" << be_nl 
+          << "void " << be_nl
           << bu->name () << "::_default ()" << be_nl
           << "{" << be_idt_nl
           << "this->disc_ = ";
@@ -211,27 +214,28 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
                         -1);
         }
 
-      *os << ";" << be_uidt_nl << "}\n\n";
+      *os << ";" << be_uidt_nl << "}";
     }
 
-  os->indent ();
-
   // The set method.
-  *os << "// accessor to set the discriminant" << be_nl
-      << "ACE_INLINE void" << be_nl
+  *os << be_nl << be_nl
+      << "// Accessor to set the discriminant." << be_nl
+      << "ACE_INLINE" << be_nl
+      << "void" << be_nl
       << bu->name () << "::_d (" << bt->name ()
       << " discval)" << be_nl
       << "{" << be_idt_nl
       << "this->disc_ = discval;" << be_uidt_nl
-      << "}" << be_nl;
+      << "}" << be_nl << be_nl;
 
   // The get method.
-  *os << "// accessor to get the discriminant" << be_nl
-      << "ACE_INLINE " << bt->name () << be_nl
+  *os << "// Accessor to get the discriminant." << be_nl
+      << "ACE_INLINE" << be_nl
+      << bt->name () << be_nl
       << bu->name () << "::_d (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->disc_;" << be_uidt_nl
-      << "}\n\n";
+      << "}";
 
   return 0;
 }

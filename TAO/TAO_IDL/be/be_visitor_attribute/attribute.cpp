@@ -73,6 +73,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
   get_op.set_name ((UTL_IdList *) node->name ()->copy ());
   get_op.set_defined_in (node->defined_in ());
+  get_op.be_add_exceptions (node->get_get_exceptions ());
 
   // Get the strategy from the attribute and hand it over
   // to the operation.
@@ -290,6 +291,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   set_op.set_name ((UTL_IdList *) node->name ()->copy ());
   set_op.set_defined_in (node->defined_in ());
   set_op.be_add_argument (&arg);
+  set_op.be_add_exceptions (node->get_set_exceptions ());
 
   // Get the strategy from the attribute and hand it over
   // to the operation, thereby deleting the old one.

@@ -33,6 +33,8 @@ class AST_ValueType;
 class AST_ValueTypeFwd;
 class AST_Component;
 class AST_ComponentFwd;
+class AST_EventType;
+class AST_EventTypeFwd;
 class AST_Home;
 class AST_Factory;
 class AST_Structure;
@@ -113,6 +115,12 @@ public:
 
   virtual int visit_component_fwd (AST_ComponentFwd *node) = 0;
   // Visit component_fwd
+
+  virtual int visit_eventtype (AST_EventType *node) = 0;
+  // Visit eventtype.
+
+  virtual int visit_eventtype_fwd (AST_EventTypeFwd *node) = 0;
+  // Visit eventtype_fwd
 
   virtual int visit_factory (AST_Factory *node) = 0;
   // Visit a OBV factory construct.

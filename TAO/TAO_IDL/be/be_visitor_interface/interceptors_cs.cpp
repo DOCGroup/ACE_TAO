@@ -52,18 +52,14 @@ int be_visitor_interface_interceptors_cs::visit_interface (be_interface *node)
   // elements of its scope. We depend on the front-end to have made sure
   // that only legal syntactic elements appear in our scope.
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
-  os->indent ();
-
-  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+  *os << "\n\n#if (TAO_HAS_INTERCEPTORS == 1)";
 
   // Generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
   // that only legal syntactic elements appear in our scope.
-
-   os->indent ();
 
    if (this->visit_scope (node) == -1)
      {
@@ -74,9 +70,14 @@ int be_visitor_interface_interceptors_cs::visit_interface (be_interface *node)
                          -1);
      }
 
-  *os  << "#endif /* TAO_HAS_INTERCEPTORS */\n";
+  *os  << "\n\n#endif /* TAO_HAS_INTERCEPTORS */\n";
 
   return 0;
+}
+
+int be_visitor_interface_interceptors_cs::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
 }
 
 int

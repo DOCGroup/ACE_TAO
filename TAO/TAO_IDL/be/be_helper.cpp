@@ -46,7 +46,7 @@ static const char copyright[] =
 "//       http://doc.ece.uci.edu/\n"
 "//\n"
 "// Information about TAO is available at:\n"
-"//     http://www.cs.wustl.edu/~schmidt/TAO.html\n";
+"//     http://www.cs.wustl.edu/~schmidt/TAO.html";
 
 TAO_NL::TAO_NL (void)
 {
@@ -272,8 +272,8 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
     default:
       return -1;
   }
-  *this << "\n#if !defined (" << macro << ")\n";
-  *this << "#define " << macro << be_nl << be_nl;
+  *this << "\n\n#if !defined (" << macro << ")\n";
+  *this << "#define " << macro;
 
   return 0;
 }
@@ -281,7 +281,7 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
 int
 TAO_OutStream::gen_endif (void)
 {
-  *this << "\n#endif /* end #if !defined */" << be_nl << be_nl;
+  *this << "\n\n#endif /* end #if !defined */";
 
   return 0;
 }
@@ -291,9 +291,7 @@ TAO_OutStream::gen_endif (void)
 int
 TAO_OutStream::gen_ifdef_AHETI (void)
 {
-  *this << "\n"
-        << "#if !defined (TAO_USE_SEQUENCE_TEMPLATES)"
-        << be_nl;
+  *this << "\n\n#if !defined (TAO_USE_SEQUENCE_TEMPLATES)";
 
   return 0;
 }
@@ -310,8 +308,7 @@ TAO_OutStream::gen_else_AHETI (void)
 int
 TAO_OutStream::gen_endif_AHETI (void)
 {
-  *this << "\n#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ "
-        << be_nl;
+  *this << "\n\n#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ ";
 
   return 0;
 }

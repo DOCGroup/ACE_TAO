@@ -346,3 +346,34 @@ be_visitor_operation_rettype::visit_valuetype_fwd (be_valuetype_fwd *node)
   return 0;
 }
 
+int
+be_visitor_operation_rettype::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_operation_rettype::visit_component_fwd (be_component_fwd *node)
+{
+  return this->visit_interface_fwd (node);
+}
+
+int
+be_visitor_operation_rettype::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
+int
+be_visitor_operation_rettype::visit_eventtype_fwd (be_eventtype_fwd *node)
+{
+  return this->visit_valuetype_fwd (node);
+}
+
+int
+be_visitor_operation_rettype::visit_home (be_home *node)
+{
+  return this->visit_interface (node);
+}
+
+

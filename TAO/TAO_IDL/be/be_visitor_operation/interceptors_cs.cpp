@@ -72,10 +72,11 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
   // Generate the ClientRequestInfo object per operation to
   // be used by the interceptors.
 
-  // Start with the current indentation level.
-  os->indent ();
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << "class TAO_ClientRequestInfo_" << node->flat_name ();
+  *os << be_nl << be_nl 
+      << "class TAO_ClientRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -326,7 +327,7 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
         }
     }
 
-  *os << " &);\n" << be_nl;
+  *os << " &);";
 
   // Need to generate the args as reference memebers...
   // Generate the member list with the appropriate mapping. For these
@@ -361,6 +362,8 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
   // void since we can't have a private member to be of void type.
   if (!this->void_return_type (bt))
     {
+      *os << be_nl << be_nl;
+
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
       be_visitor_operation_interceptors_info_rettype toiir_visitor (&ctx);
@@ -374,14 +377,10 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
                             -1);
         }
 
-      *os << " _result;" << be_uidt_nl;
-    }
-  else
-    {
-      *os << be_uidt_nl;
+      *os << " _result;";
     }
 
-  *os << "};\n" << be_nl;
+  *os << be_uidt_nl << "};";
 
   return 0;
 }
@@ -392,16 +391,17 @@ be_visitor_operation_interceptors_cs::generate_class_definition (
     be_operation *node
   )
 {
-  // Start with the current indentation level.
-  os->indent ();
-
   be_type *bt = 0;
   be_visitor_context ctx (*this->ctx_);
 
   // Save the node.
   this->ctx_->node (node);
 
-  *os << "TAO_ClientRequestInfo_"<< node->flat_name ();
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl << be_nl
+      << "TAO_ClientRequestInfo_"<< node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -580,7 +580,7 @@ be_visitor_operation_interceptors_cs::generate_class_definition (
           || (!(this->has_param_type (node, AST_Argument::dir_IN)) 
               && !(this->has_param_type (node, AST_Argument::dir_INOUT))))
         {
-          *os << "return parameter_list;" << be_uidt_nl;
+          *os << "return parameter_list;";
         }
       else
         {
@@ -597,7 +597,7 @@ be_visitor_operation_interceptors_cs::generate_class_definition (
               << "parameter_list->length (" << parameter_count << ");"
               << be_nl;
 
-          *os << "CORBA::ULong len = 0;" << be_nl << be_nl;
+          *os << "CORBA::ULong len = 0;";
 
           // The insertion operator is different for different nodes.  We
           // change our scope to go to the argument scope to be able to
@@ -632,14 +632,14 @@ be_visitor_operation_interceptors_cs::generate_class_definition (
         }
     }
 
-  *os << be_uidt_nl << "}\n\n";
-
-  os->decr_indent ();
+  *os << be_uidt_nl << "}";
 
   // -----------------------------------------------------------------
   // PortableInterceptor::ClientRequestInfo::exceptions()
   // -----------------------------------------------------------------
-  *os << "Dynamic::ExceptionList *" << be_nl;
+
+  *os << be_nl << be_nl
+      << "Dynamic::ExceptionList *" << be_nl;
 
   *os << "TAO_ClientRequestInfo_" << node->flat_name ();
 
@@ -909,9 +909,9 @@ be_visitor_operation_interceptors_cs::generate_class_definition (
 
       *os << " result)" << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
-          << "// update the result " << be_nl
+          << "// Update the result. " << be_nl
           << "this->_result = result;" << be_uidt_nl
-          << "}\n\n";
+          << "}";
     }
 
   return 0;

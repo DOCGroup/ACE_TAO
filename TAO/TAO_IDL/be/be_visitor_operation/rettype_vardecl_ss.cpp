@@ -56,7 +56,8 @@ be_visitor_operation_rettype_vardecl_ss::visit_array (be_array *node)
       bt = node;
     }
 
-  *os << "::" << bt->name () << "_var _tao_retval;\n\n";
+  *os << "::" << bt->name () << "_var _tao_retval;";
+
   return 0;
 }
 
@@ -76,7 +77,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_enum (be_enum *node)
       bt = node;
     }
 
-  *os << "::" << bt->name () << " _tao_retval;\n";
+  *os << "::" << bt->name () << " _tao_retval;";
   return 0;
 }
 
@@ -85,7 +86,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "::" << node->name () << "_var _tao_retval;\n";
+  *os << "::" << node->name () << "_var _tao_retval;";
   return 0;
 }
 
@@ -95,7 +96,7 @@ visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "::" << node->name () << "_var _tao_retval;\n";
+  *os << "::" << node->name () << "_var _tao_retval;";
   return 0;
 }
 
@@ -105,7 +106,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_valuetype (be_valuetype *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "::" << node->name () << "_var _tao_retval;\n";
+  *os << "::" << node->name () << "_var _tao_retval;";
   return 0;
 }
 
@@ -115,7 +116,7 @@ visit_valuetype_fwd (be_valuetype_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "::" << node->name () << "_var _tao_retval;\n";
+  *os << "::" << node->name () << "_var _tao_retval;";
   return 0;
 }
 
@@ -139,23 +140,23 @@ visit_predefined_type (be_predefined_type *node)
     {
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
-      *os << bt->name () << "_var _tao_retval;\n";
+      *os << bt->name () << "_var _tao_retval;";
       break;
     case AST_PredefinedType::PT_any:
-      *os << bt->name () << "_var _tao_retval;\n";
+      *os << bt->name () << "_var _tao_retval;";
       break;
     case AST_PredefinedType::PT_void:
       break;
     case AST_PredefinedType::PT_longdouble:
       *os << bt->name ()
-          << " _tao_retval = ACE_CDR_LONG_DOUBLE_INITIALIZER;\n";
+          << " _tao_retval = ACE_CDR_LONG_DOUBLE_INITIALIZER;";
       break;
     case AST_PredefinedType::PT_longlong:
       *os << bt->name ()
-          << " _tao_retval = ACE_CDR_LONGLONG_INITIALIZER;\n";
+          << " _tao_retval = ACE_CDR_LONGLONG_INITIALIZER;";
       break;
     default:
-      *os << bt->name () << " _tao_retval = 0;\n";
+      *os << bt->name () << " _tao_retval = 0;";
       break;
     }
   return 0;
@@ -179,7 +180,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_sequence (be_sequence *node)
       bt = node;
     }
 
-  *os << "::" << bt->name () << "_var _tao_retval;\n";
+  *os << "::" << bt->name () << "_var _tao_retval;";
   return 0;
 }
 
@@ -190,11 +191,11 @@ be_visitor_operation_rettype_vardecl_ss::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "CORBA::String_var _tao_retval;\n";
+      *os << "CORBA::String_var _tao_retval;";
     }
   else
     {
-      *os << "CORBA::WString_var _tao_retval;\n";
+      *os << "CORBA::WString_var _tao_retval;";
     }
 
   return 0;
@@ -220,11 +221,11 @@ be_visitor_operation_rettype_vardecl_ss::visit_structure (be_structure *node)
   // aggregate type.
   if (node->size_type () == AST_Type::VARIABLE)
     {
-      *os << "::" << bt->name () << "_var _tao_retval;\n";
+      *os << "::" << bt->name () << "_var _tao_retval;";
     }
   else
     {
-      *os << "::" << bt->name () << " _tao_retval;\n";
+      *os << "::" << bt->name () << " _tao_retval;";
     }
 
   return 0;
@@ -268,14 +269,48 @@ be_visitor_operation_rettype_vardecl_ss::visit_union (be_union *node)
   // aggregate type.
   if (node->size_type () == AST_Type::VARIABLE)
     {
-      *os << "::" << bt->name () << "_var _tao_retval;\n";
+      *os << "::" << bt->name () << "_var _tao_retval;";
     }
   else
     {
-      *os << "::" << bt->name () << " _tao_retval;\n";
+      *os << "::" << bt->name () << " _tao_retval;";
     }
 
   return 0;
+}
+
+int
+be_visitor_operation_rettype_vardecl_ss::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
+int
+be_visitor_operation_rettype_vardecl_ss::visit_eventtype_fwd (
+    be_eventtype_fwd *node
+  )
+{
+  return this->visit_valuetype_fwd (node);
+}
+
+int
+be_visitor_operation_rettype_vardecl_ss::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_operation_rettype_vardecl_ss::visit_component_fwd (
+    be_component_fwd *node
+  )
+{
+  return this->visit_interface_fwd (node);
+}
+
+int
+be_visitor_operation_rettype_vardecl_ss::visit_home (be_home *node)
+{
+  return this->visit_interface (node);
 }
 
 

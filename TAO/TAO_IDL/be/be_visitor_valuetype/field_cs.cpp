@@ -150,7 +150,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
                        bt->full_name ());
     }
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Accessor to set the member." << be_nl
@@ -192,7 +192,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
   *os << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix () << ";" << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+  *os << "}";
 
   return 0;
 }
@@ -225,7 +225,7 @@ be_visitor_valuetype_field_cs::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Accessor to set the member." << be_nl
@@ -260,7 +260,7 @@ be_visitor_valuetype_field_cs::visit_enum (be_enum *node)
       << bu->field_pd_postfix ()
       << ";" << be_uidt_nl;
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}";
 
   return 0;
 }
@@ -293,7 +293,7 @@ be_visitor_valuetype_field_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Accessor to set the member." << be_nl
@@ -327,7 +327,7 @@ be_visitor_valuetype_field_cs::visit_interface (be_interface *node)
       << bu->field_pd_postfix ()
       << ".ptr ();" << be_uidt_nl;
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}";
 
   return 0;
 }
@@ -360,7 +360,7 @@ be_visitor_valuetype_field_cs::visit_interface_fwd (be_interface_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Accessor to set the member." << be_nl
@@ -394,7 +394,7 @@ be_visitor_valuetype_field_cs::visit_interface_fwd (be_interface_fwd *node)
       << bu->field_pd_postfix ()
       << ".ptr ();" << be_uidt_nl;
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}";
 
   return 0;
 }
@@ -427,7 +427,7 @@ be_visitor_valuetype_field_cs::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Accessor to set the member." << be_nl
@@ -462,7 +462,7 @@ be_visitor_valuetype_field_cs::visit_valuetype (be_valuetype *node)
       << bu->field_pd_postfix ()
       << ".ptr ();" << be_uidt_nl;
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}";
 
   return 0;
 }
@@ -495,7 +495,7 @@ be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Accessor to set the member." << be_nl
@@ -531,7 +531,7 @@ be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
       ()
       << ".ptr ();" << be_uidt_nl;
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}";
 
   return 0;
 }
@@ -564,7 +564,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Accessor to set the member." << be_nl
@@ -635,7 +635,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
           << bu->field_pd_prefix () << ub->local_name () 
           << bu->field_pd_postfix ()
           << ";" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}";
 
       break;
     case AST_PredefinedType::PT_any:
@@ -667,7 +667,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
           << bu->field_pd_prefix () << ub->local_name () 
           << bu->field_pd_postfix ()
           << ";" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}";
 
       break;
     case AST_PredefinedType::PT_void:
@@ -686,7 +686,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
           << bu->field_pd_prefix () << ub->local_name () 
           << bu->field_pd_postfix ()
           << ";" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}";
 
       break;
   }
@@ -740,7 +740,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
         }
     }
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // (1) set from a const
@@ -787,7 +787,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
       << bu->field_pd_prefix () << ub->local_name () 
       << bu->field_pd_postfix()
       << ";" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
   return 0;
 }
@@ -811,11 +811,8 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
 
   // Three methods to set the string value.
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  // (1) Set method from char* or wchar*.
-  os->indent ();
 
   *os << "// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
@@ -834,8 +831,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
 
   *os << be_nl
       << "{" << be_idt_nl;
-  *os << "// set the value" << be_nl
-      << "this->"
+  *os << "this->"
       << bu->field_pd_prefix () << ub->local_name () 
       << bu->field_pd_postfix ()
       << " = val;" << be_uidt_nl
@@ -896,7 +892,6 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
     }
 
   *os << "{" << be_idt_nl;
-  *os << "// set the value" << be_nl;
 
   if (node->width () == (long) sizeof (char))
     {
@@ -934,7 +929,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
       << bu->field_pd_prefix () << ub->local_name () 
       << bu->field_pd_postfix ()
       << ";" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
   return 0;
 }
@@ -985,7 +980,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
         }
     }
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // (1) Set from a const.
@@ -1032,7 +1027,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
       << bu->field_pd_prefix () << ub->local_name () 
       << bu->field_pd_postfix ()
       << ";" << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+  *os << "}";
 
   return 0;
 }
@@ -1102,7 +1097,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
         }
     }
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Accessor to set the member" << be_nl
@@ -1147,7 +1142,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
       << bu->field_pd_prefix () << ub->local_name () 
       << bu->field_pd_postfix ()
       << ";" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
   return 0;
 }

@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // structure's fields are managed in a scope).
 
 #include "ast_union.h"
+#include "ast_structure_fwd.h"
 #include "ast_field.h"
 #include "ast_enum.h"
 #include "ast_enum_val.h"
@@ -531,6 +532,117 @@ AST_Structure::dump (ACE_OSTREAM_TYPE &o)
   UTL_Scope::dump (o);
   idl_global->indent ()->skip_to (o);
   o << "}";
+}
+
+// This serves for interfaces, valuetypes, components and eventtypes.
+void
+AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
+                                        UTL_Scope *s)
+{
+  if (i == 0)
+    {
+      return;
+    }
+
+  // Fwd redefinition should be in the same scope, so local
+  // lookup is all that's needed.
+  AST_Decl *d = s->lookup_by_name_local (i->local_name (),
+                                         0);
+
+  AST_Structure *fd = 0;
+
+  if (d != 0)
+    {
+      // Full definition must have the same prefix as the forward declaration.
+      if (ACE_OS::strcmp (i->prefix (), d->prefix ()) != 0)
+        {
+          idl_global->err ()->error1 (UTL_Error::EIDL_PREFIX_CONFLICT,
+                                      i);
+
+          return;
+        }
+
+      AST_Decl::NodeType nt = d->node_type ();
+
+      // If this interface has been forward declared in a previous opening
+      // of the module it's defined in, the lookup will find the
+      // forward declaration.
+      if (nt == AST_Decl::NT_struct_fwd
+          || nt == AST_Decl::NT_union_fwd)
+        {
+          AST_StructureFwd *fwd_def =
+            AST_StructureFwd::narrow_from_decl (d);
+
+          fd = fwd_def->full_definition ();
+        }
+      // In all other cases, the lookup will find an interface node.
+      else if (nt == AST_Decl::NT_struct
+               || nt == AST_Decl::NT_union)
+        {
+          fd = AST_Structure::narrow_from_decl (d);
+        }
+
+      // Successful?
+      if (fd == 0)
+        {
+          // Should we give an error here?
+          // No, look in fe_add_interface.
+        }
+      // If it is a forward declared interface..
+      else if (!fd->is_defined ())
+        {
+          // Check if redefining in same scope. If a module is reopened,
+          // a new pointer in created, and the first term below will be
+          // true. In that case, the scoped names must be compared.
+          if (fd->defined_in () != s
+              && i->name ()->compare (fd->name ()) != 0)
+            {
+              idl_global->err ()->error2 (UTL_Error::EIDL_SCOPE_CONFLICT,
+                                          i,
+                                          fd);
+            }
+          // All OK, do the redefinition.
+          else
+            {
+              AST_Decl::NodeType fd_nt = fd->node_type ();
+              AST_Decl::NodeType i_nt = i->node_type ();
+
+              // Only redefinition of the same kind.
+              if (i_nt != fd_nt)
+                {
+                  idl_global->err ()->error2 (UTL_Error::EIDL_REDEF,
+                                              i,
+                                              fd);
+                  return;
+                }
+
+              fd->redefine (i);
+
+              // Use full definition node.
+              delete i;
+              i = fd;
+            }
+        }
+    }
+}
+
+// This serves only for structs. It is overridden for unions.
+void
+AST_Structure::redefine (AST_Structure *from)
+{
+  // We've already checked for inconsistent prefixes.
+  this->prefix (ACE::strnew (from->prefix ()));
+
+  this->set_defined_in (from->defined_in ());
+  this->set_imported (idl_global->imported ());
+  this->set_in_main_file (idl_global->in_main_file ());
+  this->set_line (idl_global->lineno ());
+  this->set_file_name (idl_global->filename ());
+  this->ifr_added_ = from->ifr_added_;
+  this->ifr_fwd_added_ = from->ifr_fwd_added_;
+  this->fields_ = from->fields_;
+  this->member_count_ = from->member_count_;
+  this->local_struct_ = from->local_struct_;
 }
 
 // Compute the size type of the node in question.

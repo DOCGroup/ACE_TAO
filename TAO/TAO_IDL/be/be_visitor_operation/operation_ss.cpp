@@ -96,10 +96,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  // Generate the signature of the static skeleton.
-  os->indent ();
-
-  *os << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "void " << intf->full_skel_name () << "::";
@@ -117,6 +114,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
           *os << "_get_";
         }
     }
+
   *os << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request," << be_nl
@@ -201,7 +199,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // Fish out the interceptors.
-  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+  *os << "\n\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
 
   // Cast the Servant_Upcall pointer.
   *os << "TAO_Object_Adapter::Servant_Upcall *_tao_upcall =" << be_idt_nl
@@ -332,7 +330,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   if (!be_global->exception_support ())
     {
-      *os << "TAO_INTERCEPTOR_CHECK;" << be_nl;
+      *os << "TAO_INTERCEPTOR_CHECK;";
     }
 
   // Update the result.
@@ -349,7 +347,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // Invoke the send_reply() or send_other() interception point, and
   // check for exception.
-  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+  *os << "\n\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
 
   // Close scope for "if (!_tao_vfr.location_forwarded ()"
   *os << be_uidt_nl
@@ -507,7 +505,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
           << "&& !_tao_server_request.sync_with_server ())" << be_uidt_nl
           << "{" << be_idt_nl
           << "_tao_server_request.init_reply ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
+          << "}" << be_uidt;
     }
 
   // Marshal outgoing parameters.
@@ -520,10 +518,10 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << "// In case _tao_servant_upcall is not used in this function"
+  *os << be_nl << be_nl << "// In case _tao_servant_upcall is not used in this function"
       << be_nl
       << "ACE_UNUSED_ARG (_tao_servant_upcall);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";;
 
   return 0;
 }
@@ -596,10 +594,8 @@ be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
   if (this->has_param_type (node, AST_Argument::dir_IN) ||
       this->has_param_type (node, AST_Argument::dir_INOUT))
     {
-      os->indent ();
-
       // demarshal the in and inout arguments
-      *os << "if (!(\n" << be_idt;
+      *os << be_nl << be_nl << "if (!(" << be_idt << be_idt;
 
       // Marshal each in and inout argument.
       ctx = *this->ctx_;
@@ -616,7 +612,7 @@ be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
                             -1);
         }
 
-      *os << be_uidt_nl << "))\n" << be_idt;
+      *os << be_uidt_nl << "))" << be_nl;
 
       // If marshaling fails, raise exception.
       int status = this->gen_raise_exception (0,
@@ -632,8 +628,7 @@ be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
                             -1);
         }
 
-      *os << be_uidt << "\n";
-
+      *os << be_uidt;
     };
 
   return 0;
@@ -652,7 +647,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
 
   // We will be here only if we are 2way
   // first initialize a reply message
-  *os << "_tao_server_request.init_reply ();" << be_nl << be_nl;
+  *os << "_tao_server_request.init_reply ();";
 
   // We still need the following check because we maybe 2way and yet have no
   // parameters and a void return type.
@@ -693,9 +688,10 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
                         -1);
     }
 
-  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
+  *os << be_nl << be_nl 
+      << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
       << be_nl << be_nl;
-  *os << "if (!(\n" << be_idt << be_idt;
+  *os << "if (!(" << be_idt << be_idt;
 
   if (!this->void_return_type (bt))
     {
@@ -722,7 +718,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
       if (!this->void_return_type (bt))
         {
           // We have already printed the return val. SO put a &&.
-          *os << " &&\n";
+          *os << " &&";
         }
 
       // Marshal each in and inout argument.
@@ -741,7 +737,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
         }
     }
 
-  *os << be_uidt_nl << "))\n";
+  *os << be_uidt_nl << "))" << be_nl;
 
   // If marshaling fails, raise exception.
   int status = this->gen_raise_exception (0,
@@ -757,7 +753,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
                         -1);
     }
 
-  *os << be_uidt_nl;
+  *os << be_uidt;
 
   return 0;
 }

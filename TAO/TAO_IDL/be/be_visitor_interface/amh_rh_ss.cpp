@@ -67,8 +67,8 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
   ACE_CString rh_skel_class_name (rh_skel_class_name_prefix);
   rh_skel_class_name += node->local_name ();
 
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << rh_skel_full_scope_name.c_str()
       << "::" << be_nl
@@ -77,17 +77,14 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
       << "  : TAO_AMH_Response_Handler (sr)" << be_nl
       << "  , " << node->full_name () << " ()" << be_nl
       << "{" << be_nl
-      << "}\n\n";
-
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl;
+      << "}" << be_nl << be_nl;
 
   *os << rh_skel_full_scope_name.c_str()
       << "::" << be_nl
       << "  ~" << rh_skel_class_name.c_str()
       << " (void)" << be_nl;
   *os << "{" << be_nl;
-  *os << "}\n\n";
+  *os << "}";
 
 
   // Generate code for elements in the scope (e.g., operations)
@@ -101,8 +98,6 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
                          "codegen for scope failed\n"),
                         -1);
     }
-
-  *os << "\n\n";
 
   return 0;
 }

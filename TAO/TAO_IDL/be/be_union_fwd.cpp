@@ -19,6 +19,7 @@
 
 #include "be_union_fwd.h"
 #include "be_visitor.h"
+#include "ast_union.h"
 
 ACE_RCSID (be, 
            be_union_fwd, 
@@ -28,10 +29,14 @@ be_union_fwd::be_union_fwd (void)
 {
 }
 
-be_union_fwd::be_union_fwd (UTL_ScopedName *n)
-  : be_type (AST_Decl::NT_union_fwd,
-             n),
-    AST_UnionFwd (n),
+be_union_fwd::be_union_fwd (AST_Union *dummy,
+                            UTL_ScopedName *n)
+  : be_structure_fwd (dummy,
+                      n),
+    AST_UnionFwd (dummy,
+                  n),
+    AST_StructureFwd (dummy,
+                      n),
     AST_Type (AST_Decl::NT_union_fwd,
               n),
     AST_Decl (AST_Decl::NT_union_fwd,

@@ -145,7 +145,6 @@ be_visitor_scope::next_elem (be_decl *elem,
                          "(%N:%l) be_visitor_scope::next_elem - "
                          "bad scope\n"),
                         -1);
-
     }
 
   successor = 0;

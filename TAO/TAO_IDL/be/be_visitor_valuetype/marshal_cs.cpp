@@ -168,7 +168,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}";
 
   return 0;
 }

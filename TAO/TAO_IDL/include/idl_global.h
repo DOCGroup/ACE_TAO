@@ -138,6 +138,12 @@ public:
     , PS_ValueTypeSqSeen        // '{' seen for value type
     , PS_ValueTypeQsSeen        // '}' seen for value type
     , PS_ValueTypeBodySeen      // Seen a value type body
+    , PS_EventTypeSeen          // Seen a EVENTTYPE keyword
+    , PS_EventTypeForwardSeen   // Forward eventtype decl seen
+    , PS_EventTypeIDSeen        // Seen the eventtype ID
+    , PS_EventTypeSqSeen        // '{' seen for event type
+    , PS_EventTypeQsSeen        // '}' seen for event type
+    , PS_EventTypeBodySeen      // Seen a event type body
     , PS_ComponentSeen          // Seen a component declaration
     , PS_ComponentIDSeen        // Seen the component ID
     , PS_ComponentForwardSeen   // Seen a forward declaration of a component
@@ -226,6 +232,8 @@ public:
     , PS_OpIDSeen               // Seen operation ID
     , PS_OpParsCompleted        // Completed operation param list
     , PS_OpRaiseCompleted       // Completed operation except list
+    , PS_OpGetRaiseCompleted    // Completed attribute get except list
+    , PS_OpSetRaiseCompleted    // Completed attribute set except list
     , PS_OpContextCompleted     // Completed operation context spec
     , PS_OpCompleted            // Completed operation statement
     , PS_OpSqSeen               // Seen '(' for operation
@@ -237,6 +245,12 @@ public:
     , PS_OpRaiseSeen            // Seen RAISES keyword
     , PS_OpRaiseSqSeen          // Seen '(' for RAISES
     , PS_OpRaiseQsSeen          // Seen ')' for RAISES
+    , PS_OpGetRaiseSeen         // Seen GETRAISES keyword
+    , PS_OpGetRaiseSqSeen       // Seen '(' for GETRAISES
+    , PS_OpGetRaiseQsSeen       // Seen ')' for GETRAISES
+    , PS_OpSetRaiseSeen         // Seen SETRAISES keyword
+    , PS_OpSetRaiseSqSeen       // Seen '(' for SETRAISES
+    , PS_OpSetRaiseQsSeen       // Seen ')' for SETRAISES
     , PS_OpContextSeen          // Seen CONTEXT keyword
     , PS_OpContextSqSeen        // Seen '(' for CONTEXT
     , PS_OpContextQsSeen        // Seen ')' for CONTEXT
@@ -386,12 +400,6 @@ public:
   virtual idl_bool obv_support (void);
   // check if OBV (Valuetype) support is enabled
 
-  void component_support (idl_bool);
-  // set enable/disable CORBA component support
-
-  idl_bool component_support (void);
-  // check if CORBA component support is enabled
-
   virtual void case_diff_error (idl_bool);
   // report an error (1) for indentifiers in the same scope
   // that differ only by case, or report a warning (0).
@@ -493,9 +501,6 @@ private:
 
   idl_bool obv_support_;
   // Do we support OBV (Valuetype)?
-
-  idl_bool component_support_;
-  // Do we support the CCM (CORBA Component Model)?
 
   idl_bool case_diff_error_;
   // Do we report an error for indentifiers in the same scope that differ

@@ -75,6 +75,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_module.h"
 #include "be_valuetype.h"
 #include "be_valuetype_fwd.h"
+#include "be_eventtype.h"
+#include "be_eventtype_fwd.h"
 #include "be_component.h"
 #include "be_component_fwd.h"
 #include "be_home.h"
@@ -304,6 +306,62 @@ be_generator::create_valuetype_fwd (UTL_ScopedName *n,
   return retval;
 }
 
+AST_EventType *
+be_generator::create_eventtype (UTL_ScopedName *n,
+                                AST_Interface **inherits,
+                                long n_inherits,
+                                AST_ValueType *inherits_concrete,
+                                AST_Interface **inherits_flat,
+                                long n_inherits_flat,
+                                AST_Interface **supports,
+                                long n_supports,
+                                AST_Interface *supports_concrete,
+                                idl_bool abstract,
+                                idl_bool truncatable)
+{
+  be_eventtype *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_eventtype (n,
+                                inherits,
+                                n_inherits,
+                                inherits_concrete,
+                                inherits_flat,
+                                n_inherits_flat,
+                                supports,
+                                n_supports,
+                                supports_concrete,
+                                abstract,
+                                truncatable),
+                  0);
+
+  return retval;
+}
+
+AST_EventTypeFwd *
+be_generator::create_eventtype_fwd (UTL_ScopedName *n,
+                                    idl_bool abstract)
+{
+  AST_EventType *dummy = this->create_eventtype (n,
+                                                 0,
+                                                 -1,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 abstract,
+                                                 0);
+
+  be_eventtype_fwd *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_eventtype_fwd (dummy,
+                                    n),
+                  0);
+
+  return retval;
+}
+
 AST_Component *
 be_generator::create_component (UTL_ScopedName *n,
                                 AST_Component *base_component,
@@ -402,9 +460,14 @@ be_generator::create_structure (UTL_ScopedName *n,
 AST_StructureFwd *
 be_generator::create_structure_fwd (UTL_ScopedName *n)
 {
+  
+  AST_Structure *dummy = this->create_structure (n,
+                                                 0,
+                                                 0);
   be_structure_fwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_structure_fwd (n),
+                  be_structure_fwd (dummy,
+                                    n),
                   0);
 
   return retval;
@@ -513,9 +576,14 @@ be_generator::create_union (AST_ConcreteType *dt,
 AST_UnionFwd *
 be_generator::create_union_fwd (UTL_ScopedName *n)
 {
+  AST_Union *dummy = this->create_union (0,
+                                         n,
+                                         0,
+                                         0);
   be_union_fwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_union_fwd (n),
+                  be_union_fwd (dummy,
+                                n),
                   0);
 
   return retval;

@@ -48,14 +48,15 @@ be_visitor_array_any_op_ch::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // generate the Any <<= and >>= operator declarations
-  os->indent ();
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << be_global->stub_export_macro () << " void"
       << " operator<<= (CORBA::Any &, const " << node->name ()
       << "_forany &);" << be_nl;
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, "
-      << node->name () << "_forany &);\n";
+      << node->name () << "_forany &);";
 
   node->cli_hdr_any_op_gen (1);
   return 0;

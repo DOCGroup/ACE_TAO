@@ -57,6 +57,9 @@ public:
   virtual int visit_interface (be_interface *node);
   // visit interface
 
+  virtual int visit_component (be_component *node);
+  // visit component
+
   virtual int visit_sequence (be_sequence *node);
   // visit a sequence
 
@@ -72,6 +75,8 @@ public:
   virtual int visit_valuetype (be_valuetype *node);
   // visit a valuetype
 
+  virtual int visit_eventtype (be_eventtype *node);
+  // visit a valuetype
 };
 
 #endif /* _BE_VISITOR_TYPECODE_TYPECODE_DECL_H_ */

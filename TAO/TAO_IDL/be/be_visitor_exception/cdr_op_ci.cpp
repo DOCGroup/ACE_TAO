@@ -67,10 +67,14 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
                         -1);
     }
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  *os << "ACE_INLINE" << be_nl
+  *os << be_nl << be_nl
+      << "ACE_INLINE" << be_nl
       << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->name () << " &_tao_aggregate" << be_uidt_nl
@@ -194,7 +198,7 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
       *os << "return 1;" << be_uidt_nl;
     }
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}";
 
   node->cli_inline_cdr_op_gen (1);
   return 0;

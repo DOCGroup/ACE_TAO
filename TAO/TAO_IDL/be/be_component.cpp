@@ -41,7 +41,7 @@ be_component::be_component (UTL_ScopedName *n,
                   n_supports,
                   supports_flat,
                   n_supports_flat,
-                  I_TRUE,
+                  I_FALSE,
                   I_FALSE),
     AST_Component (n,
                    base_component,
@@ -54,14 +54,14 @@ be_component::be_component (UTL_ScopedName *n,
                    n_supports,
                    supports_flat,
                    n_supports_flat,
-                   I_TRUE,
+                   I_FALSE,
                    I_FALSE),
     AST_Type (AST_Decl::NT_component,
               n),
     AST_Decl (AST_Decl::NT_component,
               n),
     UTL_Scope (AST_Decl::NT_component),
-    COMMON_Base (I_TRUE,
+    COMMON_Base (I_FALSE,
                  I_FALSE)
 {
   this->size_type (AST_Type::VARIABLE);
@@ -83,6 +83,18 @@ int
 be_component::accept (be_visitor *visitor)
 {
   return visitor->visit_component (this);
+}
+
+AST_Structure *
+be_component::be_add_structure (AST_Structure *t)
+{
+  return this->fe_add_structure (t);
+}
+
+AST_Typedef *
+be_component::be_add_typedef (AST_Typedef *t)
+{
+  return this->fe_add_typedef (t);
 }
 
 // Narrowing.

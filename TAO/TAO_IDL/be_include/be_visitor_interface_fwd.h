@@ -24,7 +24,6 @@
 
 #include "be_visitor_decl.h"
 #include "be_visitor_interface_fwd/interface_fwd_ch.h"
-#include "be_visitor_interface_fwd/interface_fwd_ci.h"
 #include "be_visitor_interface_fwd/cdr_op_ch.h"
 #include "be_visitor_interface_fwd/cdr_op_ci.h"
 #include "be_visitor_interface_fwd/any_op_ch.h"

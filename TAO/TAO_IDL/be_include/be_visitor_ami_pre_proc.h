@@ -71,8 +71,8 @@ public:
 
 private:
   int create_raise_operation (be_decl *node,
-                               be_valuetype *excep_holder,
-                               Operation_Kind operation_kind);
+                              be_valuetype *excep_holder,
+                              Operation_Kind operation_kind);
   // Creates a raise operation from node and inserts it in
   // excep_holder, while obeying if it is a normal operation
   // or a set or get attribute.

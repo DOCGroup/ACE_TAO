@@ -99,7 +99,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       // Save the sequence node for further use.
       this->ctx_->node (node);
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
       // If we're an anonymous sequence, we must protect against
@@ -191,7 +191,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
             {
               // We are dealing with a bounded sequence. Check if we are within
               // bounds.
-              *os << "if (_tao_seq_len <= _tao_sequence.maximum ())" << be_nl
+              *os << "if (_tao_seq_len <= _tao_sequence.maximum ())" << be_idt_nl
                   << "{" << be_idt_nl;
             }
         }
@@ -241,13 +241,13 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 
       *os << "}" << be_uidt_nl << be_nl
           << "return 0;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}";
 
       if (!this->ctx_->tdef ())
         {
-          *os << "#endif /* _TAO_CDR_OP_"
-              << node->flat_name () << "_CPP_ */"
-              << be_uidt_nl << be_uidt_nl;
+          *os << be_nl << be_nl
+              << "#endif /* _TAO_CDR_OP_"
+              << node->flat_name () << "_CPP_ */";
         }
 
       node->cli_stub_cdr_op_gen (1);

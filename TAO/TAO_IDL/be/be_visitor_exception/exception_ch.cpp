@@ -47,12 +47,12 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   os->gen_ifdef_macro (node->flat_name ());
 
-  *os << "class " << be_global->stub_export_macro ()
+  *os << be_nl << be_nl << "class " << be_global->stub_export_macro ()
             << " " << node->local_name ()
             << " : public CORBA::UserException" << be_nl;
   *os << "{" << be_nl
@@ -78,9 +78,13 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
   // Assignment operator.
   *os << node->local_name () << " &operator= (const "
-      << node->local_name () << " &);\n" << be_nl;
+      << node->local_name () << " &);" << be_nl << be_nl;
 
-  *os << "static void _tao_any_destructor (void*);\n" << be_nl;
+  if (be_global->any_support ())
+    {
+      *os << "static void _tao_any_destructor (void *);" << be_nl << be_nl;
+    }
+
 
   *os << "static " << node->local_name ()
       << " *_downcast (CORBA::Exception *);" << be_nl;
@@ -97,7 +101,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       << "virtual void _tao_decode (" << be_idt << be_idt_nl
       << "TAO_InputCDR &" << be_nl
       << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");" << be_uidt;
 
   // Generate constructor that takes each member as a parameter. We need a
   // new state. Such a constructor exists if we have members.
@@ -117,12 +121,16 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
         }
     }
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   if (be_global->tc_support ())
     {
-      *os << be_nl <<"virtual CORBA::TypeCode_ptr _type (void) const;";
+      *os << be_nl << be_nl 
+          << "virtual CORBA::TypeCode_ptr _type (void) const;";
     }
 
-  *os << be_uidt_nl << "};" << be_nl << be_nl;
+  *os << be_uidt_nl << "};";
 
   if (be_global->tc_support ())
     {

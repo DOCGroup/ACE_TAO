@@ -43,7 +43,6 @@ public:
 
   virtual int visit_argument (be_argument *node);
   // visit the argument node
-
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_REQUEST_INFO_SS_H_ */

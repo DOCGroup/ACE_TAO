@@ -66,7 +66,7 @@ be_visitor_operation_argument_marshal::pre_process (be_decl *bd)
         {
           if (this->last_arg_printed_ !=
               be_visitor_operation_argument_marshal::TAO_ARG_NONE)
-            *os << " &&\n";
+            *os << " &&";
         }
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
         {
@@ -78,13 +78,13 @@ be_visitor_operation_argument_marshal::pre_process (be_decl *bd)
         {
           if (this->last_arg_printed_ !=
               be_visitor_operation_argument_marshal::TAO_ARG_NONE)
-            *os << " &&\n";
+            *os << " &&";
         }
       else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
         {
           if (this->last_arg_printed_ !=
               be_visitor_operation_argument_marshal::TAO_ARG_NONE)
-            *os << " &&\n";
+            *os << " &&";
         }
       break;
     case AST_Argument::dir_OUT:
@@ -96,7 +96,7 @@ be_visitor_operation_argument_marshal::pre_process (be_decl *bd)
         {
           if (this->last_arg_printed_ !=
               be_visitor_operation_argument_marshal::TAO_ARG_NONE)
-            *os << " &&\n";
+            *os << " &&";
         }
       break;
     }
@@ -164,6 +164,7 @@ be_visitor_operation_argument_marshal::post_process (be_decl *bd)
                          "Bad sub state\n"),
                         -1);
     }
+
   return 0;
 }
 
@@ -199,13 +200,13 @@ be_visitor_args_decl::visit_array (be_array *node)
 
   // retrieve the field node
   be_argument *f = this->ctx_->be_node_as_argument ();
+
   if (f == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_args_decl::"
                          "visit_array - "
-                         "cannot retrieve argument node\n"
-                         ), 
+                         "cannot retrieve argument node\n"), 
                         -1);
     }
 

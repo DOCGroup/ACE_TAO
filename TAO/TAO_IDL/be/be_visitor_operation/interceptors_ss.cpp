@@ -70,10 +70,14 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
   // save the node.
   this->ctx_->node (node);
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   // Generate the ServerRequestInfo object per operation to
   // be used by the interecptors.
 
-  *os << "class TAO_ServerRequestInfo_"<< node->flat_name ();
+  *os << be_nl << be_nl 
+      << "class TAO_ServerRequestInfo_"<< node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -413,7 +417,7 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
       *os << " _result;";
     }
 
-  *os << be_uidt_nl << "};" << be_nl << be_nl;
+  *os << be_uidt_nl << "};";
 
   return 0;
 }
@@ -430,8 +434,8 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
   // Save the node.
   this->ctx_->node (node);
 
-  // Start with the current indentation level.
-  os->indent ();
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // -----------------------------------------------------------------
   // Constructor
@@ -439,7 +443,8 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
 
   // Generate the ServerRequestInfo object definition per operation
   // to be used by the interceptors.
-  *os << "TAO_ServerRequestInfo_" << node->flat_name ();
+  *os << be_nl << be_nl 
+      << "TAO_ServerRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -562,13 +567,13 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
                         -1);
     }
 
-  os->decr_indent ();
-  *os << be_nl << "{}\n\n";
+  *os << be_uidt_nl << "{}";
 
   // -----------------------------------------------------------------
   // PortableInterceptor::ServerRequestInfo::arguments()
   // -----------------------------------------------------------------
-  *os << "Dynamic::ParameterList *" << be_nl;
+  *os << be_nl << be_nl
+      << "Dynamic::ParameterList *" << be_nl;
 
   *os << "TAO_ServerRequestInfo_"<<node->flat_name ();
 
@@ -630,7 +635,7 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
   else
     {
       *os << "Dynamic::ParameterList_var safe_parameter_list = "
-          << "parameter_list;" << be_nl;
+          << "parameter_list;";
 
       // Precompute the length of the Dynamic::ParameterList.  This is
       // a nice optimization since it reduces the number of additional
@@ -639,10 +644,11 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
       // sequence for each parameter.
 
       *os << be_nl
-          << "parameter_list->length (" << parameter_count << ");"
-          << be_nl;
+          << "parameter_list->length (" << parameter_count << ");";
 
-      *os << "CORBA::ULong len = 0;" << be_nl << be_nl;
+      *os << be_nl << "CORBA::ULong len = 0;";
+
+      *os << be_nl;
 
       // The insertion operator is different for different nodes.  We
       // change our scope to go to the argument scope to be able to
@@ -664,14 +670,13 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
           << "return safe_parameter_list._retn ();" << be_uidt_nl;
     }
 
-  *os << "}\n\n";
-
-  os->decr_indent ();
+  *os << "}";
 
   // -----------------------------------------------------------------
   // PortableInterceptor::ServerRequestInfo::exceptions()
   // -----------------------------------------------------------------
-  *os << "Dynamic::ExceptionList *" << be_nl;
+  *os << be_nl << be_nl
+      << "Dynamic::ExceptionList *" << be_nl;
 
   *os << "TAO_ServerRequestInfo_"<<node->flat_name ();
 
@@ -761,14 +766,13 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
         }
     }
 
-  *os << be_uidt_nl << "}\n\n" << be_nl;
-
-  os->decr_indent ();
+  *os << be_uidt_nl << "}";
 
   // -----------------------------------------------------------------
   // PortableInterceptor::ServerRequestInfo::result()
   // -----------------------------------------------------------------
-  *os << "CORBA::Any * " << be_nl;
+  *os << be_nl << be_nl 
+      << "CORBA::Any * " << be_nl;
 
   *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
 
@@ -869,12 +873,13 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
         }
     }
 
-  *os << be_uidt_nl << "}\n\n";
+  *os << be_uidt_nl << "}";
 
   // -----------------------------------------------------------------
   // PortableInterceptor::ServerRequestInfo::target_most_derived_interface()
   // -----------------------------------------------------------------
-  *os << "char *" << be_nl;
+  *os << be_nl << be_nl 
+      << "char *" << be_nl;
 
   *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
 
@@ -916,12 +921,13 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
       << "{" << be_idt_nl
       << "return" << be_idt_nl
       << "CORBA::string_dup (this->_tao_impl->_interface_repository_id ());"
-      << be_uidt << be_uidt_nl << "}" << be_nl << be_nl;
+      << be_uidt << be_uidt_nl << "}";
 
   // -----------------------------------------------------------------
   // PortableInterceptor::ServerRequestInfo::target_is_a()
   // -----------------------------------------------------------------
-  *os << "CORBA::Boolean" << be_nl;
+  *os << be_nl << be_nl 
+      << "CORBA::Boolean" << be_nl;
 
   *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
 
@@ -962,10 +968,9 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
       << "return this->_tao_impl->_is_a (id ACE_ENV_ARG_PARAMETER);"
-      << be_uidt_nl << "}" << be_nl << be_nl;
+      << be_uidt_nl << "}";
 
   // -----------------------------------------------------------------
-  os->decr_indent ();
 
   // Update the result.
   bt = be_type::narrow_from_decl (node->return_type ());
@@ -984,6 +989,7 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
   // type.
   if (!this->void_return_type (bt))
     {
+      *os << be_nl << be_nl;
       *os << "void " << be_nl;
 
       *os << "TAO_ServerRequestInfo_" << node->flat_name ();
@@ -1034,12 +1040,11 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
                             -1);
         }
 
-      os->indent ();
       *os << " result)" << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
           << "// Update the result." << be_nl
           << " this->_result = result;" << be_uidt_nl
-          << "}\n\n";
+          << "}";
     }
 
   return 0;

@@ -30,6 +30,7 @@
 #include "be_extern.h"
 #include "utl_identifier.h"
 #include "ast_generator.h"
+#include "ast_component.h"
 #include "global_extern.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
@@ -489,7 +490,8 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
   // Generate the constructor from stub and servant.
   if (!this->is_local ())
     {
-      *os << "ACE_INLINE" << be_nl;
+      *os << be_nl << be_nl
+          << "ACE_INLINE" << be_nl;
       *os << this->name () << "::"
           << this->local_name () << " ("
           << be_idt << be_idt_nl
@@ -532,7 +534,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << "_setup_collocation (_tao_collocated);";
 
       *os << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}";
     }
 }
 
@@ -565,7 +567,7 @@ be_interface::gen_var_defn (char *interface_name)
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
-  *ch << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *ch << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *ch << "class " << be_global->stub_export_macro ()
@@ -637,6 +639,10 @@ be_interface::gen_var_defn (char *interface_name)
     {
       *ch << "CORBA::AbstractBase *" << be_nl;
     }
+  else if (this->node_type () == AST_Decl::NT_component)
+    {
+      *ch << "Components::CCMObject *" << be_nl;
+    }
   else
     {
       *ch << "CORBA::Object *" << be_nl;
@@ -647,14 +653,18 @@ be_interface::gen_var_defn (char *interface_name)
 
   if (this->is_abstract ())
     {
-      *ch << "static CORBA::AbstractBase * tao_upcast (void *);";
+      *ch << "static CORBA::AbstractBase *";
+    }
+  else if (this->node_type () == AST_Decl::NT_component)
+    {
+      *ch << "Components::CCMObject *";
     }
   else
     {
-      *ch << "static CORBA::Object * tao_upcast (void *);";
+      *ch << "static CORBA::Object *";
     }
 
-  *ch << be_uidt_nl << be_nl;
+  *ch << " tao_upcast (void *);" << be_uidt_nl << be_nl;
 
   // Private.
   *ch << "private:" << be_idt_nl;
@@ -664,7 +674,7 @@ be_interface::gen_var_defn (char *interface_name)
   *ch << interface_name << "_var &operator= (const TAO_Base_var &rhs);"
       << be_uidt_nl;
 
-  *ch << "};\n\n";
+  *ch << "};";
 
   return 0;
 }
@@ -707,23 +717,22 @@ be_interface::gen_var_impl (char *interface_local_name,
 
   TAO_OutStream *cs = tao_cg->client_stubs ();
 
+  *cs << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
   // Generate the var implementation in the inline file
   // Depending upon the data type, there are some differences which we
   // account for over here.
 
-  cs->indent (); // start with whatever was our current indent level
-
-  *cs << "// *************************************************************"
+  *cs << be_nl << be_nl
+      << "// *************************************************************"
       << be_nl
       << "// " << fname << be_nl
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl
       << "// *************************************************************"
       << be_nl << be_nl;
 
   // Default constructor.
   *cs << fname << "::" << lname
-      << " (void) // default constructor" << be_idt_nl;
+      << " (void)" << be_idt_nl;
   *cs << ": ptr_ (" << interface_local_name
       << "::_nil ())" << be_uidt_nl;
   *cs << "{}" << be_nl << be_nl;
@@ -742,7 +751,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   // Copy constructor.
   *cs << fname << "::" << lname
       << " (const ::" << interface_full_name
-      << "_var &p) // copy constructor" << be_nl;
+      << "_var &p)" << be_nl;
   *cs << "  : TAO_Base_var ()," << be_nl;
   *cs << "    ptr_ (" << interface_local_name
       << "::_duplicate (p.ptr ()))" << be_nl;
@@ -750,7 +759,7 @@ be_interface::gen_var_impl (char *interface_local_name,
 
   // Destructor.
   *cs << fname << "::~" << lname
-      << " (void) // destructor" << be_nl;
+      << " (void)" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "CORBA::release (this->ptr_);" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
@@ -871,6 +880,10 @@ be_interface::gen_var_impl (char *interface_local_name,
     {
       *cs << "CORBA::AbstractBase *p" << be_nl;
     }
+  else if (this->node_type () == AST_Decl::NT_component)
+    {
+      *cs << "Components::CCMObject *p" << be_nl;
+    }
   else
     {
       *cs << "CORBA::Object *p" << be_nl;
@@ -888,6 +901,10 @@ be_interface::gen_var_impl (char *interface_local_name,
     {
       *cs << "CORBA::AbstractBase *" << be_nl;
     }
+  else if (this->node_type () == AST_Decl::NT_component)
+    {
+      *cs << "Components::CCMObject *" << be_nl;
+    }
   else
     {
       *cs << "CORBA::Object *" << be_nl;
@@ -900,7 +917,7 @@ be_interface::gen_var_impl (char *interface_local_name,
       << " **, src);"
       << be_uidt_nl
       << "return *tmp;" << be_uidt_nl
-      << "}\n\n";
+      << "}";
 
   return 0;
 }
@@ -925,7 +942,7 @@ be_interface::gen_out_defn (char *interface_name)
 
   TAO_OutStream *ch = tao_cg->client_header ();
 
-  *ch << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *ch << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the out definition (always in the client header)
@@ -973,7 +990,7 @@ be_interface::gen_out_defn (char *interface_name)
   *ch << "private:" << be_idt_nl;
   *ch << interface_name << "_ptr &ptr_;" << be_uidt_nl;
 
-  *ch << "};" << be_nl << be_nl;
+  *ch << "};";
 
   return 0;
 }
@@ -1009,19 +1026,18 @@ be_interface::gen_out_impl (char *interface_local_name,
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
-  // Start with whatever was our current indent level.
-  cs->indent ();
+  *cs << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
-  *cs << "// *************************************************************"
+  *cs << be_nl << be_nl
+      << "// *************************************************************"
       << be_nl
       << "// " << fname << be_nl
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl
-      << "// *************************************************************"
-      << be_nl << be_nl;
+      << "// *************************************************************";
 
       // Constructor from a _ptr.
-  *cs << fname << "::" << lname
+  *cs << be_nl << be_nl
+      << fname << "::" << lname
       << " ("  << interface_local_name
       << "_ptr &p)" << be_nl;
   *cs << "  : ptr_ (p)" << be_nl;
@@ -1033,7 +1049,7 @@ be_interface::gen_out_impl (char *interface_local_name,
   // Constructor from _var &.
   *cs << fname << "::" << lname
       << " (" << interface_local_name
-      << "_var &p) // constructor from _var" << be_nl;
+      << "_var &p)" << be_nl;
   *cs << "  : ptr_ (p.out ())" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "CORBA::release (this->ptr_);" << be_nl;
@@ -1044,7 +1060,7 @@ be_interface::gen_out_impl (char *interface_local_name,
   // Copy constructor.
   *cs << fname << "::" << lname
       << " (const ::" << interface_full_name
-      << "_out &p) // copy constructor" << be_nl;
+      << "_out &p)" << be_nl;
   *cs << "  : ptr_ (ACE_const_cast (" << interface_local_name
       << "_out &, p).ptr_)" << be_nl;
   *cs << "{}" << be_nl << be_nl;
@@ -1089,7 +1105,7 @@ be_interface::gen_out_impl (char *interface_local_name,
   // ptr function.
   *cs << "::" << interface_full_name
       << "_ptr &" << be_nl;
-  *cs << fname << "::ptr (void) // ptr" << be_nl;
+  *cs << fname << "::ptr (void)" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "return this->ptr_;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
@@ -1100,10 +1116,7 @@ be_interface::gen_out_impl (char *interface_local_name,
   *cs << fname << "::operator-> (void)" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "return this->ptr_;" << be_uidt_nl;
-  *cs << "}" << be_nl << be_nl;
-
-  *cs << "// *************************************************************"
-      << "\n\n";
+  *cs << "}";
 
   return 0;
 }
@@ -1276,9 +1289,9 @@ be_interface::gen_operation_table (const char *flat_name,
         if (os == 0)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "be_visitor_interface_ss",
-                               "::",
-                               "visit_interface-",
+                               "be_visitor_interface_ss"
+                               "::"
+                               "visit_interface-"
                                "make_outstream failed\n"),
                               -1);
           }
@@ -1291,9 +1304,9 @@ be_interface::gen_operation_table (const char *flat_name,
                       TAO_OutStream::TAO_GPERF_INPUT) == -1)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "be_visitor_interface_ss",
-                               "::",
-                               "visit_interface-",
+                               "be_visitor_interface_ss"
+                               "::"
+                               "visit_interface-"
                                "gperf_input.tmp file open failed\n"),
                               -1);
           }
@@ -1360,9 +1373,9 @@ be_interface::gen_operation_table (const char *flat_name,
 
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_interface",
-                         "::",
-                         "gen_operation_table",
+                         "be_interface"
+                         "::"
+                         "gen_operation_table"
                          "unknown op_lookup_strategy\n"),
                         -1);
   }
@@ -1650,11 +1663,31 @@ be_interface::traverse_inheritance_graph (
                             -1);
         }
 
-      long i;
+      // If we are doing a component, we check for a parent.
+      if (bi->node_type () == AST_Decl::NT_component)
+        {
+          AST_Component *base = 
+            AST_Component::narrow_from_decl (bi)->base_component ();
+
+          if (base != 0)
+            {
+              (void) this->insert_non_dup (base);
+
+              long n_supports = base->n_supports ();
+              AST_Interface **supports = base->supports ();
+
+              for (long j = 0; j < n_supports; ++j)
+                {
+                  (void) this->insert_non_dup (supports[j]);
+                }
+            }
+        }
 
       // Now check if the dequeued element has any ancestors. If yes, insert
       // them inside the queue making sure that there are no duplicates.
-      for (i = 0; i < bi->n_inherits (); ++i)
+      // If we are doing a component, the inheritance list is actually a
+      // supports list.
+      for (long i = 0; i < bi->n_inherits (); ++i)
         {
           // Retrieve the next parent from which the dequeued element inherits.
           AST_Interface *parent = bi->inherits ()[i];
@@ -1690,7 +1723,7 @@ be_interface::gen_gperf_things (const char *flat_name)
 
   TAO_OutStream *os = this->strategy_->get_out_stream ();
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the correct class definition for the operation lookup
@@ -1784,8 +1817,7 @@ be_interface::gen_perfect_hash_class_definition (const char *flat_name)
       << be_nl
       << " const TAO_operation_db_entry * lookup (const char *str, unsigned int len);"
       << be_nl
-      << "};"
-      << "\n";
+      << "};\n\n";
 }
 
 // Outputs the class definition for the binary searching. This class
@@ -1805,8 +1837,7 @@ be_interface::gen_binary_search_class_definition (const char *flat_name)
       << be_nl
       << " const TAO_operation_db_entry * lookup (const char *str);"
       << be_nl
-      << "};"
-      << "\n";
+      << "};\n\n";
 }
 
 // Outputs the class definition for the linear search. This class
@@ -1826,8 +1857,7 @@ be_interface::gen_linear_search_class_definition (const char *flat_name)
       << be_nl
       << " const TAO_operation_db_entry * lookup (const char *str);"
       << be_nl
-      << "};"
-      << "\n";
+      << "};\n\n";
 }
 
 // We have collected the input (Operations and the corresponding
@@ -2190,10 +2220,7 @@ be_interface::gen_skel_helper (be_interface *derived,
 
           if (d->node_type () == AST_Decl::NT_op)
             {
-              // Start from current indentation level.
-              os->indent ();
-
-              *os << "// TAO_IDL - Generated from" << be_nl
+              *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
                   << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
@@ -2205,7 +2232,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "void *obj," << be_nl
                       << "void *context" << be_nl
                       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-                      << ");" << be_uidt << "\n\n";
+                      << ");" << be_uidt;
                 }
               else
                 { // Generate code in the inline file.
@@ -2233,7 +2260,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "context" << be_nl
                       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
-                      << "}\n";
+                      << "}";
                 }
             }
           else if (d->node_type () == AST_Decl::NT_attr)
@@ -2256,7 +2283,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "void *obj," << be_nl
                       << "void *context" << be_nl
                       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-                      << ");" << be_uidt << "\n\n";
+                      << ");" << be_uidt;
                 }
               else
                 { // Generate code in the inline file.
@@ -2284,14 +2311,12 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "context" << be_nl
                       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
-                      << "}\n";
+                      << "}";
                 }
 
               if (!attr->readonly ())
                 {
-                  // The set method.
-                  // start from current indentation level
-                  os->indent ();
+                  *os << be_nl << be_nl;
 
                   if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                     {
@@ -2303,7 +2328,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "void *obj," << be_nl
                           << "void *context" << be_nl
                           << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-                          << ");" << be_uidt << "\n\n";
+                          << ");" << be_uidt;
                     }
                   else
                     { // Generate code in the inline file.
@@ -2332,7 +2357,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "context" << be_nl
                           << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                           << ");" << be_uidt << be_uidt_nl
-                          << "}\n";
+                          << "}";
                     }
                 }
             }

@@ -49,13 +49,14 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the ifdefined macro for the union type.
   os->gen_ifdef_macro (node->flat_name ());
 
-  *os << "class " << node->local_name () << "_var;" << be_nl << be_nl;
+  *os << be_nl << be_nl
+      << "class " << node->local_name () << "_var;" << be_nl << be_nl;
 
   *os << "class " << be_global->stub_export_macro () << " "
       << node->local_name () << be_nl
@@ -69,12 +70,15 @@ int be_visitor_union_ch::visit_union (be_union *node)
     // Generate destructor.
       << "~" << node->local_name () << " (void);" << be_nl;
 
-  *os << "static void _tao_any_destructor (void*);"
-      << be_nl << be_nl;
+  if (be_global->any_support ())
+    {
+      *os << "static void _tao_any_destructor (void*);"
+          << be_nl << be_nl;
+    }
 
     // Generate assignment operator.
   *os << node->local_name () << " &operator= (const "
-      << node->local_name () << " &);" << be_nl << be_nl;
+      << node->local_name () << " &);";
 
   // Retrieve the disriminant type.
   be_type *bt = be_type::narrow_from_decl (node->disc_type ());
@@ -103,9 +107,12 @@ int be_visitor_union_ch::visit_union (be_union *node)
                         -1);
     }
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   // Generate the _var_type typedef.
-  *os << "typedef " << node->local_name () << "_var _var_type;"
-      << be_nl << be_nl;
+  *os << be_nl << be_nl 
+      << "typedef " << node->local_name () << "_var _var_type;";
 
   // Now generate the public defn for the union branch members. For this,
   // set our state to reflect what we are aiming to do.
@@ -134,9 +141,13 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   if ((dv.computed_ != 0) && (node->default_index () == -1))
     {
+      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__;
+
       // Only if all cases are not covered AND there is no explicit
       // default, we get the _default () method.
-      *os << "void _default (void);";
+      *os << be_nl << be_nl 
+          << "void _default (void);";
     }
 
   *os << be_uidt_nl;
@@ -149,7 +160,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   // The members are inside of a union.
   *os << "union" << be_nl;
-  *os << "{" << be_idt_nl;
+  *os << "{" << be_idt;
 
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PRIVATE_CH);
 
@@ -163,14 +174,15 @@ int be_visitor_union_ch::visit_union (be_union *node)
     }
 
   *os << be_uidt_nl;
-  *os << "} u_;" << be_nl << be_nl;
+  *os << "} u_;";
 
   // The reset method (TAO extension).
-  *os << "// TAO extension." << be_nl;
+  *os << be_nl << be_nl 
+      << "// TAO extension - frees any allocated storage." << be_nl;
   *os << "void _reset (" << bt->nested_type_name (node)
-      << ", CORBA::Boolean /* finalize */);" << be_nl;
-  *os << "// Frees any allocated storage." << be_uidt_nl;
-  *os << "}; //" << node->name () << be_nl << be_nl;
+      << ", CORBA::Boolean /* finalize */);";
+
+  *os << be_uidt_nl << "};";
 
   if (be_global->tc_support ())
     {
@@ -221,8 +233,11 @@ int be_visitor_union_ch::visit_union (be_union *node)
     }
   else
     {
-      *os << "typedef " << node->local_name () << " &"
-          << node->local_name () << "_out;" << be_nl << be_nl;
+      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__;
+
+      *os << be_nl << be_nl << "typedef " << node->local_name () << " &"
+          << node->local_name () << "_out;";
     }
 
   os->gen_endif ();

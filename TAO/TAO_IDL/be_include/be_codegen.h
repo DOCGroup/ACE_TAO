@@ -176,6 +176,7 @@ public:
       TAO_INTERFACE_TIE_SI,
       TAO_INTERFACE_SMART_PROXY_CH,
       TAO_INTERFACE_SMART_PROXY_CS,
+      TAO_INTERFACE_INTERCEPTORS_CH,
       TAO_INTERFACE_INTERCEPTORS_CS,
       TAO_INTERFACE_INTERCEPTORS_SH,
       TAO_INTERFACE_INTERCEPTORS_SS,
@@ -206,11 +207,8 @@ public:
 
       // Emitting code for the interface forward declaration.
       TAO_INTERFACE_FWD_CH,
-      TAO_INTERFACE_FWD_CI,
-      TAO_INTERFACE_FWD_CS,
       TAO_INTERFACE_FWD_CDR_OP_CH,
       TAO_INTERFACE_FWD_CDR_OP_CI,
-      TAO_INTERFACE_FWD_CDR_OP_CS,
       TAO_INTERFACE_FWD_ANY_OP_CH,
 
       // Emitting code for the AMH ResponseHandlers.
@@ -246,11 +244,69 @@ public:
 
       // Emitting code for the valuetype forward declaration.
       TAO_VALUETYPE_FWD_CH,
-      TAO_VALUETYPE_FWD_CI,
-      TAO_VALUETYPE_FWD_CS,
+      TAO_VALUETYPE_FWD_ANY_OP_CH,
       TAO_VALUETYPE_FWD_CDR_OP_CH,
       TAO_VALUETYPE_FWD_CDR_OP_CI,
-      TAO_VALUETYPE_FWD_CDR_OP_CS,
+
+      // Emitting code for the component.
+      TAO_COMPONENT_CH,
+      TAO_COMPONENT_CI,
+      TAO_COMPONENT_CS,
+      TAO_COMPONENT_IS,
+      TAO_COMPONENT_IH,
+      TAO_COMPONENT_SH,
+      TAO_COMPONENT_SI,
+      TAO_COMPONENT_SS,
+      TAO_COMPONENT_ANY_OP_CH,
+      TAO_COMPONENT_ANY_OP_CS,
+      TAO_COMPONENT_CDR_OP_CH,
+      TAO_COMPONENT_CDR_OP_CI,
+      TAO_COMPONENT_CDR_OP_CS,
+
+      // Emitting code for the component forward declaration.
+      TAO_COMPONENT_FWD_CH,
+      TAO_COMPONENT_FWD_CDR_OP_CH,
+      TAO_COMPONENT_FWD_CDR_OP_CI,
+      TAO_COMPONENT_FWD_ANY_OP_CH,
+
+      // Emitting code for the eventtype.
+      TAO_EVENTTYPE_CH,
+      TAO_EVENTTYPE_CI,
+      TAO_EVENTTYPE_CS,
+      TAO_EVENTTYPE_IS,
+      TAO_EVENTTYPE_IH,
+      TAO_EVENTTYPE_SH,
+      TAO_EVENTTYPE_SI,
+      TAO_EVENTTYPE_SS,
+      TAO_EVENTTYPE_OBV_CH,                 // OBV_ class
+      TAO_EVENTTYPE_OBV_CI,
+      TAO_EVENTTYPE_OBV_CS,
+      TAO_EVENTTYPE_ANY_OP_CH,
+      TAO_EVENTTYPE_ANY_OP_CS,
+      TAO_EVENTTYPE_CDR_OP_CH,
+      TAO_EVENTTYPE_CDR_OP_CI,
+      TAO_EVENTTYPE_CDR_OP_CS,
+
+      // Emitting code for the eventtype forward declaration.
+      TAO_EVENTTYPE_FWD_CH,
+      TAO_EVENTTYPE_FWD_CDR_OP_CH,
+      TAO_EVENTTYPE_FWD_CDR_OP_CI,
+      TAO_EVENTTYPE_FWD_ANY_OP_CH,
+
+      // Emitting code for the component home.
+      TAO_HOME_CH,
+      TAO_HOME_CI,
+      TAO_HOME_CS,
+      TAO_HOME_IS,
+      TAO_HOME_IH,
+      TAO_HOME_SH,
+      TAO_HOME_SI,
+      TAO_HOME_SS,
+      TAO_HOME_ANY_OP_CH,
+      TAO_HOME_ANY_OP_CS,
+      TAO_HOME_CDR_OP_CH,
+      TAO_HOME_CDR_OP_CI,
+      TAO_HOME_CDR_OP_CS,
 
       // Emitting code for the module,
       TAO_MODULE_CH,

@@ -34,6 +34,8 @@ class be_interface;
 class be_interface_fwd;
 class be_valuetype;
 class be_valuetype_fwd;
+class be_eventtype;
+class be_eventtype_fwd;
 class be_component;
 class be_component_fwd;
 class be_home;
@@ -104,6 +106,12 @@ public:
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   // visit valuetype_fwd
+
+  virtual int visit_eventtype (be_eventtype *node);
+  // visit eventtype
+
+  virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
+  // visit eventtype_fwd
 
   virtual int visit_component (be_component *node);
   // visit component

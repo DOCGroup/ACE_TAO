@@ -40,7 +40,7 @@ be_visitor_operation_ih::visit_operation (be_operation *node)
   this->ctx_->node (node); // save the node
 
   // every operation is declared virtual in the client code
-  *os << "virtual ";
+  *os << be_nl << be_nl << "virtual ";
 
   // STEP I: generate the return type
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
@@ -85,6 +85,8 @@ be_visitor_operation_ih::visit_operation (be_operation *node)
                          "codegen for argument list failed\n"),
                         -1);
     }
+
+  *os << be_uidt;
 
   return 0;
 }

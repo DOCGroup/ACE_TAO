@@ -67,6 +67,9 @@ be_structure::gen_var_defn (char *)
   // Depending upon the data type, there are some differences which
   // we account for here.
 
+  *ch << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // Start with whatever was our current indent level.
   *ch << "class " << be_global->stub_export_macro ()
       << " " << namebuf << be_nl;
@@ -99,35 +102,35 @@ be_structure::gen_var_defn (char *)
       << " *);" << be_nl;
 
   // Assignment from _var.
-  *ch << namebuf << " &operator= (const " << namebuf << " &);" << be_nl;
+  *ch << namebuf << " &operator= (const " << namebuf << " &);";
 
   // Fixed-size types only.
   if (this->size_type () == AST_Type::FIXED)
     {
-      *ch << "// Fixed-size types only." << be_nl;
+      *ch << be_nl << be_nl << "// Fixed-size types only." << be_nl;
       *ch << namebuf << " &operator= (const " << this->local_name ()
           << " &);" << be_nl;
     }
 
   // Arrow operator.
-  *ch << this->local_name () << " *operator-> (void);" << be_nl;
+  *ch << be_nl << this->local_name () << " *operator-> (void);" << be_nl;
   *ch << "const " << this->local_name ()
-      << " *operator-> (void) const;" << be_nl;
-  *ch << be_nl;
+      << " *operator-> (void) const;" << be_nl << be_nl;
 
   // Other extra types (cast operators, [] operator, and others).
   *ch << "operator const " << this->local_name () << " &() const;" << be_nl;
   *ch << "operator " << this->local_name () << " &();" << be_nl;
-  *ch << "operator " << this->local_name () << " &() const;" << be_nl;
+  *ch << "operator " << this->local_name () << " &() const;";
 
   if (this->size_type () == AST_Type::VARIABLE)
     {
-      *ch << "// Variable-size types only." << be_nl;
+      *ch << be_nl << be_nl
+          << "// Variable-size types only." << be_nl;
       *ch << "operator " << this->local_name ()
-          << " *&();" << be_nl;
+          << " *&();";
     }
 
-  *ch << be_nl;
+  *ch << be_nl << be_nl;
   *ch << "// in, inout, out, _retn " << be_nl;
 
   // The return types of in, out, inout, and _retn are based on the
@@ -154,7 +157,7 @@ be_structure::gen_var_defn (char *)
   // Generate the private section.
   *ch << "private:" << be_idt_nl;
   *ch << this->local_name () << " *ptr_;" << be_uidt_nl;
-  *ch << "};" << be_nl << be_nl;
+  *ch << "};";
 
   return 0;
 }
@@ -187,6 +190,9 @@ be_structure::gen_var_impl (char *,
 
   ci = tao_cg->client_inline ();
 
+  *ci << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *ci << "// *************************************************************"
       << be_nl;
   *ci << "// Inline operations for class " << fname << be_nl;
@@ -196,7 +202,7 @@ be_structure::gen_var_impl (char *,
   // Default constructor.
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname
-      << " (void) // default constructor" << be_nl;
+      << " (void)" << be_nl;
   *ci << "  " << ": ptr_ (0)" << be_nl;
   *ci << "{}" << be_nl << be_nl;
 
@@ -210,19 +216,23 @@ be_structure::gen_var_impl (char *,
   // Copy constructor.
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (const ::" << fname
-      << " &p) // copy constructor" << be_nl;
+      << " &p)" << be_nl;
   *ci << "{" << be_idt_nl;
-  *ci << "if (p.ptr_)" << be_nl;
-  *ci << "  ACE_NEW (this->ptr_, " << "::" << this->name ()
-      << " (*p.ptr_));" << be_nl;
-  *ci << "else" << be_nl;
-  *ci << "  this->ptr_ = 0;" << be_uidt_nl;
+  *ci << "if (p.ptr_)" << be_idt_nl
+      << "{" << be_idt_nl;
+  *ci << "ACE_NEW (this->ptr_, " << "::" << this->name ()
+      << " (*p.ptr_));" << be_uidt_nl
+      << "}" << be_uidt_nl;
+  *ci << "else" << be_idt_nl
+      << "{" << be_idt_nl;
+  *ci << "this->ptr_ = 0;" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
   // Fixed-size types only.
   if (this->size_type () == AST_Type::FIXED)
     {
-      *ci << "// fixed-size types only" << be_nl;
+      *ci << "// Fixed-size types only." << be_nl;
       *ci << "ACE_INLINE" << be_nl;
       *ci << fname << "::" << lname << " (const "
           << "::" << this->name () << " &p)" << be_nl;
@@ -234,13 +244,14 @@ be_structure::gen_var_impl (char *,
 
   // Destructor.
   *ci << "ACE_INLINE" << be_nl;
-  *ci << fname << "::~" << lname << " (void) // destructor" << be_nl;
+  *ci << fname << "::~" << lname << " (void)" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "delete this->ptr_;" << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
   // Assignment operator from a pointer.
-  *ci << "ACE_INLINE " << fname << " &" << be_nl;
+  *ci << "ACE_INLINE" << be_nl
+  << fname << " &" << be_nl;
   *ci << fname << "::operator= (" << this->local_name ()
       << " *_tao_struct_var)" << be_nl;
   *ci << "{" << be_idt_nl;
@@ -250,7 +261,8 @@ be_structure::gen_var_impl (char *,
   *ci << "}" << be_nl << be_nl;
 
   // Assignment operator from _var.
-  *ci << "ACE_INLINE ::" << fname << " &" << be_nl
+  *ci << "ACE_INLINE" << be_nl
+      << "::" << fname << " &" << be_nl
       << fname << "::operator= (const ::" << fname
       << " &_tao_struct_var)" << be_nl
       << "{" << be_idt_nl
@@ -340,7 +352,7 @@ be_structure::gen_var_impl (char *,
   // Variable-size types only.
   if (this->size_type () == AST_Type::VARIABLE)
     {
-      *ci << "// variable-size types only" << be_nl;
+      *ci << "// Variable-size types only." << be_nl;
       *ci << "ACE_INLINE" << be_nl;
       *ci << fname << "::operator " << "::" << this->name ()
           << " *&() // cast " << be_nl;
@@ -365,7 +377,7 @@ be_structure::gen_var_impl (char *,
   // The out is handled differently based on our size type.
   if (this->size_type () == AST_Type::VARIABLE)
     {
-      *ci << "// mapping for variable size " << be_nl;
+      *ci << "// Mapping for variable size." << be_nl;
       *ci << "ACE_INLINE " << "::" << this->name () << " *&" << be_nl;
       *ci << fname << "::out (void)" << be_nl;
       *ci << "{" << be_idt_nl;
@@ -404,7 +416,7 @@ be_structure::gen_var_impl (char *,
   *ci << fname << "::ptr (void) const" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return this->ptr_;" << be_uidt_nl;
-  *ci << "}" << be_nl << be_nl;
+  *ci << "}";
 
   return 0;
 }
@@ -428,6 +440,9 @@ be_structure::gen_out_defn (char *)
   ch = tao_cg->client_header ();
 
   // Generate the out definition (always in the client header).
+
+  *ch << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *ch << "class " << be_global->stub_export_macro ()
       << " " << namebuf << be_nl;
@@ -470,8 +485,8 @@ be_structure::gen_out_defn (char *)
   *ch << "// Assignment from T_var not allowed." << be_nl;
   *ch << "void operator= (const " << this->local_name ()
       << "_var &);" << be_uidt_nl;
+  *ch << "};";
 
-  *ch << "};" << be_nl << be_nl;
   return 0;
 }
 
@@ -504,6 +519,9 @@ be_structure::gen_out_impl (char *,
 
   // Generate the var implementation in the inline file.
 
+  *ci << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *ci << "// *************************************************************"
       << be_nl;
   *ci << "// Inline operations for class " << fname << be_nl;
@@ -523,7 +541,7 @@ be_structure::gen_out_impl (char *,
   // Constructor from _var &.
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (" << this->local_name ()
-      << "_var &p) // constructor from _var" << be_nl;
+      << "_var &p)" << be_nl;
   *ci << "  : ptr_ (p.out ())" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "delete this->ptr_;" << be_nl;
@@ -533,12 +551,13 @@ be_structure::gen_out_impl (char *,
   // Copy constructor.
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (const ::" << fname
-      << " &p) // copy constructor" << be_nl;
+      << " &p)" << be_nl;
   *ci << "  : ptr_ (ACE_const_cast (" << lname << "&, p).ptr_)" << be_nl;
   *ci << "{}" << be_nl << be_nl;
 
   // assignment operator from _out &.
-  *ci << "ACE_INLINE " << fname << " &" << be_nl;
+  *ci << "ACE_INLINE" << be_nl
+      << fname << " &" << be_nl;
   *ci << fname << "::operator= (const ::" << fname <<
     " &p)" << be_nl;
   *ci << "{" << be_idt_nl;
@@ -549,7 +568,8 @@ be_structure::gen_out_impl (char *,
   // Assignment from _var is not allowed by a private declaration.
 
   // Assignment operator from pointer.
-  *ci << "ACE_INLINE " << fname << " &" << be_nl;
+  *ci << "ACE_INLINE" << be_nl
+      << fname << " &" << be_nl;
   *ci << fname << "::operator= (" << this->local_name () << " *_tao_struct_out)" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "this->ptr_ = _tao_struct_out;" << be_nl;
@@ -576,7 +596,7 @@ be_structure::gen_out_impl (char *,
   *ci << fname << "::operator-> (void)" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return this->ptr_;" << be_uidt_nl;
-  *ci << "}" << be_nl << be_nl;
+  *ci << "}";
 
   return 0;
 }
@@ -594,6 +614,12 @@ int
 be_structure::accept (be_visitor *visitor)
 {
   return visitor->visit_structure (this);
+}
+
+AST_Field *
+be_structure::be_add_field (AST_Field *f)
+{
+  return this->fe_add_field (f);
 }
 
 // Narrowing.

@@ -52,6 +52,8 @@ public:
   virtual int visit_module (be_module *node);
 
   virtual int visit_interface (be_interface *node);
+
+  virtual int visit_component (be_component *node);
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_STH_H_ */

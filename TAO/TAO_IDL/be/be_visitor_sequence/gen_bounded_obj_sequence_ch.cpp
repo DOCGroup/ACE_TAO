@@ -39,7 +39,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
     }
 
   // Generate the class name.
-  be_type  *pt;
+  be_type *pt;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
@@ -58,18 +58,20 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
   be_visitor_sequence_base visitor (&ctx);
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   // !! Branching in either compile time template instantiation
   // or manual template instantiation.
-  os->gen_ifdef_AHETI();
-
+  os->gen_ifdef_AHETI ();
   os->gen_ifdef_macro (class_name);
 
-  *os << "class TAO_EXPORT_MACRO " << class_name
-      << " : public TAO_Bounded_Base_Sequence" << be_nl
+  *os << be_nl << be_nl
+      << "class " << be_global->stub_export_macro () 
+      << " " << class_name << be_idt_nl
+      << ": public TAO_Bounded_Base_Sequence" << be_uidt_nl
       << "{" << be_nl
-      << "public:" << be_idt_nl
-      << "// = Initialization and termination methods." << be_nl
-      << be_nl;
+      << "public:" << be_idt_nl;
 
   // Default constructor.
   *os << class_name << " (void);" << be_nl;
@@ -172,12 +174,13 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
   *os << "virtual void _shrink_buffer (" << be_idt << be_idt_nl
       << "CORBA::ULong nl," << be_nl
       << "CORBA::ULong ol" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");" << be_uidt;
 
   if (! (is_pseudo_object || nt == AST_Decl::NT_valuetype))
     {
       // Pseudo objects do not require these methods.
-      *os << "virtual void _downcast (" << be_idt << be_idt_nl
+      *os << be_nl << be_nl
+          << "virtual void _downcast (" << be_idt << be_idt_nl
           << "void* target," << be_nl
           << "CORBA_Object *src" << be_nl
           << "ACE_ENV_ARG_DECL_WITH_DEFAULTS"  << be_uidt_nl
@@ -185,7 +188,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
       *os << "virtual CORBA_Object* _upcast (void *src) const;";
     }
 
-  *os << be_uidt_nl << "};" << be_nl;
+  *os << be_uidt_nl << "};";
 
   os->gen_endif ();
 

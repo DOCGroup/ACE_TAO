@@ -49,8 +49,9 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Generate the Any <<= and >>= operator declarations.
-  os->indent ();
+  *os << be_nl << be_nl 
+      << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "void operator<<= (" << be_idt << be_idt_nl
       << "CORBA::Any &_tao_any," << be_nl
@@ -232,7 +233,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "}" << be_nl
       << "ACE_ENDTRY;" << be_nl << be_nl
       << "return 0;" << be_uidt_nl
-      << "}\n\n";
+      << "}";
 
   // All we have to do is to visit the scope and generate code.
   if (this->visit_scope (node) == -1)

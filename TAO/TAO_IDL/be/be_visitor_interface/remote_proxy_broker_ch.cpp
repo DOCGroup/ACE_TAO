@@ -82,8 +82,14 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (
 
   *os << "//" << be_nl
       << "//              End Remote Proxy Broker Declaration " << be_nl
-      << "///////////////////////////////////////////////////////////////////////"
-      << be_nl << be_nl;
+      << "///////////////////////////////////////////////////////////////////////";
 
   return 0;
+}
+
+int be_visitor_interface_remote_proxy_broker_ch::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
 }

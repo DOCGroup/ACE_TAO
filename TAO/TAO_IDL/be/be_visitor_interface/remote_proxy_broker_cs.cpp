@@ -83,18 +83,24 @@ be_visitor_interface_remote_proxy_broker_cs::visit_interface (
 
   *os << node->full_base_proxy_impl_name () << "&" << be_nl
       <<node->full_remote_proxy_broker_name () << "::"
-      << "select_proxy (" << be_idt_nl
+      << "select_proxy (" << be_idt << be_idt_nl
       << "::" << node->full_name () << " *" << be_nl
       << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl << ")"
       << be_uidt_nl << "{" << be_idt_nl // idt = 1
       << "return this->remote_proxy_impl_;"
-      << be_uidt_nl << "}" << be_nl << be_nl;
+      << be_uidt_nl << "}";
 
-   *os << be_nl
+  *os << be_nl << be_nl
       << "//" << be_nl
       << "//           End Remote & Base Proxy Broker Implementation" << be_nl
-      << "///////////////////////////////////////////////////////////////////////"
-      << be_nl << be_nl;
+      << "///////////////////////////////////////////////////////////////////////";
 
   return 0;
+}
+
+int be_visitor_interface_remote_proxy_broker_cs::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
 }

@@ -11,7 +11,7 @@
 //    valuetype_fwd_ch.cpp
 //
 // = DESCRIPTION
-//    Visitor generating code for Interface_Fwd node in the client header.
+//    Visitor generating code for ValueTypeFwd node in the client header.
 //
 // = AUTHOR
 //    Boris Kolpackov <bosk@ipmce.ru>
@@ -24,7 +24,9 @@ ACE_RCSID (be_visitor_valuetype_fwd,
            valuetype_fwd_ch, 
            "$Id$")
 
-be_visitor_valuetype_fwd_ch::be_visitor_valuetype_fwd_ch (be_visitor_context *ctx)
+be_visitor_valuetype_fwd_ch::be_visitor_valuetype_fwd_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
@@ -53,18 +55,20 @@ be_visitor_valuetype_fwd_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "// Valuetype class" << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // == STEP 1: Generate the class name and class names we inherit ==
 
   // Forward declaration.
-  *os << "class " << node->local_name () << ";" << be_nl;
+  *os << "class " << node->local_name () << ";";
 
   // Generate _ptr declaration
   os->gen_ifdef_macro (node->flat_name (), "_ptr");
 
-  *os << "typedef " << node->local_name ()
-      << " *" << node->local_name () << "_ptr;" << be_nl;
+  *os << be_nl << be_nl 
+      << "typedef " << node->local_name ()
+      << " *" << node->local_name () << "_ptr;";
 
   os->gen_endif ();
 

@@ -27,6 +27,7 @@
 class be_interface;
 class be_interface_fwd;
 class UTL_String;
+class AST_PredefinedType;
 
 // Defines a class containing all back end global data.
 
@@ -390,6 +391,10 @@ public:
   // CORBA::is_nil, needed when the interface inherits versions from
   // both CORBA::Object and CORBA::AbstractBase.
 
+  AST_PredefinedType *void_type (void) const;
+  void void_type (AST_PredefinedType *val);
+  // Accessors for the member.
+
 private:
   size_t changing_standard_include_files_;
   // To switch between changing or non-changing standard include
@@ -506,6 +511,9 @@ private:
 
   LOOKUP_STRATEGY lookup_strategy_;
   // The enumerated value indicating the lookup strategy.
+
+  AST_PredefinedType *void_type_;
+  // Used for void operation return types.
 };
 
 #endif /* _BE_GLOBAL_H */

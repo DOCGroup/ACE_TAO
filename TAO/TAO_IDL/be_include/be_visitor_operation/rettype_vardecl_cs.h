@@ -79,6 +79,20 @@ public:
   int visit_union (be_union *node);
   // visit a union node
 
+  int visit_component (be_component *node);
+  // visit a component node
+
+  int visit_component_fwd (be_component_fwd *node);
+  // visit a forward declared component node
+
+  int visit_eventtype (be_eventtype *node);
+  // visit an eventtype node
+
+  int visit_eventtype_fwd (be_eventtype_fwd *node);
+  // visit a forward declared eventtype node
+
+  int visit_home (be_home *node);
+  // visit a component home node
 };
 
 #endif /* _BE_VISITOR_OPERATION_RETTYPE_VARDECL_CS_H_ */

@@ -110,10 +110,13 @@ public:
     EIDL_LOOKUP_ERROR,          // Identifier not found
     EIDL_INHERIT_FWD_ERROR,     // Cannot inherit from fwd decl interface
     EIDL_SUPPORTS_FWD_ERROR,    // Cannot support a fwd decl interface
+    EIDL_PRIMARY_KEY_ERROR,     // Does not inherit from primaryKeyBase
     EIDL_CONSTANT_EXPECTED,     // We got something else..
     EIDL_INTERFACE_EXPECTED,    // We got something else..
     EIDL_VALUETYPE_EXPECTED,    // We got something else..
+    EIDL_CONCRETE_VT_EXPECTED,  // We got something else..
     EIDL_ABSTRACT_EXPECTED,     // We got something else..
+    EIDL_EVENTTYPE_EXPECTED,    // We got something else..
     EIDL_NAME_CASE_ERROR,       // Identifier spellings differ only in case
     EIDL_NAME_CASE_WARNING,     // Same as above, but only a warning
     EIDL_KEYWORD_ERROR,         // Case-insensitive clash with IDL keyword
@@ -247,16 +250,31 @@ public:
   // or inheritance list.
   void interface_expected (AST_Decl *d);
 
-  // Report a situation where an value type was expected but we got
+  // Report a situation where a value type was expected but we got
   // something else instead. This most likely is a case in a primary
   // key, emits, publishes or consumes declaration.
   void valuetype_expected (AST_Decl *d);
+
+  // Report a situation where a concrete value type was expected but we got
+  // something else instead. This most likely is a case where a valuetype
+  // inherits from something other than a concrete valuetype.
+  void concrete_valuetype_expected (AST_Decl *d);
 
   // Report a situation where an abstract type was expected but we got
   // something else instead. This is the case in an inheritance
   // list where a concrete type appears after an abstract type, or
   // where a valuetype inherits more than one concrete valuetype.
   void abstract_expected (AST_Decl *d);
+
+  // Report a situation where an event type was expected but we got
+  // something else instead. This is the case in an 'emits', 'publishes',
+  // or 'consumes' declaration in a component and it's not an event type.
+  void eventtype_expected (AST_Decl *d);
+
+  // Report a situation where a valuetype used as a primary key for a
+  // component home does not inherit directly or indirectly from
+  // Components::primaryKeyBase.
+  void primary_key_error (AST_Decl *d);
 
   // Report a situation where an enumerator was expected but we got
   // something else instead. This occurs when a union with an enum

@@ -77,7 +77,8 @@ be_home::~be_home (void)
 void
 be_home::destroy (void)
 {
-  this->be_interface::destroy ();
+  // Can't call be_interface->destroy() because all the 
+  // home's decls are also added to the explicit interface.
   this->AST_Home::destroy ();
 }
 

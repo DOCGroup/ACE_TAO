@@ -49,10 +49,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Any <<= and >>= operators.
-  os->indent ();
-
-  *os << be_nl 
+  *os << be_nl << be_nl 
       << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -262,7 +259,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           << "}" << be_nl
           << "ACE_ENDTRY;" << be_nl << be_nl
           << "return 0;" << be_uidt_nl
-          << "}\n\n";
+          << "}";
     }
 
   node->cli_stub_any_op_gen (1);

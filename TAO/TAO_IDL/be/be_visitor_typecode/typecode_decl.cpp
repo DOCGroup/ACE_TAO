@@ -40,7 +40,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   if (node->is_nested ())
@@ -60,7 +60,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
 
       *os << "::CORBA::TypeCode_ptr "
           << node->tc_name ()->last_component ()
-          << ";" << be_nl << be_nl;
+          << ";";
     }
   else
     {
@@ -68,7 +68,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
       *os << "extern " << be_global->stub_export_macro ()
           << " ::CORBA::TypeCode_ptr "
           << " " << node->tc_name ()->last_component ()
-          << ";" << be_nl << be_nl;
+          << ";";
     }
 
   return 0;
@@ -99,6 +99,12 @@ be_visitor_typecode_decl::visit_interface (be_interface *node)
 }
 
 int
+be_visitor_typecode_decl::visit_component (be_component *node)
+{
+  return this->visit_type (node);
+}
+
+int
 be_visitor_typecode_decl::visit_sequence (be_sequence *node)
 {
   return this->visit_type (node);
@@ -124,6 +130,12 @@ be_visitor_typecode_decl::visit_union (be_union *node)
 
 int
 be_visitor_typecode_decl::visit_valuetype (be_valuetype *node)
+{
+  return this->visit_type (node);
+}
+
+int
+be_visitor_typecode_decl::visit_eventtype (be_eventtype *node)
 {
   return this->visit_type (node);
 }

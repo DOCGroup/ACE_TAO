@@ -101,21 +101,21 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
   be_visitor_sequence_base visitor (&ctx);
 
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // Branching in either compile time template instantiation
   // or manual template instatiation.
   os->gen_ifdef_AHETI();
   os->gen_ifdef_macro (class_name);
-  os->indent ();
 
   // First generate the static methods since they are used by others. Since
   // they are inlined, their definition needs to come before their use else
   // some compilers give lots of warnings.
 
   // Allocate_buffer.
-  *os << "// The Base_Sequence functions, please see tao/sequence.h"
+  *os << be_nl << be_nl 
+      << "// The Base_Sequence functions, please see tao/sequence.h"
       << be_nl
       << "void " << be_nl
       << full_class_name << "::_allocate_buffer (CORBA::ULong length)"
@@ -134,7 +134,9 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
       << full_class_name << "::_deallocate_buffer (void)" << be_nl
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
-      << "return;" << be_uidt_nl;
+      << "{" << be_idt_nl
+      << "return;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
 
   bt->accept (&visitor);
 

@@ -142,8 +142,11 @@ public:
   // Method to add exceptions
   UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
 
-  AST_Argument *be_add_argument (AST_Argument *arg);
   // Add an argument to the scope.
+  AST_Argument *be_add_argument (AST_Argument *arg);
+
+  // Insert an exception at the head of the list.
+  int be_insert_exception (AST_Exception *ex);
 
   // Cleanup function.
   virtual void destroy (void);

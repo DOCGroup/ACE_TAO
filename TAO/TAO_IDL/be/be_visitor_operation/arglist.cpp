@@ -44,8 +44,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << " (" << be_idt
-      << be_idt_nl;
+  *os << " (" << be_idt << be_idt_nl;
 
   int arg_emitted = 0;
 
@@ -87,7 +86,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     }
 
   *os << be_uidt_nl
-      << ")"; // idt = 0
+      << ")";
 
   // Now generate the throw specs.
   if (this->gen_throw_spec (node) == -1)
@@ -106,26 +105,26 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
       if (node->is_local ())
         {
-          *os << " = 0;" << be_nl << be_nl;
+          *os << " = 0;";
         }
       else
         {
-          *os << ";" << be_nl << be_nl;
+          *os << ";";
         }
 
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
-      *os << ";" << be_nl << be_nl;
+      *os << ";";
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
       // Each method is pure virtual in the server header.
-      *os << " = 0;" << be_nl << be_nl;
+      *os << " = 0;";
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
     default:
-      *os << be_nl;
+      break;
     }
 
   return 0;

@@ -43,6 +43,8 @@ FILES = fe/fe_declarator \
         ast/ast_enum_val \
         ast/ast_exception \
         ast/ast_expression \
+	ast/ast_event \
+	ast/ast_event_fwd \
         ast/ast_factory \
         ast/ast_field \
         ast/ast_home \

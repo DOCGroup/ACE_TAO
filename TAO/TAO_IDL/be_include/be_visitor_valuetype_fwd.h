@@ -25,7 +25,7 @@
 
 #include "be_visitor_decl.h"
 #include "be_visitor_valuetype_fwd/valuetype_fwd_ch.h"
-#include "be_visitor_valuetype_fwd/valuetype_fwd_ci.h"
+#include "be_visitor_valuetype_fwd/any_op_ch.h"
 #include "be_visitor_valuetype_fwd/cdr_op_ch.h"
 #include "be_visitor_valuetype_fwd/cdr_op_ci.h"
 

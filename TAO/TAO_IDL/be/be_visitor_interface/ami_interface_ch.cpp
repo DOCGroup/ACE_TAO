@@ -54,12 +54,13 @@ be_visitor_ami_interface_ch::visit_interface (be_interface *node)
   os->gen_ifdef_macro (node->replacement ()->flat_name (), "_ptr");
 
   // Forward declaration.
-  *os << "class " << node->replacement ()->local_name () << ";" << be_nl;
+  *os << be_nl << be_nl 
+      << "class " << node->replacement ()->local_name () << ";" << be_nl;
 
   // Generate the _ptr declaration.
   *os << "typedef " << node->replacement ()->local_name ()
       << " *" << node->replacement ()->local_name ()
-      << "_ptr;" << be_nl << be_nl;
+      << "_ptr;";
 
   os->gen_endif ();
   return 0;

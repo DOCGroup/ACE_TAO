@@ -36,6 +36,10 @@ public:
   virtual int visit_interface (be_interface *node);
   // visit an interface
 
+  virtual int visit_component (be_component *node);
+  // This will just call the above method - no need to create
+  // another set of visitors for this stuff.
+
   static int gen_abstract_ops_helper (be_interface *node,
                                       be_interface *base,
                                       TAO_OutStream *os);

@@ -55,8 +55,8 @@ be_visitor_interface_fwd_cdr_op_ci::visit_interface_fwd (
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // generate the CDR << and >> operator declarations
-  os->indent ();
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->stub_export_macro () << " CORBA::Boolean operator<< ("
       << be_idt << be_idt_nl
@@ -68,7 +68,7 @@ be_visitor_interface_fwd_cdr_op_ci::visit_interface_fwd (
       << be_idt << be_idt_nl
       << "TAO_InputCDR &," << be_nl
       << node->name () << "_ptr &" << be_uidt_nl
-      << ");" << be_uidt << "\n\n";
+      << ");" << be_uidt;
 
   node->cli_inline_cdr_decl_gen (1);
 

@@ -50,13 +50,10 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
                         -1);
     }
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
   os->gen_ifdef_AHETI();
 
   // This is the instantiation branch.
-  *os << node->instance_name ();
+  *os << be_nl << node->instance_name ();
 
   os->gen_else_AHETI();
 
@@ -209,7 +206,7 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
         }
     }
 
-  os->gen_endif_AHETI();
+  os->gen_endif_AHETI ();
 
   return 0;
 }
@@ -249,7 +246,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                          "Bad element type\n"), -1);
     }
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// *************************************************************"
@@ -260,13 +257,14 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
   // default constructor
   *os << node->name () << "::" << node->local_name () << " (void)" << be_nl
-      << "{}" << be_nl;
+      << "{}";
 
   // for unbounded sequences, we have a different set of constructors
   if (node->unbounded ())
     {
-      *os << node->name () << "::" << node->local_name ()
-          << " (CORBA::ULong max) // uses max size" << be_nl
+      *os << be_nl << be_nl
+          << node->name () << "::" << node->local_name ()
+          << " (CORBA::ULong max)" << be_nl
           << "  : ";
 
       // pass it to the base constructor
@@ -279,19 +277,23 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
         }
 
 
-      *os << " (max)" << be_nl
-          << "{}" << be_nl;
+      *os << be_nl << " (max)" << be_nl
+          << "{}";
     }
 
   // constructor with the buffer
-  *os << node->name () << "::" << node->local_name () << " (";
+  *os << be_nl << be_nl 
+      << node->name () << "::" << node->local_name () << " (" 
+      << be_idt << be_idt_nl;
 
   if (node->unbounded ())
     {
-      *os << "CORBA::ULong max, ";  // unbounded seq takes this extra parameter
+      // Unbounded seq takes this extra parameter.
+      *os << "CORBA::ULong max," << be_nl;
     }
 
-  *os << "CORBA::ULong length, ";
+  *os << "CORBA::ULong length," << be_nl;
+
   // generate the base type for the buffer
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CS);
@@ -306,7 +308,9 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  *os << " *buffer, CORBA::Boolean release)" << be_nl
+  *os << " *buffer," << be_nl
+      << "CORBA::Boolean release" << be_uidt_nl
+      << ")" << be_uidt_nl
       << "  : ";
 
   // Pass it to the base constructor.
@@ -319,7 +323,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  *os << " (";
+  *os << be_nl << " (";
 
   if (node->unbounded ())
     {
@@ -327,12 +331,12 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
     }
 
   *os << "length, buffer, release)" << be_nl
-      << "{}" << be_nl;
+      << "{}";
 
   // Copy constructor.
-  *os << node->name () << "::" << node->local_name ()
+  *os << be_nl << be_nl << node->name () << "::" << node->local_name ()
       << " (const " << node->local_name ()
-      << " &seq) // copy ctor" << be_nl
+      << " &seq)" << be_nl
       << "  : ";
 
   // Pass it to the base constructor.
@@ -345,21 +349,27 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  *os << " (seq)" << be_nl
-      << "{}" << be_nl;
+  *os << be_nl << " (seq)" << be_nl
+      << "{}";
 
   // Destructor.
-  *os << node->name () << "::~" << node->local_name ()
+  *os << be_nl << be_nl
+      << node->name () << "::~" << node->local_name ()
       << " (void) // dtor" << be_nl
-      << "{}" << be_nl
-      << "void "
-      << node->name () << "::_tao_any_destructor (void *_tao_void_pointer)" 
-      << be_nl
-      << "{" << be_idt_nl
-      << node->local_name () << " *tmp = ACE_static_cast ("
-      << node->local_name () << "*, _tao_void_pointer);" << be_nl
-      << "delete tmp;" << be_uidt_nl
-      << "}\n\n";
+      << "{}" << be_nl << be_nl;
+
+
+  if (be_global->any_support ())
+    {
+      *os << "void "
+          << node->name () << "::_tao_any_destructor (void *_tao_void_pointer)" 
+          << be_nl
+          << "{" << be_idt_nl
+          << node->local_name () << " *tmp = ACE_static_cast ("
+          << node->local_name () << "*, _tao_void_pointer);" << be_nl
+          << "delete tmp;" << be_uidt_nl
+          << "}";
+    }
 
   os->gen_endif ();
   node->cli_stub_gen (1);

@@ -481,7 +481,9 @@ int
 FE_InterfaceHeader::check_inherit (AST_Interface *i,
                                    idl_bool for_valuetype)
 {
-  idl_bool is_valuetype = (i->node_type () == AST_Decl::NT_valuetype);
+  // We use the narrow instead of node_type() here so we can get a
+  // match with both valuetypes and eventtypes.
+  idl_bool is_valuetype = (AST_ValueType::narrow_from_decl (i) != 0);
 
   if (
       // Non-local interfaces may not inherit from local ones.
@@ -535,7 +537,8 @@ FE_InterfaceHeader::n_inherits_flat (void) const
 FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
                             UTL_NameList *inherits,
                             UTL_NameList *supports,
-                            idl_bool truncatable)
+                            idl_bool truncatable,
+                            idl_bool is_eventtype)
   : FE_InterfaceHeader (n,
                         inherits,
                         I_FALSE,
@@ -552,17 +555,18 @@ FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
   if (this->pd_n_inherits > 0)
     {
       AST_Interface *iface = this->pd_inherits[0];
+      AST_ValueType *vt = AST_ValueType::narrow_from_decl (iface);
 
-      if (!iface->is_abstract ())
+      if (vt != 0
+          && vt->is_abstract () == I_FALSE)
         {
-          AST_ValueType *vt = AST_ValueType::narrow_from_decl (iface);
-
-          if (vt == 0)
-            {
-              idl_global->err ()->valuetype_expected (iface);
-            }
-
           this->pd_inherits_concrete = vt;
+        }
+
+      if (! is_eventtype
+          && this->pd_inherits[0]->node_type () == AST_Decl::NT_eventtype)
+        {
+          idl_global->err ()->valuetype_expected (this->pd_inherits[0]);
         }
 
       for (long i = 1; i < this->pd_n_inherits; ++i)
@@ -572,6 +576,12 @@ FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
           if (!iface->is_abstract ())
             {
               idl_global->err ()->abstract_expected (iface);
+            }
+
+          if (! is_eventtype
+              && iface->node_type () == AST_Decl::NT_eventtype)
+            {
+              idl_global->err ()->valuetype_expected (iface);
             }
         }
     }
@@ -758,6 +768,24 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
 
 //************************************************************************
 
+FE_EventHeader::FE_EventHeader (UTL_ScopedName *n,
+                                UTL_NameList *inherits,
+                                UTL_NameList *supports,
+                                idl_bool truncatable)
+  : FE_OBVHeader (n,
+                  inherits,
+                  supports,
+                  truncatable,
+                  I_TRUE)
+{
+}
+
+FE_EventHeader::~FE_EventHeader (void)
+{
+}
+
+//************************************************************************
+
 FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n, 
                                         UTL_ScopedName *base_component, 
                                         UTL_NameList *supports,
@@ -800,28 +828,8 @@ FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n,
         }
     }
 
-  if (compile_now)
-    {
-      this->compile_inheritance (supports,
-                                 I_FALSE);
-    }
-}
-
-void
-FE_ComponentHeader::compile_inheritance (UTL_NameList *supports,
-                                         idl_bool for_valuetype)
-{
-  if (this->pd_base_component != 0)
-    {
-      UTL_NameList *base_component_name = 0;
-      ACE_NEW (base_component_name,
-               UTL_NameList (this->pd_base_component->name (),
-                             supports));
-      supports = base_component_name;
-
-      this->FE_InterfaceHeader::compile_inheritance (supports,
-                                                     for_valuetype);
-    }
+  this->compile_inheritance (supports,
+                             I_FALSE);
 }
 
 FE_ComponentHeader::~FE_ComponentHeader (void)

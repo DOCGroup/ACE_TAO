@@ -56,6 +56,8 @@ be_visitor_field_ch::visit_field (be_field *node)
 
   this->ctx_->node (node);
 
+  *os << be_nl;
+
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -66,7 +68,7 @@ be_visitor_field_ch::visit_field (be_field *node)
     }
 
   // Now output the field name.
-  *os << " " << node->local_name () << ";" << be_nl;
+  *os << " " << node->local_name () << ";";
 
   return 0;
 }
@@ -626,3 +628,37 @@ be_visitor_field_ch::visit_union (be_union *node)
 
   return 0;
 }
+
+int
+be_visitor_field_ch::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_field_ch::visit_component_fwd (
+    be_component_fwd *node
+  )
+{
+  return this->visit_interface_fwd (node);
+}
+
+int
+be_visitor_field_ch::visit_eventtype (
+    be_eventtype *node
+  )
+{
+  return this->visit_valuetype (node);
+}
+
+int
+be_visitor_field_ch::visit_eventtype_fwd (
+    be_eventtype_fwd *node
+  )
+{
+  return this->visit_valuetype_fwd (node);
+}
+
+

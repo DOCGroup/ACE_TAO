@@ -106,12 +106,10 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
     }
 
-  os->indent ();
-
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  if (!node->is_local ())
+  if (be_global->any_support ())
     {
       *os << "void " << fname << "_forany"
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
@@ -171,8 +169,9 @@ int be_visitor_array_cs::visit_array (be_array *node)
   // free method.
   os->indent ();
   *os << "void" << be_nl
-      << fname << "_free (" << fname
-      << "_slice *_tao_slice)" << be_nl;
+      << fname << "_free (" << be_idt << be_idt_nl
+      << fname << "_slice *_tao_slice" << be_uidt_nl
+      << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "delete [] _tao_slice;" << be_uidt_nl;
   *os << "}\n\n";
@@ -305,7 +304,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
       *os << be_uidt_nl << "}" << be_uidt;
     }
 
-  *os << be_uidt_nl << "}" << be_nl << be_nl;
+  *os << be_uidt_nl << "}";
 
   AST_Decl::NodeType nt = bt->node_type ();
 
@@ -325,7 +324,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
     }
 
-  // If the array is an anonymous member and if its element type
+  // If the member's element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
   if (this->ctx_->alias () == 0 // Not a typedef.

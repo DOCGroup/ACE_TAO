@@ -37,6 +37,11 @@ be_visitor_structure_fwd_ch::~be_visitor_structure_fwd_ch (void)
 int
 be_visitor_structure_fwd_ch::visit_structure_fwd (be_structure_fwd *node)
 {
+  if (node->cli_hdr_gen () || node->imported ())
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   if (node->cli_hdr_gen () || node->imported ())
@@ -44,10 +49,13 @@ be_visitor_structure_fwd_ch::visit_structure_fwd (be_structure_fwd *node)
       return 0;
     }
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   // Generate a forward declaration of the class.
-  *os << "struct " << node->local_name () << ";" << be_nl;
+  *os << be_nl << be_nl
+      << "struct " << node->local_name () << ";";
 
   node->cli_hdr_gen (I_TRUE);
-
   return 0;
 }

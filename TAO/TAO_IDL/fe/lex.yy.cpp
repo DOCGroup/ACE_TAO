@@ -790,7 +790,7 @@ static char *tao_yy_last_accepting_cpos;
 char tao_yytext[TAO_YYLMAX];
 char *tao_yytext_ptr;
 #define INITIAL 0
-/*  $Id: idl.ll,v 1.68 2002/07/23 02:51:14 parsons Exp $
+/*  $Id: idl.ll,v 1.70 2002/08/26 19:47:28 parsons Exp $
 
 COPYRIGHT
 
@@ -900,37 +900,6 @@ inline char *__tao_yytext()
 #else
 #define ace_tao_yytext tao_yytext
 #endif /* 0 */
-
-static int scan_obv_token (int token)
-{
-    if (idl_global->obv_support ())
-      {
-        return token;
-      }
-
-    TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-    const TAO_IDL_CPP_Keyword_Entry *entry =
-      cpp_key_tbl.lookup (ace_tao_yytext,
-                          ACE_OS::strlen (ace_tao_yytext));
-    if (entry)
-      tao_yylval.strval = ACE_OS::strdup (entry->mapping_);
-    else
-      tao_yylval.strval = ACE_OS::strdup (ace_tao_yytext);
-    return IDENTIFIER;
-}
-
-static int scan_ccm_token (int token)
-{
-  if (idl_global->component_support ())
-    {
-      return token;
-    }
-  else
-    {
-      tao_yylval.strval = ACE_OS::strdup (ace_tao_yytext);
-      return IDENTIFIER;
-    }
-}
 
 /* SO we don't choke on files that use \r\n */
 #define TAO_YY_NEVER_INTERACTIVE 1
@@ -1305,103 +1274,103 @@ return IDL_LOCAL;
 	TAO_YY_BREAK
 case 34:
 TAO_YY_RULE_SETUP
-return scan_obv_token (IDL_ABSTRACT);
+return IDL_ABSTRACT;
 	TAO_YY_BREAK
 case 35:
 TAO_YY_RULE_SETUP
-return scan_obv_token (IDL_CUSTOM);
+return IDL_CUSTOM;
 	TAO_YY_BREAK
 case 36:
 TAO_YY_RULE_SETUP
-return scan_obv_token (IDL_FACTORY);
+return IDL_FACTORY;
 	TAO_YY_BREAK
 case 37:
 TAO_YY_RULE_SETUP
-return scan_obv_token (IDL_PRIVATE);
+return IDL_PRIVATE;
 	TAO_YY_BREAK
 case 38:
 TAO_YY_RULE_SETUP
-return scan_obv_token (IDL_PUBLIC);
+return IDL_PUBLIC;
 	TAO_YY_BREAK
 case 39:
 TAO_YY_RULE_SETUP
-return scan_obv_token (IDL_SUPPORTS);
+return IDL_SUPPORTS;
 	TAO_YY_BREAK
 case 40:
 TAO_YY_RULE_SETUP
-return scan_obv_token (IDL_TRUNCATABLE);
+return IDL_TRUNCATABLE;
 	TAO_YY_BREAK
 case 41:
 TAO_YY_RULE_SETUP
-return scan_obv_token (IDL_VALUETYPE);
+return IDL_VALUETYPE;
 	TAO_YY_BREAK
 case 42:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_COMPONENT);
+return IDL_COMPONENT;
 	TAO_YY_BREAK
 case 43:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_CONSUMES);
+return IDL_CONSUMES;
 	TAO_YY_BREAK
 case 44:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_EMITS);
+return IDL_EMITS;
 	TAO_YY_BREAK
 case 45:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_EVENTTYPE);
+return IDL_EVENTTYPE;
 	TAO_YY_BREAK
 case 46:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_FINDER);
+return IDL_FINDER;
 	TAO_YY_BREAK
 case 47:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_GETRAISES);
+return IDL_GETRAISES;
 	TAO_YY_BREAK
 case 48:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_HOME);
+return IDL_HOME;
 	TAO_YY_BREAK
 case 49:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_IMPORT);
+return IDL_IMPORT;
 	TAO_YY_BREAK
 case 50:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_MULTIPLE);
+return IDL_MULTIPLE;
 	TAO_YY_BREAK
 case 51:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_PRIMARYKEY);
+return IDL_PRIMARYKEY;
 	TAO_YY_BREAK
 case 52:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_PROVIDES);
+return IDL_PROVIDES;
 	TAO_YY_BREAK
 case 53:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_PUBLISHES);
+return IDL_PUBLISHES;
 	TAO_YY_BREAK
 case 54:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_SETRAISES);
+return IDL_SETRAISES;
 	TAO_YY_BREAK
 case 55:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_TYPEID);
+return IDL_TYPEID;
 	TAO_YY_BREAK
 case 56:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_TYPEPREFIX);
+return IDL_TYPEPREFIX;
 	TAO_YY_BREAK
 case 57:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_USES);
+return IDL_USES;
 	TAO_YY_BREAK
 case 58:
 TAO_YY_RULE_SETUP
-return scan_ccm_token (IDL_MANAGES);
+return IDL_MANAGES;
 	TAO_YY_BREAK
 case 59:
 TAO_YY_RULE_SETUP

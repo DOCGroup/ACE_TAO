@@ -77,32 +77,6 @@ BE_GlobalData::BE_GlobalData (void)
 
 BE_GlobalData::~BE_GlobalData (void)
 {
-  delete this->client_hdr_ending_;
-  this->client_hdr_ending_ = 0;
-  delete this->client_stub_ending_;
-  this->client_stub_ending_ = 0;
-  delete this->client_inline_ending_;
-  this->client_inline_ending_ = 0;
-  delete this->server_hdr_ending_;
-  this->server_hdr_ending_ = 0;
-  delete this->implementation_hdr_ending_;
-  this->implementation_hdr_ending_ = 0;
-  delete this->implementation_skel_ending_;
-  this->implementation_skel_ending_ = 0;
-  delete this->impl_class_prefix_;
-  this->impl_class_prefix_ = 0;
-  delete this->impl_class_suffix_;
-  this->impl_class_suffix_ = 0;
-  delete this->server_template_hdr_ending_;
-  this->server_template_hdr_ending_ = 0;
-  delete this->server_skeleton_ending_;
-  this->server_skeleton_ending_ = 0;
-  delete this->server_template_skeleton_ending_;
-  this->server_template_skeleton_ending_ = 0;
-  delete this->server_inline_ending_;
-  this->server_inline_ending_ = 0;
-  delete this->server_template_inline_ending_;
-  this->server_template_inline_ending_ = 0;
 }
 
 // To switch between changing or non-changing standard include files
@@ -851,4 +825,54 @@ BE_GlobalData::lookup_strategy (void) const
 void
 BE_GlobalData::destroy (void)
 {
+  delete this->client_hdr_ending_;
+  this->client_hdr_ending_ = 0;
+
+  delete this->client_stub_ending_;
+  this->client_stub_ending_ = 0;
+
+  delete this->client_inline_ending_;
+  this->client_inline_ending_ = 0;
+
+  delete this->server_hdr_ending_;
+  this->server_hdr_ending_ = 0;
+
+  delete this->implementation_hdr_ending_;
+  this->implementation_hdr_ending_ = 0;
+
+  delete this->implementation_skel_ending_;
+  this->implementation_skel_ending_ = 0;
+
+  delete this->impl_class_prefix_;
+  this->impl_class_prefix_ = 0;
+
+  delete this->impl_class_suffix_;
+  this->impl_class_suffix_ = 0;
+
+  delete this->server_template_hdr_ending_;
+  this->server_template_hdr_ending_ = 0;
+
+  delete this->server_skeleton_ending_;
+  this->server_skeleton_ending_ = 0;
+
+  delete this->server_template_skeleton_ending_;
+  this->server_template_skeleton_ending_ = 0;
+
+  delete this->server_inline_ending_;
+  this->server_inline_ending_ = 0;
+
+  delete this->server_template_inline_ending_;
+  this->server_template_inline_ending_ = 0;
 }
+
+AST_PredefinedType *
+BE_GlobalData:: void_type (void) const
+{
+  return this->void_type_;
+}
+
+void
+BE_GlobalData::void_type (AST_PredefinedType *val)
+{
+  this->void_type_ = val;
+};

@@ -15,6 +15,8 @@ OBJFILES = \
 	$(OBJDIR)\be_decl.obj \
 	$(OBJDIR)\be_enum.obj \
 	$(OBJDIR)\be_enum_val.obj \
+	$(OBJDIR)\be_event.obj \
+	$(OBJDIR)\be_event_fwd.obj \
 	$(OBJDIR)\be_exception.obj \
 	$(OBJDIR)\be_expression.obj \
         $(OBJDIR)\be_factory.obj \
@@ -54,6 +56,7 @@ OBJFILES = \
 	$(OBJDIR)\be_visitor_argument.obj \
 	$(OBJDIR)\be_visitor_array.obj \
 	$(OBJDIR)\be_visitor_attribute.obj \
+	$(OBJDIR)\be_visitor_ccm_pre_proc.obj \
 	$(OBJDIR)\be_visitor_component.obj \
 	$(OBJDIR)\be_visitor_component_fwd.obj \
 	$(OBJDIR)\be_visitor_constant.obj \

@@ -1003,6 +1003,9 @@ be_visitor_valuetype::gen_init_defn (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << "class " << be_global->stub_export_macro ()
       << " " << node->local_name ()
       << "_init : public CORBA_ValueFactoryBase" << be_nl;
@@ -1071,8 +1074,13 @@ be_visitor_valuetype::determine_factory_style (be_valuetype* node)
       return factory_style;
     }
 
+  if (node->is_abstract ())
+    {
+      return FS_NO_FACTORY;
+    }
+
   // Check whether we have at least one operation or not.
-  idl_bool have_operation = be_visitor_valuetype::have_operation(node);
+  idl_bool have_operation = be_visitor_valuetype::have_operation (node);
 
 
   idl_bool have_factory = 0;
@@ -1222,7 +1230,7 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
   // VT needs RefCounter if it has concrete factory and
   // none of its base VT has ref_counter
 
-  if (determine_factory_style (node) != FS_CONCRETE_FACTORY)
+  if (be_visitor_valuetype::determine_factory_style (node) != FS_CONCRETE_FACTORY)
     {
       return 0;
     }
@@ -1234,7 +1242,7 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
 
       if (vt != 0)
         {
-          if (obv_have_ref_counter (vt))
+          if (be_visitor_valuetype::obv_have_ref_counter (vt))
             {
               return 0;
             }
@@ -1254,7 +1262,7 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
       return 0;
     }
 
-  if (determine_factory_style(node) == FS_CONCRETE_FACTORY)
+  if (be_visitor_valuetype::determine_factory_style (node) == FS_CONCRETE_FACTORY)
     {
       return 1;
     }
@@ -1266,7 +1274,7 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 
       if (vt != 0)
         {
-          if (obv_have_ref_counter (vt))
+          if (be_visitor_valuetype::obv_have_ref_counter (vt))
             {
               return 1;
             }

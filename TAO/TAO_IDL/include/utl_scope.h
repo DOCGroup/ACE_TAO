@@ -95,6 +95,8 @@ class AST_Interface;
 class AST_InterfaceFwd;
 class AST_ValueType;
 class AST_ValueTypeFwd;
+class AST_EventType;
+class AST_EventTypeFwd;
 class AST_Component;
 class AST_ComponentFwd;
 class AST_Home;
@@ -153,6 +155,10 @@ public:
   virtual AST_ValueType *add_valuetype (AST_ValueType *i);
 
   virtual AST_ValueTypeFwd *add_valuetype_fwd (AST_ValueTypeFwd *i);
+
+  virtual AST_EventType *add_eventtype (AST_EventType *i);
+
+  virtual AST_EventTypeFwd *add_eventtype_fwd (AST_EventTypeFwd *i);
 
   virtual AST_Component *add_component (AST_Component *i);
 
@@ -263,6 +269,14 @@ protected:
   // Additionally, UTL_Scope also maintains a record of what nodes
   // defined elsewhere were referenced in this scope.
 
+  // Replace old_decl with new_decl.
+  void replace_scope (AST_Decl *old_decl,
+                      AST_Decl *new_decl);
+
+  // Replace old_decl with new_decl.
+  void replace_referenced (AST_Decl *old_decl,
+                           AST_Decl *new_decl);
+
   // Add to referenced nodes set.
   // If ex is not 0 'e' will be inserted at the position
   // after ex, which is already in the list.
@@ -273,14 +287,6 @@ protected:
 
   // Add to local types. Node represents a local manifest type.
   void add_to_local_types (AST_Decl *e);
-
-  // Replace old_decl with new_decl.
-  void replace_scope (AST_Decl *old_decl,
-                      AST_Decl *new_decl);
-
-  // Replace old_decl with new_decl.
-  void replace_referenced (AST_Decl *old_decl,
-                           AST_Decl *new_decl);
 
   // Has this node been referenced here already?
   idl_bool referenced (AST_Decl *e,
@@ -354,6 +360,10 @@ private:
   virtual AST_ValueType *fe_add_valuetype (AST_ValueType *i);
 
   virtual AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i);
+
+  virtual AST_EventType *fe_add_eventtype (AST_EventType *i);
+
+  virtual AST_EventTypeFwd *fe_add_eventtype_fwd (AST_EventTypeFwd *i);
 
   virtual AST_Component *fe_add_component (AST_Component *i);
 

@@ -39,8 +39,24 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
       << " " << node->base_proxy_impl_name () << be_idt_nl
       << ": ";
 
-  int n_parents = node->n_inherits ();
   int has_concrete_parent = 0;
+
+  if (node->node_type () == AST_Decl::NT_component)
+    {
+      be_component *bc = be_component::narrow_from_decl (node);
+      AST_Component *ac_base = bc->base_component ();
+
+      if (ac_base != 0)
+        {
+          has_concrete_parent = 1;
+          be_component *bc_base = be_component::narrow_from_decl (ac_base);
+
+          *os << "public virtual "
+              << bc_base->full_base_proxy_impl_name ();
+        }
+    }
+
+  int n_parents = node->n_inherits ();
 
   if (n_parents > 0)
     {
@@ -77,15 +93,14 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
 
   if (has_concrete_parent == 0)
     {
-      *os << "public virtual TAO_Object_Proxy_Impl" << be_uidt << be_uidt_nl;
+      *os << "public virtual TAO_Object_Proxy_Impl" << be_uidt_nl;
     }
 
   *os << "{" << be_nl << "public:"
       << be_idt_nl; // idt = 1
 
   // Destructor Declaration.
-  *os << "virtual ~" << node->base_proxy_impl_name () << " (void) { }"
-      << be_nl;
+  *os << "virtual ~" << node->base_proxy_impl_name () << " (void) {}";
 
   if (this->visit_scope (node) == -1)
     {
@@ -96,7 +111,7 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << be_uidt_nl;
+  *os << be_uidt_nl << be_nl;
 
   // Constructor Declaration.
   *os << "protected:" << be_idt_nl // idt = 1
@@ -165,4 +180,12 @@ be_visitor_interface_base_proxy_impl_ch::gen_abstract_ops_helper (
 
   return 0;
 }
+
+int be_visitor_interface_base_proxy_impl_ch::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
+}
+
 

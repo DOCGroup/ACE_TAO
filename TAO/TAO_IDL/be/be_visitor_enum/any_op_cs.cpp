@@ -48,9 +48,11 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // Generate the Any <<= and >>= operator declarations
   // Any <<= and >>= operators.
-  os->indent ();
   *os << "void operator<<= (CORBA::Any &_tao_any, "
       << node->name () << " _tao_elem)" << be_nl
       << "{" << be_idt_nl
@@ -89,7 +91,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       << "}" << be_nl
       << "ACE_ENDTRY;" << be_nl
       << "return 0;" << be_uidt_nl
-      << "}\n\n";
+      << "}";
 
   node->cli_stub_any_op_gen (1);
   return 0;

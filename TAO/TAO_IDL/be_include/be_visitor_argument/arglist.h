@@ -62,6 +62,12 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface forward
 
+  virtual int visit_component (be_component *node);
+  // visit component
+
+  virtual int visit_component_fwd (be_component_fwd *node);
+  // visit component forward
+
   virtual int visit_native (be_native *node);
   // visit native node
 
@@ -88,6 +94,15 @@ public:
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   // visit valuetype_fwd
+
+  virtual int visit_eventtype (be_eventtype *node);
+  // visit eventtype
+
+  virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
+  // visit eventtype_fwd
+
+  virtual int visit_home (be_home *node);
+  // visit home
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_ARGLIST_H_ */

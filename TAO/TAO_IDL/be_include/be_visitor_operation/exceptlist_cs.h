@@ -46,7 +46,6 @@ public:
 
   int visit_operation (be_operation *node);
   // visit the operation
-
 };
 
 #endif /* _BE_VISITOR_OPERATION_EXCEPTIONLIST_CS_H_ */

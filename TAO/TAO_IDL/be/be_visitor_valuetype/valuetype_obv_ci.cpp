@@ -30,7 +30,9 @@ ACE_RCSID (be_visitor_valuetype,
 // Valuetype visitor for OBV_ class implementation
 // ******************************************************
 
-be_visitor_valuetype_obv_ci::be_visitor_valuetype_obv_ci (be_visitor_context *ctx)
+be_visitor_valuetype_obv_ci::be_visitor_valuetype_obv_ci (
+    be_visitor_context *ctx
+  )
   : be_visitor_valuetype (ctx)
 {
 }

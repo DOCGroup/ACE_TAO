@@ -890,7 +890,6 @@ AST_Decl::set_id_with_typeid (char *value)
     case AST_Decl::NT_factory:
     case AST_Decl::NT_component:
     case AST_Decl::NT_home:
-    case AST_Decl::NT_finder:
     case AST_Decl::NT_eventtype:
       break;
     default:

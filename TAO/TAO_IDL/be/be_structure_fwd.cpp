@@ -28,10 +28,12 @@ be_structure_fwd::be_structure_fwd (void)
 {
 }
 
-be_structure_fwd::be_structure_fwd (UTL_ScopedName *n)
+be_structure_fwd::be_structure_fwd (AST_Structure *dummy,
+                                    UTL_ScopedName *n)
   : be_type (AST_Decl::NT_struct_fwd,
              n),
-    AST_StructureFwd (n),
+    AST_StructureFwd (dummy,
+                      n),
     AST_Type (AST_Decl::NT_struct_fwd,
               n),
     AST_Decl (AST_Decl::NT_struct_fwd,

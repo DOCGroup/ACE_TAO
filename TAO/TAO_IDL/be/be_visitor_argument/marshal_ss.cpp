@@ -57,7 +57,7 @@ int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
   // Different types have different mappings when used as in/out or
   // inout parameters. Let this visitor deal with the type
 
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -65,8 +65,7 @@ int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
         {
         case AST_Argument::dir_IN:
         case AST_Argument::dir_INOUT:
-          os->indent ();
-          *os << "(_tao_in >> ";
+          *os << be_nl << "(_tao_in >> ";
           break;
         case AST_Argument::dir_OUT:
           break;
@@ -80,8 +79,7 @@ int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
           break;
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
-          os->indent ();
-          *os << "(_tao_out << ";
+          *os << be_nl << "(_tao_out << ";
           break;
         }
     }
@@ -788,3 +786,46 @@ int be_visitor_args_marshal_ss::visit_typedef (be_typedef *node)
   this->ctx_->alias (0);
   return 0;
 }
+
+int
+be_visitor_args_marshal_ss::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_args_marshal_ss::visit_component_fwd (
+    be_component_fwd *node
+  )
+{
+  return this->visit_interface_fwd (node);
+}
+
+int
+be_visitor_args_marshal_ss::visit_eventtype (
+    be_eventtype *node
+  )
+{
+  return this->visit_valuetype (node);
+}
+
+int
+be_visitor_args_marshal_ss::visit_eventtype_fwd (
+    be_eventtype_fwd *node
+  )
+{
+  return this->visit_valuetype_fwd (node);
+}
+
+int
+be_visitor_args_marshal_ss::visit_home (
+    be_home *node
+  )
+{
+  return this->visit_interface (node);
+}
+
+
+

@@ -77,6 +77,21 @@ public:
 
   virtual int visit_typedef (be_typedef *node);
   // visit the typedef type
+
+  virtual int visit_component (be_component *node);
+  // visit a component node
+
+  virtual int visit_component_fwd (be_component_fwd *node);
+  // visit a forward declared component node
+
+  virtual int visit_eventtype (be_eventtype *node);
+  // visit an eventtype node
+
+  virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
+  // visit a forward declared eventtype node
+
+  virtual int visit_home (be_home *node);
+  // visit a component home node
 };
 
 #endif /* _BE_VISITOR_OPERATION_INTERCEPTORS_RESULT_H_ */
