@@ -176,6 +176,9 @@ private:
   /// request/response?
   virtual int is_ready_for_bidirectional (void);
 
+  /// Are there any more messages that needs processing
+  virtual int more_messages (void);
+
 private:
 
   /// Thr message handler object that does reading and parsing of the

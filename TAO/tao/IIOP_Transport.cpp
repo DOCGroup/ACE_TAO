@@ -37,13 +37,13 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
     messaging_object_ (0),
     bidirectional_flag_ (-1)
 {
-  if (flag)
+  /*  if (flag)
     {
       // Use the lite version of the protocol
       ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Lite (orb_core));
     }
-  else
+    else*/
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
@@ -182,8 +182,13 @@ TAO_IIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
 
   // Now we know that we have been able to read the complete message
   // here..
-  return this->process_message ();
+  result = 2; // Dummy
+  while (result > 1)
+    {
+      result = this->process_message ();
+    }
 
+  return result;
 }
 
 
@@ -482,8 +487,9 @@ TAO_IIOP_Transport::process_message (void)
       return -1;
     }
 
-  this->messaging_object_->reset ();
-  return 1;
+  //  this->messaging_object_->reset ();
+
+  return this->messaging_object_->more_messages ();
 }
 
 

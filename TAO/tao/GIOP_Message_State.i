@@ -71,7 +71,6 @@ ACE_INLINE void
 TAO_GIOP_Message_State::reset (int reset_contents)
 {
   this->message_size = 0;
-  this->current_offset = 0;
   this->more_fragments = 0;
   if (reset_contents)
     this->cdr.reset_contents ();
