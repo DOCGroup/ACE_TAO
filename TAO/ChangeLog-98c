@@ -1,3 +1,8 @@
+Thu Mar 19 09:26:25 1998  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Added an entry for the Concurrency
+	  Control Service
+
 Thu Mar 19 08:41:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (new_context): replaced
