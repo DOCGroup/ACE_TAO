@@ -57,7 +57,8 @@ CLI_FILES =	param_testCli	\
 		var_struct \
 		except \
 		big_union \
-		multdim_array
+		multdim_array \
+		complex_any
 
 PARAM_TEST_SVR_OBJS = $(addsuffix .o,$(SVR_FILES))
 PARAM_TEST_CLT_OBJS = $(addsuffix .o,$(CLI_FILES))
