@@ -1,3 +1,9 @@
+Mon Nov 13 08:46:40 2000  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo.bor:
+
+          Added missing backslash.
+
 Sun Nov 12 17:31:40 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo.bor:
@@ -9,7 +15,7 @@ Sun Nov 12 17:31:40 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Until we put some serious effort into porting TAO to
           Windows CE, these files are misleading and most likely
-          very out of date.  
+          very out of date.
 
 Sun Nov 12 12:41:19 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -35,16 +41,16 @@ Sat Nov 11 11:33:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Xt_Stopwatch/Stopwatch_display.cpp:
 	* tests/Xt_Stopwatch/Client.h:
 	* tests/Xt_Stopwatch/timer.cpp:
-	* tests/Xt_Stopwatch/timer.h: 
+	* tests/Xt_Stopwatch/timer.h:
 	* tests/QtTest/client.cpp:  Added #if defined guards in all these
-	  files so that they compile clean even in default configuration. 
-	
-	* tests/Xt_Stopwatch/Makefile: 
+	  files so that they compile clean even in default configuration.
+
+	* tests/Xt_Stopwatch/Makefile:
 	* tests/QtTest/Makefile: Updated the library names against which
 	  they are linked.
 
 	  Thanks to Wei Zheng <weizheng@uiuc.edu> for reporting these
-	  problems.  
+	  problems.
 
 Sat Nov 11 10:19:06 2000  Carlos O'Ryan  <coryan@uci.edu>
 
