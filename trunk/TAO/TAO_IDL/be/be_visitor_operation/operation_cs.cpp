@@ -746,30 +746,42 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
         }
       *os << be_uidt << "\n";
       
-    };
-  
+    }
+
   // call invoke
   os->indent ();
+
+  // We should only need to capture the invocation status if we are
+  // actually going to use it, otherwise we get nasty warnings from
+  // some C++ compiler.
+  if (!this->void_return_type (bt) ||
+      this->has_param_type (node, AST_Argument::dir_INOUT) ||
+      this->has_param_type (node, AST_Argument::dir_OUT))
+    {
+      *os << "TAO_GIOP_ReplyStatusType _invoke_status = ";
+    }
+  else
+    {
+      *os << "(void) ";
+    }
+        
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // oneway operation
-      *os << "TAO_GIOP_ReplyStatusType _invoke_status = "
-          << "_tao_call.invoke (_tao_environment);" << be_nl;
+      *os << "_tao_call.invoke (_tao_environment);" << be_nl;
     }
   else
     {
       if (node->exceptions ())
         {
-          *os << "TAO_GIOP_ReplyStatusType _invoke_status = "
-              << "_tao_call.invoke (_tao_" << node->flatname () 
+          *os << "_tao_call.invoke (_tao_" << node->flatname () 
               << "_exceptiondata, "
               << node->exceptions ()->length ()
               << ", _tao_environment);" << be_nl;
         }
       else
         {
-          *os << "TAO_GIOP_ReplyStatusType _invoke_status = "
-              << "_tao_call.invoke (0, 0, _tao_environment);" << be_nl;
+          *os << "_tao_call.invoke (0, 0, _tao_environment);" << be_nl;
         }
 
       *os << "// Exceptions will be caught here\n";
