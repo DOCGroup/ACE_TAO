@@ -1532,7 +1532,7 @@ CORBA::remove_ref (PortableInterceptor::ObjectReferenceFactory * vt)
 CORBA::Boolean
 operator<< (TAO_OutputCDR &strm, const PortableInterceptor::ObjectReferenceFactory *_tao_valuetype)
 {
-  return CORBA_ValueBase::_tao_marshal (strm,
+  return CORBA::ValueBase::_tao_marshal (strm,
     ACE_const_cast (PortableInterceptor::ObjectReferenceFactory*, _tao_valuetype),
     (ptr_arith_t) &PortableInterceptor::ObjectReferenceFactory::_downcast);
 }
@@ -1566,7 +1566,7 @@ CORBA::remove_ref (PortableInterceptor::ObjectReferenceTemplate * vt)
 CORBA::Boolean
 operator<< (TAO_OutputCDR &strm, const PortableInterceptor::ObjectReferenceTemplate *_tao_valuetype)
 {
-  return CORBA_ValueBase::_tao_marshal (strm,
+  return CORBA::ValueBase::_tao_marshal (strm,
     ACE_const_cast (PortableInterceptor::ObjectReferenceTemplate*, _tao_valuetype),
     (ptr_arith_t) &PortableInterceptor::ObjectReferenceTemplate::_downcast);
 }

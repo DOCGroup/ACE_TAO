@@ -151,7 +151,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   ** This is where we diverge for an ExceptionHolder ValueType.
   ** This is how we proceed:
   ** 1) Identify it is an AMH_ExceptionHolder class.
-  ** 2) Inherit from CORBA_DefaultValueBaseRef i.e. provide a CONCRETE
+  ** 2) Inherit from CORBA::DefaultValueBaseRef i.e. provide a CONCRETE
   **    implementation for this ValueType!  This is because the alternative
   **    design of deriving a concrete-exception-holder class that the IDL
   **    compiler again has to generate is superflous, unnecessary, more
@@ -199,7 +199,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           *os << "," << be_nl;
         }
 
-      *os << "public virtual CORBA_DefaultValueRefCountBase";
+      *os << "public virtual CORBA::DefaultValueRefCountBase";
     }
 
   if (node->node_type () == AST_Decl::NT_eventtype)

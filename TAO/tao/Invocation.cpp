@@ -182,7 +182,7 @@ TAO_GIOP_Invocation::start (ACE_ENV_SINGLE_ARG_DECL)
   if (this->stub_ == 0)
     {
       ACE_THROW (CORBA::INTERNAL (
-                   CORBA_SystemException::_tao_minor_code (
+                   CORBA::SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                 CORBA::COMPLETED_NO));
@@ -248,7 +248,7 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
   if (conn_reg == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (
-                        CORBA_SystemException::_tao_minor_code (
+                        CORBA::SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,
                           EINVAL),
                         CORBA::COMPLETED_NO),
@@ -291,7 +291,7 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
       if (!is_conn_timeout)
         {
           ACE_THROW_RETURN (CORBA::TIMEOUT (
-              CORBA_SystemException::_tao_minor_code (
+              CORBA::SystemException::_tao_minor_code (
                 TAO_TIMEOUT_CONNECT_MINOR_CODE,
                 errno),
               CORBA::COMPLETED_NO),
@@ -441,7 +441,7 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean write_semantics
         {
           ACE_THROW_RETURN (
               CORBA::TIMEOUT (
-                  CORBA_SystemException::_tao_minor_code (
+                  CORBA::SystemException::_tao_minor_code (
                       TAO_TIMEOUT_SEND_MINOR_CODE,
                       errno
                     ),
@@ -691,9 +691,10 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
     {
       // Just unbind the dispatcher before we take any action.
       (void) dispatch_guard.unbind_dispatcher ();
-      return this->orb_core_->service_raise_comm_failure (this,
-                                                          this->profile_
-                                                          ACE_ENV_ARG_PARAMETER);
+      return
+        this->orb_core_->service_raise_comm_failure (this,
+                                                     this->profile_
+                                                     ACE_ENV_ARG_PARAMETER);
     }
   // @@ Alex: the old version of this had some error handling code,
   //    like:  this->profile_->reset_hint ()
@@ -772,7 +773,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
 #if defined (TAO_HAS_EXCEPTIONS)
         // Without this, the call to create_system_exception() above
         // causes a memory leak. On platforms without native exceptions,
-        // the CORBA_Environment class manages the memory.
+        // the CORBA::Environment class manages the memory.
         auto_ptr<CORBA::SystemException> safety (ex);
 #endif
 
@@ -850,7 +851,7 @@ TAO_GIOP_Synch_Invocation::validate_error (TAO_Bind_Dispatcher_Guard &guard
       // Just a timeout, don't close the connection or
       // anything...
       ACE_THROW_RETURN (CORBA::TIMEOUT (
-              CORBA_SystemException::_tao_minor_code (
+              CORBA::SystemException::_tao_minor_code (
                   TAO_TIMEOUT_SEND_MINOR_CODE,
                   errno),
               CORBA::COMPLETED_NO),

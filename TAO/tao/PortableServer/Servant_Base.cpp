@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Servant_Base.h"
 #include "POA.h"
 #include "Operation_Table.h"
@@ -90,7 +88,7 @@ TAO_ServantBase::_non_existent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return 0;
 }
 
-CORBA_InterfaceDef_ptr
+CORBA::InterfaceDef_ptr
 TAO_ServantBase::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_IFR_Client_Adapter *adapter =
@@ -204,7 +202,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
   // Fetch the skeleton for this operation
   if (this->_find (opname, skel, req.operation_length()) == -1)
     {
-      ACE_THROW (CORBA_BAD_OPERATION());
+      ACE_THROW (CORBA::BAD_OPERATION ());
     }
 
   CORBA::Boolean send_reply = !req.sync_with_server ()
@@ -259,7 +257,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
       // the appropriate reply to the client
       if (send_reply)
         {
-          req.tao_send_reply_exception(ex);
+          req.tao_send_reply_exception (ex);
         }
     }
   ACE_ENDTRY;
@@ -289,7 +287,7 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest &req,
   // Fetch the skeleton for this operation
   if (this->_find (opname, skel, req.operation_length()) == -1)
     {
-      ACE_THROW (CORBA_BAD_OPERATION());
+      ACE_THROW (CORBA::BAD_OPERATION ());
     }
 
   ACE_TRY
@@ -357,7 +355,7 @@ TAO_RefCountServantBase::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 TAO_RefCountServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  CORBA::ULong new_count = --this->ref_count_;
+  const CORBA::ULong new_count = --this->ref_count_;
 
   if (new_count == 0)
     {

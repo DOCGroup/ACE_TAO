@@ -34,6 +34,7 @@ class TAO_ORB_Core;
 class TAO_Stub;
 class TAO_MProfile;
 class TAO_ServerRequest;
+class TAO_ObjectKey;
 
 class TAO_Export TAO_Adapter
 {

@@ -342,7 +342,7 @@ const char* PortableInterceptor::Interceptor::_interface_repository_id (void) co
 
 // Default constructor.
 PortableInterceptor::ForwardRequest::ForwardRequest (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:PortableInterceptor/ForwardRequest:1.0",
         "ForwardRequest"
       )
@@ -356,7 +356,7 @@ PortableInterceptor::ForwardRequest::~ForwardRequest (void)
 
 // Copy constructor.
 PortableInterceptor::ForwardRequest::ForwardRequest (const ::PortableInterceptor::ForwardRequest &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -369,7 +369,7 @@ PortableInterceptor::ForwardRequest::ForwardRequest (const ::PortableInterceptor
 PortableInterceptor::ForwardRequest&
 PortableInterceptor::ForwardRequest::operator= (const ::PortableInterceptor::ForwardRequest &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   this->forward = CORBA::Object::_duplicate (_tao_excp.forward.in ());
   this->permanent = _tao_excp.permanent;
   return *this;
@@ -448,7 +448,7 @@ PortableInterceptor::ForwardRequest::ForwardRequest (
     const CORBA::Object_ptr  _tao_forward,
     CORBA::Boolean _tao_permanent
   )
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:PortableInterceptor/ForwardRequest:1.0",
         "ForwardRequest"
       )
@@ -619,7 +619,7 @@ TAO_NAMESPACE_END
 
 // Default constructor.
 PortableInterceptor::InvalidSlot::InvalidSlot (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:PortableInterceptor/InvalidSlot:1.0",
         "InvalidSlot"
       )
@@ -633,7 +633,7 @@ PortableInterceptor::InvalidSlot::~InvalidSlot (void)
 
 // Copy constructor.
 PortableInterceptor::InvalidSlot::InvalidSlot (const ::PortableInterceptor::InvalidSlot &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -644,7 +644,7 @@ PortableInterceptor::InvalidSlot::InvalidSlot (const ::PortableInterceptor::Inva
 PortableInterceptor::InvalidSlot&
 PortableInterceptor::InvalidSlot::operator= (const ::PortableInterceptor::InvalidSlot &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -3852,7 +3852,7 @@ const char* PortableInterceptor::ORBInitInfo::_interface_repository_id (void) co
 
 // Default constructor.
 PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:PortableInterceptor/ORBInitInfo/DuplicateName:1.0",
         "DuplicateName"
       )
@@ -3866,7 +3866,7 @@ PortableInterceptor::ORBInitInfo::DuplicateName::~DuplicateName (void)
 
 // Copy constructor.
 PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (const ::PortableInterceptor::ORBInitInfo::DuplicateName &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -3878,7 +3878,7 @@ PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (const ::Portable
 PortableInterceptor::ORBInitInfo::DuplicateName&
 PortableInterceptor::ORBInitInfo::DuplicateName::operator= (const ::PortableInterceptor::ORBInitInfo::DuplicateName &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   this->name = CORBA::string_dup (_tao_excp.name.in ());
   return *this;
 }
@@ -3939,7 +3939,7 @@ void PortableInterceptor::ORBInitInfo::DuplicateName::_tao_decode (
 PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (
     const char * _tao_name
   )
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:PortableInterceptor/ORBInitInfo/DuplicateName:1.0",
         "DuplicateName"
       )
@@ -3949,7 +3949,7 @@ PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (
 
 // Default constructor.
 PortableInterceptor::ORBInitInfo::InvalidName::InvalidName (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:PortableInterceptor/ORBInitInfo/InvalidName:1.0",
         "InvalidName"
       )
@@ -3963,7 +3963,7 @@ PortableInterceptor::ORBInitInfo::InvalidName::~InvalidName (void)
 
 // Copy constructor.
 PortableInterceptor::ORBInitInfo::InvalidName::InvalidName (const ::PortableInterceptor::ORBInitInfo::InvalidName &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -3974,7 +3974,7 @@ PortableInterceptor::ORBInitInfo::InvalidName::InvalidName (const ::PortableInte
 PortableInterceptor::ORBInitInfo::InvalidName&
 PortableInterceptor::ORBInitInfo::InvalidName::operator= (const ::PortableInterceptor::ORBInitInfo::InvalidName &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 

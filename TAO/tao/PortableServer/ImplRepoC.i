@@ -32,7 +32,7 @@ ImplementationRepository::ServerObject::ServerObject (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : CORBA_Object (objref, _tao_collocated, servant)
+  : Object (objref, _tao_collocated, servant)
 {
   this->ImplementationRepository_ServerObject_setup_collocation (_tao_collocated);
 }
@@ -1600,7 +1600,7 @@ ImplementationRepository::Administration::Administration (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : CORBA_Object (objref, _tao_collocated, servant)
+  : Object (objref, _tao_collocated, servant)
 {
   this->ImplementationRepository_Administration_setup_collocation (_tao_collocated);
 }
@@ -1619,7 +1619,7 @@ ImplementationRepository::ServerInformationIterator::ServerInformationIterator (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : CORBA_Object (objref, _tao_collocated, servant)
+  : Object (objref, _tao_collocated, servant)
 {
   this->ImplementationRepository_ServerInformationIterator_setup_collocation (_tao_collocated);
 }

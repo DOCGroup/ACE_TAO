@@ -1,14 +1,13 @@
-
-// $Id$
-
 #include "RT_ORB_Loader.h"
 #include "RT_ORBInitializer.h"
 
 #include "tao/debug.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (TAO, RT_ORB_Loader, "$Id$")
+
+ACE_RCSID (RTCORBA,
+           RT_ORB_Loader,
+           "$Id$")
+
 
 TAO_RT_ORB_Loader::TAO_RT_ORB_Loader (void)
 {
@@ -33,8 +32,10 @@ TAO_RT_ORB_Loader::init (int argc,
   initialized = 1;
 
   // Set defaults.
-  int priority_mapping_type = TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_DIRECT;
-  int network_priority_mapping_type = TAO_RT_ORBInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
+  int priority_mapping_type =
+    TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_DIRECT;
+  int network_priority_mapping_type =
+    TAO_RT_ORBInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
   long sched_policy = -1;
   long scope_policy = THR_SCOPE_PROCESS;
   int curarg = 0;
@@ -51,13 +52,16 @@ TAO_RT_ORB_Loader::init (int argc,
 
             if (ACE_OS::strcasecmp (name,
                                     ACE_LIB_TEXT("continuous")) == 0)
-              priority_mapping_type = TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_CONTINUOUS;
+              priority_mapping_type =
+                TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_CONTINUOUS;
             else if (ACE_OS::strcasecmp (name,
                                          ACE_LIB_TEXT("linear")) == 0)
-              priority_mapping_type = TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_LINEAR;
+              priority_mapping_type =
+                TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_LINEAR;
             else if (ACE_OS::strcasecmp (name,
                                          ACE_LIB_TEXT("direct")) == 0)
-              priority_mapping_type = TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_DIRECT;
+              priority_mapping_type =
+                TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_DIRECT;
             else
               ACE_DEBUG ((LM_DEBUG,
                           ACE_LIB_TEXT("RT_ORB_Loader - unknown argument")
@@ -120,7 +124,8 @@ TAO_RT_ORB_Loader::init (int argc,
 	    
             if (ACE_OS::strcasecmp (name,
                                     ACE_LIB_TEXT("linear")) == 0)
-              network_priority_mapping_type = TAO_RT_ORBInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
+              network_priority_mapping_type =
+                TAO_RT_ORBInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
 	  }
       }
     else
@@ -154,7 +159,7 @@ TAO_RT_ORB_Loader::init (int argc,
                                                sched_policy,
                                                scope_policy),
                         CORBA::NO_MEMORY (
-                          CORBA_SystemException::_tao_minor_code (
+                          CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
@@ -168,7 +173,8 @@ TAO_RT_ORB_Loader::init (int argc,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception caught while initializing the RTORB:");
+                           "Unexpected exception caught while "
+                           "initializing the RTORB");
       return 1;
     }
   ACE_ENDTRY;

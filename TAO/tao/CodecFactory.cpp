@@ -40,7 +40,7 @@ TAO_CodecFactory::create_codec (const IOP::Encoding & enc
         {
           // There is no such thing as a "0.x" CDR encapsulation.
           ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                              CORBA_SystemException::_tao_minor_code (
+                              CORBA::SystemException::_tao_minor_code (
                                 TAO_DEFAULT_MINOR_CODE,
                                 EINVAL),
                               CORBA::COMPLETED_NO),
@@ -52,7 +52,7 @@ TAO_CodecFactory::create_codec (const IOP::Encoding & enc
                                               enc.minor_version,
                                               this->orb_core_),
                         CORBA::NO_MEMORY (
-                          CORBA_SystemException::_tao_minor_code (
+                          CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_MAYBE));

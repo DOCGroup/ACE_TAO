@@ -494,7 +494,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
                 << "TAO_Abstract_ServantBase *servant" << be_uidt_nl
                 << ")"
                 << be_nl;
-      *os << ": CORBA_Object (objref, _tao_collocated, servant)";
+      *os << ": Object (objref, _tao_collocated, servant)";
 
       if (this->has_mixed_parentage_)
         {
@@ -515,7 +515,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
             }
 
           *os << "," << be_nl
-              << "CORBA_AbstractBase (objref, _tao_collocated, servant)"
+              << "CORBA::AbstractBase (objref, _tao_collocated, servant)"
               << be_uidt << be_uidt;
         }
       else
@@ -564,9 +564,15 @@ be_interface::gen_var_defn (char *interface_name)
   *ch << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  // Note the private inheritance from TAO_Base_var to emphasize that
+  // a given _var does not satisfy the IS-A relationship.  _var
+  // classes are merely IMPLEMENTED-IN-TERMS-OF TAO_Base_var.  This
+  // also invalidates assignments like:
+  //    Foo_var v;
+  //    TAO_Base_var * t = &v;
   *ch << "class " << be_global->stub_export_macro ()
       << " " << namebuf
-      << " : public TAO_Base_var" << be_nl;
+      << " : private TAO_Base_var" << be_nl;
   *ch << "{" << be_nl;
   *ch << "public:" << be_idt_nl;
 
@@ -642,7 +648,7 @@ be_interface::gen_var_defn (char *interface_name)
       *ch << "CORBA::Object *" << be_nl;
     }
 
-  *ch << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
+  *ch << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");" << be_uidt_nl;
 
   if (this->is_abstract ())
@@ -664,8 +670,8 @@ be_interface::gen_var_defn (char *interface_name)
   *ch << "private:" << be_idt_nl;
   *ch << interface_name << "_ptr ptr_;" << be_nl;
   *ch << "// Unimplemented - prevents widening assignment." << be_nl;
-  *ch << interface_name << "_var (const TAO_Base_var &rhs);" << be_nl;
-  *ch << interface_name << "_var &operator= (const TAO_Base_var &rhs);"
+  *ch << interface_name << "_var (const TAO_Base_var & rhs);" << be_nl;
+  *ch << interface_name << "_var & operator= (const TAO_Base_var & rhs);"
       << be_uidt_nl;
 
   *ch << "};";

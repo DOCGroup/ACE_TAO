@@ -52,11 +52,11 @@ public:
   ~TAO_DynSequence_i (void);
   // Destructor.
 
-  void init (CORBA_TypeCode_ptr tc
+  void init (CORBA::TypeCode_ptr tc
              ACE_ENV_ARG_DECL);
   // Initialize using just a TypeCode.
 
-  void init (const CORBA_Any& any
+  void init (const CORBA::Any& any
              ACE_ENV_ARG_DECL);
   // Initialize using an Any.
 

@@ -29,10 +29,11 @@
 
 #include "PortableInterceptorC.h"
 #include "StringSeqC.h"
-#include "Service_Context.h"
 #include "PICurrent.h"
 
+
 class TAO_GIOP_Invocation;
+class TAO_Service_Context;
 
 /**
  * @class TAO_ClientRequestInfo_i

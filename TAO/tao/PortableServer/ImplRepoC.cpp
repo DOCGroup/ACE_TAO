@@ -456,7 +456,7 @@ ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Impl::_TAO_ServerObject
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Impl::ping (
-    CORBA_Object *_collocated_tao_target_
+    CORBA::Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -633,7 +633,7 @@ void ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Impl::ping (
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Impl::shutdown (
-    CORBA_Object *_collocated_tao_target_
+    CORBA::Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1015,12 +1015,7 @@ ImplementationRepository::ServerObject::_is_a (
       return 1; // success using local knowledge
     }
   else
-    {
-      return this->CORBA_Object::_is_a (
-          value
-          ACE_ENV_ARG_PARAMETER
-        );
-    }
+    return this->Object::_is_a (value ACE_ENV_ARG_PARAMETER);
 }
 
 void *ImplementationRepository::ServerObject::_tao_QueryInterface (ptr_arith_t type)
@@ -1146,7 +1141,7 @@ TAO_NAMESPACE_END
 // be/be_visitor_exception/exception_cs.cpp:63
 
 ImplementationRepository::AlreadyRegistered::AlreadyRegistered (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:ImplementationRepository/AlreadyRegistered:1.0",
         "AlreadyRegistered"
       )
@@ -1158,7 +1153,7 @@ ImplementationRepository::AlreadyRegistered::~AlreadyRegistered (void)
 }
 
 ImplementationRepository::AlreadyRegistered::AlreadyRegistered (const ::ImplementationRepository::AlreadyRegistered &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -1168,7 +1163,7 @@ ImplementationRepository::AlreadyRegistered::AlreadyRegistered (const ::Implemen
 ImplementationRepository::AlreadyRegistered&
 ImplementationRepository::AlreadyRegistered::operator= (const ::ImplementationRepository::AlreadyRegistered &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -1297,7 +1292,7 @@ TAO_NAMESPACE_END
 // be/be_visitor_exception/exception_cs.cpp:63
 
 ImplementationRepository::CannotActivate::CannotActivate (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:ImplementationRepository/CannotActivate:1.0",
         "CannotActivate"
       )
@@ -1309,7 +1304,7 @@ ImplementationRepository::CannotActivate::~CannotActivate (void)
 }
 
 ImplementationRepository::CannotActivate::CannotActivate (const ::ImplementationRepository::CannotActivate &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -1320,7 +1315,7 @@ ImplementationRepository::CannotActivate::CannotActivate (const ::Implementation
 ImplementationRepository::CannotActivate&
 ImplementationRepository::CannotActivate::operator= (const ::ImplementationRepository::CannotActivate &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   this->reason = CORBA::string_dup (_tao_excp.reason.in ());
   return *this;
 }
@@ -1401,7 +1396,8 @@ void ImplementationRepository::CannotActivate::_tao_decode (
 
 ImplementationRepository::CannotActivate::CannotActivate (
     const char * _tao_reason
-  )  : CORBA_UserException (
+  )
+  : CORBA::UserException (
         "IDL:ImplementationRepository/CannotActivate:1.0",
         "CannotActivate"
       )
@@ -1468,7 +1464,7 @@ TAO_NAMESPACE_END
 // be/be_visitor_exception/exception_cs.cpp:63
 
 ImplementationRepository::NotFound::NotFound (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:ImplementationRepository/NotFound:1.0",
         "NotFound"
       )
@@ -1480,7 +1476,7 @@ ImplementationRepository::NotFound::~NotFound (void)
 }
 
 ImplementationRepository::NotFound::NotFound (const ::ImplementationRepository::NotFound &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -1490,7 +1486,7 @@ ImplementationRepository::NotFound::NotFound (const ::ImplementationRepository::
 ImplementationRepository::NotFound&
 ImplementationRepository::NotFound::operator= (const ::ImplementationRepository::NotFound &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -4128,7 +4124,7 @@ ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::_TAO_Administra
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::activate_server (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -4333,7 +4329,7 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 char * ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::activate_server_with_startup (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     CORBA::Long check_startup
     ACE_ENV_ARG_DECL
@@ -4565,7 +4561,7 @@ CORBA::String_var _tao_retval;
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::register_server (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const ImplementationRepository::StartupOptions & options
     ACE_ENV_ARG_DECL
@@ -4768,7 +4764,7 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::reregister_server (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const ImplementationRepository::StartupOptions & options
     ACE_ENV_ARG_DECL
@@ -4962,7 +4958,7 @@ void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::reregister
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::remove_server (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -5162,7 +5158,7 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::shutdown_server (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -5362,7 +5358,7 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 char * ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::server_is_running (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * addr,
     ImplementationRepository::ServerObject_ptr server_object
@@ -5592,7 +5588,7 @@ CORBA::String_var _tao_retval;
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::server_is_shutting_down (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -5792,7 +5788,7 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::find (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     ImplementationRepository::ServerInformation_out info
     ACE_ENV_ARG_DECL
@@ -6010,7 +6006,7 @@ TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::list (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     CORBA::ULong how_many,
     ImplementationRepository::ServerInformationList_out server_list,
     ImplementationRepository::ServerInformationIterator_out server_iterator
@@ -6427,12 +6423,7 @@ ImplementationRepository::Administration::_is_a (
       return 1; // success using local knowledge
     }
   else
-    {
-      return this->CORBA_Object::_is_a (
-          value
-          ACE_ENV_ARG_PARAMETER
-        );
-    }
+    return this->Object::_is_a (value ACE_ENV_ARG_PARAMETER);
 }
 
 void *ImplementationRepository::Administration::_tao_QueryInterface (ptr_arith_t type)
@@ -7196,7 +7187,7 @@ ImplementationRepository::_TAO_ServerInformationIterator_Remote_Proxy_Impl::_TAO
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 CORBA::Boolean ImplementationRepository::_TAO_ServerInformationIterator_Remote_Proxy_Impl::next_n (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     CORBA::ULong how_many,
     ImplementationRepository::ServerInformationList_out server_list
     ACE_ENV_ARG_DECL
@@ -7418,7 +7409,7 @@ CORBA::Boolean ImplementationRepository::_TAO_ServerInformationIterator_Remote_P
 // be/be_visitor_operation/remote_proxy_impl_cs.cpp:63
 
 void ImplementationRepository::_TAO_ServerInformationIterator_Remote_Proxy_Impl::destroy (
-    CORBA_Object *_collocated_tao_target_
+    CORBA::Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -7800,12 +7791,7 @@ ImplementationRepository::ServerInformationIterator::_is_a (
       return 1; // success using local knowledge
     }
   else
-    {
-      return this->CORBA_Object::_is_a (
-          value
-          ACE_ENV_ARG_PARAMETER
-        );
-    }
+    return this->Object::_is_a (value ACE_ENV_ARG_PARAMETER);
 }
 
 void *ImplementationRepository::ServerInformationIterator::_tao_QueryInterface (ptr_arith_t type)

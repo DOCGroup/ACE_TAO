@@ -41,8 +41,8 @@
 
 // Default constructor.
 CORBA::Bounds::Bounds (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/Bounds:1.0",
-                         "Bounds")
+  : CORBA::UserException ("IDL:omg.org/CORBA/Bounds:1.0",
+                          "Bounds")
 {
 }
 
@@ -53,8 +53,8 @@ CORBA::Bounds::~Bounds (void)
 
 // Copy constructor.
 CORBA::Bounds::Bounds (const ::CORBA::Bounds &_tao_excp)
-  : CORBA_UserException (_tao_excp._rep_id (),
-                         _tao_excp._name ())
+  : CORBA::UserException (_tao_excp._rep_id (),
+                          _tao_excp._name ())
 {
 }
 
@@ -62,7 +62,7 @@ CORBA::Bounds::Bounds (const ::CORBA::Bounds &_tao_excp)
 CORBA::Bounds&
 CORBA::Bounds::operator= (const ::CORBA::Bounds &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 

@@ -24,12 +24,22 @@
 
 
 #include "tao/Object.h"
-#include "Servant_Base.h"
 
 
-class TAO_PortableServer_Export TAO_Collocated_Object : public virtual CORBA_Object
+class TAO_ServantBase;
+
+/**
+ * @class TAO_Collocated_Object
+ *
+ * @brief TAO_Collocated_Object
+ *
+ * TAO_Collocated_Object
+ */
+class TAO_PortableServer_Export TAO_Collocated_Object
+  : public virtual CORBA::Object
 {
 public:
+
   /// Constructor.
   TAO_Collocated_Object (TAO_Stub *p = 0,
                          CORBA::Boolean collocated = 0,
@@ -47,18 +57,20 @@ public:
   static TAO_Collocated_Object *_narrow (CORBA::Object_ptr object
                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  // = The CORBA_Object methods, check the tao/Object.h file for details
+  // = The CORBA::Object methods, check the tao/Object.h file for details
   virtual CORBA::Boolean _is_a (const CORBA::Char *logical_type_id
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  virtual CORBA::Boolean _is_equivalent (CORBA_Object_ptr other_obj
+  virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj
                                          ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC (());
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   virtual CORBA::Boolean _non_existent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
-  virtual CORBA::Object_ptr _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual CORBA::Object_ptr _get_component 
+    (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 #endif /* TAO_HAS_MINIMUM_CORBA */
-  virtual void *_tao_QueryInterface(ptr_arith_t type);
+
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
 
 private:
   // = Unimplemented methods

@@ -171,8 +171,7 @@ TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
                        iiop_prefix,
                        sizeof (iiop_prefix) - 1) == 0
       && addr.find (':') == ACE_CString::npos)
-    ACE_OS::strcat (end_point.inout (), 
-                    def_port);
+    ACE_OS::strcat (end_point.inout (), def_port);
 
   // Example:
   // The End_point will now be of the form
@@ -271,7 +270,7 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (
   if (retv != 0)
     {
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA_SystemException::_tao_minor_code (
+                   CORBA::SystemException::_tao_minor_code (
                       TAO_DEFAULT_MINOR_CODE,
                       EINVAL),
                    CORBA::COMPLETED_NO));
@@ -279,7 +278,7 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (
 
   TAO_MProfile *jth_mprofile_ptr = &jth_mprofile;
 
-  /// Add this profile to the main mprofile.
+  // Add this profile to the main mprofile.
   int result = mprofile.add_profiles (jth_mprofile_ptr);
 
   if (result == -1)
@@ -307,15 +306,14 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
 
   if (!CORBA::is_nil (obj.in ()))
     {
-      /// All is well, so release the stub object from its
-      /// auto_ptr.
+      // All is well, so release the stub object from its auto_ptr.
       (void) safe_data.release ();
 
-      /// Return the object reference to the application.
+      // Return the object reference to the application.
       return obj._retn ();
     }
 
-  /// Shouldnt come here: if so, return nil reference.
+  // Shouldn't come here: if so, return nil reference.
   return CORBA::Object::_nil ();
 }
 
@@ -411,7 +409,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /// MProfile which consists of the profiles for each endpoint.
+  // MProfile which consists of the profiles for each endpoint.
   TAO_MProfile mprofile;
 
   // Skip the prefix.  We know it is there because this method is only

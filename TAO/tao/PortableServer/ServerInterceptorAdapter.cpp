@@ -126,7 +126,7 @@ send_reply (TAO_ServerRequestInfo *ri
   // interception point.
 
   // Unwind the stack.
-  size_t len = this->stack_size_;
+  const size_t len = this->stack_size_;
   for (size_t i = 0; i < len; ++i)
     {
       // Pop the interceptor off of the flow stack before it is
@@ -161,7 +161,7 @@ send_exception (TAO_ServerRequestInfo *ri
   ACE_TRY
     {
       // Unwind the flow stack.
-      size_t len = this->stack_size_;
+      const size_t len = this->stack_size_;
       for (size_t i = 0; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is
@@ -232,7 +232,7 @@ send_other (TAO_ServerRequestInfo *ri
   ACE_TRY
     {
       // Unwind the flow stack.
-      size_t len = this->stack_size_;
+      const size_t len = this->stack_size_;
       for (size_t i = 0; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is

@@ -225,7 +225,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // be/be_visitor_operation/proxy_impl_xh.cpp:24
     
     virtual void ping (
-        CORBA_Object *_collocated_tao_target_
+        CORBA::Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -236,7 +236,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     // be/be_visitor_operation/proxy_impl_xh.cpp:24
     
     virtual void shutdown (
-        CORBA_Object *_collocated_tao_target_
+        CORBA::Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -264,7 +264,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void ping (
-      CORBA_Object *_collocated_tao_target_
+      CORBA::Object *_collocated_tao_target_
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -275,7 +275,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void shutdown (
-      CORBA_Object *_collocated_tao_target_
+      CORBA::Object *_collocated_tao_target_
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -622,7 +622,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void activate_server (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server
       ACE_ENV_ARG_DECL
     )
@@ -636,7 +636,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual char * activate_server_with_startup (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server,
       CORBA::Long check_startup
       ACE_ENV_ARG_DECL
@@ -651,7 +651,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void register_server (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server,
       const ImplementationRepository::StartupOptions & options
       ACE_ENV_ARG_DECL
@@ -665,7 +665,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void reregister_server (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server,
       const ImplementationRepository::StartupOptions & options
       ACE_ENV_ARG_DECL
@@ -678,7 +678,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void remove_server (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server
       ACE_ENV_ARG_DECL
     )
@@ -691,7 +691,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void shutdown_server (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server
       ACE_ENV_ARG_DECL
     )
@@ -704,7 +704,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual char * server_is_running (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server,
       const char * addr,
       ImplementationRepository::ServerObject_ptr server_object
@@ -719,7 +719,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void server_is_shutting_down (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server
       ACE_ENV_ARG_DECL
     )
@@ -732,7 +732,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void find (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server,
       ImplementationRepository::ServerInformation_out info
       ACE_ENV_ARG_DECL
@@ -746,7 +746,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void list (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list,
       ImplementationRepository::ServerInformationIterator_out server_iterator
@@ -777,7 +777,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void activate_server (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server
       ACE_ENV_ARG_DECL
     )
@@ -791,7 +791,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual char * activate_server_with_startup (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server,
       CORBA::Long check_startup
       ACE_ENV_ARG_DECL
@@ -806,7 +806,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void register_server (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server,
       const ImplementationRepository::StartupOptions & options
       ACE_ENV_ARG_DECL
@@ -820,7 +820,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void reregister_server (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server,
       const ImplementationRepository::StartupOptions & options
       ACE_ENV_ARG_DECL
@@ -833,7 +833,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void remove_server (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server
       ACE_ENV_ARG_DECL
     )
@@ -846,7 +846,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void shutdown_server (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server
       ACE_ENV_ARG_DECL
     )
@@ -859,7 +859,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual char * server_is_running (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server,
       const char * addr,
       ImplementationRepository::ServerObject_ptr server_object
@@ -874,7 +874,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void server_is_shutting_down (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server
       ACE_ENV_ARG_DECL
     )
@@ -887,7 +887,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void find (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       const char * server,
       ImplementationRepository::ServerInformation_out info
       ACE_ENV_ARG_DECL
@@ -901,7 +901,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void list (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list,
       ImplementationRepository::ServerInformationIterator_out server_iterator
@@ -1089,7 +1089,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual CORBA::Boolean next_n (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list
       ACE_ENV_ARG_DECL
@@ -1102,7 +1102,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void destroy (
-      CORBA_Object *_collocated_tao_target_
+      CORBA::Object *_collocated_tao_target_
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -1130,7 +1130,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual CORBA::Boolean next_n (
-      CORBA_Object *_collocated_tao_target_,
+      CORBA::Object *_collocated_tao_target_,
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list
       ACE_ENV_ARG_DECL
@@ -1143,7 +1143,7 @@ public:
   // be/be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void destroy (
-      CORBA_Object *_collocated_tao_target_
+      CORBA::Object *_collocated_tao_target_
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((

@@ -342,7 +342,7 @@ const char* DynamicAny::DynAny::_interface_repository_id (void) const
 
 // Default constructor.
 DynamicAny::DynAny::InvalidValue::InvalidValue (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:omg.org/DynamicAny/DynAny/InvalidValue:1.0",
         "InvalidValue"
       )
@@ -356,7 +356,7 @@ DynamicAny::DynAny::InvalidValue::~InvalidValue (void)
 
 // Copy constructor.
 DynamicAny::DynAny::InvalidValue::InvalidValue (const ::DynamicAny::DynAny::InvalidValue &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -367,7 +367,7 @@ DynamicAny::DynAny::InvalidValue::InvalidValue (const ::DynamicAny::DynAny::Inva
 DynamicAny::DynAny::InvalidValue&
 DynamicAny::DynAny::InvalidValue::operator= (const ::DynamicAny::DynAny::InvalidValue &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -426,7 +426,7 @@ void DynamicAny::DynAny::InvalidValue::_tao_decode (
 
 // Default constructor.
 DynamicAny::DynAny::TypeMismatch::TypeMismatch (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:omg.org/DynamicAny/DynAny/TypeMismatch:1.0",
         "TypeMismatch"
       )
@@ -440,7 +440,7 @@ DynamicAny::DynAny::TypeMismatch::~TypeMismatch (void)
 
 // Copy constructor.
 DynamicAny::DynAny::TypeMismatch::TypeMismatch (const ::DynamicAny::DynAny::TypeMismatch &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -451,7 +451,7 @@ DynamicAny::DynAny::TypeMismatch::TypeMismatch (const ::DynamicAny::DynAny::Type
 DynamicAny::DynAny::TypeMismatch&
 DynamicAny::DynAny::TypeMismatch::operator= (const ::DynamicAny::DynAny::TypeMismatch &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -2355,7 +2355,7 @@ DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_shrink_buffer 
 void 
 DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_downcast (
     void* target,
-    CORBA_Object *src
+    CORBA::Object *src
     ACE_ENV_ARG_DECL
   )
 {
@@ -2364,7 +2364,7 @@ DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_downcast (
   ACE_CHECK;
 }
 
-CORBA_Object*
+CORBA::Object*
 DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_upcast (void *src) const
 {
   DynamicAny::DynAny **tmp = ACE_static_cast (DynamicAny::DynAny**, src);
@@ -3665,7 +3665,7 @@ const char* DynamicAny::DynAnyFactory::_interface_repository_id (void) const
 
 // Default constructor.
 DynamicAny::DynAnyFactory::InconsistentTypeCode::InconsistentTypeCode (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:omg.org/DynamicAny/DynAnyFactory/InconsistentTypeCode:1.0",
         "InconsistentTypeCode"
       )
@@ -3679,7 +3679,7 @@ DynamicAny::DynAnyFactory::InconsistentTypeCode::~InconsistentTypeCode (void)
 
 // Copy constructor.
 DynamicAny::DynAnyFactory::InconsistentTypeCode::InconsistentTypeCode (const ::DynamicAny::DynAnyFactory::InconsistentTypeCode &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -3690,7 +3690,7 @@ DynamicAny::DynAnyFactory::InconsistentTypeCode::InconsistentTypeCode (const ::D
 DynamicAny::DynAnyFactory::InconsistentTypeCode&
 DynamicAny::DynAnyFactory::InconsistentTypeCode::operator= (const ::DynamicAny::DynAnyFactory::InconsistentTypeCode &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 

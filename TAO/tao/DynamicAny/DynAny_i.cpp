@@ -1,17 +1,16 @@
-/* -*- C++ -*- */
-// $Id$
-
 #include "DynAny_i.h"
 #include "DynAnyFactory.h"
 
-ACE_RCSID(DynamicAny, DynAny_i, "$Id$")
 
-// Constructor from typecode
+ACE_RCSID (DynamicAny,
+           DynAny_i,
+           "$Id$")
+
+
 TAO_DynAny_i::TAO_DynAny_i (void)
 {
 }
 
-// Destructor
 TAO_DynAny_i::~TAO_DynAny_i (void)
 {
 }
@@ -61,7 +60,7 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
     case CORBA::tk_null:
       break;
     case CORBA::tk_void:
-      this->any_ = CORBA_Any (CORBA::_tc_void);
+      this->any_ = CORBA::Any (CORBA::_tc_void);
       break;
     case CORBA::tk_short:
       this->any_ <<= ACE_static_cast (CORBA::Short, 0);
@@ -148,7 +147,7 @@ TAO_DynAny_i::init_common (void)
 }
 
 void
-TAO_DynAny_i::init (CORBA_TypeCode_ptr tc
+TAO_DynAny_i::init (CORBA::TypeCode_ptr tc
                     ACE_ENV_ARG_DECL)
 {
   this->check_typecode (tc
@@ -165,7 +164,7 @@ TAO_DynAny_i::init (CORBA_TypeCode_ptr tc
 }
 
 void
-TAO_DynAny_i::init (const CORBA_Any& any
+TAO_DynAny_i::init (const CORBA::Any& any
                     ACE_ENV_ARG_DECL)
 {
   this->type_ = any.type ();
@@ -219,7 +218,7 @@ TAO_DynAny_i::_tao_QueryInterface (ptr_arith_t type)
 // ****************************************************************
 
 void
-TAO_DynAny_i::from_any (const CORBA_Any &any
+TAO_DynAny_i::from_any (const CORBA::Any &any
                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -263,7 +262,7 @@ TAO_DynAny_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  CORBA_Any_ptr retval;
+  CORBA::Any_ptr retval;
 
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any (this->any_),

@@ -329,7 +329,7 @@ TAO_NAMESPACE  ImplementationRepository
   public:
     virtual ~_TAO_Locator_Proxy_Impl (void) { }
     virtual void activate_server_in_location (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         const char * server,
         const char * location
         ACE_ENV_ARG_DECL
@@ -341,7 +341,7 @@ TAO_NAMESPACE  ImplementationRepository
       )) = 0;
 
     virtual void remove_server_in_location (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         const char * server,
         const char * location
         ACE_ENV_ARG_DECL
@@ -352,7 +352,7 @@ TAO_NAMESPACE  ImplementationRepository
       )) = 0;
 
     virtual void shutdown_server_in_location (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         const char * server,
         const char * location
         ACE_ENV_ARG_DECL
@@ -363,7 +363,7 @@ TAO_NAMESPACE  ImplementationRepository
       )) = 0;
 
     virtual void server_is_shutting_down_in_location (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         const char * server,
         const char * location
         ACE_ENV_ARG_DECL
@@ -374,7 +374,7 @@ TAO_NAMESPACE  ImplementationRepository
       )) = 0;
 
     virtual CORBA::ULong register_activator (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         const char * location,
         CORBA::Object_ptr object_ref
         ACE_ENV_ARG_DECL
@@ -385,7 +385,7 @@ TAO_NAMESPACE  ImplementationRepository
       )) = 0;
 
     virtual CORBA::ULong unregister_activator (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         const char * location,
         CORBA::Object_ptr object_ref
         ACE_ENV_ARG_DECL
@@ -422,7 +422,7 @@ TAO_NAMESPACE  ImplementationRepository
 
     virtual ~_TAO_Locator_Remote_Proxy_Impl (void) { }
     virtual void activate_server_in_location (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         const char * server,
         const char * location
         ACE_ENV_ARG_DECL
@@ -434,7 +434,7 @@ TAO_NAMESPACE  ImplementationRepository
       ));
 
     virtual void remove_server_in_location (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         const char * server,
         const char * location
         ACE_ENV_ARG_DECL
@@ -445,7 +445,7 @@ TAO_NAMESPACE  ImplementationRepository
       ));
 
     virtual void shutdown_server_in_location (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         const char * server,
         const char * location
         ACE_ENV_ARG_DECL
@@ -456,7 +456,7 @@ TAO_NAMESPACE  ImplementationRepository
       ));
 
     virtual void server_is_shutting_down_in_location (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         const char * server,
         const char * location
         ACE_ENV_ARG_DECL
@@ -467,7 +467,7 @@ TAO_NAMESPACE  ImplementationRepository
       ));
 
     virtual CORBA::ULong register_activator (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         const char * location,
         CORBA::Object_ptr object_ref
         ACE_ENV_ARG_DECL
@@ -478,7 +478,7 @@ TAO_NAMESPACE  ImplementationRepository
       ));
 
     virtual CORBA::ULong unregister_activator (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         const char * location,
         CORBA::Object_ptr object_ref
         ACE_ENV_ARG_DECL

@@ -74,7 +74,7 @@ receive_reply (TAO_ClientRequestInfo_i *ri
   TAO_ClientRequestInfo_Guard info_guard (this->info_, ri);
 
   // Unwind the stack.
-  size_t len = this->stack_size_;
+  const size_t len = this->stack_size_;
   for (size_t i = 0; i < len; ++i)
     {
       // Pop the interceptor off of the flow stack before it is
@@ -111,7 +111,7 @@ receive_exception (TAO_ClientRequestInfo_i *ri
       TAO_ClientRequestInfo_Guard info_guard (this->info_, ri);
 
       // Unwind the flow stack.
-      size_t len = this->stack_size_;
+      const size_t len = this->stack_size_;
       for (size_t i = 0; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is
@@ -180,7 +180,7 @@ receive_other (TAO_ClientRequestInfo_i *ri
       TAO_ClientRequestInfo_Guard info_guard (this->info_, ri);
 
       // Unwind the stack.
-      size_t len = this->stack_size_;
+      const size_t len = this->stack_size_;
       for (size_t i = 0; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is

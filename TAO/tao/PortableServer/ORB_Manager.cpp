@@ -311,7 +311,7 @@ TAO_ORB_Manager::run (ACE_ENV_SINGLE_ARG_DECL)
 CORBA::ORB_ptr
 TAO_ORB_Manager::orb (void)
 {
-  return CORBA_ORB::_duplicate (this->orb_.in ());
+  return CORBA::ORB::_duplicate (this->orb_.in ());
 }
 
 // Return the root POA reference

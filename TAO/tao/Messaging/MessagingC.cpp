@@ -447,10 +447,10 @@ Messaging::ExceptionHolder_init::tao_repository_id (void)
   return Messaging::ExceptionHolder::_tao_obv_static_repository_id ();
 }
 
-CORBA_ValueBase *
+CORBA::ValueBase *
 Messaging::ExceptionHolder_init::create_for_unmarshal (void)
 {
-  CORBA_ValueBase *ret_val = 0;
+  CORBA::ValueBase *ret_val = 0;
   ACE_NEW_RETURN (
       ret_val,
       OBV_Messaging::ExceptionHolder,
@@ -929,7 +929,7 @@ Messaging::ReplyHandler::_is_a (
     }
   else
     {
-      return this->CORBA_Object::_is_a (
+      return this->Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -1397,7 +1397,7 @@ operator<< (
   )
 {
   return
-    CORBA_ValueBase::_tao_marshal (
+    CORBA::ValueBase::_tao_marshal (
         strm,
         ACE_const_cast (
             Messaging::ExceptionHolder *,

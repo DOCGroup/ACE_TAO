@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 // =================================================================
 //
@@ -24,7 +23,11 @@
 
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(DynamicAny, DynAnyFactory, "$Id$")
+
+ACE_RCSID (DynamicAny,
+           DynAnyFactory,
+           "$Id$")
+
 
 // Constructor from typecode
 TAO_DynAnyFactory::TAO_DynAnyFactory (void)
@@ -34,7 +37,7 @@ TAO_DynAnyFactory::TAO_DynAnyFactory (void)
 // Utility function called by all the DynAny classes
 // to extract the TCKind of possibly aliased types.
 CORBA::TCKind
-TAO_DynAnyFactory::unalias (CORBA_TypeCode_ptr tc
+TAO_DynAnyFactory::unalias (CORBA::TypeCode_ptr tc
                             ACE_ENV_ARG_DECL)
 {
   CORBA::TCKind tck = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -42,7 +45,8 @@ TAO_DynAnyFactory::unalias (CORBA_TypeCode_ptr tc
 
   while (tck == CORBA::tk_alias)
     {
-      CORBA_TypeCode_var temp = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TypeCode_var temp =
+        tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::tk_null);
 
       tck = TAO_DynAnyFactory::unalias (temp.in ()
@@ -55,10 +59,10 @@ TAO_DynAnyFactory::unalias (CORBA_TypeCode_ptr tc
 
 // Same as above, but returns the type code.
 CORBA::TypeCode_ptr
-TAO_DynAnyFactory::strip_alias (CORBA_TypeCode_ptr tc
+TAO_DynAnyFactory::strip_alias (CORBA::TypeCode_ptr tc
                                 ACE_ENV_ARG_DECL)
 {
-  CORBA_TypeCode_var retval = CORBA::TypeCode::_duplicate (tc);
+  CORBA::TypeCode_var retval = CORBA::TypeCode::_duplicate (tc);
   CORBA::TCKind tck = retval->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
@@ -101,7 +105,7 @@ TAO_DynAnyFactory::create_dyn_any_from_type_code (
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any
+TAO_DynAnyFactory::make_dyn_any (const CORBA::Any &any
                                  ACE_ENV_ARG_DECL)
 {
   CORBA::TypeCode_var tc = any.type ();

@@ -14,7 +14,7 @@
 //
 // The implementation knows that native data formats are conformant
 // with OMG-IDL's (and hence CDR's) size requirements, and relies on
-// the fact that (for example) CORBA_Long is always four bytes long
+// the fact that (for example) CORBA::Long is always four bytes long
 // even if the environment's "int" is a different size.
 //
 //      char, octet                       8 bits (1 byte)

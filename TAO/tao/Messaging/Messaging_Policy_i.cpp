@@ -218,7 +218,7 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
 
       if (CORBA::is_nil (p.in ()))
         ACE_THROW (CORBA::INTERNAL (
-                CORBA_SystemException::_tao_minor_code (
+                CORBA::SystemException::_tao_minor_code (
                   TAO_POLICY_NARROW_CODE,
                   0),
                 CORBA::COMPLETED_NO));

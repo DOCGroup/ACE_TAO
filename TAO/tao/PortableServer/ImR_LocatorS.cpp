@@ -1310,7 +1310,7 @@ POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::_TAO_Locator_Thru
 // ThruPOA Implementation of the IDL interface methods
 
 void POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::activate_server_in_location (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * location
     ACE_ENV_ARG_DECL
@@ -1350,7 +1350,7 @@ void POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::activate_ser
 }
 
 void POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::remove_server_in_location (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * location
     ACE_ENV_ARG_DECL
@@ -1389,7 +1389,7 @@ void POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::remove_serve
 }
 
 void POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::shutdown_server_in_location (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * location
     ACE_ENV_ARG_DECL
@@ -1428,7 +1428,7 @@ void POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::shutdown_ser
 }
 
 void POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_shutting_down_in_location (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * location
     ACE_ENV_ARG_DECL
@@ -1467,7 +1467,7 @@ void POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::server_is_sh
 }
 
 CORBA::ULong POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::register_activator (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * location,
     CORBA::Object_ptr object_ref
     ACE_ENV_ARG_DECL
@@ -1508,7 +1508,7 @@ CORBA::ULong POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::regi
 }
 
 CORBA::ULong POA_ImplementationRepository::_TAO_Locator_ThruPOA_Proxy_Impl::unregister_activator (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * location,
     CORBA::Object_ptr object_ref
     ACE_ENV_ARG_DECL
@@ -1561,7 +1561,7 @@ POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::_TAO_Locator_Direc
 {}
 
 void POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::activate_server_in_location  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * location
     ACE_ENV_ARG_DECL
@@ -1583,7 +1583,7 @@ void POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::activate_serv
 }
 
 void POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::remove_server_in_location  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * location
     ACE_ENV_ARG_DECL
@@ -1604,7 +1604,7 @@ void POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::remove_server
 }
 
 void POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::shutdown_server_in_location  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * location
     ACE_ENV_ARG_DECL
@@ -1625,7 +1625,7 @@ void POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::shutdown_serv
 }
 
 void POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::server_is_shutting_down_in_location  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * location
     ACE_ENV_ARG_DECL
@@ -1646,7 +1646,7 @@ void POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::server_is_shu
 }
 
 CORBA::ULong POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::register_activator  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * location,
     CORBA::Object_ptr object_ref
     ACE_ENV_ARG_DECL
@@ -1667,7 +1667,7 @@ CORBA::ULong POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::regis
 }
 
 CORBA::ULong POA_ImplementationRepository::_TAO_Locator_Direct_Proxy_Impl::unregister_activator  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * location,
     CORBA::Object_ptr object_ref
     ACE_ENV_ARG_DECL
@@ -2541,7 +2541,7 @@ void POA_ImplementationRepository::Locator::_interface_skel (
   )
 {
   POA_ImplementationRepository::Locator *_tao_impl = (POA_ImplementationRepository::Locator *) _tao_servant;
-  CORBA_InterfaceDef_ptr _tao_retval = 0;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
   CORBA::Boolean _tao_result = 0;
   
   TAO_IFR_Client_Adapter *_tao_adapter =

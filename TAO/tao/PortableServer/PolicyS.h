@@ -217,7 +217,7 @@ TAO_NAMESPACE  POA_CORBA
     virtual ~_TAO_Policy_ThruPOA_Proxy_Impl (void) { }
 
     virtual CORBA::PolicyType policy_type (
-        CORBA_Object *_collocated_tao_target_
+        CORBA::Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -225,7 +225,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
 
     virtual ::CORBA::Policy_ptr copy (
-        CORBA_Object *_collocated_tao_target_
+        CORBA::Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -233,7 +233,7 @@ TAO_NAMESPACE  POA_CORBA
       ));
 
     virtual void destroy (
-        CORBA_Object *_collocated_tao_target_
+        CORBA::Object *_collocated_tao_target_
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -262,7 +262,7 @@ public:
   virtual ~_TAO_Policy_Direct_Proxy_Impl (void) { }
 
   virtual CORBA::PolicyType policy_type (
-      CORBA_Object *_collocated_tao_target_
+      CORBA::Object *_collocated_tao_target_
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -270,7 +270,7 @@ public:
     ));
 
   virtual ::CORBA::Policy_ptr copy (
-      CORBA_Object *_collocated_tao_target_
+      CORBA::Object *_collocated_tao_target_
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -278,7 +278,7 @@ public:
     ));
 
   virtual void destroy (
-      CORBA_Object *_collocated_tao_target_
+      CORBA::Object *_collocated_tao_target_
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((

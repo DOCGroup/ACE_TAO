@@ -44,7 +44,7 @@ TAO_Collocated_Object::_is_a (const CORBA::Char *logical_type_id
 {
   // If the object is collocated then try locally....
   if (!this->_is_collocated ())
-    return this->CORBA_Object::_is_a (logical_type_id ACE_ENV_ARG_PARAMETER);
+    return this->Object::_is_a (logical_type_id ACE_ENV_ARG_PARAMETER);
 
   if (this->_stubobj ()->type_id.in () != 0
       && ACE_OS::strcmp (logical_type_id,
@@ -83,12 +83,12 @@ TAO_Collocated_Object::_is_a (const CORBA::Char *logical_type_id
 }
 
 CORBA::Boolean
-TAO_Collocated_Object::_is_equivalent (CORBA_Object_ptr other_obj
+TAO_Collocated_Object::_is_equivalent (CORBA::Object_ptr other_obj
                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (())
 {
   CORBA::Boolean equivalent =
-    this->CORBA_Object::_is_equivalent (other_obj ACE_ENV_ARG_PARAMETER);
+    this->Object::_is_equivalent (other_obj ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (equivalent)
@@ -118,7 +118,7 @@ TAO_Collocated_Object::_non_existent (ACE_ENV_SINGLE_ARG_DECL)
     {
       // If the object is collocated then try locally....
       if (!this->_is_collocated ())
-        return this->CORBA_Object::_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+        return this->Object::_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       TAO_Stub *stub = this->_stubobj ();
 
@@ -170,7 +170,7 @@ TAO_Collocated_Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
 
   // If the object is collocated then try locally....
   if (!this->_is_collocated ())
-    return this->CORBA_Object::_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->Object::_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   TAO_Stub *stub = this->_stubobj ();
 
@@ -213,7 +213,7 @@ TAO_Collocated_Object::_tao_QueryInterface (ptr_arith_t query_type)
       return this;
     }
 
-  return this->CORBA_Object::_tao_QueryInterface (query_type);
+  return this->Object::_tao_QueryInterface (query_type);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

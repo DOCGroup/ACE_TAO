@@ -47,7 +47,7 @@ TAO_ORBInitInfo::arguments (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (args,
                     CORBA::StringSeq,
                     CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
@@ -166,7 +166,7 @@ TAO_ORBInitInfo::add_client_request_interceptor (
 #else
   ACE_UNUSED_ARG (interceptor);
   ACE_THROW (CORBA::NO_IMPLEMENT (
-               CORBA_SystemException::_tao_minor_code (
+               CORBA::SystemException::_tao_minor_code (
                  TAO_DEFAULT_MINOR_CODE,
                  ENOTSUP),
                CORBA::COMPLETED_NO));
@@ -190,7 +190,7 @@ TAO_ORBInitInfo::add_server_request_interceptor (
 #else
   ACE_UNUSED_ARG (interceptor);
   ACE_THROW (CORBA::NO_IMPLEMENT (
-               CORBA_SystemException::_tao_minor_code (
+               CORBA::SystemException::_tao_minor_code (
                  TAO_DEFAULT_MINOR_CODE,
                  ENOTSUP),
                CORBA::COMPLETED_NO));
@@ -222,7 +222,7 @@ TAO_ORBInitInfo::allocate_slot_id (ACE_ENV_SINGLE_ARG_DECL)
   return this->orb_core_->pi_current ()->allocate_slot_id ();
 #else
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOTSUP),
                       CORBA::COMPLETED_NO),
@@ -263,7 +263,7 @@ TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup
 
   if (result != 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (
-                        CORBA_SystemException::_tao_minor_code (
+                        CORBA::SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,
                           errno),
                         CORBA::COMPLETED_NO),
