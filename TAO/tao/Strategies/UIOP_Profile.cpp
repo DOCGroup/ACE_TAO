@@ -12,12 +12,11 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-
+#include "ace/os_include/os_ctype.h"
 
 ACE_RCSID (Strategies,
            UIOP_Profile,
            "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "UIOP_Profile.i"
@@ -185,7 +184,7 @@ CORBA::Boolean
 TAO_UIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 {
   const TAO_UIOP_Profile *op =
-    ACE_dynamic_cast (const TAO_UIOP_Profile *, other_profile);
+    dynamic_cast <const TAO_UIOP_Profile *> (other_profile);
 
   if (op == 0)
     return 0;
@@ -393,14 +392,14 @@ TAO_UIOP_Profile::decode_endpoints (void)
       const CORBA::Octet *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
+      TAO_InputCDR in_cdr (reinterpret_cast <const char*>(buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         return -1;
-      in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+      in_cdr.reset_byte_order (static_cast<int>(byte_order));
 
       // Extract endpoints sequence.
       TAO_UIOPEndpointSequence endpoints;
