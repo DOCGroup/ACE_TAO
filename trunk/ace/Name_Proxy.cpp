@@ -82,7 +82,7 @@ ACE_Name_Proxy::request_reply (ACE_Name_Request &request)
  
       // Receive reply via blocking read.
  
-      if (this->peer_.recv (&reply, sizeof reply) == -1)
+      if (this->peer_.recv_n (&reply, sizeof reply) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("recv failed")), -1);
  
       else if (reply.decode () == -1)
