@@ -146,7 +146,7 @@ public:
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  TAO_Buffering_Constraint_Policy *buffering_constraint (void);
+  CORBA::Policy *buffering_constraint (void);
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 

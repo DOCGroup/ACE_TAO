@@ -1,6 +1,7 @@
 // $Id$
 
 #include "testS.h"
+#include "tao/RTCORBA/RTCORBA.h"
 #include "ace/Get_Opt.h"
 
 class Test_i : public POA_Test

@@ -668,21 +668,18 @@ TAO_Stub::sync_scope (void)
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-TAO_Buffering_Constraint_Policy *
+CORBA::Policy *
 TAO_Stub::buffering_constraint (void)
 {
-  TAO_Buffering_Constraint_Policy *result = 0;
+  CORBA::Policy *result = 0;
 
   // No need to lock, the stub only changes its policies at
   // construction time...
 
   if (this->policies_ != 0)
     {
-      CORBA::Policy_var policy =
+      result =
         this->policies_->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
-      TAO::BufferingConstraintPolicy_var bcp =
-        TAO::BufferingConstraintPolicy::_narrow (policy.in());
-      result = ACE_dynamic_cast (TAO_Buffering_Constraint_Policy *, bcp.in ());
     }
 
   // No need to lock, the object is in TSS storage....
@@ -691,11 +688,8 @@ TAO_Stub::buffering_constraint (void)
       TAO_Policy_Current &policy_current =
         this->orb_core_->policy_current ();
 
-      CORBA::Policy_var policy = policy_current.get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
-      TAO::BufferingConstraintPolicy_var bcp =
-        TAO::BufferingConstraintPolicy::_narrow (policy.in());
-
-      result = ACE_dynamic_cast (TAO_Buffering_Constraint_Policy *, bcp.in ());
+      result = 
+        policy_current.get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
     }
 
   // @@ Must lock, but is is harder to implement than just modifying
@@ -707,11 +701,8 @@ TAO_Stub::buffering_constraint (void)
         this->orb_core_->policy_manager ();
       if (policy_manager != 0)
         {
-          CORBA::Policy_var policy = policy_manager->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
-          TAO::BufferingConstraintPolicy_var bcp =
-            TAO::BufferingConstraintPolicy::_narrow (policy.in());
-
-          result = ACE_dynamic_cast (TAO_Buffering_Constraint_Policy *, bcp.in ());
+          result = 
+            policy_manager->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
         }
     }
 

@@ -65,14 +65,15 @@ TAO_Eager_Buffering_Sync_Strategy::
   must_flush = 0;
   set_timer = 0;
 
+  CORBA::Policy_var bcp_policy = stub->buffering_constraint ();
+  TAO::BufferingConstraintPolicy_var bcp = 
+    TAO::BufferingConstraintPolicy::_narrow (bcp_policy.in());
+
   TAO_Buffering_Constraint_Policy *buffering_constraint_policy =
-    stub->buffering_constraint ();
+    ACE_dynamic_cast (TAO_Buffering_Constraint_Policy *, bcp.in ());
 
   if (buffering_constraint_policy == 0)
     return 1;
-
-  // Automatically release the policy
-  CORBA::Object_var auto_release = buffering_constraint_policy;
 
   TAO::BufferingConstraint buffering_constraint;
   buffering_constraint_policy->get_buffering_constraint (buffering_constraint);
