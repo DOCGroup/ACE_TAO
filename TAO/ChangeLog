@@ -1,3 +1,10 @@
+Sun Jul 6 13:08:57 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
+
+        * orbsvcs/IFR_Service/Makefile.tao_ifr:
+          Removed windows specific parts from this makefile. This is not
+          needed and cause problems when using windows and the msys shell.
+          This solves several compile problems in the MinGW build.
+
 Sun Jul 6 13:01:12 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile:
