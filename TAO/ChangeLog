@@ -20,7 +20,7 @@ Fri May 14 15:29:36 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  <max_> and <min_> were removed.  Conversion from corba to
 	  network in to_network() was corrected.
 
-	* tao/IOP_Connection_Handler.cpp (set_dscp_codepoint):
+	* tao/IIOP_Connection_Handler.cpp (set_dscp_codepoint):
 
 	  "Failed to set Diffserv" message was incorrectly getting printed
 	  out. IPDSFIELD_DSCP_DEFAULT was made a valid DiffServ code
