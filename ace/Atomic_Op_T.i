@@ -244,7 +244,8 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::value (void) const
 template <class ACE_LOCK, class TYPE> ACE_INLINE void
 ACE_Atomic_Op<ACE_LOCK, TYPE>::dump (void) const
 {
-  return this->impl_.dump ();
+  this->impl_.dump ();
+  return;
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE ACE_LOCK &
