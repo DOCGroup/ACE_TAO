@@ -57,12 +57,12 @@ main (int argc, char *argv[])
 
   char *sock_client = ACE_OS::tempnam (0, 0);
 
+  ACE_LSOCK_Dgram sd ((ACE_UNIX_Addr) (sock_client));
   if (ACE_OS::unlink (sock_client))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "unlink"),
                       -1);
-  ACE_LSOCK_Dgram sd ((ACE_UNIX_Addr) (sock_client));
   ACE_OS::free ((void *) sock_client);
 
   ACE_LSOCK_CODgram sc;

@@ -1082,7 +1082,11 @@ ACE_Thread_Manager::get_grp (ACE_thread_t t_id, int &grp_id)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   ACE_FIND (this->find_thread (t_id), ptr);
-  grp_id = ptr->grp_id_;
+
+  if (ptr)
+    grp_id = ptr->grp_id_;
+  else
+    return -1;
   return 0;
 }
 
@@ -1095,7 +1099,10 @@ ACE_Thread_Manager::set_grp (ACE_thread_t t_id, int grp_id)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   ACE_FIND (this->find_thread (t_id), ptr);
-  ptr->grp_id_ = grp_id;
+  if (ptr)
+    ptr->grp_id_ = grp_id;
+  else
+    return -1;
   return 0;
 }
 
