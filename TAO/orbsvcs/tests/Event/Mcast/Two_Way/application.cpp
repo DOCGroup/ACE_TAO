@@ -415,7 +415,6 @@ Heartbeat_Application::handle_timeout (const ACE_Time_Value&,
                            "Heartbeat_Application::handle_timeout:\n");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
   return 0;
 }
 
@@ -490,7 +489,6 @@ Heartbeat_Application::destroy_ec (void)
                                "Application_Heartbeat::destroy_ec\n");
         }
       ACE_ENDTRY;
-      ACE_CHECK;
 
       this->ec_ = RtecEventChannelAdmin::EventChannel::_nil ();
     }
@@ -554,7 +552,6 @@ Heartbeat_Application::shutdown (void)
                            "Heartbeat_Application::shutdown:\n");
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 ////////////////////////////////////////////////////////////

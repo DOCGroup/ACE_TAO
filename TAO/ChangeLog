@@ -1,3 +1,8 @@
+Wed Aug 27 16:58:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/Mcast/Two_Way/application.cpp:
+          Fixed compile errors in emulated exception builds
+
 Wed Aug 27 16:53:36 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/Mcast/Common/EC_Wrapper.cpp:
