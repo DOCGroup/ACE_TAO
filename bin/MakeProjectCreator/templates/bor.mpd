@@ -150,19 +150,19 @@ idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
 <%foreach(idl_files)%>
 <%if(flag_overrides(idl_file, idlgendir))%>
 <%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>S.cpp <%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
-	$(TAO_IDL) -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> $**
+	$(TAO_IDL) -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
 <%else%>
 <%if(idlgendir)%>
 <%idlgendir%>\<%basenoextension(idl_file)%>S.cpp <%idlgendir%>\<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
-	$(TAO_IDL) -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> $**
+	$(TAO_IDL) -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
 <%else%>
 # IDL File Directory: <%dirname(idl_file)%>
 <%if(dirname_found)%>
 <%dirname(idl_file)%>\<%basenoextension(idl_file)%>S.cpp <%dirname(idl_file)%>\<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
-	$(TAO_IDL) -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> $**
+	$(TAO_IDL) -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
 <%else%>
 $(IDLDIR)\<%basenoextension(idl_file)%>S.cpp $(IDLDIR)\<%basenoextension(idl_file)%>C.cpp: $(IDLDIR)\<%idl_file%>
-	$(TAO_IDL) <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> $**
+	$(TAO_IDL) <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
 <%endif%>
 <%endif%>
 <%endif%>

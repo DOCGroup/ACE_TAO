@@ -1,3 +1,13 @@
+Thu Jul  3 11:49:23 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Removed tao_idl specific defaults from these template files.
+
 Wed Jul  2 23:58:11 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
 
         * ace/config-freebsd.h:
@@ -85,10 +95,10 @@ Wed Jul 02 14:57:00 2003  Justin Michel  <michel_j@ociweb.com>
         * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp
         * tests/SSL/tests.mpc
 
-          Added some missing project files. 
-          Updated all ACE tests to use the common test library. 
-          Updated ACE test mpc files to use a common base project. 
-          Fixed mpc files for broken examples. 
+          Added some missing project files.
+          Updated all ACE tests to use the common test library.
+          Updated ACE test mpc files to use a common base project.
+          Fixed mpc files for broken examples.
           Added base projects rtnotify and valuetype.
 
 Wed Jul  2 13:16:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
@@ -112,7 +122,7 @@ Tue Jul  1 19:39:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/os_include/sys/os_mman.h:
           Added !defined (ACE_WIN32) to the initial #if for the PROT_*
-          define section so Windows can make it to the #ifelse section. 
+          define section so Windows can make it to the #ifelse section.
 
 Sun Jun 29 01:31:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -128,8 +138,8 @@ Fri Jun 27 12:52:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jun 26 21:34:43 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* ace/QtReactor.cpp: Removed precompiled header include residue
-	  from OCI version.
+        * ace/QtReactor.cpp: Removed precompiled header include residue
+          from OCI version.
 
 Thu Jun 26 17:35:00 2003  Justin Michel  <michel_j@ociweb.com>
 
@@ -143,29 +153,29 @@ Thu Jun 26 17:35:00 2003  Justin Michel  <michel_j@ociweb.com>
 
 Thu Jun 26 16:31:51 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* ace/QtReactor.h:
-	* ace/QtReactor.cpp:
+        * ace/QtReactor.h:
+        * ace/QtReactor.cpp:
 
-	  The QtReactor works by semi-unifying the Qt Event loop with the
-	  Reactor event loop.  Most of the time, the Qt Event loop is the
-	  dominant loop, but occasionally, when wait_for_multiple_events
-	  gets called, the reactor loop becomes the dominant loop.
+          The QtReactor works by semi-unifying the Qt Event loop with the
+          Reactor event loop.  Most of the time, the Qt Event loop is the
+          dominant loop, but occasionally, when wait_for_multiple_events
+          gets called, the reactor loop becomes the dominant loop.
 
-	  Previous QtReactor implementations only overloaded
-	  register_handler, caused them to never notice when an
-	  application changed the mask on a previously-registered handler,
-	  e.g., via ACE_Reactor::schedule_wakeup.  Thus, the Qt event loop
-	  never knew about the new interest or lack thereof, and didn't
-	  call it back.
+          Previous QtReactor implementations only overloaded
+          register_handler, caused them to never notice when an
+          application changed the mask on a previously-registered handler,
+          e.g., via ACE_Reactor::schedule_wakeup.  Thus, the Qt event loop
+          never knew about the new interest or lack thereof, and didn't
+          call it back.
 
-	  This newer version overloads ACE_Reactor::bit_ops, and tweaks
-	  the registrations with the Qt event loop according to bit_ops'
-	  arguments' mask operations.  This *should* allow us to catch
-	  every twiddling of masks, although there is no comprehensive
-	  regression test for this for any kind of reactor.
+          This newer version overloads ACE_Reactor::bit_ops, and tweaks
+          the registrations with the Qt event loop according to bit_ops'
+          arguments' mask operations.  This *should* allow us to catch
+          every twiddling of masks, although there is no comprehensive
+          regression test for this for any kind of reactor.
 
-	  From inspection, it appears as if the XtReactor might need
-	  similar changes.
+          From inspection, it appears as if the XtReactor might need
+          similar changes.
 
 Thu Jun 26 02:22:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -210,11 +220,11 @@ Wed Jun 25 13:14:00 2003  Justin Michel  <michel_j@ociweb.com>
 
 Wed Jun 25 12:45:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/topinfo_iorsize_stats.sh (s_id):
-	* bin/topinfo_simple_stats.sh: We used 'top' to determine the
-	  runtime memory used by the process. A better way to get this
-	  done is to use /proc/processid/status. The scripts have been
-	  changed to use the proc info instead of 'top'.
+        * bin/topinfo_iorsize_stats.sh (s_id):
+        * bin/topinfo_simple_stats.sh: We used 'top' to determine the
+          runtime memory used by the process. A better way to get this
+          done is to use /proc/processid/status. The scripts have been
+          changed to use the proc info instead of 'top'.
 
 Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 
@@ -409,14 +419,14 @@ Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
           Updated MPC with the latest features and changes from OCI's repo. Created
         new mpb base projects to make mpc files as simple as possible, and updated
         existing mpb base projects. Added and updated mpc files to use the latest
-        features and make use of base projects. 
+        features and make use of base projects.
           Added the create_ace_build.pl script that is more MPC friendly and works
         on Windows.
           Removed unused nightly.mwc.
 
 Wed Jun 25 10:20:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* THANKS: Added missing doc_group folks at Vanderbilt.
+        * THANKS: Added missing doc_group folks at Vanderbilt.
 
 Wed Jun 25 13:36:51 UTC 2003  Don Hinton  <dhinton@dresytems.com>
 
@@ -441,35 +451,35 @@ Wed Jun 25 03:47:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Jun 24 18:38:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* bin/tao_other_tests.lst:
-	  Added Notify Basic test for RT_Notification.
-	  Moved the Notify Lanes and Threadpool test with the other
-	  Notify tests.
+        * bin/tao_other_tests.lst:
+          Added Notify Basic test for RT_Notification.
+          Moved the Notify Lanes and Threadpool test with the other
+          Notify tests.
 
 Tue Jun 24 15:47:16 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/MakeProjectCreator/config/ciao_client.mpb: Added
-	  $(CIAO_ROOT)/ciao to idlflags.
+        * bin/MakeProjectCreator/config/ciao_client.mpb: Added
+          $(CIAO_ROOT)/ciao to idlflags.
 
-	  Added $(TAO_ROOT)/orbsvcs/orbsvcs to libpaths and linking
-	  Security to even a simple stub DLL because of the way
-	  components.idl is being set up.  (Hint: we really don't need
-	  them.)
+          Added $(TAO_ROOT)/orbsvcs/orbsvcs to libpaths and linking
+          Security to even a simple stub DLL because of the way
+          components.idl is being set up.  (Hint: we really don't need
+          them.)
 
-	* bin/MakeProjectCreator/config/ciao_component.mpb: Reorganized
-	  the template since I moved some of the libraries to ciao_client
-	  to fix the components.idl definition problem.
+        * bin/MakeProjectCreator/config/ciao_component.mpb: Reorganized
+          the template since I moved some of the libraries to ciao_client
+          to fix the components.idl definition problem.
 
-	* bin/MakeProjectCreator/config/ciao_servant.mpb: Added this new
-	  template to isolate customize CIDL rules for servant DLLs.  It
-	  turned out they also requires the stuff defined in the
-	  Deployment module (thus, the CIAO_Server library.)
+        * bin/MakeProjectCreator/config/ciao_servant.mpb: Added this new
+          template to isolate customize CIDL rules for servant DLLs.  It
+          turned out they also requires the stuff defined in the
+          Deployment module (thus, the CIAO_Server library.)
 
-	* bin/MakeProjectCreator/templates/gnu.mpd: Added code to define
-	  CIAO_ROOT in Makefiles if it's not defined already.
+        * bin/MakeProjectCreator/templates/gnu.mpd: Added code to define
+          CIAO_ROOT in Makefiles if it's not defined already.
 
-	  Thanks to Chad Elliott for helping me setting up the custom
-	  rules for CIDL compiler and answering my tons of questions.
+          Thanks to Chad Elliott for helping me setting up the custom
+          rules for CIDL compiler and answering my tons of questions.
 
 Tue June 24 16:26:06 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
@@ -482,10 +492,10 @@ Tue June 24 16:26:06 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 Tue Jun 24 13:10:25 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Cached_Connect_Strategy_T.cpp (cached_connect): Added
-	  a check for "|| errno == EADDRINUSE" to fix problems on Windows.
-  	  Thanks to Valery Salamakha <ccapstan@bigpond.net.au> for
- 	  reporting this.
+        * ace/Cached_Connect_Strategy_T.cpp (cached_connect): Added
+          a check for "|| errno == EADDRINUSE" to fix problems on Windows.
+          Thanks to Valery Salamakha <ccapstan@bigpond.net.au> for
+          reporting this.
 
 Tue Jun 24 12:07:06 2003  Chad Elliott  <elliott_c@ociweb.com>
 
