@@ -49,7 +49,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 CORBA::Short
-Test_i::box_prices (CORBA::Environment &ACE_TRY_ENV)
+Test_i::box_prices (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 125;
@@ -57,17 +57,17 @@ Test_i::box_prices (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::Long 
 Test_i::tickets (CORBA::Short number,
-                 CORBA::Environment &ACE_TRY_ENV)
+                 CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 125 * number;
 }
 
 void
-Test_i::shutdown (CORBA::Environment &)
+Test_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown ();
+  this->orb_->shutdown (ACE_TRY_ENV);
 }
 
 static const char *ior_output_file = 0;
@@ -159,11 +159,9 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (orb->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "orb->run"),
-                          -1);
+      orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_DEBUG,
                   "event loop finished\n"));
 
