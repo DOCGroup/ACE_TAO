@@ -35,6 +35,23 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
 {
 }
 
+TAO_Profile::TAO_Profile (CORBA::ULong tag,
+                          TAO_ORB_Core *orb_core,
+                          const TAO_GIOP_Message_Version &version)
+  : version_ (version)
+    , are_policies_parsed_ (0)
+    , stub_ (0)
+    , policy_list_ (0)
+    , addressing_mode_ (0)
+    , tagged_profile_ (0)
+    , object_key_ ()
+    , tag_ (tag)
+    , orb_core_ (orb_core)
+    , forward_to_ (0)
+    , refcount_ (1)
+{
+}
+
 TAO_Profile::~TAO_Profile (void)
 {
   if (this->tagged_profile_)

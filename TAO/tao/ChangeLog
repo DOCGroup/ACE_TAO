@@ -1,3 +1,8 @@
+Tue Mar 25 18:16:05 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Profile.cpp: Missed a definition of a constructor during the
+	  merge.
+
 Tue Mar 25 17:14:22 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Domain/DomainS.cpp: Fixed compile errors.
