@@ -1,22 +1,19 @@
 // -*- MPC -*-
 // $Id$
 
-project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver {
+project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver, minimum_corba {
   sharedname   = TAO_FTORB_Utils
   idlflags    += -Wb,skel_export_include=tao/PortableServer/PolicyS.h
   dynamicflags = TAO_FT_ORB_UTILS_BUILD_DLL
   tagchecks   += FTORB_Utils
-  // Add this include path for precompiled headers
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
-  avoids      += minimum_corba
 
   IDL_Files {
     PortableGroup_Simple_DS.idl
   }
 
   IDL_Files {
-  idlflags    += -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance/FT_ORB_Utils_export.h
-  FT_CORBA_ORB.idl 
+    idlflags += -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance/FT_ORB_Utils_export.h
+    FT_CORBA_ORB.idl 
   }
 
   Source_Files(ORBSVCS_COMPONENTS) {
@@ -29,15 +26,11 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver {
   }
 }
 
-project(FT_ClientORB) : orbsvcslib, ftorbutils, core, iormanip, messaging, portablegroup{
+project(FT_ClientORB) : orbsvcslib, ftorbutils, core, iormanip, messaging, portablegroup, minimum_corba {
   sharedname   = TAO_FT_ClientORB
-  idlflags    += -Wb,export_macro=TAO_FT_ServerORB_Export -Wb,export_include=FaultTolerance/FT_ServerORB_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
   dynamicflags = TAO_FT_CLIENTORB_BUILD_DLL
   tagchecks   += FT_ClientORB
   libs        += TAO_FTORB_Utils
-  // Add this include path for precompiled headers
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
-  avoids      += minimum_corba
 
   IDL_Files {
   }
@@ -57,15 +50,11 @@ project(FT_ClientORB) : orbsvcslib, ftorbutils, core, iormanip, messaging, porta
   }
 }
 
-project(FT_ServerORB) : orbsvcslib, ftorbutils, core, iormanip, messaging, portablegroup{
+project(FT_ServerORB) : orbsvcslib, ftorbutils, core, iormanip, messaging, portablegroup, minimum_corba {
   sharedname   = TAO_FT_ServerORB
-  idlflags    += -Wb,export_macro=TAO_FT_ServerORB_Export -Wb,export_include=FaultTolerance/FT_ServerORB_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
   dynamicflags = TAO_FT_SERVERORB_BUILD_DLL
   tagchecks   += FT_ServerORB
   libs        += TAO_FTORB_Utils
-  // Add this include path for precompiled headers
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
-  avoids      += minimum_corba
 
   IDL_Files {
   }
