@@ -301,13 +301,14 @@ TAO_Literal_Constraint (const TAO_Literal_Constraint& lit)
 
 TAO_Literal_Constraint::
 TAO_Literal_Constraint (CORBA::Any* any)
-  : type_ (TAO_Literal_Constraint::comparable_type (any->type ()))
 {
   CORBA::Environment env;
   CORBA::Any& any_ref = *any;
-  CORBA::TCKind corba_type = any_ref.type()->kind(env);
+  CORBA::TypeCode_var type = any_ref.type ();
+  CORBA::TCKind corba_type = type->kind(env);
   TAO_CHECK_ENV_RETURN_VOID (env);
-  
+
+  this->type_ = TAO_Literal_Constraint::comparable_type (type.in ());
   switch(this->type_)
     {
     case TAO_SIGNED:
@@ -486,7 +487,7 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
   // Convert a CORBA::TCKind into a TAO_Literal_Type
   CORBA::Environment env;
   TAO_Expression_Type return_value = TAO_UNKNOWN;
-  CORBA::TCKind kind = type->kind(env);
+  CORBA::TCKind kind = type->kind (env);
   TAO_CHECK_ENV_RETURN (env, return_value);
   
   switch (kind)
@@ -840,8 +841,8 @@ operator/ (const TAO_Literal_Constraint& left,
 
 TAO_Literal_Constraint
 operator- (const TAO_Literal_Constraint& operand)
-{  
-  switch (operand.expr_type())
+{
+  switch (operand.expr_type ())
     {
     case TAO_DOUBLE:
       {
@@ -867,8 +868,8 @@ TAO_Expression_Type
 TAO_Literal_Constraint::widest_type (const TAO_Literal_Constraint& left,
 				     const TAO_Literal_Constraint& right)
 {
-  TAO_Expression_Type left_type = left.expr_type(),
-    right_type = right.expr_type(),
+  TAO_Expression_Type left_type = left.expr_type (),
+    right_type = right.expr_type (),
     return_value = right_type;
 
   if (right_type != left_type)

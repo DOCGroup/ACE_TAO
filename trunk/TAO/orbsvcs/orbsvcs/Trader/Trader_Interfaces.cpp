@@ -1227,7 +1227,7 @@ validate_properties (const char* type,
       const char* prop_name  = prop_struct.name;
 
       // Obtain the type of the exported property.
-      CORBA::TypeCode* prop_type = prop_eval.property_type (prop_name);
+      CORBA::TypeCode_var prop_type = prop_eval.property_type (prop_name);
 
       if (prop_type == CORBA::TypeCode::_nil ())
         {
