@@ -175,6 +175,9 @@ DRV_cpp_init (void)
       DRV_cpp_putarg ("+W");
       DRV_cpp_putarg ("67");     // Ignore "invalid #pragma directive"
 #endif /* __HP_aCC */
+#if defined (__IBMCPP__) && (__IBMCPP__ < 400)  // IBM C++ 3.6
+      DRV_cpp_putarg ("-qflag=w:w");  // Ignore info msg; invalid #pragma
+#endif /* __IBM_CPP__ */
 #endif /* !defined (__BORLANDC__) */
 
       // So we can find the required orb.idl file.
