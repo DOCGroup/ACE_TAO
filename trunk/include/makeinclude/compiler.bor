@@ -1,6 +1,6 @@
 #
 # Defines specific to a particular version of the compiler
-# 
+#
 # Inputs:
 # ~~~~~~~
 # STATIC - if defined means creating a static library or executable
@@ -64,7 +64,7 @@ CODEGUARD_CFLAGS = -vG
 !endif
 
 THREAD_CFLAGS = -D_MT -tWM
-WARNINGS_CFLAGS = -w-rvl -w-rch -w-par -w-ccc -w-obs -w-aus -w-pia -w-inl
+WARNINGS_CFLAGS = -w-rvl -w-rch -w-ccc -w-obs -w-aus -w-pia -w-inl
 DEFINES_CFLAGS = -DWIN32;_NO_VCL
 QUIET_CFLAGS = -q
 MISC_CFLAGS = -a8 -b
