@@ -37,8 +37,8 @@ TAO_IIOP_Connector::connect(TAO_Profile *profile, CORBA::Environment &env)
 {
   if (profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
     TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO), env, 0);
-  
-  TAO_IIOP_Profile *iiop_profile = 
+
+  TAO_IIOP_Profile *iiop_profile =
     ACE_dynamic_cast(TAO_IIOP_Profile*,profile);
 
   if (iiop_profile == 0)
@@ -52,7 +52,7 @@ TAO_IIOP_Connector::connect(TAO_Profile *profile, CORBA::Environment &env)
 //     {
 //       ACE_INET_Addr local_addr (this->orb_core_->orb_params ()->addr ());
 //       local_addr.set_port_number (server_addr_p->get_port_number ());
-// 
+//
 //       // Set the local port number to use.
 //       if (con->connect (iiop_profile->hint (),
 //                         iiop_profile->object_addr (),
@@ -88,7 +88,7 @@ TAO_IIOP_Connector::connect(TAO_Profile *profile, CORBA::Environment &env)
                   "errno"));
 
     TAO_THROW_ENV_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO), env, 0);
-  } 
+  }
 
   // the connect call will set the hint () stored in the Profile
   // object.

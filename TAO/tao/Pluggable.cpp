@@ -30,7 +30,7 @@ TAO_Connector_Registry::~TAO_Connector_Registry()
 TAO_Connector *
 TAO_Connector_Registry::get_connector (CORBA::ULong tag)
 {
-  // For now, only IIOP connectors. 
+  // For now, only IIOP connectors.
   if (tag != TAO_IOP_TAG_INTERNET_IOP)
   {
     ACE_DEBUG ((LM_DEBUG, "Invalid connector tag %d\n", tag));
@@ -83,10 +83,10 @@ TAO_Connector_Registry::preconnect (const char* the_preconnections)
 
   // @@ OK, what we should do is parse the string so that we can gather
   // @@ together addresses of the same protocol together and pass to the
-  // @@ appropriate connector.  But, for now we ASSUME they are all 
+  // @@ appropriate connector.  But, for now we ASSUME they are all
   // @@ INET IP:Port!! HACK. fredk
 
-  if (this->iiop_connector_) 
+  if (this->iiop_connector_)
     result = this->iiop_connector_->preconnect(preconnections);
 
   ACE_OS::free (preconnections);
@@ -96,7 +96,7 @@ TAO_Connector_Registry::preconnect (const char* the_preconnections)
 }
 
 TAO_Profile *
-TAO_Connector_Registry::connect (STUB_Object *&obj, 
+TAO_Connector_Registry::connect (STUB_Object *&obj,
                                  CORBA::Environment &env)
 {
   TAO_Profile *profile;
@@ -117,10 +117,11 @@ TAO_Connector_Registry::connect (STUB_Object *&obj,
 
   // here is where we get the appropriate connector object
   // but we are the Connector Registry so call get_connector(tag)
- 
+
   TAO_Connector *connector = this->get_connector(req_tag);
 
   TAO_Transport *transport = connector->connect(profile, env);
+  TAO_CHECK_ENV_RETURN (env, 0);
 
   if (transport == 0)
     return 0;
@@ -144,7 +145,7 @@ Version::Version (CORBA::Octet maj, CORBA::Octet min)
 {
 }
 
-void 
+void
 Version::set_version (CORBA::Octet maj, CORBA::Octet min)
 {
   this->major = maj;

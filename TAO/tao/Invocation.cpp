@@ -126,15 +126,16 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   if (this->data_ == 0)
     TAO_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO));
 
-  // Get a pointer to the connector registry, which might be in 
+  // Get a pointer to the connector registry, which might be in
   // thread-specific storage, depending on the concurrency model.
   TAO_Connector_Registry *conn_reg = this->orb_core_->connector_registry ();
 
-  // The connection registry is also responsible for selecting the 
+  // The connection registry is also responsible for selecting the
   // profile to use based on some policy or the current forwarding state.
-  // We will use the returned profile 
+  // We will use the returned profile
   // Note: data_->profile_in_use () == profile
   TAO_Profile *profile = conn_reg->connect (this->data_, TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   const TAO_ObjectKey *key = &profile->object_key();
 
@@ -332,9 +333,9 @@ TAO_GIOP_Invocation::close_connection (void)
   this->data_->profile_in_use ()->transport ()->close_conn ();
   this->data_->profile_in_use ()->reset_hint ();
 
-  // @@ Get rid of any forwarding profiles and reset 
+  // @@ Get rid of any forwarding profiles and reset
   // the profile list to point to the first profile! FRED
-  // For now we will not deal with recursive forwards! 
+  // For now we will not deal with recursive forwards!
   // TAO_GIOP_SYSTEM_EXCEPTION;
 
   data_->reset_profiles ();
@@ -401,7 +402,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 
   // New for Multiple profile.  Get the MProfile list from the
   // forwarded object refererence, and assign it to the current profile
-  // in use.  Note, it should not be the case that the current profile 
+  // in use.  Note, it should not be the case that the current profile
   // in use already has a forward profile defined!  That is, even if we
   // were using a forward_profile in the request which resulted in this
   // location_forward response, it will have a null fwd_mprofiles list.
