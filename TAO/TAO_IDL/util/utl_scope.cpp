@@ -1648,10 +1648,13 @@ UTL_Scope::add_to_scope (AST_Decl *e,
       // error, unless they're both modules (which can be
       // reopened) or we have a belated definition of a
       // forward-declared interface.
+      AST_Decl::NodeType nt = e->node_type ();
+
       if (decl_name->compare (ref_name) == I_TRUE
-          && e->node_type () != AST_Decl::NT_module
+          && nt != AST_Decl::NT_module
+          && nt != AST_Decl::NT_interface_fwd
           && ((*tmp)->node_type () != AST_Decl::NT_interface_fwd
-              || e->node_type () != AST_Decl::NT_interface))
+              || nt != AST_Decl::NT_interface))
         {
           idl_global->err ()->redef_error (decl_string,
                                            ref_string);
