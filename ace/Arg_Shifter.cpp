@@ -1,14 +1,14 @@
 // $Id$
 
 #define ACE_BUILD_DLL
-#include "ace/OS.h"
+// #include "ace/OS.h"
 #include "ace/Arg_Shifter.h"
 
 ACE_RCSID(ace, Arg_Shifter, "$Id$")
 
-ACE_Arg_Shifter::ACE_Arg_Shifter (int &argc,
-                                  char **argv,
-                                  char **temp)
+ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
+                                  char** argv,
+                                  char** temp)
   : argc_ (argc),
     total_size_ (argc),
     temp_ (temp),
@@ -20,7 +20,7 @@ ACE_Arg_Shifter::ACE_Arg_Shifter (int &argc,
   // If not provided with one, allocate a temporary array.
   if (this->temp_ == 0)
     ACE_NEW (this->temp_,
-             char *[this->total_size_]);
+             char*[this->total_size_]);
   
   if (this->temp_ != 0)
     {
@@ -46,41 +46,76 @@ ACE_Arg_Shifter::~ACE_Arg_Shifter (void)
   delete [] temp_;
 }
 
-char * 
+char* 
 ACE_Arg_Shifter::get_current (void) const
 {
-  char *return_value = 0;
+  char* retval = 0;
   
   if (this->is_anything_left ())
-    return_value =  this->temp_[current_index_];
+    retval =  this->temp_[current_index_];
 
-  return return_value;
+  return retval;
+}
+
+char* 
+ACE_Arg_Shifter::is_or_contains_ignore_case(const char* flag)
+{
+  // Check for a current argument
+  if (this->get_current())
+    {
+      unsigned int flag_length = ACE_OS::strlen(flag);
+
+      // Check for presence of the flag
+      if (ACE_OS::strncasecmp(this->temp_[current_index_],
+			      flag,
+			      flag_length) == 0)
+	{
+	  // Check for the 'value' parameter
+	  if (ACE_OS::strlen(temp_[current_index_]) ==
+	      flag_length)
+	    {
+	      this->consume_arg();
+	      if (this->is_parameter_next())
+		{
+		  // return next arg
+		  return this->get_current();
+		}
+	    }
+	  else
+	    {
+	      // return tail end of current arg
+	      return temp_[current_index_] + flag_length;
+	    }
+	}
+    }
+  // failure
+  return 0;
 }
 
 int
 ACE_Arg_Shifter::consume_arg (int number)
 {
-  int return_value = 0;
+  int retval = 0;
 
   // Stick knowns at the end of the vector (consumed).
   if (this->is_anything_left() >= number)
     {
       for (int i = 0, j = this->back_ - (number - 1);
 	   i < number;
-	   i++, j++, this->current_index_++)
+	   ++i, ++j, ++this->current_index_)
 	this->argv_[j] = this->temp_[this->current_index_];
       
       this->back_ -= number;
-      return_value = 1;
+      retval = 1;
     }
 
-  return return_value;
+  return retval;
 }
 
 int
 ACE_Arg_Shifter::ignore_arg (int number)
 {
-  int return_value = 0;
+  int retval = 0;
 
   // Keep unknowns at the head of the vector.
   if (this->is_anything_left () >= number)
@@ -90,11 +125,11 @@ ACE_Arg_Shifter::ignore_arg (int number)
 	   i++, this->current_index_++, this->front_++)
 	this->argv_[this->front_] = this->temp_[this->current_index_];
 
-      return_value = 1;
+      retval = 1;
       this->argc_ += number;
     }
 
-  return return_value;
+  return retval;
 }
 
 int
