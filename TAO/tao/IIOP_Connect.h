@@ -34,8 +34,9 @@
 #include "tao/IIOP_Transport.h"
 
 // BALA Temporray include
-#include "tao/GIOP_Acceptors.h"
-#include "tao/GIOP_Message_Invocation.h"
+#include "tao/GIOP_Message_Acceptors.h"
+#include "tao/GIOP_Message_Connectors.h"
+
 
 
 // Forward Decls
@@ -108,7 +109,7 @@ protected:
 
   //@@Added by Bala for the time being. This would change to the
   // actual factory at a later date
-  TAO_GIOP_Client_Message_1_1 message_factory_;
+  TAO_GIOP_Message_Connector_11 message_factory_;
   // /////////////////////
 };
 
@@ -172,7 +173,7 @@ protected:
 
   //@@Added by Bala for the time being. This would change to the
   // actual factory at a later date
-  TAO_GIOP_Message_Acceptor acceptor_factory_;
+  TAO_GIOP_Message_Acceptors acceptor_factory_;
   // /////////////////////
 
   TAO_ORB_Core *orb_core_;

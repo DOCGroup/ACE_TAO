@@ -253,48 +253,36 @@ public:
                         size_t len);
   // Print out a debug messages..  
 
-  static CORBA::Boolean start_message (const TAO_GIOP_Version &version,
-                                       TAO_GIOP_Message_Type t,
-                                       TAO_OutputCDR &msg);
-  
-  // Build the header for a message of type <t> into stream <msg>.
-                                       
-
-  static int send_message (TAO_Transport *transport,
-                           TAO_OutputCDR &output,
-                           const size_t header_len,
-                           const size_t message_offset,
-                           ACE_Time_Value *max_wait_time = 0,
-                           TAO_Stub *stub = 0);
-  // Send the message on the wire using the right transport. 
-
-  static int read_bytes_input (TAO_Transport *transport,
-                               TAO_InputCDR &input,
-                               CORBA::ULong read_size,
-                               ACE_Time_Value *max_wait_time);
-  
-  static int parse_giop_header (TAO_GIOP_Message_State *state,
-                                TAO_InputCDR &input);
-  
-  static ssize_t read_buffer (TAO_Transport *transport,
-                              char *buf,
-                              size_t len,
-                              ACE_Time_Value *max_wait_time);
+//  static CORBA::Boolean start_message (const TAO_GIOP_Version &version,
+//                                       TAO_GIOP_Message_Type t,
+//                                       TAO_OutputCDR &msg);  
+//                                                             
+//  // Build the header for a message of type <t> into stream <msg>.
+//                                                             
+//                                                             
+//  static int send_message (TAO_Transport *transport,         
+//                           TAO_OutputCDR &output,            
+//                           const size_t header_len,          
+//                           const size_t message_offset,      
+//                           ACE_Time_Value *max_wait_time = 0,
+//                           TAO_Stub *stub = 0);              
+//  // Send the message on the wire using the right transport. 
+//                                                             
+//  static int read_bytes_input (TAO_Transport *transport,     
+//                               TAO_InputCDR &input,          
+//                               CORBA::ULong read_size,       
+//                               ACE_Time_Value *max_wait_time);
+//                                                             
+//  static int parse_giop_header (TAO_GIOP_Message_State *state,
+//                                TAO_InputCDR &input);        
+//                                                             
+//  static ssize_t read_buffer (TAO_Transport *transport,      
+//                              char *buf,                     
+//                              size_t len,                    
+//                              ACE_Time_Value *max_wait_time);
 };
 
-// Some constant definitions that would not change for sometime. I
-// think. So we can have them here till they change
-const size_t TAO_GIOP_HEADER_LEN = 12;
-const size_t TAO_GIOP_LITE_HEADER_LEN = 5;
 
-// This is the length of the MAGIC WORD + VERSION
-const size_t TAO_GIOP_MAGIC_VERSION_LEN = 6;
-
-const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
-const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
-const size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
-const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
-const size_t TAO_GIOP_MESSAGE_SIZE_OFFSET  = 8;
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Utils.i"

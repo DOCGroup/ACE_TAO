@@ -23,9 +23,9 @@
 #include "tao/Pluggable.h"
 
 // BALA Temporrary inclusion
-#include "tao/Pluggable_Messaging.h"
+//#include "tao/Pluggable_Messaging.h"
 #include "tao/GIOP_Utils.h"
-#include "tao/target_identifier.h"
+//#include "tao/target_identifier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -162,14 +162,14 @@ public:
                        const char* opname,
                        TAO_OutputCDR &msg);
   
-  void messaging_init (TAO_Pluggable_Client_Message_Factory *mesg);
+  void messaging_init (TAO_Pluggable_Messaging_Interface *mesg);
   // Initialising the messaging object
 
 private:
   TAO_UIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
 
-  TAO_Pluggable_Client_Message_Factory *client_mesg_factory_;
+  TAO_Pluggable_Messaging_Interface *client_mesg_factory_;
   // The message_factor instance specific for this particular
   // transport protocol.
 };
@@ -202,12 +202,12 @@ public:
   // This keep the state of the current message, to enable
   // non-blocking reads, fragment reassembly, etc.
 
-    void messaging_init (TAO_Pluggable_Server_Message_Factory *mesg);
+  void messaging_init (TAO_Pluggable_Messaging_Interface *mesg);
   // Initialising the messaging object  
 
  private:
   
-  TAO_Pluggable_Server_Message_Factory *server_mesg_factory_;
+  TAO_Pluggable_Messaging_Interface *server_mesg_factory_;
   // This would be server side messaging protocol  
 };
 
