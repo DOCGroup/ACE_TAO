@@ -15,7 +15,7 @@ ACE_RCSID (RTEvent,
 #define QUERY_LANG "TCL"
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Supplier supplier;
 
@@ -80,7 +80,7 @@ Supplier::run (int argc, char* argv[])
 */
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references (NAMING_SERVICE_NAME//,
+        orb->resolve_initial_references (NAMING_SERVICE_NAME
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -98,12 +98,12 @@ Supplier::run (int argc, char* argv[])
       name[0].id = CORBA::string_dup (EVENT_TLS_LOG_FACTORY_NAME);
 
       CORBA::Object_var obj =
-        this->naming_context_->resolve (name//,
+        this->naming_context_->resolve (name
                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->event_log_factory_ =
-        RTEventLogAdmin::EventLogFactory::_narrow (obj.in ()//,
+        RTEventLogAdmin::EventLogFactory::_narrow (obj.in ()
                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -129,7 +129,7 @@ Supplier::run (int argc, char* argv[])
         this->event_log_factory_->create (logfullaction,
                                           max_size,
                                           threshold,
-                                          logid//,
+                                          logid
                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

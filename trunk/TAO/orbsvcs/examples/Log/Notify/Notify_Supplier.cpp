@@ -17,7 +17,7 @@ ACE_RCSID (Notify,
 #define EVENTS_TO_SEND 10
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Supplier supplier;
 
