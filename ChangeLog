@@ -1,3 +1,9 @@
+Tue Sep 26 11:51:27 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.h: Add #include "ace/config-all.h" to be sure that
+          ACE_NDEBUG is defined (or not) properly before using it. Thanks
+          to Edan Ayal <edana@bandwiz.com> for this fix.
+
 Mon Sep 25 16:00:30 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Synch.h: Clarify that the ACE_Auto_Event and ACE_Manual_Event

@@ -20,6 +20,9 @@
 
 // This stuff must come first to avoid problems with circular
 // headers...
+// ... but ACE_NDEBUG and ACE_NLOGGING can come from the config.h file, so
+// pull that one early.
+#include "ace/config-all.h"
 
 // The following ASSERT macro is courtesy of Alexandre Karev
 // <akg@na47sun05.cern.ch>.
