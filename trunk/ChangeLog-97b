@@ -1,4 +1,21 @@
-Tue Sep 16 11:42:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Wed Sep 17 00:12:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* netsvcs/lib/Client_Logging_Handler: Reimplemented this service
+ 	  so that it uses sockets on Win32 to receive logging messages
+ 	  from clients.
+
+	* ace/Log_Msg.cpp: Enhanced ACE_Log_Msg::log() so that it now uses
+ 	  sockets on Win32 platforms to work around the lack of FIFOs.
+
+	* ace/Log_Record.h: Revised the field layout of the ACE_Log_Record
+ 	  so that the length field comes first.  This is necessary for the
+ 	  framing mechanisms used throughout ACE in various
+ 	  configurations.
+
+Tue Sep 16 23:34:36 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/servers/main.cpp (main): The use of braces was incorrect
+ 	  so that some services were being prematurely closed...
 
 	* ace: Added a new flag called ACE_LACKS_FIFO to distinguish the
  	  (lack of) features on Win32...
