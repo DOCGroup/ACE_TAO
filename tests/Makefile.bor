@@ -120,7 +120,6 @@ NAMES = \
 	TP_Reactor_Test \
 	TSS_Test \
         Vector_Test \
-        Unbounded_Set_Test \
 	Upgradable_RW_Test \
 	UPIPE_SAP_Test \
 	XtReactor_Test
