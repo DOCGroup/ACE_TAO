@@ -291,7 +291,7 @@ ACE_Service_Config::initialize (const ASYS_TCHAR svc_name[],
                 ASYS_TEXT ("opening static service %s\n"),
                 svc_name));
 
-  if (ACE_Service_Repository::instance ()->find 
+  if (ACE_Service_Repository::instance ()->find
       (svc_name,
        (const ACE_Service_Type **) &srp) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -322,7 +322,7 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
   ACE_ARGV args (parameters);
 
   if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,  
+    ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("opening dynamic service %s\n"),
                 sr->name ()));
 
@@ -424,7 +424,7 @@ ACE_Service_Config::process_directives (void)
                             ASYS_TEXT ("%p\n"),
                             // @@ Beware of the WString here...  Not
                             // sure how to fix this with %p...
-                            ASYS_TEXT (sptr->fast_rep ())));
+                            ASYS_WIDE_STRING (sptr->fast_rep ())));
               errno = ENOENT;
               result = -1;
               break;
@@ -459,7 +459,7 @@ ACE_Service_Config::process_commandline_directives (void)
            iter.advance ())
         {
           // Process just a single directive.
-          if (ACE_Service_Config::process_directive 
+          if (ACE_Service_Config::process_directive
               (ASYS_WIDE_STRING (sptr->fast_rep ())) == -1)
             {
               ACE_ERROR ((LM_ERROR,
@@ -594,14 +594,14 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
       // This really ought to be a Singleton I suspect...
 
-      if (ACE_Reactor::instance ()->register_handler 
+      if (ACE_Reactor::instance ()->register_handler
           (ACE_Service_Config::signum_,
            ACE_Service_Config::signal_handler_) == -1)
         ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT ("can't register signal handler\n")));
 #endif /* ACE_LACKS_UNIX_SIGNALS */
     }
-  
+
   if (ACE::debug ())
     ACE_Log_Msg::enable_debug_messages ();
 
@@ -617,7 +617,7 @@ ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
       && errno != ENOENT)
     // Only print out an error if it wasn't the svc.conf file that was
     // missing.
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
                 program_name));
 }
@@ -626,7 +626,7 @@ ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
 
 void
 ACE_Service_Config::handle_signal (int sig,
-                                   siginfo_t *, 
+                                   siginfo_t *,
                                    ucontext_t *)
 {
   ACE_TRACE ("ACE_Service_Config::handle_signal");
@@ -634,11 +634,11 @@ ACE_Service_Config::handle_signal (int sig,
   if (ACE_Service_Config::signum_ != sig)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("error, signal %S does match %S\n"),
-                sig, 
+                sig,
                 ACE_Service_Config::signum_));
   if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,  
-                ASYS_TEXT ("signal %S occurred\n"), 
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("signal %S occurred\n"),
                 sig));
   ACE_Service_Config::reconfig_occurred_ = 1;
 }
@@ -656,8 +656,8 @@ ACE_Service_Config::reconfigure (void)
     {
       time_t t = ACE_OS::time (0);
       if (ACE::debug ())
-        ACE_DEBUG ((LM_DEBUG,  
-                    ASYS_TEXT ("beginning reconfiguration at %s"), 
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("beginning reconfiguration at %s"),
                     ACE_OS::ctime (&t)));
     }
   if (ACE_Service_Config::process_directives () == -1)
@@ -751,7 +751,7 @@ ACE_Service_Config::fini_svcs (void)
 
   if (ACE::debug ())
     ACE_Log_Msg::enable_debug_messages ();
-  
+
   return result;
 }
 
