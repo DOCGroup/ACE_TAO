@@ -67,6 +67,19 @@ Sun Dec  8 14:39:53 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
  	  changes will help simplify Reactor, Proactor, and ReactorEx
  	  code.
 
+Sat Dec  7 01:14:04 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* tests/Process_Mutex_Test.cpp: Added new test which checks the
+ 	  functionality of a ACE_Process_Mutex.  Abandoned mutexes can be
+	  created by selecting the correct command-line arguments.
+
+	* examples/Reactor/ReactorEx/test_reactorEx.cpp: Reverted back to
+ 	  old scheme which does not utilize traits.
+
+	* ace/Task_T.h: Removed the synchronization trait in Task. This is
+	  because template typedefs are only supported by a few
+	  platforms. Sigh ;-)
+
 Sat Dec  7 16:55:37 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp: Because thread_descriptor_i() only returns 
