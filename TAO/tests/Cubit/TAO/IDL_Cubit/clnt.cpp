@@ -25,9 +25,9 @@
 Cubit_Client::Cubit_Client (void)
   : cubit_factory_key_ ("factory"),
     cubit_key_ ("key0"),
-    hostname_ ("localhost"),
+    hostname_ (ACE_DEFAULT_SERVER_HOST),
     portnum_ (TAO_DEFAULT_SERVER_PORT),
-    loop_count_ (1),
+    loop_count_ (250),
     exit_later_ (0),
     factory_ (Cubit_Factory::_nil ()),
     objref_ (CORBA::Object::_nil ()),
@@ -489,7 +489,7 @@ Cubit_Client::run (void)
 	  elapsed_time.user_time /= this->call_count_;
 	  elapsed_time.system_time /= this->call_count_;
 
-	  tmp = 1000 / (elapsed_time.real_time + elapsed_time.user_time + elapsed_time.system_time);
+	  tmp = 1000 / elapsed_time.real_time;
 
 	  ACE_DEBUG ((LM_DEBUG,
 		      "cube average call:\n\treal_time\t= %0.06f ms, \n\t"
@@ -500,13 +500,6 @@ Cubit_Client::run (void)
 		      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
 		      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time,
 		      tmp < 0.0? 0.0 : tmp));
-
-	  //   if (us > 0)
-	  //ACE_DEBUG ((LM_DEBUG,
-	  //	"cube average call ACE_OS::time\t= %d.%.03dms, \t"
-	  //	"%d calls/second\n",
-	  //	us / 1000, us % 1000,
-	  //	1000000L / us));
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -549,9 +542,13 @@ Cubit_Client::run (void)
 
   timer.stop ();
   timer.elapsed_time (elapsed_time);
+  elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
+  elapsed_time.user_time *= ACE_ONE_SECOND_IN_MSECS;
+  elapsed_time.system_time *= ACE_ONE_SECOND_IN_MSECS;
+
   ACE_DEBUG ((LM_DEBUG,
-	      "cube_struct_dii() call:\n\treal_time\t= %0.06f ms, \n\t"
-	      "user_time\t= %0.06f ms, \n\t"
+	      "cube_union_stub() call:\n\treal_time\t= %0.06f ms,\n\t"
+	      "user_time\t= %0.06f ms,\n\t"
 	      "system_time\t= %f ms\n",
 	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
 	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
@@ -564,9 +561,13 @@ Cubit_Client::run (void)
 
   timer.stop ();
   timer.elapsed_time (elapsed_time);
+  elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
+  elapsed_time.user_time *= ACE_ONE_SECOND_IN_MSECS;
+  elapsed_time.system_time *= ACE_ONE_SECOND_IN_MSECS;
+
   ACE_DEBUG ((LM_DEBUG,
-	      "cube_union_dii() call:\n\treal_time\t= %0.06f ms, \n\t"
-	      "user_time\t= %0.06f ms, \n\t"
+	      "cube_union_dii() call:\n\treal_time\t= %0.06f ms,\n\t"
+	      "user_time\t= %0.06f ms,\n\t"
 	      "system_time\t= %f ms\n",
 	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
 	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
