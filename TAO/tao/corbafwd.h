@@ -61,6 +61,8 @@
 # endif
 #endif /* _MSC_VER */
 
+#define TAO_DEFAULT_MINOR_CODE 0xffff0000L
+
 // Forward declarations of some data types are needed.
 
 class CORBA_Any;
@@ -96,6 +98,7 @@ class CORBA_UserException;
 class CORBA_SystemException;
 class CORBA_UnknownUserException;
 class CORBA_ExceptionList;
+class CORBA_ExceptionList_var;
 typedef class CORBA_Exception *CORBA_Exception_ptr;
 
 // all the system exception classes, the list is used as follows:
@@ -397,6 +400,7 @@ public:
   typedef CORBA_TypeCode_out TypeCode_out;
 
   typedef CORBA_ExceptionList ExceptionList;
+  typedef CORBA_ExceptionList_var ExdeptionList_var;
   typedef CORBA_ExceptionList *ExceptionList_ptr;
 
   typedef CORBA_ImplementationDef *ImplementationDef_ptr;
