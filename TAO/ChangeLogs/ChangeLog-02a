@@ -1,3 +1,7 @@
+Fri Dec 15 21:30:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* */Makefile: Updated dependencies.
+
 Fri Dec 15 20:59:49 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	This set of changes are for the support of BiDirGIOP in TAO.
