@@ -1,3 +1,22 @@
+Sat Nov  2 19:58:51 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1269_Regression/ORB_Task.cpp:
+	* tests/Bug_1269_Regression/Server_Timer.cpp:
+	* tests/Bug_1269_Regression/client.cpp:
+	* tests/Bug_1269_Regression/shutdown.cpp:
+	* tests/Bug_1270_Regression/ORB_Task.cpp:
+	* tests/Bug_1270_Regression/Server_Timer.cpp:
+	* tests/Bug_1270_Regression/client.cpp:
+	* tests/Bug_1270_Regression/shutdown.cpp: Fixed compile errors on
+	  platforms where exceptions have been disabled. 
+	
+	* tests/Bug_1270_Regression/run_test.pl:
+	* tests/Bug_1269_Regression/run_test.pl: Changed the cutoff times
+	  so that the tests would run without displaying errors on my
+	  box. I would love these tests to run in our daily builds. But we
+	  cannot run these, since they run for more than 75 mins on my two
+	  processor box! 
+
 Sat Nov 02 20:46:08 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/CosNotification.bor:

@@ -118,7 +118,8 @@ main (int argc, char *argv[])
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run(ACE_ENV_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - event loop finished\n"));
 
