@@ -99,6 +99,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -383,8 +389,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- PP_TestC.i
+ $(TAO_ROOT)/tao/MessagingS.i PP_TestC.i
 
 .obj/PP_TestS.o .obj/PP_TestS.so .shobj/PP_TestS.o .shobj/PP_TestS.so: PP_TestS.cpp PP_TestS.h PP_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -415,6 +420,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -699,8 +710,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- PP_TestC.i PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i
+ $(TAO_ROOT)/tao/MessagingS.i PP_TestC.i \
+ PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i
 
 .obj/PP_Test_Server.o .obj/PP_Test_Server.so .shobj/PP_Test_Server.o .shobj/PP_Test_Server.so: PP_Test_Server.cpp PP_Test_Server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
@@ -732,6 +743,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/TAO.h \
@@ -1019,8 +1036,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- PP_TestC.i PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i \
+ $(TAO_ROOT)/tao/MessagingS.i PP_TestC.i \
+ PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i \
  $(TAO_ROOT)/tao/TAO_Internal.h
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp PP_Test_Server.h \
@@ -1053,6 +1070,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/TAO.h \
@@ -1340,8 +1363,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- PP_TestC.i PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i \
+ $(TAO_ROOT)/tao/MessagingS.i PP_TestC.i \
+ PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 
@@ -1375,6 +1398,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1422,8 +1451,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- PP_Test_Client.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i PP_Test_Client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/corba.h \
@@ -1663,9 +1691,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- PP_TestC.h PP_TestC.i \
- $(TAO_ROOT)/tao/Timeprobe.h \
+ $(TAO_ROOT)/tao/MessagingS.i PP_TestC.h \
+ PP_TestC.i $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
  $(TAO_ROOT)/tao/TAO_Internal.h
 
@@ -1699,6 +1726,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/corba.h \
@@ -1984,9 +2017,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- PP_TestC.h PP_TestC.i \
- $(TAO_ROOT)/tao/Timeprobe.h \
+ $(TAO_ROOT)/tao/MessagingS.i PP_TestC.h \
+ PP_TestC.i $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 
 .obj/PP_Test_i.o .obj/PP_Test_i.so .shobj/PP_Test_i.o .shobj/PP_Test_i.so: PP_Test_i.cpp \
@@ -2018,6 +2050,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2304,8 +2342,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.h \
- PP_Test_i.h PP_TestS.h PP_TestC.h PP_TestC.i PP_TestS_T.h \
- PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i
+ $(ACE_ROOT)/ace/Timeprobe.h PP_Test_i.h \
+ PP_TestS.h PP_TestC.h PP_TestC.i PP_TestS_T.h PP_TestS_T.i \
+ PP_TestS_T.cpp PP_TestS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
