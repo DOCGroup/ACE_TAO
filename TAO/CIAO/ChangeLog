@@ -1,3 +1,9 @@
+Mon Jun  2 22:45:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/ComponentsC.h:
+
+          Contains the *C.h corresponding to the include in Components.idl.
+
 Mon Jun 02 12:47:50 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* README: Revised the root readme file.
