@@ -1,6 +1,11 @@
+Thu Feb 18 00:50:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/MProfile.cpp: Need to include MProfile.i here when not
+	  inlined.
+
 Wed Feb 17 17:57:01 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
-        * IIOP_ORB.cpp MProfile.cpp MProfile.h ORB.cpp Stub.cpp 
+        * IIOP_ORB.cpp MProfile.cpp MProfile.h ORB.cpp Stub.cpp
 	  Stub.h Stub.i decode.cpp MProfile.i
 	  Inlined many of the MProfile methods
 	  Also, changed MProfile so it could assume ownership of
@@ -24,7 +29,7 @@ Wed Feb 17 10:45:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  strategy of any changes in the set of consumers and/or
 	  suppliers.
 
-	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl: 
+	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
 	  The operation remove_observer can also raise a
 	  SYNCHRONIZATION_ERROR exception
 
@@ -45,11 +50,11 @@ Wed Feb 17 10:45:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Tue Feb 16 17:15:12 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/vb.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/vb.{h,cpp}:
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ab.{h,cpp}
 	  Defined a new VideoBuffer () class for the Video buffering
 	  process and AudioBuffer class for the audio buffering process
-	  and used the reactor for i/o handling instead of 
+	  and used the reactor for i/o handling instead of
 	  blocking i/o calls. Also uses a socketpair between the control
 	  process for exit notifications which eliminates the SIGUSR*
 	  signals. Also replaced the exit () calls with reactor
@@ -58,7 +63,7 @@ Tue Feb 16 17:15:12 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp:
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/vd.cpp:
 	  Replaced the SIGUSR signals code with socket notification code.
-	
+
 Tue Feb 16 16:48:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Exception.{h,cpp} (print_exception): Added this
