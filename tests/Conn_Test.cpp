@@ -220,7 +220,7 @@ int
 ACE_Hash_Addr<ACE_INET_Addr, Svc_Handler>::compare_i (const ACE_INET_Addr &a1, 
 						      const ACE_INET_Addr &a2) const
 {
-  return a1 == a2;
+  return a1 != a2;
 }
 
 // ****************************************
