@@ -1,12 +1,19 @@
+Fri Jun  9 09:28:18 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/platform_linux_kcc.GNU:
+          More fixes to make sure that shared and static libraries are
+          generated with the right configuration (threads, exceptions,
+          etc.).
+
 Fri Jun  9 07:19:10 2000  Toshio Hori <toshi@etl.go.jp>
 
         * ace/Stream.h (class ACE_Stream): Added an updated version an
-	  insert() and replace() that make it possible to replace the
- 	  stream head and tail.
-  
+          insert() and replace() that make it possible to replace the
+          stream head and tail.
+
 Fri Jun 09 02:34:07 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.i (floor and ceil): Added new methods.
+        * ace/OS.i (floor and ceil): Added new methods.
 
 Thu Jun  8 20:58:17 2000  Darrell Brunsch <brunsch@uci.edu>
 
