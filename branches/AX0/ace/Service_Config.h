@@ -24,6 +24,8 @@
 #include "ace/Unbounded_Queue.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/SString.h"
+#include "ace/DLL.h"
+#include "ace/XML_Svc_Conf.h"
 
 // Forward decl.
 class ACE_Service_Repository;
@@ -362,6 +364,9 @@ protected:
   /// and process_directive() both call.  Returns the number of errors
   /// that occurred.
   static int process_directives_i (ACE_Svc_Conf_Param *param);
+#else
+  /// Helper function to dynamically link in the XML Service Configurator parser.
+  static ACE_XML_Svc_Conf *get_xml_svc_conf (ACE_DLL &d);
 #endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 1 */
 
   /// Become a daemon.

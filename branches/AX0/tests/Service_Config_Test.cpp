@@ -134,10 +134,12 @@ run_test (int argc, ACE_TCHAR *argv[])
     //          Byte ordering is also an issue, so we should be
     //          generating this file on-the-fly from the UTF-8 encoded
     //          file by using functions like iconv(1) or iconv(3).
-    ACE_TEXT ("Service_Config_Test.UTF-16.conf");
+    ACE_TEXT ("Service_Config_Test.UTF-16")
+    ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
 #else
     // ASCII (UTF-8) encoded Service Configurator file.
-    ACE_TEXT ("Service_Config_Test.conf");
+    ACE_TEXT ("Service_Config_Test")
+    ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
 #endif  /* ACE_USES_WCHAR */
 
   // Process the Service Configurator directives in this test's
