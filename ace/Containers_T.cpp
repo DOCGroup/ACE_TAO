@@ -2216,12 +2216,15 @@ ACE_Array<T>::ACE_Array (size_t size)
   : max_size_ (size),
     cur_size_ (size)
 {
-  ACE_NEW (this->array_, T[size]);
+  if (size != 0)
+    ACE_NEW (this->array_, T[size]);
+  else
+    this->array_ = 0;
 }
 
 template <class T>
 ACE_Array<T>::ACE_Array (size_t size,
-                 const T &default_value)
+                         const T &default_value)
   : max_size_ (size),
     cur_size_ (size)
 {
@@ -2297,6 +2300,26 @@ ACE_Array<T>::get (T &item, size_t index) const
      }
    else
      return -1;
+}
+
+template<class T> int 
+ACE_Array<T>::size (size_t new_size)
+{
+  if (new_size >= this->max_size_)
+    {
+      // @@ We should use auto_ptr<>!
+      T* tmp;
+      ACE_NEW_RETURN (tmp, T[new_size], -1);
+      
+      for (size_t i = 0; i < this->cur_size_; ++i)
+        tmp[i] = this->array_[i];
+      delete[] this->array_;
+      this->array_ = tmp;
+      this->max_size_ = new_size;
+    }
+  this->cur_size_ = new_size;
+
+  return 0;
 }
 
 // Compare this array with <s> for equality.
