@@ -101,7 +101,7 @@ dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
    [
     dnl Add thread preprocessor flags, if any.
     ace_save_CPPFLAGS="$CPPFLAGS"
-    CPPFLAGS="$CPPFLAGS $ACE_THR_CPPFLAGS"
+    CPPFLAGS="$ACE_THR_CPPFLAGS $CPPFLAGS" dnl User's CPPFLAGS go last
 
     AC_EGREP_CPP(ACE_PTHREAD_MACROS,
       [

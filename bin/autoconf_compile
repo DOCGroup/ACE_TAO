@@ -112,7 +112,7 @@ $REVISION='$Revision$ ';
 
 $disable_file = $LOGDIR . '/.disable';
 $histfile = $LOGDIR . '/history';
-$LOGBASE = POSIX::strftime("%b%d_%Y.log", localtime);
+$LOGBASE = POSIX::strftime("%b%d_%Y.txt", localtime);
 $LOGFILE = $LOGDIR . '/' . $LOGBASE;
 $HOST = `hostname`;
 chop $HOST;
@@ -243,6 +243,8 @@ if ($dont_update == 0) {
   print LOG "$CMD: starting checkout at ", $date, "\n";
   open(CVS, "cvs -q checkout -P $MODULE 2>&1 |")
     || mydie "cannot start checkout of $MODULE";
+#  open(CVS, "cvsup -g -L 2 -P m ace-supfile 2>&1 |")
+#    || mydie "cannot start checkout";
 
   $conflicts = 0;
   while (<CVS>) {
@@ -350,10 +352,10 @@ if ($pre_clean) {
 $MAKEFLAGS .= "";
 foreach $i (@BUILD_LIST) {
     $date = localtime;
-    print LOG "$CMD: ==================================================\n";
+    print LOG "$CMD: =============================================\n";
     print LOG "$CMD: make for $i started at ", $date, "\n";
     open(MAKE, "make -k $MAKEFLAGS -C $i 2>&1 |")
-	|| mydie "cannot start make for $i";
+        || mydie "cannot start make for $i";
 
     local $current_dir = $i;
     local $last_error = "";
@@ -365,35 +367,35 @@ foreach $i (@BUILD_LIST) {
         }
         print LOG $_, "\n";
 
-	if (m/^make(\[[0-9]+\])?: Entering directory /) {
-	    s/^make(\[[0-9]+\])?: Entering directory //;
-	    $current_dir = $_;
-	}
-	if (m/error:/i || m/error /i
-	    || m/^make(\[[0-9]+\])?: \*\*\*/) {
-	    if ($last_error ne $current_dir
-		|| STATUS eq "COMPILATION WARNING") {
-	      $STATUS = "COMPILATION ERROR";
-	      push @failures, "Error while compiling in $current_dir \n";
-	      $last_error = $current_dir;
-	    }
-	}
-	if (m/warning:/i || m/warning /i) {
-	  if ($last_error ne $current_dir) {
-	    if ($STATUS eq "OK") {
-	      $STATUS = "COMPILATION WARNING";
-	    }
-	    push @failures, "Warning while compiling in $current_dir\n";
-	    $last_error = $current_dir;
-	  }
-	}
+        if (m/^make(\[[0-9]+\])?: Entering directory /) {
+            s/^make(\[[0-9]+\])?: Entering directory //;
+            $current_dir = $_;
+        }
+        if (m/error:/i || m/error /i
+            || m/^make(\[[0-9]+\])?: \*\*\*/) {
+            if ($last_error ne $current_dir
+                || STATUS eq "COMPILATION WARNING") {
+              $STATUS = "COMPILATION ERROR";
+              push @failures, "Error while compiling in $current_dir \n";
+              $last_error = $current_dir;
+            }
+        }
+        if (m/warning:/i || m/warning /i) {
+          if ($last_error ne $current_dir) {
+            if ($STATUS eq "OK") {
+              $STATUS = "COMPILATION WARNING";
+            }
+            push @failures, "Warning while compiling in $current_dir\n";
+            $last_error = $current_dir;
+          }
+        }
     }
     if (close(MAKE) == 0) {
-	push @failures, "errors while running make in $i";
+        push @failures, "errors while running make in $i";
     }
     $date = localtime;
     print LOG "$CMD: make for $i finished at ", $date, "\n";
-    print LOG "$CMD: ==================================================\n\n";
+    print LOG "$CMD: =============================================\n\n";
 }
 
 if ($dont_run == 0) {
@@ -419,11 +421,42 @@ if ($dont_run == 0) {
     $run_error = 0;
     open(CHECK, "make -k $MAKEFLAGS -C $subdir check 2>&1 |");
 
+    local $current_dir = $i;
+    local $last_error = "";
     while (<CHECK>) {
-	print LOG $_;
+        chop;
+        if ($^O eq 'hpux'
+            && m/^Warning:[ \t]+[0-9]+ future errors were detected/) {
+            next;
+        }
+        print LOG $_, "\n";
+
+        if (m/^make(\[[0-9]+\])?: Entering directory /) {
+            s/^make(\[[0-9]+\])?: Entering directory //;
+            $current_dir = $_;
+        }
+        if (m/error:/i || m/error /i
+            || m/^make(\[[0-9]+\])?: \*\*\*/) {
+            if ($last_error ne $current_dir
+                || STATUS eq "COMPILATION WARNING") {
+              $STATUS = "COMPILATION ERROR";
+              push @failures, "Error while compiling in $current_dir \n";
+              $last_error = $current_dir;
+            }
+        }
+        if (m/warning:/i || m/warning /i) {
+          if ($last_error ne $current_dir) {
+            if ($STATUS eq "OK") {
+              $STATUS = "COMPILATION WARNING";
+            }
+            push @failures, "Warning while compiling in $current_dir\n";
+            $last_error = $current_dir;
+          }
+        }
 	if (m/Error/
 	    || m/ERROR/
 	    || m/FAILED/
+	    || m/failed/
 	    || m/FAIL/
 	    || m/EXCEPTION/
 	    || m/pure virtual /i) {
@@ -433,11 +466,12 @@ if ($dont_run == 0) {
 	  $run_error = 1;
 	}
     }
+
     if (close(CHECK) == 0) {
       if ($STATUS eq "OK") {
 	$STATUS = "RUNTIME ERROR";
       }
-      push @failures, "Error when closing pipe for in $i";
+      push @failures, "Error when closing pipe in $i";
       next;
     }
     $date = localtime;
