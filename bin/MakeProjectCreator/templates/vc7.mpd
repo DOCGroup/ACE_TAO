@@ -49,7 +49,7 @@
 				ProgramDataBaseFileName="<%dllout%>"
 <%else%>
 <%if(exename)%>
-				ProgramDataBaseFileName="<%if(install)%><%install%>\<%else%><%output_dir%><%endif%>"
+				ProgramDataBaseFileName="<%if(install)%><%install%><%else%><%output_dir%><%endif%>"
 <%endif%>
 <%endif%>
 <%endif%>
@@ -65,7 +65,7 @@
 <%if(type_is_binary)%>
 				AdditionalDependencies="<%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib<%fornotlast(" ")%><%endfor%><%if(ssl)%><%foreach(ssl_libs)%> <%ssl_lib%>.lib<%endfor%><%endif%>"
 <%endif%>
-				OutputFile="<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%><%if(install)%><%install%>\<%endif%><%output_dir%>\<%exename%>.exe<%endif%><%if(type_is_static)%><%libout%>\<%staticname%><%lib_modifier%>.lib<%endif%>"
+				OutputFile="<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%><%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%>.exe<%endif%><%if(type_is_static)%><%libout%>\<%staticname%><%lib_modifier%>.lib<%endif%>"
 				Version="<%version("1.0")%>"
 				LinkIncremental="<%incremental("1")%>"
 				SuppressStartupBanner="TRUE"
@@ -78,7 +78,7 @@
 				ProgramDatabaseFile="<%dllout%>\<%sharedname%><%lib_modifier%>.pdb"
 <%else%>
 <%if(exename)%>
-				ProgramDatabaseFile="<%if(install)%><%install%>\<%endif%><%output_dir%>\<%exename%>.pdb"
+				ProgramDatabaseFile="<%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%>.pdb"
 <%endif%>
 <%endif%>
 <%endif%>
