@@ -130,8 +130,26 @@ case "$host_os" in
         ld_shlibs=no
         ;;
       aCC)
-        # FIXME: insert proper C++ library support
-        ld_shlibs=no
+	case "$host_os" in
+	hpux9*) archive_cmds='$rm $output_objdir/$soname~$CC -b ${wl}+b ${wl}$install_libdir -o $output_objdir/$soname $libobjs $deplibs $linker_flags~test $output_objdir/$soname = $lib || mv $output_objdir/$soname $lib' ;;
+	*) archive_cmds='$CC -b ${wl}+h ${wl}$soname ${wl}+b ${wl}$install_libdir -o $lib $libobjs $deplibs $linker_flags' ;;
+	esac
+	hardcode_libdir_flag_spec='${wl}+b ${wl}$libdir'
+	hardcode_libdir_separator=:
+	hardcode_direct=yes
+	hardcode_minus_L=yes # Not in the search PATH, but as the default
+			     # location of the library.
+	export_dynamic_flag_spec='${wl}-E'
+
+        # Commands to make compiler produce verbose output that lists
+        # what "hidden" libraries, object files and flags are used when
+        # linking.
+        #
+        # There doesn't appear to be a way to prevent this compiler from
+        # explicitly linking system object files so we need to strip them
+        # from the output so that they don't get included in the library
+        # dependencies.
+        output_verbose_link_cmds='templist=`($CC $CFLAGS -v conftest.$objext 2>&1) | egrep "\-L"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
         ;;
       *)
         # FIXME: insert proper C++ library support
