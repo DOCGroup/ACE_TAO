@@ -1,3 +1,9 @@
+Mon Dec 13 13:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/IFR_Service/diffs/*.diff:
+          Removed all these files, they are not needed anymore and if needed
+          they should not be here but with the IFRService library
+
 Mon Dec 13 11:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PolicyS.{h,cpp,inl}:
