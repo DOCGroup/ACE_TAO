@@ -135,7 +135,7 @@ be_interface::relative_skel_name (const char *skel_name)
 
 void
 be_interface::compute_full_skel_name (const char *prefix,
-                                                    char *&skelname)
+                                      char *&skelname)
 {
   if (skelname)
     return;
@@ -2000,7 +2000,8 @@ be_interface_type_strategy::be_interface_type_strategy (be_interface *node)
     full_coll_name_(0),
     local_coll_name_(0),
     relative_skel_name_(0),
-    node_ (node)
+    node_ (node),
+    cached_type_ (-1)
 {
 }
 
@@ -2042,13 +2043,11 @@ be_interface_type_strategy::compute_coll_names (int type,
                                                 const char *prefix,
                                                 const char *suffix)
 {
-// @@ not thread safe.
-  static int cached_type = -1;
-  if (type == cached_type && this->full_coll_name_ != 0)
+  if (type == this->cached_type_ && this->full_coll_name_ != 0)
     return;
   else
     {
-      cached_type = type;
+      this->cached_type_ = type;
       delete this->full_coll_name_;
       delete this->local_coll_name_;
     }
@@ -2300,12 +2299,9 @@ be_interface_ami_handler_strategy::full_skel_name (void)
 const char *
 be_interface_ami_handler_strategy::full_coll_name (int type)
 {
-  if (this->full_coll_name_ == 0)
-    {
-      this->compute_coll_names (type,
-                                prefix_,
-                                suffix_);
-    }
+  this->compute_coll_names (type,
+                            prefix_,
+                            suffix_);
 
   return this->full_coll_name_;
 }
@@ -2313,12 +2309,9 @@ be_interface_ami_handler_strategy::full_coll_name (int type)
 const char *
 be_interface_ami_handler_strategy::local_coll_name (int type)
 {
-  if (this->local_coll_name_ == 0)
-    {
-      compute_coll_names (type,
-                          prefix_,
-                          suffix_);
-    }
+  compute_coll_names (type,
+                      prefix_,
+                      suffix_);
 
   return this->local_coll_name_;
 }
@@ -2441,12 +2434,9 @@ be_interface_default_strategy::full_skel_name (void)
 const char *
 be_interface_default_strategy::full_coll_name (int type)
 {
-  if (this->full_coll_name_ == 0)
-    {
-      this->compute_coll_names (type,
-                                0,  // prefix
-                                0); // suffix
-    }
+  this->compute_coll_names (type,
+                            0,  // prefix
+                            0); // suffix
 
   return this->full_coll_name_;
 }
@@ -2454,12 +2444,9 @@ be_interface_default_strategy::full_coll_name (int type)
 const char *
 be_interface_default_strategy::local_coll_name (int type)
 {
-  if (this->local_coll_name_ == 0)
-    {
-      this->compute_coll_names (type,
-                                0,  // prefix
-                                0); // suffix
-    }
+  this->compute_coll_names (type,
+                            0,  // prefix
+                            0); // suffix
 
   return this->local_coll_name_;
 }
