@@ -1,7 +1,7 @@
 // $Id$
 
 #include "testC.h"
-#include "tao/rtcorbafwd.h"
+#include "tao/RTCORBAC.h"
 #include "tao/Priority_Mapping.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
@@ -299,10 +299,10 @@ Client::svc (void)
                                     now - latency_base);
         }
 
-      char orb_name[50];
+      /* char orb_name[50];
       ACE_OS::sprintf (orb_name, "%d", priorities[this->id_]);
       server->shutdown (orb_name, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK;*/
     }
   ACE_CATCHANY
     {
