@@ -23,7 +23,7 @@ project(*DiamondLib) : taolib_with_idl, smart_proxies, portableserver {
   }
 }
 
-project(*Test): taoexe, smart_proxies, portableserver {
+project(*Test): taoexe, smart_proxies, portableserver, strategies {
   after += *TestStubsLib *DiamondLib
   libs  += Coll_Test_Stubs Diamond
   Source_Files {
