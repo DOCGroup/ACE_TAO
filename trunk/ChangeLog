@@ -1,3 +1,11 @@
+Fri Mar 30 11:17:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/fuzz.pl:
+          Add a couple of TODO entries
+
+        * html/index.html:
+          Add the Audio/Video Streaming service to the index file.
+
 Fri Mar 30 11:12:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/*/Makefile:
