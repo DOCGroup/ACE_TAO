@@ -1,3 +1,10 @@
+Thu Jun 21 20:38:47 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tests/RTCORBA/Explicit_Binding/server.dsp:
+          
+          Forgot to add changed DSP file from previous Explicit_Binding
+          checkin.
+
 Wed Jun 21 13:00:31 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/PortableServer/POA.cpp:
