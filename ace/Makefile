@@ -565,12 +565,6 @@ Svc_Conf_l.cpp: Svc_Conf.l
 # ie. (Meta Object compiler) for our QtReactor.h. So, let's do it
 # here.
 
-ifneq ($(QTDIR),)
-  MOC = ${QTDIR}/bin/moc
-else
-  MOC = moc
-endif
-
 ifneq ($(qt_reactor),)
 QtReactor_moc.cpp: QtReactor.h
 	$(MOC) QtReactor.h >QtReactor_moc.cpp

@@ -109,6 +109,7 @@ public:
   virtual int is_empty (void) const;
 
   /// Returns the time of the earlier node in the <ACE_Timer_List>.
+  /// Must be called on a non-empty queue.
   virtual const ACE_Time_Value &earliest_time (void) const;
 
   /**
