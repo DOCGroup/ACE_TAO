@@ -22,6 +22,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/PortableGroupC.h"
 
 #ifndef TAO_PG_MAX_NUMBER_OF_OBJECT_GROUPS
 /// The maximum number of object groups to be managed by the
@@ -36,7 +37,23 @@ const size_t TAO_PG_MAX_NUMBER_OF_OBJECT_GROUPS = 1024;
 const size_t TAO_PG_MAX_NUMBER_OF_LOCATIONS = 1024;
 #endif  /* TAO_PG_MAX_NUMBER_OF_OBJECT_GROUPS */
 
+#ifndef TAO_PG_MEMBERSHIP_STYLE
+/// The default object group membership style.
+const PortableGroup::MembershipStyleValue TAO_PG_MEMBERSHIP_STYLE =
+  PortableGroup::MEMB_INF_CTRL;
+#endif  /* TAO_PG_INITIAL_NUMBER_MEMBERS */
 
+#ifndef TAO_PG_INITIAL_NUMBER_MEMBERS
+/// The default initial number of object group members.
+const PortableGroup::InitialNumberMembersValue TAO_PG_INITIAL_NUMBER_MEMBERS =
+  0;
+#endif  /* TAO_PG_INITIAL_NUMBER_MEMBERS */
+
+#ifndef TAO_PG_MINIMUM_NUMBER_MEMBERS
+/// The default minimum number of object group members.
+const PortableGroup::MinimumNumberMembersValue TAO_PG_MINIMUM_NUMBER_MEMBERS =
+  0;
+#endif  /* TAO_PG_MINIMUM_NUMBER_MEMBERS */
 
 #include "ace/post.h"
 

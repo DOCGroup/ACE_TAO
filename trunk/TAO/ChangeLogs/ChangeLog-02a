@@ -1,3 +1,27 @@
+Tue Jun 04 21:10:43 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
+	  (process_criteria):
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
+	  (process_criteria):
+
+	  New method that extracts group-specific criteria defined by the
+	  PortableGroup IDL.
+	  
+	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.h:
+
+	  Moved override_properties() method to the "TAO_PG" namespace.
+	  No need to make it a protected member of the
+	  TAO_PG_PropertyManager class.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_conf.h:
+
+	  Added default values for the MembershipStyle,
+	  InitialNumberMembers and MinimumNumberMembers properties.
+
 Tue Jun  4 14:31:08 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tao/PortableServer/AMH_Response_Handler.cpp (TAO_AMH_Response_Handler): 
