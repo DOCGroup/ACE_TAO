@@ -1,3 +1,9 @@
+Thu Aug 20 14:14:30 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp : 
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp : 
+		Fixed compile errors and warning shown by g++.
+	
 Thu Aug 20 13:58:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/orbconf.h: 
