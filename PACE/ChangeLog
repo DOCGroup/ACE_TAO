@@ -1,43 +1,62 @@
+Fri Feb  9 19:35:29 2001  Luther J Baker  <luther@cs.wustl.edu>
+
+        * pace/config/compiler.h
+        * pace/config/utility.h
+        * pace/config/fcntl.h
+        * pace/win32/mman.inl
+        * pace/win32/pthread.h
+        * pace/win32/semaphore.inl
+        * pace/win32/stat.inl
+        * pace/win32/stdio.inl
+        * pace/win32/types.h
+        * pace/win32/unistd.inl
+        * pace/win32/utime.h
+        * pace/win32/utime.inl
+
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com>
+          for making the changes necessary to port PACE to
+          Borland C++ Builder 5.
+
 Thu Feb  1 17:36:24 2001  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/signal.h (PACE_SIGSET_T):
-	* pace/win32/signal.inl (pace_sigfillset):	
+        * pace/win32/signal.h (PACE_SIGSET_T):
+        * pace/win32/signal.inl (pace_sigfillset):
 
-	  Used ACE implementation.
+          Used ACE implementation.
 
 Sun Jan 28 13:20:28 2001  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/posix/unistd.inl (pace_getlogin_r):
+        * pace/posix/unistd.inl (pace_getlogin_r):
 
-	  Changed C++ style comments to C.
+          Changed C++ style comments to C.
 
 Thu Jan 25 17:26:41 2001  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/posix/unistd.inl (pace_access):
+        * pace/posix/unistd.inl (pace_access):
 
-	  Yet another change to the illustrious function.
-	  Let it be noted that there needs to be a better test for
-	  the _REENTRANT policy. Linux supports 'these' calls but
-	  is currently forced to the emulation code.
+          Yet another change to the illustrious function.
+          Let it be noted that there needs to be a better test for
+          the _REENTRANT policy. Linux supports 'these' calls but
+          is currently forced to the emulation code.
 
-	  The #if (PACE_SUNOS) || (PACE_LYNXOS) should not be here.
-	  Instead, there should be a simple test like PACE_HAS_REENTRANT
-	  or something even higher (such as in ACE: ACE_MT_SAFE).
+          The #if (PACE_SUNOS) || (PACE_LYNXOS) should not be here.
+          Instead, there should be a simple test like PACE_HAS_REENTRANT
+          or something even higher (such as in ACE: ACE_MT_SAFE).
 
 Tue Jan 23 14:56:51 2001  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/posix/unistd.inl (pace_getlogin_r):
+        * pace/posix/unistd.inl (pace_getlogin_r):
 
-	  Rewrote code and based preprocessor selection on
-	  PACE_HAS_REENTRANT as opposed to PACE_LYNXOS, PACE_SUNOS
-	  on an otherwise defined platform macro.
+          Rewrote code and based preprocessor selection on
+          PACE_HAS_REENTRANT as opposed to PACE_LYNXOS, PACE_SUNOS
+          on an otherwise defined platform macro.
 
 Fri Jan 19 12:43:27 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* pace/posix/socket.h: 
-	  Added a check for HPUX so that pace_family_t is not defined for
-	  HPUX.
-          
+        * pace/posix/socket.h:
+          Added a check for HPUX so that pace_family_t is not defined for
+          HPUX.
+
 Thu Jan 18 15:22:07 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * tests/Stdio_Test.c (main):
@@ -72,12 +91,12 @@ Mon Jan 15 10:44:39 2001  Darrell Brunsch <brunsch@uci.edu>
           - Fixed the intermediate and output directories to
             fit the model used in ACE.
 
-          - Changed the names of the two pace* projects so 
+          - Changed the names of the two pace* projects so
             msvc_auto_compile.pl will be able to recognize
             them as libraries.
 
           - Added two new configurations to test_stdio so it
-            now can link to both the dynamic and static 
+            now can link to both the dynamic and static
             version of PACE.
 
           - Changed the configuration name of the static

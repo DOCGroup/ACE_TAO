@@ -17,8 +17,12 @@
 #define PACE_SYS_TYPES_H_WIN32
 
 #include <sys/types.h>
-#include <wtypes.h>
-#include <windef.h>
+#if defined (__BORLANDC__)
+# include <windows.h>
+#else /* __BORLANDC__ */
+# include <wtypes.h>
+# include <windef.h>
+#endif /* __BORLANDC__ */
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {

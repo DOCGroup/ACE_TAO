@@ -153,7 +153,7 @@ extern "C" {
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
   int pthread_attr_getstackaddr (const pace_pthread_attr_t * attr,
-				 void * stackaddr);
+				 void ** stackaddr);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)

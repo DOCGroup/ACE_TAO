@@ -49,7 +49,11 @@ FILE *
 pace_fdopen (int fildes,
              const char * type)
 {
+#if defined (__BORLANDC__)
+  return fdopen (fildes, (char *)type);
+#else /* __BORLANDC__ */
   return fdopen (fildes, type);
+#endif /* __BORLANDC__ */
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
