@@ -1169,14 +1169,17 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
         * docs/Options.html: Added documentation for new
           -ORBScopePolicy option.
 
-        * ACE_ROOT/ace/OS.h: THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM
+        * $ACE_ROOT/ace/OS.h: THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM
           were not defined for NT.  Added them.
 
-        * ACE_ROOT/ace/OS.cpp: LinuxThreads do not have support for
+        * $ACE_ROOT/ace/OS.cpp: LinuxThreads do not have support for
           PTHREAD_SCOPE_PROCESS; only PTHREAD_SCOPE_SYSTEM is
           supported.  Therefore, PTHREAD_SCOPE_PROCESS is ignored when
           setting the thread scheduling scope.
 
-        * ACE_ROOT/bin/auto_run_tests.lst: Added new RTCORBA tests.
+        * $ACE_ROOT/ace/Sample_History.cpp: Added accessors for
+          <sample_count> and <max_samples>.
+
+        * $ACE_ROOT/bin/auto_run_tests.lst: Added new RTCORBA tests.
           Removed Minimum CORBA dependency on these tests.
 
