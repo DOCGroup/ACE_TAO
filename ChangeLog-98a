@@ -1,3 +1,37 @@
+Wed Mar 11 00:39:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* CE-status: A temporary file to trace the progress of the CE
+	  port. 
+
+	* ace/ace_ce_dll.dsp: Added more .cpp files.
+
+	* ace/High_Res_Timer.{h,cpp}: Undefined functions print_ave and
+	  print_total.  These two function use STDOUT which is not
+	  supported on CE.  We should probably modify the functions so
+	  they write results to Log_Msg.
+	  (get_register_scale_factor): This function always returns 1 on
+	  CE to prevent the use of High_Res_Timer.
+	  (get_env_global_scale_factor): Always returns -1 on CE because
+	  environment variables are not supported.
+
+	* ace/Thread_Manager.cpp (spawn_i): WinCE doesn't support
+	  DuplicateHandle, therefore the best we can do now is just pass
+	  back the handle to the spawned thread.  Notice that you *can't*
+	  close the handle by yourself under CE.  Perhaps we shouldn't
+	  even try to pass this info back. ???
+	  Applied regular CE porting tricks.
+	  
+	* ace/SOCK_Dgram_Mcast.{h,cpp}:
+	* ace/SOCK_Dgram_Bcast.{h,cpp}: Changed some function signatures
+	  to use wchar on CE.  Applied regular CE porting tricks.
+	
+	* ace/IO_SAP.cpp:
+	* ace/SOCK_CODgram.cpp:
+	* ace/SOCK_Dgram.cpp:
+	* ace/Select_Reactor.cpp:
+	* ace/Timer_{Hash,Heap,List,Queue,Wheel}_T.cpp: Applied regular CE
+	  porting tricks.  Erm, I'm running out of tricks.
+
 Tue Mar 10 20:27:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Reactor.h (reset_event_loop): Made the signature match with

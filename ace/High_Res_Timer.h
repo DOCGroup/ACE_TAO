@@ -80,6 +80,8 @@ public:
   // Sets the global_scale_factor to the value in the <env>
   // environment variable.  Returns 0 on success, -1 on failure.  Note
   // if <env> points to string "0" (value zero), this call will fail.
+  // This is basically a no-op on CE because there is no concept of
+  // environment variable on CE.
 
   ACE_High_Res_Timer (void);
   // Initialize the timer.
@@ -117,6 +119,10 @@ public:
   // Set <tv> to the number of microseconds elapsed between all
   // calls to start_incr and stop_incr.
 
+#if !defined (ACE_HAS_WINCE)
+  // @@ These two functions are currently not supported on Windows CE.
+  //    However, we should probably use the handle and ACE_Log_Msg to
+  //    print out the result.
   void print_total (const char *message,
                     const int iterations = 1,
                     ACE_HANDLE handle = ACE_STDOUT);
@@ -127,6 +133,7 @@ public:
                   const int iterations = 1,
                   ACE_HANDLE handle = ACE_STDOUT);
   // Print average time.
+#endif /* !ACE_HAS_WINCE */
 
   void dump (void) const;
   // Dump the state of an object.
@@ -149,7 +156,7 @@ public:
 
 protected:
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   static u_long get_registry_scale_factor (void);
   // This is used to find out the Mhz of the machine for the scale
   // factor.  If there are any problems getting it, we just return 1

@@ -12,7 +12,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 // For Intel platforms, a scale factor is required for
 // ACE_OS::gethrtime.  We'll still set this to one to prevent division
 // by zero errors.
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE)
 
 u_long
 ACE_High_Res_Timer::get_registry_scale_factor (void)
@@ -68,7 +68,7 @@ ACE_High_Res_Timer::dump (void) const
   ACE_TRACE ("ACE_High_Res_Timer::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -155,7 +155,7 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds)
   nanoseconds = useconds * 1000u + nseconds;
 }
 
-
+#if !defined (ACE_HAS_WINCE)
 void
 ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE handle)
 {
@@ -213,10 +213,12 @@ ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE ha
   ACE_OS::write (handle, str, ACE_OS::strlen (str));
   ACE_OS::write (handle, buf, ACE_OS::strlen (buf));
 }
+#endif /* !ACE_HAS_WINCE */
 
 int
 ACE_High_Res_Timer::get_env_global_scale_factor (const char *env)
 {
+#if !defined (ACE_HAS_WINCE)
   if (env != 0)
     {
       const char *env_value = ACE_OS::getenv (env);
@@ -230,6 +232,8 @@ ACE_High_Res_Timer::get_env_global_scale_factor (const char *env)
             }
         }
     }
-
+#else
+  ACE_UNUSED_ARG (env);
+#endif /* !ACE_HAS_WINCE */
   return -1;
 }
