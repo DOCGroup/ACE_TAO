@@ -1,3 +1,15 @@
+Tue Feb 22 12:29:44 2000  Ossama Othman  <ossama@uci.edu>
+
+	* m4/threads.m4 (ACE_CHECK_THREAD_FLAGS):
+
+	  Added run-time tests to this M4 macro to get around the annoying
+	  fact that some platforms implement no-op thread function stubs,
+	  which cause link-time tests to pass.  The run-time tests check
+	  the return value of pthread_create() and/or thr_create() to
+	  determine if the function is working or not.  The cross-compiled
+	  case falls back on the link-time test.  This fixes a problem on
+	  Solaris with both Sun C++ and g++.
+
 Tue Feb 22 14:00:38 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (cond_timedwait): added pSOS support.  Thanks
@@ -10,6 +22,8 @@ Tue Feb 22 09:52:50 2000  Ossama Othman  <ossama@uci.edu>
 
           A conflict appears when including both <ucontext.h> and
           <sys/procfs.h> with recent glibc headers, so don't define it.
+	  However, at some point we should redefine this macro since the
+	  latest glibc fixes this problem.
 
 Tue Feb 22 09:16:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
