@@ -1,201 +1,205 @@
+Mon Jun 08 09:41:52 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB_Core.cpp: added/fixed template instantiations.
+
 Mon Jun  8 02:17:54 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
-	* ACE-INSTALL.html: 
-	Added a comment regarding the new port to Borland C++ Builder.
+        * ACE-INSTALL.html:
+        Added a comment regarding the new port to Borland C++ Builder.
 
-	* ace/ACE.bpg: 
-	* ace/ACED.bpr: 
-	* ace/ACED.cpp: 
-	* ace/ACER.bpr: 
-	* ace/ACER.cpp: 
+        * ace/ACE.bpg:
+        * ace/ACED.bpr:
+        * ace/ACED.cpp:
+        * ace/ACER.bpr:
+        * ace/ACER.cpp:
 
 
-	* ace/ACE.cpp: 
-	Got rid of unused const int MAX_STRING_SZ = 4096.
-	
-	* ace/Asynch_Acceptor.cpp: 
-	* ace/Asynch_IO.cpp: 
-	* ace/Msg_WFMO_Reactor.cpp: 
-	* ace/config-win32-common.h: 
-	Replaced the use of _WIN32_WINNT with ACE_HAS_WINNT4. Borland C++
-	Builder doesn't handle _WIN32_WINNT very well when building under
-	Win95.
+        * ace/ACE.cpp:
+        Got rid of unused const int MAX_STRING_SZ = 4096.
 
-	* ace/Asynch_IO.h: 
-	Now ACE_Asynch_Result inherits publicly from OVERLAPPED;
-	otherwise, Borland C++ Builder refuses to access OVERLAPPED
-	members. I'm not sure who's right or wrong here.
-	
-	* ace/CORBA_Ref.h: 
-	Added an #include "ace/ACE.h".
-	
-	* ace/Future.h: 
-	Two cosmetic changes.
-	
-	* ace/LOCK_SOCK_Acceptor.cpp: 
-	Added an #include /**/ "ace/LOCK_SOCK_Acceptor.h".
-	
-	* ace/Log_Msg.cpp: 
-	Borland C++ Builder doesn't like extern int sys_nerr, so I
-	protected against it.
-	
-	* ace/OS.cpp: 
-	A couple of hacks to handle FILETIMEs and SYSTEM_INFO structs,
-	which are defined a little different under Borland C++ Builder.
-	
-	* ace/OS.h: 
-	Added support for Borland C++ Builder.
-	
-	* ace/OS.i: 
-	Borland C++ Builder handles a few functions differently: close,
-	SetFilePointer, wfdopen.
-	
-	* ace/Synch_T.h: 
-	A comment on an #else spanned several lines and mixed // and /**/
-	styles; hard to read.
-	
-	* ace/TTY_IO.cpp: 
-	A switch was not properly indented and, as a result, had an extra
-	break that made Borland C++ Builder complain.
-	
-	* ace/WFMO_Reactor.cpp: 
-	Got rid of a couple of unused local variables called result.
-	
-	* ace/config-win32-common.h: 
-	Added a few defines for Borland C++ Builder. Don't know if
-	this is the proper way to do it, but there it is.
-	
-	* tests/Aio_Platform_Test.bpr: 
-	* tests/Atomic_Op_Test.bpr: 
-	* tests/Barrier_Test.bpr: 
-	* tests/Basic_Types_Test.bpr: 
-	* tests/Buffer_Stream_Test.bpr: 
-	* tests/Conn_Test.bpr: 
-	* tests/Enum_Interfaces_Test.bpr: 
-	* tests/Env_Value_Test.bpr: 
-	* tests/Future_Test.bpr: 
-	* tests/Handle_Set_Test.bpr: 
-	* tests/Hash_Map_Manager_Test.bpr: 
-	* tests/IOStream_Test.bpr: 
-	* tests/MM_Shared_Memory_Test.bpr: 
-	* tests/MT_Reactor_Timer_Test.bpr: 
-	* tests/MT_SOCK_Test.bpr: 
-	* tests/Map_Manager_Test.bpr: 
-	* tests/Mem_Map_Test.bpr: 
-	* tests/Message_Block_Test.bpr: 
-	* tests/Message_Queue_Notifications_Test.bpr: 
-	* tests/Message_Queue_Test.bpr: 
-	* tests/Naming_Test.bpr: 
-	* tests/Notify_Performance_Test.bpr: 
-	* tests/OrdMultiSet_Test.bpr: 
-	* tests/Pipe_Test.bpr: 
-	* tests/Priority_Buffer_Test.bpr: 
-	* tests/Priority_Reactor_Test.bpr: 
-	* tests/Priority_Task_Test.bpr: 
-	* tests/Process_Mutex_Test.bpr: 
-	* tests/Process_Strategy_Test.bpr: 
-	* tests/Reactor_Exceptions_Test.bpr: 
-	* tests/Reactor_Notify_Test.bpr: 
-	* tests/Reactor_Performance_Test.bpr: 
-	* tests/Reactor_Timer_Test.bpr: 
-	* tests/Reactors_Test.bpr: 
-	* tests/Reader_Writer_Test.bpr: 
-	* tests/Recursive_Mutex_Test.bpr: 
-	* tests/SOCK_Connector_Test.bpr: 
-	* tests/SOCK_Test.bpr: 
-	* tests/SPIPE_Test.bpr: 
-	* tests/SString_Test.bpr: 
-	* tests/SV_Shared_Memory_Test.bpr: 
-	* tests/Semaphore_Test.bpr: 
-	* tests/Service_Config_Test.bpr: 
-	* tests/Sigset_Ops_Test.bpr: 
-	* tests/Simple_Message_Block_Test.bpr: 
-	* tests/TSS_Test.bpr: 
-	* tests/Task_Test.bpr: 
-	* tests/Thread_Manager_Test.bpr: 
-	* tests/Thread_Mutex_Test.bpr: 
-	* tests/Thread_Pool_Test.bpr: 
-	* tests/Time_Service_Test.bpr: 
-	* tests/Time_Value_Test.bpr: 
-	* tests/Timer_Queue_Test.bpr: 
-	* tests/Tokens_Test.bpr: 
-	* tests/UPIPE_SAP_Test.bpr: 
-	* tests/tests.bpg: 
-	Added these Borland C++ Builder project files.
+        * ace/Asynch_Acceptor.cpp:
+        * ace/Asynch_IO.cpp:
+        * ace/Msg_WFMO_Reactor.cpp:
+        * ace/config-win32-common.h:
+        Replaced the use of _WIN32_WINNT with ACE_HAS_WINNT4. Borland C++
+        Builder doesn't handle _WIN32_WINNT very well when building under
+        Win95.
 
-	* tests/Aio_Platform_Test.cpp: 
-	* tests/Atomic_Op_Test.cpp: 
-	* tests/Barrier_Test.cpp: 
-	* tests/Basic_Types_Test.cpp: 
-	* tests/Buffer_Stream_Test.cpp: 
-	* tests/Enum_Interfaces_Test.cpp: 
-	* tests/Env_Value_Test.cpp: 
-	* tests/Future_Test.cpp: 
-	* tests/Handle_Set_Test.cpp: 
-	* tests/Hash_Map_Manager_Test.cpp: 
-	* tests/IOStream_Test.cpp: 
-	* tests/MM_Shared_Memory_Test.cpp: 
-	* tests/MT_Reactor_Timer_Test.cpp: 
-	* tests/MT_SOCK_Test.cpp: 
-	* tests/Map_Manager_Test.cpp: 
-	* tests/Mem_Map_Test.cpp: 
-	* tests/Message_Block_Test.cpp: 
-	* tests/Message_Queue_Notifications_Test.cpp: 
-	* tests/Message_Queue_Test.cpp: 
-	* tests/Naming_Test.cpp: 
-	* tests/Notify_Performance_Test.cpp: 
-	* tests/OrdMultiSet_Test.cpp: 
-	* tests/Pipe_Test.cpp: 
-	* tests/Priority_Buffer_Test.cpp: 
-	* tests/Priority_Reactor_Test.cpp: 
-	* tests/Priority_Task_Test.cpp: 
-	* tests/Process_Mutex_Test.cpp: 
-	* tests/Process_Strategy_Test.cpp: 
-	* tests/Reactor_Exceptions_Test.cpp: 
-	* tests/Reactor_Notify_Test.cpp: 
-	* tests/Reactor_Performance_Test.cpp: 
-	* tests/Reactor_Timer_Test.cpp: 
-	* tests/Reactors_Test.cpp: 
-	* tests/Reader_Writer_Test.cpp: 
-	* tests/Recursive_Mutex_Test.cpp: 
-	* tests/SOCK_Connector_Test.cpp: 
-	* tests/SOCK_Test.cpp: 
-	* tests/SPIPE_Test.cpp: 
-	* tests/SString_Test.cpp: 
-	* tests/SV_Shared_Memory_Test.cpp: 
-	* tests/Semaphore_Test.cpp: 
-	* tests/Service_Config_Test.cpp: 
-	* tests/Sigset_Ops_Test.cpp: 
-	* tests/Simple_Message_Block_Test.cpp: 
-	* tests/TSS_Test.cpp: 
-	* tests/Task_Test.cpp: 
-	* tests/Thread_Manager_Test.cpp: 
-	* tests/Thread_Mutex_Test.cpp: 
-	* tests/Thread_Pool_Test.cpp: 
-	* tests/Time_Service_Test.cpp: 
-	* tests/Time_Value_Test.cpp: 
-	* tests/Timer_Queue_Test.cpp: 
-	* tests/Tokens_Test.cpp: 
-	* tests/UPIPE_SAP_Test.cpp: 
-	Added the Borland non-sense to allow the tests to link against the
-	ACE library under Borland C++ Builder. Major pain in the rear
-	end...
+        * ace/Asynch_IO.h:
+        Now ACE_Asynch_Result inherits publicly from OVERLAPPED;
+        otherwise, Borland C++ Builder refuses to access OVERLAPPED
+        members. I'm not sure who's right or wrong here.
 
-	* tests/test_config.h: 
-	Added a couple of includes for the case of Borland C++ Builder.
+        * ace/CORBA_Ref.h:
+        Added an #include "ace/ACE.h".
 
-	* tests/Hash_Map_Manager_Test.cpp: 
-	Changed variable name allocator to alloc, to avoid conflicts with
-	STL allocators under Borland C++ Builder.
+        * ace/Future.h:
+        Two cosmetic changes.
 
-	* tests/Reactors_Test.cpp: 
-	Changed variable name tm to thr_mgr, to avoid conflicts with
-	std::tm under Borland C++ Builder.
-	
-	* tests/Tokens_Test.cpp: 
-	* tests/UPIPE_SAP_Test.cpp: 
-	Added a few explicit template instantiations.
-	
+        * ace/LOCK_SOCK_Acceptor.cpp:
+        Added an #include /**/ "ace/LOCK_SOCK_Acceptor.h".
+
+        * ace/Log_Msg.cpp:
+        Borland C++ Builder doesn't like extern int sys_nerr, so I
+        protected against it.
+
+        * ace/OS.cpp:
+        A couple of hacks to handle FILETIMEs and SYSTEM_INFO structs,
+        which are defined a little different under Borland C++ Builder.
+
+        * ace/OS.h:
+        Added support for Borland C++ Builder.
+
+        * ace/OS.i:
+        Borland C++ Builder handles a few functions differently: close,
+        SetFilePointer, wfdopen.
+
+        * ace/Synch_T.h:
+        A comment on an #else spanned several lines and mixed // and /**/
+        styles; hard to read.
+
+        * ace/TTY_IO.cpp:
+        A switch was not properly indented and, as a result, had an extra
+        break that made Borland C++ Builder complain.
+
+        * ace/WFMO_Reactor.cpp:
+        Got rid of a couple of unused local variables called result.
+
+        * ace/config-win32-common.h:
+        Added a few defines for Borland C++ Builder. Don't know if
+        this is the proper way to do it, but there it is.
+
+        * tests/Aio_Platform_Test.bpr:
+        * tests/Atomic_Op_Test.bpr:
+        * tests/Barrier_Test.bpr:
+        * tests/Basic_Types_Test.bpr:
+        * tests/Buffer_Stream_Test.bpr:
+        * tests/Conn_Test.bpr:
+        * tests/Enum_Interfaces_Test.bpr:
+        * tests/Env_Value_Test.bpr:
+        * tests/Future_Test.bpr:
+        * tests/Handle_Set_Test.bpr:
+        * tests/Hash_Map_Manager_Test.bpr:
+        * tests/IOStream_Test.bpr:
+        * tests/MM_Shared_Memory_Test.bpr:
+        * tests/MT_Reactor_Timer_Test.bpr:
+        * tests/MT_SOCK_Test.bpr:
+        * tests/Map_Manager_Test.bpr:
+        * tests/Mem_Map_Test.bpr:
+        * tests/Message_Block_Test.bpr:
+        * tests/Message_Queue_Notifications_Test.bpr:
+        * tests/Message_Queue_Test.bpr:
+        * tests/Naming_Test.bpr:
+        * tests/Notify_Performance_Test.bpr:
+        * tests/OrdMultiSet_Test.bpr:
+        * tests/Pipe_Test.bpr:
+        * tests/Priority_Buffer_Test.bpr:
+        * tests/Priority_Reactor_Test.bpr:
+        * tests/Priority_Task_Test.bpr:
+        * tests/Process_Mutex_Test.bpr:
+        * tests/Process_Strategy_Test.bpr:
+        * tests/Reactor_Exceptions_Test.bpr:
+        * tests/Reactor_Notify_Test.bpr:
+        * tests/Reactor_Performance_Test.bpr:
+        * tests/Reactor_Timer_Test.bpr:
+        * tests/Reactors_Test.bpr:
+        * tests/Reader_Writer_Test.bpr:
+        * tests/Recursive_Mutex_Test.bpr:
+        * tests/SOCK_Connector_Test.bpr:
+        * tests/SOCK_Test.bpr:
+        * tests/SPIPE_Test.bpr:
+        * tests/SString_Test.bpr:
+        * tests/SV_Shared_Memory_Test.bpr:
+        * tests/Semaphore_Test.bpr:
+        * tests/Service_Config_Test.bpr:
+        * tests/Sigset_Ops_Test.bpr:
+        * tests/Simple_Message_Block_Test.bpr:
+        * tests/TSS_Test.bpr:
+        * tests/Task_Test.bpr:
+        * tests/Thread_Manager_Test.bpr:
+        * tests/Thread_Mutex_Test.bpr:
+        * tests/Thread_Pool_Test.bpr:
+        * tests/Time_Service_Test.bpr:
+        * tests/Time_Value_Test.bpr:
+        * tests/Timer_Queue_Test.bpr:
+        * tests/Tokens_Test.bpr:
+        * tests/UPIPE_SAP_Test.bpr:
+        * tests/tests.bpg:
+        Added these Borland C++ Builder project files.
+
+        * tests/Aio_Platform_Test.cpp:
+        * tests/Atomic_Op_Test.cpp:
+        * tests/Barrier_Test.cpp:
+        * tests/Basic_Types_Test.cpp:
+        * tests/Buffer_Stream_Test.cpp:
+        * tests/Enum_Interfaces_Test.cpp:
+        * tests/Env_Value_Test.cpp:
+        * tests/Future_Test.cpp:
+        * tests/Handle_Set_Test.cpp:
+        * tests/Hash_Map_Manager_Test.cpp:
+        * tests/IOStream_Test.cpp:
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/MT_Reactor_Timer_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/Map_Manager_Test.cpp:
+        * tests/Mem_Map_Test.cpp:
+        * tests/Message_Block_Test.cpp:
+        * tests/Message_Queue_Notifications_Test.cpp:
+        * tests/Message_Queue_Test.cpp:
+        * tests/Naming_Test.cpp:
+        * tests/Notify_Performance_Test.cpp:
+        * tests/OrdMultiSet_Test.cpp:
+        * tests/Pipe_Test.cpp:
+        * tests/Priority_Buffer_Test.cpp:
+        * tests/Priority_Reactor_Test.cpp:
+        * tests/Priority_Task_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/Reactor_Exceptions_Test.cpp:
+        * tests/Reactor_Notify_Test.cpp:
+        * tests/Reactor_Performance_Test.cpp:
+        * tests/Reactor_Timer_Test.cpp:
+        * tests/Reactors_Test.cpp:
+        * tests/Reader_Writer_Test.cpp:
+        * tests/Recursive_Mutex_Test.cpp:
+        * tests/SOCK_Connector_Test.cpp:
+        * tests/SOCK_Test.cpp:
+        * tests/SPIPE_Test.cpp:
+        * tests/SString_Test.cpp:
+        * tests/SV_Shared_Memory_Test.cpp:
+        * tests/Semaphore_Test.cpp:
+        * tests/Service_Config_Test.cpp:
+        * tests/Sigset_Ops_Test.cpp:
+        * tests/Simple_Message_Block_Test.cpp:
+        * tests/TSS_Test.cpp:
+        * tests/Task_Test.cpp:
+        * tests/Thread_Manager_Test.cpp:
+        * tests/Thread_Mutex_Test.cpp:
+        * tests/Thread_Pool_Test.cpp:
+        * tests/Time_Service_Test.cpp:
+        * tests/Time_Value_Test.cpp:
+        * tests/Timer_Queue_Test.cpp:
+        * tests/Tokens_Test.cpp:
+        * tests/UPIPE_SAP_Test.cpp:
+        Added the Borland non-sense to allow the tests to link against the
+        ACE library under Borland C++ Builder. Major pain in the rear
+        end...
+
+        * tests/test_config.h:
+        Added a couple of includes for the case of Borland C++ Builder.
+
+        * tests/Hash_Map_Manager_Test.cpp:
+        Changed variable name allocator to alloc, to avoid conflicts with
+        STL allocators under Borland C++ Builder.
+
+        * tests/Reactors_Test.cpp:
+        Changed variable name tm to thr_mgr, to avoid conflicts with
+        std::tm under Borland C++ Builder.
+
+        * tests/Tokens_Test.cpp:
+        * tests/UPIPE_SAP_Test.cpp:
+        Added a few explicit template instantiations.
+
 Sun Jun 07 09:51:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Timeprobe_T.cpp: added #include of ace/Timeprobe.h.
