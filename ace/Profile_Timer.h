@@ -21,25 +21,29 @@
 #include "ace/Time_Value.h"
 #include "ace/High_Res_Timer.h"
 
-#if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
-
 class ACE_Export ACE_Profile_Timer
 {
   // = TITLE
   //     This class provides both a timing mechanism and a mechanism
   //     for reporting the resource usage of a process.
 public:
-  struct ACE_Elapsed_Time
-    {
-      double real_time;
-      double user_time;
-      double system_time;
-    };
-#if defined (ACE_HAS_PRUSAGE_T)
-    typedef prusage_t Rusage;
-#elif defined (ACE_HAS_GETRUSAGE)
-    typedef rusage Rusage;
-#endif /* ACE_HAS_PRUSAGE_T */
+
+  class ACE_Elapsed_Time
+  {
+    // = TITLE
+    //    Keeps track of the various user, system, and elapsed (real)
+    //    times.  
+    // 
+    // = DESCRIPTION
+    //   If <ACE_HAS_FLOATING_POINT> is enabled these values are in
+    //   microseconds, otherwise, they are in seconds.
+  public:
+    ACE_timer_t real_time;    
+    ACE_timer_t user_time;
+    ACE_timer_t system_time;
+  };
+
+  typedef ACE_Rusage Rusage;
 
   // = Initialization and termination methods.
   ACE_Profile_Timer (void);
@@ -112,42 +116,10 @@ private:
 
   ACE_Time_Value last_time_;
   // Keep track of the last time for incremental timing.
-
+#else
+  ACE_High_Res_Timer timer_;
 #endif /* ACE_HAS_PRUSAGE_T */
 };
-
-#else  /* ! ACE_HAS_PRUSAGE_T && ! ACE_HAS_GETRUSAGE */
-
-class ACE_Export ACE_Profile_Timer
-{
-public:
-  struct ACE_Elapsed_Time
-    {
-#if defined (ACE_LACKS_FLOATING_POINT)
-      ACE_UINT32 real_time;    // units of microseconds!
-      ACE_UINT32 user_time;
-      ACE_UINT32 system_time;
-#else  /* ! ACE_LACKS_FLOATING_POINT */
-      double real_time;        // units of seconds
-      double user_time;
-      double system_time;
-#endif /* ! ACE_LACKS_FLOATING_POINT */
-    };
-
-  ACE_Profile_Timer (void);
-  ~ACE_Profile_Timer (void);
-  int start (void);
-  int stop (void);
-  int elapsed_time (ACE_Elapsed_Time &et);
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-private:
-  ACE_High_Res_Timer timer_;
-};
-
-#endif /* ! ACE_HAS_PRUSAGE_T && ! ACE_HAS_GETRUSAGE */
 
 #if defined (__ACE_INLINE__)
 # include "ace/Profile_Timer.i"
