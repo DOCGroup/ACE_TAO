@@ -48,7 +48,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
 
       *os << "struct " << be_global->stub_export_macro () << " "
           << node->local_name () << be_nl
-          << "{" << be_idt << be_nl;
+          << "{" << be_idt_nl;
 
       // Generate the _ptr_type and _var_type typedefs.
       *os << "typedef " << node->local_name () << "_var _var_type;"

@@ -151,7 +151,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // Generate the body.
 
       *os << "{" << be_nl
-          << "public:" << be_nl
+          << "public:" << be_idt_nl
 
           // Generate the _ptr_type and _var_type typedefs.
           << "typedef " << node->local_name () << "_ptr _ptr_type;"
