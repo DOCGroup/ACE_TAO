@@ -15,8 +15,8 @@
 
 #ifndef CIAO_CONTAINER_BASE_H
 #define CIAO_CONTAINER_BASE_H
-
 #include "ace/pre.h"
+
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
@@ -126,4 +126,5 @@ namespace CIAO
      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 }
 
+#include "ace/post.h"
 #endif /* CIAO_CONTAINER_BASE_H */

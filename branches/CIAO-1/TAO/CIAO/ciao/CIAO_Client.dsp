@@ -104,7 +104,7 @@ SOURCE=.\CCM_EventC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CIAO_Component_i.cpp
+SOURCE=.\Client_init.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -128,7 +128,7 @@ SOURCE=.\CIAO_CLIENT_Export.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CIAO_Component_i.h
+SOURCE=.\Client_init.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

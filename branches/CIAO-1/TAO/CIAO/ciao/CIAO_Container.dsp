@@ -116,6 +116,10 @@ SOURCE=.\CCM_TransactionC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cookies.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CosPersistentStateC.cpp
 # End Source File
 # End Group
@@ -152,6 +156,10 @@ SOURCE=.\CIAO_Container_Export.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cookies.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CosPersistentStateC.h
 # End Source File
 # End Group
@@ -185,6 +193,10 @@ SOURCE=.\CCM_EventS.i
 # Begin Source File
 
 SOURCE=.\CCM_TransactionC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cookies.inl
 # End Source File
 # Begin Source File
 

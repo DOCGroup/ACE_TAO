@@ -43,7 +43,7 @@ IDL_SRC = \
         $(addsuffix S, $(IDL_FILES)) \
         $(addsuffix C, $(IDL_FILES))
 
-SHLIB_SRC = $(IDL_SRC) Container_Base HomeRegistrar_i
+SHLIB_SRC = $(IDL_SRC) Container_Base HomeRegistrar_i Server_init
 
 LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
 LOBJ = $(addsuffix .o,$(SHLIB_SRC))

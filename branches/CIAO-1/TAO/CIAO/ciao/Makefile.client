@@ -41,7 +41,7 @@ override TAO_IDLFLAGS += -Ge 1 -Sc -I$(TAO_ROOT) \
 IDL_FILES = CCM_Base CCM_Event CCM_Component
 IDL_SRC = CCM_BaseC CCM_EventC CCM_ComponentC
 
-SHLIB_SRC = $(IDL_SRC) CIAO_Component_i
+SHLIB_SRC = $(IDL_SRC) Client_init
 
 LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
 LOBJ = $(addsuffix .o,$(SHLIB_SRC))

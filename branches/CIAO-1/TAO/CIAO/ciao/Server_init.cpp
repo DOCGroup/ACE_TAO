@@ -1,13 +1,14 @@
 // $Id$
 
-#include "ciao/Client_init.h"
+#include "ciao/Server_init.h"
 #include "ciao/CIAO_common.h"
 #include "ciao/CCM_ComponentC.h"
+#include "ciao/Cookies.h"
 
 int
-CIAO::Client_init (CORBA::ORB_ptr o)
+CIAO::Server_init (CORBA::ORB_ptr o)
 {
-  CIAO_REGISTER_VALUE_FACTORY (o, Components::Cookie_init,
+  CIAO_REGISTER_VALUE_FACTORY (o, CIAO::Map_Key_Cookie_init,
                                Components::Cookie);
   CIAO_REGISTER_VALUE_FACTORY (o, Components::PortDescription_init,
                                Components::PortDescription);

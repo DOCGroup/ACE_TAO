@@ -16,7 +16,7 @@ project (CAIO_Client) : taolib_with_idl {
     CCM_BaseC.cpp
     CCM_EventC.cpp
     CCM_ComponentC.cpp
-    CIAO_Component_i.cpp
+    Client_init.cpp
   }
 }
 
@@ -43,6 +43,7 @@ project (CAIO_Container) : taolib_with_idl {
     CCM_BaseS.cpp
     CCM_EventS.cpp
     CCM_ComponentS.cpp
+    Cookies.cpp
   }
 }
 
@@ -67,5 +68,6 @@ project (CAIO_Server) :taolib_with_idl {
     HomeRegistrarS.cpp
     ContainerBase.cpp
     HomeRegistrar_i.cpp
+    Server_init.cpp
   }
 }
