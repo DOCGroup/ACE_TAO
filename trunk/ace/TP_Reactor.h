@@ -346,6 +346,9 @@ private:
   /// associated with <handle> that a particular event has occurred.
   int dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info);
 
+  /// Clear the <handle> from the read_set
+  void clear_handle_read_set (ACE_HANDLE handle);
+
 private:
   /// Deny access since member-wise won't work...
   ACE_TP_Reactor (const ACE_TP_Reactor &);
