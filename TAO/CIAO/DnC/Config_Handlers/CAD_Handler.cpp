@@ -32,6 +32,10 @@ void CAD_Handler::process_ComponentAssemblyDescription
       XStr node_name (node->getNodeName());
 
       if (false);
+      else if (node_name == XStr
+                (ACE_TEXT ("Deployment:ComponentAssemblyDescription")))
+        {
+        }
       else if
         (process_sequence_local<Deployment::SubcomponentInstantiationDescription>
          (this->doc_, this->iter_, node,
