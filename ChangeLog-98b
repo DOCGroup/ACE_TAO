@@ -1,3 +1,16 @@
+Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS.h: Added a new ACE_sap_any_cast macro, which makes it
+ 	  much easier to cast the ACE_Addr::sap_any to the right subclass.
+
+	* tests/Reactor_Performance_Test.cpp,
+	  tests/Reactor_Exceptions_Test.cpp,
+	  tests/Process_Strategy_Test.cpp,
+	  tests/Priority_Reactor_Test.cpp,
+	  tests/IOStream_Test.cpp,
+	  tests/Conn_Test.cpp: Replaced all the C-style casts for
+ 	  ACE_Addr::sap_any with the new ACE_sap_any_cast macro.
+
 Sun Jan 03 09:12:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.* (ACE_U_LongLong): unioned the data members

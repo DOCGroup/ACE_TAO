@@ -54,11 +54,13 @@
 #   else  /* ! ACE_LACKS_RTTI */
 #     define ACE_dynamic_cast(TYPE, EXPR)    dynamic_cast<TYPE> (EXPR)
 #   endif /* ! ACE_LACKS_RTTI */
+#   define ACE_sap_any_cast(TYPE)  reinterpret_cast<TYPE> (const_cast<ACE_Addr &> (ACE_Addr::sap_any))
 # else
 #   define ACE_static_cast(TYPE, EXPR)       ((TYPE) (EXPR))
 #   define ACE_const_cast(TYPE, EXPR)        ((TYPE) (EXPR))
 #   define ACE_reinterpret_cast(TYPE, EXPR)  ((TYPE) (EXPR))
 #   define ACE_dynamic_cast(TYPE, EXPR)      ((TYPE) (EXPR))
+#   define ACE_sap_any_cast(TYPE)  ((TYPE) (ACE_Addr::sap_any))
 # endif /* ACE_HAS_ANSI_CASTS */
 
 # if !defined (ACE_CAST_CONST)
