@@ -1,3 +1,14 @@
+Mon Jan  6 17:31:03 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Reactive_Connect_Strategy.cpp:
+	* tao/LF_Connect_Strategy.cpp: Used the cached pointer to access
+	  the ORB_Core, instead of accessing the ORB_Core in the
+	  transport. The reason why this should be done this way is too
+	  involved to explain here, but suffice to say that in highly
+	  multi-threaded environments the transports could dis-sappear
+	  before the connection handlers. Accessing the ORB_Core from the
+	  transport could then lead to vague crashes.
+
 Mon Jan  6 17:12:40 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 
