@@ -474,3 +474,22 @@ TAO_Bounded_String_Sequence (CORBA::ULong length,
   : TAO_Bounded_Base_Sequence (MAX, length, value, release)
 {
 }
+
+// *************************************************************
+// class TAO_Bounded_WString_Sequence
+// *************************************************************
+
+template<size_t MAX> ACE_INLINE
+TAO_Bounded_WString_Sequence<MAX>::~TAO_Bounded_WString_Sequence (void)
+{
+  this->_deallocate_buffer ();
+}
+
+template<size_t MAX> ACE_INLINE
+TAO_Bounded_WString_Sequence<MAX>::
+TAO_Bounded_WString_Sequence (CORBA::ULong length,
+                              CORBA::WChar **value,
+                              CORBA::Boolean release)
+  : TAO_Bounded_Base_Sequence (MAX, length, value, release)
+{
+}

@@ -259,6 +259,222 @@ TAO_Unbounded_String_Sequence::_shrink_buffer (CORBA::ULong nl,
     }
 }
 
+// *************************************************************
+
+// constructor for unbounded seq
+TAO_Unbounded_WString_Sequence::
+TAO_Unbounded_WString_Sequence (CORBA::ULong maximum)
+  : TAO_Unbounded_Base_Sequence (maximum,
+                                 TAO_Unbounded_WString_Sequence::allocbuf (maximum))
+{
+}
+
+TAO_Unbounded_WString_Sequence::
+TAO_Unbounded_WString_Sequence (const TAO_Unbounded_WString_Sequence &rhs)
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  CORBA::WChar* *tmp1 = TAO_Unbounded_WString_Sequence::allocbuf (this->maximum_);
+  CORBA::WChar ** const tmp2 =
+    ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST, 
+                          rhs.buffer_);
+
+  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+    tmp1[i] = CORBA::wstring_dup (tmp2[i]);
+
+  this->buffer_ = tmp1;
+}
+
+TAO_Unbounded_WString_Sequence::~TAO_Unbounded_WString_Sequence (void)
+{
+  this->_deallocate_buffer ();
+}
+
+TAO_Unbounded_WString_Sequence&
+TAO_Unbounded_WString_Sequence::
+operator= (const TAO_Unbounded_WString_Sequence &rhs)
+{
+  if (this == &rhs)
+    return *this;
+
+  if (this->release_)
+    {
+      CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **, 
+                                                 this->buffer_);
+
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        {
+          CORBA::wstring_free (tmp[i]);
+          tmp[i] = 0;
+        }
+
+      if (this->maximum_ < rhs.maximum_)
+        {
+          // free the older buffer
+          TAO_Unbounded_WString_Sequence::freebuf (tmp);
+          this->buffer_ =
+            TAO_Unbounded_WString_Sequence::allocbuf (rhs.maximum_);
+        }
+    }
+  else
+    this->buffer_ =
+      TAO_Unbounded_WString_Sequence::allocbuf (rhs.maximum_);
+
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+
+  CORBA::WChar **tmp1 = ACE_reinterpret_cast (CORBA::WChar **, 
+                                              this->buffer_);
+  CORBA::WChar ** const tmp2 = ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST,
+                                                     rhs.buffer_);
+  for (CORBA::ULong i=0; i < rhs.length_; ++i)
+    tmp1[i] = CORBA::wstring_dup (tmp2[i]);
+
+  return *this;
+}
+
+TAO_SeqElem_WString_Manager
+TAO_Unbounded_WString_Sequence::operator[] (CORBA::ULong slot) const
+{
+  ACE_ASSERT (slot < this->maximum_);
+  CORBA::WChar **const tmp =
+    ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST,
+                          this->buffer_);
+  return TAO_SeqElem_WString_Manager (tmp + slot,
+                                      this->release_);
+}
+
+CORBA::WChar* *
+TAO_Unbounded_WString_Sequence::allocbuf (CORBA::ULong nelems)
+{
+  CORBA::WChar* *buf = new CORBA::WChar*[nelems];
+  for (CORBA::ULong i=0; i < nelems; i++)
+    buf[i] = 0;
+  return buf;
+}
+
+void
+TAO_Unbounded_WString_Sequence::freebuf (CORBA::WChar* *buffer)
+{
+  if (buffer == 0)
+    return;
+
+  // {orbos/97-05-15:16.11}
+  // The freebuf function ensures that the destructor for each element
+  // is called before the buffer is destroyed, except for string
+  // elements, which are freed using wstring_free(), and object
+  // reference elements, which are freed using release(). The freebuf
+  // function will ignore null pointers passed to it.
+
+  // @@ How are we supposed to implement that! We don't know the
+  // length of the buffer here.
+  //  Mark the length in the first four bytes? For the moment we let
+  //  that be.
+
+  delete[] buffer;
+}
+
+CORBA::WChar**
+TAO_Unbounded_WString_Sequence::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA::WChar* *result = 0;
+  if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+        {
+          result = allocbuf (this->length_);
+          this->buffer_ = result;
+        }
+      else
+        {
+          result = ACE_reinterpret_cast (CORBA::WChar**, 
+                                         this->buffer_);
+        }
+    }
+  else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+        {
+          // We set the state back to default and relinquish
+          // ownership.
+          result = ACE_reinterpret_cast (CORBA::WChar**, 
+                                         this->buffer_);
+          this->maximum_ = 0;
+          this->length_ = 0;
+          this->buffer_ = 0;
+          this->release_ = 0;
+        }
+    }
+  return result;
+}
+
+const CORBA::WChar**
+TAO_Unbounded_WString_Sequence::get_buffer (void) const
+{
+  return ACE_reinterpret_cast (const CORBA::WChar** ACE_CAST_CONST, 
+                               this->buffer_);
+}
+
+void
+TAO_Unbounded_WString_Sequence::_allocate_buffer (CORBA::ULong length)
+{
+  CORBA::WChar* *tmp = TAO_Unbounded_WString_Sequence::allocbuf (length);
+
+  if (this->buffer_ != 0)
+    {
+      CORBA::WChar* *old = ACE_reinterpret_cast (CORBA::WChar **, 
+                                                 this->buffer_);
+
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        // Only call duplicate when we did not own the previous
+        // buffer, since after this method we own it we must also
+        // own the objects.  If we already own the objects there is
+        // no need to copy them, if we did we would also have to
+        // remove the old instances.
+        if (!this->release_)
+          tmp [i] = CORBA::wstring_dup (old[i]);
+        else
+          tmp [i] = old[i];
+
+      if (this->release_)
+        delete[] old;
+    }
+  this->buffer_ = tmp;
+}
+
+void
+TAO_Unbounded_WString_Sequence::_deallocate_buffer (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+
+  CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **, 
+                                             this->buffer_);
+
+  for (CORBA::ULong i = 0;
+       i < this->length_;
+       ++i)
+    {
+      CORBA::wstring_free (tmp[i]);
+      tmp[i] = 0;
+    }
+
+  TAO_Unbounded_WString_Sequence::freebuf (tmp);
+  this->buffer_ = 0;
+}
+
+void
+TAO_Unbounded_WString_Sequence::_shrink_buffer (CORBA::ULong nl,
+                                                CORBA::ULong ol)
+{
+  CORBA::WChar **tmp = ACE_reinterpret_cast (CORBA::WChar **, 
+                                             this->buffer_);
+  for (CORBA::ULong i = nl; i < ol; ++i)
+    {
+      CORBA::wstring_free (tmp[i]);
+      tmp[i] = 0;
+    }
+}
+
 // ****************************************************************
 
 #if defined (TAO_NO_COPY_OCTET_SEQUENCES)
