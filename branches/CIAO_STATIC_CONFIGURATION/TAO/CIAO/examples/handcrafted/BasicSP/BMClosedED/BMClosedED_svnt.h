@@ -498,13 +498,12 @@ namespace CIAO_GLUE_BasicSP
                              ACE_Equal_To<PortableServer::ObjectId>,
                              ACE_SYNCH_MUTEX> component_map_;
   };
+}
 
   extern "C" BMCLOSEDED_SVNT_Export ::PortableServer::Servant
   createBMClosedEDHome_Servant (::Components::HomeExecutorBase_ptr p,
                          CIAO::Session_Container *c
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-}
-
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_BMCLOSEDED_SVNT_H */
