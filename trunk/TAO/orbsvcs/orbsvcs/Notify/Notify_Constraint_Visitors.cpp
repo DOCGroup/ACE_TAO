@@ -369,6 +369,8 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
       return -1;
     }
   ACE_ENDTRY;
+
+  return 0;
 }
 
 int 
@@ -507,6 +509,8 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
       return -1;
     }
   ACE_ENDTRY;
+
+  return 0;
 }
 
 int 
@@ -582,6 +586,8 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
       return -1;
     }
   ACE_ENDTRY;
+
+  return 0;
 }
 
 int 
