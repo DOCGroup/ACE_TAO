@@ -1,3 +1,12 @@
+Thu Apr 26 20:14:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/CDR_Stream.h (ACE_InputCDR): 
+	* ace/CDR_Stream.cpp: Added a new method steal_data () which
+	  replaces data blocks from one InputCDR stream to another. This
+	  is a slightly modified form of steal_from () which basically
+	  creates a new data block for the source stream. Creating a new
+	  data block incurs the unwanted malloc overhead. 
+
 Thu Apr 26 12:37:45 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/README: Updated the list of tests that do not work on
