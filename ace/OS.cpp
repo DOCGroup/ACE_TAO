@@ -622,11 +622,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 // ACE_TRACE ("ACE_OS::thr_create");
 
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  int result;
-  pthread_attr_t attr;
   ACE_thread_t tmp_thr;
-
   ACE_hthread_t tmp_handle;
 
   if (thr_id == 0)
@@ -635,6 +631,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (thr_handle == 0)
     thr_handle = &tmp_handle;
 
+#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  int result;
+  pthread_attr_t attr;
 #if defined (ACE_HAS_SETKIND_NP)
   if (::pthread_attr_create (&attr) != 0)
 #else /* ACE_HAS_SETKIND_NP */
@@ -879,8 +878,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #if defined (ACE_HAS_STHREADS)
       // This is the Solaris implementation of pthreads, where
       // ACE_thread_t and ACE_hthread_t are the same.
-      if (result == 0)
-	*thr_handle = *thr_id;
+      if (result != -1)
+	{
+	  *thr_handle = *thr_id;
 #else
       *thr_handle = ACE_OS::NULL_hthread;
 #endif /* ACE_HAS_STHREADS */
@@ -898,19 +898,19 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 						  flags, thr_id), result), 
 		  int, -1, result);
 
-      if (priority > 0 && result != -1)
+      if (result != -1)
 	{
-	  // Set the priority of the new thread and then let it
-	  // continue, but only if the user didn't start it suspended
-	  // in the first place!
-	  ACE_OS::thr_setprio (*thr_id, priority);
+	  if (priority > 0)
+	    {
+	      // Set the priority of the new thread and then let it
+	      // continue, but only if the user didn't start it suspended
+	      // in the first place!
+	      ACE_OS::thr_setprio (*thr_handle, priority);
 
-	  if (start_suspended == 0)
-	    ACE_OS::thr_continue (*thr_id);
-	}
+	      if (start_suspended == 0)
+		ACE_OS::thr_continue (*thr_handle);
+	    }
 
-      if (result == 0)
-	*thr_handle = *thr_id;
       return result;
 #elif defined (ACE_HAS_WTHREADS)
       ACE_UNUSED_ARG (stack);
@@ -979,7 +979,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
       // Close down the handle if no one wants to use it.
       if (thr_handle == &tmp_handle)
-	::CloseHandle (handle);
+	::CloseHandle (tmp_handle);
 
       if (*thr_handle != 0)
 	return 0;
