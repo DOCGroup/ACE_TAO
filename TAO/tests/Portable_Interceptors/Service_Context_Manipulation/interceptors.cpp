@@ -391,12 +391,13 @@ Echo_Server_Request_Interceptor::send_reply (
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-#if 0
   ACE_DEBUG ((LM_DEBUG,
               "%s.send_reply from \"%s\"\n",
               this->myname_,
-              ri->operation ()));
-#endif /*if 0*/
+              operation.in ()));
+
+  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0)
+    return;
 
   // Check that the reply service context is set as expected.
   IOP::ServiceContext_var sc =
