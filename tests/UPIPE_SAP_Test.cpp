@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -151,7 +151,7 @@ main (int, char *argv[])
 {
   ACE_START_TEST ("UPIPE_SAP_Test.cpp");
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32))
   // Spawn a peer2 thread.
   if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (peer2), 
 					     (void *) 0,
@@ -161,7 +161,7 @@ main (int, char *argv[])
   // Wait for peer2 and peer1 threads to exit.
   ACE_Service_Config::thr_mgr ()->wait ();
 #else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR, "threads and/or UPIPE not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
