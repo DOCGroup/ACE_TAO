@@ -190,7 +190,8 @@ TAO_Wait_On_Leader_Follower::wait (void)
   leader_follower.set_client_thread ();
 
   // Check if there is a leader, but the leader is not us
-  if (leader_follower.leader_available ())
+  if (leader_follower.leader_available ()
+      && !leader_follower.is_leader_thread ())
     {
       // = Wait as a follower.
 
@@ -401,7 +402,7 @@ TAO_Wait_On_Leader_Follower::cond_response_available (void)
   if (this->cond_response_available_ == 0)
     {
       ACE_SYNCH_MUTEX &lock =
-        this->transport_->orb_core ()->leader_follower().lock ();        
+        this->transport_->orb_core ()->leader_follower().lock ();
       ACE_NEW_RETURN (this->cond_response_available_,
                       ACE_SYNCH_CONDITION (lock),
                       0);

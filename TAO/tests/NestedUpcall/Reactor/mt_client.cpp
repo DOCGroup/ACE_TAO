@@ -12,19 +12,24 @@ NestedUpCalls_MT_Client::NestedUpCalls_MT_Client (void)
   : nested_up_calls_reactor_key_ ("file://test.ior"),
     shutdown_ (0),
     call_count_ (5),
-    nthreads_ (4)
+    nthreads_ (4),
+    quiet_ (0)
 {
 }
 
 int
 NestedUpCalls_MT_Client::parse_args (int argc, char* argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dxn:t:k:");
+  ACE_Get_Opt get_opts (argc, argv, "qdxn:t:k:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'q':
+        this->quiet_ = 1;
+        break;
+
       case 'd':  // debug flag
         TAO_debug_level++;
         break;
@@ -97,11 +102,11 @@ NestedUpCalls_MT_Client::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      ACE_DEBUG ((LM_DEBUG, "Running thread (%t)\n"));
+      ACE_DEBUG ((LM_DEBUG, "Running thread (%t) %d\n", this->quiet_));
 
       // Create an EventHandler servant to hand to the other side...
-      auto_ptr<EventHandler_i> eh_impl (new EventHandler_i);
-      EventHandler_var eh = eh_impl->_this (ACE_TRY_ENV);
+      EventHandler_i eh_impl (this->quiet_);
+      EventHandler_var eh = eh_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Now, we can invoke an operation on the remote side.
@@ -120,6 +125,17 @@ NestedUpCalls_MT_Client::svc (void)
       this->reactor_->decrement (eh.in (),
                                  this->call_count_,
                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var poa =
+        eh_impl._default_POA (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::ObjectId_var oid =
+        poa->servant_to_id (&eh_impl, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (oid.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

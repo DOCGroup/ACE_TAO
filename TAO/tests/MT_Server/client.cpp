@@ -8,22 +8,29 @@ ACE_RCSID(MT_Server, client, "$Id$")
 
 const char *ior = "file://test.ior";
 int niterations = 5;
+int do_shutdown = 0;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:");
+  ACE_Get_Opt get_opts (argc, argv, "xk:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'x':
+        do_shutdown = 1;
+        break;
+
       case 'k':
         ior = get_opts.optarg;
         break;
+
       case 'i':
         niterations = ACE_OS::atoi (get_opts.optarg);
         break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -80,9 +87,11 @@ main (int argc, char *argv[])
             }
         }
 
-      server->shutdown (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+      if (do_shutdown)
+        {
+          server->shutdown (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {

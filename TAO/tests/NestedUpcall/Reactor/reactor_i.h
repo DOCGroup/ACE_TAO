@@ -17,6 +17,9 @@ public:
   virtual ~Reactor_i (void);
   // Destructor.
 
+  void be_quiet (int quiet);
+  // Set to 1 if the test should be quiet
+
   virtual CORBA::Long register_handler(EventHandler_ptr eh,
                                        CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -35,6 +38,10 @@ public:
   virtual void stop (CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Stops the reactor.
+
+private:
+  int quiet_;
+  // be quiet
 };
 
 #endif /* REACTOR_I_H */

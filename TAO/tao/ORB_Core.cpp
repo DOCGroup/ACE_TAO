@@ -1612,7 +1612,8 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
      input_cdr_dblock_allocator_ (0),
      input_cdr_buffer_allocator_ (0),
      connection_cache_ (0),
-     is_server_thread_ (0)
+     is_server_thread_ (0),
+     is_leader_thread_ (0)
 {
 }
 

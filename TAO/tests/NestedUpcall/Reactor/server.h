@@ -69,6 +69,9 @@ private:
   FILE* ior_output_file_;
   // File to output the NestedUpCalls reactor IOR.
 
+  int quiet_;
+  // be quiet
+
   TAO_ORB_Manager orb_manager_;
   // The ORB manager
 

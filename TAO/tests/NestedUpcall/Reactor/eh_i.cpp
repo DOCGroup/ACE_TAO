@@ -6,7 +6,8 @@
 ACE_RCSID(Reactor, eh_i, "$Id$")
 
 // CTOR
-EventHandler_i::EventHandler_i (void)
+EventHandler_i::EventHandler_i (int q)
+  :  quiet_ (q)
 {
 }
 
@@ -23,9 +24,10 @@ EventHandler_i::peer (CORBA::Environment &)
   // Doesn't matter what value we return!
   CORBA::Long val = 6;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "EventHandler_i::peer() returning %d\n",
-              val));
+  if (!this->quiet_)
+    ACE_DEBUG ((LM_DEBUG,
+                "EventHandler_i::peer() returning %d\n",
+                val));
 
   return val;
 }
@@ -36,16 +38,35 @@ EventHandler_i::decrement (Reactor_ptr eh,
                            CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "%{%I(%P|%t) EventHandler::decrement (%d)%$", num));
+  if (this->quiet_ == 0)
+    {
+      ACE_ASSERT (this->quiet_ == 0);
+      ACE_DEBUG ((LM_DEBUG,
+                  "%{%I(%P|%t) EventHandler::decrement (%d)%$",
+                  num, this->quiet_));
+    }
 
   CORBA::UShort ret;
   if (--num <= 0)
     ret = 0;
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) EventHandler::decrement() invoking Reactor::decrement(%d)%$", num));
+      if (!this->quiet_)
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) EventHandler::decrement() "
+                    "invoking Reactor::decrement(%d) %d %$",
+                    num, this->quiet_));
+
       ret = eh->decrement (_this (env), num, env);
     }
-  ACE_DEBUG ((LM_DEBUG, "%}(%P|%t) EventHandler::decrement() returning %d%$", ret));
+
+  if (this-quiet_ == 0)
+    {
+      ACE_ASSERT (this->quiet_ == 0);
+      ACE_DEBUG ((LM_DEBUG,
+                  "%}(%P|%t) EventHandler::decrement() "
+                  "returning %d%$", ret));
+    }
+
   return ret;
 }
