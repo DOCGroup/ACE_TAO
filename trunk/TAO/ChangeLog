@@ -1,3 +1,7 @@
+Fri Jul 26 15:35:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/tests/AVStreams/Makefile: Add Bidirectional_Flows to DIRS.
+
 Fri Jul 26 07:38:48 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/PSS/Makefile (PSDL_l.cpp): 
