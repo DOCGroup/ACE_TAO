@@ -144,6 +144,9 @@ Server::run (void)
 	 }
       }
       ACE_TRY_CHECK;
+
+      orb->shutdown( 1 ACE_ENV_ARG_PARAMETER );
+      ACE_TRY_CHECK;
     }
     ACE_CATCHANY
     {
@@ -152,8 +155,6 @@ Server::run (void)
     }
   ACE_ENDTRY;
 
-  orb->shutdown( 1 ACE_ENV_ARG_PARAMETER );
-  ACE_TRY_CHECK;
 
   ACE_CHECK_RETURN (-1);
   return 0;

@@ -1,3 +1,9 @@
+Mon Apr 22 19:40:30 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
+	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+	  Exception macro fixes.
+
 Mon Apr 22 15:20:50 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
