@@ -37,10 +37,10 @@ TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base (void)
 // Must override pure virtual method in TAO_Reply_Dispatcher.
 int
 TAO_Asynch_Reply_Dispatcher_Base::dispatch_reply (
-    CORBA::ULong reply_status,
+    CORBA::ULong /* reply_status */,
     const TAO_GIOP_Version & /* version */,
-    IOP::ServiceContextList &reply_ctx,
-    TAO_GIOP_Message_State *message_state
+    IOP::ServiceContextList & /* reply_ctx */,
+    TAO_GIOP_Message_State * /* message_state */
   )
 {
   return 0;
