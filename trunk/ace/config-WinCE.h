@@ -103,6 +103,9 @@ typedef long off_t;
 #define SEEK_CUR FILE_CURRENT
 #define SEEK_END FILE_END
 
+#define stdin 0
+#define stdout 0
+
 // @@ This needs to be defined and initialized as a static. (Singleton?)
 #define ACE_CE_DEFAULT_LOG_STREAM 0
 

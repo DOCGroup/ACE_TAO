@@ -451,11 +451,8 @@ public:
 
   // = Methods for searching and opening shared libraries.
 
-#if !defined (ACE_HAS_WINCE)
-  // @@ I'll leave the best part to the very last. ;)
-
-  static int ldfind (const char *filename, 
-                     char *pathname, 
+  static int ldfind (const ASYS_TCHAR *filename, 
+                     ASYS_TCHAR *pathname, 
                      size_t maxlen);
   // Finds the file <filename> either using an absolute path or using
   // a relative path in conjunction with ACE_LD_SEARCH_PATH (e.g.,
@@ -465,12 +462,11 @@ public:
   // apply the appropriate prefix (e.g., "lib" on UNIX and "" on
   // Win32) if the <filename> doesn't match directly.
 
-  static FILE *ldopen (const char *filename,
-		       const char *type);
+  static FILE *ldopen (const ASYS_TCHAR *filename,
+		       const ASYS_TCHAR *type);
   // Uses <ldopen> to locate and open the appropriate <filename> and
   // returns a pointer to the file, else it returns a NULL
   // pointer. <type> specifies how the file should be open.
-#endif /* !ACE_HAS_WINCE */
 
   // = Shield us from Win32's inability to select on STDIN.
 

@@ -26,6 +26,16 @@ ACE_Service_Type::name (void) const
   return this->name_;
 }
 
+ACE_INLINE const char *
+ACE_Service_Type::chname (void) const
+{
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+  return this->name ();
+#else
+  return this->chname_;
+#endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
+}
+
 ACE_INLINE const ACE_Service_Type_Impl *
 ACE_Service_Type::type (void) const
 {
@@ -47,6 +57,10 @@ ACE_Service_Type::name (const ASYS_TCHAR *n)
 
   delete [] (ASYS_TCHAR *) this->name_;
   this->name_ = ACE_OS::strcpy (new ASYS_TCHAR [ACE_OS::strlen (n) + 1], n);
+#if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+  delete [] (char *) this->chname_;
+  this->chname_ = ACE_MULTIBYTE_STRING (this->name_);
+#endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
 }
 
 ACE_INLINE void 

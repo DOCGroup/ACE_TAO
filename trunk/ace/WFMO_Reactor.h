@@ -438,7 +438,8 @@ private:
   // An auto event is used so that we can <signal> it to wakeup one
   // thread up (e.g., when the <notify> method is called).
 
-#if defined (ACE_WIN32)  // because Sun C++ 4.1 can't cope with this declaration:
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+// because Sun C++ 4.1 can't cope with this declaration:
   ACE_Message_Queue<ACE_MT_SYNCH> message_queue_;
 #endif /* ACE_WIN32 */
   // Message queue that keeps track of pending <ACE_Event_Handlers>.
@@ -454,7 +455,7 @@ private:
   // -1, which means "iterate until the queue is empty."
 };
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
 {
   // = TITLE

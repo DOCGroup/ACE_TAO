@@ -10,7 +10,9 @@
 #include "ace/Service_Types.h"
 #include "ace/Containers.h"
 #include "ace/Auto_Ptr.h"
-#include "ace/Proactor.h"
+#if !defined (ACE_HAS_WINCE)
+#  include "ace/Proactor.h"
+#endif /* !ACE_HAS_WINCE */
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 
@@ -547,7 +549,9 @@ ACE_Service_Config::close_singletons (void)
   ACE_TRACE ("ACE_Service_Config::close_singletons");
 
   ACE_Reactor::close_singleton ();
+#if !defined (ACE_HAS_WINCE)
   ACE_Proactor::close_singleton ();
+#endif /* !ACE_HAS_WINCE */
   ACE_Thread_Manager::close_singleton ();
 
   return 0;

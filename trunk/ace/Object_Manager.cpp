@@ -4,7 +4,9 @@
 
 #include "ace/Object_Manager.h"
 #include "ace/Token_Manager.h"
+#if !defined (ACE_HAS_WINCE)
 #include "ace/Naming_Context.h"
+#endif /* !ACE_HAS_WINCE */
 #include "ace/Service_Manager.h"
 #include "ace/Service_Config.h"
 #include "ace/Signal.h"
@@ -99,7 +101,9 @@ public:
   ~ACE_Object_Manager_Preallocations();
 
 private:
+#if !defined (ACE_HAS_WINCE)
   ACE_Static_Svc_Descriptor ace_svc_desc_ACE_Naming_Context;
+#endif /* !ACE_HAS_WINCE */
   ACE_Static_Svc_Descriptor ace_svc_desc_ACE_Service_Manager;
 };
 
@@ -115,16 +119,18 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations ()
 {
   // Define the static services.  This macro call creates static service
   // descriptors that are used for initialization below.
+#if !defined (ACE_HAS_WINCE)
   ACE_STATIC_SVC_DEFINE (ACE_Naming_Context_initializer,
-                         "ACE_Naming_Context",
+                         ASYS_TEXT ("ACE_Naming_Context"),
                          ACE_SVC_OBJ_T,
                          &ACE_SVC_NAME (ACE_Naming_Context),
                          ACE_Service_Type::DELETE_THIS |
                            ACE_Service_Type::DELETE_OBJ,
                          0)
+#endif /* !ACE_HAS_WINCE */
 
   ACE_STATIC_SVC_DEFINE (ACE_Service_Manager_initializer,
-                         "ACE_Service_Manager",
+                         ASYS_TEXT ("ACE_Service_Manager"),
                          ACE_SVC_OBJ_T,
                          &ACE_SVC_NAME (ACE_Service_Manager),
                          ACE_Service_Type::DELETE_THIS |
@@ -133,15 +139,19 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations ()
 
   // Initialize the static service objects using the descriptors created
   // above.
+#if !defined (ACE_HAS_WINCE)
   ace_svc_desc_ACE_Naming_Context =
     ace_svc_desc_ACE_Naming_Context_initializer;
+#endif /* !ACE_HAS_WINCE */
 
   ace_svc_desc_ACE_Service_Manager =
     ace_svc_desc_ACE_Service_Manager_initializer;
 
   // Add to the list of static configured services.
+#if !defined (ACE_HAS_WINCE)
   ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_ACE_Naming_Context);
+#endif /* !ACE_HAS_WINCE */
 
   ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_ACE_Service_Manager);

@@ -34,7 +34,7 @@ ACE_Stream_Node::apply (void)
   ACE_TRACE ("ACE_Stream_Node::apply");
 
   if (ACE_Service_Config::initialize (this->node_->record (),
-                                      ASYS_WIDE_STRING (this->node_->parameters ())) == -1)
+                                      this->node_->parameters ()) == -1)
     ace_yyerrno++;
 
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("did stream on %s, error = %d\n"),
@@ -206,7 +206,7 @@ ACE_Remove_Node::apply (void)
 
 ACE_Dynamic_Node::ACE_Dynamic_Node (const ACE_Service_Type *sr,
                                     char *parms)
-  : ACE_Static_Node (sr->name (), parms),
+  : ACE_Static_Node (sr->chname (), parms),
     record_ (sr)
 {
   ACE_TRACE ("ACE_Dynamic_Node::ACE_Dynamic_Node");
@@ -270,7 +270,7 @@ ACE_Static_Node::record (void) const
   ACE_Service_Type *sr;
 
   if (ACE_Service_Repository::instance()->find
-      (this->name (), (const ACE_Service_Type **) &sr) == -1)
+      (ACE_WIDE_STRING (this->name ()), (const ACE_Service_Type **) &sr) == -1)
     return 0;
   else
     return sr;
@@ -371,13 +371,13 @@ ACE_Location_Node::open_handle (void)
 {
   ACE_TRACE ("ACE_Location_Node::open_handle");
 
-  char dl_pathname[MAXPATHLEN + 1];
+  ASYS_TCHAR dl_pathname[MAXPATHLEN + 1];
 
   // Transform the pathname into the appropriate dynamic link library
   // by searching the ACE_LD_SEARCH_PATH.
-  ACE::ldfind (this->pathname (),
+  ACE::ldfind (ACE_WIDE_STRING (this->pathname ()),
                dl_pathname,
-               (sizeof dl_pathname / sizeof (char)));
+               (sizeof dl_pathname / sizeof (ASYS_TCHAR)));
 
   this->handle (ACE_OS::dlopen (dl_pathname));
 
@@ -389,7 +389,7 @@ ACE_Location_Node::open_handle (void)
                   ASYS_TEXT ("dlopen failed for %s"),
                   dl_pathname));
 
-      char *errmsg = ACE_OS::dlerror ();
+      ASYS_TCHAR *errmsg = ACE_OS::dlerror ();
 
       if (errmsg != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -428,9 +428,11 @@ ACE_Object_Node::symbol (void)
   ACE_TRACE ("ACE_Object_Node::symbol");
   if (this->open_handle () != 0)
     {
+      ASYS_TCHAR *wname = ACE_const_cast (ASYS_TCHAR*,
+                                          ASYS_WIDE_STRING (this->object_name_));
       this->symbol_ = (void *)
         ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
-                       (char *) this->object_name_);
+                       wname);
 
       if (this->symbol_ == 0)
         {
@@ -438,9 +440,9 @@ ACE_Object_Node::symbol (void)
 
           ACE_ERROR ((LM_ERROR,
                       ASYS_TEXT ("dlsym failed for object %s\n"),
-                      this->object_name_));
+                      wname));
 
-          char *errmsg = ACE_OS::dlerror ();
+          ASYS_TCHAR *errmsg = ACE_OS::dlerror ();
 
           if (errmsg != 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -492,9 +494,12 @@ ACE_Function_Node::symbol (void)
       // Locate the factory function <function_name> in the shared
       // object.
 
+      ASYS_TCHAR *wname = ACE_const_cast (ASYS_TCHAR *,
+                                          ASYS_WIDE_STRING (this->function_name_));
+
       func = (void *(*)(void))
         ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
-                       (ACE_DL_TYPE) this->function_name_);
+                       wname);
 
       if (func == 0)
         {
@@ -506,9 +511,9 @@ ACE_Function_Node::symbol (void)
 
               ACE_ERROR ((LM_ERROR,
                           ASYS_TEXT ("dlsym failed for function %s\n"),
-                          this->function_name_));
+                          wname));
 
-              char *errmsg = ACE_OS::dlerror ();
+              ASYS_TCHAR *errmsg = ACE_OS::dlerror ();
 
               if (errmsg != 0)
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -603,15 +608,16 @@ ACE_Static_Function_Node::symbol (void)
 
   ACE_Static_Svc_Descriptor **ssdp = 0;
   ACE_STATIC_SVCS &svcs = *ACE_Service_Config::static_svcs ();
+  ASYS_TCHAR *wname = ACE_const_cast (ASYS_TCHAR *,
+                                      ASYS_WIDE_STRING (this->function_name_));
 
   for (ACE_STATIC_SVCS_ITERATOR iter (svcs);
        iter.next (ssdp) != 0;
        iter.advance ())
     {
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
-
       if (ACE_OS::strcmp (ssd->name_,
-                          this->function_name_) == 0)
+                          wname) == 0)
         func = (void *(*)(void)) ssd->alloc_;
     }
 
@@ -625,7 +631,7 @@ ACE_Static_Function_Node::symbol (void)
 
           ACE_ERROR_RETURN ((LM_ERROR,
                              ASYS_TEXT ("no static service registered for function %s\n"),
-                             this->function_name_),
+                             wname),
                              0);
         }
     }

@@ -1030,8 +1030,7 @@ ACE_OS::_exit (int status)
 #elif !defined (ACE_HAS_WINCE)
   ::_exit (status);
 #else
-  ACE_UNUSED_ARG (status);
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Don't know how to implement _exit yet!\n")));
+  ::TerminateProcess (::GetCurrentProcess (), status);
 #endif /* VXWORKS */
 }
 
@@ -1183,7 +1182,7 @@ ACE_OS::strrchr (const char *s, int c)
 #if !defined (ACE_LACKS_STRRCHR)
   return (const char *) ::strrchr (s, c);
 #else
-  char *p = s + ::strlen (s);
+  const char *p = s + ::strlen (s);
 
   while (*p != c)
     if (p == s)
@@ -6513,9 +6512,9 @@ ACE_OS::exit (int status)
   ::exit (status);
 #endif /* ACE_WIN32 */
 #else
-  // @@ Whew, WinCE doesn't have ExitProcess and TerminateProcess
-  // is not exactly what we want.  How can we solve this????
-  ACE_UNUSED_ARG (status);
+  // @@ This is not exactly the same as ExitProcess.  But this is the
+  // closest one I can get.
+  ::TerminateProcess (::GetCurrentProcess (), status);
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -7088,7 +7087,13 @@ ACE_OS::open (const char *filename,
               LPSECURITY_ATTRIBUTES sa)
 {
   // ACE_TRACE ("ACE_OS::open");
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (filename);
+  ACE_UNUSED_ARG (mode);
+  ACE_UNUSED_ARG (perms);
+  ACE_UNUSED_ARG (sa);
+  return 0;
+#elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (perms);
   // Warning: This function ignores _O_APPEND
 
@@ -9018,3 +9023,79 @@ ACE_Thread_Adapter::entry_point (void)
 {
   return this->entry_point_;
 }
+
+#if defined (ACE_HAS_WINCE)
+ACE_INLINE size_t
+fwrite (void *buf, size_t sz, size_t count, FILE *fp)
+{
+  return ACE_OS::fwrite (buf, sz, count, fp);
+}
+
+ACE_INLINE size_t
+fread (void *buf, size_t sz, size_t count, FILE *fp)
+{
+  return ACE_OS::fread (buf, sz, count, fp);
+}
+
+ACE_INLINE int
+getc (FILE *fp)
+{
+  char retv;
+  if (ACE_OS::fread (&retv, 1, 1, fp) != 1)
+    return EOF;
+  else
+    return retv;
+}
+
+ACE_INLINE int
+ferror (FILE *fp)
+{
+  // @@ Hey! What should I implement here?
+  return 0;
+}
+
+ACE_INLINE int
+isatty (ACE_HANDLE h)
+{
+  return ACE_OS::isatty (h);
+}
+
+ACE_INLINE ACE_HANDLE
+fileno (FILE *fp)
+{
+  return fp;
+}
+
+ACE_INLINE int
+fflush (FILE *fp)
+{
+  return ACE_OS::fflush (fp);
+}
+
+ACE_INLINE void
+exit (int status)
+{
+  ACE_OS::exit (status);
+}
+  
+ACE_INLINE int
+fprintf (FILE *fp, char *format, const char *msg)
+{
+  ACE_DEBUG ((LM_DEBUG, ASYS_WIDE_STRING (format), ASYS_WIDE_STRING (msg)));
+  return 0;
+}
+
+ACE_INLINE int
+printf (const char *format, ...)
+{
+  ACE_UNUSED_ARG (format);
+  return 0;
+}
+
+ACE_INLINE int
+putchar (int c)
+{
+  ACE_UNUSED_ARG (c);
+  return c;
+}
+#endif /* ACE_HAS_WINCE */

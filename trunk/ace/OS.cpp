@@ -25,11 +25,11 @@
 #include "ace/Object_Manager.h"
 
 #if defined (ACE_HAS_WINCE)
-const wchar_t *day_of_week_name[] = {L"Sun", L"Mon", L"Tue", L"Wed",
-                                     L"Thr", L"Fri", L"Sat"};
-const wchar_t *month_name[] = {L"Jan", L"Feb", L"Mar", L"Apr",
-                               L"May", L"Jun", L"Jul", L"Aug",
-                               L"Sep", L"Oct", L"Nov", L"Dec" };
+const wchar_t *ACE_OS::day_of_week_name[] = {L"Sun", L"Mon", L"Tue", L"Wed",
+                                             L"Thr", L"Fri", L"Sat"};
+const wchar_t *ACE_OS::month_name[] = {L"Jan", L"Feb", L"Mar", L"Apr",
+                                       L"May", L"Jun", L"Jul", L"Aug",
+                                       L"Sep", L"Oct", L"Nov", L"Dec" };
 #endif /* ACE_HAS_WINCE */
 
 #if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)

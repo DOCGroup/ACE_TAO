@@ -27,7 +27,7 @@
 
 #include "ace/OS.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
 // Forward declarations
 class ACE_Proactor;
