@@ -15,7 +15,7 @@ TAO_FT_Request_Duration_Policy::TAO_FT_Request_Duration_Policy (const TAO_FT_Req
 
 ACE_INLINE
 TAO_FT_Heart_Beat_Policy::TAO_FT_Heart_Beat_Policy (
-    CORBA::Boolean heartbeat,
+    const CORBA::Boolean heartbeat,
     const TimeBase::TimeT &interval,
     const TimeBase::TimeT &timeout)
   : heartbeat_ (heartbeat),
@@ -37,7 +37,7 @@ TAO_FT_Heart_Beat_Policy::TAO_FT_Heart_Beat_Policy (const TAO_FT_Heart_Beat_Poli
 
 ACE_INLINE
 TAO_FT_Heart_Beat_Enabled_Policy::TAO_FT_Heart_Beat_Enabled_Policy (
-    CORBA::Boolean heartbeat)
+    const CORBA::Boolean heartbeat)
   : heartbeat_enabled_value_ (heartbeat)
 {
 }
