@@ -404,7 +404,7 @@ ACE_Unbounded_Queue<TYPE>::enqueue (const TYPE &new_item)
 }
 
 template <class TYPE> int
-ACE_Unbounded_Queue<TYPE>::peek (TYPE &item)
+ACE_Unbounded_Queue<TYPE>::peek (TYPE &item) const
 {
   ACE_TRACE ("ACE_Unbounded_Queue<TYPE>::peek (TYPE *&item)");
 
@@ -413,6 +413,18 @@ ACE_Unbounded_Queue<TYPE>::peek (TYPE &item)
 
   item = this->head_->item_;
   return 0;
+}
+
+template <class TYPE> TYPE *
+ACE_Unbounded_Queue<TYPE>::peek (const u_int index) const
+{
+  ACE_TRACE ("ACE_Unbounded_Queue<TYPE>::peek (const u_int index)");
+
+  ACE_Queue_Node<TYPE> *temp = head_;
+  for (u_int i = 0; temp != 0 && i < index; temp = temp->next_, ++i)
+    /* null */;
+
+  return temp == 0  ?  0  : &temp->head_->item_;
 }
 
 template <class TYPE> int
@@ -429,12 +441,6 @@ ACE_Unbounded_Queue<TYPE>::dequeue (TYPE &item)
   delete temp;
   --this->cur_size_;
   return 0;
-}
-
-template <class TYPE> int
-ACE_Unbounded_Queue<TYPE>::size (void) const
-{
-  return this->cur_size_;
 }
 
 #endif /* ACE_STACK_C */
