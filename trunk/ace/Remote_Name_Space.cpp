@@ -343,3 +343,11 @@ ACE_Remote_Name_Space::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Auto_Array_Ptr<ACE_USHORT16>;
+template class ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Auto_Array_Ptr<ACE_USHORT16>   
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -914,12 +914,4 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) 
-template class ACE_Auto_Array_Ptr<ACE_USHORT16>;
-template class ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Array_Ptr<ACE_USHORT16>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ACE_LOCAL_NAME_SPACE_T_C */
