@@ -2353,41 +2353,18 @@ ACE_Thread_Adapter::invoke (void)
   // package, the exit_hook in TSS causes a seg fault.  So, this
   // works around that by creating exit_hook on the stack.
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)
-  // > Obtain our thread-specific exit hook and make sure that it
-  // > knows how to clean us up!  Note that we never use this
-  // > pointer directly (it's stored in thread-specific storage), so
-  // > it's ok to dereference it here and only store it as a
-  // > reference.
-  //
-  // However, if the ACE_Thread_Exit::instance () returns NULL, then
-  // the program will crash in the ACE_Thread_Exit::thr_mgr() method.
-  // -- jxh
-
-  ACE_Thread_Exit * exit_hook_instance = 0;
-
-  // In case the TSS instance fails to create for some weird reason.
-  ACE_Thread_Exit exit_hook_on_stack;
-
+  // Obtain our thread-specific exit hook and make sure that it
+  // knows how to clean us up!  Note that we never use this
+  // pointer directly (it's stored in thread-specific storage), so
+  // it's ok to dereference it here and only store it as a
+  // reference.
   if (this->thr_mgr () != 0)
     {
-      exit_hook_instance = ACE_Thread_Exit::instance ();
-
-      if (exit_hook_instance == 0)
-        {
-          // If TSS fails to create an instance, use the one on the
-          // stack.  When this function returns, its destructor will be
-          // called because the object goes out of scope.  The drawback
-          // with this appraoch is that the destructor _won't_ get called
-          // if <thr_exit> is called.  So, threads shouldn't exit that
-          // way.  Instead, they should return from <svc>.
-          exit_hook_instance = & exit_hook_on_stack;
-        }
-
+      ACE_Thread_Exit &exit_hook = *ACE_Thread_Exit::instance ();
       // Keep track of the <Thread_Manager> that's associated with this
       // <exit_hook>.
-      exit_hook_instance->thr_mgr (this->thr_mgr ());
+      exit_hook.thr_mgr (this->thr_mgr ());
     }
-
 # else
   // Without TSS, create an <ACE_Thread_Exit> instance.  When this
   // function returns, its destructor will be called because the
