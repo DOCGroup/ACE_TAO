@@ -85,7 +85,7 @@ private:
 
 #if defined (ACE_WIN32)
 // This only works on Win32 platforms
-  ACE_Asynch_Acceptor<JAWS_Asynch_IO_Handler> acceptor_;
+  ACE_Asynch_Acceptor<JAWS_IO_Handler_Factory> acceptor_;
 #endif /* defined (ACE_WIN32) */
 };
 
