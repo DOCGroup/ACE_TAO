@@ -1,3 +1,39 @@
+Tue May 27 07:49:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Future.cpp: Made a few minor reformatting changes to Per's
+ 	  new Future enhancements.
+
+Tue May 27 14:19:14 1997  Per Andersson <Per.Andersson@hfera.ericsson.se>
+
+	* ace/Future: Fixed self assignment bug in ACE_Future<>::operator=().
+	  Fixed bug in ACE_Future<>::set(). It is now possible to do a 
+	  ACE_Future<>::set() followed by a ACE_Future<>::get() without
+	  hanging forever.
+
+	  Moved all handling of the ACE_Future_Rep<> reference count
+	  into three new static ACE_Future_Rep<> member functions,
+	  create, attach, assign and detach.
+
+	  Removed one mutex from ACE_Future_Rep<> by changing the
+	  reference count from an ACE_Atomic_Op<int> into a plain
+	  int. The ACE_Future_Rep<>::value_ready_mutex_ mutex is
+	  instead used for serializing changes to the reference count. 
+	  (ACE_Future_Rep<>::attach, ACE_Future_Rep<>::detach())
+
+	  Removed mutex from ACE_Future<> the serialization is
+	  performed by the ACE_Future_Rep<>::attach,
+	  ACE_Future_Rep<>::detach() and ACE_Future_Rep<>::assign()
+	  functions.
+
+	  Changed the ACE_Future<> default constructor to always
+	  create a  ACE_Future_Rep<>
+
+	* tests/Future_Test.cpp: Added test case for
+	  ACE_Future<>::set() followed by ACE_Future<>::get().  Added
+	  test for working  ACE_Future::operator=(). The test is not
+	  fool proof but it crashes or hangs the test process with the
+	  old ACE_Future<> implementation.
+
 Mon May 26 14:19:14 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* ace/OS.{h,i}: Fixed difftime implementation for cases where
