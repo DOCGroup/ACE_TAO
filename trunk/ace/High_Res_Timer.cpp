@@ -93,10 +93,11 @@ void
 ACE_High_Res_Timer::reset (void)
 {
   ACE_TRACE ("ACE_High_Res_Timer::reset");
-  (void) ACE_OS::memset (&this->start_, 0, sizeof this->start_);
-  (void) ACE_OS::memset (&this->end_, 0, sizeof this->end_);
-  (void) ACE_OS::memset (&this->total_, 0, sizeof this->total_);
-  (void) ACE_OS::memset (&this->start_incr_, 0, sizeof this->start_incr_);
+
+  start_ = 0;
+  end_ = 0;
+  total_ = 0;
+  start_incr_ = 0;
 }
 
 void
