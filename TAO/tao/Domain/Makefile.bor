@@ -16,7 +16,7 @@ CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_DOMAIN_CFLAGS) \
 
 CPPDIR = .
 
-INCDIR_NAME = tao/Domain
+INCDIR_NAME = tao\Domain
 INCLUDES = \
 	*.h *.i
 

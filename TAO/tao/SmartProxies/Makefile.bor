@@ -16,7 +16,7 @@ CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SMARTPROXIES_CFLAGS) \
 
 CPPDIR = .
 
-INCDIR_NAME = tao/SmartProxies
+INCDIR_NAME = tao\SmartProxies
 INCLUDES = \
 	*.h *.inl
 
