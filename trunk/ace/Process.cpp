@@ -228,7 +228,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 		     &process_info_);
 
   if (fork_result) // If success.
-    return 0;
+    return this->getpid ();
   else
     // CreateProcess failed.
     return -1;
