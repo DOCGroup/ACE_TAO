@@ -1,5 +1,17 @@
 Mon Jun 16 19:05:13 1997  Steve Huston <shuston@riverace.com>
 
+	* ace/ACE.cpp: Fixed conditional compiles to compile the 
+	  interface counting code for HP - it reports 0 interfaces,
+	  so it needs more debugging still.
+
+	* include/makeinclude/platform_hpux_aCC.GNU: added -g to link
+	  command for building shared library.
+
+	* tests/Buffer_Stream_Test.cpp: fixes to execute correctly and only
+	  fail assertions on real failures.
+
+Mon Jun 16 19:05:13 1997  Steve Huston <shuston@riverace.com>
+
 	* ace/Free_List.cpp: added #include ace/Synch.h, needed by
 	  Free_List.i.  Fixes compile errors on HP-UX.
 
