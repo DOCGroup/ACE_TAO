@@ -178,11 +178,11 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "EC_Busy_Lock.cpp"
+#include "EC_ConsumerAdmin_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("EC_Busy_Lock.cpp")
+#pragma implementation ("EC_ConsumerAdmin_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_EC_CONSUMERADMIN_T_H */

@@ -1,3 +1,14 @@
+Wed Feb 24 17:08:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Command.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin_T.h:
+	* orbsvcs/orbsvcs/Event/EC_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+	  Fixed explicit template instantiations.
+
 Wed Feb 24 16:01:53 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tao/Stub.cpp: Fred and I fixed up Location Forward logic in 

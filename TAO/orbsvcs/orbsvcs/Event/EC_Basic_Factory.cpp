@@ -193,6 +193,7 @@ template class TAO_EC_ConsumerAdmin_Delayed<ACE_MT_SYNCH>;
 template class TAO_EC_ConsumerAdmin_T<ACE_MT_SYNCH>;
 template class ACE_Node<ACE_Command_Base*>;
 template class ACE_Unbounded_Queue<ACE_Command_Base*>;
+template class ACE_Unbounded_Queue_Iterator<ACE_Command_Base*>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -200,5 +201,6 @@ template class ACE_Unbounded_Queue<ACE_Command_Base*>;
 #pragma instantiate TAO_EC_ConsumerAdmin_T<ACE_MT_SYNCH>
 #pragma instantiate ACE_Node<ACE_Command_Base*>
 #pragma instantiate ACE_Unbounded_Queue<ACE_Command_Base*>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Command_Base*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
