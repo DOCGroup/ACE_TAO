@@ -342,10 +342,11 @@ pthreads</A>.<P>
 
 <DD> The OSF/1 C++ 5.4 through 5.7 compilers have problems with ACE's
 templates.  They compile the lib and most of the test programs,
-although giving warnings about template usage.  Most tests run, some
+although they warn about template usage.  Most tests run, some
 dump core.<P>
 
-CXX 6.0 is _much_ improved in this regard.  Please note that
+CXX 6.0 and 6.1 are _much_ improved in this regard:  they build all of
+ACE cleanly.  Please note that
 <code>include/makeinclude/platform_osf1_4.0.GNU</code> has a
 <strong><code>WARNING_FLAGS</code></strong> macro that is disabled by
 default, to support users who don't have 6.0 yet.  If you do, enable
