@@ -1,0 +1,76 @@
+// -*- C++ -*- 
+
+// $Id$
+
+interface Audio_Control
+{
+
+  struct AudioParameter
+  {
+    short encodeType;
+    short channels;
+    short samplesPerSecond;
+    short bytesPerSample;
+  };
+
+
+  /* CmdINITaudio parameter of fixed structure of 3 integers and a AudioPara,
+     replys with CmdINITaudio followed by reply or CmdFAIL followed by a string */
+  struct INITaudioPara
+  {
+    short sn;
+    short version;
+    AudioParameter para;
+    short nameLength;
+    sequence <char> audiofile;
+    /* char audioFile[] */
+  };
+
+  struct INITaudioReply
+  {
+    short live;
+    short format;
+  
+    AudioParameter para;
+    short totalSamples;
+  };
+
+
+  /* CmdPLAY parameter */
+  struct PLAYPara
+  {
+    short sn;
+    short nextSample;
+    short samplesPerSecond; /* audio playback speed */
+    short samplesPerPacket; /* Number of samples in a packet */
+    short ABsamples; /* size of client VB buffer in samples */
+    short spslimit;  /* QoS parameter: sps supported by the audio channel */
+  };
+
+  /* STOP followed only by SN */
+
+  /* CmdSPEED parameter */
+  struct  SPEEDPara
+  {
+    short sn;
+    short samplesPerSecond;
+    short samplesPerPacket; /* Number of samples in a packet */
+    short spslimit;
+  };
+
+  boolean init_audio (in INITaudioPara para,
+                      out INITaudioReply reply_para);
+  boolean play (in PLAYPara para, out long ats);
+
+  boolean speed (in SPEEDPara para);
+
+  boolean stop (in long cmdsn);
+
+  unsigned short set_peer (in string peer);
+  // Initializes the server to communicate to the <peer>, which can be
+  // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
+  // "128.252.166.57:1234").  If there is no ':' in the <address> it
+  // is assumed to be a port number, with the IP address being
+  // INADDR_ANY.
+  // Server returns it's UDP data port number.
+};

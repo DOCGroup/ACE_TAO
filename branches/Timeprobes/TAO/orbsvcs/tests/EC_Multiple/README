@@ -1,0 +1,29 @@
+# $Id$
+
+	This test ilustrates how to connect multiple ECs.
+
+	The test requires the several other processes are running, the
+user must remember to assign a different port to each one:
+
+$ Naming_Service
+$ Scheduling_Service -ORBport 10030
+
+	then we run two instances of the test, configuring the events
+that are local, only remote, remote and local:
+
+$ EC_Multiple -ORBport 10060 -l EC1 -r EC2 -a 1 -b 2 -c 3
+$ EC_Multiple -ORBport 10070 -l EC2 -r EC1 -a 4 -b 3 -c 2
+
+	In this examples the first test treats EC1 as a local EC, and
+EC2 as remote, it generates events <1> and <2> and listens to events
+<1> and <3>.  The second instance treats EC2 as local an EC1 as
+remote, generates events <4> and <3> but listens to <4> and <2>.
+
+	Note how this configuration will have pure local events, some
+events that are both local and remote.  Right now you have to examine
+the output carefully to notice what is happening.
+
+	Another configuration of interest is:
+
+$ EC_Multiple -ORBport 10060 -l EC1 -r EC2 -a 1 -b 2 -c 2
+$ EC_Multiple -ORBport 10070 -l EC2 -r EC1 -a 4 -b 2 -c 2

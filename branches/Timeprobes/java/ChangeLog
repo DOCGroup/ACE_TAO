@@ -1,0 +1,16 @@
+Mon Dec 22 23:06:00 CST 1997  Edward Everett Anderson <eea1@cs.wustl.edu>
+
+* java/examples/Logger/simple-server/LogRecord.java:
+
+	* Made the message size constant a static so the client
+	will compile.
+
+	* Made sure the netsvcs directory is in the release archive,
+	incremented the version number to 1.4.2 to clear up this mistake.
+
+Mon Jan 19 13:45:04 CST 1998  Edward Everett Anderson <eea1@cs.wustl.edu>
+
+* java/classes/README.TXT
+
+	* Added a readme file to the classes directory so WinZip
+	creates the directory correctly on NT.
