@@ -38,6 +38,7 @@
 #include "ace/Reactor.h"
 #include "ace/Task.h"
 #include "ace/Reactor_Notification_Strategy.h"
+#include "ace/Atomic_Op.h"
 
 ACE_RCSID(tests, Message_Queue_Notifications_Test, "$Id$")
 

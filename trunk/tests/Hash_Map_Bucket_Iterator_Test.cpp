@@ -117,7 +117,6 @@ main (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Equal_To<ACE_UINT32>;
 template class ACE_Hash_Map_Entry<ACE_UINT32, ACE_UINT32>;
 template class ACE_Hash_Map_Manager_Ex<ACE_UINT32, ACE_UINT32, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_SYNCH_NULL_MUTEX>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_UINT32, ACE_UINT32, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_SYNCH_NULL_MUTEX>;
@@ -127,7 +126,6 @@ template class ACE_Hash_Map_Bucket_Iterator<ACE_UINT32, ACE_UINT32, ACE_Hash<ACE
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Equal_To<ACE_UINT32>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_UINT32, ACE_UINT32>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_UINT32, ACE_UINT32, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_SYNCH_NULL_MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_UINT32, ACE_UINT32, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_SYNCH_NULL_MUTEX>

@@ -23,6 +23,7 @@
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
+#include "ace/Atomic_Op.h"
 
 ACE_RCSID(tests, Reader_Writer_Test, "$Id$")
 

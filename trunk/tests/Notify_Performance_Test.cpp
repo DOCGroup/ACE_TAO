@@ -28,6 +28,7 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Synch.h"
+#include "ace/Atomic_Op.h"
 
 ACE_RCSID(tests, Notify_Performance_Test, "$Id$")
 
@@ -70,7 +71,8 @@ static void *
 client (void *arg)
 {
   // Number of client (user) threads
-  static ACE_Atomic_Op<ACE_Thread_Mutex, long> thread_counter = opt_nthreads;
+  static ACE_Atomic_Op<ACE_Thread_Mutex, long> thread_counter;
+  thread_counter = opt_nthreads;
 
   // To pass or not to pass is the question
   Handler *handler = 0;

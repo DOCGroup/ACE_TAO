@@ -20,6 +20,7 @@
 // ============================================================================
 
 #include "Upgradable_RW_Test.h"
+#include "ace/Atomic_Op.h"
 
 ACE_RCSID(tests, Upgradable_RW_Test, "$Id$")
 
