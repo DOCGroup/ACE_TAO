@@ -6572,7 +6572,7 @@ ACE_U_LongLong::operator- (const ACE_U_LongLong &ll) const
 }
 
 ACE_INLINE u_long
-ACE_U_LongLong::operator/ (const u_long ul) const
+ACE_U_LongLong::operator/ (u_long ul) const
 {
   return hi_ / ul * ULONG_MAX + lo_ / ul;
 }
