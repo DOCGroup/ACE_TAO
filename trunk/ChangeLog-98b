@@ -1,5 +1,9 @@
 1998-12-11  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* test/DLL_Test.dsp: Fixed configuration settings.  Most of the
+	  time, it's easier to add new projects by using the
+	  bin/dsp2dsp.pl.
+
 	* ace/Message_Queue.{h,cpp} (enqueue): Made sure all bytes in a message
 	  block chain are accounted for.
 	  (enqueue_tail,dequeue_head): Added two more methods into
