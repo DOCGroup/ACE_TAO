@@ -29,6 +29,7 @@ public class PushConsumerFactory {
 
   public PushConsumerFactory (DataHandler dataHandler, 
 			      String nameServiceIOR, 
+			      String nameServicePort, 
 			      String[] args,
 			      java.applet.Applet applet)
     {
@@ -55,7 +56,7 @@ public class PushConsumerFactory {
 	  
 	  if (nameServiceIOR == null) {  // only used when running via "java" or "vbj"     
 	    System.out.println ("Using the lookup protocol!");
-	    NS_Resolve ns_resolve_ = new NS_Resolve ();
+	    NS_Resolve ns_resolve_ = new NS_Resolve (nameServicePort);
 		naming_service_object_ = ns_resolve_.resolve_name_service (orb_);
 	  }
 	  else {

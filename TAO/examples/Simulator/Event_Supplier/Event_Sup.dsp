@@ -17,12 +17,12 @@ CFG=Event_Sup - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Event_Sup - Win32 Release" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "Event_Sup - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "Event_Sup - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -121,19 +121,19 @@ SOURCE=.\NavWeapC.h
 # Begin Source File
 
 SOURCE=.\NavWeap.idl
-USERDEP__NAVWE="..\$(InputName).idl"	
 
 !IF  "$(CFG)" == "Event_Sup - Win32 Release"
 
 !ELSEIF  "$(CFG)" == "Event_Sup - Win32 Debug"
 
+USERDEP__NAVWE="..\$(InputName).idl"	
 # Begin Custom Build
 InputPath=.\NavWeap.idl
 InputName=NavWeap
 
 BuildCmds= \
 	xcopy ..\$(InputName).idl \
-	..\..\..\..\..\bin\tao_idl $(InputName).idl \
+	..\..\..\..\..\bin\tao_idl -I ..\..\..\orbsvcs $(InputName).idl \
 	
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"

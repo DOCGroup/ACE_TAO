@@ -1,3 +1,26 @@
+Wed Dec  9 13:26:50 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/DOVEBrowser/DOVEBrowser.java
+          orbsvcs/tests/Simulator/DOVEBrowser/DOVEBrowserApplet.java
+          orbsvcs/tests/Simulator/DOVEBrowser/DemoCore.java
+          orbsvcs/tests/Simulator/DOVEBrowser/NS_Resolve.java
+          orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java
+          orbsvcs/tests/Simulator/DOVEBrowser/PushConsumerFactory.java:
+
+	  Cleaned up some type names in that had changed when RtecScheduler.idl
+	  was brought up to CORBA standard (type names and element names must
+	  differ in more than just letter case).  
+
+	  Added support for -ORBnameserviceport on command line of the 
+	  compiled DOVEBrowser version.  Generalized command line option
+	  handling, fixed bug with using == instead of .equals for string
+	  comparison.
+
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.dsp
+          orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.dsp: added -I 
+	  switch with relative path to TAO\orbsvcs\orbsvcs to tao_idl 
+	  invocation in the custom build step.
+
 1998-12-09  Nagarajan Surendran  <naga@polka.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp : Fixed warnings with

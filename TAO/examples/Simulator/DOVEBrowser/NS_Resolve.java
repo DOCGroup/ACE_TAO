@@ -24,8 +24,7 @@ import java.net.*;
 import java.io.*;
 
 
-
-public class NS_Resolve 
+public class NS_Resolve
 {
   
   private static final String ACE_DEFAULT_MULTICAST_ADDR = "224.9.9.2";
@@ -36,7 +35,21 @@ public class NS_Resolve
   private static final int TAO_SERVICEID_TRADINGSERVICE = 1;
 
   org.omg.CORBA.Object name_service_;
+  int nameServicePort_;
 
+  public NS_Resolve (String nameServicePort)
+    {
+      if (nameServicePort != null)
+        {
+          // If a name service port string was given, parse it
+          nameServicePort_ = Integer.parseInt (nameServicePort);
+        }
+      else
+        {
+          // Otherwise, just use the default TAO name service port
+          nameServicePort_ = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
+        }
+    }
 
   public org.omg.CORBA.Object resolve_name_service (org.omg.CORBA.ORB orb)
     {
@@ -62,7 +75,7 @@ public class NS_Resolve
 	  socket_.setSoTimeout (3000);
 	  // Build a packet with the port number in it
 	  DatagramPacket  hello = new DatagramPacket(msg, msg.length,
-						     group, TAO_DEFAULT_NAME_SERVER_REQUEST_PORT);
+						     group, nameServicePort_);
 
 	  // Send the packet
 	  multicastsocket_.send (hello);
