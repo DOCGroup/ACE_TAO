@@ -103,7 +103,7 @@ public:
   // destructor, does a <dec_ref> on <key_>.
   
   ACE_Configuration_Section_Key &
-    Operator= (const ACE_Configuration_Section_Key &rhs);
+    operator= (const ACE_Configuration_Section_Key &rhs);
   // assignment operator, does a <dec_ref> on <key_> and <add_ref> to
   // <rhs.key_>
 private:
