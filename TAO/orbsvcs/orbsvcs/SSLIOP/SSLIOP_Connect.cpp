@@ -98,7 +98,7 @@ TAO_SSLIOP_Server_Connection_Handler::TAO_SSLIOP_Server_Connection_Handler (
     tss_resources_ (orb_core->get_tss_resources ()),
     refcount_ (1),
     tcp_properties_ (ACE_static_cast
-                     (TAO_SSLIOP_Handler_Base::TCP_Properties *, arg))
+                     (TAO_IIOP_Handler_Base::TCP_Properties *, arg))
 {
   // The flag that is used to enable GIOPlite is *not* used for
   // SSLIOP.  GIOPlite introduces security holes.  It should not be
