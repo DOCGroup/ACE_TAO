@@ -26,6 +26,8 @@
  *
  *  Wrappers for built-in types of specific sizes:
  *    - ACE_USHORT16 (For backward compatibility.  Use ACE_UINT16 instead.)
+ *    - ACE_INT8
+ *    - ACE_UINT8
  *    - ACE_INT16
  *    - ACE_UINT16
  *    - ACE_INT32
@@ -70,6 +72,13 @@
 # endif /* ACE_LACKS_SYS_PARAM_H */
 
 # include "ace/ACE_export.h"
+
+# if !defined (ACE_LACKS_STDINT_H)
+#  include <stdint.h>
+# endif
+# if !defined (ACE_LACKS_INTTYPES_H)
+#  include <inttypes.h>
+# endif
 
 // A char always has 1 byte, by definition.
 # define ACE_SIZEOF_CHAR 1
@@ -120,9 +129,6 @@
 # endif /* !defined (ACE_SIZEOF_INT) */
 
 // The number of bytes in a long.
-// NOTE - since preprocessors only need to do integer math, this is a likely
-// place for a preprocessor to not properly support being able to figure out
-// the proper size.  HP aC++ and GNU gcc have this difficulty so watch out.
 # if !defined (ACE_SIZEOF_LONG)
 #   if (ULONG_MAX) == 65535UL
 #     define ACE_SIZEOF_LONG 2
@@ -137,83 +143,117 @@
 
 // The number of bytes in a long long.
 # if !defined (ACE_SIZEOF_LONG_LONG)
-#   if defined(__TANDEM)
-#     define ACE_SIZEOF_LONG_LONG 8
-#   elif defined (ACE_LACKS_LONGLONG_T)
-#     define ACE_SIZEOF_LONG_LONG 8
-#   else  /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
-#     if ACE_SIZEOF_LONG == 8
+#   if defined (ACE_LACKS_LONGLONG_T)
+#     define ACE_SIZEOF_LONG_LONG
+#   elif defined (ULLONG_MAX)
+#     if ((ULLONG_MAX) == 4294967295ULL)
+#       define ACE_SIZEOF_LONG_LONG 4
+#     elif ((ULLONG_MAX) == 18446744073709551615ULL)
 #       define ACE_SIZEOF_LONG_LONG 8
-        typedef unsigned long ACE_UINT64;
-        typedef   signed long ACE_INT64;
-#     elif defined (ULLONG_MAX) && !defined (__GNUG__)
-       // Some compilers use ULLONG_MAX and others, e.g. Irix, use
-       // ULONGLONG_MAX.
-#       if (ULLONG_MAX) == 18446744073709551615ULL
-#         define ACE_SIZEOF_LONG_LONG 8
-#       elif (ULLONG_MAX) == 4294967295ULL
-#         define ACE_SIZEOF_LONG_LONG 4
-#       else
-#         error Unsupported long long size needs to be updated for this platform
-#       endif
-       typedef unsigned long long ACE_UINT64;
-       typedef   signed long long ACE_INT64;
-#     elif defined (ULONGLONG_MAX) && !defined (__GNUG__)
-       // Irix 6.x, for example.
-#       if (ULONGLONG_MAX) == 18446744073709551615ULL
-#         define ACE_SIZEOF_LONG_LONG 8
-#       elif (ULONGLONG_MAX) == 4294967295ULL
-#         define ACE_SIZEOF_LONG_LONG 4
-#       else
-#         error Unsupported long long size needs to be updated for this platform
-#       endif
-       typedef unsigned long long ACE_UINT64;
-       typedef   signed long long ACE_INT64;
-#     else
-       // ACE_SIZEOF_LONG_LONG is not yet known, but the platform doesn't
-       // claim ACE_LACKS_LONGLONG_T, so assume it has 8-byte long longs.
+#     endif
+#   elif defined (ULONGLONG_MAX)
+#     if ((ULONGLONG_MAX) == 4294967295ULL)
+#       define ACE_SIZEOF_LONG_LONG 4
+#     elif ((ULONGLONG_MAX) == 18446744073709551615ULL)
 #       define ACE_SIZEOF_LONG_LONG 8
-#       if defined (sun) && !defined (ACE_LACKS_U_LONGLONG_T)
-         // sun #defines u_longlong_t, maybe other platforms do also.
-         // Use it, at least with g++, so that its -pedantic doesn't
-         // complain about no ANSI C++ long long.
-         typedef u_longlong_t ACE_UINT64;
-         typedef   longlong_t ACE_INT64;
-#       else
-         // LynxOS 2.5.0 and Linux don't have u_longlong_t.
-         typedef unsigned long long ACE_UINT64;
-         typedef   signed long long ACE_INT64;
-#       endif /* sun */
-#     endif /* ULLONG_MAX && !__GNUG__ */
-#   endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
+#     endif
+#   endif
+#   if !defined (ACE_SIZEOF_LONG_LONG)
+#     error: unsupported long size, must be updated for this platform!
+#   endif
 # endif /* !defined (ACE_SIZEOF_LONG_LONG) */
 
-// The sizes of the commonly implemented types are now known.  Set up
-// typedefs for whatever we can.  Some of these are needed for certain cases
-// of ACE_UINT64, so do them before the 64-bit stuff.
 
-# if ACE_SIZEOF_SHORT == 2
-  typedef short ACE_INT16;
-  typedef unsigned short ACE_UINT16;
-# elif ACE_SIZEOF_INT == 2
-  typedef int ACE_INT16;
-  typedef unsigned int ACE_UINT16;
-# elif (ACE_SIZEOF_SHORT) == 4 && defined(_CRAYMPP)
-  // mpp cray - uses Alpha processors
-  //   Use the real 32-bit quantity for ACE_INT32's, and use a "long"
-  //   for ACE_INT16's.  This gets around conflicts with size_t in some ACE
-  //   method signatures, among other things.
-  typedef long ACE_INT16;
-  typedef unsigned long ACE_UINT16;
-  typedef short ACE_INT32;
-  typedef unsigned short ACE_UINT32;
-# elif (ACE_SIZEOF_SHORT) == 8 && defined(_UNICOS)
-  // vector cray - hard 64-bit, all 64 bit types
-  typedef short ACE_INT16;
-  typedef unsigned short ACE_UINT16;
-# else
-#   error Have to add to the ACE_UINT16 type setting
-# endif
+// The sizes of the commonly implemented types are now known.  Set up
+// typedefs for whatever we can.  Some of these are needed for certain
+// cases of ACE_UINT64, so do them before the 64-bit stuff.
+
+#if defined (ACE_INT8_TYPE)
+  typedef ACE_INT8_TYPE		ACE_INT8;
+#elif defined (ACE_HAS_INT8_T)
+  typedef int8_t		ACE_INT8;
+#elif !defined (ACE_LACKS_SIGNED_CHAR)
+  typedef signed char		ACE_INT8;
+#else
+  typedef char			ACE_INT8;
+#endif /* defined (ACE_INT8_TYPE) */
+
+#if defined (ACE_UINT8_TYPE)
+  typedef ACE_UINT8_TYPE	ACE_UINT8;
+#elif defined (ACE_HAS_UINT8_T)
+  typedef uint8_t		ACE_UINT8;
+#else
+  typedef unsigned char		ACE_UINT8;
+#endif /* defined (ACE_UINT8_TYPE) */
+
+#if defined (ACE_INT16_TYPE)
+  typedef ACE_INT16_TYPE	ACE_INT16;
+#elif defined (ACE_HAS_INT16_T)
+  typedef int16_t		ACE_INT16;
+#elif ACE_SIZEOF_SHORT == 2
+  typedef short			ACE_INT16;
+#elif ACE_SIZEOF_INT == 2
+  typedef int			ACE_INT16;
+#else
+# error Have to add to the ACE_INT16 type setting
+#endif  /* defined (ACE_INT16_TYPE) */
+
+#if defined (ACE_UINT16_TYPE)
+  typedef ACE_UINT16_TYPE	ACE_UINT16;
+#elif defined (ACE_HAS_UINT16_T)
+  typedef uint16_t		ACE_UINT16;
+#elif ACE_SIZEOF_SHORT == 2
+  typedef unsigned short	ACE_UINT16;
+#elif ACE_SIZEOF_INT == 2
+  typedef unsigned int		ACE_UINT16;
+#else
+# error Have to add to the ACE_UINT16 type setting
+#endif /* defined (ACE_UINT16_TYPE) */
+
+#if defined (ACE_INT32_TYPE)
+  typedef ACE_INT32_TYPE	ACE_INT32;
+#elif defined (ACE_HAS_INT32_T)
+  typedef int32_t		ACE_INT32;
+#elif ACE_SIZEOF_INT == 4
+  typedef int			ACE_INT32;
+#elif ACE_SIZEOF_LONG == 4
+  typedef long			ACE_INT32;
+#else
+# error Have to add to the ACE_INT32 type setting
+#endif /* defined (ACE_INT32_TYPE) */
+
+#if defined (ACE_UINT32_TYPE)
+  typedef ACE_UINT32_TYPE	ACE_UINT32;
+#elif defined (ACE_HAS_UINT32_T)
+  typedef uint32_t		ACE_UINT32;
+#elif ACE_SIZEOF_INT == 4
+  typedef unsigned int		ACE_UINT32;
+#elif ACE_SIZEOF_LONG == 4
+  typedef unsigned long		ACE_UINT32;
+#else
+# error Have to add to the ACE_UINT32 type setting
+#endif /* defined (ACE_UINT32_TYPE) */
+
+#if defined (ACE_INT64_TYPE)
+  typedef ACE_INT64_TYPE	ACE_INT64
+#elif defined (ACE_HAS_INT64_T)
+  typedef int64_t		ACE_INT64;
+#elif ACE_SIZEOF_LONG == 8
+  typedef long			ACE_INT64;
+#elif !defined (ACE_LACKS_LONGLONG_T) && ACE_SIZEOF_LONG_LONG == 8
+  typedef long long		ACE_INT64;
+#endif /* defined (ACE_INT64_TYPE) */
+
+#if defined (ACE_UINT64_TYPE)
+  typedef ACE_UINT64_TYPE	ACE_UINT64
+#eif defined (ACE_HAS_UINT64_T)
+  typedef uint64_t		ACE_UINT64;
+#elif ACE_SIZEOF_LONG == 8
+  typedef unsigned long		ACE_UINT64;
+#elif !defined (ACE_LACKS_LONGLONG_T) && ACE_SIZEOF_LONG_LONG == 8
+  typedef unsigned long	long	ACE_UINT64;
+#endif /* defined (ACE_UINT64_TYPE) */
+
 
 typedef ACE_UINT16 ACE_USHORT16;  // @@ Backward compatibility.
 
@@ -230,28 +270,6 @@ typedef unsigned char ACE_Byte;
 #   define ACE_WINT_T ACE_UINT16
 #   define ACE_WCHAR_T ACE_UINT16
 # endif /* ACE_HAS_WCHAR */
-
-# if ACE_SIZEOF_INT == 4
-  typedef int ACE_INT32;
-  typedef unsigned int ACE_UINT32;
-#   if defined (__KCC) && !defined (ACE_LACKS_LONGLONG_T)
-  typedef unsigned long long ACE_UINT64;
-  typedef   signed long long ACE_INT64;
-#   endif /* __KCC */
-# elif ACE_SIZEOF_LONG == 4
-  typedef long ACE_INT32;
-  typedef unsigned long ACE_UINT32;
-# elif (ACE_SIZEOF_INT) == 8 && defined(_UNICOS)
-  // vector cray - hard 64-bit, all 64 bit types
-#   if !defined(_CRAYMPP)
-      typedef int ACE_INT32;
-      typedef unsigned int ACE_UINT32;
-#   endif
-  typedef unsigned long long ACE_UINT64;
-  typedef   signed long long ACE_INT64;
-# else
-#   error Have to add to the ACE_UINT32 type setting
-# endif
 
 // The number of bytes in a void *.
 # ifndef ACE_SIZEOF_VOID_P
@@ -587,23 +605,77 @@ typedef ptrdiff_t ptr_arith_t;
 #   define ACE_INT64_LITERAL(n) n ## ll
 # endif /* ! ACE_WIN32  &&  ! ACE_LACKS_LONGLONG_T */
 
+#if !defined (ACE_INT8_FORMAT_SPECIFIER)
+#  if defined (PRId8)
+#    define ACE_INT8_FORMAT_SPECIFIER ACE_LIB_TEXT ("%") ACE_LIB_TEXT (PRId8)
+#  else
+#    define ACE_INT8_FORMAT_SPECIFIER ACE_LIB_TEXT ("%d")
+#  endif /* defined (PRId8) */
+#endif /* ACE_INT8_FORMAT_SPECIFIER */
+
+#if !defined (ACE_UINT8_FORMAT_SPECIFIER)
+#  if defined (PRIu8)
+#    define ACE_UINT8_FORMAT_SPECIFIER ACE_LIB_TEXT ("%") ACE_LIB_TEXT (PRIu8)
+#  else
+#    define ACE_UINT8_FORMAT_SPECIFIER ACE_LIB_TEXT ("%u")
+#  endif /* defined (PRIu8) */
+#endif /* ACE_UINT8_FORMAT_SPECIFIER */
+
+#if !defined (ACE_INT16_FORMAT_SPECIFIER)
+#  if defined (PRId16)
+#    define ACE_INT16_FORMAT_SPECIFIER ACE_LIB_TEXT ("%") ACE_LIB_TEXT (PRId16)
+#  else
+#    define ACE_INT16_FORMAT_SPECIFIER ACE_LIB_TEXT ("%d")
+#  endif /* defined (PRId16) */
+#endif /* ACE_INT16_FORMAT_SPECIFIER */
+
+#if !defined (ACE_UINT16_FORMAT_SPECIFIER)
+#  if defined (PRIu16)
+#    define ACE_UINT16_FORMAT_SPECIFIER ACE_LIB_TEXT ("%") ACE_LIB_TEXT (PRIu16)
+#  else
+#    define ACE_UINT16_FORMAT_SPECIFIER ACE_LIB_TEXT ("%u")
+#  endif /* defined (PRIu16) */
+#endif /* ACE_UINT16_FORMAT_SPECIFIER */
+
+#if !defined (ACE_INT32_FORMAT_SPECIFIER)
+#  if defined (PRId32)
+#    define ACE_INT32_FORMAT_SPECIFIER ACE_LIB_TEXT ("%") ACE_LIB_TEXT (PRId32)
+#  elif ACE_SIZEOF_INT == 4
+#    define ACE_INT32_FORMAT_SPECIFIER ACE_LIB_TEXT ("%d")
+#  else
+#    define ACE_INT32_FORMAT_SPECIFIER ACE_LIB_TEXT ("%ld")
+#  endif /* defined (PRId32) */
+#endif /* ACE_INT32_FORMAT_SPECIFIER */
+
+#if !defined (ACE_UINT32_FORMAT_SPECIFIER)
+#  if defined (PRIu32)
+#    define ACE_UINT32_FORMAT_SPECIFIER ACE_LIB_TEXT ("%") ACE_LIB_TEXT (PRIu32)
+#  elif ACE_SIZEOF_INT == 4
+#    define ACE_UINT32_FORMAT_SPECIFIER ACE_LIB_TEXT ("%u")
+#  else
+#    define ACE_UINT32_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
+#  endif /* defined (PRIu32) */
+#endif /* ACE_UINT32_FORMAT_SPECIFIER */
+
+#if !defined (ACE_INT64_FORMAT_SPECIFIER)
+#  if defined (PRId64)
+#    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%") ACE_LIB_TEXT (PRId64)
+#  elif ACE_SIZEOF_LONG == 8
+#    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%ld")
+#  else
+#    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lld")
+#  endif /* defined (PRId64) */
+#endif /* ACE_INT64_FORMAT_SPECIFIER */
+
 #if !defined (ACE_UINT64_FORMAT_SPECIFIER)
-#  if ACE_SIZEOF_LONG == 8
+#  if defined (PRIu64)
+#    define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%") ACE_LIB_TEXT (PRIu64)
+#  elif ACE_SIZEOF_LONG == 8
 #    define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
 #  else
 #    define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%llu")
-#  endif /* ACE_SIZEOF_LONG == 8*/
+#  endif /* defined (PRIu64) */
 #endif /* ACE_UINT64_FORMAT_SPECIFIER */
-
-#if !defined (ACE_INT64_FORMAT_SPECIFIER)
-#  if ACE_SIZEOF_LONG == 8
-#    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%ld")
-#  elif defined(__TANDEM) && defined(_TNS_R_TARGET)
-#    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Ld")
-#  else
-#    define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lld")
-#  endif /* ACE_SIZEOF_LONG == 8 */
-#endif /* ACE_INT64_FORMAT_SPECIFIER */
 
 #if !defined (ACE_SSIZE_T_FORMAT_SPECIFIER)
 # if defined (ACE_WIN64)
