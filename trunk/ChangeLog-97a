@@ -1,3 +1,8 @@
+Sun May 11 14:40:51 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/ACE_Process.cpp (ACE_Process_Options ctor): reordered
+	  initializers to match declaration order.
+
 Sat May 10 19:44:28 1997    <harrison@samba.cs.wustl.edu>
 
 	* Process.h: ACE_ProcessEx now works on Solaris and NT.  There
