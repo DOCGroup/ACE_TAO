@@ -2285,7 +2285,9 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
                     ACE_Time_Value &poa_creation_time)
 {
   // Grab the id buffer
-  TAO_POA::String object_key (TAO_POA::ObjectKey_to_const_string (key));
+  const char *cs = TAO_POA::ObjectKey_to_const_string (key);
+  TAO_POA::String object_key (cs);
+  delete[] (char*)cs;
 
   // Try to find the first separator
   int first_token_position = object_key.find (TAO_POA::name_separator (),
@@ -2480,6 +2482,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
                    this->complete_name_.c_str (),
                    TAO_POA::name_separator (),
                    id_buffer);
+  delete [] (char*)id_buffer;
 
   // Create the key, giving the ownership of the buffer to the
   // sequence.  Must specify the length as one less than the buffer
@@ -2498,12 +2501,13 @@ TAO_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
   const char *id_buffer = TAO_POA::ObjectId_to_const_string (id);
 
   // Check to see if the POA name is the first part of the id
+  int ret = 0;
   if (ACE_OS::strncmp (id_buffer,
                        this->name_.c_str (),
                        this->name_.length ()) == 0)
-    return 1;
-  else
-    return 0;
+    ret = 1;
+  delete [] (char*)id_buffer;
+  return ret;
 }
 
 int
