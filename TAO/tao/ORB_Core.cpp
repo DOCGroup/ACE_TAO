@@ -609,7 +609,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                       ACE_LIB_TEXT ("(%P|%t) -ORBPreconnect is ")
                       ACE_LIB_TEXT ("deprecated.\n")
                       ACE_LIB_TEXT ("(%P|%t) Use validate_connection()")
-                      ACE_LIB_TEXT ("at run-time, instead.\n")));
+                      ACE_LIB_TEXT ("at runtime, instead.\n")));
 
           arg_shifter.consume_arg ();
         }
