@@ -203,7 +203,7 @@ TAO_GIOP_Invocation::start (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->max_wait_time_ == 0)
     {
-      int has_timeout;
+      bool has_timeout = false;
       this->orb_core_->call_timeout_hook (this->stub_,
                                           has_timeout,
                                           this->max_wait_time_value_);
@@ -263,7 +263,7 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
   ACE_Time_Value *max_wait_time = 0;
 
   ACE_Time_Value connection_timeout;
-  int is_conn_timeout = 0;
+  bool is_conn_timeout = false;
 
   // Check for the connection timout policy in the ORB
   this->orb_core ()->connection_timeout (this->stub (),

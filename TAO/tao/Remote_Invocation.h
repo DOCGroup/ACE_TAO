@@ -20,6 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Invocation_Base.h"
 #include "ace/CORBA_macros.h"
 
 
@@ -38,22 +39,14 @@ namespace TAO
   class Argument;
 
 
-    enum Invocation_Status
-      {
-        TAO_INVOKE_START,
-        /// The request must be restarted, a temporary failure has ocurred.
-        TAO_INVOKE_RESTART,
-        /// invoke() call successful.
-        TAO_INVOKE_SUCCESS,
-        TAO_INVOKE_FAILURE
-      };
+
   /**
-   * @class Synch_Invocation
+   * @class Remote_Invocation
    *
    * @brief Base class for Twoway_Invocation and Oneway_Invocation.
    *
    */
-  class TAO_Export Remote_Invocation
+  class TAO_Export Remote_Invocation : protected Invocation_Base
   {
   public:
     Remote_Invocation (Profile_Transport_Resolver &resolver,
@@ -68,17 +61,16 @@ namespace TAO
                        TAO_OutputCDR &out_stream
                        ACE_ENV_ARG_DECL);
 
-    void marshal_data (Argument **args,
-                       int args_number,
-                       TAO_OutputCDR &cdr
+    void marshal_data (TAO_OutputCDR &cdr
                        ACE_ENV_ARG_DECL);
 
     Invocation_Status send_message (TAO_OutputCDR &cdr,
-                                    short message_semantics
+                                    short message_semantics,
+                                    ACE_Time_Value *max_wait_time
                                     ACE_ENV_ARG_DECL);
+
   protected:
     Profile_Transport_Resolver &resolver_;
-    TAO_Operation_Details &detail_;
   };
 }
 

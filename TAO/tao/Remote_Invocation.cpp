@@ -6,6 +6,7 @@
 #include "IOP_IORC.h"
 #include "Stub.h"
 #include "Transport.h"
+#include "operation_details.h"
 
 ACE_RCSID (tao,
            Remote_Invocation,
@@ -15,8 +16,8 @@ namespace TAO
 {
   Remote_Invocation::Remote_Invocation (Profile_Transport_Resolver &resolver,
                                         TAO_Operation_Details &detail)
-    : resolver_ (resolver)
-      , detail_ (detail)
+    : Invocation_Base (resolver.stub (), detail)
+    , resolver_ (resolver)
   {
   }
 
@@ -81,7 +82,7 @@ namespace TAO
                                    ACE_ENV_ARG_DECL)
   {
     // Send the request for the header
-    if (this->resolver_.transport ()->generate_request_header (this->detail_,
+    if (this->resolver_.transport ()->generate_request_header (this->details_,
                                                                spec,
                                                                out_stream)
         == -1)
@@ -94,22 +95,20 @@ namespace TAO
   }
 
   void
-  Remote_Invocation::marshal_data (Argument **args,
-                                   int args_number,
-                                   TAO_OutputCDR &out_stream
+  Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream
                                    ACE_ENV_ARG_DECL)
   {
-    for (int i = 0; i != args_number; ++i)
-      {
-        if (!((*args[i]).marshal (out_stream)))
-          ACE_THROW (CORBA::MARSHAL ());
-      }
+    if (this->details_.marshal_args (out_stream) == false)
+      ACE_THROW (CORBA::MARSHAL ());
+
+    return;
   }
 
   Invocation_Status
   Remote_Invocation::send_message (TAO_OutputCDR &cdr,
-                                   short message_semantics
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+                                   short message_semantics,
+                                   ACE_Time_Value *max_wait_time
+                                   ACE_ENV_ARG_DECL)
   {
     int retval =
       this->resolver_.transport ()->send_request (
@@ -117,19 +116,36 @@ namespace TAO
         this->resolver_.stub ()->orb_core (),
         cdr,
         message_semantics,
-        0);
+        max_wait_time);
 
-    if (retval != 0)
+    if (retval == -1)
       {
+        if (errno == ETIME)
+        {
+          ACE_THROW_RETURN (
+              CORBA::TIMEOUT (
+                  CORBA::SystemException::_tao_minor_code (
+                      TAO_TIMEOUT_SEND_MINOR_CODE,
+                      errno
+                    ),
+                  CORBA::COMPLETED_NO
+                  ),
+              TAO_INVOKE_FAILURE
+              );
+        }
         if (TAO_debug_level > 2)
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) Synch_Twoway_Invocation::send_message - ")
+                      ACE_TEXT ("(%P|%t) Remote_Invocation::send_message - ")
                       ACE_TEXT ("failure while sending message \n")));
 
-        // Need to close connections..
+        // Close the transport and all the associated stuff along with
+        // it.
+        this->resolver_.transport ()->close_connection ();
 
         return TAO_INVOKE_RESTART;
       }
+
+    this->resolver_.stub ()->set_valid_profile ();
     return TAO_INVOKE_SUCCESS;
   }
 }

@@ -29,6 +29,7 @@
 
 class TAO_MProfile;
 class TAO_GIOP_Invocation;
+class ACE_Time_Value;
 
 namespace TAO
 {
@@ -63,7 +64,8 @@ public:
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation
                                 ACE_ENV_ARG_DECL) = 0;
 
-  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r
+  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
+                                ACE_Time_Value *val
                                 ACE_ENV_ARG_DECL) = 0;
 
   /**
@@ -111,7 +113,8 @@ public:
 
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation
                                 ACE_ENV_ARG_DECL);
-  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r
+  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
+                                ACE_Time_Value *val
                                 ACE_ENV_ARG_DECL);
   virtual void forward (TAO_GIOP_Invocation *invocation,
                         const TAO_MProfile &mprofile

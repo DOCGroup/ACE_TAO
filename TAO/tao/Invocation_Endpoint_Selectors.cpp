@@ -63,8 +63,9 @@ TAO_Default_Endpoint_Selector::select_endpoint (
 
 void
 TAO_Default_Endpoint_Selector::select_endpoint (
-  TAO::Profile_Transport_Resolver *r
-  ACE_ENV_ARG_DECL)
+    TAO::Profile_Transport_Resolver *r,
+    ACE_Time_Value *max_wait_time
+    ACE_ENV_ARG_DECL)
 {
   do
     {
@@ -79,7 +80,9 @@ TAO_Default_Endpoint_Selector::select_endpoint (
       for (size_t i = 0; i < endpoint_count; ++i)
         {
           bool retval =
-            r->try_connect (ep ACE_ENV_ARG_PARAMETER);
+            r->try_connect (ep,
+                            max_wait_time
+                            ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           // Check if the connect has completed.
