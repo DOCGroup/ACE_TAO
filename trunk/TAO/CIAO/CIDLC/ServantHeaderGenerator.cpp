@@ -2105,7 +2105,7 @@ ServantHeaderEmitter::pre (TranslationUnit&)
   string guard =
       "CIAO_GLUE_SESSION_"
       + regex::perl_s (uc_file_name,
-                       "/(\\.(IDL|CIDL))?$/" +  uc_file_suffix + "/");
+                       "/(\\.(IDL|CIDL|CDL))?$/" +  uc_file_suffix + "/");
 
   // Replace any remaining '.' with '_'.
   guard = regex::perl_s (guard, "/\\./_/");
@@ -2262,7 +2262,7 @@ ServantHeaderEmitter::post (TranslationUnit&)
   string guard =
     "CIAO_GLUE_SESSION_"
     + regex::perl_s (uc_file_name,
-                     "/(\\.(IDL|CIDL))?$/" +  uc_file_suffix + "/");
+                     "/(\\.(IDL|CIDL|CDL))?$/" +  uc_file_suffix + "/");
 
   guard = regex::perl_s (guard, "/\\./_/");
 

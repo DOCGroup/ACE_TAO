@@ -1,3 +1,16 @@
+Tue Nov  2 09:59:15 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        
+          Fixed some regular expressions, used to generate the servant
+          header file ifdef guard and export macros, to recognize the
+          file extension .cdl in addition to the existing patterns for
+          .cidl and .idl. These particular regular expressions were
+          overlooked in the checkin of
+          
+          Thu Sep 30 11:03:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Tue Nov  2 04:45:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/ServantSourceGenerator.cpp:

@@ -149,7 +149,7 @@ ServantGenerator::compute_export_macro (const fs::path& file_path)
     // Replace the suffix.
     export_macro_ =
       regex::perl_s (export_macro_,
-                     "/(\\.(IDL|CIDL))?$/_SVNT_Export/");
+                     "/(\\.(IDL|CIDL|CDL))?$/_SVNT_Export/");
 
     // Replace any remaining '.' in the string with '_'.
     export_macro_ = regex::perl_s (export_macro_,
