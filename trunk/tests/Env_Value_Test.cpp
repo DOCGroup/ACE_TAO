@@ -38,17 +38,15 @@ do { \
 } while (0)
 
 int
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) || defined (ACE_LACKS_FORK)
 // ACE_HAS_NONSTATIC_OBJECT_MANAGER only allows main to have two
-// arguments.  And on VxWorks, which uses
-// ACE_HAS_NONSTATIC_OBJECT_MANAGER, we can't use spawn because it
-// doesn't have <fork>.
+// arguments.  And on platforms that lack fork (), we can't use spawn.
 main (int argc, ASYS_TCHAR* [])
 {
   ACE_UNUSED_ARG (argc);
   ACE_OS::putenv (ASYS_TEXT ("TEST_VALUE_POSITIVE=10.2"));
   ACE_OS::putenv (ASYS_TEXT ("TEST_VALUE_NEGATIVE=-10.2"));
-#else  /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+#else  /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER  &&  ! ACE_LACKS_FORK */
 main (int argc, LPTSTR [], LPTSTR envp[])
 {
   if (argc == 1)
@@ -78,7 +76,7 @@ main (int argc, LPTSTR [], LPTSTR envp[])
       p.wait ();
     }
   else
-#endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+#endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER  &&  ! ACE_LACKS_FORK */
     {
       // In this case we're the child
       ACE_START_TEST (ASYS_TEXT ("Env_Value_Test"));
