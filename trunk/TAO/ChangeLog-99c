@@ -1,3 +1,9 @@
+Sun Sep 19 17:50:05 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (run):
+
+	  Removed unused code that was accidentally committed.
+
 Sun Sep 19 17:31:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB.cpp (key_to_object):
