@@ -44,7 +44,7 @@ static int test_result = 0;
 
 // Semaphore used in the tests.  Start it "locked" (i.e., its initial
 // count is 0).
-static ACE_Thread_Semaphore s (0);
+static ACE_Thread_Semaphore s ((unsigned int) 0);
 
 // Default number of iterations.
 static int n_iterations = 10;

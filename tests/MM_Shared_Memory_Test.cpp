@@ -135,7 +135,7 @@ spawn (void)
   // to avoid race condition between the creation in the parent and
   // use in the child.
   ACE_NEW_RETURN (synchronizer,
-                  SYNCHRONIZER (0), // Locked by default...
+                  SYNCHRONIZER ((unsigned int)0), // Locked by default...
                   -1);
 
 #if !defined (ACE_LACKS_FORK)
