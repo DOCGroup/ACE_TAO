@@ -215,8 +215,9 @@ Client_i::output_latency (void)
                       : "Low Priority",
                       j);
       // This loop visits each request latency from a client.
-      JITTER_ARRAY_ITERATOR iterator =
-        this->ts_->global_jitter_array_ [j]->begin ();
+      JITTER_ARRAY_ITERATOR iterator (*this->ts_->global_jitter_array_ [j]);
+	//        this->ts_->global_jitter_array_ [j]->begin ();  @@ Remove this line until I know whether UnBounded_Queue can have begin(). Sergio. 09/28/98
+
       u_int i = 0;
       ACE_timer_t *latency = 0;
 
@@ -883,12 +884,12 @@ main (int argc, char *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<Globals,ACE_Null_Mutex>;
-template class ACE_Unbounded_Set<ACE_timer_t>;
-template class ACE_Unbounded_Set_Iterator<ACE_timer_t>;
+template class ACE_Unbounded_Queue<ACE_timer_t>;
+template class ACE_Unbounded_Queue_Iterator<ACE_timer_t>;
 template class ACE_Node<ACE_timer_t>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Globals,ACE_Null_Mutex>
-#pragma instantiate ACE_Unbounded_Set<ACE_timer_t>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_timer_t>
+#pragma instantiate ACE_Unbounded_Queue<ACE_timer_t>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_timer_t>
 #pragma instantiate ACE_Node<ACE_timer_t>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

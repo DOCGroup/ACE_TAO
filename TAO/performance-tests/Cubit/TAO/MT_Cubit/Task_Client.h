@@ -86,8 +86,8 @@ enum Cubit_Datatypes
   CB_LOW_PRIORITY_RATE = 10
 };
 
-typedef ACE_Unbounded_Set<ACE_timer_t> JITTER_ARRAY;
-typedef ACE_Unbounded_Set_Iterator<ACE_timer_t> JITTER_ARRAY_ITERATOR;
+typedef ACE_Unbounded_Queue<ACE_timer_t> JITTER_ARRAY;
+typedef ACE_Unbounded_Queue_Iterator<ACE_timer_t> JITTER_ARRAY_ITERATOR;
 
 class Task_State
 {
