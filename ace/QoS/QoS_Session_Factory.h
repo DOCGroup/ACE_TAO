@@ -24,10 +24,7 @@
 #include "ace/Containers_T.h"
 #include "ACE_QoS_Export.h"
 
-/**
- * @class ACE_QoS_Session;
- Forward declare this, so the factory uses only references to this.
- */
+// Forward declare this, so the factory uses only references to this.
 class ACE_QoS_Session;
 
 /**
@@ -50,12 +47,15 @@ public :
 
   /// Default destructor.
   ~ACE_QoS_Session_Factory (void);
-  
+
 
   /// Types of sessions for this factory to manage.
   enum ACE_QoS_Session_Type
   {
+    /// ACE_RAPI_SESSION on Unix platforms with RAPI support
     ACE_RAPI_SESSION,
+
+    /// ACE_GQOS_SESSION on Windows platforms with GQOS support
     ACE_GQOS_SESSION
   };
 
