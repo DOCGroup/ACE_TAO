@@ -14,10 +14,7 @@ SHLIB 	= $(LIBNAME).$(SOEXT)
 
 BIN 	= Naming_Service
 
-LSRC 	= $(ACE_ROOT)/TAO/orbsvcs/orbsvcs/Naming/Entries.cpp
-	 $(ACE_ROOT)/TAO/orbsvcs/orbsvcs/Naming/CosNaming_i.cpp \
-	  Naming_Service.cpp \
-SVR_SRCS=Naming_Service.cpp Main.cpp
+SVR_SRCS=Naming_Service.cpp
 
 LDLIBS  = -lnaming -lorbsvcs -lTAO
 

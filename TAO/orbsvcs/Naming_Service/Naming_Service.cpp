@@ -2,7 +2,7 @@
 
 #include "ace/streams.h"
 #include "CosNaming_i.h"
-#include "Naming_Service.h"
+#include "orbsvcs/Naming/Ior_Multicast.h"
 
 int
 main (int argc, char ** argv)
