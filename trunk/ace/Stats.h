@@ -68,6 +68,9 @@ public:
   // value up by <precision> decimal digits, so that no precision will
   // be lost.  It assumes that <whole_> is >= 0.
 
+  void dump (void) const;
+  // Print to stdout.
+
 private:
   ACE_UINT32 whole_;
   // The integer portion of the value.
@@ -112,7 +115,7 @@ public:
 
   int sample (const ACE_INT32 value);
   // Provide a new sample.  Returns 0 on success, -1 if it fails due
-  // to running out of memory.
+  // to running out of memory, or to rolling over of the sample count.
 
   ACE_UINT32 samples (void) const;
   // Access the number of samples provided so far.
@@ -139,14 +142,12 @@ public:
                      FILE * = stdout) const;
   // Print summary statistics.  If scale_factor is not 1, then the
   // results are divided by it, i.e., each of the samples is scaled
-  // down by it.  Returns -1 if internal overflow had been reached.
-  // If that happens, you might retry with a smaller precision.
+  // down by it.  If internal overflow is reached with the specified
+  // scale factor, it successively tries to reduce it.  Returns -1 if
+  // there is overflow even with a 0 scale factor.
 
   void reset ();
   // Initialize internal state.
-
-  void dump (void) const;
-  // Print summary statictics to stdout.
 
   static void quotient (const ACE_UINT64 dividend,
                         const ACE_UINT32 divisor,
@@ -164,9 +165,13 @@ public:
   // method.  It's not fast, but it doesn't require floating point
   // support.
 
+  void dump (void) const;
+  // Print summary statistics to stdout.
+
 private:
   u_int overflow_;
-  // Internal indication of whether there has been overflow.
+  // Internal indication of whether there has been overflow.  Contains
+  // the errno corresponding to the cause of overflow.
 
   ACE_UINT32 number_of_samples_;
   // Number of samples.
@@ -176,9 +181,6 @@ private:
 
   ACE_INT32 max_;
   // Maximum sample value.
-
-  ACE_Stats_Value cached_mean_;
-  // Cached mean value, because std_dev () needs to know the mean.
 
   ACE_Unbounded_Queue <ACE_INT32> samples_;
   // The samples.

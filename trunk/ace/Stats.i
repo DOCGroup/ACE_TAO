@@ -52,8 +52,15 @@ ACE_Stats_Value::scaled_value (ACE_UINT64 &sv) const
 }
 
 ACE_INLINE
-ACE_Stats::ACE_Stats (void) :
-  cached_mean_ (0xFFFFFFFFu)
+void
+ACE_Stats_Value::dump (void) const
+{
+  ACE_OS::printf ("precision: %u digits; whole: %u, fractional: %u\n",
+                  precision_, whole_, fractional_);
+}
+
+ACE_INLINE
+ACE_Stats::ACE_Stats (void)
 {
   reset ();
 }
@@ -77,4 +84,11 @@ ACE_INT32
 ACE_Stats::max_value (void) const
 {
   return max_;
+}
+
+ACE_INLINE
+void
+ACE_Stats::dump (void) const
+{
+  print_summary (3u);
 }
