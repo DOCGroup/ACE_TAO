@@ -425,9 +425,6 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
             case CORBA::tk_except:
               {
                 CORBA::ULong length;
-#if defined(TAO_NEEDS_UNUSED_VARIABLES)
-                CORBA::Octet *buffer;
-#endif
 
                 continue_decoding = stream->read_ulong (length);
                 if (!continue_decoding)
@@ -436,18 +433,6 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                 // if length > MAXUNSIGNED, error ...
                 u_int len = (u_int) length;
 
-#if 0
-                buffer = new CORBA::Octet[len];
-
-                for (u_int i = 0; i < len && continue_decoding; i++)
-                  continue_decoding = stream->read_octet (buffer [i]);
-#endif
-
-                if (!continue_decoding)
-                  {
-                    //  delete [] buffer;
-                    break;
-                  }
                 *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
                                             len,
                                             stream->rd_ptr (),
@@ -456,7 +441,6 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                 // skip length number of bytes in the stream, else we may
                 // leave the stream in an undefined state
                 (void) stream->skip_bytes (length);
-                //                    (*tcp)->parent_ = parent;
               }
             } // end of switch
         }
@@ -570,13 +554,13 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
   else
     while (profiles-- != 0 && continue_decoding)
       {
-        CORBA::ULong tmp;
+        CORBA::ULong tag;
 
         // get the profile ID tag
-        if ( (continue_decoding = stream->read_ulong (tmp)) == CORBA::B_FALSE)
+        if ( (continue_decoding = stream->read_ulong (tag)) == CORBA::B_FALSE)
 	  continue;
 
-        if (tmp != TAO_IOP_TAG_INTERNET_IOP || objdata != 0)
+        if (tag != TAO_IOP_TAG_INTERNET_IOP || objdata != 0)
           {
             continue_decoding = stream->skip_string ();
             continue;
@@ -587,16 +571,19 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
         // context for it, and tell the "parent" stream that this data
         // isn't part of it any more.
 
+	CORBA::ULong encap_len;
         // ProfileData is encoded as a sequence of octet. So first get
         // the length of the sequence.
         // Create the decoding stream from the encapsulation in the
         // buffer, and skip the encapsulation.
-	if ( (continue_decoding = stream->read_ulong (tmp)) == CORBA::B_FALSE)
+	if ( (continue_decoding = stream->read_ulong (encap_len)) == CORBA::B_FALSE)
 	  continue;
 
-        TAO_InputCDR str (*stream, tmp);
+        TAO_InputCDR str (*stream, encap_len);
 
-	continue_decoding  = str.good_bit () && stream->skip_bytes(tmp - 1);
+	continue_decoding =
+	  str.good_bit ()
+	  && stream->skip_bytes(encap_len);
 
 	if (!continue_decoding)
 	  continue;
@@ -618,9 +605,9 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
               && str.read_octet (profile->iiop_version.minor)
               && profile->iiop_version.minor <= IIOP::MY_MINOR))
           {
-            dmsg2 ("detected new v%d.%d IIOP profile",
-                   profile->iiop_version.major,
-                   profile->iiop_version.minor);
+            ACE_DEBUG ((LM_DEBUG, "detected new v%d.%d IIOP profile",
+			profile->iiop_version.major,
+			profile->iiop_version.minor));
             objdata->type_id = (const char *) 0;
             objdata->Release ();
             objdata = 0;
@@ -652,7 +639,9 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
         if (str.length () != 0)
           {
             env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-            dmsg ("extra data at end of IIOP profile data");
+            ACE_DEBUG ((LM_DEBUG,
+			"%d bytes out of %d left after IIOP profile data\n",
+			str.length (), encap_len));
             objdata->Release ();
             return CORBA::TypeCode::TRAVERSE_STOP;
           }
@@ -688,7 +677,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("marshaling encode_struct detected error");
+      ACE_DEBUG ((LM_DEBUG, "marshaling decode_objref detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }

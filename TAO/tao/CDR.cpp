@@ -304,11 +304,24 @@ TAO_OutputCDR::write_array (const void* x,
 CORBA_Boolean
 TAO_OutputCDR::write_string (const CORBA::Char *x)
 {
-  CORBA::ULong len = ACE_OS::strlen (x) + 1;
-
-  if (this->write_ulong (len))
+  if (x != 0)
     {
-      return this->write_char_array (x, len);
+      CORBA::ULong len = ACE_OS::strlen (x) + 1;
+      if (this->write_ulong (len))
+	{
+	  return this->write_char_array (x, len);
+	}
+    }
+  else
+    {
+      // Be nice to programmers: treat nulls as empty strings not
+      // errors. (OMG-IDL supports languages that don't use the C/C++
+      // notion of null v. empty strings; nulls aren't part of the OMG-IDL
+      // string model.)
+      if (this->write_ulong (1))
+	{
+	  return this->write_char (0);
+	}
     }
   return CORBA::B_FALSE;
 }
@@ -316,10 +329,20 @@ TAO_OutputCDR::write_string (const CORBA::Char *x)
 CORBA_Boolean
 TAO_OutputCDR::write_wstring (const CORBA::WChar *x)
 {
-  CORBA::ULong len = ACE_OS::wslen (x) + 1;
-  if (this->write_ulong (len))
+  if (x != 0)
     {
-      return this->write_wchar_array (x, len);
+      CORBA::ULong len = ACE_OS::wslen (x) + 1;
+      if (this->write_ulong (len))
+	{
+	  return this->write_wchar_array (x, len);
+	}
+    }
+  else
+    {
+      if (this->write_ulong (1))
+	{
+	  return this->write_wchar (0);
+	}
     }
   return CORBA::B_FALSE;
 }
@@ -388,7 +411,8 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
       && newpos <= this->start_->end ()
       && newpos + size <= this->start_->end ())
     {
-      this->start_->rd_ptr (newpos);
+      // Notice that ACE_Message_Block::duplicate may leave the
+      // wr_ptr() with a higher value that what we actually want.
       this->start_->wr_ptr (newpos + size);
 
       CORBA::Octet byte_order;
