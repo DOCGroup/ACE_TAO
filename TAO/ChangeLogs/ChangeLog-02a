@@ -2,8 +2,11 @@ Tue Jan  2 18:28:15 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
           Make sure the POA is activated before anything else happens,
-          this should eliminate some phantom TRANSIENT exceptions in this
-          test.  BTW, MT_Cubit is completely unreadable.
+ 	  this should eliminate some phantom TRANSIENT exceptions in this
+ 	  test.  Thanks to Sebastian Schubert
+ 	  <sschuber@et.htwk-leipzig.de> and Li Zhou
+ 	  <lizhou@doc.ece.uci.edu> for helping identify this.  BTW,
+ 	  MT_Cubit is completely unreadable...
 
 Tue Jan  2 18:35:22 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
