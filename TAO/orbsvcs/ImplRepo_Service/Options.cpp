@@ -3,6 +3,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Configuration.h"
 
+ACE_RCSID(ImplRepo_Service, Options, "$Id$")
+
 // Default Constructor
 Options::Options ()
 : debug_ (1),
@@ -16,7 +18,7 @@ Options::Options ()
 
 Options::~Options ()
 {
-  delete config_;
+  delete this->config_;
 }
 
 int
@@ -28,27 +30,40 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'd':  // debug flag.
+      case 'd':
+        // Debug flag.
         this->debug_ = ACE_OS::atoi (get_opts.optarg);
         break;
-      case 'o':  // output the IOR to a file.
+      case 'o':  
+        // Output the IOR to a file.
         this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Error: Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
         break;
-      case 'p': // persistent heap implementation
+      case 'p':
         {
-          ACE_Configuration_Heap* heap;
-          ACE_NEW_RETURN (heap, ACE_Configuration_Heap, -1);
+          // Persistent heap implementation
+          ACE_Configuration_Heap *heap = 0;
+          ACE_NEW_RETURN (heap, 
+                          ACE_Configuration_Heap, 
+                          -1);
           
-          if (heap->open(get_opts.optarg))
+          if (heap->open (get_opts.optarg) != 0)
             {
-              ACE_ERROR_RETURN((LM_ERROR,
-                                "Error:: Opening persistent heap file '%s'\n",
-                                get_opts.optarg), -2);
+              delete heap;
+              heap = 0;
+
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("Error:: Opening persistent heap file '%s'\n"),
+                  get_opts.optarg
+                ), 
+                -2
+              );
             }
+
           this->config_ = heap;
         }
         break;
@@ -68,7 +83,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->startup_timeout_ = 
           ACE_Time_Value (ACE_OS::atoi (get_opts.optarg));
         break;
-      case '?':  // display help for use of the server.
+      case '?':  // Display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s"
@@ -82,13 +97,27 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                           1);
       }
 
-  // if no persistent implementation specified, use a simple heap
-  if (!this->config_)
+  // If no persistent implementation specified, use a simple heap.
+  if (this->config_ == 0)
     {
-      ACE_Configuration_Heap *heap;
+      ACE_Configuration_Heap *heap = 0;
+      ACE_NEW_RETURN (heap, 
+                      ACE_Configuration_Heap, 
+                      -1);
 
-      ACE_NEW_RETURN (heap, ACE_Configuration_Heap, -1);
-      heap->open ();
+      if (heap->open () != 0)
+        {
+          delete heap;
+          heap = 0;
+
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("Error:: Opening ACE_Configuration heap\n")
+            ), 
+            -2
+          );
+        }
+
       this->config_ = heap;
     }
 

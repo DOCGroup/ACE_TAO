@@ -52,9 +52,9 @@ public:
                                           CORBA_Environment &ACE_TRY_ENV
                                             = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Called by the POA when the incoming requested object/POA isn't found.  This will
-  // create POAs when needed and will also put a DSI object (IMR_Forwarder) in that POA
-  // as a default servant to handle that request
+  // Called by the POA when the incoming requested object/POA isn't found.
+  // This will create POAs when needed and will also put a DSI object 
+  // (IMR_Forwarder) in that POA as a default servant to handle that request.
 private:
   IMR_Forwarder *servant_;
   // The object to use as the default servant.
@@ -90,7 +90,8 @@ class ImplRepo_i
   //    Implementation Repository
   //
   // = DESCRIPTION
-  //    This provides the interface to Administer the Implementation Repository.
+  //    This provides the interface to Administer the Implementation
+  //    Repository.
 public:
   // = Constructor and destructor
   ImplRepo_i (void);
@@ -104,65 +105,83 @@ public:
   // = Interface methods
 
   virtual void activate_server (const char *server,
-                                CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     ImplementationRepository::Administration::NotFound,
-                     ImplementationRepository::Administration::CannotActivate));
+                                CORBA::Environment &ACE_TRY_ENV 
+                                  = TAO_default_environment ())
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        ImplementationRepository::Administration::NotFound,
+        ImplementationRepository::Administration::CannotActivate
+      ));
   // Starts up the server <server> if not already running.
 
-  virtual void register_server (const char *server,
-                                const ImplementationRepository::StartupOptions &options,
-                                CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     ImplementationRepository::Administration::AlreadyRegistered));
-  // Adds the server to the repository and registers the startup information about
-  // the server <server>.
+  virtual void register_server (
+      const char *server,
+      const ImplementationRepository::StartupOptions &options,
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        ImplementationRepository::Administration::AlreadyRegistered
+      ));
+  // Adds the server to the repository and registers the startup information
+  // about the server <server>.
 
-  virtual void reregister_server (const char *server,
-                                  const ImplementationRepository::StartupOptions &options,
-                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual void reregister_server (
+      const char *server,
+      const ImplementationRepository::StartupOptions &options,
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Updates the startup information about the server <server>.
 
   virtual void remove_server (const char *server,
-                              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+                              CORBA_Environment &ACE_TRY_ENV 
+                                = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound));
   // Removes the server <server> from the repository.
 
   virtual void shutdown_server (const char *server,
-                                CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+                                CORBA::Environment &ACE_TRY_ENV 
+                                  = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound));
   // Attempts to gracefully shut down the server, if that fails, will try
   // to do it ungracefully.
 
-  virtual char *server_is_running (const char *server,
-                                   const char *location,
-                                   ImplementationRepository::ServerObject_ptr server_object,
-                                   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual char *server_is_running (
+      const char *server,
+      const char *location,
+      ImplementationRepository::ServerObject_ptr server_object,
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
+    )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound));
-  // Called by the server to update transient information such as current location of
-  // the <server> and its ServerObject.
+  // Called by the server to update transient information such as current
+  // location of the <server> and its ServerObject.
 
   virtual void server_is_shutting_down (const char *server,
-                                        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+                                        CORBA_Environment &ACE_TRY_ENV 
+                                          = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound));
   // What the server should call before it shuts down.
 
-  virtual void find (const char *server,
-                     ImplementationRepository::ServerInformation_out info,
-                     CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual void find (
+      const char *server,
+      ImplementationRepository::ServerInformation_out info,
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
+    )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound));
   // Returns the startup information for a server
 
-  virtual void list (CORBA::ULong how_many,
-                     ImplementationRepository::ServerInformationList_out server_list,
-                     ImplementationRepository::ServerInformationIterator_out server_iterator,
-                     CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual void list (
+      CORBA::ULong how_many,
+      ImplementationRepository::ServerInformationList_out server_list,
+      ImplementationRepository::ServerInformationIterator_out server_iterator,
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Used to access the list of servers registered.  May also return an
   // iterator which can be used to access more than <how_many> of them.
@@ -182,17 +201,23 @@ public:
 private:
   ACE_TString activate_server_i (const char *server,
                                  const int check_startup,
-                                 CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     ImplementationRepository::Administration::NotFound,
-                     ImplementationRepository::Administration::CannotActivate));
+                                 CORBA::Environment &ACE_TRY_ENV = 
+                                  TAO_default_environment ())
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        ImplementationRepository::Administration::NotFound,
+        ImplementationRepository::Administration::CannotActivate
+      ));
   // Implementation of activate_server.  <check_startup> is a flag to check
   // the activation mode before attempting to start it.
 
   void start_server_i (const char *server,
-                       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     ImplementationRepository::Administration::CannotActivate));
+                       CORBA::Environment &ACE_TRY_ENV = 
+                        TAO_default_environment ())
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        ImplementationRepository::Administration::CannotActivate
+      ));
   // This method starts the server process.
 
   IORTable::Locator_var locator_;
@@ -261,9 +286,11 @@ public:
   // object incarnated by the DSI servant and performs the
   // processing necessary to execute the request.
 
-  CORBA::RepositoryId _primary_interface (const PortableServer::ObjectId &oid,
-                                          PortableServer::POA_ptr poa,
-                                          CORBA::Environment &env = TAO_default_environment ());
+  CORBA::RepositoryId _primary_interface (
+      const PortableServer::ObjectId &oid,
+      PortableServer::POA_ptr poa,
+      CORBA::Environment &env = TAO_default_environment ()
+    );
   // DynamicImplementation stuff
 
 private:
@@ -277,25 +304,30 @@ private:
   // POA reference.
 };
 
-class IMR_Iterator : public POA_ImplementationRepository::ServerInformationIterator
+class IMR_Iterator 
+  : public POA_ImplementationRepository::ServerInformationIterator
 {
 public:
   IMR_Iterator (Server_Repository::HASH_IMR_ITER *iterator,
-               PortableServer::POA_ptr poa);
+                PortableServer::POA_ptr poa);
   // Constructor
   // Ownership of iterator is transfered to this class (we'll delete it)
 
   ~IMR_Iterator ();
   // Destructor
 
-  virtual CORBA::Boolean next_n (CORBA::ULong how_many,
-                                 ImplementationRepository::ServerInformationList_out server_list,
-                                 CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ())
-     ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean next_n (
+      CORBA::ULong how_many,
+      ImplementationRepository::ServerInformationList_out server_list,
+      CORBA::Environment &ACE_TRY_ENV 
+        = CORBA::Environment::default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns the next list of up to <how_many> servers.  If empty, will return
   // false.
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ())
+  virtual void destroy (CORBA::Environment &ACE_TRY_ENV 
+                          = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroys the iterator.
 

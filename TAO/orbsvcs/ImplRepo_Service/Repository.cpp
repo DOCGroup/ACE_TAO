@@ -6,49 +6,16 @@
 
 ACE_RCSID(ImplRepo_Service, Repository, "$Id$")
 
-// Some helper functions
-const char *
-convert_mode_to_str (Server_Info::ActivationMode mode)
-{
-  if (mode == Server_Info::NORMAL)
-    return "NORMAL";
-  else if (mode == Server_Info::MANUAL)
-    return "MANUAL";
-  else if (mode == Server_Info::PER_CLIENT)
-    return "PER_CLIENT";
-  else if (mode == Server_Info::AUTO_START)
-    return "AUTO_START";
-
-  // If all else fails, we are normal
-  return "NORMAL";
-}
-
-Server_Info::ActivationMode
-convert_str_to_mode (const char *str)
-{
-  if (ACE_OS::strcasecmp (str, "NORMAL") == 0)
-    return Server_Info::NORMAL;
-  else if (ACE_OS::strcasecmp (str, "MANUAL") == 0)
-    return Server_Info::MANUAL;
-  else if (ACE_OS::strcasecmp (str, "PER_CLIENT") == 0)
-    return Server_Info::PER_CLIENT;
-  else if (ACE_OS::strcasecmp (str, "AUTO_START") == 0)
-    return Server_Info::AUTO_START;
-
-  // If all else fails, we are normal
-  return Server_Info::NORMAL;
-}
-
-
 // Initialize the command_line and working_dir.
 
-Server_Info::Server_Info (const ACE_TString POA_name,
-                          const ACE_TString logical_server_name,
-                          const ACE_TString startup_command,
-                          const ImplementationRepository::EnvironmentList
-                                environment_vars,
-                          const ACE_TString working_dir,
-                          const ActivationMode activation)
+Server_Info::Server_Info (
+    const ACE_TString POA_name,
+    const ACE_TString logical_server_name,
+    const ACE_TString startup_command,
+    const ImplementationRepository::EnvironmentList environment_vars,
+    const ACE_TString working_dir,
+    const ActivationMode activation
+  )
 : starting_up_ (0),
   logical_server_name_ (logical_server_name),
   POA_name_ (POA_name),
@@ -84,12 +51,13 @@ Server_Info::update_running_info (const ACE_TString location,
 // Returns startup information.
 
 void
-Server_Info::get_startup_info (ACE_TString &logical_server_name,
-                               ACE_TString &startup_command,
-                               ImplementationRepository::EnvironmentList
-                                  &environment_vars,
-                               ACE_TString &working_dir,
-                               ActivationMode &activation)
+Server_Info::get_startup_info (
+    ACE_TString &logical_server_name,
+    ACE_TString &startup_command,
+    ImplementationRepository::EnvironmentList &environment_vars,
+    ACE_TString &working_dir,
+    ActivationMode &activation
+  )
 {
   logical_server_name = this->logical_server_name_;
   startup_command = this->startup_command_;
@@ -134,13 +102,17 @@ Server_Repository::init ()
   ACE_Configuration *config = OPTIONS::instance ()->config ();
 
   // iterate through the list of registered servers and register them
-  config->open_section(config->root_section(), "Servers", 1, this->servers_);
+  config->open_section (config->root_section (), 
+                        "Servers", 
+                        1, 
+                        this->servers_);
   int index = 0;
   ACE_TString name;
  
   while (config->enumerate_sections (servers_, index, name) == 0)
     {
-      ACE_TString logical, startup, working_dir, activation_str;
+      ACE_TString logical, startup, working_dir;
+      u_int activation_val = 0;
       Server_Info::ActivationMode activation;
 
       ImplementationRepository::EnvironmentList environment_vars;
@@ -148,22 +120,53 @@ Server_Repository::init ()
       ACE_Configuration_Section_Key server_key;
       int error = 0;
    
-      error += config->open_section (this->servers_, name.c_str(), 0, server_key);
-      error += config->get_string_value (server_key, "LogicalServer", logical);
-      error += config->get_string_value (server_key, "StartupCommand", startup);
-      error += config->get_string_value (server_key, "WorkingDir", working_dir);
-      error += config->get_string_value (server_key, "Activation", activation_str);
-      activation = convert_str_to_mode (activation_str.c_str ());
+      error += config->open_section (this->servers_, 
+                                     name.c_str(), 
+                                     0, 
+                                     server_key);
 
-      // Maybe environments variables?? need a straight forward way to store env vars
+      error += config->get_string_value (server_key, 
+                                         "LogicalServer", 
+                                         logical);
 
-      if(error)
-        ACE_DEBUG ((LM_DEBUG, "Error reading configuration data for service '%s', skipping\n", name.rep()));
+      error += config->get_string_value (server_key, 
+                                         "StartupCommand", 
+                                         startup);
+
+      error += config->get_string_value (server_key, 
+                                         "WorkingDir", 
+                                         working_dir);
+
+      error += config->get_integer_value (server_key, 
+                                          "Activation", 
+                                          activation_val);
+
+      activation =
+        ACE_static_cast (Server_Info::ActivationMode, activation_val);
+
+      // Maybe environments variables?? need a straightforward 
+      // way to store env vars.
+
+      if (error != 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, 
+                      ACE_TEXT ("Error reading configuration data for ")
+                      ACE_TEXT ("service '%s',skipping\n"), 
+                      name.c_str ()));
+        }
       else
-        this->add (name, logical, startup, environment_vars, working_dir, activation);
+        {
+          this->add (name, 
+                     logical, 
+                     startup, 
+                     environment_vars, 
+                     working_dir, 
+                     activation);
+        }
 
       index++;
     }
+
   return 0;
 }
 
@@ -171,25 +174,41 @@ Server_Repository::init ()
 // Add a new server to the Repository
 
 int
-Server_Repository::add (const ACE_TString POA_name,
-                        const ACE_TString logical_server_name,
-                        const ACE_TString startup_command,
-                        const ImplementationRepository::EnvironmentList
-                              environment_vars,
-                        const ACE_TString working_dir,
-                        const Server_Info::ActivationMode activation)
+Server_Repository::add (
+    const ACE_TString POA_name,
+    const ACE_TString logical_server_name,
+    const ACE_TString startup_command,
+    const ImplementationRepository::EnvironmentList environment_vars,
+    const ACE_TString working_dir,
+    const Server_Info::ActivationMode activation
+  )
 {
   ACE_Configuration *config = OPTIONS::instance ()->config ();
   
   // @@ Add this to the persistent configuration; environment_vars??
   ACE_Configuration_Section_Key server;
-  config->open_section (this->servers_, POA_name.c_str(), 1, server);
-  config->set_string_value (server, "LogicalServer", logical_server_name);
-  config->set_string_value (server, "StartupCommand", startup_command);
-  config->set_string_value (server, "WorkingDir", working_dir);
-  config->set_string_value (server, "Activation", convert_mode_to_str (activation));
+  config->open_section (this->servers_, 
+                        POA_name.c_str(), 
+                        1, 
+                        server);
 
-  Server_Info *new_server;
+  config->set_string_value (server, 
+                            "LogicalServer", 
+                            logical_server_name);
+
+  config->set_string_value (server, 
+                            "StartupCommand", 
+                            startup_command);
+
+  config->set_string_value (server, 
+                            "WorkingDir", 
+                            working_dir);
+
+  config->set_integer_value (server, 
+                             "Activation", 
+                             activation);
+
+  Server_Info *new_server = 0;
   ACE_NEW_RETURN (new_server,
                   Server_Info (POA_name,
                                logical_server_name,
@@ -199,7 +218,8 @@ Server_Repository::add (const ACE_TString POA_name,
                                activation),
                   -1);
 
-  return this->repository_.bind (POA_name, new_server);
+  return this->repository_.bind (POA_name, 
+                                 new_server);
 }
 
 
@@ -211,11 +231,15 @@ Server_Repository::update (const ACE_TString POA_name,
                            const ACE_TString server_object_ior)
 {
   Server_Info *server;
-  int retval = this->repository_.find (POA_name, server);
+  int retval = this->repository_.find (POA_name, 
+                                       server);
 
   // Only fill in data if it was found
   if (retval == 0)
-    server->update_running_info (location, server_object_ior);
+    {
+      server->update_running_info (location, 
+                                   server_object_ior);
+    }
 
   return retval;
 }
@@ -224,24 +248,27 @@ Server_Repository::update (const ACE_TString POA_name,
 // Returns information related to startup.
 
 int
-Server_Repository::get_startup_info (const ACE_TString POA_name,
-                                     ACE_TString &logical_server_name,
-                                     ACE_TString &startup_command,
-                                     ImplementationRepository::EnvironmentList
-                                        &environment_vars,
-                                     ACE_TString &working_dir,
-                                     Server_Info::ActivationMode &activation)
+Server_Repository::get_startup_info (
+    const ACE_TString POA_name,
+    ACE_TString &logical_server_name,
+    ACE_TString &startup_command,
+    ImplementationRepository::EnvironmentList &environment_vars,
+    ACE_TString &working_dir,
+    Server_Info::ActivationMode &activation
+  )
 {
   Server_Info *server;
   int retval = this->repository_.find (POA_name, server);
 
   // Only fill in data if it was found
   if (retval == 0)
-    server->get_startup_info (logical_server_name, 
-                              startup_command, 
-                              environment_vars, 
-                              working_dir, 
-                              activation);
+    {
+      server->get_startup_info (logical_server_name, 
+                                startup_command, 
+                                environment_vars, 
+                                working_dir, 
+                                activation);
+    }
 
   return retval;
 }
@@ -255,11 +282,15 @@ Server_Repository::get_running_info (const ACE_TString POA_name,
                                      ACE_TString &server_object_ior)
 {
   Server_Info *server;
-  int retval = this->repository_.find (POA_name, server);
+  int retval = this->repository_.find (POA_name, 
+                                       server);
 
   // Only fill in data if it was found
   if (retval == 0)
-    server->get_running_info (location, server_object_ior);
+    {
+      server->get_running_info (location, 
+                                server_object_ior);
+    }
 
   return retval;
 }
@@ -269,10 +300,12 @@ Server_Repository::get_running_info (const ACE_TString POA_name,
 // returns the previous value or -1 if the POA_name wasn't found
 
 int
-Server_Repository::starting_up (const ACE_TString POA_name, int new_value)
+Server_Repository::starting_up (const ACE_TString POA_name, 
+                                int new_value)
 {
   Server_Info *server;
-  int retval = this->repository_.find (POA_name, server);
+  int retval = this->repository_.find (POA_name, 
+                                       server);
 
   // Only fill in data if it was found
   if (retval == 0)
@@ -291,11 +324,14 @@ int
 Server_Repository::starting_up (const ACE_TString POA_name)
 {
   Server_Info *server;
-  int retval = this->repository_.find (POA_name, server);
+  int retval = this->repository_.find (POA_name, 
+                                       server);
 
   // Only fill in data if it was found
   if (retval == 0)
-    retval = server->starting_up_;
+    {
+      retval = server->starting_up_;
+    }
 
   return retval;
 }
@@ -309,7 +345,9 @@ Server_Repository::remove (const ACE_TString POA_name)
   ACE_Configuration *config = OPTIONS::instance ()->config ();
 
   // Remove the persistent configuration information
-  config->remove_section (this->servers_, POA_name.c_str(), 1);
+  config->remove_section (this->servers_, 
+                          POA_name.c_str(), 
+                          1);
 
   return this->repository_.unbind (POA_name);
 }
@@ -318,12 +356,13 @@ Server_Repository::remove (const ACE_TString POA_name)
 // Returns a new iterator that travels over the repository.
 
 Server_Repository::HASH_IMR_ITER *
-Server_Repository::new_iterator ()
+Server_Repository::new_iterator (void)
 {
-  HASH_IMR_ITER *hash_iter;
+  HASH_IMR_ITER *hash_iter = 0;
   ACE_NEW_RETURN (hash_iter,
                   Server_Repository::HASH_IMR_ITER (this->repository_),
                   0);
+
   return hash_iter;
 }
 
@@ -331,7 +370,7 @@ Server_Repository::new_iterator ()
 // Returns the number of entries in the repository.
 
 size_t
-Server_Repository::get_repository_size ()
+Server_Repository::get_repository_size (void)
 {
   return this->repository_.current_size ();
 }
