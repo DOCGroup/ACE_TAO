@@ -22,7 +22,7 @@ namespace TAO
     const ::TAO_PG::Properties_Decoder *,
     TAO_SYNCH_MUTEX> PG_Typeid_Properties_Map;
   typedef ACE_Hash_Map_Iterator<
-    ACE_CString, 
+    ACE_CString,
     const ::TAO_PG::Properties_Decoder *,
     TAO_SYNCH_MUTEX> PG_Typeid_Properties_Map_Iterator;
 } //namespace TAO_PG
