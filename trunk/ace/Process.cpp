@@ -539,8 +539,7 @@ ACE_Process::ACE_Process (char *argv[],
 
 ACE_Process_Options::ACE_Process_Options (int ie,
 					  int cobl)
-  : cl_options_ (0),
-    inherit_environment_ (ie),
+  : inherit_environment_ (ie),
 #if defined (ACE_WIN32)
     handle_inheritence_ (TRUE),
     new_console_ (FALSE),
@@ -556,6 +555,7 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     environment_buf_index_ (0),
     environment_argv_index_ (0),
     cl_options_buf_ (0),
+    cl_options_ (0),
     cl_options_argv_calculated_ (0)
 {
   ACE_NEW (cl_options_, char[cobl]);
