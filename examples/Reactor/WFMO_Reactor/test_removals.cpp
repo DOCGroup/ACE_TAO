@@ -85,7 +85,7 @@ main (int argc, char *argv[])
 {
   int close_down = argc > 1 ? 1 : 0;
 
-  for (int i = 1; i <= ACE_Reactor::instance ()->size (); i++)
+  for (size_t i = 1; i <= ACE_Reactor::instance ()->size (); i++)
     new Event_Handler (i, close_down);
 
   int result = 0;
