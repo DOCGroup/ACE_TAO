@@ -135,6 +135,8 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
       Dynamic_ParameterC.cpp
       Dynamic_ParameterA.cpp
       ParameterMode.cpp
+      FloatSeqA.cpp
+      FloatSeqC.cpp
       OctetSeqA.cpp
       OctetSeqC.cpp
       StringSeqA.cpp

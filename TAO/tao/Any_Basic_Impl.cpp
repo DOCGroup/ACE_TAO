@@ -290,10 +290,9 @@ namespace TAO
         break;
       default:
         {
-          char tmp[ACE_CDR::MAX_ALIGNMENT];
-          ACE_OS::memset (tmp, 0, ACE_CDR::MAX_ALIGNMENT);
+          CORBA::ULongLong tmp = 0;
           ACE_NEW_RETURN (retval,
-                          TAO::Any_Basic_Impl (tc, tmp),
+                          TAO::Any_Basic_Impl (tc, &tmp),
                           0);
         }
 
