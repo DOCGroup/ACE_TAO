@@ -482,6 +482,7 @@ MCT_Event_Handler::~MCT_Event_Handler (void)
       delete this->address_vec_[i];
       this->address_vec_[i] = 0;
     }
+  mcast_.close ();
 }
 
 
@@ -794,6 +795,7 @@ int producer (MCT_Config &config)
       // Give the task thread a chance to run.
       ACE_Thread::yield ();
     }
+  socket.close ();
   return retval;
 }
 
