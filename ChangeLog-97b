@@ -42,6 +42,10 @@ Thu Sep 11 08:52:36 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Log_Msg.cpp (~ACE_Log_Msg): release guard before calling
 	  ACE_Log_Msg_Manager::close (), because that deletes the lock.
 
+	* ace/Managed_Object.{h,cpp} (get_object): changed type of "id"
+	  to int because it will often be passed an enum.  Pass "id" by
+	  value to get_object (int id), for preallocated objects.
+
 	* include/makeinclude/wrapper_macros.GNU: ignore shared_libs_only
 	  in modules that only build a static lib.  Fixed shared_libs_only
 	  by removing OBJDIRS, unless BIN is undefined, and VDIR.  Removed
