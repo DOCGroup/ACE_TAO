@@ -1,3 +1,15 @@
+Fri Jan 18 13:19:00 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp: 
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp: 
+	* tao/TAO_AMH_Response_handler.h: 
+	* tao/TAO_AMH_Response_handler.cpp:
+	
+	  Added code that now generates AMH-RH code for operation 
+	  in skeleton-source file.  Changed 'tao_out' CDR stream in
+	  TAO_AMH_Response_Handler so that the variable names of the 
+	  generated IDL code and that in the tao orb_core files match.
+
 Fri Jan 18 13:47:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be_include/be_visitor_valuetype.h:
