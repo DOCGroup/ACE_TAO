@@ -180,6 +180,8 @@ $(INSMAN)/mann/% :
 			echo "Installing $(@F) -> $(@D)" ; \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			$(LN_S) $(shell pwd)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			$(RM) $@; \
+			$(LN_S) $(shell pwd)/$(@F) $@; \
 		fi ; \
 	fi
 ifdef MVSLIB
