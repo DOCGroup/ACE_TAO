@@ -1,3 +1,10 @@
+Thu Sep 26 21:49:16 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/BiDir_GIOP/BiDirGIOP.h:
+	* tao/BiDir_GIOP/BiDirGIOP.cpp: Prevent activate () from being
+	  called more than once. Thanks to Erich Hochmuth
+	  <erich_hochmuth@hotmail.com> for reporting this.
+
 Thu Sep 26 17:38:30 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
