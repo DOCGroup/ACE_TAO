@@ -5,7 +5,7 @@
 #define TAO_HANG_TEST_I_H
 #include /**/ "ace/pre.h"
 
-#include "testS.h"
+#include "TestS.h"
 
 #if defined (_MSC_VER)
 #  pragma warning(push)
