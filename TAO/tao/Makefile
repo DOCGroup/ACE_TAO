@@ -115,6 +115,7 @@ PLUGGABLE_MESSAGING_FILES = \
   GIOP_Message_Locate_Header \
   target_specification \
   GIOP_Message_State \
+  GIOP_Message_Version \
   Tagged_Profile
 
 DEFAULT_RESOURCES_FILES = \

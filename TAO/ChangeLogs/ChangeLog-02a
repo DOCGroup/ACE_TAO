@@ -1,3 +1,8 @@
+Tue May 29 14:48:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile: Added the new file GIOP_Message_Version in the
+	  builds.  It was really bad on my part that I missed this one :(  
+
 Tue May 29 12:29:25 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/ior_corbaloc/run_test.pl: 
