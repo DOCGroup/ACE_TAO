@@ -1,10 +1,17 @@
-1999-09-08  Vishal Kachroo  <vishal@cs.wustl.edu>
+Wed Sep  8 14:58:12 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
+
+	  Changed format type to long instead of int.  This change should
+	  fix a warning on Digital Unix.
+
+Wed Sep  8 14:30:00 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+	
+	* orbsvcs/tests/Time/run_test.pl:
 
 	  Changed -ORBImplRepoServiceIOR file://foo.bar to 
 	  -ORBInitRef ImplRepoService=file://foo.bar in the following
 	  file.
-	
-	* orbsvcs/tests/Time/run_test.pl (time_service_test_using_ir): 
 
 Wed Sep  8 14:08:49 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
