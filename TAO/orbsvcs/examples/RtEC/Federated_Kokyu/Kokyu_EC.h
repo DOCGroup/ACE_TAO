@@ -6,6 +6,9 @@
 #include "Supplier.h"
 #include "Consumer.h"
 #include "ace/Vector_T.h"
+#include "ace/Task_T.h"
+#include "ace/Reactor.h"
+#include "ace/Select_Reactor_Base.h" //for ACE_Select_Reactor_Impl::DEFAULT_SIZE
 
 #include "RtSchedEventChannelS.h"
 #include "tao/Utils/Servant_Var.h"
@@ -181,6 +184,75 @@ private:
   ACE_Vector<Supplier*> suppliers_;
   ACE_Vector<Timeout_Consumer*> timeout_consumers_;
   ACE_Vector<Consumer*> consumers_;
-};
+}; //class Kokyu_EC
+
+class Reactor_Task : public ACE_Task<ACE_SYNCH>
+{
+public:
+  /// Constructor
+  Reactor_Task (void)
+    : initialized_(0)
+    , react_(0)
+  {}
+
+
+  ~Reactor_Task (void)
+  {
+    delete react_;
+  }
+
+  int initialize(void)
+  {
+    //We need to set the ACE_Reactor::instance() to be the ORB
+    //reactor so Kokyu's RG implementation can use it w/o creating
+    //an extra thread to run the reactor event loop. I hope this
+    //doesn't screw something else up!
+    //use Select_Reactor explicitly?
+    ACE_Reactor *reactor; //TODO: how clean up reactor and stop thread?
+    ACE_NEW_RETURN(reactor,
+                   ACE_Reactor,
+                   -1);
+    reactor->open(ACE_Select_Reactor_Impl::DEFAULT_SIZE);
+    ACE_Reactor::instance(reactor);
+
+    this->react_ = reactor;
+
+    this->initialized_ = 1;
+
+    return 0;
+  }
+
+  ACE_Reactor *reactor(void)
+  {
+    return this->react_;
+  }
+
+  /// Process the events in the queue.
+  int svc (void)
+  {
+    ACE_DEBUG((LM_DEBUG,"Reactor_Task (%P|%t) svc(): ENTER\n"));
+
+    if (!this->initialized_)
+      {
+        this->initialize();
+      }
+
+    this->react_->owner(ACE_Thread::self()); //set this thread as owner
+
+    int err = this->react_->run_reactor_event_loop();
+    if (err < 0)
+      {
+        ACE_DEBUG((LM_ERROR,"Reactor_Task (%t) error running Reactor event loop\n"));
+      }
+
+    ACE_DEBUG((LM_DEBUG,"Reactor_Task (%P|%t) svc(): LEAVE\n"));
+    return 0;
+  }
+
+private:
+  int initialized_;
+
+  ACE_Reactor *react_;
+}; //class Reactor_Task
 
 #endif
