@@ -153,7 +153,7 @@
 // (LRU) with the default purging percentage of 20% once this feature
 // has been thoroughly tested.
 #if !defined (TAO_CONNECTION_CACHING_STRATEGY)
-# define TAO_CONNECTION_CACHING_STRATEGY TAO_Resource_Factory::NOOP
+# define TAO_CONNECTION_CACHING_STRATEGY TAO_Resource_Factory::LRU
 #endif /* TAO_CONNECTION_CACHING_STRATEGY */
 
 #if !defined (TAO_PURGE_PERCENT)
