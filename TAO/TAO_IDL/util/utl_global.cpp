@@ -140,7 +140,8 @@ IDL_GlobalData::IDL_GlobalData (void)
       gen_assign_op_ (I_FALSE),
       exception_support_ (I_FALSE),
       opt_tc_ (I_FALSE),
-      case_diff_error_ (I_TRUE)
+      case_diff_error_ (I_TRUE),
+      ami_call_back_ (I_FALSE)
 {
 
   // Path for the perfect hash generator(gperf) program.
@@ -1386,4 +1387,16 @@ idl_bool
 IDL_GlobalData::case_diff_error (void)
 {
   return this->case_diff_error_;
+}
+
+void
+IDL_GlobalData::ami_call_back (idl_bool val)
+{
+  this->ami_call_back_ = val;
+}
+
+idl_bool
+IDL_GlobalData::ami_call_back (void)
+{
+  return this->ami_call_back_;
 }

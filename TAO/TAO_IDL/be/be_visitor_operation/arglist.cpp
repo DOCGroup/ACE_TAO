@@ -196,7 +196,6 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arglist::"
-
                          "visit_argument - "
                          "codegen for arglist failed\n"),
                         -1);

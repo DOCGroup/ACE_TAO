@@ -1,3 +1,11 @@
+Wed Jun 16 13:41:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Incorporated the changes in the second phase for the
+	  asynchronous messaging support.  This time Alex changed the IDL
+	  compiler to generate the ReplyHandler and the sendc_ methods.
+	  The merge includes all the changes from ami_phase2_start to
+	  ami_phase2_end.
+
 Wed Jun 16 15:31:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/dsicriminant_ci.cpp:

@@ -99,13 +99,48 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
     }
   os->gen_endif ();
 
-  // generate inline methods for elements of our scope
+  // Generate inline methods for elements of our scope
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_ci::"
                          "visit_interface - "
                          "codegen for scope failed\n"), -1);
+    }
+
+  // If AMI is enabled, generate all the inline stuff for the
+  // AMI_<interface_name>_Handler interface.
+
+  if (idl_global->ami_call_back () == I_TRUE)
+    {
+      // Set the context.
+      be_visitor_context ctx (*this->ctx_);
+      
+      // Set the state.
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_FWD_CI);
+      
+      // Create the visitor.
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_ci::"
+                             "visit_interface - "
+                             "Bad visitor\n"),
+                            -1);
+        }
+      
+      // Call the visitor on this interface.
+      if (node->accept (visitor) == -1)
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_interface_ch::"
+                             "visit_interface - "
+                             "code gen for ami handler fwd failed\n"),
+                            -1);
+        }
+      delete visitor;
     }
 
   return 0;
