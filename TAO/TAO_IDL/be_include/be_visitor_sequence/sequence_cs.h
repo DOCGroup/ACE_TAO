@@ -58,8 +58,7 @@ public:
 private:
 
   // Generate explicit instantiation for the base class type.
-  int gen_base_class_tmplinst (be_sequence *node,
-                               be_type *bt);
+  int gen_base_class_tmplinst (be_sequence *node);
 };
 
 #endif /* _BE_VISITOR_SEQUENCE_SEQUENCE_CS_H_ */
