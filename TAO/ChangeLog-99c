@@ -1,3 +1,8 @@
+Tue Jul  6 11:31:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/MT_Client/client.cpp:
+	  Fixed warning in IRIX when compiled without debugging info.
+
 Tue Jul  6 11:01:57 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/UIOP_Connector.cpp (connect):
