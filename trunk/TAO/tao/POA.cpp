@@ -2929,7 +2929,7 @@ TAO_POA::encode_sequence_to_string (CORBA::String &str,
        i++)
     {
       u_char byte = seq[i];
-      if (isascii (byte) && isprint (byte) && byte != '\\')
+      if (isprint (byte) && byte != '\\')
         {
           *cp++ = (char) byte;
           continue;
