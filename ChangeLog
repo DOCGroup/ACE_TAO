@@ -1,3 +1,9 @@
+Fri Jul 25 09:17:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/performance_stats.sh:
+	* bin/generate_performance_chart.sh: Redefined the range for
+	  plotting different graphs.
+
 Fri Jul 25 08:53:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/performance_stats.sh: Changed the path to mogrify. On
