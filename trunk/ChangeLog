@@ -1,3 +1,12 @@
+Thu Apr 10 13:02:42 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* tests/tests.{dsw,icp}: Added Unbounded_Set_Test_Ex.
+
+	* tests/Unbounded_Set_Test_Ex.{dsp,icc}: New.
+
+	Please bear with me, these changes were made "blindly", i.e.
+	I don't have access to those build environments.
+
 Thu Apr 10 09:51:59 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:
