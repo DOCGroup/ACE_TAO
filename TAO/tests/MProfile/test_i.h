@@ -34,7 +34,7 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void remote_call (CORBA::Environment &)
+  CORBA::Long remote_call (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (CORBA::Environment&)
@@ -42,6 +42,9 @@ public:
 
 private:
   CORBA::ORB_var orb_;
+
+  CORBA::Long val_;
+
 };
 
 #endif /* TAO_MPROFILE_TEST_I_H */

@@ -4,6 +4,6 @@
 
 interface Simple_Server
 {
-  void remote_call ();
+  long remote_call ();
   oneway void shutdown ();
 };
