@@ -13,7 +13,7 @@ Usage: mwc.pl [-global <file>] [-include <directory>]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>]
               [-template <file>] [-dynamic_only] [-static_only]
               [-relative NAME=VAR] [-noreldefs]
-              [-type <bor | em3 | gnu | nma | va4 | vc6 | vc7>]
+              [-type <bor | em3 | ghs | gnu | nma | va4 | vc6 | vc7>]
               [files]
 
        -global       Specifies the global input file.  Values stored
@@ -41,7 +41,7 @@ is not specified on the command line.
 
 Two include directories are used by default
 (ACE_wrappers/bin/MakeProjectCreator/config and
-ACE_wrappers/bin/MakeProjectCreator/templates) if -include is not used.
+ACE_wrappers/bin/MakeProjectCreator/templates).
 
 Each project creator has a default template input file for each type of
 project (dll_exe, lib_exe, dll, lib).  You can override the default template
@@ -61,9 +61,13 @@ files.  This currently only applies to the vc6 type.
 The -static_only option can be used to avoid generating dynamic project
 files.  This currently only applies to the vc6 type.
 
+The -noreldefs option says not to generate default relative definitions for
+ACE_ROOT and TAO_ROOT (which would come from environment variables).
+
 The -type option can be used multiple times on the same command line to
-generate projects of different types per mpc file.  NOTE: The -ti option
-overrides the template input file for all types specified.
+generate projects of different types per mpc file.  The default type is
+always gnu.  NOTE: The -ti option overrides the template input file for all
+types specified.
 
 
 Running only the Project Generator
