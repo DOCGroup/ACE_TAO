@@ -571,8 +571,8 @@ TAO_UIPMC_Profile::update_cached_group_component (void)
   PortableGroup::TagGroupTaggedComponent group;
 
   // Encode the data structure.
-  group.component_version.major = TAO_DEF_MIOP_MAJOR;
-  group.component_version.minor = TAO_DEF_MIOP_MINOR;
+  group.group_version.major = TAO_DEF_MIOP_MAJOR;
+  group.group_version.minor = TAO_DEF_MIOP_MINOR;
 
   group.group_domain_id = CORBA::string_dup (this->group_domain_id_.c_str ());
   group.object_group_id = this->group_id_;

@@ -5,7 +5,7 @@ project(*server): server, orbsvcsexe, iormanip, ftorb {
   }
 }
 
-project(*Manager): taoserver, orbsvcsexe, iormanip, ftorb {
+project(*Manager): taoserver, orbsvcsexe, iormanip, ftorb, portablegroup, Messaging {
   exename  = Manager
   Source_Files {
     testC.cpp

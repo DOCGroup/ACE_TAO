@@ -491,6 +491,20 @@ TAO::FT_ReplicationManager::get_object_group_ref (
                                                       ACE_ENV_ARG_PARAMETER);
 }
 
+PortableGroup::ObjectGroup_ptr
+TAO::FT_ReplicationManager::get_object_group_ref_from_id (
+    PortableGroup::ObjectGroupId group_id
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , PortableGroup::ObjectGroupNotFound
+  ))
+{
+  return
+    this->object_group_manager_.get_object_group_ref_from_id (group_id
+                                                      ACE_ENV_ARG_PARAMETER);
+}
+
 CORBA::Object_ptr
 TAO::FT_ReplicationManager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,

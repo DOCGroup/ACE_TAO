@@ -469,6 +469,39 @@ TAO_PG_ObjectGroupManager::get_member_ref (
                     CORBA::Object::_nil ());
 }
 
+PortableGroup::ObjectGroup_ptr
+TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
+        PortableGroup::ObjectGroupId group_id
+        ACE_ENV_ARG_DECL
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableGroup::ObjectGroupNotFound
+      ))
+{
+  //@@ If we change the PG's concept of ObjectGroupId from
+  // PortableServer::ObjectId to PortableGroup::ObjectGroupId, can
+  // just call TAO_PG_ObjectGroupManager::object_group() here.
+
+  TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->lock_,
+                      PortableGroup::ObjectGroup::_nil ());
+
+    if (this->object_group_map_.find (group_id, group_entry) != 0)
+      ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
+                        PortableGroup::ObjectGroup::_nil ());
+  }
+
+  if (group_entry == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (),
+                      PortableGroup::ObjectGroup::_nil ());
+
+  return 
+    PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
+}
 
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::create_object_group (
@@ -491,8 +524,8 @@ TAO_PG_ObjectGroupManager::create_object_group (
   //  { int _TODO_replace_this_with_commemted_out_version_; }
   PortableGroup::TagGroupTaggedComponent tag_component;
 
-  tag_component.component_version.major = (CORBA::Octet) 1;
-  tag_component.component_version.minor = (CORBA::Octet) 0;
+  tag_component.group_version.major = (CORBA::Octet) 1;
+  tag_component.group_version.minor = (CORBA::Octet) 0;
   tag_component.group_domain_id = domain_id;
   tag_component.object_group_id = group_id;
   tag_component.object_group_ref_version = 0;
