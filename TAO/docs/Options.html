@@ -103,6 +103,9 @@ while the rest of the options are set via the service configurator
 <blockquote>
 <H3><CODE>CORBA::ORB</CODE><A NAME="ORB"></A></H3>
 
+<p><em>Note:</em> <code>-ORBGlobalCollocation</code> flag has been
+merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>. 
+
 <blockquote>
 <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING= "0">
   <TR>
@@ -171,8 +174,7 @@ while the rest of the options are set via the service configurator
   <TR>
 
     <TD><CODE>-ORBHost</CODE> <EM>hostname</EM></TD>
-    <TD><a
-        name="-ORBHost"></a>Tells the ORB to listen for requests on the
+    <TD><a name="-ORBHost"></a>Tells the ORB to listen for requests on the
         interface associated with the host named
         <I><EM>hostname</EM></I>.  This option is valid only for IIOP endpoints.<BR>
         <STRONG>NOTE:</STRONG> This option has been superceded by the
@@ -238,12 +240,12 @@ while the rest of the options are set via the service configurator
   </TR>
   <TR>
     <TD><CODE>-ORBCollocation</CODE> <EM>yes/global/per-orb/no</EM></TD>
-    <TD>Specifies the use of collocation object optimization.  If
-        <em>global</em> or <em>yes</em> is specified, objects in the
-        same process will be treated as collocated.  If
-        <em>per-orb</em> is specified, only objects in the same ORB
-        are treated as collocated.  When <em>no</em> is specified, no
-        objects are treated as collocated.   Default is global.</TD>
+    <TD><a name="-ORBCollocation"></a>Specifies the use of collocation
+        object optimization.  If <em>global</em> or <em>yes</em> is
+        specified, objects in the same process will be treated as collocated.
+        If <em>per-orb</em> is specified, only objects in the same ORB are
+        treated as collocated.  When <em>no</em> is specified, no objects are
+        treated as collocated.   Default is global.</TD> 
   </TR>
   <TR>
     <TD>
@@ -346,6 +348,8 @@ while the rest of the options are set via the service configurator
 
 <H3><CODE>TAO_Resource_Factory</CODE><A NAME="ResourceFactory"></A></H3>
 
+<p><em>Note:</em> <code>-ORBReactorLock</code> flag has been superceded by <code>-ORBReactorType</code>.
+
 <blockquote>
 <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
   <TR>
@@ -363,19 +367,8 @@ while the rest of the options are set via the service configurator
     </TD>
   </TR>
   <TR>
-    <TD><CODE>-ORBReactorLock</CODE> <EM>which</EM></TD>
-    <TD><a name="-ORBReactorLock"></a>Specify whether the ORB reactor is
-        thread-safe
-        (<em>which</em> = <code>token</code>) or not
-        (<em>which</em> = <code>null</code>).  Default is <code>token</code>.
-        <P>This option has been superseeded by
-        <CODE>-ORBReactorType</CODE>
-        </P>
-    </TD>
-  </TR>
-  <TR>
     <TD><CODE>-ORBReactorType</CODE> <EM>which</EM></TD>
-    <TD><a name="-ORBColTable"></a>Specify what kind of reactor does the
+    <TD><a name="-ORBReactorType"></a>Specify what kind of reactor does the
         ORB use, the options are:
         <TABLE BORDER="1" CELLSPACING="2" CELLPADDING="0">
           <TR><TH><em>which</em></TH><TH>Reactor</TH>
@@ -418,10 +411,8 @@ while the rest of the options are set via the service configurator
 The default is <code>select_mt</code></TD>
 </TR>
 <TR>
-  <TD><CODE>-ORBColTable</CODE> <EM>which</EM></TD>
-  <TD><a name="-ORBColTable"></a>Specify whether each ORB uses a global
-      (<em>which</em> = <code>global</code>) or a per-ORB
-      (<em>which</em> = <code>orb</code>) collocation table.</TD>
+  <TD><CODE>-ORBProtocolFactory</CODE> <EM>which</EM></TD>
+  <TD><font color=red>Somebody document me. </font></TD>
 </TR>
 <TR>
   <TD><CODE>-ORBInputCDRAllocator</CODE> <EM>which</EM></TD>
@@ -584,14 +575,8 @@ The default is <code>select_mt</code></TD>
   </TR>
   <TR>
 
-    <TD><CODE>-ORBColTblLock</CODE> <EM>lock type</EM></TD>
-    <TD><a
-        name="-ORBColTblLock"></a>Specify the type of lock to be used for the
-        global collocation table.  Possible values for <em>lock type</em> are
-        <code>thread</code>, which specifies that an inter-thread mutex is
-        used to guarantee exclusive acccess, and <code>null</code>, which
-        specifies that no locking be performed.  The default is
-        <code>thread</code>.</TD>
+    <TD><CODE>-ORBEventLoopLock</CODE> <EM>lock type</EM></TD>
+    <TD><font color=red>Somebody document me.</font></TD>
   </TR>
   <TR>
 
