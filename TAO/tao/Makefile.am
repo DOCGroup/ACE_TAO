@@ -7,7 +7,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 TAO_ROOT = $(top_srcdir)
 TAO_BUILDDIR = $(top_builddir)
 
-## Makefile.TAO.am
+## Makefile.TAO.am 
 
 ORB_Core = \
   Abstract_Servant_Base.cpp \
@@ -907,7 +907,6 @@ nobase_include_HEADERS = \
   BooleanSeq.pidl \
   Bounds.pidl \
   CONV_FRAME.pidl \
-  CORBA.pidl \
   CharSeq.pidl \
   Current.pidl \
   Domain.pidl \
@@ -951,7 +950,7 @@ nobase_include_HEADERS = \
 EXTRA_DIST = \
   tao.rc
 
-## Makefile.BiDir_GIOP.am
+## Makefile.BiDir_GIOP.am 
 
 lib_LTLIBRARIES += libTAO_BiDirGIOP.la
 
@@ -992,7 +991,255 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   BiDir_GIOP/TAO_BiDir_GIOP.rc
 
-## Makefile.Valuetype.am
+## Makefile.PortableServer.am 
+
+lib_LTLIBRARIES += libTAO_PortableServer.la
+
+libTAO_PortableServer_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_PORTABLESERVER_BUILD_DLL
+
+libTAO_PortableServer_la_SOURCES = \
+  PortableServer/Active_Object_Map.cpp \
+  PortableServer/Collocated_Object_Proxy_Broker.cpp \
+  PortableServer/Default_Acceptor_Filter.cpp \
+  PortableServer/Default_Policy_Validator.cpp \
+  PortableServer/Default_Servant_Dispatcher.cpp \
+  PortableServer/ImR_LocatorC.cpp \
+  PortableServer/ImR_LocatorS.cpp \
+  PortableServer/ImplRepoC.cpp \
+  PortableServer/ImplRepoS.cpp \
+  PortableServer/ImplRepo_i.cpp \
+  PortableServer/Key_Adapters.cpp \
+  PortableServer/ORB_Manager.cpp \
+  PortableServer/ORT_Adapter.cpp \
+  PortableServer/ORT_Adapter_Factory.cpp \
+  PortableServer/Object_Adapter.cpp \
+  PortableServer/Operation_Table.cpp \
+  PortableServer/PICurrent_Guard.cpp \
+  PortableServer/POA.cpp \
+  PortableServer/POAManager.cpp \
+  PortableServer/POA_Cached_Policies.cpp \
+  PortableServer/POA_Policies.cpp \
+  PortableServer/POA_Policy_Set.cpp \
+  PortableServer/PolicyS.cpp \
+  PortableServer/PortableGroup_Hooks.cpp \
+  PortableServer/PortableServer.cpp \
+  PortableServer/PortableServerA.cpp \
+  PortableServer/PortableServerC.cpp \
+  PortableServer/PortableServer_ORBInitializer.cpp \
+  PortableServer/PortableServer_PolicyFactory.cpp \
+  PortableServer/Servant_Base.cpp \
+  PortableServer/Servant_Dispatcher.cpp \
+  PortableServer/ServerInterceptorAdapter.cpp \
+  PortableServer/ServerRequestInfo.cpp
+
+libTAO_PortableServer_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_PortableServer_la_LIBADD = \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  PortableServer/Active_Object_Map.h \
+  PortableServer/Collocated_Object_Proxy_Broker.h \
+  PortableServer/Default_Acceptor_Filter.h \
+  PortableServer/Default_Policy_Validator.h \
+  PortableServer/Default_Servant_Dispatcher.h \
+  PortableServer/ImR_LocatorC.h \
+  PortableServer/ImR_LocatorS.h \
+  PortableServer/ImplRepoC.h \
+  PortableServer/ImplRepoS.h \
+  PortableServer/ImplRepo_i.h \
+  PortableServer/Key_Adapters.h \
+  PortableServer/ORB_Manager.h \
+  PortableServer/ORT_Adapter.h \
+  PortableServer/ORT_Adapter_Factory.h \
+  PortableServer/Object_Adapter.h \
+  PortableServer/Operation_Table.h \
+  PortableServer/PICurrent_Guard.h \
+  PortableServer/POA.h \
+  PortableServer/POAManager.h \
+  PortableServer/POA_Cached_Policies.h \
+  PortableServer/POA_Policies.h \
+  PortableServer/POA_Policy_Set.h \
+  PortableServer/PolicyS.h \
+  PortableServer/PolicyS_T.h \
+  PortableServer/PortableGroup_Hooks.h \
+  PortableServer/PortableServer.h \
+  PortableServer/PortableServerC.h \
+  PortableServer/PortableServerS.h \
+  PortableServer/PortableServer_ORBInitializer.h \
+  PortableServer/PortableServer_PolicyFactory.h \
+  PortableServer/Servant_Base.h \
+  PortableServer/Servant_Dispatcher.h \
+  PortableServer/ServerInterceptorAdapter.h \
+  PortableServer/ServerRequestInfo.h \
+  PortableServer/Upcall_Wrapper.h \
+  PortableServer/poa_macros.h \
+  PortableServer/portableserver_export.h \
+  PortableServer/Active_Object_Map.i \
+  PortableServer/ImR_LocatorC.inl \
+  PortableServer/ImR_LocatorS.inl \
+  PortableServer/ImplRepoC.inl \
+  PortableServer/ImplRepoS.inl \
+  PortableServer/Key_Adapters.i \
+  PortableServer/Object_Adapter.i \
+  PortableServer/POA.i \
+  PortableServer/POAManager.i \
+  PortableServer/POA_Cached_Policies.i \
+  PortableServer/POA_Policies.i \
+  PortableServer/POA_Policy_Set.i \
+  PortableServer/PolicyS.inl \
+  PortableServer/PolicyS_T.inl \
+  PortableServer/PortableServerC.inl \
+  PortableServer/Servant_Base.i \
+  PortableServer/ServerInterceptorAdapter.inl \
+  PortableServer/ServerRequestInfo.inl \
+  PortableServer/PolicyS_T.cpp \
+  PortableServer/ImR_Locator.pidl \
+  PortableServer/ImplRepo.pidl \
+  PortableServer/PortableServer.pidl
+
+EXTRA_DIST += \
+  PortableServer/TAO_PortableServer.rc
+
+## Makefile.IFR_Client.am 
+
+lib_LTLIBRARIES += libTAO_IFR_Client.la
+
+libTAO_IFR_Client_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_IFR_CLIENT_BUILD_DLL
+
+libTAO_IFR_Client_la_SOURCES = \
+  IFR_Client/IFR_BaseA.cpp \
+  IFR_Client/IFR_BaseC.cpp \
+  IFR_Client/IFR_BasicA.cpp \
+  IFR_Client/IFR_BasicC.cpp \
+  IFR_Client/IFR_Client_Adapter_Impl.cpp \
+  IFR_Client/IFR_ComponentsA.cpp \
+  IFR_Client/IFR_ComponentsC.cpp \
+  IFR_Client/IFR_ExtendedA.cpp \
+  IFR_Client/IFR_ExtendedC.cpp
+
+libTAO_IFR_Client_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_IFR_Client_la_LIBADD = \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  IFR_Client/IFR_BaseC.h \
+  IFR_Client/IFR_BaseS.h \
+  IFR_Client/IFR_BasicC.h \
+  IFR_Client/IFR_Client_Adapter_Impl.h \
+  IFR_Client/IFR_ComponentsC.h \
+  IFR_Client/IFR_ExtendedC.h \
+  IFR_Client/ifr_client_export.h \
+  IFR_Client/IFR_BaseC.i \
+  IFR_Client/IFR_BasicC.i \
+  IFR_Client/IFR_ComponentsC.i \
+  IFR_Client/IFR_ExtendedC.i \
+  IFR_Client/IFR_Base.pidl \
+  IFR_Client/IFR_Basic.pidl \
+  IFR_Client/IFR_Components.pidl \
+  IFR_Client/IFR_Extended.pidl
+
+EXTRA_DIST += \
+  IFR_Client/TAO_IFR_Client.rc
+
+## Makefile.Domain.am 
+
+lib_LTLIBRARIES += libTAO_Domain.la
+
+libTAO_Domain_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_DOMAIN_BUILD_DLL
+
+libTAO_Domain_la_SOURCES = \
+  Domain/DomainS.cpp
+
+libTAO_Domain_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_Domain_la_LIBADD = \
+  libTAO_PortableServer.la \
+  libTAO_IFR_Client.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Domain/DomainS.h \
+  Domain/DomainS_T.h \
+  Domain/domain_export.h \
+  Domain/DomainS.i \
+  Domain/DomainS_T.i \
+  Domain/DomainS_T.cpp
+
+EXTRA_DIST += \
+  Domain/TAO_Domain.rc
+
+## Makefile.DynamicAny.am 
+
+lib_LTLIBRARIES += libTAO_DynamicAny.la
+
+libTAO_DynamicAny_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_DYNAMICANY_BUILD_DLL
+
+libTAO_DynamicAny_la_SOURCES = \
+  DynamicAny/DynAnyFactory.cpp \
+  DynamicAny/DynAny_i.cpp \
+  DynamicAny/DynArray_i.cpp \
+  DynamicAny/DynCommon.cpp \
+  DynamicAny/DynEnum_i.cpp \
+  DynamicAny/DynSequence_i.cpp \
+  DynamicAny/DynStruct_i.cpp \
+  DynamicAny/DynUnion_i.cpp \
+  DynamicAny/DynamicAny.cpp \
+  DynamicAny/DynamicAnyC.cpp
+
+libTAO_DynamicAny_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_DynamicAny_la_LIBADD = \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  DynamicAny/DynAnyFactory.h \
+  DynamicAny/DynAny_i.h \
+  DynamicAny/DynArray_i.h \
+  DynamicAny/DynCommon.h \
+  DynamicAny/DynEnum_i.h \
+  DynamicAny/DynSequence_i.h \
+  DynamicAny/DynStruct_i.h \
+  DynamicAny/DynUnion_i.h \
+  DynamicAny/DynamicAny.h \
+  DynamicAny/DynamicAnyC.h \
+  DynamicAny/dynamicany_export.h \
+  DynamicAny/DynamicAnyC.i \
+  DynamicAny/DynamicAny.pidl
+
+EXTRA_DIST += \
+  DynamicAny/TAO_DynamicAny.rc
+
+## Makefile.Valuetype.am 
 
 lib_LTLIBRARIES += libTAO_Valuetype.la
 
@@ -1044,343 +1291,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Valuetype/TAO_Valuetype.rc
 
-## Makefile.ObjRefTemplate.am
-
-lib_LTLIBRARIES += libTAO_ObjRefTemplate.la
-
-libTAO_ObjRefTemplate_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -DTAO_ORT_BUILD_DLL
-
-libTAO_ObjRefTemplate_la_SOURCES = \
-  ObjRefTemplate/ORT_Adapter_Factory_Impl.cpp \
-  ObjRefTemplate/ORT_Adapter_Impl.cpp \
-  ObjRefTemplate/ObjectReferenceTemplate_i.cpp \
-  ObjRefTemplate/ObjectReferenceTemplateC.cpp \
-  ObjRefTemplate/Default_ORTC.cpp
-
-libTAO_ObjRefTemplate_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_ObjRefTemplate_la_LIBADD = \
-  libTAO_PortableServer.la \
-  libTAO_Valuetype.la \
-  libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  ObjRefTemplate/ORT_Adapter_Factory_Impl.h \
-  ObjRefTemplate/ORT_Adapter_Impl.h \
-  ObjRefTemplate/ObjectReferenceTemplate_i.h \
-  ObjRefTemplate/ObjectReferenceTemplateC.h \
-  ObjRefTemplate/ort_export.h \
-  ObjRefTemplate/ObjectReferenceTemplateC.inl \
-  ObjRefTemplate/ObjectReferenceTemplate.pidl \
-  ObjRefTemplate/Default_ORTC.inl \
-  ObjRefTemplate/Default_ORT.pidl
-
-EXTRA_DIST += \
-  ObjRefTemplate/TAO_ObjRefTemplate.rc
-
-## Makefile.IORInterceptor.am
-
-lib_LTLIBRARIES += libTAO_IORInterceptor.la
-
-libTAO_IORInterceptor_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -DTAO_IORINTERCEPTOR_BUILD_DLL
-
-libTAO_IORInterceptor_la_SOURCES = \
-  IORInterceptor/IORInfo.cpp \
-  IORInterceptor/IORInterceptorC.cpp \
-  IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp \
-  IORInterceptor/IORInterceptor_Adapter_Impl.cpp \
-  IORInterceptor/IORInterceptor_List.cpp
-
-libTAO_IORInterceptor_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_IORInterceptor_la_LIBADD = \
-  libTAO_ObjRefTemplate.la \
-  libTAO_Valuetype.la \
-  libTAO_PortableServer.la \
-  libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  IORInterceptor/IORInterceptorC.h \
-  IORInterceptor/IORInfo.h \
-  IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h \
-  IORInterceptor/IORInterceptor_Adapter_Impl.h \
-  IORInterceptor/IORInterceptor_List.h \
-  IORInterceptor/iorinterceptor_export.h \
-  IORInterceptor/IORInterceptorC.inl \
-  IORInterceptor/IORInterceptor_List.inl \
-  IORInterceptor/IORInterceptor.pidl
-
-EXTRA_DIST += \
-  IORInterceptor/TAO_IORInterceptor.rc
-
-## Makefile.PortableServer.am
-
-lib_LTLIBRARIES += libTAO_PortableServer.la
-
-libTAO_PortableServer_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -DTAO_PORTABLESERVER_BUILD_DLL
-
-libTAO_PortableServer_la_SOURCES = \
-  PortableServer/Active_Object_Map.cpp \
-  PortableServer/Collocated_Object_Proxy_Broker.cpp \
-  PortableServer/Default_Acceptor_Filter.cpp \
-  PortableServer/Default_Policy_Validator.cpp \
-  PortableServer/Default_Servant_Dispatcher.cpp \
-  PortableServer/ImR_LocatorC.cpp \
-  PortableServer/ImR_LocatorS.cpp \
-  PortableServer/ImplRepoC.cpp \
-  PortableServer/ImplRepoS.cpp \
-  PortableServer/ImplRepo_i.cpp \
-  PortableServer/Key_Adapters.cpp \
-  PortableServer/ORB_Manager.cpp \
-  PortableServer/Object_Adapter.cpp \
-  PortableServer/ORT_Adapter.cpp \
-  PortableServer/ORT_Adapter_Factory.cpp \
-  PortableServer/Operation_Table.cpp \
-  PortableServer/PICurrent_Guard.cpp \
-  PortableServer/POA.cpp \
-  PortableServer/POAManager.cpp \
-  PortableServer/POA_Cached_Policies.cpp \
-  PortableServer/POA_Policies.cpp \
-  PortableServer/POA_Policy_Set.cpp \
-  PortableServer/PolicyS.cpp \
-  PortableServer/PortableGroup_Hooks.cpp \
-  PortableServer/PortableServer.cpp \
-  PortableServer/PortableServerA.cpp \
-  PortableServer/PortableServerC.cpp \
-  PortableServer/PortableServer_ORBInitializer.cpp \
-  PortableServer/PortableServer_PolicyFactory.cpp \
-  PortableServer/Servant_Base.cpp \
-  PortableServer/Servant_Dispatcher.cpp \
-  PortableServer/ServerInterceptorAdapter.cpp \
-  PortableServer/ServerRequestInfo.cpp
-
-libTAO_PortableServer_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_PortableServer_la_LIBADD = \
-  libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  PortableServer/Active_Object_Map.h \
-  PortableServer/Collocated_Object_Proxy_Broker.h \
-  PortableServer/Default_Acceptor_Filter.h \
-  PortableServer/Default_Policy_Validator.h \
-  PortableServer/Default_Servant_Dispatcher.h \
-  PortableServer/ImR_LocatorC.h \
-  PortableServer/ImR_LocatorS.h \
-  PortableServer/ImplRepoC.h \
-  PortableServer/ImplRepoS.h \
-  PortableServer/ImplRepo_i.h \
-  PortableServer/Key_Adapters.h \
-  PortableServer/ORB_Manager.h \
-  PortableServer/Object_Adapter.h \
-  PortableServer/Operation_Table.h \
-  PortableServer/ORT_Adapter.h \
-  PortableServer/ORT_Adapter_Factory.h \
-  PortableServer/PICurrent_Guard.h \
-  PortableServer/POA.h \
-  PortableServer/POAManager.h \
-  PortableServer/POA_Cached_Policies.h \
-  PortableServer/POA_Policies.h \
-  PortableServer/POA_Policy_Set.h \
-  PortableServer/PolicyS.h \
-  PortableServer/PolicyS_T.h \
-  PortableServer/PortableGroup_Hooks.h \
-  PortableServer/PortableServer.h \
-  PortableServer/PortableServerC.h \
-  PortableServer/PortableServerS.h \
-  PortableServer/PortableServer_ORBInitializer.h \
-  PortableServer/PortableServer_PolicyFactory.h \
-  PortableServer/Servant_Base.h \
-  PortableServer/Servant_Dispatcher.h \
-  PortableServer/ServerInterceptorAdapter.h \
-  PortableServer/ServerRequestInfo.h \
-  PortableServer/Upcall_Wrapper.h \
-  PortableServer/poa_macros.h \
-  PortableServer/portableserver_export.h \
-  PortableServer/Active_Object_Map.i \
-  PortableServer/ImR_LocatorC.inl \
-  PortableServer/ImR_LocatorS.inl \
-  PortableServer/ImplRepoC.inl \
-  PortableServer/ImplRepoS.inl \
-  PortableServer/Key_Adapters.i \
-  PortableServer/Object_Adapter.i \
-  PortableServer/POA.i \
-  PortableServer/POAManager.i \
-  PortableServer/POA_Cached_Policies.i \
-  PortableServer/POA_Policies.i \
-  PortableServer/POA_Policy_Set.i \
-  PortableServer/PolicyS.inl \
-  PortableServer/PolicyS_T.inl \
-  PortableServer/PortableServerC.inl \
-  PortableServer/Servant_Base.i \
-  PortableServer/ServerInterceptorAdapter.inl \
-  PortableServer/ServerRequestInfo.inl \
-  PortableServer/PolicyS_T.cpp \
-  PortableServer/Default_ORT.pidl \
-  PortableServer/ImR_Locator.pidl \
-  PortableServer/ImplRepo.pidl \
-  PortableServer/PortableServer.pidl
-
-EXTRA_DIST += \
-  PortableServer/TAO_PortableServer.rc
-
-## Makefile.IFR_Client.am
-
-lib_LTLIBRARIES += libTAO_IFR_Client.la
-
-libTAO_IFR_Client_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -DTAO_IFR_CLIENT_BUILD_DLL
-
-libTAO_IFR_Client_la_SOURCES = \
-  IFR_Client/IFR_BaseA.cpp \
-  IFR_Client/IFR_BaseC.cpp \
-  IFR_Client/IFR_BasicA.cpp \
-  IFR_Client/IFR_BasicC.cpp \
-  IFR_Client/IFR_Client_Adapter_Impl.cpp \
-  IFR_Client/IFR_ComponentsA.cpp \
-  IFR_Client/IFR_ComponentsC.cpp \
-  IFR_Client/IFR_ExtendedA.cpp \
-  IFR_Client/IFR_ExtendedC.cpp
-
-libTAO_IFR_Client_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_IFR_Client_la_LIBADD = \
-  libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  IFR_Client/IFR_BaseC.h \
-  IFR_Client/IFR_BaseS.h \
-  IFR_Client/IFR_BasicC.h \
-  IFR_Client/IFR_Client_Adapter_Impl.h \
-  IFR_Client/IFR_ComponentsC.h \
-  IFR_Client/IFR_ExtendedC.h \
-  IFR_Client/ifr_client_export.h \
-  IFR_Client/IFR_BaseC.i \
-  IFR_Client/IFR_BasicC.i \
-  IFR_Client/IFR_ComponentsC.i \
-  IFR_Client/IFR_ExtendedC.i \
-  IFR_Client/IFR_Base.pidl \
-  IFR_Client/IFR_Basic.pidl \
-  IFR_Client/IFR_Components.pidl \
-  IFR_Client/IFR_Extended.pidl
-
-EXTRA_DIST += \
-  IFR_Client/TAO_IFR_Client.rc
-
-## Makefile.Domain.am
-
-lib_LTLIBRARIES += libTAO_Domain.la
-
-libTAO_Domain_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -DTAO_DOMAIN_BUILD_DLL
-
-libTAO_Domain_la_SOURCES = \
-  Domain/DomainS.cpp
-
-libTAO_Domain_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_Domain_la_LIBADD = \
-  libTAO_PortableServer.la \
-  libTAO_IORInterceptor.la \
-  libTAO_ObjRefTemplate.la \
-  libTAO_Valuetype.la \
-  libTAO_IFR_Client.la \
-  libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  Domain/DomainS.h \
-  Domain/DomainS_T.h \
-  Domain/domain_export.h \
-  Domain/DomainS.i \
-  Domain/DomainS_T.i \
-  Domain/DomainS_T.cpp
-
-EXTRA_DIST += \
-  Domain/TAO_Domain.rc
-
-## Makefile.DynamicAny.am
-
-lib_LTLIBRARIES += libTAO_DynamicAny.la
-
-libTAO_DynamicAny_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -DTAO_DYNAMICANY_BUILD_DLL
-
-libTAO_DynamicAny_la_SOURCES = \
-  DynamicAny/DynAnyFactory.cpp \
-  DynamicAny/DynAny_i.cpp \
-  DynamicAny/DynArray_i.cpp \
-  DynamicAny/DynCommon.cpp \
-  DynamicAny/DynEnum_i.cpp \
-  DynamicAny/DynSequence_i.cpp \
-  DynamicAny/DynStruct_i.cpp \
-  DynamicAny/DynUnion_i.cpp \
-  DynamicAny/DynamicAny.cpp \
-  DynamicAny/DynamicAnyC.cpp
-
-libTAO_DynamicAny_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_DynamicAny_la_LIBADD = \
-  libTAO_Valuetype.la \
-  libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  DynamicAny/DynAnyFactory.h \
-  DynamicAny/DynAny_i.h \
-  DynamicAny/DynArray_i.h \
-  DynamicAny/DynCommon.h \
-  DynamicAny/DynEnum_i.h \
-  DynamicAny/DynSequence_i.h \
-  DynamicAny/DynStruct_i.h \
-  DynamicAny/DynUnion_i.h \
-  DynamicAny/DynamicAny.h \
-  DynamicAny/DynamicAnyC.h \
-  DynamicAny/dynamicany_export.h \
-  DynamicAny/DynamicAnyC.i \
-  DynamicAny/DynamicAny.pidl
-
-EXTRA_DIST += \
-  DynamicAny/TAO_DynamicAny.rc
-
-## Makefile.Messaging.am
+## Makefile.Messaging.am 
 
 lib_LTLIBRARIES += libTAO_Messaging.la
 
@@ -1413,10 +1324,8 @@ libTAO_Messaging_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_Messaging_la_LIBADD = \
-  libTAO_PortableServer.la \
-  libTAO_IORInterceptor.la \
-  libTAO_ObjRefTemplate.la \
   libTAO_Valuetype.la \
+  libTAO_PortableServer.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1459,7 +1368,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Messaging/TAO_Messaging.rc
 
-## Makefile.DynamicInterface.am
+## Makefile.DynamicInterface.am 
 
 if !BUILD_MINIMUM_CORBA
 
@@ -1491,8 +1400,6 @@ libTAO_DynamicInterface_la_LDFLAGS = \
 libTAO_DynamicInterface_la_LIBADD = \
   libTAO_Messaging.la \
   libTAO_PortableServer.la \
-  libTAO_IORInterceptor.la \
-  libTAO_ObjRefTemplate.la \
   libTAO_Valuetype.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -1523,7 +1430,97 @@ endif !BUILD_MINIMUM_CORBA
 EXTRA_DIST += \
   DynamicInterface/TAO_DynamicInterface.rc
 
-## Makefile.IORManipulation.am
+## Makefile.ObjRefTemplate.am 
+
+lib_LTLIBRARIES += libTAO_ObjRefTemplate.la
+
+libTAO_ObjRefTemplate_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_ORT_BUILD_DLL
+
+libTAO_ObjRefTemplate_la_SOURCES = \
+  ObjRefTemplate/Default_ORTC.cpp \
+  ObjRefTemplate/ORT_Adapter_Factory_Impl.cpp \
+  ObjRefTemplate/ORT_Adapter_Impl.cpp \
+  ObjRefTemplate/ObjectReferenceTemplateC.cpp \
+  ObjRefTemplate/ObjectReferenceTemplate_i.cpp
+
+libTAO_ObjRefTemplate_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_ObjRefTemplate_la_LIBADD = \
+  libTAO_PortableServer.la \
+  libTAO_Valuetype.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  ObjRefTemplate/Default_ORTC.h \
+  ObjRefTemplate/ORT_Adapter_Factory_Impl.h \
+  ObjRefTemplate/ORT_Adapter_Impl.h \
+  ObjRefTemplate/ObjectReferenceTemplateC.h \
+  ObjRefTemplate/ObjectReferenceTemplate_i.h \
+  ObjRefTemplate/ort_export.h \
+  ObjRefTemplate/Default_ORTC.i \
+  ObjRefTemplate/ObjectReferenceTemplateC.inl \
+  ObjRefTemplate/ObjectReferenceTemplate_i.inl \
+  ObjRefTemplate/Default_ORT.pidl \
+  ObjRefTemplate/ObjectReferenceTemplate.pidl
+
+EXTRA_DIST += \
+  ObjRefTemplate/TAO_ObjRefTemplate.rc
+
+## Makefile.IORInterceptor.am 
+
+lib_LTLIBRARIES += libTAO_IORInterceptor.la
+
+libTAO_IORInterceptor_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_IORINTERCEPTOR_BUILD_DLL
+
+libTAO_IORInterceptor_la_SOURCES = \
+  IORInterceptor/IORInfo.cpp \
+  IORInterceptor/IORInfoC.cpp \
+  IORInterceptor/IORInterceptorC.cpp \
+  IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp \
+  IORInterceptor/IORInterceptor_Adapter_Impl.cpp \
+  IORInterceptor/IORInterceptor_List.cpp
+
+libTAO_IORInterceptor_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_IORInterceptor_la_LIBADD = \
+  libTAO_ObjRefTemplate.la \
+  libTAO_Valuetype.la \
+  libTAO_PortableServer.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  IORInterceptor/IORInfo.h \
+  IORInterceptor/IORInfoC.h \
+  IORInterceptor/IORInterceptorC.h \
+  IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h \
+  IORInterceptor/IORInterceptor_Adapter_Impl.h \
+  IORInterceptor/IORInterceptor_List.h \
+  IORInterceptor/iorinterceptor_export.h \
+  IORInterceptor/IORInfo.inl \
+  IORInterceptor/IORInfoC.inl \
+  IORInterceptor/IORInterceptorC.inl \
+  IORInterceptor/IORInterceptor_List.inl \
+  IORInterceptor/IORInfo.pidl \
+  IORInterceptor/IORInterceptor.pidl
+
+EXTRA_DIST += \
+  IORInterceptor/TAO_IORInterceptor.rc
+
+## Makefile.IORManipulation.am 
 
 lib_LTLIBRARIES += libTAO_IORManip.la
 
@@ -1558,7 +1555,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   IORManipulation/TAO_IORManip.rc
 
-## Makefile.IORTable.am
+## Makefile.IORTable.am 
 
 lib_LTLIBRARIES += libTAO_IORTable.la
 
@@ -1594,7 +1591,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   IORTable/TAO_IORTable.rc
 
-## Makefile.RTCORBA.am
+## Makefile.RTCORBA.am 
 
 if BUILD_RT_CORBA
 
@@ -1705,7 +1702,7 @@ endif BUILD_RT_CORBA
 EXTRA_DIST += \
   RTCORBA/TAO_RTCORBA.rc
 
-## Makefile.RTPortableServer.am
+## Makefile.RTPortableServer.am 
 
 if BUILD_RT_CORBA
 
@@ -1734,9 +1731,6 @@ libTAO_RTPortableServer_la_LDFLAGS = \
 
 libTAO_RTPortableServer_la_LIBADD = \
   libTAO_PortableServer.la \
-  libTAO_IORInterceptor.la \
-  libTAO_ObjRefTemplate.la \
-  libTAO_Valuetype.la \
   libTAO_RTCORBA.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -1762,7 +1756,7 @@ endif BUILD_RT_CORBA
 EXTRA_DIST += \
   RTPortableServer/TAO_RTPortableServer.rc
 
-## Makefile.RTScheduler.am
+## Makefile.RTScheduler.am 
 
 if BUILD_RT_CORBA
 if BUILD_CORBA_MESSAGING
@@ -1791,9 +1785,6 @@ libTAO_RTScheduler_la_LDFLAGS = \
 
 libTAO_RTScheduler_la_LIBADD = \
   libTAO_PortableServer.la \
-  libTAO_IORInterceptor.la \
-  libTAO_ObjRefTemplate.la \
-  libTAO_Valuetype.la \
   libTAO_RTCORBA.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -1821,7 +1812,7 @@ endif BUILD_RT_CORBA
 EXTRA_DIST += \
   RTScheduling/TAO_RTScheduler.rc
 
-## Makefile.SmartProxies.am
+## Makefile.SmartProxies.am 
 
 lib_LTLIBRARIES += libTAO_SmartProxies.la
 
@@ -1850,7 +1841,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   SmartProxies/SmartProxies.rc
 
-## Makefile.Strategies.am
+## Makefile.Strategies.am 
 
 lib_LTLIBRARIES += libTAO_Strategies.la
 
@@ -1975,7 +1966,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Strategies/TAO_Strategies.rc
 
-## Makefile.TypeCodeFactory.am
+## Makefile.TypeCodeFactory.am 
 
 lib_LTLIBRARIES += libTAO_TypeCodeFactory.la
 
@@ -2012,7 +2003,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   TypeCodeFactory/TypeCodeFactory.rc
 
-## Makefile.Utils.am
+## Makefile.Utils.am 
 
 lib_LTLIBRARIES += libTAO_Utils.la
 
@@ -2036,9 +2027,6 @@ libTAO_Utils_la_LDFLAGS = \
 
 libTAO_Utils_la_LIBADD = \
   libTAO_PortableServer.la \
-  libTAO_IORInterceptor.la \
-  libTAO_ObjRefTemplate.la \
-  libTAO_Valuetype.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
