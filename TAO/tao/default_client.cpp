@@ -296,7 +296,7 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
                     0);
   else if (this->wait_strategy_ == TAO_WAIT_ON_LF_NO_UPCALL)
     ACE_NEW_RETURN (ws,
-                    TAO_Wait_On_LF_No_Upcall (transport),
+                    TAO::Wait_On_LF_No_Upcall (transport),
                     0);
   else
     {
