@@ -1,3 +1,7 @@
+Thu Jun 22 08:28:48 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/OS_Test.cpp: Fixed unused argv warning for g++.
+
 Wed Jun 21 14:40:15 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/OS.i:
