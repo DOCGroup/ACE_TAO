@@ -1,90 +1,95 @@
+Tue Nov 04 10:12:21 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: changed
+          another lock () to mutex ().
+
 Tue Nov 04 04:13:23 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.36, released Tue Nov 04 04:13:23 1997.
 
 Tue Nov  4 04:08:42 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Containers.cpp (insert_head): Added some minor stylistic
-	  fixes.
+        * ace/Containers.cpp (insert_head): Added some minor stylistic
+          fixes.
 
-	* apps/Gateway/Gateway/Event_Channel.cpp (initiate_acceptor): 
+        * apps/Gateway/Gateway/Event_Channel.cpp (initiate_acceptor):
           Changed
- 
+
           if (ACE_Reactor::instance ()->register_handler
               (&this->acceptor_, ACE_Event_Handler::ACCEPT_MASK) == -1)
- 
+
           to:
- 
+
           if (this->acceptor_.open(this->options ().acceptor_port_,
             ACE_Reactor::instance (), this->options ().blocking_semantics_) == -1)
 
-	  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+          Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
 
-	* apps/Gateway/Gateway/Gateway.cpp (parse_args): Changed
+        * apps/Gateway/Gateway/Gateway.cpp (parse_args): Changed
 
-	  ACE_Get_Opt get_opt (argc, argv, "abC:cdP:pq:t:vw:", 0);
- 
+          ACE_Get_Opt get_opt (argc, argv, "abC:cdP:pq:t:vw:", 0);
+
           to:
- 
+
           ACE_Get_Opt get_opt (argc, argv, "abC:cdP:p:q:t:vw:", 0);
 
-	  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+          Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
 
 Tue Nov 04 03:50:57 1997    <irfan@TWOSTEP>
 
-	* ace/Addr.i (operator == && operator !=): Comparison of
- 	  sap.addr_type_ should be with this->addr_type_ and not with 0.
+        * ace/Addr.i (operator == && operator !=): Comparison of
+          sap.addr_type_ should be with this->addr_type_ and not with 0.
 
 Mon Nov  3 23:18:33 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-	* ace/Synch_T.cpp (dump): change the field lock_ to mutex_.
+        * ace/Synch_T.cpp (dump): change the field lock_ to mutex_.
 
 Mon Nov  3 22:37:58 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* ace/Timer_Wheel_T.cpp:
-	* ace/Timer_List_T.cpp:
-	* ace/Timer_Hash_T.cpp:  Changed the use of lock_ to mutex_.
+        * ace/Timer_Wheel_T.cpp:
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_Hash_T.cpp:  Changed the use of lock_ to mutex_.
 
-	* ace/OS.cpp (cleanup_tss): Added TSS cleanup codes for Win32 when
-	  non-main threads are exiting.  Without them, Thread_Manager won't
-	  cleanup its thread table correctly.
+        * ace/OS.cpp (cleanup_tss): Added TSS cleanup codes for Win32 when
+          non-main threads are exiting.  Without them, Thread_Manager won't
+          cleanup its thread table correctly.
 
-	* ace/SV_Semaphore_Complex.cpp (close): Changed to return 0
-	  only when this->key_ == -1 instead of <= -1.  This was causing
-	  semaphore leaks on Solaris.
+        * ace/SV_Semaphore_Complex.cpp (close): Changed to return 0
+          only when this->key_ == -1 instead of <= -1.  This was causing
+          semaphore leaks on Solaris.
 
-	* ace/UNIX_Addr.i (operator ==):
-	* ace/SPIPE_Addr.i (operator ==):
-	* ace/FILE_Addr.i (operator ==):
-	* ace/DEV_Addr.i (operator ==):
-	* ace/INET_Addr.cpp (operator ==):  Added checking for the same
-	  Addr types for addresses under comparison.  Thanks to Stephen
-	  Coy <stevec@magna.com.au> for pointing out the problem.
+        * ace/UNIX_Addr.i (operator ==):
+        * ace/SPIPE_Addr.i (operator ==):
+        * ace/FILE_Addr.i (operator ==):
+        * ace/DEV_Addr.i (operator ==):
+        * ace/INET_Addr.cpp (operator ==):  Added checking for the same
+          Addr types for addresses under comparison.  Thanks to Stephen
+          Coy <stevec@magna.com.au> for pointing out the problem.
 
 Mon Nov 03 18:32:42 1997  Carlos O'Ryan  <coryan@MILONGA>
 
-	* ace/Proactor.cpp:
-	* ace/Timer_Queue_T.h:
-	* ace/Timer_Queue_T.cpp:
-	* ace/Timer_Heap_T.cpp:
-	* ace/Synch_T.h:
-	* ace/Synch_T.cpp:
-	* ace/Atomic_Op.i:
-	  Changed the method name from lock() to mutex(), otherwise the
-	  lame HP/C++ compiler gets completely confused. Also changed the
-	  field from lock_ to mutex_
+        * ace/Proactor.cpp:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Queue_T.cpp:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Synch_T.h:
+        * ace/Synch_T.cpp:
+        * ace/Atomic_Op.i:
+          Changed the method name from lock() to mutex(), otherwise the
+          lame HP/C++ compiler gets completely confused. Also changed the
+          field from lock_ to mutex_
 
 Mon Nov  3 17:15:17 1997  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.h: Removed "class ace_dewarn_gplusplus;" from the
-	  ACE_CLASS_IS_NAMESPACE macro.  Produces warnings on AIX and
-	  shouldn't be needed.
+        * ace/OS.h: Removed "class ace_dewarn_gplusplus;" from the
+          ACE_CLASS_IS_NAMESPACE macro.  Produces warnings on AIX and
+          shouldn't be needed.
 
 Mon Nov  3 15:49:18 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* ace/Connector.cpp (connect): "Fixed" so that the service handler
- 	  pointer passed in by the caller doesn't change until the connect
- 	  completes without errors.
+        * ace/Connector.cpp (connect): "Fixed" so that the service handler
+          pointer passed in by the caller doesn't change until the connect
+          completes without errors.
 
 Mon Nov 03 08:15:21 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -122,61 +127,61 @@ Sun Nov 02 18:09:14 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Nov  2 15:31:45 1997  Douglas C. Schmidt  <schmidt@polka.cs.wustl.edu>
 
-	* ace/Select_Reactor.i (cancel_timer): Make sure that we don't try
- 	  to call cancel() through a NULL this->timer_queue_.  Thanks to
- 	  Stephen Coy <stevec@wsa.com.au> for reporting this.
+        * ace/Select_Reactor.i (cancel_timer): Make sure that we don't try
+          to call cancel() through a NULL this->timer_queue_.  Thanks to
+          Stephen Coy <stevec@wsa.com.au> for reporting this.
 
-	* ace/ACE.cpp (set_handle_limit): Fixed a subtle bug that occurs
- 	  if the OS doesn't like non-initialized rlimit structs.  Thanks
- 	  to Stephen Coy <stevec@wsa.com.au> for reporting this.
+        * ace/ACE.cpp (set_handle_limit): Fixed a subtle bug that occurs
+          if the OS doesn't like non-initialized rlimit structs.  Thanks
+          to Stephen Coy <stevec@wsa.com.au> for reporting this.
 
-	* examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp (main):
- 	  Renamed allocator to my_alloc to work around wonderful STL and
- 	  GCC problems...  Thanks to Ben Eng <ben@jetpen.com> for
- 	  reporting this.
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp (main):
+          Renamed allocator to my_alloc to work around wonderful STL and
+          GCC problems...  Thanks to Ben Eng <ben@jetpen.com> for
+          reporting this.
 
-	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp: Removed
- 	  unused constant SHMSZ.  Thanks to Ben Eng <ben@jetpen.com> for
- 	  reporting this.
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp: Removed
+          unused constant SHMSZ.  Thanks to Ben Eng <ben@jetpen.com> for
+          reporting this.
 
-	* examples/Reactor/Misc/test_time_value.cpp (operator<<): Removed
- 	  the "dec" stream manipulator since it isn't portable.  Thanks to
- 	  Ben Eng <ben@jetpen.com> for reporting this.
+        * examples/Reactor/Misc/test_time_value.cpp (operator<<): Removed
+          the "dec" stream manipulator since it isn't portable.  Thanks to
+          Ben Eng <ben@jetpen.com> for reporting this.
 
-	* performance-tests/Misc/preempt.cpp (main): Cleaned up this test
- 	  so it compiles on non-threaded platforms.  Thanks to Ben Eng
- 	  <ben@jetpen.com> for reporting this.
+        * performance-tests/Misc/preempt.cpp (main): Cleaned up this test
+          so it compiles on non-threaded platforms.  Thanks to Ben Eng
+          <ben@jetpen.com> for reporting this.
 
-	* examples/Timer_Queue/main_*.cpp (main): std::auto_ptr does not
- 	  have an operator= that accepts a raw pointer.  Therefore, we
- 	  must assign raw pointers to an auto_ptr via the constructor.
-  	  Thanks to Ben Eng <ben@jetpen.com> for reporting this.
+        * examples/Timer_Queue/main_*.cpp (main): std::auto_ptr does not
+          have an operator= that accepts a raw pointer.  Therefore, we
+          must assign raw pointers to an auto_ptr via the constructor.
+          Thanks to Ben Eng <ben@jetpen.com> for reporting this.
 
-	* apps/Gateway/Gateway/Proxy_Handler.cpp: Make sure we distinguish
- 	  between ACE_NULL_SYNCH and ACE_MT_SYNCH since these will be
- 	  different on all platforms, whereas ACE_SYNCH will be the same
- 	  as ACE_NULL_SYNCH on platforms without threads.  Thanks to Ben
- 	  Eng <ben@jetpen.com> for reporting this.
+        * apps/Gateway/Gateway/Proxy_Handler.cpp: Make sure we distinguish
+          between ACE_NULL_SYNCH and ACE_MT_SYNCH since these will be
+          different on all platforms, whereas ACE_SYNCH will be the same
+          as ACE_NULL_SYNCH on platforms without threads.  Thanks to Ben
+          Eng <ben@jetpen.com> for reporting this.
 
-	* ace: Removed lots of uses of NULL and replaced them with 0.
-  	  This works around bugs with lame C++ compilers that treat NULL
- 	  as (void *).  Thanks to Ben Eng <ben@jetpen.com> for reporting
- 	  this.
+        * ace: Removed lots of uses of NULL and replaced them with 0.
+          This works around bugs with lame C++ compilers that treat NULL
+          as (void *).  Thanks to Ben Eng <ben@jetpen.com> for reporting
+          this.
 
-	* ace/Thread.i (spawn): Replaced "stack" with "thr_stack" to work
- 	  around bugs with lame C++ compilers and STL.  Thanks to Evgeny
- 	  Beskrovny <evgeny_beskrovny@icomverse.com> for reporting this.
+        * ace/Thread.i (spawn): Replaced "stack" with "thr_stack" to work
+          around bugs with lame C++ compilers and STL.  Thanks to Evgeny
+          Beskrovny <evgeny_beskrovny@icomverse.com> for reporting this.
 
 Sat Nov  1 11:55:05 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/config-irix5.3-g++.h,
-	  ace/config-irix5.3-sgic++.h: Removed the ACE_HAS_SYS_SIGLIST
- 	  macro since it doesn't seem to be working.  Thanks to Laura
- 	  Paterno <lpaterno@d0chb.fnal.gov> for reporting this.
+        * ace/config-irix5.3-g++.h,
+          ace/config-irix5.3-sgic++.h: Removed the ACE_HAS_SYS_SIGLIST
+          macro since it doesn't seem to be working.  Thanks to Laura
+          Paterno <lpaterno@d0chb.fnal.gov> for reporting this.
 
-	* include/makeinclude/platform_chorus.GNU: Tidied up
- 	  platform_chorus.GNU a bit.  Thanks to Wei Chiang
- 	  <chiang@tele.nokia.fi> for this.
+        * include/makeinclude/platform_chorus.GNU: Tidied up
+          platform_chorus.GNU a bit.  Thanks to Wei Chiang
+          <chiang@tele.nokia.fi> for this.
 
 Fri Oct 31 14:35:37 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -226,38 +231,38 @@ Fri Oct 31 14:35:37 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Oct 31 00:53:52 1997    <irfan@TWOSTEP>
 
-	* The following five changes were suggested by Stephen Coy
- 	  <stevec@wsa.com.au>.  Thanks Stephen.
+        * The following five changes were suggested by Stephen Coy
+          <stevec@wsa.com.au>.  Thanks Stephen.
 
-	* ace/OS.h (ACE_CLASS_IS_NAMESPACE): Changed friend
- 	  ace_dewarn_gplusplus to friend class ace_dewarn_gplusplus.
+        * ace/OS.h (ACE_CLASS_IS_NAMESPACE): Changed friend
+          ace_dewarn_gplusplus to friend class ace_dewarn_gplusplus.
 
-	* ace/Malloc_T.h: Move the #include files to just after the
- 	  declaration of the macros, otherwise Containers.cpp will be
- 	  #included before the definition of the various allocator macros
- 	  (such as ACE_ALLOCATOR_RETURN) have been seen (when
- 	  ACE_TEMPLATES_REQUIRE_SOURCE is defined).
+        * ace/Malloc_T.h: Move the #include files to just after the
+          declaration of the macros, otherwise Containers.cpp will be
+          #included before the definition of the various allocator macros
+          (such as ACE_ALLOCATOR_RETURN) have been seen (when
+          ACE_TEMPLATES_REQUIRE_SOURCE is defined).
 
-	* ace/Hash_Map_Manager.cpp (close_i): Changed &table[i] to
- 	  &table_[i].
+        * ace/Hash_Map_Manager.cpp (close_i): Changed &table[i] to
+          &table_[i].
 
-	* ace/Containers.h: The ACE_Node destructor needs to be publicly
- 	  accessible in order to support the
- 	  ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR fix.  Unfortunately,
- 	  making the template function
- 	  ACE_Destructor_Template_For_HPUX_aCC_Only a friend does not seem
- 	  to work (although it should).
+        * ace/Containers.h: The ACE_Node destructor needs to be publicly
+          accessible in order to support the
+          ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR fix.  Unfortunately,
+          making the template function
+          ACE_Destructor_Template_For_HPUX_aCC_Only a friend does not seem
+          to work (although it should).
 
-	* ace/ACE.cpp (ldfind): Changed path_entry from char* to
- 	  const char*.
+        * ace/ACE.cpp (ldfind): Changed path_entry from char* to
+          const char*.
 
-	* tests/Priority_Reactor_Test.cpp (main): Fixed auto_ptr usage.
-  	  Thanks to Jack Erickson (jack@pinion.com) for pointing this out.
+        * tests/Priority_Reactor_Test.cpp (main): Fixed auto_ptr usage.
+          Thanks to Jack Erickson (jack@pinion.com) for pointing this out.
 
-	* ace/OS.h (ACE_CLASS_IS_NAMESPACE): Changed the macro to not
- 	  include the destructor.  This causes undefined destructor
- 	  problems on Win32.  Also added ACE_UNIMPLEMENTED_FUNC macros
- 	  around the remain functions.
+        * ace/OS.h (ACE_CLASS_IS_NAMESPACE): Changed the macro to not
+          include the destructor.  This causes undefined destructor
+          problems on Win32.  Also added ACE_UNIMPLEMENTED_FUNC macros
+          around the remain functions.
 
 Thu Oct 30 21:22:47 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -272,80 +277,80 @@ Thu Oct 30 19:54:50 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Oct 30 17:49:56 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tests/Priority_Task_Test.cpp (main): Moved "int status" out of
- 	  the #if defined (ACE_HAS_THREADS) so that it will compile when
- 	  the platform *doesn't* have threads.
+        * tests/Priority_Task_Test.cpp (main): Moved "int status" out of
+          the #if defined (ACE_HAS_THREADS) so that it will compile when
+          the platform *doesn't* have threads.
 
-	* ace/Synch_T.i (ACE_TSS): Added a missing ':' that was causing
- 	  problems on platforms that lack threads.  Thanks to Laura
- 	  Paterno <lpaterno@d0chb.fnal.gov> for helping to track this
- 	  down.
+        * ace/Synch_T.i (ACE_TSS): Added a missing ':' that was causing
+          problems on platforms that lack threads.  Thanks to Laura
+          Paterno <lpaterno@d0chb.fnal.gov> for helping to track this
+          down.
 
-	* ace/Signal.cpp (register_handler): Make sure not to use
- 	  SA_SIGINFO if we're running on LynxOS.  At some point, we'll
- 	  want to generalize this, once enough OS platforms support POSIX
- 	  real-time signals.  Thanks to Kirill.Rybaltchenko
- 	  <Kirill.Rybaltchenko@cern.ch> for reporting this.
+        * ace/Signal.cpp (register_handler): Make sure not to use
+          SA_SIGINFO if we're running on LynxOS.  At some point, we'll
+          want to generalize this, once enough OS platforms support POSIX
+          real-time signals.  Thanks to Kirill.Rybaltchenko
+          <Kirill.Rybaltchenko@cern.ch> for reporting this.
 
-	* include/makeinclude/platform_chorus.GNU (CXX): Replaced
-	  DCFLAGS += -g with DCFLAGS += -gstabs+.  Thanks to
-	  Wei Chiang for this.
+        * include/makeinclude/platform_chorus.GNU (CXX): Replaced
+          DCFLAGS += -g with DCFLAGS += -gstabs+.  Thanks to
+          Wei Chiang for this.
 
-	* ace/OS.cpp: It's not valid to set the NULL_key to anything other
- 	  than implicit initialization.  In particular, if we set it to -1
- 	  it breaks on pthreads systems...  Thanks to Check Gehr for
-	  reporting this.
+        * ace/OS.cpp: It's not valid to set the NULL_key to anything other
+          than implicit initialization.  In particular, if we set it to -1
+          it breaks on pthreads systems...  Thanks to Check Gehr for
+          reporting this.
 
-	* ace/config-irix5.3*++.h: Added ACE_NEEDS_SYSTIME_H.  Thanks to
- 	  Laura Paterno <lpaterno@d0chb.fnal.gov> for reporting the
- 	  problem.
+        * ace/config-irix5.3*++.h: Added ACE_NEEDS_SYSTIME_H.  Thanks to
+          Laura Paterno <lpaterno@d0chb.fnal.gov> for reporting the
+          problem.
 
-	* ace/OS.h: Moved the unistd.h files back down to where
-	  they originally were defined since this was unnecessary.
+        * ace/OS.h: Moved the unistd.h files back down to where
+          they originally were defined since this was unnecessary.
 
-	* include/makeinclude/platform_chorus.GNU (CXX): Replaced
-	  DCFLAGS += -g with DCFLAGS += -gstabs+.  Thanks to
-	  Wei Chiang for this.
+        * include/makeinclude/platform_chorus.GNU (CXX): Replaced
+          DCFLAGS += -g with DCFLAGS += -gstabs+.  Thanks to
+          Wei Chiang for this.
 
 Thu Oct 30 17:41:19 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
-	* ace/OS.h: Stray semi-colon removed from ACE_CLASS_IS_NAMESPACE
-	  macro.
+        * ace/OS.h: Stray semi-colon removed from ACE_CLASS_IS_NAMESPACE
+          macro.
 
 Thu Oct 30 17:04:52 1997    <irfan@TWOSTEP>
 
-	* ace/OS.h (ACE_CLASS_IS_NAMESPACE): Changed the macro to not
- 	  include the destructor.  This causes undefined destructor
- 	  problems on Win32.  Also added ACE_UNIMPLEMENTED_FUNC macros
- 	  around the remain functions.
+        * ace/OS.h (ACE_CLASS_IS_NAMESPACE): Changed the macro to not
+          include the destructor.  This causes undefined destructor
+          problems on Win32.  Also added ACE_UNIMPLEMENTED_FUNC macros
+          around the remain functions.
 
 Thu Oct 30 10:50:21 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* ace/OS.h: Added new macro--ACE_CLASS_IS_NAMESPACE ()--to
- 	  designate that a class is being used as a pseudo-namespace.  It
- 	  declares private CTOR, Copy CTOR, and DTOR, as well as a friend
- 	  declaration in order to de-warn on g++.  Typical usage would be
- 	  something like:
+        * ace/OS.h: Added new macro--ACE_CLASS_IS_NAMESPACE ()--to
+          designate that a class is being used as a pseudo-namespace.  It
+          declares private CTOR, Copy CTOR, and DTOR, as well as a friend
+          declaration in order to de-warn on g++.  Typical usage would be
+          something like:
 
-	  class FooBarNamespace
-	  {
-	    ACE_CLASS_IS_NAMESPACE (FooBarNamespace);
+          class FooBarNamespace
+          {
+            ACE_CLASS_IS_NAMESPACE (FooBarNamespace);
 
-	  public:
-	    static ...
-	  };
+          public:
+            static ...
+          };
 
-	  The ACE_OS class has been updated to use this.
+          The ACE_OS class has been updated to use this.
 
-	* ace/ACE.h: Updated class ACE to use the new
- 	  ACE_CLASS_IS_NAMESPACE ().
+        * ace/ACE.h: Updated class ACE to use the new
+          ACE_CLASS_IS_NAMESPACE ().
 
-	* ace/OS.i (getopt): Changed ACE_LACKS_SOME_POSIX_PROTOTYPES back
- 	  to ACE_LACKS_POSIX_PROTOTYPES so that a clean build on Linux is
- 	  achievable now.
-	(msgsnd): Corrected errant spelling from
- 	  ACE_LACKS_POSIX_SOME_PROTOTYPES to
- 	  ACE_LACKS_SOME_POSIX_PROTOTYPES.
+        * ace/OS.i (getopt): Changed ACE_LACKS_SOME_POSIX_PROTOTYPES back
+          to ACE_LACKS_POSIX_PROTOTYPES so that a clean build on Linux is
+          achievable now.
+        (msgsnd): Corrected errant spelling from
+          ACE_LACKS_POSIX_SOME_PROTOTYPES to
+          ACE_LACKS_SOME_POSIX_PROTOTYPES.
 
 Thu Oct 30 06:14:58 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -390,24 +395,24 @@ Thu Oct 30 06:14:58 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Oct 30 03:25:13 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* ace/Hash_Map_Manager.cpp (close_i): Can't use ACE_DES*
-	  template.  Have I been here before?
+        * ace/Hash_Map_Manager.cpp (close_i): Can't use ACE_DES*
+          template.  Have I been here before?
 
 Thu Oct 30 03:03:41 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* ace/Hash_Map_Manager.cpp (close_i): Changed to use ACE_DES* macros.
+        * ace/Hash_Map_Manager.cpp (close_i): Changed to use ACE_DES* macros.
 
-	* ace/OS.h: Moved ACE_Allocator related macros to Malloc_T.h
+        * ace/OS.h: Moved ACE_Allocator related macros to Malloc_T.h
 
-	* ace/Malloc_T.h: Moved ACE_Allocator related macros from OS.h.
-	  Added two macros ACE_DES_NOFREE and ACE_DES_NOFREE_TEMPLATE to
-	  call objects' destructors explicitly.  This is required to
-	  take care of some "broken" compilers.  Thanks to Stephen Coy
-	  <stevec@magna.com.au> for providing the fix for HP-UX aCC.
+        * ace/Malloc_T.h: Moved ACE_Allocator related macros from OS.h.
+          Added two macros ACE_DES_NOFREE and ACE_DES_NOFREE_TEMPLATE to
+          call objects' destructors explicitly.  This is required to
+          take care of some "broken" compilers.  Thanks to Stephen Coy
+          <stevec@magna.com.au> for providing the fix for HP-UX aCC.
 
-	* ace/README:
-	* ace/config-hpux-10.x-hpc++.h: Added flag
-	  ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR.
+        * ace/README:
+        * ace/config-hpux-10.x-hpc++.h: Added flag
+          ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR.
 
 Thu Oct 30 02:56:25 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -415,54 +420,54 @@ Thu Oct 30 02:56:25 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Oct 30 01:03:21 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/LOCK_SOCK_Acceptor.cpp: Added a #include of "ace/Synch.h" so
- 	  that the Conn_Test.cpp will compile on HP/UX.  Thanks to Stephen
- 	  Coy <stevec@magna.com.au> for reporting this.
+        * ace/LOCK_SOCK_Acceptor.cpp: Added a #include of "ace/Synch.h" so
+          that the Conn_Test.cpp will compile on HP/UX.  Thanks to Stephen
+          Coy <stevec@magna.com.au> for reporting this.
 
 Wed Oct 29 22:55:15 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* ace/config-vxworks5.x-g++.h:
-	* ace/config-unixware-2.1.2-g++.h:
-	* ace/config-unixware-2.01-g++.h:
-	* ace/config-sunos5.5-g++.h:
-	* ace/config-sunos5.4-g++.h:
-	* ace/config-sunos4-g++.h:
-	* ace/config-osf1-4.0.h:
-	* ace/config-osf1-4.0-g++.h:
-	* ace/config-linux.h:
-	* ace/config-linux-pthread.h:
-	* ace/config-linux-lxpthreads.h:
-	* ace/config-irix6.x-g++.h:
-	* ace/config-irix5.3-g++.h:
-	* ace/config-hpux-10.x-g++.h:
-	* ace/config-gcc-2.7.2.h:
-	* ace/config-freebsd.h:
-	* ace/config-freebsd-pthread.h:
-	* ace/config-chorus.h:
-	* ace/config-aix-4.1.x.h:
-	* ace/README: Removed ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR.
-	  It is no longer in use.
+        * ace/config-vxworks5.x-g++.h:
+        * ace/config-unixware-2.1.2-g++.h:
+        * ace/config-unixware-2.01-g++.h:
+        * ace/config-sunos5.5-g++.h:
+        * ace/config-sunos5.4-g++.h:
+        * ace/config-sunos4-g++.h:
+        * ace/config-osf1-4.0.h:
+        * ace/config-osf1-4.0-g++.h:
+        * ace/config-linux.h:
+        * ace/config-linux-pthread.h:
+        * ace/config-linux-lxpthreads.h:
+        * ace/config-irix6.x-g++.h:
+        * ace/config-irix5.3-g++.h:
+        * ace/config-hpux-10.x-g++.h:
+        * ace/config-gcc-2.7.2.h:
+        * ace/config-freebsd.h:
+        * ace/config-freebsd-pthread.h:
+        * ace/config-chorus.h:
+        * ace/config-aix-4.1.x.h:
+        * ace/README: Removed ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR.
+          It is no longer in use.
 
 Wed Oct 29 21:12:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/README: Added a new macro called ACE_LACKS_SOCKET_BUFSIZ,
-	  which is enabled on VxWorks.
+        * ace/README: Added a new macro called ACE_LACKS_SOCKET_BUFSIZ,
+          which is enabled on VxWorks.
 
-	* ace/OS.h: Added a new macro called
-	  ACE_DEFAULT_MAX_SOCKET_BUFSIZ, which is set to 65536.
+        * ace/OS.h: Added a new macro called
+          ACE_DEFAULT_MAX_SOCKET_BUFSIZ, which is set to 65536.
 
-	* ace/OS: Changed the tolower() method to to_lower() so that it
- 	  won't conflict if there's a macro with the same name.
+        * ace/OS: Changed the tolower() method to to_lower() so that it
+          won't conflict if there's a macro with the same name.
 
-	* ace/OS.h: #include <unistd.h> before ACE_Time_Value as long as
- 	  ACE_LACKS_UNISTD_H is false.  Added this flag to the VxWorks and
- 	  Win32 config.h files.
+        * ace/OS.h: #include <unistd.h> before ACE_Time_Value as long as
+          ACE_LACKS_UNISTD_H is false.  Added this flag to the VxWorks and
+          Win32 config.h files.
 
-	* ace/OS.h: Added a special #define for IRIX5, which seems to put
- 	  timeval in a strange file...  Also, moved this #include to
- 	  *before* ACE_Time_Value.  Thanks to Carlos O'Ryan for suggesting
- 	  this and to Laura Paterno <lpaterno@d0chb.fnal.gov> for
- 	  reporting the problem in the first place.
+        * ace/OS.h: Added a special #define for IRIX5, which seems to put
+          timeval in a strange file...  Also, moved this #include to
+          *before* ACE_Time_Value.  Thanks to Carlos O'Ryan for suggesting
+          this and to Laura Paterno <lpaterno@d0chb.fnal.gov> for
+          reporting the problem in the first place.
 
         * ace: Changes all uses of the overly long
           ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS to
@@ -486,18 +491,18 @@ Wed Oct 29 21:12:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Wed Oct 29 22:17:03 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* ace/config-hpux-10.x-hpc++.h (ACE_HAS_TEMPLATE_SPECIALIZATION):
-	  Moved to C++ section.  Restored ACE_TEMPLATE_REQUIRE_SOURCE in
-	  C++ section.  Thanks to Stephen Coy <stevec@magna.com.au> for
-	  providing the fix (patiently.)
+        * ace/config-hpux-10.x-hpc++.h (ACE_HAS_TEMPLATE_SPECIALIZATION):
+          Moved to C++ section.  Restored ACE_TEMPLATE_REQUIRE_SOURCE in
+          C++ section.  Thanks to Stephen Coy <stevec@magna.com.au> for
+          providing the fix (patiently.)
 
 Wed Oct 29 20:30:55 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
-	* ace/OS.i (strlen): Moved it earlier so that it would be declared
-	  inline before use.
+        * ace/OS.i (strlen): Moved it earlier so that it would be declared
+          inline before use.
 
-	* ace/OS.i (strcasecmp): Removed spurious semi-colons (how did
-	  they get in there?).
+        * ace/OS.i (strcasecmp): Removed spurious semi-colons (how did
+          they get in there?).
 
 Wed Oct 29 18:51:12 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
