@@ -1,3 +1,8 @@
+Mon Aug 25 08:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DynAny_Test/analyzer.{h,cpp}:
+          Fixed compile errors in debian build.
+
 Mon Aug 25 06:34:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
