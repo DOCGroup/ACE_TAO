@@ -1,3 +1,13 @@
+Fri Oct 18 10:43:40 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* examples/Reactor/Misc/test_timer_queue.cpp (test_functionality): 
+	  Fixed the test so that it passes dynamically allocated memory
+ 	  rather that values via the "act" parameter to
+ 	  ACE_Timer_Queue::schedule().  This ensures the test will work
+ 	  properly on strange OS platforms, such as Win64 where pointers
+ 	  and longs/ints are different sizes.  Thanks to Cristian
+ 	  Ungureanu <cristian.ungureanu@amdocs.com> for motivating this.
+
 Fri Oct 18 11:55:33 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/POSIX_CB_Proactor.cpp: Removed unneeded argument to

@@ -11,19 +11,18 @@ class Example_Handler : public ACE_Event_Handler
 {
 public:
   Example_Handler (void)
-    : count_ (0)
+    : count_ (1)
   {}
 
   virtual int handle_timeout (const ACE_Time_Value &, const void *arg)
   {
-    // Cast the arg to a long, first, because a pointer is the same
-    // size as a long on all current ACE platforms.
-    int times = (int) (long) arg;
+    int *times = (int *) arg;
 
     ACE_DEBUG ((LM_DEBUG,
                 "yow, the time has come and gone %d times %d, Horatio!\n",
                 this->count_++,
-                times));
+                *times));
+    delete times;
     return 0;
   }
 
@@ -38,32 +37,50 @@ test_functionality (ACE_Timer_Queue *tq)
 
   ACE_ASSERT (tq->is_empty ());
   ACE_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
-  int timer_id;
+  const void *time_arg = 0;
 
-  timer_id = tq->schedule (&eh, (const void *) 1, ACE_OS::gettimeofday ());
+  ACE_NEW (time_arg, int (1));
+  int timer_id1 = tq->schedule (&eh, time_arg, ACE_OS::gettimeofday ());
 
   // Use timer_id outside of an assert, so that we don't get compile
   // warnings with ACE_NDEBUG about it being unused.
-  if (timer_id == -1)
+  if (timer_id1 == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "schedule () failed"));
-  ACE_ASSERT (timer_id != -1);
+  ACE_ASSERT (timer_id1 != -1);
 
-  ACE_ASSERT (tq->schedule (&eh, (const void *) 42,
-                           ACE_OS::gettimeofday ()) != -1);
-  ACE_ASSERT (tq->schedule (&eh, (const void *) 42,
-                           ACE_OS::gettimeofday ()) != -1);
-  ACE_ASSERT (tq->cancel (timer_id) == 1);
-  ACE_ASSERT (!tq->is_empty ());
+  ACE_NEW (time_arg, int (42));
+  int result = tq->schedule (&eh, time_arg, ACE_OS::gettimeofday ());
+  ACE_ASSERT (result != -1);
+  ACE_NEW (time_arg, int (42));
+  result = tq->schedule (&eh, time_arg, ACE_OS::gettimeofday ());
+  ACE_ASSERT (result != -1);  
 
-  ACE_ASSERT (tq->expire () == 2);
+  result = tq->cancel (timer_id1, &time_arg);
+  ACE_ASSERT (result == 1);  
+  delete time_arg;
+  result = tq->is_empty ();
+  ACE_ASSERT (!result);
 
-  ACE_ASSERT (tq->schedule (&eh, (const void *) 4, ACE_OS::gettimeofday
-                           ()) != -1);
-  ACE_ASSERT (tq->schedule (&eh, (const void *) 5, ACE_OS::gettimeofday
-                           ()) != -1);
-  ACE_ASSERT (tq->cancel (&eh) == 2);
-  ACE_ASSERT (tq->is_empty ());
-  ACE_ASSERT (tq->expire () == 0);
+  result = tq->expire ();
+  ACE_ASSERT (result == 2);
+
+  ACE_NEW (time_arg, int (4));
+  timer_id1 = tq->schedule (&eh, time_arg, ACE_OS::gettimeofday ());
+  ACE_ASSERT (timer_id1 != -1);
+  ACE_NEW (time_arg, int (5));
+  int timer_id2 = tq->schedule (&eh, time_arg, ACE_OS::gettimeofday ());
+  ACE_ASSERT (timer_id2 != -1);
+
+  result = tq->cancel (timer_id1, &time_arg);
+  ACE_ASSERT (result == 1);
+  delete time_arg;
+  result = tq->cancel (timer_id2, &time_arg);
+  ACE_ASSERT (result == 1);
+  delete time_arg;
+  result = tq->is_empty ();
+  ACE_ASSERT (result == 1);
+  result = tq->expire ();
+  ACE_ASSERT (result == 0);
 }
 
 struct Timer_Queues
