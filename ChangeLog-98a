@@ -1,23 +1,3 @@
-Thu Dec 18 22:35:45 1997  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/OS.h: fixed typo in end-of-comment marker.
-
-Thu Dec 18 21:17:46 1997    <nw1@DINGO>
-
-	* ace/ace_dll.dsp: Added project files for Windows CE on SH3
- 	  series CPU and x86 emulator.
-
-	* ace/streams.h:
-	* ace/OS.h: Added Windows CE flags.
-
-Thu Dec 18 15:48:03 1997    <nw1@JIG>
-
-	* ace/OS.cpp (invoke): Added a dummy return to shut gcc up.
-
-Thu Dec 18 21:19:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-        * ACE version 4.4.7, released Thu Dec 18 20:18:50 1997.
-
 Thu Dec 18 19:47:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP: Stripped the CPP-in{server,client}.cpp
@@ -33,28 +13,9 @@ Thu Dec 18 19:47:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
           ACE_DEFAULT_LOGGER_KEY.  Thanks to Patrick J. McNerthney
           <pat@thememedia.com> for reporting this problem.
 
-Thu Dec 18 15:48:03 1997    <nw1@JIG>
+Thu Dec 18 22:35:45 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* ace/OS.cpp (invoke): Added a dummy return to shut gcc up.
-
-        * ace/OS.{h,cpp} (rethrow_w32_structural_exception): Added this
- 	  function, which prints out an error message to indicate the
- 	  occurance of structural exception and rethrow it again.
-          (ACE_Thread_Adapter::invoke): Rearranged try and except block
- 	  for Win32 and added a finally block so when a structural
- 	  exception occurs, a thread can clean it up properly, print out
- 	  an error message, and rethrow the exception again.
-
-Thu Dec 18 15:40:50 1997  James C Hu  <jxh@cs.wustl.edu>
-
-        * ace/Filecache.{cpp,h}:
-          - debugged writing a file.
-          - can select if mapping is desired.
-
-        * ace/OS.h: Added new #defines to facilitate forward declarations
-          of ACE_Export classes.
-
-Thu Dec 18 09:59:33 1997  David L. Levine  <levine@cs.wustl.edu>
+        * ace/OS.h: fixed typo in end-of-comment marker.
 
         * ace/OS.h: on Digital Unix 4.0, only declare sigwait () with cxx,
           not with g++.  Thanks to Erik Margraf <erik@asgard.gud.siemens.co.at>
@@ -82,6 +43,35 @@ Thu Dec 18 09:59:33 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-common.h: started adding support for threads on
           alpha (glibc).
+
+Thu Dec 18 21:17:46 1997    <nw1@DINGO>
+
+	* ace/ace_dll.dsp: Added project files for Windows CE on SH3
+ 	  series CPU and x86 emulator.
+
+	* ace/streams.h:
+	* ace/OS.h: Added Windows CE flags.
+
+	* ace/OS.cpp (invoke): Added a dummy return to shut gcc up.
+
+	* ace/OS.cpp (invoke): Added a dummy return to shut gcc up.
+
+        * ace/OS.{h,cpp} (rethrow_w32_structural_exception): Added this
+ 	  function, which prints out an error message to indicate the
+ 	  occurance of structural exception and rethrow it again.
+          (ACE_Thread_Adapter::invoke): Rearranged try and except block
+ 	  for Win32 and added a finally block so when a structural
+ 	  exception occurs, a thread can clean it up properly, print out
+ 	  an error message, and rethrow the exception again.
+
+Thu Dec 18 15:40:50 1997  James C Hu  <jxh@cs.wustl.edu>
+
+        * ace/Filecache.{cpp,h}:
+          - debugged writing a file.
+          - can select if mapping is desired.
+
+        * ace/OS.h: Added new #defines to facilitate forward declarations
+          of ACE_Export classes.
 
 Thu Dec 18 00:15:02 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
