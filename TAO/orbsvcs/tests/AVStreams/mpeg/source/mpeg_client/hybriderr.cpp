@@ -25,12 +25,12 @@
    luminance channel and F-S error diffusion on chrominance.
 */
 
+#include "ace/OS.h"
 #include <stdlib.h>
 #include <string.h>
 #include "video.h"
 #include "proto.h"
 #include "dither.h"
-#include "ace/OS.h"
 
 ACE_RCSID(mpeg_client, hybriderr, "$Id$")
 

@@ -25,6 +25,7 @@
  *     email: scen@cse.ogi.edu
  */
 
+#include "ace/OS.h"
 #include "Globals.h"
 
 ACE_RCSID(mpeg_server, Globals, "$Id$")

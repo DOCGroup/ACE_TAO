@@ -29,6 +29,7 @@
 extern int asp[2];
 extern void set_exit_routine_tag(int tag);
 
+#include "ace/OS.h"
 #include "ab.h"
 
 ACE_RCSID(mpeg_client, ab, "$Id$")

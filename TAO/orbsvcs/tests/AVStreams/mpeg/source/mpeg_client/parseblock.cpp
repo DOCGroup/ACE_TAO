@@ -23,11 +23,11 @@
 
 #define NO_SANITY_CHECKS
 
+#include "ace/OS.h"
 #include <assert.h>
 #include "video.h"
 #include "proto.h"
 #include "decoders.h"
-#include "ace/OS.h"
 
 ACE_RCSID(mpeg_client, parseblock, "$Id$")
 

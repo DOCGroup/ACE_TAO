@@ -21,12 +21,12 @@
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
 
+#include "ace/OS.h"
 #include <stdlib.h>
 #include <string.h>
 #include "video.h"
 #include "dither.h"
 #include "proto.h"
-#include "ace/OS.h"
 
 ACE_RCSID(mpeg_client, 24bit, "$Id$")
 

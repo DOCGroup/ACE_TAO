@@ -23,6 +23,7 @@
 
 /* This file contains C code to implement an ordered dither. */
 
+#include "ace/OS.h"
 #include <string.h>
 #include <stdlib.h>
 #include "video.h"

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS.h"
 #include "Audio_Control_State.h"
 #include "Audio_Control_i.h"
 

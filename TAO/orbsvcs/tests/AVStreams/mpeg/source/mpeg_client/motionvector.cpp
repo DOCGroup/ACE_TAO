@@ -21,10 +21,10 @@
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
 
+#include "ace/OS.h"
 #include "video.h"
 #include "proto.h"
 #include "util.h"
-#include "ace/OS.h"
 
 ACE_RCSID(mpeg_client, motionvector, "$Id$")
 

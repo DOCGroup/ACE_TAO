@@ -32,8 +32,6 @@ FILES= mibButton \
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
-##LIBS 	+= -lTAO -lACE
-
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
@@ -61,7 +59,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-LDFLAGS +=  -L/project/doc/pkg/X11/lib/ -lXm -lXt -lXext -lSM -lICE -lX11 -L/project/doc/pkg/X11/lib -lsocket -lnsl -ldl
+LDFLAGS +=  -L/project/doc/pkg/X11/lib/ 
+LDLIBS += -lXm -lXt -lXext -lSM -lICE -lX11
 CPPFLAGS += -DSH_MEM -DNDEBUG  -I/project/doc/pkg/X11/include
 
 realclean: clean
