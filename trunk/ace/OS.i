@@ -6862,7 +6862,6 @@ ACE_U_LongLong::operator-= (const ACE_U_LongLong &ll)
 }
 #endif /* ! ACE_WIN32 && ! ACE_HAS_LONGLONG_T */
 
-#if !defined (ACE_HAS_PENTIUM) || !defined (__GNUC__)
 ACE_INLINE ACE_hrtime_t 
 ACE_OS::gethrtime (void)
 {
@@ -6876,6 +6875,32 @@ ACE_OS::gethrtime (void)
   ::time_base_to_time(&tb, TIMEBASE_SZ);
 
   return tb.tb_high * 1000000000L + tb.tb_low;
+#elif defined (linux)
+# if defined (ACE_HAS_PENTIUM)
+  volatile ACE_hrtime_t now;
+
+  // See comments about the RDTSC Pentium instruction for the ACE_WIN32
+  // version of ACE_OS::gethrtime (), below.
+  //
+  // Read the high-res tick counter directly into memory variable "now".
+  // The A constraint signifies a 64-bit int.
+  asm volatile ("rdtsc" : "=A" (now) : : "memory");
+
+  return now;
+# elif defined (__alpha)
+  volatile ACE_hrtime_t now;
+
+  // The following statement is based on code published by:
+  // Mosberger, David, "How to Make Your Applications Fly, Part 1",
+  // Linux Journal Issue 42, October 1997, page 50.
+  // It reads the high-res tick counter directly into memory variable "now".
+  asm volatile ("rpcc %0" : "=r" (now) : : "memory");
+
+  return now;
+# else
+  const ACE_Time_Value now = ACE_OS::gettimeofday ();
+  return now.msec () * 1000000L /* nanoseconds/millsecond */;
+# endif /* i386 || __alpha */
 #elif defined (ACE_HAS_PENTIUM)
   // for WIN32 only (see OS.cpp for the GCC version) . . .
   // Issue the RDTSC assembler instruction to get the number of clock
@@ -6920,7 +6945,6 @@ ACE_OS::gethrtime (void)
   return now.msec () * 1000000L /* nanoseconds/millsecond */;
 #endif /* ACE_HAS_HI_RES_TIMER */
 }
-#endif /* ! ACE_HAS_PENTIUM || ! __GNUC__ */
 
 ACE_INLINE int 
 ACE_OS::fdetach (const char *file)
