@@ -929,6 +929,12 @@ sub create_kit () {
   if ($kit eq 'ace+tao' || $kit eq 'ace+tao+ciao') {
       # Set the relese files once again
     my $tmp_rel_file = '';
+      $status = &bootstrap_autotools ();
+
+      if ($status != 0) {
+          die "$0: failed to bootstrap autotools\n";
+      }
+
     chomp ($tmp_rel_file = `$regmake -f ACE_wrappers/TAO/Release show_release_files`);
     $release_files = $base_release_files;
     $release_files .= ' ';
@@ -973,11 +979,6 @@ sub create_kit () {
         if ($status != 0) {
             die "$0: failed to generate em3 files\n";
         }
-      $status = &bootstrap_autotools ();
-
-      if ($status != 0) {
-          die "$0: failed to bootstrap autotools\n";
-      }
 
       # Reset it again with autoconf files
       chomp ($release_files = `$regmake -f ACE_wrappers/Release show_autoconf_release_files`);

@@ -66,7 +66,6 @@ CONTROLLED_FILES = \
         ace \
         ace-config.1.in \
         ace-config.in \
-        aceConf.sh.in \
         apps \
         bin \
 	configure.ac \
