@@ -6,7 +6,7 @@
 CXX		= CC -g
 IDL		= $(TAO_ROOT)/TAO_IDL/tao_idl
 
-CPPFLAGS	= -c -I$(ACE_ROOT) -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I. -DHIERARCHICAL_BIND -DRECURSIVE_BIND
+CPPFLAGS	= -c -I$(ACE_ROOT) -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I. 
 IDLFLAGS	=
 
 # All ACE/TAO related libraries have links in the $ACE_ROOT/ace
