@@ -1,3 +1,11 @@
+Wed Sep 15 10:14:21 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/exceptions.html:
+
+	  Corrected some ACE_TRY_THROW examples.  The exception being
+	  thrown must have a parameter list, even if it is empty
+	  (e.g.: ACE_TRY_THROW (CORBA::BAD_PARAM ());)
+
 Tue Sep 14 22:10:24 1999  Kristopher Johnson <kjohnson@gardnersys.com>
 
         * ace/Process_Manager.cpp (wait): changed array index from
