@@ -1,3 +1,8 @@
+Wed May  7 18:32:45 2003  Steve Huston  <shuston@riverace.com>
+
+	* tests/FIFO_Test.cpp: Fix the version of main() that was actually
+	  causing the problem (see: Tue May  6 18:06:39 2003  Steve Huston)
+
 Wed May  7 17:02:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_component.mpb: Added the
