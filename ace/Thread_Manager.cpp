@@ -488,11 +488,22 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 #endif /* ACE_NO_THREAD_ADAPTER */
 
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
-  ACE_thread_t thr_id;
   ACE_hthread_t thr_handle;
 
+#if defined (VXWORKS)
+  // On VxWorks, ACE_thread_t is char *.
+  if (t_id == 0)
+    {
+      char *thr_id;
+      ACE_NEW_RETURN (thr_id, char[16], -1);
+      ACE_OS::strcpy (thr_id, "ace_t");
+      t_id = &thr_id;
+    }
+#else  /* ! VXWORKS */
+  ACE_thread_t thr_id;
   if (t_id == 0)
     t_id = &thr_id;
+#endif /* ! VXWORKS */
 
   int result = ACE_Thread::spawn (func,
                                   args,
@@ -673,6 +684,7 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
   thr_desc->flags_ = flags;
 
   this->thr_list_.insert_head (thr_desc);
+
   return 0;
 }
 
@@ -719,8 +731,13 @@ ACE_Thread_Manager::insert_thr (ACE_thread_t t_id,
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Check for duplicates and bail out if we're already registered...
+#if defined (VXWORKS)
+  if (this->find_hthread (t_handle) != 0 )
+    return -1;
+#else  /* ! VXWORKS */
   if (this->find_thread (t_id) != 0 )
     return -1;
+#endif /* ! VXWORKS */
 
   if (grp_id == -1)
     grp_id = this->grp_id_++;
@@ -770,7 +787,19 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 {
   ACE_TRACE ("ACE_Thread_Manager::remove_thr");
 
+#if defined (VXWORKS)
+  ACE_thread_t tid = td->self ();
+#endif /* VXWORKS */
+
   this->thr_list_.remove (td);
+
+#if defined (VXWORKS)
+  if (tid && ACE_OS::strcmp (tid, "ace_t") == 0)
+    {
+      delete tid;
+    }
+#endif /* VXWORKS */
+
 #if defined (ACE_WIN32)
   if (close_handler != 0)
     ::CloseHandle (td->thr_handle_);
@@ -1245,8 +1274,14 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 
     // Find the thread id, but don't use the cache.  It might have been
     // deleted already.
+#if defined (VXWORKS)
+    ACE_hthread_t id;
+    ACE_OS::thr_self (id);
+    ACE_Thread_Descriptor *td = this->find_hthread (id);
+#else  /* ! VXWORKS */
     ACE_thread_t id = ACE_OS::thr_self ();
     ACE_Thread_Descriptor *td = this->find_thread (id);
+#endif /* ! VXWORKS */
 
     // Locate thread id.
     if (td != 0)
