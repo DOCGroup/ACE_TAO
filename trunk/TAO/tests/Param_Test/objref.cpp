@@ -190,41 +190,61 @@ Test_ObjRef::add_args (CORBA::NVList_ptr param_list,
 		       CORBA::NVList_ptr retval,
 		       CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Any in_arg (_tc_Coffee,
-                     this->in_courier,
-                     0);
+  ACE_TRY
+    {
+      CORBA::Any in_arg (_tc_Coffee,
+                         this->in_courier,
+                         0);
 
-  CORBA::Any inout_arg (_tc_Coffee,
-                        this->inout_courier,
-                        0);
+      CORBA::Any inout_arg (_tc_Coffee,
+                            this->inout_courier,
+                            0);
 
-  CORBA::Any out_arg (_tc_Coffee,
-                      this->out_courier,
-                      0);
+      CORBA::Any out_arg (_tc_Coffee,
+                          this->out_courier,
+                          0);
 
-  // Add parameters.
-  param_list->add_value ("o1",
-                         in_arg,
-                         CORBA::ARG_IN,
-                         ACE_TRY_ENV);
+      // Add parameters.
+      param_list->add_value ("o1",
+                             in_arg,
+                             CORBA::ARG_IN,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  param_list->add_value ("o2",
-                         inout_arg,
-                         CORBA::ARG_INOUT,
-                         ACE_TRY_ENV);
+      param_list->add_value ("o2",
+                             inout_arg,
+                             CORBA::ARG_INOUT,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  param_list->add_value ("o3",
-                         out_arg,
-                         CORBA::ARG_OUT,
-                         ACE_TRY_ENV);
+      param_list->add_value ("o3",
+                             out_arg,
+                             CORBA::ARG_OUT,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Add return value.
-  retval->item (0, ACE_TRY_ENV)->value ()->replace (_tc_Coffee,
-                                            this->ret_courier,
-                                            0, // does not own
-                                            ACE_TRY_ENV);
+      // Add return value.
+      CORBA::NamedValue *item = retval->item (0,
+                                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  return 0;
+      item->value ()->replace (_tc_Coffee,
+                               this->ret_courier,
+                               0, // does not own
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      return 0;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Test_ObjRef::add_args\n");
+
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 }
 
 CORBA::Boolean
