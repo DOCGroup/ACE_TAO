@@ -157,10 +157,9 @@ void process_sequential_element (DOMNode* node,
                                  Process_Function <OBJECT, DATA>* func,
                                  REFMAP& id_map);
 
-template <typename T>
-class Null_Class {
-public:
-};
+/*
+ *  Process function for member functions
+ */
 
 template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
 inline void process_function(OBJECT* obj, SEQUENCE& data, FUNCTION func,
@@ -170,6 +169,21 @@ inline void process_function(OBJECT* obj, SEQUENCE& data, FUNCTION func,
                              REFMAP& id_map)
 {
   Process_Member_Function<OBJECT, DATA> pf(obj, func, doc);
+  process_sequential_element (node, doc, iter, data, &pf, id_map);
+}
+
+/*
+ *  Process function for static functions
+ */
+
+template<typename DATA, typename SEQUENCE, typename FUNCTION>
+inline void process_function(SEQUENCE& data, FUNCTION func,
+                             DOMNode* node,
+                             DOMDocument* doc,
+                             DOMNodeIterator *iter,
+                             REFMAP& id_map)
+{
+  Process_Static_Function<OBJECT, DATA> pf(func);
   process_sequential_element (node, doc, iter, data, &pf, id_map);
 }
 
