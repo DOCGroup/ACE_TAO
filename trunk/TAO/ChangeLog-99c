@@ -16,6 +16,10 @@ Wed Feb 17 10:45:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  strategy of any changes in the set of consumers and/or
 	  suppliers.
 
+	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl: 
+	  The operation remove_observer can also raise a
+	  SYNCHRONIZATION_ERROR exception
+
 	* orbsvcs/orbsvcs/Event/EC_Filter.h:
 	  Added a typedef for the HeaderSet iterator.
 

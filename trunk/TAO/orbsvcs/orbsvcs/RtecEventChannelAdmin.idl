@@ -110,7 +110,7 @@ module RtecEventChannelAdmin {
     //   This object receives updates from Event Channels with any
     //   changes on set of consumer and or suppliers registered with
     //   the Event Channel.
-    
+
     void update_consumer (in ConsumerQOS sub);
     // A change in the list of consumers has ocurred. The disjunction
     // of the subscriptions (and its equivalent form ) is
@@ -161,7 +161,7 @@ module RtecEventChannelAdmin {
     // used to remove the gateway from the ORB.
 
     void remove_observer (in Observer_Handle gw)
-      raises (CANT_REMOVE_OBSERVER);
+      raises (SYNCHRONIZATION_ERROR,CANT_REMOVE_OBSERVER);
     // Remove the observer.
     // @@ TODO: We should raise something if the handle is invalid.
   };
