@@ -1,3 +1,39 @@
+Sun Mar 23 23:42:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        *         * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+        * tao/VarOut_T.cpp:
+        * tao/VarOut_T.h:
+        * tao/VarOut_T.inl:
+
+	  New files adding to the support of template-based
+	  _var and _out classes.
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/TAO.dsp:
+        * tao/corba.h:
+        * TAO_IDLast/ast_type.cpp:
+        * TAO_IDLbe/be_interface.cpp:
+        * TAO_IDLbe/be_type.cpp:
+        * TAO_IDLbe/be_visitor_array/array_ch.cpp:
+        * TAO_IDLbe/be_visitor_array/array_ci.cpp:
+        * TAO_IDLbe/be_visitor_array/array_cs.cpp:
+        * TAO_IDLbe/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDLbe/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDLbe/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDLbe/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDLbe_include/be_interface.h:
+        * TAO_IDLbe_include/be_type.h:
+        * TAO_IDLbe_include/be_visitor_array/array_ch.h:
+        * TAO_IDLbe_include/be_visitor_array/array_ci.h:
+        * TAO_IDLinclude/ast_type.h:
+
+	  Other changes to support template _var and _out 
+	  classes.
+
 Sat Mar 22 18:34:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ObjectReferenceTemplateC.cpp:
