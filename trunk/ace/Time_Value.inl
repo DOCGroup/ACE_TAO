@@ -156,8 +156,14 @@ ACE_Time_Value::operator *= (double d)
   double time =
     ((double) this->sec ()) * ACE_ONE_SECOND_IN_USECS + this->usec ();
   time *= d;
-  this->sec ((long)(time / ACE_ONE_SECOND_IN_USECS));
-  this->usec (((long)time) % ACE_ONE_SECOND_IN_USECS);
+  // Truncate time to usable range <-2^31, 2^31) secs
+  if (time > (double)(1<<31)*ACE_ONE_SECOND_IN_USECS-1.0)
+    time = (double)(1<<31)*ACE_ONE_SECOND_IN_USECS-1.0;
+  else if (time < -(double)(1<<31)*ACE_ONE_SECOND_IN_USECS)
+    time = -(double)(1<<31)*ACE_ONE_SECOND_IN_USECS;
+  long sec = (long)(time / ACE_ONE_SECOND_IN_USECS);
+  this->sec (sec);
+  this->usec ((long)(time - ((double) sec) * ACE_ONE_SECOND_IN_USECS));
   this->normalize ();
   return *this;
 }
