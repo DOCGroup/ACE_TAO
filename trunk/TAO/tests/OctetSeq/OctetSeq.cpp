@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tests/CDR
+//    TAO/tests/OctetSeq
 //
 // = FILENAME
 //    octetseq.cpp
@@ -212,7 +212,7 @@ main (int argc, char *argv[])
       // Create a "big" buffer and fill it up.
       char* buf = new char[hi];
       CORBA::Long l = 0xdeadbeef;
-      for (u_int i = 0; i < hi / sizeof (l); ++i)
+      for (int i = 0; i < hi / sizeof (l); ++i)
         {
           ACE_OS::memcpy (buf + sizeof (l) * i, &l, sizeof (l));
         }
