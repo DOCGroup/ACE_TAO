@@ -312,7 +312,7 @@ FE_InterfaceHeader::check_further (AST_Interface *i)
 }
 
 idl_bool
-FE_InterfaceHeader::check_supports (AST_Interface *i)
+FE_InterfaceHeader::check_supports (AST_Interface *)
 {
   return 0;
 }

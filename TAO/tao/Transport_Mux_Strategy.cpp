@@ -42,7 +42,7 @@ TAO_Muxed_TMS::request_id (void)
 
 // Bind the dispatcher with the request id.
 int
-TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
+TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong,
                                 TAO_Reply_Dispatcher *)
 {
   // @@

@@ -173,7 +173,7 @@ void
 TAO_IIOP_Client_Transport::
     start_locate (TAO_ORB_Core *orb_core,
                   const TAO_Profile* pfile,
-                  CORBA::ULong /* request_id */,
+                  CORBA::ULong request_id,
                   TAO_OutputCDR &output,
                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -193,7 +193,7 @@ TAO_IIOP_Client_Transport::
     ACE_THROW (CORBA::MARSHAL ());
 
 
-  if (TAO_GIOP::write_locate_request_header (this->request_id (),
+  if (TAO_GIOP::write_locate_request_header (request_id,
                                              key,
                                              output) != 0)
     ACE_THROW (CORBA::MARSHAL ());

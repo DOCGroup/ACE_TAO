@@ -1430,7 +1430,7 @@ TAO_GIOP::start_message_std (const TAO_GIOP_Version &version,
 }
 
 CORBA::Boolean
-TAO_GIOP::start_message_lite (const TAO_GIOP_Version &version,
+TAO_GIOP::start_message_lite (const TAO_GIOP_Version &,
                               TAO_GIOP::Message_Type type,
                               TAO_OutputCDR &msg)
 {

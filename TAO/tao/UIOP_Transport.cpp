@@ -193,7 +193,7 @@ TAO_UIOP_Client_Transport::
     ACE_THROW (CORBA::MARSHAL ());
 
 
-  if (TAO_GIOP::write_locate_request_header (this->request_id (),
+  if (TAO_GIOP::write_locate_request_header (request_id,
                                              key,
                                              output) != 0)
     ACE_THROW (CORBA::MARSHAL ());
@@ -219,7 +219,7 @@ TAO_UIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
 // @@ This code should go in the TAO_Transport class is repeated for
 //    each transport!!
 int
-TAO_UIOP_Client_Transport::handle_client_input (int block)
+TAO_UIOP_Client_Transport::handle_client_input (int /* block */)
 {
   // When we multiplex several invocations over a connection we need
   // to allocate the CDR stream *here*, but when there is a single
