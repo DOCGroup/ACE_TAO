@@ -17,7 +17,8 @@ include $(TAO_ROOT)/rules.tao.GNU
 
 
 DIRS = \
-  Simple_Naming
+  Simple_Naming \
+  Redundant_Naming
 
 ifeq ($(corba_messaging),1)
 DIRS += \

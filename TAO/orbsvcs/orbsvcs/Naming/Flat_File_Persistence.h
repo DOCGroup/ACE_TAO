@@ -18,49 +18,73 @@
 //------------------------------------------------------------------------
 // The Flat File concrete classes
 //------------------------------------------------------------------------
-class TAO_NS_FlatFileWriter : public TAO_Writer_Base
+class TAO_NS_FlatFileStream : public TAO_Storable_Base
 {
 public:
 
-  TAO_NS_FlatFileWriter();
-  virtual ~TAO_NS_FlatFileWriter();
+  TAO_NS_FlatFileStream(const ACE_CString & file, const char * mode);
+  virtual ~TAO_NS_FlatFileStream();
 
-  virtual int open(const char * filename);
+  /// Remove a file by name (file is not open)
+  virtual void remove();
+
+  /// Check if a file exists on disk (file is not open)
+  virtual int exists();
+
+  /// Open a file (the remaining methods below all require an open file)
+  virtual int open();
+
+  /// Close an open file
   virtual int close();
 
-  virtual TAO_Writer_Base& operator << (const TAO_NS_Persistence_Header &header);
-  virtual TAO_Writer_Base& operator << (const TAO_NS_Persistence_Record &record);
+  /// Acquire a file lock
+  virtual int flock (int whence, int start, int len);
+
+  /// Release a file lock
+  virtual int funlock (int whence, int start, int len);
+
+  /// Returns the last time an open file was changed
+  virtual time_t last_changed(void);
+
+  /// Write a header to disk
+  virtual TAO_Storable_Base& operator << (
+              const TAO_NS_Persistence_Header& header);
+
+  /// Read a header from disk
+  virtual TAO_Storable_Base& operator >> (
+              TAO_NS_Persistence_Header& header);
+
+  /// Write a record to disk
+  virtual TAO_Storable_Base& operator << (
+              const TAO_NS_Persistence_Record& record);
+
+  /// Read a record from disk
+  virtual TAO_Storable_Base& operator >> (
+              TAO_NS_Persistence_Record& record);
+
+  /// Write the global data to disk
+  virtual TAO_Storable_Base& operator << (
+              const TAO_NS_Persistence_Global& global);
+
+  /// Read the global data from disk
+  virtual TAO_Storable_Base& operator >> (
+              TAO_NS_Persistence_Global& global);
 
 private:
-  FILE* fout_;
-  ACE_CString filename_;
+  ACE_OS::ace_flock_t filelock_;
+  FILE* fl_;
+  ACE_CString file_;
+  ACE_CString mode_;
 };
-
-class TAO_NS_FlatFileReader : public TAO_Reader_Base
-{
-public:
-
-  TAO_NS_FlatFileReader ();
-  virtual ~TAO_NS_FlatFileReader();
-
-  virtual int open(const char * filename);
-  virtual int close();
-
-  virtual TAO_Reader_Base& operator >> (TAO_NS_Persistence_Header &header);
-  virtual TAO_Reader_Base& operator >> (TAO_NS_Persistence_Record &record);
-
-private:
-  FILE* fin_;
-};
-
 
 class TAO_NS_FlatFileFactory : public TAO_Naming_Service_Persistence_Factory
 {
 public:
   // Factory Methods
 
-  virtual TAO_Reader_Base *create_reader();
-  virtual TAO_Writer_Base *create_writer();
+  /// Create the stream that can operate on a disk file
+  virtual TAO_Storable_Base *create_stream(const ACE_CString & file, 
+                                           const ACE_TCHAR * mode);
 };
 
 

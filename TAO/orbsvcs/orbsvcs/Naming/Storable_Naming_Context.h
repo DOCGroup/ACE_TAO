@@ -33,8 +33,7 @@
  * A thin wrapper on top of ACE_Hash_Map_Manager.  Supports
  * TAO_Bindings_Map interface.  Used by TAO_Transient_Naming_Context.
  */
-class TAO_Naming_Export TAO_Storable_Bindings_Map : public TAO_Bindings_Map,
-                                                    public TAO_Storable_Base
+class TAO_Naming_Export TAO_Storable_Bindings_Map : public TAO_Bindings_Map
 {
 public:
 
@@ -46,12 +45,7 @@ public:
   // = Initialization and termination methods.
 
   /// Constructor.
-  TAO_Storable_Bindings_Map (size_t hash_table_size);
-
-  /// Constructor.
-  TAO_Storable_Bindings_Map (size_t hash_table_size,
-                             CORBA::ORB_ptr orb,
-                             const char* poa_id,PortableServer::POA_ptr poa);
+  TAO_Storable_Bindings_Map (size_t hash_table_size, CORBA::ORB_ptr orb);
 
   /// Destructor.
   virtual ~TAO_Storable_Bindings_Map (void);
@@ -110,10 +104,6 @@ public:
                     CORBA::Object_ptr & obj,
                     CosNaming::BindingType &type);
 
-  virtual void Write(TAO_Writer_Base& wrtr);
-
-  virtual const char * name();
-
 private:
 
   /// Helper: factors common code from <bind> and <rebind>.
@@ -128,9 +118,6 @@ private:
 
   CORBA::ORB_ptr orb_;
 
-  ACE_CString name_;
-
-  PortableServer::POA_var poa_;
 };
 
 /**
@@ -164,15 +151,6 @@ public:
                                const ACE_TCHAR *persistence_directory,
                                size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
 
-  /// Constructor.
-  TAO_Storable_Naming_Context (CORBA::ORB_ptr orb,
-                               PortableServer::POA_ptr poa,
-                               const char *poa_id,
-                               TAO_Storable_Bindings_Map* bm,
-                               TAO_Naming_Service_Persistence_Factory *factory,
-                               const ACE_TCHAR *persistence_directory,
-                               size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
-
   /// Destructor.
   virtual ~TAO_Storable_Naming_Context (void);
 
@@ -190,7 +168,8 @@ public:
                                const char *poa_id,
                                size_t context_size,
                                TAO_Naming_Service_Persistence_Factory *factory,
-                               const ACE_TCHAR *persistence_directory
+                               const ACE_TCHAR *persistence_directory,
+                               TAO_Storable_Naming_Context **new_context
                                ACE_ENV_ARG_DECL);
 
   // = Methods not implemented in TAO_Hash_Naming_Context.
@@ -202,7 +181,8 @@ public:
                               size_t context_size,
                               int reentering,
                               TAO_Naming_Service_Persistence_Factory *factory,
-                              const ACE_TCHAR *persistence_directory
+                              const ACE_TCHAR *persistence_directory,
+                              int use_redundancy
                               ACE_ENV_ARG_DECL);
 
 
@@ -301,8 +281,11 @@ public:
 
 protected:
 
-  /// Counter used for generation of POA ids for children Naming
+  /// Global counter used for generation of POA ids for children Naming
   /// Contexts.
+  static ACE_UINT32 gcounter_;
+
+  /// Counter used for generation of transients
   ACE_UINT32 counter_;
 
   /**
@@ -316,13 +299,92 @@ protected:
 
   CORBA::ORB_ptr orb_;
 
+  ACE_CString name_;
+
+  PortableServer::POA_var poa_;
+
   TAO_Naming_Service_Persistence_Factory *factory_;
 
   /// The directory in which to store the files
   ACE_CString persistence_directory_;
 
-  static CosNaming::NamingContext_ptr root_context_;
+  /// Save the hash table initial size
+  size_t hash_table_size_;
+
+  /// Disk time that match current memory state
+  time_t last_changed_;
+
+  /// Flag to tell use whether we are redundant or not
+  static int redundant_;
+
+  static const char * root_name_;
+
+  /// The pointer to the global file used to allocate new contexts
+  static TAO_Storable_Base *gfl_;
+
+/**
+ * @class File_Open_Lock_and_Check
+ *
+ * @brief Helper class for the TAO_Storable_Naming_Context.
+ *
+ * Guard class for the TAO_Storable_Naming_Context.  It opens
+ * a file for read/write and sets a lock on it.  It then checks
+ * if the file has changed and re-reads it if it has.
+ *
+ * The destructor insures that the lock gets released.
+ *
+ * <pre>
+ * How to use this class:
+ *   File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
+     ACE_CHECK;
+ * </pre>
+ */
+class File_Open_Lock_and_Check
+{
+public:
+
+  /// Constructor - we always need the object which we guard.
+  File_Open_Lock_and_Check(TAO_Storable_Naming_Context * context,
+                                const char * mode 
+                                ACE_ENV_ARG_DECL);
+
+  /// Destructor
+  ~File_Open_Lock_and_Check(void);
+
+  /// Releases the lock, closes the file, and deletes the I/O stream.
+  void release(void);
+
+  /// Returns the stream to read/write on
+  TAO_Storable_Base & peer(void);
+
+private:
+  /// Default constructor
+  File_Open_Lock_and_Check(void);
+
+  /// A flag to keep us from trying to close things more than once.
+  int closed_;
+
+  /// We need to save the pointer to our parent for cleaning up
+  TAO_Storable_Naming_Context * context_;
+
+  /// The pointer to the actual file I/O (bridge pattern)
+  TAO_Storable_Base *fl_;
+
+  /// The flags that we were opened with
+  int rwflags_;
+
+  /// Symbolic values for the flags in the above
+  enum{ mode_write = 1, mode_read = 2, mode_create = 4 };
+}; // end of embedded class File_Open_Lock_and_Check
+
+  friend class File_Open_Lock_and_Check;
+
+  int load_map(File_Open_Lock_and_Check *flck ACE_ENV_ARG_DECL);
+
+  void Write(TAO_Storable_Base& wrtr);
+
 };
+
 
 #include "ace/post.h"
 #endif /* TAO_STORABLE_NAMING_CONTEXT_H */
