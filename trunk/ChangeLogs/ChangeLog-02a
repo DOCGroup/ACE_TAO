@@ -1,3 +1,9 @@
+Thu Jun  8 09:52:36 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* bin/pace_components:
+          Adding this file to handle setup and cleanup of PACE components
+          just like the ace_components file does for ACE.
+
 Thu Jun 08 01:53:03 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Message_Queue.i (peek_dequeue_head): Fixed typo.
