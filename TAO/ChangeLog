@@ -1,3 +1,13 @@
+Fri Apr 18 12:18:46 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/AV.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+
+          Added missing libraries.
+
 Wed Apr 16 12:49:59 2003  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be_include/be_helper.h:
