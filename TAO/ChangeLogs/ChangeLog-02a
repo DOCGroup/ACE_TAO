@@ -1,10 +1,9 @@
 Wed Mar 22 16:24:26 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/Notify_Service/Notify_Service.{h,cpp}:
-	  Fixed bug#502. If the Naming Service is not started, an appropriate
-	  message is displayed.
-	  Thanks to Nechypurenko Andrey <A.Nechypurenko.telesens.de>
-	  for reporting this.
+	  Fixed bug#502. If the Naming Service is not started, an
+ 	  appropriate message is displayed.  Thanks to Andrey Nechypurenko
+ 	  <A.Nechypurenko.telesens.de> for reporting this.
 
 Wed Mar 22 14:11:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
