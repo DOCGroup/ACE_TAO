@@ -30,9 +30,10 @@
 #include "ace/OS.h"
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
-    (defined (ACE_HAS_AIO_CALLS))
+ (defined (ACE_HAS_AIO_CALLS))
 
 #include "ace/Task.h"
+#include "ace/Reactor.h"
 
 // Forward declarations
 class ACE_Proactor;
@@ -498,6 +499,7 @@ public:
   };
 };
 
+
 class ACE_Export ACE_Asynch_Accept : public ACE_Asynch_Operation
 {
   // = TITLE
@@ -513,6 +515,14 @@ class ACE_Export ACE_Asynch_Accept : public ACE_Asynch_Operation
 public:
   ACE_Asynch_Accept (void);
   // A do nothing constructor.
+
+#if defined (ACE_HAS_AIO_CALLS)
+  int open (ACE_Handler &handler,
+	    ACE_HANDLE handle = ACE_INVALID_HANDLE,
+	    const void *completion_key = 0,
+	    ACE_Proactor *proactor = 0);
+  // (We will call base class's <open> from here).
+#endif /* ACE_HAS_AIO_CALLS */
 
   int accept (ACE_Message_Block &message_block,
 	      u_long bytes_to_read,
@@ -545,7 +555,7 @@ public:
 
 #if defined (ACE_HAS_AIO_CALLS)
     friend class ACE_Asynch_Accept_Handler;
-    // The helper factory has oprivilages too.
+    // This factory does it all, so it needs spl privileges. 
 #endif /* ACE_HAS_AIO_CALLS */
 
     u_long bytes_to_read (void) const;
@@ -594,36 +604,19 @@ public:
     ACE_HANDLE accept_handle_;
     // I/O handle for the new connection.
   };
-};
 
+private:
 #if defined (ACE_HAS_AIO_CALLS)
-class ACE_Export ACE_Asynch_Accept_Handler : public ACE_Task <ACE_NULL_SYNCH>
-{
-  // = TITLE
-  //     For the POSIX implementation, this class takes care of doing
-  //     Asynch_Accept. 
-  // 
-  // = DESCRIPTION
-  //      
-public:
-  ACE_Asynch_Accept_Handler (ACE_Asynch_Accept::Result *result);
-  // Constructor.
-  
-  ~ACE_Asynch_Accept_Handler (void);
-  // Destructor.
-  
-protected:
-  virtual int svc (void);
-  // Run by a daemon thread to handle deferred processing. This method
-  // will be doing the accept actually.
-  
-  ACE_Asynch_Accept::Result *result_;
-  // The result pointer given by <ACE_Asynch_Transmit> class. 
-  
-  int shutting_down_;
-  // Flag used to indicate when we are shutting down. 
+  static void* thread_function  (void* reactor);
+  // The thread function that does handle events 
+
+  ACE_Reactor reactor_;
+  // Reactor to wait on the <listen_handle>.
+
+  ACE_Asynch_Accept_Handler* accept_handler_;
+  // The Event Handler to do handle_input.
+#endif /* ACE_HAS_AIO_CALLS */
 };
-#endif /* ACE_HAS_AIO_CALLS*/
 
 class ACE_Export ACE_Asynch_Transmit_File : public ACE_Asynch_Operation
 {
@@ -911,86 +904,6 @@ public:
   // Called by ACE_Asynch_Acceptor to pass the addresses of the new
   // connections.
 };
-
-#if defined (ACE_HAS_AIO_CALLS)
-class ACE_Export ACE_Asynch_Transmit_Handler : public ACE_Handler
-{
-  // = TITLE
-  //     Auxillary handler for doing <Asynch_Transmit_File> in
-  //     Unix. <ACE_Asynch_Transmit_File> internally uses this.
-  //
-  // = DESCRIPTION
-  //     This is a helper class for implementing
-  //     <ACE_Asynch_Transmit_File> in Unix systems.
-public:
-  ACE_Asynch_Transmit_Handler (ACE_Asynch_Transmit_File::Result *result,
-                               ACE_Proactor *proactor);
-  // Constructor. Result pointer will have all the information to do
-  // the file transmission (socket, file, application handler, bytes
-  // to write....)  and the the <proactor> pointer tells this class
-  // the <proactor> that is being used by the
-  // Asynch_Transmit_Operation and the application.
-  
-  virtual ~ACE_Asynch_Transmit_Handler (void);
-  // Destructor.
-
-  int transmit (void);
-  // Do the transmission. All the info to do the transmission is in
-  // the <result> member.
-
-protected:
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
-  // This is called when asynchronous writes from the socket complete.
-
-  virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
-  // This is called when asynchronous reads from the file complete.
-private:
-  int initiate_read_file (void);
-  // Issue asynch read from  the file.
-
-  ACE_Asynch_Transmit_File::Result *result_;
-  // The asynch result pointer made from the initial transmit file
-  // request.
-
-  ACE_Proactor *proactor_;
-  // The Proactor that is being used by the application handler and
-  // so the Asynch_Transmit_File.
-  
-  ACE_Asynch_Read_File rf_;
-  // To read from the file to be transmitted.
-
-  ACE_Asynch_Write_Stream ws_;
-  // Write stream to write the header, trailer and the data.
-
-  ACE_Message_Block *mb_;
-  // Message bloack used to do the txn.
-
-  enum ACT
-  {
-    HEADER_ACT  = 1,
-    DATA_ACT    = 2,
-    TRAILER_ACT = 3
-  };
-
-  ACT header_act_;
-  ACT data_act_;
-  ACT trailer_act_;
-  // ACT to transmit header, data and trailer.
-
-  size_t file_offset_;
-  // Current offset of the file being transmitted.
-
-  size_t file_size_;
-  // Total size of the file.
-
-  size_t bytes_transferred_;
-  // Number of bytes transferred on the stream.
-  
-  size_t transmit_file_done_;
-  // Flag to indicate that the transmitting is over.
-};
-
-#endif /* ACE_HAS_AIO_CALLS */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Asynch_IO.i"
