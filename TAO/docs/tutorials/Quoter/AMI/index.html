@@ -12,30 +12,30 @@
 
     <h3>Asynchronous Method Invocation - CORBA for impatient clients</h3>
 
-    <P>Our <A HREF="../../Simple/Client/index.html">simple client</A>
+    <P>Our <A HREF="../Simple/Client/index.html">simple client</A>
       illustrated how to use the traditional CORBA synchronous method
       invocation to query a number of stock prices.
       Suppose that we had to query hundreds of stock prices, for
       example, during the initialization of a complex market analysis
       tool.
       In that case sending the requests in sequence is going to yield
-      poor performance, we are not taking advantage of the natural
+      poor performance; we are not taking advantage of the natural
       parallelism in distributed systems, since we are waiting for the 
       first response to come back before sending the next query.
       Traditionally this problem has been attacked using either
-      <CODE>oneway</CODE> calls or multiple threads, both approaches can
+      <CODE>oneway</CODE> calls or multiple threads.  Both approaches can
       work, but they have some disadvantages:
       multi-threading programming can be hard and error-prone,
       oneways are unreliable and require callback interfaces to return 
       the stock value.
-      Recently the OMG approved the CORBA Messaging specification,
+      Recently the OMG approved the CORBA Messaging specification
       that extends the basic invocation model to include asynchronous
       calls.
-      Unlikely the old deferred synchronous model the new model uses
+      Unlike the old deferred synchronous model, the new model uses
       the IDL compiler and the SII to achieve type safety and improved 
       performance, but the application does not block waiting for a
-      response, instead it gives the ORB a reference to a reply
-      handler, that will receive the response asynchronously.
+      response. Instead, it gives the ORB a reference to a reply
+      handler that will receive the response asynchronously.
       The specification also defines a polling interface that we will
       not discuss as TAO does not implement it.
     </P>
@@ -53,16 +53,16 @@
     </P>
 
     <P>The first step is to generate the stubs and skeletons with
-      support for the callback AMI, we do this with the <CODE>-GC</CODE>
+      support for the callback AMI.  We do this with the <CODE>-GC</CODE>
       flag:
     </P>
 <PRE>
 $ $ACE_ROOT/TAO/TAO_IDL/tao_idl -GC Quoter.idl
 </PRE>
     <P>You may want to take a brief look at the generated client side
-      interface,
-      the IDL compiler adds new methods to the <CODE>Quoter::Stock</CODE>
-      interface, in particular pay attention this operation:
+      interface.
+      The IDL compiler adds new methods to the <CODE>Quoter::Stock</CODE>
+      interface.  In particular pay attention to this operation:
     </P>
 <PRE>
   virtual void sendc_get_price_and_names (
@@ -72,7 +72,7 @@ $ $ACE_ROOT/TAO/TAO_IDL/tao_idl -GC Quoter.idl
       CORBA::SystemException
     ));
 </PRE>
-    <P>This is the operation used to send a request asynchronously, the 
+    <P>This is the operation used to send a request asynchronously.  The 
       response is received in the handler object. This is a regular
       CORBA object with the following IDL interface:
     </P>
@@ -83,12 +83,12 @@ interface AMI_Single_Query_StockHandler {
                            in string full_name);
 };
 </PRE>
-    <P>You don't have to write this IDL interface, the IDL compiler
+    <P>You don't have to write this IDL interface.  The IDL compiler
       automatically generates the so-called <EM>implied IDL</EM>
       constructs from your original IDL.
-      Notice how the arguments are generated, the first argument is
+      Notice how the arguments are generated.  The first argument is
       simply the return value, then the output arguments show up, but
-      this as <EM>input</EM> only since the handler as to received the 
+      as <EM>input</EM> only since the handler has to receive the 
       reply.
     </P>
 
@@ -179,16 +179,16 @@ private:
 
     <H4>Solution</H4>
     <P>Look at
-      <A HREF="client.cpp">client.cpp</A> file, it should
+      <A HREF="client.cpp">client.cpp</A> file.  It should
       not be much different from yours.
     </P>
 
     <H3>Testing</H3>
 
-    <P>A simple server is provided, it is based on the
-      <A HREF="../../Simple/Server/index.html">simpler server</A>
+    <P>A simple server is provided, based on the
+      <A HREF="../Simple/Server/index.html">simple server</A>
       from the introduction.
-      As before you need the following files:
+      As before, you need the following files:
       <A HREF="Stock_i.h">Stock_i.h</A>,
       <A HREF="Stock_i.cpp">Stock_i.cpp</A>,
       <A HREF="Stock_Factory_i.h">Stock_Factory_i.h</A>
@@ -201,24 +201,24 @@ private:
     <P>So far we have used the default configuration in TAO,
       but AMI works better with some fine tuning.  For example,
       by default TAO uses a separate connection for each outstanding
-      request, with SMI this is a very good strategy as separate
+      request.  With SMI this is a very good strategy, as separate
       threads can send concurrent requests without any shared
       resources,
       but this approach does not scale well with AMI, as it would
       create too many connections.
-      The solution is to change the strategy to share connections,
-      all we need to do is create a
+      The solution is to change the strategy to share connections.
+      All we need to do is create a
       <A HREF="svc.conf">svc.conf</A> file with the following
       contents:
     </P>
 <PRE>
 static Client_Strategy_Factory "-ORBTransportMuxStrategy MUXED"
 </PRE>
-    <P>there are many other configuration options, all of them
+    <P>There are many other configuration options, all of them
       documented in
       <A HREF="http://ace.cs.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/TAO/docs/Options.html">Options.html</A>,
       in 
-      <A HREF="http://ace.cs.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/TAO/docs/configurations.html">configurations.html</A>
+      <A HREF="http://ace.cs.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/TAO/docs/configurations.html">configurations.html</A>,
       and in the Developer's Guide available from
       <A HREF="http://www.theaceorb.com/">OCI</A>.
     </P>
@@ -227,7 +227,7 @@ static Client_Strategy_Factory "-ORBTransportMuxStrategy MUXED"
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Sat Nov 27 15:47:01 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Tue Feb 22 11:43:05 PST 2000
+Last modified: Thu Mar 29 16:04:44 PST 2001
 <!-- hhmts end -->
   </body>
 </html>
