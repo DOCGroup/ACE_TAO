@@ -1,3 +1,25 @@
+Wed Jun 28 19:35:23 2000 Jerry D. De Master <jdemaste@rite-solutions.com>
+
+	* netsvcs/lib/Client_Logging_Handler.cpp:
+          Currently, the client logging daemon attempts to connect to a
+ 	  server logging daemon to which all logging records are
+ 	  forwarded.  In the event that a connection cannot be established
+ 	  at initialization, or if the connection is lost during daemon
+ 	  execution, logging output "rolls-over" to STDERR.  This seems
+ 	  like reasonable behavior, however....
+
+          One interesting use case of the client logging daemon is to use
+ 	  it to collect all logging output from all clients, on a single
+ 	  node system.  For this use case, there is no need for a server
+ 	  logging daemon.  One could run the client logging daemon without
+ 	  a server logging daemon and redirect STDERR to a logfile,
+ 	  however, this methodology does not allow the use of the
+ 	  ACE_Logging_Strategy class to configure the client daemon's
+ 	  logging behavior (especially the new -i and -m options).  This
+ 	  problem can be easily fixed by first testing if the client
+ 	  daemon is already logging to a msg_ostream - if it is, do not
+ 	  roll-over logging to STDERR upon connection failure.
+
 Wed Jun 28 11:20:08 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * bin/pace_components: 
