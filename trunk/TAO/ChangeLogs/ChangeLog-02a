@@ -1,3 +1,32 @@
+Thu Mar 30 00:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* TAO/tao/Smart_Proxies.{h,i,cpp}: 
+	  A new class TAO_Smart_Proxy_Base was added which is the base class 
+	  for all the smart proxy interface base classes and contains the 
+	  <base_proxy_> member.
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+	  Added <get_proxy> method which downcasts the CORBA_Object member 
+	  of TAO_Smart_Proxy_Base to the appropriate proxy interface. Added 
+	  a default constructor definition and removed the previously
+	  defined constructor.
+	* TAO_IDL/be/be_visitor_operation/smart_proxy_cs.cpp: 
+	  Added delegation of every operation to the <get_proxy> method.
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be/be_type.cpp (nested_sp_type_name):
+	  Added a nested name generation method for smart proxy base.
+	  classes and also put the common code into a new method
+	  <nested_name>.
+	* tao/Makefile: Added Smart_Proxies entry
+	* tao/corba.h: Included Smart_PRoxies.h
+	* tao/Smart_proxies.{h,i,cpp}: Contains the TAO_Smart_Proxy_Base
+	  class.
+	
+	The above changes are a modified version of the implementation
+	inheritance changes contributed by Brian Wallis
+	<brian.wallis.ot.com.au>. Thanks to Brian Wallis for this
+	wonderful contibution towards the Smart Proxies feature in TAO.
+
 Thu Mar 30 15:45:25 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/SHMIOP_Acceptor.cpp (TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor):
