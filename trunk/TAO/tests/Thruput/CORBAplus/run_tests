@@ -1,0 +1,36 @@
+#! /bin/csh
+
+rm -f results.CP
+touch results.CP
+
+echo "CORBAplus throughput test"
+echo "========================="
+echo "CORBAplus throughput test" >>& results.CP
+echo "=========================" >>& results.CP
+
+
+echo "Send Struct --------------------------------------------------------"  >>& results.CP
+   ./client -S 10485760 -f m -l 1024 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 2048 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP 
+   ./client -S 10485760 -f m -l 4096 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S  -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 8192 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S  -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 16384 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 32768 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 65536 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 131072 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S  -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 262144 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S  -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+
+echo "Send Short ---------------------------------------------------------"  >>& results.CP
+   ./client -S 10485760 -f m -l 1024 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 2048 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP 
+   ./client -S 10485760 -f m -l 4096 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s  -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 8192 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s  -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 16384 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 32768 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 65536 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 131072 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s  -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 262144 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s  -pbtrace -pbinit TTCP_IIOP_test iiop://merengue-atm1:58733/TTCP_IIOP_test >>& results.CP
+ 
+
+grep "Mbit/sec\|Send" results.CP
+ 
