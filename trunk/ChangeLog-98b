@@ -1,3 +1,7 @@
+Wed Oct 14 00:28:10 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.53 released.
+
 1998-10-14  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* ace/Synch_T.cpp : Changed ACE_mutex_t to ACE_cond_t for CHORUS
