@@ -42,7 +42,6 @@ TAO_Internal::open_services (int& argc, char** argv)
 #endif /* TAO_USES_STATIC_SERVICE */
   else
     return 0;
-#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 }
 
 TAO_Internal::TAO_Internal (void)
