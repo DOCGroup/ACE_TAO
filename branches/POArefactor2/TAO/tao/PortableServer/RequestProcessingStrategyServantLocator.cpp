@@ -97,12 +97,25 @@ namespace TAO
     PortableServer::Servant
     Servant_Locator_Request_Processing_Strategy::locate_servant (
       const char *operation,
-      const PortableServer::ObjectId &/*system_id*/,
+      const PortableServer::ObjectId &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       int &/*wait_occurred_restart_call*/
       ACE_ENV_ARG_DECL)
     {
+      PortableServer::Servant servant = 0;
+
+      servant = this->poa_->find_servant (system_id,
+                                          servant_upcall,
+                                          poa_current_impl
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (servant != 0)
+        {
+          return servant;
+        }
+
       // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
       // has been associated with the POA so the POA will invoke incarnate
       // or preinvoke on it to find a servant that may handle the
@@ -146,7 +159,7 @@ namespace TAO
       servant_upcall.state (TAO::Portable_Server::Servant_Upcall::OBJECT_ADAPTER_LOCK_RELEASED);
 
       PortableServer::ServantLocator::Cookie cookie = 0;
-      PortableServer::Servant servant =
+      servant =
         this->servant_locator_->preinvoke (poa_current_impl.object_id (),
                                            this->poa_,
                                            operation,
