@@ -1,3 +1,10 @@
+Wed Sep  1 15:15:00 1999  Luther Baker  <ljb1@cs.wustl.edu>
+
+	* ace/Arg_Shifter.h: Added function (get_current_parameter(offset)
+	  to return parameters that may be mangled with flags.
+
+	* ace/Arg_Shifter.cpp: Implemented function above.
+
 Wed Sep  1 14:50:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Added definitions for _O_BINARY, _O_TEXT, and _O_RAW
