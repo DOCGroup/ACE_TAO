@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_AIO_CALLS) && !defined(__sun)
+#if defined (ACE_HAS_AIO_CALLS) && !defined(__sun) && !defined(__Lynx__)
 
 #include "ace/POSIX_Proactor.h"
 
@@ -101,5 +101,5 @@ protected:
 #include "ace/POSIX_CB_Proactor.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_HAS_AIO_CALLS && !__sun*/
+#endif /* ACE_HAS_AIO_CALLS && !__sun && !__Lynx__ */
 #endif /* ACE_POSIX_CB_PROACTOR_H*/

@@ -3,7 +3,7 @@
 
 #include "ace/POSIX_CB_Proactor.h"
 
-#if defined (ACE_HAS_AIO_CALLS) && !defined(__sun)
+#if defined (ACE_HAS_AIO_CALLS) && !defined(__sun) && !defined(__Lynx__)
 
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
@@ -200,5 +200,5 @@ ACE_POSIX_CB_Proactor::cancel_aio (ACE_HANDLE handle)
   return ACE_POSIX_AIOCB_Proactor::cancel_aio (handle);
 }
 
-#endif /* ACE_HAS_AIO_CALLS && !__sun */
+#endif /* ACE_HAS_AIO_CALLS && !__sun && !__Lynx__ */
 
