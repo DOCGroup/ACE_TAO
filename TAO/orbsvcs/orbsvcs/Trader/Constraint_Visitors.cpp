@@ -1197,6 +1197,9 @@ template class ACE_Unbounded_Queue<TAO_Literal_Constraint>;
 template class ACE_Unbounded_Queue_Iterator<TAO_Literal_Constraint>;
 template CORBA::Boolean TAO_find (const CORBA::Any &, const int &);
 template CORBA::Boolean TAO_find (const CORBA::Any &, const unsigned char &);
+
+
+
 #if !defined (ACE_LACKS_FLOATING_POINT)
 template CORBA::Boolean TAO_find (const CORBA::Any &, const float &);
 template CORBA::Boolean TAO_find (const CORBA::Any &, const double &);
@@ -1214,6 +1217,9 @@ template CORBA::Boolean TAO_find (const CORBA::Any &, const unsigned int &);
 
 #pragma instantiate CORBA::Boolean TAO_find (const CORBA::Any &, const int &)
 #pragma instantiate CORBA::Boolean TAO_find (const CORBA::Any &, const unsigned char &)
+
+
+
 #if !defined (ACE_LACKS_FLOATING_POINT)
 #pragma instantiate CORBA::Boolean TAO_find (const CORBA::Any &, const float &)
 #pragma instantiate CORBA::Boolean TAO_find (const CORBA::Any &, const double &)
