@@ -1,6 +1,8 @@
 // $Id$  -*- IDL -*-
 
 // Component implementation definition of hello.idl.
+// Since we currently don't have a CCIDL (CIAO CIDL) compiler available,
+// we need to generate the servant implementation manually.
 
 import HelloWorld;              // Do we need this?
 import HelloHome;               // This should import all related defitions.
