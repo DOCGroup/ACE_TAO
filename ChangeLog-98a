@@ -1,8 +1,15 @@
+Sat Apr  4 02:06:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (invoke,thr_exit): (*Win32*) We also need to consider
+	  threads that are not spawned by ACT_Thread_Manager by checking
+	  the validity of cached ACE_Thread_Descriptor.  In any rate,
+	  please avoid using thread functions in ACE_Thread::* and
+	  ACE_OS::thr_* directly.
 
 Sat Apr  4 01:03:17 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
         * ace/Map_Manager.cpp (map): Added map method for the iterator interface.
-	
+
 Sat Apr  4 00:55:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/clients/Naming/{Client,Dump_Restore}/Makefile:
@@ -42,9 +49,9 @@ Fri Apr 03 18:45:35 1998  Steve Huston  <shuston@riverace.com>
 	* performance-tests/Misc/Makefile
 	      Moved all program source names to PSRC, not SRC, for
 	      'make depend'.
-	
+
 	* performance-tests/Makefile: Removed UDP from list of dirs to build.
-	
+
 	* include/makeinclude/rules.bin.GNU: Set OBJEXT and VOBJS from the
 	  SRC files in the Makefile (LSRC sets VLOBJS in rules.lib.GNU;
 	  SRC sets VOBJS in rules.bin.GNU).
@@ -65,7 +72,9 @@ Fri Apr  3 10:40:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  _beginthreadex.  This seemed to cause some subtle problem with
 	  MSVC 4.2.  Since we always cached the Thread_Descriptor in TSS
 	  now, we can just check how a thread was created and use the
-	  appropriate thread exiting method.
+	  appropriate thread exiting method.  Thanks to Detlef Becker
+	  <Becker.Detlef@med.siemens.de> for tracing down this obscure
+	  bug.
 
 	* ace/Thread_Manager.{h,i} (flags): Added this new access function
 	  into ACE_Thread_Descriptor to get the creation flags for a
