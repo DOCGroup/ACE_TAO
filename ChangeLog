@@ -1,6 +1,9 @@
+Wed Mar 21 08:11:15 2002  Boris Kolpackov  <bosk@ipmce.ru>
+	* THANKS: Added Frank Rybak <rybak@ll.mit.edu> to the Hall of fame.
+	
 Wed Mar 20 11:23:38 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/Service_Manager.cpp (handle_input): 
+	* ace/Service_Manager.cpp (handle_input):
 	  Moved the declaration of 'error' outside the do-while loop to
 	  fix the 'error (undeclared)' error.
 
