@@ -64,7 +64,7 @@ TAO_ValueFactory_Map::rebind (const char *repo_id,
   int ret = 0;
   ret = this->map_.rebind (CORBA::string_dup (repo_id),
                            factory,
-                           prev_repo_id, 
+                           prev_repo_id,
                            prev_factory);
 
   if (ret > -1)   // ok, no error
@@ -88,7 +88,7 @@ TAO_ValueFactory_Map::unbind (const char *repo_id,
   // ACE_Hash_Map_Entry<const char *, CORBA_ValueFactory_ptr> *prev_entry;
   FACTORY_MAP_MANAGER::ENTRY *prev_entry;
   int ret = 0;
-  ret = this->map_.find (repo_id, 
+  ret = this->map_.find (repo_id,
                          prev_entry);
   if (ret == 0)    // there was a matching factory
     {
@@ -110,7 +110,7 @@ TAO_ValueFactory_Map::find (const char *repo_id,
                             CORBA_ValueFactory &factory)
 {
   int ret = 0;
-  ret = this->map_.find (repo_id, 
+  ret = this->map_.find (repo_id,
                          factory);
   // %! this must be guarded to be atomic  !!!!!!!!!!!!!!!!!!
   if (ret > -1)
@@ -124,19 +124,19 @@ TAO_ValueFactory_Map::find (const char *repo_id,
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Iterator_Base_Ex<const char *, CORBA_ValueFactory_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<const char *, CORBA_ValueFactory_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, CORBA_ValueFactory_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<const char *, CORBA_ValueFactory_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Entry<const char *, CORBA_ValueFactory_ptr>;
+template class ACE_Hash_Map_Iterator_Base_Ex<const char *, CORBA_ValueFactory *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<const char *, CORBA_ValueFactory *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, CORBA_ValueFactory *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<const char *, CORBA_ValueFactory *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Entry<const char *, CORBA_ValueFactory *>;
 template class TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, CORBA_ValueFactory_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, CORBA_ValueFactory_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, CORBA_ValueFactory_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, CORBA_ValueFactory_ptr, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<const char *, CORBA_ValueFactory_ptr>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, CORBA_ValueFactory *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, CORBA_ValueFactory *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, CORBA_ValueFactory *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, CORBA_ValueFactory *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<const char *, CORBA_ValueFactory *>
 #pragma instantiate TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

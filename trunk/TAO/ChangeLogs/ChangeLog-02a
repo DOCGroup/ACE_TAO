@@ -1,3 +1,7 @@
+Wed Jul  3 07:27:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ValueFactory_Map.cpp: Fixed a compile error with SunCC 5.3.
+
 Tue Jul  2 19:27:49 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Security.idl:
