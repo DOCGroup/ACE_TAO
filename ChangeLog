@@ -1,6 +1,13 @@
+Thu Nov 25 14:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Threads/Guards.cpp:
+        * examples/APG/Threads/Message_Blocks.cpp:
+          Use ACE_TMAIN instead of main to fix link errors in the unicode
+          builds.
+
 Wed Nov 24 17:23:22 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\Timer_Wheel_T.cpp (expire): 
+	* ace\Timer_Wheel_T.cpp (expire):
 
 	  ACE_Timer_Wheel_T<>::expire() made the upcall before
 	  rescheduling a recurring timer.  The problem with this is that
