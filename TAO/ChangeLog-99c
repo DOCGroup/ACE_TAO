@@ -1,5 +1,7 @@
 Thu Jun 10 11:07:30 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* tests/Param_Test/tmplinst.cpp: Fixed #pragma instantiations.
+
 	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: Fixed a problem
 	in NT. Thanks to Chris & Andy for pointing this out.
