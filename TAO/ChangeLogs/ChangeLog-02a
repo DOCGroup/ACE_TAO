@@ -1,3 +1,8 @@
+Wed Apr 11 07:40:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Reliable_Oneways/client.cpp: Added a #include to get rid
+	  of compile errors on builds with no Interceptors support.
+
 Wed Apr 11 07:38:45 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/examples/POA/Generic_Servant/client.bor
