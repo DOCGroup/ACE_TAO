@@ -69,14 +69,14 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
-      *os << " = " << be_idt_nl
-	  << "CORBA::Environment::default_environment ()"
+      *os << " = CORBA::Environment::default_environment ()"
 	  << be_uidt;
       break;
     default:
       break;
     }
   *os << be_uidt_nl << " )";
+
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:

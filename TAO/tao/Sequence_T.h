@@ -287,6 +287,18 @@ public:
   operator T *&();
   // Cast.
 
+  const T *in (void) const;
+  // for in parameter.
+  
+  T *&inout (void);
+  // for inout parameter.
+  
+  T *&out (void);
+  // for out parameter.
+  
+  T *_retn (void);
+  // for return type
+
 private:
   T **ptr_;
   // data member, notice that it is a pointer, to implement the

@@ -157,8 +157,50 @@ be_visitor_sequence_ch::gen_object_manager (be_sequence *node)
       << "{" << be_idt_nl
       << "return *this->ptr_;" << be_uidt_nl
       << "}" << be_nl
-      << be_uidt_nl;
+      << be_nl;
 
+  // in method
+  *os << "const "; pt->accept (visitor); *os << " *in (void) const // in " 
+      << be_nl
+      << "{" << be_idt_nl
+      << "return *this->ptr_;" << be_uidt_nl
+      << "}" << be_nl
+      << be_nl;
+                                           
+  // inout method
+  pt->accept (visitor); 
+  *os << " *&inout (void) // inout " 
+      << be_nl
+      << "{" << be_idt_nl
+      << "return *this->ptr_;" << be_uidt_nl
+      << "}" << be_nl
+      << be_nl;
+                                           
+  // out method
+  pt->accept (visitor);
+  *os << " *&out (void) // out " 
+      << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::release (*this->ptr_);" << be_nl
+      << "*this->ptr_ = "; pt->accept (visitor); *os << "::_nil ();"
+      << be_nl
+      << "return *this->ptr_;" << be_uidt_nl
+      << "}" << be_nl
+      << be_nl;
+                                           
+  // retn method
+  pt->accept (visitor); 
+  *os << " *_retn (void) // retn " 
+      << be_nl
+      << "{" << be_idt_nl;
+  pt->accept (visitor);
+  *os << " *temp = *this->ptr_;" << be_nl
+      << "*this->ptr_ = "; pt->accept (visitor); *os << "::_nil ();"
+      << be_nl
+      << "return temp;" << be_uidt_nl
+      << "}" << be_nl
+      << be_uidt_nl;
+                                           
   // members
   *os << "private:" << be_idt_nl;
   pt->accept(visitor); *os <<" **ptr_;" << be_nl

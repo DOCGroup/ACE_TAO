@@ -257,6 +257,34 @@ TAO_Object_Manager<T>::operator T* &() // cast
   return *this->ptr_;
 }
 
+template <class T> ACE_INLINE const T *
+TAO_Object_Manager<T>::in (void) const
+{
+  return *this->ptr_;
+}
+
+template <class T> ACE_INLINE T *&
+TAO_Object_Manager<T>::inout (void)
+{
+  return *this->ptr_;
+}
+
+template <class T> ACE_INLINE T *&
+TAO_Object_Manager<T>::out (void)
+{
+  CORBA::release (*this->ptr_);
+  *this->ptr_ = T::_nil ();
+  return *this->ptr_;
+}
+
+template <class T> ACE_INLINE T *
+TAO_Object_Manager<T>::_retn (void)
+{
+  T *temp = *this->ptr_;
+  *this->ptr_ = T::_nil ();
+  return temp;
+}
+
 // *************************************************************
 // class TAO_Unbounded_Object_Sequence
 // *************************************************************

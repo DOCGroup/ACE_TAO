@@ -36,5 +36,7 @@
 #include "be_visitor_union/discriminant_cs.h"
 #include "be_visitor_union/any_op_ch.h"
 #include "be_visitor_union/any_op_cs.h"
+#include "be_visitor_union/cdr_op_ch.h"
+#include "be_visitor_union/cdr_op_cs.h"
 
 #endif // TAO_BE_VISITOR_UNION_H

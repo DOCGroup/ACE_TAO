@@ -79,6 +79,12 @@ be_visitor_typedef::visit_array (be_array *node)
     case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
       ctx.state (TAO_CodeGen::TAO_ARRAY_ANY_OP_CS);
       break;
+    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_ARRAY_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_ARRAY_CDR_OP_CS);
+      break;
     case TAO_CodeGen::TAO_TYPEDEF_SH:
     case TAO_CodeGen::TAO_TYPEDEF_SI:
     case TAO_CodeGen::TAO_TYPEDEF_SS:
@@ -143,6 +149,12 @@ be_visitor_typedef::visit_enum (be_enum *node)
       break;
     case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
       ctx.state (TAO_CodeGen::TAO_ENUM_ANY_OP_CS);
+      break;
+    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_TYPEDEF_CI:
     case TAO_CodeGen::TAO_TYPEDEF_SH:
@@ -220,6 +232,12 @@ be_visitor_typedef::visit_sequence (be_sequence *node)
     case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
       ctx.state (TAO_CodeGen::TAO_SEQUENCE_ANY_OP_CS);
       break;
+    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS);
+      break;
     case TAO_CodeGen::TAO_TYPEDEF_SH:
     case TAO_CodeGen::TAO_TYPEDEF_SI:
     case TAO_CodeGen::TAO_TYPEDEF_SS:
@@ -284,6 +302,8 @@ be_visitor_typedef::visit_string (be_string *node)
       break;
     case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH:
     case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
+    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
+    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
     case TAO_CodeGen::TAO_TYPEDEF_SH:
     case TAO_CodeGen::TAO_TYPEDEF_SI:
     case TAO_CodeGen::TAO_TYPEDEF_SS:
@@ -352,6 +372,12 @@ be_visitor_typedef::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
       ctx.state (TAO_CodeGen::TAO_STRUCT_ANY_OP_CS);
       break;
+    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CS);
+      break;
     case TAO_CodeGen::TAO_TYPEDEF_SH:
     case TAO_CodeGen::TAO_TYPEDEF_SI:
     case TAO_CodeGen::TAO_TYPEDEF_SS:
@@ -419,6 +445,12 @@ be_visitor_typedef::visit_union (be_union *node)
       break;
     case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
       ctx.state (TAO_CodeGen::TAO_UNION_ANY_OP_CS);
+      break;
+    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_TYPEDEF_SH:
     case TAO_CodeGen::TAO_TYPEDEF_SI:

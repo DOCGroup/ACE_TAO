@@ -79,6 +79,12 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
     case TAO_CodeGen::TAO_UNION_PUBLIC_ACCESS_CS:
       ctx.state (TAO_CodeGen::TAO_UNION_PUBLIC_ACCESS_CS);
       break;
+    case TAO_CodeGen::TAO_UNION_CDR_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_UNION_BRANCH_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_UNION_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_UNION_BRANCH_CDR_OP_CS);
+      break;
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,

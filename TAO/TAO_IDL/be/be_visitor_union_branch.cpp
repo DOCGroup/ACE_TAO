@@ -31,6 +31,8 @@
 #include "be_visitor_union_branch/public_ch.cpp"
 #include "be_visitor_union_branch/public_ci.cpp"
 #include "be_visitor_union_branch/public_cs.cpp"
+#include "be_visitor_union_branch/cdr_op_ch.cpp"
+#include "be_visitor_union_branch/cdr_op_cs.cpp"
 
 ACE_RCSID(be, be_visitor_union_branch, "$Id$")
 
