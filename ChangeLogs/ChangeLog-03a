@@ -23,7 +23,7 @@ Thu May 09 00:38:22 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  to include the increment of active threads (and the acquisition
 	  of the lock) would probably fix the larger bug."
 
-	  Also, thanks to Lyn Headley <headley@wolve.com> and P Mason
+	  Also, thanks to Lyn Headley <headley@wolve.com> and Paxton Mason
 	  <pmason@wolve.com> at Wolverine, and Kobi Cohen Arazi
 	  <kobi@mivzak.com>, Mike Winter (mwinter@sonic.net),
 	  <sturtesm@hotmail.com> who have all suggested fimilar problems
