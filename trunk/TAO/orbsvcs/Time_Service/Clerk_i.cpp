@@ -4,6 +4,7 @@
 #include "tao/debug.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Time_Service, Clerk_i, "$Id$")
 
@@ -30,14 +31,14 @@ Clerk_i::~Clerk_i (void)
 // naming service.
 
 int
-Clerk_i::read_ior (const char *filename)
+Clerk_i::read_ior (const ACE_TCHAR* filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for writing: %p\n",
+                       ACE_LIB_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for writing: %p\n"),
                        filename),
                       -1);
   else
@@ -48,7 +49,7 @@ Clerk_i::read_ior (const char *filename)
   char *data = ior_buffer.read (EOF,'\n','\n');
   if (data == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n"),
+                       ACE_LIB_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n")),
                       -1);
 
   int result = 0;
@@ -61,8 +62,8 @@ Clerk_i::read_ior (const char *filename)
            str = ACE_OS::strtok (0, "\n"))
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "iors -> |%s|\n",
-                      str));
+                      ACE_LIB_TEXT("iors -> |%s|\n"),
+                      ACE_TEXT_CHAR_TO_TCHAR(str)));
 
           CORBA::Object_var objref =
             this->orb_->string_to_object (str
@@ -73,7 +74,7 @@ Clerk_i::read_ior (const char *filename)
           if (CORBA::is_nil (objref.in ()))
             {
               ACE_ERROR ((LM_ERROR,
-                          "IOR for the server is Null\n"));
+                          ACE_LIB_TEXT("IOR for the server is Null\n")));
               result = -1;
               break;
             }
@@ -88,7 +89,7 @@ Clerk_i::read_ior (const char *filename)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_LIB_TEXT("Exception"));
     }
   ACE_ENDTRY;
 
@@ -101,9 +102,10 @@ Clerk_i::read_ior (const char *filename)
 // Parse the command-line arguments and set options.
 
 int
-Clerk_i::parse_args (void)
+Clerk_i::parse_args (int argc,
+                     ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "dt:u:f:o:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("dt:u:f:o:"));
 
   int c, result;
 
@@ -115,13 +117,13 @@ Clerk_i::parse_args (void)
         break;
 
       case 't':  // time in secs after which the clerk should update time.
-        this->timer_value_ = atoi (get_opts.opt_arg ());
+        this->timer_value_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'u':
         // time in usecs after which the clerk should update time.
         // Continues the precision of the -t option.
-        this->timer_value_usecs_ = atoi (get_opts.opt_arg ());
+        this->timer_value_usecs_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'f':  // read the server IORs from a file.
@@ -129,18 +131,18 @@ Clerk_i::parse_args (void)
 
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "[CLERK] Process/Thread Id : (%P/%t) Unable to read ior from %s : %p\n",
+                             ACE_LIB_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to read ior from %s : %p\n"),
                              get_opts.opt_arg ()),
                             -1);
         break;
 
      case 'o':  // output the Clerk IOR to a file.
        this->ior_output_file_ =
-         ACE_OS::fopen (get_opts.opt_arg (), "w");
+         ACE_OS::fopen (get_opts.opt_arg (), ACE_LIB_TEXT("w"));
 
        if (this->ior_output_file_ == 0)
          ACE_ERROR_RETURN ((LM_ERROR,
-                            "[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %\n",
+                            ACE_LIB_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %\n"),
                             get_opts.opt_arg ()), -1);
        break;
 
@@ -148,15 +150,15 @@ Clerk_i::parse_args (void)
         /* FALLTHRU */
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "[SERVER] Process/Thread Id : (%P/%t)"
-                           "usage:  %s"
-                           " [-d]"
-                           " [-t] <Timer value inn Secs>"
-                           " [-u] <Timer value in uSecs>"
-                           " [-f] <ior_input_file>"
-                           " [-o] <ior_output_file>"
-                           "\n",
-                           argv_ [0]),
+                           ACE_LIB_TEXT("[SERVER] Process/Thread Id : (%P/%t)")
+                           ACE_LIB_TEXT("usage:  %s")
+                           ACE_LIB_TEXT(" [-d]")
+                           ACE_LIB_TEXT(" [-t] <Timer value inn Secs>")
+                           ACE_LIB_TEXT(" [-u] <Timer value in uSecs>")
+                           ACE_LIB_TEXT(" [-f] <ior_input_file>")
+                           ACE_LIB_TEXT(" [-o] <ior_output_file>")
+                           ACE_LIB_TEXT("\n"),
+                           argv[0]),
                           1);
       }
 
@@ -199,8 +201,8 @@ Clerk_i::get_first_IOR (void)
 
       if (CORBA::is_nil (server_context.in ()))
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Time_Service_Clerk::get_server_IORs:"
-                    "No Active Servers in the Network\n"));
+                    ACE_LIB_TEXT("TAO_Time_Service_Clerk::get_server_IORs:")
+                    ACE_LIB_TEXT("No Active Servers in the Network\n")));
 
       // Get the first element and an iterator over the other
       // elements.
@@ -223,8 +225,8 @@ Clerk_i::get_first_IOR (void)
 
       if (CORBA::is_nil (obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "[CLERK] Process/Thread Id : (%P/%t) Unable to Resolve "
-                           "Server Reference\n"),
+                           ACE_LIB_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to Resolve ")
+                           ACE_LIB_TEXT("Server Reference\n")),
                           -1);
 
       // Insert the first server IOR into the unbounded set of server
@@ -236,12 +238,12 @@ Clerk_i::get_first_IOR (void)
       if (next_n_IORs (iter,
                        server_context) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "[CLERK] Process/Thread Id : (%P/%t) Unable to get next N IORs "),
+                           ACE_LIB_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to get next N IORs ")),
                           -1);;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_LIB_TEXT("Exception"));
       return -1;
     }
   ACE_ENDTRY;
@@ -270,8 +272,8 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
               ACE_TRY_CHECK;
 
               ACE_DEBUG ((LM_DEBUG,
-                          "Getting IOR of the server: %s\n\n",
-                          binding->binding_name[0].id.in ()));
+                          ACE_LIB_TEXT("Getting IOR of the server: %s\n\n"),
+                          ACE_TEXT_CHAR_TO_TCHAR(binding->binding_name[0].id.in ())));
 
               CosNaming::Name server_name;
               server_name.length (1);
@@ -298,7 +300,7 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception in next_n_IORs\n");
+                           ACE_LIB_TEXT("Unexpected exception in next_n_IORs\n"));
       return -1;
     }
   ACE_ENDTRY;
@@ -309,15 +311,16 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
 // Initialise the Naming Service.
 
 int
-Clerk_i::init_naming_service (void)
+Clerk_i::init_naming_service (int argc,
+                              char* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       // Initialize the POA.
-      this->orb_manager_.init_child_poa (this->argc_,
-                                         this->argv_,
+      this->orb_manager_.init_child_poa (argc,
+                                         argv,
                                          "my_child_poa"
                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -337,7 +340,7 @@ Clerk_i::init_naming_service (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_LIB_TEXT("Exception"));
       return -1;
     }
   ACE_ENDTRY;
@@ -374,8 +377,8 @@ Clerk_i::create_clerk (void)
 
       // Print the clerk IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
-                  "[SERVER] Process/Thread Id : (%P/%t) The Time Service CLERK IOR is: <%s>\n",
-                  objref_clerk.in ()));
+                  ACE_LIB_TEXT("[SERVER] Process/Thread Id : (%P/%t) The Time Service CLERK IOR is: <%s>\n"),
+                  ACE_TEXT_CHAR_TO_TCHAR(objref_clerk.in ())));
 
       // Print the Time Service clerk IOR to a file.
       if (this->ior_output_file_)
@@ -391,7 +394,7 @@ Clerk_i::create_clerk (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_LIB_TEXT("Exception"));
       return -1;
     }
   ACE_ENDTRY;
@@ -474,7 +477,7 @@ Clerk_i::register_clerk (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Exception from init_naming_service ()\n");
+                           ACE_LIB_TEXT("(%P|%t) Exception from init_naming_service ()\n"));
     }
   ACE_ENDTRY;
 
@@ -485,13 +488,13 @@ Clerk_i::register_clerk (void)
 
 int
 Clerk_i::init (int argc,
-               char *argv[]
+               ACE_TCHAR *argv[]
                ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
-      this->argc_ = argc;
-      this->argv_ = argv;
+      // Make a copy of command line parameter.
+      ACE_Argv_Type_Converter command(argc, argv);
 
       // Set the size of the Server IOR Array.
       this->server_.max_size (10);
@@ -501,19 +504,19 @@ Clerk_i::init (int argc,
       // create a child POA under the root POA.
 
 
-      this->orb_manager_.init (argc,
-                               argv
+      this->orb_manager_.init (command.get_argc(),
+                               command.get_ASCII_argv()
                                ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
-      if (this->orb_manager_.init_child_poa (argc,
-                                             argv,
+      if (this->orb_manager_.init_child_poa (command.get_argc(),
+                                             command.get_ASCII_argv(),
                                              "child_poa"
                                              ACE_ENV_ARG_PARAMETER) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "init_child_poa"),
+                           ACE_LIB_TEXT("%p\n"),
+                           ACE_LIB_TEXT("init_child_poa")),
                           -1);
       ACE_TRY_CHECK;
 
@@ -521,7 +524,7 @@ Clerk_i::init (int argc,
       this->orb_ = this->orb_manager_.orb ();
 
       // Parse commandline arguments.
-      if (this->parse_args () !=0 )
+      if (this->parse_args (command.get_argc(), command.get_TCHAR_argv()) !=0 )
         return -1;
 
       // If IOR file has not been specified then try the Naming
@@ -530,10 +533,11 @@ Clerk_i::init (int argc,
       if (!this->ior_fp_)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "IOR file not specified. Using the Naming Service instead\n"));
+                      ACE_LIB_TEXT("IOR file not specified. Using the Naming Service instead\n")));
 
           // Initialize the Naming Service.
-          if (this->init_naming_service () !=0 )
+          if (this->init_naming_service (command.get_argc(),
+                                         command.get_ASCII_argv()) !=0 )
             return -1;
 
           // Get a reference to the Server Naming context and the
@@ -561,7 +565,7 @@ Clerk_i::init (int argc,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Exception in Clerk_i::init ()\n");
+                           ACE_LIB_TEXT("(%P|%t) Exception in Clerk_i::init ()\n"));
       return -1;
     }
   ACE_ENDTRY;
@@ -580,13 +584,13 @@ Clerk_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
       if (r == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "[SERVER] Process/Thread Id : (%P/%t) Clerk_i::run"),
+                           ACE_LIB_TEXT("[SERVER] Process/Thread Id : (%P/%t) Clerk_i::run")),
                           -1);
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Exception in Clerk_i::run ()\n");
+                           ACE_LIB_TEXT("(%P|%t) Exception in Clerk_i::run ()\n"));
     }
   ACE_ENDTRY;
 

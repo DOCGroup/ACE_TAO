@@ -66,7 +66,7 @@ public:
 
   typedef TAO_Trader_Base TAO_TRADER;
 
-  static TAO_TRADER* create_trader (int& argc, char** argv);
+  static TAO_TRADER* create_trader (int& argc, ACE_TCHAR** argv);
   // Creates an instance of the trader according to parameters whose
   // default values can be overrided with the following command line
   // arguments:
@@ -88,7 +88,7 @@ public:
 
 protected:
 
-  TAO_Trader_Factory (int& argc, char** argv);
+  TAO_Trader_Factory (int& argc, ACE_TCHAR** argv);
 
 private:
 
@@ -99,7 +99,7 @@ private:
 
   TAO_TRADER* manufacture_trader (void);
 
-  void parse_args (int& argc, char** argv);
+  void parse_args (int& argc, ACE_TCHAR** argv);
 
   TAO_Trader_Factory& operator= (const TAO_Trader_Factory&);
   TAO_Trader_Factory (const TAO_Trader_Factory&);

@@ -101,7 +101,7 @@ Server_Repository::init ()
 
   // iterate through the list of registered servers and register them
   config->open_section (config->root_section (), 
-                        "Servers", 
+                        ACE_LIB_TEXT("Servers"),
                         1, 
                         this->servers_);
   int index = 0;
@@ -124,19 +124,19 @@ Server_Repository::init ()
                                      server_key);
 
       error += config->get_string_value (server_key, 
-                                         "LogicalServer", 
+                                         ACE_LIB_TEXT("LogicalServer"),
                                          logical);
 
       error += config->get_string_value (server_key, 
-                                         "StartupCommand", 
+                                         ACE_LIB_TEXT("StartupCommand"),
                                          startup);
 
       error += config->get_string_value (server_key, 
-                                         "WorkingDir", 
+                                         ACE_LIB_TEXT("WorkingDir"),
                                          working_dir);
 
       error += config->get_integer_value (server_key, 
-                                          "Activation", 
+                                          ACE_LIB_TEXT("Activation"),
                                           activation_val);
 
       activation =
@@ -191,19 +191,19 @@ Server_Repository::add (
                         server);
 
   config->set_string_value (server, 
-                            "LogicalServer", 
+                            ACE_LIB_TEXT("LogicalServer"),
                             logical_server_name);
 
   config->set_string_value (server, 
-                            "StartupCommand", 
+                            ACE_LIB_TEXT("StartupCommand"),
                             startup_command);
 
   config->set_string_value (server, 
-                            "WorkingDir", 
+                            ACE_LIB_TEXT("WorkingDir"),
                             working_dir);
 
   config->set_integer_value (server, 
-                             "Activation", 
+                             ACE_LIB_TEXT("Activation"),
                              activation);
 
   Server_Info *new_server = 0;

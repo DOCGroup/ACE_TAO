@@ -38,14 +38,15 @@ public:
   // Destructor
 
   int init (int argc,
-            char *argv[]
+            ACE_TCHAR *argv[]
             ACE_ENV_ARG_DECL);
   // Initialize the Server state - parsing arguments and ...
 
   int run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the orb.
 
-  u_int parse_args (void);
+  u_int parse_args (int argc,
+                    ACE_TCHAR* argv[]);
   // Parse the passed parameters.
 
 private:
@@ -57,12 +58,6 @@ private:
 
   CosNaming::NamingContext_var namingContext_var_;
   // reference to the naming service
-
-  int argc_;
-  // Number of commandline arguments.
-
-  char **argv_;
-  // commandline arguments.
 
   int debug_level_;
   // debug level (0 = quiet, 1 = default, informative, 2+ = noisy);

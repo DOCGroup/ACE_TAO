@@ -46,7 +46,7 @@ public:
   // Default Constructor.
 
   Concurrency_Service (int argc,
-                       char **argv
+                       ACE_TCHAR **argv
                        ACE_ENV_ARG_DECL);
   // Constructor taking the command-line arguments.
 
@@ -54,7 +54,7 @@ public:
   // Destructor.
 
   int init (int argc,
-            char **argv
+            ACE_TCHAR **argv
             ACE_ENV_ARG_DECL);
   // Initialize the Concurrency Service with the arguments.
 
@@ -62,7 +62,7 @@ public:
   // Run the Concurrency_Service.
 
 private:
-  int parse_args (void);
+  int parse_args (int argc, ACE_TCHAR** argv);
   // Parses the commandline arguments.
 
   int init_naming_service (ACE_ENV_SINGLE_ARG_DECL);
@@ -95,12 +95,6 @@ private:
 
   CosNaming::NamingContext_var naming_context_;
   // Naming context for the naming service.
-
-  int argc_;
-  // Number of commandline arguments.
-
-  char **argv_;
-  // Commandline arguments.
 };
 
 #endif /* _CONCURRENCY_SERVICE_H */

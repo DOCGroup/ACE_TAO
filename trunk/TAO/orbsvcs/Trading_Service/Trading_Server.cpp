@@ -5,7 +5,7 @@
 // Driver function for the TAO Trading Service.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   Trading_Service trader;
 

@@ -1522,7 +1522,17 @@ FILE *file;
 	b->yy_input_file = file;
 	b->yy_fill_buffer = 1;
 
+#if defined (ACE_HAS_WINCE)
+    // Mimic the behavior as WinCE does not have isatty().
+    if ((file != 0) && (file == fileno(file))) {
+        b->yy_is_interactive = 1;
+    }
+    else {
+        b->yy_is_interactive = 0;
+    }
+#else
 	b->yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
+#endif  // ACE_HAS_WINCE
 
 	}
 

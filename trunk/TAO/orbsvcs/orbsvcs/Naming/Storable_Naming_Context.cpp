@@ -219,7 +219,7 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
     storable_context_ (0),
     orb_(CORBA::ORB::_duplicate (orb)),
     factory_(factory),
-    persistence_directory_ (persistence_directory)
+    persistence_directory_ (ACE_TEXT_ALWAYS_CHAR(persistence_directory))
 {
   ACE_NEW (this->storable_context_,
            TAO_Storable_Bindings_Map (hash_table_size,orb,poa_id,poa));
@@ -239,7 +239,7 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
     storable_context_ (0),
     orb_(CORBA::ORB::_duplicate (orb)),
     factory_(factory),
-    persistence_directory_ (persistence_directory)
+    persistence_directory_ (ACE_TEXT_ALWAYS_CHAR(persistence_directory))
 {
   this->storable_context_ = bindings_map;
   context_ = storable_context_;
@@ -353,7 +353,7 @@ TAO_Storable_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
                       poa_id,
                       this->storable_context_->total_size (),
                       this->factory_,
-                      this->persistence_directory_.c_str ()
+                      ACE_TEXT_CHAR_TO_TCHAR(this->persistence_directory_.c_str ())
                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
@@ -1038,7 +1038,6 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
                                const ACE_TCHAR *persistence_directory
                                ACE_ENV_ARG_DECL)
 {
-
   ACE_UNUSED_ARG (reentering);
 
   ACE_Unbounded_List<ACE_CString> context_id_coll;
@@ -1050,7 +1049,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
   ACE_Unbounded_List<ACE_CString> ref_IOR_coll;
   ACE_Unbounded_List<ACE_CString> ref_type_coll;
 
-  ACE_CString reader_name(persistence_directory);
+  ACE_CString reader_name(ACE_TEXT_ALWAYS_CHAR(persistence_directory));
   reader_name += "/";
   reader_name += poa_id;
 

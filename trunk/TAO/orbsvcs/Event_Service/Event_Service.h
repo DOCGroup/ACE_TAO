@@ -37,7 +37,7 @@ public:
   Event_Service (void);
   virtual ~Event_Service (void);
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Run the event service.
 
   // = The RtecEventChannelAdmin::Event_Channel methods
@@ -64,7 +64,7 @@ public:
           RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
 
 private:
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line args
 
   enum {
@@ -83,13 +83,13 @@ private:
   POA_RtecEventChannelAdmin::EventChannel *ec_impl_;
   // The Event Channel implementation.
 
-  const char* service_name_;
+  ACE_CString service_name_;
   // The name we use to bind with the NameService
 
-  const char* ior_file_name_;
+  ACE_CString ior_file_name_;
   // The name of the file were we output the Event_Service IOR.
 
-  const char* pid_file_name_;
+  ACE_CString pid_file_name_;
   // The name of a file where the process stores its pid
 
   int event_service_type_;

@@ -61,7 +61,7 @@ public:
   // Destructor
 
   int init (int argc,
-            char *argv[]
+            ACE_TCHAR *argv[]
             ACE_ENV_ARG_DECL);
   // Initialize the Trading Service with arguments.
 

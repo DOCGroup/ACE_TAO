@@ -20,6 +20,7 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Trader, Trading_Loader, "$Id$")
 
@@ -73,14 +74,17 @@ TAO_Trading_Loader::~TAO_Trading_Loader (void)
 }
 
 int
-TAO_Trading_Loader::init (int argc, char *argv[])
+TAO_Trading_Loader::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      // Copy command line parameter.
+      ACE_Argv_Type_Converter command_line(argc, argv);
+
       // Initialize the ORB Manager
-      this->orb_manager_.init (argc,
-                               argv
+      this->orb_manager_.init (command_line.get_argc(),
+                               command_line.get_ASCII_argv()
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -89,7 +93,7 @@ TAO_Trading_Loader::init (int argc, char *argv[])
 
       // Initializes and sets up the Trading Service
       CORBA::Object_var object =
-        this->create_object (orb.in (), argc, argv ACE_ENV_ARG_PARAMETER);
+        this->create_object (orb.in (), command_line.get_argc(), command_line.get_TCHAR_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
@@ -187,7 +191,8 @@ TAO_Trading_Loader::run (ACE_ENV_SINGLE_ARG_DECL)
 
 CORBA::Object_ptr
 TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
-                                   int argc, char *argv[]
+                                   int argc,
+                                   ACE_TCHAR *argv[]
                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -434,31 +439,30 @@ TAO_Trading_Loader::init_multicast_server (void)
 
 
 int
-TAO_Trading_Loader::parse_args (int &argc, char *argv [])
+TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
 {
-
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *current_arg = arg_shifter.get_current ();
+      const ACE_TCHAR *current_arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (current_arg,
-                          "-TSfederate") == 0)
+                          ACE_LIB_TEXT("-TSfederate")) == 0)
         {
           arg_shifter.consume_arg ();
           this->federate_ = 1;
         }
       if (ACE_OS::strcmp (current_arg,
-                          "-TSdumpior") == 0)
+                          ACE_LIB_TEXT("-TSdumpior")) == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const char *file_name =
+              const ACE_TCHAR *file_name =
                 arg_shifter.get_current ();
               this->ior_output_file_ =
-                ACE_OS::fopen (file_name, "w");
+                ACE_OS::fopen (file_name, ACE_LIB_TEXT("w"));
 
               if (this->ior_output_file_ == 0)
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -469,7 +473,7 @@ TAO_Trading_Loader::parse_args (int &argc, char *argv [])
           else
             this->ior_output_file_ =
               ACE_OS::fdopen (ACE_STDOUT,
-                              "w");
+                              ACE_LIB_TEXT("w"));
         }
 
       else

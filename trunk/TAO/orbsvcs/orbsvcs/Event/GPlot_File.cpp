@@ -23,7 +23,7 @@ ACE_GPlot_File::open (const char *filename)
 {
   ACE_OS::strcpy (filename_, filename);
 
-  FILE *read_file = ACE_OS::fopen (filename_, "r");
+  FILE *read_file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename_), ACE_LIB_TEXT("r"));
 
   long entry;
   char *value;
@@ -57,7 +57,7 @@ ACE_GPlot_File::open (const char *filename)
       fclose (read_file);
     }
 
-  write_file_ = ACE_OS::fopen (filename_, "w");
+  write_file_ = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename_), ACE_LIB_TEXT("w"));
   if (write_file_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p: can't open\n", filename_), -1);
 

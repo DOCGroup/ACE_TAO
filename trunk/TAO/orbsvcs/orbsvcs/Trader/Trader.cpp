@@ -562,13 +562,13 @@ operator== (const CosTrading::Admin::OctetSeq& left,
 #include "Trader_T.h"
 
 TAO_Trader_Factory::TAO_TRADER*
-TAO_Trader_Factory::create_trader (int& argc, char** argv)
+TAO_Trader_Factory::create_trader (int& argc, ACE_TCHAR** argv)
 {
   TAO_Trader_Factory trader_factory (argc, argv);
   return trader_factory.manufacture_trader ();
 }
 
-TAO_Trader_Factory::TAO_Trader_Factory (int& argc, char** argv)
+TAO_Trader_Factory::TAO_Trader_Factory (int& argc, ACE_TCHAR** argv)
   : conformance_ (TAO_TRADER_LINKED),
     threadsafe_ (0),
     supports_dynamic_properties_ (1),
@@ -647,77 +647,77 @@ TAO_Trader_Factory::manufacture_trader (void)
 }
 
 void
-TAO_Trader_Factory::parse_args (int& argc, char** argv)
+TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *current_arg = arg_shifter.get_current ();
+      const ACE_TCHAR* current_arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcmp (current_arg, "-TSthreadsafe") == 0)
+      if (ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSthreadsafe")) == 0)
         {
           arg_shifter.consume_arg ();
           this->threadsafe_ = 1;
         }
-      else if (ACE_OS::strcmp (current_arg, "-TSconformance") == 0)
+      else if (ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSconformance")) == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const char* conformance_str = arg_shifter.get_current ();
+              const ACE_TCHAR* conformance_str = arg_shifter.get_current ();
 
-              if (ACE_OS::strcasecmp (conformance_str, "Linked") == 0)
+              if (ACE_OS::strcasecmp (conformance_str, ACE_LIB_TEXT("Linked")) == 0)
                 this->conformance_ = TAO_TRADER_LINKED;
-              else if (ACE_OS::strcasecmp (conformance_str, "Query") == 0)
+              else if (ACE_OS::strcasecmp (conformance_str, ACE_LIB_TEXT("Query")) == 0)
                 this->conformance_ = TAO_TRADER_QUERY;
-              else if (ACE_OS::strcasecmp (conformance_str, "Simple") == 0)
+              else if (ACE_OS::strcasecmp (conformance_str, ACE_LIB_TEXT("Simple")) == 0)
                 this->conformance_ = TAO_TRADER_SIMPLE;
-              else if (ACE_OS::strcasecmp (conformance_str, "Standalone") == 0)
+              else if (ACE_OS::strcasecmp (conformance_str, ACE_LIB_TEXT("Standalone")) == 0)
                 this->conformance_ = TAO_TRADER_STANDALONE;
 
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-TSsupports_dynamic_properties") == 0)
+      else if (ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSsupports_dynamic_properties")) == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const char* arg_str = arg_shifter.get_current ();
+              const ACE_TCHAR* arg_str = arg_shifter.get_current ();
 
-              if (ACE_OS::strcasecmp (arg_str, "true") == 0)
+              if (ACE_OS::strcasecmp (arg_str, ACE_LIB_TEXT("true")) == 0)
                 this->supports_dynamic_properties_ = 1;
-              else if (ACE_OS::strcasecmp (arg_str, "false") == 0)
+              else if (ACE_OS::strcasecmp (arg_str, ACE_LIB_TEXT("false")) == 0)
                 this->supports_dynamic_properties_ = 0;
 
               arg_shifter.consume_arg ();
             }
 
         }
-      else if (ACE_OS::strcmp (current_arg, "-TSsupports_modifiable_properties") == 0)
+      else if (ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSsupports_modifiable_properties")) == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const char* arg_str = arg_shifter.get_current ();
+              const ACE_TCHAR* arg_str = arg_shifter.get_current ();
 
-              if (ACE_OS::strcasecmp (arg_str, "true") == 0)
+              if (ACE_OS::strcasecmp (arg_str, ACE_LIB_TEXT("true")) == 0)
                 this->supports_modifiable_properties_ = 1;
-              else if (ACE_OS::strcasecmp (arg_str, "false") == 0)
+              else if (ACE_OS::strcasecmp (arg_str, ACE_LIB_TEXT("false")) == 0)
                 this->supports_modifiable_properties_ = 0;
 
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-TSdef_search_card") == 0 ||
-               ACE_OS::strcmp (current_arg, "-TSmax_search_card") == 0 ||
-               ACE_OS::strcmp (current_arg, "-TSdef_match_card") == 0 ||
-               ACE_OS::strcmp (current_arg, "-TSmax_match_card") == 0 ||
-               ACE_OS::strcmp (current_arg, "-TSdef_return_card") == 0 ||
-               ACE_OS::strcmp (current_arg, "-TSmax_return_card") == 0 ||
-               ACE_OS::strcmp (current_arg, "-TSdef_hop_count") == 0 ||
-               ACE_OS::strcmp (current_arg, "-TSmax_hop_count") == 0)
+      else if (ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSdef_search_card")) == 0 ||
+               ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSmax_search_card")) == 0 ||
+               ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSdef_match_card")) == 0 ||
+               ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSmax_match_card")) == 0 ||
+               ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSdef_return_card")) == 0 ||
+               ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSmax_return_card")) == 0 ||
+               ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSdef_hop_count")) == 0 ||
+               ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSmax_hop_count")) == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
@@ -727,22 +727,22 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
                                  ACE_OS::atoi (arg_shifter.get_current ()));
               arg_shifter.consume_arg ();
 
-              if (ACE_OS::strstr (current_arg, "card"))
+              if (ACE_OS::strstr (current_arg, ACE_LIB_TEXT("card")))
                 {
-                  if (ACE_OS::strstr (current_arg, "max"))
+                  if (ACE_OS::strstr (current_arg, ACE_LIB_TEXT("max")))
                     {
-                      if (ACE_OS::strstr (current_arg, "search"))
+                      if (ACE_OS::strstr (current_arg, ACE_LIB_TEXT("search")))
                         this->max_search_card_ = value;
-                      else if (ACE_OS::strstr (current_arg, "match"))
+                      else if (ACE_OS::strstr (current_arg, ACE_LIB_TEXT("match")))
                         this->max_match_card_ = value;
                       else
                         this->max_return_card_ = value;
                     }
                   else
                     {
-                      if (ACE_OS::strstr (current_arg, "search"))
+                      if (ACE_OS::strstr (current_arg, ACE_LIB_TEXT("search")))
                         this->def_search_card_ = value;
-                      else if (ACE_OS::strstr (current_arg, "match"))
+                      else if (ACE_OS::strstr (current_arg, ACE_LIB_TEXT("match")))
                         this->def_match_card_ = value;
                       else
                         this->def_return_card_ = value;
@@ -750,34 +750,34 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
                 }
               else
                 {
-                  if (ACE_OS::strstr (current_arg, "max"))
+                  if (ACE_OS::strstr (current_arg, ACE_LIB_TEXT("max")))
                     this->max_hop_count_ = value;
                   else
                     this->def_hop_count_ = value;
                 }
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-TSdef_follow_policy") == 0
-               || ACE_OS::strcmp (current_arg, "-TSmax_follow_policy") == 0)
+      else if (ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSdef_follow_policy")) == 0
+               || ACE_OS::strcmp (current_arg, ACE_LIB_TEXT("-TSmax_follow_policy")) == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const char* arg_str = arg_shifter.get_current ();
+              const ACE_TCHAR* arg_str = arg_shifter.get_current ();
               CosTrading::FollowOption follow_option;
 
-              if (ACE_OS::strcasecmp (arg_str, "always") == 0)
+              if (ACE_OS::strcasecmp (arg_str, ACE_LIB_TEXT("always")) == 0)
                 follow_option = CosTrading::always;
-              else if (ACE_OS::strcasecmp (arg_str, "if_no_local") == 0)
+              else if (ACE_OS::strcasecmp (arg_str, ACE_LIB_TEXT("if_no_local")) == 0)
                 follow_option = CosTrading::if_no_local;
-              else if (ACE_OS::strcasecmp (arg_str, "local_only") == 0)
+              else if (ACE_OS::strcasecmp (arg_str, ACE_LIB_TEXT("local_only")) == 0)
                 follow_option = CosTrading::local_only;
-              else if (ACE_OS::strstr (current_arg, "def"))
+              else if (ACE_OS::strstr (current_arg, ACE_LIB_TEXT("def")))
                 follow_option = this->def_follow_policy_;
               else
                 follow_option = this->max_follow_policy_;
 
-              if (ACE_OS::strstr (current_arg, "def"))
+              if (ACE_OS::strstr (current_arg, ACE_LIB_TEXT("def")))
                 this->def_follow_policy_ = follow_option;
               else
                 this->max_follow_policy_ = follow_option;

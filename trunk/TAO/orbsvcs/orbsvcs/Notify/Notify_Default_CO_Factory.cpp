@@ -33,7 +33,7 @@ TAO_Notify_Default_CO_Factory::~TAO_Notify_Default_CO_Factory ()
 }
 
 int
-TAO_Notify_Default_CO_Factory::init (int /*argc*/, char* /*argv*/[])
+TAO_Notify_Default_CO_Factory::init (int /*argc*/, ACE_TCHAR* /*argv*/[])
 {
   return 0;
 }
@@ -77,7 +77,7 @@ TAO_Notify_Default_CO_Factory::create_consumer_admin (TAO_Notify_EventChannel_i*
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unable to propagate event channel qos\n");
+                           ACE_LIB_TEXT("Unable to propagate event channel qos\n"));
     }
   ACE_ENDTRY;
 
@@ -107,7 +107,7 @@ TAO_Notify_Default_CO_Factory::create_supplier_admin (TAO_Notify_EventChannel_i*
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unable to propagate event channel qos\n");
+                           ACE_LIB_TEXT("Unable to propagate event channel qos\n"));
     }
   ACE_ENDTRY;
 
@@ -147,7 +147,7 @@ TAO_Notify_Default_CO_Factory::create_struct_proxy_pushsupplier (TAO_Notify_Cons
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unable to propagate parent qos\n");
+                           ACE_LIB_TEXT("Unable to propagate parent qos\n"));
     }
   ACE_ENDTRY;
 
@@ -175,7 +175,7 @@ TAO_Notify_Default_CO_Factory::create_seq_proxy_pushsupplier (TAO_Notify_Consume
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unable to propagate parent qos\n");
+                           ACE_LIB_TEXT("Unable to propagate parent qos\n"));
     }
   ACE_ENDTRY;
 
@@ -203,7 +203,7 @@ TAO_Notify_Default_CO_Factory::create_proxy_pushsupplier (TAO_Notify_ConsumerAdm
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unable to propagate parent qos\n");
+                           ACE_LIB_TEXT("Unable to propagate parent qos\n"));
     }
   ACE_ENDTRY;
 
@@ -232,7 +232,7 @@ TAO_Notify_Default_CO_Factory::create_struct_proxy_pushconsumer (TAO_Notify_Supp
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unable to propagate parent qos\n");
+                           ACE_LIB_TEXT("Unable to propagate parent qos\n"));
     }
   ACE_ENDTRY;
 
@@ -260,7 +260,7 @@ TAO_Notify_Default_CO_Factory::create_proxy_pushconsumer (TAO_Notify_SupplierAdm
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unable to propagate parent qos\n");
+                           ACE_LIB_TEXT("Unable to propagate parent qos\n"));
     }
   ACE_ENDTRY;
 
@@ -288,7 +288,7 @@ TAO_Notify_Default_CO_Factory::create_seq_proxy_pushconsumer (TAO_Notify_Supplie
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unable to propagate parent qos\n");
+                           ACE_LIB_TEXT("Unable to propagate parent qos\n"));
     }
   ACE_ENDTRY;
 

@@ -49,7 +49,7 @@ public:
   static int init_svcs (void);
 
   // = The Service_Object entry points
-  virtual int init (int argc, char* argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
   virtual int fini (void);
 
   // = The CEC_Factory methods
@@ -118,7 +118,7 @@ public:
 
 private:
   /// Parse an argument to set the type of collections used.
-  int parse_collection_arg (char *opt);
+  int parse_collection_arg (ACE_TCHAR* opt);
 
 private:
   /// Several flags to control the kind of object created.
@@ -141,7 +141,10 @@ private:
   int reactive_pulling_period_;
 
   /// Use this ORB to locate global resources.
-  const char *orbid_;
+  char *orbid_;
+
+  /// Indicate ORB ID has been duplicated (memory allocated).
+  int orbid_dupped_;
 
   /// The consumer and supplier control policies.
   int consumer_control_;

@@ -18,6 +18,7 @@
 
 #include "Concurrency_Service.h"
 
+#include "ace/Argv_Type_Converter.h"
 #include "tao/debug.h"
 
 ACE_RCSID(Concurrency_Service, Concurrency_Service, "$Id$")
@@ -29,27 +30,27 @@ Concurrency_Service::Concurrency_Service (void)
     ior_output_file_ (0)
 {
   ACE_DEBUG ((LM_DEBUG,
-             "Concurrency_Service::Concurrency_Service (void)\n"));
+             ACE_LIB_TEXT("Concurrency_Service::Concurrency_Service (void)\n")));
 }
 
 // Constructor taking command-line arguments.
 
 Concurrency_Service::Concurrency_Service (int argc,
-                                          char** argv
+                                          ACE_TCHAR** argv
                                           ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Concurrency_Service::Concurrency_Service (...)\n"));
+              ACE_LIB_TEXT("Concurrency_Service::Concurrency_Service (...)\n")));
   this->init (argc, argv ACE_ENV_ARG_PARAMETER);
 }
 
 int
-Concurrency_Service::parse_args (void)
+Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Concurrency_Service::parse_args\n"));
+              ACE_LIB_TEXT("Concurrency_Service::parse_args\n")));
 
-  ACE_Get_Opt get_opts (argc_, argv_, "do:s");
+  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("do:s"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -59,10 +60,10 @@ Concurrency_Service::parse_args (void)
         TAO_debug_level++;
         break;
       case 'o': // output the IOR to a file
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, ACE_LIB_TEXT("w"));
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
+                             ACE_LIB_TEXT("Unable to open %s for writing: %p\n"),
                              get_opts.opt_arg ()), -1);
         break;
       case 's':
@@ -70,11 +71,11 @@ Concurrency_Service::parse_args (void)
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           " [-o] <ior_output_file>"
-                           "\n",
-                           argv_[0]),
+                           ACE_LIB_TEXT("usage:  %s")
+                           ACE_LIB_TEXT(" [-d]")
+                           ACE_LIB_TEXT(" [-o] <ior_output_file>")
+                           ACE_LIB_TEXT("\n"),
+                           argv[0]),
                            1);
       }
   // Indicates sucessfull persing of command line.
@@ -85,34 +86,35 @@ Concurrency_Service::parse_args (void)
 
 int
 Concurrency_Service::init (int argc,
-                           char **argv
+                           ACE_TCHAR **argv
                            ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Concurrency_Service::init\n"));
-  if (this->orb_manager_.init_child_poa (argc,
-                                        argv,
-                                        "child_poa"
-                                        ACE_ENV_ARG_PARAMETER) == -1)
+
+  // Copy command line parameter.
+  ACE_Argv_Type_Converter command_line(argc, argv);
+
+  if (this->orb_manager_.init_child_poa (command_line.get_argc(),
+                                         command_line.get_ASCII_argv(),
+                                         "child_poa"
+                                          ACE_ENV_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "init_child_poa"),
+                       ACE_LIB_TEXT("%p\n"),
+                       ACE_LIB_TEXT("init_child_poa")),
                       -1);
   ACE_CHECK_RETURN (-1);
 
-  this->argc_ = argc;
-  this->argv_ = argv;
-
-  if (this->parse_args ()!=0)
+  if (this->parse_args (command_line.get_argc(), command_line.get_TCHAR_argv())!=0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                      "Could not parse command line\n"),
+                       ACE_LIB_TEXT("Could not parse command line\n")),
                      -1);
   CORBA::String_var str =
     this->orb_manager_.activate (this->my_concurrency_server_.GetLockSetFactory ()
                                 ACE_ENV_ARG_PARAMETER);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
-              str.in ()));
+              ACE_TEXT_CHAR_TO_TCHAR(str.in ())));
 
   if (this->ior_output_file_)
     {
@@ -189,7 +191,7 @@ Concurrency_Service::~Concurrency_Service (void)
 }
 
 int
-main (int argc, char ** argv)
+ACE_TMAIN (int argc, ACE_TCHAR ** argv)
 {
   Concurrency_Service concurrency_service;
 

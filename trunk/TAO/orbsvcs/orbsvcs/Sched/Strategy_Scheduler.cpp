@@ -29,11 +29,15 @@ ACE_RCSID(Sched, Strategy_Scheduler, "$Id$")
 // Helper function type definition for sort //
 //////////////////////////////////////////////
 
+#if defined (ACE_HAS_WINCE)
+typedef int (_cdecl* COMP_FUNC) (const void*, const void*);
+#else
 // This is awkward, but it makes MSVC++ happy.
 extern "C"
 {
 typedef int (*COMP_FUNC) (const void*, const void*);
 }
+#endif  // ACE_HAS_WINCE
 
 ///////////////////////////////////////////////////
 // class ACE_Strategy_Scheduler member functions //

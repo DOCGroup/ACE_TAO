@@ -1,10 +1,11 @@
 // $Id$
 
+#include "Scheduling_Service.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/CosNamingC.h"
-
-#include "Scheduling_Service.h"
 
 ACE_RCSID(Scheduling_Service, Scheduling_Service, "$Id$")
 
@@ -12,8 +13,6 @@ ACE_RCSID(Scheduling_Service, Scheduling_Service, "$Id$")
 
 TAO_Scheduling_Service::TAO_Scheduling_Service (void)
   : scheduler_impl_ (0),
-    ior_file_name_ (0),
-    pid_file_name_ (0),
     service_name_ ("ScheduleService"),
     scheduler_type_ (CONFIG)
 {
@@ -22,10 +21,8 @@ TAO_Scheduling_Service::TAO_Scheduling_Service (void)
 
 // Constructor taking the command-line arguments.
 
-TAO_Scheduling_Service::TAO_Scheduling_Service (int argc, char *argv[])
+TAO_Scheduling_Service::TAO_Scheduling_Service (int argc, ACE_TCHAR* argv[])
   : scheduler_impl_ (0),
-    ior_file_name_ (0),
-    pid_file_name_ (0),
     service_name_ ("ScheduleService"),
     scheduler_type_ (CONFIG)
 {
@@ -42,7 +39,7 @@ TAO_Scheduling_Service::~TAO_Scheduling_Service (void)
 // Initialize the Scheduling Service with the arguments.
 
 int
-TAO_Scheduling_Service::init (int argc, char *argv[])
+TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
 {
   int result;
   CORBA::ORB_var orb;
@@ -50,8 +47,11 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
+      // Copy command line parameter.
+      ACE_Argv_Type_Converter command_line(argc, argv);
+
       // Initialize ORB manager.
-      this->orb_manager_.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      this->orb_manager_.init (command_line.get_argc(), command_line.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb = this->orb_manager_.orb ();
@@ -67,7 +67,7 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
       // initialize the scheduler implementation so that we know which
       // type of scheduler to use.
 
-      result = this->parse_args (argc, argv);
+      result = this->parse_args (command_line.get_argc(), command_line.get_TCHAR_argv());
       if (result < 0)
         return result;
 
@@ -123,35 +123,35 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
         orb->object_to_string (scheduler.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "The scheduler IOR is <%s>\n",
-                            scheduler_ior_string.in ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("The scheduler IOR is <%s>\n"),
+                            ACE_TEXT_CHAR_TO_TCHAR(scheduler_ior_string.in ())));
 
       // Register the servant with the Naming Context....
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
-      schedule_name[0].id = CORBA::string_dup (this->service_name_);
+      schedule_name[0].id = CORBA::string_dup (this->service_name_.rep());
       naming_context->rebind (schedule_name, scheduler.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (this->ior_file_name_ != 0)
+      if (this->ior_file_name_.rep() != 0)
         {
-          FILE *iorf = fopen (this->ior_file_name_, "w");
+          FILE *iorf = fopen (this->ior_file_name_.rep(), "w");
           if (iorf != 0)
             {
               ACE_OS::fprintf (iorf,
-                               "%s\n",
-                               scheduler_ior_string.in ());
+                               ACE_LIB_TEXT("%s\n"),
+                               ACE_TEXT_CHAR_TO_TCHAR(scheduler_ior_string.in ()));
               ACE_OS::fclose (iorf);
             }
         }
 
-      if (this->pid_file_name_ != 0)
+      if (this->pid_file_name_.rep() != 0)
         {
-          FILE *pidf = fopen (this->pid_file_name_, "w");
+          FILE *pidf = fopen (this->pid_file_name_.rep(), "w");
           if (pidf != 0)
             {
               ACE_OS::fprintf (pidf,
-                               "%ld\n",
+                               ACE_LIB_TEXT("%ld\n"),
                                ACE_static_cast (long, ACE_OS::getpid ()));
               ACE_OS::fclose (pidf);
             }
@@ -181,9 +181,9 @@ TAO_Scheduling_Service::run (ACE_ENV_SINGLE_ARG_DECL)
 // Parses the command line arguments.
 
 int
-TAO_Scheduling_Service::parse_args (int argc, char *argv[])
+TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:p:o:s:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:p:o:s:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -191,15 +191,15 @@ TAO_Scheduling_Service::parse_args (int argc, char *argv[])
       switch (opt)
         {
         case 'n':
-          this->service_name_ = get_opt.opt_arg ();
+          this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 'p':
-          this->pid_file_name_ = get_opt.opt_arg ();
+          this->pid_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 'o':
-          this->ior_file_name_ = get_opt.opt_arg ();
+          this->ior_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
 // The templatized method parameters needed by the reconfig scheduler
@@ -208,11 +208,11 @@ TAO_Scheduling_Service::parse_args (int argc, char *argv[])
 (__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
 
         case 's':
-          if (ACE_OS::strcasecmp ("CONFIG", get_opt.opt_arg ()) == 0)
+          if (ACE_OS::strcasecmp (ACE_LIB_TEXT("CONFIG"), get_opt.optarg) == 0)
             {
               this->scheduler_type_ = CONFIG;
             }
-          else if (ACE_OS::strcasecmp ("RECONFIG", get_opt.opt_arg ()) == 0)
+          else if (ACE_OS::strcasecmp (ACE_LIB_TEXT("RECONFIG"), get_opt.optarg) == 0)
             {
               this->scheduler_type_ = RECONFIG;
             }
@@ -269,7 +269,7 @@ TAO_Scheduling_Service::parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRY_NEW_ENV
     {

@@ -1,7 +1,5 @@
 // $Id$
 
-#include "ace/Arg_Shifter.h"
-#include "ace/Get_Opt.h"
 #include "Notify_Default_EMO_Factory.h"
 #include "Notify_Event_Manager.h"
 #include "Notify_Event_Map.h"
@@ -10,6 +8,9 @@
 #include "Notify_Factory.h"
 #include "Notify_Event.h"
 #include "Notify_MT_Worker_Task.h"
+
+#include "ace/Arg_Shifter.h"
+#include "ace/Get_Opt.h"
 
 #include "tao/debug.h"
 
@@ -57,63 +58,63 @@ TAO_Notify_Default_EMO_Factory::~TAO_Notify_Default_EMO_Factory ()
 }
 
 int
-TAO_Notify_Default_EMO_Factory::init (int argc, char* argv[])
+TAO_Notify_Default_EMO_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   // ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Default_EMO_Factory::init\n"));
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const char *current_arg = 0;
+  const ACE_TCHAR *current_arg = 0;
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcasecmp (arg, "-MTDispatching") == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-MTDispatching")) == 0)
         {
           EMO_OPTIONS::instance ()->mt_dispatching_ = 1;
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-DispatchingThreads")))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-DispatchingThreads"))))
         {
           EMO_OPTIONS::instance ()->dispatching_threads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (ACE_OS::strcasecmp (arg, "-MTSourceEval") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-MTSourceEval")) == 0)
         {
           EMO_OPTIONS::instance ()->mt_source_eval_ = 1;
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-SourceThreads")))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-SourceThreads"))))
         {
           EMO_OPTIONS::instance ()->source_threads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (ACE_OS::strcasecmp (arg, "-MTLookup") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-MTLookup")) == 0)
         {
           EMO_OPTIONS::instance ()->mt_lookup_ = 1;
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-LookupThreads")))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-LookupThreads"))))
         {
           EMO_OPTIONS::instance ()->lookup_threads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (ACE_OS::strcasecmp (arg, "-MTListenerEval") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-MTListenerEval")) == 0)
         {
           EMO_OPTIONS::instance ()->mt_listener_eval_ = 1;
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-ListenerThreads")))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-ListenerThreads"))))
         {
           EMO_OPTIONS::instance ()->listener_threads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (ACE_OS::strcasecmp (arg, "-AsynchUpdates") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-AsynchUpdates")) == 0)
         {
           EMO_OPTIONS::instance ()->asynch_updates_ = 1;
           arg_shifter.consume_arg ();
         }
-      else if (ACE_OS::strcasecmp (arg, "-AllocateTaskperProxy") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-AllocateTaskperProxy")) == 0)
         {
           EMO_OPTIONS::instance ()->alloc_task_per_proxy_ = 1;
           arg_shifter.consume_arg ();

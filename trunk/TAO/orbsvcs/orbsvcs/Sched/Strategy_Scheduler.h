@@ -235,8 +235,12 @@ protected:
 
 private:
 
-  static int sort_function (void *arg1, void *arg2);
     // = Comparison function to pass to qsort: calls instance ()->sort_comp ().
+#if defined (ACE_HAS_WINCE)
+  static int _cdecl sort_function (void *arg1, void *arg2);
+#else
+  static int sort_function (void *arg1, void *arg2);
+#endif  // ACE_HAS_WINCE
 
   static ACE_MUF_Scheduler_Strategy *instance_;
     // Instance of the strategy.

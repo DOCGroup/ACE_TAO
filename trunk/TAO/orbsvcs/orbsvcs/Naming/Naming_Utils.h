@@ -107,7 +107,7 @@ public:
   // to multicast location queries.
 
   int init_with_orb (int argc,
-                     char *argv [],
+                     ACE_TCHAR *argv [],
                      CORBA::ORB_ptr orb);
   // Initialize the Naming Service with the command line arguments and
   // the ORB.
@@ -141,7 +141,7 @@ protected:
   // If <enable_multicast> is not zero then the service will respond
   // to multicast location queries.
 
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // parses the arguments.
 
   CosNaming::NamingContext_var naming_context_;
@@ -170,7 +170,7 @@ protected:
   FILE *ior_output_file_;
   // File to output the Naming Service IOR.
 
-  const char *pid_file_name_;
+  const ACE_TCHAR *pid_file_name_;
   // File to output the process id.
 
   size_t context_size_;
