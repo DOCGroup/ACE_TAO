@@ -1,3 +1,19 @@
+Mon Apr  2 15:20:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp: 
+        * examples/PluggableUDP/DIOP/DIOP_Transport.h: 
+          Removed the use of the local buffer as TAO now
+          supports the single read mechanism, which will
+          read in all of the UDP datagram.
+
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.h:
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.h:
+          Removed dead code, e.g. we do not support
+          TCP properties, preconnects, and cached connections.
+
 Mon Apr  2 15:09:23 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/IFR_Client/IFR_ExtendedC.h:

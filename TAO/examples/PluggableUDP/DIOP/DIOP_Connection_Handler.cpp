@@ -430,13 +430,9 @@ TAO_DIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
   if (--this->pending_upcalls_ <= 0)
     result = -1;
 
-  if (result == -1)
-    return result;
-  else if (result == 0)
-    // Requires another call to handle_input ()
-    return 1;
-
-  return 0;
+  // We always return a positive number, as we do not have any
+  // send errors.
+  return 1;
 }
 
 // @@ Frank: From DIOP_Connect.cpp

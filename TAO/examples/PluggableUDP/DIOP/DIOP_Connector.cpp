@@ -18,9 +18,7 @@ ACE_RCSID(tao, DIOP_Connector, "$Id$")
 
 TAO_DIOP_Connector::TAO_DIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_UDP_PROFILE),
-    lite_flag_ (flag),
-    connect_strategy_ (),
-    base_connector_ ()
+    lite_flag_ (flag)
 {
 }
 
@@ -33,41 +31,8 @@ TAO_DIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
   this->orb_core (orb_core);
 
-  // @@ Frank: No TCP properties or even DIOP properties yet.
-/*
-  if (this->init_tcp_properties () != 0)
-    return -1;
-*/
+  // @@ Michael: We do not use traditional connection management.
 
-  // @@ Michael: For DIOP we should be able to get rid of the connection
-  //             caching.
-
-  /*
-
-  /// Our connect creation strategy
-  TAO_DIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
-
-  ACE_NEW_RETURN (connect_creation_strategy,
-                  TAO_DIOP_CONNECT_CREATION_STRATEGY
-                      (orb_core->thr_mgr (),
-                       orb_core,
-                       &(this->tcp_properties_),
-                       this->lite_flag_),
-                  -1);
-
-  /// Our activation strategy
-  TAO_DIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = 0;
-
-  ACE_NEW_RETURN (concurrency_strategy,
-                  TAO_DIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
-                  -1);
-
-  return this->base_connector_.open (this->orb_core ()->reactor (),
-                                     connect_creation_strategy,
-                                     &this->connect_strategy_,
-                                     concurrency_strategy);
-
-  */
   return 0;
 }
 
@@ -93,13 +58,7 @@ TAO_DIOP_Connector::close (void)
 
   // -----------------------------------------------------------------
 
-  // @@ Michael: For DIOP we should be able to get rid of the connection
-  //             caching.
-  /*
-  delete this->base_connector_.concurrency_strategy ();
-  delete this->base_connector_.creation_strategy ();
-  return this->base_connector_.close ();
-  */
+  // @@ Michael: We do not use traditional connection management.
   return 0;
 }
 
@@ -140,9 +99,7 @@ TAO_DIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
       return -1;
     }
 
-  // @@ Frank: int result = 0;
   TAO_DIOP_Connection_Handler *svc_handler = 0;
-  // @@ Frank:   TAO_Connection_Handler *conn_handler = 0;
 
   // @@ Michael -- UDP Additions ----------------------------
 
@@ -167,275 +124,31 @@ TAO_DIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
       ACE_OS::memcpy (addr_str_i, addr_str, BUFSIZ);
       svc_handler_table_.bind (addr_str_i,
                                svc_handler_i);
-      // we increment the ref count to keep the handler from disappearing.
-      // <decrement> should be called by the destructor of us.
-
       svc_handler = svc_handler_i;
-   }
-
-  // @@ Frank  svc_handler->increment ();
-   if (TAO_debug_level > 2)
-     ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT ("(%P|%t) DIOP_Connector::connect - ")
-                 ACE_TEXT ("new connection on HANDLE %d\n"),
-                 svc_handler->peer ().get_handle ()));
-
-  // ---------------------------------------------------------
-
-
-// @@ Michael: We shortcut the actual connector.
-/*
-  // Check the Cache first for connections
-  if (this->orb_core ()->connection_cache ().find_handler (desc,
-                                                           conn_handler) == 0)
-    {
-      // We have found a connection and a handler
-      svc_handler =
-        ACE_dynamic_cast (TAO_DIOP_Connection_Handler *,
-                          conn_handler);
-      if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) DIOP_Connector::connect - ")
-                    ACE_TEXT ("got an existing connection on HANDLE %d\n"),
-                    svc_handler->peer ().get_handle ()));
-    }
-  else
-    {
-      if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) DIOP_Connector::connect - ")
-                    ACE_TEXT ("making a new connection\n")));
-
-      // @@ This needs to change in the next round when we implement a
-      // policy that will not allow new connections when a connection
-      // is busy.
-      if (max_wait_time != 0)
-        {
-          ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
-                                           *max_wait_time);
-
-          // We obtain the transport in the <svc_handler> variable. As
-          // we know now that the connection is not available in Cache
-          // we can make a new connection
-          result = this->base_connector_.connect (svc_handler,
-                                                  remote_address,
-                                                  synch_options);
-        }
-      else
-        {
-          // We obtain the transport in the <svc_handler> variable. As
-          // we know now that the connection is not available in Cache
-          // we can make a new connection
-          result = this->base_connector_.connect (svc_handler,
-                                                  remote_address);
-        }
-
-      if (result == -1)
-        {
-          // Give users a clue to the problem.
-          if (TAO_debug_level)
-            {
-              ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) %s:%u, connection to ")
-                          ACE_TEXT ("%s:%d failed (%p)\n"),
-                          __FILE__,
-                          __LINE__,
-                          diop_endpoint->host (),
-                          diop_endpoint->port (),
-                          ACE_TEXT ("errno")));
-            }
-          return -1;
-        }
 
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) DIOP_Connector::connect - ")
                     ACE_TEXT ("new connection on HANDLE %d\n"),
-                    svc_handler->peer ().get_handle ()));
+                    svc_handler->get_handle ()));
+   }
 
-      // Add the handler to Cache
-      int retval =
-        this->orb_core ()->connection_cache ().cache_handler (desc,
-                                                              svc_handler);
+  // @@ Frank  svc_handler->increment ();
 
-      if (retval != 0 && TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) DIOP_Connector::connect ")
-                      ACE_TEXT ("could not add the new connection to Cache \n")));
-        }
-    }
-  */
+  // ---------------------------------------------------------
 
-  transport = svc_handler->transport ();
+  // @@ Michael: We do not use traditional connection management.
+
+  transport = TAO_Transport::_duplicate (svc_handler->transport ());
+
   return 0;
 }
 
 int
-TAO_DIOP_Connector::preconnect (const char *preconnects)
+TAO_DIOP_Connector::preconnect (const char *)
 {
-  // Check for the proper protocol prefix.
-  if (this->check_prefix (preconnects) != 0)
-    return 0; // Failure: zero successful preconnections
-
-  const char *protocol_removed =
-    ACE_OS::strstr (preconnects,
-                    "://") + 3;
-  // "+ 3" since strlen of "://" is 3.
-
-  char *preconnections =
-    ACE_OS::strdup (protocol_removed);
-
-  int successes = 0;
-  if (preconnections)
-    {
-      ACE_INET_Addr dest;
-      ACE_Unbounded_Stack<ACE_INET_Addr> dests;
-
-      size_t num_connections;
-
-      char *nextptr = 0;
-      char *where = 0;
-      for (where = ACE::strsplit_r (preconnections, ",", nextptr);
-           where != 0;
-           where = ACE::strsplit_r (0, ",", nextptr))
-        {
-          int version_offset = 0;
-          // Additional offset to remove version from preconnect, if it exists.
-
-          if (isdigit (where[0]) &&
-              where[1] == '.' &&
-              isdigit (where[2]) &&
-              where[3] == '@')
-            version_offset = 4;
-
-          // @@ For now, we just drop the version prefix.  However, at
-          //    some point in the future the version may become useful.
-
-          char *tport = 0;
-          char *thost = where + version_offset;
-          char *sep = ACE_OS::strchr (where, ':');
-
-          if (sep)
-            {
-              *sep = '\0';
-              tport = sep + 1;
-
-              dest.set ((u_short) ACE_OS::atoi (tport), thost);
-              dests.push (dest);
-            }
-          else
-            {
-              // No port was specified so assume that the port will be the
-              // IANA assigned port for DIOP.
-              //
-              //    DIOP:           683
-              //    DIOP over SSL:  684
-
-              dest.set (683, thost);
-              dests.push (dest);
-
-              if (TAO_debug_level > 0)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("TAO (%P|%t) No port specified for <%s>.  ")
-                              ACE_TEXT ("Using <%d> as default port.\n"),
-                              where,
-                              dest.get_port_number ()));
-                }
-            }
-        }
-
-      // Create an array of addresses from the stack, as well as an
-      // array of eventual handlers.
-      num_connections = dests.size ();
-      ACE_INET_Addr *remote_addrs = 0;
-      TAO_DIOP_Connection_Handler **handlers = 0;
-
-      ACE_NEW_RETURN (remote_addrs,
-                      ACE_INET_Addr[num_connections],
-                      -1);
-
-      ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_remote_addrs (remote_addrs);
-
-      ACE_NEW_RETURN (handlers,
-                      TAO_DIOP_Connection_Handler *[num_connections],
-                      -1);
-
-      ACE_Auto_Basic_Array_Ptr<TAO_DIOP_Connection_Handler*>
-        safe_handlers (handlers);
-
-      // No longer need to worry about exception safety at this point.
-      remote_addrs = safe_remote_addrs.release ();
-      handlers = safe_handlers.release ();
-
-      size_t slot = 0;
-
-      // Fill in the remote address array
-      while (dests.pop (remote_addrs[slot]) == 0)
-        handlers[slot++] = 0;
-
-
-      // @@ Michael
-#if 0
-      char *failures;
-      ACE_NEW_RETURN (failures,
-                      char[num_connections],
-                      -1);
-
-      // Finally, try to connect.
-      this->base_connector_.connect_n (num_connections,
-                                       handlers,
-                                       remote_addrs,
-                                       failures);
-      // Loop over all the failures and set the handlers that
-      // succeeded to idle state.
-      for (slot = 0;
-           slot < num_connections;
-           slot++)
-        {
-          if (!failures[slot])
-            {
-              TAO_DIOP_Endpoint endpoint (remote_addrs[slot],
-                                          0);
-              TAO_Base_Connection_Property prop (&endpoint);
-
-              // Add the handler to Cache
-              int retval =
-                this->orb_core ()->connection_cache ().cache_handler (&prop,
-                                                                      handlers[slot]);
-              successes++;
-
-              if (retval != 0 && TAO_debug_level > 4)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO (%P|%t) Unable to add handles\n"),
-                            ACE_TEXT ("to cache \n")));
-
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO (%P|%t) Preconnection <%s:%d> ")
-                            ACE_TEXT ("succeeded.\n"),
-                            remote_addrs[slot].get_host_name (),
-                            remote_addrs[slot].get_port_number ()));
-            }
-          else if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) Preconnection <%s:%d> failed.\n"),
-                        remote_addrs[slot].get_host_name (),
-                        remote_addrs[slot].get_port_number ()));
-        }
-#endif /* 0 */
-
-      ACE_OS::free (preconnections);
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) DIOP preconnections: %d successes and ")
-                    ACE_TEXT ("%d failures.\n"),
-                    successes,
-                    num_connections - successes));
-    }
-  return successes;
+  // @@ Michael: We do not support preconnects.
+  return 0;
 }
 
 TAO_Profile *
@@ -512,64 +225,7 @@ TAO_DIOP_Connector::object_key_delimiter (void) const
 int
 TAO_DIOP_Connector::init_tcp_properties (void)
 {
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-  // Connector protocol properties are obtained from ORB-level
-  // RTCORBA::ClientProtocolProperties policy override.
-  // If the override doesn't exist or doesn't contain the
-  // properties, we use ORB default.
-  //
-  // Currently, we do not use Object-level and Current-level policy
-  // overrides for protocol configuration because connection
-  // lookup and caching are not done based on protocol
-  // properties.
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  int send_buffer_size = 0;
-  int recv_buffer_size = 0;
-  int no_delay = 0;
-
-  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
-
-  if (tph != 0)
-    {
-      const char protocol [] = "iiop";
-      const char *protocol_type = protocol;
-
-      int hook_result =
-        tph->call_client_protocols_hook (this->orb_core (),
-                                         send_buffer_size,
-                                         recv_buffer_size,
-                                         no_delay,
-                                         protocol_type);
-
-      if(hook_result == -1)
-        return -1;
-    }
-
-  // Extract and locally store properties of interest.
-  this->tcp_properties_.send_buffer_size =
-    send_buffer_size;
-  this->tcp_properties_.recv_buffer_size =
-    recv_buffer_size;
-  this->tcp_properties_.no_delay =
-    no_delay;
-
-#else /* TAO_HAS_RT_CORBA == 1 */
-
-  // Without RTCORBA, protocol configuration properties come from ORB
-  // options.
-  this->tcp_properties_.send_buffer_size =
-    this->orb_core ()->orb_params ()->sock_sndbuf_size ();
-  this->tcp_properties_.recv_buffer_size =
-    this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
-  this->tcp_properties_.no_delay =
-    this->orb_core ()->orb_params ()->nodelay ();
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
+  // @@ Michael: We have not TCP, so we have no TCP properties.
   return 0;
 }
 

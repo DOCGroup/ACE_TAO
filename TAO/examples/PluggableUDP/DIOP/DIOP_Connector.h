@@ -105,13 +105,6 @@ protected:
   CORBA::Boolean lite_flag_;
 
 private:
-
-  /// Our connect strategy
-  TAO_DIOP_CONNECT_STRATEGY connect_strategy_;
-
-  /// The connector initiating connection requests for DIOP.
-  TAO_DIOP_BASE_CONNECTOR base_connector_;
-
   // @@ Michael: UDP Addition
   ACE_Hash_Map_Manager_Ex < ACE_TCHAR *,
                             TAO_DIOP_Connection_Handler *,
