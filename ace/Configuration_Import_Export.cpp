@@ -598,7 +598,7 @@ ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
 
   // Now start at the beginning and move over all whitespace.
   for (cp = src;
-       (*cp != '\0') && ((*cp == ' ') || (*cp == '\t'));
+       (*cp != '\0') && ((*cp == ' ') || (*cp == '\t') || (*cp == '\n'));
        cp++)
     continue;
 

@@ -1,3 +1,41 @@
+Sat May 25 16:42:46 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/run_test.lst,
+	* tests/Makefile.bor,
+	* tests/Makefile: Added Proactor_Scatter_Gather_Test.
+
+Sat May 25 16:30:00 2002  Edan Ayal <edanayal@yahoo.com>
+  
+        * tests/Proactor_Scatter_Gather_Test.cpp:
+          Added a new test for the asynch scatter/gather I/O
+ 	  functionality. It is currently supported (as the feature itself)
+ 	  only under Win32 - actually NT4 SP2 and above.  The test runs in
+ 	  a single thread, and involves a single Sender, two Receivers and
+ 	  a single Writer. The Sender async-reads (scattered) from a file
+ 	  into chunks of <page size>. It async-sends (gathered) the odd
+ 	  chunks to the first receiver over a stream, and the even chunks
+ 	  to the second receiver over a different stream. The receivers
+ 	  async-read (scattered) from the socket streams into chunks in
+ 	  size of <page size>, and convey the data to the Writer. The
+ 	  Writer reconstructs the file using async-write
+ 	  (gathered). Finally, the reconstructed file is compared to the
+ 	  original file to determine test success.  The test therefore
+ 	  covers both async scatter/gather stream I/O and async
+ 	  scatter/gather file I/O.	
+  
+Sat May 25 14:52:06 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Strategies_T.cpp (make_svc_handler): Fixed a typo where
+	  dll_name_ was misspelled as shared_library_.  Thanks to Nathan
+ 	  Krasney <natan-k@actcom.co.il> for reporting this.
+
+Fri May 24 10:42:25 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Configuration_Import_Export.cpp (squish): Added a
+	  check for '\n' to ensure that empty lines are handled properly.
+  	  Thanks to Vladimir Chovanec <Vladimir.CHOVANEC@asset.sk> for
+ 	  reporting this.
+
 Sat May 25 15:09:42 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/SLDex.{cpp mak}:
@@ -79,7 +117,7 @@ Fri May 24 10:18:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/CDR_Stream.h (ACE_InputCDR): Added comments clarifying
           the behavior of the ctor that takes a const ACE_Message_Block *.
-          Thanks to Alexander Maack for motivating this.
+  	  Thanks to Alexander Maack for motivating this.
 
         * examples/C++NPv2/display_logfile.cpp (svc): Fix memory leak
           (thanks to Alexander Maack for reporting this) and don't lose
@@ -117,8 +155,9 @@ Mon May 13 19:15:49 2002  Steve Huston  <shuston@riverace.com>
 
         * netsvcs/servers/main.cpp: Move the reactor/signal initialization
           to be after the service loading. If the user specifies -b (be a
-          daemon) it closes all handles, including the reactor notification
-          pipe. Also added ACE_TEXT decorator to the string literals.
+ 	  daemon) it closes all handles, including the reactor
+ 	  notification pipe. Also added ACE_TEXT decorator to the string
+ 	  literals.
 
 Fri May 24 13:29:05 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
