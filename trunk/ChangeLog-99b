@@ -1,3 +1,9 @@
+Wed Jun 16 17:54:27 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ATM_Addr.h (ACE_ATM_Addr): Added a quick fix to get ACE up
+ 	  and running again.  Thanks to John Heitmann <jwh1@cs.wustl.edu>
+ 	  for this fix.
+
 Wed Jun 16 16:10:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/Process.pm:
