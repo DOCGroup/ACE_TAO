@@ -23,7 +23,6 @@
 
 #include "tao/orbconf.h"
 
-#include "rtcorba_export.h"
 #include "Priority_Mapping.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -37,13 +36,9 @@ class TAO_RTCORBA_Export TAO_Direct_Priority_Mapping : public TAO_Priority_Mappi
   //   A simple implementation of the Priority_Mapping interface
   //
   // = DESCRIPTION
-  //   This implementation uses direct mapping between the range of
-  //   priorities for a given scheduling class (ACE_SCHED_OTHER,
-  //   ACE_SCHED_FIFO, ACE_SCHED_RR) and the valid range of CORBA
-  //   priorities (0...32767)
-  //
+  //   This implementation uses direct mapping.
 public:
-  TAO_Direct_Priority_Mapping (long policy);
+  TAO_Direct_Priority_Mapping (long);
   // Default constructor
 
   virtual ~TAO_Direct_Priority_Mapping (void);
@@ -57,12 +52,6 @@ public:
                 RTCORBA::Priority &corba_priority);
 
 private:
-  long policy_;
-  // The scheduling policy
-
-  int min_;
-  int max_;
-  // The range
 };
 
 #if defined (__ACE_INLINE__)

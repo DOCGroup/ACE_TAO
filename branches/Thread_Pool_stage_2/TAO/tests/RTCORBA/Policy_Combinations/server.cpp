@@ -100,13 +100,12 @@ test_i::_default_POA (CORBA_Environment &)
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-static CORBA::Short server_priority = 2;
-static CORBA::Short client_priority = 6;
+static CORBA::Short server_priority = 15;
+static CORBA::Short client_priority = 2;
 static CORBA::ULong stacksize = 0;
 static CORBA::ULong static_threads = 2;
 static CORBA::ULong dynamic_threads = 2;
-static RTCORBA::Priority default_thread_priority =
-RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
+static RTCORBA::Priority default_thread_priority;
 static CORBA::Boolean allow_request_buffering = 0;
 static CORBA::ULong max_buffered_requests = 0;
 static CORBA::ULong max_request_buffer_size = 0;
@@ -372,7 +371,7 @@ server::test_bands_poa (CORBA::PolicyList &policies,
   bands[0].low = default_thread_priority;
   bands[0].high = default_thread_priority;
   bands[1].low = ::server_priority;
-  bands[1].high = ::server_priority + 1;
+  bands[1].high = ::server_priority;
   bands[2].low = ::client_priority - 1;
   bands[2].high = ::client_priority;
 
@@ -774,6 +773,20 @@ main (int argc, char **argv)
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in (),
                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      object =
+        orb->resolve_initial_references ("RTCurrent",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      RTCORBA::Current_var current =
+        RTCORBA::Current::_narrow (object.in (),
+                                   ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      default_thread_priority =
+        current->the_priority (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       int result =

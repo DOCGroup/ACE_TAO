@@ -26,7 +26,7 @@ $priority1 = 65;
 $priority2 = 70;
 
 if ($^O eq "MSWin32") {
-    $priority1 = 6;
+    $priority1 = 2;
     $priority2 = 1;
 }
 elsif ($^O eq "dec_osf") {

@@ -10,8 +10,6 @@
 
 static int iterations = 5;
 static int shutdown_server = 0;
-static RTCORBA::Priority default_thread_priority =
-RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
 
 static const char *ior = "file://ior";
 
@@ -153,7 +151,7 @@ main (int argc, char **argv)
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      current->the_priority (default_thread_priority,
+      current->the_priority (0,
                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

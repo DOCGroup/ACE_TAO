@@ -114,11 +114,9 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
     CORBA::Policy::_duplicate (threadpool_policy);
 
   // Priority Model policy.
-  RTCORBA::Priority default_priority =
-    RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
   policies[2] =
     rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                          default_priority,
+                                          0,
                                           ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
@@ -190,6 +188,30 @@ main (int argc, char *argv[])
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      object =
+        orb->resolve_initial_references ("RTORB",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      RTCORBA::RTORB_var rt_orb =
+        RTCORBA::RTORB::_narrow (object.in (),
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      object =
+        orb->resolve_initial_references ("RTCurrent",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      RTCORBA::Current_var current =
+        RTCORBA::Current::_narrow (object.in (),
+                                   ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      RTCORBA::Priority default_thread_priority =
+        current->the_priority (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       int result =
         parse_args (argc, argv);
       if (result != 0)
@@ -215,27 +237,15 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::ULong stacksize = 0;
-      RTCORBA::Priority default_priority =
-        RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
       CORBA::Boolean allow_request_buffering = 0;
       CORBA::ULong max_buffered_requests = 0;
       CORBA::ULong max_request_buffer_size = 0;
-
-      object =
-        orb->resolve_initial_references ("RTORB",
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in (),
-                                 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       RTCORBA::ThreadpoolId threadpool_id_1 =
         rt_orb->create_threadpool (stacksize,
                                    static_threads,
                                    dynamic_threads,
-                                   default_priority,
+                                   default_thread_priority,
                                    allow_request_buffering,
                                    max_buffered_requests,
                                    max_request_buffer_size,
@@ -251,11 +261,11 @@ main (int argc, char *argv[])
       RTCORBA::ThreadpoolLanes lanes (2);
       lanes.length (2);
 
-      lanes[0].lane_priority = default_priority;
+      lanes[0].lane_priority = default_thread_priority;
       lanes[0].static_threads = static_threads;
       lanes[0].dynamic_threads = dynamic_threads;
 
-      lanes[1].lane_priority = default_priority;
+      lanes[1].lane_priority = default_thread_priority;
       lanes[1].static_threads = static_threads * 2;
       lanes[1].dynamic_threads = dynamic_threads * 2;
 

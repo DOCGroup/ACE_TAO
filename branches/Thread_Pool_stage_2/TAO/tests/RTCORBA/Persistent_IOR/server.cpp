@@ -66,8 +66,7 @@ static int debug = 0;
 static CORBA::ULong stacksize = 0;
 static CORBA::ULong static_threads = 2;
 static CORBA::ULong dynamic_threads = 2;
-static RTCORBA::Priority default_thread_priority =
-RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
+static RTCORBA::Priority default_thread_priority;
 static CORBA::Boolean allow_request_buffering = 0;
 static CORBA::ULong max_buffered_requests = 0;
 static CORBA::ULong max_request_buffer_size = 0;
@@ -348,6 +347,20 @@ main (int argc, char **argv)
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in (),
                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      object =
+        orb->resolve_initial_references ("RTCurrent",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      RTCORBA::Current_var current =
+        RTCORBA::Current::_narrow (object.in (),
+                                   ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      default_thread_priority =
+        current->the_priority (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       object =

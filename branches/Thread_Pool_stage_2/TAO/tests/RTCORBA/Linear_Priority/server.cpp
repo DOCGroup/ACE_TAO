@@ -64,8 +64,6 @@ test_i::_default_POA (CORBA_Environment &)
 static CORBA::ULong stacksize = 0;
 static CORBA::ULong static_threads = 2;
 static CORBA::ULong dynamic_threads = 2;
-static RTCORBA::Priority default_thread_priority =
-RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
 static CORBA::Boolean allow_request_buffering = 0;
 static CORBA::ULong max_buffered_requests = 0;
 static CORBA::ULong max_request_buffer_size = 0;
@@ -209,7 +207,7 @@ main (int argc, char **argv)
 
       CORBA::Policy_var priority_model_policy =
         rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                              default_thread_priority,
+                                              0,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
