@@ -52,7 +52,12 @@ ACE_QOS_Event_Handler::handle_qos (ACE_HANDLE)
               "\nReceived a QOS event. Inside handle_qos ()\n"));
  
   ACE_OVERLAPPED ace_overlapped;
-  const iovec iov = {5, "Hello"};
+
+#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+  const iovec iov = {5,"Hello"};
+#else
+  const iovec iov = {"Hello", 5};
+#endif
 
   // For some really weird reason if I do not define the following 
   // sockaddr_in, the send () call fails.
