@@ -1,0 +1,20 @@
+// $Id$
+
+/**
+ * @file RateGen.idl
+ *
+ * Definition of the RateGen (a rate generator) component.
+ *
+ * @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+
+#include "HUDisplay.idl"
+
+Module HUDisplay
+{
+
+  component RateGen supports opmode
+    {
+      publishes tick Pulse;
+    };
+};
