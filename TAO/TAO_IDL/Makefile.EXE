@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_IDL_FE_DLL -lTAO_IDL_BE_DLL
+LDLIBS = -lTAO_IDL_BE_DLL -lTAO_IDL_FE_DLL 
 
 BIN = tao_idl
 
