@@ -1920,8 +1920,14 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
       if (TAO_debug_level >= 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - blocking on handle events\n")));
+                    ACE_TEXT ("TAO (%P|%t) - calling handle_events\n")));
+
       result = r->handle_events (tv);
+
+      if (TAO_debug_level >= 3)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - handle_events returns %d\n"),
+                    result));
 
       if (result == -1)
         {

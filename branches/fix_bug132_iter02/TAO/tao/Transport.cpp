@@ -71,32 +71,45 @@ TAO_Transport::handle_output ()
 {
   if (TAO_debug_level > 4)
     {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - handle_output\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - handle_output (%d)\n",
+                  this->handle ()));
     }
-  // The reactor is asking us to send more data, first check if
-  // there is a current message that needs more sending:
-  int result = this->send_current_message ();
 
-  while (result > 0)
+  int retval;
+  do
     {
-      // ... there is no current message or it was completely
-      // sent, time to check the queue....
-      result = this->dequeue_next_message ();
-      if (result == 1)
+      // The reactor is asking us to send more data, first check if
+      // there is a current message that needs more sending:
+      retval = this->send_current_message ();
+
+      if (TAO_debug_level > 4)
         {
-          (void) this->cancel_output ();
-          return 0;
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - send_current_message (%d) %d/%d\n",
+                      this->handle (),
+                      retval,
+                      errno));
         }
-      result = this->send_current_message ();
+
+      if (retval == 1)
+        {
+          // ... there is no current message or it was completely
+          // sent, time to check the queue....
+          int dequeue = this->dequeue_next_message ();
+          if (dequeue == -1)
+            {
+              // ... no more messages in the queue, cancel output...
+              (void) this->cancel_output ();
+              return 0;
+            }
+        }
+      // ... on Win32 we must continue until we get EWOULDBLOCK ...
     }
-  // else { there was an error.... }
+  while (retval > 0);
 
-  if (result == -1)
-    return -1; // There was an error, return -1 so the Reactor
-
-  // There is no more data or socket blocked, just return 0
-  /* if (result >= 0) */
-  return 0;
+  // Any errors are returned directly to the Reactor
+  return retval;
 }
 
 int
@@ -204,7 +217,12 @@ TAO_Transport::send_current_message (void)
       this->current_message_ = 0;
 
       if (retval == -1)
-        return -1;
+        {
+          if (errno == EWOULDBLOCK || errno == ETIME)
+            return 0;
+
+          return -1;
+        }
 
       return 1;
     }
@@ -228,7 +246,7 @@ TAO_Transport::dequeue_next_message (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_mutex_, -1);
   if (this->head_ == 0)
-    return 1;
+    return -1;
 
   this->current_message_ = this->head_;
   this->head_->remove_from_list (this->head_, this->tail_);
