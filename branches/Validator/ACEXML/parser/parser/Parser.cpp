@@ -22,7 +22,7 @@ const ACEXML_Char
 ACEXML_Parser::namespace_prefixes_feature_[] = ACE_TEXT ("http://xml.org/sax/features/namespace-prefixes");
 
 
-static const ACEXML_Char* ACEXML_Parser_Msg [] = {
+static const ACEXML_Char* ACEXML_Parser_Msg[] = {
   ACE_TEXT ("Invalid input source"),
   ACE_TEXT ("Expecting '<'"),
   ACE_TEXT ("Expecting '>'"),
@@ -84,7 +84,7 @@ static const ACEXML_Char* ACEXML_Parser_Msg [] = {
   ACE_TEXT ("Expecting either keyword `SYSTEM' or `PUBLIC'."),
   ACE_TEXT ("Expecting keyword `#PCDATA'"),
   ACE_TEXT ("Expecting end of Mixed section"),
-  ACE_TEXT ("Expecting closing `)*' or ')'")
+  ACE_TEXT ("Expecting closing `)*' or ')'"),
   ACE_TEXT ("Error reading sub-element name"),
   ACE_TEXT ("Expecting `,', `|', or `)' while defining an element."),
   ACE_TEXT ("Invalid character reference")
