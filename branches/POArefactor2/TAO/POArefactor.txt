@@ -1,3 +1,15 @@
+Wed Oct 13 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Creation_Time.{h,cpp,inl}:
+          Moved TAO_Creation_Time and TAO_Temporary_Creation_Time to this
+          file, removed the TAO_ prefix and moved them in the
+          TAO::Portable_Server namespace
+
+        * tao/PortableServer/Lifespan_Strategy.h:
+        * tao/PortableServer/Object_Adatper.{h,cpp,i}:
+        * tao/PortableServer/POA.{h,cpp,i}:
+          Updated because of the move of the time classes
+
 Tue Oct 12 14:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.cpp:
