@@ -300,6 +300,12 @@ ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS   GNUC 2.7.3 mistakenly
                                         as the place where an inline
                                         function of an argument class
                                         is first used.
+ACE_HAS_BROKEN_EXTENDED_TEMPLATES       GNU CC < 2.8 is broken for 
+                                        template classes. This label 
+                                        shortens the template parameter
+                                        list by removing the iterator
+                                        functionality in the
+                                        Cache_Map_Manager class. 
 ACE_HAS_GNU_CSTRING_H                   Denotes that GNU has cstring.h
                                         as standard which redefines
                                         memchr()
@@ -930,6 +936,7 @@ ACE_HAS_ALLOCA:
   Used in:
      libsrc/IPC_SAP/SOCK_SAP/SOCK_Connect.C
         for allocation of iovp
+A
      libsrc/IPC_SAP/SPIPE_SAP/SPIPE_Msg.C
         for alocation of iovp
 
