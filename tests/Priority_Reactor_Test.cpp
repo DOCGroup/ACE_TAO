@@ -299,7 +299,7 @@ main (int argc, char *argv[])
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
     }
-#elif !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_PSOS)
+#elif !defined (ACE_LACKS_FORK)
   for (i = 0; i < opt_nchildren; ++i)
     {
       switch (ACE_OS::fork ("child"))

@@ -160,7 +160,7 @@ ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
 // listen-mode port/socket.
 #if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
 typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
-#elif (defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_PSOS)) && defined (ACE_HAS_THREADS)
+#elif defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
 typedef ACE_Thread_Mutex ACCEPTOR_LOCKING;
 #else
 typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
@@ -402,13 +402,13 @@ server (void *arg)
                                      &cli_addr
 // Timing out is the only way for threads to stop accepting, since we
 // don't have signals
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_PSOS)
+#if defined (ACE_LACKS_FORK)
                                      , options
                                      );
-#else
+#else  /* ! ACE_LACKS_FORK */
                                      );
   ACE_UNUSED_ARG (options);
-#endif /* ACE_WIN32 || VXWORKS || ACE_PSOS */
+#endif /* ! ACE_LACKS_FORK */
 
       if (result == -1)
         {
@@ -428,7 +428,7 @@ server (void *arg)
   return 0;
 }
 
-#if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_PSOS)
+#if !defined (ACE_LACKS_FORK)
 static void
 handler (int signum)
 {
@@ -494,9 +494,9 @@ spawn_processes (ACCEPTOR *acceptor,
   // Remove the lock so we don't have process semaphores lying around.
   return acceptor->acceptor ().lock ().remove ();
 }
-#endif /* ! ACE_WIN32 ! VXWORKS ! ACE_PSOS */
+#endif /* ! ACE_LACKS_FORK */
 
-#if (defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_PSOS)) && defined (ACE_HAS_THREADS)
+#if defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
 // Spawn threads and run the client and server.
 
 static void
@@ -579,7 +579,7 @@ spawn_threads (ACCEPTOR *acceptor,
   delete [] stack_size;
 #endif /* VXWORKS */
 }
-#endif /* (ACE_WIN32 || VXWORKS || ACE_PSOS) && ACE_HAS_THREADS */
+#endif /* ! ACE_LACKS_FORK && ACE_HAS_THREADS */
 
 int
 main (int argc, ASYS_TCHAR *argv[])
@@ -614,15 +614,15 @@ main (int argc, ASYS_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) starting server at port %d\n"),
                   server_addr.get_port_number ()));
 
-#if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_PSOS)
+#if !defined (ACE_LACKS_FORK)
       if (spawn_processes (&acceptor, &server_addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%r) %p\n"), ASYS_TEXT ("spawn_processes")), 1);
 #elif defined (ACE_HAS_THREADS)
       spawn_threads (&acceptor, &server_addr);
-#else
+#else  /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
       ACE_ERROR ((LM_ERROR,
                   ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"), 1));
-#endif /* ACE_HAS_THREADS */
+#endif /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
     }
 
   ACE_END_TEST;
