@@ -52,14 +52,16 @@ public:
   /**
    * @name The TAO_Connector methods
    *
-   * Please check the documentation in Pluggable.h
+   * Please check the documentation in Transport_Connector.h
    */
   //@{
   virtual int open (TAO_ORB_Core *orb_core);
   virtual int close (void);
   virtual int connect (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc
+                       TAO_Transport_Descriptor_Interface *desc,
+                       ACE_Time_Value *timeout
                        ACE_ENV_ARG_DECL);
+
   virtual TAO_Profile *create_profile (TAO_InputCDR& cdr);
   //@}
 
@@ -77,7 +79,8 @@ protected:
    * @note The IIOP endpoint is extracted from the SSLIOP endpoint.
    */
   int iiop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
-                    TAO_GIOP_Invocation *invocation
+                    TAO_GIOP_Invocation *invocation,
+                    ACE_Time_Value *timeout
                     ACE_ENV_ARG_DECL);
 
   /// SSLIOP-specific connection establishment.
@@ -85,7 +88,8 @@ protected:
                       Security::QOP qop,
                       const Security::EstablishTrust &trust,
                       TAO_GIOP_Invocation *invocation,
-                      TAO_Transport_Descriptor_Interface *desc
+                      TAO_Transport_Descriptor_Interface *desc,
+                      ACE_Time_Value *timeout
                       ACE_ENV_ARG_DECL);
 
   /// Retrieve SSLIOP credentials from the policy overrides list and
