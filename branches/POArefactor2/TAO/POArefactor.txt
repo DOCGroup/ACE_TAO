@@ -1,3 +1,9 @@
+Wed Nov  3 11:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.h:
+          Removed declaration of default_poa_policies(), there is no
+          implementation for this method
+
 Wed Nov  3 11:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.{h,cpp}:

@@ -693,10 +693,6 @@ protected:
                         CORBA::Boolean &is_system_id,
                         TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time);
 
-  /// Access the list of default POA policies.  This list is used as a
-  /// prototype for creating new POA's.  It should
-  static TAO_POA_Policy_Set &default_poa_policies (void);
-
 protected:
   /// Accessor methods to ObjectReferenceTemplate
   PortableInterceptor::ObjectReferenceTemplate *
