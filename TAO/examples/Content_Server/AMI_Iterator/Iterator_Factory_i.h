@@ -5,7 +5,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//     Content_Server
+//     ECE255
 //
 // = FILENAME
 //     Iterator_Factory_i.h
@@ -20,8 +20,6 @@
 
 #ifndef ITERATOR_FACTORY_I_H
 #define ITERATOR_FACTORY_I_H
-
-#include "ace/pre.h"
 
 #include "Web_ServerS.h"
 
@@ -60,6 +58,5 @@ public:
 
 };
 
-#include "ace/post.h"
 
 #endif  /* ITERATOR_FACTORY_I_H */
