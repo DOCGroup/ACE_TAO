@@ -1,3 +1,10 @@
+Sun Jan  9 19:52:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Naming/README:
+
+	  Updated to note that Naming_Utils.{cpp,h} was split into
+	  Naming_Client.{cpp,h} and Naming_Server.{cpp,h}.
+
 Sun Jan  9 19:36:24 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
