@@ -14,6 +14,7 @@ project(Hello_Base_Sender_stub): ciao_client {
 
   Source_Files {
     SenderC.cpp
+
   }
 }
 
@@ -58,11 +59,13 @@ project(Hello_Base_Sender_exec) : ciao_component {
   }
 }
 
-project (Hello_Starter) : ciao_client{
+project (Hello_Starter) : ciao_client, valuetype{
   exename = starter
-  after += Sender_stub
+  after += Hello_Base_Sender_stub
   libs += Sender_stub
-  libpaths += ..
+
+  IDL_Files {
+  }
 
   Source_Files {
     starter.cpp
