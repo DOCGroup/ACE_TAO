@@ -174,6 +174,11 @@
 
 #define ACE_LACKS_GETHOSTENT
 
+// By default, don't include RCS Id strings in object code.
+#if !defined (ACE_USE_RCSID)
+# define ACE_USE_RCSID 0
+#endif /* ! ACE_USE_RCSID */
+
 extern "C"
 {
   int getopt (int, char *const *, const char *);
