@@ -9,8 +9,11 @@ use lib "../../../bin";
 require ACEutils;
 
 $brace="\#\#\#\#\#";
-@tests = ("basic_types", "tc", "growth");
-@argslist = ("-n 256 -l 10", "", "-l 64 -h 256 -s 4 -n 100");
+%tests = ("basic_types" => "-n 256 -l 10",
+	  "tc" => "",
+	  "growth" => "-l 64 -h 256 -s 4 -n 10",
+	  "alignment" => "",
+	  "allocator" => "");
 $test = "";
 $args = "";
 $| = 1;
@@ -32,12 +35,12 @@ sub run_test
     } elsif ($retval != 0) { 
       print STDERR "ERROR $brace $test $args, exit value $retval\n";
     }
-    print STDERR "$brace $test ENDED successfully\n";
+    print STDERR "$brace $test FINISHED successfully\n";
 }
 
-foreach $test (@tests)
+while (($test,$args) = each %tests)
 {
     run_test ($test, $args);
 }
 
-
+exit 0;

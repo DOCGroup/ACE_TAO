@@ -613,8 +613,7 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
         this->params_->_tao_target_alignment ();
 
       ptr_arith_t current =
-        ptr_arith_t(this->outgoing_->current ()->wr_ptr ())
-        % ACE_CDR::MAX_ALIGNMENT;
+        ptr_arith_t(this->outgoing_->current_alignment ()) % ACE_CDR::MAX_ALIGNMENT;
 
       CORBA::ULong pad = 0;
       if (target == 0)

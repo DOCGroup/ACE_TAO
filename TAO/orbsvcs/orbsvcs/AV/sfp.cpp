@@ -327,8 +327,8 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
                   fragment_entry->frame_info.sequence_num = state.frame_.sequence_num;
                   break;
                 case flowProtocol::SimpleFrame_Msg:
-                  fragment_entry->frame_info.ssrc = 
-                    fragment_entry->frame_info.timestamp = 
+                  fragment_entry->frame_info.ssrc =
+                    fragment_entry->frame_info.timestamp =
                     fragment_entry->frame_info.sequence_num = 0;
                   break;
                 }
@@ -1179,14 +1179,14 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
     }
   else
     {
-      // flow controlled so wait. 
+      // flow controlled so wait.
       // A greater than 0 value indicates that flow control is being exercised.
       return 1;
     }
    return 0;
 }
 
-int 
+int
 TAO_SFP_Object::send_frame (const iovec * /*iov*/,
                             int /*iovcnt*/,
                             TAO_AV_frame_info * /*frame_info*/)
@@ -1249,7 +1249,7 @@ TAO_SFP_Object::set_policies (const TAO_AV_PolicyList& policies)
 
         case TAO_AV_SFP_CREDIT_POLICY:
           {
-            TAO_AV_SFP_Credit_Policy *credit_policy = 
+            TAO_AV_SFP_Credit_Policy *credit_policy =
               ACE_reinterpret_cast (TAO_AV_SFP_Credit_Policy*,policy);
             this->max_credit_ = credit_policy->value ();
           }
@@ -1320,7 +1320,7 @@ TAO_SFP_Producer_Object::TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
                                                   char *&sfp_options)
   :TAO_SFP_Object (callback,transport),
    credit_sequence_num_ (0)
-   
+
 {
   TAO_Tokenizer flow_string (sfp_options,':');
   if (flow_string [2] != 0)
@@ -1401,7 +1401,7 @@ TAO_AV_SFP_Factory::match_protocol (const char *flow_string)
   return 0;
 }
 
-TAO_AV_Protocol_Object* 
+TAO_AV_Protocol_Object*
 TAO_AV_SFP_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                           TAO_Base_StreamEndPoint *endpoint,
                                           TAO_AV_Flow_Handler *handler,
