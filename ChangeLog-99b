@@ -1,9 +1,16 @@
+Tue Mar  2 02:28:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/CDR_Stream.h (do_byte_swap): This accessor function should
+	  be public accessible.  Otherwise it's useless.  Reorder class
+	  declaration so the protected members appear before private
+	  members/functions.
+
 Mon Mar  1 23:26:41 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/DLL_Test.cpp (ACE_HAS_SVR4_DYNAMIC_LINKING): 
+	* tests/DLL_Test.cpp (ACE_HAS_SVR4_DYNAMIC_LINKING):
 	  Added this check to prevent this test from being run
 	  separately.
-	
+
 Mon Mar 01 17:02:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.6.25 released.
