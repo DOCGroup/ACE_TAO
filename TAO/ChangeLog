@@ -1,3 +1,21 @@
+Tue Jun 10 15:15:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+          We have been having an interoperability problem with JacOrb
+          for the following reason: In typecode generation for aggregate
+          types with repeated member types, the TAO IDL compiler generates
+          a negative offset indirection for the repeats, using the same
+          mechanism as for recursive types. This is allowed, but not
+          mandated, by the spec. JacOrb, it seems, can handle this method
+          in recursive types, but not for repeated members.
+
+          My fix will change typecode generation so that the negative
+          offset for repeated members will be used only with the
+          optimized typecode command line option (-Gt). Otherwise,
+          typecodes for reapeated members will themselves be repeated
+          in the containing typecode.
+
 Tue Jun 10 10:05:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp (visit_node):
