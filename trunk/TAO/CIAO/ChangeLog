@@ -1,3 +1,11 @@
+Wed May 12 12:44:40 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Domain_Handler.cpp:
+        * DnC/Config_Handlers/Domain_Handler.h:
+
+          Made changes to handle HREF tags within
+          another referenced document.
+
 Wed May 12 00:06:26 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Domain_Handler.cpp:
