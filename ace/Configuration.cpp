@@ -544,27 +544,38 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
   if (load_key (base, base_key))
     return -1;
 
+  int errnum;
   HKEY result_key;
-  if (ACE_TEXT_RegOpenKeyEx (base_key,
-                             sub_section,
-                             0,
-                             KEY_ALL_ACCESS,
-                             &result_key) != ERROR_SUCCESS)
+  if ((errnum = ACE_TEXT_RegOpenKeyEx (base_key,
+                                       sub_section,
+                                       0,
+                                       KEY_ALL_ACCESS,
+                                       &result_key)) != ERROR_SUCCESS)
     {
       if (!create)
-        return -1;
+        {
+          errno = errnum;
+          return -1;
+        }
 
-      if (ACE_TEXT_RegCreateKeyEx (base_key,
-                                   sub_section,
-                                   0,
-                                   0,
-                                   REG_OPTION_NON_VOLATILE,
-                                   KEY_ALL_ACCESS,
-                                   0,
-                                   &result_key,
-                                   0
-                                   ) != ERROR_SUCCESS)
-        return -1;
+      if ((errnum = ACE_TEXT_RegCreateKeyEx (base_key,
+                                             sub_section,
+                                             0,
+                                             0,
+                                             REG_OPTION_NON_VOLATILE,
+                                             KEY_ALL_ACCESS,
+                                             0,
+                                             &result_key,
+#if defined (__MINGW32__)
+                                             (PDWORD) 0
+#else
+                                             0
+#endif /* __MINGW32__ */
+                                             )) != ERROR_SUCCESS)
+        {
+          errno = errnum;
+          return -1;
+        }
     }
 
   ACE_Section_Key_Win32 *temp;
@@ -616,9 +627,14 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
         }
     }
 
+  int errnum;
 #if (ACE_HAS_WINNT4 != 0)
-  if (ACE_TEXT_RegDeleteKey (base_key, sub_section) != ERROR_SUCCESS)
-    return -1;
+  errnum = ACE_TEXT_RegDeleteKey (base_key, sub_section);
+  if (errnum != ERROR_SUCCESS)
+    {
+      errno = errnum;
+      return -1;
+    }
 #else
   if (!recursive)
     {
@@ -641,10 +657,17 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
                                  0,
                                  0,
                                  0) == ERROR_SUCCESS)
-        return -1;
+        {
+          errno = ERROR_DIR_NOT_EMPTY;
+          return -1;
+        }
     }
-  if (ACE_TEXT_RegDeleteKey (base_key, sub_section) != ERROR_SUCCESS)
-    return -1;
+  errnum = ACE_TEXT_RegDeleteKey (base_key, sub_section);
+  if (errnum != ERROR_SUCCESS)
+    {
+      errno = errnum;
+      return -1;
+    }
 #endif
 
   return 0;
@@ -675,7 +698,10 @@ ACE_Configuration_Win32Registry::enumerate_values (const ACE_Configuration_Secti
   if (rc == ERROR_NO_MORE_ITEMS)
     return 1;
   else if (rc != ERROR_SUCCESS)
-    return -1;
+    {
+      errno = rc;
+      return -1;
+    }
 
   name = name_buffer;
 
@@ -719,7 +745,10 @@ ACE_Configuration_Win32Registry::enumerate_sections (const ACE_Configuration_Sec
   if (rc == ERROR_NO_MORE_ITEMS)
     return 1;
   else if (rc != ERROR_MORE_DATA && rc != ERROR_SUCCESS)
-    return -1;
+    {
+      errno = rc;
+      return -1;
+    }
 
   name = name_buffer;
 
@@ -739,16 +768,20 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
   if (load_key (key, base_key))
     return -1;
 
+  int errnum;
   DWORD len = ACE_static_cast (DWORD, value.length () + 1);
   len *= sizeof (ACE_TCHAR);
-  if (ACE_TEXT_RegSetValueEx (base_key,
-                              t_name,
-                              0,
-                              REG_SZ,
-                              (BYTE *) value.fast_rep (),
-                              len)
+  if ((errnum = ACE_TEXT_RegSetValueEx (base_key,
+                                       name,
+                                       0,
+                                       REG_SZ,
+                                       (BYTE *) value.fast_rep (),
+                                        len))
       != ERROR_SUCCESS)
-    return -1;
+    {
+      errno = errnum;
+      return -1;
+    }
 
   return 0;
 }
@@ -766,13 +799,17 @@ ACE_Configuration_Win32Registry::set_integer_value (const ACE_Configuration_Sect
   if (load_key (key, base_key))
     return -1;
 
-  if (ACE_TEXT_RegSetValueEx (base_key,
-                              t_name,
-                              0,
-                              REG_DWORD,
-                              (BYTE *) &value,
-                              sizeof (value)) != ERROR_SUCCESS)
-    return -1;
+  int errnum;
+  if ((errnum = ACE_TEXT_RegSetValueEx (base_key,
+                                        name,
+                                        0,
+                                        REG_DWORD,
+                                        (BYTE *) &value,
+                                        sizeof (value))) != ERROR_SUCCESS)
+    {
+      errno = errnum;
+      return -1;
+    }
 
   return 0;
 }
@@ -791,14 +828,18 @@ ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Secti
   if (load_key (key, base_key))
     return -1;
 
-  if (ACE_TEXT_RegSetValueEx (base_key,
-                              t_name,
-                              0,
-                              REG_BINARY,
-                              (BYTE *) data,
-                              ACE_static_cast (DWORD, length))
+  int errnum;
+  if ((errnum = ACE_TEXT_RegSetValueEx (base_key,
+                                        name,
+                                        0,
+                                        REG_BINARY,
+                                        (BYTE *) data,
+                                        ACE_static_cast (DWORD, length)))
       != ERROR_SUCCESS)
-    return -1;
+    {
+      errno = errnum;
+      return -1;
+    }
 
   return 0;
 }
@@ -817,19 +858,23 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
     return -1;
 
   // Get the size of the binary data from windows
+  int errnum;
   DWORD buffer_length = 0;
   DWORD type;
-  if (ACE_TEXT_RegQueryValueEx (base_key,
-                                t_name,
-                                0,
-                                &type,
-                                (BYTE *) 0,
-                                &buffer_length) != ERROR_SUCCESS)
-    return -1;
+  if ((errnum = ACE_TEXT_RegQueryValueEx (base_key,
+                                          name,
+                                          0,
+                                          &type,
+                                          (BYTE *) 0,
+                                          &buffer_length)) != ERROR_SUCCESS)
+    {
+      errno = errnum;
+      return -1;
+    }
 
   if (type != REG_SZ)
     {
-      errno = 0; ACE_OS::last_error (ERROR_INVALID_DATATYPE);
+      errno = ERROR_INVALID_DATATYPE;
       return -1;
     }
 
@@ -840,15 +885,16 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
 
   ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer (temp);
 
-  if (ACE_TEXT_RegQueryValueEx (base_key,
-                                t_name,
-                                0,
-                                &type,
-                                (BYTE *) buffer.get (),
-                                &buffer_length) != ERROR_SUCCESS)
-  {
-    return -1;
-  }
+  if ((errnum = ACE_TEXT_RegQueryValueEx (base_key,
+                                          name,
+                                          0,
+                                          &type,
+                                          (BYTE *) buffer.get (),
+                                          &buffer_length)) != ERROR_SUCCESS)
+    {
+      errno = errnum;
+      return -1;
+    }
 
   value = buffer.get ();
   return 0;
@@ -867,19 +913,23 @@ ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Sect
   if (load_key (key, base_key))
     return -1;
 
+  int errnum;
   DWORD length = sizeof (value);
   DWORD type;
-  if (ACE_TEXT_RegQueryValueEx (base_key,
-                                t_name,
-                                0,
-                                &type,
-                                (BYTE *) &value,
-                                &length) != ERROR_SUCCESS)
-    return -1;
+  if ((errnum = ACE_TEXT_RegQueryValueEx (base_key,
+                                          name,
+                                          0,
+                                          &type,
+                                          (BYTE *) &value,
+                                          &length)) != ERROR_SUCCESS)
+    {
+      errno = errnum;
+      return -1;
+    }
 
   if (type != REG_DWORD)
     {
-      errno = 0; ACE_OS::last_error (ERROR_INVALID_DATATYPE);
+      errno = ERROR_INVALID_DATATYPE;
       return -1;
     }
 
@@ -901,19 +951,23 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
     return -1;
 
   // Get the size of the binary data from windows
+  int errnum;
   DWORD buffer_length = 0;
   DWORD type;
-  if (ACE_TEXT_RegQueryValueEx (base_key,
-                                t_name,
-                                0,
-                                &type,
-                                (BYTE *) 0,
-                                &buffer_length) != ERROR_SUCCESS)
-    return -1;
+  if ((errnum = ACE_TEXT_RegQueryValueEx (base_key,
+                                          name,
+                                          0,
+                                          &type,
+                                          (BYTE *) 0,
+                                          &buffer_length)) != ERROR_SUCCESS)
+    {
+      errno = errnum;
+      return -1;
+    }
 
   if (type != REG_BINARY)
     {
-      errno = 0; ACE_OS::last_error (ERROR_INVALID_DATATYPE);
+      errno = ERROR_INVALID_DATATYPE;
       return -1;
     }
 
@@ -921,15 +975,16 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
 
   ACE_NEW_RETURN (data, BYTE[length], -1);
 
-  if (ACE_TEXT_RegQueryValueEx (base_key,
-                                t_name,
-                                0,
-                                &type,
-                                (BYTE *) data,
-                                &buffer_length) != ERROR_SUCCESS)
+  if ((errnum = ACE_TEXT_RegQueryValueEx (base_key,
+                                          name,
+                                          0,
+                                          &type,
+                                          (BYTE *) data,
+                                          &buffer_length)) != ERROR_SUCCESS)
     {
       delete [] (BYTE *) data;
       data = 0;
+      errno = errnum;
       return -1;
     }
 
@@ -958,7 +1013,10 @@ ACE_Configuration_Win32Registry::find_value (const ACE_Configuration_Section_Key
                                        0,
                                        &buffer_length);
   if (result != ERROR_SUCCESS)
-    return -1;
+    {
+      errno = result;
+      return -1;
+    }
 
   switch (type)
     {
@@ -990,8 +1048,12 @@ ACE_Configuration_Win32Registry::remove_value (const ACE_Configuration_Section_K
   if (load_key (key, base_key))
     return -1;
 
-  if (ACE_TEXT_RegDeleteValue (base_key, t_name) != ERROR_SUCCESS)
-    return -1;
+  int errnum;
+  if ((errnum = ACE_TEXT_RegDeleteValue (base_key, name)) != ERROR_SUCCESS)
+    {
+      errno = errnum;
+      return -1;
+    }
 
   return 0;
 }
@@ -1017,12 +1079,16 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
 {
   HKEY result = 0;
   // Make a copy of hKey
+  int errnum;
 #if defined (ACE_HAS_WINCE)
-  if (::RegOpenKeyEx (hKey, 0, 0, 0, &result) != ERROR_SUCCESS)
+  if ((errnum = RegOpenKeyEx (hKey, 0, 0, 0, &result)) != ERROR_SUCCESS)
 #else
-  if (::RegOpenKey (hKey, 0, &result) != ERROR_SUCCESS)
+  if ((errnum = RegOpenKey (hKey, 0, &result)) != ERROR_SUCCESS)
 #endif  // ACE_HAS_WINCE
-    return 0;
+    {
+      errno = errnum;
+      return 0;
+    }
 
   // recurse through the path
   ACE_TCHAR *temp_path = 0;
@@ -1043,33 +1109,34 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
       HKEY subkey;
 
 #if defined (ACE_HAS_WINCE)
-      if (ACE_TEXT_RegOpenKeyEx (result,
-                                 temp,
-                                 0,
-                                 0,
-                                 &subkey) != ERROR_SUCCESS)
+      if ((errnum = ACE_TEXT_RegOpenKeyEx (result,
+                                           temp,
+                                           0,
+                                           0,
+                                           &subkey)) != ERROR_SUCCESS)
 #else
-      if (ACE_TEXT_RegOpenKey (result,
-                               temp,
-                               &subkey) != ERROR_SUCCESS)
+      if ((errnum = ACE_TEXT_RegOpenKey (result,
+                                         temp,
+                                         &subkey)) != ERROR_SUCCESS)
 #endif  // ACE_HAS_WINCE
         {
           // try creating it
-          if (!create || ACE_TEXT_RegCreateKeyEx (result,
-                                                  temp,
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  KEY_ALL_ACCESS,
-                                                  0,
-                                                  &subkey,
+          if (!create || (errnum = ACE_TEXT_RegCreateKeyEx (result,
+                                                            temp,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            KEY_ALL_ACCESS,
+                                                            0,
+                                                            &subkey,
 #if defined (__MINGW32__)
- (PDWORD) 0
+                                                            (PDWORD) 0
 #else
-                                                  0
+                                                            0
 #endif /* __MINGW32__ */
-                                                  ) != ERROR_SUCCESS)
+                                                            )) !=ERROR_SUCCESS)
             {
+              errno = errnum;
               // error
               ::RegCloseKey (result);
               return 0;
