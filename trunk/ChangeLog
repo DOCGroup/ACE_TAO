@@ -1,3 +1,11 @@
+Thu Jan  8 14:05:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Misc/Makefile:
+
+	  Fixed a bild error in our daily builds. Thanks to Don for
+	  helping with this. The change just involved removing
+	  shared_libs=0  from the Makefile.
+
 Thu Jan  8 18:35:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/templates/bor.mpd:
