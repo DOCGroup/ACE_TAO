@@ -1,3 +1,8 @@
+Tue Jul 28 11:09:35 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp : 
+		Removed unnecessary commented code.
+
 Tue Jul 28 10:17:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
          * orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h:
