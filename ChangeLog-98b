@@ -1,3 +1,8 @@
+Fri Oct 09 23:47:42 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Mem_Map.cpp (map_it): Fixed the setting of length_ again.
+	  Hopefully, it will be right this time.
+
 Fri Oct  9 15:37:26 PDT 1998  James Hu  <jxh@entera.com>
 
 	* ace/Mem_Map.cpp: Protect against assigning 0 to length_.  This
