@@ -1,3 +1,10 @@
+Sun Oct  6 09:03:28 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/UPIPE_Stream.cpp (send):
+
+	  Silenced a signed/unsigned conversion warning using a
+	  static_cast<> until a better solution presents itself.
+
 Sat Oct  5 17:04:38 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Memory_Pool.cpp (ACE_Pagefile_Memory_Pool::acquire): Remove
@@ -14,7 +21,7 @@ Sat Oct  5 12:30:49 2002  Steve Huston  <shuston@riverace.com>
 
 Fri Oct 04 22:24:23 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
-        * ACEXML\common\URL_Addr.cpp (string_to_addr): Added a new wrapper
+        * ACEXML/common/URL_Addr.cpp (string_to_addr): Added a new wrapper
           which matches the signature in ACE_INET_Addr, and delegates the
           work to the ACEXML_Char function to work around Borland BCB
           warning about hidden virtual function.
