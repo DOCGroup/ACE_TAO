@@ -261,7 +261,11 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
   ACE_hrtime_t delta_t; /* nanoseconds */
   timer_.elapsed_time (delta_t);
 
+# if defined (ACE_WIN32)
+  et.real_time = (__int64) delta_t / (double) ACE_ONE_SECOND_IN_NSECS;
+# else
   et.real_time = delta_t / (double) ACE_ONE_SECOND_IN_NSECS;
+# endif /* ACE_WIN32 */
 #endif /* ! ACE_LACKS_FLOATING_POINT */
 
   et.user_time = 0;
