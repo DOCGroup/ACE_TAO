@@ -1,36 +1,42 @@
+Tue Oct 03 10:08:19 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile: inserted
+          -lTAO_CosEventin ACE_SHLIBS to suppress Compaq cxx warning
+          about unresolved symbols when creating libTAO_RTEC_COSEC.so.
+
 Mon Oct  2 17:21:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* docs/INS.html (src): 
-	  Updated to reflect the change from iioploc to corbaloc format.
-	
+        * docs/INS.html (src):
+          Updated to reflect the change from iioploc to corbaloc format.
+
 Mon Oct  2 15:25:16 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/default_resource.h (TAO_Default_Resource_Factory): 
-	* tao/default_resource.cpp (get_parser_names): 
-	  Added CORBALOC_Parser in the list of IOR parsers.
-	
-	* tao/CORBALOC_Parser.h: 
-	* tao/CORBALOC_Parser.cpp: 
-	* tao/ior_corbaloc_export.h: 
-	* tao/CORBALOC_Parser.i: 
-	  Moved these files from the sub-directory ior_corbaloc to tao.
-	  Added support for uiop and shmiop protocols in the corbaloc url.
-	  So, finally TAO supports corbaloc scheme.
+        * tao/default_resource.h (TAO_Default_Resource_Factory):
+        * tao/default_resource.cpp (get_parser_names):
+          Added CORBALOC_Parser in the list of IOR parsers.
 
-	* tao/Makefile: 
-	  Added the CORBALOC_Parser files.
-	
-	* tao/SHMIOP_Profile.cpp (parse_string): 
-	  Added support so that if the host is not specified, the host is
-	  to be defaulted to the local host.
+        * tao/CORBALOC_Parser.h:
+        * tao/CORBALOC_Parser.cpp:
+        * tao/ior_corbaloc_export.h:
+        * tao/CORBALOC_Parser.i:
+          Moved these files from the sub-directory ior_corbaloc to tao.
+          Added support for uiop and shmiop protocols in the corbaloc url.
+          So, finally TAO supports corbaloc scheme.
 
-	* tests/ior_corbaloc/ior_corbaloc_client_i.cpp (init): 
-	  Added some comments.
+        * tao/Makefile:
+          Added the CORBALOC_Parser files.
+
+        * tao/SHMIOP_Profile.cpp (parse_string):
+          Added support so that if the host is not specified, the host is
+          to be defaulted to the local host.
+
+        * tests/ior_corbaloc/ior_corbaloc_client_i.cpp (init):
+          Added some comments.
 
 Mon Oct 02 17:16:38 2000  David L. Levine <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile.CosEvent: inserted
-          -lTAO_CosNaming ACE_SHLIBS to suppress Compaq cxx warning
+          -lTAO_CosNaming in ACE_SHLIBS to suppress Compaq cxx warning
           about unresolved CosNaming symbols when creating libTAO_CosEvent.so.
 
 Mon Oct  2 14:19:30 2000  Carlos O'Ryan  <coryan@uci.edu>
