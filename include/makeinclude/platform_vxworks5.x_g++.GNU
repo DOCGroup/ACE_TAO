@@ -42,7 +42,7 @@ PERL_PATH = perl
 
 ifeq (win32,$(findstring win32,$(WIND_HOST_TYPE)))
   #### GNU make on WIN32 needs double double quotes.
-  ACE_QUOTE =""
+  ACE_QUOTE ='"'
 else  # ! win32 host
   ACE_QUOTE ="
 endif # ! win32 host
