@@ -1,3 +1,25 @@
+Fri May  7 20:39:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Sequence_T.i:
+	  Added a <T> to the argument of the copy constructor for
+	  TAO_Object_Manager<T>. Was causing a problem with IBM
+	  OpenEdition.
+
+	* tao/Object_Adapter.h:
+	  Moved the classes Hint_Strategy, Active_Hint_Strategy, and
+	  No_Hint_Strategy to the public section of TAO_Object_Adapter.
+	  IBM OpenEdition didn't like the protected class Hint_Strategy
+	  being inherited by the other two.
+
+	* tao/ORB.h:
+	  Moved forward declaration and typedefs of
+          CORBA_ORB_InconsistentTypeCode outside of class
+	  ORBA_ORB to the beginning of the file. IBM OpenEdition
+	  didn't like this either.
+
+	  Thanks to Jim Rogers <jrogers@viasoft.com> for pointing
+	  out the problems and suggesting fixes.
+
 Fri May  7 19:37:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
@@ -16,7 +38,8 @@ Fri May  7 19:16:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/include/ast_expression.h:
 	  Put in many many #if ! defined (ACE_LACKS_LONGLONG_T)
 	  brackets to avoid compile errors on GreenHills and
-	  IBM OpenEdition.
+	  IBM OpenEdition. Thanks to Jim Rogers <jrogers@viasoft.com>
+	  for pointing out the problem.
 
 Fri May  7 16:55:08 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
