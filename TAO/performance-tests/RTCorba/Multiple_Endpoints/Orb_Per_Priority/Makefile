@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lRTCORBA_Common -lTAO_Strategies -lTAO_PortableServer -lTAO
+LDLIBS = -lRTCORBA_Common -lTAO_Strategies -lTAO_PortableServer -lTAO -lTAO_RTCORBA -lTAO_RTPortableServer
 
 BIN_UNCHECKED = server client
 
