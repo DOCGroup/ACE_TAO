@@ -59,7 +59,8 @@ public:
   /// The following methods are not needed for this class..
   virtual void reply_timed_out (void)  {}
   virtual long schedule_timer (CORBA::ULong ,
-                               const ACE_Time_Value &)
+                               const ACE_Time_Value &
+                               ACE_ENV_ARG_DECL_NOT_USED)
   {
     return 0;
   }

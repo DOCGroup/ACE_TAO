@@ -1,3 +1,17 @@
+Sun Dec  7 00:41:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Asynch_Reply_Dispatcher_Base.cpp:
+	* tao/Asynch_Reply_Dispatcher_Base.h:
+	* tao/Asynch_Reply_Dispatcher_Base.i:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
+	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
+	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+	* tao/Messaging/Asynch_Reply_Dispatcher.h:
+
+	  Fixed a bunch of copile errors when compiled with exceptions=0.
+
+
 Sat Dec  6 23:42:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	This checkin is a fix for the various race conditions in Asynch

@@ -83,15 +83,6 @@ TAO_Asynch_Reply_Dispatcher_Base::reply_timed_out (void)
 }
 
 long
-TAO_Asynch_Reply_Dispatcher_Base::schedule_timer (
-    CORBA::ULong /*request_id */,
-    const ACE_Time_Value & /*max_wait_time*/
-  )
-{
-  return 0;
-}
-
-long
 TAO_Asynch_Reply_Dispatcher_Base::incr_refcount (void)
 {
   ACE_GUARD_RETURN (ACE_Lock,

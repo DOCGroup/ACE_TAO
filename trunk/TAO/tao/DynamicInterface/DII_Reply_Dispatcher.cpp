@@ -105,7 +105,9 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
 void
 TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       // Generate a fake exception....
       CORBA::COMM_FAILURE comm_failure (0,

@@ -202,7 +202,9 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 void
 TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       // Generate a fake exception....
       CORBA::TIMEOUT timeout_failure (
