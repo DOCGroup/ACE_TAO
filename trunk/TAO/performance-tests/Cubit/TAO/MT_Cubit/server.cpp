@@ -41,17 +41,21 @@ Server::initialize (int argc, char **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
+
 #if defined (VXWORKS)
+  // @@ Naga, can you please factor this code into a separate file?!
 #if defined (VME_DRIVER)
    STATUS status = vmeDrv ();
 
    if (status != OK)
-     printf ("ERROR on call to vmeDrv()\n");
+     ACE_DEBUG ((LM_DEBUG,
+                 "ERROR on call to vmeDrv()\n"));
 
    status = vmeDevCreate ("/vme");
 
    if (status != OK)
-     printf ("ERROR on call to vmeDevCreate()\n");
+     ACE_DEBUG ((LM_DEBUG,
+                 "ERROR on call to vmeDevCreate()\n"));
 #endif /* defined (VME_DRIVER) */
 
 #if defined (FORCE_ARGS)
@@ -75,14 +79,6 @@ Server::initialize (int argc, char **argv)
 int
 Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
 {
-  //DONE// @@ Naga, can you please explain why you need to do all of this?
-  //DONE// i.e, we need some comments here!  In particular, what is args1
-  //DONE// being used for and how will we know that ACE_DEFAULT_ARGV_BUFSIZ
-  //DONE// is an appropriate size?  It seems to me that we should either (1)
-  //DONE// add an accessor on ACE_ARGV to determine what this size ought to
-  //DONE// be or (2) we should try to use/add a method on ACE_ARGV that
-  //DONE// converts the argv back into a char * buffer or something!  At any
-  //DONE// rate, this code should be cleaned up and abstracted better.
   int i;
 
   for (i = 0; i < this->argc_ ; i++)
@@ -143,6 +139,9 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
                               0), //task id 0.
                   -1);
 
+  // @@ Naga, here's another place where we write the same code again.
+  // Please make sure that this gets factored out into a macro or an
+  // inline function!
 #if defined (VXWORKS)
   ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
 #elif defined (ACE_WIN32)
@@ -164,16 +163,14 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
                                     1,
                                     0,
                                     priority) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) %p\n"
                 "\thigh_priority_task->activate failed"));
 
-  //  ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
 
   while (!GLOBALS::instance ()->ready_)
     GLOBALS::instance ()->ready_cnd_.wait ();
-
-  //  ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
 
   // Create an array to hold pointers to the low priority tasks.
   Cubit_Task **low_priority_task;
@@ -244,7 +241,9 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
     {
       ACE_OS::sprintf (orbport,
                       "-ORBport %d",
-                       (GLOBALS::instance ()->base_port == 0) ? (int) 0 :GLOBALS::instance ()->base_port+i);
+                       GLOBALS::instance ()->base_port == 0
+                       ? (int) 0 
+                       : GLOBALS::instance ()->base_port + i);
 
       char *low_second_argv[] = {orbport,
                                  orbhost,
@@ -253,7 +252,8 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
                                  "-ORBrcvsock 32768 ",
                                  0};
       ACE_NEW_RETURN (low_argv,
-                      ACE_ARGV (this->argv_,low_second_argv),
+                      ACE_ARGV (this->argv_,
+                                low_second_argv),
                       -1);
 
       ACE_NEW_RETURN (low_priority_task [i - 1],
@@ -266,10 +266,11 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
 
       // Make the low priority task an active object.
       if (low_priority_task [i - 1]->activate (THR_BOUND | ACE_SCHED_FIFO,
-                                           1,
-                                           0,
-                                           priority) == -1)
-        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
+                                               1,
+                                               0,
+                                               priority) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) %p\n"
                     "\tlow_priority_task[i]->activate"));
       ACE_DEBUG ((LM_DEBUG,
                   "Created servant %d with priority %d\n",
@@ -286,12 +287,11 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
               &&
                //Just so when we distribute the priorities among the
                //threads, we make sure we don't go overboard.
-              (number_of_priorities * grain > number_of_low_priority_servants - (i - 1)))
+              number_of_priorities * grain > number_of_low_priority_servants - (i - 1))
             // Get the next higher priority.
             priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                         priority,
                                                         ACE_SCOPE_THREAD);
-
         }
     } /* end of for() */
 
@@ -302,17 +302,15 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
     cubits[0] = high_priority_task->get_servant_ior (0);
 
     for (j = 0;
-         j < GLOBALS::instance ()->num_of_objs-1;
+         j < GLOBALS::instance ()->num_of_objs - 1;
          ++j)
       cubits[j + 1] = low_priority_task[j]->get_servant_ior (0);
 
     FILE *ior_f = 0;
 
     if (GLOBALS::instance ()->ior_file != 0)
-      {
-        //        ACE_DEBUG ((LM_DEBUG,"(%P|%t) Opening file:%s\n",GLOBALS::instance ()->ior_file));
-        ior_f = ACE_OS::fopen (GLOBALS::instance ()->ior_file, "w");
-      }
+      ior_f = ACE_OS::fopen (GLOBALS::instance ()->ior_file,
+                             "w");
 
     for (j = 0;
          j < GLOBALS::instance ()->num_of_objs;
@@ -320,19 +318,16 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
       {
         if (ior_f != 0)
           {
-            //            ACE_DEBUG ((LM_DEBUG,"(%P|%t) ior_file is open :%s",GLOBALS::instance ()->ior_file));
             ACE_OS::fprintf (ior_f, "%s\n", cubits[j]);
-            ACE_OS::printf ("cubits[%d] ior = %s\n",
-                            j,
-                            cubits[j]);
+            ACE_DEBUG ((LM_DEBUG,
+                        "cubits[%d] ior = %s\n",
+                        j,
+                        cubits[j]));
           }
       }
 
     if (ior_f != 0)
-      {
-        //        ACE_DEBUG ((LM_DEBUG,"(%P|%t) Closing ior file\n"));
-        ACE_OS::fclose (ior_f);
-      }
+      ACE_OS::fclose (ior_f);
   }
   return 0;
 
@@ -352,7 +347,7 @@ server (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-#endif
+#endif /* VXWORKS */
   // Dummy code to create the GLOBALS object in the global memory
   // instead of TSS.
   GLOBALS::instance ();
@@ -376,10 +371,12 @@ main (int argc, char *argv[])
           ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_DEBUG ((LM_MAX, "preempt: user is not superuser, "
+        ACE_DEBUG ((LM_MAX,
+                    "preempt: user is not superuser, "
                     "so remain in time-sharing class\n"));
       else
-        ACE_ERROR_RETURN ((LM_ERROR, "%n: ACE_OS::sched_params failed\n%a"),
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%n: ACE_OS::sched_params failed\n%a"),
                           -1);
     }
 

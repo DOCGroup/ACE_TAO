@@ -86,20 +86,24 @@ Task_State::parse_args (int argc,char **argv)
       switch (datatype)
         {
         case CB_OCTET:
-          ACE_DEBUG ((LM_DEBUG, "Testing Octets\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Testing Octets\n"));
           datatype_ = CB_OCTET;
           break;
         case CB_LONG:
-          ACE_DEBUG ((LM_DEBUG, "Testing Longs\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Testing Longs\n"));
           datatype_ = CB_LONG;
           break;
         case CB_STRUCT:
-          ACE_DEBUG ((LM_DEBUG, "Testing Structs\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Testing Structs\n"));
           datatype_ = CB_STRUCT;
           break;
         case CB_SHORT:
         default:
-          ACE_DEBUG ((LM_DEBUG, "Testing Shorts\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Testing Shorts\n"));
           datatype_ = CB_SHORT;
           break;
         }
@@ -148,15 +152,16 @@ Task_State::parse_args (int argc,char **argv)
       FILE *ior_file = ACE_OS::fopen (ior_file_, "r");
 
       if (ior_file == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR, "Task_State::parse_args; "
-                             "unable to open IOR file \"%s\"\n",
-                             ior_file_), -1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Task_State::parse_args; "
+                           "unable to open IOR file \"%s\"\n",
+                           ior_file_),
+                          -1);
 
       while (ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0 && i < thread_count_)
         {
-          ACE_DEBUG ((LM_DEBUG,buf));
+          ACE_DEBUG ((LM_DEBUG,
+                      buf));
           j = ACE_OS::strlen (buf);
           buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
           iors_[i] = ACE_OS::strdup (buf);
@@ -176,24 +181,18 @@ Task_State::parse_args (int argc,char **argv)
         // If we are to use the utilization test, include it in the
         // barrier count.  See description of this variable in header
         // file.
-        {
-          ACE_NEW_RETURN (barrier_,
-			  ACE_Barrier (thread_count_ + 2),
-			  -1);
-        }
+        ACE_NEW_RETURN (barrier_,
+                        ACE_Barrier (thread_count_ + 2),
+                        -1);
       else
-        {
-          ACE_NEW_RETURN (barrier_,
-			  ACE_Barrier (thread_count_ + 1),
-			  -1);
-        }
+        ACE_NEW_RETURN (barrier_,
+                        ACE_Barrier (thread_count_ + 1),
+                        -1);
     }
   else
-    {
-      ACE_NEW_RETURN (barrier_,
-		      ACE_Barrier (thread_count_),
-                      -1);
-    }
+    ACE_NEW_RETURN (barrier_,
+                    ACE_Barrier (thread_count_),
+                    -1);
 
   ACE_NEW_RETURN (semaphore_,
 		  ACE_Thread_Semaphore (0),
@@ -210,16 +209,16 @@ Task_State::parse_args (int argc,char **argv)
   return 0;
 }
 
-
 Task_State::~Task_State (void)
 {
   int i;
 
   if (this->ior_file_ != 0)
+    // @@ Naga, should this be delete [] this->ior_file?!
     delete this->ior_file_;
 
-  // Delete the strduped memory
-  for (i=0;i<this->iors_count_; i++)
+  // Delete the strduped memory.
+  for (i = 0; i < this->iors_count_; i++)
     ACE_OS::free (this->iors_ [i]);
   
   // Delete the barrier
@@ -231,7 +230,9 @@ Task_State::~Task_State (void)
   delete [] this->count_;
 }
 
-Client::Client (ACE_Thread_Manager *thread_manager, Task_State *ts, u_int id)
+Client::Client (ACE_Thread_Manager *thread_manager,
+                Task_State *ts,
+                u_int id)
   : ACE_MT (ACE_Task<ACE_MT_SYNCH> (thread_manager)),
     ts_ (ts),
     id_ (id)
@@ -250,6 +251,9 @@ Client::put_latency (double *jitter,
   ts_->global_jitter_array_[thread_id] = jitter;
   ts_->count_[thread_id] = count;
 
+  // @@ Naga, can you please try to factor out all of the
+  // ACE_LACKS_FLOATING_POINT into a helper class to clean up all of
+  // this code?!
 #if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG,
               "(%t) My latency was %u msec\n",
@@ -312,7 +316,10 @@ Client::get_high_priority_jitter (void)
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
 
-  ACE_OS::fprintf (stderr, "high priority jitter:\n");
+  // @@ Naga, can you please replace the fprintf (stderr, ...) calls
+  // with ACE_DEBUG(()) calls throughout this file?
+  ACE_OS::fprintf (stderr,
+                   "high priority jitter:\n");
   stats.print_summary (3, 1000, stderr);
 
   return sqrt (jitter / (number_of_samples - 1));
@@ -348,7 +355,8 @@ Client::get_low_priority_jitter (void)
         }
     }
 
-  ACE_OS::fprintf (stderr, "low priority jitter:\n");
+  ACE_OS::fprintf (stderr,
+                   "low priority jitter:\n");
   stats.print_summary (3, 1000, stderr);
 
   // Return the square root of the sum of the differences computed
@@ -378,7 +386,8 @@ Client::get_jitter (u_int id)
       stats.sample ((ACE_UINT32) (ts_->global_jitter_array_ [id][i] * 1000 + 0.5));
     }
 
-  ACE_OS::fprintf (stderr, "jitter for thread id %d:\n", id);
+  ACE_OS::fprintf (stderr,
+                   "jitter for thread id %d:\n", id);
   stats.print_summary (3, 1000, stderr);
 
   // Return the square root of the sum of the differences computed
@@ -433,24 +442,36 @@ Client::svc (void)
       env.print_exception ("ORB_init()\n");
       return -1;
     }
-ACE_DEBUG ((LM_DEBUG, "in svc() ts_->one_ior_ = \"%s\"\n", ts_->one_ior_));
+  ACE_DEBUG ((LM_DEBUG,
+              "in svc() ts_->one_ior_ = \"%s\"\n",
+              ts_->one_ior_));
 
   if (this->id_ == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,"parsing the arguments\n"));
-      int result;
-      result = this->ts_->parse_args (argc,argv);
-ACE_DEBUG ((LM_DEBUG, "in svc(), AFTER parse_args()  ts_->one_ior_ = \"%s\"\n", ts_->one_ior_));
+      ACE_DEBUG ((LM_DEBUG,
+                  "parsing the arguments\n"));
+      int result = this->ts_->parse_args (argc,argv);
+
+      ACE_DEBUG ((LM_DEBUG,
+
+                  "in svc(), AFTER parse_args() ts_->one_ior_ = \"%s\"\n",
+                  ts_->one_ior_));
+
       if (result < 0)
         return -1;
-      ACE_DEBUG ((LM_DEBUG,"(%t)Arguments parsed successfully\n"));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t)Arguments parsed successfully\n"));
+
       ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, this->ts_->ready_mtx_, 1));
       this->ts_->ready_ = 1;
       this->ts_->ready_cnd_.broadcast ();
       ready_mon.release ();
     }
 
-  ACE_DEBUG ((LM_DEBUG,"(%t) ORB_init success\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) ORB_init success\n"));
+
   if (ts_->use_name_service_ != 0)
     {
       // Initialize the naming services
@@ -465,7 +486,8 @@ ACE_DEBUG ((LM_DEBUG, "in svc(), AFTER parse_args()  ts_->one_ior_ = \"%s\"\n", 
 
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ts_->lock_, -1));
 
-    ACE_DEBUG ((LM_DEBUG,"(%P|%t) Out of ACE_MT\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "(%P|%t) Out of ACE_MT\n"));
     if (ts_->thread_per_rate_ == 0)
       {
         if (this->id_ == 0)
@@ -519,12 +541,14 @@ ACE_DEBUG ((LM_DEBUG, "in svc(), AFTER parse_args()  ts_->one_ior_ = \"%s\"\n", 
                       this->id_));
           break;
         default:
-          ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID!!!!\n", this->id_));
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) Invalid Thread ID!!!!\n",
+                      this->id_));
         }
 
     TAO_TRY
       {
-        // if the naming service was resolved successsfully ...
+        // If the naming service was resolved successsfully ...
         if (!CORBA::is_nil (this->my_name_client_.get_context ()))
           {
             ACE_DEBUG ((LM_DEBUG,
@@ -534,7 +558,8 @@ ACE_DEBUG ((LM_DEBUG, "in svc(), AFTER parse_args()  ts_->one_ior_ = \"%s\"\n", 
             // Construct the key for the name service lookup.
             CosNaming::Name mt_cubit_context_name (1);
             mt_cubit_context_name.length (1);
-            mt_cubit_context_name[0].id = CORBA::string_dup ("MT_Cubit");
+            mt_cubit_context_name[0].id =
+              CORBA::string_dup ("MT_Cubit");
 
             objref =
               this->my_name_client_->resolve (mt_cubit_context_name,
@@ -582,13 +607,20 @@ ACE_DEBUG ((LM_DEBUG, "in svc(), AFTER parse_args()  ts_->one_ior_ = \"%s\"\n", 
               }
           }
 
-ACE_DEBUG ((LM_DEBUG, "ts_->one_ior_=%s, this->id_=%d \t naming_success=%d\n", ts_->one_ior_, this->id_, naming_success));
+        ACE_DEBUG ((LM_DEBUG,
+                    "ts_->one_ior_=%s, this->id_=%d \t naming_success=%d\n",
+                    ts_->one_ior_,
+                    this->id_,
+                    naming_success));
 
         if (naming_success == CORBA::B_FALSE)
           {
-            char *my_ior = ts_->use_utilization_test_ == 1? ts_->one_ior_ : ts_->iors_[this->id_];
+            char *my_ior =
+              ts_->use_utilization_test_ == 1
+              ? ts_->one_ior_ 
+              : ts_->iors_[this->id_];
 
-            // if we are running the "1 to n" test make sure all low
+            // If we are running the "1 to n" test make sure all low
             // priority clients use only 1 low priority servant.
             if (this->id_ > 0 && ts_->one_to_n_test_ == 1)
               my_ior = ts_->iors_[1];
@@ -599,8 +631,10 @@ ACE_DEBUG ((LM_DEBUG, "ts_->one_ior_=%s, this->id_=%d \t naming_success=%d\n", t
                                  " naming service, or ior filename\n"),
                                 -1);
 
-            ACE_DEBUG ((LM_DEBUG,"(%P|%t) my ior is:%s\n",my_ior));
-            // if we are running the "1 to n" test make sure all low
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) my ior is:%s\n",
+                        my_ior));
+            // If we are running the "1 to n" test make sure all low
             // priority clients use only 1 low priority servant.
             if (this->id_ > 0 && ts_->one_to_n_test_ == 1)
               my_ior = ts_->iors_[1];
@@ -613,7 +647,8 @@ ACE_DEBUG ((LM_DEBUG, "ts_->one_ior_=%s, this->id_=%d \t naming_success=%d\n", t
 
             objref = orb->string_to_object (my_ior,
                                             TAO_TRY_ENV);
-            ACE_DEBUG ((LM_DEBUG,"(%P|%t)  String_to_object success\n"));
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t)  String_to_object success\n"));
             TAO_CHECK_ENV;
           }
 
@@ -628,7 +663,8 @@ ACE_DEBUG ((LM_DEBUG, "ts_->one_ior_=%s, this->id_=%d \t naming_success=%d\n", t
                              TAO_TRY_ENV);
         TAO_CHECK_ENV;
 
-        ACE_DEBUG ((LM_DEBUG,"(%t) _narrow done\n"));
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%t) _narrow done\n"));
 
         if (CORBA::is_nil (cb))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -675,7 +711,8 @@ ACE_DEBUG ((LM_DEBUG, "ts_->one_ior_=%s, this->id_=%d \t naming_success=%d\n", t
                                 ts_->datatype_,
                                 frequency);
 
-  if (ts_->thread_per_rate_ == 1 && this->id_ == (ts_->thread_count_ - 1) )
+  if (ts_->thread_per_rate_ == 1 
+      && this->id_ == ts_->thread_count_ - 1)
     ts_->semaphore_->release (ts_->thread_count_ - 1);
   else
     ts_->semaphore_->release ();
@@ -697,7 +734,6 @@ ACE_DEBUG ((LM_DEBUG, "ts_->one_ior_=%s, this->id_=%d \t naming_success=%d\n", t
     }
 
   // Delete dynamic memory
-  
   CORBA::release (cb);
 
   return 0;
@@ -710,6 +746,8 @@ Client::run_tests (Cubit_ptr cb,
                    Cubit_Datatypes datatype,
                    double frequency)
 {
+  // @@ Naga, this function is WAY too long!  Can you please try to
+  // split it up?!
   Cubit_i cb_impl;
   CORBA::Environment env;
   u_int i = 0;
@@ -719,14 +757,18 @@ Client::run_tests (Cubit_ptr cb,
   double *my_jitter_array;
 
   if (id_ == 0 && ts_->thread_count_ > 1)
+
+    // @@ Naga, can you please generalize this magic number?
     ACE_NEW_RETURN (my_jitter_array,
-                    double [(loop_count/ts_->granularity_)*30], // magic number, for now.
+                    double [(loop_count/ts_->granularity_) * 30], 
                     -1);
   else
     ACE_NEW_RETURN (my_jitter_array,
-                    double [loop_count/ts_->granularity_*15],
+                    double [loop_count/ts_->granularity_ * 15],
                     -1);
 
+  // @@ Naga, can you please replace this CHORUS stuff with the
+  // ACE_timer_t stuff throughout the file?!
 #if defined (CHORUS)
   long latency = 0;
   long sleep_time = (1 / frequency) * ACE_ONE_SECOND_IN_USECS * ts_->granularity_; // usec
@@ -735,9 +777,9 @@ Client::run_tests (Cubit_ptr cb,
   double latency = 0;
   double sleep_time = (1 / frequency) * ACE_ONE_SECOND_IN_USECS * ts_->granularity_; // usec
   double delta = 0;
-#endif
+#endif /* CHORUS */
 
-  // time to wait for utilization tests to know when to stop.
+  // Time to wait for utilization tests to know when to stop.
   ACE_Time_Value max_wait_time (ts_->util_time_, 0);
   ACE_Countdown_Time countdown (&max_wait_time);
 
@@ -747,7 +789,7 @@ Client::run_tests (Cubit_ptr cb,
   long real_time = 0;
 #else /* CHORUS */
   double real_time = 0.0;
-#endif
+#endif /* CHORUS */
 
   ACE_High_Res_Timer timer_;
 
@@ -759,7 +801,9 @@ Client::run_tests (Cubit_ptr cb,
 
   // Make the calls in a loop.
 
-  ACE_DEBUG((LM_DEBUG,"(%P|%t)loop_count:%d",loop_count));
+  ACE_DEBUG((LM_DEBUG,
+             "(%P|%t)loop_count:%d",
+             loop_count));
   for (i = 0;
        // keep running for loop count, OR
        i < loop_count ||
@@ -772,16 +816,15 @@ Client::run_tests (Cubit_ptr cb,
        i++)
     {
       // start timing a call
-      if ( (i % ts_->granularity_) == 0 &&
-           (ts_->use_utilization_test_ == 0) 
-           )
+      if ((i % ts_->granularity_) == 0 &&
+           ts_->use_utilization_test_ == 0)
         {
-          // delay a sufficient amount of time to be able to enforce
+          // Delay a sufficient amount of time to be able to enforce
           // the calling frequency (i.e., 20Hz, 10Hz, 5Hz, 1Hz).
           ACE_Time_Value tv (0,
-                             (u_long) ((sleep_time - delta) < 0
+                             (u_long) (sleep_time - delta < 0
                                        ? 0
-                                       : (sleep_time - delta)));
+                                       : sleep_time - delta));
           ACE_OS::sleep (tv);
 #if defined (CHORUS)
           pstartTime = pccTime1Get();
@@ -796,19 +839,17 @@ Client::run_tests (Cubit_ptr cb,
             {
             case CB_OCTET:
               {
-                //            ACE_DEBUG ((LM_DEBUG,"(%P|%t) Cubing Octet\n"));
                 // Cube an octet.
                 CORBA::Octet arg_octet = func (i), ret_octet = 0;
 
 #if defined (NO_ACE_QUANTIFY)
-                /* start recording quantify data from here */
+                //  start recording quantify data from here.
                 quantify_start_recording_data ();
 #endif /* NO_ACE_QUANTIFY */
 		if (ts_->remote_invocations_ == 1)
 		  ret_octet = cb->cube_octet (arg_octet, env);
 		else
 		  ret_octet = cb_impl.cube_octet (arg_octet, env);
-
 #if defined (NO_ACE_QUANTIFY)
                 quantify_stop_recording_data();
 #endif /* NO_ACE_QUANTIFY */
@@ -821,8 +862,6 @@ Client::run_tests (Cubit_ptr cb,
                                        env.exception ()),
                                       2);
                   }
-                //                ACE_DEBUG ((LM_DEBUG,"(%P|%t) Cube_Octed  call success\n"));
-
                 arg_octet = arg_octet * arg_octet * arg_octet;
 
                 if (arg_octet != ret_octet)
@@ -843,6 +882,11 @@ Client::run_tests (Cubit_ptr cb,
 
                 CORBA::Short arg_short = func (i), ret_short;
 
+                // @@ Naga, can you please do two things:
+                // 1. Move this quantify stuff into a macro so that it
+                //    doesn't clutter the code everywhere?
+                // 2. Reconsider why this macro is named NO_ACE_QUANTIFY?
+                //    It doesn't seem to make much sense!
 #if defined (NO_ACE_QUANTIFY)
                 // start recording quantify data from here.
                 quantify_start_recording_data ();
@@ -885,7 +929,7 @@ Client::run_tests (Cubit_ptr cb,
                 CORBA::Long ret_long;
 
 #if defined (NO_ACE_QUANTIFY)
-                /* start recording quantify data from here */
+                // start recording quantify data from here.
                 quantify_start_recording_data ();
 #endif /* NO_ACE_QUANTIFY */
 
@@ -985,20 +1029,19 @@ Client::run_tests (Cubit_ptr cb,
             }
         }
 
-      // stop the timer
-      if ( (i % ts_->granularity_) == (ts_->granularity_ - 1) &&
-           (ts_->use_utilization_test_ == 0) 
-           )
+      // Stop the timer.
+      if ( (i % ts_->granularity_) == ts_->granularity_ - 1 &&
+           ts_->use_utilization_test_ == 0)
         {
 #if defined (CHORUS)
-          pstopTime = pccTime1Get();
+          pstopTime = pccTime1Get ();
 #else /* CHORUS */
           // if CHORUS is not defined just use plain timer_.stop ().
           timer_.stop ();
           timer_.elapsed_time (delta_t);
 #endif /* !CHORUS */
 
-          // Calculate time elapsed
+          // Calculate time elapsed.
 #if defined (ACE_LACKS_FLOATING_POINT)
 #   if defined (CHORUS)
           real_time = (pstopTime - pstartTime) / ts_->granularity_;
@@ -1088,11 +1131,10 @@ Client::run_tests (Cubit_ptr cb,
 			      (double) delta_t.usec () / (double) ACE_ONE_SECOND_IN_USECS);
     }
 
-  // perform latency stats onlt if we are not running the utilization
+  // Perform latency stats only if we are not running the utilization
   // tests.
   if (call_count > 0 &&
-      (ts_->use_utilization_test_ == 0) 
-      )
+      ts_->use_utilization_test_ == 0)
     {
       if (error_count == 0)
         {

@@ -57,5 +57,8 @@ void Cubit_i::shutdown (CORBA::Environment &)
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%t) Calling TAO_ORB_Core_instance ()->orb ()->shutdown ()\n"));
 
+  // @@ Naga, can you please revise this so that it doesn't use
+  // TAO-specific features?  Please see how Irfan fixed IDL_Cubit's
+  // shutdown () so that it wasn't TAO-specific!
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }

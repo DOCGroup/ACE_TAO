@@ -28,27 +28,32 @@ ACE_RCSID(MT_Cubit, client, "$Id$")
 u_int ctx = 0;
 u_int ct = 0;
 
-typedef struct {
+typedef struct 
+{
   char name[15];
   WIND_TCB *tcb;
-  INSTR *   pc;
+  INSTR *pc;
 } task_info;
 
+// @@ Naga, does this really need to be a #define?  Can it be a const
+// int instead?!
 #define SWITCHES 25000
 task_info tInfo[SWITCHES];
 
 extern "C"
 int
-switchHook ( WIND_TCB *pOldTcb,    /* pointer to old task's WIND_TCB */
-             WIND_TCB *pNewTcb )   /* pointer to new task's WIND_TCB */
+switchHook ( WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
+             WIND_TCB *pNewTcb )   // pointer to new task's WIND_TCB.
 {
   // We create the client threads with names starting with "@".
-  if ( pNewTcb->name[0] == '@')
+  if (pNewTcb->name[0] == '@')
     ctx++;
 
   if (ct < SWITCHES)
     {
-      strncpy (tInfo[ct].name, pNewTcb->name, 14);
+      ACE_OS::strncpy (tInfo[ct].name,
+                       pNewTcb->name,
+                       14); // @@ Naga, can you please fix this "magic number" 14?!
       tInfo[ct].tcb = pNewTcb;
       tInfo[ct].pc  = pNewTcb->regs.pc;
       ct++;
@@ -62,18 +67,21 @@ int
 initialize (void)
 {
 #if defined (VXWORKS) && defined (VME_DRIVER)
+  // @@ Naga, can you please factor these initialization functions
+  // into a separate function somehow?
   STATUS status = vmeDrv ();
   if (status != OK)
-    printf ("ERROR on call to vmeDrv()\n");
+    ACE_DEBUG ((LM_DEBUG,
+                "ERROR on call to vmeDrv()\n"));
   status = vmeDevCreate ("/vme");
   if (status != OK)
-    printf ("ERROR on call to vmeDevCreate()\n");
+    ACE_DEBUG ((LM_DEBUG, 
+                "ERROR on call to vmeDevCreate()\n"));
 #endif /* VXWORKS && VME_DRIVER */
 
-  // Make sure we've got plenty of socket handles.  This call will
-  // use the default maximum.
+  // Make sure we've got plenty of socket handles.  This call will use
+  // the default maximum.
   ACE::set_handle_limit ();
-
   return 0;
 }
 
@@ -89,7 +97,8 @@ output_taskinfo (void)
   ACE_OS::fprintf(stderr,
                   "--->Output file for taskinfo data is \"taskinfo.txt\"\n");
 
-  // This loop visits each client.  thread_count_ is the number of clients.
+  // This loop visits each client.  thread_count_ is the number of
+  // clients.
   for (u_int j = 0; j < SWITCHES; j ++)
     {
       ACE_OS::fprintf(file_handle,
@@ -120,15 +129,18 @@ output_latency (Task_State *ts)
 
   latency_file_handle = ACE_OS::fopen (latency_file, "w");
 
-  // This loop visits each client.  thread_count_ is the number of clients.
+  // This loop visits each client.  thread_count_ is the number of
+  // clients.
   for (u_int j = 0; j < ts->thread_count_; j ++)
     {
       ACE_OS::sprintf(buffer,
                       "%s #%d",
                       j==0? "High Priority": "Low Priority",
                       j);
-      // this loop visits each request latency from a client
-      for (u_int i = 0; i < (j==0? ts->high_priority_loop_count_:ts->loop_count_)/ts->granularity_; i ++)
+      // This loop visits each request latency from a client.
+      for (u_int i = 0;
+           i < (j == 0 ? ts->high_priority_loop_count_ : ts->loop_count_) / ts->granularity_;
+           i ++)
         {
           ACE_OS::sprintf(buffer+strlen(buffer),
 #if defined (CHORUS)
@@ -148,17 +160,15 @@ output_latency (Task_State *ts)
 int
 start_servant (Task_State *ts, ACE_Thread_Manager &thread_manager)
 {
-  //  ACE_ARGV  tmp_args (this->argv_); 
   char high_thread_args[BUFSIZ];   
 
   static char hostname[BUFSIZ]; 
 
   if (ACE_OS::hostname (hostname, BUFSIZ) != 0)         
-    {                                                   
-      perror ("gethostname");                           
-      return -1;                                        
-    }                                                   
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "hostname"),
+                       -1);
   ACE_OS::sprintf (high_thread_args,
                    "-ORBport %d "
                    "-ORBhost %s "
@@ -178,6 +188,9 @@ start_servant (Task_State *ts, ACE_Thread_Manager &thread_manager)
 			      (u_int) 0), //task id 0.
 		  -1);
   
+  // @@ Naga, can you please generalize this #ifdef so that it doesn't
+  // go into the code, but goes into a header file or inline function
+  // or something instead?!
 #if defined (VXWORKS)
   ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
 #elif defined (ACE_WIN32)
@@ -197,26 +210,37 @@ start_servant (Task_State *ts, ACE_Thread_Manager &thread_manager)
                                      0,
                                      priority) == -1)
      {
-       ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
+       ACE_ERROR ((LM_ERROR,
+                   "(%P|%t) %p\n"
                    "\thigh_priority_task->activate failed"));
      }
 
-   ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
+   ACE_DEBUG ((LM_DEBUG,
+               "(%t) Waiting for argument parsing\n"));
    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
    while (!GLOBALS::instance ()->ready_)
      GLOBALS::instance ()->ready_cnd_.wait ();
-   ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
+   ACE_DEBUG ((LM_DEBUG,
+               "(%t) Argument parsing waiting done\n"));
 
-   ACE_DEBUG ((LM_DEBUG, "<< Before start_barrier.wait()\n"));
+   ACE_DEBUG ((LM_DEBUG,
+               "<< Before start_barrier.wait()\n"));
          GLOBALS::instance ()->barrier_->wait ();
-   ACE_DEBUG ((LM_DEBUG, ">> After start_barrier.wait()\n"));
+   ACE_DEBUG ((LM_DEBUG,
+               ">> After start_barrier.wait()\n"));
 
    ts->one_ior_ = high_priority_task->get_servant_ior (0);
-   ACE_DEBUG ((LM_DEBUG, "ts->one_ior_ = \"%s\"\n", ts->one_ior_));
 
+   ACE_DEBUG ((LM_DEBUG,
+               "ts->one_ior_ = \"%s\"\n",
+               ts->one_ior_));
    return 0;
 }
 
+// @@ Naga, can this function be either (1) made static to the file or
+// (2) moved into a class somewhere (I prefer the latter, if
+// possible).  Moreover, this function is VERY long.  Can you please
+// break it up somehow?
 int
 do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
                             Task_State *ts)
@@ -224,7 +248,7 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
   int i;
   u_int j;
 
-  char * task_id = 0;
+  char *task_id = 0;
 
   ACE_High_Res_Timer timer_;
   ACE_Time_Value delta_t;
@@ -238,9 +262,10 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
                   -1);
 #endif /* VXWORKS */
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) <<<<<<< starting test on %D\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) <<<<<<< starting test on %D\n"));
 
-  // stores the total number of context switches incurred by the
+  // Stores the total number of context switches incurred by the
   // program while making CORBA requests
 #if defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)
   u_int context_switch = 0;
@@ -255,12 +280,14 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
 
   ACE_Thread_Manager server_thread_manager;
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) ts->argc_=%d\n", ts->argc_));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) ts->argc_=%d\n",
+              ts->argc_));
 
   GLOBALS::instance ()->use_name_service = 0;
 
   for (j = 0; j < ts->argc_; j++)
-    if (strcmp (ts->argv_[j], "-u") == 0)
+    if (ACE_OS::strcmp (ts->argv_[j], "-u") == 0)
       {
 	start_servant (ts, server_thread_manager);
 	break;
@@ -276,7 +303,7 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
                   Client *[ts->thread_count_],
                   -1);
 
-  // hack to make sure we have something in this pointer, when
+  // Hack to make sure we have something in this pointer, when
   // thread_count == 1
   low_priority_client[0] = &high_priority_client;
 
@@ -285,9 +312,10 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
 
   Util_Thread util_thread (ts, &util_thr_mgr);
 
-  //
   // Time the utilization thread' "computation" to get %IdleCPU at the end of the test.
-  //
+
+  // @@ Naga, can you please clean up the following code?  It's VERY
+  // complicated and needs to be refactored into a separate abstraction.
 #if defined (CHORUS)
   int pstartTime = 0;
   int pstopTime = 0;
@@ -316,11 +344,13 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
   ACE_Sched_Priority priority;
 
 #if defined (VXWORKS)
-  // set a task_id string starting with "@", so we are able to
+  // Set a task_id string starting with "@", so we are able to
   // accurately count the number of context switches.
   strcpy (task_id, "@High");
 #endif /* VXWORKS */
 
+  // @@ Naga, again, this code is repeated from earlier.  Can you
+  // please factor this out somehow?!
   // Now activate the high priority client.
 #if defined (VXWORKS)
   priority = ACE_THR_PRI_FIFO_DEF;
@@ -350,11 +380,13 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
                 "activate failed",
                 priority));
 
-  ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) Waiting for argument parsing\n"));
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, ts->ready_mtx_,-1));
   while (!ts->ready_)
     ts->ready_cnd_.wait ();
-  ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) Argument parsing waiting done\n"));
 
   u_int number_of_low_priority_client = 0;
   u_int number_of_priorities = 0;
@@ -363,15 +395,15 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
 
   number_of_low_priority_client = ts->thread_count_ - 1;
 
-  // mechanism to distribute the available priorities among the
+  // Mechanism to distribute the available priorities among the
   // threads when there are not enough different priorities for all
   // threads.
   if (ts->use_multiple_priority_ == 1)
     {
       ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
                                                      ACE_SCOPE_THREAD);
-
       number_of_priorities = 0;
+
       while (priority_iterator.more ())
         {
           number_of_priorities ++;
@@ -384,9 +416,7 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
       // if utilization thread is present, reduce in 1 the available
       // priorities.
       if (ts->use_utilization_test_ == 1)
-        {
-          number_of_priorities --;
-        }
+        number_of_priorities --;
 
       // Drop the priority, so that the priority of clients will
       // increase with increasing client number.
@@ -395,18 +425,18 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
                                                         priority,
                                                         ACE_SCOPE_THREAD);
 
-      // if the lowest priority of the "low priority clients" is the
+      // If the lowest priority of the "low priority clients" is the
       // minimum, and we are running the utilization thread, increment
       // the priority, since we don't want the utlization thread and a
       // "low priority thread" to have the same priority.
-      if ( priority == ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                                       ACE_SCOPE_THREAD) &&
-           ts->use_utilization_test_ == 1)
+      if (priority == ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                                      ACE_SCOPE_THREAD) 
+          && ts->use_utilization_test_ == 1)
         priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                     priority,
                                                     ACE_SCOPE_THREAD);
 
-      // granularity of the assignment of the priorities.  Some OSs
+      // Granularity of the assignment of the priorities.  Some OSs
       // have fewer levels of priorities than we have threads in our
       // test, so with this mechanism we assign priorities to groups
       // of threads when there are more threads than priorities.
@@ -417,12 +447,10 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
         grain = 1;
     }
   else
-    {
-      // Drop the priority one level
-      priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                      priority,
-                                                      ACE_SCOPE_THREAD);
-    }
+    // Drop the priority one level.
+    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                    priority,
+                                                    ACE_SCOPE_THREAD);
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating %d clients at priority %d\n",
@@ -440,7 +468,7 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
       const ACE_Time_Value delay (0L, 500000L);
       ACE_OS::sleep (delay);
 
-      // set a task_id string startiing with "@", so we are able to
+      // Set a task_id string startiing with "@", so we are able to
       // accurately count the number of context switches on VXWORKS
       sprintf (task_id, "@Low%u", i);
 #endif /* VXWORKS */
@@ -470,22 +498,19 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
       if (ts->use_multiple_priority_ == 1)
         {
           counter = (counter + 1) % grain;
-          if ( (counter == 0) &&
-               //Just so when we distribute the priorities among the
-               //threads, we make sure we don't go overboard.
-               ((number_of_priorities * grain) > (number_of_low_priority_client - (i - 1))) )
-            {
-              // Get the next higher priority.
-              priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                          priority,
-                                                          ACE_SCOPE_THREAD);
-            }
-
+          if (counter == 0 &&
+              // Just so when we distribute the priorities among the
+              // threads, we make sure we don't go overboard.
+              number_of_priorities * grain > number_of_low_priority_client - (i - 1))
+            // Get the next higher priority.
+            priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                        priority,
+                                                        ACE_SCOPE_THREAD);
         }
     } /* end of for () */
 
   if (ts->use_utilization_test_ == 1) 
-    // activate the utilization thread only if specified.  See
+    // Activate the utilization thread only if specified.  See
     // description of this variable in header file.
     {
       priority =
@@ -495,17 +520,16 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
                   "Creating utilization thread with priority of %d\n",
                   priority));
 
-      // activate the Utilization thread.  It will wait until
-      // all threads have finished binding.
+      // Activate the Utilization thread.  It will wait until all
+      // threads have finished binding.
       util_thread.activate (THR_BOUND | ACE_SCHED_FIFO,
                             1,
                             0,
                             priority);
     }
   else
-    {
-      util_thread.close ();
-    }
+    util_thread.close ();
+
   // Wait for all the client threads to be initialized before going
   // any further.
   ts->barrier_->wait ();
@@ -534,27 +558,28 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
 #if defined (VXWORKS)
   if (ts->context_switch_test_ == 1)
     {
-      fprintf(stderr, "Adding the context switch hook!\n");
-      taskSwitchHookAdd ((FUNCPTR)&switchHook);
+      ACE_DEBUG ((LM_DEBUG,
+                  "Adding the context switch hook!\n"));
+      taskSwitchHookAdd ((FUNCPTR) &switchHook);
     }
-#endif
+#endif /* VXWORKS */
 
   // Wait for all the client threads to exit (except the utilization
   // thread).
   thread_manager->wait ();
-  //server_thread_manager.wait ();
 
 #if defined (NO_ACE_QUANTIFY)
   quantify_stop_recording_data();
 #endif /* NO_ACE_QUANTIFY */
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) >>>>>>> ending test on %D\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) >>>>>>> ending test on %D\n"));
 
   timer_.stop ();
   timer_.elapsed_time (delta_t);
 
   if (ts->use_utilization_test_ == 1)
-    // signal the utilization thread to finish with its work..  only
+    // Signal the utilization thread to finish with its work..  only
     // if utilization test was specified.  See description of this
     // variable in header file.
     {
@@ -594,10 +619,10 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
       ACE_DEBUG ((LM_DEBUG,
                   "Context switches=%d\n",
                   ctx));
-#endif
+#endif /* ACE_HAS_PRUSAGE_T */
     }
 
-  // if running the utilization test, don't report latency nor jitter.
+  // If running the utilization test, don't report latency nor jitter.
   if (ts->use_utilization_test_ == 0)
     {
 #if defined (VXWORKS)
@@ -638,13 +663,15 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
 
   if (ts->use_utilization_test_ == 1)
     {
-      total_util_task_duration = util_task_duration * util_thread.get_number_of_computations ();
+      total_util_task_duration =
+        util_task_duration * util_thread.get_number_of_computations ();
 
       total_latency = (delta_t.sec () *
                        ACE_ONE_SECOND_IN_MSECS +
                        (double)delta_t.usec () / ACE_ONE_SECOND_IN_MSECS);
 
-      total_latency_high = total_latency - total_util_task_duration;
+      total_latency_high =
+        total_latency - total_util_task_duration;
 
       // Calc and print the CPU percentage. I add 0.5 to round to the
       // nearest integer before casting it to int.
@@ -685,10 +712,12 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
   for (i = number_of_low_priority_client; i > 0; i--)
     delete low_priority_client [i - 1];
 
-  delete[] low_priority_client;
+  delete [] low_priority_client;
   return 0;
 }
 
+// @@ Naga, can you please either (1) make this a static or (2) move
+// it into a class?!
 int
 do_thread_per_rate_test (ACE_Thread_Manager *thread_manager,
                          Task_State *ts)
@@ -713,17 +742,23 @@ do_thread_per_rate_test (ACE_Thread_Manager *thread_manager,
               "Creating 20 Hz client with priority %d\n",
               priority));
 
-  if (CB_20Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) errno = %p: activate failed\n"));
+  if (CB_20Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO,
+                               1,
+                               1,
+                               priority) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) errno = %p: activate failed\n"));
 
   // The high priority thread is parsing the arguments, so wait on the
   // condition variable until it wakes us up.
 
-  ACE_DEBUG ((LM_DEBUG,"(%t) Waiting for argument parsing\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) Waiting for argument parsing\n"));
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, ts->ready_mtx_,-1));
   while (!ts->ready_)
     ts->ready_cnd_.wait ();
-  ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) Argument parsing waiting done\n"));
 
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                   priority,
@@ -733,8 +768,12 @@ do_thread_per_rate_test (ACE_Thread_Manager *thread_manager,
               "Creating 10 Hz client with priority %d\n",
               priority));
 
-  if (CB_10Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) errno = %p: activate failed\n"));
+  if (CB_10Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO,
+                               1,
+                               1,
+                               priority) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) errno = %p: activate failed\n"));
 
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                   priority,
@@ -743,8 +782,12 @@ do_thread_per_rate_test (ACE_Thread_Manager *thread_manager,
               "Creating 5 Hz client with priority %d\n",
               priority));
 
-  if (CB_5Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) errno = %p: activate failed\n"));
+  if (CB_5Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO,
+                              1,
+                              1,
+                              priority) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) errno = %p: activate failed\n"));
 
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                   priority,
@@ -753,8 +796,12 @@ do_thread_per_rate_test (ACE_Thread_Manager *thread_manager,
               "Creating 1 Hz client with priority %d\n",
               priority));
 
-  if (CB_1Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) errno = %p: activate failed\n"));
+  if (CB_1Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO,
+                              1,
+                              1,
+                              priority) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) errno = %p: activate failed\n"));
 
   // Wait for all the threads to exit.
   thread_manager->wait ();
@@ -801,7 +848,7 @@ client (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-#endif
+#endif /* VXWORKS */
 
 #if defined (ACE_HAS_THREADS)
 #if defined (FORCE_ARGS)
@@ -890,14 +937,13 @@ ACE_DEBUG ((LM_DEBUG, "argv[1]=%s\n", argv[1]));
     do_thread_per_rate_test (&client_thread_manager, &ts);
 
 #if defined (CHORUS)
-  if(pccTimer(PCC2_TIMER1_STOP,&pTime) !=K_OK)
-    {
-      printf("pccTimer has a pending bench mark\n");
-    }
+  if (pccTimer (PCC2_TIMER1_STOP, &pTime) != K_OK)
+    ACE_DEBUG ((LM_DEBUG, 
+                "pccTimer has a pending bench mark\n"));
 #elif defined (VXWORKS)
-  // Shoot myself.  Otherwise, there's a General Protection Fault.  This
-  // will leak memory, but that's preferable.  It looks like the problem
-  // might be due to static objects in libTAO or liborbsvcs?
+  // Shoot myself.  Otherwise, there's a General Protection Fault.
+  // This will leak memory, but that's preferable.  It looks like the
+  // problem might be due to static objects in libTAO or liborbsvcs?
   int status;
   ACE_OS::thr_exit (&status);
 #endif /* CHORUS */
