@@ -1,21 +1,30 @@
+Sat Oct 03 09:54:14 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Thruput/Orbix/Makefile: removed
+          Quantify/Purify relics.
+
+        * performance-tests/Thruput/Orbix/ttcp_decl.h,ttcp_i.cpp,
+          Client.cpp,Srv_Main.cpp: replace USE_QUANTIFY with
+          ACE_HAS_QUANTIFY.
+
 Fri Oct  2 23:03:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/releasenotes/ec.html: 
-	  Added an entry to explain the differences between the TAO event
-	  service and the standard CORBA event service.
+        * docs/releasenotes/ec.html:
+          Added an entry to explain the differences between the TAO event
+          service and the standard CORBA event service.
 
 Fri Oct  2 20:16:35 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tao/DynAnyC.cpp:
-	  David got a couple of warnings with Dec cxx that led me to 
-	  some lines that I had commented out to find a bug and 
-	  forgot to uncomment.
+        * tao/DynAnyC.cpp:
+          David got a couple of warnings with Dec cxx that led me to
+          some lines that I had commented out to find a bug and
+          forgot to uncomment.
 
 Fri Oct  2 20:02:42 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* TAO_IDL/be/be_sunsoft.cpp:
-	  IDL compiler will now generate correct code for
-	  a constant char that is an escape sequence. 
+        * TAO_IDL/be/be_sunsoft.cpp:
+          IDL compiler will now generate correct code for
+          a constant char that is an escape sequence.
 
 Fri Oct 02 16:49:59 1998  David L. Levine  <levine@cs.wustl.edu>
 
