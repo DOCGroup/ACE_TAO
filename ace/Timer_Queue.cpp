@@ -37,6 +37,7 @@ template class
 template class ACE_Unbounded_Set<ACE_Timer_Node_T<ACE_Event_Handler *> *>;
 template class ACE_Node<ACE_Timer_Node_T<ACE_Event_Handler *> *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<ACE_Event_Handler *> *>;
+template class ACE_Timer_Node_Dispatch_Info_T<ACE_Event_Handler *>;
 template class ACE_Timer_Node_T<ACE_Event_Handler *>;
 template class ACE_Timer_Queue_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, ACE_SYNCH_RECURSIVE_MUTEX>;
@@ -47,6 +48,7 @@ template class ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX
 #pragma instantiate ACE_Unbounded_Set<ACE_Timer_Node_T<ACE_Event_Handler *> *>
 #pragma instantiate ACE_Node<ACE_Timer_Node_T<ACE_Event_Handler *> *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<ACE_Event_Handler *> *>
+#pragma instantiate ACE_Timer_Node_Dispatch_Info_T<ACE_Event_Handler *>
 #pragma instantiate ACE_Timer_Node_T<ACE_Event_Handler *>
 #pragma instantiate ACE_Timer_Queue_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, ACE_SYNCH_RECURSIVE_MUTEX>
