@@ -1,3 +1,35 @@
+Fri Apr 30 19:05:32 1999  Ossama Othman  <othman@cs.wustl.edu>
+	
+	* tao/Server_Request.*:
+	* tao/IIOP_Server_Request.*:
+	* tao/UIOP_Server_Request.*:
+
+	  Moved IIOP specific stuff from Server_Request.* to
+	  IIOP_Server_Request.*.  Created UIOP-specific UIOP_Server_Request
+	  files based on the IIOP ones.
+	
+	* tao/Makefile:
+
+	  Added IIOP_Server_Request files to the Makefile and updated the
+	  dependencies.
+	
+	* tao/UIOP_Connect.{h,i,cpp}:
+
+	  Rough implementation of UIOP connection handlers based on the IIOP
+	  connection handlers.  Not operational yet.
+	
+	* tao/Connect.*: 
+
+	  Changed all references of TAO_SVC_HANDLER to TAO_IIOP_SVC_HANDLER.
+
+	* tao/LSOCK_*:
+	* tao/UIOP_*:
+
+	  Changed all references of "LSOCK" to "UIOP" (except for ACE
+	  related LSOCK references).  Renamed all `LSOCK*' files to
+	  `UIOP*'.  Thanks to Fred for motivating these naming
+	  conventions.
+
 Fri Apr 30 18:46:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_sunsoft.cpp:
