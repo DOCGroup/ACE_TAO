@@ -1,3 +1,8 @@
+Tue Mar  9 10:16:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_mpc_auto_compile.pl:
+          Corrected end message
+
 Tue Mar  9 10:07:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_mpc_auto_compile.pl:
