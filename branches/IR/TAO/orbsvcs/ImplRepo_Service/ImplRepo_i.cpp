@@ -228,7 +228,6 @@ ImplRepo_i::register_server (const char *server,
                               options.working_directory_.in ()));
 
   Repository_Record rec (options.command_line_,
-                         options.environment_,
                          options.working_directory_,
                          "",
                          0,
@@ -252,11 +251,9 @@ ImplRepo_i::register_server (const char *server,
       if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                               "Command Line: %s\n"
-                              "Environment: %s\n"
                               "Working Directory: %s\n\n",
                               server,
                               rec.comm_line,
-                              rec.env,
                               rec.wdir));
     }
 }
@@ -271,7 +268,6 @@ ImplRepo_i::reregister_server (const char *server,
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
   Repository_Record rec (options.command_line_,
-                         options.environment_,
                          options.working_directory_,
                          "",
                          0,
@@ -286,11 +282,9 @@ ImplRepo_i::reregister_server (const char *server,
   if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                           "Command Line: %s\n"
-                          "Environment: %s\n"
                           "Working Directory: %s\n\n",
                           server,
                           rec.comm_line,
-                          rec.env,
                           rec.wdir));
 }
 
