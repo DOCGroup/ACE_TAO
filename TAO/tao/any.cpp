@@ -318,8 +318,8 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
   (void) DEEP_COPY (this->type_, src.value_, this->value_, env);
 }
 
-
 //a&a : Added on 14 feb 1998
+
 CORBA_Any &
 CORBA_Any::operator= (const CORBA_Any &src)
 {
@@ -333,12 +333,12 @@ CORBA_Any::operator= (const CORBA_Any &src)
     }
 
   if (this->orb_owns_data_)
-    {
-      DEEP_FREE (this->type_, this->value_, 0, env);
-    }
+    DEEP_FREE (this->type_, this->value_, 0, env);
+
+  // @@ Andy, can we remove this code if it's not needed?
   //  this->Release (); // release any value + typecode we may have
 
-  // now copy the contents of the source to ourselves
+  // Now copy the contents of the source to ourselves.
   this->type_ = (src.type_) != 0 ? src.type_ : CORBA::_tc_null;
 
   this->orb_owns_data_ = CORBA::B_TRUE;
@@ -502,19 +502,21 @@ CORBA_Any::~CORBA_Any (void)
   // assert (this->refcount_ == 0);
 
   if (this->orb_owns_data_)
-    {
-      //      (void) deep_free (type_, value_, 0, 0, env);
-      DEEP_FREE (this->type_, this->value_, 0, env);
-      // TODO: This crashes the server on NT, apparently the previous
-      // DEEP_FREE does the job and make the delete operator uneeded.
-      // delete value_;
-    }
+    // @@ Andy, do we still need the deep_free() function call?  If
+    // not, can we remove it? 
+    //      (void) deep_free (type_, value_, 0, 0, env);
+    DEEP_FREE (this->type_, this->value_, 0, env);
+    // @@ Andy, is the following comment still true?  If not, can we remove it? 
+
+    // TODO: This crashes the server on NT, apparently the previous
+    // DEEP_FREE does the job and make the delete operator uneeded.
+    // delete value_;
 
   if (this->type_)
     this->type_->Release ();
 }
 
-// all-at-once replacement of the contents of an "Any"
+// All-at-once replacement of the contents of an "Any."
 
 void
 CORBA_Any::replace (CORBA::TypeCode_ptr tc,
@@ -524,9 +526,13 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 {
   if (this->orb_owns_data_)
     {
+      // @@ Andy, do we still need the deep_free() function call?  If
+      // not, can we remove it? 
       //      (void) deep_free (type_, value_, 0, 0, env);
       if (value_)
         DEEP_FREE (this->type_, this->value_, 0, env);
+      // @@ Andy, is this delete ok?  The one in the destructor is
+      // commented out...
       delete this->value_;
     }
 
@@ -545,7 +551,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 void
 CORBA_Any::operator<<= (from_string s)
 {
-  // if the inserted string is bounded, we create a typecode.
+  // If the inserted string is bounded, we create a typecode.
   static CORBA::Long _oc_string [] =
   {     // CDR typecode octets
     TAO_ENCAP_BYTE_ORDER,   // native endian + padding; "tricky"
@@ -555,7 +561,7 @@ CORBA_Any::operator<<= (from_string s)
   CORBA::TypeCode_ptr tc = 0;
   if (s.bound_ > 0)
     {
-      // bounded string
+      // Bounded string.
       _oc_string [1] = s.bound_;
       ACE_NEW (tc, CORBA::TypeCode (CORBA::tk_string,
                                     sizeof _oc_string,
@@ -563,7 +569,7 @@ CORBA_Any::operator<<= (from_string s)
                                     CORBA::B_TRUE));
     }
   else
-    tc = CORBA::_tc_string; // unbounded
+    tc = CORBA::_tc_string; // unbounded.
 
   if (s.nocopy_)
       this->replace (tc, new char* (s.val_), CORBA::B_TRUE);
@@ -572,8 +578,9 @@ CORBA_Any::operator<<= (from_string s)
                    CORBA::B_TRUE);
 }
 
-// extraction: these are safe and hence we have to check that the typecode of
-// the Any is equal to the one we are trying to extract into
+// Extraction: these are safe and hence we have to check that the
+// typecode of the Any is equal to the one we are trying to extract
+// into
 
 CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::Short &s) const
@@ -736,9 +743,9 @@ CORBA_Any::operator>>= (to_string s) const
 {
   CORBA::Environment env;
 
-  // the typecode must be equal. Since we do not readily have access to the
-  // typecode of the string into which we want to retrieve, we emulate the
-  // behavior of "equal"
+  // The typecode must be equal. Since we do not readily have access
+  // to the typecode of the string into which we want to retrieve, we
+  // emulate the behavior of "equal"
   if (this->type_->kind (env) == CORBA::tk_string)
     {
       CORBA::ULong bound = this->type_->length (env);
@@ -749,7 +756,7 @@ CORBA_Any::operator>>= (to_string s) const
         }
     }
 
-  // otherwise
+  // Otherwise.
   return CORBA::B_FALSE;
 }
 
