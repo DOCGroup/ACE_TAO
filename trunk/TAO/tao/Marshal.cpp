@@ -47,7 +47,6 @@ TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc,
     {
     default:
     case CORBA::tk_fixed:
-    case CORBA::tk_value:
     case CORBA::tk_value_box:
     case CORBA::tk_native:
     case CORBA::tk_abstract_interface:
@@ -135,6 +134,11 @@ TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc,
     case CORBA::tk_wstring:
       {
         TAO_Marshal_WString marshal;
+        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+      }
+    case CORBA::tk_value:
+      {
+        TAO_Marshal_Value marshal;
         return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
       }
     }
@@ -153,7 +157,6 @@ TAO_Marshal_Object::perform_append (CORBA::TypeCode_ptr tc,
     {
     default:
     case CORBA::tk_fixed:
-    case CORBA::tk_value:
     case CORBA::tk_value_box:
     case CORBA::tk_native:
     case CORBA::tk_abstract_interface:
@@ -241,6 +244,11 @@ TAO_Marshal_Object::perform_append (CORBA::TypeCode_ptr tc,
     case CORBA::tk_wstring:
       {
         TAO_Marshal_WString marshal;
+        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+      }
+    case CORBA::tk_value:
+      {
+        TAO_Marshal_Value marshal;
         return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
       }
     }
