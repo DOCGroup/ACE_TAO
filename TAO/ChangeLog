@@ -1,3 +1,10 @@
+Sat Dec 25 20:53:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* Release:
+
+	  Added INSTALL target which generates textual version of 
+	  ACE-INSTAll.html and some autoconf files for the release.
+
 Sat Dec 25 15:12:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* interop-tests/wchar/client.cpp:
