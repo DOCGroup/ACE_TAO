@@ -694,6 +694,11 @@ ACE_Object_Manager.  Please see the <code>#define</code> of <code>main
 (int, char *[])</code> in <code>ace/OS.h</code> to see how ACE does
 that for entry points named <code>main</code>.<p>
 
+ACE threads (VxWorks tasks) can be named, for example, by supplying a
+non-null argument to the Thread_Manager spawn routines.  However,
+names beginning with <code>"==ace_t=="</code> are forbidden because
+that prefix is used internally by ACE.<p>
+
 You can spawn a new task to run <code>ace_main</code>, using either
 VxWorks <code>sp</code>, or ACE'S <A NAME="spa"><code>spa</code></A>.
 <code>spa</code> can be used from the VxWorks shell to pass arguments
