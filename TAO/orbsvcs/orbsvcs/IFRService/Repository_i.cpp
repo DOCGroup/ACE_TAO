@@ -883,7 +883,7 @@ TAO_Repository_i::select_idltype (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_ValueBox:
       return this->ValueBoxDef_servant_->_tied_object ();
     case CORBA::dk_Value:
-      return this->ValueDef_servant_->_tied_object ();
+      return this->ExtValueDef_servant_->_tied_object ();
     case CORBA::dk_Wstring:
       return this->WstringDef_servant_->_tied_object ();
     default:
@@ -911,7 +911,7 @@ TAO_Repository_i::select_container (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_Union:
       return this->UnionDef_servant_->_tied_object ();
     case CORBA::dk_Value:
-      return this->ValueDef_servant_->_tied_object ();
+      return this->ExtValueDef_servant_->_tied_object ();
     default:
       return 0;
   }
@@ -949,7 +949,7 @@ TAO_Repository_i::select_contained (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_ValueBox:
       return this->ValueBoxDef_servant_->_tied_object ();
     case CORBA::dk_Value:
-      return this->ValueDef_servant_->_tied_object ();
+      return this->ExtValueDef_servant_->_tied_object ();
     case CORBA::dk_ValueMember:
       return this->ValueMemberDef_servant_->_tied_object ();
     default:
@@ -999,7 +999,7 @@ TAO_Repository_i::select_poa (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_ValueBox:
       return this->ValueBoxDef_poa_.in ();
     case CORBA::dk_Value:
-      return this->ValueDef_poa_.in ();
+      return this->ExtValueDef_poa_.in ();
     case CORBA::dk_ValueMember:
       return this->ValueMemberDef_poa_.in ();
     case CORBA::dk_Wstring:

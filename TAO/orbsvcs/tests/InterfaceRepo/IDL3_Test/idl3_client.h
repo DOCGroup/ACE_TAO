@@ -79,6 +79,14 @@ private:
                        const char **ids
                        ACE_ENV_ARG_DECL);
 
+  int valuetype_inheritance_test (CORBA::ExtValueDef_var &
+                                  ACE_ENV_ARG_DECL);
+
+  int valuetype_attribute_test (
+      CORBA::ExtValueDef::ExtFullValueDescription_var &
+      ACE_ENV_ARG_DECL
+    );
+
 private:
   CORBA::Boolean debug_;
   // Flag to output detailed error messages.
