@@ -1,3 +1,13 @@
+Thu May 27 18:39:10 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+
+          Redefine the Hash map to make all the artifacts (NodeManager,
+          NodeApplicationManager, NodeApplication, Connections) handy
+          to use. Changed all the member functions to reflect this 
+          change.
+
 Thu May 27 17:45:26 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/tests/Config_Handlers/handler_test.mpb:
