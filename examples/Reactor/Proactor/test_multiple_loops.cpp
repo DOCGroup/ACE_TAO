@@ -23,6 +23,7 @@
 #include "ace/Task.h"
 #include "ace/Proactor.h"
 #include "ace/WIn32_Proactor.h"
+#include "ace/Atomic_Op.h"
 
 ACE_RCSID(Proactor, test_multiple_loops, "$Id$")
 
