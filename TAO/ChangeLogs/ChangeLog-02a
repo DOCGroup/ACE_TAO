@@ -1,3 +1,98 @@
+Thu Nov 16 13:19:02 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/AMI/FL_Callback/Makefile:
+        * examples/AMI/FL_Callback/Peer_i.cpp:
+        * examples/AMI/FL_Callback/Progress_i.cpp:
+        * orbsvcs/Makefile:
+        * orbsvcs/TAO_Service/Makefile:
+        * orbsvcs/examples/Makefile:
+        * orbsvcs/examples/Security/Send_File/Makefile:
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/FaultTolerance/Makefile:
+        * orbsvcs/tests/LoadBalancing/Makefile:
+        * orbsvcs/tests/Notify/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
+        * orbsvcs/tests/ior_corbaname/Makefile:
+        * orbsvcs/tests/tests_svc_loader/Makefile:
+        * tests/Makefile:
+        * tests/QtTests/Makefile:
+        * tests/QtTests/client.cpp:
+        * tests/Xt_Stopwatch/Makefile:
+        * tests/ior_corbaloc/Makefile:
+          Update makefiles, several directories were not listed in their
+          top-level Makefiles, and they were not compiled nor was their
+          dependencies ever updated.
+
+        * Benchmark/Marshal_Test/Orbix/Makefile:
+        * Benchmark/Marshal_Test/Orbix/client.cpp:
+        * Benchmark/Marshal_Test/Orbix/marshal.h:
+        * Benchmark/Marshal_Test/Orbix/marshal.idl:
+        * Benchmark/Marshal_Test/Orbix/orbix_marshal_client.cpp:
+        * Benchmark/Marshal_Test/Orbix/orbix_marshal_client.h:
+        * Benchmark/Marshal_Test/Orbix/orbix_marshal_client.i:
+        * Benchmark/Marshal_Test/Orbix/orbix_marshal_impl.cpp:
+        * Benchmark/Marshal_Test/Orbix/orbix_marshal_impl.h:
+        * Benchmark/Marshal_Test/Orbix/orbix_marshal_impl.i:
+        * Benchmark/Marshal_Test/Orbix/orbix_marshal_server.cpp:
+        * Benchmark/Marshal_Test/Orbix/orbix_marshal_server.h:
+        * Benchmark/Marshal_Test/Orbix/orbix_marshal_server.i:
+        * Benchmark/Marshal_Test/Orbix/run_client:
+        * Benchmark/Marshal_Test/Orbix/run_dsi:
+        * Benchmark/Marshal_Test/Orbix/run_dsi_server:
+        * Benchmark/Marshal_Test/Orbix/run_ssi:
+        * Benchmark/Marshal_Test/Orbix/run_ssi_server:
+        * Benchmark/Marshal_Test/Orbix/server.cpp:
+        * Benchmark/Marshal_Test/TAO/Makefile:
+        * Benchmark/Marshal_Test/TAO/client.cpp:
+        * Benchmark/Marshal_Test/TAO/marshal.idl:
+        * Benchmark/Marshal_Test/TAO/marshalC.cpp:
+        * Benchmark/Marshal_Test/TAO/marshalC.h:
+        * Benchmark/Marshal_Test/TAO/marshalS.cpp:
+        * Benchmark/Marshal_Test/TAO/marshalS.h:
+        * Benchmark/Marshal_Test/TAO/server.cpp:
+        * Benchmark/Marshal_Test/TAO/tao_marshal_client.cpp:
+        * Benchmark/Marshal_Test/TAO/tao_marshal_client.h:
+        * Benchmark/Marshal_Test/TAO/tao_marshal_client.i:
+        * Benchmark/Marshal_Test/TAO/tao_marshal_impl.cpp:
+        * Benchmark/Marshal_Test/TAO/tao_marshal_impl.h:
+        * Benchmark/Marshal_Test/TAO/tao_marshal_impl.i:
+        * Benchmark/Marshal_Test/TAO/tao_marshal_server.cpp:
+        * Benchmark/Marshal_Test/TAO/tao_marshal_server.h:
+        * Benchmark/Marshal_Test/TAO/tao_marshal_server.i:
+        * Benchmark/Marshal_Test/VisiBroker/Makefile:
+        * Benchmark/Marshal_Test/VisiBroker/client.cpp:
+        * Benchmark/Marshal_Test/VisiBroker/marshal.idl:
+        * Benchmark/Marshal_Test/VisiBroker/run_client:
+        * Benchmark/Marshal_Test/VisiBroker/run_server:
+        * Benchmark/Marshal_Test/VisiBroker/server.cpp:
+        * Benchmark/Marshal_Test/VisiBroker/visi_marshal_client.cpp:
+        * Benchmark/Marshal_Test/VisiBroker/visi_marshal_client.h:
+        * Benchmark/Marshal_Test/VisiBroker/visi_marshal_client.i:
+        * Benchmark/Marshal_Test/VisiBroker/visi_marshal_impl.cpp:
+        * Benchmark/Marshal_Test/VisiBroker/visi_marshal_impl.h:
+        * Benchmark/Marshal_Test/VisiBroker/visi_marshal_impl.i:
+        * Benchmark/Marshal_Test/VisiBroker/visi_marshal_server.cpp:
+        * Benchmark/Marshal_Test/VisiBroker/visi_marshal_server.h:
+        * Benchmark/Marshal_Test/VisiBroker/visi_marshal_server.i:
+        * Benchmark/benchmark/Makefile:
+        * Benchmark/benchmark/driver.cpp:
+        * Benchmark/benchmark/driver.h:
+        * Benchmark/benchmark/marshal_options.cpp:
+        * Benchmark/benchmark/marshal_options.h:
+        * Benchmark/benchmark/marshal_options.i:
+        * Benchmark/benchmark/marshal_proxy.cpp:
+        * Benchmark/benchmark/marshal_proxy.h:
+        * Benchmark/benchmark/marshal_proxy.i:
+        * Benchmark/benchmark/marshal_results.cpp:
+        * Benchmark/benchmark/marshal_results.h:
+        * Benchmark/benchmark/marshal_results.i:
+          Remove everything in these directories.  The test do not
+          compile, we don't have access to the other ORBs, and in general
+          they just confuse people.
+
 Thu Nov 16 11:29:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/README.txt:
@@ -11,10 +106,10 @@ Thu Nov 16 11:29:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Nov 16 11:23:44 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Cleanup_Func_Registry.cpp (cleanup):
+        * tao/Cleanup_Func_Registry.cpp (cleanup):
 
-	  Make sure that the cleanup function pointer is non-zero prior to
-	  invoking it.
+          Make sure that the cleanup function pointer is non-zero prior to
+          invoking it.
 
 Thu Nov 16 09:36:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 

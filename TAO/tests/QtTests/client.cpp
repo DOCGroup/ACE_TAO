@@ -7,7 +7,7 @@ ACE_RCSID(QtTests, client, "$Id$")
 
 #if !defined (ACE_HAS_QT)
 
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_INFO,
@@ -22,9 +22,9 @@ main (int, char *[])
 int
 main (int argc, char *argv[])
 {
-  QApplication app (argc, argv); 
+  QApplication app (argc, argv);
   TAO_QtResource_Factory::set_context (&app);
-  
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
@@ -118,16 +118,16 @@ Client::create_widgets (CORBA::Environment &/*ACE_TRY_ENV*/)
 {
   // Ewsize the box
   this->box_.resize (200,120);
-  
+
   // Make a pushbutton widget
   ACE_NEW (this->push_button_,
-           QPushButton ("Quit", 
+           QPushButton ("Quit",
                         &this->box_));
 
   // Connect the click () SIGNAL routine with the SLOT handler that we
   // have defined
-  QObject::connect (this->push_button_, 
-                    SIGNAL (clicked()), 
+  QObject::connect (this->push_button_,
+                    SIGNAL (clicked()),
                     this,
                     SLOT (shutdown_call ()));
 
@@ -136,7 +136,7 @@ Client::create_widgets (CORBA::Environment &/*ACE_TRY_ENV*/)
            QSlider (QSlider::Horizontal,
                     &this->box_,
                     "Slider"));
-  
+
   // Add resource for the slider
   this->slider_->setRange (0, 99);
   this->slider_->setValue (0);
@@ -144,10 +144,10 @@ Client::create_widgets (CORBA::Environment &/*ACE_TRY_ENV*/)
   // Connect the valuechanged SIGNAL routine with the slot that we
   // have defined. THe slot routine would invoke the remote call.
   QObject::connect (this->slider_,
-                    SIGNAL (valueChanged (int)), 
+                    SIGNAL (valueChanged (int)),
                     this,
                     SLOT (remote_call (int)));
-                    
+
 }
 
 void
