@@ -1,0 +1,2 @@
+dynamic HA_Status_Dynamic_Service Service_Object *
+HA_Status:_make_HA_Status() "-f status.ini"

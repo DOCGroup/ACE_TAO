@@ -1,0 +1,27 @@
+// $Id$
+
+TAO Audio/Video Streaming service
+---------------------------------
+
+This directory contains a complete distributed audio/video streaming
+application.  This application uses interfaces and interactions
+defined in the OMG "Control and Management of A/V streams"
+specification, which is available at the OMG web site.  An
+implementation of the A/V Streaming specification is available for TAO
+in the following directory.
+
+$TAO_ROOT/orbsvcs/orbsvcs/AV/
+
+Subsequent directories contain README files that describe the
+compilation and installation process of this application.
+
+The TAO application is a modified version of a streaming application
+developed at the Oregon Graduate Institute.
+
+Members of the TAO A/V Streaming team include the following
+
+Sumedh Mungee <sumedh@cs.wustl.edu>
+Seth Widoff <sbw1@cs.wustl.edu>
+Nagarajan Surendran <naga@cs.wustl.edu>
+Alexander Arulanthu <alex@cs.wustl.edu>
+

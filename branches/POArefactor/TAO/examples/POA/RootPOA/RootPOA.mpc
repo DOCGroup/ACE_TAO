@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoexe, portableserver {
+  Source_Files {
+    RootPOA.cpp
+  }
+}
+
