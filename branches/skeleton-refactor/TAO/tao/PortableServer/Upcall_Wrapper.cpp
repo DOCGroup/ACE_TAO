@@ -176,7 +176,7 @@ TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
   TAO::Argument * const * const begin = args + 1;  // Skip the return value.
   TAO::Argument * const * const end   = args + nargs;
 
-  for (TAO::Argument ** i = begin; i != end; ++i)
+  for (TAO::Argument * const * i = begin; i != end; ++i)
     {
       if (!(*i)->demarshal (cdr))
         {
@@ -196,8 +196,8 @@ TAO::Upcall_Wrapper::post_upcall (TAO_OutputCDR & cdr,
   // Marshal the operation "inout" and "out" arguments and return
   // value, if any.
 
-  TAO::Argument ** const begin = args;
-  TAO::Argument ** const end   = args + nargs;
+  TAO::Argument * const * const begin = args;
+  TAO::Argument * const * const end   = args + nargs;
 
   for (TAO::Argument * const * i = begin; i != end; ++i)
     {
