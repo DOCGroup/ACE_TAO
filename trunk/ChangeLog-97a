@@ -6,6 +6,11 @@ Sat May 03 06:56:10 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Set.cpp (ACE_Fixed_Set<T, SIZE>::find): typo: index instead of i.
 
+	* netsvcs/lib/{Client_Logging_Handler,TS_Clerk_Handler}.cpp,
+	  netsvcs/clients/Tokens/manual/manual.cpp,
+	  tests/Conn_Test.cpp: added ACE_Map_Entry template specialization.
+	  It's needed now that the destructor is explicit.
+
 Fri May  2 14:57:56 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Map_Manager.cpp: Added a no-op destructor to ACE_Map_Entry
