@@ -4,6 +4,7 @@
 #
 
 DIRS = \
-        RedGreen
+        RedGreen \
+        Throughput
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
