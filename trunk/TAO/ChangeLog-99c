@@ -1,3 +1,16 @@
+Thu Feb 25 18:16:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	  IDL generated code was passing in the size instead of
+	  the length for bounded strings. Then CDR would add 1 
+	  to get back the size... Just subtracted 1 in the 
+	  appropriate spots in IDL compiler code. Checked out the
+	  new version in param_test and all seems to be ok. Thanks to
+	  Henrik Nordberg for reporting this bug.
+
 Thu Feb 25 16:06:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* rules.tao.GNU: Added make commands to generate dummy *S_T.*
