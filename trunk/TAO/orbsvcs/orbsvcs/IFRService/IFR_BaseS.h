@@ -472,9 +472,9 @@ namespace POA_CORBA
     
     static void
     _get_def_kind_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
@@ -483,9 +483,9 @@ namespace POA_CORBA
     
     static void
     destroy_skel (
-        TAO_ServerRequest &req, 
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request, 
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
@@ -989,9 +989,9 @@ namespace POA_CORBA
     
     static void
     _get_def_kind_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
@@ -1000,9 +1000,9 @@ namespace POA_CORBA
     
     static void
     destroy_skel (
-        TAO_ServerRequest &req, 
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request, 
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
@@ -1139,9 +1139,9 @@ namespace POA_CORBA
     
     static void
     _get_def_kind_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
@@ -1150,9 +1150,9 @@ namespace POA_CORBA
     
     static void
     destroy_skel (
-        TAO_ServerRequest &req, 
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request, 
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
@@ -1273,9 +1273,9 @@ namespace POA_CORBA
     
     static void
     _get_def_kind_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
@@ -1284,81 +1284,81 @@ namespace POA_CORBA
     
     static void
     destroy_skel (
-        TAO_ServerRequest &req, 
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request, 
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     static void
     _get_id_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     static void
     _set_id_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     static void
     _get_name_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     static void
     _set_name_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     static void
     _get_version_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     static void
     _set_version_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     static void
     _get_defined_in_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     static void
     _get_absolute_name_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     static void
     _get_containing_repository_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
@@ -1367,9 +1367,9 @@ namespace POA_CORBA
     
     static void
     describe_skel (
-        TAO_ServerRequest &req, 
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request, 
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
@@ -1378,17 +1378,17 @@ namespace POA_CORBA
     
     static void
     move_skel (
-        TAO_ServerRequest &req, 
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request, 
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     static void
     _get_type_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *context
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };

@@ -29,17 +29,17 @@
 ACE_INLINE
 void
 POA_CORBA::Contained::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::Contained_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::Contained *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -50,17 +50,17 @@ POA_CORBA::Contained::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::Contained::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::Contained_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::Contained *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -68,17 +68,17 @@ POA_CORBA::Contained::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::Container::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::Container_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::Container *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -89,17 +89,17 @@ POA_CORBA::Container::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::Container::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::Container_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::Container *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -107,17 +107,17 @@ POA_CORBA::Container::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::IDLType::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::IDLType_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::IDLType *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -128,17 +128,17 @@ POA_CORBA::IDLType::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::IDLType::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::IDLType_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::IDLType *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -146,17 +146,17 @@ POA_CORBA::IDLType::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -167,17 +167,17 @@ POA_CORBA::TypedefDef::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -185,17 +185,17 @@ POA_CORBA::TypedefDef::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::_get_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::Contained::_get_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -203,17 +203,17 @@ POA_CORBA::TypedefDef::_get_id_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::_set_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::Contained::_set_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -221,17 +221,17 @@ POA_CORBA::TypedefDef::_set_id_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::_get_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::Contained::_get_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -239,17 +239,17 @@ POA_CORBA::TypedefDef::_get_name_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::_set_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::Contained::_set_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -257,17 +257,17 @@ POA_CORBA::TypedefDef::_set_name_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::_get_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::Contained::_get_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -275,17 +275,17 @@ POA_CORBA::TypedefDef::_get_version_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::_set_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::Contained::_set_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -293,17 +293,17 @@ POA_CORBA::TypedefDef::_set_version_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::_get_defined_in_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::Contained::_get_defined_in_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -311,17 +311,17 @@ POA_CORBA::TypedefDef::_get_defined_in_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::_get_absolute_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::Contained::_get_absolute_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -329,17 +329,17 @@ POA_CORBA::TypedefDef::_get_absolute_name_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::_get_containing_repository_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::Contained::_get_containing_repository_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -350,17 +350,17 @@ POA_CORBA::TypedefDef::_get_containing_repository_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::describe_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::Contained::describe_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -371,17 +371,17 @@ POA_CORBA::TypedefDef::describe_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::move_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::Contained::move_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -389,17 +389,17 @@ POA_CORBA::TypedefDef::move_skel (
 ACE_INLINE
 void
 POA_CORBA::TypedefDef::_get_type_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IDLType_ptr impl = (POA_CORBA::TypedefDef_ptr) obj;
+  POA_CORBA::IDLType * const impl = static_cast<POA_CORBA::TypedefDef *> (servant);
   POA_CORBA::IDLType::_get_type_skel (
-      req,
-      (POA_CORBA::IDLType_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
