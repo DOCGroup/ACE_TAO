@@ -62,7 +62,7 @@ namespace TAO
     Objref<char const *,
            CORBA::tk_component,
            TAO::Null_RefCount_Policy> tc_Component (tc_component_id,
-						    tc_component_name);
+                                                    tc_component_name);
 
     char const tc_home_id[]   = "IDL:omg.org/CORBA/CCMHome:1.0";
     char const tc_home_name[] = "CCMHome";
@@ -75,26 +75,26 @@ namespace TAO
     char const tc_value_base_id[]   = "IDL:omg.org/CORBA/ValueBase:1.0";
     char const tc_value_base_name[] = "ValueBase";
     Value<char const *,
-	  Field<char const *> *,
-	  CORBA::tk_value,
-	  TAO::Null_RefCount_policy> tc_ValueBase (tc_value_base_id,
-						   tc_value_base_name,
-						   CORBA::VM_NONE,
-						   0,  // Nil TypeCode
-						   0,  // Field array
-						   0); // Field count
+          Field<char const *> *,
+          CORBA::tk_value,
+          TAO::Null_RefCount_policy> tc_ValueBase (tc_value_base_id,
+                                                   tc_value_base_name,
+                                                   CORBA::VM_NONE,
+                                                   0,  // Nil TypeCode
+                                                   0,  // Field array
+                                                   0); // Field count
 
     char const tc_event_base_id[]   = "IDL:omg.org/CORBA/EventBase:1.0";
     char const tc_event_base_name[] = "EventBase";
     Value<char const *,
-	  Field<char const *> *,
-	  CORBA::tk_event,
-	  TAO::Null_RefCount_policy> tc_EventBase (tc_event_base_id,
-						   tc_event_base_name,
-						   CORBA::VM_NONE,
-						   0,  // Nil TypeCode
-						   0,  // Field array
-						   0); // Field count
+          Field<char const *> *,
+          CORBA::tk_event,
+          TAO::Null_RefCount_policy> tc_EventBase (tc_event_base_id,
+                                                   tc_event_base_name,
+                                                   CORBA::VM_NONE,
+                                                   0,  // Nil TypeCode
+                                                   0,  // Field array
+                                                   0); // Field count
 
   }  // End TypeCode namespace
 }  // End TAO namespace
