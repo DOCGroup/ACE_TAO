@@ -84,8 +84,12 @@ Sun Aug 17 00:22:16 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Made this static variable "const".  It's value will never
 	  change.
 
+	* tao/Makefile.am:
 	* tao/Makefile.bor:
 	* tao/Makefile.tao:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	* tao/tao.mpc:
 
 	  Added new TSS_Resources.* files to these Makefiles.
 
