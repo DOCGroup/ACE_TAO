@@ -1,3 +1,7 @@
+Tue Jun 30 00:58:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.1.36 released.
+
 Mon Jun 29 14:43:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_array.cpp (gen_forany_defn): changed
