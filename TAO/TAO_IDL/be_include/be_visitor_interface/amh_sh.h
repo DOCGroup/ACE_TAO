@@ -39,7 +39,7 @@ public:
   ~be_visitor_amh_rh_interface_sh (void);
 
 protected:
-  virtual void this_method (be_interface *node);
+  //  virtual void this_method (be_interface *node);
 };
 
 #endif /* AMH_RH_SH_H_ */
