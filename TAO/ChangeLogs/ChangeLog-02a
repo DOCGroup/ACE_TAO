@@ -1,128 +1,135 @@
+Tue Nov 21 15:56:10 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ORB_Core.cpp:
+          Initialize the default endpoint selector outside the #if
+          TAO_HAS_CORBA_MESSAGING, otherwise things don't work at all when
+          messaging is disabled.
+
 Tue Nov 21 15:38:04 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/ior_corbaname/Makefile : 
-	  Updated dependencies.
-	
-	* orbsvcs/tests/ior_corbaname/status_i.h: 
-	* orbsvcs/tests/ior_corbaname/server.cpp : 
-	  Removed unnecessary #include's.
-	
+        * orbsvcs/tests/ior_corbaname/Makefile :
+          Updated dependencies.
+
+        * orbsvcs/tests/ior_corbaname/status_i.h:
+        * orbsvcs/tests/ior_corbaname/server.cpp :
+          Removed unnecessary #include's.
+
 Tue Nov 21 15:04:31 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* performance-tests/Latency/server.cpp : 
-	* performance-tests/Latency/client.cpp : 
-	* performance-tests/Latency/st_client.cpp : 
-	  Included tao/Strategies/advanced_resource.h.
+        * performance-tests/Latency/server.cpp :
+        * performance-tests/Latency/client.cpp :
+        * performance-tests/Latency/st_client.cpp :
+          Included tao/Strategies/advanced_resource.h.
 
-	* performance-tests/Latency/Makefile: 
-	  Updated to link TAO_Strategies.
-	
-	* performance-tests/Latency/server.conf : 
-	* performance-tests/Latency/client.conf :
-	* performance-tests/Latency/st_client.conf :
-	* performance-tests/Latency/st_server.conf :
-	* performance-tests/Latency/client-mt-exclusive.conf : 
-	* performance-tests/Latency/client-st-muxed.conf : 
-	  Updated to load the correct, i.e. the advanced resource 
-	  factory.
-	
-	* tao/Strategies/advanced_resource.cpp : 
-	  Changed the default in input_cdr_buffer_allocator to
-	  TAO_ALLOCATOR_THREAD_LOCK instead of TAO_ALLOCATOR_NULL_LOCK.
-	  
+        * performance-tests/Latency/Makefile:
+          Updated to link TAO_Strategies.
+
+        * performance-tests/Latency/server.conf :
+        * performance-tests/Latency/client.conf :
+        * performance-tests/Latency/st_client.conf :
+        * performance-tests/Latency/st_server.conf :
+        * performance-tests/Latency/client-mt-exclusive.conf :
+        * performance-tests/Latency/client-st-muxed.conf :
+          Updated to load the correct, i.e. the advanced resource
+          factory.
+
+        * tao/Strategies/advanced_resource.cpp :
+          Changed the default in input_cdr_buffer_allocator to
+          TAO_ALLOCATOR_THREAD_LOCK instead of TAO_ALLOCATOR_NULL_LOCK.
+
 Tue Nov 21 12:06:09 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/Benchmark/interceptors.h:	  
+        * tests/Portable_Interceptors/Benchmark/interceptors.h:
 
-	  Interceptors are local objects, so derive (via multiple
-	  inheritance) each interceptor from CORBA::LocalObject.
+          Interceptors are local objects, so derive (via multiple
+          inheritance) each interceptor from CORBA::LocalObject.
 
-	* tests/Portable_Interceptors/Benchmark/interceptors.cpp
-	  (receive_request):
+        * tests/Portable_Interceptors/Benchmark/interceptors.cpp
+          (receive_request):
 
-	  Throw CORBA::NO_PERMISSION() exception instead of the
-	  "Test_Interceptors::Invalid" exception.  Throwing a user
-	  exception is not allowed since it is not part of the throw spec,
-	  which is dictated by the
-	  PortableInterceptor::ServerRequestInterceptor interface.
+          Throw CORBA::NO_PERMISSION() exception instead of the
+          "Test_Interceptors::Invalid" exception.  Throwing a user
+          exception is not allowed since it is not part of the throw spec,
+          which is dictated by the
+          PortableInterceptor::ServerRequestInterceptor interface.
 
-	* tests/Portable_Interceptors/Benchmark/README:
+        * tests/Portable_Interceptors/Benchmark/README:
 
-	  Updated README.  "Pseudo-portable interceptors" no longer
-	  applies, since TAO now implements the standard Portable
-	  Interceptor interfaces.
+          Updated README.  "Pseudo-portable interceptors" no longer
+          applies, since TAO now implements the standard Portable
+          Interceptor interfaces.
 
 Tue Nov 21 13:30:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
 
-	  In the usage message, fixed
+          In the usage message, fixed
 
-	  ACE_TEXT (" -Ge [0|1]\t\t\tDisable/Enable generation of")
-	  ACE_TEXT (" CORBA::Environment arguments (enabled by default")
-	  ACE_TEXT (" if ACE_HAS_EXCEPTIONS)\n")
+          ACE_TEXT (" -Ge [0|1]\t\t\tDisable/Enable generation of")
+          ACE_TEXT (" CORBA::Environment arguments (enabled by default")
+          ACE_TEXT (" if ACE_HAS_EXCEPTIONS)\n")
 
-	  to read
+          to read
 
-	  ACE_TEXT (" -Ge [0|1]\t\t\tDisable/Enable generation of")
-	  ACE_TEXT (" CORBA::Environment arguments (disabled by default")
-	  ACE_TEXT (" if ACE_HAS_EXCEPTIONS)\n")
+          ACE_TEXT (" -Ge [0|1]\t\t\tDisable/Enable generation of")
+          ACE_TEXT (" CORBA::Environment arguments (disabled by default")
+          ACE_TEXT (" if ACE_HAS_EXCEPTIONS)\n")
 
-	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for pointing 
-	  this out.
+          Thanks to Craig Rodrigues <crodrigu@bbn.com> for pointing
+          this out.
 
 Tue Nov 21 13:13:37 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tests/Multiple/Multiple.dsw:
-	* tests/Multiple/Server.dsp:
-	* tests/Multiple/Client.dsp:
-	* tests/Multiple/README:
-	* tests/Multiple/Makefile:
+        * tests/Multiple/Multiple.dsw:
+        * tests/Multiple/Server.dsp:
+        * tests/Multiple/Client.dsp:
+        * tests/Multiple/README:
+        * tests/Multiple/Makefile:
 
-	  VC++ workspace, VC++ project, Makefile and documentation files
-	  for the new  collocation test.
+          VC++ workspace, VC++ project, Makefile and documentation files
+          for the new  collocation test.
 
-	* tests/Multiple/Collocation_Tester.cpp:
-	* tests/Multiple/Collocation_Tester.h:
-	* tests/Multiple/Multiple_Impl.cpp:
-	* tests/Multiple/Multiple_Impl.h:
-	* tests/Multiple/client.cpp:
-	* tests/Multiple/server.cpp:
-	* tests/Multiple/Multiple.idl:
+        * tests/Multiple/Collocation_Tester.cpp:
+        * tests/Multiple/Collocation_Tester.h:
+        * tests/Multiple/Multiple_Impl.cpp:
+        * tests/Multiple/Multiple_Impl.h:
+        * tests/Multiple/client.cpp:
+        * tests/Multiple/server.cpp:
+        * tests/Multiple/Multiple.idl:
 
-	  Source file for the new collocation test.
+          Source file for the new collocation test.
 
 Tue Nov 21 09:40:51 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Updated the Security Service release notes with information
-	  about the new SSLIOP features.
+          Updated the Security Service release notes with information
+          about the new SSLIOP features.
 
 Tue Nov 21 10:41:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Accept_State.cpp: We align the write pointers
-	  as per GIOP 1.2. But when we read from the stream on the server
-	  side, we just set the read pointer to an 8 byte boundary. Why?
-	  We dont have any information about the information following the
-	  header. So, we just set the read pointer to an 8 byte boundary
-	  assuming that the skeletons would know whether to marshal
-	  something or not. This started giving problems in DSI_Gateway
-	  test during the shutdown () operation. So, for a shutdown ()
-	  call that we receive on the gateway, the read pointer is set to
-	  an 8 byte boundary. The same stream is used for encoding (). As
-	  the read pointer is displaced, the difference between them gave
-	  a "BIG" number that wrapped around as -4 when we called a writev
-	  () on the handler which is not acceptable. So, the fix -- we
-	  check for the stream length before we align the read
-	  pointer. Hopefully this should be the right fix.
+        * tao/GIOP_Message_Accept_State.cpp: We align the write pointers
+          as per GIOP 1.2. But when we read from the stream on the server
+          side, we just set the read pointer to an 8 byte boundary. Why?
+          We dont have any information about the information following the
+          header. So, we just set the read pointer to an 8 byte boundary
+          assuming that the skeletons would know whether to marshal
+          something or not. This started giving problems in DSI_Gateway
+          test during the shutdown () operation. So, for a shutdown ()
+          call that we receive on the gateway, the read pointer is set to
+          an 8 byte boundary. The same stream is used for encoding (). As
+          the read pointer is displaced, the difference between them gave
+          a "BIG" number that wrapped around as -4 when we called a writev
+          () on the handler which is not acceptable. So, the fix -- we
+          check for the stream length before we align the read
+          pointer. Hopefully this should be the right fix.
 
 Tue Nov 21 10:10:07 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_interface.h:
 
-	  Removed typo (i.e.  ",") from the last element of the enum that
-	  defines the collocation strategy.
+          Removed typo (i.e.  ",") from the last element of the enum that
+          defines the collocation strategy.
 
 Tue Nov 21 07:32:28 2000  Chris Kohlhoff  <chris@kohlhoff.com>
 
@@ -148,113 +155,113 @@ Tue Nov 21 07:32:28 2000  Chris Kohlhoff  <chris@kohlhoff.com>
 
 Tue Nov 21 03:03:00 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Private_Connection/run_test.pl:
+        * tests/RTCORBA/Private_Connection/run_test.pl:
 
-	  Output formatting.
+          Output formatting.
 
-	* tests/RTCORBA/README
-	* tests/RTCORBA/Private_Connection/README:
+        * tests/RTCORBA/README
+        * tests/RTCORBA/Private_Connection/README:
 
-	  Added test description and expected output.
+          Added test description and expected output.
 
 Mon Nov 20 23:33:11 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP.idl (Current):
+        * orbsvcs/orbsvcs/SSLIOP.idl (Current):
 
-	  Wrap the SSLIOP::Current TAO extension with with a
-	  "#pragma prefix ssliop.tao".  This makes it clear that
-	  SSLIOP::Current is a TAO extension, not an OMG defined object.
+          Wrap the SSLIOP::Current TAO extension with with a
+          "#pragma prefix ssliop.tao".  This makes it clear that
+          SSLIOP::Current is a TAO extension, not an OMG defined object.
 
 Mon Nov 20 21:22:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/NVList.i:
-	* tao/NVList.cpp:
+        * tao/NVList.i:
+        * tao/NVList.cpp:
 
-	  Modified the new method _lazy_has_arguments() to handle the
-	  case where the list's input CDR is null, and also uninlined
-	  the method since it is now not so simple.
+          Modified the new method _lazy_has_arguments() to handle the
+          case where the list's input CDR is null, and also uninlined
+          the method since it is now not so simple.
 
-	* tao/DynamicInterface/Request.cpp:
+        * tao/DynamicInterface/Request.cpp:
 
-	  Replace the NVList::count() call with NVList::_lazy_has_arguments
-	  in Request::send_oneway, as it was in Request::invoke.
+          Replace the NVList::count() call with NVList::_lazy_has_arguments
+          in Request::send_oneway, as it was in Request::invoke.
 
 Mon Nov 20 20:25:39 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Replicated the
-	  changes to SSLIOP too.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Replicated the
+          changes to SSLIOP too.
 
 Mon Nov 20 20:06:38 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Transport.h (TAO_SHMIOP_Server_Transport):
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* tao/Strategies/SHMIOP_Connect.h:
-	* tao/Strategies/UIOP_Transport.h:
-	* tao/Strategies/UIOP_Transport.cpp:
-	* tao/Strategies/UIOP_Connect.h: Changes from IIOP have been
-	  replicated here.
+        * tao/Strategies/SHMIOP_Transport.h (TAO_SHMIOP_Server_Transport):
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Connect.h:
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Connect.h: Changes from IIOP have been
+          replicated here.
 
 Mon Nov 20 19:54:03 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/RTCORBA/Banded_Connections/Makefile:
-	  Updated to link TAO_Strategies.
+        * tests/RTCORBA/Banded_Connections/Makefile:
+          Updated to link TAO_Strategies.
 
-	* tests/RTCORBA/Banded_Connections/client.conf:
-	* tests/RTCORBA/Banded_Connections/server.conf:
-	  Updated to statically load the Advanced_Resource_Factory
+        * tests/RTCORBA/Banded_Connections/client.conf:
+        * tests/RTCORBA/Banded_Connections/server.conf:
+          Updated to statically load the Advanced_Resource_Factory
 
-	* tests/RTCORBA/Banded_Connections/server.cpp:
-	* tests/RTCORBA/Banded_Connections/client.cpp:
-	  Included "tao/Strategies/advanced_resource.h"
+        * tests/RTCORBA/Banded_Connections/server.cpp:
+        * tests/RTCORBA/Banded_Connections/client.cpp:
+          Included "tao/Strategies/advanced_resource.h"
 
 Mon Nov 20 19:51:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Connection_Handler.cpp:
-	* tao/Connection_Handler.h: Added a method purge_entry ().
+        * tao/Connection_Handler.cpp:
+        * tao/Connection_Handler.h: Added a method purge_entry ().
 
-	* tao/IIOP_Connect.h (TAO_IIOP_Server_Connection_Handler):
-	* tao/IIOP_Transport.cpp:
-	* tao/IIOP_Transport.h: Removed the method close_connection ()
-	  from the base class and moved it to the server & client
-	  transport classes.  Further, added a call to purge_entry () on
-	  the service handler when close_connection () is called.  This is
-	  required as we need to purge the cache map entries when the ORB
-	  decides to shutdown the connection.
+        * tao/IIOP_Connect.h (TAO_IIOP_Server_Connection_Handler):
+        * tao/IIOP_Transport.cpp:
+        * tao/IIOP_Transport.h: Removed the method close_connection ()
+          from the base class and moved it to the server & client
+          transport classes.  Further, added a call to purge_entry () on
+          the service handler when close_connection () is called.  This is
+          required as we need to purge the cache map entries when the ORB
+          decides to shutdown the connection.
 
 Mon Nov 20 18:59:28 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/remote_proxy_impl_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
-	* TAO/TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/arglist.cpp:
 
-	  Modified indentation\spacing\newlines in the generated code
-	  to make the code look better.
+          Modified indentation\spacing\newlines in the generated code
+          to make the code look better.
 
-	  Removed unused vars. that were causing warning on some platfom.
+          Removed unused vars. that were causing warning on some platfom.
 
 Mon Nov 20 15:49:50 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp
-	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp
-	  Updated setings.
+        * performance-tests/Cubit/TAO/IDL_Cubit/server.dsp
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.dsp
+          Updated setings.
 
- 	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf
 
-	  Updated to use the right resource factory keeping in view
-	  the advanced resource factory arguments passed to it.
+          Updated to use the right resource factory keeping in view
+          the advanced resource factory arguments passed to it.
 
 Mon Nov 20 15:55:38 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IIOP_Connector.cpp (TAO_IIOP_Connector):
+        * tao/IIOP_Connector.cpp (TAO_IIOP_Connector):
 
-	  Removed "tcp_properties_" from the base member initializer
-	  list.  G++ 2.7.x gets confused about the fact that the
-	  TAO_IIOP_Properties class doesn't have a constructor.
+          Removed "tcp_properties_" from the base member initializer
+          list.  G++ 2.7.x gets confused about the fact that the
+          TAO_IIOP_Properties class doesn't have a constructor.
 
 Mon Nov 20 15:20:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -263,29 +270,29 @@ Mon Nov 20 15:20:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Nov 20 15:04:34 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/RTCORBA/Server_Declared/server.conf:
-	  Updated to provide the right arguments.
+        * tests/RTCORBA/Server_Declared/server.conf:
+          Updated to provide the right arguments.
 
-	* tests/RTCORBA/Client_Propagated/svc.conf:
-	  Not needed. Removed.
+        * tests/RTCORBA/Client_Propagated/svc.conf:
+          Not needed. Removed.
 
 Mon Nov 20 14:54:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/NVList.h:
-	* tao/NVList.i:
-	* tao/DynamicInterface/Request.inl:
-	* tao/DynamicInterface/Request.cpp:
+        * tao/NVList.h:
+        * tao/NVList.i:
+        * tao/DynamicInterface/Request.inl:
+        * tao/DynamicInterface/Request.cpp:
 
-	  Uninlined definition of _nil to make aggressively inlining
-	  compilers happy.
+          Uninlined definition of _nil to make aggressively inlining
+          compilers happy.
 
-	  Also added _lazy_has_arguments() method to NVList, so this
-	  condition can be checked without having to evaluate the
-	  NVList's CDR stream, and replaced call to NVList::count()
-	  method in Request::invoke() with a call to this new method.
-	  The call to count() has the side effect of decoding the
-	  list's CDR stream and destroying it, which was causing DII
-	  requests to crash.
+          Also added _lazy_has_arguments() method to NVList, so this
+          condition can be checked without having to evaluate the
+          NVList's CDR stream, and replaced call to NVList::count()
+          method in Request::invoke() with a call to this new method.
+          The call to count() has the side effect of decoding the
+          list's CDR stream and destroying it, which was causing DII
+          requests to crash.
 
 Mon Nov 20 11:49:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
