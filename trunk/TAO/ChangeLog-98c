@@ -1,3 +1,7 @@
+Thu Mar 12 21:23:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/debug.cpp (_dmsg_x): Changed ex->id () to ex->_id ().
+
 Thu Mar 12 20:40:09 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
 
 	* tests/Thruput/TAO/client.cpp:
