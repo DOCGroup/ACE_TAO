@@ -15,15 +15,6 @@
  
  #ifdef __cplusplus
  
-@@ -240,7 +240,7 @@
-  * Copyright (c) 1993 by Sun Microsystems, Inc.
-  */
- 
--#pragma ident	"@(#)yaccpar	6.12	93/06/07 SMI"
-+/* #pragma ident	"@(#)yaccpar	6.12	93/06/07 SMI" */
- 
- /*
- ** Skeleton parser driver for yacc output
 @@ -303,7 +303,7 @@
  #define ACE_CC_YYLEX()		ace_cc_yycvtok(ace_cc_yylex())
  /*
