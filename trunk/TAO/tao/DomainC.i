@@ -23,11 +23,6 @@ ACE_INLINE
 CORBA_DomainManager::~CORBA_DomainManager (void) // destructor
 {}
 
-ACE_INLINE CORBA::DomainManager_ptr
-CORBA_DomainManager::_nil (void)
-{
-  return (CORBA::DomainManager_ptr)0;
-}
 
 // *************************************************************
 // Inline operations for class CORBA::DomainManager_var
