@@ -1,3 +1,9 @@
+Wed Sep 25 12:40:23 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+
+	  Removed unused local variables.
+
 Wed Sep 25 12:24:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/Makefile.BE:
