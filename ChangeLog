@@ -1,3 +1,12 @@
+Thu Jan 22 13:25:49 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-sunos5.5.h:
+        * ace/config-sunos5.7.h:
+
+          Define ACE_LACKS_GETLOADAVG in config-sunos5.5.h since SunOS 5.5
+          and 5.6 do not have getloadavg().  Undefine it in
+          config-sunos5.7.h, since it has it.
+
 Wed Jan 22 10:33:47 2004  Scott Harris <harris_s@ociweb.com>
         * bin/MakeProjectCreator/config/wxwindows.mpb
         * include/makeinclude/platform_linux.GNU

@@ -15,6 +15,9 @@
 // Sun began distributing <sys/loadavg.h> with SunOS 5.7
 #define ACE_HAS_SYS_LOADAVG_H
 
+// SunOS 5.7 has getloadavg()
+#undef ACE_LACKS_GETLOADAVG
+
 #if defined (__GNUG__)
 # if __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8
     // Assume that later g++ were built on SunOS 5.7, so they don't
