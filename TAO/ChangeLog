@@ -1,3 +1,11 @@
+Sun Sep 26 14:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          Added valuetype as base of ImR_Activator, this should fix the link
+          errors in the windows builds. Changed ImR_Activator_IDL and
+          ImR_Locator_IDL to have valuetype as base project instead of
+          adding it manually to the after and libs part
+
 Sun Sep 26 14:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CORBALOC_Parser.h:
