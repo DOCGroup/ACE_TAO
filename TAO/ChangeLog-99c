@@ -1,3 +1,13 @@
+Thu Jun 10 13:05:17 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/arglist_ami.h:
+	* TAO_IDL/be/be_visitor_operation/arglist_ami.cpp:
+	Updated the files to generate parameters for all the different
+	types. 
+	* TAO_IDL/Makefile:
+	Updated the dependencies. 		
+
+
 Wed Jun  9 19:19:43 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_codegen.h
