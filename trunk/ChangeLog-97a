@@ -1,3 +1,14 @@
+Fri Feb  7 01:13:05 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Fixed a minor typo where friend class ACE_rwlock_t
+ 	  should be friend class ACE_OS.  Thanks to Thilo Kielmann
+ 	  <kielmann@informatik.uni-siegen.de> for reporting this.
+
+	* ace/Log_Msg.cpp: Added a destructor to ACE_Log_Msg and changed
+ 	  ACE_TSS_cleanup so that it calls delete (ACE_Log_Msg *) ptr.
+  	  Thanks to Per Anderson <Per.Andersson@hfera.ericsson.se> for
+ 	  reporting this.
+
 Fri Feb 07 05:08:51 1997    <irfan@cha-cha.cs.wustl.edu>
 
 	* ace/ReactorEx: Complete rewrite. Details to follow.
