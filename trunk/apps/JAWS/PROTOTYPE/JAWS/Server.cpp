@@ -94,7 +94,9 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
 
   ACE_INET_Addr inet_addr (this->port_);
   JAWS_IO_Synch_Acceptor_Singleton::instance ()->open (inet_addr);
-  JAWS_IO_Asynch_Acceptor_Singleton::instance ()->open (inet_addr);
+  ACE_HANDLE socket
+    = JAWS_IO_Synch_Acceptor_Singleton::instance ()->get_handle ();
+  JAWS_IO_Asynch_Acceptor_Singleton::instance ()->open (socket);
 
   // initialize data block
 
@@ -108,7 +110,14 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
 
   policy->concurrency ()->put (db);
 
-  policy->concurrency ()->thr_mgr ()->wait ();
+  char buf[265];
+  do
+    ACE_OS::fprintf (stderr, "%s", "hello: ");
+  while (ACE_OS::fgets (buf, sizeof (buf), stdin) != NULL);
+
+  ACE_OS::closesocket (policy->acceptor ()->get_handle ());
+
+  ACE_Thread_Manager::instance ()->wait ();
 
   db->release ();
 

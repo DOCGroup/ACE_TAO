@@ -9,11 +9,13 @@
 #include "JAWS/Policy.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/Waiter.h"
+#include "JAWS/Reaper.h"
 
 JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
   : ACE_Task<ACE_MT_SYNCH> (new ACE_Thread_Manager),
     mb_acquired_ (0),
-    mb_ (0)
+    mb_ (0),
+    reaper_ (new JAWS_Reaper (this))
 {
 }
 
@@ -142,6 +144,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
       //  handler maintains the state of the protocol
       task = handler->task ();
       ts_db = handler->message_block ();
+      handler->waiter_index (waiter_index);
 
       // Use a NULL task to make the thread recycle now
       if (task == 0)
@@ -250,6 +253,10 @@ JAWS_Thread_Pool_Task::open (long flags, int nthreads, int maxthreads)
 
   this->thr_mgr_->resume_all ();
 
+  if (this->reaper_->open () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Reaper::open"),
+                      -1);
+
   return 0;
 }
 
@@ -304,6 +311,10 @@ JAWS_Thread_Per_Task::activate_hook (void)
   JAWS_Waiter_Singleton::instance ()->insert (thr_id, dummy);
 
   this->thr_mgr_->resume (thr_name);
+
+  if (this->reaper_->open () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Reaper::open"),
+                      -1);
 
   return 0;
 }

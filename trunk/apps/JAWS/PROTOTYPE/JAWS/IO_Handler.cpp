@@ -24,6 +24,7 @@ JAWS_IO_Handler::JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory)
     mb_ (0),
     handle_ (ACE_INVALID_HANDLE),
     task_ (0),
+    waiter_index_ (-1),
     factory_ (factory)
 {
   // this->io_->handler (this);
@@ -147,6 +148,18 @@ JAWS_Pipeline_Handler *
 JAWS_IO_Handler::task (void)
 {
   return this->task_;
+}
+
+void
+JAWS_IO_Handler::waiter_index (int index)
+{
+  this->waiter_index_ = index;
+}
+
+int
+JAWS_IO_Handler::waiter_index (void)
+{
+  return this->waiter_index_;
 }
 
 void
@@ -350,11 +363,29 @@ JAWS_Asynch_IO_Handler::~JAWS_Asynch_IO_Handler (void)
 {
 }
 
+void
+JAWS_Asynch_IO_Handler::accept_complete (ACE_HANDLE handle)
+{
+  // callback into pipeline task, notify that the accept has completed
+  this->handle_ = handle;
+  this->status_ = ACCEPT_OK;
+
+  JAWS_Dispatch_Policy *policy = this->mb_->policy ();
+
+  // Irfan says at this point issue another accept
+  if (policy->acceptor () == JAWS_IO_Asynch_Acceptor_Singleton::instance ())
+    policy->acceptor ()->accept (JAWS_Data_Block::JAWS_Data_Block_Size);
+
+  // Do this so that Thread Per Request can spawn a new thread
+  policy->concurrency ()->activate_hook ();
+}
+
 ACE_Handler *
 JAWS_Asynch_IO_Handler::handler (void)
 {
   return &this->handler_;
 }
+
 
 JAWS_IO_Handler *
 JAWS_Asynch_IO_Handler_Factory::create_io_handler (void)

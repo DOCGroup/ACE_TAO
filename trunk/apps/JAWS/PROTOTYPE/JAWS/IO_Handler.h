@@ -140,14 +140,18 @@ public:
   virtual void write_error (void);
   virtual void confirmation_message_complete (void);
   virtual void error_message_complete (void);
-  virtual void task (JAWS_Pipeline_Handler *ph);
 
   virtual JAWS_IO_Handler_Factory *factory (void);
   virtual ACE_HANDLE handle (void);
 
   virtual void done (void);
   virtual int status (void);
+
+  virtual void task (JAWS_Pipeline_Handler *ph);
   virtual JAWS_Pipeline_Handler *task (void);
+
+  virtual void waiter_index (int index);
+  virtual int waiter_index (void);
 
   virtual void message_block (JAWS_Data_Block *mb);
   virtual JAWS_Data_Block *message_block (void);
@@ -173,6 +177,8 @@ protected:
   JAWS_Pipeline_Handler *task_;
   // This is a reference to the next stage of the pipeline when the IO
   // request completes.
+
+  int waiter_index_;
 
   JAWS_IO_Handler_Factory *factory_;
   // The reference to the handler's factory.
@@ -266,6 +272,8 @@ friend class JAWS_Asynch_IO_Handler_Factory;
 public:
   JAWS_Asynch_IO_Handler (JAWS_IO_Handler_Factory *factory);
   virtual ~JAWS_Asynch_IO_Handler (void);
+
+  virtual void accept_complete (ACE_HANDLE handle);
 
   virtual ACE_Handler *handler (void);
 
