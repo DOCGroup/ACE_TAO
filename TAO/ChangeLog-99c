@@ -1,3 +1,16 @@
+Mon Sep 20 15:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp:
+	  Made some cosmetic changes.
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+	  Using now the ACE_NESTED_CLASS macro to take care
+	  of the Microsoft VC++ nested class bug.
+		
+	* tests/AMI/client.cpp,
+	  tests/AMI/simple_client.cpp: Fixed naming conventions.
+
+
 Mon Sep 20 14:58:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/params.h:
