@@ -26,7 +26,7 @@ TAO_PG_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
                   0);
 
   // Create and register the RT servant dispatcher.
-  TAO_PG_Servant_Dispatcher *rt_servant_dispatcher;
+  TAO_PG_Servant_Dispatcher *rt_servant_dispatcher = 0;
   ACE_NEW_RETURN (rt_servant_dispatcher,
                   TAO_PG_Servant_Dispatcher,
                   0);
