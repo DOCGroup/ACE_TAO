@@ -229,11 +229,6 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
             }
         }
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
-      ACE_RE_THROW;
-    }
   ACE_CATCH (CORBA::NO_MEMORY, ex)
     {
       ACE_PRINT_EXCEPTION (ex, "A system exception oc client side");
@@ -244,7 +239,11 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
       ACE_PRINT_EXCEPTION (ex, "A system exception oc client side");
       return -1;
     }
-
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ACE_RE_THROW;
+    }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
@@ -312,10 +311,10 @@ NContextExt_Client_i::print_values (CosNaming::Name name,
                                     CORBA::String_var url_string)
 {
 
-  ACE_OS::printf ( "The first component id is %s,
-                    The first component kind is %s,
-                    The second component id is %s,
-                    The second component kind is %s\n\n",
+  ACE_OS::printf ("The first component id is %s,\n"
+                  "The first component kind is %s,\n"
+                  "The second component id is %s,\n"
+                  "The second component kind is %s\n\n",
                    name[0].id.in (),
                    name[0].kind.in (),
                    name[1].id.in (),
@@ -324,19 +323,19 @@ NContextExt_Client_i::print_values (CosNaming::Name name,
   ACE_OS::printf ("The string form of the input name is:\n %s\n",
                   str_name.in ());
 
-  ACE_OS::printf ("The unstringified version of the name components are:\n
-                   The first component id is %s,
-                   The first component kind is %s,
-                   The second component id is %s,
-                   The second component kind is %s\n",
+  ACE_OS::printf ("The unstringified version of the name components are:\n"
+                  "The first component id is %s,\n"
+                  "The first component kind is %s,\n"
+                  "The second component id is %s,\n"
+                  "The second component kind is %s\n\n",
                   nm[0].id.in (),
                   nm[0].kind.in (),
                   nm[1].id.in (),
                   nm[1].kind.in ());
 
-  ACE_OS::printf ("When the address of the NamingCOntext is:\t
-                   myhost.555xyz.com:9999
-                   and the Object name is %s\n",
+  ACE_OS::printf ("When the address of the NamingCOntext is:\t"
+                  "myhost.555xyz.com:9999"
+                  "and the Object name is %s\n",
                   obj_name.in ());
 
   ACE_OS::printf ("The URL form of the string is \n %s\n",
