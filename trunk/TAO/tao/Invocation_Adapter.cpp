@@ -88,8 +88,6 @@ namespace TAO
         if (strat == TAO_CS_REMOTE_STRATEGY ||
             strat == TAO_CS_LAST)
           {
-
-
             status =
               this->invoke_remote_i (stub,
                                      details,

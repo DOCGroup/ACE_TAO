@@ -19,7 +19,7 @@ namespace TAO
   {
   }
 
-  bool
+  void
   LocateRequest_Invocation_Adapter::invoke (ACE_ENV_SINGLE_ARG_DECL)
   {
     CORBA::Object *effective_target = this->target_;
@@ -28,12 +28,11 @@ namespace TAO
       this->target_->_stubobj ();
 
     if (stub == 0)
-      ACE_THROW_RETURN (CORBA::INTERNAL (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            EINVAL),
-                          CORBA::COMPLETED_NO),
-                        0);
+      ACE_THROW (CORBA::INTERNAL (
+                     CORBA::SystemException::_tao_minor_code (
+                       TAO_DEFAULT_MINOR_CODE,
+                         EINVAL),
+                        CORBA::COMPLETED_NO));
 
     ACE_Time_Value tmp_wait_time;
     ACE_Time_Value *max_wait_time = 0;
@@ -43,7 +42,6 @@ namespace TAO
 
     if (is_timeout)
       max_wait_time = &tmp_wait_time;
-
 
     Invocation_Status s = TAO_INVOKE_START;
 
@@ -89,10 +87,10 @@ namespace TAO
             ACE_RE_THROW;
           }
         ACE_ENDTRY;
-        ACE_CHECK_RETURN (false);
+        ACE_CHECK;
       }
 
-    return true;
+    return;
   }
 
   CORBA::PolicyList *

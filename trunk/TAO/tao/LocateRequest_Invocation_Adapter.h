@@ -29,16 +29,31 @@ namespace CORBA
 namespace TAO
 {
   /**
+   * @class LocateRequest_Invocation_Adapter
    *
+   * @brief Adapter class for locate request invocations.
    *
+   *  This class provides a look and feel similar to the
+   *  TAO::Invocation_Adapter though the functionalities are
+   *  different. For the record, IDL compiler doesn't know the
+   *  existence of this class. This class is concerned with the
+   *  creation and invocation of locate request invocations to the
+   *  target object
+   *
+   * @todo: Need to think what happens if the target is
+   *  collocated. Looks like there are no ways to utilize the
+   *  opportunity that may have been presented.
    */
   class TAO_Export LocateRequest_Invocation_Adapter
   {
   public:
-    LocateRequest_Invocation_Adapter (CORBA::Object_ptr target);
+    LocateRequest_Invocation_Adapter (
+        CORBA::Object_ptr target);
 
-    bool invoke (ACE_ENV_SINGLE_ARG_DECL);
+    /// Start the invocation on the target
+    void invoke (ACE_ENV_SINGLE_ARG_DECL);
 
+    /// Accessor to the inconsistent policy list
     CORBA::PolicyList *get_inconsistent_policies (void);
 
   private:
