@@ -1030,7 +1030,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // #define TAO_TAG_AIOP_PROFILE   0x54414f01U /* ATM/AAL5 */
 #define TAO_TAG_SHMEM_PROFILE  0x54414f02U /* Shared memory */
 // #define TAO_TAG_MSGQ_PROFILE   0x54414f03U /* Message Queue */
-// #define TAO_TAG_UDP_PROFILE    0x54414f04U /* UDP */
+#define TAO_TAG_UDP_PROFILE    0x54414f04U /* UDP */
 // #define TAO_TAG_MCAST_PROFILE  0x54414f05U /* IP/Multicast */
 // #define TAO_TAG_CPCI_PROFILE   0x54414f06U /* Compact/PCI */
 // #define TAO_TAG_VME_PROFILE    0x54414f07U /* VME Bus */
@@ -1038,7 +1038,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // #define TAO_TAG_HTTPNG_PROFILE 0x54414f09U /* HTTP-NG */
 // #define TAO_TAG_PIPE_PROFILE   0x54414f0AU /* Pipe */
 // #define TAO_TAG_XXXX_PROFILE   0x54414f0BU /* ???? */
-#define TAO_TAG_BIOP_PROFILE   0x54414f0FU /* Boeign Custom Protocol */
+#define TAO_TAG_BIOP_PROFILE   0x54414f0FU /* Boeing Custom Protocol */
 
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
 // define our own profile tagged components in TAO.
