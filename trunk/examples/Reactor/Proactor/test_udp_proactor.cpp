@@ -50,7 +50,7 @@ public:
   Receiver (void);
   ~Receiver (void);
 
-  int open (const ACE_INET_Addr &localAddr);
+  int open_addr (const ACE_INET_Addr &localAddr);
 
 protected:
   // These methods are called by the framework
@@ -79,10 +79,10 @@ Receiver::~Receiver (void)
 }
 
 int
-Receiver::open (const ACE_INET_Addr &localAddr)
+Receiver::open_addr (const ACE_INET_Addr &localAddr)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%N:%l:Receiver::open called\n"));
+              "%N:%l:Receiver::open_addr called\n"));
 
   // Create a local UDP socket to receive datagrams.
   if (this->sockDgram_.open (localAddr) == -1)
@@ -399,7 +399,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // If passive side
   if (host == 0)
     {
-      if (receiver.open (ACE_INET_Addr (port)) == -1)
+      if (receiver.open_addr (ACE_INET_Addr (port)) == -1)
         return -1;
     }
   // If active side
