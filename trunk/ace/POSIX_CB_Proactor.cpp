@@ -3,7 +3,9 @@
 
 #include "ace/POSIX_CB_Proactor.h"
 
-#if defined (ACE_HAS_AIO_CALLS) && !defined(__Lynx__)
+#if defined (ACE_HAS_AIO_CALLS) && !defined(__Lynx__) && \
+    !(defined (__FreeBSD_version) && (__FreeBSD_version > 500000))
+
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Task_T.h"
@@ -181,4 +183,4 @@ ACE_POSIX_CB_Proactor::handle_events_i (unsigned long milli_seconds)
   return ret_aio + ret_que > 0 ? 1 : 0;
 }
 
-#endif /* ACE_HAS_AIO_CALLS && !__Lynx__ */
+#endif /* ACE_HAS_AIO_CALLS && !__Lynx__ && !FreeBSD 5*/
