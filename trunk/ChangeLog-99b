@@ -1,3 +1,12 @@
+Mon Sep 27 13:11:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-sunos5.5.h: Wrap the define statement in a
+	  conditional that prevents declaration of #define
+ 	  ACE_HAS_STL_QUEUE_CONFLICT for gcc 2.95.  We don't know if this
+ 	  is a problem in newer versions of Solaris but this will get rid
+ 	  of it for 5.5.1.  Thanks to Siegurd Weber <siegurdw@hotmail.com>
+ 	  for this fix.
+
 Mon Sep 27 16:56:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.cpp:

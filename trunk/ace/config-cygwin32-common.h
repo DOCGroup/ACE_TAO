@@ -3,7 +3,7 @@
 
 // This configuration file is designed to be included by another,
 // specific configuration file.  It provides config information common
-// to all Linux platforms.  It automatically determines the CPU
+// to all CygWin platforms.  It automatically determines the CPU
 // architecture, compiler (g++ or egcs), and libc (libc5 or glibc),
 // and configures based on those.
 
