@@ -285,7 +285,7 @@ TAO_PG_ObjectGroupManager::remove_member (
        iter != end;
        ++iter)
     {
-      const TAO_PG_MemberInfo & info = *i;
+      const TAO_PG_MemberInfo & info = *iter;
 
       if (info.location == the_location)
         {

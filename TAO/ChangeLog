@@ -1,3 +1,9 @@
+Sat Dec 27 12:03:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+
+	  Fixed a compilation error with g++.
+
 Sat Dec 27 10:14:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
