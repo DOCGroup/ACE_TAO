@@ -1,3 +1,5 @@
+<!-- $Id$ -->
+
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -38,7 +40,7 @@ file. <P>
 Currently, you must edit this file by hand to port it to new OS
 platforms.  It's a good idea to use the <CODE>config-*.h</CODE> files
 for platforms with similar characteristics as examples.  Ultimately,
-we plan to <A HREF="http://squall.tn.cornell.edu/aceconf">auto
+we plan to <A HREF="http://www.cs.wustl.edu/~othman/aceconf">auto
 configure</A> these files. <P>
 
 <hr align=left width="50%"><P>
@@ -131,7 +133,7 @@ compile ACE and TAO:
 
 <LI> <B>Multiple inheritance and dynamic binding</B> -- The C++
     compiler must support multiple inheritance and dynamic
-    binding. <P> 
+    binding. <P>
 </UL>
 
 The following is a list of which C++ features that ACE and TAO can
@@ -140,7 +142,7 @@ take advantage of if a compiler supports them:
 <UL>
 <LI> <B>Exceptions</B> -- The ACE library itself is ``exception
     neutral,'' <EM>i.e.,</EM> it does not catch or throw C++
-    exceptions.  However, you can use exceptions in code 
+    exceptions.  However, you can use exceptions in code
     that uses ACE including throwing exceptions inside call back
     methods, as long as you provide the code to handle it.
     TAO can be configured to use C++ exceptions if ACE supports them,
@@ -159,11 +161,11 @@ take advantage of if a compiler supports them:
     <CODE>ACE_HAS_BROKEN_NAMESPACES</CODE> is <EM>not</EM> enabled. <P>
 
 <LI> <B>STL</B> -- Unfortunately many of the platforms that ACE
-	supports don't have an STL library.  Moreover, different versions
+        supports don't have an STL library.  Moreover, different versions
         of STL behave differently.  Therefore, ACE does not depends on
-	STL and does not use it internally.
-	If your target platform(s) support STL you should be able to
-	use it with ACE and TAO without problems, though your C++
+        STL and does not use it internally.
+        If your target platform(s) support STL you should be able to
+        use it with ACE and TAO without problems, though your C++
         compiler may have problems with it (this is beyond the scope
         of ACE, however). <P>
 
