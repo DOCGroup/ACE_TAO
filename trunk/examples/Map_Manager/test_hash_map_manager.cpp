@@ -12,7 +12,7 @@ const int MAX_KEY_LEN = 1000;
 typedef ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_SYNCH_RW_MUTEX> MAP_MANAGER;
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   if (argc != 4)
     ACE_ERROR_RETURN ((LM_ERROR, "usage: %s tablesize file1 file2\n",
@@ -47,7 +47,7 @@ main (int argc, char *argv[])
                     entry->int_id_.fast_rep ()));
 
       if (!freopen (argv[3], "r", stdin))
-        perror (argv[0]), exit (1);
+        ACE_OS::perror (argv[0]), exit (1);
 
       while (ACE_OS::fgets (key, sizeof key, stdin))
         {
@@ -58,7 +58,7 @@ main (int argc, char *argv[])
         }
 
       if (!freopen (argv[3], "r", stdin))
-        perror (argv[0]), exit (1);
+        ACE_OS::perror (argv[0]), exit (1);
 
       while (ACE_OS::fgets (key, sizeof key, stdin))
         {

@@ -7,6 +7,9 @@ Sat Dec 29 12:54:45 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * examples/Reactor/Multicast/server.cpp:
           Made these files compiling when ACE_USES_WCHAR is set
 
+        * examples/Map_Manager/test_hash_map_manager.cpp:
+          Made this file partly compiling when ACE_USES_WCHAR is set
+
 Sat Dec 29 10:42:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/SSL/Makefile.bor:
