@@ -9,7 +9,7 @@
  */
 
 #include "CIAO_Events.idl"
-#include "orbsvcs/CosNotifyFilter.idl"
+#include <orbsvcs/orbsvcs/CosNotifyFilter.idl>
 
 module CIAO
 {

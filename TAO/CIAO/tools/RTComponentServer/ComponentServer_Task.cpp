@@ -4,10 +4,10 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "RTServer_Impl.h"
 #include "ace/Null_Mutex.h"
-#include "Server_init.h"
-#include "CIAO_ServersC.h"
+#include "ciao/Server_init.h"
+#include "ciao/CIAO_ServersC.h"
 #include "../XML_Helpers/XML_Utils.h"
-#include "RTPortableServer/RTPortableServer.h"
+#include "tao/RTPortableServer/RTPortableServer.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ComponentServer_Task.inl"

@@ -3,6 +3,7 @@
 #include "CCM_DeploymentC.h"
 #include "Client_init.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 const char *ior = "file://test.ior";
 int test_container = 0;

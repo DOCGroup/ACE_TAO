@@ -16,7 +16,7 @@
 #include "XML_Helpers_Export.h"
 #include "Softpkg_Handlers.h"
 #include "Assembly_Spec.h"
-#include "RTCORBA/RTCORBA.h"
+#include "tao/RTCORBA/RTCORBA.h"
 #include "RTConfigurationC.h"
 
 namespace CIAO

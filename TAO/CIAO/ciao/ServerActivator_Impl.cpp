@@ -3,6 +3,7 @@
 #include "ServerActivator_Impl.h"
 #include "ace/Process.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_stdio.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ServerActivator_Impl.inl"

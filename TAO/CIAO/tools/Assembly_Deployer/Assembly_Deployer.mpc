@@ -1,6 +1,6 @@
 project(Assembly_Manager): ciao_server, acexml, iortable, rtcorba {
 
-  libs += CIAO_XML_Helpers
+  libs += CIAO_XML_Helpers CIAO_Events
   libpaths += ../XML_Helpers
   after += XML_Helpers
 

@@ -18,13 +18,9 @@
 
 INFO    = VERSION
 
-DIRS    = CIDLC \
-	  bin \
-	  ciao \
-	  docs \
-	  examples \
-	  tests \
-	  tools 
+ALT_DIRS = CIDLC \
+           examples \
+           tests
 
 CLONE   = Makefile \
 	  CIDLC \
@@ -35,12 +31,32 @@ CLONE   = Makefile \
 	  tests \
 	  tools 
 
+CORE_DIRS = ciao \
+            tools
+
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+
+ifneq ($(static_libs_only),1)
+  DIRS = $(CORE_DIRS)
+endif #static_libs_only
+
+# Need boost and utility libs in order to compile these.  You
+# may need to run MPC in these directories to create the Makefiles
+# first.
+ifdef BOOST_ROOT
+  ifdef UTILITY_ROOT
+    ifneq ($(static_libs_only),1)
+      DIRS += $(ALT_DIRS)
+    endif #static_libs_only
+  endif # UTILITY_ROOT
+endif # BOOST_ROOT
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
@@ -91,4 +107,12 @@ clone:
 
 reverseclean:
 	@$(ACE_ROOT)/bin/reverse_clean $(DIRS)
+
+# Just realclean for the core directories. This is temporary. Will be 
+# removed at a later date. 
+coreclean:
+	@for dir in $(CORE_DIRS); \
+        do \
+          ($(MAKE) realclean -C $$dir) \
+        done
 

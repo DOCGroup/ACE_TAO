@@ -96,9 +96,16 @@ and also the libraries they depends on.
         > cd $CIAO_ROOT/ciao
         > $(ACE_ROOT)/bin/mwc.pl -type vc71
 
+* You also need to build the CIDL compiler before trying out any
+  examples. The CIDL compiler, CIDLC, compiles your component
+  implementation definition and generates the necessary glue code for
+  developing and deploying components. Pleas see
+  $CIAO_ROOT/CIDLC/README.html for instructions on how to build and
+  use CIDLC.
+  
 * Now you can play with the examples:
 
-  - $CIAO_ROOT/examples/handcrafted/Hello
+  - $CIAO_ROOT/examples/Hello
 
      This is a single component example.  Check out run_test.pl to see
      how you can instantiate a single component using CIAO.
@@ -133,16 +140,18 @@ and also the libraries they depends on.
   them.  For examples, to compile the multi-component example, use the
   following:
 
-        $ cd $CIAO_ROOT/examples/handcrafted/Display
+        $ cd $CIAO_ROOT/examples/Display
         $ $(ACE_ROOT)/bin/mwc.pl
         $ make
 
   To regenerate VC6 dsp files, do:
 
-        > cd $CIAO_ROOT/examples/handcrafted/Display
+        > cd $CIAO_ROOT/examples/Display
         > $(ACE_ROOT)/bin/mwc.pl -type vc6
 
   Likewise, to regenerate VC7.NET project files, do:
 
-        > cd $CIAO_ROOT/examples/handcrafted/Display
+        > cd $CIAO_ROOT/examples/Display
         > $(ACE_ROOT)/bin/mwc.pl -type vc7
+
+

@@ -15,7 +15,7 @@
 #include "CIAO_RTEvent.h"
 #include "CIAO_CosNotify.h"
 
-#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
 
 /// Initialize the RTEventService object. Will eventually be moved to a separate init ()
 /// method so exceptions can be handled properly.

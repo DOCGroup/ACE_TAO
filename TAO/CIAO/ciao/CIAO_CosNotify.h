@@ -21,7 +21,7 @@
 #include "CIAO_EventServiceBase.h"
 #include "CIAO_CosNotifyS.h"
 
-#include "orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
 
 namespace CIAO
 {
