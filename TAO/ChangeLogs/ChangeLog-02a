@@ -1,3 +1,24 @@
+Fri Dec 22 12:22:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/BiDirectional_Upcall: New test for BiDirectional
+	  connections that tests for callbacks in an upcall.
+
+        * tests/BiDirectional_Upcall/README:
+        * tests/BiDirectional_Upcall/client.cpp:
+        * tests/BiDirectional_Upcall/server.cpp:
+        * tests/BiDirectional_Upcall/test_i.h:
+        * tests/BiDirectional_Upcall/test_i.cpp:
+        * tests/BiDirectional_Upcall/test_i.i:
+        * tests/BiDirectional_Upcall/test.idl:
+        * tests/BiDirectional_Upcall/BiDir.dsw:
+        * tests/BiDirectional_Upcall/client.dsp:
+        * tests/BiDirectional_Upcall/server.dsp:
+        * tests/BiDirectional_Upcall/client.bor:
+        * tests/BiDirectional_Upcall/server.bor:
+        * tests/BiDirectional_Upcall/Makefile.bor:
+        * tests/BiDirectional_Upcall/svc.conf:
+        * tests/BiDirectional_Upcall/Makefile: Files for the new test.
+
 Fri Dec 22 07:30:37 2000  Johnny Willemsen
 
         * examples/Load_Balancing:
@@ -240,9 +261,7 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
           TAO_ThreadpoolPolicy *threadpool (void);
           TAO_PriorityModelPolicy *priority_model (void);
           TAO_ServerProtocolPolicy *server_protocol (void);
-<<<<<<< ChangeLog
 	  }
-=======
           }
 
         * tao/Policy_Manager.h :
@@ -261,9 +280,7 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
           TAO_ServerProtocolPolicy *server_protocol (void) const;
           TAO_ClientProtocolPolicy *client_protocol (void) const;
           }
->>>>>>> 1.2239
 
-<<<<<<< ChangeLog
 	* tao/Policy_Manager.h :
 	* tao/Policy_Manager.i :
 	* tao/Policy_Manager.cpp :
@@ -280,7 +297,6 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  TAO_ServerProtocolPolicy *server_protocol (void) const;
           TAO_ClientProtocolPolicy *client_protocol (void) const;
 	  }
-=======
           and
           {
           TAO_PrivateConnectionPolicy *private_connection (void) const;
@@ -288,9 +304,6 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
           (void) const;
           TAO_ClientProtocolPolicy *client_protocol (void) const;
           }
->>>>>>> 1.2239
-
-<<<<<<< ChangeLog
 	  and
 	  {
 	  TAO_PrivateConnectionPolicy *private_connection (void) const;
@@ -323,7 +336,6 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* tao/Invocation.i :
 	* tao/Invocation.cpp :
 
-=======
           And all these variables are now CORBA::Policy *
           {
           TAO_PriorityModelPolicy *priority_model_;
@@ -348,7 +360,6 @@ Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
         * tao/Invocation.i :
         * tao/Invocation.cpp :
 
->>>>>>> 1.2239
           Moved part of add_rt_service_context to
           TAO_RT_Protocols_Hooks::add_rt_service_context_hook and invoked
           the hook instead in
