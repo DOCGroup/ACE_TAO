@@ -60,7 +60,7 @@ public:
                                  ACE_ENV_ARG_DECL);
 
   /// QoS changed notification from the Peer.
-  virtual void qos_changed (TAO_NS_QoSProperties& qos_properties);
+  virtual void qos_changed (const TAO_NS_QoSProperties& qos_properties);
 
   /// Handle dispatch exceptions.
   void handle_dispatch_exception (ACE_ENV_SINGLE_ARG_DECL);

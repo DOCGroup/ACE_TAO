@@ -25,7 +25,7 @@ TAO_NS_Peer::~TAO_NS_Peer ()
 }
 
 void
-TAO_NS_Peer::qos_changed (TAO_NS_QoSProperties& /*qos_properties*/)
+TAO_NS_Peer::qos_changed (const TAO_NS_QoSProperties& /*qos_properties*/)
 {
   // NOP.
 }

@@ -51,36 +51,36 @@ TAO_NS_ProxyConsumer::connect (TAO_NS_Supplier *supplier ACE_ENV_ARG_DECL)
       supplier_count >= max_suppliers.value ())
     ACE_THROW (CORBA::IMP_LIMIT ()); // we've reached the limit of suppliers connected.
 
-  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
-                      CORBA::INTERNAL ());
+  {
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                        CORBA::INTERNAL ());
+    ACE_CHECK;
+
+    if (this->is_connected ())
+      {
+        supplier->release ();
+        ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
+      }
+
+    supplier_ = supplier;
+
+    this->parent_->subscribed_types (this->subscribed_types_ ACE_ENV_ARG_PARAMETER); // get the parents subscribed types.
+    ACE_CHECK;
+  }
+
+  // Inform QoS values.
+  supplier_->qos_changed (this->qos_properties_);
+
+  TAO_NS_EventTypeSeq removed;
+
+  this->event_manager_->offer_change (this, this->subscribed_types_, removed ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (this->is_connected ())
-    {
-      supplier->release ();
-      ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
-    }
-  else
-    {
-      supplier_ = supplier;
+  this->event_manager_->connect (this ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-      this->parent_->subscribed_types (this->subscribed_types_ ACE_ENV_ARG_PARAMETER); // get the parents subscribed types.
-      ACE_CHECK;
-
-      // Inform QoS values.
-      supplier_->qos_changed (this->qos_properties_);
-
-      TAO_NS_EventTypeSeq removed;
-
-      this->event_manager_->offer_change (this, this->subscribed_types_, removed ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      this->event_manager_->connect (this ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      // Increment the global supplier count
-      ++supplier_count;
-    }
+  // Increment the global supplier count
+  ++supplier_count;
 }
 
 void

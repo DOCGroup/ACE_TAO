@@ -119,32 +119,37 @@ TAO_NS_Object::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_D
 {
   CosNotification::PropertyErrorSeq err_seq;
 
-  // Init the standard QoS
-  int ret_val = this->qos_properties_.init (qos, err_seq);
+  TAO_NS_QoSProperties qos_properties;
+  
+  qos_properties.init (qos, err_seq);
 
   // Init the Worker Task QoS
-  if (this->qos_properties_.thread_pool ().is_valid ())
+  if (qos_properties.thread_pool ().is_valid ())
     {
       TAO_NS_PROPERTIES::instance()->builder ()->apply_threadpool_qos (*this,
-                                                                       this->qos_properties_.thread_pool ().value (),
+                                                                       qos_properties.thread_pool ().value (),
                                                                        *this->admin_properties_
                                                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
-  else if (this->qos_properties_.thread_pool_lane ().is_valid ())
+  else if (qos_properties.thread_pool_lane ().is_valid ())
     {
       TAO_NS_PROPERTIES::instance()->builder ()->
         apply_threadpool_lane_qos (*this,
-                                   this->qos_properties_.thread_pool_lane ().value (),
+                                   qos_properties.thread_pool_lane ().value (),
                                    *this->admin_properties_
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
-  // Inform subclasses of QoS changed.
-  this->qos_changed ();
+  // Update the Thread Task's QoS properties..
+  this->worker_task_->update_qos_properties (qos_properties);
 
-  if (ret_val == 1) // Unsupported Property
+  // Inform subclasses of QoS changed.
+  this->qos_changed (qos_properties);
+
+  // Init the the overall QoS on this object.
+  if (this->qos_properties_.init (qos, err_seq) == 1) // Unsupported Property
     ACE_THROW (CosNotification::UnsupportedQoS (err_seq));
 }
 
@@ -163,7 +168,7 @@ TAO_NS_Object::get_qos (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Object::qos_changed (void)
+TAO_NS_Object::qos_changed (const TAO_NS_QoSProperties& /*qos_properties*/)
 {
   // NOP.
 }
