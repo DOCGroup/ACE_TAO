@@ -1,3 +1,8 @@
+Thu Jun 03 12:32:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Functor: Changed ACE_Hash<unsigned long long> specialization
+	  to ACE_Hash<ACE_UINT64>.
+
 Thu Jun  3 10:36:35  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* ace/Functor.i
