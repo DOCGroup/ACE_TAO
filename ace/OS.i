@@ -1542,7 +1542,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
 #if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   // This call will automatically release the mutex and wait on the semaphore.
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (external_mutex->proc_mutex_, 
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (external_mutex->proc_mutex_,
 						       cv->sema_, INFINITE, FALSE), 
 				result),
               int, -1, result);
@@ -1568,6 +1568,20 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
 #if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
+  if (last_waiter)
+    // This call atomically signals the waiters_done_ event and waits
+    // until it can acquire the mutex.  This is important to prevent
+    // unfairness.
+    ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
+							 external_mutex->proc_mutex_,
+							 cv->sema_, INFINITE, FALSE), 
+				  result),
+		int, -1, result);
+  else
+    // We must always regain the external mutex, even when errors
+    // occur because that's the guarantee that we give to our
+    // callers.
+    ACE_OS::mutex_lock (external_mutex);
 #else
   if (result != -1)
     {
@@ -1649,6 +1663,10 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
   cv->waiters_--;
 
+  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
+
   if (result != WAIT_OBJECT_0)
     {
       switch (result)
@@ -1665,21 +1683,37 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 	}
       result = -1;  
     }
-  else if (cv->was_broadcast_ && cv->waiters_ == 0)
+#if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
+  else if (last_waiter)
+    // This call atomically signals the waiters_done_ event and waits
+    // until it can acquire the mutex.  This is important to prevent
+    // unfairness.
+    ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
+							 external_mutex->proc_mutex_,
+							 cv->sema_, INFINITE, FALSE), 
+				  result),
+		int, -1, result);
+  else
+    // We must always regain the external mutex, even when errors
+    // occur because that's the guarantee that we give to our
+    // callers.
+    ACE_OS::mutex_lock (external_mutex);
+#else
+  else if (last_waiter)
     // Release the signaler/broadcaster if we're the last waiter.
     ACE_OS::event_signal (&cv->waiters_done_);
-
-  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   // We must always regain the external mutex, even when errors occur
   // because that's the guarantee that we give to our callers.
   ACE_OS::mutex_lock (external_mutex);
+#endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
+
   errno = error;
   return result;
 #elif defined (VXWORKS)
-  // POSIX semaphores don't have a timed wait.  Should implement conds with
-  // VxWorks semaphores instead, they do have a timed wait.  But all of the
-  // other cond operations would have to be modified.
+  // POSIX semaphores don't have a timed wait.  Should implement conds
+  // with VxWorks semaphores instead, they do have a timed wait.  But
+  // all of the other cond operations would have to be modified.
   ACE_NOTSUP_RETURN (-1);
 #else /* PTHREADS or STHREADS or DCETHREADS */
   int result;
@@ -1759,6 +1793,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
   cv->waiters_--;
 
+  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
+
   if (result != WAIT_OBJECT_0)
     {
       switch (result)
@@ -1775,11 +1812,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 	}
       result = -1;
     }
-  else if (cv->was_broadcast_ && cv->waiters_ == 0)
+  else if (last_waiter)
     // Release the signaler/broadcaster if we're the last waiter.
     ACE_OS::event_signal (&cv->waiters_done_);
-
-  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   // We must always regain the external mutex, even when errors occur
   // because that's the guarantee that we give to our callers.
@@ -1821,6 +1856,9 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
   cv->waiters_--;
 
+  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
+
   if (result != WAIT_OBJECT_0)
     {
       switch (result)
@@ -1836,11 +1874,9 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 	  break;
 	}
     }
-  else if (cv->was_broadcast_ && cv->waiters_ == 0)
+  else if (last_waiter)
     // Release the signaler/broadcaster if we're the last waiter.
     ACE_OS::event_signal (&cv->waiters_done_);
-
-  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   // We must always regain the external mutex, even when errors
   // occur because that's the guarantee that we give to our
