@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -36,9 +35,9 @@ public:
   // Open up a record-oriented named pipe for reading.
 
   int open (const char *rendezvous, 
-		   int flags = O_CREAT | O_RDONLY, 
-		   int perms = ACE_DEFAULT_FILE_PERMS, 
-		   int persistent = 1);
+	    int flags = O_CREAT | O_RDONLY, 
+	    int perms = ACE_DEFAULT_FILE_PERMS, 
+	    int persistent = 1);
   // Open up a record-oriented named pipe for reading.
 
   ssize_t recv (ACE_Str_Buf &msg);

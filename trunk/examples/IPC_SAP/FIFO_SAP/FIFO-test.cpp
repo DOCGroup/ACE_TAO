@@ -6,7 +6,6 @@
 // the fifo.  The child reads from the ACE_FIFO and executes the more
 // command.
 
-
 #include "ace/FIFO_Recv.h"
 #include "ace/FIFO_Send.h"
 
@@ -14,9 +13,9 @@
 #define EXEC_NAME               "more"
 #define EXEC_COMMAND_ARG        "more"
 
-const char *FIFO_NAME = "/tmp/fifo";
+static const char *FIFO_NAME = "/tmp/fifo";
 
-int
+static int
 do_child (ACE_FIFO_Recv &fifo_reader)
 {
   // Set child's stdin to read from the fifo.
@@ -32,13 +31,14 @@ do_child (ACE_FIFO_Recv &fifo_reader)
   return 0;
 }
 
-int 
-do_parent (const char fifo_name[], char input_filename[])
+static int 
+do_parent (const char fifo_name[],
+	   char input_filename[])
 {
-  int       inputfd;
+  int inputfd;
   ACE_FIFO_Send fifo_sender (fifo_name, O_WRONLY | O_CREAT);
-  int       len;
-  char      buf[BUFSIZ];
+  int len;
+  char buf[BUFSIZ];
 
   if (fifo_sender.get_handle () == ACE_INVALID_HANDLE)
     return -1;

@@ -246,9 +246,9 @@ ACE_Process_Manager::remove (pid_t pid)
 }
 
 int
-ACE_Process_Manager::kill (pid_t pid, int signum)
+ACE_Process_Manager::terminate (pid_t pid)
 {
-  ACE_TRACE ("ACE_Process_Manager::kill_proc");
+  ACE_TRACE ("ACE_Process_Manager::terminate");
 
   // Check for duplicates and bail out if they're already
   // registered...
@@ -258,8 +258,7 @@ ACE_Process_Manager::kill (pid_t pid, int signum)
     return -1;
   else
     {
-      int result = ACE_OS::kill (this->proc_table_[i].proc_id_,
-				 signum);
+      int result = ACE::terminate_process (this->proc_table_[i].proc_id_);
 
       if (result == -1)
 	{ 

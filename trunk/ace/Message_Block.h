@@ -240,7 +240,8 @@ public:
   void wr_ptr (char *ptr);
   // Set the write pointer to <ptr>.
   void wr_ptr (size_t n);
-  // Set the write pointer ahead <n> bytes.
+  // Set the write pointer ahead <n> bytes.  This is used to compute
+  // the <length> of a message.
 
   // = Message length is wr_ptr() - rd_ptr ().
   size_t length (void) const;

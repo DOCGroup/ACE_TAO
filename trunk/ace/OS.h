@@ -2107,6 +2107,7 @@ extern "C" {
 #include /**/ <sys/uio.h>
 #include /**/ <time.h>
 #include /**/ <stdfileio.h>
+#include /**/ <am/afexec.h>
 
 // This must come after limits.h is included
 #define MAXPATHLEN _POSIX_PATH_MAX

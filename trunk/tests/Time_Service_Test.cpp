@@ -68,11 +68,11 @@ main (int, char *[])
   ACE_DEBUG ((LM_DEBUG, "Sleeping...\n"));
   ACE_OS::sleep (10);
 
-  if (clerk.kill () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Kill failed for clerk.\n"), -1);
+  if (clerk.terminate () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "Terminate failed for clerk.\n"), -1);
 
-  if (server.kill () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Kill failed for server.\n"), -1);
+  if (server.terminate () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "Terminate failed for server.\n"), -1);
 
   // Since we kill the clerk process, on Win32 it may not do a
   // graceful shutdown and the backing store file is left behind.
