@@ -14,12 +14,12 @@
 #ifndef msg_accrights
 #undef msg_control
 #define msg_accrights msg_control
-#endif
+#endif /* msg_accrights */
 
 #ifndef msg_accrightslen
 #undef msg_controllen
 #define msg_accrightslen msg_controllen
-#endif
+#endif /* msg_accrightslen */
 
 // You may need to undefine these for older versions of Linux.
 //#define ACE_LACKS_SENDMSG

@@ -1,7 +1,23 @@
-# Consumer configuration file
-# Conn ID  Supplier ID  Type     Consumers
-# -------  -----------  -------  ------------  
-  1        1           0	 3,4
-  2        2           0	 3           
-# 3        3           0	 4
-# 4	   4	       0	 5
+# Configuration file for specifying which Consumers will receive
+# messages from which Suppliers.  
+#
+# Here's an explanation of the fields in this file, and how they
+# relate to fields in the "proxy_config" file.
+#
+# 1. Proxy ID 
+#    The conn
+#
+# 2. Supplier ID
+#    
+#
+# 3. Type 
+#    
+#
+# 4. Consumers
+#
+# Proxy ID  Supplier ID  Type     Consumers
+# --------  -----------  -------  ------------  
+  1         1            0	  2
+# 2         2            0	  3,4
+# 3         3            0	  4
+# 4	    4	         0	  5

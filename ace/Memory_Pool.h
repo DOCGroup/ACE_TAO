@@ -297,7 +297,8 @@ public:
   // = Initialization method.
   ACE_MMAP_Memory_Pool_Options (void *base_addr = ACE_DEFAULT_BASE_ADDR,
 				int use_fixed_addr = 1,
-				int write_each_page = 1);
+				int write_each_page = 1,
+				int minimum_bytes = 0);
 
   void *base_addr_;
   // Base address of the memory-mapped backing store.
@@ -308,6 +309,9 @@ public:
   int write_each_page_;
   // Should each page be written eagerly to avoid surprises later
   // on?
+
+  int minimum_bytes_;
+  // What the minimim bytes of the initial segment should be.
 };
 
 class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
@@ -405,6 +409,9 @@ protected:
   int write_each_page_;
   // Should we write a byte to each page to forceably allocate memory
   // for this backing store?
+
+  int minimum_bytes_;
+  // What the minimim bytes of the initial segment should be.
 
   TCHAR backing_store_name_[MAXPATHLEN];
   // Name of the backing store where the shared memory pool is kept.
