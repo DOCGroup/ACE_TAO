@@ -1307,13 +1307,13 @@ private:
                  const ACE_Addr &local_sap,
                  int reuse_addr);
 
-  int post_result (ACE_WIN32_Asynch_Connect_Result *result, int flg_post);
+  int post_result (ACE_WIN32_Asynch_Connect_Result *result, bool flg_post);
 
   /// Cancel uncompleted connect operations.
   /**
    * @param flg_notify Indicates whether or not to send notification about
-   *                   canceled connect operations.  If 0, don't send
-   *                   notifications. If 1, notify user about canceled
+   *                   canceled connect operations.  If false, don't send
+   *                   notifications. If true, notify user about canceled
    *                   connects.
    *                   According WIN32 standards we should receive
    *                   notifications on canceled AIO requests.
@@ -1323,36 +1323,22 @@ private:
    *                   method. The contents of @a set are completely
    *                   replaced.
    */
-  int cancel_uncompleted (int flg_notify, ACE_Handle_Set & set);
+  int cancel_uncompleted (bool flg_notify, ACE_Handle_Set &set);
 
-  /// 1 - Connect is registered in ACE_Asynch_Pseudo_Task
-  /// 0 - Aceept is deregisted in ACE_Asynch_Pseudo_Task
-  int flg_open_ ;
-
-  /// To prevent ACE_Asynch_Pseudo_Task from deletion
-  /// while we make a call to the ACE_Asynch_Pseudo_Task
-  /// This is extra cost !!!
-  /// we could avoid them if all applications will follow the rule:
-  /// Proactor should be deleted only after deletion all
-  ///  AsynchOperation objects connected with it
-  int  task_lock_count_;
+  /// true  - Connect is registered in ACE_Asynch_Pseudo_Task
+  /// false - Accept is deregisted in ACE_Asynch_Pseudo_Task
+  bool flg_open_ ;
 
   typedef ACE_Map_Manager<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
           MAP_MANAGER;
-
-  // (Two) Deprecated typedefs.  Use appropriate MAP_MANAGER traits
-  // instead.
-  typedef MAP_MANAGER::ITERATOR MAP_ITERATOR;
-  typedef MAP_MANAGER::ENTRY MAP_ENTRY;
 
   /// Map of Result pointers that correspond to all the <accept>'s
   /// pending.
   MAP_MANAGER result_map_;
 
-  /// The lock to protect the  result queue which is shared. The queue
+  /// The lock to protect the result map which is shared. The queue
   /// is updated by main thread in the register function call and
-  /// through the auxillary thread  in the deregister fun. So let us
-  /// mutex it.
+  /// through the auxillary thread in the asynch pseudo task.
   ACE_SYNCH_MUTEX lock_;
 };
 
