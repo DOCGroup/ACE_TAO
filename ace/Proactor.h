@@ -23,6 +23,7 @@
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_List.h"
 #include "ace/Timer_Heap.h"
+#include "ace/Timer_Wheel.h"
 
 #if defined (ACE_WIN32)
 // This only works on Win32 platforms
@@ -101,6 +102,9 @@ public:
 
   typedef ACE_Timer_Heap_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Heap;
   typedef ACE_Timer_Heap_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Heap_Iterator;
+
+  typedef ACE_Timer_Wheel_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Wheel;
+  typedef ACE_Timer_Wheel_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Wheel_Iterator;
 
   ACE_Proactor (size_t number_of_threads = 0, 
 		Timer_Queue *tq = 0);
