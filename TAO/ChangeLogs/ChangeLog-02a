@@ -1,3 +1,13 @@
+Sun Mar 24 22:06:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i:
+          Fixed for warning on 'const char*' to 'char*' conversion.
+
+        * TAO/orbsvcs/orbsvcs/Sched/DynSched.cpp:
+          Added back original C-style casting, (const char*), for ACE_DEBUG
+          output of task lists' entry points to fix compilation warning
+          on some platforms.
+
 Sun Mar 24 13:39:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * TAO/orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
