@@ -3,14 +3,14 @@ $Id$
 A Regression test for ACE QoS features. 
 ---------------------------------------
 
-This test implements a simple Receiver-Sender program that ensures 
-Quality of Service (QoS) guarantees on the underlying network before 
-transmitting data. The program tests the ACE QoS APIs/features. The 
-test works only on Win2K because currently most QoS ACE APIs are implemented as 
-wrappers around WinSock2 APIs. In the future, RAPI, an implementation 
-of QoS APIs on Solaris will be incorporated into ACE and this test
-should work "out of the box" for the underlying RAPI APIs as should all
-the applications that use the ACE QoS APIs.
+This test implements a simple Receiver-Sender program that ensures
+Quality of Service (QoS) guarantees on the underlying network before
+transmitting data. The program tests the ACE QoS APIs/features. The
+test works only on Win2K because currently most QoS ACE APIs are
+implemented as wrappers around WinSock2 APIs. In the future, RAPI, an
+implementation of QoS APIs on Solaris will be incorporated into ACE
+and this test should work "out of the box" for the underlying RAPI
+APIs as should all the applications that use the ACE QoS APIs.
 
 Build Requirements :
 --------------------
@@ -45,7 +45,6 @@ The Sender is started next as :
    any potential receivers that can negotiate and satisfy the QoS
    requirements of the sender.
 
-
 The user must have administrative access to the machine to run this program.
 It seems to be a pre-requisite to opening QoS sockets. 
 
@@ -55,9 +54,9 @@ The test demonstrates how to GQOS enable an application using the ACE QoS APIs.
 It concentrates on the use of various ACE QoS APIs and their correctness.
 
 -----------------
-Contact Point :
-Vishal Kachroo
-vishal@cs.wustl.edu
+
+If you run into any problems with this test please contact Vishal
+Kachroo <vishal@cs.wustl.edu>.
 
 
 

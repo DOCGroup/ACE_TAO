@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -34,10 +35,10 @@ static void Usage (char *szProgramname,
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
 // To open QOS sockets administrative access is required on the
-// machine. Fill in default values for QoS structure.  The default 
-// values were simply choosen from existing QOS templates available via
-// WSAGetQosByName.  Notice that ProviderSpecific settings are being
-// allowed when picking the "default" template but not for
+// machine. Fill in default values for QoS structure.  The default
+// values were simply choosen from existing QOS templates available
+// via WSAGetQosByName.  Notice that ProviderSpecific settings are
+// being allowed when picking the "default" template but not for
 // "well-known" QOS templates.  Also notice that since data is only
 // flowing from sender to receiver, different flowspecs are filled in
 // depending upon whether this application is acting as a sender or
@@ -103,12 +104,11 @@ int SetQos (QOS_OPTIONS *pQosOptions,
   else 
     ACE_DEBUG ((LM_DEBUG,
                 "Run the program with -q:default option\n"));
-
   return !bError;
 }
 
-// Fill up the ACE_Flow_Spec with the default_g711 values
-// as defined in the QoSEvent.h
+// Fill up the ACE_Flow_Spec with the default_g711 values as defined
+// in the QoSEvent.h
 
 int 
 FillQoSTraffic (ACE_Flow_Spec &afc)
@@ -157,7 +157,9 @@ main (int argc, char * argv[])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in ValidOptions\n"),
                       -1);
- 
+
+  // @@ Vishal, shouldn't this stuff be done automagically by ACE?!
+  // Can you please check with David Levine to see how to do it?
   // This internally calls WSAStartup ().
   ACE_OS_Object_Manager ace_object_manager;
 
@@ -196,37 +198,34 @@ main (int argc, char * argv[])
                         "set again in FD_QOS\n"));
         }
     }
-
   else
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Use the -q:default option to enable the QOS\n"),
                       -1);
 
-
-  // Opening a new Multicast Datagram. It is absolutely necessary 
-  // that the sender and the receiver subscribe to the same multicast 
-  // addresses to make sure the "multicast sessions" for the two are 
+  // Opening a new Multicast Datagram. It is absolutely necessary that
+  // the sender and the receiver subscribe to the same multicast
+  // addresses to make sure the "multicast sessions" for the two are
   // the same. This is used to match the RESV<->PATH states.
-
   ACE_SOCK_Dgram_Mcast dgram_mcast;
 
   // The windows example code uses PF_INET for the address family.
-  // Winsock.h defines PF_INET to be AF_INET. Is there really a difference 
-  // between the protocol families and the address families ? The following
-  // code internally uses AF_INET as a default for the underlying socket.
-
+  // Winsock.h defines PF_INET to be AF_INET. Is there really a
+  // difference between the protocol families and the address families
+  // ? The following code internally uses AF_INET as a default for the
+  // underlying socket.
   ACE_INET_Addr mult_addr (options.port,
                            options.szHostname);
 
   // Fill the ACE_QoS_Params to be passed to the <ACE_OS::join_leaf>
   // through subscribe.
-
   ACE_QoS_Params qos_params;
-  FillQoSParams (qos_params, 0, &qos);
+  FillQoSParams (qos_params,
+                 0,
+                 &qos);
 
   // The following call opens the Dgram_Mcast and calls the
   // <ACE_OS::join_leaf> with the qos_params supplied here.
-
   if (dgram_mcast.subscribe (mult_addr,
                              qos_params,
                              1,
@@ -281,15 +280,13 @@ main (int argc, char * argv[])
     ACE_DEBUG ((LM_DEBUG,
                 "Disable Loopback with ACE_OS::ioctl call succeeds \n"));
 
-
   // Fill up an ACE_QoS and pass it to the overloaded ACE_OS::ioctl ()
   // that uses the I/O control code as SIO_SET_QOS.
   ACE_QoS ace_qos;
 
-  // Make sure the flowspec is set in the correct direction. Since this is
-  // the sender, sending flowspec is set to g711 and receiving flowspec is 
-  // set to no traffic.
-
+  // Make sure the flowspec is set in the correct direction. Since
+  // this is the sender, sending flowspec is set to g711 and receiving
+  // flowspec is set to no traffic.
   ACE_Flow_Spec sending_flowspec;
   ACE_Flow_Spec receiving_flowspec;
   const iovec iov = {0, 0};
@@ -476,7 +473,6 @@ FindServiceProvider(int iProtocol,
 
 }
 
-
 int 
 ValidOptions (char *argv[],
               int argc,
@@ -487,7 +483,7 @@ ValidOptions (char *argv[],
 
   for (int i = 1; i < argc; i++)
     {
-      if ((argv[i][0] == '-') || (argv[i][0] == '/') ) 
+      if (argv[i][0] == '-' || argv[i][0] == '/')
         {
           switch (ACE_OS::to_lower (argv[i][1])) 
             {
@@ -544,12 +540,10 @@ ValidOptions (char *argv[],
             case 'n' : 
               pOptions->qosOptions.bReceiver = FALSE; 
               // multicast group overrides hostname on -n
-              if (!pOptions->spOptions.bMulticast)
-                {
-                  if (ACE_OS::strlen (argv[i]) > 3)
-                    ACE_OS::strcpy (pOptions->szHostname,
-                                    &argv[i][3]);
-                }
+              if (!pOptions->spOptions.bMulticast
+                  && ACE_OS::strlen (argv[i]) > 3)
+                ACE_OS::strcpy (pOptions->szHostname,
+                                &argv[i][3]);
               break;
 
             case 'p' :
@@ -681,7 +675,6 @@ ValidOptions (char *argv[],
     ACE_NEW_RETURN (pOptions->buf,
                     char[pOptions->nBufSize],
                     0);
-
   else 
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Buffer size to be allocated is less than or"
@@ -802,12 +795,12 @@ void PrintOptions (OPTIONS *pOptions)
   return;
 }
 
-//      Print out usage table for the program
+// Print out usage table for the program.
+
 void 
 Usage (char *szProgramname,
        OPTIONS *pOptions)
 {
-
   ACE_DEBUG ((LM_DEBUG,
               "usage:\n  %s -?\n\n"
               "  %s [-b:#] [-d:c] [-e:#] [-l:#] [-m:group] "

@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 //$Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -16,17 +17,6 @@
 #ifndef QOSEVENT_H
 #define QOSEVENT_H
 
-// @@ Vishal, we should probably most this stuff to OS.h at some point
-// so that it'll be available to all applications that use the ACE QoS
-// wrappers.
-
-// I agree. However, if the user chooses to use other options than used
-// in this test application she might have to declare other such stuff.
-// I would suggest keeping these defines to the test program until we find
-// a more portable way of handling this. This would mean having these defines 
-// in the user applications which is not neat but it will avoid cluttering 
-// OS.h with incomplete QoS related defines.
-  
 #if !(defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
 
 #define XP1_QOS_SUPPORTED        0x00002000
@@ -61,8 +51,7 @@
 
 #endif /* ACE_HAS_WINSOCK2 */
 
-
-#define MY_DEFPORT (5001)
+#define MY_DEFPORT 5001
 
 // Application-specific define - there is NO specific invalid send
 // priority.  This value is simply used to indicate whether or not to
@@ -109,54 +98,54 @@ typedef enum
 
 typedef struct _QOS_OPTIONS
 {
-  int    bReceiver;          
+  int bReceiver;          
   // act as receiver if TRUE
 
-  int    bWaitToSend;        
+  int bWaitToSend;        
   // sender must wait for RESV before sending
 
-  int    bConfirmResv;       
+  int bConfirmResv;       
   // have receiver request RESV confirmation
 
-  int    bQueryBufferSize;   
+  int bQueryBufferSize;   
   // have WSAioctl return size of buffer needed when using SIO_GET_QOS
   // (behaviour not avail on Win98).
 
-  int    bMustSetQosInAccept;
+  int bMustSetQosInAccept;
   // Will be set for Win98 only.  Win98 currently needs valid qos
   // structure to be set in wsaaccept condition func in lpSQos is
   // valid
 
-  int    bDisableSignalling; 
+  int bDisableSignalling; 
   // If TRUE do not emit RSVP signalling, just use traffic control
 
-  int    bAlternateQos;      
+  int bAlternateQos;      
   // Alternate between enabling and disabling QOS on a socket every N
   // sends
 
-  unsigned int   SendPriority;       
+  u_int SendPriority;       
   // create QOS_OBJECT_PRIORITY structure, and set valid priority 0-7
 
-  int    bSetDestaddr;       
+  int bSetDestaddr;       
   // TRUE if unconnected UDP and QOS is used (not multicast)
 
-  int    bProviderSpecific;  
+  int bProviderSpecific;  
   // TRUE if a provider-specific object must be set
 
-  int    bFineGrainErrorAvail;   
+  int bFineGrainErrorAvail;   
   // TRUE if Win2000beta3 availability of fine grain errors on SIO_SET_QOS
 
-  int    bQosabilityIoctls;   
+  int bQosabilityIoctls;   
   // TRUE if Win2000beta3 qosablity ioctls 
 
-  int    bFixTemplate;       
+  int bFixTemplate;       
   // TRUE if Win98 to divide ToeknRate and PeakBandwidth by 8 when
   // using WSAGetQOSByName
 
-  QOS_IOCTL_SET  qosIoctlSet;  
+  QOS_IOCTL_SET qosIoctlSet;  
   // when to set QOS
 
-  char    szTemplate[64];     
+  char szTemplate[64];     
   // qos template
 } QOS_OPTIONS;
 
@@ -165,16 +154,16 @@ extern ACE_Flow_Spec default_g711;
 
 typedef struct _OPTIONS
 {
-  char            szHostname[64];
-  unsigned short  port;
-  int             nRepeat;
-  char            fillchar;
-  int             nBufSize;
-  char *          buf;
-  u_long          dwSleep;
-  u_long          dwTotalClients;
-  QOS_OPTIONS     qosOptions;
-  SP_OPTIONS      spOptions;
+  char szHostname[64];
+  u_short port;
+  int nRepeat;
+  char fillchar;
+  int nBufSize;
+  char *buf;
+  u_long dwSleep;
+  u_long dwTotalClients;
+  QOS_OPTIONS qosOptions;
+  SP_OPTIONS spOptions;
 } OPTIONS;
 
 #ifdef QOSEVENT_MAIN
@@ -215,19 +204,13 @@ ACE_Flow_Spec default_g711 (9200,
                             368,
                             25,
                             1);
-
-
 #else
-
 extern FLOWSPEC default_notraffic;
 extern FLOWSPEC default_g711;
 extern SOCKADDR_IN g_destaddr;
-    
 #endif /* QOSEVENT_MAIN */
-
 extern int FindServiceProvider (int iProtocol,
                                 int bQos,
                                 int bMulticast,
                                 ACE_Protocol_Info *pProtocolInfo);
-
 #endif /* QOSEVENT_H */
