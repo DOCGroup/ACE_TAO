@@ -13,7 +13,7 @@
 #include "ace/Auto_Ptr.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Base_Transport_Property.h"
-#include "tao/Connection_Purging_Strategy.h"
+#include "tao/Transport_Cache_Manager.h"
 
 ACE_RCSID(Strategies, UIOP_Connector, "$Id$")
 
@@ -154,7 +154,7 @@ TAO_UIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
 
   // Check the Cache first for connections
   // If transport found, reference count is incremented on assignment
-  if (this->orb_core ()->purging_strategy ()->find_in_cache (desc,
+  if (this->orb_core ()->transport_cache ()->find_transport (desc,
                                                              base_transport) == 0)
     {
       if (TAO_debug_level > 5)
@@ -171,7 +171,7 @@ TAO_UIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
                     ACE_TEXT ("making a new connection \n")));
 
       // Purge connections (if necessary)
-      this->orb_core ()->purging_strategy ()->purge ();
+      this->orb_core ()->transport_cache ()->purge ();
 
       // @@ This needs to change in the next round when we implement a
       // policy that will not allow new connections when a connection
@@ -221,8 +221,8 @@ TAO_UIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
       base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
       // Add the handler to Cache
       int retval =
-        this->orb_core ()->purging_strategy ()->add_to_cache (desc,
-                                                              base_transport);
+        this->orb_core ()->transport_cache ()->cache_transport (desc,
+                                                                base_transport);
 
       if (retval != 0 && TAO_debug_level > 0)
         {
@@ -342,8 +342,8 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
 
               // Add the handler to Cache
               int retval =
-                this->orb_core ()->purging_strategy ()->add_to_cache (&prop,
-                                                                      handlers[slot]->transport ());
+                this->orb_core ()->transport_cache ()->cache_transport (&prop,
+                                                                        handlers[slot]->transport ());
               ++successes;
 
               if (retval != 0 && TAO_debug_level > 4)

@@ -1,3 +1,52 @@
+Fri May 18 14:23:22 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/Acceptor_Impl.cpp:
+        * tao/Cache_Entries.cpp:
+        * tao/Cache_Entries.h:
+        * tao/Cache_Entries.inl:
+        * tao/Connection_Purging_Strategy.cpp:
+        * tao/Connection_Purging_Strategy.h:
+        * tao/Connection_Purging_Strategy.inl:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/LRU_Connection_Purging_Strategy.cpp:
+        * tao/LRU_Connection_Purging_Strategy.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/Transport.cpp:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
+        * tao/default_resource.cpp:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.h:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.h:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Strategies/advanced_resource.cpp:
+        * tests/BiDirectional/test_i.cpp:
+        * tests/BiDirectional_NestedUpcall/test_i.cpp:
+
+          Merged most of the Connection Purging code into the
+          Transport_Cache_Manger to simplify things and to reduce the
+          footprint size.
+
+        * tests/Connection_Purging/client.fifo.conf:
+        * tests/Connection_Purging/client.lfu.conf:
+        * tests/Connection_Purging/client.lru.conf:
+
+          Fix the usage of a deprecated option.
+
 Fri May 18 12:23:31 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp:

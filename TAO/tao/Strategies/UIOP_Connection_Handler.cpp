@@ -15,7 +15,7 @@
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/GIOP_Message_Lite.h"
-#include "tao/Connection_Purging_Strategy.h"
+#include "tao/Transport_Cache_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "UIOP_Connection_Handler.inl"
@@ -218,8 +218,8 @@ TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
   TAO_Base_Transport_Property prop (&endpoint);
 
   // Add the handler to Cache
-  return this->orb_core ()->purging_strategy ()->add_to_cache (&prop,
-                                                               this->transport ());
+  return this->orb_core ()->transport_cache ()->cache_transport (&prop,
+                                                                 this->transport ());
 }
 
 

@@ -12,28 +12,40 @@
 #define TAO_LRU_PURGING_STRATEGY_H
 #include "ace/pre.h"
 
-// @@ Chad: PRAMA please...
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/Connection_Purging_Strategy.h"
 
-// @@ Chad:Class description...
-class TAO_Export TAO_LRU_Connection_Purging_Strategy: public TAO_ULong_Connection_Purging_Strategy
+// ****************************************************************
+
+/**
+ * @class TAO_LRU_Connection_Purging_Strategy
+ *
+ * @brief The Least Recently Used connection purging strategy
+ *
+ * This class maintains it's own count which is applied to the
+ * item passed in.  This way, the least recently used transport
+ * has the smallest ordering number and will therefore be purged
+ * first.
+ */
+
+class TAO_Export TAO_LRU_Connection_Purging_Strategy: public TAO_Connection_Purging_Strategy
 {
 public:
   /// The constructor
-  TAO_LRU_Connection_Purging_Strategy (TAO_Resource_Factory* rf);
+  TAO_LRU_Connection_Purging_Strategy (int cache_maximum);
 
   /// The destructor
-  virtual ~TAO_LRU_Connection_Purging_Strategy ();
-
-protected:
+  virtual ~TAO_LRU_Connection_Purging_Strategy (void);
 
   /// Called when accessing an item from the cache
-  virtual void update_item_i (TAO_DESCRIPTOR_INTERFACE* prop,
-                              TAO_PURGING_CACHE_ITEM* item);
+  virtual void update_item (TAO_Cache_IntId& int_id);
 
 private:
-
-  ATTRIBUTE_TYPE order_;
+  /// The ordering information for each transport in the cache
+  unsigned long order_;
 };
 
 #include "ace/post.h"

@@ -16,6 +16,7 @@
 #include "ace/pre.h"
 
 #include "ace/Hash_Map_Manager_T.h"
+#include "ace/Array_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
@@ -33,6 +34,8 @@
 
 class TAO_ORB_Core;
 class ACE_Handle_Set;
+class TAO_Resource_Factory;
+class TAO_Connection_Purging_Strategy;
 
 typedef ACE_Unbounded_Set<ACE_Event_Handler*> TAO_EventHandlerSet;
 typedef ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
@@ -78,7 +81,7 @@ public:
   // == Public methods
 
   /// Constructor
-  TAO_Transport_Cache_Manager (void);
+  TAO_Transport_Cache_Manager (TAO_Resource_Factory* rf);
 
   /// Destructor
   virtual ~TAO_Transport_Cache_Manager (void);
@@ -97,37 +100,6 @@ public:
   /// Initialize a <HASH_MAP> with <size> elements.
   int open (TAO_ORB_Core *orb_core,
             size_t size = ACE_DEFAULT_MAP_SIZE);
-
-  /// Associate <ext_id> with <int_id>. Grabs the lock and calls the
-  /// implementation function bind_i.
-  int bind (TAO_Cache_ExtId &ext_id,
-            TAO_Cache_IntId &int_id);
-
-  /// Lookup entry<key,value> in the cache. Grabs the lock and calls the
-  /// implementation function find_i.
-  int find (const TAO_Cache_ExtId &key,
-            TAO_Cache_IntId &value);
-
-  /// Reassociate the <key> with <value>. Grabs the lock and calls the
-  /// implementation function find_i.
-  int rebind (const TAO_Cache_ExtId &key,
-              const TAO_Cache_IntId &value);
-
-  /**
-   * Associate <key> with <value> if and only if <key> is not in the
-   * cache.  Grabs the lock and calls the implementation function
-   * find_i.
-   */
-  int trybind (const TAO_Cache_ExtId &key,
-               TAO_Cache_IntId &value);
-
-  /// Remove <key> from the cache.
-  int unbind (const TAO_Cache_ExtId &key);
-
-  /// Remove <key> from the cache, and return the <value> associated with
-  /// <key>.
-  int unbind (const TAO_Cache_ExtId &key,
-              TAO_Cache_IntId &value);
 
   /// Remove entries from the cache depending upon the strategy.
   int purge (void);
@@ -154,6 +126,29 @@ public:
 
 private:
 
+  /// Associate <ext_id> with <int_id>. Grabs the lock and calls the
+  /// implementation function bind_i.
+  int bind (TAO_Cache_ExtId &ext_id,
+            TAO_Cache_IntId &int_id);
+
+  /// Lookup entry<key,value> in the cache. Grabs the lock and calls the
+  /// implementation function find_i.
+  int find (const TAO_Cache_ExtId &key,
+            TAO_Cache_IntId &value);
+
+  /// Reassociate the <key> with <value>. Grabs the lock and calls the
+  /// implementation function find_i.
+  int rebind (const TAO_Cache_ExtId &key,
+              const TAO_Cache_IntId &value);
+
+  /// Remove <key> from the cache.
+  int unbind (const TAO_Cache_ExtId &key);
+
+  /// Remove <key> from the cache, and return the <value> associated with
+  /// <key>.
+  int unbind (const TAO_Cache_ExtId &key,
+              TAO_Cache_IntId &value);
+
   /**
    * Non-Locking version and actual implementation of bind ()
    * call. Calls bind on the Hash_Map_Manager that it holds. If the
@@ -177,10 +172,6 @@ private:
   /// Non-locking version and actual implementation of rebind () call
   int rebind_i (const TAO_Cache_ExtId &key,
                 const TAO_Cache_IntId &value);
-
-  /// Non-locking version and actual implementation of trybind () call
-  int trybind_i (const TAO_Cache_ExtId &key,
-                 TAO_Cache_IntId &value);
 
   /// Non-locking version and actual implementation of unbind () call
   int unbind_i (const TAO_Cache_ExtId &key);
@@ -223,8 +214,31 @@ private:
    */
   int is_entry_idle (HASH_MAP_ENTRY *&entry);
 
+#if !defined(ACE_LACKS_QSORT)
+  /// Used by qsort
+  static int cpscmp(const void* a, const void* b);
+#endif
+
+  typedef ACE_Array_Base<TAO_Transport_Descriptor_Interface*>
+          DESCRIPTOR_SET;
+
+  /// Sort the list of entries
+  void sort_set (HASH_MAP_ENTRY**& entries, int size);
+
+  /// Fill sorted_set in with the TAO_Transport_Descriptor_Interface's in
+  /// a sorted order.
+  virtual int fill_set_i (DESCRIPTOR_SET& sorted_set);
+
+  /// Look through the sorted set and close the connection on
+  /// the required number of items in the set.
+  void close_entries (DESCRIPTOR_SET& sorted_set);
 
 private:
+  /// The percentage of the cache to purge at one time
+  int percent_;
+
+  /// The underlying connection purging strategy
+  TAO_Connection_Purging_Strategy *purging_strategy_;
 
   /// The hash map that has the connections
   HASH_MAP cache_map_;
