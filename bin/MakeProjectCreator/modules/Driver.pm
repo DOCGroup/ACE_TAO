@@ -268,8 +268,10 @@ sub run {
         if ($value =~ /\$(\w+)(.*)?/) {
           my($var)   = $1;
           my($extra) = $2;
-          $options->{'relative'}->{$key} = 
-                     $options->{'relative'}->{$var} . $extra;
+          $options->{'relative'}->{$key} =
+                     (defined $options->{'relative'}->{$var} ?
+                              $options->{'relative'}->{$var} : '') .
+                     (defined $extra ? $extra : '');
         }
         else {
           $options->{'relative'}->{$key} = $value;
