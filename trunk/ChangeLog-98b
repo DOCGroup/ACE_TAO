@@ -1,26 +1,67 @@
 Fri Oct 16 15:45:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/[Hash_]Map_Manager: Removed the use of locking for the
- 	  iterators.  This is totally broken when using STL-style
- 	  iterators, so it's better to let users figure out their usecase,
- 	  rather than guess wrong and screwing up their code.
+        * ace/[Hash_]Map_Manager: Today we decided to remove the use of
+          locking for the ACE[_Hash]_Map_Manager Iterators.  The original
+          scheme acquired the mutex of the [Hash_]Map_Manager on every
+          ++operator++/--operator-- call.  Not only was this very
+          inefficient, but it was also essentially useless since it
+          doesn't protect against arbitrary insertions/deletions in the
+          underlying map during the iteration.
+
+          Our first thought was to put an ACE_Read_Guard into the iterator
+          itself and acquire this for the duration of the iteration.
+          However, this approach is totally broken when using STL-style
+          iterators since the postfix ++ and -- operators return a copy of
+          the iterator, which easily causes deadlocks if non-recursive
+          mutexes are used.
+
+          After much discussion, we decided it's better to let users
+          figure out their own locking usecase, rather than have the
+          iterators guess wrong and either screw up their code or yield
+          substantial inefficiencies.  Therefore, the right approach is to
+          do something like this:
+
+          typedef ACE_Map_Manager <TYPE1, TYPE2, ACE_Thread_Mutex> MAP_MANAGER;
+          typedef ACE_Map_Iterator <TYPE1, TYPE2, ACE_Thread_Mutex> ITERATOR;
+          typedef ACE_Map_Entry <TYPE1, TYPE2> ENTRY;
+
+          void 
+          foo (MAP_MANAGER &map)
+          {
+            // ...
+            {
+              // Explicitly grab the lock and hold it for the duration of 
+              // the iteration.
+              ACE_READ_GUARD (ACE_Thread_Mutex, ace_mon, map.mutex ());
+ 
+              ITERATOR end = map.end ();
+
+              for (ITERATOR iter = map.begin ();
+                   iter != end;
+                   iter++) 
+              {
+                ENTRY &entry = *iter;
+                i++;
+              }
+            // ...
+          }
 
 Fri Oct 16 14:57:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager and Map_Manager: Fixed the operator++ and
- 	  operator--.  Also, moved the guard from the individual methods
- 	  to the iterator.  Now, the read guard is held for the life time
- 	  of the iterator.
+        * ace/Hash_Map_Manager and Map_Manager: Fixed the operator++ and
+          operator--.  Also, moved the guard from the individual methods
+          to the iterator.  Now, the read guard is held for the life time
+          of the iterator.
 
 Fri Oct 16 14:51:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (thr_create): Made sure if users don't specify
-	  whether to spawn threads detached or joinable, we'd change the
-	  creation flag for them so that they are always joinable (not
-	  detached.)  This is important for unify the thread behavior on
-	  different platforms that have various default thread creation
-	  policies.  Thanks to Susan Liebeskind
-	  <shl@janis.gtri.gatech.edu> for motivating the change.
+        * ace/OS.cpp (thr_create): Made sure if users don't specify
+          whether to spawn threads detached or joinable, we'd change the
+          creation flag for them so that they are always joinable (not
+          detached.)  This is important for unify the thread behavior on
+          different platforms that have various default thread creation
+          policies.  Thanks to Susan Liebeskind
+          <shl@janis.gtri.gatech.edu> for motivating the change.
 
 Fri Oct 16 01:28:17 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
