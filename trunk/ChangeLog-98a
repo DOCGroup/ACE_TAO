@@ -20,10 +20,13 @@ Fri Mar 06 08:37:44 1998  David L. Levine  <levine@cs.wustl.edu>
           VxWorks targets.
 
         * tests/Recursive_Mutex_Test.cpp: 50 iterations instead of 100
-          on CHORUS.
+          on Chorus.
 
         * include/makeinclude/platform_chorus_ghs.GNU: added -G to
           LDFLAGS.
+
+        * tests/run_tests.sh: added capability for executing the tests
+          on a remote (Chorus) target.
 
 Thu Mar 05 12:36:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
