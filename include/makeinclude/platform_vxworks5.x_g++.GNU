@@ -39,18 +39,12 @@ ifeq (,$(findstring $(HOST_DIR)/bin,$PATH))
   PATH := $(PATH):$(HOST_DIR)/bin
 endif # PATH
 
-PERL_PATH = perl
-
-ifeq (win32,$(findstring win32,$(WIND_HOST_TYPE)))
-  #### GNU make on WIN32 needs quoted double quotes.
-  ACE_QUOTE ='"'
-else  # ! win32 host
-  ACE_QUOTE ="
-endif # ! win32 host
+ifeq (,$(PERL_PATH))
+  PERL_PATH = perl
+endif # ! PERL_PATH
 
 
 #### BEGIN target CPU-specific settings
-
 
 #### This is kind of messy so that it can support multiple targets.
 #### You'll need to set CPU to a supported CPU using one of these
@@ -104,7 +98,6 @@ endif # I80486
 endif # PPC860
 endif # PPC604
 
-
 #### END target CPU-specific settings
 
 
@@ -149,9 +142,9 @@ endif # rtti
 DCFLAGS         += -g
 DLD             = $(LD)
 INCLDIRS        += -I$(WIND_BASE)/target/h
-LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld -c \
-                  $(ACE_QUOTE)$(COMPILE.c) -traditional$(ACE_QUOTE) \
-                  -m "munch" -n "nm$(TOOLENV)" ld$(TOOLENV)
+LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld \
+                  -C $(COMPILE.c) -traditional -- \
+                  -m munch -n nm$(TOOLENV) ld$(TOOLENV)
 LDFLAGS         += -X -r
 #### WindRiver only recommends -O, not -O2, with some CPUs, including
 #### the i386 family.  And -O2 causes some compilation failures.
