@@ -1,3 +1,9 @@
+Thu Sep 25 11:46:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp: Removed
+	  dependencies on TAO_GIOP_Invocation.
+
 Wed Sep 24 20:02:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PolicyC.h:
