@@ -163,9 +163,12 @@ bgcolor="#ffffff">
 
         This exact construct (note the <code>#ifndef</code>)
         is optimized by many compilers such they only open the
-        file once per compilation unit.  <strong>No</strong> code
-        can appear after the final <code>#endif</code> for the
-        optimization to be effective and correct.<p>
+        file once per compilation unit.  Thanks to Eric C. Newton
+        &lt;ecn@smart.net&gt; for pointing that out.<p>
+
+        <strong>No</strong> code can appear after the final
+        <code>#endif</code> for the optimization to be effective and
+        correct.<p>
   </ul>
 
   <li><strong>C++ Syntax and Constructs</strong><p>
