@@ -1,3 +1,16 @@
+Thu Jul 19 06:55:07 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* include/makeinclude/platform_vxworks5.x_g++.GNU (HOST_DIR): Added
+	   support for the SH7700 and SH7700LE.  Thanks to Frank Wolf
+ 	  <WolfF@Becker.de> for reporting this.
+
+	* ace/OS.i (truncate): Make sure to close the handle that we
+	  opens.  Thanks to Lothar for reporting this.
+
+	* ace/Connector.cpp: Changed the SH macro to SVH to avoid clashes
+	  with a macro in VxWorks.  Thanks to Frank Wolf <fwolf@gum.de>
+ 	  for reporting this.
+
 Wed Jul 18 13:15:06 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS_Dirent.cpp (scandir_emulation): Removed the calls to the
@@ -15,7 +28,7 @@ Wed Jul 18 13:15:06 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	  make gcc 2.96 happy.  Thanks to Frank Wolf <fwolf@gum.de> for
  	  reporting this.
   
-        * Happy birthday to me!  
+        * Happy birthday to me and Angelo Corsaro!
 
 Tue Jul 17 00:34:40 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 

@@ -6769,16 +6769,19 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
                                     ACE_DEFAULT_FILE_PERMS);
   if (handle == ACE_INVALID_HANDLE)
     ACE_FAIL_RETURN (-1);
+  else if (::SetFilePointer (handle,
+                             offset,
+                             NULL,
+                             FILE_BEGIN) != (unsigned) -1) 
+    {
+      BOOL result = ::SetEndOfFile (handle);
+      ::CloseHandle (handle);
+      ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (result, ace_result_), int, -1);
+    }
   else
     {
-      if (::SetFilePointer (handle,
-                            offset,
-                            NULL,
-                            FILE_BEGIN) != (unsigned) -1)
-        ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle),
-                                                ace_result_), int, -1);
-      else
-        ACE_FAIL_RETURN (-1);
+      ::CloseHandle (handle);
+      ACE_FAIL_RETURN (-1);
     }
   /* NOTREACHED */
 #elif !defined (ACE_LACKS_TRUNCATE)

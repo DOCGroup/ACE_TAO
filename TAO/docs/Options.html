@@ -302,7 +302,8 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
     <TD><CODE>-ORBSkipServiceConfigOpen</CODE></TD>
     <TD><A name="-ORBSkipServiceConfigOpen"></a>Do not call the <code>ACE_Service_Config::open</code>
         method, which is necessary if the ORB is being linked dynamically via the ACE Service Configurator
-        which is not reentrant. Default is </TD>
+        which is not reentrant. The default is to call this
+        <CODE>open</CODE> method.  </TD>
   </TR>
   <TR>
     <TD><CODE>-ORBGIOPlite</CODE></TD>
@@ -403,7 +404,7 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
     <TD>Specify whether each thread uses a global
         (<em>which</em> = <code>global</code>) or a thread-specific
         (<em>which</em> = <code>tss</code>) instance for the resources it
-        returns. The default is <CODE>global </CODE>.
+        returns. The default is <CODE>global</CODE>.
         <B>NOTE:</B> This option controls the default value for
         the ORB option of the same name.</A>.
     </TD>
@@ -519,8 +520,8 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
       purged if it has reached the limit specified by the
       -ORBConnectionCacheMax option or the system default if that option was
       not used.  The possible values for type are lru, lfu, fifo and null.
-      The default is lru (Least Recently Used).  The others lfu (Least
-      Frequently Used), fifo (First In First Out) and null (No connections
+      The default is LRU (Least Recently Used).  The others LFU (Least
+      Frequently Used), FIFO (First In First Out), and null (No connections
       are purged) are contained within the TAO Strategies library.
   </TD>
 </TR>
