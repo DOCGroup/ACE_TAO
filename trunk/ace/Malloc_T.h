@@ -71,6 +71,10 @@ private:
  * must be greater than or equal to <code> sizeof (void*) </code> for
  * this to work properly.
  *
+ * This class can be configured flexibly with different types of
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a 
+ * ACE_Process_Mutex constructor API.   
+ *
  * @sa ACE_Dynamic_Cached_Allocator
  */
 template <class T, class ACE_LOCK>
@@ -128,6 +132,10 @@ private:
  * fixed-size chunks.  Notice that the <code>chunk_size</code>
  * must be greater than or equal to <code> sizeof (void*) </code> for
  * this to work properly.
+ *
+ * This class can be configured flexibly with different types of
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a 
+ * ACE_Process_Mutex constructor API.   
  *
  * @sa ACE_Cached_Allocator
  */
@@ -647,6 +655,10 @@ private:
  *
  * @brief LIFO iterator for names stored in Malloc'd memory.
  *
+ * This class can be configured flexibly with different types of
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a 
+ * ACE_Process_Mutex constructor API.   
+ *
  * Does not support deletions while iteration is occurring.
  */
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
@@ -710,6 +722,10 @@ private:
  * @class ACE_Malloc_FIFO_Iterator_T
  *
  * @brief FIFO iterator for names stored in Malloc'd memory.
+ *
+ * This class can be configured flexibly with different types of
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a 
+ * ACE_Process_Mutex constructor API.   
  *
  * Does not support deletions while iteration is occurring.
  */
