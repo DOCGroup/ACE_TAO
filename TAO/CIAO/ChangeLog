@@ -1,3 +1,10 @@
+2003-12-08  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* examples/Hello/Receiver/Receiver_svnt.h:
+	* examples/Hello/Sender/Sender_svnt.h:
+
+	  Removed two generated files.
+
 Sun Dec  7 20:38:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Hello/Sender/starter.cpp:
@@ -10,11 +17,11 @@ Sun Dec  7 20:32:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* examples/Hello/Receiver/Receiver_svnt.h:
 	* examples/Hello/Sender/Sender_svnt.h:
 	* examples/Hello/descriptors/run_test_default.pl:
-	  
+
 	  Fixed fuzz errors.
 
 Wed Dec 3 10:55:41 2003 Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
-	
+
         * performance-tests/Benchmark/RoundTripClient/RoundTripClient.idl:
           Changed comment to indicate that the interface uses a reference and
           not porvides it. Thanks to Gautam Thaker for pointing this out.
@@ -23,7 +30,7 @@ Wed Dec 3 12:25:20 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 	* performance-tests/Benchmark/NOTE.txt:
 	* performance-tests/Benchmark/descriptors/NOTE.txt:
-	  Moved file to the right directory and updated name of the .cad file 
+	  Moved file to the right directory and updated name of the .cad file
           to the right one. Thanks to Gautam Thaker for pointing this out.
 
 Tue Dec  2 18:40:59 2003  Tao Lu  <lu@dre.vanderbilt.edu>
