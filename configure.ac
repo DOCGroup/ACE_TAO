@@ -4056,7 +4056,7 @@ dnl Check for Unix98 pthreads extensions
   ACE_CACHE_CHECK([for struct pthread_rwlock_t],
     [ace_cv_struct_pthread_rwlock_t],
     [
-     dnl Since we are checking for siginfo_t in more than one header
+     dnl Since we are checking for pthread_rwlock_t in more than one header
      dnl we can't use the ACE_CHECK_STRUCT macro so we have to do things
      dnl manually.
      ACE_TRY_COMPILE_STRUCT([pthread_rwlock_t], [pthread.h],
@@ -4077,9 +4077,9 @@ dnl Check for Unix98 pthreads extensions
   ACE_CACHE_CHECK([for struct pthread_rwlockattr_t],
     [ace_cv_struct_pthread_rwlockattr_t],
     [
-     dnl Since we are checking for siginfo_t in more than one header
-     dnl we can't use the ACE_CHECK_STRUCT macro so we have to do things
-     dnl manually.
+     dnl Since we are checking for pthread_rwlockattr_t in more than one
+     dnl header, we can't use the ACE_CHECK_STRUCT macro so we have to do
+     dnl things manually.
      ACE_TRY_COMPILE_STRUCT([pthread_rwlockattr_t], [pthread.h],
        [
         ace_cv_struct_pthread_rwlockattr_t=yes
