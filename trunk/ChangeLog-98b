@@ -1,3 +1,14 @@
+Thu Jul 16 18:28:31 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.i (ACE_OS::sema_wait(ACE_sema_t*, ACE_Time_Value&)):
+	  Changed WinCE version to use time as absolute and update it if
+	  the semaphore is acquired.  Changed Win32 version to update the
+	  time if semaphore is acquired.
+
+	* tests/Semaphore_Test.cpp: Added sanity checks for time that the
+	  semaphore waits take and for the updated time values on acquiring
+	  a semaphore.
+
 Thu Jul 16 15:41:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * examples/IPC_SAP/UPIPE_SAP/ex2.cpp,
