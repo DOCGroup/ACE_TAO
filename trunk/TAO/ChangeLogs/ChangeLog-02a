@@ -1,3 +1,10 @@
+Wed Jul 25 23:48:58 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/Blocking_Sync_None/client.cpp (main): Changed an 
+	  error messages so that the "Right Thing[TM]" will happen when
+ 	  this test fails, i.e., the build system will automagically
+ 	  detect it.  Thanks to Johnny Willemsen for reportng this.
+
 Fri Jul 27 21:48:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: Removed all

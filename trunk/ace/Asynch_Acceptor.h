@@ -158,6 +158,9 @@ protected:
                       ACE_INET_Addr &remote_address,
                       ACE_INET_Addr &local_address);
 
+  /// Return the asynch accept object.
+  ACE_Asynch_Accept &asynch_accept (void);
+
   /**
    * This is the template method used to create new handler.
    * Subclasses must overwrite this method if a new handler creation

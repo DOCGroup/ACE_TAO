@@ -414,6 +414,12 @@ ACE_Asynch_Acceptor<HANDLER>::handle (ACE_HANDLE h)
   ACE_Handler::handle (h);
 }
 
+template <class HANDLER> ACE_Asynch_Accept &
+ACE_Asynch_Acceptor<HANDLER>::asynch_accept (void)
+{
+  return this->asynch_accept_;
+}
+
 template <class HANDLER> HANDLER *
 ACE_Asynch_Acceptor<HANDLER>::make_handler (void)
 {

@@ -308,6 +308,7 @@ parameters_opt
 pathname
   : ACE_PATHNAME
   | ACE_IDENT
+  | ACE_STRING
   ;
 
 %%
