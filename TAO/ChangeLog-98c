@@ -1,3 +1,10 @@
+Sun Nov 16 12:56:24 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp: The _is_a_skel method's signature
+	had an Object_ptr obj parameter which was unused. Instead of
+	generating the ACE_UNUSED_ARG (obj) line of code, we use /* obj */
+	in the signature.
+
 Sun Nov 16 09:42:05 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
