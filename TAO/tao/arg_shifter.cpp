@@ -2,7 +2,7 @@
 
 #include "arg_shifter.h"
 
-Arg_Shifter::Arg_Shifter(int& argc, char** argv, char** temp)
+Arg_Shifter::Arg_Shifter (int &argc, char **argv, char **temp)
   : argc_ (argc),
     total_size_ (argc),
     temp_ (temp),
@@ -13,7 +13,7 @@ Arg_Shifter::Arg_Shifter(int& argc, char** argv, char** temp)
 {
   // If not provided with one, allocate a temporary array.
   if (this->temp_ == 0)
-    this->temp_ = new char*[this->total_size_];
+    this->temp_ = new char *[this->total_size_];
   
   if (this->temp_ != 0)
     {
@@ -33,25 +33,25 @@ Arg_Shifter::Arg_Shifter(int& argc, char** argv, char** temp)
     }
 }
 
-Arg_Shifter::~Arg_Shifter(void)
+Arg_Shifter::~Arg_Shifter (void)
 {
   // Delete the temporary vector.
   delete [] temp_;
 }
 
-char*
-Arg_Shifter::get_current(void) const
+char * 
+Arg_Shifter::get_current (void) const
 {
-  char* return_value = 0;
+  char *return_value = 0;
   
-  if (this->is_anything_left())
+  if (this->is_anything_left ())
     return_value =  this->temp_[current_index_];
 
   return return_value;
 }
 
 int
-Arg_Shifter::consume_arg(int number)
+Arg_Shifter::consume_arg (int number)
 {
   int return_value = 0;
 
@@ -71,12 +71,12 @@ Arg_Shifter::consume_arg(int number)
 }
 
 int
-Arg_Shifter::ignore_arg(int number)
+Arg_Shifter::ignore_arg (int number)
 {
   int return_value = 0;
 
   // Keep unknowns at the head of the vector.
-  if (this->is_anything_left() >= number)
+  if (this->is_anything_left () >= number)
     {
       for (int i = 0;
 	   i < number;
@@ -91,27 +91,27 @@ Arg_Shifter::ignore_arg(int number)
 }
 
 int
-Arg_Shifter::is_anything_left(void) const
+Arg_Shifter::is_anything_left (void) const
 {
-  return (this->total_size_ - this->current_index_);
+  return this->total_size_ - this->current_index_;
 }
 
 int
-Arg_Shifter::is_option_next(void) const
+Arg_Shifter::is_option_next (void) const
 {
-  return this->is_anything_left() &&
+  return this->is_anything_left () &&
     this->temp_[this->current_index_][0] == '-';
 }
 
 int
-Arg_Shifter::is_parameter_next(void) const
+Arg_Shifter::is_parameter_next (void) const
 {
-  return this->is_anything_left() &&
+  return this->is_anything_left () &&
     this->temp_[this->current_index_][0] != '-';
 }
 
 int
-Arg_Shifter::num_ignored_args(void) const
+Arg_Shifter::num_ignored_args (void) const
 {
   return this->front_;
 }

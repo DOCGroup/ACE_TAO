@@ -13,28 +13,6 @@ Mon Nov 17 23:33:38 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	passing a char * const* argv. So we cast this. g++ was giving this
 	error.
 
-Mon Nov 17 20:05:40 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
-
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Cleaned up lots of places
- 	where the allocated stuff wasn't being deallocated.
-
-	* tao/request.cpp: Insured that the CTOR adds a reference for the
- 	dynamically-allocated NamedValue.
-
-	* tao/orb_core.cpp: Freed the faked service configurator argv.
-
-	* tao/iiopobj.h: Removed anachronistic comments.
-
-	* tao/iiopobj.{i,cpp}: Changed allocation of IIOP::Profile.host to use
- 	new/delete rather than strdup/free b/c the decoder, which is
- 	generic, must use new to allocate the space.  Thus, the strdup had
- 	to go.  Purify now happier.
-
-	* tao/cdr.cpp: Added call to memset bracketed by #if
- 	defined(TAO_PURIFY) in order to appease the purify gods.
-
-Mon Nov 17 20:13:09 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
-
 	* TAO_IDL/be_include/be_codegen.h, TAO_IDL/be/be_codegen.cpp:
 	Added 5 new states for code generation. All of these for
 	operations and arguments.
@@ -59,6 +37,26 @@ Mon Nov 17 20:13:09 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	of the be_argument class from the be_operation methods. Added the
 	5 new states. Added proper handling of _out parameters in stubs
 	and skeletons.
+
+Mon Nov 17 20:05:40 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Cleaned up lots of places
+ 	where the allocated stuff wasn't being deallocated.
+
+	* tao/request.cpp: Insured that the CTOR adds a reference for the
+ 	dynamically-allocated NamedValue.
+
+	* tao/orb_core.cpp: Freed the faked service configurator argv.
+
+	* tao/iiopobj.h: Removed anachronistic comments.
+
+	* tao/iiopobj.{i,cpp}: Changed allocation of IIOP::Profile.host to use
+ 	new/delete rather than strdup/free b/c the decoder, which is
+ 	generic, must use new to allocate the space.  Thus, the strdup had
+ 	to go.  Purify now happier.
+
+	* tao/cdr.cpp: Added call to memset bracketed by #if
+ 	defined(TAO_PURIFY) in order to appease the purify gods.
 
 Mon Nov 17 20:05:16 1997  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
