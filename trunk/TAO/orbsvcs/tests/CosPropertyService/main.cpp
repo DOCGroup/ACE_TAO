@@ -270,9 +270,6 @@ TAO_PropertySet_Tester::test_get_property_value (CORBA::Environment &env)
 int
 TAO_PropertySet_Tester::test_is_property_defined (CORBA::Environment &env)
 {
-  // Checking "is_property_defined" of no.
-  //TAO_TRY
-  //{
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking is_property_defined ()\n"));
   if (property_set_.is_property_defined ("short_property",
@@ -282,7 +279,7 @@ TAO_PropertySet_Tester::test_is_property_defined (CORBA::Environment &env)
   else 
     ACE_DEBUG ((LM_DEBUG,
                 "short_property defined\n"));
-  //TAO_CHECK_ENV;
+  TAO_CHECK_ENV_RETURN (env, 1);
   if (property_set_.is_property_defined ("string_property",
                                          env) == CORBA::B_FALSE)
     ACE_DEBUG ((LM_DEBUG,
@@ -290,7 +287,7 @@ TAO_PropertySet_Tester::test_is_property_defined (CORBA::Environment &env)
   else
     ACE_DEBUG ((LM_DEBUG,
                 "string_property defined\n"));
-  //TAO_CHECK_ENV;
+  TAO_CHECK_ENV_RETURN (env, 1);
   if (property_set_.is_property_defined ("char_property",
                                          env) == CORBA::B_FALSE)
     ACE_DEBUG ((LM_DEBUG,
@@ -298,19 +295,8 @@ TAO_PropertySet_Tester::test_is_property_defined (CORBA::Environment &env)
   else
     ACE_DEBUG ((LM_DEBUG,
                 "char_property defined\n"));
-  //TAO_CHECK_ENV;
-  // }
-  //TAO_CATCH (CORBA::SystemException, sysex)
-  //{
-  //  TAO_TRY_ENV.print_exception ("System Exception");
-  //  return -1;
-  //}
-  //TAO_CATCH (CORBA::UserException, userex)
-  //{
-  //  TAO_TRY_ENV.print_exception ("User Exception");
-  //   return -1;
-  //}
-  // TAO_ENDTRY;
+  TAO_CHECK_ENV_RETURN (env, 1);
+
   return 0;
 }
 
@@ -320,9 +306,6 @@ TAO_PropertySet_Tester::test_is_property_defined (CORBA::Environment &env)
 int
 TAO_PropertySet_Tester::test_delete_properties (CORBA::Environment &env)
 {
-  //  TAO_TRY 
-  //{
-  // Deleting a sequece of Properties.
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking delete_properties == Deleting a sequence of Properties\n"));
   CosPropertyService::PropertyNames prop_names;
@@ -337,20 +320,9 @@ TAO_PropertySet_Tester::test_delete_properties (CORBA::Environment &env)
               prop_names.maximum ()));
   property_set_.delete_properties (prop_names,
                                    env);
+  TAO_CHECK_ENV_RETURN (env, 0);
+  
   return 0;
-  //  TAO_CHECK_ENV;
-  //}
-  //TAO_CATCH (CORBA::SystemException, sysex)
-  //{
-  //  TAO_TRY_ENV.print_exception ("System Exception");
-  //  return -1;
-  // }
-  //TAO_CATCH (CORBA::UserException, userex)
-  //{
-  //  TAO_TRY_ENV.print_exception ("User Exception");
-  //  return -1;
-  // }
-  //TAO_ENDTRY;
 }
 
 // Defines a sequnce of properties containing, char, short, long,
@@ -372,7 +344,7 @@ TAO_PropertySet_Tester::test_define_properties (CORBA::Environment &env)
   anyval >>= to_char (ch);  
   nproperties[0].property_name  = CORBA::string_copy ("char_property");
   nproperties[0].property_value <<= from_char (ch);
-  
+ 
   // Prepare a Short and "define" that in the PropertySet.
   CORBA::Short s = 3;
   anyval <<= s; 
@@ -405,19 +377,8 @@ TAO_PropertySet_Tester::test_define_properties (CORBA::Environment &env)
   
   // Define this sequence of properties now.
   property_set_.define_properties (nproperties, env);
-  //TAO_CHECK_ENV;
-  //}
-  //TAO_CATCH (CORBA::SystemException, sysex)
-  //    {
-  //     TAO_TRY_ENV.print_exception ("System Exception");
-  //    return -1;
-  //  }
-  // TAO_CATCH (CORBA::UserException, userex)
-  //  {
-  //    TAO_TRY_ENV.print_exception ("User Exception");
-  //    return -1;
-  //  }
-  //TAO_ENDTRY;
+  TAO_CHECK_ENV_RETURN (env, 1);
+
   return 0;
 }
 
