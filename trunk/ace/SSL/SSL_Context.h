@@ -86,7 +86,7 @@ public:
     TLSv1_server,
     TLSv1
   };
-  
+
   ACE_SSL_Context ();
   // Constructor
 
@@ -139,6 +139,12 @@ public:
                    int type = SSL_FILETYPE_PEM);
   // Set the certificate file.
 
+  void default_verify_mode (int mode);
+  int default_verify_mode (void) const;
+  // Set and query the default verify mode for this context, it is
+  // inherited by all the ACE_SSL objects created using the context.
+  // It can be overriden on a per-ACE_SSL object.
+
 private:
   void check_context (void);
   // Verify if the context has been initialized or not.
@@ -163,6 +169,9 @@ private:
   ACE_SSL_Data_File private_key_;
   ACE_SSL_Data_File certificate_;
   // The private key and certificate file
+
+  int default_verify_mode_;
+  // The default verify mode.
 
   static int library_init_count_;
   // @@ This should also be done with a singleton, otherwise it is not

@@ -56,7 +56,6 @@ int
 TAO_SSLIOP_Protocol_Factory::init (int argc,
                                    char* argv[])
 {
-
   for (int curarg = 0; curarg != argc; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
@@ -110,6 +109,31 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
                   type = SSL_FILETYPE_PEM;
                 }
               ACE_SSL_Context::instance ()->private_key (path, type);
+            }
+        }
+
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   "-SSLVerifyMode") == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              int mode = SSL_VERIFY_NONE;
+              if (ACE_OS::strcasecmp (argv[curarg], "NONE") == 0)
+                {
+                  mode = SSL_VERIFY_NONE;
+                }
+              else if (ACE_OS::strcasecmp (argv[curarg], "SERVER") == 0)
+                {
+                  mode = SSL_VERIFY_PEER;
+                }
+              else if (ACE_OS::strcasecmp (argv[curarg], "CLIENT") == 0
+                       || ACE_OS::strcasecmp (argv[curarg],
+                                              "SERVER_AND_CLIENT") == 0)
+                {
+                  mode = SSL_VERIFY_PEER|SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
+                }
+              ACE_SSL_Context::instance ()->default_verify_mode (mode);
             }
         }
     }
