@@ -1,12 +1,212 @@
 <HTML>
-<BODY>
-
-   <title>TAO's Cos Notification Service</title>
-</head>
-<body text="#000000" bgcolor="#FFFFFF">
+<BODY text="#000000" bgcolor="#FFFFFF">
 <!-- $Id$ -->
 
-<H3><center>Feature matrix for the Cos Notification Service</center> </H3><p>
+   <title>TAO's Notification Service</title>
+
+<H1><center>TAO's Notification Service</center> </H1><p>
+<p>
+<ul>
+
+<li>
+<a href="#notify_service">Options to Notify_Service</a>
+</li>
+
+<li>
+<a href="#feature_matrix">Feature Matrix</a>
+</li>
+
+
+<li>
+<a href="#test_framework">Notification Service Testing framework</a>
+</li>
+</ul>
+
+<HR>
+<H2><center><a NAME="notify_service"></a>Options to Notify_Service</center> </H2><p>
+<HR>
+
+The <a href="../../orbsvcs/Notify_Service"> Notify_Service </a> driver program options are: <br>
+
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=40%>Command</TH>
+<TH >Description</TH>
+</TR>
+
+<TR>
+<TD> -Factory factory_name
+</TD>
+
+<TD>
+Uses the <factory_name> as the default name for the Channel Factory.
+The default is "NotifyEventChannelFactory".
+</TD>
+</TR>
+
+<TR>
+<TD>-Boot </TD>
+
+<TD>
+Flag asking that the factory_name be registered
+in the IOR table.
+The option is disabled by default.
+See the "Using the Boot option" section in the <a href="../../orbsvcs/Notify_Service/README"> README </a> for details.
+</TD>
+
+</TR>
+
+<TR>
+<TD>-NameSvc </TD>
+
+<TD>
+Registers the Factory and if specified, an Event
+                          Channel with the Naming Service.
+                          if this option is used, a Naming Service must
+                          be accessible.
+                          This option is enabled by default.
+</TD>
+</TR>
+
+<TR>
+<TD>-NoNameSvc</TD>
+
+<TD>Asks to skip any registration with the
+                          Naming Service.
+                          This option is disabled by default.
+</TD>
+</TR>
+
+<TR>
+
+<TD>-IORoutput file_name</TD>
+
+<TD>The IOR is output to the file file_name.
+                          By default, the IOR is printed out.
+</TD>
+
+</TR>
+
+<TR>
+<TD>-Channel </TD>
+
+<TD>If this option is specified, a EventChannel is
+                          created and registered with the Naming Service.
+                          This option is disabled by default.
+</TD>
+</TR>
+
+<TR>
+<TD>-ChannelName channel_name </TD>
+<TD>
+ Specifes the channel_name to register with the
+                          Naming Service.
+                          The default is "NotifyEventChannel".
+</TD>
+</TR>
+
+<TR>
+<TD>-ORBRunThreads threads</TD>
+<TD> Specifies the number of threads that will run the ORB::run method.
+</TD>
+</TR>
+
+</TABLE>
+<p>
+The Notify_Service driver can be used to load the CosNotification service or it's Real-Time CORBA extension, the RT-Notification.<br>
+By using the svc.conf file, the appropriate service is loaded.
+<p>To load the CosNotification do: <br>
+
+<tt>
+dynamic TAO_Notify_Service Service_Object * TAO_CosNotification:_make_TAO_CosNotify_Service () ""
+</tt>
+<p> or <br>
+<tt> static TAO_CosNotify_Service "" </tt>
+
+<p>
+To load the RT-Notification Service, do: <br>
+<tt> dynamic TAO_Notify_Service Service_Object * TAO_RT_Notification:_make_TAO_RT_Notify_Service () ""
+</tt>
+<p>
+
+If your application links to the RT-Notification library, you can configure the RT-Notification statically via: <br>
+<tt> static TAO_RT_Notify_Service "" </tt>
+
+<p> The service objects also accept the following options to control concurrency in the Notification. <br>
+Note that the <a href="#rt_ext">Notification extensions </a> allow threads to be specified at the EventChannel, Admin and Proxy levels via QoS parameters at run-time.
+ <br>
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=40%>Option</TH>
+<TH >Description</TH>
+</TR>
+
+<TR>
+<TD> -DispatchingThreads [thread_count]
+</TD>
+
+<TD>
+Specifies the number of threads for dispatching.
+</TD>
+</TR>
+
+<TR>
+<TD> -SourceThreads [thread_count]
+</TD>
+
+<TD>
+Specifies the number of threads for ProxyConsumer filter evaluation.
+</TD>
+</TR>
+
+<TR>
+<TD> -ListenerThreads [thread_count]
+</TD>
+
+<TD>
+Specifies the number of threads for ProxySupplier filter evaluation.
+</TD>
+</TR>
+
+<TR>
+<TD> -AsynchUpdates
+</TD>
+
+<TD>
+Send subscription and publication updates asynchronously.
+</TD>
+</TR>
+
+<TR>
+<TD> -AsynchUpdates
+</TD>
+
+<TD>
+Send subscription and publication updates asynchronously.
+</TD>
+</TR>
+
+<TR>
+<TD> -AllocateTaskperProxy
+</TD>
+
+<TD>
+Allocate threads for the -LookupThreads and -ListenerThreads <b> per proxy </b> <br>
+See the README for further explaination.<br>
+</TD>
+</TR>
+
+</TABLE>
+
+
+
+<hr>
+<H2><center><a NAME="feature_matrix"></a>Feature matrix for the Cos Notification Service</center> </H2><p>
+<hr>
 <H4>Supported Interfaces</H4>
 
 <a href="#qos_admin">CosNotification::QoSAdmin</a><br>
@@ -56,6 +256,10 @@
 <a href="#structured_proxy_pull_consumer">CosNotifyChannelAdmin::StructuredProxyPullConsumer </a><br>
 <a href="#sequence_proxy_pull_consumer">CosNotifyChannelAdmin::SequenceProxyPullConsumer </a><br>
 
+<a NAME="rt_ext"><H4>Interfaces Extensions for RTCORBA support</H4> </a>
+<a href="#ext_ecf">NotifyExt::EventChannelFactory</a><br>
+<a href="#ext_ca">NotifyExt::ConsumerAdmin</a><br>
+<a href="#ext_sa">NotifyExt::SupplierAdmin</a><br>
 
 <a NAME="qos_admin"></a><HR>
  <B>Interface </B> : <CODE>CosNotification::QoSAdmin </CODE><br>
@@ -67,33 +271,33 @@
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_qos</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>set_qos</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a href="../../orbsvcs/tests/Notify/Ordering"> Ordering </a>
                    <a href="../../orbsvcs/tests/Notify/Discarding"> Discarding </a>
                                                                                              <br>
                   </TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
-          
-          <TR>    
+
+          <TR>
                   <TD><CODE>validate_qos</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 QoS Properties support on all interfaces supporting CosNotification::QoSAdmin
 <ul>
@@ -101,7 +305,7 @@ QoS Properties support on all interfaces supporting CosNotification::QoSAdmin
 <li> ConnectionReliability : Not supported </li>
 <li> Priority : Supported Per Message, Priority applied to Channel,
 Admin or proxy Objects are NOT applied to the events.
-  
+
 <li> StartTime : Not supported </li>
 <li> StopTime : Not Supported </li>
 
@@ -116,7 +320,7 @@ Admin or proxy Objects are NOT applied to the events.
 
 <li> OrderPolicy : Supported policies - PriorityOrder, AnyOrder, FifoOrder,
 LifoOrder, DeadlineOrder </li>
- 
+
 <li> DiscardPolicy : : Supported policies - PriorityOrder, AnyOrder, FifoOrder,
 LifoOrder, DeadlineOrder </li>
 
@@ -138,24 +342,24 @@ LifoOrder, DeadlineOrder </li>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_admin</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>set_admin</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a href="../../orbsvcs/tests/Notify/Basic/"> Events
 </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="notify_publish"></a><HR>
 <B>Interface </B> : <CODE>CosNotifyComm::NotifyPublish </CODE><br>
@@ -167,17 +371,17 @@ LifoOrder, DeadlineOrder </li>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>offer_change</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/"> Updates </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="notify_subscribe"></a><HR><B>Interface </B> : <CODE>CosNotifyComm::NotifySubscribe </CODE><br>
 <B>Base Interface(s) </B> : none<br>
@@ -189,16 +393,16 @@ href="../../orbsvcs/tests/Notify/Basic/"> Updates </a></TD>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>subscription_change</CODE></TD>
                   <TD>Yes</TD>
                   <TD> see <a
 href="../../orbsvcs/tests/Notify/Basic/"> Updates </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
-</TABLE> </P>  
+</TABLE> </P>
 
 
 <a NAME="push_consumer"></a><HR><P>
@@ -211,29 +415,29 @@ href="../../orbsvcs/tests/Notify/Basic/"> Updates </a></TD>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE> CosEventComm::PushConsumer::push</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/"> MultiTypes,Simple </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE> CosEventComm::PushConsumer::disconnect_push_consumer</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">ConnectDisconnect </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="pull_consumer"></a><HR><P>
 <B>Interface </B> : <CODE>CosNotifyComm::PullConsumer </CODE><br>
-<B> Not Supported </B>. 
+<B> Not Supported </B>.
 </P>
 
 <a NAME="push_supplier"></a><HR><P>
@@ -245,22 +449,22 @@ href="../../orbsvcs/tests/Notify/Basic/">ConnectDisconnect </a></TD>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE> CosEventComm::PushConsumer::disconnect_push_supplier</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic"> ConnectDisconnect </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 
 <a NAME="pull_supplier"></a><HR><P>
 <B>Interface </B> : <CODE>CosNotifyComm::PullSupplier </CODE><br>
-<B> Not Supported </B>. 
+<B> Not Supported </B>.
 </P>
 
 
@@ -274,35 +478,35 @@ href="../../orbsvcs/tests/Notify/Basic"> ConnectDisconnect </a></TD>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>push_structured_event</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic">MultiTypes </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
-          
-          <TR>    
+
+          <TR>
                   <TD><CODE>disconnect_structured_push_consumer</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic">ConnectDisconnect </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="structured_pull_consumer"></a>
 <HR><P>
 <B>Interface </B> : <CODE>CosNotifyComm::StructuredPullConsumer </CODE><br>
-<B> Not Supported </B>. 
+<B> Not Supported </B>.
 </P>
 
 <a NAME="structured_pull_supplier"></a>
 <HR><P><B>Interface </B> : <CODE>CosNotifyComm::StructuredPullSupplier </CODE><br>
-<B> Not Supported </B>. 
+<B> Not Supported </B>.
 </P>
 
 <a NAME="structured_push_supplier"></a>
@@ -316,17 +520,17 @@ CosNotifyComm::NotifySubscribe </a> <br>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>disconnect_structured_push_supplier</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">ConnectDisconnect </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="sequence_push_consumer"></a><HR>
 <B>Interface </B> : <CODE>CosNotifyComm::SequencePushConsumer </CODE><br>
@@ -338,34 +542,34 @@ href="../../orbsvcs/tests/Notify/Basic/">ConnectDisconnect </a></TD>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>push_structured_events</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">MultiTypes </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
-          
-          <TR>    
+
+          <TR>
                   <TD><CODE>disconnect_sequence_push_consumer</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">ConnectDisconnect </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="sequence_pull_consumer"></a><HR><P>
 <B>Interface </B> : <CODE>CosNotifyComm::SequencePullConsumer </CODE><br>
-<B> Not Supported </B>. 
+<B> Not Supported </B>.
 </P>
 
 <a NAME="sequence_pull_supplier"></a><HR><P>
 <B>Interface </B> : <CODE>CosNotifyComm::SequencePullSupplier </CODE><br>
-<B> Not Supported </B>. 
+<B> Not Supported </B>.
 </P>
 
 <a NAME="sequence_push_supplier"></a><HR>
@@ -379,17 +583,17 @@ CosNotifyComm::NotifySubscribe </a> <br>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>disconnect_sequence_push_supplier</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">ConnectDisconnect </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="filter"></a><HR><B>Interface </B> : <CODE>CosNotifyFilter::Filter </CODE><br>
 <B>Base Interface(s) </B> none <br>
@@ -401,107 +605,107 @@ href="../../orbsvcs/tests/Notify/Basic/">ConnectDisconnect </a></TD>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>constraint_grammar</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>add_constraints</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Filter</a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>modify_constraints</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_constraints</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_all_constraints</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>remove_all_constraints</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>destroy</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>match</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>match_structured</CODE></TD>
                   <TD>Yes</TD>
                   <TD>yes, called internally by Notification during
 execution of <a
 href="../../orbsvcs/tests/Notify/Structured_Filter/">Structured_Filter</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>match_typed</CODE></TD>
                   <TD>No</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>attach_callback</CODE></TD>
                   <TD>No</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>detach_callback</CODE></TD>
                   <TD>No</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_callbacks</CODE></TD>
                   <TD>No</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
-          
-</TABLE> </P>  
+
+</TABLE> </P>
 
 <HR><P>
 <a NAME="mapping_filter"></a><B>Interface </B> : <CODE>CosNotifyFilter::MappingFilter </CODE><br>
-<B> Not Supported </B>. 
+<B> Not Supported </B>.
 </P>
 
 <a NAME="filter_factory"></a><HR><B>Interface </B> : <CODE>CosNotifyFilter::FilterFactory </CODE><br>
@@ -514,28 +718,28 @@ href="../../orbsvcs/tests/Notify/Structured_Filter/">Structured_Filter</TD>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>create_filter</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Filter </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>create_mapping_filter</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 
 <a NAME="filter_admin"></a><HR><B>Interface </B> : <CODE>CosNotifyFilter::FilterAdmin </CODE><br>
-<B>Base Interface(s) </B> 
+<B>Base Interface(s) </B>
 
 
 <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
@@ -544,48 +748,48 @@ href="../../orbsvcs/tests/Notify/Basic/">Filter </a></TD>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>add_filter</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Filter </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>remove_filter</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Filter </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_filter</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_all_filters</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Filter </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>remove_all_filters</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Filter </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="proxy_consumer"></a><HR>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::ProxyConsumer </CODE><br>
@@ -599,38 +803,38 @@ href="../../orbsvcs/tests/Notify/Basic/">Filter </a></TD>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>MyType</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>MyAdmin</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>obtain_subscription_types</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic"> Updates </a></TD>
-                  <TD>Only CosNotifyChannelAdmin::ALL_NOW_UPDATES_ON tested</TD>                     
+                  <TD>Only CosNotifyChannelAdmin::ALL_NOW_UPDATES_ON tested</TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>validate_event_qos</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="proxy_supplier"></a><HR>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::ProxySupplier </CODE><br>
@@ -643,53 +847,53 @@ href="../../orbsvcs/tests/Notify/Basic"> Updates </a></TD>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>MyType</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>MyAdmin</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>priority_filter</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
 
-          <TR>    
+          <TR>
                   <TD><CODE>lifetime_filter</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>obtain_offered_types</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Updates </a></TD>
-                  <TD>Only CosNotifyChannelAdmin::ALL_NOW_UPDATES_ON tested</TD>                     
+                  <TD>Only CosNotifyChannelAdmin::ALL_NOW_UPDATES_ON tested</TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>validate_event_qos</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="proxy_push_consumer"></a><HR>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::ProxyPushConsumer </CODE><br>
@@ -703,17 +907,17 @@ href="#proxy_consumer">CosNotification::ProxyConsumer </a>,
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>connect_any_push_supplier</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">MultiTypes,ConnectDisconnect </a></TD>
-                  <TD></TD>                     
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="structured_proxy_push_consumer"></a><HR>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::StructuredProxyPushConsumer </CODE><br>
@@ -728,17 +932,17 @@ CosNotifyComm::StructuredPushConsumer </a> <CODE> <br>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>connect_structured_push_supplier</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">MultiTypes,ConnectDisconnect </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="sequence_proxy_push_consumer"></a><HR>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::SequenceProxyPushConsumer </CODE><br>
@@ -753,46 +957,46 @@ CosNotification::ProxyConsumer </a>,
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>connect_sequence_push_supplier</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">MultiTypes,ConnectDisconnect </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="proxy_pull_supplier"></a><HR><P>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::ProxyPullSupplier</CODE><br>
-<B> Not Supported </B>. 
+<B> Not Supported </B>.
 </P>
 
 <a NAME="structured_proxy_pull_supplier"></a><HR><P>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::StructuredProxyPullSupplier</CODE><br>
-<B> Not Supported </B>. 
+<B> Not Supported </B>.
 </P>
 
 <a NAME="sequence_proxy_pull_supplier"></a><HR><P>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::SequenceProxyPullSupplier</CODE><br>
-<B> Not Supported </B>. 
+<B> Not Supported </B>.
 </P>
 
 <a NAME="proxy_pull_consumer"></a><HR><P>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::ProxyPullConsumer</CODE><br>
-<B> Not Supported </B>. 
+<B> Not Supported </B>.
 </P>
 
 <a NAME="structured_proxy_pull_consumer"></a><HR><P>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::StructuredProxyPullConsumer</CODE><br>
-<B> Not Supported </B>. 
+<B> Not Supported </B>.
 </P>
 
 <a NAME="sequence_proxy_pull_consumer"></a><HR><P>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::SequenceProxyPullConsumer</CODE><br>
-<B> Not Supported </B>. 
+<B> Not Supported </B>.
 </P>
 
 <a NAME="proxy_push_supplier"></a><HR>
@@ -806,31 +1010,31 @@ CosNotifyComm::PushSupplier <CODE> <br>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>connect_any_push_consumer</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">MultiTypes,ConnectDisconnect </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>suspend_connection</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>resume_connection</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="structured_proxy_push_supplier"></a><HR>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::StructuredProxyPushSupplier </CODE><br>
@@ -843,32 +1047,32 @@ CosNotifyComm::StructuredPushSupplier <CODE> <br>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>connect_structured_push_consumer</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/"> MultiTypes,ConnectDisconnect
 </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>suspend_connection</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>resume_connection</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="sequence_proxy_push_supplier"></a><HR>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::SequenceProxyPushSupplier </CODE><br>
@@ -883,31 +1087,31 @@ CosNotification::ProxySupplier </a>,
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>connect_sequence_push_consumer</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">MultiTypes,ConnectDisconnect </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>suspend_connection</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>resume_connection</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="consumer_admin"></a><HR>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::ConsumerAdmin </CODE><br>
@@ -923,106 +1127,106 @@ CosNotification::QoSAdmin </a>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>CosEventChannelAdmin::ConsumerAdmin::obtain_push_supplier</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
 
-          <TR>    
+          <TR>
                   <TD><CODE>CosEventChannelAdmin::ConsumerAdmin::obtain_pull_supplier</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>MyID</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>MyChannel</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>MyOperator</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>priority_filter</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>lifetime_filter</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>pull_suppliers</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>push_suppliers</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_proxy_supplier</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Updates </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>obtain_notification_pull_supplier</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>obtain_notification_push_supplier</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see
 <a
 href="../../orbsvcs/tests/Notify/Basic/">MultiTypes, ConnectDisconnect
 </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>destroy</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">LifeCycle, IdAssignment </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="supplier_admin"></a><HR>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::SupplierAdmin </CODE><br>
@@ -1038,90 +1242,90 @@ CosNotification::QoSAdmin </a>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>CosEventChannelAdmin::SupplierAdmin::obtain_push_consumer</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>CosEventChannelAdmin::SupplierAdmin::obtain_pull_consumer</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>MyID</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>MyChannel</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>MyOperator</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>pull_consumers</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>push_consumers</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_proxy_consumer</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Updates </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>obtain_notification_pull_supplier</CODE></TD>
                   <TD>No</TD>
                   <TD></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>obtain_notification_push_consumer</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">MultiTypes, ConnectDisconnect
 </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>destroy</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/"> LifeCycle, IdAssignment </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 <a NAME="event_channel"></a><HR>
 <B>Interface </B> : <CODE>CosNotifyChannelAdmin::EventChannel </CODE><br>
@@ -1137,108 +1341,108 @@ CosNotification::AdminPropertiesAdmin </a>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>CosEventChannelAdmin::EventChannel::for_consumers</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>CosEventChannelAdmin::EventChannel::for_suppliers</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>CosEventChannelAdmin::EventChannel::destroy</CODE></TD>
                   <TD>Yes</TD>
                   <TD>yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/"> Events, Filter </a> </TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>MyFactory</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>default_consumer_admin</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Events </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>default_supplier_admin</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Events </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>default_filter_factory</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Filter </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>new_for_consumers</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Simple,Events </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>new_for_suppliers</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">Simple,Events </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_consumeradmin</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">IdAssignment </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_supplieradmin</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">IdAssignment </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_all_consumeradmins</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_all_supplieradmins</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
 
 AdminProperties supported at the EventChannel are:
@@ -1260,32 +1464,1129 @@ see <a href="../../orbsvcs/tests/Notify/Basic/"> AdminProperties </a>
                 <TH>Supported</TH>
                 <TH>Tested</TH>
                 <TH>Notes</TH>
-          </TR>     
+          </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>create_channel</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes,  see <a
 href="../../orbsvcs/tests/Notify/Basic/">Events,Simple</a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_all_channels</CODE></TD>
                   <TD>Yes</TD>
                   <TD>No</TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-          <TR>    
+          <TR>
                   <TD><CODE>get_event_channel</CODE></TD>
                   <TD>Yes</TD>
                   <TD>Yes, see <a
 href="../../orbsvcs/tests/Notify/Basic/">IdAssignment </a></TD>
-                  <TD></TD>                    
+                  <TD></TD>
           </TR>
 
-</TABLE> </P>  
+</TABLE> </P>
 
+<a NAME="ext_ecf"></a><HR>
+ <B>Interface </B> : <CODE>NotifyExt::EventChannelFactory</CODE><br>
+<B>Base Interface(s) </B> : CosNotifyChannelAdmin::EventChannelFactory<br>
+
+<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
+          <TR>
+                <TH>Method</TH>
+                <TH>Supported</TH>
+                <TH>Tested</TH>
+                <TH>Notes</TH>
+          </TR>
+
+          <TR>
+                  <TD><CODE>destroy</CODE></TD>
+                  <TD>Yes</TD>
+                  <TD>Yes, see <a href="../../orbsvcs/tests/Notify/Destroy"> Destroy </a>
+                  </TD>
+                  <TD></TD>
+          </TR>
+
+</TABLE> </P>
+
+<a NAME="ext_ca"></a><HR>
+ <B>Interface </B> : <CODE>NotifyExt::ConsumerAdmin</CODE><br>
+<B>Base Interface(s) </B> : CosNotifyChannelAdmin::ConsumerAdmin<br>
+
+<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
+          <TR>
+                <TH>Method</TH>
+                <TH>Supported</TH>
+                <TH>Tested</TH>
+                <TH>Notes</TH>
+          </TR>
+
+          <TR>
+                  <TD><CODE>obtain_notification_push_supplier_with_qos</CODE></TD>
+                  <TD>Yes</TD>
+                  <TD>Yes, see <a href="../../orbsvcs/tests/Notify/Lanes"> Lanes </a>
+                  </TD>
+                  <TD></TD>
+          </TR>
+
+</TABLE> </P>
+
+<a NAME="ext_sa"></a><HR>
+ <B>Interface </B> : <CODE>NotifyExt::SupplierAdmin</CODE><br>
+<B>Base Interface(s) </B> : CosNotifyChannelAdmin::SupplierAdmin<br>
+
+<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
+          <TR>
+                <TH>Method</TH>
+                <TH>Supported</TH>
+                <TH>Tested</TH>
+                <TH>Notes</TH>
+          </TR>
+
+          <TR>
+                  <TD><CODE>obtain_notification_push_consumer_with_qos</CODE></TD>
+                  <TD>Yes</TD>
+                  <TD>Yes, see <a href="../../orbsvcs/tests/Notify/Lanes"> Lanes </a>
+                  </TD>
+                  <TD></TD>
+          </TR>
+
+</TABLE> </P>
+
+The additional QoS properties supported are: <br>
+
+<ul>
+<li>
+ThreadPoolParams
+</li>
+
+<li>
+ThreadPoolLanesParams
+</li>
+</ul>
+
+see the <a href="../../orbsvcs/orbsvcs/NotifyExt.idl"> NotifyExt.idl </a> file for the QoS definitions.
+
+<P>
+<HR>
+<H2><center><a NAME="test_framework"></a>Scripting Options for Notification Service Testing framework</center> </H2><p>
+<HR>
+
+The Notification Service Testing framework uses the Service Configurator to load various command objects. <br>
+The <tt>Command_Builder</tt> object is used to load the target objects. <br>
+To test the various Notification features we then write scripts to rapidly reproduce test cases.<br>
+
+The <a href="../../orbsvcs/tests/Notify/Driver" >Notify_Test_Driver </a> program reads a svc.conf file and executes the commands specified. <br>
+The following options can specified to the Driver program: <p>
+
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=40%>Command</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+
+<TD>-Timeout timeout_period_in_seconds</TD>
+
+<TD> Specify the timeout period for this test</TD>
+
+</TR>
+
+<TR>
+
+<TD>-IORoutput output_file_name</TD>
+
+<TD> Output the IOR of the <a href="../../orbsvcs/tests/Notify/lib/Activation_Manager.idl" >Activation Manager </a>.<br>
+This is used by a client to signal its peer.</TD>
+
+</TR>
+
+<TR>
+
+<TD>-IORinput file://input_file_name</TD>
+
+<TD>
+ Input the IOR of the peer's  <a href="../../orbsvcs/tests/Notify/lib/Activation_Manager.idl" >Activation Manager </a>.<br>
+This is used to signal the peer.
+</TD>
+
+</TR>
+
+</TABLE>
+<p>
+See the *.conf files in <a href="../../orbsvcs/tests/Notify/Lanes" >Lanes </a>
+and
+<a href="../../orbsvcs/tests/Notify/ThreadPool" >ThreadPool </a>
+for examples of the test framework in use.
+
+<p>
+The options that can be specified to each target object are as follows:
+<p>
+
+<h3>Target Object : <b> EventChannel </b></h3>
+Loading Syntax: dynamic TAO_Notify_EventChannel_Command_Factory Service_Object *TAO_NotifyTests:_make_TAO_Notify_EventChannel_Command_Factory () ""
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Create </TD>
+<TD WIDTH=60%>Name_of_channel <br> Name_of_EventChannelFactory <br> [COLLOCATED]
+</TD>
+<TD>Create an Event Channel</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b> static Command_Builder "EventChannel -Create ec1 NotifyEventChannelFactory"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Destroy</TD>
+<TD WIDTH=60%>Name_of_channel
+</TD>
+<TD>Destroy an Event Channel</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b> static Command_Builder "EventChannel -Destroy ec1"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Set_QoS</TD>
+<TD >
+Name_of_channel [QoS_Options]
+</TD>
+
+<TD>Set QoS parameters on an event channel
+</TD>
+</TR>
+</TABLE>
+<br>
+QoS_Options = -ThreadPool  [-Threads thread_pool_size (default= 1) ]
+
+[-Priority default_priority (default=ACE_DEFAULT_THREAD_PRIORITY)]
+|
+
+-ThreadPoolLanes lane_count [-Lane priority static_threads dynamic_threads]*
+
+<p><b>Example : </b>: static Command_Builder "EventChannel -Set_QoS -ThreadPool Threads 2 -Priority 2"
+<br><b>Example : </b>: static Command_Builder "EventChannel -Set_QoS -ThreadPoolLane  2 -Lane 10 1 0 -Lane 30 2 1"
+
+<hr>
+
+<h3>Target Object : <b> ConsumerAdmin </b></h3>
+Loading Syntax: dynamic TAO_Notify_ConsumerAdmin_Command_Factory Service_Object *TAO_NotifyTests:_make_TAO_Notify_ConsumerAdmin_Command_Factory () ""
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Create</TD>
+<TD>
+Name_of_Admin <br>
+
+Name_of_EventChannel <br>
+
+[-AND_OP | OR_OP (default = CosNotifyChannelAdmin::OR_OP)]
+
+</TD>
+<TD>Create a ConsumerAdmin</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "ConsumerAdmin -Create ca1 ec1 -AND_OP"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Subscription</TD>
+<TD>
+Name_of_Admin <br>
+
++added_type1 +added_type2 ... -removed_type3 -removed_type4 ...
+</TD>
+
+<TD>Send subscription updates to the ConsumerAdmin. Note that domain name  is  set to "*".
+</TD>
+
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "ConsumerAdmin -Subscription ca1 +Red +Green -Blue"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Set_QoS</TD>
+<TD >
+Name_of_Admin [QoS_Options]
+</TD>
+
+<TD>
+Set QoS options for ConsumerAdmin
+</TD>
+
+</TR>
+</TABLE>
+<P>
+QoS_Options = -ThreadPool  [-Threads thread_pool_size (default= 1) ]
+
+[-Priority default_priority (default=ACE_DEFAULT_THREAD_PRIORITY)]
+|
+
+-ThreadPoolLane  lane_count [-Lane priority static_threads dynamic_threads]*
+
+<p><b>Example : </b>: static Command_Builder "ConsumerAdmin -Set_Qos -ThreadPool Threads 2 -Priority 2"
+<br><b>Example : </b>: static Command_Builder "ConsumerAdmin -Set_Qos -ThreadPoolLane  2 -Lane 10 1 0 -Lane 30 2 1"
+
+<hr>
+<h3>Target Object : <b> SupplierAdmin </b></h3>
+Loading Syntax: dynamic TAO_Notify_SupplierAdmin_Command_Factory Service_Object *TAO_NotifyTests:_make_TAO_Notify_SupplierAdmin_Command_Factory () ""
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Create</TD>
+<TD>
+Name_of_Admin <br>
+
+Name_of_EventChannel <br>
+
+[-AND_OP | OR_OP (default = CosNotifyChannelAdmin::OR_OP)]
+
+</TD>
+<TD>Create a SupplierAdmin</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "SupplierAdmin -Create sa1 ec1 -AND_OP"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Offer</TD>
+<TD>
+Name_of_Admin <br>
+
++added_type1 +added_type2 ... -removed_type3 -removed_type4 ...
+</TD>
+
+<TD>Send offer updates to the SupplierAdmin. Note that domain name  is  set to "*".
+</TD>
+
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "SupplierAdmin -Offer ca1 +Red +Green -Blue"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Set_QoS</TD>
+<TD >
+Name_of_Admin [QoS_Options]
+</TD>
+
+<TD>
+Set QoS options for SupplierAdmin
+</TD>
+
+</TR>
+</TABLE>
+<P>
+QoS_Options = -ThreadPool  [-Threads thread_pool_size (default= 1) ]
+
+[-Priority default_priority (default=ACE_DEFAULT_THREAD_PRIORITY)]
+|
+
+-ThreadPoolLane  lane_count [-Lane priority static_threads dynamic_threads]*
+
+<p><b>Example : </b>: static Command_Builder "SupplierAdmin -Set_Qos -ThreadPool Threads 2 -Priority 2"
+<br><b>Example : </b>: static Command_Builder "SupplierAdmin -Set_Qos -ThreadPoolLane  2 -Lane 10 1 0 -Lane 30 2 1"
+
+<hr>
+<h3>Target Object : <b> PeriodicConsumer </b></h3>
+Loading Syntax: dynamic TAO_Notify_Periodic_Consumer_Command_Factory Service_Object* TAO_NotifyTests:_make_TAO_Notify_Periodic_Consumer_Command_Factory () ""
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Create</TD>
+<TD>
+Name_of_Consumer<br>
+
+[-Relay relay_destination] <br>
+[-Direct] <br>
+
+[-Admin Name_of_ConsumerAdmin] <br>
+
+[-POA name_of_POA (default = RootPOA)]<br>
+
+[-Proxy proxy_name] <br>
+
+[-Set_QoS [Qos_Options]] <br>
+
+[-MaxCount expected_number_of_events] <br>
+
+[-Check_Priority]
+
+</TD>
+<TD>Create a PeriodicConsumer. The consumer is activated in the POA specified.
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "PeriodicConsumer -Create c1 ca1 -POA myPOA -Proxy ca1_proxy -MaxCount 10"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Subscription</TD>
+<TD>
+Name_of_Consumer <br>
+
++added_type1 +added_type2 ... -removed_type3 -removed_type4 ...
+
+</TD>
+
+<TD>
+static Command_Builder "PeriodicConsumer -Subscription  ca1 +Red +Green -Blue"
+</TD>
+
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: Send subscription updates to its proxy. Note that domain name  is  set to "*".
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Disconnect</TD>
+<TD>
+Name_of_Consumer
+</TD>
+
+<TD>Disconnect the Consumer from the EventChannel.
+</TD>
+
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder -PeriodicConsumer "Disconnect ca1"
+
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Deactivate</TD>
+<TD>
+Name_of_Consumer
+</TD>
+
+<TD>Deactivate the Consumer from its POA </TD>
+
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "-PeriodicConsumer -Deactivate ca1"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Status</TD>
+<TD>
+Name_of_Consumer
+</TD>
+<TD>Print the status of the consumer.
+
+Checks if the proxy is alive.
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "-PeriodicConsumer -Status ca1"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Set_QoS</TD>
+<TD >
+Name_of_consumer [QoS_Options]
+</TD>
+
+<TD>Set QoS parameters on a Periodic Consumer. The actual QoS settings are applied to the corresponding ProxySupplier.
+</TD>
+</TR>
+</TABLE>
+<br>
+QoS_Options = -ThreadPool  [-Threads thread_pool_size (default= 1) ]
+
+[-Priority default_priority (default=ACE_DEFAULT_THREAD_PRIORITY)]
+|
+
+-ThreadPoolLanes lane_count [-Lane priority static_threads dynamic_threads]*
+
+<p><b>Example : </b>: static Command_Builder "PeriodicConsumer -Set_QoS -ThreadPool Threads 2 -Priority 2"
+<br><b>Example : </b>: static Command_Builder "PeriodicConsumer -Set_QoS -ThreadPoolLane  2 -Lane 10 1 0 -Lane 30 2 1"
+
+<hr>
+<h3>Target Object : <b> PeriodicSupplier </b></h3>
+Loading Syntax: dynamic TAO_Notify_Periodic_Supplier_Command_Factory Service_Object* TAO_NotifyTests:_make_TAO_Notify_Periodic_Supplier_Command_Factory () ""
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Create</TD>
+<TD>
+
+Name_of_Supplier <br>
+
+[-Direct direct_target]<br>
+
+[-Admin Name_of_ConsumerAdmin] <br>
+
+[-POA name_of_POA (default = RootPOA)]<br>
+
+[-Proxy proxy_name] <br>
+
+[-Set_QoS [Qos_Options]] <br>
+
+-EventType type_of_event <br>
+
+-FilterLongData name  long_filterable_data <br>
+
+-Priority supplier_thread_priority <br>
+
+-Period  sending_period (in microseconds) <br>
+
+-ExecTime estimated_time_per_send_operation <br>
+
+-Phase supplier_thread_starting_phase <br>
+
+-Iter number_of_events-to_send <br>
+
+-Load hint_to_consumer <br>
+
+-RunTime time_to_run_in_sec
+</TD>
+
+<TD>
+Create a PeriodicSupplier.
+
+The supplier is activated in the POA specified.
+<br>
+The -Create command spawns a thread that sends periodic events.
+
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "PeriodicSupplier -Create s1 sa1_ec1 -Proxy s1_proxy -EventType RED -FilterLongData Temp 3 -Priority 0 -Period 10000 -ExecTime 10000 -Phase 0 -Iter 1 -Load 1 "
+
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Offer</TD>
+<TD>
+Name_of_Supplier <br>
+
++added_type1 +added_type2 ... -removed_type3 -removed_type4 ...
+
+</TD>
+
+<TD>
+static Command_Builder "PeriodicSupplier -Offer sa1 +Red +Green -Blue"
+</TD>
+
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: Send offer updates to its proxy. Note that domain name  is  set to "*".
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Disconnect</TD>
+<TD>
+Name_of_Supplier
+</TD>
+
+<TD>Disconnect the Supplier from the EventChannel.
+</TD>
+
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder -PeriodicSupplier "Disconnect sa1"
+
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Deactivate</TD>
+<TD>
+Name_of_Supplier
+</TD>
+
+<TD>Deactivate the Supplier from its POA </TD>
+
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "-PeriodicSupplier -Deactivate ca1"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>Status</TD>
+<TD>
+Name_of_Supplier
+</TD>
+<TD>Print the status of the consumer.
+
+Checks if the proxy is alive.
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "-PeriodicSupplier -Status sa1"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Set_QoS</TD>
+<TD >
+Name_of_Supplier [QoS_Options]
+</TD>
+
+<TD>Set QoS parameters on a Periodic Supplier. The actual QoS settings are applied to the corresponding ProxyConsumer.
+</TD>
+</TR>
+</TABLE>
+<br>
+QoS_Options = -ThreadPool  [-Threads thread_pool_size (default= 1) ]
+
+[-Priority default_priority (default=ACE_DEFAULT_THREAD_PRIORITY)]
+|
+
+-ThreadPoolLanes lane_count [-Lane priority static_threads dynamic_threads]*
+
+<p><b>Example : </b>: static Command_Builder "PeriodicSupplier -Set_QoS -ThreadPool Threads 2 -Priority 2"
+<br><b>Example : </b>: static Command_Builder "PeriodicSupplier -Set_QoS -ThreadPoolLane  2 -Lane 10 1 0 -Lane 30 2 1"
+
+<hr>
+
+<h3>Target Object : <b> Filter </b></h3>
+Loading Syntax: dynamic TAO_Notify_Filter_Command_Factory Service_Object* TAO_NotifyTests:_make_TAO_Notify_Filter_Command_Factory () ""
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-CreateFactory</TD>
+
+<TD>
+Filter_Factory_Name<br>
+
+Event_Channel_Name
+</TD>
+
+<TD>Obtain the default FilterFactory  from the EventChannel.
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "Filter -CreateFactory ff ec1"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-CreateFilter</TD>
+
+<TD>
+Filter_Name<br>
+Filter_Factory_Name
+</TD>
+
+<TD>Create a Filter
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "Filter -CreateFilter f1 ff"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Add_Constraint</TD>
+
+<TD>
+Filter_Name
+<br>
+Constraint_Expression
+</TD>
+
+<TD>
+Add a constraint to a filter.
+
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "Filter -Add_Constraint f1 'Temp > 2'"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-AddFilter</TD>
+
+<TD>
+Filter_Name
+<br>
+FilterAdmin_Name
+</TD>
+
+<TD>
+Add a filter to an Admin.
+
+The FilterAdmin can be the name of any Admin or Proxy objects.
+
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "Filter -Add_Filter f1 sa1_ec1"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Destroy</TD>
+
+<TD>
+Filter_Name
+<br>
+</TD>
+
+<TD>
+Destroy the Filter.
+
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "Filter –Destroy ff "
+
+<hr>
+<h3>Target Object : <b> Application </b></h3>
+Loading Syntax for RTCORBA Application: <br>
+dynamic TAO_Notify_RT_Application_Command_Factory Service_Object * TAO_RT_NotifyTests:_make_TAO_Notify_RT_Application_Command_Factory () "" <br>
+Loading Syntax for non-RTCORBA Application: <br>
+dynamic TAO_Notify_Application_Command_Factory Service_Object * TAO_NotifyTests:_make_TAO_Notify_Application_Command_Factory () ""
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Init</TD>
+
+<TD>
+<br>
+</TD>
+
+<TD>
+Init the Application
+
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "Application -Init"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Run</TD>
+
+<TD>
+<br>
+</TD>
+
+<TD>
+Run all the suppliers and consumers.
+
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "Application -Run"
+
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-WaitForEvents</TD>
+
+<TD>
+<br>
+</TD>
+
+<TD>
+Wait till all the suppliers have send all there events and all the consumers have received the expected count of events.
+
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "Application –Wait_For_Events"
+
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Shutdown</TD>
+
+<TD>
+<br>
+</TD>
+
+<TD>
+Shutdown the ORB.
+
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "Application –Shutdown"
+
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH WIDTH=20%>Description</TH>
+</TR>
+
+<TR>
+<TD>-DumpStats</TD>
+
+<TD>
+[-Samples]
+<br>
+</TD>
+
+<TD>
+Dump performance statistics. <br>
+
+if the -Samples option is specified all the latency samples are generated. <br>
+
+Data files are created in the current directory with the following names: <br>
+
+Supplier_{supplier_name}.dat <br>
+
+Consumer_{consumer_name}.dat <br>
+
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "Application –DumpStats"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-SignalPeer</TD>
+
+<TD>
+<br>
+</TD>
+
+<TD>
+Signal another waiting instance of the test.
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example </b>: static Command_Builder "Application –SignalPeer":
+
+<hr>
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-WaitToStart</TD>
+
+<TD>
+<br>
+</TD>
+
+<TD>
+Wait for another instance to signal.
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example </b>:static Command_Builder "Application –WaitToStart"
+
+<hr>
+
+<hr>
+<h3>Target Object : <b> POA </b></h3>
+Loading Syntax for RTCORBA Application: <br>
+dynamic TAO_Notify_RT_POA_Command_Factory Service_Object* TAO_RT_NotifyTests:_make_TAO_Notify_RT_POA_Command_Factory () ""
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Create</TD>
+
+<TD>
+POA_Name <br>
+
+-PriorityModel {CLIENT|SERVER} default_priority (defaults : CLIENT_PROPAGATED, Priority = 0)<br>
+
+-Lanes lane_count  [-Lane priority static_threads dynamic_threads>]* <br>
+
+-Bands band_count [-Band low_priority high_priority]* <br>
+
+-ThreadPool static_threads priority
+<br>
+</TD>
+
+<TD>
+Create an RT POA with the specified name and options of
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "POA -Create poa_test -PriorityModel CLIENT 1 -Lanes 1 -Lane -15 1 0"
+
+<P><TABLE WIDTH = 80% BORDER="1" CELLSPACING="1" CELLPADDING="1">
+
+<TR>
+<TH WIDTH=20%>Command</TH>
+<TH WIDTH=60%>Parameters</TH>
+<TH>Description</TH>
+</TR>
+
+<TR>
+<TD>-Destroy</TD>
+
+<TD>
+POA_Name
+<br>
+</TD>
+
+<TD>
+Destroy a POA
+</TD>
+</TR>
+</TABLE>
+
+<br><b>Example : </b>: static Command_Builder "POA –Destroy”
 </BODY>
 </HTML>

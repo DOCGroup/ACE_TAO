@@ -409,6 +409,13 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
         }
       else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-Notify_TPReactor"))))
         {
+          ACE_DEBUG((LM_DEBUG, "-Notify_TPReactor option is deprecated, use -ORBRunThreads option\n"));
+
+          this->nthreads_ = ACE_OS::atoi (current_arg);
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-ORBRunThreads"))))
+        {
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
@@ -421,7 +428,7 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
                      "-Channel -ChannelName channel_name\n"
                      "default: %s -Factory NotifyEventChannelFactory "
                      "-NameSvc -Channel NotifyEventChannel\n",
-                     "-Notify_TPReactor [threads]\n",
+                     "-ORBRunThreads [threads]\n",
                      argv[0], argv[0]));
 
           arg_shifter.consume_arg ();
