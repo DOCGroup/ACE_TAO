@@ -1,6 +1,7 @@
 // $Id$
 
 #include "RateGenC.h"
+#include "ace/streams.h"
 #include "ace/Get_Opt.h"
 
 /**

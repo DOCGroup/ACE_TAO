@@ -1,3 +1,26 @@
+Sun Aug 17 22:43:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h:
+	* ciao/Container_Impl.cpp: Changed the signature of
+	  CIAO::Container to pass in a CORBA::PolicyList.  We will need
+	  this to initialize RT_Session_Container and the future
+	  unclassified container.
+
+	* docs/ConfigValues.html:
+	* docs/XML/ciao_rt_cad_ext.dtd:
+	* docs/XML/componentassembly.dtd: Updated documentation on
+	  extension element usage, RTCAD extension usage and recognizable
+	  ConfigValues names.
+
+	* examples/OEP/Display/RateGen/client.cpp:
+	* examples/OEP/Display/RateGen/controller.cpp:
+	* examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h:
+	* examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h:
+	* examples/OEP/Display/NavDisplayGUI_exec/UpdatePositionCmd.cpp:
+	  Reordered order of inclusion to make sure ACE headers are seen
+	  by the compiler first.
+
 Sun Aug 17 09:53:57 2003  Diego Sevilla  <dsevilla@ditec.um.es>
 
 	* CCF/CCF/CCF.mwc: Fixed a bug in the name of a file that was
@@ -11,7 +34,7 @@ Fri Aug 15 16:26:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIAO/CCF/CCF/IDL2/IDL2.vcproj:
         * CIAO/CCF/CCF/IDL3/IDL3.vcproj:
         * CIAO/CIDLC/CIDLC.vcproj:
-        
+
           Turned off detection of 64-bit portability issues in these
           projects. There are places in the Boost library where they
           play fast and loose with conversions in this area, which
@@ -21,7 +44,7 @@ Fri Aug 15 15:18:37 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 		* CCF:
 		* CIDLC:
-	      
+
 		Added VC7.1 Solutions and Projects.
 
 Wed Aug 13 17:37:30 2003  George Edwards <g.edwards@vanderbilt.edu>

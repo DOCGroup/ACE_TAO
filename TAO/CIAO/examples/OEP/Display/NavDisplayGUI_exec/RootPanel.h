@@ -3,10 +3,10 @@
 #ifndef __ROOTPANEL_H
 #define __ROOTPANEL_H
 
+#include "ace/Hash_Map_Manager.h"
 #include "MapView.h"
 #include "DetailView.h"
 #include <qmainwindow.h>
-#include "ace/Hash_Map_Manager.h"
 
 
 class NodeItem;

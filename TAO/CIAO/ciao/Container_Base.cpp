@@ -46,10 +46,13 @@ CIAO::Session_Container::~Session_Container ()
 }
 
 int
-CIAO::Session_Container::init (const char *name
+CIAO::Session_Container::init (const char *name,
+                               const CORBA::PolicyList *add_policies
                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (add_policies);
+
   char buffer[MAXPATHLEN];
 
    if (name == 0)
