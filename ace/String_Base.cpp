@@ -34,8 +34,9 @@ ACE_String_Base<CHAR>::set (const CHAR *s,
                      (CHAR *) this->allocator_->malloc (new_buf_len * sizeof (CHAR)));
 
       if (this->release_)
+      {
         this->allocator_->free (this->rep_);
-
+      }
       this->rep_ = temp;
       this->buf_len_ = new_buf_len;
       this->release_ = 1;
@@ -50,11 +51,13 @@ ACE_String_Base<CHAR>::set (const CHAR *s,
     {
       // Free memory if necessary and figure out future ownership
       if (!release || s == 0 || len == 0)
+      {
         if (this->release_)
           {
             this->allocator_->free (this->rep_);
             this->release_ = 0;
           }
+      }
       // else - stay with whatever value for release_ we have.
 
       // Populate data.
@@ -90,18 +93,25 @@ ACE_String_Base<CHAR>::substring (size_t offset,
 
   // case 1. empty string
   if (this->len_ == 0)
+  {
     return nil;
-
+  }
+  
   // case 2. start pos past our end
   if (offset >= this->len_)
+  {
     return nil;
+  }
   // No length == empty string.
   else if (length == 0)
+  {
     return nil;
+  }
   // Get all remaining bytes.
   else if (length == -1 || count > (this->len_ - offset))
+  {
     count = this->len_ - offset;
-
+  }
   return ACE_String_Base<CHAR> (&this->rep_[offset],
                                 count,
                                 this->allocator_);
@@ -120,14 +130,16 @@ ACE_String_Base<CHAR>::operator+= (const ACE_String_Base<CHAR> &s)
 
       // case 1. No memory allocation needed.
       if (this->buf_len_ >= new_buf_len)
+      {
         // Copy in data from new string.
         ACE_OS::memcpy (this->rep_ + this->len_,
                         s.rep_,
                         s.len_ * sizeof (CHAR));
+      }
 
       // case 2. Memory reallocation is needed
       else
-        {
+      {
           CHAR *t = 0;
 
           ACE_ALLOCATOR_RETURN (t,
@@ -145,12 +157,14 @@ ACE_String_Base<CHAR>::operator+= (const ACE_String_Base<CHAR> &s)
                           s.len_ * sizeof (CHAR));
 
           if (this->release_)
+	  {
             this->allocator_->free (this->rep_);
+	  }
 
           this->release_ = 1;
           this->rep_ = t;
           this->buf_len_ = new_buf_len;
-        }
+      }
 
       this->len_ += s.len_;
       this->rep_[this->len_] = '\0';
@@ -168,7 +182,10 @@ ACE_String_Base<CHAR>::resize (size_t len, CHAR c)
   if (this->buf_len_ <= len)
     {
       if (this->buf_len_ != 0)
+      {
         this->allocator_->free (this->rep_);
+      }
+
       this->rep_ = (CHAR *)
         this->allocator_->malloc ((len + 1) * sizeof (CHAR));
       this->buf_len_ = len + 1;

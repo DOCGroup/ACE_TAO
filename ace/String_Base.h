@@ -43,95 +43,194 @@ class ACE_Allocator;
  * provided buffer with the release parameter set to 0,
  * ACE_String_Base is not guaranteed to be '\0' terminated.
  */
-template <class CHAR>
-class ACE_String_Base : public ACE_String_Base_Const
+template < class CHAR > class ACE_String_Base:public ACE_String_Base_Const
 {
 public:
-  /// Default constructor.
-  ACE_String_Base (ACE_Allocator *alloc = 0);
+   /**
+    *  Default constructor.
+    *  
+    *  @param alloc ACE_Allocator associated with string
+    *  @return Default ACE_String_Base string.
+    */
+  ACE_String_Base (ACE_Allocator * alloc = 0);
 
   /**
    * Constructor that copies @a s into dynamically allocated memory.
-   * If @a release is non-0 then the @a ACE_allocator is responsible for
+   * If @a release is non-0 then the @a ACE_Allocator is responsible for
    * freeing this memory. Memory is _not_ allocated/freed if @a release
    * is 0.
+   *
+   * @param s Zero terminated input string
+   * @param alloc ACE_Allocator associated with string
+   * @param release Allocator responsible(1)/not reponsible(0) for
+   * 	freeing memory.
+   * @return ACE_String_Base containing const CHAR *s
    */
-  ACE_String_Base (const CHAR *s,
-                   ACE_Allocator *alloc = 0,
-                   int release = 1);
+  ACE_String_Base (const CHAR * s,
+		   ACE_Allocator * alloc = 0,
+		   int release = 1);
 
   /**
-   * Constructor that copies <len> CHARs of <s> into dynamically
-   * allocated memory (will NUL terminate the result).  If <release>
-   * is non-0 then the <ACE_allocator> is responsible for freeing this
-   * memory.  Memory is _not_ allocated/freed if <release> is 0.
+   * Constructor that copies @a len CHARs of @a s into dynamically
+   * allocated memory (will zero terminate the result).  If @a release
+   * is non-0 then the @a ACE_allocator is responsible for freeing this
+   * memory.  Memory is _not_ allocated/freed if @a release is 0.
+   *
+   * @param s Non-zero terminated input string
+   * @param len Length of non-zero terminated input string
+   * @param alloc ACE_Allocator associated with string
+   * @param release Allocator responsible(1)/not reponsible(0) for
+   * 	freeing memory.
+   * @return ACE_String_Base containing const CHAR *s
    */
-  ACE_String_Base (const CHAR *s,
-                   size_t len,
-                   ACE_Allocator *alloc = 0,
-                   int release = 1);
+  ACE_String_Base (const CHAR * s,
+		   size_t len, 
+		   ACE_Allocator * alloc = 0,
+		   int release = 1);
 
-  /// Copy constructor.
-  ACE_String_Base (const ACE_String_Base<CHAR> &);
+  /**
+   *  Copy constructor.
+   *
+   *  @param s Input ACE_String_Base string to copy
+   *  @return Copy of input string @a s
+   */
+  ACE_String_Base (const ACE_String_Base < CHAR > &s);
 
-  /// Constructor that copies @a c into dynamically allocated memory.
-  ACE_String_Base (CHAR c, ACE_Allocator *alloc = 0);
+  /**
+   *  Constructor that copies @a c into dynamically allocated memory.
+   *
+   *  @param c Single input character.
+   *  @param alloc ACE_Allocator associated with string
+   *  @return ACE_String_Base containing CHAR 'c'
+   */
+  ACE_String_Base (CHAR c, 
+		  ACE_Allocator * alloc = 0);
 
-  /// Constructor that dynamically allocate @a len long of char array
-  /// and initialize it to @a c using @a alloc to allocate the memory.
-  ACE_String_Base (size_t len, CHAR c = 0, ACE_Allocator *alloc = 0);
+  /**
+   *  Constructor that dynamically allocate @a len long of char array
+   *  and initialize it to @a c using @a alloc to allocate the memory.
+   *
+   *  @param len Length of character array 'c'
+   *  @param c Input character array
+   *  @param alloc ACE_Allocator associated with string
+   *  @return ACE_String_Base containing character array 'c'
+   */
+  ACE_String_Base (size_t len, 
+		  CHAR c = 0, 
+		  ACE_Allocator * alloc = 0);
 
-  /// Deletes the memory...
+  /**
+   *  Deletes the memory...
+   */
   ~ACE_String_Base (void);
 
-  /// Return the <slot'th> character in the string (doesn't perform
-  /// bounds checking).
-  const CHAR &operator [] (size_t slot) const;
+  /**
+   * Return the <slot'th> character in the string (doesn't perform
+   * bounds checking).
+   *
+   * @param slot Index of the desired character
+   * @return The character at index 'slot'
+   */
+  const CHAR & operator[] (int slot) const;
 
-  /// Return the <slot'th> character by reference in the string
-  /// (doesn't perform bounds checking).
-  CHAR &operator [] (size_t slot);
+  /**
+   * Return the <slot'th> character by reference in the string
+   * (doesn't perform bounds checking).
+   *
+   * @param slot Index of the desired character
+   * @return The character at index 'slot'
+   */
+  CHAR & operator[](int slot);
 
-  /// Assignment operator (does copy memory).
-  ACE_String_Base<CHAR> &operator = (const ACE_String_Base<CHAR> &);
+  /**
+   *  Assignment operator (does copy memory).
+   *
+   *  @param s Input ACE_String_Base string to assign to this object.
+   *  @return Return a copy of the this string.
+   */
+  ACE_String_Base < CHAR > &operator = (const ACE_String_Base < CHAR > &s);
 
-  /// Copy @a s into this @a ACE_String_Base.  Memory is _not_
-  /// allocated/freed if @a release is 0.
-  void set (const CHAR *s, int release = 1);
+  /**
+   * Copy @a s into this @a ACE_String_Base.  Memory is _not_
+   * allocated/freed if @a release is 0.
+   * 
+   * @param s Null terminated input string
+   * @param release Allocator responsible(1)/not reponsible(0) for
+   * 	freeing memory.
+   */
+  void set (const CHAR * s, int release = 1);
 
-  /// Copy @a len bytes of @a s (will NUL terminate the result).
-  /// Memory is _not_ allocated/freed if @a release is 0.
-  void set (const CHAR *s,
-            size_t len,
-            int release);
+  /**
+   *  Copy @a len bytes of @a s (will zero terminate the result).
+   *  Memory is _not_ allocated/freed if @a release is 0.
+   *
+   *  @param s Non-zero terminated input string
+   *  @param len Length of input string 's'
+   *  @param release Allocator responsible(1)/not reponsible(0) for
+   * 	freeing memory.
+   */
+  void set (const CHAR * s, size_t len, int release);
 
-  /// Clear this string. Memory is _not_ freed if <release> is 0.
+  /**
+   * Clear this string. Memory is _not_ freed if <release> is 0.
+   *
+   * @param release Memory is freed if 1 or not if 0.
+   */
   void clear (int release = 0);
 
   /**
    * Return a substring given an offset and length, if length == -1
    * use rest of str.  Return empty substring if offset or
    * offset/length are invalid.
+   *
+   * @param offset Index of first desired character of the substring.
+   * @param length How many characters to return starting at the offset.
+   * @return The string containing the desired substring
    */
-  ACE_String_Base<CHAR> substring (size_t offset, ssize_t length = -1) const;
+  ACE_String_Base < CHAR > substring (size_t offset, 
+		  			ssize_t length = -1) const;
 
-  /// Same as <substring>.
-  ACE_String_Base<CHAR> substr (size_t offset, ssize_t length = -1) const;
+  /**
+   *  Same as <substring>.
+   *
+   * @param offset Index of first desired character of the substring.
+   * @param length How many characters to return starting at the offset.
+   * @return The string containing the desired substring
+   */
+  ACE_String_Base < CHAR > substr (size_t offset, ssize_t length = -1) const;
 
-  /// Concat operator (copies memory).
-  ACE_String_Base<CHAR> &operator += (const ACE_String_Base<CHAR> &);
+  /**
+   *  Concat operator (copies memory).
+   *
+   *  @param s Input ACE_String_Base string to concatenate to another string.
+   *  @return The combined string (input append to the end of the old). New
+   *  	string is zero terminated.
+   */
+  ACE_String_Base < CHAR > &operator += (const ACE_String_Base < CHAR > &s);
 
-  /// Returns a hash value for this string.
+  /**
+   *  Returns a hash value for this string.
+   *
+   *  @return Hash value of string
+   */
   u_long hash (void) const;
 
-  /// Return the length of the string.
+  /**
+   *  Return the length of the string.
+   *
+   *  @return Length of stored string
+   */
   size_t length (void) const;
 
-  /// Get a copy of the underlying representation.
   /**
+   * Get a copy of the underlying representation.
+   * 
    * This method allocates memory for a copy of the string and returns
    * a pointer to the new area. The caller is responsible for freeing
    * the memory when finished; use delete []
+   *
+   * @return Pointer reference to the string data. Returned string is
+   * 	zero terminated. 
    */
   CHAR *rep (void) const;
 
@@ -139,48 +238,114 @@ public:
    * Get at the underlying representation directly!
    * _Don't_ even think about casting the result to (char *) and modifying it,
    * if it has length 0!
+   *
+   * @return Pointer reference to the stored string data. No guarantee is
+   * 	that the string is zero terminated.
+   * 	
    */
   const CHAR *fast_rep (void) const;
 
-  /// Same as STL String's <c_str> and <fast_rep>.
+  /**
+   *  Same as STL String's <c_str> and <fast_rep>.
+   */
   const CHAR *c_str (void) const;
 
-  /// Comparison operator that will match substrings.  Returns the
-  /// slot of the first location that matches, else -1.
+  /**
+   *  Comparison operator that will match substrings.  Returns the
+   *  slot of the first location that matches, else -1.
+   *
+   *  @param s Input ACE_String_Base string
+   *  @return Integer index value of the first location of string @a s or
+   *  	-1 (not found).
+   */
   int strstr (const ACE_String_Base<CHAR> &s) const;
 
-  /// Find <str> starting at pos.  Returns the slot of the first
-  /// location that matches (will be >= pos), else npos.
+  /**
+   *  Find <str> starting at pos.  Returns the slot of the first
+   *  location that matches (will be >= pos), else npos.
+   *  
+   *  @param str Input ACE_String_Base string to search for in stored string.
+   *  @param pos Starting index position to start searching for string @a str.
+   *  @return Index value of the first location of string @a str else npos.
+   */
   int find (const ACE_String_Base<CHAR> &str, int pos = 0) const;
 
-  /// Find <s> starting at pos.  Returns the slot of the first
-  /// location that matches (will be >= pos), else npos.
+  /**
+   *  Find @a s starting at pos.  Returns the slot of the first
+   *  location that matches (will be >= pos), else npos.
+   *  
+   *  @param Input non-zero input string to search for in stored string.
+   *  @param pos Starting index position to start searching for string @a str.
+   *  @return Index value of the first location of string @a str else npos.
+   */
   int find (const CHAR *s, int pos = 0) const;
 
-  /// Find <c> starting at pos.  Returns the slot of the first
-  /// location that matches (will be >= pos), else npos.
+  /**
+   *  Find @a c starting at pos.  Returns the slot of the first
+   *  location that matches (will be >= pos), else npos.
+   *
+   *  @param c Input character to search for in stored string.
+   *  @param pos Starting index position to start searching for string @a str.
+   *  @return Index value of the first location of string @a str else npos.
+   */
   int find (CHAR c, int pos = 0) const;
 
-  /// Find <c> starting at pos (counting from the end).  Returns the
-  /// slot of the first location that matches, else npos.
+  /**
+   *  Find @a c starting at pos (counting from the end).  Returns the
+   *  slot of the first location that matches, else npos.
+   *
+   *  @param c Input character to search for in stored string.
+   *  @param pos Starting index position to start searching for string @a str.
+   *  @return Index value of the first location of string @a str else npos.
+   */
   int rfind (CHAR c, int pos = npos) const;
 
-  /// Equality comparison operator (must match entire string).
+  /**
+   *  Equality comparison operator (must match entire string).
+   *
+   * @param s Input ACE_String_Base string to compare against stored string.
+   * @return Integer value of result (1 = found, 0 = not found).
+   */
   int operator == (const ACE_String_Base<CHAR> &s) const;
 
-  /// Less than comparison operator.
+  /**
+   *  Less than comparison operator.
+   *
+   *  @param s Input ACE_String_Base string to compare against stored string.
+   *  @return Integer value of result (1 = less than, 0 = greater than or 
+   *  equal).
+   */
   int operator < (const ACE_String_Base<CHAR> &s) const;
 
-  /// Greater than comparison operator.
+  /**
+   *  Greater than comparison operator.
+   *
+   *  @param s Input ACE_String_Base string to compare against stored string.
+   *  @return Integer value of result (1 = greater than, 0 = less than or
+   *  equal).
+   */
   int operator > (const ACE_String_Base<CHAR> &s) const;
 
-  /// Inequality comparison operator.
+  /**
+   *  Inequality comparison operator.
+   *
+   *  @param s Input ACE_String_Base string to compare against stored string.
+   *  @return Integer value of result (1 = not equal, 0 = equal).
+   */
   int operator != (const ACE_String_Base<CHAR> &s) const;
 
-  /// Performs a <strcmp>-style comparison.
+  /**
+   *  Performs a strncmp comparison.
+   *
+   *  @param s Input ACE_String_Base string to compare against stored string.
+   *  @return Integer value of result (less than 0, 0, greater than 0) 
+   *  	depending on how input string @a s is to the stored string.
+   */
   int compare (const ACE_String_Base<CHAR> &s) const;
 
-  /// Dump the state of an object.
+  /**
+   *  Dump the state of an object.
+   */
   void dump (void) const;
 
   /**
@@ -188,50 +353,67 @@ public:
    * care ;-) If the current size of the string is less than <len>,
    * the string is resized to the new length. The data is zero'd
    * out after this operation.
+   *
+   * @param len New string size
+   * @param c New input string
    */
   void resize (size_t len, CHAR c = 0);
 
-  /// Declare the dynamic allocation hooks.
+  /**
+   *  Declare the dynamic allocation hooks.
+   */
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Pointer to a memory allocator.
-  ACE_Allocator *allocator_;
+  /**
+   *  Pointer to a memory allocator.
+   */
+  ACE_Allocator * allocator_;
 
-  /// Length of the ACE_String_Base data (not counting the trailing '\0').
+  /**
+   *  Length of the ACE_String_Base data (not counting the trailing '\0').
+   */
   size_t len_;
 
-  /// Length of the ACE_String_Base data buffer.  Keeping track of the
-  /// length allows to avoid unnecessary dynamic allocations.
+  /**
+   *  Length of the ACE_String_Base data buffer.  Keeping track of the
+   *  length allows to avoid unnecessary dynamic allocations.
+   */
   size_t buf_len_;
 
-  /// Pointer to data.
+  /**
+   *  Pointer to data.
+   */
   CHAR *rep_;
 
-  /// Flag that indicates if we own the memory
+  /**
+   *  Flag that indicates if we own the memory
+   */
   int release_;
 
-  /// Represents the "NULL" string to simplify the internal logic.
+  /**
+   *  Represents the "NULL" string to simplify the internal logic.
+   */
   static CHAR NULL_String_;
 };
 
-template <class CHAR> ACE_INLINE
-ACE_String_Base<CHAR> operator + (const ACE_String_Base<CHAR> &,
-                                  const ACE_String_Base<CHAR> &);
-template <class CHAR> ACE_INLINE
-ACE_String_Base<CHAR> operator + (const ACE_String_Base<CHAR> &,
-                                  const CHAR *);
-template <class CHAR> ACE_INLINE
-ACE_String_Base<CHAR> operator + (const CHAR *,
-                                  const ACE_String_Base<CHAR> &);
+template < class CHAR > ACE_INLINE
+  ACE_String_Base < CHAR > operator + (const ACE_String_Base < CHAR > &,
+				       const ACE_String_Base < CHAR > &);
+template < class CHAR > ACE_INLINE
+  ACE_String_Base < CHAR > operator + (const ACE_String_Base < CHAR > &,
+				       const CHAR *);
+template < class CHAR > ACE_INLINE
+  ACE_String_Base < CHAR > operator + (const CHAR *,
+				       const ACE_String_Base < CHAR > &);
 
-template <class CHAR> ACE_INLINE
-ACE_String_Base<CHAR> operator + (const ACE_String_Base<CHAR> &t,
-                                  const CHAR c);
+template < class CHAR > ACE_INLINE
+  ACE_String_Base < CHAR > operator + (const ACE_String_Base < CHAR > &t,
+				       const CHAR c);
 
-template <class CHAR> ACE_INLINE
-ACE_String_Base<CHAR> operator + (const CHAR c,
-                                  const ACE_String_Base<CHAR> &t);
+template < class CHAR > ACE_INLINE
+  ACE_String_Base < CHAR > operator + (const CHAR c,
+				       const ACE_String_Base < CHAR > &t);
 
 #if defined (__ACE_INLINE__)
 #include "ace/String_Base.i"
