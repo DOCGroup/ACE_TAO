@@ -1,3 +1,13 @@
+Sat Dec 27 10:22:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Also check for Id tag in .GNU files.
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+        * include/makeinclude/platform_linux_borland.GNU:
+        * include/makeinclude/platform_integrity_ghs.GNU:
+          Added missing Id tag
+
 Fri Dec 26 17:29:29 2003  Steve Huston  <shuston@riverace.com>
 
 	* m4/ace.m4: Uncommented the AM_CONDITIONAL for BUILD_SSL so
