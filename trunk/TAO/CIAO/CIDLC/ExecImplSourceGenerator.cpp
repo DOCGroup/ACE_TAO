@@ -1238,7 +1238,7 @@ namespace
        
        os << "_exec_i," << endl
           << "CORBA::NO_MEMORY ());"
-          << "ACE_CHECK_RETURN (" << STRS[COMP_EC]
+          << STRS[ACE_CR] << " (" << STRS[COMP_EC]
           << "::_nil ());" << endl
           << "return retval;" 
           << "}";
