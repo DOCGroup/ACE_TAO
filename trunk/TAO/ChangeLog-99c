@@ -57,7 +57,7 @@ Thu May 20 17:39:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* TAO/tao/TAO.dsp:
 	* TAO/TAO_IDL/tao_idl.dsp:
 	* orbsvcs/orbsvcs/orbsvcs.dsp: Fixed Alpha configurations.  Thanks
-	  to Schuderer Christian <Christian.Schuderer@erl9.siemens.de> for
+	  to Christian Schuderer <Christian.Schuderer@erl9.siemens.de> for
 	  reporting this.
 
 	* TAO/TAO_IDL/tao_idl_static.dsp: Removed definitions of
