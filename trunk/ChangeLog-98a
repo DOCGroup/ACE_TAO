@@ -1,3 +1,10 @@
+Tue Feb 10 09:34:27 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/INET_Addr.cpp (get_host_name): moved declaration of local
+          "hentry" so that it's not seen on CHORUS.
+
+        * ace/OS.i (getprotoby{name,number}{,_r}): not supported on Chorus.
+
 Mon Feb 09 18:10:37 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * ace/Containers.{cpp,h} : made next () a const member function in
