@@ -272,7 +272,7 @@ public:
   // Get the implementation class.
 
   // = Factory methods for the operations
-  //
+
   // Note that the user does not have to use or know about these
   // methods.
 
@@ -300,7 +300,7 @@ public:
   // Asynch_Transmit_File.
 
   // = Factory methods for the results
-  //
+
   // Note that the user does not have to use or know about these
   // methods unless they want to "fake" results.
 
