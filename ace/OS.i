@@ -1145,7 +1145,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
 	  return 0;
 	case WAIT_ABANDONED:
 	  errno = WAIT_ABANDONED;
-	  return -1;
+	  return 0;  // something goofed, but we hold the lock ... 
 	default:
 	  // This is a hack, we need to find an appropriate mapping...
 	  errno = ::GetLastError ();
