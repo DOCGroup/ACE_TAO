@@ -1,7 +1,19 @@
+Mon Sep  6 22:59:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp (gen_stub_src_includes):
+
+          The UserException::_tao_{en,de}code() methods can throw a
+	  CORBA::MARSHAL exception make sure that system exception is
+	  fully declared/defined by including
+	  "tao/SystemException.h".  However, only include
+	  "tao/SystemException.h" if a user exception was encountered and
+	  if we're not already including it in the stub header.  Thanks to
+	  Johnny Willemsen for reporting the problem.
+
 Mon Sep  6 19:45:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
-        
+
           Fixed a bug in the generation of repository ids for implied
           IDL event consumer interfaces.
 
