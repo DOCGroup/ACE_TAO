@@ -49,6 +49,10 @@ Tue Jan 18 20:56:58 2000  Ossama Othman  <ossama@uci.edu>
 	  cuserid() implementation requires that password file related
 	  functions exist.
 
+	* ace/config-linux-common.h:
+
+	  Define ACE_HAS_ALT_CUSERID on glibc 2.1.x.
+
 	* m4/acinclude.m4:
 
 	  Cosmetic updates.
