@@ -10,8 +10,6 @@ Supplier_Router::svc (void)
 {
   assert (this->is_writer ());
 
-  ACE_Thread_Control tc (this->thr_mgr ());
-
   ACE_DEBUG ((LM_DEBUG, "(%t) starting svc in Supplier_Router\n"));
 
   for (ACE_Message_Block *mb = 0;
@@ -31,8 +29,6 @@ Supplier_Router::svc (void)
 
   ACE_DEBUG ((LM_DEBUG, "(%t) stopping svc in Supplier_Router\n"));
   return 0;
-  // Note the implicit ACE_OS::thr_exit() via ACE_Thread_Control's
-  // destructor.
 }
 
 Supplier_Router::Supplier_Router (Peer_Router_Context *prc)

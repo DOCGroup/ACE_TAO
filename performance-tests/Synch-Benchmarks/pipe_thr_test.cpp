@@ -22,8 +22,6 @@ private:
 void *
 Pipe_Thr_Test::reader (Pipe_Thr_Test *t)
 {
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
-
   ACE_HANDLE handle = t->pipe_handles[0];
   int ni = t->thr_id ();
   size_t length = options.msg_size ();

@@ -30,8 +30,6 @@ reader (void *arg)
   // Shared data via a reference.
   int& data = *(int *) arg;
 
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
-
   // Wait for writer to complete.
 
   ACE_DEBUG ((LM_DEBUG, "(%t) reader: waiting...... \n"));
@@ -53,8 +51,6 @@ static void *
 writer (void *arg)
 {
   int& data = *(int *) arg;
-
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
 
   // Calculate (work).
   ACE_DEBUG ((LM_DEBUG, "(%t) writer: working for %d secs\n", work_time));

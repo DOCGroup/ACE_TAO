@@ -35,22 +35,17 @@ handler (int signum)
 static void *
 worker (int iterations)
 {
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 
   for (int i = 0; i < iterations; i++)
-    {
-      if ((i % 1000) == 0)
-	{
-	  if (ACE_Thread_Manager::instance ()->testcancel (ACE_Thread::self ()) != 0)
-	    {
-	      ACE_DEBUG ((LM_DEBUG, 
-			  "(%t) has been cancelled before iteration %d!\n", 
-			  i));
-	      break;
-	    }
-	}
-    }
+    if ((i % 1000) == 0 
+	&& ACE_Thread_Manager::instance ()->testcancel (ACE_Thread::self ()) != 0)
+      {
+	ACE_DEBUG ((LM_DEBUG, 
+		    "(%t) has been cancelled before iteration %d!\n", 
+		    i));
+	break;
+      }
 
   // Destructor removes thread from Thread_Manager.
   return 0;

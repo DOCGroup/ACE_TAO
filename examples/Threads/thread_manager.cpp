@@ -19,8 +19,6 @@ handler (int signum)
 static void *
 worker (int iterations)
 {
-	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
-
   for (int i = 0; i < iterations; i++)
     {
       if ((i % 1000) == 0)

@@ -271,7 +271,12 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 {
   ACE_Thread_Adapter *thread_args = 0;
 #if !defined (ACE_NO_THREAD_ADAPTER)
-  ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args, (ACE_THR_C_FUNC) ace_thread_manager_adapter), -1);
+  ACE_NEW_RETURN (thread_args,
+		  ACE_Thread_Adapter (func,
+				      args,
+				      (ACE_THR_C_FUNC) ace_thread_manager_adapter,
+				      this),
+		  -1);
 #endif /* ACE_NO_THREAD_ADAPTER */
 
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
@@ -941,7 +946,9 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    copy_table = new ACE_Thread_Descriptor [this->current_count_];  
+    ACE_NEW_RETURN (copy_table,
+		    ACE_Thread_Descriptor [this->current_count_],
+		    -1);
 
     for (size_t i = 0; i < this->current_count_; i++)
       if (this->thr_table_[i].task_ == task)
@@ -957,7 +964,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
     if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
       result = -1;
   
-  delete []copy_table;
+  delete [] copy_table;
 
   return result;
 }

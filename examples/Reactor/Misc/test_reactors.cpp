@@ -126,7 +126,6 @@ Test_Task::handle_input (ACE_HANDLE)
 static void *
 worker (void *args)
 {
-	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_Reactor *reactor = (ACE_Reactor *) args;
 
   reactor->owner (ACE_Thread::self ());

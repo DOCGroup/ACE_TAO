@@ -61,7 +61,6 @@ cleanup (void *ptr)
 static void *
 worker (void *c)
 {
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 
   int count = int (c);

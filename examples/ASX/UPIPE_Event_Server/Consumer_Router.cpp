@@ -65,7 +65,6 @@ Consumer_Router::close (u_long)
 int
 Consumer_Router::svc (void)
 {
-  ACE_Thread_Control tc (this->thr_mgr ());
   ACE_Message_Block *mb = 0;
 
   ACE_ASSERT (this->is_reader ());
@@ -74,11 +73,9 @@ Consumer_Router::svc (void)
     ACE_DEBUG ((LM_DEBUG, "(%t) starting svc in %s\n", this->name ()));
 
   while (this->getq (mb) > 0)
-  {
     if (this->put_next (mb) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "(%t) put_next failed in %s\n", this->name ()), -1);
 
-  }
   return 0;
   // Note the implicit ACE_OS::thr_exit() via destructor.
 }

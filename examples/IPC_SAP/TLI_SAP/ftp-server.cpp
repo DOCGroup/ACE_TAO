@@ -12,7 +12,6 @@ ACE_Thread_Manager thr_mgr;
 void *
 read_file (void *fd)
 {
-  ACE_Thread_Control   tc (&thr_mgr);
   ACE_TLI_Stream stream;
   char	     buf[BUFSIZ];
   int	     flags = 0;

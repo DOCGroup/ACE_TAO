@@ -60,8 +60,7 @@ static int rwlocks = 0;
 static void *
 two_token_thread (void *vp)
 {
-  Two_Tokens* tm = (Two_Tokens*) vp;
-  ACE_Thread_Control (tm->thr_mgr_);
+  Two_Tokens* tm = (Two_Tokens *) vp;
 
   for (int x = 0; x < iterations; x++)
     {
@@ -105,8 +104,7 @@ two_token_thread (void *vp)
 static void *
 run_writer (void *vp)
 {
-  Four_Tokens* ft = (Four_Tokens *) vp;
-  ACE_Thread_Control (ft->thr_mgr_);
+  Four_Tokens *ft = (Four_Tokens *) vp;
   int acquire_number = 0;
 
   for (int x = 0; x < iterations; x++)

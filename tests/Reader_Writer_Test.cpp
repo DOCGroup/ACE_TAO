@@ -88,7 +88,6 @@ parse_args (int argc, char *argv[])
 static void *
 reader (void *)
 {
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 
   ACE_DEBUG ((LM_DEBUG, " (%t) reader starting\n"));
@@ -134,7 +133,6 @@ reader (void *)
 static void *
 writer (void *)
 {
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 
   ACE_DEBUG ((LM_DEBUG, " (%t) writer starting\n"));
