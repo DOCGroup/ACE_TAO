@@ -4544,9 +4544,10 @@ ACE_OS_Thread_Mutex_Guard::release (void)
 
 ACE_INLINE
 ACE_OS_Thread_Mutex_Guard::ACE_OS_Thread_Mutex_Guard (ACE_thread_mutex_t &m)
-   : lock_ (m)
+  : lock_ (m), owner_ (-1)
 {
-  acquire ();
+  if (!ACE_Object_Manager::starting_up ())
+    acquire ();
 }
 
 ACE_INLINE
@@ -4583,7 +4584,8 @@ ACE_OS_Recursive_Thread_Mutex_Guard::ACE_OS_Recursive_Thread_Mutex_Guard (
    : lock_ (m),
      owner_ (-1)
 {
-  acquire ();
+  if (!ACE_Object_Manager::starting_up ())
+    acquire ();
 }
 
 ACE_INLINE

@@ -18,6 +18,8 @@
 
 ACE_RCSID(tests, Date_Time_Test, "$Id$")
 
+static ACE_Date_Time static_dt;   // Making sure it doesn't crash.
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -80,6 +82,45 @@ run_main (int, ACE_TCHAR *[])
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Microseconds (%d) out of range (0-999999)\n"),
                   usec));
+      error = 1;
+    }
+
+  // The static ACE_Date_Time object is primarily to be sure it doesn't
+  // crash; However, let's do some sanity checks on it to be sure it's
+  // legit as well.
+  if (static_dt.month () != month)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Static month (%d) doesn't match %d\n"),
+                  static_dt.month (), month));
+      error = 1;
+    }
+  if (static_dt.day () != day)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Static day (%d) doesn't match %d\n"),
+                  static_dt.day (), day));
+      error = 1;
+    }
+  if (static_dt.year () != year)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Static year (%d) doesn't match %d\n"),
+                  static_dt.year (), year));
+      error = 1;
+    }
+  if (static_dt.hour () != hour)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Static hour (%d) doesn't match %d\n"),
+                  static_dt.hour (), hour));
+      error = 1;
+    }
+  if (static_dt.minute () != minute)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Static minute (%d) doesn't match %d\n"),
+                  static_dt.minute (), minute));
       error = 1;
     }
   ACE_END_TEST;
