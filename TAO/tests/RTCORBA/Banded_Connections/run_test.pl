@@ -34,7 +34,7 @@ $server_args =
 
 $client_args =
     "-n file://$iorfile1 -o file://$iorfile2 "
-    ."-a 67 -b 75 -c 77";
+    ."-a 67 -b 75 -c 90";
 
 if ($^O eq "MSWin32") {
     $server_args =
