@@ -1,35 +1,40 @@
+Thu Nov 05 13:23:29 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_lynxos.GNU: default VERSION
+          to 3.0.0.  We no longer build/test for LynxOS 2.5.0.
+
 Thu Nov  5 07:02:19 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Stream.h: Clarified some subtleties with subclassing from
- 	  ACE_Stream.  Thanks to Stephen Coy for reminding me of this.
+        * ace/Stream.h: Clarified some subtleties with subclassing from
+          ACE_Stream.  Thanks to Stephen Coy for reminding me of this.
 
-	* include/makeinclude: Updated the platform_linux_kcc.GNU file.
-  	  Thanks to Joseph Weihs <joseph-w@Orbotech.Co.IL> for reporting
- 	  this.
+        * include/makeinclude: Updated the platform_linux_kcc.GNU file.
+          Thanks to Joseph Weihs <joseph-w@Orbotech.Co.IL> for reporting
+          this.
 
-	* ACE.FAQ.html: Pointed out that ACE is Y2K compliant.  Thanks to
- 	  Fredrik Lindahl <fredrik.lindahl@ausys.se> for suggesting this.
+        * ACE.FAQ.html: Pointed out that ACE is Y2K compliant.  Thanks to
+          Fredrik Lindahl <fredrik.lindahl@ausys.se> for suggesting this.
 
 Wed Nov  4 23:28:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Stream.h: Made all the methods of ACE_Stream virtual to
- 	  enable subclasses.  Thanks to Bob McWhirter's for this
- 	  suggestion.
+        * ace/Stream.h: Made all the methods of ACE_Stream virtual to
+          enable subclasses.  Thanks to Bob McWhirter's for this
+          suggestion.
 
 Tue Nov  3 16:06:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Logger/simple-server: Fixed the server so that it shuts
- 	  down cleanly when ^C is given.  Thanks to Avi Nash
- 	  <anash@RedBrick.COM> for reporting this.
+        * examples/Logger/simple-server: Fixed the server so that it shuts
+          down cleanly when ^C is given.  Thanks to Avi Nash
+          <anash@RedBrick.COM> for reporting this.
 
 Tue Nov 03 13:17:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.{h,i,cpp} (thread_desc_self): Changed this
-	  method to an inline function.  Removed outdated comments and
-	  instead of searching thru the list when the current thread's
-	  descriptor is not found in TSS cache, place an assertion there
-	  for this should never happen.  Thanks to Terry Rosenbaum
-	  <Terry.Rosenbaum@Radiology.MSU.edu> for motivating the change.
+        * ace/Thread_Manager.{h,i,cpp} (thread_desc_self): Changed this
+          method to an inline function.  Removed outdated comments and
+          instead of searching thru the list when the current thread's
+          descriptor is not found in TSS cache, place an assertion there
+          for this should never happen.  Thanks to Terry Rosenbaum
+          <Terry.Rosenbaum@Radiology.MSU.edu> for motivating the change.
 
 Mon Nov  2 22:54:08 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -1176,9 +1181,9 @@ Thu Oct 15 18:02:51 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/config-win32.h: For non-winnt systems, define
           ACE_LACKS_RECVMSG and ACE_LACKS_SENDMSG.  Thanks to Bill Hall
-          <hts@gte.net> for pointing this out.  
-                    
-          [BTW, Bill was the 400th individual to contribute an ACE/TAO 
+          <hts@gte.net> for pointing this out.
+
+          [BTW, Bill was the 400th individual to contribute an ACE/TAO
           bug report, thanks to everyone for all their help over the years!]
 
 Thu Oct 15 16:50:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
