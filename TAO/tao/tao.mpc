@@ -34,7 +34,9 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       IIOP_Connection_Handler.cpp
       IIOP_Endpoint.cpp
       IIOP_EndpointsC.cpp
+      IIOP_EndpointsA.cpp
       IIOPC.cpp
+      IIOPA.cpp
     }
 
     Pluggable_Messaging {
@@ -77,6 +79,7 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       Any_SystemException.cpp
       CORBA_String.cpp
       CurrentC.cpp
+      CurrentA.cpp
       Exception.cpp
       WrongTransactionC.cpp
       Environment.cpp
@@ -95,6 +98,7 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       Remote_Object_Proxy_Broker.cpp
       Object_Proxy_Impl.cpp
       DomainC.cpp
+      DomainA.cpp
       TimeBaseC.cpp
       Principal.cpp
       Sequence.cpp
@@ -130,6 +134,7 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       DynamicC.cpp
       DynamicA.cpp
       Dynamic_ParameterC.cpp
+      Dynamic_ParameterA.cpp
       ParameterMode.cpp
       OctetSeqA.cpp
       OctetSeqC.cpp
@@ -181,10 +186,13 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       IOPC.cpp
       PollableC.cpp
       CONV_FRAMEC.cpp
+      CONV_FRAMEA.cpp
       Tagged_Components.cpp
       Service_Context.cpp
       GIOPC.cpp
+      GIOPC.cpp
       BoundsC.cpp
+      BoundsA.cpp
       TAOC.cpp
       Object_Loader.cpp
       TAO_Singleton_Manager.cpp

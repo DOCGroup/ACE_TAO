@@ -25,24 +25,24 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "DynamicC.h"
-#include "DynamicA.h"
+#include "IIOP_EndpointsC.h"
+#include "IIOP_EndpointsA.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
-    const Dynamic::ParameterList &_tao_elem
+    const TAO::IIOP_Endpoint_Info &_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<Dynamic::ParameterList>::insert_copy (
+  TAO::Any_Dual_Impl_T<TAO::IIOP_Endpoint_Info>::insert_copy (
       _tao_any,
-      Dynamic::ParameterList::_tao_any_destructor,
-      Dynamic::_tc_ParameterList,
+      TAO::IIOP_Endpoint_Info::_tao_any_destructor,
+      TAO::_tc_IIOP_Endpoint_Info,
       _tao_elem
     );
 }
@@ -50,13 +50,13 @@ void operator<<= (
 // Non-copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
-    Dynamic::ParameterList *_tao_elem
+    TAO::IIOP_Endpoint_Info *_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<Dynamic::ParameterList>::insert (
+  TAO::Any_Dual_Impl_T<TAO::IIOP_Endpoint_Info>::insert (
       _tao_any,
-      Dynamic::ParameterList::_tao_any_destructor,
-      Dynamic::_tc_ParameterList,
+      TAO::IIOP_Endpoint_Info::_tao_any_destructor,
+      TAO::_tc_IIOP_Endpoint_Info,
       _tao_elem
     );
 }
@@ -64,11 +64,11 @@ void operator<<= (
 // Extraction to non-const pointer (deprecated).
 CORBA::Boolean operator>>= (
     const CORBA::Any &_tao_any,
-    Dynamic::ParameterList *&_tao_elem
+    TAO::IIOP_Endpoint_Info *&_tao_elem
   )
 {
   return _tao_any >>= ACE_const_cast (
-      const Dynamic::ParameterList *&,
+      const TAO::IIOP_Endpoint_Info *&,
       _tao_elem
     );
 }
@@ -76,14 +76,14 @@ CORBA::Boolean operator>>= (
 // Extraction to const pointer.
 CORBA::Boolean operator>>= (
     const CORBA::Any &_tao_any,
-    const Dynamic::ParameterList *&_tao_elem
+    const TAO::IIOP_Endpoint_Info *&_tao_elem
   )
 {
   return
-    TAO::Any_Dual_Impl_T<Dynamic::ParameterList>::extract (
+    TAO::Any_Dual_Impl_T<TAO::IIOP_Endpoint_Info>::extract (
         _tao_any,
-        Dynamic::ParameterList::_tao_any_destructor,
-        Dynamic::_tc_ParameterList,
+        TAO::IIOP_Endpoint_Info::_tao_any_destructor,
+        TAO::_tc_IIOP_Endpoint_Info,
         _tao_elem
       );
 }
@@ -94,13 +94,13 @@ CORBA::Boolean operator>>= (
 // Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
-    const Dynamic::ExceptionList &_tao_elem
+    const TAO::IIOPEndpointSequence &_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<Dynamic::ExceptionList>::insert_copy (
+  TAO::Any_Dual_Impl_T<TAO::IIOPEndpointSequence>::insert_copy (
       _tao_any,
-      Dynamic::ExceptionList::_tao_any_destructor,
-      Dynamic::_tc_ExceptionList,
+      TAO::IIOPEndpointSequence::_tao_any_destructor,
+      TAO::_tc_IIOPEndpointSequence,
       _tao_elem
     );
 }
@@ -108,13 +108,13 @@ void operator<<= (
 // Non-copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
-    Dynamic::ExceptionList *_tao_elem
+    TAO::IIOPEndpointSequence *_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<Dynamic::ExceptionList>::insert (
+  TAO::Any_Dual_Impl_T<TAO::IIOPEndpointSequence>::insert (
       _tao_any,
-      Dynamic::ExceptionList::_tao_any_destructor,
-      Dynamic::_tc_ExceptionList,
+      TAO::IIOPEndpointSequence::_tao_any_destructor,
+      TAO::_tc_IIOPEndpointSequence,
       _tao_elem
     );
 }
@@ -122,11 +122,11 @@ void operator<<= (
 // Extraction to non-const pointer (deprecated).
 CORBA::Boolean operator>>= (
     const CORBA::Any &_tao_any,
-    Dynamic::ExceptionList *&_tao_elem
+    TAO::IIOPEndpointSequence *&_tao_elem
   )
 {
   return _tao_any >>= ACE_const_cast (
-      const Dynamic::ExceptionList *&,
+      const TAO::IIOPEndpointSequence *&,
       _tao_elem
     );
 }
@@ -134,14 +134,14 @@ CORBA::Boolean operator>>= (
 // Extraction to const pointer.
 CORBA::Boolean operator>>= (
     const CORBA::Any &_tao_any,
-    const Dynamic::ExceptionList *&_tao_elem
+    const TAO::IIOPEndpointSequence *&_tao_elem
   )
 {
   return
-    TAO::Any_Dual_Impl_T<Dynamic::ExceptionList>::extract (
+    TAO::Any_Dual_Impl_T<TAO::IIOPEndpointSequence>::extract (
         _tao_any,
-        Dynamic::ExceptionList::_tao_any_destructor,
-        Dynamic::_tc_ExceptionList,
+        TAO::IIOPEndpointSequence::_tao_any_destructor,
+        TAO::_tc_IIOPEndpointSequence,
         _tao_elem
       );
 }
@@ -152,24 +152,24 @@ CORBA::Boolean operator>>= (
 
   template class
     TAO::Any_Dual_Impl_T<
-        Dynamic::ParameterList
+        TAO::IIOP_Endpoint_Info
       >;
 
   template class
     TAO::Any_Dual_Impl_T<
-        Dynamic::ExceptionList
+        TAO::IIOPEndpointSequence
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
     TAO::Any_Dual_Impl_T< \
-        Dynamic::ParameterList \
+        TAO::IIOP_Endpoint_Info \
       >
 
 # pragma instantiate \
     TAO::Any_Dual_Impl_T< \
-        Dynamic::ExceptionList \
+        TAO::IIOPEndpointSequence \
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
