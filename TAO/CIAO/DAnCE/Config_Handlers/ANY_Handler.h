@@ -12,17 +12,20 @@
 #define CIAO_CONFIG_HANDLERS_ANY_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Basic_Deployment_Data.hpp"
+#include "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "Basic_Deployment_Data.hpp"
 
 namespace CORBA
 {
   class Any;
 }
 
+// @@ Jules, can you please change the name of this file?
 namespace CIAO
 {
 
@@ -38,15 +41,15 @@ namespace CIAO
     * corresponding CORBA IDL Any type.
     *
     */
-    
+
     class ANY_Handler{
-     
+
       public:
-       
+
         ANY_Handler (void);
         virtual ~ANY_Handler (void);
-  
-        static void get_Any (CORBA::Any& toconfig, Any& desc);          
+
+        static void get_Any (CORBA::Any& toconfig, Any& desc);
 
     };
   }
