@@ -43,6 +43,11 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.4
 . SHMIOP respects now the dotted decimal addresses setting. When this is
   set it uses ip addresses instead of hostnames.
 
+. Removed the usage of the ACE_x_cast macros, we are using the C++ casts
+  from now on. The ACE_x_cast macros are deprecated and will be removed
+  after the x.5.1 release. The TAO core libraries will be updated before
+  the x.4.5 release
+
 USER VISIBLE CHANGES BETWEEN TAO-1.4.2 and TAO-1.4.3
 ====================================================
 
