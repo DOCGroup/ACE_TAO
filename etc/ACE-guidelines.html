@@ -15,6 +15,10 @@
 </center>
 <h2>&nbsp</h2>
 
+Thanks to Graham Dumpleton &lt;grahamd@nms.otc.com.au&gt; for providing
+corrections to the OSE Classtools link and description.  Thanks also
+to Graham for providing the OSE tools!<p>
+
 <h3>Coding Guidelines</h3>
 <ul>
   <li><strong>General</strong><p>
@@ -73,9 +77,20 @@
         perl -pi -e 'if (! $o) {printf "// \$<!-- -->Id\$\n\n";}; $o = 1;' <em>file</em>
         </pre><p>
 
-    <li>Comments, especially in header files, must follow the OSE
-        <a href=http://www.dscpl.com.au/ose-5.2/tls_3.htm#HEADING3-0>Classinfo
-        Tools</a> format requirements.<p>
+    <li>Comments, especially in header files, must follow the
+        <a href=http://www.dscpl.com.au>OSE</a> Tools format requirements.
+        Please see the ``Classinfo Tools'' section of the
+        <a href=http://www.dscpl.com.au>OSE</a> ``Tools Manual''
+        for these requirements.<p>
+
+        Please note that the Classinfo tools in OSE have been developed
+        independently since the copies in ACE were made and thus they
+        support new features not supported in the ACE version of the tools.
+        Certain subtle changes were also made in the ACE copies for
+        indicating sections, <em>etc.</em>, which makes them different
+        from the OSE documentation.  Please see the
+        <a href=http://www.cs.wustl.edu/~schmidt/ACE-doctools.html>ACE-doctools
+        page</a> for descriptions of these changes.<p>
   </ul>
 
   <li><strong>Preprocessor</strong><p>
