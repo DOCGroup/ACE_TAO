@@ -1,3 +1,13 @@
+Mon Jun 28 17:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_Acceptor.h:
+        * ace/Sock_Connect.h:
+        * ace/SUN_Proactor.h:
+        * ace/Token.h:
+        * ace/Token_Collection.h:
+        * ace/Token_Manager.h:
+          Doxygen improvements
+
 Mon Jun 28 16:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ciao.doxygen:
