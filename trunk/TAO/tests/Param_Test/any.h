@@ -39,8 +39,10 @@ public:
     ANY_STRING,
     ANY_OBJREF,
     ANY_ARRAY,
+    ANY_SHORT_SEQ,
     ANY_BD_SHORT_SEQ,
     ANY_STRUCT,
+    ANY_UNION,
     ANY_LAST_TEST_ITEM
   };
 

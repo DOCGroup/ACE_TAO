@@ -255,7 +255,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_UNION_ANY_OP_CH:
       return new be_visitor_union_any_op_ch (new_ctx);
     case TAO_CodeGen::TAO_UNION_ANY_OP_CS:
-      return new be_visitor_union_any_op_cs (new_ctx);
+      break;
     case TAO_CodeGen::TAO_UNION_CDR_OP_CH:
       return new be_visitor_union_cdr_op_ch (new_ctx);
     case TAO_CodeGen::TAO_UNION_CDR_OP_CS:
@@ -373,6 +373,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       delete new_ctx;
       return 0;
     }
+  return 0;
 }
 
 // The concrete visitor factory for operation visitors  generating interpretive
@@ -398,6 +399,9 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
   switch (st)
     {
+    case TAO_CodeGen::TAO_UNION_ANY_OP_CS:
+      return new be_visitor_union_any_op_interpretive_cs (new_ctx);
+
     case TAO_CodeGen::TAO_OPERATION_CH:
       return new be_visitor_operation_ch (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_CS:
@@ -518,6 +522,9 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
   switch (st)
     {
+    case TAO_CodeGen::TAO_UNION_ANY_OP_CS:
+      return new be_visitor_union_any_op_compiled_cs (new_ctx);
+
     case TAO_CodeGen::TAO_OPERATION_CH:
       return new be_visitor_operation_ch (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_CS:

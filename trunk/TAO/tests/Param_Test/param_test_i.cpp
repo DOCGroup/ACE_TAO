@@ -151,7 +151,7 @@ Param_Test::Long_Seq * Param_Test_i::test_long_sequence (
   Param_Test::Long_Seq
     *ret = new Param_Test::Long_Seq,
     *out = new Param_Test::Long_Seq;
-  
+
   s2 = s1;
   *out = s1;
   *ret = s1;
@@ -582,19 +582,33 @@ CORBA::Any *
 Param_Test_i::test_any (const CORBA::Any &a1,
                         CORBA::Any &a2,
                         CORBA::Any_out a3,
-                        CORBA::Environment &)
+                        CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::Any *ret;
   CORBA::Short short_in;
   char *str_in;
   Coffee_ptr coffee;
   Param_Test::Fixed_Array_forany array;
+  Param_Test::Short_Seq_ptr ub_short_sequence;
   Param_Test::Bounded_Short_Seq_ptr bd_short_sequence;
   Param_Test::Fixed_Struct *fixed_structure;
+  Param_Test::Big_Union *big_union;
 
   a2 = a1;
   a3 = new CORBA::Any (a1);
   ret = new CORBA::Any (a1);
+
+
+  if (TAO_debug_level > 0)
+    {
+      CORBA::TypeCode_var tc = a1.type ();
+      int kind = tc->kind (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Received any contents are <%d>\n",
+                  kind));
+    }
 
   // debug the incoming Any
   if (a1 >>= short_in)
@@ -635,6 +649,20 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       a2 <<= Param_Test::Fixed_Array_forany (array);
       *ret <<= Param_Test::Fixed_Array_forany (array);
     }
+  else if (a1 >>= ub_short_sequence)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Received Unbounded Short_Seq:"));
+          for (size_t i = 0; i < ub_short_sequence->length (); i++)
+            ACE_DEBUG ((LM_DEBUG, " %d", (*ub_short_sequence)[i]));
+          ACE_DEBUG ((LM_DEBUG, "\n"));
+        }
+      for (size_t i = 0; i < ub_short_sequence->length (); i++)
+        (*ub_short_sequence)[i] = i * i;
+      a2   <<= *ub_short_sequence;
+      *ret <<= *ub_short_sequence;
+    }
   else if (a1 >>= bd_short_sequence)
     {
       if (TAO_debug_level > 0)
@@ -654,6 +682,32 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Received Fixed_Struct\n"));
     }
+  else if (a1 >>= big_union)
+    {
+      Param_Test::Big_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
+      a1 >>= bu_in;
+      
+      // Insert copies....
+      a2 <<= *bu_in;
+      *a3 <<= *bu_in;
+      *ret <<= *bu_in;
+
+      // Extract the value to compare...
+      a2 >>= bu_inout;
+      *a3 >>= bu_out;
+      *ret >>= bu_ret;
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Received Big Union\n"
+                    "  in %d\n"
+                    "  inout %d\n"
+                    "  out %d\n"
+                    "  ret %d\n",
+                    bu_in->the_long (),
+                    bu_inout->the_long (),
+                    bu_out->the_long (),
+                    bu_ret->the_long () ));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG, "Received UNKNOWN type\n"));
@@ -670,7 +724,7 @@ Param_Test_i::test_fixed_array (const Param_Test::Fixed_Array a1,
                                 CORBA::Environment &)
 {
   Param_Test::Fixed_Array_slice *ret;
-  
+
   Param_Test::Fixed_Array_copy (a2, a1);
   Param_Test::Fixed_Array_copy (a3, a1);
   ret = Param_Test::Fixed_Array_dup (a1);
@@ -685,7 +739,7 @@ Param_Test_i::test_var_array (const Param_Test::Var_Array a1,
                               CORBA::Environment &)
 {
   Param_Test::Var_Array_slice *ret;
-  
+
   Param_Test::Var_Array_copy (a2, a1);
   a3 = Param_Test::Var_Array_dup (a1);
   ret = Param_Test::Var_Array_dup (a1);

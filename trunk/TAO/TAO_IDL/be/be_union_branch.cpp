@@ -52,10 +52,50 @@ be_union_branch::gen_encapsulation (void)
   ACE_UINT32 *arr;
 
   cs = cg->client_stubs ();
-  cs->indent (); // start from whatever indentation level we were at
+
+  *cs << be_nl;
+
+  // be_union* the_union =
+  // be_union::narrow_from_scope (this->defined_in ());
+
+  ACE_UINT32 buf[1];
+  ACE_OS::memset (buf, 0, sizeof (buf));
 
   // emit the case label value
-  *cs << this->label ()->label_val ();
+  AST_Expression *expression = this->label ()->label_val ();
+  AST_ExprValue *ev = expression->ev ();
+  switch (ev->et) // the_union->udisc_type ())
+    {
+    case AST_Expression::EV_char:
+    case AST_Expression::EV_bool:
+      cs->print ("ACE_IDL_NCTOHL (0x%02.2x)", (unsigned char)ev->u.cval);
+      break;
+
+    case AST_Expression::EV_wchar:
+    case AST_Expression::EV_short:
+    case AST_Expression::EV_ushort:
+      cs->print ("ACE_IDL_NSTOHL (0x%04.4x)", (unsigned short)ev->u.sval);
+      break;
+
+    case AST_Expression::EV_long:
+    case AST_Expression::EV_ulonglong:
+      *cs << expression;
+      break;
+
+    default:
+      if (expression->ec () == AST_Expression::EC_symbol)
+        {
+          *cs << expression;
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "be_union_branch: (%N:%l) Label value "
+                             "type (%d) is invalid\n", ev->et), -1);
+        }
+      break;
+    }
+  
   *cs << ", // union case label (evaluated)" << nl;
   // emit name
   *cs << (ACE_OS::strlen (this->local_name ()->get_string ())+1) << ", ";
@@ -136,7 +176,7 @@ be_union_branch::gen_label_value (TAO_OutStream *os)
 
   // Find where was the enum defined, if it was defined in the globa
   // scope, then it is easy to generate the enum values....
-  be_scope* scope = 
+  be_scope* scope =
     be_scope::narrow_from_scope (dt->defined_in ());
   if (scope == 0)
     {
@@ -144,9 +184,9 @@ be_union_branch::gen_label_value (TAO_OutStream *os)
       return 0;
     }
 
-  // But if it was generated inside a module or something similar then 
-  // we must prefix the enum value with something... 
-  be_decl* decl = 
+  // But if it was generated inside a module or something similar then
+  // we must prefix the enum value with something...
+  be_decl* decl =
     scope->decl ();
   *os << decl->fullname () << "::" << e->n ();
   return 0;

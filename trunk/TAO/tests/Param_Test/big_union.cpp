@@ -67,7 +67,7 @@ Test_Big_Union::init_parameters (Param_Test_ptr objref,
       ACE_PRINT_EXCEPTION (sysex,"System Exception doing make_coffee");
       return -1;
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "An exception caught in make_coffee");
       return -1;
