@@ -1,3 +1,9 @@
+Wed Jul  1 06:36:11 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp: For the copying
+	version of the <<= operator, we were not doing a copy. Thanks to
+	Seth Widoff for pointing this out.
+
 Tue Jun 30 22:08:38 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp (lookup_strategy): added full
