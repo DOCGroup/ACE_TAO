@@ -26,18 +26,18 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export User_IdAssignment_Policy
+    class TAO_PortableServer_Export IdAssignmentPolicyValueUser
       : public virtual IdAssignmentPolicyValue
     {
       public:
-        virtual ~User_IdAssignment_Policy (void);
+        virtual ~IdAssignmentPolicyValueUser (void);
 
         virtual ::PortableServer::IdAssignmentPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           ACE_THROW_SPEC ((CORBA::SystemException));
     };
 
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, User_IdAssignment_Policy)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, User_IdAssignment_Policy)
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdAssignmentPolicyValueUser)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, IdAssignmentPolicyValueUser)
   } /* namespace Portable_Server */
 } /* namespace TAO */
 

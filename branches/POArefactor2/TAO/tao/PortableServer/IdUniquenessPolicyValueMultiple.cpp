@@ -9,35 +9,35 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Multiple_IdUniqueness_Policy::~Multiple_IdUniqueness_Policy (void)
+    IdUniquenessPolicyValueMultiple::~IdUniquenessPolicyValueMultiple (void)
     {
     }
 
     ::PortableServer::IdUniquenessPolicyValue
-    Multiple_IdUniqueness_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    IdUniquenessPolicyValueMultiple::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::MULTIPLE_ID;
     }
 
-    ACE_FACTORY_DEFINE (TAO_PortableServer, Multiple_IdUniqueness_Policy)
+    ACE_FACTORY_DEFINE (TAO_PortableServer, IdUniquenessPolicyValueMultiple)
 
     ACE_STATIC_SVC_DEFINE (
-        Multiple_IdUniqueness_Policy,
-        ACE_TEXT ("Multiple_IdUniqueness_Policy"),
+        IdUniquenessPolicyValueMultiple,
+        ACE_TEXT ("IdUniquenessPolicyValueMultiple"),
         ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (Multiple_IdUniqueness_Policy),
+        &ACE_SVC_NAME (IdUniquenessPolicyValueMultiple),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
         0
       )
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-    template class ACE_Dynamic_Service<Multiple_IdUniqueness_Policy>;
+    template class ACE_Dynamic_Service<IdUniquenessPolicyValueMultiple>;
 
     #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-    #pragma instantiate ACE_Dynamic_Service<Multiple_IdUniqueness_Policy>
+    #pragma instantiate ACE_Dynamic_Service<IdUniquenessPolicyValueMultiple>
 
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }

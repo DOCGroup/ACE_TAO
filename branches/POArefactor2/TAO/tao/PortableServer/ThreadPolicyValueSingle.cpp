@@ -11,34 +11,34 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    SINGLE_THREAD_Thread_Policy::~SINGLE_THREAD_Thread_Policy (void)
+    ThreadPolicyValueSingle::~ThreadPolicyValueSingle (void)
     {
     }
 
     ::PortableServer::ThreadPolicyValue
-    SINGLE_THREAD_Thread_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ThreadPolicyValueSingle::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
           ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::SINGLE_THREAD_MODEL;
     }
 
-    ACE_FACTORY_DEFINE (TAO_PortableServer, SINGLE_THREAD_Thread_Policy)
+    ACE_FACTORY_DEFINE (TAO_PortableServer, ThreadPolicyValueSingle)
 
     ACE_STATIC_SVC_DEFINE (
-        SINGLE_THREAD_Thread_Policy,
-        ACE_TEXT ("SINGLE_THREAD_Thread_Policy"),
+        ThreadPolicyValueSingle,
+        ACE_TEXT ("ThreadPolicyValueSingle"),
         ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (SINGLE_THREAD_Thread_Policy),
+        &ACE_SVC_NAME (ThreadPolicyValueSingle),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
         0
       )
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-    template class ACE_Dynamic_Service<SINGLE_THREAD_Thread_Policy>;
+    template class ACE_Dynamic_Service<ThreadPolicyValueSingle>;
 
     #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-    #pragma instantiate ACE_Dynamic_Service<SINGLE_THREAD_Thread_Policy>
+    #pragma instantiate ACE_Dynamic_Service<ThreadPolicyValueSingle>
 
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }

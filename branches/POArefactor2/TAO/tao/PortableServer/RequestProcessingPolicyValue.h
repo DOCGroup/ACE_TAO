@@ -39,44 +39,44 @@ namespace TAO
           ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
     };
 
-    class TAO_PortableServer_Export Default_Servant_Request_Processing_Policy
+    class TAO_PortableServer_Export RequestProcessingPolicyValueDefaultServant
       : public virtual RequestProcessingPolicyValue
     {
       public:
-        virtual ~Default_Servant_Request_Processing_Policy (void);
+        virtual ~RequestProcessingPolicyValueDefaultServant (void);
 
         virtual ::PortableServer::RequestProcessingPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           ACE_THROW_SPEC ((CORBA::SystemException));
     };
 
-    ACE_STATIC_SVC_DECLARE (Default_Servant_Request_Processing_Policy)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, Default_Servant_Request_Processing_Policy)
+    ACE_STATIC_SVC_DECLARE (RequestProcessingPolicyValueDefaultServant)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingPolicyValueDefaultServant)
 
-    class TAO_PortableServer_Export Servant_Manager_Request_Processing_Policy
+    class TAO_PortableServer_Export RequestProcessingPolicyValueServantManager
       : public virtual RequestProcessingPolicyValue
     {
       public:
-        virtual ~Servant_Manager_Request_Processing_Policy  (void);
+        virtual ~RequestProcessingPolicyValueServantManager  (void);
 
         virtual ::PortableServer::RequestProcessingPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           ACE_THROW_SPEC ((CORBA::SystemException));
     };
 
-    ACE_STATIC_SVC_DECLARE (Servant_Manager_Request_Processing_Policy)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, Servant_Manager_Request_Processing_Policy)
+    ACE_STATIC_SVC_DECLARE (RequestProcessingPolicyValueServantManager)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingPolicyValueServantManager)
 
-    class TAO_PortableServer_Export Active_Object_Map_Request_Processing_Policy
+    class TAO_PortableServer_Export RequestProcessingPolicyValueAOMOnly
       : public virtual RequestProcessingPolicyValue
     {
       public:
-        virtual ~Active_Object_Map_Request_Processing_Policy  (void);
+        virtual ~RequestProcessingPolicyValueAOMOnly  (void);
 
         virtual ::PortableServer::RequestProcessingPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           ACE_THROW_SPEC ((CORBA::SystemException));
     };
 
-    ACE_STATIC_SVC_DECLARE (Active_Object_Map_Request_Processing_Policy)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, Active_Object_Map_Request_Processing_Policy)
+    ACE_STATIC_SVC_DECLARE (RequestProcessingPolicyValueAOMOnly)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingPolicyValueAOMOnly)
   }
 }
 

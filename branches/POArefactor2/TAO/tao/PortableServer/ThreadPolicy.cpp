@@ -43,32 +43,32 @@ namespace TAO
         case ::PortableServer::ORB_CTRL_MODEL :
           {
             this->value_ =
-              ACE_Dynamic_Service<ThreadPolicyValue>::instance ("ORB_CTRL_Thread_Policy");
+              ACE_Dynamic_Service<ThreadPolicyValue>::instance ("ThreadPolicyValueORBControl");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic ORB_CTRL_Thread_Policy Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_ORB_CTRL_Thread_Policy()"));
+                  ACE_TEXT("dynamic ThreadPolicyValueORBControl Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_ThreadPolicyValueORBControl()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<ThreadPolicyValue>::instance ("ORB_CTRL_Thread_Policy");
+                  ACE_Dynamic_Service<ThreadPolicyValue>::instance ("ThreadPolicyValueORBControl");
               }
             break;
           }
         case ::PortableServer::SINGLE_THREAD_MODEL :
           {
             this->value_ =
-              ACE_Dynamic_Service<ThreadPolicyValue>::instance ("SINGLE_THREAD_Thread_Policy");
+              ACE_Dynamic_Service<ThreadPolicyValue>::instance ("ThreadPolicyValueSingle");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic SINGLE_THREAD_Thread_Policy Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_SINGLE_THREAD_Thread_Policy()"));
+                  ACE_TEXT("dynamic ThreadPolicyValueSingle Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_ThreadPolicyValueSingle()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<ThreadPolicyValue>::instance ("SINGLE_THREAD_Thread_Policy");
+                  ACE_Dynamic_Service<ThreadPolicyValue>::instance ("ThreadPolicyValueSingle");
               }
 
             break;

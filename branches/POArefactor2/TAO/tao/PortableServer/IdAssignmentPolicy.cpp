@@ -41,16 +41,16 @@ namespace TAO
         case ::PortableServer::USER_ID :
           {
             this->value_ =
-              ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("User_IdAssignment_Policy");
+              ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("IdAssignmentPolicyValueUser");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic User_IdAssignment_Policy Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_User_IdAssignment_Policy()"));
+                  ACE_TEXT("dynamic IdAssignmentPolicyValueUser Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyValueUser()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("User_IdAssignment_Policy");
+                  ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("IdAssignmentPolicyValueUser");
               }
             break;
           }

@@ -28,18 +28,18 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export SINGLE_THREAD_Thread_Policy
+    class TAO_PortableServer_Export ThreadPolicyValueSingle
       : public virtual ThreadPolicyValue
     {
       public:
-        virtual ~SINGLE_THREAD_Thread_Policy  (void);
+        virtual ~ThreadPolicyValueSingle  (void);
 
         virtual ::PortableServer::ThreadPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           ACE_THROW_SPEC ((CORBA::SystemException));
     };
 
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, SINGLE_THREAD_Thread_Policy)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, SINGLE_THREAD_Thread_Policy)
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ThreadPolicyValueSingle)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, ThreadPolicyValueSingle)
   }
 }
 

@@ -9,35 +9,35 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    System_IdAssignment_Policy::~System_IdAssignment_Policy (void)
+    IdAssignmentPolicyValueSystem::~IdAssignmentPolicyValueSystem (void)
     {
     }
 
     ::PortableServer::IdAssignmentPolicyValue
-    System_IdAssignment_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    IdAssignmentPolicyValueSystem::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::SYSTEM_ID;
     }
 
-    ACE_FACTORY_DEFINE (TAO_PortableServer, System_IdAssignment_Policy)
+    ACE_FACTORY_DEFINE (TAO_PortableServer, IdAssignmentPolicyValueSystem)
 
     ACE_STATIC_SVC_DEFINE (
-        System_IdAssignment_Policy,
-        ACE_TEXT ("System_IdAssignment_Policy"),
+        IdAssignmentPolicyValueSystem,
+        ACE_TEXT ("IdAssignmentPolicyValueSystem"),
         ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (System_IdAssignment_Policy),
+        &ACE_SVC_NAME (IdAssignmentPolicyValueSystem),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
         0
       )
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-    template class ACE_Dynamic_Service<System_IdAssignment_Policy>;
+    template class ACE_Dynamic_Service<IdAssignmentPolicyValueSystem>;
 
     #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-    #pragma instantiate ACE_Dynamic_Service<System_IdAssignment_Policy>
+    #pragma instantiate ACE_Dynamic_Service<IdAssignmentPolicyValueSystem>
 
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }

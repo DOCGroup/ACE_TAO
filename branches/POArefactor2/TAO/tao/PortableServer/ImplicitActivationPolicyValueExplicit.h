@@ -29,18 +29,18 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export No_Implicit_Implicit_Activation_Policy
+    class TAO_PortableServer_Export ImplicitActivationPolicyValueExplicit
       : public virtual ImplicitActivationPolicyValue
     {
       public:
-        virtual ~No_Implicit_Implicit_Activation_Policy  (void);
+        virtual ~ImplicitActivationPolicyValueExplicit  (void);
 
         virtual ::PortableServer::ImplicitActivationPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           ACE_THROW_SPEC ((CORBA::SystemException));
     };
 
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, No_Implicit_Implicit_Activation_Policy)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, No_Implicit_Implicit_Activation_Policy)
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ImplicitActivationPolicyValueExplicit)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, ImplicitActivationPolicyValueExplicit)
   }
 }
 

@@ -111,43 +111,45 @@ TAO_POA_Initializer::init (void)
   // Policy Values
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ORB_CTRL_Thread_Policy
+      TAO::Portable_Server::ace_svc_desc_ThreadPolicyValueORBControl
+    );
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_ThreadPolicyValueSingle
+    );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_LifespanPolicyValueTransient
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_SINGLE_THREAD_Thread_Policy
+      TAO::Portable_Server::ace_svc_desc_LifespanPolicyValuePersistent
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_Transient_Lifespan_Policy
+      TAO::Portable_Server::ace_svc_desc_IdAssignmentPolicyValueSystem
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_Persistent_Lifespan_Policy
+      TAO::Portable_Server::ace_svc_desc_IdAssignmentPolicyValueUser
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_System_IdAssignment_Policy
+      TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyValueMultiple
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_User_IdAssignment_Policy
+      TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyValueUnique
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_Multiple_IdUniqueness_Policy
+      TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyValueExplicit
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_Unique_IdUniqueness_Policy
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_No_Implicit_Implicit_Activation_Policy
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_Implicit_Implicit_Activation_Policy
+      TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyValueImplicit
     );
 
   // Strategy factories
@@ -186,9 +188,11 @@ TAO_POA_Initializer::init (void)
       TAO::Portable_Server::ace_svc_desc_ThreadStrategyORBControl
     );
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ThreadStrategySingle
     );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   return
     ACE_Service_Config::process_directive (

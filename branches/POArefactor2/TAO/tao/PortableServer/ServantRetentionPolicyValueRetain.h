@@ -29,18 +29,18 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Retain_Servant_Retention_Policy
+    class TAO_PortableServer_Export ServantRetentionPolicyValueRetain
       : public virtual ServantRetentionPolicyValue
     {
       public:
-        virtual ~Retain_Servant_Retention_Policy (void);
+        virtual ~ServantRetentionPolicyValueRetain (void);
 
         virtual ::PortableServer::ServantRetentionPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           ACE_THROW_SPEC ((CORBA::SystemException));
     };
 
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, Retain_Servant_Retention_Policy)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, Retain_Servant_Retention_Policy)
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ServantRetentionPolicyValueRetain)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, ServantRetentionPolicyValueRetain)
   }
 }
 

@@ -26,18 +26,18 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Persistent_Lifespan_Policy
+    class TAO_PortableServer_Export LifespanPolicyValuePersistent
       : public virtual LifespanPolicyValue
     {
       public:
-        virtual ~Persistent_Lifespan_Policy (void);
+        virtual ~LifespanPolicyValuePersistent (void);
 
         virtual ::PortableServer::LifespanPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           ACE_THROW_SPEC ((CORBA::SystemException));
     };
 
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, Persistent_Lifespan_Policy)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, Persistent_Lifespan_Policy)
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, LifespanPolicyValuePersistent)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, LifespanPolicyValuePersistent)
   }
 }
 

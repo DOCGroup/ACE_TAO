@@ -42,30 +42,30 @@ namespace TAO
         case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
           {
             this->value_ =
-              ACE_Dynamic_Service<Active_Object_Map_Request_Processing_Policy>::instance ("Active_Object_Map_Request_Processing_Policy");
+              ACE_Dynamic_Service<RequestProcessingPolicyValueAOMOnly>::instance ("RequestProcessingPolicyValueAOMOnly");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_Active_Object_Map_Request_Processing_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueAOMOnly);
 
                 this->value_ =
-                  ACE_Dynamic_Service<Active_Object_Map_Request_Processing_Policy>::instance ("Active_Object_Map_Request_Processing_Policy");
+                  ACE_Dynamic_Service<RequestProcessingPolicyValueAOMOnly>::instance ("RequestProcessingPolicyValueAOMOnly");
               }
             break;
           }
         case ::PortableServer::USE_DEFAULT_SERVANT :
           {
             this->value_ =
-              ACE_Dynamic_Service<Default_Servant_Request_Processing_Policy>::instance ("Default_Servant_Request_Processing_Policy");
+              ACE_Dynamic_Service<RequestProcessingPolicyValueDefaultServant>::instance ("RequestProcessingPolicyValueDefaultServant");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_Default_Servant_Request_Processing_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueDefaultServant);
 
                 this->value_ =
-                  ACE_Dynamic_Service<Default_Servant_Request_Processing_Policy>::instance ("Default_Servant_Request_Processing_Policy");
+                  ACE_Dynamic_Service<RequestProcessingPolicyValueDefaultServant>::instance ("RequestProcessingPolicyValueDefaultServant");
               }
 
             break;
@@ -73,15 +73,15 @@ namespace TAO
         case ::PortableServer::USE_SERVANT_MANAGER :
           {
             this->value_ =
-              ACE_Dynamic_Service<Servant_Manager_Request_Processing_Policy>::instance ("Servant_Manager_Request_Processing_Policy");
+              ACE_Dynamic_Service<RequestProcessingPolicyValueServantManager>::instance ("RequestProcessingPolicyValueServantManager");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_Servant_Manager_Request_Processing_Policy);
+                  ::TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueServantManager);
 
                 this->value_ =
-                  ACE_Dynamic_Service<Servant_Manager_Request_Processing_Policy>::instance ("Servant_Manager_Request_Processing_Policy");
+                  ACE_Dynamic_Service<RequestProcessingPolicyValueServantManager>::instance ("RequestProcessingPolicyValueServantManager");
               }
 
             break;
