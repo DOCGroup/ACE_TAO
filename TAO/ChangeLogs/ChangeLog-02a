@@ -1,3 +1,12 @@
+Wed Feb  2 17:49:33 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/pluggable_protocols/index.html:
+
+	  Updated the "Notes from a Real World Pluggable Protocol
+	  Implementation" section so that it no longer states that changes
+	  to ACE and TAO were necessary.  Changes to ACE and TAO weren't
+	  necessary for that implementation.
+
 Wed Feb  2 19:17:13 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* docs/pluggable_protocols/index.html: Updated the documentation
