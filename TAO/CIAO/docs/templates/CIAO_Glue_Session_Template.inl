@@ -465,3 +465,145 @@ ACE_INLINE [eventtype]Consumer_ptr
                                                      ACE_ENV_ARG_PARAMETER);
 }
 ##end foreach [publish name] with [eventtype]
+
+//////////////////////////////////////////////////////////////////
+// Component Home Glue code implementation
+//////////////////////////////////////////////////////////////////
+
+ACE_INLINE
+[ciao module name]::[home name]_Servant::[home name]_Servant (CCM_[home name]_ptr exe,
+                                                              CIAO::Session_Container *c)
+  : executor_ (CCM_[home name]::_duplicate (exe)),
+    container_ (c)
+{
+}
+
+ACE_INLINE
+[ciao module name]::[home name]_Servant::~[home name]_Servant (void)
+{
+}
+
+##foreach [operation] in (all explicit operations in [home basename] including its parents)
+
+// The operation impl here.  This can simply be relayed to the underlying executor...
+
+## end foreach opeartion
+
+##foreach [factory name]  in (all factory operations in [home basename] including its parents)
+// for factory operations inherit from parent home(s), they should return
+// the corresponding component types their homes manage
+ACE_INLINE [component name]_ptr
+[ciao module name]::[home name]_Servant::[factory name] (.... ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Components::CreateFailure,
+                   ....))
+{
+  Components::EnterpriseComponent_var com =
+    this->executor_->[factory name] (.... ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return this->create_helper (com ACE_ENV_ARG_PARAMETER);
+}
+##end foreach [factory name]
+
+##foreach [finder name]  in (all finder operations in [home basename] including its parents)
+// for finder operations inherit from parent home(s), they should return
+// the corresponding component types their homes manage
+ACE_INLINE [component name]_ptr
+[ciao module name]::[home name]_Servant::[finder name] (.... ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::FinderFailure,
+                   ....))
+{
+  Components::EnterpriseComponent_var com =
+    this->executor_->[finder name] (.... ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // Do we create a new object reference referring to the same object,
+  // or do we try to create a different objref referring to the same object?
+  return this->create_helper (com ACE_ENV_ARG_PARAMETER);
+}
+##end foreach [finder name]
+
+##  if [home name] is a keyless home
+
+    // Operations for KeylessHome interface
+ACE_INLINE ::Components::CCMObject_ptr
+[ciao module name]::[home name]_Servant::create_component (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CreateFailure))
+{
+  // Simply forward to the create method.
+  return this->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+##  else [home basename] is keyed home with [key type]
+
+    // We do not support key'ed home at the moment but we might
+    // as well generate the mapping.
+ACE_INLINE [component name]_ptr
+[ciao module name]::[home name]_Servant::create ([key type]_ptr key)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Components::CreationFailure,
+                   ::Components::DuplicateKeyValue,
+                   ::Components::InvalidKey))
+{
+  // @@ TO-DO when we suppor keyed home.
+
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+ACE_INLINE [component name]_ptr
+[ciao module name]::[home name]_Servant::find_by_primary_key ([key type]_ptr key)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Components::FinderFailure,
+                   ::Components::UnknownKeyValue,
+                   ::Components::InvalidKey))
+{
+  // @@ TO-DO when we suppor keyed home.
+
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+
+ACE_INLINE void
+[ciao module name]::[home name]_Servant::remove ([key type]_ptr key)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ::Components::RemoveFailure,
+                   ::Components::UnknownKeyValue,
+                   ::Components::InvalidKey))
+{
+  // @@ TO-DO when we suppor keyed home.
+
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+}
+
+ACE_INLINE [key type]_ptr
+[ciao module name]::[home name]_Servant::get_primary_key ([component name]_ptr comp)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // @@ TO-DO when we suppor keyed home.
+
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+##  endif (keyed or keyless home)
+
+
+// Operations for CCMHome interface
+ACE_INLINE ::CORBA::IRObject_ptr
+[ciao module name]::[home name]_Servant::get_component_def (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // @@ TO-DO.  Contact IfR?
+
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+ACE_INLINE CORBA::IRObject_ptr get_home_def (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // @@ TO-DO.  Contact IfR?
+
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}

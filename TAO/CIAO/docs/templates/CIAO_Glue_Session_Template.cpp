@@ -894,3 +894,69 @@ CORBA::Object_ptr
   return ho._retn ();
 
 }
+
+//////////////////////////////////////////////////////////////////
+// Component Home Glue code implementation
+//////////////////////////////////////////////////////////////////
+
+[component name]_ptr
+[ciao module name]::[home name]_Servant::_ciao_create_helper (::Components::EnterpriseComponent_ptr c
+                                                              ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CreateFailure))
+{
+  CCM_[component name]_var hw = CCM_[component name]::_narrow (com
+                                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // Acquiring the home reference and pass it to the component servant
+  CORBA::Object_var hobj= this->container_->get_objref (this
+                                                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  ::Components::[home name]_var home = ::Components::[home name]::_narrow (hobj.in ()
+                                                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CIAO_[component name]_Servant *svt = new CIAO_[component name]_Servant (hw.in (),
+                                                                          home.in (),
+                                                                          this->container_);
+  return svt->_ciao_activate_component (ACE_ENV_ARG_PARAMETER);
+}
+
+// Operations for Implicit Home interface
+[component name]_ptr
+[ciao module name]::[home name]_Servant::create (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CreateFailure))
+{
+  if (this->executor_.in () == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
+  Components::EnterpriseComponent_var com =
+    this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return this->_ciao_create_helper (com
+                             ACE_ENV_ARG_PARAMETER);
+}
+
+// Operations for CCMHome interface
+void
+[ciao module name]::[home name]_Servant::remove_component (Components::CCMObject_ptr comp
+                                                           ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::RemoveFailure))
+{
+  if (CORBA::is_nil (comp))
+    ACE_THROW (CORBA::INTERNAL (), 0); // What is the right exception to throw here?
+
+  comp->remove (ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Removing the object reference?  get the servant from the POA with
+  // the objref, and call remove() on the component, deactivate the
+  // component, and then remove-ref the servant?
+  this->container_->uninstall (comp
+                               ACE_ENV_ARG_PARAMETER);
+}
