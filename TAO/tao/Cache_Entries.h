@@ -18,7 +18,7 @@
 #define TAO_CACHE_ENTRIES_H
 #include "ace/pre.h"
 
-#include "tao/Base_Connection_Property.h"
+#include "tao/Connection_Descriptor_Interface.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -108,7 +108,7 @@ public:
   TAO_Cache_ExtId (void);
   // Constructor.
 
-  TAO_Cache_ExtId (TAO_Base_Connection_Property *prop);
+  TAO_Cache_ExtId (TAO_Connection_Descriptor_Interface *prop);
   // Constructor.
 
   TAO_Cache_ExtId (const TAO_Cache_ExtId & rhs);
@@ -143,13 +143,13 @@ public:
   // but for the TAO_Connection_Cache_Manager class.
 
   // = Accessors
-  TAO_Base_Connection_Property *property (void) const;
+  TAO_Connection_Descriptor_Interface *property (void) const;
   // Get the underlying the property pointer
 
 private:
   // = Data members.
 
-  TAO_Base_Connection_Property *connection_property_;
+  TAO_Connection_Descriptor_Interface *connection_property_;
   // A property object that we represent.
 
   CORBA::Boolean is_delete_;

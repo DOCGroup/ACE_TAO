@@ -14,6 +14,7 @@
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Endpoint.h"
 #include "tao/Connection_Cache_Manager.h"
+#include "tao/Base_Connection_Property.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Connect.i"

@@ -31,7 +31,7 @@ TAO_Connection_Cache_Manager::find (const TAO_Cache_ExtId &key,
 
 ACE_INLINE int
 TAO_Connection_Cache_Manager::
-    cache_handler (TAO_Base_Connection_Property *prop,
+    cache_handler (TAO_Connection_Descriptor_Interface *prop,
                    TAO_Connection_Handler *handler)
 {
   // Compose the ExternId & Intid
@@ -45,7 +45,7 @@ TAO_Connection_Cache_Manager::
 
 ACE_INLINE int
 TAO_Connection_Cache_Manager::
-    find_handler (TAO_Base_Connection_Property *prop,
+    find_handler (TAO_Connection_Descriptor_Interface *prop,
                   TAO_Connection_Handler *&handler)
 {
   // Compose the ExternId

@@ -594,6 +594,25 @@ SOURCE=.\Connection_Cache_Manager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connection_Descriptor_Interface.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connection_Handler.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3357,6 +3376,10 @@ SOURCE=.\Connection_Cache_Manager.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connection_Descriptor_Interface.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connection_Handler.h
 # End Source File
 # Begin Source File
@@ -4054,6 +4077,10 @@ SOURCE=.\Client_Priority_Policy.i
 # Begin Source File
 
 SOURCE=.\Connection_Cache_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Descriptor_Interface.inl
 # End Source File
 # Begin Source File
 
