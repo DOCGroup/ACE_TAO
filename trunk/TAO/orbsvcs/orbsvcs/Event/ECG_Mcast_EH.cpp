@@ -57,14 +57,6 @@ TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv,
 
 TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH (void)
 {
-  ACE_TRY
-    {
-      if (this->handle_)
-	this->close ();
-    }
-  ACE_CATCHALL
-  ACE_ENDTRY;
-
   ACE::strdelete (this->net_if_);
   delete this->lock_;
 }

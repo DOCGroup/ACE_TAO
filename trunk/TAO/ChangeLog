@@ -1,3 +1,10 @@
+Sat Dec  7 11:59:06 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:  Removed close
+	  from dtor since it can raise an exception.  This is 
+	  consistent with previous behavior since the user must
+	  explicitely call close.
+
 Fri Dec  6 21:02:48 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.{h,cpp}:  Removed use of 
