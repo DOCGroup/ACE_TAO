@@ -62,6 +62,10 @@ CosECConsumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
 void
 CosECConsumer::push (const CORBA::Any &,
                      CORBA::Environment &)
+ ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventComm::Disconnected
+      ))
 {
   ACE_DEBUG ((LM_DEBUG,
               "in CosECConsumer::push\n"));
@@ -70,6 +74,9 @@ CosECConsumer::push (const CORBA::Any &,
 
 void
 CosECConsumer::disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+ ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ))
 {
   // Deactivate this object.
 

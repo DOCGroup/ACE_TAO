@@ -47,7 +47,10 @@ public:
                    CORBA::Environment &ACE_TRY_ENV);
   // Send one event.
 
-  virtual void disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV);
+  virtual void disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
   // The POA_CosEventComm::PushSupplier method.
 
 private:

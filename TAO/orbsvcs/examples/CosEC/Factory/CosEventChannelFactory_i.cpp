@@ -78,6 +78,10 @@ CosEventChannelAdmin::EventChannel_ptr
 TAO_CosEventChannelFactory_i::create (const char * channel_id,
                                       CORBA::Boolean store_in_naming_service,
                                       CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventChannelFactory::DuplicateChannel
+      ))
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
 
@@ -215,6 +219,10 @@ TAO_CosEventChannelFactory_i::destroy
  CORBA::Boolean unbind_from_naming_service,
  CORBA::Environment &ACE_TRY_ENV
  )
+ ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventChannelFactory::NoSuchChannel
+      ))
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
 
@@ -276,6 +284,10 @@ TAO_CosEventChannelFactory_i::find
  const char * channel_id,
  CORBA::Environment &ACE_TRY_ENV
  )
+  ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventChannelFactory::NoSuchChannel
+      ))
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
 
@@ -310,6 +322,10 @@ TAO_CosEventChannelFactory_i::find_channel_id
  CosEventChannelAdmin::EventChannel_ptr channel,
  CORBA::Environment &ACE_TRY_ENV
  )
+  ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventChannelFactory::NoSuchChannel
+      ))
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
 
