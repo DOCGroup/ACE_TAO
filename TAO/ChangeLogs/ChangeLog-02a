@@ -1,3 +1,23 @@
+Wed Sep 20 15:17:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+	* orbsvcs/ImplRepo_Service/Options.cpp:
+	* orbsvcs/ImplRepo_Service/Repository.cpp:
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+	  Modified a call to make_mprofile (and surrounding code) in 
+	  ImplRepo_i::start_server_i reflecting changes to 
+	  tao/PortableServer.
+
+	  Modified the 'servers' section in ACE_Configuration to
+	  store the activation mode enum value as an integer,
+	  rather than converting it to a string first. This 
+	  enabled elimination of two conversion functions for 
+	  this data type.
+
+	  Cosmetic changes to all the above files.
+
 Wed Sep 20 11:55:35 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
