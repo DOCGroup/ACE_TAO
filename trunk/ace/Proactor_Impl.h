@@ -104,6 +104,14 @@ public:
   /// Create the correct implementation class for doing Asynch_Transmit_File.
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void) = 0;
 
+  /// Create the correct implementation class for doing
+  /// Asynch_Read_Dgram.
+  virtual ACE_Asynch_Read_Dgram_Impl *create_asynch_read_dgram (void) = 0;
+
+  /// Create the correct implementation class for doing
+  /// Asynch_Write_Dgram.
+  virtual ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram (void) = 0;
+
   //
   // = Factory methods for the results
   //

@@ -170,6 +170,7 @@ public:
                                                                                 const void* act,
                                                                                 ACE_HANDLE event,
                                                                                 int priority,
+                                                                                int signal_number = 0);
 
   virtual ACE_Asynch_Accept_Result_Impl *create_asynch_accept_result (ACE_Handler &handler,
                                                                       ACE_HANDLE listen_handle,
