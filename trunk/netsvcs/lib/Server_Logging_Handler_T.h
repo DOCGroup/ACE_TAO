@@ -17,7 +17,7 @@
 #ifndef ACE_SERVER_LOGGING_HANDLER_T_H
 #define ACE_SERVER_LOGGING_HANDLER_T_H
 
-#include "ace/Synch.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

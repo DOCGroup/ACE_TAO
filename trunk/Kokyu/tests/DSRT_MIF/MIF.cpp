@@ -4,7 +4,6 @@
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
 #include "ace/Atomic_Op.h"
-#include "ace/Synch.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Barrier.h"
 

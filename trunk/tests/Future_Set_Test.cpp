@@ -26,7 +26,6 @@
 #include "test_config.h"
 #include "ace/ACE.h"
 #include "ace/Task.h"
-#include "ace/Synch.h"
 #include "ace/Message_Queue.h"
 #include "ace/Future.h"
 #include "ace/Future_Set.h"

@@ -47,6 +47,7 @@ endif
 
 .obj/main_async.o .obj/main_async.so .shobj/main_async.o .shobj/main_async.so: main_async.cpp \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -55,7 +56,6 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   Driver.h \
@@ -148,7 +148,6 @@ endif
   $(ACE_ROOT)/ace/Object_Manager.h \
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/OS_NS_ctype.h \
   $(ACE_ROOT)/ace/Static_Object_Lock.h \
   $(ACE_ROOT)/ace/Managed_Object.h \
   $(ACE_ROOT)/ace/Managed_Object.cpp \
@@ -200,6 +199,7 @@ endif
 
 .obj/main_reactor.o .obj/main_reactor.so .shobj/main_reactor.o .shobj/main_reactor.so: main_reactor.cpp \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -208,7 +208,6 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   Reactor_Timer_Queue_Test.h Driver.h \
@@ -301,7 +300,6 @@ endif
   $(ACE_ROOT)/ace/Object_Manager.h \
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/OS_NS_ctype.h \
   $(ACE_ROOT)/ace/Static_Object_Lock.h \
   $(ACE_ROOT)/ace/Managed_Object.h \
   $(ACE_ROOT)/ace/Managed_Object.cpp \
@@ -355,6 +353,7 @@ endif
 
 .obj/main_thread.o .obj/main_thread.so .shobj/main_thread.o .shobj/main_thread.so: main_thread.cpp \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -363,7 +362,6 @@ endif
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   Driver.h \
@@ -456,7 +454,6 @@ endif
   $(ACE_ROOT)/ace/Object_Manager.h \
   $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/OS_NS_ctype.h \
   $(ACE_ROOT)/ace/Static_Object_Lock.h \
   $(ACE_ROOT)/ace/Managed_Object.h \
   $(ACE_ROOT)/ace/Managed_Object.cpp \

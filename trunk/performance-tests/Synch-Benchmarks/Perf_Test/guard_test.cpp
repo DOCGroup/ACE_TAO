@@ -1,7 +1,6 @@
 // $Id$
 
 #define  ACE_BUILD_SVC_DLL
-#include "ace/Synch.h"
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 

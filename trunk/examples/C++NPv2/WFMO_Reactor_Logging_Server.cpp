@@ -9,7 +9,6 @@
 #if defined (ACE_WIN32)
 
 #include "ace/Reactor.h"
-#include "ace/Synch.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Thread_Manager.h"
 

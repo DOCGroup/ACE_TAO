@@ -8,7 +8,6 @@
 #include "ace/Task.h"
 
 #include "ace/Service_Config.h"
-#include "ace/Synch.h"
 #include "ace/Atomic_Op.h"
 
 ACE_RCSID(Threads, task_two, "$Id$")

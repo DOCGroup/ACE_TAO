@@ -8,6 +8,7 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
+MAKEFILE = Makefile.Service_Config_DLL
 LIB     = libService_Config_DLL.a
 SHLIB   = libService_Config_DLL.$(SOEXT)
 FILES   = Service_Config_DLL

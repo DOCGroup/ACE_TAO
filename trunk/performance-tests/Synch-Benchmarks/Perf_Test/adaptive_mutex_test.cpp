@@ -1,8 +1,8 @@
 // $Id$
 
 #define  ACE_BUILD_SVC_DLL
-#include "ace/Synch.h"
 #include "Adaptive_Lock_Performance_Test_Base.h"
+#include "ace/Lock_Adapter_T.h"
 
 ACE_RCSID(Synch_Benchmarks, adaptive_mutex_test, "$Id$")
 

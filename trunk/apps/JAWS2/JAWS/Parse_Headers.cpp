@@ -1,6 +1,7 @@
 // $Id$
 
 #include "JAWS/Parse_Headers.h"
+#include "ace/OS_NS_string.h"
 
 #define ACCESSOR(T,C,x) \
 T C :: x (void) const { return this-> x##_; }\

@@ -6,7 +6,6 @@
 #define JAWS_CACHE_MANAGER_T_H
 
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
 
 #include "JAWS/Cache_Object.h"
 

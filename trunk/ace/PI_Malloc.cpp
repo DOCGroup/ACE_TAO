@@ -15,7 +15,6 @@ ACE_RCSID (ace,
 
 #include "ace/Object_Manager.h"
 #include "ace/Process_Mutex.h"
-#include "ace/Synch_T.h"
 #include "ace/OS_NS_string.h"
 
 void

@@ -3,7 +3,6 @@
 #include "Dispatcher_Task.h"
 
 #include "ace/Malloc_T.h"
-#include "ace/Synch_T.h"
 #include "ace/OS_NS_errno.h"
 
 #if ! defined (__ACE_INLINE__)

@@ -40,13 +40,13 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/FILE_Addr.h \
   $(ACE_ROOT)/ace/Addr.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Errno.h \

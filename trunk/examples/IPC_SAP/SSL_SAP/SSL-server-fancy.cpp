@@ -7,7 +7,6 @@
 
 #include "ace/Svc_Handler.h"
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 
