@@ -1,3 +1,8 @@
+Wed Jan 29 11:47:29 2003  Steve Huston  <shuston@riverace.com>
+
+        * ACEXML/tests/ContentHandler_Test.cpp: Fixed compile errors by
+          adding/correcting use of the ACEXML exception macros.
+
 Wed Jan 29 08:30:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Vector_T.cpp:
