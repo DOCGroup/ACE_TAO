@@ -83,7 +83,7 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
 
   // constructor
   *os << class_name << " (void)" << be_nl
-      << ": TAO_Bounded_Base_Sequence (" << node->max_size () 
+      << "  : TAO_Bounded_Base_Sequence (" << node->max_size () 
       << ", allocbuf(" << node->max_size () << "))" << be_nl
       << "{" << be_nl
       << "}" << be_nl
@@ -93,8 +93,9 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
   *os << class_name << " (CORBA::ULong length," << be_idt_nl
       << "char* *value," << be_nl
       << "CORBA::Boolean release = 0)" << be_uidt_nl
-      << ": TAO_Bounded_Base_Sequence (" << node->max_size () << ", length, value, release)" << be_nl
+      << "  : TAO_Bounded_Base_Sequence (" << node->max_size () << ", length, value, release)" << be_nl
       << "{" << be_nl
+      << "  this->_allocate_buffer (" << node->max_size () << ");" << be_nl
       << "}" << be_nl
       << be_nl;
 

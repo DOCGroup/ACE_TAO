@@ -73,7 +73,9 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
   // Constructor
   *os << class_name << " (void)" << be_nl
       << "// Default constructor." << be_nl
+      << "  : TAO_Bounded_Base_Sequence (" << node->max_size () << ", 0, 0, CORBA::B_FALSE)" << be_nl
       << "{" << be_nl
+      << "  this->_allocate_buffer (" << node->max_size () << ");" << be_nl 
       << "}" << be_nl
       << be_nl;
 
@@ -82,8 +84,9 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
   pt->accept (visitor); *os <<" *data," << be_nl
             << "CORBA::Boolean release=0)" << be_uidt_nl
       << "// Constructor using the data and memory management flag." << be_nl
-      << ": TAO_Bounded_Base_Sequence (length, " << node->max_size () << ", data, release)" << be_nl
+      << "  : TAO_Bounded_Base_Sequence (" << node->max_size () << ", length, data, release)" << be_nl
       << "{" << be_nl
+      << "  this->_allocate_buffer (" << node->max_size () << ");" << be_nl 
       << "}" << be_nl
       << be_nl;
 
