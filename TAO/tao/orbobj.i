@@ -3,10 +3,10 @@
 // Constructor and destructor are accessible to subclasses
 ACE_INLINE
 CORBA_ORB::CORBA_ORB (void)
-  : client_factory_(0),
-    client_factory_from_service_config_(CORBA_B_FALSE),
-    server_factory_(0),
-    server_factory_from_service_config_(CORBA_B_FALSE)
+  : client_factory_ (0),
+    client_factory_from_service_config_ (CORBA::B_FALSE),
+    server_factory_ (0),
+    server_factory_from_service_config_ (CORBA::B_FALSE)
 {
   refcount_ = 1;
 }
@@ -28,14 +28,14 @@ CORBA_ORB::~CORBA_ORB (void)
 // CORBA dup/release build on top of COM's (why not).
 
 ACE_INLINE void
-CORBA_release (CORBA_ORB_ptr obj)
+CORBA::release (CORBA::ORB_ptr obj)
 {
   if (obj)
     obj->Release ();
 }
 
-ACE_INLINE CORBA_ORB_ptr
-CORBA_ORB::_duplicate (CORBA_ORB_ptr obj)
+ACE_INLINE CORBA::ORB_ptr
+CORBA_ORB::_duplicate (CORBA::ORB_ptr obj)
 {
   if (obj)
     obj->AddRef ();
@@ -44,16 +44,16 @@ CORBA_ORB::_duplicate (CORBA_ORB_ptr obj)
 
 // Null pointers represent nil objects.
 
-ACE_INLINE CORBA_ORB_ptr
+ACE_INLINE CORBA::ORB_ptr
 CORBA_ORB::_nil (void)
 {
   return 0;
 }
 
-ACE_INLINE CORBA_Boolean
-CORBA_is_nil (CORBA_ORB_ptr obj)
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::ORB_ptr obj)
 {
-  return (CORBA_Boolean) (obj == 0);
+  return (CORBA::Boolean) (obj == 0);
 }
 
 ACE_INLINE ULONG __stdcall

@@ -14,7 +14,11 @@
 // ============================================================================
 
 #define ACE_BUILD_SVC_DLL
+#if 0
 #include "default_client.h"
+#endif /* 0 */
+
+#include "tao/corba.h"
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
 {
@@ -60,10 +64,6 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char *argv[])
   // no args to parse at this time
   return 0;
 }
-
-#if ! defined (__ACE_INLINE__)
-#  include "default_client.i"
-#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>;

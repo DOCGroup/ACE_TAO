@@ -6,6 +6,7 @@
 //
 // Implementation of Named Value List
 
+#if 0
 #include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
@@ -16,6 +17,9 @@
 #include "tao/any.h"
 #include "tao/except.h"
 #include "tao/nvlist.h"
+#endif
+
+#include "tao/corba.h"
 
 // COM's IUnknown support
 
@@ -66,22 +70,22 @@ CORBA_NamedValue::QueryInterface (REFIID riid,
 // Reference counting for DII Request object
 
 void
-CORBA_release (CORBA_NamedValue_ptr nv)
+CORBA::release (CORBA::NamedValue_ptr nv)
 {
   if (nv)
     nv->Release ();
 }
 
-CORBA_Boolean
-CORBA_is_nil (CORBA_NamedValue_ptr nv)
+CORBA::Boolean
+CORBA::is_nil (CORBA::NamedValue_ptr nv)
 {
-  return (CORBA_Boolean) nv == 0;
+  return (CORBA::Boolean) nv == 0;
 }
 
 CORBA_NamedValue::~CORBA_NamedValue (void)
 {
   if (_name)
-    CORBA_string_free ((CORBA_String) _name);
+    CORBA::string_free ((CORBA::String) _name);
 }
 
 // COM's IUnknown support
@@ -133,16 +137,16 @@ CORBA_NVList::QueryInterface (REFIID riid,
 // Reference counting for DII Request object
 
 void
-CORBA_release (CORBA_NVList_ptr nvl)
+CORBA::release (CORBA::NVList_ptr nvl)
 {
   if (nvl)
     nvl->Release ();
 }
 
-CORBA_Boolean
-CORBA_is_nil (CORBA_NVList_ptr nvl)
+CORBA::Boolean
+CORBA::is_nil (CORBA::NVList_ptr nvl)
 {
-  return (CORBA_Boolean) nvl == 0;
+  return (CORBA::Boolean) nvl == 0;
 }
 
 CORBA_NVList::~CORBA_NVList (void)
@@ -156,17 +160,17 @@ CORBA_NVList::~CORBA_NVList (void)
   _len = _max = 0;
 }
 
-CORBA_NamedValue_ptr
-CORBA_NVList::add_value (const CORBA_Char *name,
-                         const CORBA_Any &value,
-                         CORBA_Flags flags,
-                         CORBA_Environment &env)
+CORBA::NamedValue_ptr
+CORBA_NVList::add_value (const CORBA::Char *name,
+                         const CORBA::Any &value,
+                         CORBA::Flags flags,
+                         CORBA::Environment &env)
 {
   env.clear ();
 
-  if (ACE_BIT_DISABLED (flags, CORBA_ARG_IN | CORBA_ARG_OUT | CORBA_ARG_INOUT))
+  if (ACE_BIT_DISABLED (flags, CORBA::ARG_IN | CORBA::ARG_OUT | CORBA::ARG_INOUT))
     {
-      env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
+      env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -182,14 +186,14 @@ CORBA_NVList::add_value (const CORBA_Char *name,
 
   if (_values == 0) 
     {
-      _values = (CORBA_NamedValue_ptr)
-        calloc (_len, sizeof (CORBA_NamedValue));
+      _values = (CORBA::NamedValue_ptr)
+        calloc (_len, sizeof (CORBA::NamedValue));
       _max = _len;
     } 
   else if (len >= _max) 
     {
-      _values = (CORBA_NamedValue_ptr) ACE_OS::realloc ((char *)_values,
-                                                        sizeof (CORBA_NamedValue) * _len);
+      _values = (CORBA::NamedValue_ptr) ACE_OS::realloc ((char *)_values,
+                                                        sizeof (CORBA::NamedValue) * _len);
       (void) ACE_OS::memset (&_values[_max], 0,
                              sizeof (_values[_max]) * (_len - _max));
       _max = _len;
@@ -197,16 +201,16 @@ CORBA_NVList::add_value (const CORBA_Char *name,
   assert (_values != 0);
 
   _values[len]._flags = flags;
-  _values[len]._name = CORBA_string_copy (name);
+  _values[len]._name = CORBA::string_copy (name);
 
-  if (ACE_BIT_ENABLED (flags, CORBA_IN_COPY_VALUE))
+  if (ACE_BIT_ENABLED (flags, CORBA::IN_COPY_VALUE))
     // IN_COPY_VALUE means that the parameter is not "borrowed" by
     // the ORB, but rather that the ORB copies its value.
     //
     // Initialize the newly allocated memory using a copy
     // constructor that places the new "Any" value at just the right
     // place, and makes a "deep copy" of the data.
-    (void) new (&_values[len]._any) CORBA_Any (value);
+    (void) new (&_values[len]._any) CORBA::Any (value);
   else 
     // The normal behaviour for parameters is that the ORB "borrows"
     // their memory for the duration of calls.
@@ -220,8 +224,8 @@ CORBA_NVList::add_value (const CORBA_Char *name,
     // application-allocated memory.  It needs at least a "send the
     // response now" call.
     //
-    (void) new (&_values[len]._any) CORBA_Any (value.type (),
-                                               value.value (), CORBA_B_FALSE);
+    (void) new (&_values[len]._any) CORBA::Any (value.type (),
+                                                (void *)value.value (), CORBA::B_FALSE);
 
   return &_values[len];
 }

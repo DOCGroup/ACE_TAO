@@ -13,9 +13,13 @@
 //     $Id$
 // ============================================================================
 
+#if 0
 #if !defined (__ACE_INLINE__)
 #  include "client_factory.i"
 #endif /* __ACE_INLINE__ */
+#endif /* 0 */
+
+#include "tao/corba.h"
 
 // Template specializations which allow the cached connection manager
 // to work better.

@@ -5,24 +5,28 @@
 // ORB:		Principal identifier pseudo-objref
 //
 
+#if 0
 #include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
 
 #include "tao/orb.h"
 #include "tao/principa.h"
+#endif
+
+#include "tao/corba.h"
 
 void
-CORBA_release (CORBA_Principal_ptr principal)
+CORBA::release (CORBA::Principal_ptr principal)
 {
   if (principal)
     principal->Release ();
 }
 
-CORBA_Boolean
-CORBA_is_nil (CORBA_Principal_ptr principal)
+CORBA::Boolean
+CORBA::is_nil (CORBA::Principal_ptr principal)
 {
-  return (CORBA_Boolean) (principal == 0);
+  return (CORBA::Boolean) (principal == 0);
 }
 
 CORBA_Principal::CORBA_Principal (void)

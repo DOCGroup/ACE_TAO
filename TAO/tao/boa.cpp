@@ -10,6 +10,7 @@
 // the modules knowing about IIOP.  In the future, a looser coupling
 // between OA initialiszation and protocol components is desired.
 
+#if 0
 #include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
@@ -22,16 +23,17 @@
 
 #include "tao/iioporb.h"
 #include "tao/roa.h"
+#endif  /* 0 */
 
+#include "tao/corba.h"
 
 // {A201E4C8-F258-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_BOA,
 0xa201e4c8, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98) ;
 
-// destructor
-TAO_Object_Table::~TAO_Object_Table (void)
-{
-}
+#if !defined (__ACE_INLINE__) 
+#  include "boa.i"
+#endif
 
 // A "Named BOA" is used in bootstrapping some part of the ORB since
 // it's name-to-address binding is managed by the OS.  Examples of
@@ -50,10 +52,10 @@ TAO_Object_Table::~TAO_Object_Table (void)
 // XXX the coupling could stand to be looser here, so this module did
 // not know specifically about the Internet ORB !!
 
-CORBA_BOA_ptr
-CORBA_BOA::get_named_boa (CORBA_ORB_ptr orb,
-                          CORBA_String name,
-                          CORBA_Environment &env) 
+CORBA::BOA_ptr
+CORBA_BOA::get_named_boa (CORBA::ORB_ptr orb,
+                          CORBA::String name,
+                          CORBA::Environment &env) 
 {
   env.clear ();
 
@@ -83,7 +85,7 @@ CORBA_BOA::get_named_boa (CORBA_ORB_ptr orb,
 
   // We don't know how to deal with this kind of ORB.  Report error.
 
-  env.exception (new CORBA_BAD_PARAM (COMPLETED_NO) );
+  env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO) );
   return 0;
 }
 
@@ -91,9 +93,9 @@ CORBA_BOA::get_named_boa (CORBA_ORB_ptr orb,
 // matter to anyone; it is only used to create object references with
 // a short lifespan, namely that of the process acquiring this BOA.
 
-CORBA_BOA_ptr
-CORBA_BOA::get_boa (CORBA_ORB_ptr orb,
-		    CORBA_Environment &env) 
+CORBA::BOA_ptr
+CORBA_BOA::get_boa (CORBA::ORB_ptr orb,
+		    CORBA::Environment &env) 
 {
   env.clear ();
 
@@ -122,18 +124,18 @@ CORBA_BOA::get_boa (CORBA_ORB_ptr orb,
 
   // We don't know how to deal with this kind of ORB.  Report error.
 
-  env.exception (new CORBA_BAD_PARAM (COMPLETED_NO) );
+  env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO) );
   return 0;
 }
 
-void CORBA_BOA::dispatch (CORBA_OctetSeq &key,
-			  CORBA_ServerRequest &req,
+void CORBA_BOA::dispatch (CORBA::OctetSeq &key,
+			  CORBA::ServerRequest &req,
 			  void *context,
-			  CORBA_Environment &env) 
+			  CORBA::Environment &env) 
 {
   TAO_Skeleton skel;  // pointer to function pointer for the operation
-  CORBA_Object_ptr obj;  // object that will be looked up based on the key
-  CORBA_String  opname;
+  CORBA::Object_ptr obj;  // object that will be looked up based on the key
+  CORBA::String  opname;
 
   // Get the skeleton
 
@@ -163,19 +165,16 @@ void CORBA_BOA::dispatch (CORBA_OctetSeq &key,
 }
 
 int
-CORBA_BOA::find (const CORBA_OctetSeq &key,
-		 CORBA_Object_ptr &obj)
+CORBA_BOA::find (const CORBA::OctetSeq &key,
+		 CORBA::Object_ptr &obj)
 {
   return objtable_->find (key, obj);
 }
 
 int
-CORBA_BOA::bind (const CORBA_OctetSeq &key, 
-		 CORBA_Object_ptr obj)
+CORBA_BOA::bind (const CORBA::OctetSeq &key, 
+		 CORBA::Object_ptr obj)
 {
   return objtable_->bind (key, obj);
 }
 
-#if !defined (__ACE_INLINE__) 
-#  include "boa.i"
-#endif /* __ACE_INLINE__ */

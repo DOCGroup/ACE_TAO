@@ -7,6 +7,7 @@
 // This includes objref stringification/destringification for IIOP
 // object references.
 
+#if 0
 #include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
@@ -16,6 +17,9 @@
 #include "tao/cdr.h"
 #include "tao/iioporb.h"
 #include "tao/iiopobj.h"
+#endif
+
+#include "tao/corba.h"
 
 static const char ior_prefix [] = "IOR:";
 static const char iiop_prefix [] = "iiop:";
@@ -47,9 +51,9 @@ hex2byte (char c)
 
 // Objref stringification
 
-CORBA_String
-IIOP_ORB::object_to_string (CORBA_Object_ptr obj,
-                            CORBA_Environment &env)
+CORBA::String
+IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
+                            CORBA::Environment &env)
 {
   env.clear ();
 
@@ -73,22 +77,22 @@ IIOP_ORB::object_to_string (CORBA_Object_ptr obj,
 
       // Marshal the objref into an encapsulation bytestream.
       (void) cdr.put_char (MY_BYTE_SEX);
-      if (cdr.encode (_tc_CORBA_Object,
+      if (cdr.encode (CORBA::_tc_Object,
 			&obj, 0, 
-			env) != CORBA_TypeCode::TRAVERSE_CONTINUE)
+			env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
         return 0;
 
       // Now hexify the encapsulated CDR data into a string, and
       // return that string.
 
-      CORBA_String cp;
+      CORBA::String cp;
       size_t len = cdr.length - cdr.remaining;
 
-      CORBA_String string = CORBA_string_alloc (sizeof ior_prefix + 2 * len);
+      CORBA::String string = CORBA::string_alloc (sizeof ior_prefix + 2 * len);
 
       ACE_OS::strcpy ((char *) string, ior_prefix);
 
-      for (cp = (CORBA_String) ACE_OS::strchr ((char *) string, ':') + 1, bytes = cdr.buffer;
+      for (cp = (CORBA::String) ACE_OS::strchr ((char *) string, ':') + 1, bytes = cdr.buffer;
            len--;
            bytes++)
         {
@@ -120,12 +124,12 @@ IIOP_ORB::object_to_string (CORBA_Object_ptr obj,
       if (obj->QueryInterface (IID_IIOP_Object, 
 			       (void **) &obj2) != NOERROR)
         {
-          env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+          env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
           return 0;
 	}
 
       if (!obj2)			// null?
-        return CORBA_string_copy ((CORBA_String) iiop_prefix);
+        return CORBA::string_copy ((CORBA::String) iiop_prefix);
 
       char buf [BUFSIZ + 2];
 
@@ -158,11 +162,11 @@ IIOP_ORB::object_to_string (CORBA_Object_ptr obj,
 	}
       if (cp >= &buf [BUFSIZ])
         {
-          env.exception (new CORBA_IMP_LIMIT (COMPLETED_NO));
+          env.exception (new CORBA_IMP_LIMIT (CORBA::COMPLETED_NO));
           return 0;
 	}
       *cp = 0;
-      return CORBA_string_copy ((CORBA_String) &buf[0]);
+      return CORBA::string_copy ((CORBA::String) &buf[0]);
     }
 }
 
@@ -171,9 +175,9 @@ IIOP_ORB::object_to_string (CORBA_Object_ptr obj,
 // XXX there should be a simple way to reuse this code in other ORB
 // implementations ...
 
-static CORBA_Object_ptr
-ior_string_to_object (CORBA_String str,
-                      CORBA_Environment &env)
+static CORBA::Object_ptr
+ior_string_to_object (CORBA::String str,
+                      CORBA::Environment &env)
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
@@ -199,7 +203,7 @@ ior_string_to_object (CORBA_String str,
   if (tmp [0] && !isspace (tmp [0])) 
     {
       delete [] buffer;
-      env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
+      env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
       return 0;
     }
 
@@ -207,12 +211,12 @@ ior_string_to_object (CORBA_String str,
   // stream.
 
   CDR stream;
-  CORBA_Object_ptr objref;
+  CORBA::Object_ptr objref;
     
   stream.setup_encapsulation (buffer, len);
-  if (stream.decode (_tc_CORBA_Object, 
+  if (stream.decode (CORBA::_tc_Object, 
 		    &objref, 0, 
-		    env) != CORBA_TypeCode::TRAVERSE_CONTINUE)
+		    env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     objref = 0;
 
   delete [] buffer;
@@ -221,9 +225,9 @@ ior_string_to_object (CORBA_String str,
 
 // Destringify URL style IIOP objref.
 
-static CORBA_Object_ptr
-iiop_string_to_object (CORBA_String string,
-                       CORBA_Environment &env)
+static CORBA::Object_ptr
+iiop_string_to_object (CORBA::String string,
+                       CORBA::Environment &env)
 {
   // NIL objref encodes as just "iiop:" ... which has already been
   // removed, so we see it as an empty string.
@@ -249,7 +253,7 @@ iiop_string_to_object (CORBA_String string,
     }
   else
     {
-      env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       data->Release ();
       return 0;
     }
@@ -257,7 +261,7 @@ iiop_string_to_object (CORBA_String string,
   if (data->profile.iiop_version.major != IIOP::MY_MAJOR
       || data->profile.iiop_version.minor > IIOP::MY_MINOR)
     {
-      env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       data->Release ();
       return 0;
     }
@@ -268,12 +272,12 @@ iiop_string_to_object (CORBA_String string,
 
   if (cp == 0)
     {
-      env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       data->Release ();
       return 0;
     }
 
-  data->profile.host = CORBA_string_alloc (1 + cp - string);
+  data->profile.host = CORBA::string_alloc (1 + cp - string);
 
   for (cp = data->profile.host; 
        *string != ':'; 
@@ -287,8 +291,8 @@ iiop_string_to_object (CORBA_String string,
 
   if (cp == 0)
     {
-      env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
-      CORBA_string_free (data->profile.host);
+      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
+      CORBA::string_free (data->profile.host);
       data->Release ();
       return 0;
     }
@@ -300,7 +304,7 @@ iiop_string_to_object (CORBA_String string,
   // nonprintable.  This assumes that printable ASCII is the common
   // case ... but since stringification is uncommon, no big deal.
 
-  data->profile.object_key.buffer = (u_char *) CORBA_string_copy (string);
+  data->profile.object_key.buffer = (u_char *) CORBA::string_copy (string);
 
   // Strip out whitespace and adjust length accordingly.
 
@@ -323,8 +327,8 @@ iiop_string_to_object (CORBA_String string,
 
   while ((cp = ACE_OS::strchr ((char *)data->profile.object_key.buffer, '\\')) != 0)
     {
-      *cp = (CORBA_Char) (hex2byte ((char) cp [1]) << 4);
-      *cp |= (CORBA_Char) hex2byte ((char) cp [2]);
+      *cp = (CORBA::Char) (hex2byte ((char) cp [1]) << 4);
+      *cp |= (CORBA::Char) hex2byte ((char) cp [2]);
       cp++;
 
       size_t len = ACE_OS::strlen (cp);
@@ -334,7 +338,7 @@ iiop_string_to_object (CORBA_String string,
     }
 
   // Return the objref.
-  CORBA_Object_ptr obj;
+  CORBA::Object_ptr obj;
 
  (void) data->QueryInterface (IID_CORBA_Object, (void **)&obj);
   data->Release ();
@@ -343,13 +347,13 @@ iiop_string_to_object (CORBA_String string,
 
 // Destringify arbitrary objrefs.
 
-CORBA_Object_ptr
-IIOP_ORB::string_to_object (CORBA_String str,
-                            CORBA_Environment &env)
+CORBA::Object_ptr
+IIOP_ORB::string_to_object (CORBA::String str,
+                            CORBA::Environment &env)
 {
   env.clear ();
 
-  CORBA_Object_ptr obj = 0;
+  CORBA::Object_ptr obj = 0;
   
   // Use the prefix code to choose which destringify algorithm to use.
   if (ACE_OS::strncmp ((char *)str, iiop_prefix, sizeof iiop_prefix - 1) == 0)
@@ -362,7 +366,7 @@ IIOP_ORB::string_to_object (CORBA_String str,
   if (obj != 0)
     obj->orb (this);
   else
-    env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
+    env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
 
   // Return the object
   return obj;

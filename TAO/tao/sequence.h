@@ -18,11 +18,11 @@
 
 template <class T>
 struct CORBA_SEQUENCE 
-// = TITLE
-//    Utility template class.
-//
-// = DESCRIPTION
 {
+  // = TITLE
+  //    Utility template class.
+  //
+  // = DESCRIPTION
 #if SIZEOF_LONG == 4
   u_long maximum;
   u_long length;
@@ -40,6 +40,8 @@ struct CORBA_SEQUENCE
   ~CORBA_SEQUENCE (void) { }
 };
 
+#if 0
 typedef CORBA_SEQUENCE <CORBA_Octet> CORBA_OctetSeq;
+#endif
 
 #endif /* TAO_SEQUENCE_H */

@@ -16,12 +16,14 @@
 #if !defined (TAO_OPTABLE_H)
 #define TAO_OPTABLE_H
 
+#if 0
 #include "ace/ACE.h"
 #include "ace/Synch.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 #include "ace/Singleton.h"
 #include "tao/orb.h"
+#endif
 
 struct TAO_operation_db_entry
 {
@@ -29,7 +31,7 @@ struct TAO_operation_db_entry
   // Define a table entry that holds an operation name and its corresponding skeleton.
   // A table of such entries is used to initialize the different lookup strategies.
 
-  CORBA_String opname_;
+  CORBA::String opname_;
   // operation name
   TAO_Skeleton skel_ptr_;
   // skeleton pointer
@@ -41,13 +43,13 @@ class ACE_Svc_Export TAO_Operation_Table
   //     operation names. 
 {
 public:
-  virtual int find (const CORBA_String &opname, 
+  virtual int find (const CORBA::String &opname, 
 		   TAO_Skeleton &skelfunc) = 0;
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
 
-  virtual int bind (const CORBA_String &opname,
+  virtual int bind (const CORBA::String &opname,
 		    const TAO_Skeleton skel_ptr) = 0;
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
@@ -66,8 +68,8 @@ class ACE_Svc_Export TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
   // = TITLE
   // Dynamic Hashing scheme for CORBA IDL operation name lookup
 public:
-  TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry *db, CORBA_ULong
-			    dbsize, CORBA_ULong hashtblsize = 0);
+  TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry *db, CORBA::ULong
+			    dbsize, CORBA::ULong hashtblsize = 0);
   // Constructor.
   // Initialize the dynamic hash operation table with a database of operation
   // names. The hash table size may be different from the size of the
@@ -77,12 +79,12 @@ public:
   ~TAO_Dynamic_Hash_OpTable (void);
   // destructor
 
-  virtual int bind (const CORBA_String &opname, 
+  virtual int bind (const CORBA::String &opname, 
 		    const TAO_Skeleton skel_ptr);
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
-  virtual int find (const CORBA_String &opname,
+  virtual int find (const CORBA::String &opname,
 		    TAO_Skeleton &skelfunc);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
@@ -97,7 +99,7 @@ struct ACE_Svc_Export TAO_Linear_OpTable_Entry
 {
   // = TITLE
   // Table entry for linear search lookup strategy
-  CORBA_String opname_;
+  CORBA::String opname_;
   // holds the operation name
 
   TAO_Skeleton skel_ptr_;
@@ -113,7 +115,7 @@ struct ACE_Svc_Export TAO_Linear_OpTable_Entry
 class ACE_Svc_Export TAO_Linear_OpTable : public TAO_Operation_Table
 {
 public:
-  TAO_Linear_OpTable (const TAO_operation_db_entry *db, CORBA_ULong dbsize);
+  TAO_Linear_OpTable (const TAO_operation_db_entry *db, CORBA::ULong dbsize);
   // constructor.
   // Initialize the linear search operation table with a database of operation
   // names 
@@ -121,22 +123,22 @@ public:
   ~TAO_Linear_OpTable (void);
   // destructor
 
-  virtual int find (const CORBA_String &opname,
+  virtual int find (const CORBA::String &opname,
 		    TAO_Skeleton &skel_ptr);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
 
-  virtual int bind (const CORBA_String &opname,
+  virtual int bind (const CORBA::String &opname,
 		    const TAO_Skeleton skelptr);
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
 private:
-  CORBA_ULong next_;
+  CORBA::ULong next_;
   // keeps track of the next available slot to be filled.
 
-  CORBA_ULong tablesize_;
+  CORBA::ULong tablesize_;
   // size of the internal table
 
   TAO_Linear_OpTable_Entry *tbl_;
@@ -163,29 +165,29 @@ class ACE_Svc_Export TAO_Active_Demux_OpTable : public TAO_Operation_Table
   // Implements the active demultiplexed lookup strategy. The key is assumed to
   // provide an index directly into the internal table
 public:
-  TAO_Active_Demux_OpTable (const TAO_operation_db_entry *db, CORBA_ULong dbsize);
+  TAO_Active_Demux_OpTable (const TAO_operation_db_entry *db, CORBA::ULong dbsize);
   // Constructor
   // Initializes the internal table with the database of operations
 
   ~TAO_Active_Demux_OpTable (void);
   // destructor
 
-  virtual int find (const CORBA_String &opname,
+  virtual int find (const CORBA::String &opname,
 		    TAO_Skeleton &skel_ptr);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
 
-  virtual int bind (const CORBA_String &opname,
+  virtual int bind (const CORBA::String &opname,
 		    const TAO_Skeleton skelptr);
   // Associate the skeleton <{skel_ptr}> with an operation named
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
 private:
-  CORBA_ULong next_;
+  CORBA::ULong next_;
   // the next available free slot
 
-  CORBA_ULong tablesize_;
+  CORBA::ULong tablesize_;
   // size of the internal table
 
   TAO_Active_Demux_OpTable_Entry *tbl_;

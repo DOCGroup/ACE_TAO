@@ -13,9 +13,13 @@
 //     $Id$
 // ============================================================================
 
+#if 0
 #if !defined (__ACE_INLINE__)
 #  include "server_factory.i"
 #endif /* __ACE_INLINE__ */
+#endif /* 0 */
+
+#include "tao/corba.h"
 
 TAO_Server_Strategy_Factory::TAO_Server_Strategy_Factory (void)
 {}

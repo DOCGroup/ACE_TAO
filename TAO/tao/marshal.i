@@ -142,14 +142,14 @@ TAO_Marshal_WString::~TAO_Marshal_WString (void)
 //
 // Based on the kind of the typecode, return the appropriate marshal object
 ACE_INLINE TAO_Marshal_Object * 
-TAO_Marshal_Factory::make_marshal_object (CORBA_TypeCode_ptr tc,
-                                         CORBA_Environment &env)
+TAO_Marshal_Factory::make_marshal_object (CORBA::TypeCode_ptr tc,
+                                         CORBA::Environment &env)
 {
-  if (tc && tc->_kind >= 0 && tc->_kind < TC_KIND_COUNT)
+  if (tc && tc->_kind >= 0 && tc->_kind < CORBA::TC_KIND_COUNT)
     return this->mobj_table_[tc->_kind].obj_;
   else
     {
-      env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
 }
@@ -157,132 +157,132 @@ TAO_Marshal_Factory::make_marshal_object (CORBA_TypeCode_ptr tc,
 // the deep_copy methods
 
 // deep_copy for any
-ACE_INLINE CORBA_TypeCode::traverse_status
-TAO_Marshal_Any::deep_copy (CORBA_TypeCode_ptr,
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_Marshal_Any::deep_copy (CORBA::TypeCode_ptr,
                             const void *source,
 			    const void *dest,
-			    CORBA_Environment &)
+			    CORBA::Environment &)
 {
-  (void) new (dest) CORBA_Any (*(CORBA_Any *) source);
-  return CORBA_TypeCode::TRAVERSE_CONTINUE;
+  (void) new (dest) CORBA::Any (*(CORBA::Any *) source);
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // deep_copy for TypeCode
-ACE_INLINE CORBA_TypeCode::traverse_status
-TAO_Marshal_TypeCode::deep_copy (CORBA_TypeCode_ptr,
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_Marshal_TypeCode::deep_copy (CORBA::TypeCode_ptr,
 				 const void *source,
 				 const void *dest,
-				 CORBA_Environment &)
+				 CORBA::Environment &)
 {
-  if ((*(CORBA_TypeCode_ptr *) source) != 0) 
+  if ((*(CORBA::TypeCode_ptr *) source) != 0) 
     dest = source;
   else
-    dest = _tc_CORBA_Null;
+    dest = CORBA::_tc_null;
 
-  ((CORBA_TypeCode_ptr) dest)->AddRef ();
-  return CORBA_TypeCode::TRAVERSE_CONTINUE;
+  ((CORBA::TypeCode_ptr) dest)->AddRef ();
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // deep_copy for ObjRef
-ACE_INLINE CORBA_TypeCode::traverse_status
-TAO_Marshal_ObjRef::deep_copy (CORBA_TypeCode_ptr,
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_Marshal_ObjRef::deep_copy (CORBA::TypeCode_ptr,
 			       const void *source,
 			       const void *dest,
-			       CORBA_Environment &)
+			       CORBA::Environment &)
 {
-  *(CORBA_Object_ptr *) dest = CORBA_Object::_duplicate (*(CORBA_Object_ptr *)
+  *(CORBA::Object_ptr *) dest = CORBA::Object::_duplicate (*(CORBA::Object_ptr *)
 							 source); 
-  return CORBA_TypeCode::TRAVERSE_CONTINUE;
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // deep_copy for string
-ACE_INLINE CORBA_TypeCode::traverse_status
-TAO_Marshal_String::deep_copy (CORBA_TypeCode_ptr,
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_Marshal_String::deep_copy (CORBA::TypeCode_ptr,
 			       const void *source,
 			       const void *dest,
-			       CORBA_Environment &)
+			       CORBA::Environment &)
 {
-  *(CORBA_String *) dest = CORBA_string_copy (*(CORBA_String *) source);
-  return CORBA_TypeCode::TRAVERSE_CONTINUE;
+  *(CORBA::String *) dest = CORBA::string_copy (*(CORBA::String *) source);
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // deep_copy for wstring
-ACE_INLINE CORBA_TypeCode::traverse_status
-TAO_Marshal_WString::deep_copy (CORBA_TypeCode_ptr,
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_Marshal_WString::deep_copy (CORBA::TypeCode_ptr,
 				const void *source,
 				const void *dest,
-				CORBA_Environment &)
+				CORBA::Environment &)
 {
-  *(CORBA_WString *) dest = CORBA_wstring_copy (*(CORBA_WString *) source);
-  return CORBA_TypeCode::TRAVERSE_CONTINUE;
+  *(CORBA::WString *) dest = CORBA::wstring_copy (*(CORBA::WString *) source);
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // *************** deep_free methods ******************
 
 // deep_free for Any
-ACE_INLINE CORBA_TypeCode::traverse_status
-TAO_Marshal_Any::deep_free (CORBA_TypeCode_ptr,
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_Marshal_Any::deep_free (CORBA::TypeCode_ptr,
 			    const void *source,
 			    const void *,
-			    CORBA_Environment &)
+			    CORBA::Environment &)
 {
- ((CORBA_Any *) source)->~CORBA_Any ();
-  return CORBA_TypeCode::TRAVERSE_CONTINUE;
+ ((CORBA::Any *) source)->~CORBA_Any ();
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // deep_free for TypeCode
-ACE_INLINE CORBA_TypeCode::traverse_status
-TAO_Marshal_TypeCode::deep_free (CORBA_TypeCode_ptr,
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_Marshal_TypeCode::deep_free (CORBA::TypeCode_ptr,
                                  const void *source,
                                  const void *,
-                                 CORBA_Environment &)
+                                 CORBA::Environment &)
 {
-  if ((*(CORBA_TypeCode_ptr *) source) != 0) 
-    (*(CORBA_TypeCode_ptr *) source)->Release ();
-  return CORBA_TypeCode::TRAVERSE_CONTINUE;
+  if ((*(CORBA::TypeCode_ptr *) source) != 0) 
+    (*(CORBA::TypeCode_ptr *) source)->Release ();
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // deep_free for Principal
-ACE_INLINE CORBA_TypeCode::traverse_status
-TAO_Marshal_Principal::deep_free (CORBA_TypeCode_ptr,
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_Marshal_Principal::deep_free (CORBA::TypeCode_ptr,
 				  const void *value,
 				  const void *,
-				  CORBA_Environment &)
+				  CORBA::Environment &)
 {
-  CORBA_release (*(CORBA_Principal_ptr *) value);
-  return CORBA_TypeCode::TRAVERSE_CONTINUE;
+  CORBA::release (*(CORBA::Principal_ptr *) value);
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // deep_free for ObjRef
-ACE_INLINE CORBA_TypeCode::traverse_status
-TAO_Marshal_ObjRef::deep_free (CORBA_TypeCode_ptr,
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_Marshal_ObjRef::deep_free (CORBA::TypeCode_ptr,
 			       const void *source,
 			       const void *,
-			       CORBA_Environment &)
+			       CORBA::Environment &)
 {
-  CORBA_release (*(CORBA_Object_ptr *) source);
-  return CORBA_TypeCode::TRAVERSE_CONTINUE;
+  CORBA::release (*(CORBA::Object_ptr *) source);
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // deep_free for string 
-ACE_INLINE CORBA_TypeCode::traverse_status
-TAO_Marshal_String::deep_free (CORBA_TypeCode_ptr,
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_Marshal_String::deep_free (CORBA::TypeCode_ptr,
 			       const void *source,
 			       const void *,
-			       CORBA_Environment &)
+			       CORBA::Environment &)
 {
-  CORBA_string_free (*(CORBA_String *) source);
-  return CORBA_TypeCode::TRAVERSE_CONTINUE;
+  CORBA::string_free (*(CORBA::String *) source);
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // deep_free for wstring 
-ACE_INLINE CORBA_TypeCode::traverse_status
-TAO_Marshal_WString::deep_free (CORBA_TypeCode_ptr,
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_Marshal_WString::deep_free (CORBA::TypeCode_ptr,
 				const void *source,
 				const void *,
-				CORBA_Environment &)
+				CORBA::Environment &)
 {
-  CORBA_wstring_free (*(CORBA_WString *) source);
-  return CORBA_TypeCode::TRAVERSE_CONTINUE;
+  CORBA::wstring_free (*(CORBA::WString *) source);
+  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
