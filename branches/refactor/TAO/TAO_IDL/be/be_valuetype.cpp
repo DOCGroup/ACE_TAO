@@ -69,6 +69,8 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                   n_inherits_flat,
                   0,
                   abstract),
+    be_type (AST_Decl::NT_valuetype,
+             n),
     AST_ValueType (n,
                    inherits,
                    n_inherits,
@@ -158,6 +160,8 @@ be_valuetype::~be_valuetype (void)
 void
 be_valuetype::redefine (AST_Interface *from)
 {
+  be_valuetype *bv = be_valuetype::narrow_from_decl (from);
+  bv->var_out_seq_decls_gen_ = bv->var_out_seq_decls_gen_;
   this->AST_ValueType::redefine (from);
 }
 
@@ -187,18 +191,6 @@ be_valuetype::full_obv_skel_name (void)
     }
 
   return this->full_obv_skel_name_;
-}
-
-int 
-be_valuetype::var_out_seq_decls_gen (void) const
-{
-  return this->var_out_seq_decls_gen_;
-}
-
-void 
-be_valuetype::var_out_seq_decls_gen (int val)
-{
-  this->var_out_seq_decls_gen_ = val;
 }
 
 const char *
@@ -304,6 +296,11 @@ be_valuetype::gen_helper_stubs (char* ,
 void
 be_valuetype:: gen_var_out_seq_decls (void)
 {
+  if (this->var_out_seq_decls_gen_ == 1)
+    {
+      return;
+    }
+
   TAO_OutStream *os = tao_cg->client_header ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
@@ -325,6 +322,8 @@ be_valuetype:: gen_var_out_seq_decls (void)
       << lname << " *);" << be_nl
       << "static void tao_remove_ref (" << lname << " *);" << be_uidt_nl
       << "};";
+
+  this->var_out_seq_decls_gen_ = 1;
 }
 
 // For building the pre and postfix of private data fields.

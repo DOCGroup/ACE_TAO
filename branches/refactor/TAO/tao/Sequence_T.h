@@ -77,6 +77,8 @@ public:
   /// Free the sequence.
   static void freebuf (T *);
 
+  static void _tao_any_destructor (void *);
+
   /// Implement the TAO_Base_Sequence methods (see Sequence.h)
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
@@ -179,6 +181,8 @@ public:
 
   /// Free the sequence.
   static void freebuf (T *);
+
+  static void _tao_any_destructor (void *);
 
   /// allocate a buffer of the requested length. The buffer is allocated for
   /// the right type

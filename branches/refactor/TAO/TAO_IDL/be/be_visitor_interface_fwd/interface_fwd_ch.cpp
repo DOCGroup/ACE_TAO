@@ -50,11 +50,8 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
   AST_Interface *fd = node->full_definition ();
   be_interface *bfd = be_interface::narrow_from_decl (fd);
 
-  if (bfd->var_out_seq_decls_gen () == 0)
-    {
-      bfd->gen_var_out_seq_decls ();
-      bfd->var_out_seq_decls_gen (1);
-    }
+  // This will be a no-op if it has already been done for this node.
+  bfd->gen_var_out_seq_decls ();
 
   node->cli_hdr_gen (I_TRUE);
   return 0;

@@ -97,6 +97,18 @@ TAO_Unbounded_Sequence<T>::~TAO_Unbounded_Sequence (void)
 
 template<typename T> 
 void
+TAO_Unbounded_Sequence<T>::_tao_any_destructor (
+    void * _tao_void_pointer
+  )
+{
+  typedef TAO_Unbounded_Sequence<T> THIS_SEQ_TYPE;
+  THIS_SEQ_TYPE *tmp = ACE_static_cast (THIS_SEQ_TYPE *,
+                                        _tao_void_pointer);
+  delete tmp;
+}
+
+template<typename T> 
+void
 TAO_Unbounded_Sequence<T>::_allocate_buffer (CORBA::ULong length)
 {
   T * tmp = TAO_Unbounded_Sequence<T>::allocbuf (length);
@@ -299,6 +311,18 @@ template<typename T, size_t MAX>
 TAO_Bounded_Sequence<T, MAX>::~TAO_Bounded_Sequence (void)
 {
   this->_deallocate_buffer ();
+}
+
+template<typename T, size_t MAX>
+void
+TAO_Bounded_Sequence<T, MAX>::_tao_any_destructor (
+    void * _tao_void_pointer
+  )
+{
+  typedef TAO_Bounded_Sequence<T, MAX> THIS_SEQ_TYPE;
+  THIS_SEQ_TYPE *tmp = ACE_static_cast (THIS_SEQ_TYPE *,
+                                        _tao_void_pointer);
+  delete tmp;
 }
 
 template<typename T, size_t MAX> 

@@ -35,11 +35,9 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
       return 0;
     }
 
-  if (node->var_out_seq_decls_gen () == 0)
-    {
-      node->gen_var_out_seq_decls ();
-      node->var_out_seq_decls_gen (1);
-    }
+  // This will be a no-op if it has already been done by a forward
+  // declaration.
+  node->gen_var_out_seq_decls ();
 
   TAO_OutStream *os = this->ctx_->stream ();
 

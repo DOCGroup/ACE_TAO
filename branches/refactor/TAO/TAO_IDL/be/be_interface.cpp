@@ -365,7 +365,8 @@ be_interface::relative_name (const char *localname,
 
 
 // Am I in some kind of a multiple inheritance?
-int be_interface::in_mult_inheritance (void)
+int 
+be_interface::in_mult_inheritance (void)
 {
   if (this->in_mult_inheritance_ == -1)
     {
@@ -386,12 +387,21 @@ int be_interface::in_mult_inheritance (void)
   return this->in_mult_inheritance_;
 }
 
-void be_interface::in_mult_inheritance (int mi)
+void 
+be_interface::in_mult_inheritance (int mi)
 {
   if (this->in_mult_inheritance_ == -1)
     {
       this->in_mult_inheritance_ = mi;
     }
+}
+
+void 
+be_interface::redefine (AST_Interface *from)
+{
+  be_interface *bi = be_interface::narrow_from_decl (from);
+  this->var_out_seq_decls_gen_ = bi->var_out_seq_decls_gen_;
+  AST_Interface::redefine (from);
 }
 
 // Gen copy constructors,
@@ -545,6 +555,11 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
 void
 be_interface:: gen_var_out_seq_decls (void)
 {
+  if (this->var_out_seq_decls_gen_ == 1)
+    {
+      return;
+    }
+
   TAO_OutStream *os = tao_cg->client_header ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
@@ -585,6 +600,8 @@ be_interface:: gen_var_out_seq_decls (void)
           << "static CORBA::Object_ptr tao_upcast (void *);" << be_uidt_nl
           << "};";
     }
+
+  this->var_out_seq_decls_gen_ = 1;
 }
 
 // ****************************************************************
@@ -1993,18 +2010,6 @@ be_interface::has_mixed_parentage (void)
     }
 
   return this->has_mixed_parentage_;
-}
-
-int 
-be_interface::var_out_seq_decls_gen (void) const
-{
-  return this->var_out_seq_decls_gen_;
-}
-
-void 
-be_interface::var_out_seq_decls_gen (int val)
-{
-  this->var_out_seq_decls_gen_ = val;
 }
 
 const char *

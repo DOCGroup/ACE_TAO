@@ -45,11 +45,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       return 0;
     }
 
-  if (node->var_out_seq_decls_gen () == 0)
-    {
-      node->gen_var_out_seq_decls ();
-      node->var_out_seq_decls_gen (1);
-    }
+  // This will be a no-op if it has alread by done by a forward
+  // declaration.
+  node->gen_var_out_seq_decls ();
 
   TAO_OutStream *os = this->ctx_->stream ();
   int status = 0;

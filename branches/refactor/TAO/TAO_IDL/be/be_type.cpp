@@ -33,7 +33,8 @@ ACE_RCSID (be,
            "$Id$")
 
 be_type::be_type (void)
-  : tc_name_ (0)
+  : tc_name_ (0),
+    common_varout_gen_ (0)
 {
 }
 
@@ -45,7 +46,8 @@ be_type::be_type (AST_Decl::NodeType nt,
               n),
     AST_Decl (nt,
               n),
-    tc_name_ (0)
+    tc_name_ (0),
+    common_varout_gen_ (0)
 {
   AST_Decl *parent = ScopeAsDecl (this->defined_in ());
   Identifier *segment = 0;
@@ -215,6 +217,103 @@ const char *
 be_type::fwd_helper_name (void) const
 {
   return this->fwd_helper_name_.fast_rep ();
+}
+
+void
+be_type::gen_common_varout (TAO_OutStream *os)
+{
+  if (this->common_varout_gen_ == 1)
+    {
+      return;
+    }
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  AST_Type::SIZE_TYPE st = this->size_type ();
+
+  *os << be_nl << be_nl
+      << (this->node_type () == AST_Decl::NT_struct ? "struct "
+                                                    : "class ")
+      << this->local_name () << ";";
+
+  *os << be_nl << be_nl
+      << "typedef" << be_idt_nl
+      << (st == AST_Type::FIXED ? "TAO_Fixed_Var_T<"
+                                : "TAO_Var_Var_T<")
+      << be_idt << be_idt_nl
+      << this->local_name () << be_uidt_nl
+      << ">" << be_uidt_nl
+      << this->local_name () << "_var;" << be_uidt_nl << be_nl;
+
+  if (st == AST_Type::FIXED)
+    {
+      *os << "typedef" << be_idt_nl
+          << this->local_name () << " &" << be_nl
+          << this->local_name () << "_out;" << be_uidt;
+    }
+  else
+    {
+      *os << "typedef" << be_idt_nl
+          << "TAO_Out_T<" << be_idt << be_idt_nl
+          << this->local_name () << "," << be_nl
+          << this->local_name () << "_var" << be_uidt_nl
+          << ">" << be_uidt_nl
+          << this->local_name () << "_out;" << be_uidt;
+    }
+
+  this->common_varout_gen_ = 1;
+}
+
+void
+be_type::gen_common_tmplinst (TAO_OutStream *os)
+{
+  AST_Type::SIZE_TYPE st = this->size_type ();
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  os->gen_ifdef_AHETI ();
+
+  *os << be_nl << be_nl
+      << "template class" << be_idt_nl
+      << (st == AST_Type::FIXED ? "TAO_Fixed_Var_T<"
+                                : "TAO_Var_Var_T<")
+      << be_idt << be_idt_nl
+      << this->local_name () << be_uidt_nl
+      << ">;" << be_uidt << be_uidt;
+
+  if (st == AST_Type::VARIABLE)
+    {
+      *os << be_nl<< be_nl
+          << "template class" << be_idt_nl
+          << "TAO_Out_T<" << be_idt << be_idt_nl
+          << this->local_name () << "," << be_nl
+          << this->local_name () << "_var" << be_uidt_nl
+          << ">;" << be_uidt << be_uidt;
+    }
+
+  os->gen_elif_AHETI ();
+
+  *os << be_nl << be_nl
+      << "# pragma instantiate \\" << be_idt_nl
+      << (st == AST_Type::FIXED ? "TAO_Fixed_Var_T< \\"
+                                : "TAO_Var_Var_T< \\")
+      << be_idt << be_idt_nl
+      << this->local_name () << " \\" << be_uidt_nl
+      << ">" << be_uidt << be_uidt;
+
+  if (st == AST_Type::VARIABLE)
+    {
+      *os << be_nl << be_nl
+          << "# pragma instantiate \\" << be_idt_nl
+          << "TAO_Out_T< \\" << be_idt << be_idt_nl
+          << this->local_name () << ", \\" << be_nl
+          << this->local_name () << "_var \\" << be_uidt_nl
+          << ">" << be_uidt << be_uidt;
+    }
+
+  os->gen_endif_AHETI ();
 }
 
 AST_Decl::NodeType

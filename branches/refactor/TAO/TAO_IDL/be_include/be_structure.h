@@ -42,19 +42,9 @@ public:
                 idl_bool abstract);
   // Constructor.
 
-  virtual int gen_var_defn (char *local_name = 0);
-  // Generate the _var class definition.
-
-  virtual int gen_var_impl (char *local_name = 0,
-                            char *full_name = 0);
-  // Generate the implementation for the _var class.
-
-  virtual int gen_out_defn (char *local_name = 0);
-  // Generate the _out class definition.
-
-  virtual int gen_out_impl (char *local_name = 0,
-                            char *full_name = 0);
-  // Generate the _out implementation.
+  virtual void redefine (AST_Structure *from);
+  // Copy BE-specific values when redefining struct or union
+  // from a forward declaration.
 
   virtual void destroy (void);
   // Cleanup method.

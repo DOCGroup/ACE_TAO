@@ -99,7 +99,7 @@ public:
   const char *local_coll_name (int) const;
   // Retrieve the fully qualified collocated class name.
 
-    virtual const char *base_proxy_impl_name (void);
+  virtual const char *base_proxy_impl_name (void);
   // retrieve the name of the base proxy implementation.
 
   virtual const char *full_base_proxy_impl_name (void);
@@ -217,6 +217,9 @@ public:
   void in_mult_inheritance (int mi);
   // Set a new value.
 
+  virtual void redefine (AST_Interface *from);
+  // Pass along BE-specific member values when redefining a fwd decl.
+
   virtual void destroy (void);
   // Cleanup function.
 
@@ -331,10 +334,6 @@ public:
   int has_mixed_parentage (void);
   // Do we have both abstract and concrete parents?
 
-  int var_out_seq_decls_gen (void) const;
-  void var_out_seq_decls_gen (int val);
-  // Accessors for the members.
-
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);
   // Output the header (type declaration and %%) to the gperf's input
@@ -370,6 +369,10 @@ private:
   void gen_linear_search_instance (const char *flat_name);
   // Create an instance of the linear search optable.
 
+protected:
+  int var_out_seq_decls_gen_;
+  // Have these been done already?
+
 private:
   int skel_count_;
   // Number of static skeletons in the operation table.
@@ -387,9 +390,6 @@ private:
 
   int has_mixed_parentage_;
   // Do we have both abstract and concrete parents?
-
-  int var_out_seq_decls_gen_;
-  // Have these been done already?
 };
 
 /**
