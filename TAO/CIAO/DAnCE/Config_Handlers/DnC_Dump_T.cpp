@@ -1,6 +1,7 @@
 // $Id$
 #ifndef DNC_DUMP_T_C
 #define DNC_DUMP_T_C
+#include "DnC_Dump.h"
 #include "DnC_Dump_T.h"
 #include "Dump_Obj.h"
 

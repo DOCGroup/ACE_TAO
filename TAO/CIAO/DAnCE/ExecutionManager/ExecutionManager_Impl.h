@@ -23,7 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Synch.h"
-#include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
 #include "tao/Utils/Servant_Var.h"
 #include "DomainApplicationManager/DomainApplicationManager_Impl.h"

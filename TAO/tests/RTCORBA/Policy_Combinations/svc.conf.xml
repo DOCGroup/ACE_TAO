@@ -1,8 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from svc.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  Options required for regular testing -->
- <static id="RT_ORB_Loader" params="-ORBPriorityMapping continuous"/>
- <!--  For real-time testing, uncomment the following line: -->
- <!--  static RT_ORB_Loader "-ORBPriorityMapping continuous -ORBSchedPolicy SCHED_FIFO -ORBScopePolicy SYSTEM" -->
-</ACE_Svc_Conf>

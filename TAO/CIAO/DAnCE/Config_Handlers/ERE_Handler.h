@@ -1,63 +1,64 @@
-
-//==================================================================
+//==============================================================
 /**
  *  @file  ERE_Handler.h
  *
  *  $Id$
  *
- *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+ *  @author Jules White <jules@dre.vanderbilt.edu>
  */
-//=====================================================================
+//================================================================
 
-#ifndef ERE_HANDLER_H
-#define ERE_HANDLER_H
+#ifndef CIAO_CONFIG_HANDLERS_ERE_HANDLER_H
+#define CIAO_CONFIG_HANDLERS_ERE_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "ciao/DeploymentC.h"
+#include "Config_Handlers/Config_Handlers_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Config_Handler_export.h"
-#include <xercesc/util/XercesDefs.hpp>
-#include <xercesc/dom/DOM.hpp>
-#include "XercesString.h"
-
-using Config_Handler::XStr;
-using xercesc::XMLString;
-using xercesc::DOMImplementation;
-using xercesc::DOMText;
-using xercesc::DOMNodeIterator;
-using xercesc::DOMNode;
+namespace Deployment
+{
+  class ExternalReferenceEndpoints;
+  struct ExternalReferenceEndpoint;
+}
 
 namespace CIAO
 {
-  namespace Config_Handler
-  {
-    /**
-     * @class ERE_Handler
-     *
-     * @brief Handler class for <ExternalReferenceEndpoint> tag
-     *
-     * This class defines handler methods to parse the aforementioned type
-     * in the descriptor files. The corresponding CORBA IDL type for this
-     * element is returned.
-     */
 
-    class Config_Handler_Export ERE_Handler
+  namespace Config_Handlers
+  {
+    class PlanConnectionDescription;
+    class ExternalReferenceEndpoint;
+
+   /*
+    * @class ERE_Handler
+    *
+    * @brief Handler class for <ExternalReferenceEndpoint> types.
+    *
+    * This class defines handler methods to map values from
+    * XSC ExternalReferenceEndpoint objects, parsed from
+    * the descriptor files, to the corresponding CORBA IDL type.
+    *
+    */
+
+    class Config_Handlers_Export ERE_Handler
     {
     public:
-      static void  
-        process_ExternalReferenceEndpoint (DOMNodeIterator * iter,
-                                           Deployment::ExternalReferenceEndpoint &ret_struct);
-      // process <ExternalReferenceEndpoint> definitions in the descriptor
-      // files
-
+      static bool external_ref_endpoints (
+        const PlanConnectionDescription &src,
+        ::Deployment::ExternalReferenceEndpoints &dest);
+      
+      static ExternalReferenceEndpoint external_ref_endpoint (
+        const Deployment::ExternalReferenceEndpoint& src);
+    private:
+      static void external_ref_endpoint (
+        const ExternalReferenceEndpoint &src,
+        Deployment::ExternalReferenceEndpoint &dest);
     };
   }
 }
 
 #include /**/ "ace/post.h"
-
-#endif /* ERE_HANDLER_H */
+#endif /* CIAO_CONFIG_HANDLERS_ERE_HANDLER_H*/

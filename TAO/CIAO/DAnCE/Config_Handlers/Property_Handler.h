@@ -1,55 +1,63 @@
-//==================================================================
+//================================================
 /**
- *  @file  Property_Handler.h
+ *  @file  Prop_Handler.h
  *
  *  $Id$
  *
- *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+ *  @author Jules White <jules@dre.vanderbilt.edu>
  */
-//===================================================================
+//================================================
 
-#ifndef PROPERTY_HANDLER_H
-#define PROPERTY_HANDLER_H
+#ifndef CIAO_CONFIG_HANDLERS_PROPERTY_HANDLER_H
+#define CIAO_CONFIG_HANDLERS_PROPERTY_HANDLER_H
+
 #include /**/ "ace/pre.h"
 
-#include "ciao/DeploymentC.h"
+#include "Config_Handlers/Config_Handlers_Export.h"
 
-#include "Config_Handler_export.h"
-#include <xercesc/util/XercesDefs.hpp>
-#include <xercesc/dom/DOM.hpp>
-#include "XercesString.h"
-using Config_Handler::XStr;
-using xercesc::XMLString;
-using xercesc::DOMText;
-using xercesc::DOMNodeIterator;
-using xercesc::DOMNode;
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+namespace Deployment
+{
+  struct Property;
+}
 
 namespace CIAO
 {
-  namespace Config_Handler
+  namespace Config_Handlers
   {
-    /**
+    class Property;
+
+    /*
      * @class Property_Handler
      *
-     * @brief Handler class for <Property> type
+     * @brief Handler class for <CCMComponentPortDescription> types.
      *
-     * This class defines handler methods to parse Property
-     * types in the descriptor files. The corresponding
-     * CORBA IDL type for the schema element is returned.
+     * This class defines handler methods to map values from
+     * XSC objects, parsed from the descriptor files, to the
+     * corresponding CORBA IDL type for the schema element.
      *
      */
-    class Config_Handler_Export Property_Handler
-    {
-    public:
-      static void process_Property (DOMNodeIterator * iter,
-                                    Deployment::Property &property);
-      // process elements of type Property definitions in
-      // the descriptor files
 
-    };
-  }
+   class Config_Handlers_Export Property_Handler
+   {
+   public:
+     Property_Handler (void);
+     virtual ~Property_Handler (void);
+
+     /// This method maps the values from the XSC object
+     /// <CIAO::Config_Handlers::Property> to the CORBA IDL type
+     /// <Deployment::Property>.
+     static void get_property (const Property& desc,
+       ::Deployment::Property& toconfig);
+     static Property get_property (
+       const ::Deployment::Property& src);
+   };
+
+ }
 }
 
 #include /**/ "ace/post.h"
-
-#endif /* PROPERTY_HANDLER_H */
+#endif /* CIAO_CONFIG_HANDLERS_PROPERTY_HANDLER_H*/

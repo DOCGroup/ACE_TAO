@@ -38,16 +38,16 @@ $SV1 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/Node_Daemon",
                              "-ORBEndpoint iiop://localhost:10000 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
 
 $SV2 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/Node_Daemon",
-                             "-ORBEndpoint iiop://localhost:20000 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
+                             "-ORBEndpoint iiop://localhost:20000  -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
 
 $SV3 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/Node_Daemon",
-                             "-ORBEndpoint iiop://localhost:30000 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
+                             "-ORBEndpoint iiop://localhost:30000  -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
 
 $SV4 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/Node_Daemon",
-                             "-ORBEndpoint iiop://localhost:40000 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
+                             "-ORBEndpoint iiop://localhost:40000  -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
                              
 $SV5 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/Node_Daemon",
-                             "-ORBEndpoint iiop://localhost:50000 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");                             
+                             "-ORBEndpoint iiop://localhost:50000  -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");                             
 $SV1->Spawn ();
 $SV2->Spawn ();
 $SV3->Spawn ();
