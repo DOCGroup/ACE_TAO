@@ -1,3 +1,14 @@
+Wed Feb 14 12:08:10 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* ace/Read_Buffer.cpp: Fixed boundary condition in rec_read.
+	  If record was a multiple of BUFSIZ and the record was 
+	  terminated with an EOF instead of a "term" character, 
+	  rec_read would return 0 instead of the actual data read in.
+	  The problem was that the partial buffer fill size was being
+	  checked instead of the total number of bytes read in.  This
+	  issue was noticed when trying to read in an IOR file in TAO
+	  that was exactly 512 bytes (BUFSIZ * 2 on Win2k) long.
+
 Tue Feb 13 14:44:28 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_wchar.inl: Changed several variable from type <size_t>
