@@ -61,7 +61,7 @@ typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 // Accepting end point.  This is actually "localhost:10010", but some
 // platform couldn't resolve the name so we use the IP address
 // directly here.
-static LPCTSTR rendezvous = ASYS_TEXT ("127.0.0.1:10010");
+static ASYS_TCHAR *rendezvous = ASYS_TEXT ("127.0.0.1:10010");
 
 // Total number of server threads.
 static size_t svr_thrno = ACE_MAX_THREADS;
@@ -247,7 +247,7 @@ static void *
 worker (void *)
 {
   ACE_OS::sleep (3);
-  LPCTSTR msg = ASYS_TEXT ("Message from Connection worker");
+  ASYS_TCHAR *msg = ASYS_TEXT ("Message from Connection worker");
   ASYS_TCHAR buf [BUFSIZ];
   buf[0] = (ACE_OS::strlen (msg) + 1) * sizeof (ASYS_TCHAR);
   ACE_OS::strcpy (&buf[1], msg);

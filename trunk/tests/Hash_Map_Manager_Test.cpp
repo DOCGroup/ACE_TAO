@@ -15,7 +15,7 @@
 //      conjunction with the <ACE_Hash_Map_Manager>.
 //
 // = AUTHOR
-//    James Hu <jxh@cs.wustl.edu> and 
+//    James Hu <jxh@cs.wustl.edu> and
 //    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
@@ -32,25 +32,25 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-typedef ACE_Hash_Map_Entry<LPCTSTR, 
+typedef ACE_Hash_Map_Entry<LPCTSTR,
                            LPCTSTR> HASH_STRING_ENTRY;
 
-typedef ACE_Hash_Map_Manager_Ex<LPCTSTR, 
-                                LPCTSTR, 
-                                ACE_Hash<LPCTSTR>, 
-                                ACE_Equal_To<LPCTSTR>, 
+typedef ACE_Hash_Map_Manager_Ex<LPCTSTR,
+                                LPCTSTR,
+                                ACE_Hash<LPCTSTR>,
+                                ACE_Equal_To<LPCTSTR>,
                                 ACE_Null_Mutex> HASH_STRING_MAP;
 
-typedef ACE_Hash_Map_Iterator_Ex<LPCTSTR, 
-                                 LPCTSTR, 
-                                 ACE_Hash<LPCTSTR>, 
-                                 ACE_Equal_To<LPCTSTR>, 
+typedef ACE_Hash_Map_Iterator_Ex<LPCTSTR,
+                                 LPCTSTR,
+                                 ACE_Hash<LPCTSTR>,
+                                 ACE_Equal_To<LPCTSTR>,
                                  ACE_Null_Mutex> HASH_STRING_ITER;
 
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<LPCTSTR, 
-                                         LPCTSTR, 
-                                         ACE_Hash<LPCTSTR>, 
-                                         ACE_Equal_To<LPCTSTR>, 
+typedef ACE_Hash_Map_Reverse_Iterator_Ex<LPCTSTR,
+                                         LPCTSTR,
+                                         ACE_Hash<LPCTSTR>,
+                                         ACE_Equal_To<LPCTSTR>,
                                          ACE_Null_Mutex> HASH_STRING_REVERSE_ITER;
 
 struct String_Table
@@ -61,19 +61,19 @@ struct String_Table
 
 static String_Table string_table[] =
 {
-  { 
-    ASYS_TEXT ("hello"),
-    ASYS_TEXT ("guten Tag")
+  {
+    ACE_TEXT ("hello"),
+    ACE_TEXT ("guten Tag")
   },
-  { 
-    ASYS_TEXT ("goodbye"),
-    ASYS_TEXT ("auf wiedersehen")
+  {
+    ACE_TEXT ("goodbye"),
+    ACE_TEXT ("auf wiedersehen")
   },
-  { 
-    ASYS_TEXT ("funny"),
-    ASYS_TEXT ("lustig")
+  {
+    ACE_TEXT ("funny"),
+    ACE_TEXT ("lustig")
   },
-  { 
+  {
     0,
     0
   }
@@ -105,7 +105,7 @@ run_test (void)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ASYS_TEXT ("%p failed for %s \n"),
                          ASYS_TEXT ("bind"),
-                         string_table[i].key_), -1);
+                         ASYS_MULTIBYTE_STRING (string_table[i].key_)), -1);
 
   LPCTSTR entry;
 
@@ -115,12 +115,12 @@ run_test (void)
                    entry) == 0)
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("`%s' found `%s'\n"),
-                  string_table[i].key_,
+                  ASYS_MULTIBYTE_STRING (string_table[i].key_),
                   entry));
     else
       ACE_ERROR_RETURN ((LM_ERROR,
                          ASYS_TEXT ("`%s' not found\n"),
-                         string_table[i].key_),
+                         ASYS_MULTIBYTE_STRING (string_table[i].key_)),
                         -1);
 
   // Check the <trybind> operation.
@@ -149,8 +149,8 @@ run_test (void)
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("iterating (%d): [%s, %s]\n"),
                     i,
-                    (LPCTSTR) entry->ext_id_,
-                    (LPCTSTR) entry->int_id_));
+                    ASYS_MULTIBYTE_STRING ((LPCTSTR) entry->ext_id_),
+                    ASYS_MULTIBYTE_STRING ((LPCTSTR) entry->int_id_)));
         i++;
       }
   }
@@ -163,12 +163,12 @@ run_test (void)
                    entry) == 0)
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("`%s' found `%s'\n"),
-                  string_table[i].key_,
-                  entry));
+                  ASYS_MULTIBYTE_STRING (string_table[i].key_),
+                  ASYS_MULTIBYTE_STRING (entry)));
     else if (i != 2)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ASYS_TEXT ("`%s' not found\n"),
-                         string_table[i].key_),
+                         ASYS_MULTIBYTE_STRING (string_table[i].key_)),
                         -1);
 
   // Let's test the iterator backwards.
@@ -183,8 +183,8 @@ run_test (void)
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("iterating (%d): [%s, %s]\n"),
                     i,
-                    (LPCTSTR) entry->ext_id_,
-                    (LPCTSTR) entry->int_id_));
+                    ASYS_MULTIBYTE_STRING ((LPCTSTR) entry->ext_id_),
+                    ASYS_MULTIBYTE_STRING ((LPCTSTR) entry->int_id_)));
         i++;
       }
   }

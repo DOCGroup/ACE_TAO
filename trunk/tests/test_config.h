@@ -254,11 +254,11 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
   LPCTSTR test_dir;
 
 #if !defined (ACE_HAS_WINCE)
-  test_dir = ACE_OS::getenv ("ACE_TEST_DIR");
+  test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
 
   if (test_dir == 0)
 #endif /* ACE_HAS_WINCE */
-    test_dir = ASYS_TEXT ("");
+    test_dir = ACE_TEXT ("");
 
   ACE_OS::sprintf (temp,
                    ASYS_TEXT ("%s%s%s%s"),

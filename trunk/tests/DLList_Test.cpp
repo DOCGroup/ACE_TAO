@@ -26,7 +26,13 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-static LPCTSTR string_table[] =
+static ACE_Static_Allocator<8192> alloc;
+
+typedef ASYS_TCHAR * STRING;
+typedef ACE_DLList<STRING> STRLIST;
+typedef ACE_DLList_Iterator<STRING> STRLIST_ITERATOR;
+
+static STRING string_table[] =
 {
   ASYS_TEXT ("hello"),
   ASYS_TEXT ("guten Tag"),
@@ -36,12 +42,6 @@ static LPCTSTR string_table[] =
   ASYS_TEXT ("lustig"),
   0
 };
-
-static ACE_Static_Allocator<8192> alloc;
-
-typedef ASYS_TCHAR * STRING;
-typedef ACE_DLList<STRING> STRLIST;
-typedef ACE_DLList_Iterator<STRING> STRLIST_ITERATOR;
 
 static void
 run_iterate (STRLIST &list)
