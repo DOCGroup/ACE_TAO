@@ -15,12 +15,12 @@ else {
 @directories = ();
 
 @ace_dirs = ("$ACE_ROOT\\ace",
-             "$ACE_ROOT\\apps", 
-             "$ACE_ROOT\\ASNMP", 
-             "$ACE_ROOT\\examples", 
-             "$ACE_ROOT\\netsvcs", 
-             "$ACE_ROOT\\performance-tests", 
-             "$ACE_ROOT\\tests", 
+             "$ACE_ROOT\\apps",
+             "$ACE_ROOT\\ASNMP",
+             "$ACE_ROOT\\examples",
+             "$ACE_ROOT\\netsvcs",
+             "$ACE_ROOT\\performance-tests",
+             "$ACE_ROOT\\tests",
              "$ACE_ROOT\\websvcs");
 
 $verbose = 0;
@@ -148,6 +148,10 @@ sub Build_Core ()
                       $ACE_ROOT."\\TAO\\TAO_IDL\\TAO_IDL_FE_LIB.dsp",
                       $ACE_ROOT."\\TAO\\TAO_IDL\\tao_idl_static.dsp",
                       $ACE_ROOT."\\TAO\\tao\\TAO_Static.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\PortableServer\\TAO_PortableServer_Static.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\DynamicAny\\TAO_DynamicAny_Static.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\IORManipulation\\TAO_IORManip_Static.dsp",
+                      $ACE_ROOT."\\TAO\\tao\\IORTable\\TAO_IORTable_Static.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\Svc_Utils_Static.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosNaming_Static.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosProperty_Static.dsp",
