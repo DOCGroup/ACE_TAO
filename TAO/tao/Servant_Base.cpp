@@ -115,13 +115,13 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
   TAO_Stub *stub;
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-  TAO_POA_Current *poa_current = orb_core->poa_current ();
+  TAO_POA_Current &poa_current = orb_core->poa_current ();
+  TAO_POA_Current_Impl *poa_current_impl = poa_current.implementation ();
 
-  if (poa_current != 0
-      && poa_current->in_upcall ()
-      && this == poa_current->servant ())
+  if (poa_current_impl != 0 &&
+      this == poa_current_impl->servant ())
     {
-      stub = orb_core->orb ()->create_stub_object (poa_current->object_key (),
+      stub = orb_core->orb ()->create_stub_object (poa_current_impl->object_key (),
                                                    this->_interface_repository_id (),
                                                    env);
     }
@@ -357,28 +357,28 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &env)
   // by the DSI servant, it raises the PortableServer::WrongPolicy
   // exception.
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-  TAO_POA_Current *poa_current = orb_core->poa_current ();
+  TAO_POA_Current &poa_current = orb_core->poa_current ();
+  TAO_POA_Current_Impl *poa_current_impl = poa_current.implementation ();
 
-  if (poa_current == 0
-      || !poa_current->in_upcall ()
-      || this != poa_current->servant ())
+  if (poa_current_impl == 0 &&
+      this != poa_current_impl->servant ())
     {
       CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
       env.exception (exception);
       return 0;
     }
 
-  PortableServer::POA_var poa = poa_current->get_POA (env);
+  PortableServer::POA_var poa = poa_current_impl->get_POA (env);
   if (env.exception () != 0)
     return 0;
 
-  CORBA::RepositoryId interface = this->_primary_interface (poa_current->object_id (),
+  CORBA::RepositoryId interface = this->_primary_interface (poa_current_impl->object_id (),
                                                             poa.in (),
                                                             env);
   if (env.exception () != 0)
     return 0;
 
-  return TAO_ORB_Core_instance ()->orb ()->create_stub_object (poa_current->object_key (),
+  return TAO_ORB_Core_instance ()->orb ()->create_stub_object (poa_current_impl->object_key (),
                                                                interface,
                                                                env);
 }

@@ -261,11 +261,11 @@ TAO_Object_Adapter::dispatch_servant_i (const TAO_ObjectKey &key,
 
   // Setup for POA Current
   const char *operation = req.operation ();
-  TAO_POA_Current current_context (poa,
-                                   key,
-                                   0,
-                                   operation,
-                                   this->orb_core_);
+  TAO_POA_Current_Impl current_context (poa,
+                                        key,
+                                        0,
+                                        operation,
+                                        this->orb_core_);
 
   PortableServer::Servant servant = 0;
 
