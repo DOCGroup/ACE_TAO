@@ -2555,6 +2555,18 @@ typedef u_int ACE_RANDR_TYPE;
 struct msghdr {};
 # endif /* ACE_HAS_MSG */
 
+# if defined (ACE_HAS_MSG) && defined (ACE_LACKS_MSG_ACCRIGHTS)
+  #if !defined (msg_accrights)
+  # undef msg_control
+  # define msg_accrights msg_control
+  #endif /* ! msg_accrights */
+
+  #if !defined (msg_accrightslen)
+  # undef msg_controllen
+  # define msg_accrightslen msg_controllen
+  #endif /* ! msg_accrightslen */
+# endif /* ACE_HAS_MSG && ACE_LACKS_MSG_ACCRIGHTS */
+
 # if !defined (ACE_HAS_SIG_ATOMIC_T)
 typedef int sig_atomic_t;
 # endif /* !ACE_HAS_SIG_ATOMIC_T */

@@ -59,6 +59,7 @@
 #define ACE_NEEDS_DEV_IO_CONVERSION
 
 #define ACE_HAS_MSG
+#define ACE_LACKS_MSG_ACCRIGHTS
 
 // The following two #defines may require OS patches.  If you
 // have trouble building ACE, try commenting them out.
@@ -126,17 +127,6 @@
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 #define ACE_HAS_STRBUF_T
-
-// BSD 4.4 interface fixes nabbed from config-linux.h
-#if !defined (msg_accrights)
-#undef msg_control
-#define msg_accrights msg_control
-#endif /* msg_accrights */
-
-#if !defined (msg_accrightslen)
-#undef msg_controllen
-#define msg_accrightslen msg_controllen
-#endif /* msg_accrightslen */
 
 #define ACE_HAS_UALARM
 

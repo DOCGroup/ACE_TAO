@@ -64,15 +64,7 @@
 # endif /* __GLIBC__ 2.1+ */
 #else /* ! __GLIB__ */
   // Fixes a problem with some non-glibc versions of Linux...
-  #ifndef msg_accrights
-  # undef msg_control
-  # define msg_accrights msg_control
-  #endif
-
-  #ifndef msg_accrightslen
-  # undef msg_controllen
-  # define msg_accrightslen msg_controllen
-  #endif
+#   define ACE_LACKS_MSG_ACCRIGHTS
 #endif /* __GLIBC__ */
 
 
