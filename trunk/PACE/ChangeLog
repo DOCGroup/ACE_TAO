@@ -1,3 +1,13 @@
+Wed Jul 12 17:01:47 2000  Ossama Othman  <ossama@uci.edu>
+
+	* Makefile.am:
+	* pace/Makefile.am:
+	* pace/posix/Makefile.am:
+	* tests/Makefile.am:
+
+	  Preliminary Automake input files for PACE.  They aren't working
+	  yet, but do provide a good start.
+
 Wed Jul 12 15:27:27 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/posix/types.h (PACE_TCHAR):
