@@ -1,3 +1,12 @@
+Fri Mar 28 12:35:51 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* tests/ORB_init/Portspan/portspan.dsp:
+	  Fixed duff relative path to tao_idl (release and debug).
+
+	* tests/CodeSets/simple/client.dsp:
+	* tests/CodeSets/simple/server.dsp: Fixed dependencies to prevent
+	  warnings. Added custom build step for Release configurations.
+
 Fri Mar 28 11:27:12 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* orbsvcs/performance-tests/RTEvent/lib/Auto_Disconnect.h:
