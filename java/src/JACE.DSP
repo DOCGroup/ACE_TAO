@@ -82,6 +82,10 @@ SOURCE=.\ActivateStrategy.java
 # End Source File
 # Begin Source File
 
+SOURCE=.\AddServiceObjectNode.java
+# End Source File
+# Begin Source File
+
 SOURCE=.\Blob.java
 # End Source File
 # Begin Source File
@@ -95,6 +99,14 @@ SOURCE=.\BlobReader.java
 # Begin Source File
 
 SOURCE=.\BlobWriter.java
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClassNameGenerator.java
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClassReader.java
 # End Source File
 # Begin Source File
 
@@ -115,6 +127,10 @@ SOURCE=.\EventHandler.java
 # Begin Source File
 
 SOURCE=.\GetOpt.java
+# End Source File
+# Begin Source File
+
+SOURCE=.\HTTPHelper.java
 # End Source File
 # Begin Source File
 
@@ -154,7 +170,23 @@ SOURCE=.\OS.java
 # End Source File
 # Begin Source File
 
+SOURCE=.\ParseNode.java
+# End Source File
+# Begin Source File
+
+SOURCE=.\parser.java
+# End Source File
+# Begin Source File
+
 SOURCE=.\ProfileTimer.java
+# End Source File
+# Begin Source File
+
+SOURCE=.\RemoveNode.java
+# End Source File
+# Begin Source File
+
+SOURCE=.\ResumeNode.java
 # End Source File
 # Begin Source File
 
@@ -170,7 +202,19 @@ SOURCE=.\ServiceConfig.java
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServiceLoader.java
+# End Source File
+# Begin Source File
+
 SOURCE=.\ServiceObject.java
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServiceObjectRecord.java
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServiceRecord.java
 # End Source File
 # Begin Source File
 
@@ -206,7 +250,15 @@ SOURCE=.\StreamTail.java
 # End Source File
 # Begin Source File
 
+SOURCE=.\SuspendNode.java
+# End Source File
+# Begin Source File
+
 SOURCE=.\SvcHandler.java
+# End Source File
+# Begin Source File
+
+SOURCE=.\sym.java
 # End Source File
 # Begin Source File
 
@@ -243,6 +295,10 @@ SOURCE=.\TimeValue.java
 # Begin Source File
 
 SOURCE=.\Token.java
+# End Source File
+# Begin Source File
+
+SOURCE=.\Yylex.java
 # End Source File
 # End Target
 # End Project
