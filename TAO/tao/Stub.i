@@ -290,3 +290,9 @@ TAO_Stub::get_base_profiles (void) const
 {
   return this->base_profiles_;
 }
+
+ACE_INLINE TAO_ORB_Core*
+TAO_Stub::orb_core (void) const
+{
+  return this->orb_core_;
+}

@@ -1,3 +1,41 @@
+Mon Mar 29 19:10:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Stub.h:
+	* tao/Stub.i:
+	* tao/Stub.cpp:
+	  The Stub carries the ORB_Core around, this reduces the number of 
+	  calls to TAO_ORB_Core_instance(), at least on the client-side.
+	  It is also the first step to be able to get to the policy list
+	  effective for an object, because we needed some way to map from
+	  the CORBA::Object to the ORB that it belongs to.
+
+	* tao/CDR.h:
+	* tao/CDR.i:
+	* tao/CDR.cpp:
+	  The InputCDR class can carry the ORB_Core around to initialize
+	  the TAO_Stub's appropiately. Unfortunately we cannot use this
+	  feature everywhere.
+
+	* tao/Invocation.i:
+	  Initialize the InputCDR with the right ORB_Core.
+
+	* tao/ORB.cpp:
+	  Changed the code to create TAO_Stub's to use the new
+	  constructor and pass it the ORB_Core.
+	  Use the right ORB_Core when extracting an object reference from
+	  a string.
+
+	* tao/Object.cpp:
+	  When extracting an Object from a CDR stream we use the right
+	  ORB_Core.
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: 
+	  Use the ORB_Core in the stub instead TAO_ORB_Core_instance() to
+	  make a request.
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: 
+	  Migrated to the new TAO_Stub constructors.
+
 Mon Mar 29 15:55:23 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Request.h (CORBA_Request): Put a default argument for calls
