@@ -58,6 +58,7 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>::item (void)
 template <class TYPE, class FUNCTOR, class LOCK> ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &
 ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::iter (void)
 {
+  this->iterator_->first ();
   return *this->iterator_;
 }
 

@@ -224,6 +224,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::is_empty (void) const
 template <class TYPE, class FUNCTOR, class LOCK> ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &
 ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::iter (void)
 {
+  this->iterator_->first ();
   return *this->iterator_;
 }
 
