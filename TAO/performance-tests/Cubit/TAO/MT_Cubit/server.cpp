@@ -790,8 +790,19 @@ start_servants (void)
   // ACE_Barrier doesn't work on Linux/glibc2 because its
   // pthread_cond_wait appears broken:  it doesn't always catch
   // the signal.
-  ACE_OS::thr_yield ();
+
   ACE_OS::sleep (2);
+
+  // To compensate for the lack of a barrier.
+  while (high_priority_task->servants_iors_ == 0)
+    ACE_OS::thr_yield ();
+
+  for (i = 0; i < num_of_objs-1; ++i)
+    while (low_priority_task[i]->servants_iors_ == 0)
+      ACE_OS::thr_yield ();
+
+  ACE_OS::sleep (2);
+
 #else  /* ! linux */
   barrier_.wait ();
 #endif /* ! linux */
