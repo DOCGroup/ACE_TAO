@@ -1,3 +1,9 @@
+Tue Oct 20 16:28:12 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: added recommended DU CXX version info.
+          Thanks to Susan Liebeskind <shl@janis.gtri.gatech.edu>
+          for suggesting this.
+
 Tue Oct 20 14:31:37 EDT 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/001/Makefile
@@ -15,9 +21,9 @@ Tue Oct 20 14:31:37 EDT 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
         * docs/tutorials/012a/Makefile
         * docs/tutorials/Makefile
 
-	Updated these makefiles to remove rules.lib.GNU
-	Added the "top-level" makefile to allow building
-	of all tutorials in one step.
+        Updated these makefiles to remove rules.lib.GNU
+        Added the "top-level" makefile to allow building
+        of all tutorials in one step.
 
 Tue Oct 20 12:54:39 1998  David L. Levine  <levine@cs.wustl.edu>
 
