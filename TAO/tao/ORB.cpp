@@ -1740,17 +1740,22 @@ CORBA_ORB::_tao_find_in_IOR_table (ACE_CString &object_id,
 CORBA::ORB_ptr
 CORBA::instance (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
-                            *ACE_Static_Object_Lock::instance (), 0));
   if (CORBA::instance_ == 0)
     {
-      int argc = 0;
-      char *const *argv = 0;
-      // Note that CORBA::ORB_init() will also acquire the static
-      // lock, but that's ok since it's a recursive lock.
-      CORBA::instance_ = CORBA::ORB_init (argc, argv);
-    }
+      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+                                *ACE_Static_Object_Lock::instance (), 0));
+      if (CORBA::instance_ == 0)
+        {
+          int argc = 0;
+          char *const *argv = 0;
 
+          // Note that CORBA::ORB_init() will also acquire the static
+          // lock, but that's ok since it's a recursive lock.
+          CORBA::Environment ACE_TRY_ENV;
+          CORBA::instance_ = CORBA::ORB_init (argc, argv, "",
+                                              ACE_TRY_ENV);
+        }
+    }
   return CORBA::instance_;
 }
 
