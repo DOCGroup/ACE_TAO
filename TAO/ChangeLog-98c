@@ -1,36 +1,40 @@
+Sat Jan 17 22:40:29 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO/tao/orbobj.{h,i}: Added _var and _out for CORBA_ORB
+
 Sat Jan 17 21:28:05 1998    <coryan@MILONGA>
 
-	* tao/corba.h: 
-	* tao/corbacom.h: 
+	* tao/corba.h:
+	* tao/corbacom.h:
 	  Moved the definition of TAO_opaque from corbacom.h to corba.h so
 	  it appears after the "sequence.h" file.
 
-	* tao/sequence.h: 
-	* tao/sequence.cpp: 
+	* tao/sequence.h:
+	* tao/sequence.cpp:
 	  Reorder includes to avoid "inline called before declared so"
 	  warning in g++.
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp: 
+	* tests/Cubit/TAO/MT_Cubit/server.cpp:
 	  The OA uses TAO_opaque instead of CORBA::OctetSeq.
-	
+
 Sat Jan 17 16:07:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_args.cpp: 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
-	* TAO_IDL/be_include/be_visitor_args.h: 
-	* TAO_IDL/be_include/be_visitor_interface.h: 
+	* TAO_IDL/be/be_visitor_args.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be_include/be_visitor_args.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
 	  New visitors to generate collocated classes (only used on the
 	  POA branch) and the arguments declaration.
-	
+
 Fri Jan 16 23:38:38 1998    <coryan@MILONGA>
 
-	* tao/decode.cpp: 
-	* tao/deep_free.cpp: 
-	* tao/giop.h: 
-	* tao/iiopobj.cpp: 
-	* tao/sequence.h: 
-	* tao/sequence_T.h: 
-	* tao/sequence_T.cpp: 
+	* tao/decode.cpp:
+	* tao/deep_free.cpp:
+	* tao/giop.h:
+	* tao/iiopobj.cpp:
+	* tao/sequence.h:
+	* tao/sequence_T.h:
+	* tao/sequence_T.cpp:
 	  Fixed some memory *deallocation* problems with sequences, they
 	  needed a _deallocate_buffer() method, not to implement the base
 	  class destructor, but to implement deep_free.
@@ -39,35 +43,35 @@ Fri Jan 16 18:01:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* The Event Service works on Solaris/SunCC again.
 
-	* tao/poa.h: 
-	* tao/poa.cpp: 
-	* tao/objtable.h: 
-	* tao/objtable.cpp: 
-	* tao/connect.cpp: 
+	* tao/poa.h:
+	* tao/poa.cpp:
+	* tao/objtable.h:
+	* tao/objtable.cpp:
+	* tao/connect.cpp:
 	  The object table, and POA use a real TAO_Unbounded_Sequence,
 	  removing some nasty casts.
 
-	* tao/sequence_T.i: 
-	* tao/sequence_T.cpp: 
+	* tao/sequence_T.i:
+	* tao/sequence_T.cpp:
 	  Fixed some memory allocation problems in operator=
 
-	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_interface.cpp:
 	  No need to cast the object key when calling POA::bind(), it
 	  takes a TAO_opaque now.
 
 Thu Jan 15 17:15:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO/TAO_IDL/be/be_interface.cpp: 
-	* TAO/tao/connect.cpp: 
-	* TAO/tao/corba.h: 
-	* TAO/tao/corbacom.cpp: 
-	* TAO/tao/corbacom.h: 
-	* TAO/tao/decode.cpp: 
-	* TAO/tao/encode.cpp: 
-	* TAO/tao/iiopobj.cpp: 
-	* TAO/tao/iiopobj.i: 
-	* TAO/tao/iioporb.cpp: 
-	* TAO/tao/poa.cpp: 
+	* TAO/TAO_IDL/be/be_interface.cpp:
+	* TAO/tao/connect.cpp:
+	* TAO/tao/corba.h:
+	* TAO/tao/corbacom.cpp:
+	* TAO/tao/corbacom.h:
+	* TAO/tao/decode.cpp:
+	* TAO/tao/encode.cpp:
+	* TAO/tao/iiopobj.cpp:
+	* TAO/tao/iiopobj.i:
+	* TAO/tao/iioporb.cpp:
+	* TAO/tao/poa.cpp:
 	  Now TAO_opaque is implemented using the new TAO_*_Sequence
 	  classes, this is needed because the demarshaller expects that
 	  class.   There are some other sequences in the ORB core that
@@ -77,9 +81,9 @@ Thu Jan 15 17:15:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  branch already solved this, so I will wait until the merge to
 	  fix it.
 
-	* TAO/tao/sequence_T.h: 
-	* TAO/tao/sequence_T.i: 
-	* TAO/tao/sequence_T.cpp: 
+	* TAO/tao/sequence_T.h:
+	* TAO/tao/sequence_T.i:
+	* TAO/tao/sequence_T.cpp:
 	  Now we include sequence_T.i in sequence_T.h, this is needed for
 	  template instantiation.
 	  The ACE_ASSERT for indices was comparing to the value of
@@ -89,19 +93,19 @@ Thu Jan 15 17:15:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  finally sets the length, with the previous asserts that would
 	  fail.
 
-	* TAO/tao/Makefile: 
-	* TAO/TAO_IDL/*/Makefile: 
-	* TAO/orbsvcs/*/Makefile: 
-	* TAO/tests/Cubit/TAO/*/Makefile: 
+	* TAO/tao/Makefile:
+	* TAO/TAO_IDL/*/Makefile:
+	* TAO/orbsvcs/*/Makefile:
+	* TAO/tests/Cubit/TAO/*/Makefile:
 	  Dependencies regenerated.
 
 Wed Jan 14 23:10:13 1998    <coryan@MILONGA>
 
-	* sequence.h: 
-	* sequence.i: 
-	* sequence.cpp: 
-	* sequence_T.h: 
-	* sequence_T.i: 
+	* sequence.h:
+	* sequence.i:
+	* sequence.cpp:
+	* sequence_T.h:
+	* sequence_T.i:
 	  More generated and parametric code reduced, also fixed some
 	  problems  detected by MSVC++.
 
@@ -111,29 +115,29 @@ Wed Jan 14 23:10:13 1998    <coryan@MILONGA>
 
 Wed Jan 14 21:03:18 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* sequence.h: 
-	* sequence.i: 
-	* sequence.cpp: 
+	* sequence.h:
+	* sequence.i:
+	* sequence.cpp:
 	  Removed unused TAO_Unbounded_String class, it has been
 	  superseeded by
-	  TAO_Unbounded_Managed_String<char,TAO_String_Manager>.  
+	  TAO_Unbounded_Managed_String<char,TAO_String_Manager>.
 
-	* sequence_T.h: 
-	* sequence_T.i: 
+	* sequence_T.h:
+	* sequence_T.i:
 	  Managed sequences only need the const version of operator[],
 	  because they return a Manager by value.
 
 Wed Jan 14 20:32:47 1998    <coryan@MILONGA>
 
-	* tao/sequence_T.h: 
+	* tao/sequence_T.h:
 	  Fixed typo in base class for ACE_Bounded_Managed_Sequence.
 
 Wed Jan 14 17:54:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_visitor_sequence.h: 
-	* TAO_IDL/be/be_visitor_sequence.cpp: 
-	* TAO_IDL/be/be_interpretive.cpp: 
-	* TAO_IDL/be/be_sequence.cpp: 
+	* TAO_IDL/be_include/be_visitor_sequence.h:
+	* TAO_IDL/be/be_visitor_sequence.cpp:
+	* TAO_IDL/be/be_interpretive.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
 	  The compiler generates code using the new managed sequence
 	  parametric classes.
 	  Also handled typedefs correctly while generating sequence code
@@ -144,11 +148,11 @@ Wed Jan 14 17:54:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Finally made some of the visitors more generic, so less
 	  knowledge on the stream files gets distributed.
 
-	* tao/sequence.h: 
-	* tao/sequence.cpp: 
-	* tao/sequence_T.h: 
-	* tao/sequence_T.i: 
-	* tao/sequence_T.cpp: 
+	* tao/sequence.h:
+	* tao/sequence.cpp:
+	* tao/sequence_T.h:
+	* tao/sequence_T.i:
+	* tao/sequence_T.cpp:
 	  Re-implemented the Managed_Sequence classes using the "Manager"
 	  as a parameter instead of a nested type.
 	  Still requires some work because the sequences need privileged
