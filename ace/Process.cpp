@@ -104,7 +104,32 @@ ACE_Process::spawn (ACE_Process_Options &options)
         }
     }
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WINCE)
+  // Note that WinCE does not have process name included in the command line as argv[0]
+  // like other OS environment.  Therefore, it is user's whole responsibility to call
+  // 'ACE_Process_Options::process_name(const ACE_TCHAR *name)' to set the proper
+  // process name (the execution file name with path if needed).
+
+  BOOL fork_result =
+    ACE_TEXT_CreateProcess (options.process_name(),
+                            options.command_line_buf(),
+                            options.get_process_attributes(),  // must be NULL in CE
+                            options.get_thread_attributes(),   // must be NULL in CE
+                            options.handle_inheritence(),      // must be false in CE
+                            options.creation_flags(),          // must be NULL in CE
+                            options.env_buf(),                 // environment variables, must be NULL in CE
+                            options.working_directory(),       // must be NULL in CE
+                            options.startup_info(),            // must be NULL in CE
+                            &this->process_info_);
+
+  if (fork_result)
+    {
+      parent (this->getpid ());
+      return this->getpid ();
+    }
+  return ACE_INVALID_PID;
+
+#elif defined (ACE_WIN32)
   BOOL fork_result =
     ACE_TEXT_CreateProcess (0,
                             options.command_line_buf (),
