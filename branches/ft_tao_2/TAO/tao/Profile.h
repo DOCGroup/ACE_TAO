@@ -68,6 +68,12 @@ public:
   // Access the tagged components, notice that they they could be
   // empty (or ignored) for non-GIOP protocols (and even for GIOP-1.0)
 
+#if (TAO_HAS_FT_CORBA == 1)
+
+  CORBA::Boolean is_primary (void);
+  // Is this profile a primary?
+#endif /*TAO_HAS_FT_CORBA */
+
   virtual char object_key_delimiter (void) const = 0;
   // The object key delimiter.
 

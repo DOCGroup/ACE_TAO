@@ -891,5 +891,14 @@ enum MCAST_SERVICEID
 // To explicitly enable SMART_PROXIES support uncomment the following
 // #define TAO_HAS_SMART_PROXIES 1
 
+// By default FT_CORBA  is disabled.
+# if !defined (TAO_HAS_FT_CORBA)
+#    define TAO_HAS_FT_CORBA 1
+#endif /*TAO_HAS_FT_CORBA*/
+
+// FT_CORBA support is disabled by default.
+// To explicitly enable FT_CORBA support uncomment the following
+        //#define TAO_HAS_FT_CORBA 1
+
 #include "ace/post.h"
 #endif  /* TAO_ORB_CONFIG_H */
