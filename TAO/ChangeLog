@@ -2,7 +2,7 @@ Tue Dec 31 19:33:09 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* tao/Condition.h:
 	* tao/Condition.cpp: Added missing includes for the AIX compiler.
-	  Thanks to Jan Wackley for providing this patch.
+	  Thanks to Jon Wackley for providing this patch.
 
 	* tao/Leader_Follower.cpp (wait_for_event): Cached the transport
 	  id before waiting as a follower or drive the event loop as
