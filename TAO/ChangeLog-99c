@@ -1,3 +1,13 @@
+Sun Jan 17 16:15:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/GIOP.h: 
+	* tao/GIOP.cpp: 
+	  Checked the return value of some send_n() calls, at least to
+	  print appropiate debug messages if TAO_orbdebug is not 0.
+	  Also added constants to document the size of the IIOP_Lite
+	  header (vs. the GIOP header) and the offset of the message size
+	  in the GIOP and the IIOP_Lite headers.
+
 Sun Jan 17 15:51:39 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/Time_Service/Time_Service_Server.dsp: Added the generated

@@ -208,16 +208,12 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
   // this particular environment and that isn't handled by the
   // networking infrastructure (e.g., IPSEC).
 
-  size_t offset = 8;
-  // @@ Carlos, can you please make this more "abstract" rather
-  // than hard-coding it to 8!!!
   size_t header_len = TAO_GIOP_HEADER_LEN;
+  size_t offset = TAO_GIOP_MESSAGE_SIZE_OFFSET;
   if (orb_core->orb_params ()->use_IIOP_lite_protocol ())
     {
-      offset = 0;
-      // @@ Carlos, can you please make this more "abstract" rather
-      // than hard-coding it to 5!!!
-      header_len = 5;
+      header_len = TAO_IIOP_LITE_HEADER_LEN;
+      offset = TAO_IIOP_LITE_MESSAGE_SIZE_OFFSET;
     }
 
   CORBA::ULong bodylen = buflen - header_len;
@@ -360,14 +356,19 @@ TAO_GIOP::close_connection (TAO_Client_Connection_Handler *&handler,
   // @@ should recv and discard queued data for portability; note
   // that this won't block (long) since we never set SO_LINGER
 
-  TAO_GIOP::dump_msg ("send",
+  TAO_GIOP::dump_msg ("close_connection",
                       (const u_char *) close_message,
                       TAO_GIOP_HEADER_LEN);
 
-  // @@ Carlos, can you please check the return value on this?
-  handler->peer ().send (close_message,
-                         TAO_GIOP_HEADER_LEN);
   ACE_HANDLE which = handler->peer ().get_handle ();
+  if (handler->peer ().send_n (close_message,
+                               TAO_GIOP_HEADER_LEN) == -1)
+    {
+      if (TAO_orbdebug)
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) error closing connection %d\n",
+                    which));
+    }
   handler->handle_close ();
   handler = 0;
   ACE_DEBUG ((LM_DEBUG,
@@ -395,19 +396,24 @@ error_message [TAO_GIOP_HEADER_LEN] =
 void
 TAO_GIOP::send_error (TAO_SVC_HANDLER *&handler)
 {
-  TAO_GIOP::dump_msg ("send",
+  TAO_GIOP::dump_msg ("send_error",
                       (const u_char *) error_message,
                       TAO_GIOP_HEADER_LEN);
 
-  // @@ Carlos, can you please check to see if <send_n> should have
-  // it's reply checked?
-  handler->peer ().send_n (error_message,
-                           TAO_GIOP_HEADER_LEN);
+  ACE_HANDLE which = handler->peer ().get_handle ();
+  if (handler->peer ().send_n (error_message,
+                               TAO_GIOP_HEADER_LEN) == -1)
+    {
+      if (TAO_orbdebug != 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) error sending error to %d\n",
+                    which));
+                    
+    }
   if (TAO_orbdebug)
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) aborted socket %d\n",
-                handler->peer ().get_handle ()));
-//   handler->handle_close ();
+                which));
   handler = 0;
 }
 
