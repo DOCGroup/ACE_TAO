@@ -20,7 +20,7 @@ TAO_ServerRequestInfo::TAO_ServerRequestInfo (
   TAO_ServerRequest &server_request)
   : server_request_ (server_request),
     forward_reference_ (),
-    poa_current_ (),
+    //    poa_current_ (),
     adapter_id_ (),
     caught_exception_ (0),
     reply_status_ (-1)
