@@ -50,11 +50,20 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  os->indent ();
+
+  // Generate the stub factory function pointer declaration
+  *os << "extern " << node->name () << "_ptr (*_TAO_collocation_"
+      << node->flatname () << "_Stub_Factory_function_pointer) ("
+      << be_idt << be_idt_nl
+      << "CORBA::Object_ptr obj" << be_uidt_nl
+      << ");" << be_uidt_nl;
+
   // generate the Any <<= and >>= operator declarations
   os->indent ();
   *os << "// Any operators for interface " << node->name () << be_nl;
   *os << "void " << idl_global->export_macro ()
-      << " operator<<= (CORBA::Any &, " << node->name () 
+      << " operator<<= (CORBA::Any &, " << node->name ()
       << "_ptr);" << be_nl;
   *os << "CORBA::Boolean " << idl_global->export_macro ()
       << " operator>>= (const CORBA::Any &, "

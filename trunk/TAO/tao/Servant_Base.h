@@ -59,11 +59,6 @@ public:
   virtual TAO_Stub *_create_stub (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // This is an auxiliar method for _this() and _narrow().
 
-  virtual void * _create_collocated_objref (const char *repository_id,
-                                            CORBA::ULong type,
-                                            TAO_Stub *stub);
-  // Collocated object factory.
-
 protected:
   TAO_ServantBase (void);
   // Default constructor, only derived classes can be created.
