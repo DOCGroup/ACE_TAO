@@ -7,8 +7,11 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.3
 - (Boris) Addition of XSC
 
 - (Steve, J.T., Ossama) Autoconfigure using all MPC-generated files.
+  **In progress. Mostly fighting with MPC.
 
 - (Steve) Wide-char functionality on POSIX (Linux, etc.)
+  Tue Aug 24 14:07:22 2004  Steve Huston  <shuston@riverace.com>
+  (and subsequent follow-ups)
 
 - (OCI) TSS memory leak fixes (Bug 1542)
 
