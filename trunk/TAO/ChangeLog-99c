@@ -1,4 +1,5 @@
 Fri Feb 12 10:03:56 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
         * tao/IIOP_Profile.{h,cpp}
 	  tao/ORB.cpp
 	  tao/Stub.{i,cpp}
@@ -149,7 +150,8 @@ Thu Feb 11 11:23:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  svc.conf or when tao is using a static services.
 
 Thu Feb 11 10:34:41 1999 Fred Kuhns <fredk@cs.wustl.edu>
-        * Use of PHandle in MProfile.{h,cpp} create a name conflict.
+
+        * Use of PHandle in MProfile.{h,cpp} create a name conflict.  
 	  Added TAO_ to fix this.
 
 	* Thanks to  John Morey <jmorey@tbi.com>
