@@ -116,10 +116,20 @@ class ACE_Export ACE_Recyclable
 public:
   enum State
   {
-    IDLE,
-    BUSY,
-    CLOSED,
-    UNKNOWN
+    IDLE_AND_PURGABLE,
+    // Idle and can be purged.
+
+    IDLE_BUT_NOT_PURGABLE,
+    // Idle but cannot be purged.
+
+    BUSY = 2,
+    // Busy (i.e., cannot be recycled or purged).
+
+    CLOSED = 3,
+    // Closed.
+
+    UNKNOWN = 4
+    // Unknown state.
   };
 
   virtual ~ACE_Recyclable (void);
