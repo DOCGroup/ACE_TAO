@@ -29,22 +29,6 @@
 #define SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
 //#define SFP_MAX_PACKET_SIZE 100
 
-// default arguments to pass to use for the ORB
-const char *TAO_SFP_ORB_ARGUMENTS = "-ORBobjrefstyle URL";
-
-// SFP magic numbers
-const char *TAO_SFP_MAGIC_NUMBER = "=SFP";
-const char *TAO_SFP_FRAGMENT_MAGIC_NUMBER = "FRAG";
-const char *TAO_SFP_START_MAGIC_NUMBER = "=STA";
-const char *TAO_SFP_CREDIT_MAGIC_NUMBER = "=CRE";
-const char *TAO_SFP_STARTREPLY_MAGIC_NUMBER = "=STR";
-
-// SFP version 1.0
-const unsigned char TAO_SFP_MAJOR_VERSION = 1;
-const unsigned char TAO_SFP_MINOR_VERSION = 0;
-
-// lengths of various SFP headers
-const unsigned char TAO_SFP_FRAME_HEADER_LEN = 12;
 
 // various message class for SFP.
 
@@ -109,6 +93,22 @@ class TAO_ORBSVCS_Export TAO_SFP :public virtual ACE_Event_Handler
 
 {
 public:
+  // default arguments to pass to use for the ORB
+  static const char *TAO_SFP_ORB_ARGUMENTS;
+
+  // SFP magic numbers
+  static const char *TAO_SFP_MAGIC_NUMBER;
+  static const char *TAO_SFP_FRAGMENT_MAGIC_NUMBER;
+  static const char *TAO_SFP_START_MAGIC_NUMBER;
+  static const char *TAO_SFP_CREDIT_MAGIC_NUMBER;
+  static const char *TAO_SFP_STARTREPLY_MAGIC_NUMBER;
+
+  // SFP version 1.0
+  static const unsigned char TAO_SFP_MAJOR_VERSION;
+  static const unsigned char TAO_SFP_MINOR_VERSION;
+
+// lengths of various SFP headers
+  static const unsigned char TAO_SFP_FRAME_HEADER_LEN;
   enum State
   {
     ACTIVE_START,
@@ -120,10 +120,10 @@ public:
   };
 
   TAO_SFP (CORBA::ORB_ptr orb,
-       ACE_Reactor* reactor,
-       ACE_Time_Value timeout1,
-       ACE_Time_Value timeout2,
-       SFP_Callback *callback);
+           ACE_Reactor* reactor,
+           ACE_Time_Value timeout1,
+           ACE_Time_Value timeout2,
+           SFP_Callback *callback);
   // constructor.
 
   virtual int start_stream (const char *receiver_addr);

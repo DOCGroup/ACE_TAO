@@ -3,6 +3,23 @@
 
 // $Id$
 
+// default arguments to pass to use for the ORB
+const char *TAO_SFP::TAO_SFP_ORB_ARGUMENTS = "-ORBobjrefstyle URL";
+
+// SFP magic numbers
+const char *TAO_SFP::TAO_SFP_MAGIC_NUMBER = "=SFP";
+const char *TAO_SFP::TAO_SFP_FRAGMENT_MAGIC_NUMBER = "FRAG";
+const char *TAO_SFP::TAO_SFP_START_MAGIC_NUMBER = "=STA";
+const char *TAO_SFP::TAO_SFP_CREDIT_MAGIC_NUMBER = "=CRE";
+const char *TAO_SFP::TAO_SFP_STARTREPLY_MAGIC_NUMBER = "=STR";
+
+// SFP version 1.0
+const unsigned char TAO_SFP::TAO_SFP_MAJOR_VERSION = 1;
+const unsigned char TAO_SFP::TAO_SFP_MINOR_VERSION = 0;
+
+// lengths of various SFP headers
+const unsigned char TAO_SFP::TAO_SFP_FRAME_HEADER_LEN = 12;
+
 int 
 operator< (const TAO_SFP_Fragment_Node& left,
            const TAO_SFP_Fragment_Node& right)
