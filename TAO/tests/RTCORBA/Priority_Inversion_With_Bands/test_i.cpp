@@ -104,7 +104,7 @@ test_i::estimate_iterations (void)
   ACE_Countdown_Time countdown (&work_time);
 
   int i = 0;
-  for (; work_time > 0; ++i)
+  for (; work_time > ACE_Time_Value::zero; ++i)
     {
       ACE::is_prime (this->prime_number_,
                      2,
