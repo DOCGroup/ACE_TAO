@@ -1,3 +1,22 @@
+Wed Jun 30 15:46:32 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Updated UIOP release notes with list of restrictions/guidelines
+	  the user should follow or be aware of when using the UIOP
+	  pluggable protocol.
+	
+	* tao/UIOP_Profile.{h,cpp}:
+
+	  Comment/documentation updates based on the release notes
+	  updates.  No code changes.
+
+	* tao/Pluggable.cpp (start_request, start_locate):
+
+	  Removed ACE_UNUSED_ARG since ACE_THROW already contains an
+	  ACE_UNUSED_ARG.  This corrects an "unreachable statement"
+	  warning.
+
 Wed Jun 30 15:39:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp;
