@@ -546,11 +546,11 @@ public:
   // Kill a group of threads.
 
   // = Cancel methods, which provides a cooperative thread-termination mechanism (will not block).
-  int cancel_all (void);
+  int cancel_all (int async_cancel = 0);
   // Cancel's all the threads.
-  int cancel (ACE_thread_t);
+  int cancel (ACE_thread_t, int async_cancel = 0);
   // Cancel a single thread.
-  int cancel_grp (int grp_id);
+  int cancel_grp (int grp_id, int async_cancel = 0);
   // Cancel a group of threads.
   int testcancel (ACE_thread_t t_id);
   // True if <t_id> is cancelled, else false.
@@ -577,7 +577,7 @@ public:
   int kill_task (ACE_Task_Base *task,
                  int signum);
   // Kill all threads in an ACE_Task.
-  int cancel_task (ACE_Task_Base *task);
+  int cancel_task (ACE_Task_Base *task, int async_cancel = 0);
   // Cancel all threads in an ACE_Task.
 
   // = The following method provide new functionality. They do not
@@ -740,7 +740,7 @@ protected:
   // Send signal <signum> to the thread described in <tda>.
 
   int cancel_thr (ACE_Thread_Descriptor *td,
-                  int = 0);
+                  int async_cancel = 0);
   // Set the cancellation flag for the thread described in <tda>.
 
   ACE_Double_Linked_List<ACE_Thread_Descriptor> thr_list_;

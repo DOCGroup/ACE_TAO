@@ -1101,11 +1101,18 @@ ACE_Thread_Manager::resume_thr (ACE_Thread_Descriptor *td, int)
 }
 
 int
-ACE_Thread_Manager::cancel_thr (ACE_Thread_Descriptor *td, int)
+ACE_Thread_Manager::cancel_thr (ACE_Thread_Descriptor *td, int async_cancel)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel_thr");
-  // @@ Don't really know how to handle thread cancel.
+  // Must set the state first and then try to cancel the thread.
   td->thr_state_ = ACE_THR_CANCELLED;
+
+  if (async_cancel != 0)
+    // Note that this call only does something relevant if the OS
+    // platform supports asynchronous thread cancellation.  Otherwise,
+    // it's a no-op.
+    ACE_Thread::cancel (td->thr_id_);
+
   return 0;
 }
 
@@ -1136,7 +1143,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
 
 // ------------------------------------------------------------------
 // Factor out some common behavior to simplify the following methods.
-#define ACE_EXECUTE_OP(OP) \
+#define ACE_EXECUTE_OP(OP, ARG) \
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1)); \
   ACE_ASSERT (this->thr_to_be_removed_.is_empty ()); \
   ACE_FIND (this->find_thread (t_id), ptr); \
@@ -1145,7 +1152,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
       errno = ENOENT; \
       return -1; \
     } \
-  int result = OP (ptr); \
+  int result = OP (ptr, ARG); \
   int error = errno; \
   while (! this->thr_to_be_removed_.is_empty ()) { \
     ACE_Thread_Descriptor *td; \
@@ -1161,7 +1168,7 @@ int
 ACE_Thread_Manager::suspend (ACE_thread_t t_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend");
-  ACE_EXECUTE_OP (this->suspend_thr);
+  ACE_EXECUTE_OP (this->suspend_thr, 0);
 }
 
 // Resume a single thread.
@@ -1170,16 +1177,16 @@ int
 ACE_Thread_Manager::resume (ACE_thread_t t_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume");
-  ACE_EXECUTE_OP (this->resume_thr);
+  ACE_EXECUTE_OP (this->resume_thr, 0);
 }
 
 // Cancel a single thread.
 
 int
-ACE_Thread_Manager::cancel (ACE_thread_t t_id)
+ACE_Thread_Manager::cancel (ACE_thread_t t_id, int async_cancel)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel");
-  ACE_EXECUTE_OP (this->cancel_thr);
+  ACE_EXECUTE_OP (this->cancel_thr, async_cancel);
 }
 
 // Send a signal to a single thread.
@@ -1188,25 +1195,7 @@ int
 ACE_Thread_Manager::kill (ACE_thread_t t_id, int signum)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-  ACE_ASSERT (this->thr_to_be_removed_.is_empty ());
-
-  ACE_FIND (this->find_thread (t_id), ptr);
-  if (ptr == 0)
-    {
-      errno = ENOENT;
-      return -1 ;
-    }
-
-  int result = this->kill_thr (ptr, signum);
-  int error = errno;
-  while (! this->thr_to_be_removed_.is_empty ()) {
-    ACE_Thread_Descriptor *td;
-    this->thr_to_be_removed_.dequeue_head (td);
-    this->remove_thr (td, 1);
-  }
-  errno = error;
-  return result;
+  ACE_EXECUTE_OP (this->kill_thr, signum);
 }
 
 int
@@ -1362,11 +1351,12 @@ ACE_Thread_Manager::kill_grp (int grp_id, int signum)
 // Cancel a group of threads.
 
 int
-ACE_Thread_Manager::cancel_grp (int grp_id)
+ACE_Thread_Manager::cancel_grp (int grp_id, int async_cancel)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_grp");
   return this->apply_grp (grp_id,
-                          ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::cancel_thr));
+                          ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::cancel_thr),
+                          async_cancel);
 }
 
 int
@@ -1424,10 +1414,11 @@ ACE_Thread_Manager::kill_all (int sig)
 }
 
 int
-ACE_Thread_Manager::cancel_all (void)
+ACE_Thread_Manager::cancel_all (int async_cancel)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel_all");
-  return this->apply_all (ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::cancel_thr));
+  return this->apply_all (ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::cancel_thr),
+                          async_cancel);
 }
 
 // Wait for group of threads
@@ -1838,11 +1829,13 @@ ACE_Thread_Manager::kill_task (ACE_Task_Base *task, int /* signum */)
 
 // Cancel a task.
 int
-ACE_Thread_Manager::cancel_task (ACE_Task_Base *task)
+ACE_Thread_Manager::cancel_task (ACE_Task_Base *task,
+                                 int async_cancel)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel_task");
   return this->apply_task (task,
-                           ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::cancel_thr));
+                           ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::cancel_thr),
+                           async_cancel);
 }
 
 // Locate the index in the table associated with <task> from the
