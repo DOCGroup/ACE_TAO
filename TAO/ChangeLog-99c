@@ -1,3 +1,7 @@
+Tue Dec 21 11:34:45 1999  bala  <bala@cs.wustl.edu>
+
+        * TAO version 1.0.10 released.
+
 Tue Dec 21 10:58:54 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (server_is_running):
