@@ -1,3 +1,18 @@
+Tue Sep 11 01:22:40 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/String_Base.h:
+	* ace/String_Base.i:
+	* ace/String_Base.cpp: Abstracted out ACE_CString and ACE_WString
+	  into a templatized String_Base.
+
+	* ace/CDR_Stream.h: Removed forward declarating ACE_CString and
+	  added inclusion of <SString.h>.
+
+	* ace/SString.h:
+	* ace/SString.i:
+	* ace/SString.cpp: Changed ACE_CString to be a typedef of
+	  ACE_String_Base<char>.
+
 Thu Aug  9 16:56:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager_T.i:
@@ -7,7 +22,7 @@ Thu Aug  9 16:56:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  to the liking of SunCC 4.2. Looks like we had to change a bunch
 	  of static cast sprayed in these two files to a C style cast as
 	  4.2 doesnt like them. Compilers like Borland handle these
-	  better, but not 4.2.    
+	  better, but not 4.2.
 
 Thu Aug  9 11:51:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 

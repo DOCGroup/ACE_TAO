@@ -41,11 +41,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SString.h"
 #include "ace/Message_Block.h"
 
 class ACE_Char_Codeset_Translator;
 class ACE_WChar_Codeset_Translator;
-class ACE_CString;
 
 class ACE_InputCDR;
 
