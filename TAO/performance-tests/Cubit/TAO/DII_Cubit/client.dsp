@@ -90,7 +90,7 @@ LINK32=link.exe
 # PROP BASE Target_Dir "client"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Static_Debug"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Static_Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "client"
@@ -117,7 +117,7 @@ LINK32=link.exe
 # PROP BASE Target_Dir "client"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "static_Release"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "static_Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "client"
