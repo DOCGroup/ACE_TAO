@@ -11,10 +11,6 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-#if !defined (__ACE_INLINE__)
-#include "tao/Invocation_Endpoint_Selectors.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (FaultTolerance,
            FT_Invocation_Endpoint_Selectors,
            "$Id$")
