@@ -1,3 +1,11 @@
+Mon Apr 10 17:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/orbconf.h: Diabled smart proxies by default.
+	* rules.tao.GNU: Set TAO_HAS_SMART_PROXIES flag if $smart_proxies
+	  is set.
+	* tests/Makefile: Only if smart proxies feature is enabled will 
+	  the Smart_Proxies test be included in the build.
+	
 Mon Apr 10 13:17:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Makefile:
