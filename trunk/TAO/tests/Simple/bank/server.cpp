@@ -12,7 +12,7 @@ main (int argc, char *argv[])
   Server_i server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\t Bank server\n\n"));
+              "\n\tBank account server\n\n"));
 
   TAO_TRY
     {
