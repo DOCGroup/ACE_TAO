@@ -64,13 +64,32 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
+  virtual IR::Contained::Description *describe_i (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From Contained_i's pure virtual function.
+
   virtual CORBA::TypeCode_ptr result (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  CORBA::TypeCode_ptr result_i (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual IR::IDLType_ptr result_def (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  IR::IDLType_ptr result_def_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -83,7 +102,20 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void result_def_i (
+      IR::IDLType_ptr result_def,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual IR::ParDescriptionSeq *params (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  IR::ParDescriptionSeq *params_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -96,7 +128,20 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void params_i (
+      const IR::ParDescriptionSeq &params,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual IR::OperationMode mode (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  IR::OperationMode mode_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -109,7 +154,20 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void mode_i (
+      IR::OperationMode mode,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual IR::ContextIdSeq *contexts (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  IR::ContextIdSeq *contexts_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -122,13 +180,33 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void contexts_i (
+      const IR::ContextIdSeq &contexts,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual IR::ExceptionDefSeq *exceptions (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  IR::ExceptionDefSeq *exceptions_i (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void exceptions (
+      const IR::ExceptionDefSeq &exceptions,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void exceptions_i (
       const IR::ExceptionDefSeq &exceptions,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()

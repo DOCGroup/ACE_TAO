@@ -24,6 +24,15 @@ IR::Contained::Description *
 TAO_TypedefDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->describe_i (ACE_TRY_ENV);
+}
+
+IR::Contained::Description *
+TAO_TypedefDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   IR::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
                     IR::Contained::Description,
@@ -38,9 +47,9 @@ TAO_TypedefDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
   IR::TypeDescription td;
 
   ACE_CHECK_RETURN (0);
-  td.name = this->name (ACE_TRY_ENV);
+  td.name = this->name_i (ACE_TRY_ENV);
 
-  td.id = this->id (ACE_TRY_ENV);
+  td.id = this->id_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   ACE_TString container_id;
@@ -51,10 +60,10 @@ TAO_TypedefDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
 
   td.defined_in = container_id.c_str ();
 
-  td.version = this->version (ACE_TRY_ENV);
+  td.version = this->version_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  td.type = this->type (ACE_TRY_ENV);
+  td.type = this->type_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   retval->value <<= td;

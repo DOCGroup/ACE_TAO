@@ -26,14 +26,32 @@ TAO_FinderDef_i::def_kind (CORBA::Environment &)
 }
 
 void 
-TAO_FinderDef_i::destroy (CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_FinderDef_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->destroy_i (ACE_TRY_ENV);
+}
+
+void 
+TAO_FinderDef_i::destroy_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 IR::Contained::Description *
-TAO_FinderDef_i::describe (CORBA::Environment & /* ACE_TRY_ENV */ )
+TAO_FinderDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->describe_i (ACE_TRY_ENV);
+}
+
+IR::Contained::Description *
+TAO_FinderDef_i::describe_i (CORBA::Environment & /* ACE_TRY_ENV */ )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO

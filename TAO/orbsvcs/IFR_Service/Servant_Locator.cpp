@@ -26,13 +26,10 @@ IFR_ServantLocator::preinvoke (
   CORBA::String_var s =
     PortableServer::ObjectId_to_string (oid);
 
-  ACE_TString full_name (s.in ());
-
   ACE_Configuration_Section_Key servant_key;
-
   int status =
     this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                         full_name,
+                                         s.in (),
                                          servant_key,
                                          0);
 

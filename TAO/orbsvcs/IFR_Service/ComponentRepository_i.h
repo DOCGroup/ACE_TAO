@@ -63,7 +63,30 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  IR::ComponentDef_ptr create_component_i (
+      const char *id,
+      const char *name,
+      const char *version,
+      IR::ComponentDef_ptr base_component,
+      const IR::InterfaceDefSeq & supports_interfaces,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual IR::HomeDef_ptr create_home (
+      const char *id,
+      const char *name,
+      const char *version,
+      IR::HomeDef_ptr base_home,
+      IR::ComponentDef_ptr managed_component,
+      IR::ValueDef_ptr primary_key,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  IR::HomeDef_ptr create_home_i (
       const char *id,
       const char *name,
       const char *version,

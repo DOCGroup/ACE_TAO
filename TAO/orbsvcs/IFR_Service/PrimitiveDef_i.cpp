@@ -30,11 +30,27 @@ void
 TAO_PrimitiveDef_i::destroy (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  this->destroy_i (ACE_TRY_ENV);
+}
+
+void 
+TAO_PrimitiveDef_i::destroy_i (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   ACE_THROW (CORBA::BAD_INV_ORDER (2, CORBA::COMPLETED_NO));
 }
 
 CORBA::TypeCode_ptr 
-TAO_PrimitiveDef_i::type (CORBA::Environment &)
+TAO_PrimitiveDef_i::type (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
+
+  return this->type_i (ACE_TRY_ENV);
+}
+
+CORBA::TypeCode_ptr 
+TAO_PrimitiveDef_i::type_i (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int pkind = 0;
@@ -94,7 +110,16 @@ TAO_PrimitiveDef_i::type (CORBA::Environment &)
 }
 
 IR::PrimitiveKind 
-TAO_PrimitiveDef_i::kind (CORBA::Environment &)
+TAO_PrimitiveDef_i::kind (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->kind_i (ACE_TRY_ENV);
+}
+
+IR::PrimitiveKind 
+TAO_PrimitiveDef_i::kind_i (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int pkind = 0;

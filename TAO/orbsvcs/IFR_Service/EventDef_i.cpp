@@ -18,14 +18,32 @@ TAO_EventDef_i::~TAO_EventDef_i (void)
 }
 
 void 
-TAO_EventDef_i::destroy (CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_EventDef_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->destroy_i (ACE_TRY_ENV);
+}
+
+void 
+TAO_EventDef_i::destroy_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 IR::Contained::Description *
-TAO_EventDef_i::describe (CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_EventDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->describe_i (ACE_TRY_ENV);
+}
+
+IR::Contained::Description *
+TAO_EventDef_i::describe_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -33,8 +51,19 @@ TAO_EventDef_i::describe (CORBA::Environment & /* ACE_TRY_ENV */)
 }
 
 CORBA::Boolean 
-TAO_EventDef_i::is_a (const char * /* event_id */,
-                      CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_EventDef_i::is_a (const char *event_id,
+                      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->is_a_i (event_id,
+                       ACE_TRY_ENV);
+}
+
+CORBA::Boolean 
+TAO_EventDef_i::is_a_i (const char * /* event_id */,
+                        CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
@@ -42,7 +71,16 @@ TAO_EventDef_i::is_a (const char * /* event_id */,
 }
 
 IR::ValueDef_ptr 
-TAO_EventDef_i::event (CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_EventDef_i::event (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (IR::ValueDef::_nil ());
+
+  return this->event_i (ACE_TRY_ENV);
+}
+
+IR::ValueDef_ptr 
+TAO_EventDef_i::event_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
