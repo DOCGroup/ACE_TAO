@@ -21,156 +21,140 @@
 
 #include "orbsvcs/CosPropertyServiceS.h"
 
-
-
-
-
-
-
-
-
-
-class TAO_PropertySetFactory : public POA_CosPropertyService::PropertySetFactory 
-{  
+class TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
+{
+public:
+  TAO_PropertySetFactory (void);
  
-public:  
-  TAO_PropertySetFactory(void);
-  
-  virtual CosPropertyService::PropertySet_ptr create_propertyset (CORBA::Environment &env);
-  
-  virtual CosPropertyService::PropertySet_ptr 
-    create_constrained_propertyset (CosPropertyService::PropertyTypes &allowed_property_types,
-                                    CosPropertyService::Properties  &allowed_properties,
-                                    CORBA::Environment &env);
-                                   
-  virtual CosPropertyService::PropertySet_ptr
-    create_initial_propertyset (CosPropertyService::Properties &initial_properties,
-                                CORBA::Environment &env);
+  virtual CosPropertyService::PropertySet_ptr  create_propertyset (CORBA::Environment &env); 
 
-  ~TAO_PropertySetFactory(void);
+  virtual CosPropertyService::PropertySet_ptr  
+    create_constrained_propertyset (const CosPropertyService::PropertyTypes &allowed_property_types, 
+                                    const CosPropertyService::Properties &allowed_properties,  CORBA::Environment &env);
+
+  virtual CosPropertyService::PropertySet_ptr 
+    create_initial_propertyset (const CosPropertyService::Properties &initial_properties,  CORBA::Environment &env) ;
+
+  virtual ~TAO_PropertySetFactory (void);
 };
 
-class TAO_PropertySetDefFactory : public POA_CosPropertyService::PropertySetDefFactory
+class TAO_PropertySetDefFactory :  public virtual POA_CosPropertyService::PropertySetDefFactory  
 {
-  
 public:
-  TAO_PropertySetDefFactory(void);    
-  
-  virtual CosPropertyService::PropertySetDef_ptr create_propertysetdef (CORBA::Environment &env); 
+  TAO_PropertySetDefFactory(void); 
+
+  virtual ~TAO_PropertySetDefFactory (void);
+
+  virtual CosPropertyService::PropertySetDef_ptr  create_propertysetdef ( CORBA::Environment &env); 
 
   virtual CosPropertyService::PropertySetDef_ptr 
-    create_constrained_propertysetdef (CosPropertyService::PropertyTypes &allowed_property_types,
-                                       CosPropertyService::PropertyDefs  &allowed_property_defs,
+    create_constrained_propertysetdef (const CosPropertyService::PropertyTypes &allowed_property_types, 
+                                       const CosPropertyService::PropertyDefs &allowed_property_defs, 
                                        CORBA::Environment &env);
-  
+
   virtual CosPropertyService::PropertySetDef_ptr 
-    create_initial_propertysetdef (CosPropertyService::PropertyDefs &initial_property_defs,
+    create_initial_propertysetdef (const CosPropertyService::PropertyDefs &initial_property_defs,
                                    CORBA::Environment &env);
+};
 
-  ~TAO_PropertySetDefFactory(void);
-};  
+
+class TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet  
+{    
+public:
  
-class TAO_PropertySet : POA_CosPropertyService::PropertySet  
-{
-  /* Support for defining and modifying properties */
-  void define_property (const CosPropertyService::PropertyName &property_name,
-                        const any &property_value,
-                        CORBA::Environment &env);
+  TAO_PropertySet (void);
 
-  void define_properties (const CosPropertyService::Properties  &nproperties,
-                          CORBA::Environment &env);
+  virtual ~TAO_PropertySet (void);
+  
+  virtual void define_property (const char *property_name, const CORBA::Any &property_value,  CORBA::Environment &env);
+
+  virtual void define_properties (const CosPropertyService::Properties &nproperties,  CORBA::Environment &env);
     
-  /* Support for Getting Properties and their Names */
-  CORBA::ULong get_number_of_properties(CORBA::Environment &env);
+  virtual CORBA::ULong get_number_of_properties ( CORBA::Environment &env);
+  
+  virtual void get_all_property_names (CORBA::ULong how_many, 
+                                       CosPropertyService::PropertyNames_out property_names, 
+                                       CosPropertyService::PropertyNamesIterator_out rest,  CORBA::Environment &env);
+  
+  virtual CORBA::Any * get_property_value (const char *property_name,  CORBA::Environment &env);
 
-  void get_all_property_names (CORBA::ULong how_many,
-                              CosPropertyService::PropertyNames *&property_names,
-                              CosPropertyService::PropertyNamesIterator *&rest,
-                              CORBA::Environment &env);
+  virtual CORBA::Boolean get_properties (const CosPropertyService::PropertyNames &property_names,
+                                         CosPropertyService::Properties_out nproperties,  CORBA::Environment &env) = 0;
 
-  any *get_property_value (CosPropertyService::PropertyName &property_name,
-                           CORBA::Environment &env);
+  virtual void get_all_properties (CORBA::ULong how_many, CosPropertyService::Properties_out nproperties, 
+                                   CosPropertyService::PropertiesIterator_out rest,  CORBA::Environment &env);
+   
+  virtual void delete_property (const char *property_name,  CORBA::Environment &env);
 
-  CORBA::Boolean get_properties (CosPropertyService::PropertyNames *&property_names,
-                                 CosPropertyService::Properties *&nproperties,
+  virtual void delete_properties (const CosPropertyService::PropertyNames &property_names,  CORBA::Environment &env);
+
+  virtual CORBA::Boolean delete_all_properties ( CORBA::Environment &env);
+
+  virtual CORBA::Boolean is_property_defined (const char *property_name,  CORBA::Environment &env);
+};
+
+class TAO_PropertySetDef : public virtual TAO_PropertySet
+{
+public:
+  TAO_PropertySetDef (void);
+  
+  virtual ~TAO_PropertySetDef (void);
+  
+  virtual void get_allowed_property_types (CosPropertyService::PropertyTypes_out property_types,  CORBA::Environment &env);
+
+  virtual void get_allowed_properties (CosPropertyService::PropertyDefs_out property_defs,  CORBA::Environment &env);
+  
+  virtual void define_property_with_mode (const char *property_name, const CORBA::Any &property_value,
+                                          CosPropertyService::PropertyModeType property_mode,  CORBA::Environment &env);
+
+  virtual void define_properties_with_modes (const CosPropertyService::PropertyDefs &property_defs,  CORBA::Environment &env);
+
+  virtual CosPropertyService::PropertyModeType get_property_mode (const char *property_name,  CORBA::Environment &env);
+
+  virtual CORBA::Boolean get_property_modes (const CosPropertyService::PropertyNames &property_names,
+                                             CosPropertyService::PropertyModes_out property_modes,  CORBA::Environment &env);
+  
+  virtual void set_property_mode (const char *property_name, CosPropertyService::PropertyModeType property_mode, 
+                                  CORBA::Environment &env);
+  
+  virtual void set_property_modes (const CosPropertyService::PropertyModes &property_modes,  CORBA::Environment &env);
+    
+};
+
+
+class TAO_PropertyNamesIterator :  public virtual POA_CosPropertyService::PropertyNamesIterator
+{
+public:
+  TAO_PropertyNamesIterator (void);
+
+  virtual ~TAO_PropertyNamesIterator (void);
+
+  virtual void reset ( CORBA::Environment &env);
+    
+  virtual CORBA::Boolean next_one (CORBA::String_out property_name,  CORBA::Environment &env);
+    
+  virtual CORBA::Boolean next_n (CORBA::ULong how_many, CosPropertyService::PropertyNames_out property_names, 
+                                 CORBA::Environment &env);
+  virtual void destroy ( CORBA::Environment &env);
+    
+};
+
+class TAO_PropertiesIterator :  public virtual POA_CosPropertyService::PropertiesIterator
+{
+public:
+  TAO_PropertiesIterator (void);
+  
+  virtual ~TAO_PropertiesIterator (void);
+    
+  virtual void reset ( CORBA::Environment &env);
+
+  virtual CORBA::Boolean next_one (CosPropertyService::Property_out aproperty,  CORBA::Environment &env);
+    
+  virtual CORBA::Boolean next_n (CORBA::ULong how_many, CosPropertyService::Properties_out nproperties, 
                                  CORBA::Environment &env);
 
-  void get_all_properties(CORBA::ULong how_many,
-                          CosPropertyService::Properties *&nproperties,
-                          CosPropertyService::PropertiesIterator *&rest,
-                          CORBA::Environment &env);
+  virtual void destroy ( CORBA::Environment &env);
 
-  /* Support for Deleting Properties              */
-  void delete_property (CosPropertyService::PropertyName  &property_name, 
-                        CORBA::Environment &env);
-
-  void delete_properties (CosPropertyService::PropertyNames &property_names, 
-                          CORBA::Environment &env);
-
-  CORBA::Boolean delete_all_properties (CORBA::Environment &env);
-
-  /* Support for Existence Check             */
-  CORBA::Boolean is_property_defined (const CosPropertyService::PropertyName *property_name,
-                                      CORBA::Environment &env);
-};
-
-class TAO_PropertySetDef : public TAO_PropertySet
-{
-  /* Support for retrieval of PropertySet constraints*/
-  void get_allowed_property_types (CosPropertyService::PropertyTypes *&property_types,
-                                   CORBA::Environment &env);
-
-  void get_allowed_properties (CosPropertyService::PropertyDefs *&property_defs,
-                               CORBA::Environment &env);
-
-  /* Support for defining and modifying properties */
-  void define_property_with_mode (const CosPropertyService::PropertyName &property_name,
-                                  const any &property_value,
-                                  const CosPropertyService::PropertyModeType &property_mode,
-                                  CORBA::Environment &env);
-
-  void define_properties_with_modes (const CosPropertyService::PropertyDefs &property_defs,
-                                     CORBA::Environment &env);
-
-  /* Support for Getting and Setting Property Modes */
-  PropertyModeType get_property_mode (const CosPropertyService::PropertyName &property_name,
-                                      CORBA::Environment &env);
-
-  CORBA::Boolean get_property_modes (const CosPropertyService::PropertyNames &property_names,
-                                     CosPropertyService::PropertyModes *&property_modes,
-                                     CORBA::Environment &env);
-
-  void set_property_mode (CosPropertyService::PropertyName &property_name,
-                          CosPropertyService::PropertyModeType &property_mode, 
-                          CORBA::Environment &env);
-
-  void set_property_modes (const CosPropertyService::PropertyModes &property_modes, 
-                           CORBA::Environment &env);
-};
-
-class TAO_PropertyNamesIterator : POA_CosPropertyService::PropertyNamesIterator
-
-{
-  void reset (CORBA::Environment &env);
-  
-  CORBA::Boolean next_one (CosPropertyService::PropertyName *&property_name, 
-                           CORBA::Environment &env);
-  
-  CORBA::Boolean next_n (CORBA::ULong how_many,
-                         CosPropertyService::PropertyNames  *&property_names,
-                         CORBA::Environment &env);
-  void destroy(CORBA::Environment &env);
-};
- 
-class TAO_PropertiesIterator : POA_CosPropertyService::PropertiesIterator 
-{
-  void    reset (CORBA::Environment &env);
-  CORBA::Boolean next_one (CosPropertyService::Property *&aproperty,
-                           CORBA::Environment &env);
-  CORBA::Boolean next_n (CORBA::ULong how_many,
-                         CosPropertyService::Properties *&nproperties,
-                         CORBA::Environment &env);
-  void destroy(CORBA::Environment &env);
 };
 
 #endif /* COSPROPERTYSERVICE_I_H */
