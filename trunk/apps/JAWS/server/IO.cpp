@@ -180,7 +180,7 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
     // This callback is for this->receive_file()
     {      
       int code = 0;
-      if (result.success ())
+      if (result.success () && result.bytes_transferred () != 0)
 	{
 	  if (result.message_block ().length () == result.message_block ().size ())
 	    code = HTTP_Status_Code::STATUS_OK;
@@ -195,20 +195,23 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
 	      else
 		return;
 	    }
-	  if (code == HTTP_Status_Code::STATUS_OK)
-	    this->handler_->receive_file_complete ();
-	  else
-	    this->handler_->receive_file_error (code);    
-	  
-	  delete &result.message_block ();
-	  JAWS_VFS_Node *vf = (JAWS_VFS_Node *) result.act ();	  
-	  VFS::instance ()->close (vf);
 	}
+      else
+	code = HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR;
+
+      if (code == HTTP_Status_Code::STATUS_OK)
+	this->handler_->receive_file_complete ();
+      else
+	this->handler_->receive_file_error (code);    
+      
+      delete &result.message_block ();
+      JAWS_VFS_Node *vf = (JAWS_VFS_Node *) result.act ();	  
+      VFS::instance ()->close (vf);
     }
   else
     {
       // This callback is for this->read()
-      if (result.success ())
+      if (result.success () && result.bytes_transferred () != 0)
 	this->handler_->client_data (result.message_block ());
       else
 	this->handler_->read_error ();    
