@@ -57,7 +57,7 @@ class ACE_Export ACE_Message_Block
 public:
   friend class ACE_Data_Block;
 
-  enum 
+  enum
   {
     // = Data and protocol messages (regular and priority)
     MB_DATA     = 0x01, // regular data
@@ -90,7 +90,7 @@ public:
     MB_USER     = 0x200 // User-defined control messages
   };
 
-  typedef ACE_UINT32 ACE_Message_Type;
+  typedef int ACE_Message_Type;
   typedef u_long Message_Flags;
 
   enum
