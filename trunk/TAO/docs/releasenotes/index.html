@@ -55,6 +55,8 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <li>
 <a href="OBV.html">Object-by-Value</a></li>
 
+<li><a href"CORBA2.3.1">CORBA 2.3.1 Conformance</a></li>
+
 </UL>
 </TD>
 <TD>
@@ -1339,7 +1341,7 @@ TAO's A/V Service please have a look <A HREF="http://www.cs.wustl.edu/~schmidt/a
   <li>
       A Videoconferencing application based on Vic, a MBONE tool, has
       been implemented using the AV components. Please contact <A
-      HREF="mailto:yamuna@cs.wustl.edu"> yamuna or <A
+      HREF="mailto:yamuna@cs.wustl.edu"> yamuna</a> or <A
       HREF="mailto:naga@cs.wustl.edu"> Naga </A> if you're interested.
   </li>
   <li>
@@ -2154,6 +2156,52 @@ please refers to Section 11.1.1 to 11.1.4 of the
 <a href="http://www.omg.org/cgi-bin/doc?orbos/99-07-01/">spec</a> and
 our short <a href="../LocalObject.html">guideline</a> on implementing
 local objects.</p>
+
+<h3><a NAME="CORBA2.3.1">CORBA 2.3.1 Conformance</a></h3>
+(updated 9 August 2000)<br>
+Here is a summary of TAO's conformance issues with CORBA 2.3.1:<br>
+
+2.3.1 and 2.3 differ in very little, if at all, check:<br>
+
+<a href="http://ringil.ece.uci.edu/corba/CORBA2.3/99-10-07.pdf">http://ringil.ece.uci.edu/corba/CORBA2.3/99-10-07.pdf</a><br>
+
+   and search for the change bars, meanwhile this can help:
+<ul>
+
+  <li>The INS features (have to merge the code)
+
+  <li>The full OBV (valueboxes, valuetypes in all sorts of things, value
+   graphs, Anys and value types, abstract interfaces, etc. etc.)
+
+  <li>The new DynAny interface
+
+  <li>The old (2.3.1) IfR interface (we support a 3.0 draft, which is
+   non-backwards compatible, and it is going to be changed).
+
+  <li>The IfR database cannot be populated (so it is less than fully
+   operational ;-)
+
+  <li>The old typecode factory methods (we support a much better
+   alternative from a 3.0 draft)
+
+  <li>Fixed data types (who cares)
+
+  <li>GIOP fragments (1.1 and 1.2) are completely untested.
+
+  <li>There are several "optional" features like bi-dir GIOP that we
+   don't support and people tend to expect.
+
+  <li>The old ServantManager interfaces (POA stuff)
+
+  <li>Domain Managers (useful for security, but otherwise nobody seems to
+   care)
+
+  <li>I think our interpretation of codesets is compliant (we only
+   support one codeset), but would have to check.
+
+  <li>I'm sure I'm leaving other minor things here and there...
+</ul>
+
 
 <p>Future Work (aka. known problems):</p>
 <ul>

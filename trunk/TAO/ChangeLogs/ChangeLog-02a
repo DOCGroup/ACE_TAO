@@ -1,3 +1,8 @@
+Wed Aug 09 21:41:37 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * docs/releasenotes/index.html: added Carlos' useful notes
+          about TAO's conformance with CORBA 2.3.1.
+
 Wed Aug 09 16:49:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Notify/README:
