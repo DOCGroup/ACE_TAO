@@ -12,15 +12,21 @@
 
 <P>
 <HR WIDTH="100%">
-The Xmit object knows how to send data to the peer.  It sits at the
-tail of the stream and gets everything that flows down from the head.
-In keeping with the spirit of things, this object does only one thing
-and doesn't concern itself with anyone else' details.
+The implementation of Xmit isn't too complicated.  If we choose to
+combine it with the Recv task we simply lift the recv() method from
+that object and drop it into this one.
 <P>
-The only thing you might want to do is combine it with Recv.  Why?
-As you'll realize in a page or two, the Xmit and Recv objects must
-interact if you're going to ensure a safe transit.  By having a single 
-object it's easier to coordinate and maintain the interaction.
+Note that close() must decide if it's being called when the stream is
+shutdown or when it's svc() method exits.  Since we tell the baseclass 
+not to use any threads it's a safe bet that flags will always be
+non-zero.  Still, it's good practice to plan for the future by
+checking the value.
+<P>
+Note also that when we send the data we prefix it with the data size.
+This let's our sibling Recv ensure that an entire block is received
+together.  This can be very important for compression and encryption
+processes which typically work better with blocks of data instead of
+streams of data.
 <HR>
 <PRE>
 
