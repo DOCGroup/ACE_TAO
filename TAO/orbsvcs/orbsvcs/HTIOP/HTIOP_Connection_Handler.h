@@ -12,7 +12,7 @@
 
 #ifndef HTIOP_CONNECTION_HANDLER_H
 #define HTIOP_CONNECTION_HANDLER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "HTIOP_Transport.h"
 
@@ -131,5 +131,5 @@ namespace TAO
 #include "HTIOP_Connection_Handler.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* HTIOP_CONNECTION_HANDLER_H */

@@ -16,7 +16,7 @@
 
 #ifndef HTIOP_PROFILE_H
 #define HTIOP_PROFILE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Profile.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -147,5 +147,5 @@ namespace TAO
 # include "HTIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* HTIOP_PROFILE_H */

@@ -1,3 +1,7 @@
+// -*- MPC -*-
+//
+// $Id$
+
 project(*Server): messaging, taoexe, portableserver, ami, htiop {
   Source_Files {
     Test_Output.cpp

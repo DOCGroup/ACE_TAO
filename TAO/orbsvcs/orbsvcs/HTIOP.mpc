@@ -1,3 +1,7 @@
+// -*- MPC -*-
+//
+// $Id$
+
 project : orbsvcslib, core {
   sharedname   = TAO_HTIOP
   libs += ACE_HTBP
