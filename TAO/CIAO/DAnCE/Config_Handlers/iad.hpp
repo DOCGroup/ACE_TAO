@@ -2,6 +2,8 @@
 #ifndef IAD_HPP
 #define IAD_HPP
 
+#include "vc6-4786.h"
+
 // Forward declarations.
 //
 namespace CIAO

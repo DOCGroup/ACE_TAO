@@ -1,3 +1,19 @@
+Thu Mar 24 17:02:34  Will Otte <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
+	* DAnCE/Config_Handlers/Deployment.hpp
+	* DAnCE/Config_Handlers/ccd.hpp
+	* DAnCE/Config_Handlers/cdd.hpp
+	* DAnCE/Config_Handlers/cdp.hpp
+	* DAnCE/Config_Handlers/cid.hpp
+	* DAnCE/Config_Handlers/cpd.hpp
+	* DAnCE/Config_Handlers/iad.hpp
+	* DAnCE/Config_Handlers/pcd.hpp
+	* DAnCE/Config_Handlers/toplevel.hpp
+	* DAnCE/Config_Handlers/XSCRT/XML.hpp
+
+	Finally beat a big warning problem in VC6.
+
 Thu Mar 24 15:19:21 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/XSCRT/Elements.hpp

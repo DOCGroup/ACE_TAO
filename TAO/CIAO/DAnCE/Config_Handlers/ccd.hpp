@@ -2,6 +2,8 @@
 #ifndef CCD_HPP
 #define CCD_HPP
 
+#include "vc6-4786.h"
+
 // Forward declarations.
 //
 namespace CIAO
