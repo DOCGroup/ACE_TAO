@@ -123,7 +123,7 @@ ACE_RMCast_UDP_Proxy::receive_message (char *buffer, size_t size)
 
       ACE_OS::memcpy (&tmp, buffer + 1,
                       sizeof(tmp));
-      ack.highest_in_sequence = ACE_NTOHL (tmp);
+      ack.next_expected = ACE_NTOHL (tmp);
       ACE_OS::memcpy (&tmp, buffer + 1 + sizeof(ACE_UINT32),
                       sizeof(tmp));
       ack.highest_received = ACE_NTOHL (tmp);
@@ -175,4 +175,3 @@ ACE_RMCast_UDP_Proxy::reply_leave (ACE_RMCast::Leave &leave)
 {
   return this->io_udp_->send_leave (leave, this->peer_addr_);
 }
-

@@ -33,44 +33,65 @@ class ACE_Time_Value;
 class ACE_RMCast_Export ACE_RMCast_IO_UDP : public ACE_RMCast_Module
 {
 public:
+  //! Constructor
+  /*!
+   * The <factory> argument is used to create the modules for each
+   * proxy that process incoming messages. The class does *not* assume
+   * ownership of <factory>, the caller owns it.  But it does assume
+   * ownership of the modules returned by the factory, and it may ask
+   * the factory to release them eventually.
+   */
   ACE_RMCast_IO_UDP (ACE_RMCast_Module_Factory *factory);
-  // Constructor
-  // <factory> is used to create the modules for each proxy that
-  // process incoming messages. The class does *not* assume ownership
-  // of <factory>, the caller owns it.
 
+  //! Destructor
   ~ACE_RMCast_IO_UDP (void);
-  // Destructor
 
+  //! Join a new multicast group
+  /*!
+   * Start receiving data for the <mcast_addr> multicast group.
+   * Please read the documentation of ACE_SOCK_Dgram_Mcast for more
+   * details.
+   */
   int subscribe (const ACE_INET_Addr &mcast_addr,
                  int reuse_addr = 1,
                  const ACE_TCHAR *net_if = 0,
                  int protocol_family = PF_INET,
                  int protocol = 0);
-  // Start receiving data for the <mcast_addr> multicast group.
-  // Please read the documentation of <ACE_SOCK_Dgram_Mcast> for more
-  // details.
 
   // The class can be used with a Reactor or using blocking I/O
   // depending on what method of the following two is called.
 
+  //! Wait for events for the period <tv>. If <tv> is zero it blocks
+  //! forever.
   int handle_events (ACE_Time_Value *tv = 0);
-  // Wait for events for the period <tv>. If <tv> is zero it blocks
-  // forever.
 
+  //! Register any event handlers into <reactor>
+  /*!
+   * @@TODO: This should be left for the clients of the class, there
+   * is no reason why this class must know about reactors.
+   */
   int register_handlers (ACE_Reactor *reactor);
-  // Register any event handlers into <reactor>
 
+  //! Remove all the handlers from the reactor
+  /*!
+   * @@TODO: This should be left for the clients of the class, there
+   * is no reason why this class must know about reactors.
+   */
   int remove_handlers (void);
-  // Remove all the handlers from the reactor
 
+  //! There is data to read, read it and process it.
   int handle_input (ACE_HANDLE h);
-  // There is data to read, read it and process it.
 
+  //! Obtain the handle for the underlying socket
   ACE_HANDLE get_handle (void) const;
-  // Obtain the handle for the underlying socket
 
-  // Send back to the remove object represented by <proxy>
+  //@{
+  //! Send the message to the ACE_INET_Addr argument.
+  /*!
+   * These methods are used in the implementation of the
+   * ACE_RMCast_UDP_Proxy objects and the implementation of the
+   * inherited ACE_RMCast_Module methods in this class.
+   */
   int send_data (ACE_RMCast::Data &, const ACE_INET_Addr &);
   int send_poll (ACE_RMCast::Poll &, const ACE_INET_Addr &);
   int send_ack_join (ACE_RMCast::Ack_Join &, const ACE_INET_Addr &);
@@ -78,8 +99,9 @@ public:
   int send_ack (ACE_RMCast::Ack &, const ACE_INET_Addr &);
   int send_join (ACE_RMCast::Join &, const ACE_INET_Addr &);
   int send_leave (ACE_RMCast::Leave &, const ACE_INET_Addr &);
+  //@}
 
-  // = The RMCast_Module methods
+  // Please read the documentation in ACE_RMCast_Module for more details
   virtual int data (ACE_RMCast::Data &);
   virtual int poll (ACE_RMCast::Poll &);
   virtual int ack_join (ACE_RMCast::Ack_Join &);
@@ -87,23 +109,24 @@ public:
   virtual int ack (ACE_RMCast::Ack &);
   virtual int join (ACE_RMCast::Join &);
   virtual int leave (ACE_RMCast::Leave &);
-  // The messages are sent to the multicast group
 
 private:
+  //! The factory used to create the modules attached to each proxy
   ACE_RMCast_Module_Factory *factory_;
-  // The factory used to create the modules attached to each proxy
 
+  //! The multicast group we subscribe and send to
   ACE_INET_Addr mcast_group_;
-  // The multicast group we subscribe and send to
 
+  //! The socket used to receive and send data
   ACE_SOCK_Dgram_Mcast dgram_;
-  // The socket
 
+  //! Use a Hash_Map to maintain the collection of proxies
   typedef ACE_Hash_Map_Manager<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*,ACE_Null_Mutex> Map;
+  //! The collection of proxies
   Map map_;
 
+  //! The event handler adapter
   ACE_RMCast_UDP_Event_Handler eh_;
-  // The event handler adapter
 };
 
 #if defined (__ACE_INLINE__)

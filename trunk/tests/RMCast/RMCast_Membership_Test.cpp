@@ -40,7 +40,7 @@ public:
     return this->joined_;
   }
   //! Set the flag to remember if this proxy has joined the group or
-  //! not. 
+  //! not.
   void joined (int j)
   {
     this->joined_ = j;
@@ -286,12 +286,12 @@ Tester::ack (ACE_RMCast::Ack &ack)
 
   //  ACE_DEBUG ((LM_DEBUG,
   //              "Received ack in Tester %d,%d\n",
-  //              ack.highest_in_sequence,
+  //              ack.next_expected,
   //              ack.highest_received));
 
   // Assume the lock is held, verify that the ack message satisfy the
   // invariants...
-  ACE_UINT32 highest_in_sequence;
+  ACE_UINT32 next_expected;
   ACE_UINT32 highest_received;
   int set = 0;
   for (size_t i = 0; i != nproxy; ++i)
@@ -301,18 +301,18 @@ Tester::ack (ACE_RMCast::Ack &ack)
       if (!set)
         {
           set = 1;
-          highest_in_sequence = this->proxy_[i].highest_in_sequence ();
+          next_expected = this->proxy_[i].next_expected ();
           highest_received = this->proxy_[i].highest_received ();
         }
       else
         {
-          if (highest_in_sequence >
-              this->proxy_[i].highest_in_sequence ())
+          if (next_expected >
+              this->proxy_[i].next_expected ())
             {
-              highest_in_sequence =
-                this->proxy_[i].highest_in_sequence ();
+              next_expected =
+                this->proxy_[i].next_expected ();
             }
-          if (highest_received < 
+          if (highest_received <
               this->proxy_[i].highest_received ())
             {
               highest_received =
@@ -325,10 +325,10 @@ Tester::ack (ACE_RMCast::Ack &ack)
     return 0;
 
   // Check the invariants
-  if (ack.highest_in_sequence != highest_in_sequence)
+  if (ack.next_expected != next_expected)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Invalid highest_in_sequence in Ack\n"),
+                         "Invalid next_expected in Ack\n"),
                         -1);
     }
   if (ack.highest_received != highest_received)
@@ -395,8 +395,8 @@ Tester::generate_acks (int iterations)
 
       ACE_RMCast::Ack ack;
       ack.source = &this->proxy_[i];
-      ack.highest_in_sequence =
-        this->proxy_[i].highest_in_sequence ();
+      ack.next_expected =
+        this->proxy_[i].next_expected ();
       ack.highest_received =
         this->proxy_[i].highest_received ();
 
@@ -415,13 +415,13 @@ Tester::generate_acks (int iterations)
           ack.highest_received++;
           break;
         default:
-          if (ack.highest_received > ack.highest_in_sequence)
-            ack.highest_in_sequence++;
+          if (ack.highest_received > ack.next_expected)
+            ack.next_expected++;
           break;
         }
       //      ACE_DEBUG ((LM_DEBUG,
       //                  "Sending ack message (%d,%d) through proxy %d\n",
-      //                  ack.highest_in_sequence,
+      //                  ack.next_expected,
       //                  ack.highest_received,
       //                  i));
       int result = this->proxy_[i].ack (ack);

@@ -19,6 +19,7 @@
 #include "ace/pre.h"
 
 #include "RMCast_Module.h"
+#include "RMCast_Copy_On_Write.h"
 #include "ace/RB_Tree.h"
 #include "ace/Synch.h"
 
@@ -26,38 +27,72 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+//! Store messages for retransmission in reliable configurations
+/*!
+ * Reliable configurations of the RMCast framework need to store
+ * messages on the sender side to resend them if one or more clients
+ * do not receive them successfully.
+ */
 class ACE_RMCast_Export ACE_RMCast_Retransmission : public ACE_RMCast_Module
 {
-  // = TITLE
-  //     Reliable Multicast Retransmission
-  //
-  // = DESCRIPTION
-  //     Define the interface for all reliable multicast retransmission
 public:
   // = Initialization and termination methods.
+  //! Constructor
   ACE_RMCast_Retransmission (void);
-  // Constructor
 
+  //! Destructor
   virtual ~ACE_RMCast_Retransmission (void);
-  // Destructor
 
-  // = The RMCast_Module methods
+  //! Use a Red-Black Tree to keep the queue of messages
+  typedef ACE_RB_Tree<ACE_UINT32,ACE_RMCast::Data,ACE_Less_Than<ACE_UINT32>,ACE_Null_Mutex> Collection;
+  typedef ACE_RB_Tree_Iterator<ACE_UINT32,ACE_RMCast::Data,ACE_Less_Than<ACE_UINT32>,ACE_Null_Mutex> Collection_Iterator;
+
+  //! The messages are stored in the Copy_On_Write wrapper to provide
+  //! an efficient, but thread safe interface.
+  typedef ACE_RMCast_Copy_On_Write<ACE_UINT32,ACE_RMCast::Data,Collection,Collection_Iterator> Messages;
+
+  //! Resend messages
+  /*!
+   * Resends all the messages up to \param max_sequence_number
+   * Returns the number of messages sent, or -1 if there where any
+   * errors.
+   */
+  int resend (ACE_UINT32 max_sequence_number);
+
+  //! Cleanup all the stored messages
   virtual int close (void);
+
+  //! Pass the message downstream, but also save it in the
+  //! retransmission queue
+  /*!
+   * Sequence number are assigned by the ACE_RMCast_Fragmentation
+   * class, consequently this class first passes the message
+   * downstream, to obtain the sequence number and then stores the
+   * message for later retransmission.
+   */
   virtual int data (ACE_RMCast::Data &data);
+
+  //! Process an Ack message from the remote receivers.
+  /*!
+   * Normally this Ack message will be a summary of all the Ack
+   * messages received by the ACE_RMCast_Membership class
+   */
   virtual int ack (ACE_RMCast::Ack &);
+
+  //! Detect when new members join the group and Ack_Join them
+  /*!
+   * When a new receiver joins the group this module sends an Ack_Join
+   * message with the next sequence number that the receiver should
+   * expect.
+   * The sequence number is obtained from the current list of cached
+   * messages.
+   */
   virtual int join (ACE_RMCast::Join &);
 
 protected:
-  typedef ACE_RB_Tree<ACE_UINT32,ACE_RMCast::Data,ACE_Less_Than<ACE_UINT32>,ACE_Null_Mutex>
-    Messages;
-  typedef ACE_RB_Tree_Iterator<ACE_UINT32,ACE_RMCast::Data,ACE_Less_Than<ACE_UINT32>,ACE_Null_Mutex>
-    Messages_Iterator;
 
+  //! The retransmission buffer
   Messages messages_;
-  // The retransmission buffer
-
-  ACE_SYNCH_MUTEX mutex_;
-  // Synchronization
 };
 
 #if defined (__ACE_INLINE__)

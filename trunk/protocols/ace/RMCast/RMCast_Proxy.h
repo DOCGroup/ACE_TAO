@@ -48,27 +48,28 @@ public:
 
   //! Destructor
   virtual ~ACE_RMCast_Proxy (void);
-
-  //! Return the highest sequence number received without any losses
-  //! before it.  Only applies to remote receiver proxies.
+    
+  //! Return the next sequence number expected by the peer. Only
+  //! applies to remote receiver proxies.
   /*!
-    Please read the documentation in ACE_RMCast::Ack
+   * Please read the documentation in ACE_RMCast::Ack
    */
-  virtual ACE_UINT32 highest_in_sequence (void) const;
+  virtual ACE_UINT32 next_expected (void) const;
 
   //! Return the highest sequence number successfully received.
   //! Only applies to remote receiver proxies.
   /*!
-    Please read the documentation in ACE_RMCast::Ack
+   * Please read the documentation in ACE_RMCast::Ack
    */
   virtual ACE_UINT32 highest_received (void) const;
 
   //@{
   //! Send messages directly to the peer.
-  /*! Send a message directly to the peer, i.e. the message is not
-    sent through the multicast group and it may not be processed by
-    all the layers in the stack.
-  */
+  /*!
+   * Send a message directly to the peer, i.e. the message is not
+   * sent through the multicast group and it may not be processed by
+   * all the layers in the stack.
+   */
   virtual int reply_data (ACE_RMCast::Data &) = 0;
   virtual int reply_poll (ACE_RMCast::Poll &) = 0;
   virtual int reply_ack_join (ACE_RMCast::Ack_Join &) = 0;
@@ -79,8 +80,8 @@ public:
   //@}
 
   /*!
-    Proxies process the ACK sequence numbers to save the sequence
-    numbers reported from the remote peer.
+   * Proxies process the ACK sequence numbers to cache the ack
+   * information from the peer.
    */
   virtual int ack (ACE_RMCast::Ack &);
 
@@ -88,7 +89,7 @@ private:
   //@{
   //! Cache the sequence numbers reported from the remote peer using
   //! Ack messages
-  ACE_UINT32 highest_in_sequence_;
+  ACE_UINT32 next_expected_;
   ACE_UINT32 highest_received_;
   //@}
 };

@@ -15,9 +15,9 @@ ACE_RMCast_Proxy::~ACE_RMCast_Proxy (void)
 }
 
 ACE_UINT32
-ACE_RMCast_Proxy::highest_in_sequence (void) const
+ACE_RMCast_Proxy::next_expected (void) const
 {
-  return this->highest_in_sequence_;
+  return this->next_expected_;
 }
 
 ACE_UINT32
@@ -29,7 +29,7 @@ ACE_RMCast_Proxy::highest_received (void) const
 int
 ACE_RMCast_Proxy::ack (ACE_RMCast::Ack &ack)
 {
-  this->highest_in_sequence_ = ack.highest_in_sequence;
+  this->next_expected_ = ack.next_expected;
   this->highest_received_ = ack.highest_received;
   return this->ACE_RMCast_Module::ack (ack);
 }
