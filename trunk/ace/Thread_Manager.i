@@ -185,7 +185,7 @@ ACE_INLINE ACE_Thread_Descriptor *
 ACE_Thread_Descriptor::get_next (void) const
 {
   ACE_TRACE ("ACE_Thread_Descriptor::get_next");
-  return ACE_const_cast (ACE_Thread_Desriptor *,
+  return ACE_const_cast (ACE_Thread_Descriptor *,
                          ACE_static_cast (ACE_Thread_Descriptor *,
                                           this->next_));
 }
