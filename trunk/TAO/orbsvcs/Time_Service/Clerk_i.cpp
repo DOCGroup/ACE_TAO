@@ -44,19 +44,20 @@ Clerk_i::read_ior (const char *filename)
 
   ACE_Read_Buffer ior_buffer (f_handle);
 
-  char * data = ior_buffer.read ();
-  char * str = data;
+  char *data = ior_buffer.read ();
+  char *str = data;
 
   if (data == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n"),
                       -1);
 
+  // @@ Vishal, can you please reorganize this code to use a for()
+  // loop rather than a while() loop?
   int nreplaced = ior_buffer.replaced ();
 
   while (nreplaced--)
     {
-
       ACE_DEBUG ((LM_DEBUG,
                   "iors -> |%s|\n",
                   str));
@@ -69,10 +70,12 @@ Clerk_i::read_ior (const char *filename)
 
           // Return if the server reference is nil.
           if (CORBA::is_nil (objref.in ()))
+            // @@ Vishal, note that if you take this return you won't
+            // close down the file or free the buffer.  Can you please
+            // reorganize this code to handle this case?
             ACE_ERROR_RETURN ((LM_ERROR,
                                "IOR for the server is Null\n"),
                               -1);
-
           CosTime::TimeService_ptr server =
             CosTime::TimeService::_narrow (objref.in (),
                                            TAO_TRY_ENV);
@@ -88,7 +91,6 @@ Clerk_i::read_ior (const char *filename)
 
       if (nreplaced != 0)
           str = str + ACE_OS::strlen (str) + 1;
-
    }
 
   ACE_OS::close (f_handle);
@@ -96,35 +98,6 @@ Clerk_i::read_ior (const char *filename)
 
   return 0;
 }
-
-//     if ((this->ior_fp_ = ACE_OS::fopen (filename, "r")) == 0)
-//         {
-//           ACE_ERROR_RETURN ((LM_ERROR,
-//                              "Clerk_i::read_ior () "
-//                              "Failed to open the IOR file for reading\n"),
-//                             -1);
-//     }
-
-//   // @@ Vishal, please sure you don't use magic numbers like 1024 *
-//   // 10.  Instead, add a const or an enum to the Clerk_i class.  Check
-//   // other applications in TAO that read IORs and see if there's a
-//   // default size for these things.  Please update Andy's stuff to
-//   // also use a const.
-
-//   char str[1024 * 10];
-//   //  ACE_OS::memset (str, 0, sizeof (str));
-
-//   while (fscanf (this->ior_fp_, "%s", str) != EOF)
-//     {
-//       // Get the IOR and insert it into the set of server IORs.
-
-//     }
-
-//   this->ior_fp_.close ();
-
-//   return 0;
-
-// }
 
 // Parse the command-line arguments and set options.
 
@@ -603,15 +576,14 @@ Clerk_i::run (CORBA::Environment &env)
 void
 Clerk_i::insert_server (CosTime::TimeService_ptr server)
 {
-
   // We duplicate the capacity of the Array.
   size_t s = this->server_.size ();
 
   if (this->server_.max_size () == s)
-    {
-      this->server_.max_size (2 * s);
-    }
-  this->server_[s] = CosTime::TimeService::_duplicate (server);
-  this->server_.size (s + 1);
+    this->server_.max_size (2 * s);
 
+  this->server_[s] =
+    CosTime::TimeService::_duplicate (server);
+
+  this->server_.size (s + 1);
 }
