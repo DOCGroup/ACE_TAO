@@ -528,6 +528,17 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
   </TD>
 </TR>
 <TR>
+  <TD><CODE>-ORBFlushingStrategy</CODE> <EM>type</EM></TD>
+  <TD><a name="-ORBFlshingStrategy"></a>
+      By default TAO provides two strategies to flush queued messages.
+      The <CODE>reactive</CODE> strategy uses the Reactor and
+      non-blocking I/O to drain the queue.
+      In contrast, the <CODE>blocking</CODE> strategy flushes the
+      queue as soon as it becomes "full", and blocks the
+      thread until all the data is sent.
+  </TD>
+</TR>
+<TR>
   <TD><CODE>-ORBSchedPolicy</CODE> <EM>policy</EM></TD>
   <TD><a name="-ORBSchedPolicy"></a>
       Specify the scheduling policy used for the priority mapping
