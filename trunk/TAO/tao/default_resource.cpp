@@ -34,6 +34,17 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
 
 TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
 {
+  TAO_ProtocolFactorySetItor end = this->protocol_factories_.end ();
+
+  for (TAO_ProtocolFactorySetItor iterator =
+         this->protocol_factories_.begin ();
+       iterator != end;
+       ++iterator)
+    {
+      delete *iterator;
+    }
+
+  this->protocol_factories_.reset ();
 }
 
 int
@@ -278,9 +289,9 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       return 0;
     }
 
-  for ( ; factory != end ; factory++)
+  for (; factory != end; factory++)
     {
-      const ACE_CString& name = (*factory)->protocol_name ();
+      const ACE_CString &name = (*factory)->protocol_name ();
       (*factory)->factory (
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));
       if ((*factory)->factory () == 0)
@@ -617,19 +628,6 @@ TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
   delete this->object_adapter_;
 
   delete this->r_;
-}
-
-// ****************************************************************
-
-TAO_Cached_Connector_Lock::TAO_Cached_Connector_Lock (void)
-{
-  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_cached_connector_lock ();
-}
-
-TAO_Cached_Connector_Lock::~TAO_Cached_Connector_Lock (void)
-{
-  delete this->lock_;
-  this->lock_ = 0;
 }
 
 // ****************************************************************

@@ -74,6 +74,8 @@ TAO_Connector_Registry::close_all (void)
       if (*i == 0)
         continue;
       (*i)->close ();
+
+      delete *i;
     }
   this->connectors_.reset ();
   return 0;

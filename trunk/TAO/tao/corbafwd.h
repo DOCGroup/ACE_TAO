@@ -920,6 +920,7 @@ TAO_NAMESPACE CORBA
 #define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x03u << 4)
 #define TAO_POA_DISCARDING                         (0x04u << 4)
 #define TAO_POA_HOLDING                            (0x05u << 4)
+#define TAO_UNHANDLED_SERVER_CXX_EXCEPTION         (0x06u << 4)
 
 // errno encoding:  bottom 4 bits.
 #define TAO_UNKNOWN_MINOR_CODE   0x00u

@@ -287,6 +287,9 @@ CORBA_SystemException::print_exception_tao_ (FILE *) const
       case TAO_POA_HOLDING :
         location = "poa in holding state";
         break;
+      case TAO_UNHANDLED_SERVER_CXX_EXCEPTION :
+        location = "unhandled c++ exception in server side";
+        break;
       default :
         location = "unknown location";
       }
