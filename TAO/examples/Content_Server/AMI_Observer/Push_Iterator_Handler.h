@@ -92,7 +92,8 @@ private:
    CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
 
-  void deactivate (CORBA::Environment &ACE_TRY_ENV);
+  void deactivate (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Deactivate this handler.
 
 private:

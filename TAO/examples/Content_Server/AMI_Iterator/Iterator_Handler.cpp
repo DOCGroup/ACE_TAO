@@ -78,6 +78,7 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
 }
 void
 Iterator_Handler::destroy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deactivate this reply handler.
   this->deactivate (ACE_TRY_ENV);
