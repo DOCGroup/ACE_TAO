@@ -44,6 +44,12 @@ static const char copyright[] =
 "//       Irvine, CA\n"
 "//       USA\n"
 "//       http://doc.ece.uci.edu/\n"
+"// and\n"
+"//       Institute for Software Integrated Systems\n"
+"//       Vanderbilt University\n"
+"//       Nashville, TN\n"
+"//       USA\n"
+"//       http://www.isis.vanderbilt.edu/\n"
 "//\n"
 "// Information about TAO is available at:\n"
 "//     http://www.cs.wustl.edu/~schmidt/TAO.html";
