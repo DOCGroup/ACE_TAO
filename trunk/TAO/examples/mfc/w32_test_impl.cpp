@@ -15,7 +15,7 @@ W32_Test_Impl::W32_Test_Impl (void)
 char *
 W32_Test_Impl::getresponse (CORBA::Long respnr)
 {
-  CORBA::String myreturn;
+  char *myreturn;
 
   switch (respnr)
     {
