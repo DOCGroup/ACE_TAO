@@ -206,12 +206,12 @@ ACEXML_INLINE ACEXML_Char
 ACEXML_Parser::get (void)
 {
   ACEXML_Char ch = 0;
-  const ACEXML_InputSource* ip = this->current_.getInputSource();
+  const ACEXML_InputSource* ip = this->current_->getInputSource();
   ACEXML_CharStream* instream = ip->getCharStream();
 
   if (instream->get (ch) != -1)
     {
-      this->current_.getLocator()->incrColumnNumber();
+      this->current_->getLocator()->incrColumnNumber();
       // Normalize white-space
       if (ch == '\x0D')
         {
@@ -222,8 +222,8 @@ ACEXML_Parser::get (void)
       if (ch == '\x0A')
         {
           // Reset column number and increment Line Number.
-          this->current_.getLocator()->incrLineNumber();
-          this->current_.getLocator()->setColumnNumber (0);
+          this->current_->getLocator()->incrLineNumber();
+          this->current_->getLocator()->setColumnNumber (0);
       }
       return ch;
     }
@@ -236,7 +236,7 @@ ACEXML_Parser::peek (void)
   // Using an extra level of indirection so we can
   // manage document location in the future.
   ACEXML_Char ch = 0;
-  const ACEXML_InputSource* ip = this->current_.getInputSource();
+  const ACEXML_InputSource* ip = this->current_->getInputSource();
   ACEXML_CharStream* instream = ip->getCharStream();
   ch = instream->peek ();
   return (ch == -1 ? 0 : ch);

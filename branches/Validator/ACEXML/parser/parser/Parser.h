@@ -687,7 +687,7 @@ private:
    *  Push the current context on to the stack.
    *
    */
-  int push_context (const ACEXML_Parser_Context& context);
+  int push_context (ACEXML_Parser_Context* context);
 
   /**
    *  Pop the top element in the stack and replace current context with that.
@@ -771,10 +771,10 @@ private:
   ACEXML_Char *doctype_;
 
   /// Current parser context
-  ACEXML_Parser_Context current_;
+  ACEXML_Parser_Context* current_;
 
   /// Stack used to hold the Parser_Context
-  ACE_Unbounded_Stack<ACEXML_Parser_Context> ctx_stack_;
+  ACE_Unbounded_Stack<ACEXML_Parser_Context*> ctx_stack_;
 
   /*
    * The following two are essentially chains of references and is used by

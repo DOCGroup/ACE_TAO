@@ -30,6 +30,7 @@ ACEXML_Parser::ACEXML_Parser (void)
       content_handler_ (0),
       error_handler_ (0),
       doctype_ (0),
+      current_ (0),
       alt_stack_ (MAXPATHLEN),
       nested_namespace_ (0),
       ref_state_ (ACEXML_ParserInt::INVALID),
@@ -85,7 +86,7 @@ ACEXML_Parser::parse (ACEXML_InputSource *input ACEXML_ENV_ARG_DECL)
     }
   // Set up Locator.
   if (this->content_handler_)
-    this->content_handler_->setDocumentLocator (this->current_.getLocator());
+    this->content_handler_->setDocumentLocator (this->current_->getLocator());
 
   int xmldecl_defined = 0;
   ACEXML_Char fwd = this->get();  // Consume '<'
@@ -322,6 +323,8 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   this->ref_state_ = ACEXML_ParserInt::IN_INT_DTD;
   ACEXML_Char nextch = this->skip_whitespace ();
+  int nrelems = 0;
+  ACEXML_String reference;
   do {
     switch (nextch)
       {
@@ -354,9 +357,25 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
                              ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK_RETURN (-1);
         case 0:
-          this->fatal_error (ACE_TEXT ("Unexpected end-of-file")
-                             ACEXML_ENV_ARG_PARAMETER);
-          ACEXML_CHECK_RETURN (-1);
+          nrelems = this->pop_context();
+          if (this->PE_reference_.pop (reference) < 0)
+            {
+              this->fatal_error (ACE_TEXT ("Internal Parser Error")
+                                 ACEXML_ENV_ARG_PARAMETER);
+              ACEXML_CHECK_RETURN (-1);
+            }
+          if (nrelems >= 1)
+            {
+              if (this->external_entity_)
+                this->external_entity_--;
+              break;
+            }
+          else
+            {
+              this->fatal_error(ACE_TEXT ("Unexpected end-of-file")
+                                ACEXML_ENV_ARG_PARAMETER);
+              ACEXML_CHECK_RETURN (-1);
+            }
         default:
           this->fatal_error (ACE_TEXT ("Invalid content in internal subset")
                              ACEXML_ENV_ARG_PARAMETER);
@@ -375,6 +394,7 @@ ACEXML_Parser::parse_external_subset (ACEXML_ENV_SINGLE_ARG_DECL)
   this->ref_state_ = ACEXML_ParserInt::IN_EXT_DTD;
   this->external_subset_ = 1;
   int nrelems = 0;
+  ACEXML_String reference;
   ACEXML_Char nextch = this->skip_whitespace();
   do {
     switch (nextch)
@@ -411,16 +431,28 @@ ACEXML_Parser::parse_external_subset (ACEXML_ENV_SINGLE_ARG_DECL)
           break;
         case 0:
           nrelems = this->pop_context();
+          if (this->PE_reference_.pop (reference) < 0)
+            {
+              this->fatal_error (ACE_TEXT ("Internal Parser Error")
+                                 ACEXML_ENV_ARG_PARAMETER);
+              ACEXML_CHECK_RETURN (-1);
+            }
           if (nrelems > 1)
-            break;
+            {
+              if (this->external_entity_)
+                this->external_entity_--;
+              break;
+            }
           else if (nrelems == 1)
             {
+              if (this->external_entity_)
+                this->external_entity_--;
               this->external_subset_ = 0;
               return 0;
             }
           else
             {
-              this->fatal_error(ACE_TEXT ("Internal Parser Error")
+              this->fatal_error(ACE_TEXT ("Unexpected end-of-file")
                                 ACEXML_ENV_ARG_PARAMETER);
               ACEXML_CHECK_RETURN (-1);
             }
@@ -642,15 +674,7 @@ ACEXML_Parser::parse_markup_decl (ACEXML_ENV_SINGLE_ARG_DECL)
         this->fatal_error (ACE_TEXT ("Unexpected end-of-file")
                            ACEXML_ENV_ARG_PARAMETER);
         ACEXML_CHECK_RETURN (-1);
-      case '%':
-        if (this->external_subset_)
-          {
-            this->parse_PE_reference (ACEXML_ENV_SINGLE_ARG_PARAMETER);
-            ACEXML_CHECK_RETURN (-1);
-            break;
-          }
-        // Fall through
-      default:
+     default:
         this->fatal_error (ACE_TEXT ("Invalid markupDecl")
                            ACEXML_ENV_ARG_PARAMETER);
         ACEXML_CHECK_RETURN (-1);
@@ -733,7 +757,7 @@ ACEXML_Parser::normalize_systemid (const char* systemId)
   else
     {
       ACEXML_Char* normalized_uri = 0;
-      const char* baseURI = this->current_.getLocator()->getSystemId();
+      const char* baseURI = this->current_->getLocator()->getSystemId();
       if (!baseURI)
         return 0;
       if (ACE_OS::strstr (baseURI, ACE_TEXT ("http://")) != 0)
@@ -946,13 +970,21 @@ ACEXML_Parser::parse_content (const ACEXML_Char* startname,
           case 0:
             nrelems = this->pop_context();
             if (nrelems >= 1)
-              break;
+              {
+                if (this->external_entity_)
+                  this->external_entity_--;
+                break;
+              }
             else if (nrelems == 0)
-              return 0;
+              {
+                if (this->external_entity_)
+                  this->external_entity_--;
+                return 0;
+              }
             else
               {
-                this->fatal_error(ACE_TEXT ("Internal Parser Error")
-                                ACEXML_ENV_ARG_PARAMETER);
+                this->fatal_error(ACE_TEXT ("Unexpected end-of-file")
+                                  ACEXML_ENV_ARG_PARAMETER);
                 ACEXML_CHECK_RETURN (-1);
               }
           case '<':
@@ -1396,6 +1428,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_DECL)
   ACEXML_Char fwd;
   int count = this->skip_whitespace_count(&fwd);
   int nrelems = 0;
+  ACEXML_String reference;
   // Parse AttDef*
   while (fwd != '>')
     {
@@ -1408,6 +1441,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_DECL)
       switch (fwd)
         {
           case '%':
+            this->get();
             if (this->external_subset_)
               {
                 this->parse_PE_reference (ACEXML_ENV_SINGLE_ARG_PARAMETER);
@@ -1415,13 +1449,20 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_DECL)
               }
             break;
           case 0:
+            this->get();
             nrelems = this->pop_context();
+             if (this->PE_reference_.pop (reference) < 0)
+               {
+                 this->fatal_error (ACE_TEXT ("Internal Parser Error")
+                                 ACEXML_ENV_ARG_PARAMETER);
+                 ACEXML_CHECK_RETURN (-1);
+               }
             if (nrelems >= 1)
               break;
             else
               {
-                this->fatal_error(ACE_TEXT ("Internal Parser Error")
-                                ACEXML_ENV_ARG_PARAMETER);
+                this->fatal_error(ACE_TEXT ("Unexpected end-of-file")
+                                  ACEXML_ENV_ARG_PARAMETER);
                 ACEXML_CHECK_RETURN (-1);
               }
           default:
@@ -1525,6 +1566,10 @@ ACEXML_Parser::parse_defaultdecl (ACEXML_ENV_SINGLE_ARG_DECL)
             ACEXML_CHECK_RETURN (-1);
           }
         // @@ set up validator
+        break;
+      case '%':
+        this->parse_PE_reference (ACEXML_ENV_SINGLE_ARG_PARAMETER);
+        ACEXML_CHECK_RETURN (-1);
         break;
       default:
         this->fatal_error (ACE_TEXT ("Invalid DefaultDecl")
@@ -2073,7 +2118,7 @@ ACEXML_Parser::parse_attvalue (ACEXML_Char *&str ACEXML_ENV_ARG_DECL)
           str = temp;
           return 0;
         }
-	  switch (ch)
+      switch (ch)
         {
           case '&':
             if (this->peek () == '#')
@@ -2106,8 +2151,8 @@ ACEXML_Parser::parse_attvalue (ACEXML_Char *&str ACEXML_ENV_ARG_DECL)
               break;
             else
               {
-                this->fatal_error(ACE_TEXT ("Internal Parser Error")
-                                ACEXML_ENV_ARG_PARAMETER);
+                this->fatal_error(ACE_TEXT ("Unexpected end-of-file")
+                                  ACEXML_ENV_ARG_PARAMETER);
                 ACEXML_CHECK_RETURN (-1);
               }
           default:
@@ -2180,11 +2225,11 @@ ACEXML_Parser::parse_entity_reference (ACEXML_ENV_SINGLE_ARG_DECL)
                              ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK_RETURN (-1);
         }
-      this->external_entity_ = 1;
+      this->external_entity_++;
     }
 
   // [WFC: No Recursion]
-  int present = this->GE_reference_.insert (entity);
+  int present = this->GE_reference_.insert (replace);
   if (present == 1 || present == -1)
     {
       ACEXML_String ref_name;
@@ -2288,7 +2333,7 @@ ACEXML_Parser::parse_PE_reference (ACEXML_ENV_SINGLE_ARG_DECL)
                              ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK_RETURN (-1);
         }
-      this->external_entity_ = 1;
+      this->external_entity_++;
     }
 
   // [WFC: No Recursion]
@@ -2447,13 +2492,13 @@ ACEXML_Parser::parse_entity_value (ACEXML_Char *&str
             if (nrelems >= 1)
               {
                 if (this->external_entity_)
-                  this->external_entity_ = 0;
+                  this->external_entity_--;
                 break;
               }
             else
               {
-                this->fatal_error(ACE_TEXT ("Internal Parser Error")
-                                ACEXML_ENV_ARG_PARAMETER);
+                this->fatal_error(ACE_TEXT ("Unexpected end-of-file")
+                                  ACEXML_ENV_ARG_PARAMETER);
                 ACEXML_CHECK_RETURN (-1);
               }
           default:
@@ -2687,28 +2732,27 @@ ACEXML_Parser::switch_input (ACEXML_InputSource* input,
                              const ACEXML_Char* publicId)
 {
   ACEXML_LocatorImpl* locator = 0;
-  if (!systemId && this->current_.getLocator())
+  if (!systemId && this->current_ && this->current_->getLocator())
     locator = ACE_const_cast (ACEXML_LocatorImpl*,
-                              this->current_.getLocator());
+                              this->current_->getLocator());
   if (!locator)
     ACE_NEW_RETURN (locator, ACEXML_LocatorImpl (systemId, publicId), -1);
   ACEXML_Parser_Context* new_context = 0;
   ACE_NEW_RETURN (new_context, ACEXML_Parser_Context(input, locator), -1);
-  if (this->push_context (*new_context) != 0)
+  if (this->push_context (new_context) != 0)
     {
       ACE_ERROR ((LM_ERROR, "Unable to switch input streams"));
       return -1;
     }
-  this->current_.reset();
-  this->current_ = *new_context;
+  this->current_ = new_context;
   // Set up Locator.
   if (this->content_handler_)
-    this->content_handler_->setDocumentLocator (this->current_.getLocator());
+    this->content_handler_->setDocumentLocator (this->current_->getLocator());
   return 0;
 }
 
 int
-ACEXML_Parser::push_context (const ACEXML_Parser_Context& context)
+ACEXML_Parser::push_context (ACEXML_Parser_Context* context)
 {
   if (this->ctx_stack_.push (context) < 0)
     {
@@ -2721,16 +2765,16 @@ ACEXML_Parser::push_context (const ACEXML_Parser_Context& context)
 int
 ACEXML_Parser::pop_context (void)
 {
-  this->current_.reset();
-  int retval = this->ctx_stack_.pop (this->current_);
+  ACEXML_Parser_Context* temp = 0;
+  int retval = this->ctx_stack_.pop (temp);
   if (retval != 0)
     return -1;
-  this->current_.reset();
+  delete temp;
   if (this->ctx_stack_.top (this->current_) != 0)
     return -1;
   // Set up Locator.
   if (this->content_handler_)
-    this->content_handler_->setDocumentLocator (this->current_.getLocator());
+    this->content_handler_->setDocumentLocator (this->current_->getLocator());
   return this->ctx_stack_.size();
 }
 
@@ -2870,7 +2914,7 @@ ACEXML_Parser::parse_encoding_decl (ACEXML_ENV_SINGLE_ARG_DECL)
                          ACEXML_ENV_ARG_PARAMETER);
       ACEXML_CHECK;
     }
-  const ACEXML_Char* encoding = this->current_.getInputSource()->getEncoding();
+  const ACEXML_Char* encoding = this->current_->getInputSource()->getEncoding();
   if (ACE_OS::strcmp (astring, encoding) != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Detected Encoding is %s "
@@ -3057,10 +3101,9 @@ ACEXML_Parser::parse_processing_instruction (ACEXML_ENV_SINGLE_ARG_DECL)
 void
 ACEXML_Parser::reset (void)
 {
-  this->current_.reset();
   if (this->ctx_stack_.pop (this->current_) != -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Mismatched push/pop of Context stack")));
-  this->current_.reset();
+  delete this->current_;
   ACEXML_String temp;
   while (this->GE_reference_.pop (temp) != -1)
     ;
