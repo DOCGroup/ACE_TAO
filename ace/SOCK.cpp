@@ -6,11 +6,6 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK)
 
-#if defined (ACE_WIN32)
-// Static used to initialize WinSock.
-ACE_SOCK ACE_SOCK::dummy_;
-#endif /* ACE_WIN32 */
-
 void
 ACE_SOCK::dump (void) const
 {
@@ -20,10 +15,6 @@ ACE_SOCK::dump (void) const
 ACE_SOCK::ACE_SOCK (void)
 {
   // ACE_TRACE ("ACE_SOCK::ACE_SOCK");
-
-  // Make sure that we've initialized the WinSock library before using
-  // sockets!
-  ACE_OS::socket_init (ACE_WSOCK_VERSION);
 }
 
 // Returns information about the remote peer endpoint (if there is
@@ -59,9 +50,9 @@ ACE_SOCK::get_local_addr (ACE_Addr &sa) const
 
 int
 ACE_SOCK::open (int type, 
-		int protocol_family, 
-		int protocol,
-		int reuse_addr)
+                int protocol_family, 
+                int protocol,
+                int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK::open");
   int one = 1;
@@ -71,7 +62,7 @@ ACE_SOCK::open (int type,
   if (this->get_handle () == ACE_INVALID_HANDLE)
     return -1;
   else if (reuse_addr && this->set_option (SOL_SOCKET, SO_REUSEADDR,
-					   &one, sizeof one)) 
+                                           &one, sizeof one)) 
     {
       this->close ();
       return -1;
@@ -99,12 +90,12 @@ ACE_SOCK::close (void)
 // creation.
 
 ACE_SOCK::ACE_SOCK (int type, 
-		    int protocol_family, 
-		    int protocol,
-		    int reuse_addr)
+                    int protocol_family, 
+                    int protocol,
+                    int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK::ACE_SOCK");
   if (this->open (type, protocol_family, 
-		  protocol, reuse_addr) == -1)
+                  protocol, reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_SOCK::ACE_SOCK"));
 }
