@@ -63,15 +63,6 @@ ACE_Local_Memory_Pool::round_up (size_t nbytes)
   return ACE::round_to_pagesize (nbytes);
 }
 
-// No-op for now...
-
-ACE_INLINE int
-ACE_Local_Memory_Pool::release (void)
-{
-  ACE_TRACE ("ACE_Local_Memory_Pool::release");
-  return 0;
-}
-
 #if !defined (ACE_LACKS_SYSV_SHMEM)
 // Implement the algorithm for rounding up the request to an
 // appropriate chunksize.

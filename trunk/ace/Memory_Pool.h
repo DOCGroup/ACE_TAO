@@ -291,6 +291,9 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
+  ACE_Unbounded_Set<char *> allocated_chunks_;
+  // List of memory that we have allocated.
+
   virtual size_t round_up (size_t nbytes);
 
   // Implement the algorithm for rounding up the request to an
