@@ -1,3 +1,10 @@
+Tue Jul  9 08:56:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAO_IDL/ast/ast_argument.cpp:
+	* TAO_IDL/ast/ast_factory.cpp:
+	  Changed the type of the argument of the dump method from
+	  ostream to ACE_OSTREAM_TYPE so that it matches the header file.
+
 Mon Jul  8 17:44:47 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tests/AMH_Exceptions/Makefile:
@@ -11,7 +18,7 @@ Mon Jul  8 18:21:42 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Sun Jun 30 22:22:05 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors: 
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors:
 	* tao/RTCORBA/RT_Endpoint_Selector_Factory:
 
 	  The RT endpoint and profile selection in TAO was broken.  There
@@ -56,16 +63,16 @@ Sun Jun 30 22:22:05 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  endpoints per profile) or (b) we have TAO server with a non-lane
 	  threadpool, in which case there is only one acceptor. In both
 	  cases we should use the endpoint regardless of its priority.
-	  
+
 	  Finally, we check for the private connection policy.
 
 	  A new test tests/RTCORBA/Profile_And_Endpoint_Selection
 	  described below is added to make sure that all the RT invocation
 	  policy combinations are being correctly honored.
-	
+
 	* tao/IIOP_Endpoint:
 	* tao/Strategies/DIOP_Endpoint:
-	* tao/Strategies/SHMIOP_Endpoint:	
+	* tao/Strategies/SHMIOP_Endpoint:
 
 	  Fixed a very subtle race condition caused by changes from:
 
@@ -108,7 +115,7 @@ Sun Jun 30 22:22:05 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  priority request.
 
 	  The following files were changed:
-	  
+
 	  - tao/Transport.cpp (handle_input_i): Check if the single read
 	  optimization option is on. If so continue with existing behavior
 	  of read upto the size of <TAO_MAXBUFSIZE>.  If not, read only
@@ -126,7 +133,7 @@ Sun Jun 30 22:22:05 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  - tao/ORB_Core.cpp: Added parsing of new option.
 
 	  - tao/params.*: Added new option.
-	
+
 	  - docs/Options.html: Added documentation on new option.
 
 	* tao/Invocation_Endpoint_Selectors (next): Removed this method
@@ -154,29 +161,29 @@ Sun Jun 30 22:22:05 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  ways as detailed below.
 
 	  Client: The client does the following:
-	  
-	  - vanilla invocations 
+
+	  - vanilla invocations
 	  - sets private connection
-	  - vanilla invocations 
+	  - vanilla invocations
 	  - reset
 
 	  - sets client protocols
-	  - vanilla invocations 
+	  - vanilla invocations
 	  - sets private connection
-	  - vanilla invocations 
+	  - vanilla invocations
 	  - reset
-	  
+
 	  - set bands
 	  - priority invocations
 	  - sets private connection
-	  - priority invocations 
+	  - priority invocations
 	  - reset
 
 	  - set bands
 	  - sets client protocols
-	  - priority invocations 
+	  - priority invocations
 	  - sets private connection
-	  - priority invocations 
+	  - priority invocations
 	  - reset
 
 	  Client: The client starts off by making vanilla invocations on
@@ -188,7 +195,7 @@ Sun Jun 30 22:22:05 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  the client protocols policies are reset.
 
 	  This test can be configured in several ways (72 to be precise)
-	  as documented in the README file.  
+	  as documented in the README file.
 
 	  The following files were added:
 
