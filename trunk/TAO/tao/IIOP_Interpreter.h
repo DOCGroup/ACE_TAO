@@ -98,7 +98,7 @@ class TAO_Export TAO_IIOP_Interpreter
   //   issues; only the data being fed to the interpreter must be
   //   protected against concurrency.
 public:
-  static void init_table (void);
+  static void init (void);
   // Initialize TAO's TypeCode table.
 
   static size_t calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,

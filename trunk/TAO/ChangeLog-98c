@@ -1,3 +1,28 @@
+Thu Apr 23 18:50:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/ORB: Added a new static method called init_orb_globals()
+ 	  that initializes the globals when necessary.
+
+	* tao/ORB: Added a new orb_init_count_ data member that keeps
+ 	  track of the number of times ORBs have been initialized in order
+ 	  to do a better job of managing globa ORB resources.
+
+	* tao/Exception: Added a new method called fini() that deletes the
+ 	  dynamically allocated exceptions list.
+
+	* tao/Exception: Changed init_standard_exceptions() to init() to
+ 	  be consistent.
+
+	* tao/Marshal: Changed initialize() to init() to be consistent.
+
+	* tao/IIOP_Interpreter: Changed init_table() to init() to be
+ 	  consistent.
+
+	* tao/ORB: Added support so that we make sure to only initialize
+ 	  and destroy global ORB resources when the first/last ORB is
+ 	  created/destroyed, rather than using static objects (which are
+ 	  causing problems on shutdown).
+
 Thu Apr 23 16:20:58 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* TAO/TAO_IDL/Makefile: Change the YY* symbols to ACE_YY* symbols

@@ -30,6 +30,10 @@
 
 // Null and void
 
+// @@ All this stuff needs to be initialized/destroyed in one central
+// place via new/delete, i.e., it needs to be moved into the
+// CORBA::ORB_init and ~CORBA_ORB methods.  Fortunately, this won't
+// break any client code.
 static CORBA::TypeCode tc_null (CORBA::tk_null);
 TAO_Export CORBA::TypeCode_ptr CORBA::_tc_null = (CORBA::TypeCode_ptr) &tc_null;
 

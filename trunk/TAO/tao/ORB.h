@@ -718,7 +718,6 @@ public:
   typedef CORBA::ULong PolicyType;
   typedef CORBA::ULong_out PolicyType_out;
   static CORBA::TypeCode_ptr _tc_PolicyType;
-
 };  // end of class (namespace) CORBA
 
 #include "tao/Sequence.h"
@@ -895,8 +894,10 @@ private:
                                          u_short port);
   // Resolve the refernce of a service of type <name>.
 
+  // @@ Please document me.
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;
+
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int> open_called_;
   // Flag which denotes that the open method was called.
 
@@ -919,6 +920,14 @@ private:
   CORBA_Object_ptr trading_service_;
   // If this is non-_nil(), then this is the object reference to our
   // configured Trading.
+
+  static void init_orb_globals (void);
+  // Initialize the ORB globals correctly, i.e., only when they
+  // haven't been initialized yet.
+
+  static int orb_init_count_;
+  // Count of the number of times that <ORB_init> has been called.
+  // This must be protected by <ACE_Static_Object_Lock>.
 
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);

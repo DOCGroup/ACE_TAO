@@ -65,8 +65,15 @@ CORBA_ORB::~CORBA_ORB (void)
 {
   TAO_ORB_Core_instance ()->fini ();
 
-  // This assertion isn't valid because our ORB is a singleton assert
-  // (refcount_ == 0);
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon, *ACE_Static_Object_Lock::instance (), 0));
+
+  CORBA_ORB::orb_init_count_--;
+
+  if (CORBA_ORB::orb_init_count_ == 0)
+    {
+      // Other <fini> stuff should go here...
+      TAO_Exceptions::fini (env);
+    }
 }
 
 // Set up listening endpoints.
@@ -593,6 +600,23 @@ CORBA::wstring_free (CORBA::WChar *const str)
   delete [] str;
 }
 
+void
+CORBA_ORB::init_orb_globals (void)
+{
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon, *ACE_Static_Object_Lock::instance (), 0));
+
+  // Put these initializations here so that exceptions are enabled
+  // immediately.
+
+  if (CORBA_ORB::orb_init_count_ == 0)
+    {
+      TAO_Marshal::init ();
+      TAO_Exceptions::init (env);
+      TAO_IIOP_Interpreter::init ();
+    }
+  CORBA_ORB::orb_init_count_++;
+}
+
 // ORB initialisation, per OMG document 94-9-46.
 //
 // XXX in addition to the "built in" Internet ORB, there will be ORBs
@@ -606,8 +630,8 @@ CORBA::ORB_init (int &argc,
                  const char * /* orb_name */,
                  CORBA::Environment &env)
 {
-  // Using ACE_Static_Object_Lock::instance() precludes ORB_init from
-  // being called within a static object CTOR.
+  // Using ACE_Static_Object_Lock::instance() precludes <ORB_init>
+  // from being called within a static object CTOR.
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
                             *ACE_Static_Object_Lock::instance (), 0));
 
@@ -619,11 +643,7 @@ CORBA::ORB_init (int &argc,
   // putting them in some type of TAO_Object_Manager, along with the
   // Typecode_Constants...
 
-  // Put these initializations here so that exceptions are enabled
-  // immediately.
-  TAO_Marshal::initialize ();
-  TAO_Exceptions::init_standard_exceptions (env);
-  TAO_IIOP_Interpreter::init_table ();
+  CORBA_ORB::init_orb_globals ();
 
   if (env.exception () != 0)
     return 0;

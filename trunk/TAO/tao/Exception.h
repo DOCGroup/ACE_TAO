@@ -260,7 +260,6 @@ class TAO_Export TAO_Exceptions
   //   This class is a namespace for exception-related static data and
   //   methods.
 public:
-
   static void make_standard_typecode (CORBA::TypeCode_ptr tcp,
                                       const char *name,
                                       char *buffer,
@@ -270,9 +269,12 @@ public:
   // correctly, initializing system exceptions is only an exercise
   // in CPU time; it allocates no new memory.
 
-  static void init_standard_exceptions (CORBA::Environment &env);
+  static void init (CORBA::Environment &env);
   // Runtime initialization of all standard exception typecodes.
-  // Called from CORBA::ORB::init ().
+  // Called from <CORBA::ORB_init>.
+
+  static void fini (CORBA::Environment &env);
+  // Runtime finalization of all standard exception typecodes.
 
   enum
   {
@@ -284,25 +286,27 @@ public:
   };
 
   static CORBA::TypeCode_ptr sys_exceptions [NUM_SYS_EXCEPTIONS];
+  // @@ Please document me.
 
-  static CORBA::ExceptionList system_exceptions;
+  static CORBA::ExceptionList *system_exceptions;
+  // @@ Please document me.
 };
 
-// ExceptionList definition taken from CORBA v2.2 Feb 1998
 class CORBA_ExceptionList
 {
-  // =TITLE
-  //   CORBA_ExceptionList
-  // =DESCRIPTION
-  //   Maintains a list of TypeCodes for Exceptions
+  // = TITLE
+  //   ExceptionList definition taken from CORBA v2.2 Feb 1998
+  //
+  // = DESCRIPTION
+  //   Maintains a list of TypeCodes for Exceptions.
 public:
-
   CORBA_ExceptionList (void);
   // constructor
 
   CORBA_ExceptionList (CORBA::ULong len,
                        CORBA::TypeCode_ptr *tc_list);
-  // constructor - initialize given a length and an array of TypeCodes
+  // Constructor - initialize given a length and an array of
+  // TypeCodes.
 
   ~CORBA_ExceptionList (void);
   // destructor
