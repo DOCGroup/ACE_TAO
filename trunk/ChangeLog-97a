@@ -1,3 +1,10 @@
+Sun Apr 20 20:47:34 1997  Sumedh Mungee	      <sumedh@cs.wustl.edu>
+
+	* apps/JAWS/client: Reworked the ACE_Blob* classes to work
+	  with the new Connector behavior. Added README for this 
+	  directory. Added comments.
+	* apps/JAWS/stress-testing: Added README file
+	
 Sat Apr 19 11:56:35 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* include/makeinclude: Removed the platform_irix6.2_sgiCC.GNU
