@@ -39,38 +39,38 @@ TAO_Service_Type_Repository::
 }
 
 
-SERVICE_TYPE_REPOS::IncarnationNumber 
+CosTradingRepos::ServiceTypeRepository::IncarnationNumber 
 TAO_Service_Type_Repository::
 incarnation (CORBA::Environment& _env)
 {
-  SERVICE_TYPE_REPOS::IncarnationNumber inc_num;
+  CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
   TAO_READ_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, inc_num);
   return incarnation_;
 }
 
 
-SERVICE_TYPE_REPOS::IncarnationNumber 
+CosTradingRepos::ServiceTypeRepository::IncarnationNumber 
 TAO_Service_Type_Repository::
 add_type (const char * name, 
 	  const char * if_name, 
-	  const SERVICE_TYPE_REPOS::PropStructSeq& props, 
-	  const SERVICE_TYPE_REPOS::ServiceTypeNameSeq& super_types,
+	  const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props, 
+	  const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
 	  CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException,
-		  CosTrading::IllegalServiceType, 
-		  SERVICE_TYPE_REPOS::ServiceTypeExists, 
-		  SERVICE_TYPE_REPOS::InterfaceTypeMismatch, 
-		  CosTrading::IllegalPropertyName, 
-		  CosTrading::DuplicatePropertyName, 
-		  SERVICE_TYPE_REPOS::ValueTypeRedefinition, 
-		  CosTrading::UnknownServiceType, 
-		  SERVICE_TYPE_REPOS::DuplicateServiceTypeName))
+		   CosTrading::IllegalServiceType, 
+		   CosTradingRepos::ServiceTypeRepository::ServiceTypeExists, 
+		   CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch, 
+		   CosTrading::IllegalPropertyName, 
+		   CosTrading::DuplicatePropertyName, 
+		   CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition, 
+		   CosTrading::UnknownServiceType, 
+		   CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName))
 {
   PROP_MAP prop_map;
   SUPER_TYPE_MAP super_map;
-  SERVICE_TYPE_REPOS::TypeStruct info;
+  CosTradingRepos::ServiceTypeRepository::TypeStruct info;
   SERVICE_TYPE_MAP::iterator type_iterator;
-  SERVICE_TYPE_REPOS::IncarnationNumber inc_num;
+  CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
   
   TAO_WRITE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, inc_num);
 
@@ -82,7 +82,7 @@ add_type (const char * name,
   // check if the service type already exists.
   type_iterator = this->type_map_.find (name);
   if (type_iterator != this->type_map_.end ())
-    TAO_THROW_RETURN (SERVICE_TYPE_REPOS::ServiceTypeExists (),
+    TAO_THROW_RETURN (CosTradingRepos::ServiceTypeRepository::ServiceTypeExists (),
 		      this->incarnation_);
   
   // make sure all property names are valid and appear only once.
@@ -104,7 +104,7 @@ add_type (const char * name,
   // Instead, we do this:
   // 
   if (if_name == 0)
-    TAO_THROW_RETURN (SERVICE_TYPE_REPOS::InterfaceTypeMismatch (),
+    TAO_THROW_RETURN (CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch (),
 		      this->incarnation_);
   
   // collect and make sure that properties of all supertypes and this type
@@ -138,7 +138,7 @@ remove_type (const char * name,
   TAO_THROW_SPEC ((CORBA::SystemException, 
 		  CosTrading::IllegalServiceType, 
 		  CosTrading::UnknownServiceType, 
-		  SERVICE_TYPE_REPOS::HasSubTypes))
+		  CosTradingRepos::ServiceTypeRepository::HasSubTypes))
 {
   ACE_DEBUG ((LM_DEBUG, "TAO_Service_Type_Repository::remove_type (%s)\n",
 	      name));
@@ -158,11 +158,11 @@ remove_type (const char * name,
   if (type_info.sub_types_.empty () == 0)
     {
       const char* type_name = type_info.sub_types_.front ().data ();
-      TAO_THROW (SERVICE_TYPE_REPOS::HasSubTypes (name, type_name));
+      TAO_THROW (CosTradingRepos::ServiceTypeRepository::HasSubTypes (name, type_name));
     }
 
   // remove this type from an entry of each of its supertypes.
-  SERVICE_TYPE_REPOS::ServiceTypeNameSeq &super =
+  CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super =
     type_info.type_info_.super_types;
 
   for (CORBA::ULong i = 0; i < super.length (); i++)
@@ -180,27 +180,27 @@ remove_type (const char * name,
 }
            
 
-SERVICE_TYPE_REPOS::ServiceTypeNameSeq* 
+CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq* 
 TAO_Service_Type_Repository::
-list_types (const SERVICE_TYPE_REPOS::SpecifiedServiceTypes& which_types,
+list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes& which_types,
 	    CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_READ_GUARD_RETURN (ACE_Lock, 
 			 ace_mon, 
 			 *this->lock_,
-			 (SERVICE_TYPE_REPOS::ServiceTypeNameSeq*) 0);
+			 (CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq*) 0);
 
   CORBA::ULong i = 0;
-  SERVICE_TYPE_REPOS::IncarnationNumber num;
+  CosTradingRepos::ServiceTypeRepository::IncarnationNumber num;
   CORBA::ULong length = this->type_map_.size ();
   CosTrading::ServiceTypeName* types =
-    SERVICE_TYPE_REPOS::ServiceTypeNameSeq::allocbuf (length);
+    CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq::allocbuf (length);
 
   if (types == 0)
     return 0;
   
-  if (which_types._d () == SERVICE_TYPE_REPOS::all)
+  if (which_types._d () == CosTradingRepos::ServiceTypeRepository::all)
     {
       num.high = 0;
       num.low = 0;
@@ -216,13 +216,13 @@ list_types (const SERVICE_TYPE_REPOS::SpecifiedServiceTypes& which_types,
 	types[i++] = CORBA::string_dup ((*itr).first.c_str ());
     }
   
-  return new SERVICE_TYPE_REPOS::
+  return new CosTradingRepos::ServiceTypeRepository::
     ServiceTypeNameSeq (length, i, types, CORBA::B_TRUE);
 }
 
            
 
-SERVICE_TYPE_REPOS::TypeStruct*
+CosTradingRepos::ServiceTypeRepository::TypeStruct*
 TAO_Service_Type_Repository::
 describe_type (const char * name,
 	       CORBA::Environment& _env) 
@@ -231,23 +231,27 @@ describe_type (const char * name,
 		  CosTrading::UnknownServiceType))
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
-    TAO_THROW_RETURN (CosTrading::IllegalServiceType (name),
-		      (SERVICE_TYPE_REPOS::TypeStruct*) 0);
+    TAO_THROW_RETURN
+      (CosTrading::IllegalServiceType (name),
+       (CosTradingRepos::ServiceTypeRepository::TypeStruct*) 0);
 
-  TAO_READ_GUARD_RETURN (ACE_Lock, 
-			 ace_mon, 
-			 *this->lock_,
-			 (SERVICE_TYPE_REPOS::TypeStruct*) 0);
+  TAO_READ_GUARD_RETURN
+    (ACE_Lock, 
+     ace_mon, 
+     *this->lock_,
+     (CosTradingRepos::ServiceTypeRepository::TypeStruct*) 0);
 
   // make sure the type exists.
   SERVICE_TYPE_MAP::iterator type_iterator = this->type_map_.find (name);
   if (type_iterator == this->type_map_.end ())
     TAO_THROW_RETURN (CosTrading::UnknownServiceType (name),
-		      (SERVICE_TYPE_REPOS::TypeStruct*) 0);
+		      (CosTradingRepos::ServiceTypeRepository::TypeStruct*) 0);
   
   // return appropriate information about the type.
-  SERVICE_TYPE_REPOS::TypeStruct* descr = new SERVICE_TYPE_REPOS::TypeStruct;
-  SERVICE_TYPE_REPOS::TypeStruct & s = (*type_iterator).second.type_info_;
+  CosTradingRepos::ServiceTypeRepository::TypeStruct* descr =
+    new CosTradingRepos::ServiceTypeRepository::TypeStruct;
+  CosTradingRepos::ServiceTypeRepository::TypeStruct & s =
+    (*type_iterator).second.type_info_;
 
   (*descr) = s;
 
@@ -255,7 +259,7 @@ describe_type (const char * name,
 }
        
 
-SERVICE_TYPE_REPOS::TypeStruct* 
+CosTradingRepos::ServiceTypeRepository::TypeStruct* 
 TAO_Service_Type_Repository::
 fully_describe_type (const char * name,
 		     CORBA::Environment& _env) 
@@ -264,24 +268,25 @@ fully_describe_type (const char * name,
 		  CosTrading::UnknownServiceType))
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
-    TAO_THROW_RETURN (CosTrading::IllegalServiceType (name),
-		      (SERVICE_TYPE_REPOS::TypeStruct*) 0);
+    TAO_THROW_RETURN
+      (CosTrading::IllegalServiceType (name),
+       (CosTradingRepos::ServiceTypeRepository::TypeStruct*) 0);
   
   TAO_READ_GUARD_RETURN (ACE_Lock, 
 			 ace_mon, 
 			 *this->lock_,
-			 (SERVICE_TYPE_REPOS::TypeStruct*) 0);
+			 (CosTradingRepos::ServiceTypeRepository::TypeStruct*) 0);
 
   // make sure the type exists.
   SERVICE_TYPE_MAP::iterator type_iterator = this->type_map_.find (name);
   if (type_iterator == this->type_map_.end ())
     TAO_THROW_RETURN (CosTrading::UnknownServiceType (name),
-		      (SERVICE_TYPE_REPOS::TypeStruct*) 0);
-
+		      (CosTradingRepos::ServiceTypeRepository::TypeStruct*) 0);
+  
   // return appropriate information about the type.
-  SERVICE_TYPE_REPOS::TypeStruct* descr =
-    new SERVICE_TYPE_REPOS::TypeStruct;
-  SERVICE_TYPE_REPOS::TypeStruct & s =
+  CosTradingRepos::ServiceTypeRepository::TypeStruct* descr =
+    new CosTradingRepos::ServiceTypeRepository::TypeStruct;
+  CosTradingRepos::ServiceTypeRepository::TypeStruct & s =
     (*type_iterator).second.type_info_;
 
   // We do the explicit copy, since otherwise we'd have excessive
@@ -303,7 +308,7 @@ mask_type (const char * name,
   TAO_THROW_SPEC ((CORBA::SystemException, 
 		  CosTrading::IllegalServiceType, 
 		  CosTrading::UnknownServiceType, 
-		  SERVICE_TYPE_REPOS::AlreadyMasked))
+		  CosTradingRepos::ServiceTypeRepository::AlreadyMasked))
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
     TAO_THROW (CosTrading::IllegalServiceType (name));
@@ -318,7 +323,7 @@ mask_type (const char * name,
   // make sure the type is unmasked.
   CORBA::Boolean & mask = (*type_iterator).second.type_info_.masked;
   if (mask == 1)
-    TAO_THROW (SERVICE_TYPE_REPOS::AlreadyMasked (name));
+    TAO_THROW (CosTradingRepos::ServiceTypeRepository::AlreadyMasked (name));
   // mask.
   else
     mask = 1;
@@ -332,7 +337,7 @@ unmask_type (const char * name,
   TAO_THROW_SPEC ((CORBA::SystemException,
 		  CosTrading::IllegalServiceType, 
 		  CosTrading::UnknownServiceType, 
-		  SERVICE_TYPE_REPOS::NotMasked))
+		  CosTradingRepos::ServiceTypeRepository::NotMasked))
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
     TAO_THROW (CosTrading::IllegalServiceType (name));
@@ -347,7 +352,7 @@ unmask_type (const char * name,
   // make sure the type is masked.
   CORBA::Boolean & mask = (*type_iterator).second.type_info_.masked;
   if (mask == 0)
-    TAO_THROW (SERVICE_TYPE_REPOS::NotMasked (name));
+    TAO_THROW (CosTradingRepos::ServiceTypeRepository::NotMasked (name));
   // unmask.
   else
     mask = 0;
@@ -355,7 +360,7 @@ unmask_type (const char * name,
 
  void
 TAO_Service_Type_Repository::
-validate_properties (const SERVICE_TYPE_REPOS::PropStructSeq& props,
+validate_properties (const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
 		     PROP_MAP& prop_map,
 		     CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
@@ -369,8 +374,8 @@ validate_properties (const SERVICE_TYPE_REPOS::PropStructSeq& props,
       else
 	{
 	  string prop_name (n);
-	  SERVICE_TYPE_REPOS::PropStruct* prop_struct =
-	    (SERVICE_TYPE_REPOS::PropStruct *) &props[i];
+	  CosTradingRepos::ServiceTypeRepository::PropStruct* prop_struct =
+	    (CosTradingRepos::ServiceTypeRepository::PropStruct *) &props[i];
 
 	  if (! prop_map.insert
 	      (make_pair (prop_name, prop_struct)).second)
@@ -381,7 +386,7 @@ validate_properties (const SERVICE_TYPE_REPOS::PropStructSeq& props,
 
  void
 TAO_Service_Type_Repository::
-validate_supertypes (const SERVICE_TYPE_REPOS::ServiceTypeNameSeq& super_types,
+validate_supertypes (const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
 		     SUPER_TYPE_MAP& super_map,
 		     CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTrading::IllegalServiceType,
@@ -404,7 +409,7 @@ validate_supertypes (const SERVICE_TYPE_REPOS::ServiceTypeNameSeq& super_types,
 	    TAO_THROW (CosTrading::UnknownServiceType (type));
 	  else
 	    if (! super_map.insert (make_pair (s_type, super_iter)).second)
-	      TAO_THROW (SERVICE_TYPE_REPOS::DuplicateServiceTypeName (type));
+	      TAO_THROW (CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName (type));
 	}
     }
 }
@@ -414,9 +419,9 @@ TAO_Service_Type_Repository
 ::validate_inheritance (PROP_MAP& prop_map,
 			SUPER_TYPE_MAP& super_map,
 			CORBA::Environment& _env)
-  TAO_THROW_SPEC ((SERVICE_TYPE_REPOS::ValueTypeRedefinition))
+  TAO_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition))
 {
-  SERVICE_TYPE_REPOS::PropertyMode mode;
+  CosTradingRepos::ServiceTypeRepository::PropertyMode mode;
   // for each super_type
   for (SUPER_TYPE_MAP::iterator super_map_iterator = super_map.begin ();
        super_map_iterator != super_map.end ();
@@ -427,7 +432,7 @@ TAO_Service_Type_Repository
       // for each property in a super_type
       for (int i = 0; i < (*super_iter).second.all_prop_.length (); i++)
 	{
-	  SERVICE_TYPE_REPOS::PropStruct& property =
+	  CosTradingRepos::ServiceTypeRepository::PropStruct& property =
 	    (*super_iter).second.all_prop_[i];
 	  
 	  // insert property into the map.
@@ -437,12 +442,12 @@ TAO_Service_Type_Repository
 	      // if already there, check that it is compatible with
 	      // properties of other types. Value Types have to be the
 	      // same. 
-	      SERVICE_TYPE_REPOS::PropStruct& property_in_map =
+	      CosTradingRepos::ServiceTypeRepository::PropStruct& property_in_map =
 		*(prop_map[prop_name]);
 	      
 	      if (! property.value_type->equal (property_in_map.value_type, _env))
 		{
-		  TAO_THROW (SERVICE_TYPE_REPOS::ValueTypeRedefinition
+		  TAO_THROW (CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition
 			     (property.name, property,
 			      property_in_map.name, property_in_map));
 		}
@@ -451,7 +456,7 @@ TAO_Service_Type_Repository
 	      // restrictive. 
 	      if (property.mode >= property_in_map.mode)
 		{
-		  TAO_THROW (SERVICE_TYPE_REPOS::ValueTypeRedefinition
+		  TAO_THROW (CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition
 			     (property.name, property,
 			      property_in_map.name, property_in_map));
 		}
@@ -463,12 +468,12 @@ TAO_Service_Type_Repository
 void
 TAO_Service_Type_Repository::
 update_type_map (const char* name,
-		 SERVICE_TYPE_REPOS::TypeStruct& info,
+		 CosTradingRepos::ServiceTypeRepository::TypeStruct& info,
 		 PROP_MAP& prop_map,
 		 SUPER_TYPE_MAP& super_map)
 {
   Type_Info type;
-  SERVICE_TYPE_REPOS::PropStructSeq all_prop;
+  CosTradingRepos::ServiceTypeRepository::PropStructSeq all_prop;
 
   CORBA::ULong i = 0;
   all_prop.length (prop_map.size ());

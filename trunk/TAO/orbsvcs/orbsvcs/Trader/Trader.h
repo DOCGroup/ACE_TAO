@@ -23,8 +23,6 @@
 #include "Attributes.h"
 #include "Monitor.h"
 
-typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;
-
 // Forward Declaration.
 class TAO_Trader_Base;
 
@@ -106,12 +104,12 @@ protected:
 };
 
 int
-operator> (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
-	   const SERVICE_TYPE_REPOS::IncarnationNumber &r);
+operator> (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
+	   const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r);
 
 int
-operator< (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
-	   const SERVICE_TYPE_REPOS::IncarnationNumber &r);
+operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
+	   const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r);
 
 
 #endif /* TAO_TRADER_BASE_H */

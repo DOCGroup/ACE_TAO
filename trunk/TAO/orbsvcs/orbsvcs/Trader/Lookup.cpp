@@ -199,7 +199,7 @@ perform_lookup (const char* type,
   // determines whether an offer meets those constraints.
   // TAO_Preference_Interpreter -- parses the preference string and
   // orders offers according to those constraints.
-  TYPE_STRUCT type_struct (rep->fully_describe_type (type, env));
+  CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct (rep->fully_describe_type (type, env));
   TAO_CHECK_ENV_RETURN (env,);
   TAO_Offer_Filter offer_filter (type_struct.ptr (), policies, env);
   TAO_CHECK_ENV_RETURN (env,);
@@ -304,7 +304,7 @@ lookup_one_type (const char* type,
 template <class TRADER> void
 TAO_Lookup<TRADER>::
 lookup_all_subtypes (const char* type,
-		     SERVICE_TYPE_REPOS::IncarnationNumber& inc_num,
+		     CosTradingRepos::ServiceTypeRepository::IncarnationNumber& inc_num,
 		     SERVICE_TYPE_MAP& service_type_map,
 		     CosTradingRepos::ServiceTypeRepository_ptr rep,
 		     TAO_Constraint_Interpreter& constr_inter,
@@ -333,19 +333,19 @@ lookup_all_subtypes (const char* type,
   // cardinality constraints.
 
   typedef deque<char*> TYPE_LIST;
-  typedef deque<pair <SERVICE_TYPE_REPOS::IncarnationNumber, char*> >
+  typedef deque< pair
+    <CosTradingRepos::ServiceTypeRepository::IncarnationNumber, char*> >
     TYPE_NUM_LIST;
 
-  TYPE_NAME_SEQ all_types;
   TYPE_NUM_LIST sub_types;
   TYPE_LIST unconsidered_types;
-
-  CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes sst;
+    CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes sst;
+  CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq_var all_types;
   
   // Optimization: Since a subtype can't have a higher incarnation
   // number than a supertype, we don't need to consider those
   // types with lower incarnation numbers.  
-  sst._d (SERVICE_TYPE_REPOS::since);
+  sst._d (CosTradingRepos::ServiceTypeRepository::since);
   sst.incarnation (inc_num);  
   
   //  TAO_TRY
@@ -372,14 +372,15 @@ lookup_all_subtypes (const char* type,
   {
     // For each potential supertype, iterate over the remaining types.
     const char* super_type = sub_types.front ().second;
-    SERVICE_TYPE_REPOS::IncarnationNumber in = sub_types.front ().first;
-    sub_types.pop_front ();
-    
+    CosTradingRepos::ServiceTypeRepository::IncarnationNumber in =
+      sub_types.front ().first;
+
+    sub_types.pop_front ();    
     for (int j = unconsidered_types.size () - 1;
 	 j >= 0 && offer_filter.ok_to_consider_more ();
 	 j--)
       {
-	TYPE_STRUCT type_struct;
+	CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct;
 	CORBA::Boolean is_sub_type = 0;
 	const char* type_name = unconsidered_types.front ();
 	unconsidered_types.pop_front ();
@@ -400,8 +401,9 @@ lookup_all_subtypes (const char* type,
 	// this can't be a subtype. 
 	if (type_struct->incarnation > in)
 	  {	  	  	
-	    // Determine if the prospective type is a subtype of the current
-	    // one -- that is, has the current one as its supertype.
+	    // Determine if the prospective type is a subtype of the
+	    // current one -- that is, has the current one as its
+	    // supertype. 
 	    for (int k = type_struct->super_types.length () - 1;
 		 k >= 0; k--)
 	      {

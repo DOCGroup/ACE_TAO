@@ -46,17 +46,17 @@ public:
     add_type (const char * name, 
 	      const char * if_name, 
 	      const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
-	      const SERVICE_TYPE_REPOS::ServiceTypeNameSeq& super_types,
+	      const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
 	      CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
 		    CosTrading::IllegalServiceType, 
-		    SERVICE_TYPE_REPOS::ServiceTypeExists, 
-		    SERVICE_TYPE_REPOS::InterfaceTypeMismatch, 
+		    CosTradingRepos::ServiceTypeRepository::ServiceTypeExists, 
+		    CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch, 
 		    CosTrading::IllegalPropertyName, 
 		    CosTrading::DuplicatePropertyName, 
-		    SERVICE_TYPE_REPOS::ValueTypeRedefinition, 
+		    CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition, 
 		    CosTrading::UnknownServiceType, 
-		    SERVICE_TYPE_REPOS::DuplicateServiceTypeName));
+		    CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName));
 
   // BEGIN SPEC
   // The add_type operation enables the creation of new service types
@@ -107,7 +107,7 @@ public:
     TAO_THROW_SPEC ((CORBA::SystemException,
 		    CosTrading::IllegalServiceType, 
 		    CosTrading::UnknownServiceType, 
-		    SERVICE_TYPE_REPOS::HasSubTypes));
+		    CosTradingRepos::ServiceTypeRepository::HasSubTypes));
 
   // BEGIN SPEC
   // The remove_type operation removes the named type from the service
@@ -119,8 +119,8 @@ public:
   // HasSubTypes exception is raised. 
   // END SPEC
   
-  virtual SERVICE_TYPE_REPOS::ServiceTypeNameSeq* 
-    list_types (const SERVICE_TYPE_REPOS::SpecifiedServiceTypes& which_types,
+  virtual CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq* 
+    list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes& which_types,
 		CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException));
 
@@ -135,7 +135,7 @@ public:
   // operation. 
   // END SPEC 
            
-  virtual SERVICE_TYPE_REPOS::TypeStruct*
+  virtual CosTradingRepos::ServiceTypeRepository::TypeStruct*
     describe_type (const char * name,
 		   CORBA::Environment& _env) 
     TAO_THROW_SPEC ((CORBA::SystemException,
@@ -149,7 +149,7 @@ public:
   // CosTrading::UnknownServiceType exception is raised. 
   // END SPEC
   
-  virtual SERVICE_TYPE_REPOS::TypeStruct* 
+  virtual CosTradingRepos::ServiceTypeRepository::TypeStruct* 
     fully_describe_type (const char * name,
 			 CORBA::Environment& _env) 
     TAO_THROW_SPEC ((CORBA::SystemException, 
@@ -172,7 +172,7 @@ public:
     TAO_THROW_SPEC ((CORBA::SystemException,
 		     CosTrading::IllegalServiceType, 
 		     CosTrading::UnknownServiceType, 
-		     SERVICE_TYPE_REPOS::AlreadyMasked));
+		     CosTradingRepos::ServiceTypeRepository::AlreadyMasked));
   // BEGIN SPEC
   // The mask_type operation permits the deprecation of a particular
   // type (i.e., after being masked, exporters will no longer be able
@@ -191,7 +191,7 @@ public:
     TAO_THROW_SPEC ((CORBA::SystemException, 
 		    CosTrading::IllegalServiceType, 
 		    CosTrading::UnknownServiceType, 
-		    SERVICE_TYPE_REPOS::NotMasked));
+		    CosTradingRepos::ServiceTypeRepository::NotMasked));
   // BEGIN SPEC
   // The unmask_type undeprecates a type (i.e., after being unmasked,
   // exporters will be able to resume advertisement of offers of that
@@ -210,10 +210,10 @@ private:
 
     typedef list<string> TYPE_LIST;
 
-    SERVICE_TYPE_REPOS::TypeStruct type_info_; 
+    CosTradingRepos::ServiceTypeRepository::TypeStruct type_info_; 
     // standard type info.
 
-    SERVICE_TYPE_REPOS::PropStructSeq all_prop_; 
+    CosTradingRepos::ServiceTypeRepository::PropStructSeq all_prop_; 
     // complete listing of the type's properties (including inherited).
     
     TYPE_LIST sub_types_;
@@ -226,7 +226,7 @@ private:
   typedef map
     <
     string,
-    SERVICE_TYPE_REPOS::PropStruct*,
+    CosTradingRepos::ServiceTypeRepository::PropStruct*,
     less < string >
     > PROP_MAP;
   
@@ -237,7 +237,7 @@ private:
     less < string >
     > SUPER_TYPE_MAP;
   
-  void validate_properties (const SERVICE_TYPE_REPOS::PropStructSeq& props,
+  void validate_properties (const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
 			    PROP_MAP& prop_map,
 			    CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
@@ -245,7 +245,7 @@ private:
   // Confirm that the properties in props have valid names, and aren't
   // duplicated. Cram those properties into the prop_map.
   
-  void validate_supertypes (const SERVICE_TYPE_REPOS::ServiceTypeNameSeq& super_types,
+  void validate_supertypes (const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
 			    SUPER_TYPE_MAP& super_map,
 			    CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::IllegalServiceType,
@@ -256,18 +256,18 @@ private:
   void validate_inheritance (PROP_MAP& prop_map,
 			     SUPER_TYPE_MAP& super_map,
 			     CORBA::Environment& _env)
-    TAO_THROW_SPEC ((SERVICE_TYPE_REPOS::ValueTypeRedefinition));
+    TAO_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition));
   // Ensure that properties of a super_type aren't having their types
   // or retstrictions redefined.
 
   //  void validate_interface (const char* if_name,
   //			   SUPER_TYPE_MAP& super_map,
   //			   CORBA::Environment& _env)
-  //    TAO_THROW_SPEC ((SERVICE_TYPE_REPOS::InterfaceTypeMismatch));
+  //    TAO_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch));
   // Ensure that the interface type derives from its superclasses'.
   
   void update_type_map (const char* name,
-			SERVICE_TYPE_REPOS::TypeStruct& type,
+			CosTradingRepos::ServiceTypeRepository::TypeStruct& type,
 			PROP_MAP& prop_map,
 			SUPER_TYPE_MAP& super_map);
   // Update the type map with the information contained in the
@@ -281,7 +281,7 @@ private:
   // This is a mapping from service type name to a Type_Info struct
   // which serves as a storage for various information for the given type.
 
-  SERVICE_TYPE_REPOS::IncarnationNumber incarnation_;
+  CosTradingRepos::ServiceTypeRepository::IncarnationNumber incarnation_;
   // incarnation number to be used for the next modification to the repository.
 };
 
