@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="TAO_DIOP_Static" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="TAO_DIOP LIB" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
-CFG=TAO_DIOP_Static - Win32 Static Debug
+CFG=TAO_DIOP LIB - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "TAO_DIOP_Static.mak".
+!MESSAGE NMAKE /f "TAO_DIOP LIB.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "TAO_DIOP_Static.mak" CFG="TAO_DIOP_Static - Win32 Static Debug"
+!MESSAGE NMAKE /f "TAO_DIOP LIB.mak" CFG="TAO_DIOP LIB - Win32 Static Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "TAO_DIOP_Static - Win32 Static Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "TAO_DIOP_Static - Win32 Static Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "TAO_DIOP LIB - Win32 Static Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "TAO_DIOP LIB - Win32 Static Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -28,12 +28,12 @@ CFG=TAO_DIOP_Static - Win32 Static Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "TAO_DIOP_Static - Win32 Static Release"
+!IF  "$(CFG)" == "TAO_DIOP LIB - Win32 Static Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "Release"
-# PROP BASE Intermediate_Dir "Release"
+# PROP BASE Output_Dir "Static_Release"
+# PROP BASE Intermediate_Dir "Static_Release"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
@@ -54,12 +54,12 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"TAO_DIOPs.lib"
 
-!ELSEIF  "$(CFG)" == "TAO_DIOP_Static - Win32 Static Debug"
+!ELSEIF  "$(CFG)" == "TAO_DIOP LIB - Win32 Static Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "TAO_DIOP_Static___Win32_Debug"
-# PROP BASE Intermediate_Dir "TAO_DIOP_Static___Win32_Debug"
+# PROP BASE Output_Dir "Static_Debug"
+# PROP BASE Intermediate_Dir "Static_Debug"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
@@ -84,8 +84,8 @@ LIB32=link.exe -lib
 
 # Begin Target
 
-# Name "TAO_DIOP_Static - Win32 Static Release"
-# Name "TAO_DIOP_Static - Win32 Static Debug"
+# Name "TAO_DIOP LIB - Win32 Static Release"
+# Name "TAO_DIOP LIB - Win32 Static Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"

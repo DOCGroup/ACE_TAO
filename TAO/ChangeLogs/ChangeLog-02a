@@ -1,3 +1,14 @@
+Fri May 18 10:30:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
+          Fixed KCC warning.
+
+        * examples/PluggableUDP/DIOP/TAO_DIOP.dsp:
+        * examples/PluggableUDP/DIOP/TAO_DIOP_Static.dsp:
+          Renamed the configuration names to have the words DLL and LIB in
+          them so that the win32 build picks these dsps before the tests that
+          use them.
+
 Fri May 18 06:53:20 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Simple_Two_Stage,
