@@ -4818,7 +4818,9 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
 # if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #   if !defined (ACE_LACKS_PWD_REENTRANT_FUNCTIONS)
-#     if defined (ACE_HAS_PTHREADS_STD) && !defined (ACE_HAS_STHREADS)
+#     if defined (ACE_HAS_PTHREADS_STD) && \
+      !defined (ACE_HAS_STHREADS) || \
+      defined (__USLC__) // Added by Roland Gigler for SCO UnixWare 7.
   struct passwd *result;
   int status;
 #       if defined (DIGITAL_UNIX)
