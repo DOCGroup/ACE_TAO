@@ -1,3 +1,24 @@
+
+Sat May 15 17:25:17 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+	* ace/SOCK_Dgram_Bcast.h:
+	* ace/SOCK_Dgram_Bcast.cpp:
+	  Fixed bug in mk_broadcast related with incorrect length of struct ifreq.
+	  Thanks to Mirek Pabich <miropabich@tenbit.pl> for this patch.
+	* ace/Time_Value.inl:
+	  Fixed bug in operator *=( double ) which led to overflow for results
+	  greater than 2 seconds. Thanks to Mirek Pabich <miropabich@tenbit.pl>
+	  for this patch.
+	* tests/SOCK_Dgram_Bcast_Test.cpp:
+	  tests/tests.mpc:
+	  test/run_test.lst:
+	  New automatic test for checking against bugs similiar to those reported by
+	  Mirek Pabich. The usability of the test is restricted, as some errors in
+	  broadcast handling can be detected only in LAN transmission.
+	* tests/tests.mpc:
+	  MT_Reference_Counted_Event_Handler_Test project name truncated to
+	  MT_Ref_Counted_Event_Handler_Test.
+
 Fri May 14 22:13:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/event.mpb:
@@ -197,7 +218,7 @@ Thu May 13 21:39:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd: Changed dependency file
         name to make file names shorter. Thanks to Chad Elliott
-        <elliott_c@ociweb.com> for a patch.
+        <elliott_c@ociweb.com> for this patch.
 
 Thu May 13 21:39:00 2004-05-13  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
