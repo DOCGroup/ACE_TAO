@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -9,7 +9,6 @@
  *   Define the format used to exchange messages between the
  *   ACE_Name Server and its clients.
  *
- *
  *  @author Gerhard Lenzer
  *  @author Douglas C. Schmidt
  *  @author and Prashant Jain
@@ -19,15 +18,16 @@
 
 #ifndef ACE_NAME_REQUEST_REPLY_H
 #define ACE_NAME_REQUEST_REPLY_H
+
 #include "ace/pre.h"
 
-#include "ace/Time_Value.h"
+#include "ace/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
+class ACE_Time_Value;
 
 /**
  * @class ACE_Name_Request
@@ -71,9 +71,9 @@ public:
 
   /// Create a <ACE_Name_Request> message.
   ACE_Name_Request (ACE_INT32 msg_type, // Type of request.
-                    const ACE_USHORT16 name[], //
+                    const ACE_WCHAR_T name[], //
                     const ACE_UINT32 name_length,
-                    const ACE_USHORT16 value[],
+                    const ACE_WCHAR_T value[],
                     const ACE_UINT32 value_length,
                     const char type[],
                     const ACE_UINT32 type_length,
@@ -100,12 +100,12 @@ public:
   void timeout (const ACE_Time_Value timeout);
 
   // = Set/get the name
-  const ACE_USHORT16 *name (void) const;
-  void name (const ACE_USHORT16 *);
+  const ACE_WCHAR_T *name (void) const;
+  void name (const ACE_WCHAR_T *);
 
   // = Set/get the value
-  const ACE_USHORT16 *value (void) const;
-  void value (const ACE_USHORT16 *);
+  const ACE_WCHAR_T *value (void) const;
+  void value (const ACE_WCHAR_T *);
 
   // = Set/get the type
   const char *type (void) const;
@@ -167,17 +167,17 @@ private:
     /// The data portion contains the <name_>
     /// followed by the <value_>
     /// followed by the <type_>.
-    ACE_USHORT16 data_[MAX_NAME_LENGTH + MAXPATHLEN + MAXPATHLEN + 2];
+    ACE_WCHAR_T data_[MAX_NAME_LENGTH + MAXPATHLEN + MAXPATHLEN + 2];
   };
 
   /// Transfer buffer.
   Transfer transfer_;
 
   /// Pointer to the beginning of the name in this->data_.
-  ACE_USHORT16 *name_;
+  ACE_WCHAR_T *name_;
 
   /// Pointer to the beginning of the value in this->data_;
-  ACE_USHORT16 *value_;
+  ACE_WCHAR_T *value_;
 
   /// Pointer to the beginning of the type in this->data_;
   char *type_;
@@ -257,4 +257,5 @@ private:
 };
 
 #include "ace/post.h"
+
 #endif /* ACE_NAME_REQUEST_REPLY_H */

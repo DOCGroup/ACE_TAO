@@ -8,6 +8,10 @@ Thu Apr 17 08:23:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* ace/Local_Name_Space.h (ACE_NS_String):
 	* ace/Local_Name_Space.cpp (ACE_NS_String):
 	* ace/Local_Name_Space_T.cpp (shared_rebind_i):
+	* ace/Name_Request_Reply.h:
+	* ace/Name_Request_Reply.cpp:
+	* ace/Remote_Name_Space.cpp:
+	* netsvcs/lib/Name_Handler.cpp:
 
 	  The underlying string is now an ACE_WCHAR_T instead of an
 	  ACE_USHORT16.  Not all platforms represent wide characters with
