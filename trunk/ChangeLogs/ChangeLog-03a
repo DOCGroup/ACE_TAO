@@ -1,3 +1,9 @@
+Tue Apr 11 13:57:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch_T.cpp: Make sure to cast the "type" argument to 
+	  "short" to avoid overload confusions by certain compilers.
+  	  Thanks to ctaurines@amadeus.net for reporting this.
+
 Tue Apr 11 12:52:04 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Mcast.cpp (subscribe): Removed the #ifdef

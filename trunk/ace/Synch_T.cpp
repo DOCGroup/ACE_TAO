@@ -244,7 +244,7 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
   // ACE_TRACE ("ACE_Condition<MUTEX>::ACE_Condition");
 
   if (ACE_OS::cond_init (&this->cond_,
-                         type,
+                         (short) type,
                          name,
                          arg) != 0)
     ACE_ERROR ((LM_ERROR,
