@@ -1,4 +1,3 @@
-// LSOCK.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -34,7 +33,7 @@ ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
   a[0] = 0xab;
-  a[1] = 0xcd; 
+  a[1] = 0xcd;
   iov.iov_base = (char *) a;
   iov.iov_len = sizeof a;
   send_msg.msg_iov = &iov;
@@ -70,11 +69,10 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
   iovec iov;
   msghdr recv_msg;
 
-#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG) && !defined (ACE_HAS_STREAMS)
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
   char cmsgbuf[ACE_BSD_CONTROL_MSG_LEN];
-  cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
-#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG && !ACE_HAS_STREAMS */
-   
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+
   if (pbuf != 0 && len != 0)
     {
       iov.iov_base = pbuf;
@@ -85,68 +83,73 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
       iov.iov_base = (char *) a;
       iov.iov_len  = sizeof a;
     }
-   
+
   recv_msg.msg_iov = &iov;
   recv_msg.msg_iovlen = 1;
   recv_msg.msg_name = 0;
   recv_msg.msg_namelen = 0;
-#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG) && !defined (ACE_HAS_STREAMS)
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
   recv_msg.msg_control = cmsgbuf;
   recv_msg.msg_controllen = sizeof cmsgbuf;
 #else
   recv_msg.msg_accrights = (char *) &handle;
   recv_msg.msg_accrightslen = sizeof handle;
-#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG && !ACE_HAS_STREAMS */
-   
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+
 #if defined (ACE_HAS_STREAMS)
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+  ACE_UNUSED_ARG (handle);
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+
   ssize_t nbytes = ACE_OS::recvmsg (this->get_handle (), &recv_msg, 0);
 
   if (nbytes != ACE_INVALID_HANDLE)
     {
       if (len != 0)
-	*len = nbytes;
+        *len = nbytes;
 
-      if (nbytes == sizeof a 
-	  && ((unsigned char *) iov.iov_base)[0] == 0xab
-	  && ((unsigned char *) iov.iov_base)[1] == 0xcd)
-	return 1;
+      if (nbytes == sizeof a
+          && ((unsigned char *) iov.iov_base)[0] == 0xab
+          && ((unsigned char *) iov.iov_base)[1] == 0xcd)
+        return 1;
       else
-	return 0;
+        return 0;
     }
 #else
   ssize_t nbytes = ACE_OS::recvmsg (this->get_handle (), &recv_msg, MSG_PEEK);
 
   if (nbytes != ACE_INVALID_HANDLE)
     {
-      if (nbytes == sizeof a 
-	  && ((unsigned char *) iov.iov_base)[0] == 0xab
-	  && ((unsigned char *) iov.iov_base)[1] == 0xcd)
-	{
+      if (nbytes == sizeof a
+          && ((unsigned char *) iov.iov_base)[0] == 0xab
+          && ((unsigned char *) iov.iov_base)[1] == 0xcd)
+        {
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-	  recv_msg.msg_control = cmsgbuf;
-	  recv_msg.msg_controllen = sizeof cmsgbuf;
+          recv_msg.msg_control = cmsgbuf;
+          recv_msg.msg_controllen = sizeof cmsgbuf;
 #else
-	  recv_msg.msg_accrights = (char *) &handle;
-	  recv_msg.msg_accrightslen = sizeof handle;
+          recv_msg.msg_accrights = (char *) &handle;
+          recv_msg.msg_accrightslen = sizeof handle;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
-	  if (ACE_OS::recvmsg (this->get_handle (), 
-			       &recv_msg, 0) == ACE_INVALID_HANDLE)
-	    return ACE_INVALID_HANDLE;
-	  else
-	    {
+          if (ACE_OS::recvmsg (this->get_handle (),
+                               &recv_msg, 0) == ACE_INVALID_HANDLE)
+            return ACE_INVALID_HANDLE;
+          else
+            {
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-	      handle = *(ACE_HANDLE *) CMSG_DATA (cmsgptr) ;
+              cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
+              handle = *(ACE_HANDLE *) CMSG_DATA (cmsgptr) ;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
-	      return 1;
-	    }
-	}
+              return 1;
+            }
+        }
       else
-	{
-	  if (len != 0)
-	    *len = nbytes;
-	  return 0;
-	}
+        {
+          if (len != 0)
+            *len = nbytes;
+          return 0;
+        }
     }
 #endif /* ACE_HAS_STREAMS */
   else
