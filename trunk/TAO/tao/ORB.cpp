@@ -35,9 +35,9 @@ ACE_RCSID (tao,
 # include "PICurrent_ORBInitializer.h"  /* @@ This should go away! */
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-#if defined (TAO_HAS_VALUETYPE)
+#if (TAO_HAS_VALUETYPE == 1)
 #  include "ValueFactory_Map.h"
-#endif /* TAO_HAS_VALUETYPE */
+#endif /* TAO_HAS_VALUETYPE == 1 */
 
 #include "Object_KeyC.h"
 
@@ -167,9 +167,9 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
   : lock_ (),
     refcount_ (1),
     orb_core_ (orb_core),
-# if defined (TAO_HAS_VALUETYPE)
+# if (TAO_HAS_VALUETYPE == 1)
     valuetype_factory_map_ (0),
-# endif /* TAO_HAS_VALUETYPE */
+# endif /* TAO_HAS_VALUETYPE == 1*/
     use_omg_ior_format_ (1),
     timeout_ (0)
 {
@@ -180,10 +180,10 @@ CORBA_ORB::~CORBA_ORB (void)
   // This destructor is only invoked when the last ORB reference (not
   // instance) is being destroyed.
 
-# if defined (TAO_HAS_VALUETYPE)
+# if (TAO_HAS_VALUETYPE == 1)
   // delete valuetype_factory_map_;
   // @@ not really, its a singleton
-# endif /* TAO_HAS_VALUETYPE */
+# endif /* TAO_HAS_VALUETYPE == 1 */
 }
 
 void
@@ -1990,7 +1990,7 @@ CORBA_ORB::set_timeout (ACE_Time_Value *timeout)
 // Valuetype factory operations
 // *************************************************************
 
-#if defined (TAO_HAS_VALUETYPE)
+#if (TAO_HAS_VALUETYPE == 1)
 
 CORBA::ValueFactory
 CORBA_ORB::register_value_factory (const char *repository_id,
@@ -2039,7 +2039,7 @@ CORBA_ORB::lookup_value_factory (const char *repository_id
   if (valuetype_factory_map_)
     {
       CORBA::ValueFactory factory;
-      int result = valuetype_factory_map_->find (repository_id, 
+      int result = valuetype_factory_map_->find (repository_id,
                                                  factory);
 
       if (result == -1)
@@ -2055,4 +2055,4 @@ CORBA_ORB::lookup_value_factory (const char *repository_id
     }
 }
 
-#endif /* TAO_HAS_VALUETYPE */
+#endif /* TAO_HAS_VALUETYPE == 1 */

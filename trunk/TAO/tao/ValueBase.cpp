@@ -21,14 +21,14 @@
 #include "tao/ValueFactory.h"
 #include "tao/debug.h"
 
-#if defined (TAO_HAS_VALUETYPE)
+#if (TAO_HAS_VALUETYPE == 1)
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ValueBase.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           ValueBase, 
+ACE_RCSID (tao,
+           ValueBase,
            "$Id$")
 
 // destructor
@@ -146,34 +146,34 @@ CORBA_ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
 
 //  CORBA::ValueBase *base = 0;
   CORBA::ValueFactory_var factory;
-  CORBA::Boolean retval = 
+  CORBA::Boolean retval =
     CORBA::ValueBase::_tao_unmarshal_pre (strm,
                                           factory.out (),
                                           new_object,
                                           0);
-                      
+
   if (retval == 0)
     {
       return 0;
     }
-  
+
   if (factory.in () != 0)
     {
       new_object = factory->create_for_unmarshal ();
-      
+
       if (new_object == 0)
         {
           return 0;  // %! except.?
         }
-      
+
       retval = new_object->_tao_unmarshal_v (strm);
-      
+
       if (retval == 0)
         {
           return 0;
         }
     }
-  
+
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
 //  new_object = CORBA_ValueBase::_downcast (base);
@@ -220,7 +220,7 @@ CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
 
   if (!TAO_OBV_GIOP_Flags::is_value_tag (value_tag))
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("!CORBA::ValueBase::_tao_unmarshal_pre ")
                   ACE_TEXT ("not value_tag\n")));
       return 0;
@@ -259,7 +259,7 @@ CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
 
   if (factory == 0) // %! except.!
     {
-      ACE_DEBUG ((LM_ERROR, 
+      ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("(%N:%l) OBV factory is null !!!\n")));
       return 0;
     }
@@ -327,23 +327,23 @@ const CORBA::ULong TAO_OBV_GIOP_Flags::Type_info_list    = 6;
 // ===========================================================
 
 CORBA::Boolean
-operator<< (TAO_OutputCDR &strm, 
+operator<< (TAO_OutputCDR &strm,
             const CORBA_ValueBase *_tao_valuetype)
 {
   return CORBA_ValueBase::_tao_marshal (
              strm,
-             ACE_const_cast (CORBA_ValueBase *, 
+             ACE_const_cast (CORBA_ValueBase *,
                              _tao_valuetype),
              (ptr_arith_t) &CORBA_ValueBase::_downcast
            );
 }
 
 CORBA::Boolean
-operator>> (TAO_InputCDR &strm, 
+operator>> (TAO_InputCDR &strm,
             CORBA_ValueBase *&_tao_valuetype)
 {
-  return CORBA_ValueBase::_tao_unmarshal (strm, 
+  return CORBA_ValueBase::_tao_unmarshal (strm,
                                           _tao_valuetype);
 }
 
-#endif /* TAO_HAS_VALUETYPE */
+#endif /* TAO_HAS_VALUETYPE == 1 */

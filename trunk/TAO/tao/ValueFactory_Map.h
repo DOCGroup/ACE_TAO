@@ -25,7 +25,7 @@
 #include "ace/Synch.h"
 #include "tao/corbafwd.h"
 
-#if defined (TAO_HAS_VALUETYPE)
+#if (TAO_HAS_VALUETYPE == 1)
 
 class TAO_ValueFactory_Map
 {
@@ -80,6 +80,6 @@ typedef TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>
 # include "tao/ValueFactory_Map.i"
 #endif /* __ACE_INLINE__) */
 
-#endif /* TAO_HAS_VALUETYPE */
+#endif /* TAO_HAS_VALUETYPE == 1 */
 #include "ace/post.h"
 #endif /* TAO_VALUEFACTORY_MAP_H */
