@@ -4,7 +4,7 @@
 #ifndef TAO_TIME_IDL
 #define TAO_TIME_IDL
 
-#include "CosTimeBase.idl"
+#include "TimeBase.idl"
 
 #pragma prefix "omg.org"
 
@@ -68,7 +68,7 @@ module CosTime
       // = DESCRIPTION
       //   This interface provides the following
       //   operations on basic time :
-      //	- Construction of a UTO from piece parts, and extraction of the
+      //        - Construction of a UTO from piece parts, and extraction of the
       //          piece parts from a UTO. The piece parts are the readonly
       //          attributes :
       //                      time
@@ -99,7 +99,7 @@ module CosTime
       // relative time in the object.
 
       TimeComparison compare_time (in ComparisonType comparison_type,
-				   in UTO uto);
+                                   in UTO uto);
       // Compares the time contained in the object with the time in
       // the supplied uto according to the supplied comparison type.
 
@@ -130,13 +130,13 @@ module CosTime
       // Consists of a lower and an upper bound for the time interval.
 
       CosTime::OverlapType spans (in UTO time,
-				  out TIO overlap);
+                                  out TIO overlap);
       // This operation compares the time in this interface with the time
       // in the supplied UTO and returns the overlap type as well as the
       // interval of overlap in the form of a TIO.
 
       CosTime::OverlapType overlaps (in TIO interval,
-				     out TIO overlap);
+                                     out TIO overlap);
       // This operation compares the time in this interface with the time
       // in the supplied TIO and returns the overlap type as well as the
       // interval of overlap in the form of a TIO.
@@ -163,15 +163,15 @@ module CosTime
       // time can be guaranteed to have been obtained securely.
 
       UTO new_universal_time (in TimeBase::TimeT time,
-			      in TimeBase::InaccuracyT inaccuracy,
-			      in TimeBase::TdfT tdf);
+                              in TimeBase::InaccuracyT inaccuracy,
+                              in TimeBase::TdfT tdf);
       // This creates a new UTO based on the given parameters.
 
       UTO uto_from_utc (in TimeBase::UtcT utc);
       // This creates a new UTO given a time in the UtcT form.
 
       TIO new_interval (in TimeBase::TimeT lower,
-			in TimeBase::TimeT upper );
+                        in TimeBase::TimeT upper );
       // This creates a new TIO with the given parameters.
     };
 };

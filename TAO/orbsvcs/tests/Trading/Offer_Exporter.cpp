@@ -66,10 +66,10 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg,
       for (int i = 0; i < NUM_OFFERS; i++)
         {
           CosTrading::OfferId_var offer_id =
-            reg->export (this->plotter_[i]._this (TAO_TRY_ENV),
-                         TT_Info::INTERFACE_NAMES[1],
-                         this->props_plotters_[i],
-                         TAO_TRY_ENV);
+            reg->_cxx_export (this->plotter_[i]._this (TAO_TRY_ENV),
+                              TT_Info::INTERFACE_NAMES[1],
+                              this->props_plotters_[i],
+                              TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           if (this->verbose_)
@@ -77,10 +77,10 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg,
               ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
             }
 
-          offer_id = reg->export (this->printer_[i]._this (TAO_TRY_ENV),
-                                  TT_Info::INTERFACE_NAMES[2],
-                                  this->props_printers_[i],
-                                  TAO_TRY_ENV);
+          offer_id = reg->_cxx_export (this->printer_[i]._this (TAO_TRY_ENV),
+                                       TT_Info::INTERFACE_NAMES[2],
+                                       this->props_printers_[i],
+                                       TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           if (this->verbose_)
@@ -88,10 +88,10 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg,
               ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
             }
 
-          offer_id = reg->export (this->fs_[i]._this (TAO_TRY_ENV),
-                                  TT_Info::INTERFACE_NAMES[3],
-                                  this->props_fs_[i],
-                                  TAO_TRY_ENV);
+          offer_id = reg->_cxx_export (this->fs_[i]._this (TAO_TRY_ENV),
+                                       TT_Info::INTERFACE_NAMES[3],
+                                       this->props_fs_[i],
+                                       TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           if (this->verbose_)

@@ -897,10 +897,10 @@ TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Register (void)
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::OfferId
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-export (CORBA::Object_ptr reference,
-        const char *type,
-        const CosTrading::PropertySeq &properties,
-        CORBA::Environment& TAO_IN_ENV)
+_cxx_export (CORBA::Object_ptr reference,
+             const char *type,
+             const CosTrading::PropertySeq &properties,
+             CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::Register::InvalidObjectRef,
                   CosTrading::IllegalServiceType,

@@ -1,11 +1,11 @@
 // $Id$
 
-#ifndef COS_TIME_BASE_IDL
-#define COS_TIME_BASE_IDL
+#ifndef TIME_BASE_PIDL
+#define TIME_BASE_PIDL
 
 #pragma prefix "omg.org"
 
-module TimeBase 
+module TimeBase
 {
   // = TITLE
   //   COS Time Service basic types.
@@ -25,7 +25,7 @@ module TimeBase
   typedef short TdfT;
   // Minutes of displacement from the Greenwich time.
 
-  struct UtcT 
+  struct UtcT
   {
     // = TITLE
     //   Structure of the time value.  The inaccuracy is packed into
@@ -64,4 +64,4 @@ module TimeBase
 
 };
 
-#endif /* COS_TIME_BASE_IDL */
+#endif /* TIME_BASE_PIDL */

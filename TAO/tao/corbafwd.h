@@ -131,7 +131,9 @@ typedef class CORBA_Exception *CORBA_Exception_ptr;
   TAO_SYSTEM_EXCEPTION(DATA_CONVERSION); \
   TAO_SYSTEM_EXCEPTION(INV_POLICY); \
   TAO_SYSTEM_EXCEPTION(REBIND); \
-  TAO_SYSTEM_EXCEPTION(TIMEOUT);
+  TAO_SYSTEM_EXCEPTION(TIMEOUT); \
+  TAO_SYSTEM_EXCEPTION(TRANSACTION_UNAVAILABLE); \
+  TAO_SYSTEM_EXCEPTION(TRANSACTION_MODE);
 
 #define TAO_SYSTEM_EXCEPTION(name) \
   class CORBA_ ## name
@@ -172,16 +174,6 @@ class CORBA_Context_var;
 class CORBA_Context_out;
 typedef class CORBA_Context *CORBA_Context_ptr;
 
-class CORBA_Policy;
-class CORBA_Policy_var;
-class CORBA_Policy_out;
-typedef class CORBA_Policy *CORBA_Policy_ptr;
-
-class CORBA_PolicyList;
-class CORBA_PolicyList_var;
-class CORBA_PolicyList_out;
-typedef class CORBA_PolicyList *CORBA_PolicyList_ptr;
-
 class CORBA_Current;
 class CORBA_Current_var;
 class CORBA_Current_out;
@@ -204,6 +196,47 @@ class CORBA_String_var;
 class CORBA_String_out;
 
 class CORBA_ExceptionList;
+
+class CORBA_PolicyError;
+typedef CORBA_PolicyError *CORBA_PolicyError_ptr;
+
+class CORBA_InvalidPolicies;
+typedef CORBA_InvalidPolicies* CORBA_InvalidPolicies_ptr;
+
+class CORBA_PolicyTypeSeq;
+class CORBA_PolicyTypeSeq_var;
+class CORBA_PolicyTypeSeq_out;
+
+class CORBA_PolicyManager;
+typedef CORBA_PolicyManager *CORBA_PolicyManager_ptr;
+
+class CORBA_PolicyCurrent;
+typedef CORBA_PolicyCurrent *CORBA_PolicyCurrent_ptr;
+
+class CORBA_Policy;
+class CORBA_Policy_var;
+class CORBA_Policy_out;
+typedef CORBA_Policy *CORBA_Policy_ptr;
+
+class CORBA_PolicyList;
+class CORBA_PolicyList_var;
+class CORBA_PolicyList_out;
+typedef CORBA_PolicyList *CORBA_PolicyList_ptr;
+
+class CORBA_PollableSet;
+class CORBA_PollableSet_var;
+class CORBA_PollableSet_out;
+typedef CORBA_PollableSet *CORBA_PollableSet_ptr;
+
+class CORBA_Pollable;
+class CORBA_Pollable_var;
+class CORBA_Pollable_out;
+typedef CORBA_Pollable *CORBA_Pollable_ptr;
+
+class CORBA_DIIPollable;
+class CORBA_DIIPollable_var;
+class CORBA_DIIPollable_out;
+typedef CORBA_DIIPollable *CORBA_DIIPollable_ptr;
 
 class TAO_InputCDR;
 class TAO_OutputCDR;
@@ -370,15 +403,6 @@ public:
 
   typedef class CORBA_InterfaceDef *InterfaceDef_ptr;
 
-  typedef CORBA_Policy Policy;
-  typedef CORBA_Policy *Policy_ptr;
-  typedef CORBA_Policy_var Policy_var;
-  typedef CORBA_Policy_out Policy_out;
-
-  typedef CORBA_PolicyList PolicyList;
-  typedef CORBA_PolicyList_var PolicyList_var;
-  typedef CORBA_PolicyList_out PolicyList_out;
-
   typedef CORBA_Current Current;
   typedef CORBA_Current *Current_ptr;
   typedef CORBA_Current_var Current_var;
@@ -526,32 +550,7 @@ TAO_SYSTEM_EXCEPTION_LIST
 
   static TypeCode_ptr _tc_UnknownUserException;
 
-  static CORBA::TypeCode_ptr _tc_Policy;
-  static CORBA::TypeCode_ptr _tc_PolicyList;
-
   static CORBA::TypeCode_ptr _tc_Current;
-
-  static CORBA_Environment& default_environment (void);
-  // Obtain the thread-specific default environment.
-
-  // There could be a single version of these methods, but g++ 2.7.2
-  // gets horribly confused if we used CORBA::default_environment() at
-  // this point.
-  static ORB_ptr ORB_init (int &argc,
-                           char *const *argv,
-                           const char *orb_name = 0);
-  static ORB_ptr ORB_init (int &argc,
-                           char *const *argv,
-                           const char *orb_name,
-                           CORBA_Environment &TAO_IN_ENV);
-  // ORB initialisation
-
-  // = The following two methods are TAO-specific extensions.
-  static ORB_ptr instance (void);
-  // Returns a pointer to the "default ORB."
-
-  static void instance (ORB_ptr);
-  // Sets a pointer to the "default ORB."
 
   enum
   {
@@ -574,15 +573,116 @@ TAO_SYSTEM_EXCEPTION_LIST
   typedef CORBA::String_out RepositoryId_out;
   static CORBA::TypeCode_ptr _tc_RepositoryId;
 
+  typedef CORBA::Short PolicyErrorCode;
+  typedef CORBA::Short_out PolicyErrorCode_out;
+  static CORBA::TypeCode_ptr _tc_PolicyErrorCode;
+
+  static const PolicyErrorCode BAD_POLICY;
+  static const PolicyErrorCode UNSUPPORTED_POLICY;
+  static const PolicyErrorCode BAD_POLICY_TYPE;
+  static const PolicyErrorCode BAD_POLICY_VALUE;
+  static const PolicyErrorCode UNSUPPORTED_POLICY_VALUE;
+
+  typedef CORBA_PolicyError PolicyError;
+  typedef CORBA_PolicyError *PolicyError_ptr;
+  static CORBA::TypeCode_ptr _tc_PolicyError;
+
+  typedef CORBA_InvalidPolicies InvalidPolicies;
+  typedef CORBA_InvalidPolicies* InvalidPolicies_ptr;
+  static CORBA::TypeCode_ptr _tc_InvalidPolicies;
+
   typedef CORBA::ULong PolicyType;
   typedef CORBA::ULong_out PolicyType_out;
   static CORBA::TypeCode_ptr _tc_PolicyType;
+
+  typedef CORBA_Policy Policy;
+  typedef CORBA_Policy *Policy_ptr;
+  typedef CORBA_Policy_var Policy_var;
+  typedef CORBA_Policy_out Policy_out;
+  static CORBA::TypeCode_ptr _tc_Policy;
+
+  typedef CORBA_PolicyList PolicyList;
+  typedef CORBA_PolicyList_var PolicyList_var;
+  typedef CORBA_PolicyList_out PolicyList_out;
+  static CORBA::TypeCode_ptr _tc_PolicyList;
+
+  typedef CORBA_PolicyTypeSeq PolicyTypeSeq;
+  typedef CORBA_PolicyTypeSeq_var PolicyTypeSeq_var;
+  typedef CORBA_PolicyTypeSeq_out PolicyTypeSeq_out;
+  static CORBA::TypeCode_ptr _tc_PolicyTypeSeq;
+
+  enum SetOverrideType
+  {
+    SET_OVERRIDE,
+    ADD_OVERRIDE
+  };
+  typedef SetOverrideType &SetOverrideType_out;
+  static CORBA::TypeCode_ptr _tc_SetOverrideType;
+
+  typedef CORBA_PolicyManager PolicyManager;
+  typedef CORBA_PolicyManager *PolicyManager_ptr;
+  static CORBA::TypeCode_ptr _tc_PolicyManager;
+
+  typedef CORBA_PolicyCurrent PolicyCurrent;
+  typedef CORBA_PolicyCurrent *PolicyCurrent_ptr;
+  static CORBA::TypeCode_ptr _tc_PolicyCurrent;
+
+  // ****************************************************************
+
+  typedef CORBA_PollableSet PollableSet;
+  typedef CORBA_PollableSet_var PollableSet_var;
+  typedef CORBA_PollableSet_out PollableSet_out;
+  typedef CORBA_PollableSet_ptr PollableSet_ptr;
+  static CORBA::TypeCode_ptr _tc_PollableSet;
+
+  typedef CORBA_Pollable Pollable;
+  typedef CORBA_Pollable_var Pollable_var;
+  typedef CORBA_Pollable_out Pollable_out;
+  typedef CORBA_Pollable_ptr Pollable_ptr;
+  static CORBA::TypeCode_ptr _tc_Pollable;
+
+  typedef CORBA_DIIPollable DIIPollable;
+  typedef CORBA_DIIPollable_var DIIPollable_var;
+  typedef CORBA_DIIPollable_out DIIPollable_out;
+  typedef CORBA_DIIPollable_ptr DIIPollable_ptr;
+  static CORBA::TypeCode_ptr _tc_DIIPollable;
+
+  // ****************************************************************
+
+  // There could be a single version of these methods, but g++ 2.7.2
+  // gets horribly confused if we used CORBA::default_environment() at
+  // this point.
+  static ORB_ptr ORB_init (int &argc,
+                           char *const *argv,
+                           const char *orb_name = 0);
+  static ORB_ptr ORB_init (int &argc,
+                           char *const *argv,
+                           const char *orb_name,
+                           CORBA_Environment &TAO_IN_ENV);
+  // ORB initialisation
+
+  // = TAO extensions...
+
+  static CORBA_Environment& default_environment (void);
+  // Obtain the thread-specific default environment.
+
+  // = The following two methods are TAO-specific extensions.
+  static ORB_ptr instance (void);
+  // Returns a pointer to the "default ORB."
+
+  static void instance (ORB_ptr);
+  // Sets a pointer to the "default ORB."
 
 private:
   friend class CORBA_ORB;
   static ORB_ptr instance_;
   // Points to the "default ORB."
 };  // end of class (namespace) CORBA
+
+// ****************************************************************
+
+// A helper clas to handle the various kinds of octet sequences used
+// inside the ORB.
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
 extern TAO_Export CORBA::TypeCode_ptr TC_opaque;

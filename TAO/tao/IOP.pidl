@@ -1,0 +1,9 @@
+//
+// $Id$
+//
+
+module IOP
+{
+  typedef unsigned long ComponentId;
+  typedef unsigned long ServiceId;
+};

@@ -68,6 +68,18 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       *os << "{" << be_nl
 	  << "public:\n";
       os->incr_indent ();
+
+      // generate code for field members
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_exception_ch::"
+                             "visit_exception - "
+                             "codegen for scope failed\n"), -1);
+        }
+
+      *os << be_nl;
+
       // constructors and destructor
       *os << node->local_name () << " (void); // default ctor" << be_nl;
       *os << node->local_name () << " (const " << node->local_name ()
@@ -102,14 +114,6 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
           delete visitor;
         }
 
-      // generate code for field members
-      if (this->visit_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_exception_ch::"
-                             "visit_exception - "
-                             "codegen for scope failed\n"), -1);
-        }
 
       *os << be_nl
 	  << "// = TAO extension" << be_nl
