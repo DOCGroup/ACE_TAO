@@ -1,9 +1,9 @@
 #
-# Makefile for building the ImplRepo_Service executable
+# Makefile for building the ImR_Activator executable
 #
 
 !ifndef MINIMUM_CORBA
-NAME = ImplRepo_Service
+NAME = ImR_Activator
 !else
 !undef NAME
 !endif
