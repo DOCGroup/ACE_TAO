@@ -92,7 +92,7 @@ public:
                      PortableInterceptor::ForwardRequest));
 
 private:
-  static void*
+  static ACE_THR_FUNC_RETURN
   listener_thunk (void* p);
 
   void
