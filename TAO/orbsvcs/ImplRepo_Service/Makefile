@@ -85,8 +85,6 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -346,15 +344,14 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/ImplRepoS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/ImplRepoS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/ImplRepoS.i \
- Repository.h $(TAO_ROOT)/tao/TAO.h
+ Repository.h \
+ $(TAO_ROOT)/tao/TAO.h
 .obj/ImplRepo_i.o .obj/ImplRepo_i.so .shobj/ImplRepo_i.o .shobj/ImplRepo_i.so: ImplRepo_i.cpp ImplRepo_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/ImplRepoS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/ImplRepoC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -614,8 +611,10 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/ImplRepoS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/ImplRepoS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/ImplRepoS.i \
- Repository.h $(TAO_ROOT)/tao/TAO.h \
- Options.h $(TAO_ROOT)/tao/IIOP_Profile.h \
+ Repository.h \
+ $(TAO_ROOT)/tao/TAO.h \
+ Options.h \
+ $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/Tagged_Components.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
@@ -657,6 +656,8 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(TAO_ROOT)/tao/Wait_Strategy.h \
+ $(TAO_ROOT)/tao/IIOP_Transport.h \
  $(TAO_ROOT)/tao/IIOP_Connect.i \
  $(TAO_ROOT)/tao/Acceptor_Impl.h \
  $(TAO_ROOT)/tao/Acceptor_Impl.i \
@@ -675,8 +676,6 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -753,7 +752,8 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h Options.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ Options.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp
@@ -763,8 +763,6 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -801,8 +799,6 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \

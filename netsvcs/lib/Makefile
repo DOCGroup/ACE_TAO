@@ -60,8 +60,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
@@ -208,15 +208,12 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  TS_Clerk_Handler.h \
@@ -242,6 +239,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers_T.i \
@@ -264,6 +262,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -359,15 +359,12 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Acceptor.h \
@@ -392,6 +389,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers_T.i \
@@ -414,6 +412,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -514,17 +514,15 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers_T.i \
@@ -567,6 +565,9 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  Name_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -574,6 +575,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -666,16 +669,13 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
@@ -700,13 +700,10 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -723,6 +720,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers_T.i \
@@ -745,6 +743,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -822,15 +822,12 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -854,15 +851,12 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -885,13 +879,10 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -908,6 +899,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers_T.i \
@@ -930,6 +922,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1009,15 +1003,12 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  Token_Handler.h \
@@ -1043,6 +1034,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers_T.i \
@@ -1065,6 +1057,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1165,15 +1159,12 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  Logging_Strategy.h \
@@ -1189,16 +1180,13 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  Base_Optimizer.cpp
 

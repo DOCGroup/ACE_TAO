@@ -56,15 +56,12 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -84,6 +81,7 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers_T.i \
@@ -106,6 +104,8 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -226,10 +226,7 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
  $(ACE_ROOT)/netsvcs/lib/Server_Logging_Handler_T.h \
  $(ACE_ROOT)/ace/TLI_Acceptor.h \
  $(ACE_ROOT)/ace/TLI.h \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/TLI_Stream.h \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Acceptor.i \
  $(ACE_ROOT)/netsvcs/lib/Server_Logging_Handler_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \

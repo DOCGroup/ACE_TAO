@@ -2187,7 +2187,10 @@ endif # GHS
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Dynamic.i
+ $(ACE_ROOT)/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp
 .obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -2287,6 +2290,83 @@ endif # GHS
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i
+.obj/FlReactor.o .obj/FlReactor.so .shobj/FlReactor.o .shobj/FlReactor.so: FlReactor.cpp \
+ $(ACE_ROOT)/ace/FlReactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor_T.h \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Token.h \
+ $(ACE_ROOT)/ace/Token.i \
+ $(ACE_ROOT)/ace/Pipe.h \
+ $(ACE_ROOT)/ace/Pipe.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Heap.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
+ $(ACE_ROOT)/ace/Select_Reactor_T.i \
+ $(ACE_ROOT)/ace/Select_Reactor.i
 .obj/Handle_Set.o .obj/Handle_Set.so .shobj/Handle_Set.o .shobj/Handle_Set.so: Handle_Set.cpp \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -2303,9 +2383,12 @@ endif # GHS
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Handle_Set.i
-.obj/POSIX_Proactor.o .obj/POSIX_Proactor.so .shobj/POSIX_Proactor.o .shobj/POSIX_Proactor.so: POSIX_Proactor.cpp \
- $(ACE_ROOT)/ace/POSIX_Proactor.h \
- $(ACE_ROOT)/ace/Proactor_Impl.h \
+.obj/Msg_WFMO_Reactor.o .obj/Msg_WFMO_Reactor.so .shobj/Msg_WFMO_Reactor.o .shobj/Msg_WFMO_Reactor.so: Msg_WFMO_Reactor.cpp \
+ $(ACE_ROOT)/ace/Msg_WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -2315,17 +2398,9 @@ endif # GHS
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Asynch_IO.h \
- $(ACE_ROOT)/ace/Asynch_IO.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -2339,13 +2414,6 @@ endif # GHS
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -2355,6 +2423,9 @@ endif # GHS
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
  $(ACE_ROOT)/ace/Malloc_T.i \
  $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
@@ -2367,16 +2438,11 @@ endif # GHS
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/POSIX_Asynch_IO.h \
- $(ACE_ROOT)/ace/Asynch_IO_Impl.h \
- $(ACE_ROOT)/ace/Asynch_IO_Impl.i \
- $(ACE_ROOT)/ace/POSIX_Asynch_IO.i \
- $(ACE_ROOT)/ace/POSIX_Proactor.i \
- $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -2397,6 +2463,10 @@ endif # GHS
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
@@ -2418,20 +2488,26 @@ endif # GHS
  $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Task.i \
- $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Msg_WFMO_Reactor.i
+.obj/POSIX_Proactor.o .obj/POSIX_Proactor.so .shobj/POSIX_Proactor.o .shobj/POSIX_Proactor.so: POSIX_Proactor.cpp \
+ $(ACE_ROOT)/ace/POSIX_Proactor.h \
+ $(ACE_ROOT)/ace/Proactor_Impl.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i
 .obj/Priority_Reactor.o .obj/Priority_Reactor.so .shobj/Priority_Reactor.o .shobj/Priority_Reactor.so: Priority_Reactor.cpp \
  $(ACE_ROOT)/ace/Priority_Reactor.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -2525,13 +2601,19 @@ endif # GHS
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Asynch_IO.h \
- $(ACE_ROOT)/ace/Asynch_IO.i \
- $(ACE_ROOT)/ace/Asynch_IO_Impl.h \
- $(ACE_ROOT)/ace/Asynch_IO_Impl.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Proactor_Impl.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2542,17 +2624,10 @@ endif # GHS
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Free_List.cpp \
@@ -2560,41 +2635,15 @@ endif # GHS
  $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Timer_Wheel.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Proactor.i \
- $(ACE_ROOT)/ace/Proactor_Impl.h \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2613,9 +2662,20 @@ endif # GHS
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2645,13 +2705,7 @@ endif # GHS
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
- $(ACE_ROOT)/ace/POSIX_Proactor.h \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/POSIX_Asynch_IO.h \
- $(ACE_ROOT)/ace/POSIX_Asynch_IO.i \
- $(ACE_ROOT)/ace/POSIX_Proactor.i
+ $(ACE_ROOT)/ace/Stream_Modules.cpp
 .obj/Reactor.o .obj/Reactor.so .shobj/Reactor.o .shobj/Reactor.so: Reactor.cpp \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -2941,6 +2995,178 @@ endif # GHS
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp
+.obj/TP_Reactor.o .obj/TP_Reactor.so .shobj/TP_Reactor.o .shobj/TP_Reactor.so: TP_Reactor.cpp \
+ $(ACE_ROOT)/ace/TP_Reactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor_T.h \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Token.h \
+ $(ACE_ROOT)/ace/Token.i \
+ $(ACE_ROOT)/ace/Pipe.h \
+ $(ACE_ROOT)/ace/Pipe.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Heap.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
+ $(ACE_ROOT)/ace/Select_Reactor_T.i \
+ $(ACE_ROOT)/ace/Select_Reactor.i \
+ $(ACE_ROOT)/ace/TP_Reactor.i
+.obj/TkReactor.o .obj/TkReactor.so .shobj/TkReactor.o .shobj/TkReactor.so: TkReactor.cpp \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/TkReactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor_T.h \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Token.h \
+ $(ACE_ROOT)/ace/Token.i \
+ $(ACE_ROOT)/ace/Pipe.h \
+ $(ACE_ROOT)/ace/Pipe.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Heap.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
+ $(ACE_ROOT)/ace/Select_Reactor_T.i \
+ $(ACE_ROOT)/ace/Select_Reactor.i
 .obj/WFMO_Reactor.o .obj/WFMO_Reactor.so .shobj/WFMO_Reactor.o .shobj/WFMO_Reactor.so: WFMO_Reactor.cpp \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Signal.h \
@@ -3051,6 +3277,100 @@ endif # GHS
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp
+.obj/XtReactor.o .obj/XtReactor.so .shobj/XtReactor.o .shobj/XtReactor.so: XtReactor.cpp \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/XtReactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor.h \
+ $(ACE_ROOT)/ace/Select_Reactor_T.h \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Token.h \
+ $(ACE_ROOT)/ace/Token.i \
+ $(ACE_ROOT)/ace/Pipe.h \
+ $(ACE_ROOT)/ace/Pipe.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Select_Reactor_Base.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Heap.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
+ $(ACE_ROOT)/ace/Select_Reactor_T.i \
+ $(ACE_ROOT)/ace/Select_Reactor.i
 .obj/Asynch_IO.o .obj/Asynch_IO.so .shobj/Asynch_IO.o .shobj/Asynch_IO.so: Asynch_IO.cpp \
  $(ACE_ROOT)/ace/Asynch_IO.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3065,77 +3385,7 @@ endif # GHS
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Asynch_IO.i \
- $(ACE_ROOT)/ace/Proactor.h \
- $(ACE_ROOT)/ace/Asynch_IO_Impl.h \
- $(ACE_ROOT)/ace/Asynch_IO_Impl.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Timer_Wheel.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Proactor.i \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/INET_Addr.i
+ $(ACE_ROOT)/ace/Log_Record.i
 .obj/Asynch_IO_Impl.o .obj/Asynch_IO_Impl.so .shobj/Asynch_IO_Impl.o .shobj/Asynch_IO_Impl.so: Asynch_IO_Impl.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -3150,10 +3400,7 @@ endif # GHS
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Asynch_IO_Impl.h \
- $(ACE_ROOT)/ace/Asynch_IO.h \
- $(ACE_ROOT)/ace/Asynch_IO.i \
- $(ACE_ROOT)/ace/Asynch_IO_Impl.i
+ $(ACE_ROOT)/ace/Asynch_IO_Impl.h
 .obj/POSIX_Asynch_IO.o .obj/POSIX_Asynch_IO.so .shobj/POSIX_Asynch_IO.o .shobj/POSIX_Asynch_IO.so: POSIX_Asynch_IO.cpp \
  $(ACE_ROOT)/ace/POSIX_Asynch_IO.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -3168,138 +3415,7 @@ endif # GHS
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Asynch_IO_Impl.h \
- $(ACE_ROOT)/ace/Asynch_IO.h \
- $(ACE_ROOT)/ace/Asynch_IO.i \
- $(ACE_ROOT)/ace/Asynch_IO_Impl.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/POSIX_Asynch_IO.i \
- $(ACE_ROOT)/ace/Proactor.h \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Timer_Wheel.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Proactor.i \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/Task.i \
- $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Task_T.cpp \
- $(ACE_ROOT)/ace/Module.h \
- $(ACE_ROOT)/ace/Module.i \
- $(ACE_ROOT)/ace/Module.cpp \
- $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.i \
- $(ACE_ROOT)/ace/Stream_Modules.cpp \
- $(ACE_ROOT)/ace/POSIX_Proactor.h \
- $(ACE_ROOT)/ace/Proactor_Impl.h \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/POSIX_Proactor.i
+ $(ACE_ROOT)/ace/Log_Record.i
 .obj/Strategies.o .obj/Strategies.so .shobj/Strategies.o .shobj/Strategies.so: Strategies.cpp \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -5347,24 +5463,8 @@ endif # GHS
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/Proactor.h \
- $(ACE_ROOT)/ace/Asynch_IO.h \
- $(ACE_ROOT)/ace/Asynch_IO.i \
- $(ACE_ROOT)/ace/Asynch_IO_Impl.h \
- $(ACE_ROOT)/ace/Asynch_IO_Impl.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Timer_Wheel.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.h \
- $(ACE_ROOT)/ace/Timer_Wheel_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Proactor.i
+ $(ACE_ROOT)/ace/Thread_Manager.i
 .obj/Service_Manager.o .obj/Service_Manager.so .shobj/Service_Manager.o .shobj/Service_Manager.so: Service_Manager.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -7325,115 +7425,6 @@ endif # GHS
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Local_Name_Space_T.cpp
-.obj/Msg_WFMO_Reactor.o .obj/Msg_WFMO_Reactor.so .shobj/Msg_WFMO_Reactor.o .shobj/Msg_WFMO_Reactor.so: Msg_WFMO_Reactor.cpp \
- $(ACE_ROOT)/ace/Msg_WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Msg_WFMO_Reactor.i
 .obj/Name_Proxy.o .obj/Name_Proxy.so .shobj/Name_Proxy.o .shobj/Name_Proxy.so: Name_Proxy.cpp \
  $(ACE_ROOT)/ace/Name_Proxy.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
@@ -7850,349 +7841,5 @@ endif # GHS
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Name_Request_Reply.h \
  $(ACE_ROOT)/ace/Name_Space.h
-.obj/TP_Reactor.o .obj/TP_Reactor.so .shobj/TP_Reactor.o .shobj/TP_Reactor.so: TP_Reactor.cpp \
- $(ACE_ROOT)/ace/TP_Reactor.h \
- $(ACE_ROOT)/ace/Select_Reactor.h \
- $(ACE_ROOT)/ace/Select_Reactor_T.h \
- $(ACE_ROOT)/ace/Select_Reactor_Base.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Token.h \
- $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Select_Reactor_Base.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Select_Reactor_T.i \
- $(ACE_ROOT)/ace/Select_Reactor.i \
- $(ACE_ROOT)/ace/TP_Reactor.i
-.obj/XtReactor.o .obj/XtReactor.so .shobj/XtReactor.o .shobj/XtReactor.so: XtReactor.cpp \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/XtReactor.h \
- $(ACE_ROOT)/ace/Select_Reactor.h \
- $(ACE_ROOT)/ace/Select_Reactor_T.h \
- $(ACE_ROOT)/ace/Select_Reactor_Base.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Token.h \
- $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Select_Reactor_Base.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Select_Reactor_T.i \
- $(ACE_ROOT)/ace/Select_Reactor.i
-.obj/FlReactor.o .obj/FlReactor.so .shobj/FlReactor.o .shobj/FlReactor.so: FlReactor.cpp \
- $(ACE_ROOT)/ace/FlReactor.h \
- $(ACE_ROOT)/ace/Select_Reactor.h \
- $(ACE_ROOT)/ace/Select_Reactor_T.h \
- $(ACE_ROOT)/ace/Select_Reactor_Base.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Token.h \
- $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Select_Reactor_Base.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Select_Reactor_T.i \
- $(ACE_ROOT)/ace/Select_Reactor.i \
- $(ACE_ROOT)/ace/FlReactor.i
-.obj/TkReactor.o .obj/TkReactor.so .shobj/TkReactor.o .shobj/TkReactor.so: TkReactor.cpp \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/TkReactor.h \
- $(ACE_ROOT)/ace/Select_Reactor.h \
- $(ACE_ROOT)/ace/Select_Reactor_T.h \
- $(ACE_ROOT)/ace/Select_Reactor_Base.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Token.h \
- $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Select_Reactor_Base.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Select_Reactor_T.i \
- $(ACE_ROOT)/ace/Select_Reactor.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
