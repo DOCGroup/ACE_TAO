@@ -1,3 +1,19 @@
+Thu Feb 12 13:10:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        
+          Added code to make sure that all arguments and return types
+          added as a result of implied IDL have their full scoped 
+          names initialized, so that their flat names can be computed
+          correctly later, if need be.
+          
+        * tests/IDL_Test/IDL_Test.mpc:
+        
+          Added -GC (AMI), -GH (AMH) and -Gd (direct collocation) to
+          the IDL compiler command line options, so that code
+          generated as a result of these options can be tested on
+          all platforms.
+
 Thu Feb 12 09:48:43 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
