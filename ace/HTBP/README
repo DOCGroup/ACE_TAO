@@ -1,0 +1,82 @@
+// $Id$
+
+This directory contains the HTTP Tunneling, Bidirectional, Protocol
+implementation. This is a new streaming abstraction layered over an
+HTTP document request/reply mechanism. It is designed to allow clients
+that are inside a of a corporate firewall to communicate with servers
+that are outside, hence HTTP Tunneling. Also, once a connection is
+established, the outside peer is able to send asynchronous messages to
+the inside peer, hence Bidirectional.
+
+HTBP provides Acceptor, Connector, and Stream classes that follow the
+interface defined for the ACE_Acceptor and ACE_Connector
+templates. This means that HTBP can be used right away with
+applications designed to use these templates.
+
+Bidirectionality is achieved in the context of the proxy's restriction
+by using two channels between the peers. One channel is defined for
+data flow from the inside to the outside, data flow from the outside
+in occurs on the other channel. In-to-out data is passed in the form
+of a PUT command with the data payload marshalled into an
+"application/gzip" buffer. On this channel, the outside peer always
+responds with a simple document which serves as an ack. On the
+out-to-in channel, the inside client must send a token request in the
+form of a GET command. This request goes unfulfilled until the outside
+peer has data to send, which it does by supplying an HTML document
+that again encapsulates the data so that it may pass through the proxy
+uncorrupted.
+
+The connections from the inside peer to the proxy, or from the proxy
+to the outside peer may be closed by the proxy at any time. The inside
+peer will automatically reconnect as needed when this happens. Since
+the outside peer cannot actively connect to the proxy, it will queue
+outbound messages as long as it can until a new out-to-in channel is
+made available, at which time it will flush its queue. The sense of
+channels may change over time, as the proxy may choose any local
+connection to the server to send any request (GET or POST).
+
+The outside peer is identified using an ordinary INET addr, however
+the inside peer uses a simple, transient unique ID to identify
+itself. Inside peers will never have any type of persistent identity.
+The unique ID used to identify the inside peer is usually a UUID value
+as composed by ACE_UUID_Generator. However, a domain based unique ID
+may also be obtainedusing HTBP::ID_Requestor::get_HTID(). If no domain
+based ID generator is configured, get_HTID() will return a UUID value.
+
+As there are a variety of HTTP proxies available, HTBP uses a
+pluggable filter class that defines the particular characteristics of
+a proxy and is responsible for marshalling and unmarshalling binary
+data. As of now there is a single filter available that works with a
+defaulted Squid proxy and may also be used as a null filter, directly
+connecting the inside and outside peers. This mode is useful for
+testing.
+
+CONFIGURING HTBP
+This is done through the ACE_Configuration framework. On windows
+platforms, the Windows Registry may be used, whereas on non-windows, a
+flat file is used to configure. Configuration data may also be
+persisted in a memory mapped file.
+
+The configuration map contains a single section, HTBP, that contains
+all the configurable parameters in name=value form. The following is
+an example of a configuration file:
+
+[htbp]
+proxy_host=<hostname>               This is the hostname of the http
+                                    proxy through which all requests
+                                    will be sent.
+proxy_port=<port>                   This is the proxy's port.
+htid_url=<url>                      If a domain based unique id is
+                                    required, this is the URL of the
+                                    ID generator.
+htid_via_proxy=<1|0>                If the htid_url must be reached
+                                    via the proxy, set this to 1.
+                                    Default is 0, meaning the ID
+                                    generator is directly accessible.
+
+COMPANION DIRECTORIES:
+$ACE_ROOT/tests/HTBP.               These are the test drivers, which
+                                    also serve as example code.
+$TAO_ROOT/orbsvcs/orbsvcs/HTIOP     This is a TAO pluggable protocol
+                                    based on HTBP.
+$TAO_ROOT/orbsvcs/tests/HTIOP       The tests for HTIOP.

@@ -1,0 +1,17 @@
+project(*Server): aceexe {
+  libs += ACE_HTBP
+  exename = server
+
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*Client): aceexe {
+  libs += ACE_HTBP
+  exename = client
+
+  Source_Files {
+    client.cpp
+  }
+}

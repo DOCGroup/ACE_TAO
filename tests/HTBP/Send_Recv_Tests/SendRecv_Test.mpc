@@ -1,0 +1,9 @@
+project: aceexe {
+  libs += ACE_HTBP
+  exename = SendRecv_Test
+
+  Source_Files {
+     SendRecv_Test.cpp
+     Test_Output.cpp
+  }
+}

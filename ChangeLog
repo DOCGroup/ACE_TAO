@@ -1,3 +1,17 @@
+Mon Oct 25 21:27:03 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/ace.mwc:
+          Added HTBP as a new project.
+
+        * ace/HTBP:
+          This is a new streaming protocol, HTTP Tunneling Bidirectional
+          Protocol. Motivation for this protocol comes from Essex-Radez
+          (www.radez.com). A description of the protocol details may be
+          found in ace/HTBP/README.
+
+        * tests/HTBP:
+          This is a collection of tests specific to HTBP.
+
 Mon Oct 25 20:13:07 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Global_Macros.h:
