@@ -76,6 +76,12 @@ public:
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
+
+  int set_mmap_options (const char *prefix,
+                        off_t size);
+  // Set the MMAP options the MEM_Stream this acceptor creates will
+  // use.
+
 private:
   int open_i (TAO_ORB_Core* orb_core);
   // Implement the common part of the open*() methods.
@@ -122,7 +128,7 @@ private:
   TAO_SHMIOP_ACCEPT_STRATEGY *accept_strategy_;
   // Acceptor strategies.
 
-  ACE_TCHAR *mmap_file_prefix_;
+  const ACE_TCHAR *mmap_file_prefix_;
   // Determine the prefix (include path name) of the mmap file.
 
   off_t mmap_size_;

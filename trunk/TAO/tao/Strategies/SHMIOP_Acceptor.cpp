@@ -249,6 +249,16 @@ TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 }
 
 int
+TAO_SHMIOP_Acceptor::set_mmap_options (const ACE_TCHAR *prefix,
+                                       off_t size)
+{
+  this->mmap_file_prefix_ = prefix;
+  this->mmap_size_ = size;
+
+  return 0;
+}
+
+int
 TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
 {
   this->orb_core_ = orb_core;
@@ -282,6 +292,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
       return -1;
     }
 
+  this->base_acceptor_.acceptor().mmap_prefix (this->mmap_file_prefix_);
   this->base_acceptor_.acceptor().malloc_options ().minimum_bytes_
     = this->mmap_size_;
 
