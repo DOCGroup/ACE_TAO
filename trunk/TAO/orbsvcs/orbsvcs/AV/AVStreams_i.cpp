@@ -612,319 +612,8 @@ TAO_VDev::~TAO_VDev (void)
 // ----------------------------------------------------------------------
 
 
-int
-TAO_Endpoint_Strategy::create_B (AVStreams::StreamEndPoint_B_ptr stream_endpoint,
-                                 AVStreams::VDev_ptr vdev,
-                                 CORBA::Environment &env)
-{
-  if (this->activate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "(%P|%t) TAO_Endpoint_Strategy: Error in activate ()\n"),
-                      -1);
-
-  stream_endpoint = this->stream_endpoint_b_;
-  vdev = this->vdev_;
-  return 0;
-  
-}
-
-int
-TAO_Endpoint_Process_Strategy::activate (void)
-{
-  ACE_Process process;
-  
-  pid_t pid = process.spawn (*this->process_options_);
-  if (pid == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) ACE_Process:: spawn failed: %p\n",
-                       "spawn"),
-                      -1);
-
-  char sem_str [BUFSIZ];
-  char host [MAXHOSTNAMELEN];
-  ACE_OS::hostname (host,
-                    sizeof host);
-  
-  // create a unique semaphore name
-  ::sprintf (sem_str,
-             "%s:%s:%d",
-             "TAO_AV_Process_Semaphore",
-             host,
-             pid);
-  
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) semaphore is %s\n",
-              sem_str));
-  // Create the semaphore
-  ACE_Process_Semaphore semaphore (0, // 0 means that the
-                                   // semaphore is locked initially
-                                   sem_str);
-  
-  // %% wait until the child finishes booting
-  while (1)
-    {
-      if (semaphore.acquire () == -1)
-        {
-          // See if my child process is still alive -- if not, return an error
-          if (ACE_OS::kill (pid,
-                            0) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%P|%t) Process_Strategy: Process being created died unexpectedly.\n"),
-                              -1);
-          // if we were not interrupted due to a EINTR, break
-          if (errno != EINTR)
-            break;
-        }
-      else
-        break;
-    }
-  
-  if (semaphore.remove () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) semaphore remove failed: %p\n",
-                       "remove"),
-                      -1);
-  
-  return this->get_object_references ();
-}
-
-int
-TAO_Endpoint_Process_Strategy::get_object_references (void)
-{
-  TAO_TRY
-    {
-      CORBA::Object_var naming_obj =
-        TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService");
-      if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to resolve the Name Service.\n"),
-                          -1);
-      CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      CosNaming::Name Stream_Endpoint_B_Name (1);
-
-      Stream_Endpoint_B_Name.length (1);
-      Stream_Endpoint_B_Name [0].id = CORBA::string_dup
-        ("Stream_Endpoint_B");
-
-      CORBA::Object_var stream_endpoint_b =
-        naming_context->resolve (Stream_Endpoint_B_Name,
-                                 TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      this->stream_endpoint_b_ =
-        AVStreams::StreamEndPoint_B::_narrow (stream_endpoint_b.in (),
-                                              TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      if (CORBA::is_nil (this->stream_endpoint_b_))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
-                          -1);
-
-      // ----------------------------------------------------------------------
-      CosNaming::Name VDev_Name (1);
-      VDev_Name.length (1);
-      VDev_Name [0].id = CORBA::string_dup
-        ("VDev");
-      
-      CORBA::Object_var vdev =
-        naming_context->resolve (VDev_Name,
-                                 TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      
-      this->vdev_ =
-        AVStreams::VDev::_narrow (vdev.in (),
-                                  TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      
-      if (CORBA::is_nil (this->vdev_))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
-                          -1);
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("TAO_Endpoint_Process_Strategy::get_object_references");
-      return -1;
-    }
-  TAO_ENDTRY;
-  return 0;
-}
-
-template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
-TAO_Child_Process <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::TAO_Child_Process ()
-{
-}
-
-template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
-int
-TAO_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::init (int argc, char **argv)
-{
-  TAO_TRY
-    {
-      this->activate_objects (argc,
-                              argv,
-                              TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      this->register_with_naming_service (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("TAO_Child_Process");
-      return -1;
-    }
-  TAO_ENDTRY;
-
-  if (this->release_semaphore () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Error releasing semaphores\n"),
-                      -1);
-  
-  return 0;
-}
-
-template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
-int
-TAO_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::activate_objects (int argc, 
-                                                                                char **argv,
-                                                                                CORBA::Environment &env)
-{
-  this->orb_manager_.init (argc,
-                           argv,
-                           env);
-  TAO_CHECK_ENV_RETURN (env, -1);
-
-  this->orb_manager_.activate ("Stream_Endpoint_B",
-                               this->stream_endpoint_b_,
-                               env);
-  TAO_CHECK_ENV_RETURN (env, -1);
-
-
-  this->orb_manager_.activate ("VDev",
-                               this->vdev_,
-                               env);
-  TAO_CHECK_ENV_RETURN (env, -1);
-
-  return 0;
-
-}
-
-template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
-int
-TAO_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::register_with_naming_service (CORBA::Environment &env)
-{
-  CORBA::Object_var naming_obj =
-    this->orb_manager_.orb ()->resolve_initial_references ("NameService");
-  if (CORBA::is_nil (naming_obj.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to resolve the Name Service.\n"),
-                      -1);
-  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
-  CosNaming::NamingContext_var naming_context =
-    CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                       env);
-  TAO_CHECK_ENV_RETURN (env,
-                        -1);
-  
-  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
-  // Create a name for the video control object
-  CosNaming::Name Stream_Endpoint_B_Name (1);
-  
-  Stream_Endpoint_B_Name.length (1);
-  Stream_Endpoint_B_Name [0].id = CORBA::string_dup
-    ("Stream_Endpoint_B");
-  
-  // Register the stream endpoint object with the naming server.
-  naming_context->bind (Stream_Endpoint_B_Name,
-                        this->stream_endpoint_b_._this (env),
-                        env);
-
-  if (env.exception () != 0)
-    {
-      env.clear ();
-      naming_context->rebind (Stream_Endpoint_B_Name,
-                              this->stream_endpoint_b_._this (env),
-                              env);
-      TAO_CHECK_ENV_RETURN (env, -1);
-    }
-  
-  CosNaming::Name vdev_name (1);
-  vdev_name.length (1);
-  vdev_name [0].id = CORBA::string_dup ("VDev");
-  
-  // Register the vdev with the naming server.
-  naming_context->bind (vdev_name,
-                        this->vdev_._this (env),
-                        env);
-
-  if (env.exception () != 0)
-    {
-      env.clear ();
-      naming_context->rebind (vdev_name,
-                              this->vdev_._this (env),
-                              env);
-      TAO_CHECK_ENV_RETURN (env, -1);
-    }
-  
-  
-  return 0;
-}
-
-template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
-int
-TAO_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::run (ACE_Time_Value &tv)
-{
-  return this->orb_manager_.run (tv);
-}
-
-template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
-int
-TAO_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::release_semaphore ()
-{
-  char sem_str [BUFSIZ];
-  char host [MAXHOSTNAMELEN];
-  pid_t pid;
-  
-  if ((pid = ACE_OS::getpid ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Unable to get my pid!\n"),
-                      -1);
-  
-  ACE_OS::hostname (host,
-                    sizeof host);
-  
-  sprintf (sem_str,
-           "%s:%s:%d",
-           "TAO_AV_Process_Semaphore",
-           host,
-           pid);
-
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) semaphore is %s\n",
-              sem_str));
-
-  // Release the lock on which the server is waiting
-  ACE_Process_Semaphore semaphore (0, // 0 means that the semaphore is
-                                   // initially locked
-                                   sem_str);
-  
-  if (semaphore.release () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Error releasing semaphore %s: %p\n",
-                       sem_str,
-                       "semaphore.release ()"),
-                      -1);
-  
-  return 0;
-}
-
-TAO_MMDevice::TAO_MMDevice ()
+TAO_MMDevice::TAO_MMDevice (TAO_Endpoint_Strategy *endpoint_strategy)
+  : endpoint_strategy_ (endpoint_strategy)
 {
 }
 
@@ -986,9 +675,17 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr the_requester,
                                    const AVStreams::flowSpec &the_spec,  
                                    CORBA::Environment &env)
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
-                     "(%P|%t) Cannot create a A device!\n"),
-                    0);
+  AVStreams::StreamEndPoint_A_ptr ptr;
+  if (this->endpoint_strategy_->create_A (ptr,
+                                          the_vdev,
+                                          env) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Error in create_A\n"),
+                      0);
+  
+  TAO_CHECK_ENV_RETURN (env, 0);
+  
+  return ptr;
 }
 
 
@@ -1001,9 +698,17 @@ TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester,
                         const AVStreams::flowSpec &the_spec,  
                         CORBA::Environment &env)
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
-                     "(%P|%t) Cannot create a B device!\n"),
-                    0);
+  AVStreams::StreamEndPoint_B_ptr ptr;
+  if (this->endpoint_strategy_->create_B (ptr,
+                                          the_vdev,
+                                          env) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Error in create_B\n"),
+                      0);
+  
+  TAO_CHECK_ENV_RETURN (env, 0);
+  
+  return ptr;
 }
 
 void 
@@ -1039,90 +744,4 @@ TAO_MMDevice::remove_fdev (const char *flow_name,
 TAO_MMDevice::~TAO_MMDevice (void)
 {
 }
-
-// template <class T>
-// TAO_Client_MMDevice <T>::TAO_Client_MMDevice ()
-// {
-// }
-//  
-// // We have been asked to create a new stream_endpoint and a vdev.
-// template <class T>
-// AVStreams::StreamEndPoint_A_ptr  
-// TAO_Client_MMDevice <T>::create_A (AVStreams::StreamCtrl_ptr the_requester, 
-//                                    AVStreams::VDev_out the_vdev, 
-//                                    AVStreams::streamQoS &the_qos, 
-//                                    CORBA::Boolean_out met_qos, 
-//                                    char *&named_vdev, 
-//                                    const AVStreams::flowSpec &the_spec,  
-//                                    CORBA::Environment &env)
-// {
-//   ACE_DEBUG ((LM_DEBUG, 
-//               "(%P|%t) TAO_MMDevice::create_A: called\n"));
-//  
-//   TAO_VDev *vdev = new TAO_VDev;
-//   the_vdev = AVStreams::VDev::_duplicate (vdev->_this (env));
-//  
-//   TAO_Client_StreamEndPoint *stream_endpoint_a = 
-//     new T;
-//   return AVStreams::StreamEndPoint_A::_duplicate 
-//     (stream_endpoint_a->_this (env));
-// }
-//  
-// template <class T>
-// AVStreams::StreamEndPoint_B_ptr  
-// TAO_Client_MMDevice <T>::create_B (AVStreams::StreamCtrl_ptr the_requester, 
-//                                    AVStreams::VDev_out the_vdev, 
-//                                    AVStreams::streamQoS &the_qos, 
-//                                    CORBA::Boolean_out met_qos, 
-//                                    char *&named_vdev, 
-//                                    const AVStreams::flowSpec &the_spec,  
-//                                    CORBA::Environment &env)
-// {
-//   ACE_ERROR_RETURN ((LM_ERROR, 
-//                      "(%P|%t) Cannot create a B device on the client side!\n"),
-//                     0);
-// }
-//  
-// template <class T>
-// TAO_Server_MMDevice <T>::TAO_Server_MMDevice ()
-// {
-// }
-//  
-// template <class T>
-// AVStreams::StreamEndPoint_A_ptr  
-// TAO_Server_MMDevice <T>::create_A (AVStreams::StreamCtrl_ptr the_requester, 
-//                                    AVStreams::VDev_out the_vdev, 
-//                                    AVStreams::streamQoS &the_qos, 
-//                                    CORBA::Boolean_out met_qos, 
-//                                    char *&named_vdev, 
-//                                    const AVStreams::flowSpec &the_spec,  
-//                                    CORBA::Environment &env)
-// {
-//   ACE_ERROR_RETURN ((LM_ERROR, 
-//                      "(%P|%t) Cannot create a A device on the server side!\n"),
-//                     0);
-// }
-//  
-// // We have been asked to create a new stream_endpoint and a vdev.
-// template <class T>
-// AVStreams::StreamEndPoint_B_ptr  
-// TAO_Server_MMDevice <T>::create_B (AVStreams::StreamCtrl_ptr the_requester, 
-//                                    AVStreams::VDev_out the_vdev, 
-//                                    AVStreams::streamQoS &the_qos, 
-//                                    CORBA::Boolean_out met_qos, 
-//                                    char *&named_vdev, 
-//                                    const AVStreams::flowSpec &the_spec,  
-//                                    CORBA::Environment &env)
-// {
-//   ACE_DEBUG ((LM_DEBUG, 
-//               "(%P|%t) TAO_MMDevice::create_B: called\n"));
-//  
-//   TAO_VDev *vdev = new TAO_VDev;
-//   the_vdev = AVStreams::VDev::_duplicate (vdev->_this (env));
-//  
-//   TAO_Server_StreamEndPoint *stream_endpoint_b = 
-//     new T;
-//   return AVStreams::StreamEndPoint_B::_duplicate 
-//     (stream_endpoint_b->_this (env));
-// }
 
