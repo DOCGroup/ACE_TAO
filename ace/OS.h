@@ -671,7 +671,10 @@ struct ACE_sema_t
   // Block until there are no waiters.
 
   u_long count_;
-  // Number of waiters.
+  // Count of the semaphore.
+  
+  u_long waiters_;
+  // Number of threads that have called <ACE_OS::sema_wait>.
 };
 #endif /* !ACE_HAS_POSIX_SEM */
 
