@@ -1,3 +1,9 @@
+Wed Feb 10 14:16:25 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tests/Message_Queue_Test.cpp (performance_test): initialized
+	  ACE_Message_Block **send_block to zero to prevent "uninitialized"
+	  warnings from egcs 1.1.1.
+
 Wed Feb 10 14:02:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/ACE.cpp (get_ip_interfaces): initialized struct ifreq * ifs
@@ -1189,7 +1195,7 @@ Wed Jan 20 13:38:03 1999  David L. Levine  <levine@cs.wustl.edu>
         * *.h: replaced () around #pragma implementation argument.  Thanks
           to Susan Liebeskind <susan.liebeskind@gtri.gatech.edu> and
           Steve Huston for reporting and confirming that it's necessary
-          AIX.
+          on AIX.
 
 Wed Jan 20 01:48:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -1474,7 +1480,7 @@ Sat Jan 16 13:40:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           ACE_SYNCH_RECURSIVE_THREAD_MUTEX in place of
           ACE_Recursive_Thread_Mutex to avoid problems when threads=0.
 
-     * ace/OS.cpp (lwp_getparams): For some reason we had to
+        * ace/OS.cpp (lwp_getparams): For some reason we had to
           add
 
           # if defined (ACE_HAS_STHREADS) || (defined (sun) && (ACE_MT_SAFE != 0))
@@ -1774,7 +1780,7 @@ Tue Jan 12 00:18:15 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/Event_Handler.h: Moved the priority_ and reactor_ data
           members into the private section of the class since these can
-       always be accessed via their accessor methods.  Thanks to Mike
+          always be accessed via their accessor methods.  Thanks to Mike
           Goldman <whig@by.net> for reporting this.
 
 Mon Jan 11 15:30:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
