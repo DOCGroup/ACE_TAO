@@ -368,9 +368,7 @@ libACE_la_LDFLAGS = $(X_LIBS) \
 # We also add any X libraries to the list.
 libACE_la_LIBADD = $(X_PRE_LIBS) $(ACE_XLIBS) $(X_EXTRA_LIBS)
 
-## These are source files that are needed by the header files if the
-## ACE_TEMPLATES_REQUIRE_SOURCE or ACE_TEMPLATES_REQUIRE_PRAGMA
-## macro is defined.
+## These are template source files.
 ACE_TEMPLATE_FILES = \
         Acceptor.cpp \
         Active_Map_Manager_T.cpp \
@@ -415,12 +413,6 @@ ACE_TEMPLATE_FILES = \
         Timer_Wheel_T.cpp \
         Typed_SV_Message.cpp \
         Typed_SV_Message_Queue.cpp
-
-if TEMPLATES_REQUIRE_SOURCE
-TEMPLATE_FILES = $(ACE_TEMPLATE_FILES)
-else
-TEMPLATE_FILES = 
-endif
 
 ## It would be good to remove pkgincludedir.  However, we want to install
 ## headers in "$(prefix)/ace" not "$(prefix)/ACE" because the source files
@@ -814,8 +806,8 @@ pkginclude_HEADERS = \
         iosfwd.h \
         streams.h \
         ws2tcpip.h \
-        $(TEMPLATE_FILES)
-## Make sure config.h and $(TEMPLATE_FILES) are in the above header list!
+        $(ACE_TEMPLATE_FILES)
+## Make sure config.h and $(ACE_TEMPLATE_FILES) are in the above header list!
 
 ## Make sure the following get into the distribution
 EXTRA_DIST = $(ACE_TEMPLATE_FILES)
