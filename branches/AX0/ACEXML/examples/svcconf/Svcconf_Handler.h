@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef ACEXML_SAXPRINT_HANDLER_H
-#define ACEXML_SAXPRINT_HANDLER_H
+#ifndef ACEXML_SVCCONF_HANDLER_H
+#define ACEXML_SVCCONF_HANDLER_H
 
 #include "common/DefaultHandler.h"
 
@@ -302,4 +302,4 @@ private:
 #if defined (__ACEXML_INLINE__)
 # include "Svcconf_Handler.i"
 #endif /* __ACEXML_INLINE__ */
-#endif /* ACEXML_SAXPRINT_HANDLER_H */
+#endif /* ACEXML_SVCCONF_HANDLER_H */
