@@ -1,111 +1,145 @@
+Wed Aug  1 16:05:49 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Merged changes from the fix_886 branch
+
+        Tue Jul 31 09:17:49 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Intrusive_List.h:
+        * ace/Intrusive_List.inl:
+          Add new methods to access the head and tail of the list.
+
+        * ace/Intrusive_List.cpp:
+          Fixed the implementation of remove(), if the element to be
+          removed was the last on the list it wasn't removed at all.
+          Left some code to check invariants, have to find a way to keep
+          that code around with some optional compilation flags.
+
+        Thu Jul 26 16:50:54 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Makefile:
+        * ace/Makefile.am:
+        * ace/Makefile.bor:
+        * ace/Intrusive_List.h:
+        * ace/Intrusive_List.inl:
+        * ace/Intrusive_List.cpp:
+          Add new template to implement intrusive lists, i.e. lists that
+          assume their elements implement the next() and prev() methods.
+
+        * ace/Intrusive_List_Node.h:
+        * ace/Intrusive_List_Node.inl:
+        * ace/Intrusive_List_Node.cpp:
+          Helper class to add the requirements of ACE_Intrusive_List to
+          any other class, simply do:
+          class Foo : public ACE_Intrusive_List_Node<Foo>
+
 Wed Aug  1 15:57:35 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Message_Block.cpp (release, release_i):
+        * ace/Message_Block.cpp (release, release_i):
 
-	  Obtain the pointer to the allocator from the object that will be
-	  destroyed before calling ACE_DES_FREE on the object.  Previously
-	  we were obtaining the allocator after the object was destroyed,
-	  due to the way the ACE_DES_FREE macro works.  Thanks to Hyman
-	  Rosen <hyrosen@mail.com> for reporting the problem, and to
-	  Carlos for suggesting a fix.  [Bug 992]
+          Obtain the pointer to the allocator from the object that will be
+          destroyed before calling ACE_DES_FREE on the object.  Previously
+          we were obtaining the allocator after the object was destroyed,
+          due to the way the ACE_DES_FREE macro works.  Thanks to Hyman
+          Rosen <hyrosen@mail.com> for reporting the problem, and to
+          Carlos for suggesting a fix.  [Bug 992]
 
 Wed Aug  1 15:00:21 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Log_Record.{h,i}: Changed msg_data_len() from a "setter"
-	  to a "getter" method, which makes more sense.  Thanks to Patrick
- 	  Rabau <Patrick.Rabau@htc.com> for reporting this.
+        * ace/Log_Record.{h,i}: Changed msg_data_len() from a "setter"
+          to a "getter" method, which makes more sense.  Thanks to Patrick
+          Rabau <Patrick.Rabau@htc.com> for reporting this.
 
 Wed Aug  1 12:43:57 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_l.cpp:
 
-	  Reintegreated Nanbor's change (Wed Jun 13 10:22:10 2001  Nanbor
-	  Wang  <nanbor@cs.wustl.edu>) that enables proper handling of
-	  UNICODE Service Configurator directives.
+          Reintegreated Nanbor's change (Wed Jun 13 10:22:10 2001  Nanbor
+          Wang  <nanbor@cs.wustl.edu>) that enables proper handling of
+          UNICODE Service Configurator directives.
 
 Wed Aug  1 07:14:42 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* include/makeinclude/platform_vxworks5.x_g++.GNU: Checked in a new
-	  version of this file, which includes support for the Hitachi
- 	  chip.  Thanks to Frank Wolf for this.
+        * include/makeinclude/platform_vxworks5.x_g++.GNU: Checked in a new
+          version of this file, which includes support for the Hitachi
+          chip.  Thanks to Frank Wolf for this.
 
-	* ace/Log_Record.cpp (format_msg): Added a cast to fix a warning.
-	  Thanks to Bala for reporting this.
+        * ace/Log_Record.cpp (format_msg): Added a cast to fix a warning.
+          Thanks to Bala for reporting this.
 
 Tue Jul 31 22:53:26 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/libService_Config_DLL.icc:
+        * tests/libService_Config_DLL.icc:
 
-	  New Visual Age project file for the libService_Config_DLL
-	  library.
+          New Visual Age project file for the libService_Config_DLL
+          library.
 
-	* tests/Makefile.am:
+        * tests/Makefile.am:
 
-	  Added build targets/dependencies for the libService_Config_DLL
-	  library.
+          Added build targets/dependencies for the libService_Config_DLL
+          library.
 
 Tue Jul 31 22:46:33 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Service_Config_DLL.dsp:
-	* tests/Service_Config_Test.dsp:
+        * tests/Service_Config_DLL.dsp:
+        * tests/Service_Config_Test.dsp:
 
-	  Removed the static library configurations.  The
-	  Service_Config_Test currently requires dynamically loadable
-	  objects.  Fixes Win32 "LIB" build failures.
+          Removed the static library configurations.  The
+          Service_Config_Test currently requires dynamically loadable
+          objects.  Fixes Win32 "LIB" build failures.
 
 Tue Jul 31 22:10:48 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Service_Config_Test.cpp (run_test):
+        * tests/Service_Config_Test.cpp (run_test):
 
-	  Wrap strings passed to ACE_ARGV::add() within an ACE_TEXT
-	  macro.  Fixes Unicode conversion problems.
+          Wrap strings passed to ACE_ARGV::add() within an ACE_TEXT
+          macro.  Fixes Unicode conversion problems.
 
 Tue Jul 31 16:53:57 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Svc_Conf.h (ace_yyrestart, ace_yy_delete_parse_buffer,
-	  ace_yydirective):
+        * ace/Svc_Conf.h (ace_yyrestart, ace_yy_delete_parse_buffer,
+          ace_yydirective):
 
-	  Remove these global function and variable declarations.  They
-	  are no longer used.
+          Remove these global function and variable declarations.  They
+          are no longer used.
 
 Tue Jul 31 16:43:33 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Basic_Types.h:
+        * ace/Basic_Types.h:
 
-	  If "__LITTLE_ENDIAN__" is defined then assume that the
-	  architecture is little endian.  Some compilers/platforms define
-	  that macro.  Suggested by Frank Wolf" <fwolf@gum.de>.
+          If "__LITTLE_ENDIAN__" is defined then assume that the
+          architecture is little endian.  Some compilers/platforms define
+          that macro.  Suggested by Frank Wolf" <fwolf@gum.de>.
 
-	* ace/Svc_Conf.h (yy_push_buffer):
-	* ace/Svc_Conf.l (yy_push_buffer):
-	* ace/Svc_Conf_l.cpp (ace_yy_push_buffer):
-	* ace/Svc_Conf_Lexer_Guard.cpp (ACE_Svc_Conf_Lexer_Guard):
-	* ace/Svc_Conf_Lexer_Guard.h (ACE_Svc_Conf_Lexer_Guard):
+        * ace/Svc_Conf.h (yy_push_buffer):
+        * ace/Svc_Conf.l (yy_push_buffer):
+        * ace/Svc_Conf_l.cpp (ace_yy_push_buffer):
+        * ace/Svc_Conf_Lexer_Guard.cpp (ACE_Svc_Conf_Lexer_Guard):
+        * ace/Svc_Conf_Lexer_Guard.h (ACE_Svc_Conf_Lexer_Guard):
 
-	  The Service Configurator directive is an "ACE_TCHAR *" not a
-	  "char *".  Updated these method/function parameters to accept
-	  the former.  Fixes a compile-time problem on "wchar/Unicode"
-	  builds.
+          The Service Configurator directive is an "ACE_TCHAR *" not a
+          "char *".  Updated these method/function parameters to accept
+          the former.  Fixes a compile-time problem on "wchar/Unicode"
+          builds.
 
 Tue Jul 31 05:34:48 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/OS.h: Removed a spurious WNOHANG definition.  Thanks to
-	  Christina Junru <junruli@lucent.com> for reporting this.
+        * ace/OS.h: Removed a spurious WNOHANG definition.  Thanks to
+          Christina Junru <junruli@lucent.com> for reporting this.
 
 Mon Jul 30 15:31:42 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Log_Msg.{h,i,cpp}: Fixed this class so that all of its fields
-	  are ACE_UINT32 or ACE_INT32 internally so that it'll always be
- 	  the same on all platforms.  Thanks to Fabris
- 	  <fabris65@my-deja.com> for reporting this.
+        * ace/Log_Msg.{h,i,cpp}: Fixed this class so that all of its fields
+          are ACE_UINT32 or ACE_INT32 internally so that it'll always be
+          the same on all platforms.  Thanks to Fabris
+          <fabris65@my-deja.com> for reporting this.
 
 Tue Jul 31 10:22:38 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Makefile:
+        * tests/Makefile:
 
-	  Only build the Service_Config_Test if shared libraries are
-	  enabled, since it attempts to dynamically load a shared
-	  library.
+          Only build the Service_Config_Test if shared libraries are
+          enabled, since it attempts to dynamically load a shared
+          library.
 
 Tue Jul 31 10:16:31 2001  Steve Huston  <shuston@riverace.com>
 
@@ -115,266 +149,266 @@ Tue Jul 31 10:16:31 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Jul 30 13:41:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (ACE_Time_Value::FILETIME_to_timval_skew): Updated
-	  docuementation to better explain the meaning of this constant.
-  	  Thanks to Mike Vitalo <mvitalo@sprynet.com> for motivating the
- 	  change.
+        * ace/OS.cpp (ACE_Time_Value::FILETIME_to_timval_skew): Updated
+          docuementation to better explain the meaning of this constant.
+          Thanks to Mike Vitalo <mvitalo@sprynet.com> for motivating the
+          change.
 
 Mon Jul 30 09:43:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS.i (mutex_lock): Missing an argument to the ACE_OSCALL macro.
-	  Thanks to Bala for reporting this.
+        * ace/OS.i (mutex_lock): Missing an argument to the ACE_OSCALL macro.
+          Thanks to Bala for reporting this.
 
 Mon Jul 30 05:43:23 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Synch.h (ACE_Semaphore): Corrected the comment on
-	  how to get POSIX Pthreads "implementation" of semaphores (which
- 	  supports the timed acquire() option).  Thanks to Grzegorz
- 	  Sikora <GSikora1@era.pl> for reporting this.
+        * ace/Synch.h (ACE_Semaphore): Corrected the comment on
+          how to get POSIX Pthreads "implementation" of semaphores (which
+          supports the timed acquire() option).  Thanks to Grzegorz
+          Sikora <GSikora1@era.pl> for reporting this.
 
 Sun Jul 29 19:03:56 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* tests/Thread_Mutex_Test.cpp (test): Fixed this test to be
-	  consistent wrt the errno for the timed acquire(), which should
- 	  now always be set to ETIME rather than ETIMEDOUT and EBUSY.
+        * tests/Thread_Mutex_Test.cpp (test): Fixed this test to be
+          consistent wrt the errno for the timed acquire(), which should
+          now always be set to ETIME rather than ETIMEDOUT and EBUSY.
 
-	* ace/Message_Queue_T.cpp (wait_not_full_cond,
-	  wait_not_empty_cond): Fixed a nasty bug with the semaphore
- 	  version of ACE_Message_Queue that would have reared it's ugly
- 	  head if ACE_NULL_SYNCH were used when
- 	  ACE_HAS_OPTIMIZED_MESSAGE_QUEUE was enabled.  Fixing this bug
- 	  also triggered the following changes.
+        * ace/Message_Queue_T.cpp (wait_not_full_cond,
+          wait_not_empty_cond): Fixed a nasty bug with the semaphore
+          version of ACE_Message_Queue that would have reared it's ugly
+          head if ACE_NULL_SYNCH were used when
+          ACE_HAS_OPTIMIZED_MESSAGE_QUEUE was enabled.  Fixing this bug
+          also triggered the following changes.
 
-	* ace/OS.{h,i}: Added support for ACE_OS::sema_wait(),
-	  ACE_OS::mutex_lock(), ACE_OS::thread_mutex_lock() that take
- 	  ACE_Time_Value *.
+        * ace/OS.{h,i}: Added support for ACE_OS::sema_wait(),
+          ACE_OS::mutex_lock(), ACE_OS::thread_mutex_lock() that take
+          ACE_Time_Value *.
 
-	* ace/OS.i: For some odd reason the timeouts for the timed version
-	  of mutex_lock() were returning a random smattering of errnos.
-  	  I've changed them to all be consistent with the
- 	  ACE_Condition_Thread_Mutex::wait() errno, which is ETIME.
+        * ace/OS.i: For some odd reason the timeouts for the timed version
+          of mutex_lock() were returning a random smattering of errnos.
+          I've changed them to all be consistent with the
+          ACE_Condition_Thread_Mutex::wait() errno, which is ETIME.
 
-	* ace/Synch.h: Updated the documentation of all the timed
-	  acquire() methods to explain what the various return values
- 	  mean.
+        * ace/Synch.h: Updated the documentation of all the timed
+          acquire() methods to explain what the various return values
+          mean.
 
 Sun Jul 29 22:10:40 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Service_Config_DLL.cpp:
-	* tests/Service_Config_DLL.h:
-	* tests/Service_Config_DLL.dsp:
-	* tests/Service_Config_DLL_Export.h:
-	* tests/Service_Config_Test.conf:
+        * tests/Service_Config_DLL.cpp:
+        * tests/Service_Config_DLL.h:
+        * tests/Service_Config_DLL.dsp:
+        * tests/Service_Config_DLL_Export.h:
+        * tests/Service_Config_Test.conf:
 
-	  New files associated with the existing Service_Config_Test.
-	  They are used when testing the reentrance/thread-safety of the
-	  Service Configurator, in addition to testing the Service
-	  Configurator's ability to handle nested processing of Service
-	  Configurator directives.
+          New files associated with the existing Service_Config_Test.
+          They are used when testing the reentrance/thread-safety of the
+          Service Configurator, in addition to testing the Service
+          Configurator's ability to handle nested processing of Service
+          Configurator directives.
 
-	* tests/Service_Config_Test.cpp (run_test):
+        * tests/Service_Config_Test.cpp (run_test):
 
-	  Add arguments to the Service Configurator argument vector to
-	  make it process the newly added `Service_Config_Test.conf'
-	  file.
+          Add arguments to the Service Configurator argument vector to
+          make it process the newly added `Service_Config_Test.conf'
+          file.
 
-	  (main):
+          (main):
 
-	  Make the ACE_Thread_Manager wait for all running threads before
-	  exiting the test.  Processing the `Service_Config_Test.conf'
-	  file causes some threads to be spawned.
+          Make the ACE_Thread_Manager wait for all running threads before
+          exiting the test.  Processing the `Service_Config_Test.conf'
+          file causes some threads to be spawned.
 
 Sun Jul 29 19:19:20 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Service_Config.cpp (process_directive, process_directives):
+        * ace/Service_Config.cpp (process_directive, process_directives):
 
-	  Wrap the ACE_GUARD_RETURN macro within an ACE_MT block.  The
-	  ACE_Static_Object_Lock declaration is only visible if
-	  ACE_HAS_THREADS is defined.  This truly fixes the
-	  single-threaded build problems.
+          Wrap the ACE_GUARD_RETURN macro within an ACE_MT block.  The
+          ACE_Static_Object_Lock declaration is only visible if
+          ACE_HAS_THREADS is defined.  This truly fixes the
+          single-threaded build problems.
 
 Sun Jul 29 19:06:11 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Svc_Conf.y (ace_obstack):
-	* ace/Svc_Conf_y.cpp:
-	* ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf.y (ace_obstack):
+        * ace/Svc_Conf_y.cpp:
+        * ace/Svc_Conf_l.cpp:
 
-	  UNICODE updates and fixes.
+          UNICODE updates and fixes.
 
 Sun Jul 29 10:50:45 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Svc_Conf_Lexer_Guard.cpp:
+        * ace/Svc_Conf_Lexer_Guard.cpp:
 
-	  There is no longer any need to include "ace/Object_Manager.h"
+          There is no longer any need to include "ace/Object_Manager.h"
 
-	* ace/Service_Config.cpp:
+        * ace/Service_Config.cpp:
 
-	  Include "ace/Object_Manager.h" to pull in the definition of
-	  ACE_Static_Object_Lock.  Fixes a problem found in Sun builds and
-	  single-threaded builds.
+          Include "ace/Object_Manager.h" to pull in the definition of
+          ACE_Static_Object_Lock.  Fixes a problem found in Sun builds and
+          single-threaded builds.
 
 Sat Jul 28 23:03:24 2001  Ossama Othman  <ossama@uci.edu>
 
-	The following are changes that make the Service Configurator
-	reentrant and thread-safe.
+        The following are changes that make the Service Configurator
+        reentrant and thread-safe.
 
-	* ace/Svc_Conf.y:
+        * ace/Svc_Conf.y:
 
-	  Generate a pure (reentrant) parser using Bison.  BYACC doesn't
-	  support generation of reentrant parsers.
+          Generate a pure (reentrant) parser using Bison.  BYACC doesn't
+          support generation of reentrant parsers.
 
-	* ace/Svc_Conf.l:
+        * ace/Svc_Conf.l:
 
-	  Implemented "buffer stack" support.  This feature makes it
-	  possible to process Service Configurator directives within a
-	  Service Object's init() method, i.e. support nested directive
-	  processing.
+          Implemented "buffer stack" support.  This feature makes it
+          possible to process Service Configurator directives within a
+          Service Object's init() method, i.e. support nested directive
+          processing.
 
-	  (ace_yyerrno):
+          (ace_yyerrno):
 
-	  Moved declaration of ace_yyerrno from this file to
-	  `Svc_Conf.y'.  ace_yyerrno was not used in the generated
-	  scanner.  It was only used in the generated parser.
+          Moved declaration of ace_yyerrno from this file to
+          `Svc_Conf.y'.  ace_yyerrno was not used in the generated
+          scanner.  It was only used in the generated parser.
 
-	  (yy_delete_parse_buffer):
+          (yy_delete_parse_buffer):
 
-	  There is no longer any need for this function.  The lexer buffer
-	  stack implementation handles memory management of lexer buffers.
+          There is no longer any need for this function.  The lexer buffer
+          stack implementation handles memory management of lexer buffers.
 
-	  (yywrap):
+          (yywrap):
 
-	  Do not call yy_delete_parse_buffer().  It is no longer necessary
-	  to do so, in addition to the fact that that function was
-	  removed (as described above).
+          Do not call yy_delete_parse_buffer().  It is no longer necessary
+          to do so, in addition to the fact that that function was
+          removed (as described above).
 
-	  (<<EOF>>):
+          (<<EOF>>):
 
-	  Do not call ACE_YY_NEW_FILE in this rule.  The new buffer stack
-	  implementation handles the buffer switching that ACE_YY_NEW_FILE
-	  did, and more.
+          Do not call ACE_YY_NEW_FILE in this rule.  The new buffer stack
+          implementation handles the buffer switching that ACE_YY_NEW_FILE
+          did, and more.
 
-	* ace/Svc_Conf_Tokens.h:
-	* ace/Svc_Conf_l.cpp:
-	* ace/Svc_Conf_y.cpp:
+        * ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_y.cpp:
 
-	  Regenerated these files using updated Bison/YACC and FLEX input
-	  files to pull in support for reentrant parsing and nested
-	  processing of Service Configurator directives.
+          Regenerated these files using updated Bison/YACC and FLEX input
+          files to pull in support for reentrant parsing and nested
+          processing of Service Configurator directives.
 
-	* ace/Svc_Conf.h (ace_yy_push_buffer, ace_yy_pop_buffer):
+        * ace/Svc_Conf.h (ace_yy_push_buffer, ace_yy_pop_buffer):
 
-	  Added function prototypes for the newly implemented lexer buffer
-	  stack manipulation functions.
+          Added function prototypes for the newly implemented lexer buffer
+          stack manipulation functions.
 
-	  (ace_yylex):
+          (ace_yylex):
 
-	  Added ACE_YYSTYPE parameter to this functions signature, as
-	  required by the new reentrant parser support.
+          Added ACE_YYSTYPE parameter to this functions signature, as
+          required by the new reentrant parser support.
 
-	  (ACE_SERVICE_DIRECTIVE_STACK_DEPTH):
+          (ACE_SERVICE_DIRECTIVE_STACK_DEPTH):
 
-	  New symbolic constant that defines the maximum supported depth
-	  for nested Service Configurator processing.  The current default
-	  is 8.
+          New symbolic constant that defines the maximum supported depth
+          for nested Service Configurator processing.  The current default
+          is 8.
 
-	  (ACE_YY_INPUT):
+          (ACE_YY_INPUT):
 
-	  No longer any need to redefine this macro to support scanning of
-	  Service Configurator directive strings.  The new lexer buffer
-	  stack implementation provides support for lexer buffer scanning
-	  from a string instead of a pointer to "FILE."
+          No longer any need to redefine this macro to support scanning of
+          Service Configurator directive strings.  The new lexer buffer
+          stack implementation provides support for lexer buffer scanning
+          from a string instead of a pointer to "FILE."
 
-	  (ace_yydirective):
+          (ace_yydirective):
 
-	  This global variable is no longer needed due to the fact that
-	  the new buffer stack implementation handles directives read from
-	  both a string and a file.
+          This global variable is no longer needed due to the fact that
+          the new buffer stack implementation handles directives read from
+          both a string and a file.
 
-	* ace/Service_Config.cpp:
+        * ace/Service_Config.cpp:
 
-	  (process_directive, process_directives):
+          (process_directive, process_directives):
 
-	  Obtain a recursive lock before manipulating the lexer buffer
-	  stack, and invoking the parser and scanner.  This makes
-	  invocation of the scanner thread-safe.
+          Obtain a recursive lock before manipulating the lexer buffer
+          stack, and invoking the parser and scanner.  This makes
+          invocation of the scanner thread-safe.
 
-	  The new lexer buffer stack implemenation obviates the need to
-	  call yyrestart() since buffer switching is handled by the stack
-	  implementation.
+          The new lexer buffer stack implemenation obviates the need to
+          call yyrestart() since buffer switching is handled by the stack
+          implementation.
 
-	  (open_i, close):
+          (open_i, close):
 
-	  No need to deallocate the lexer buffer since the buffer stack
-	  implementation handles that.
+          No need to deallocate the lexer buffer since the buffer stack
+          implementation handles that.
 
-	* ace/Svc_Conf_Lexer_Guard.h:
-	* ace/Svc_Conf_Lexer_Guard.cpp:
+        * ace/Svc_Conf_Lexer_Guard.h:
+        * ace/Svc_Conf_Lexer_Guard.cpp:
 
-	  New "guard" class that makes lexer buffer stack pushing and
-	  popping exception-safe.
+          New "guard" class that makes lexer buffer stack pushing and
+          popping exception-safe.
 
-	* ace/Makefile:
-	* ace/Makefile.am:
-	* ace/Makefile.bor:
-	* ace/ace.icc:
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
+        * ace/Makefile:
+        * ace/Makefile.am:
+        * ace/Makefile.bor:
+        * ace/ace.icc:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
 
-	  Added Svc_Conf_Lexer_Guard.* sources to these Makefiles and
-	  project files.
+          Added Svc_Conf_Lexer_Guard.* sources to these Makefiles and
+          project files.
 
 Sat Jul 28 14:58:30 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Svc_Conf_l.cpp:
-  	* ace/Svc_Conf_y.cpp: Reran BYACC and FLEX on the Svc_Conf.l and
-	  Svc_Conf.y files to regenerate them.  Thanks to Bala for
-	  motivating this.
+        * ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_y.cpp: Reran BYACC and FLEX on the Svc_Conf.l and
+          Svc_Conf.y files to regenerate them.  Thanks to Bala for
+          motivating this.
 
-	* netsvcs/clients/Tokens/collection/Makefile,
-	  netsvcs/clients/Tokens/deadlock/Makefile,
-	  netsvcs/clients/Tokens/invariant/Makefile,
-	  netsvcs/clients/Tokens/mutex/Makefile,
-	  netsvcs/clients/Tokens/rw_lock/Makefile,
-	  examples/ASX/CCM_App/Makefile,
-	  examples/Logger/Acceptor-server/Makefile,
-	  examples/Reactor/Multicast/Makefile,
-	  examples/Reactor/Ntalker/Makefile,
-	  examples/Shared_Malloc/Makefile,
-	  performance-tests/TCP/Makefile,
-	  performance-tests/UDP/Makefile: Removed the line
-	  include $(ACE_ROOT)/include/makeinclude/rules.LIB.GNU
-	  so that these projects will build correctly on VxWorks with
-	  Make 3.79.1.  Thanks to Frank Wolf for reporting this.
+        * netsvcs/clients/Tokens/collection/Makefile,
+          netsvcs/clients/Tokens/deadlock/Makefile,
+          netsvcs/clients/Tokens/invariant/Makefile,
+          netsvcs/clients/Tokens/mutex/Makefile,
+          netsvcs/clients/Tokens/rw_lock/Makefile,
+          examples/ASX/CCM_App/Makefile,
+          examples/Logger/Acceptor-server/Makefile,
+          examples/Reactor/Multicast/Makefile,
+          examples/Reactor/Ntalker/Makefile,
+          examples/Shared_Malloc/Makefile,
+          performance-tests/TCP/Makefile,
+          performance-tests/UDP/Makefile: Removed the line
+          include $(ACE_ROOT)/include/makeinclude/rules.LIB.GNU
+          so that these projects will build correctly on VxWorks with
+          Make 3.79.1.  Thanks to Frank Wolf for reporting this.
 
 Fri Jul 27 11:24:50 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Svc_Conf.y: Allow quoted strings as the pathname.  Thanks
-	  to Kevin Burge <kcburge@systemware-inc.com> for suggesting this
- 	  and providing the fix.
+        * ace/Svc_Conf.y: Allow quoted strings as the pathname.  Thanks
+          to Kevin Burge <kcburge@systemware-inc.com> for suggesting this
+          and providing the fix.
 
-	* ace/Svc_Conf.l: Added support for "~" in pathnames to support
-	  Win32isms.  Thanks to Kevin Burge <kcburge@systemware-inc.com>
- 	  for suggesting this and providing the fix.
+        * ace/Svc_Conf.l: Added support for "~" in pathnames to support
+          Win32isms.  Thanks to Kevin Burge <kcburge@systemware-inc.com>
+          for suggesting this and providing the fix.
 
-	* ace/Refcounted_Auto_Ptr.i (assign): Fixed the code to avoid a
-	  race condition.  Thanks to Charlie Duke for this fix.
+        * ace/Refcounted_Auto_Ptr.i (assign): Fixed the code to avoid a
+          race condition.  Thanks to Charlie Duke for this fix.
 
 Thu Jul 26 08:15:36 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* include/makeinclude/platform_vxworks5.x_g++.GNU: Changed
-	  $PATH to $(PATH).  Thanks to Frank Wolf for reporting this.
+        * include/makeinclude/platform_vxworks5.x_g++.GNU: Changed
+          $PATH to $(PATH).  Thanks to Frank Wolf for reporting this.
 
 Wed Jul 25 17:46:58 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Asynch_Acceptor.{h,cpp}: Added an asynch_accept() accessor
-	  method.  Thanks to Craig L. Ching <cching@mqsoftware.com> for
- 	  reporting this.
+        * ace/Asynch_Acceptor.{h,cpp}: Added an asynch_accept() accessor
+          method.  Thanks to Craig L. Ching <cching@mqsoftware.com> for
+          reporting this.
 
 Wed Jul 25 17:36:09 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Refcounted_Auto_Ptr.i: Added a lock for the reference count
-	  to the assign() method.  Thanks to Charlie Duke
- 	  <cduke@cuseeme.com> for reporting this.
+        * ace/Refcounted_Auto_Ptr.i: Added a lock for the reference count
+          to the assign() method.  Thanks to Charlie Duke
+          <cduke@cuseeme.com> for reporting this.
 
 Fri Jul 27 23:17:31 2001  Steve Huston  <shuston@riverace.com>
 
@@ -393,8 +427,8 @@ Fri Jul 27 23:17:31 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Jul 27 21:52:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Added the IDL_Cubut test with GIOP Lite
-	  script, to our daily builds.
+        * bin/auto_run_tests.lst: Added the IDL_Cubut test with GIOP Lite
+          script, to our daily builds.
 
 Fri Jul 27 16:50:49 2001  Steve Huston  <shuston@riverace.com>
 
