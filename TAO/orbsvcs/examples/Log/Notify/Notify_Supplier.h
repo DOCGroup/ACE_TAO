@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  An example of using the Notify_Logging_Service.
- *  
+ *
  *
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
@@ -17,10 +17,10 @@
 #ifndef NOTIFY_SUPPLIER_H
 #define NOTIFY_SUPPLIER_H
 
-#include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/DsNotifyLogAdminC.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/CosNotifyCommS.h"
+#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/orbsvcs/DsNotifyLogAdminC.h"
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/orbsvcs/CosNotifyCommS.h"
 
 
 class Filter_StructuredPushSupplier;
@@ -29,7 +29,7 @@ class Filter_StructuredPushSupplier;
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class Supplier 
+class Supplier
 {
   // = TITLE
   //   Simple supplier object
