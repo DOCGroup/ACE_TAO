@@ -238,7 +238,7 @@ $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_TARGET.GNU' \
 <ol>
   <li><code>cd build/SunOS5_g++</code>
   <li><code>export ACE_ROOT=`pwd`;
-    export LD_LIBRARY_PATH=`pwd`/ace:$LD_LIBRARY_PATH</code>
+    export LD_LIBRARY_PATH=`pwd`/ace:`pwd`/lib:$LD_LIBRARY_PATH</code>
   <li><code>(cd ace; make && cd ../tests; make && cd ../TAO; make) &gt;
     make.log</code>
   <li><code>cd ../vxworks</code>
