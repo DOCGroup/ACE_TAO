@@ -1,17 +1,23 @@
 ##  Process this file with automake to create Makefile.in
+##
+## $Id$
+##
 
-ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
-TAO_ROOT = $(top_srcdir)
+ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
+TAO_ROOT = $(top_srcdir)
 
-## Makefile.LoadManager.am 
+bin_PROGRAMS =
+
+## Makefile.LoadManager.am
 
 if BUILD_AMI
+if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
 if !BUILD_MINIMUM_CORBA
 
-bin_PROGRAMS = LoadManager
+bin_PROGRAMS += LoadManager
 
 LoadManager_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -42,11 +48,13 @@ LoadManager_LDADD = \
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_INTERCEPTORS
+endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
-## Makefile.LoadMonitor.am 
+## Makefile.LoadMonitor.am
 
 if BUILD_AMI
+if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
 if !BUILD_MINIMUM_CORBA
 
@@ -84,10 +92,13 @@ LoadMonitor_LDADD = \
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_INTERCEPTORS
+endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB

@@ -1,15 +1,20 @@
 ##  Process this file with automake to create Makefile.in
+##
+## $Id$
+##
 
-ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
-TAO_ROOT = $(top_srcdir)
+ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
+TAO_ROOT = $(top_srcdir)
 
-## Makefile.Notify_Logging_Service.am 
+bin_PROGRAMS =
+
+## Makefile.Notify_Logging_Service.am
 
 if !BUILD_MINIMUM_CORBA
 
-bin_PROGRAMS = Notify_Logging_Service
+bin_PROGRAMS += Notify_Logging_Service
 
 Notify_Logging_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \

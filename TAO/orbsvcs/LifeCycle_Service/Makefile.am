@@ -1,15 +1,20 @@
 ##  Process this file with automake to create Makefile.in
+##
+## $Id$
+##
 
-ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
-TAO_ROOT = $(top_srcdir)
+ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
+TAO_ROOT = $(top_srcdir)
 
-## Makefile.LifeCycle_Service.am 
+bin_PROGRAMS =
+
+## Makefile.LifeCycle_Service.am
 
 if !BUILD_MINIMUM_CORBA
 
-bin_PROGRAMS = LifeCycle_Service
+bin_PROGRAMS += LifeCycle_Service
 
 LifeCycle_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -30,6 +35,7 @@ LifeCycle_Service_SOURCES = \
   LifeCycle_Service_i.h
 
 LifeCycle_Service_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
@@ -45,6 +51,8 @@ endif !BUILD_MINIMUM_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB
