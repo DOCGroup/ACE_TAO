@@ -150,8 +150,6 @@ CC_Client::run (void)
 int
 CC_Client::run_basic_tests (void)
 {
-  int success = CC_FAIL;
-
   Test_Single_Lock_With_Mode t1 (naming_service_,
                                  CosConcurrencyControl::read);
   Test_Single_Lock_With_Mode t2 (naming_service_,
@@ -175,7 +173,6 @@ CC_Client::run_basic_tests (void)
 int 
 CC_Client::run_extended_tests (char *params)
 {
-  char *test;
   int success = CC_FAIL;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -331,11 +328,3 @@ main (int argc, char **argv)
       return cc_client.run ();
     }
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Env_Value<unsigned long>;
-template class ACE_Env_Value<unsigned short>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Env_Value<unsigned long>
-#pragma instantiate ACE_Env_Value<unsigned short>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

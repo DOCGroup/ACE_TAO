@@ -594,9 +594,6 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
 {
   CORBA::Boolean continue_skipping = CORBA::B_TRUE;
   TAO_InputCDR *stream = (TAO_InputCDR *) context;
-  // Return status.
-  CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;
   // Typecode of the element.
   CORBA::TypeCode_ptr tc2;
   // Size of element.
@@ -644,10 +641,6 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
 {
   CORBA::Boolean continue_skipping = CORBA::B_TRUE;
   TAO_InputCDR *stream = (TAO_InputCDR *) context;
-
-  // Return status.
-  CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   // Typecode of the element.
   CORBA::TypeCode_ptr tc2;

@@ -168,8 +168,6 @@ Test_Setup_LockSet::~Test_Setup_LockSet (void)
 int 
 Test_Setup_LockSet::run (int times_to_run)
 {
-  CORBA::Boolean lock_held = CORBA::B_FALSE;
-
   TAO_TRY
     {
       CosConcurrencyControl::LockSet_ptr cc_lock_set_ =
@@ -209,8 +207,6 @@ Test_Use_Already_Created_LockSet::~Test_Use_Already_Created_LockSet (void)
 int 
 Test_Use_Already_Created_LockSet::run (int times_to_run)
 {
-  CORBA::Boolean lock_held = CORBA::B_FALSE;
-  
   TAO_TRY
     {
       CORBA::Object_var ccls_obj = 
@@ -249,8 +245,6 @@ Test_Unlock_Already_Created_LockSet::~Test_Unlock_Already_Created_LockSet (void)
 int 
 Test_Unlock_Already_Created_LockSet::run (int times_to_run)
 {
-  CORBA::Boolean lock_held = CORBA::B_FALSE;
-  
   TAO_TRY
     {
       CORBA::Object_var ccls_obj = 
