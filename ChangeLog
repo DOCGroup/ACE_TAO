@@ -1,11 +1,29 @@
+Tue Jun 10 11:09:12 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/PerlACE/Process.pm:
+
+          Added a delay_factor() function that could be used to dynamically
+          determine the delay factor for the test scripts.  Some
+          coordination is required to ensure that the delay factor and the
+          times used in run_test.pl scripts work together.
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Added code to support running tests using the cygwin perl.
+
+        * bin/create_ace_build:
+
+          Added windows support by using hard links (only with MSWin32
+          version of perl).
+
 Mon Jun  9 18:59:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* THANKS: Added Gan Deng to the hall of fame.
+        * THANKS: Added Gan Deng to the hall of fame.
 
 Mon Jun  9 13:16:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/performance_stats.sh: The sequence<> latency tests will also
-	  be  monitored on a daily basis.
+        * bin/performance_stats.sh: The sequence<> latency tests will also
+          be  monitored on a daily basis.
 
 Mon Jun  9 08:27:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -15,7 +33,7 @@ Mon Jun  9 08:27:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jun  8 22:36:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* THANKS: Added Andrew Voumard to the hall of fame.
+        * THANKS: Added Andrew Voumard to the hall of fame.
 
 Sun Jun  8 17:55:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -24,18 +42,18 @@ Sun Jun  8 17:55:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sun Jun  8 10:52:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/PerlACE/Process.pm:
-	* bin/PerlACE/Process_Win32.pm:
-	* bin/PerlACE/Process_Unix.pm: Moved the Normalize_Executable_Name
-	  method to platform specific implementation files.  The original
-	  implementation in Process.pm was Win32 specific.
+        * bin/PerlACE/Process.pm:
+        * bin/PerlACE/Process_Win32.pm:
+        * bin/PerlACE/Process_Unix.pm: Moved the Normalize_Executable_Name
+          method to platform specific implementation files.  The original
+          implementation in Process.pm was Win32 specific.
 
 Sat Jun  7 11:12:16 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.h: Added a
-	  #include for "ace/Atomic_Op.h" to solve a compilation problem.
-  	  Thanks to Nick Kukuczka <nickk@appliedepi.com> for reporting
- 	  this.
+        * performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.h: Added a
+          #include for "ace/Atomic_Op.h" to solve a compilation problem.
+          Thanks to Nick Kukuczka <nickk@appliedepi.com> for reporting
+          this.
 
 Fri Jun  6 09:31:21 2003  Chad Elliott  <elliott_c@ociweb.com>
 
