@@ -359,15 +359,80 @@ ACE_Mutex::dump (void) const
 // ACE_TRACE ("ACE_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
+#if defined (CHORUS)
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("lockname_ = %s\n"), this->lockname_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("process_lock_ = %x\n"), this->process_lock_));
+#endif /* CHORUS */
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, void *arg)
+#if defined (CHORUS)
+  : lock_ (0),
+    lockname_ (0)
+#endif /* CHORUS */
 {
-// ACE_TRACE ("ACE_Mutex::ACE_Mutex");
+  // ACE_TRACE ("ACE_Mutex::ACE_Mutex");
 
-  if (ACE_OS::mutex_init (&this->lock_, type, name, arg) != 0)
+#if defined(CHORUS)
+  if (type == USYNC_PROCESS) 
+    {
+      // Let's see if the shared memory entity already exists.
+      ACE_HANDLE fd = ACE_OS::shm_open (name,
+                                        O_RDWR | O_CREAT | O_EXCL,
+                                        ACE_DEFAULT_FILE_PERMS);
+      if (fd == ACE_INVALID_HANDLE) 
+        {
+          if (errno == EEXIST)
+            fd = ACE_OS::shm_open (name,
+                                   O_RDWR | O_CREAT,
+                                   ACE_DEFAULT_FILE_PERMS);
+          else 
+            return;
+        }
+      else 
+        {
+          // We own this shared memory object!  Let's set its size.
+          if (ACE_OS::ftruncate (fd,
+                                 sizeof (ACE_mutex_t)) == -1)
+            {
+              ACE_OS::close (fd);
+              return;
+            }
+          this->lockname_ = ACE_OS::strdup (name);
+          if (this->lockname_ == 0)
+            {
+              ACE_OS::close (fd);
+              return;
+            }
+        }
+
+      this->process_lock_ = 
+        (ACE_mutex_t *) ACE_OS::mmap (0,
+                                      sizeof (ACE_mutex_t),
+                                      PROT_RDWR,
+                                      MAP_SHARED,
+                                      fd,
+                                      0);
+      ACE_OS::close (fd);
+      if (this->process_lock_ == MAP_FAILED)
+        return;
+
+      if (this->lockname_
+          && ACE_OS::mutex_init (this->process_lock_,
+                                 type,
+                                 name,
+                                 arg) != 0) 
+        return;
+    }
+   // It is ok to fall through into the <mutex_init> below if the
+   // USYNC_PROCESS flag is not enabled.
+#endif /* CHORUS */
+  if (ACE_OS::mutex_init (&this->lock_, 
+                          type,
+                          name,
+                          arg) != 0)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Mutex::ACE_Mutex")));

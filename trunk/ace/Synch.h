@@ -511,6 +511,16 @@ public:
   // Declare the dynamic allocation hooks.
 
 //private:
+#if defined (CHORUS)
+  ACE_mutex_t *process_lock_;
+  // This lock resides in shared memory.
+
+  LPCTSTR lockname_; 
+  // Remember the name of the mutex if we created it so we can unlink
+  // it when we go away (only the actor that initialized the memory
+  // can destroy it).
+#endif /* CHORUS */
+
   ACE_mutex_t lock_;
   // Mutex type supported by the OS.
 

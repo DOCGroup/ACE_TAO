@@ -786,6 +786,16 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
+#if defined (CHORUS)
+  ACE_cond_t *process_cond_;
+  // This condition resides in shared memory.
+
+  LPCTSTR condname_; 
+  // Remember the name of the condition if we created it so we can
+  // unlink it when we go away (only the actor that initialized the
+  // memory can destroy it).
+#endif /* CHORUS */
+
   ACE_cond_t cond_;
   // Condition variable.
 

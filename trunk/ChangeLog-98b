@@ -1,10 +1,19 @@
 Sat Oct 10 18:30:02 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Synch_T: Added a process condition abstraction for Chorus
+ 	  that is based on a condition variable stored in shared memory.
+  	  Thanks Alberto Villarica <Alberto.Villarica.rav@nt.com> for
+ 	  this.
+
+	* ace/Synch: Added a process mutex abstraction for Chorus that is
+ 	  based on a mutex stored in shared memory.  Thanks Alberto
+ 	  Villarica <Alberto.Villarica.rav@nt.com> for this.
+
 	* ace/config-chorus.h: Updated the config file for Chorus.  Thanks
  	  Alberto Villarica <Alberto.Villarica.rav@nt.com> for this.
 
-	* ace/OS.i: Added flock support for Chorus.  Thanks Alberto
- 	  Villarica <Alberto.Villarica.rav@nt.com> for this.
+	* ace/OS.i: Added rudimentary flock support for Chorus.  Thanks
+ 	  Alberto Villarica <Alberto.Villarica.rav@nt.com> for this.
 
 	* ace/OS.i: Added exec*() support for Chorus.  Thanks Alberto
  	  Villarica <Alberto.Villarica.rav@nt.com> for this.

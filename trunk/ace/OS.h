@@ -4363,6 +4363,8 @@ public:
 
 #if defined (CHORUS)
     ACE_mutex_t *process_lock_;
+    // This is the mutex that's stored in shared memory.  It can only
+    // be destroyed by the actor that initialized it.
 #endif /* CHORUS */
   };
 

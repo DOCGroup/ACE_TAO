@@ -126,6 +126,10 @@ ACE_Condition<MUTEX>::dump (void) const
 // ACE_TRACE ("ACE_Condition<MUTEX>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+#if defined (CHORUS)
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("condname_ = %s\n"), this->condname_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("process_cond_ = %x\n"), this->process_cond_));
+#endif /* CHORUS */
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -152,11 +156,75 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
                                      int type,
                                      LPCTSTR name,
                                      void *arg)
-  : mutex_ (m)
+  :
+#if defined (CHORUS)
+    process_cond_(0),
+    condname_ (0),
+#endif /* CHORUS */
+    mutex_ (m)
 {
-// ACE_TRACE ("ACE_Condition<MUTEX>::ACE_Condition");
 
-  if (ACE_OS::cond_init (&this->cond_, type, name, arg) != 0)
+#if defined(CHORUS)
+  if (type == USYNC_PROCESS) 
+    {
+      // Let's see if the shared memory entity already exists.
+      ACE_HANDLE fd = ACE_OS::shm_open (name,
+                                        O_RDWR | O_CREAT | O_EXCL,
+                                        ACE_DEFAULT_FILE_PERMS);
+      if (fd == ACE_INVALID_HANDLE) 
+        {
+          if (errno == EEXIST)
+            fd = ACE_OS::shm_open (name,
+                                   O_RDWR | O_CREAT,
+                                   ACE_DEFAULT_FILE_PERMS);
+          else 
+            return;
+        }
+      else 
+        {
+          // We own this shared memory object!  Let's set its size.
+          if (ACE_OS::ftruncate (fd,
+                                 sizeof (ACE_mutex_t)) == -1)
+            {
+              ACE_OS::close (fd);
+              return;
+            }
+          this->condname_ = ACE_OS::strdup (name);
+          if (this->condname_ == 0)
+            {
+              ACE_OS::close (fd);
+              return;
+            }
+        }
+
+      this->process_cond_ = 
+        (ACE_mutex_t *) ACE_OS::mmap (0,
+                                      sizeof (ACE_mutex_t),
+                                      PROT_RDWR,
+                                      MAP_SHARED,
+                                      fd,
+                                      0);
+      ACE_OS::close (fd);
+      if (this->process_cond_ == MAP_FAILED)
+        return;
+
+      if (this->condname_
+          && ACE_OS::cond_init (this->process_cond_,
+                                type,
+                                name,
+                                arg) != 0) 
+        return;
+    }
+   // It is ok to fall through into the <cond_init> below if the
+   // USYNC_PROCESS flag is not enabled.
+#endif /* CHORUS */
+
+  // ACE_TRACE ("ACE_Condition<MUTEX>::ACE_Condition");
+
+  if (ACE_OS::cond_init (&this->cond_, 
+                         type,
+                         name,
+                         arg) != 0)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Condition::ACE_Condition")));
@@ -165,7 +233,7 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
 template <class MUTEX>
 ACE_Condition<MUTEX>::~ACE_Condition (void)
 {
-// ACE_TRACE ("ACE_Condition<MUTEX>::~ACE_Condition");
+  // ACE_TRACE ("ACE_Condition<MUTEX>::~ACE_Condition");
 
   if (this->remove () == -1)
     ACE_ERROR ((LM_ERROR,
@@ -176,8 +244,14 @@ ACE_Condition<MUTEX>::~ACE_Condition (void)
 template <class MUTEX> int
 ACE_Condition<MUTEX>::wait (void)
 {
-// ACE_TRACE ("ACE_Condition<MUTEX>::wait");
-  return ACE_OS::cond_wait (&this->cond_, &this->mutex_.lock_);
+  // ACE_TRACE ("ACE_Condition<MUTEX>::wait");
+#if defined (CHORUS)
+  if (this->process_cond_ != 0)
+    return ACE_OS::cond_wait (this->process_cond_,
+                              &this->mutex_.lock_);
+#endif /* CHORUS */
+  return ACE_OS::cond_wait (&this->cond_,
+                            &this->mutex_.lock_);
 }
 
 template <class MUTEX> int
@@ -188,9 +262,17 @@ ACE_Condition<MUTEX>::wait (MUTEX &mutex,
   if (abstime == 0)
     return this->wait ();
   else
-    return ACE_OS::cond_timedwait (&this->cond_,
-                                   &mutex.lock_,
-                                   (ACE_Time_Value *) abstime);
+    {
+#if defined (CHORUS)
+      if (this->process_cond_ != 0)
+        return ACE_OS::cond_timewait (this->process_cond_,
+                                      &mutex_.lock_,
+                                      (ACE_Time_Value *) abstime);
+#endif /* CHORUS */
+      return ACE_OS::cond_timedwait (&this->cond_,
+                                     &mutex.lock_,
+                                     (ACE_Time_Value *) abstime);
+    }
 }
 
 // Peform an "alertable" timed wait.  If the argument ABSTIME == 0
