@@ -79,8 +79,6 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
 
-  CORBA::Boolean hdr_status;
-
   // Tear out the service context ... we currently ignore it, but it
   // should probably be passed to each ORB service as appropriate
   // (e.g. transactions, security).
@@ -90,25 +88,40 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
   // environment.  It may be required even when using IPSEC security
   // infrastructure.
 
-  hdr_status = input.decode (TC_ServiceContextList,
-                             &this->service_info_,
-                             0,
-                             env);
+  input >> this->service_info_;
+  CORBA::Boolean hdr_status = input.good_bit ();
 
   // Get the rest of the request header ...
 
   hdr_status = hdr_status && input.read_ulong (this->request_id_);
   hdr_status = hdr_status && input.read_boolean (this->response_expected_);
+
+#if defined (TAO_COPY_OBJKEY)
+  // Actually it is not a copy, but it increases a reference count and
+  // thus allocates more memory.
   hdr_status = hdr_status && input.decode (TC_opaque,
                                            &this->object_key_,
                                            0,
                                            env);
+#else
+  // We use ad-hoc demarshalling here: there is no need to increase
+  // the reference count on the CDR message block, because this key
+  // will not outlive the request (or the message block).
+
+  CORBA::Long key_length;
+  hdr_status = hdr_status && input.read_long (key_length);
+  if (hdr_status)
+    {
+      this->object_key_.replace (key_length, key_length,
+				 (CORBA::Octet*)input.rd_ptr (),
+				 CORBA::B_FALSE);
+      input.skip_bytes (key_length);
+    }
+#endif
+
 #if !defined (TAO_COPY_OPNAME)
   CORBA::Long length;
-  hdr_status = hdr_status && input.decode (CORBA::_tc_long,
-					   &length,
-					   0,
-					   env);
+  hdr_status = hdr_status && input.read_long (length);
   if (hdr_status)
     {
       this->operation_ = input.rd_ptr ();
@@ -120,10 +133,12 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
                                            0,
                                            env);
 #endif
-  hdr_status = hdr_status && input.decode (CORBA::_tc_Principal,
-                                           &this->requesting_principal_,
-                                           0,
-                                           env);
+
+  if (hdr_status)
+    {
+      input >> this->requesting_principal_;
+      hdr_status = input.good_bit ();
+    }
 
   if (!hdr_status)
     env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));

@@ -35,6 +35,9 @@
 #if !defined (TAO_GIOP_H)
 #  define TAO_GIOP_H
 
+class TAO_Export TAO_InputCDR;
+class TAO_Export TAO_OuputCDR;
+
 // namespace TAO_IOP
 
 // Assigned Protocol/Profile tag values.  ORB protcols may be uniquely
@@ -185,6 +188,18 @@ typedef TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>
         TAO_GIOP_ServiceContextList;
 
 extern CORBA::TypeCode_ptr TC_ServiceContextList;
+
+extern TAO_Export TAO_OutputCDR&
+operator<<(TAO_OutputCDR&, const TAO_GIOP_ServiceContext&);
+
+extern TAO_Export TAO_InputCDR&
+operator>>(TAO_InputCDR&, TAO_GIOP_ServiceContext&);
+
+extern TAO_Export TAO_OutputCDR&
+operator<<(TAO_OutputCDR&, const TAO_GIOP_ServiceContextList&);
+
+extern TAO_Export TAO_InputCDR&
+operator>>(TAO_InputCDR&, TAO_GIOP_ServiceContextList&);
 
 // = Reply headers
 

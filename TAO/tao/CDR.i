@@ -614,12 +614,12 @@ TAO_InputCDR::rd_ptr (void)
 // ****************************************************************
 // TODO: Use the CORBA_* types when they become available.
 
-#if 0
 #if defined (ACE_HAS_BOOL)
 ACE_INLINE TAO_OutputCDR&
 operator<< (TAO_OutputCDR& cdr, CORBA::Boolean x)
 {
-  cdr.write_boolean (x);
+  if (cdr.good_bit ())
+    cdr.write_boolean (x);
   return cdr;
 }
 #endif /* ACE_HAS_BOOL */
@@ -627,70 +627,88 @@ operator<< (TAO_OutputCDR& cdr, CORBA::Boolean x)
 ACE_INLINE TAO_OutputCDR&
 operator<< (TAO_OutputCDR& cdr, CORBA::Octet x)
 {
-  cdr.write_octet (x);
+  if (cdr.good_bit ())
+    cdr.write_octet (x);
   return cdr;
 }
 
 ACE_INLINE TAO_OutputCDR&
 operator<< (TAO_OutputCDR& cdr, CORBA::Short x)
 {
-  cdr.write_short (x);
+  if (cdr.good_bit ())
+    cdr.write_short (x);
   return cdr;
 }
 
 ACE_INLINE TAO_OutputCDR&
 operator<< (TAO_OutputCDR& cdr, CORBA::UShort x)
 {
-  cdr.write_short (x);
+  if (cdr.good_bit ())
+    cdr.write_short (x);
   return cdr;
 }
 
 ACE_INLINE TAO_OutputCDR&
 operator<< (TAO_OutputCDR& cdr, CORBA::Long x)
 {
-  cdr.write_long (x);
+  if (cdr.good_bit ())
+    cdr.write_long (x);
   return cdr;
 }
 
 ACE_INLINE TAO_OutputCDR&
 operator<< (TAO_OutputCDR& cdr, CORBA::ULong x)
 {
-  cdr.write_long (x);
+  if (cdr.good_bit ())
+    cdr.write_long (x);
   return cdr;
 }
 
 ACE_INLINE TAO_OutputCDR&
 operator<< (TAO_OutputCDR& cdr, CORBA::LongLong x)
 {
-  cdr.write_longlong (x);
+  if (cdr.good_bit ())
+    cdr.write_longlong (x);
   return cdr;
 }
 
 ACE_INLINE TAO_OutputCDR&
 operator<< (TAO_OutputCDR& cdr, CORBA::ULongLong x)
 {
-  cdr.write_ulonglong (x);
+  if (cdr.good_bit ())
+    cdr.write_ulonglong (x);
   return cdr;
 }
 
 ACE_INLINE TAO_OutputCDR&
 operator<< (TAO_OutputCDR& cdr, CORBA::Float x)
 {
-  cdr.write_float (x);
+  if (cdr.good_bit ())
+    cdr.write_float (x);
   return cdr;
 }
 
 ACE_INLINE TAO_OutputCDR&
 operator<< (TAO_OutputCDR& cdr, CORBA::Double x)
 {
-  cdr.write_double (x);
+  if (cdr.good_bit ())
+    cdr.write_double (x);
   return cdr;
 }
 
 ACE_INLINE TAO_OutputCDR&
 operator<< (TAO_OutputCDR& cdr, CORBA::Char x)
 {
-  cdr.write_char (x);
+  if (cdr.good_bit ())
+    cdr.write_char (x);
+  return cdr;
+}
+
+ACE_INLINE TAO_OutputCDR&
+operator<< (TAO_OutputCDR& cdr, const CORBA::Char* x)
+{
+  if (cdr.good_bit ())
+    cdr.write_string (x);
   return cdr;
 }
 
@@ -698,7 +716,8 @@ operator<< (TAO_OutputCDR& cdr, CORBA::Char x)
 ACE_INLINE TAO_InputCDR&
 operator>> (TAO_InputCDR& cdr, CORBA::Boolean &x)
 {
-  cdr.read_boolean (x);
+  if (cdr.good_bit ())
+    cdr.read_boolean (x);
   return cdr;
 }
 #endif /* ACE_HAS_BOOL */
@@ -706,73 +725,90 @@ operator>> (TAO_InputCDR& cdr, CORBA::Boolean &x)
 ACE_INLINE TAO_InputCDR&
 operator>> (TAO_InputCDR& cdr, CORBA::Octet &x)
 {
-  cdr.read_octet (x);
+  if (cdr.good_bit ())
+    cdr.read_octet (x);
   return cdr;
 }
 
 ACE_INLINE TAO_InputCDR&
 operator>> (TAO_InputCDR& cdr, CORBA::Short &x)
 {
-  cdr.read_short (x);
+  if (cdr.good_bit ())
+    cdr.read_short (x);
   return cdr;
 }
 
 ACE_INLINE TAO_InputCDR&
 operator>> (TAO_InputCDR& cdr, CORBA::UShort &x)
 {
-  cdr.read_ushort (x);
+  if (cdr.good_bit ())
+    cdr.read_ushort (x);
   return cdr;
 }
 
 ACE_INLINE TAO_InputCDR&
 operator>> (TAO_InputCDR& cdr, CORBA::Long &x)
 {
-  cdr.read_long (x);
+  if (cdr.good_bit ())
+    cdr.read_long (x);
   return cdr;
 }
 
 ACE_INLINE TAO_InputCDR&
 operator>> (TAO_InputCDR& cdr, CORBA::ULong &x)
 {
-  cdr.read_ulong (x);
+  if (cdr.good_bit ())
+    cdr.read_ulong (x);
   return cdr;
 }
 
 ACE_INLINE TAO_InputCDR&
 operator>> (TAO_InputCDR& cdr, CORBA::LongLong &x)
 {
-  cdr.read_longlong (x);
+  if (cdr.good_bit ())
+    cdr.read_longlong (x);
   return cdr;
 }
 
 ACE_INLINE TAO_InputCDR&
 operator>> (TAO_InputCDR& cdr, CORBA::ULongLong &x)
 {
-  cdr.read_ulonglong (x);
+  if (cdr.good_bit ())
+    cdr.read_ulonglong (x);
   return cdr;
 }
 
 ACE_INLINE TAO_InputCDR&
 operator>> (TAO_InputCDR& cdr, CORBA::Float &x)
 {
-  cdr.read_float (x);
+  if (cdr.good_bit ())
+    cdr.read_float (x);
   return cdr;
 }
 
 ACE_INLINE TAO_InputCDR&
 operator>> (TAO_InputCDR& cdr, CORBA::Double &x)
 {
-  cdr.read_double (x);
+  if (cdr.good_bit ())
+    cdr.read_double (x);
   return cdr;
 }
 
 ACE_INLINE TAO_InputCDR&
 operator>> (TAO_InputCDR& cdr, CORBA::Char &x)
 {
-  cdr.read_char (x);
+  if (cdr.good_bit ())
+    cdr.read_char (x);
   return cdr;
 }
-#endif /* 0 */
+
+ACE_INLINE TAO_InputCDR&
+operator>> (TAO_InputCDR& cdr, CORBA::Char*&x)
+{
+  if (cdr.good_bit ())
+    cdr.read_string (x);
+  return cdr;
+}
 
 // ***************************************************************************
 // We must define these methods here because they use the "read_*" inlined

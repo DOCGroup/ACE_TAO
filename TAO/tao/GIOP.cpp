@@ -132,6 +132,52 @@ TAO_GIOP::dump_msg (const char *label,
     }
 }
 
+TAO_OutputCDR&
+operator<<(TAO_OutputCDR& cdr, const TAO_GIOP_ServiceContext& x)
+{
+  if (cdr.good_bit ())
+    {
+      cdr << x.context_id
+	  << x.context_data;
+    }
+  return cdr;
+}
+
+TAO_InputCDR&
+operator>>(TAO_InputCDR& cdr, TAO_GIOP_ServiceContext& x)
+{
+  if (cdr.good_bit ())
+    {
+      cdr >> x.context_id
+	  >> x.context_data;
+    }
+  return cdr;
+}
+
+TAO_OutputCDR&
+operator<<(TAO_OutputCDR& cdr, const TAO_GIOP_ServiceContextList& x)
+{
+  CORBA::ULong length = x.length ();
+  cdr.write_ulong (length);
+  for (CORBA::ULong i = 0; i < length && cdr.good_bit (); ++i)
+    cdr << x[i];
+  return cdr;
+}
+
+TAO_InputCDR&
+operator>>(TAO_InputCDR& cdr, TAO_GIOP_ServiceContextList& x)
+{
+  CORBA::ULong length;
+  cdr.read_ulong (length);
+  if (cdr.good_bit ())
+    {
+      x.length (length);
+      for (CORBA::ULong i = 0; i < length && cdr.good_bit (); ++i)
+	cdr >> x[i];
+    }
+  return cdr;
+}
+
 // @@ TODO: this is a good candidate for an ACE routine, even more,
 // all the code to write a Message_Block chain could be encapsulated
 // in ACE.
@@ -622,8 +668,6 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_START_ENTER);
 
-  const TAO_opaque *key;
-
   // First try to bind to the appropriate address.  We do that here
   // since we may get forwarded to a different objref in the course of
   // any given call, with new start () call each time.  It's not
@@ -645,10 +689,8 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
 
   // Determine the object key and the address to which we'll need a
   // connection.
-  ACE_INET_Addr *server_addr_p = 0;
-
-  key = &data_->profile.object_key;
-  server_addr_p = &data_->profile.object_addr ();
+  ACE_INET_Addr *server_addr_p =
+    &data_->profile.object_addr ();
 
   if (server_addr_p == 0)
     {
@@ -735,30 +777,15 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   static CORBA::Principal_ptr anybody = 0;
   static TAO_GIOP_ServiceContextList svc_ctx;   // all zeroes
 
-  if (this->out_stream_.encode (TC_ServiceContextList, 0, &svc_ctx, env)
-      != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    return;
+  this->out_stream_ << svc_ctx;
+  this->out_stream_.write_ulong (this->my_request_id_);
+  this->out_stream_.write_boolean (this->do_rsvp_);
+  this->out_stream_ << this->data_->profile.object_key;
+  this->out_stream_.write_string (this->opname_);
+  this->out_stream_ << anybody;
 
-  if (!this->out_stream_.write_ulong (this->my_request_id_)
-      || !this->out_stream_.write_boolean (this->do_rsvp_))
-    {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-      return;
-    }
-
-  if (this->out_stream_.encode (TC_opaque,
-                                key,
-                                0,
-                                env) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || this->out_stream_.encode (CORBA::_tc_string,
-                                   &opname_,
-                                   0,
-                                   env) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || this->out_stream_.encode (CORBA::_tc_Principal,
-                                   &anybody,
-                                   0,
-                                   env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    return; // pass the exception through....
+  if (!this->out_stream_.good_bit ())
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_REQUEST_HDR);
 }
@@ -943,9 +970,10 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
   CORBA::ULong request_id;
   CORBA::ULong reply_status;            // TAO_GIOP_ReplyStatusType
 
-  if (this->inp_stream_.decode (TC_ServiceContextList, &reply_ctx, 0, env)
-      != CORBA::TypeCode::TRAVERSE_CONTINUE)
+  this->inp_stream_ >> reply_ctx;
+  if (!this->inp_stream_.good_bit ())
     {
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
       TAO_GIOP::send_error (this->handler_);
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
@@ -1319,10 +1347,11 @@ TAO_GIOP_Invocation::invoke (TAO_Exception_Data *excepts,
   CORBA::ULong request_id;
   CORBA::ULong reply_status;            // TAO_GIOP_ReplyStatusType
 
-  if (this->inp_stream_.decode (TC_ServiceContextList, &reply_ctx, 0, env)
-      != CORBA::TypeCode::TRAVERSE_CONTINUE)
+  this->inp_stream_ >> reply_ctx;
+  if (!this->inp_stream_.good_bit ())
     {
       TAO_GIOP::send_error (this->handler_);
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
@@ -1530,6 +1559,7 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
   // if (msg.size () < TAO_GIOP_HEADER_LEN)
   // return CORBA::B_FALSE;
 
+#if 0
   msg.write_octet ('G');
   msg.write_octet ('I');
   msg.write_octet ('O');
@@ -1539,6 +1569,16 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
   msg.write_octet (TAO_GIOP_MessageHeader::MY_MINOR);
 
   msg.write_octet (TAO_ENCAP_BYTE_ORDER);
+#else
+  static CORBA::Octet header[] = {
+    'G', 'I', 'O', 'P',
+    TAO_GIOP_MessageHeader::MY_MAJOR,
+    TAO_GIOP_MessageHeader::MY_MINOR,
+    TAO_ENCAP_BYTE_ORDER
+  };
+  static int header_size = sizeof(header)/sizeof(header[0]);
+  msg.write_octet_array (header, header_size);
+#endif
   msg.write_octet (type);
 
   // Write a dummy <size> later it is set to the right value...

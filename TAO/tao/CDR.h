@@ -569,31 +569,59 @@ private:
 #if defined(__ACE_INLINE__)
 # include "tao/CDR.i"
 #else
-extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Boolean x);
-extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Octet x);
-extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Short x);
-extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::UShort x);
-extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Long x);
-extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::ULong x);
-extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::LongLong x);
-extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::ULongLong x);
-extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Float x);
-extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Double x);
-extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::Char x);
-extern TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr, CORBA::WChar x);
+extern TAO_Export TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr,
+					     CORBA::Boolean x);
+extern TAO_Export TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr,
+					     CORBA::Octet x);
+extern TAO_Export TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr,
+					     CORBA::Short x);
+extern TAO_Export TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr,
+					     CORBA::UShort x);
+extern TAO_Export TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr,
+					     CORBA::Long x);
+extern TAO_Export TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr,
+					     CORBA::ULong x);
+extern TAO_Export TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr,
+					     CORBA::LongLong x);
+extern TAO_Export TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr,
+					     CORBA::ULongLong x);
+extern TAO_Export TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr,
+					     CORBA::Float x);
+extern TAO_Export TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr,
+					     CORBA::Double x);
+extern TAO_Export TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr,
+					     CORBA::Char x);
+extern TAO_Export TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr,
+					     CORBA::WChar x);
+extern TAO_Export TAO_OutputCDR& operator<< (TAO_OutputCDR& cdr,
+					     const CORBA::Char* x);
 
-extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Boolean &x);
-extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Octet &x);
-extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Short &x);
-extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::UShort &x);
-extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Long &x);
-extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::ULong &x);
-extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::LongLong &x);
-extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::ULongLong &x);
-extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Float &x);
-extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Double &x);
-extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::Char &x);
-extern TAO_InputCDR& operator>> (TAO_InputCDR& cdr, CORBA::WChar &x);
+extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
+					    CORBA::Boolean &x);
+extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
+					    CORBA::Octet &x);
+extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
+					    CORBA::Short &x);
+extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
+					    CORBA::UShort &x);
+extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
+					    CORBA::Long &x);
+extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
+					    CORBA::ULong &x);
+extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
+					    CORBA::LongLong &x);
+extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
+					    CORBA::ULongLong &x);
+extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
+					    CORBA::Float &x);
+extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
+					    CORBA::Double &x);
+extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
+					    CORBA::Char &x);
+extern TAO_Export TAO_InputCDR& operator>> (TAO_InputCDR& cdr,
+					    CORBA::WChar &x);
+extern TAO_Export TAO_InputCDR& operator<< (TAO_InputCDR& cdr,
+					    CORBA::Char*& x);
 #endif /* __ACE_INLINE */
 
 #endif /* TAO_CDR_H */
