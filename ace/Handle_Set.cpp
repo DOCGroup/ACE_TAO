@@ -386,8 +386,8 @@ ACE_Handle_Set_Iterator::operator () (void)
        while (lsb >>= 1)
          this->handle_index_++;
      }
-    else
-      {
+   else
+     {
         // Find the least significative bit.
         lsb &= ~(lsb - 1);
 
