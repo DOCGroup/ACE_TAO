@@ -1,3 +1,11 @@
+Sat Apr 26 08:50:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_borland.GNU:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.bin.GNU:
+          Updated Kylix rules so that we don't pass the same options multiple
+          times to the linker.
+
 Sat Apr 26 08:47:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_auto_compile.pl:
