@@ -1,4 +1,7 @@
 #include "ace/config.h"
+#if defined (ACE_HAS_TERM_IOCTLS) /* to avoid conflict with sys/termios.h ECHO */
+#undef ACE_HAS_TERM_IOCTLS
+#endif /* ACE_HAS_TERM_IOCTLS */
 #if defined (HPUX) || defined (VXWORKS)
 #include "ace/OS.h"
 #endif /* HPUX || VXWORKS */
