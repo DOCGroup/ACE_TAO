@@ -191,6 +191,9 @@ endif # rtti
 DCFLAGS         += -g
 DLD             = $(LD)
 INCLDIRS        += -I$(WIND_BASE)/target/h
+LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld \
+                  -C $(COMPILE.c) -traditional -- \
+                  -m munch -n nm$(TOOLENV) ld$(TOOLENV)
 LDFLAGS         += -X -r
 #### WindRiver only recommends -O, not -O2, with some CPUs, including
 #### the i386 family.  And -O2 causes some compilation failures.
@@ -228,12 +231,7 @@ ifeq (egcs,$(findstring egcs,$(ACE_CC_VERSION)))
     #### Without, we do it here.
     CFLAGS += -Wno-uninitialized
   endif # ! exceptions
-  LD = ld$(TOOLENV)
-else  # ! egcs
-  LD = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld \
-       -C $(COMPILE.c) -traditional -- \
-       -m munch -n nm$(TOOLENV) ld$(TOOLENV)
-endif # ! egcs
+endif # egcs
 
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
