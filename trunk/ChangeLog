@@ -1,3 +1,17 @@
+Mon Jul 12 01:31:53 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+	* tests/QtReactor_Test.cpp: 
+	* tests/QtReactor_Test.h: 
+	* tests/tests.mpc: 
+	  New automatic test for testing QtReactor. This test may also serve 
+          as an example of Qt and ACE integration.
+	* ace/QtReactor.cpp:
+	* ace/QtReactor.h:
+	Many bugfixes in QtReactor. QtReactor is operational now, though it should 
+	be rewritten to make it more efficient and improve the clarity of sources.
+	Moreover, valgrind reports small memory leak in QtReactor_Test, though it's 
+	not clear now if the leak results from QtReactor ot test code.
+
 Sun Jul 11 16:48:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SOCK_Acceptor.cpp:
@@ -66,6 +80,7 @@ Fri Jul  9 21:23:13 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
  	  <brian.j.waltersdorf@boeing.com> for reporting this and
  	  suggesting a fix.
 
+>>>>>>> 4.7217
 Thu Jul  8 16:00:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Timer_Queue_Adapters.h: If ACE_HAS_DEFERRED_TIMER_COMMANDS is
