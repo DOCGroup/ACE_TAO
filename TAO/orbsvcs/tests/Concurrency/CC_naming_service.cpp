@@ -50,6 +50,7 @@ CC_naming_service::get_obj_from_name (char *c_name, char *name,
           ns_name.length (1);
           ns_name[0].id = CORBA::string_dup (name);
           obj = naming_context_->resolve (ns_name, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
       else
         {
@@ -58,6 +59,7 @@ CC_naming_service::get_obj_from_name (char *c_name, char *name,
           ns_name[0].id = CORBA::string_dup (c_name);
           ns_name[1].id = CORBA::string_dup (name);
           obj = naming_context_->resolve (ns_name, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
     }
   TAO_CATCHANY
@@ -84,7 +86,8 @@ CC_naming_service::bind_name (char *n,
       ns_name[0].id = CORBA::string_dup (n);
       naming_context_->bind (ns_name,
                             obj,
-                            _env);
+                            TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
