@@ -622,7 +622,7 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
 					       ACE_Event_Handler::ACCEPT_MASK);
 
       // Call up to our ancestor in the inheritance to do the
-      // SVC_HANDLER initialization.  
+      // SVC_HANDLER initialization.
       return this->inherited::activate_svc_handler (svc_handler, arg);
       /* NOTREACHED */
     default: // In parent process.
