@@ -1073,7 +1073,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
               number_of_active_handles = this->any_ready (dispatch_set);
             }
           else
-            return number_of_active_handles;
+            return number_of_handlers_dispatched;
         }
 
       // Next dispatch the notification handlers (if there are any to
