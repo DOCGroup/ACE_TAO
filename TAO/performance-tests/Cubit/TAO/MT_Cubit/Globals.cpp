@@ -41,14 +41,14 @@ Globals::parse_args (int argc, char *argv[])
                         char[BUFSIZ],
                         -1);
         ACE_OS::strcpy (ior_file,
-                        opts.optarg);
+                        opts.opt_arg ());
         break;
       case 'e':
         ACE_OS::strcpy (endpoint,
-                        opts.optarg);
+                        opts.opt_arg ());
         break;
       case 't':
-        num_of_objs = ACE_OS::atoi (opts.optarg);
+        num_of_objs = ACE_OS::atoi (opts.opt_arg ());
         break;
       case '?':
       default:

@@ -73,87 +73,87 @@ parse_args (int argc, char *argv[])
       {
       case 'c':
         continuous_workers =
-          ACE_OS::atoi (get_opts.optarg);
+          ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'e':
         count_missed_end_deadlines =
-          ACE_OS::atoi (get_opts.optarg);
+          ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'g':
         do_dump_history =
-          ACE_OS::atoi (get_opts.optarg);
+          ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
         individual_continuous_worker_stats =
-          ACE_OS::atoi (get_opts.optarg);
+          ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'j':
         continuous_workers_are_rt =
-          ACE_OS::atoi (get_opts.optarg);
+          ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'k':
         ior =
-          get_opts.optarg;
+          get_opts.opt_arg ();
         break;
 
       case 'm':
         print_missed_invocations =
-          ACE_OS::atoi (get_opts.optarg);
+          ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'p':
         invocation_priorities_file =
-          get_opts.optarg;
+          get_opts.opt_arg ();
         break;
 
       case 'q':
         prime_number =
-          ACE_OS::atoi (get_opts.optarg);
+          ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'r':
         rates_file =
-          get_opts.optarg;
+          get_opts.opt_arg ();
         break;
 
       case 't':
         time_for_test =
-          ACE_OS::atoi (get_opts.optarg);
+          ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'u':
         continuous_worker_priority =
-          ACE_OS::atoi (get_opts.optarg);
+          ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'v':
         priority_setting =
-          Priority_Setting (ACE_OS::atoi (get_opts.optarg));
+          Priority_Setting (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
 
       case 'w':
         work =
-          ACE_OS::atoi (get_opts.optarg);
+          ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
         shutdown_server =
-          ACE_OS::atoi (get_opts.optarg);
+          ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'y':
         set_priority =
-          ACE_OS::atoi (get_opts.optarg);
+          ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'z':
         max_throughput_timeout =
-          ACE_OS::atoi (get_opts.optarg);
+          ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'b':

@@ -30,13 +30,13 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'k':
-        IOR = get_opts.optarg;
+        IOR = get_opts.opt_arg ();
         break;
       case 'i':
-        iterations = ::atoi (get_opts.optarg);
+        iterations = ::atoi (get_opts.opt_arg ());
         break;
       case 'd':
-        data_bytes = ::atoi (get_opts.optarg);
+        data_bytes = ::atoi (get_opts.opt_arg ());
         break;
       case 'x':
         shutdown_server = 1;

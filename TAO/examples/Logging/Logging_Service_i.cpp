@@ -24,7 +24,7 @@ Logger_Server::parse_args (void)
         TAO_debug_level++;
         break;
       case 'n':  // Set factory name to cmnd line arg
-        service_name_ = get_opts.optarg;
+        service_name_ = get_opts.opt_arg ();
         break;
       case '?':
       default:

@@ -26,11 +26,11 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'k':
-        ior = get_opts.optarg;
+        ior = get_opts.opt_arg ();
         break;
 
       case 'm':
-        name = get_opts.optarg;
+        name = get_opts.opt_arg ();
         break;
 
       case '?':

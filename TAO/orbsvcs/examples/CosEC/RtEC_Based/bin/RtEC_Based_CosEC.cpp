@@ -56,11 +56,11 @@ RtEC_Based_CosEC::parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 'n':
-          this->service_name = get_opt.optarg;
+          this->service_name = get_opt.opt_arg ();
           break;
 
         case 't':
-          this->rt_service_name = get_opt.optarg;
+          this->rt_service_name = get_opt.opt_arg ();
           break;
 
         case 'r':
@@ -68,15 +68,15 @@ RtEC_Based_CosEC::parse_args (int argc, char *argv [])
           break;
 
         case 'e':
-          this->eventTypeIds_ =  get_opt.optarg;
+          this->eventTypeIds_ =  get_opt.opt_arg ();
           break;
 
         case 'o':
-          this->eventSourceIds_ = get_opt.optarg;
+          this->eventSourceIds_ = get_opt.opt_arg ();
           break;
 
         case 'p':
-          this->source_type_pairs_ = get_opt.optarg;
+          this->source_type_pairs_ = get_opt.opt_arg ();
           break;
 
         case '?':

@@ -35,11 +35,11 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'k':
-        IOR = ACE_OS::strdup (get_opts.optarg);
+        IOR = ACE_OS::strdup (get_opts.opt_arg ());
         break;
 
       case 'f':
-        IOR_file = get_opts.optarg;
+        IOR_file = get_opts.opt_arg ();
         break;
 
       case 'x':

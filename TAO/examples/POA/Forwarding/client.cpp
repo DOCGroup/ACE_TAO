@@ -37,13 +37,13 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'k':
-        IOR = get_opts.optarg;
+        IOR = get_opts.opt_arg ();
         break;
       case 's':
-        servers = ::atoi (get_opts.optarg);
+        servers = ::atoi (get_opts.opt_arg ());
         break;
       case 'i':
-        iterations = ::atoi (get_opts.optarg);
+        iterations = ::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:

@@ -24,7 +24,7 @@ parse_args (int argc, char *argv[])
       {
       case 'o':
 
-        ior_file = get_opts.optarg;
+        ior_file = get_opts.opt_arg ();
         break;
 
       default:

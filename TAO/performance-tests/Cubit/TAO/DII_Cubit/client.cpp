@@ -271,17 +271,17 @@ DII_Cubit_Client::parse_args (void)
         TAO_debug_level++;
         break;
       case 'n':   // loop count
-        this->loop_count_ = ACE_OS::atoi (opts.optarg);
+        this->loop_count_ = ACE_OS::atoi (opts.opt_arg ());
         break;
       case 'i':   // Get the IOR from the command line.
-        this->factory_IOR_ = opts.optarg;
+        this->factory_IOR_ = opts.opt_arg ();
         break;
       case 'f':   // Read the IOR from the file.
-        result = this->read_ior (opts.optarg);
+        result = this->read_ior (opts.opt_arg ());
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             opts.optarg),
+                             opts.opt_arg ()),
                             -1);
         break;
       case 'x':   // Shut down server after test run.

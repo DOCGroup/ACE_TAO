@@ -26,11 +26,11 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'k':
-        ior = get_opts.optarg;
+        ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        iterations = ::atoi (get_opts.optarg);
+        iterations = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
@@ -38,11 +38,11 @@ parse_args (int argc, char **argv)
         break;
 
       case 'p':
-        invocation_priorities_file = get_opts.optarg;
+        invocation_priorities_file = get_opts.opt_arg ();
         break;
 
       case 'b':
-        bands_file = get_opts.optarg;
+        bands_file = get_opts.opt_arg ();
         break;
 
       case '?':

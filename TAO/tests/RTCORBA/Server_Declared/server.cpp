@@ -92,15 +92,15 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'p':
-        ior_output_file1 = get_opts.optarg;
+        ior_output_file1 = get_opts.opt_arg ();
         break;
 
       case 'o':
-        ior_output_file2 = get_opts.optarg;
+        ior_output_file2 = get_opts.opt_arg ();
         break;
 
       case 'a':
-        result = ::sscanf (get_opts.optarg,
+        result = ::sscanf (get_opts.opt_arg (),
                            "%hd",
                            &poa_priority);
         if (result == 0 || result == EOF)
@@ -110,7 +110,7 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'b':
-        result = ::sscanf (get_opts.optarg,
+        result = ::sscanf (get_opts.opt_arg (),
                            "%hd",
                            &object_priority);
         if (result == 0 || result == EOF)

@@ -32,12 +32,12 @@ parse_args (int argc, char *argv[])
 
         if (ior_count == 1)
           {
-            ior1_file = get_opts.optarg;
+            ior1_file = get_opts.opt_arg ();
             ++ior_count;
           }
         else if (ior_count == 2)
           {
-            ior2_file = get_opts.optarg;
+            ior2_file = get_opts.opt_arg ();
             ++ior_count;
           }
 

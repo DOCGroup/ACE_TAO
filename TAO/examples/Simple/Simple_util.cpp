@@ -40,18 +40,18 @@ Server<Servant>::parse_args (void)
         TAO_debug_level++;
         break;
       case 'o':  // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
-                             get_opts.optarg), -1);
+                             get_opts.opt_arg ()), -1);
         break;
 
       case 'n': //Use naming service
         this->naming_ = 1;
         break;
       case 'i': // For Testing the InterOperable Naming Service.
-        this->ins_ = CORBA::string_dup (get_opts.optarg);
+        this->ins_ = CORBA::string_dup (get_opts.opt_arg ());
         break;
       case 'h':  // display help for use of the server.
       default:
@@ -325,17 +325,17 @@ Client<INTERFACE_OBJECT, Var>::parse_args (void)
         TAO_debug_level++;
         break;
       case 'k':  // ior provide on command line
-        this->ior_ = ACE_OS::strdup (get_opts.optarg);
+        this->ior_ = ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'n': // Use naming service
         this->naming_ = 1;
         break;
       case 'f': // read the IOR from the file.
-        result = this->read_ior (get_opts.optarg);
+        result = this->read_ior (get_opts.opt_arg ());
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             get_opts.optarg),
+                             get_opts.opt_arg ()),
                             -1);
         break;
       case 'x': // read the flag for shutting down

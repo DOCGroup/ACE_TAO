@@ -54,7 +54,7 @@ Demux_Stats::parse_args (int argc_, char * argv_ [])
     switch (c)
       {
       case 'i':
-	iterations = atoi (get_opts.optarg);
+	iterations = atoi (get_opts.opt_arg ());
 	break;
       }
 

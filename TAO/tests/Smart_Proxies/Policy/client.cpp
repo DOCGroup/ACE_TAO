@@ -36,13 +36,13 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'i':
-        ior1 = ACE_OS::strdup (get_opts.optarg);
+        ior1 = ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'j':
-        ior2 = ACE_OS::strdup (get_opts.optarg);
+        ior2 = ACE_OS::strdup (get_opts.opt_arg ());
         break;
        case 'f':
-        one_shot_factory = ACE_OS::atoi (get_opts.optarg);
+        one_shot_factory = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:

@@ -136,13 +136,13 @@ Client::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_OS::strdup (opts.optarg);
+          this->filename_ = ACE_OS::strdup (opts.opt_arg ());
           break;
         case 'a':
-          this->address_ = ACE_OS::strdup (opts.optarg);
+          this->address_ = ACE_OS::strdup (opts.opt_arg ());
           break;
         case 'p':
-          this->protocol_ = ACE_OS::strdup (opts.optarg);
+          this->protocol_ = ACE_OS::strdup (opts.opt_arg ());
           break;
         case 's':
           this->use_sfp_ = 1;

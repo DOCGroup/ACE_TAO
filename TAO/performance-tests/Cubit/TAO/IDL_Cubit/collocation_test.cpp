@@ -82,11 +82,11 @@ main (int argc, char **argv)
     switch (c)
       {
       case 'c':
-        client_cmd = get_opts.optarg;
+        client_cmd = get_opts.opt_arg ();
         ACE_DEBUG ((LM_DEBUG, "Client argument: %s\n", client_cmd));
         break;
       case 's':
-        server_cmd = get_opts.optarg;
+        server_cmd = get_opts.opt_arg ();
         ACE_DEBUG ((LM_DEBUG, "Server argument: %s\n", server_cmd));
         break;
       default:

@@ -41,7 +41,7 @@ Server_i::parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':  // get the file name to write to
-       this->ior_file_name_ = get_opts.optarg;
+       this->ior_file_name_ = get_opts.opt_arg ();
       break;
 
       case '?':  // display help for use of the server.

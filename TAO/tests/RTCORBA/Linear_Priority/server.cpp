@@ -84,11 +84,11 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'b':
-        bands_file = get_opts.optarg;
+        bands_file = get_opts.opt_arg ();
         break;
 
       case 'l':
-        lanes_file = get_opts.optarg;
+        lanes_file = get_opts.opt_arg ();
         break;
 
       case '?':

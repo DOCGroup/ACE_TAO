@@ -21,11 +21,11 @@ Consumer::parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 'n':
-          this->service_name = get_opt.optarg;
+          this->service_name = get_opt.opt_arg ();
           break;
 
         case 'c':
-          this->event_count_ = ACE_OS::atoi (get_opt.optarg);
+          this->event_count_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case '?':

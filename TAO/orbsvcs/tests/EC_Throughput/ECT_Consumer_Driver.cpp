@@ -305,17 +305,17 @@ ECT_Consumer_Driver::parse_args (int argc, char *argv [])
           break;
 
         case 'c':
-          this->n_consumers_ = ACE_OS::atoi (get_opt.optarg);
+          this->n_consumers_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 's':
-          this->n_suppliers_ = ACE_OS::atoi (get_opt.optarg);
+          this->n_suppliers_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'h':
           {
             char* aux;
-                char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
+                char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
 
             this->type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
@@ -324,7 +324,7 @@ ECT_Consumer_Driver::parse_args (int argc, char *argv [])
           break;
 
         case 'p':
-          this->pid_file_name_ = get_opt.optarg;
+          this->pid_file_name_ = get_opt.opt_arg ();
           break;
 
         case '?':

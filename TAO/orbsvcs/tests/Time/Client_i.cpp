@@ -257,17 +257,17 @@ Client_i::parse_args (void)
          TAO_debug_level++;
          break;
        case 'n':  // loop count
-         this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.optarg);
+         this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
          break;
        case 'k':  // ior provide on command line
-         this->ior_ = ACE_OS::strdup (get_opts.optarg);
+         this->ior_ = ACE_OS::strdup (get_opts.opt_arg ());
          break;
        case 'f': // read the IOR from the file.
-         result = this->read_ior (get_opts.optarg);
+         result = this->read_ior (get_opts.opt_arg ());
          if (result < 0)
            ACE_ERROR_RETURN ((LM_ERROR,
                               "[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior from %s : %p\n",
-                              get_opts.optarg),
+                              get_opts.opt_arg ()),
                              -1);
          break;
        case 'x':

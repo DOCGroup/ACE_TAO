@@ -122,11 +122,11 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 's':
-        ::server_priority = ::atoi (get_opts.optarg);
+        ::server_priority = ::atoi (get_opts.opt_arg ());
       break;
 
       case 'c':
-        ::client_priority = ::atoi (get_opts.optarg);
+        ::client_priority = ::atoi (get_opts.opt_arg ());
       break;
 
       case '?':

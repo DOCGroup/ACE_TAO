@@ -115,33 +115,33 @@ Clerk_i::parse_args (void)
         break;
 
       case 't':  // time in secs after which the clerk should update time.
-        this->timer_value_ = atoi (get_opts.optarg);
+        this->timer_value_ = atoi (get_opts.opt_arg ());
         break;
 
       case 'u':
         // time in usecs after which the clerk should update time.
         // Continues the precision of the -t option.
-        this->timer_value_usecs_ = atoi (get_opts.optarg);
+        this->timer_value_usecs_ = atoi (get_opts.opt_arg ());
         break;
 
       case 'f':  // read the server IORs from a file.
-        result = this->read_ior (get_opts.optarg);
+        result = this->read_ior (get_opts.opt_arg ());
 
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "[CLERK] Process/Thread Id : (%P/%t) Unable to read ior from %s : %p\n",
-                             get_opts.optarg),
+                             get_opts.opt_arg ()),
                             -1);
         break;
 
      case 'o':  // output the Clerk IOR to a file.
        this->ior_output_file_ =
-         ACE_OS::fopen (get_opts.optarg, "w");
+         ACE_OS::fopen (get_opts.opt_arg (), "w");
 
        if (this->ior_output_file_ == 0)
          ACE_ERROR_RETURN ((LM_ERROR,
                             "[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %\n",
-                            get_opts.optarg), -1);
+                            get_opts.opt_arg ()), -1);
        break;
 
       case '?':  // display help for use of the server.

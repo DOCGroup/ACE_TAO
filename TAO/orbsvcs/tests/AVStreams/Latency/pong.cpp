@@ -37,14 +37,14 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.optarg;
+        ior_output_file = get_opts.opt_arg ();
         break;
 
       case 'r':
         {
           CORBA::ULong l = ping_protocols.length ();
           ping_protocols.length (l + 1);
-          ping_protocols[l] = CORBA::string_dup (get_opts.optarg);
+          ping_protocols[l] = CORBA::string_dup (get_opts.opt_arg ());
         }
         break;
 
@@ -52,16 +52,16 @@ parse_args (int argc, char *argv[])
         {
           CORBA::ULong l = pong_protocols.length ();
           pong_protocols.length (l + 1);
-          pong_protocols[l] = CORBA::string_dup (get_opts.optarg);
+          pong_protocols[l] = CORBA::string_dup (get_opts.opt_arg ());
         }
         break;
 
       case 't':
-        milliseconds = ACE_OS::atoi (get_opts.optarg);
+        milliseconds = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'b':
-        message_size = ACE_OS::atoi (get_opts.optarg);
+        message_size = ACE_OS::atoi (get_opts.opt_arg ());
         if (message_size < sizeof(ACE_hrtime_t))
           {
             ACE_DEBUG ((LM_DEBUG, "Invalid message size\n"));

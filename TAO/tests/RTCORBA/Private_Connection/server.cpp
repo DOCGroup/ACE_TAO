@@ -62,11 +62,11 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file1 = get_opts.optarg;
+        ior_output_file1 = get_opts.opt_arg ();
         break;
 
       case 'p':
-        ior_output_file2 = get_opts.optarg;
+        ior_output_file2 = get_opts.opt_arg ();
         break;
 
       case '?':

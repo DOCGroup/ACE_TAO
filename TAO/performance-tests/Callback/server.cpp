@@ -149,7 +149,7 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':
-        ior_file_name = get_opts.optarg;
+        ior_file_name = get_opts.opt_arg ();
         break;
 
       case '?':

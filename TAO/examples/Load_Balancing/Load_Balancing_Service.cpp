@@ -36,12 +36,12 @@ Load_Balancing_Service::parse_args (int argc, char *argv[])
         break;
       case 'o': // outputs object ior to the specified file.
         this->ior_output_file_ =
-          ACE_OS::fopen (get_opts.optarg, "w");
+          ACE_OS::fopen (get_opts.opt_arg (), "w");
 
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
-                             get_opts.optarg), -1);
+                             get_opts.opt_arg ()), -1);
         break;
       case '?':
       default:

@@ -81,15 +81,15 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'p':
-        persistent_ior = get_opts.optarg;
+        persistent_ior = get_opts.opt_arg ();
         break;
 
       case 't':
-        transient_ior = get_opts.optarg;
+        transient_ior = get_opts.opt_arg ();
         break;
 
       case 'd':
-        debug = ACE_OS::atoi (get_opts.optarg);
+        debug = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':

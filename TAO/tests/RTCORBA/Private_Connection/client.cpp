@@ -17,10 +17,10 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':
-        ior1 = get_opts.optarg;
+        ior1 = get_opts.opt_arg ();
         break;
       case 'p':
-        ior2 = get_opts.optarg;
+        ior2 = get_opts.opt_arg ();
         break;
       case '?':
       default:

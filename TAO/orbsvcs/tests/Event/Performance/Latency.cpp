@@ -282,11 +282,11 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.optarg);
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'k':
-        ec_ior = get_opts.optarg;
+        ec_ior = get_opts.opt_arg ();
         break;
 
       case '?':

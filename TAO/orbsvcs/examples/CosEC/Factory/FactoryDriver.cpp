@@ -32,7 +32,7 @@ FactoryDriver::parse_args (int argc, char *argv [])
         break;
 
       case 'r':
-        factoryName_ = get_opts.optarg;
+        factoryName_ = get_opts.opt_arg ();
         break;
 
       case '?':  // display help for use of the server.

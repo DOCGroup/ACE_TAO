@@ -29,9 +29,9 @@ parse_args (int argc, char *argv[])
       case 'k':
 
         if (ior1 == 0)
-          ior1 = get_opts.optarg;
+          ior1 = get_opts.opt_arg ();
         else if (ior2 == 0)
-          ior2 = get_opts.optarg;
+          ior2 = get_opts.opt_arg ();
 
         break;
       default:

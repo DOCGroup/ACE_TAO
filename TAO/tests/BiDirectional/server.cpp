@@ -19,10 +19,10 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.optarg;
+        ior_output_file = get_opts.opt_arg ();
         break;
       case 'i':
-        no_iterations = ACE_OS::atoi (get_opts.optarg);
+        no_iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:

@@ -64,15 +64,15 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 's':
-        ior_output_file1 = get_opts.optarg;
+        ior_output_file1 = get_opts.opt_arg ();
         break;
 
       case 'c':
-        ior_output_file2 = get_opts.optarg;
+        ior_output_file2 = get_opts.opt_arg ();
         break;
 
       case 'p':
-        result = ::sscanf (get_opts.optarg,
+        result = ::sscanf (get_opts.opt_arg (),
                            "%u",
                            &protocol_type);
         if (result == 0 || result == EOF)
