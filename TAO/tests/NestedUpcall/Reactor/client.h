@@ -68,14 +68,14 @@ private:
   int shutdown_;
   // Flag to tell server to shutdown.
 
+  CORBA::ORB_var orb_;
+  // Remember our orb.
+
   Reactor_var reactor_;
   // reactor pointer for NestedUpCalls.
 
   CORBA::Environment env_;
   // Environment variable.
-
-  CORBA::ORB_var orb_;
-  // Remember our orb.
 
   u_int call_count_;
   // # of calls made to functions.
