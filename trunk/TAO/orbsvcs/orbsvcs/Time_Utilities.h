@@ -34,7 +34,7 @@ class TAO_ORBSVCS_Export ORBSVCS_Time
   //   nanoseconds as time units (i.e. 1 second is 10^7 TimeT units).
 public:
   // = A helper constant, IDL does not have constant for structures.
-  static TimeBase::TimeT zero;
+  static TimeBase::TimeT zero ();
 
   // = ACE_hrtime_t conversion routines.
 

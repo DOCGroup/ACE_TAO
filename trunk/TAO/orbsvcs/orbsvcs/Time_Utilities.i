@@ -1,5 +1,11 @@
 // $Id$
 
+ACE_INLINE TimeBase::TimeT
+ORBSVCS_Time::zero ()
+{
+  return 0;
+}
+
 ACE_INLINE void
 ORBSVCS_Time::TimeT_to_hrtime (ACE_hrtime_t &lhs,
                                const TimeBase::TimeT& rhs)
