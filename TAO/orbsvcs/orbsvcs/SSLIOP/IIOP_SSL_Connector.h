@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "IIOP_SSL_Connection_Handler.h"
+#include "SSLIOP_Connection_Handler.h"
 #include "tao/IIOP_Connector.h"
 
 
@@ -78,6 +79,11 @@ private:
 
   /// The connector initiating connection requests for IIOP_SSL.
   TAO_IIOP_SSL_BASE_CONNECTOR base_connector_;
+
+  /// State that will be passed to each SSLIOP connection handler upon
+  /// creation.
+  TAO_SSLIOP_Connection_Handler_State handler_state_;
+
 };
 
 #include "ace/post.h"

@@ -4,6 +4,9 @@
 
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Profile.h"
+#include "SSLIOP_Current.h"
+#include "SSLIOP_Util.h"
+
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -13,7 +16,9 @@
 #include "SSLIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(TAO_SSLIOP, SSLIOP_Acceptor, "$Id$")
+ACE_RCSID (TAO_SSLIOP,
+           SSLIOP_Acceptor,
+           "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -46,7 +51,8 @@ TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (int support_no_protection)
     ssl_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
-    accept_strategy_ (0)
+    accept_strategy_ (0),
+    handler_state_ ()
 {
   // Clear all bits in the SSLIOP::SSL association option fields.
   this->ssl_component_.target_supports = 0;
@@ -86,8 +92,6 @@ TAO_SSLIOP_Acceptor::~TAO_SSLIOP_Acceptor (void)
   delete this->accept_strategy_;
 }
 
-// TODO =
-//    2) For V1.[1,2] there are tagged components
 int
 TAO_SSLIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
                                      TAO_MProfile &mprofile,
@@ -445,9 +449,14 @@ TAO_SSLIOP_Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
   // Explicitly disable GIOPlite support since it introduces security
   // holes.
 
+  if (TAO_SSLIOP_Util::setup_handler_state (this->orb_core_,
+                                            &(this->tcp_properties_),
+                                            this->handler_state_) != 0)
+      return -1;
+
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_SSLIOP_CREATION_STRATEGY (this->orb_core_,
-                                                &(this->tcp_properties_),
+                                                &(this->handler_state_),
                                                 giop_lite),
                   -1);
 

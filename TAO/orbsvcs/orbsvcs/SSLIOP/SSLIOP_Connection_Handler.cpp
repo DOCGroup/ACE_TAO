@@ -21,7 +21,9 @@
 # include "SSLIOP_Connection_Handler.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (TAO_SSLIOP, SSLIOP_Connection_Handler, "$Id$")
+ACE_RCSID (TAO_SSLIOP,
+           SSLIOP_Connection_Handler,
+           "$Id$")
 
 // ****************************************************************
 
@@ -30,7 +32,6 @@ TAO_SSLIOP_Connection_Handler::TAO_SSLIOP_Connection_Handler (
   : TAO_SSL_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
     current_ (),
-    current_impl_ (),
     tcp_properties_ (0)
 {
   // This constructor should *never* get called, it is just here to
@@ -49,10 +50,14 @@ TAO_SSLIOP_Connection_Handler::TAO_SSLIOP_Connection_Handler (
   : TAO_SSL_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     current_ (),
-    current_impl_ (),
-    tcp_properties_ (ACE_static_cast
-                     (TAO_IIOP_Properties *, arg))
+    tcp_properties_ (0)
 {
+  TAO_SSLIOP_Connection_Handler_State *s =
+    ACE_static_cast (TAO_SSLIOP_Connection_Handler_State *, arg);
+
+  this->tcp_properties_ = s->tcp_properties;
+  this->current_ = s->ssliop_current;
+
   TAO_SSLIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
           TAO_SSLIOP_Transport (this, orb_core, 0));
@@ -373,66 +378,30 @@ TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE)
 
 
 int
-TAO_SSLIOP_Connection_Handler::setup_ssl_state (TAO_ORB_Core *orb_core)
+TAO_SSLIOP_Connection_Handler::setup_ssl_state (
+  TAO_SSLIOP_Current_Impl *&previous_current_impl,
+  TAO_SSLIOP_Current_Impl *new_current_impl,
+  CORBA::Boolean &setup_done)
 {
-  // Make sure we have a valid reference to the SSLIOP::Current
-  // object.
-  if (CORBA::is_nil (this->current_.in ()))
-    {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
-        {
-          CORBA::Object_var object =
-            orb_core->orb ()->resolve_initial_references (
-              "SSLIOPCurrent",
-              ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          this->current_ = SSLIOP::Current::_narrow (object.in (),
-                                                     ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          if (CORBA::is_nil (this->current_.in ()))
-            ACE_TRY_THROW (CORBA::INV_OBJREF ());
-        }
-      ACE_CATCHANY
-        {
-          if (TAO_debug_level > 0)
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                 "Could not resolve "
-                                 "\"SSLIOPCurrent\" object");
-
-          return -1;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (-1);
-    }
-
-  TAO_SSLIOP_Current *current =
-    ACE_dynamic_cast (TAO_SSLIOP_Current *,
-                      this->current_.in ());
-
-  if (current == 0)   // Sanity check
-    return -1;
-
   // Make the SSL session state available to the SSLIOP::Current
   // TSS object.
-  this->current_impl_.ssl (this->peer ().ssl ());
+  new_current_impl->ssl (this->peer ().ssl ());
 
-  current->setup (&this->current_impl_);
+  // The following call is reentrant and thread-safe
+  this->current_->setup (previous_current_impl,
+                         new_current_impl,
+                         setup_done);
 
   return 0;
 }
 
 void
-TAO_SSLIOP_Connection_Handler::teardown_ssl_state (void)
+TAO_SSLIOP_Connection_Handler::teardown_ssl_state (
+  TAO_SSLIOP_Current_Impl *previous_current_impl,
+  CORBA::Boolean &setup_done)
 {
-  TAO_SSLIOP_Current *current =
-    ACE_dynamic_cast (TAO_SSLIOP_Current *,
-                      this->current_.in ());
-
-  if (current != 0)
-    current->teardown ();
+  this->current_->teardown (previous_current_impl,
+                            setup_done);
 }
 
 // ****************************************************************

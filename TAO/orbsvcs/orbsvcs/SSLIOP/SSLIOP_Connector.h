@@ -116,6 +116,11 @@ private:
 
   /// The connector initiating connection requests for IIOP.
   TAO_SSLIOP_BASE_CONNECTOR base_connector_;
+
+  /// State that will be passed to each SSLIOP connection handler upon
+  /// creation.
+  TAO_SSLIOP_Connection_Handler_State handler_state_;
+
 };
 
 
