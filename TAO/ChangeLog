@@ -1,3 +1,10 @@
+Fri Aug  2 07:38:00 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp
+	  (receive_request_service_contexts):
+
+	  Parenthesize expression to clarify precedence.
+
 Fri Aug  2 09:11:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/ValueFactory_Map.h:
