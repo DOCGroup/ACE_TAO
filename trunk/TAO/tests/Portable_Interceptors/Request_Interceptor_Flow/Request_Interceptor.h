@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
+#include "ace/Atomic_Op.h"
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
