@@ -188,18 +188,19 @@ const char *IIOP_Object::_get_name (CORBA::Environment &)
 
 // Constructor
 // It will usually be used by the _bind call
-IIOP_Object::IIOP_Object (const char *host, const CORBA::UShort port,
-                          const char *objkey, char *repository_id)
+IIOP_Object::IIOP_Object (const char *host,
+                          const CORBA::UShort port,
+                          const char *objkey,
+                          char *repository_id)
   : STUB_Object (repository_id),
     base (this),
     refcount_ (1),
     fwd_profile_ (0)
 {
-  // If the repository ID (typeID) is NULL,
-  // it will make narrowing rather expensive, though it does ensure that
-  // type-safe narrowing code gets thoroughly excercised/debugged!
-  // Without a typeID, the _narrow will be required to make an expensive remote
-  // "is_a" call.
+  // If the repository ID (typeID) is NULL, it will make narrowing
+  // rather expensive, though it does ensure that type-safe narrowing
+  // code gets thoroughly excercised/debugged!  Without a typeID, the
+  // _narrow will be required to make an expensive remote "is_a" call.
 
   // we set this to use IIOP version 1.0
   this->profile.iiop_version.major = IIOP::MY_MAJOR;
@@ -215,9 +216,33 @@ IIOP_Object::IIOP_Object (const char *host, const CORBA::UShort port,
   this->profile.object_key.maximum = this->profile.object_key.length;
 }
 
-// Constructor
-// It will usually be used by the server side
-IIOP_Object::IIOP_Object (char *repository_id, const ACE_INET_Addr &addr, const
+IIOP_Object::~IIOP_Object (void)
+{
+  assert (refcount_ == 0);
+  delete this->fwd_profile_;
+}
+
+IIOP_Object::IIOP_Object (char *repository_id)
+  : STUB_Object (repository_id),
+    base (this),
+    refcount_ (1),
+    fwd_profile_ (0)
+{
+}
+
+IIOP_Object::IIOP_Object (char *repository_id,
+			  const IIOP::Profile &a_profile)
+  : STUB_Object (repository_id),
+    profile (a_profile),
+    base (this),
+    refcount_ (1),
+    fwd_profile_ (0)
+{
+}
+
+// Constructor.  It will usually be used by the server side.
+IIOP_Object::IIOP_Object (char *repository_id,
+                          const ACE_INET_Addr &addr, const
                           char *objkey)
   : STUB_Object (repository_id),
     base (this),
