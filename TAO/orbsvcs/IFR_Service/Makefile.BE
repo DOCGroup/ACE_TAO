@@ -53,6 +53,7 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 CPPFLAGS += -I../../TAO_IDL/include -I../../TAO_IDL/fe
+LDFLAGS += -I$(TAO_ROOT)/tao
 
 realclean: clean
 
