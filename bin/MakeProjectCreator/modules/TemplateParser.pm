@@ -619,8 +619,10 @@ sub handle_special {
   ## If $name (fornotlast, forfirst, etc.) is set to 1
   ## Then we append the $val onto the current string that's
   ## being built.
-  if ($self->get_value($name)) {
-    $self->append_current($val);
+  if (!$self->{'if_skip'}) {
+    if ($self->get_value($name)) {
+      $self->append_current($val);
+    }
   }
 }
 
