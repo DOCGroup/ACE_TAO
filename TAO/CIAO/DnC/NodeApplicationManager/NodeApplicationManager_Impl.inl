@@ -15,5 +15,5 @@ Deployment::NodeApplicationManager_ptr
 CIAO::NodeApplicationManager_Impl::
 get_nadeapp_manager (void)
 {
-  return this->objref_. in ();
+  return this->objref_;
 }

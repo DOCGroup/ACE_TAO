@@ -86,7 +86,7 @@ namespace CIAO
      *        of the NodeApplication. For example, ORB config options etc.
      * @return value 0 on succeed others on failure.
      **/
-    virtual Deployment::NodeApplicationManager_ptr
+    virtual CIAO::NodeApplicationManager_Impl *
     init (const char *nodeapp_location,
 	  CORBA::ULong delay,
 	  const Deployment::DeploymentPlan & plan
@@ -135,7 +135,7 @@ namespace CIAO
     PortableServer::POA_var poa_;
 
     // ObjectRef of ourself which will be needed by the callback
-    Deployment::NodeApplicationManager_var objref_;
+    Deployment::NodeApplicationManager_ptr objref_;
 
     // Child poa that uses active object map.
     PortableServer::POA_var callback_poa_;
