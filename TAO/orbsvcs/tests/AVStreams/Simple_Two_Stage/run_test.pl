@@ -10,19 +10,17 @@ use PerlACE::Run_Test;
 
 # amount of delay between running the servers
 
-$sleeptime = 6;
+$sleeptime = 2;
 $status = 0;
 
 $nsior = PerlACE::LocalFile ("ns.ior");
-$testfile = PerlACE::LocalFile ("test");
-$makefile = PerlACE::LocalFile ("Makefile");
+$outfile = PerlACE::LocalFile ("output");
 
 unlink $nsior;
 
 $NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
-$SV = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -f $makefile -s Sender");
-$RE = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -f $testfile -s Distributer -r Receiver");
-$DI = new PerlACE::Process ("distributer", "-ORBInitRef NameService=file://$nsior -s Sender -r Distributer");
+$SV = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior");
+$CL = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior");
 
 print STDERR "Starting Naming Service\n";
 
@@ -36,40 +34,25 @@ if (PerlACE::waitforfile_timed ($nsior, 5) == -1) {
 
 print STDERR "Starting Receiver\n";
 
-$RE->Spawn ();
-
-sleep $sleeptime;
-
-print STDERR "Starting Distributer\n";
-
-$DI->Spawn ();
+$SV->Spawn ();
 
 sleep $sleeptime;
 
 print STDERR "Starting Sender\n";
 
-$sender = $SV->SpawnWaitKill (60);
+$sender = $CL->SpawnWaitKill (60);
 
 if ($sender != 0) {
     print STDERR "ERROR: sender returned $sender\n";
     $status = 1;
 }
 
-
-$distributer = $DI->TerminateWaitKill (5);
-
-if ($distributer != 0) {
-    print STDERR "ERROR: distributer returned $distributer\n";
-    $status = 1;
-}
-
-$receiver = $RE->TerminateWaitKill (5);
+$receiver = $SV->TerminateWaitKill (5);
 
 if ($receiver != 0) {
     print STDERR "ERROR: receiver returned $receiver\n";
     $status = 1;
 }
-
 
 $nserver = $NS->TerminateWaitKill (5);
 
@@ -79,6 +62,6 @@ if ($nserver != 0) {
 }
 
 unlink $nsior;
-unlink $testfile;
+unlink $output;
 
 exit $status;

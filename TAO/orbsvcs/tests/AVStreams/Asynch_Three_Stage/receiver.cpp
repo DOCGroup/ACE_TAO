@@ -4,52 +4,53 @@
 #include "ace/Get_Opt.h"
 
 static FILE *output_file = 0;
-// File into which the received data is written.
-
-static const char *output_file_name = "output";
-// File handle of the file into which data is written.
-
-ACE_CString sender_device_name_;
-// Sender device name.
-
-ACE_CString receiver_device_name_;
-// Receiver device name.
+// File handle of the file into which received data is written.
 
 int
 Receiver_StreamEndPoint::get_callback (const char *,
-                                         TAO_AV_Callback *&callback)
+                                       TAO_AV_Callback *&callback)
 {
-  // Return the application callback to the AVStreams for further upcalls
+  // Return the receiver application callback to the AVStreams for
+  // future upcalls.
   callback = &this->callback_;
   return 0;
 }
 
+Receiver_Callback::Receiver_Callback (void)
+  : frame_count_ (1)
+{
+}
+
 int
 Receiver_Callback::receive_frame (ACE_Message_Block *frame,
-                                    TAO_AV_frame_info *,
-                                    const ACE_Addr &)
+                                  TAO_AV_frame_info *,
+                                  const ACE_Addr &)
 {
-  // Upcall from the AVStreams when there is data to be received from the
-  // distributer.
-
+  //
+  // Upcall from the AVStreams when there is data to be received from
+  // the sender.
+  //
   ACE_DEBUG ((LM_DEBUG,
-              "Receiver_Callback::receive_frame\n"));
+              "Receiver_Callback::receive_frame for frame %d\n",
+              this->frame_count_++));
 
   while (frame != 0)
     {
       // Write the received data to the file.
-      unsigned int result = ACE_OS::fwrite (frame->rd_ptr (),
-                                            frame->length (),
-                                            1,
-                                            output_file);
-      
+      int result =
+        ACE_OS::fwrite (frame->rd_ptr (),
+                        frame->length (),
+                        1,
+                        output_file);
+
       if (result == frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "FTP_Server_Flow_Handler::fwrite failed\n"),
+                           "Receiver_Callback::fwrite failed\n"),
                           -1);
-      
+
       frame = frame->cont ();
     }
+
   return 0;
 }
 
@@ -59,24 +60,30 @@ Receiver_Callback::handle_destroy (void)
   // Called when the distributer requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::end_stream\n"));
-  TAO_AV_CORE::instance ()->orb ()->shutdown ();
-  return 0;
-}
 
+  ACE_TRY_NEW_ENV
+    {
+      TAO_AV_CORE::instance ()->orb ()->shutdown (0,
+                                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Receiver_Callback::handle_destroy Failed\n");
+      return -1;
 
-int
-Receiver_Callback::handle_stop (void)
-{
-  // Called when the distributer requests the stream to be shutdown.
-  ACE_DEBUG ((LM_DEBUG,
-              "Receiver_Callback::end_stream\n"));
-  TAO_AV_CORE::instance ()->orb ()->shutdown ();
+    }
+  ACE_ENDTRY;
+
   return 0;
 }
 
 Receiver::Receiver (void)
-  : default_port_ (10000),
-    protocol_ ("UDP")
+  : mmdevice_ (0),
+    output_file_name_ ("output"),
+    sender_name_ ("distributer"),
+    receiver_name_ ("receiver")
 {
 }
 
@@ -93,15 +100,16 @@ Receiver::init (int,
   int result =
     this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                    TAO_AV_CORE::instance ()->poa ());
-  
   if (result != 0)
     return result;
 
-  // Initialize the helper.
-  this->helper_.init (TAO_AV_CORE::instance ()->orb (), 
-                      TAO_AV_CORE::instance ()->poa ());
-  
-  // Register the receiver mmdevice object with the ORB 
+  // Initialize the connection manager.
+  result =
+    this->connection_manager_.init (TAO_AV_CORE::instance ()->orb ());
+  if (result != 0)
+    return result;
+
+  // Register the receiver mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
                   TAO_MMDevice (&this->reactive_strategy_),
                   -1);
@@ -110,51 +118,27 @@ Receiver::init (int,
   PortableServer::ServantBase_var safe_mmdevice =
     this->mmdevice_;
 
-  this->mmdevice_obj_ =
+  AVStreams::MMDevice_var mmdevice =
     this->mmdevice_->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN(-1);
-  
-  // Bind to sender
-  result = this->helper_.bind_to_sender (&sender_device_name_,
-                                         &receiver_device_name_,
-                                         this->sender_mmdevice_.inout (),
-                                         this->mmdevice_obj_.in (),
-                                         ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
-  ACE_DEBUG ((LM_DEBUG,
-              "Bound to senders\n"));
-  
-  if (result != 0)
-    return result;
 
-  ACE_CString flow_protocol_str ("");
-
-  ACE_CString address ("");
-
-  result = this->helper_.connect_to_sender (&sender_device_name_,
-                                            &receiver_device_name_,
-                                            &flow_protocol_str,
-                                            &this->protocol_,
-                                            &address,
-                                            this->sender_mmdevice_.inout (),
-                                            this->mmdevice_obj_.in (),
-                                            this->streamctrl_map_,
+  // Bind to sender.
+  this->connection_manager_.bind_to_sender (this->sender_name_,
+                                            this->receiver_name_,
+                                            mmdevice.in (),
                                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
-  ACE_DEBUG ((LM_DEBUG,
-              "Connected to senders\n"));
-  
-  if (result != 0)
-    return result;
+
+  // Connect to the sender.
+  this->connection_manager_.connect_to_sender (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-parse_args (int argc,
-            char **argv)
+Receiver::parse_args (int argc,
+                      char **argv)
 {
   // Parse the command line arguments
   ACE_Get_Opt opts (argc,
@@ -167,22 +151,28 @@ parse_args (int argc,
       switch (c)
         {
         case 'f':
-          output_file_name = opts.optarg;
+          this->output_file_name_ = opts.optarg;
           break;
         case 's':
-          sender_device_name_ = opts.optarg;
+          this->sender_name_ = opts.optarg;
           break;
         case 'r':
-          receiver_device_name_ = opts.optarg;
+          this->receiver_name_ = opts.optarg;
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Usage: server -f filename"),
+                             "Usage: receiver -f filename"),
                             -1);
         }
     }
 
   return 0;
+}
+
+ACE_CString
+Receiver::output_file_name (void)
+{
+  return this->output_file_name_;
 }
 
 int
@@ -193,30 +183,12 @@ main (int argc,
   ACE_TRY
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0,
-                                            ACE_TRY_ENV);
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc,
+                         argv,
+                         0,
+                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      int result =
-        parse_args (argc,
-                    argv);
-
-      if (result == -1)
-        return -1;
-
-      // Make sure we have a valid <output_file>
-      output_file = ACE_OS::fopen (output_file_name,
-                                   "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Cannot open output file %s\n",
-                           output_file_name),
-                          -1);
-
-      else ACE_DEBUG ((LM_DEBUG,
-		       "File Opened Successfull\n"));
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA",
@@ -243,16 +215,42 @@ main (int argc,
       ACE_TRY_CHECK;
 
       Receiver receiver;
+      int result =
+        receiver.parse_args (argc,
+                             argv);
+      if (result == -1)
+        return -1;
+
+      // Make sure we have a valid <output_file>
+      output_file =
+        ACE_OS::fopen (receiver.output_file_name ().c_str (),
+                       "w");
+      if (output_file == 0)
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           "Cannot open output file %s\n",
+                           receiver.output_file_name ().c_str ()),
+                          -1);
+
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "File Opened Successfull\n"));
+
       result =
         receiver.init (argc,
-                     argv,
-                     ACE_TRY_ENV);
+                       argv,
+                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (result != 0)
         return result;
-      
+
       orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Hack for now....
+      ACE_OS::sleep (1);
+
+      orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -269,13 +267,9 @@ main (int argc,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_AV_Endpoint_Reactive_Strategy_B
-<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy
-<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
+template class TAO_AV_Endpoint_Reactive_Strategy_B<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
+template class TAO_AV_Endpoint_Reactive_Strategy<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B
-<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy
-<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage
+//    TAO/orbsvcs/tests/AVStreams/Simple
 //
 // = FILENAME
 //    sender.h
@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#include "Connection_Manager.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
@@ -69,18 +69,27 @@ public:
   int pace_data (CORBA::Environment &);
   // Method to pace and send data from a file.
 
-  Connection_Manager &connection_manager (void);
-  // Accessor to the connection manager.
+  void protocol_object (TAO_AV_Protocol_Object *protocol_object);
+  // Set the protocol object corresponding to the transport protocol chosen.
 
 private:
   int parse_args (int argc, char **argv);
   // Method to parse the command line arguments.
 
+  int bind_to_receiver (CORBA::Environment& ACE_TRY_ENV);
+  // Method that binds the sender to the receiver.
+
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;
   // The endpoint strategy used by the sender.
 
+  AVStreams::MMDevice_var receiver_mmdevice_;
+  // The receiver MMDevice that the sender connects to.
+
   TAO_MMDevice *sender_mmdevice_;
   // The sender MMDevice.
+
+  TAO_StreamCtrl *streamctrl_;
+  // Stream controller
 
   int frame_count_;
   // Number of frames sent.
@@ -88,8 +97,14 @@ private:
   ACE_CString filename_;
   // File from which data is read.
 
+  TAO_Naming_Client naming_client_;
+  // The Naming Service client.
+
   FILE *input_file_;
   // File handle of the file read from.
+
+  ACE_CString protocol_;
+  // Selected protocol - default is UDP
 
   int frame_rate_;
   // Rate at which the data will be sent.
@@ -97,9 +112,6 @@ private:
   ACE_Message_Block mb_;
   // Message block into which data is read from a file and then sent.
 
-  ACE_CString sender_name_;
-  // Name of this sender.
-
-  // Connection manager.
-  Connection_Manager connection_manager_;
+  TAO_AV_Protocol_Object *protocol_object_;
+  // Protocol object corresponding to the transport protocol selected.
 };

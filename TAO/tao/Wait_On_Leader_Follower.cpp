@@ -92,7 +92,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                       cond));
 
         // Keep the entry on the stack
-        ACE_NESTED_CLASS (TAO_Leader_Follower, TAO_Follower_Node) node(cond);
+        TAO_Leader_Follower::TAO_Follower_Node node (cond);
 
         while (!reply_received &&
                leader_follower.leader_available ())
@@ -321,7 +321,7 @@ TAO_Wait_On_Leader_Follower::reply_dispatched (int &reply_received_flag,
 
   // The following works as the node is assumed to be on the stack
   // till the thread is alive.
-  ACE_NESTED_CLASS (TAO_Leader_Follower, TAO_Follower_Node) node (condition);
+  TAO_Leader_Follower::TAO_Follower_Node node (condition);
 
   // We *must* remove it when we signal it so the same condition
   // is not signalled for both wake up as a follower and as the
@@ -355,7 +355,7 @@ TAO_Wait_On_Leader_Follower::connection_closed (int &reply_received_flag,
 
   // The following works as the node is assumed to be on the stack
   // till the thread is alive.
-  ACE_NESTED_CLASS (TAO_Leader_Follower, TAO_Follower_Node) node(condition);
+  TAO_Leader_Follower::TAO_Follower_Node node (condition);
 
   (void) leader_follower.remove_follower (&node);
 
