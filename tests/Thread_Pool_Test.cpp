@@ -18,7 +18,9 @@
 //      worker tasks compared to queue deactivate.
 //
 // = AUTHOR
-//    Karlheinz Dorn, Doug Schmidt, and Prashant Jain
+//    Karlheinz Dorn <Karlheinz.Dorn@med.siemens.de>, 
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, and 
+//    Prashant Jain <pjain@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -153,10 +155,12 @@ Thread_Pool::open (void *)
                        ASYS_TEXT ("activate failed")),
                       -1);
 
-  for (size_t count = 0; count < n_iterations; count++)
-    {
-      ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
 
+  for (size_t count = 0;
+       count < n_iterations;
+       count++)
+    {
       // Allocate a new message.
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (BUFSIZ,
@@ -192,8 +196,6 @@ Thread_Pool::open (void *)
               this->thr_count ()));
   this->dump ();
 
-  ACE_Message_Block *mb;
-
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (0,
                                      ACE_Message_Block::MB_DATA,
@@ -202,9 +204,11 @@ Thread_Pool::open (void *)
                                      0,
                                      &this->lock_adapter_),
                   -1);
+  int i = 0;
 
-  int i = this->thr_count ();
-  while (i > 0)
+  for (i = this->thr_count ();
+       i > 0;
+       i--)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%t) EOF, enqueueing NULL block for thread = %d\n"),
@@ -219,7 +223,6 @@ Thread_Pool::open (void *)
         ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT (" (%t) %p\n"),
                     ASYS_TEXT ("put")));
-      i--;
     }
 
   mb->release ();
