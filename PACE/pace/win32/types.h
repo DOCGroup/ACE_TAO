@@ -18,6 +18,7 @@
 
 #include <sys/types.h>
 #include <wtypes.h>
+#include <windef.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
