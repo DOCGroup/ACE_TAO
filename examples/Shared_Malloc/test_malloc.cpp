@@ -32,9 +32,11 @@ malloc_recurse (int count)
   if (count <= 0)
     {
       if (Options::instance ()->debug ())
-        // Note that you'll need to #define ACE_HAS_MALLOC_STATS in
-        // the main ACE config.h file and remake ACE to enable this.
-        ACE_MALLOC_STATS (Malloc::instance ()->print_stats ());
+        {
+          // Note that you'll need to #define ACE_HAS_MALLOC_STATS in
+          // the main ACE config.h file and remake ACE to enable this.
+          ACE_MALLOC_STATS (Malloc::instance ()->print_stats ());
+        }
     }
   else
     {

@@ -12,7 +12,18 @@ else {
     $ACE_ROOT = $ENV{ACE_ROOT};
 }
 
-@directories = ($ACE_ROOT);
+@directories = ();
+
+# Make sure to list these in opposite order (first to be compiled
+# should be last).
+@ace_dirs = ("$ACE_ROOT/ace",
+             "$ACE_ROOT/apps", 
+             "$ACE_ROOT/ASNMP", 
+             "$ACE_ROOT/examples", 
+             "$ACE_ROOT/netsvcs", 
+             "$ACE_ROOT/performance-tests", 
+             "$ACE_ROOT/tests", 
+             "$ACE_ROOT/websvcs");
 
 $verbose = 0;
 $print_status = 0;
@@ -25,6 +36,7 @@ $Build_All = 1;
 $build_core_only = 0;
 $Build_Cmd = "/BUILD";
 $use_custom_dir = 0;
+$useenv = '';
 
 # Find_dsp will search a directory for *.dsp files and return a list
 # of strings that include the project name and the configuration
@@ -97,7 +109,7 @@ sub Build ($$)
 
   print "Building $project $config\n" if $verbose;
 
-  return system ("msdev.com $project /MAKE \"$config\" $Build_Cmd");
+  return system ("msdev.com $project /MAKE \"$config\" $Build_Cmd $useenv");
 }
 
 # Only builds the core libraries.
@@ -216,17 +228,23 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     elsif ($ARGV[0] =~ '-s') {          # status messages
         $print_status = 1;
     }
-    elsif ($ARGV[0] =~ '-core') {       # Build only the core of ace/tao
-        print "Building Core only\n" if ( $verbose );
+    elsif ($ARGV[0] =~ '-u') {          # USEENV
+        print "Using Environment\n" if ($verbose);
+        $useenv = '/USEENV';
+    }
+    elsif ($ARGV[0] =~ '-CORE') {       # Build the core of ace/tao
+        print "Building only Core\n" if ( $verbose );
         $build_core_only = 1;
+    }
+    elsif ($ARGV[0] =~ '-ACE') {       # Build ACE and its programs
+        print "Building ACE\n" if ( $verbose );
+        $use_custom_dir = 1;
+	push @directories, @ace_dirs;
     }
     elsif ($ARGV[0] =~ '-dir') {        # Compile only a specific directory
         shift;
         print "Adding directory $ARGV[0]\n" if ( $verbose );
-        if (!$use_custom_dir) {
-            $use_custom_dir = 1;
-            @directories = ();
-        }
+        $use_custom_dir = 1;
         push @directories, $ARGV[0];
     }
     elsif ($ARGV[0] =~ '-rebuild') {    # Rebuild all
@@ -262,8 +280,12 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "-k         = Ignore Errors\n";
         print "-v         = Script verbose Mode\n";
         print "-s         = Print status messages to STDERR\n";
-        print "-core      = Build the Core\n";
+        print "-u         = Tell MSVC to use the environment\n";
+        print "\n";
+        print "-CORE      = Build the Core libraries\n";
+        print "-ACE       = Build ACE and its programs\n";
         print "-dir <dir> = Compile custom directories\n";
+        print "\n";
         print "-rebuild   = Rebuild All\n";
         print "-clean     = Clean\n";
         print "-Debug     = Compile Debug versions\n";
@@ -289,11 +311,15 @@ if (!$Build_Debug && !$Build_Release) {
     $Build_Release = 1;
 }
 
+if ($#directories < 0) {
+    @directories = ($ACE_ROOT);
+}
+
 print "msvc_auto_compile: Begin\n";
 print STDERR "Beginning Core Build\n" if ($print_status == 1);
 Build_Core if (!$use_custom_dir || $build_core_only);
 print STDERR "Beginning Full Build\n" if ($print_status == 1);
-Build_All if (!$build_core_only);
+Build_All if !$build_core_only;
 
 print "msvc_auto_compile: End\n";
 print STDERR "End\n" if ($print_status == 1);

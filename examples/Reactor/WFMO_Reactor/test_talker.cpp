@@ -514,7 +514,7 @@ main (int argc, char *argv[])
 {
   // Let the proactor know that it will be used with Reactor
   // Create specific proactor
-  ACE_WIN32_Proactor win32_proactor (0, 0, 1);
+  ACE_WIN32_Proactor win32_proactor (0, 1);
   // Get the interface proactor
   ACE_Proactor proactor (&win32_proactor);
   // Put it as the instance.
