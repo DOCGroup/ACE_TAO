@@ -1,3 +1,10 @@
+Wed Oct  9 23:08:19 2002  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/rules.lib.GNU: For the funky AIX shr.o/lib*.a
+          machination, declare shr.o as .INTERMEDIATE to avoid rebuilding it
+          all the time for nothing. Thanks to Craig L. Ching for motivating
+          this.
+
 Wed Oct 09 12:19:40 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/PerlACE/Process_Win32.pm: Added hack to purify a process.
