@@ -345,11 +345,11 @@ ACE_Get_Opt::short_option_i (void)
 
   /* Look at and handle the next option-character.  */
   ACE_TCHAR opt = *this->nextchar_++;
-  // Set last_option_ to opt 
+  // Set last_option_ to opt
   this->last_option (opt);
 
   ACE_TCHAR *oli = 0;
-  oli = ACE_const_cast (ACE_TCHAR*, 
+  oli = ACE_const_cast (ACE_TCHAR*,
                         ACE_OS::strchr (this->optstring_.c_str (), opt));
 
   /* Increment `optind' when we start to process its last character.  */
@@ -481,7 +481,7 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
       // add it.
       ACE_TCHAR *s = 0;
       if ((s = ACE_const_cast (ACE_TCHAR*,
-                               ACE_OS::strchr (this->optstring_.c_str (), 
+                               ACE_OS::strchr (this->optstring_.c_str (),
                                                short_option))) != 0)
         {
           // Short option exists, so verify the argument options
@@ -583,7 +583,7 @@ ACE_Get_Opt::dump (void) const
   ACE_TRACE ("ACE_Get_Opt::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n") 
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")
               ACE_LIB_TEXT ("opstring_ = %s\n")
               ACE_LIB_TEXT ("long_only_ = %d\n")
               ACE_LIB_TEXT ("has_colon_ = %d\n")
@@ -599,7 +599,7 @@ ACE_Get_Opt::dump (void) const
               this->optopt_,
               this->ordering_));
 
-  // now loop through the 
+  // now loop through the
   size_t size = this->long_opts_.size ();
   for (u_int i = 0; i < size ; ++i)
     {

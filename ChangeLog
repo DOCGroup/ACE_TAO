@@ -1,41 +1,41 @@
 Wed Apr 16 19:27:29 UTC 2003  Don Hinton  <dhinton@drestystems.com>
-        
+
         * ace/Get_Opt.{h,cpp}:
-        
+
           Added default value for optstring in ctor so that apps can
           more easily only use the long option format without also
           having to provide a blank optstring.
-        
+
           Added new method, last_option(), which returns the last option
           processed.  This allows applications to see the actual command
           line text of the last option that was found (or not found in
           the case of an error).  This is especially useful in cases where
           the option was invalid and the caller wants to print out the
           invalid value.
-        
+
           Enhanced dump() output.
-        
+
         * tests/Get_Opt_Test.cpp:
-        
+
           Modified test to utilize new method, last_option().
-        
+
         * ace/Configuration.{h,cpp}:
-        
+
           Added the ability to have a default, or unnamed, key.  This
-          is done with the help of a new validate_value_name() method 
+          is done with the help of a new validate_value_name() method
           which deals with the differences between Windows and everything
           else.
-        
+
         * ace/Configuration_Import_Export.cpp (import_config):
-        
+
           Changed to allow unnamed keys.
-        
+
         * tests/Config_Test.cpp:
-        
+
           Added test for unnanmed keys.
-        
+
         * ace/Global_Macros.h:
-        
+
           Modified ACE_BEGIN_DUMP macro to include a newline charater
           at the end so that dump() output is easier to parse.
 
