@@ -1,3 +1,10 @@
+Tue Jun 22 11:12:42 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: added System Resource Requirements
+          section.  Thanks to Hakan Kallberg <hk@simulina.se>
+          and Eric Mitchell <emitchell@altaira.com> for the
+          Linux swap space and -pipe removal suggestions.
+
 Tue Jun 22 07:45:59 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Event_Handler_T.i: fixed some occurrences of
