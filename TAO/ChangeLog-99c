@@ -1,24 +1,36 @@
+Fri Apr 16 07:25:25 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/Dump_Schedule/Makefile,orbsvcs/Event_Service/Makefile,
+          orbsvcs/Scheduling_Service/Makefile,orbsvcs/tests/EC_Basic/Makefile,
+          orbsvcs/tests/EC_Custom_Marshal/Makefile,
+          orbsvcs/tests/EC_Mcast/Makefile,orbsvcs/tests/EC_Multiple/Makefile,
+          orbsvcs/tests/EC_Throughput/Makefile,
+          orbsvcs/tests/Event_Latency/Makefile
+          orbsvcs/tests/Sched/Makefile,orbsvcs/tests/Sched_Conf/Makefile:
+          only build if the orbsvcs library was built with the respective
+          TAO_ORBSVCS component.
+
 Thu Apr 15 16:35:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	* tao/Environment.cpp:
-	  Fixed initialization problem, to query the default environment
-	  we don't need the ORB_Core, only its TSS resources, this allow
-	  us to use CORBA_init() without the environment argument.
+        * tao/ORB_Core.cpp:
+        * tao/Environment.cpp:
+          Fixed initialization problem, to query the default environment
+          we don't need the ORB_Core, only its TSS resources, this allow
+          us to use CORBA_init() without the environment argument.
 
 Thu Apr 15 15:58:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.h:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
-	* orbsvcs/tests/AVStreams/server_discovery/Trader_Client.cpp:
-	* orbsvcs/tests/Trading/Offer_Importer.cpp:
-	* orbsvcs/tests/Trading/Offer_Importer.h:
-	  Changed the name of the TAO_Policy_Manager class in Trader_Utils 
-	  to TAO_Policy_Creator, the previous name had conflicts with the
-	  new TAO_Policy_Manager in $TAO_ROOT/tao.
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * orbsvcs/tests/AVStreams/server_discovery/Trader_Client.cpp:
+        * orbsvcs/tests/Trading/Offer_Importer.cpp:
+        * orbsvcs/tests/Trading/Offer_Importer.h:
+          Changed the name of the TAO_Policy_Manager class in Trader_Utils
+          to TAO_Policy_Creator, the previous name had conflicts with the
+          new TAO_Policy_Manager in $TAO_ROOT/tao.
 
-	* docs/releasenotes/TODO.html:
-	  A small update
+        * docs/releasenotes/TODO.html:
+          A small update
 
 Thu Apr 15 15:40:53 1999  David L. Levine  <levine@cs.wustl.edu>
 
