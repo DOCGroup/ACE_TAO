@@ -55,7 +55,7 @@ TAO/examples/Buffered_Oneways/run_test.pl: !MINIMUM
 # REQUIRES AMI 'TAO/examples/Buffered_AMI/run_test.pl: !MINIMUM
 TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM
 TAO/tests/Multiple/run_test.pl
-# This test is broken - to be fixed by Angelo TAO/tests/Exposed_Policies/run_test.pl
+TAO/tests/Exposed_Policies/run_test.pl
 TAO/tests/Portable_Interceptors/Dynamic/run_test.pl: !MINIMUM
 TAO/tests/Portable_Interceptors/IORInterceptor/run_test.pl: !MINIMUM
 TAO/tests/Portable_Interceptors/ForwardRequest/run_test.pl: !MINIMUM
