@@ -1,3 +1,11 @@
+Tue Dec 30 08:34:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+          Made this mpc a lot simpler so that the generated borland projects also
+          work. Thanks to Chad Elliot for explaining a much simpler way to
+          pass an extra IDL compiler option for just 2 of the 4 IDL files and
+          Huang-Ming Huang for testing that this works.
+
 Tue Dec 30 05:23:13 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/driver.cpp:
@@ -40,7 +48,7 @@ Mon Dec 29 14:43:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
 	  I cannot fathom why the following tests were prevented from
 	  compiling in minimum_corba builds. Fixed the MPC files to get
-	  them compiling. 
+	  them compiling.
 
 Mon Dec 29 14:36:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -62,7 +70,7 @@ Mon Dec 29 13:21:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
 
-	  #included a files that is needed for one of our builds.  
+	  #included a files that is needed for one of our builds.
 
 	* orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
 
@@ -73,7 +81,7 @@ Mon Dec 29 13:12:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
 
 	  Another one that shouldn't be built when minimum_corba is
-	  enabled. 
+	  enabled.
 
 Mon Dec 29 13:00:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -85,7 +93,7 @@ Mon Dec 29 13:00:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Mon Dec 29 12:55:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1670_Regression/server.dsp (BuildCmds): 
+	* tests/Bug_1670_Regression/server.dsp (BuildCmds):
 	* tests/Bug_1670_Regression/client.dsp:
 	* tests/Bug_1670_Regression/Bug_1670_Regression.dsw:
 
