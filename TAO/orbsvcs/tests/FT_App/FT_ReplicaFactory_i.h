@@ -30,6 +30,7 @@ class  FT_ReplicaFactory_i;
 #include <ace/Vector_T.h>
 #include "FT_TestReplicaS.h"
 #include <ace/Thread_Manager.h>
+#include <orbsvcs/FT_ReplicationManagerC.h>
 
 /////////////////////
 // Forward references
@@ -207,6 +208,19 @@ private:
    * A file to which the factory's IOR should be written.
    */
   const char * ior_output_file_;
+
+
+  /**
+   * bool: true if we found a replication manager
+   */
+  int have_replication_manager_;
+
+  /**
+   * The replication manager (if any
+   */
+
+  ::FT::ReplicationManager_var replication_manager_;
+
 
   /**
    * The factory registry IOR

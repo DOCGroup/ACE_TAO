@@ -105,7 +105,6 @@ project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe {
 
   Source_Files {
     FTAPP_FactoryRegistry_Main.cpp
-    FactoryRegistry_i.cpp
   }
 
   // explicitly omit IDL files
@@ -129,5 +128,6 @@ project(*Creator): taoclient, fault_tolerance, orbsvcsexe {
   Documentation_Files {
     // pretend the pl file is documentation for now
     run_test_registry.pl
+		run_test_rmregistry.pl
   }
 }
