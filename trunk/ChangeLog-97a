@@ -55,6 +55,30 @@ Wed May 14 16:32:57 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Wed May 14 15:00:58 1997    <irfan@TWOSTEP>
 
+	* ace/OS.h: Added UNICODE support for some #defines.
+
+	* OS.i (vsprintf): Added support for this in ACE_OS.
+
+	* OS.cpp (socket_init && socket_fini): It is ok to print out cout
+ 	  and cerr messages from here (as the C runtime library is still
+ 	  attached) but it is *not* ok to print out ACE_DEBUG
+ 	  messages. God only knows the state of the thread specific LogMsg
+ 	  instance when the process reaches this piece of code.
+
+	  Also added a (handy) sprintf that has the following prototype:
+
+	  sprintf (wchar_t *buf, const char *format, ...)
+
+	* ace/Process: UNICODE fixes.
+
+	* tests: Fixed the following such that they work with UNICODE:
+
+	  Pipe_Test.cpp 
+	  Process_Mutex_Test.cpp 
+	  Process_Strategy_Test.cpp 
+	  Time_Service_Test.cpp 
+	  Tokens_Test.cpp
+
 	* Time_Service_Test.cpp (main): Fixed typo in the svc.conf
  	  filename for the clerk.
 
