@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/OS_NS_unistd.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "testC.h"
 #include "MUF_Scheduler.h"
@@ -111,7 +112,7 @@ main (int argc, char *argv[])
 
   if (sched_policy == ACE_SCHED_RR)
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_RR;
-  else 
+  else
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_FIFO;
 
   ACE_hthread_t main_thr_handle;
@@ -189,9 +190,9 @@ main (int argc, char *argv[])
             {
               disp_impl_type = Kokyu::DSRT_OS_BASED;
             }
-          
+
           ACE_NEW_RETURN (scheduler,
-                          MUF_Scheduler (orb.in (), 
+                          MUF_Scheduler (orb.in (),
                                          disp_impl_type,
                                          sched_policy,
                                          sched_scope), -1);
