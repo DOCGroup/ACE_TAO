@@ -33,9 +33,11 @@ class ACE_URL_Record
   //     out of scope.
 {
   friend class ACE_URL_Local_Locator;
-  // Nanbor, is it really necessary to have ACE_Node<> as a friend?
-  // That seems like it breaks encapsulation. 
   friend class ACE_Node<ACE_URL_Record>;
+  // We are making ACE_Node as friend class because we don't want
+  // others to access default constructor and pushing in an invalid
+  // record.  However, container classes need to use default constructor
+  // for its head record.
 public:
   ACE_URL_Record (ACE_URL_Offer *offer);
   // ctor.
@@ -51,8 +53,8 @@ public:
 
 private:
   ACE_URL_Record (void);
-  // Nanbor, please explain why this is private.
-  // default ctor.
+  // Default ctor.  This is put here to prevent users from
+  // pushing in an invalid record.
 
   ACE_WString *id_;
   // Offer ID in the repository.
@@ -101,9 +103,7 @@ class ACE_Export ACE_URL_Local_Locator
   // Modify a previously registered offer.
 
 protected:
-  ACE_Unbounded_Stack<ACE_URL_Record> repository_;
-  // Nanbor, please add a comment here.  In particular, why do you use
-  // a stack rather than, e.g., a set?
+  ACE_Unbounded_Set<ACE_URL_Record> repository_;
 };
 
 #if defined (__ACE_INLINE__)
