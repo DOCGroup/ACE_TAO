@@ -13,7 +13,7 @@ OBJFILES = \
 CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
-	-DTEST_CLIENT_MODULE_BUILD_DLL=1
+        -DTEST_CLIENT_MODULE_BUILD_DLL
 
 LIBFILES = \
 	$(ACE_LIB) \
@@ -26,7 +26,7 @@ CPPDIR = .
 
 IDLDIR = .
 
-!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
 
 #
 # IDL Build rules
