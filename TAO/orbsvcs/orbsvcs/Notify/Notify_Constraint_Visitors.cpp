@@ -216,8 +216,9 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
                 ACE_TRY_CHECK;
 
                 const char *member_name = 0;
+                CORBA::ULong i = 0;
 
-                for (CORBA::ULong i = 0; i < count; ++i)
+                for (i = 0; i < count; ++i)
                   {
                     member_name = tc->member_name (i
                                                    TAO_ENV_ARG_PARAMETER);
