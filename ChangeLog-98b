@@ -1,18 +1,22 @@
 Tue Jun 30 13:13:21 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (open): Made sure that size does not exceed
- 	  MAXIMUM_WAIT_OBJECTS.  Thanks to Dr. Schmidt for pointing this
- 	  out.
+        * ace/WFMO_Reactor.cpp (open): Made sure that size does not exceed
+          MAXIMUM_WAIT_OBJECTS.  Thanks to Dr. Schmidt for pointing this
+          out.
 
 Tue Jun 30 11:45:12 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/Message_Queue_T.cpp: Added explicit class names where needed
-	  for ANSI C++.  Fixed some compile errors.  Still needs more work to
-	  compile correctly on HP-UX aCC.
+        * ace/Message_Queue_T.cpp: Added explicit class names where needed
+          for ANSI C++.  Fixed some compile errors.  Still needs more work to
+          compile correctly on HP-UX aCC.
 
 Tue Jun 30 09:27:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * etc/ACE-guidelines.html: added a guideline about using ACE_Export.
+
+        * ace/Message_Queue.cpp (ACE_Message_Queue_Vx::dtor): added close ()
+          call to destructor, because the one in the parent class will never
+          get called because head_ is always 0.
 
 Tue Jun 30 03:39:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
