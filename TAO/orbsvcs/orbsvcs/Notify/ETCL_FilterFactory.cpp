@@ -33,7 +33,8 @@ TAO_NS_ETCL_FilterFactory::create_filter (const char *constraint_grammar ACE_ENV
 {
   // @@: change to "ExTCL" later.
   if (ACE_OS::strcmp (constraint_grammar, "TCL") != 0 &&
-      ACE_OS::strcmp (constraint_grammar, "ETCL") != 0)
+      ACE_OS::strcmp (constraint_grammar, "ETCL") != 0 &&
+      ACE_OS::strcmp (constraint_grammar, "EXTENDED_TCL") != 0)
     ACE_THROW_RETURN (CosNotifyFilter::InvalidGrammar (), 0);
 
 
