@@ -21,6 +21,11 @@ Tue Sep 22 15:33:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  subscriptions; we still have to propagate this to the multicast
 	  groups that we join.
 
+	* orbsvcs/orbsvcs/Scheduler_Factory.h: 
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
+	  Added support for configuring a local scheduler, without using
+	  the naming service.
+
 Tue Sep 22 14:29:29 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	Made changes to the ACE_DEBUG to print the server/client Process

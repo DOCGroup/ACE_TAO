@@ -148,6 +148,16 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
   return 0;
 }
 
+int
+ACE_Scheduler_Factory::server (RtecScheduler::Scheduler_ptr sptr)
+{
+  if (server_ != 0 || TAO_SF_entry_count != -1)
+    return -1;
+
+  server_ = RtecScheduler::Scheduler::_duplicate (sptr);
+  return 0;
+}
+
 RtecScheduler::Scheduler_ptr
 ACE_Scheduler_Factory::server (void)
 {
