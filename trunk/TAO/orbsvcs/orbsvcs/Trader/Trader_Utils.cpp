@@ -274,7 +274,7 @@ TAO_Property_Evaluator::property_value (int index,
       value >>= dp_struct;
 
       CosTradingDynamic::DynamicPropEval_var dp_eval =
-        CosTradingDynamic::DynamicPropEval::_duplicate (dp_struct->eval_if);
+        CosTradingDynamic::DynamicPropEval::_duplicate (dp_struct->eval_if.in ());
 
       if (CORBA::is_nil (dp_eval.in ()))
         {
@@ -458,7 +458,7 @@ construct_dynamic_prop (const char* name,
       CosTradingDynamic::DynamicPropEval_var dp_eval =
         this->_this (TAO_TRY_ENV);
 
-      dp_struct->eval_if = dp_eval;
+      dp_struct->eval_if = dp_eval.in ();
 
       TAO_CHECK_ENV;
 
