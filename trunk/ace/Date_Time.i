@@ -3,6 +3,9 @@
 
 // Date_Time.i
 
+#include "ace/OS.h"
+#include "ace/Time_Value.h"
+
 ASYS_INLINE void
 ACE_Date_Time::update (void)
 {

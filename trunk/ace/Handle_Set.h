@@ -14,11 +14,14 @@
 #define ACE_HANDLE_SET_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/os_include/sys/os_select.h"
+#include "ace/os_include/os_limits.h"
 
 #if (defined (ACE_PSOS) && !defined (ACE_PSOSIM)) || defined (__QNX__)
    typedef long fd_mask;

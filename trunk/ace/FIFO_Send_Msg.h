@@ -21,6 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// Forward Decls
+class ACE_Str_Buf;
+
 /**
  * @class ACE_FIFO_Send_Msg
  *

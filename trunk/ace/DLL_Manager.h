@@ -15,14 +15,14 @@
 #define ACE_DLL_MANAGER_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
 #include "ace/Synch_T.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Auto_Ptr.h"
+#include "ace/SStringfwd.h"
 
 #define ACE_DEFAULT_DLL_MANAGER_SIZE 1024
 

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/FIFO_Send_Msg.h"
+#include "ace/OS.h"
 
 ACE_RCSID(FIFO_SAP, FIFO_Msg_client, "$Id$")
 
@@ -29,7 +30,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 #else
-#include <stdio.h>
+#include "ace/os_include/os_stdio.h"
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_OS::fprintf (stderr, "This feature is not supported\n");

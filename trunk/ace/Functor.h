@@ -32,11 +32,14 @@
 #define ACE_FUNCTOR_H
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ACE_export.h"
+#include "ace/Basic_Types.h"
 
 //////////////////////////////////////////////////////////////
 // GOF Command Pattern Classes and Template Specializations //
@@ -93,7 +96,7 @@ class ACE_Export ACE_Hash<char>
 {
 public:
   /// Simply returns t
-  u_long operator () (char t) const;
+  unsigned long operator () (char t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -106,7 +109,7 @@ class ACE_Export ACE_Hash<signed char>
 {
 public:
   /// Simply returns t
-  u_long operator () (signed char t) const;
+  unsigned long operator () (signed char t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -119,7 +122,7 @@ class ACE_Export ACE_Hash<unsigned char>
 {
 public:
   /// Simply returns t
-  u_long operator () (unsigned char t) const;
+  unsigned long operator () (unsigned char t) const;
 };
 
 // @@ ADD HASHES FOR ACE TYPES
@@ -134,7 +137,7 @@ class ACE_Export ACE_Hash<ACE_INT16>
 {
 public:
   /// Simply returns t
-  u_long operator () (ACE_INT16 t) const;
+  unsigned long operator () (ACE_INT16 t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -147,7 +150,7 @@ class ACE_Export ACE_Hash<ACE_UINT16>
 {
 public:
   /// Simply returns t
-  u_long operator () (ACE_UINT16 t) const;
+  unsigned long operator () (ACE_UINT16 t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -160,7 +163,7 @@ class ACE_Export ACE_Hash<ACE_INT32>
 {
 public:
   /// Simply returns t
-  u_long operator () (ACE_INT32 t) const;
+  unsigned long operator () (ACE_INT32 t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -173,7 +176,7 @@ class ACE_Export ACE_Hash<ACE_UINT32>
 {
 public:
   /// Simply returns t
-  u_long operator () (ACE_UINT32 t) const;
+  unsigned long operator () (ACE_UINT32 t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -186,7 +189,7 @@ class ACE_Export ACE_Hash<ACE_UINT64>
 {
 public:
   /// Simply returns t
-  u_long operator () (ACE_UINT64 t) const;
+  unsigned long operator () (ACE_UINT64 t) const;
 };
 
 // @@ DONE ADDING HASHES FOR ACE TYPES
@@ -201,7 +204,7 @@ class ACE_Export ACE_Hash<const ACE_TCHAR *>
 {
 public:
   /// Calls ACE::hash_pjw
-  u_long operator () (const ACE_TCHAR *t) const;
+  unsigned long operator () (const ACE_TCHAR *t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -214,7 +217,7 @@ class ACE_Export ACE_Hash<ACE_TCHAR *>
 {
 public:
   /// Calls ACE::hash_pjw
-  u_long operator () (const ACE_TCHAR *t) const;
+  unsigned long operator () (const ACE_TCHAR *t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -226,7 +229,7 @@ ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Hash<void *>
 {
 public:
-  u_long operator () (const void *) const;
+  unsigned long operator () (const void *) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -406,7 +409,7 @@ class ACE_Export ACE_Hash<const ACE_ANTI_TCHAR *>
 {
 public:
   /// Calls ACE::hash_pjw
-  u_long operator () (const ACE_ANTI_TCHAR *t) const;
+  unsigned long operator () (const ACE_ANTI_TCHAR *t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION
@@ -419,7 +422,7 @@ class ACE_Export ACE_Hash<ACE_ANTI_TCHAR *>
 {
 public:
   /// Calls ACE::hash_pjw
-  u_long operator () (const ACE_ANTI_TCHAR *t) const;
+  unsigned long operator () (const ACE_ANTI_TCHAR *t) const;
 };
 
 ACE_TEMPLATE_SPECIALIZATION

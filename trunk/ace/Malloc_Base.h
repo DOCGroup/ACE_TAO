@@ -15,11 +15,14 @@
 #define ACE_MALLOC_BASE_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/os_include/sys/os_types.h"
+#include "ace/os_include/sys/os_mman.h"
 
 // The definition of this class is located in Malloc.cpp.
 

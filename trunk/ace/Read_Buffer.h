@@ -22,7 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
+#include "ace/Global_Macros.h"
+#include "ace/os_include/os_stdio.h"
 
 class ACE_Allocator;
 

@@ -15,11 +15,14 @@
 #define ACE_DLL_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Global_Macros.h"
+#include "ace/os_include/os_dlfcn.h"
 
 class ACE_DLL_Handle;
 

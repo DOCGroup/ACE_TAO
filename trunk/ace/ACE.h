@@ -14,7 +14,7 @@
 #define ACE_ACE_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,6 +25,7 @@
 #include "ace/Lib_Find.h"
 #include "ace/Init_ACE.h"
 #include "ace/Sock_Connect.h"
+#include "ace/Default_Constants.h"
 
 // Forward declarations.
 class ACE_Time_Value;

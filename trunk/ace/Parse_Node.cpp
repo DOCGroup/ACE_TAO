@@ -2,15 +2,15 @@
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
-#include "ace/Service_Config.h"
-#include "ace/Service_Repository.h"
-#include "ace/Service_Types.h"
-#include "ace/Task.h"
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Parse_Node.i"
 #endif /* ____ */
 
+#include "ace/Service_Config.h"
+#include "ace/Service_Repository.h"
+#include "ace/Service_Types.h"
+#include "ace/Task.h"
+#include "ace/DLL.h"
 
 ACE_RCSID (ace,
            Parse_Node,

@@ -15,14 +15,13 @@
 
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Malloc_Base.h"
-#include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_MALLOC_STATS)
 #include "ace/Synch_T.h"

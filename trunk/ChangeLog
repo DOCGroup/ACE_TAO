@@ -1,3 +1,105 @@
+Sun Jun 22 03:27:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/ACE.h:
+        * ace/ARGV.h:
+        * ace/Array_Base.cpp:
+        * ace/Array_Base.h:
+        * ace/Asynch_Connector.h:
+        * ace/Asynch_IO.cpp:
+        * ace/Asynch_IO.h:
+        * ace/Asynch_Pseudo_Task.h:
+        * ace/Based_Pointer_Repository.h:
+        * ace/DEV.cpp:
+        * ace/DEV_Addr.h:
+        * ace/DEV_Connector.cpp:
+        * ace/DEV_IO.h:
+        * ace/DEV_IO.i:
+        * ace/DLL.h:
+        * ace/DLL_Manager.cpp:
+        * ace/DLL_Manager.h:
+        * ace/Date_Time.h:
+        * ace/Date_Time.i:
+        * ace/Event_Handler.h:
+        * ace/Event_Handler_T.i:
+        * ace/FIFO.h:
+        * ace/FIFO_Recv.h:
+        * ace/FIFO_Recv.i:
+        * ace/FIFO_Recv_Msg.h:
+        * ace/FIFO_Send.h:
+        * ace/FIFO_Send.i:
+        * ace/FIFO_Send_Msg.h:
+        * ace/FILE.cpp:
+        * ace/FILE_Addr.h:
+        * ace/FILE_IO.h:
+        * ace/FILE_IO.i:
+        * ace/Flag_Manip.h:
+        * ace/Flag_Manip.i:
+        * ace/Free_List.h:
+        * ace/Functor.h:
+        * ace/Functor.i:
+        * ace/Get_Opt.cpp:
+        * ace/Handle_Ops.cpp:
+        * ace/Handle_Ops.h:
+        * ace/Handle_Set.h:
+        * ace/Lib_Find.h:
+        * ace/Malloc_Allocator.h:
+        * ace/Malloc_Allocator.i:
+        * ace/Malloc_Base.h:
+        * ace/Message_Block_T.cpp:
+        * ace/OS.h:
+        * ace/Parse_Node.cpp:
+        * ace/Process.h:
+        * ace/Read_Buffer.h:
+        * ace/Service_Object.h:
+        * ace/Sock_Connect.h:
+        * ace/Thread_Control.h:
+        * ace/Thread_Exit.h:
+        * ace/Typed_SV_Message.h:
+        * ace/Unbounded_Queue.h:
+          Removed include of OS.h and/or ACE.h from headers and adjusted
+          includes in headers and other files by including appropriate
+          headers in order to reduce dependencies as part of the
+          subsetting effort.          
+
+        * ace/OS.h:
+        * ace/Asynch_IO.cpp:
+        * ace/Asynch_IO.h:
+          Changed u_long to unsigned long to help remove dependencies.
+          Moved the typedef for TRANSMIT_FILE_BUFFERS here from OS.h.
+
+        * ace/Functor.h:
+        * ace/Functor.i:
+          Changed u_long to unsigned long to help remove dependencies.
+
+        * ace/OS.h:
+        * ace/Global_Macros.h:
+          Moved definitions for many macros including
+          LPSECURITY_ATTRIBUTES and GENERIC_READ, etc... here from OS.h.
+          Moved the ACE_ALLOCATOR_* macros here from OS.h. 
+
+        * ace/Makefile.ace:
+          Added Date_Time so it will get build if
+          ACE_LACKS_INLINE_FUNCTIONS is defined.
+
+        * ace/os_include/os_pthread.h:
+          Added include of ace/OS_Export.h if ACE_HAS_POSIX_SEM to pick up
+          ACE_Export.
+
+        * ace/OS.h:
+        * ace/os_include/os_signal.h:
+          Moved ACE_SIGRTMIN, etc., defines here from OS.h.
+
+        * ace/OS.h:
+        * ace/os_include/os_stdio.h:
+          Moved ACE_OVERLAPPED typedef here from OS.h.
+
+        * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-client.cpp:
+        * websvcs/lib/URL_Addr.i:
+          Added include of OS.h.
+
+        * tests/CDR_File_Test.cpp:
+          Added include of ACE.h.
+
 Sat Jun 21 13:47:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:
@@ -277,7 +379,6 @@ Wed Jun 18 17:20:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           Noseworthy <j.russell.noseworthy@objectsciences.com> for
           providing these patches.
 
->>>>>>> 4.5220
 Wed Jun 18 15:59:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:
