@@ -211,11 +211,9 @@ CORBA_ConstructionPolicy_ptr CORBA_ConstructionPolicy::_unchecked_narrow (
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, CORBA_ConstructionPolicy (stub), CORBA_ConstructionPolicy::_nil ());
-      #if (TAO_HAS_SMART_PROXIES == 1)
-        return TAO_CORBA_ConstructionPolicy_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else 
-        return default_proxy;
-      #endif /*TAO_HAS_SMART_PROXIES == 1*/
+
+      return default_proxy;
+
     }
   else 
     return
