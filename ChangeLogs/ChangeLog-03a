@@ -1,3 +1,8 @@
+Mon Jul  3 08:04:00 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/POSIX_Proactor.h (ACE_POSIX_AIOCB_Proactor): Fixed another
+	  syntax error.  Thanks to David Levine for reporting it.
+
 Mon Jul  3 00:22:57 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* ace/OS.{cpp,h}:
