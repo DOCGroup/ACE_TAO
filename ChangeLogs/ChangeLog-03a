@@ -1,3 +1,9 @@
+Thu Dec 12 00:01:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* netsvcs/clients/Naming/Client/Makefile: Fixed a small problem in
+	  static builds. Hopefully they should be fine in the next round
+	  of builds.
+
 Wed Dec 11 23:11:09 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/clean_sems.sh: A shell script to remove
