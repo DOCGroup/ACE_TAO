@@ -1,3 +1,11 @@
+Mon Jul  5 11:07:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_sunsoft.cpp:
+	  Modified a check of the char value in an AST_Expression
+	  to work also with unsigned chars. which is apparently
+	  the type used by IRIX, since a warning from that 
+	  platform prompted this change.
+
 Mon Jul  5 10:09:15 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/objref.cpp:
