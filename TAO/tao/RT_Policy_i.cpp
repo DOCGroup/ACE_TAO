@@ -447,13 +447,13 @@ TAO_Unix_Domain_Properties::_tao_encode (TAO_OutputCDR &out_cdr)
           && (out_cdr << this->recv_buffer_size_));
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_Unix_Domain_Properties::_tao_decode (TAO_InputCDR &in_cdr)
 {
   return ((in_cdr >> this->send_buffer_size_)
           && (in_cdr >> this->recv_buffer_size_));
 }
-    
+
 // ****************************************************************
 
 TAO_SMEM_Properties::TAO_SMEM_Properties (void)
@@ -523,16 +523,16 @@ TAO_SMEM_Properties::_tao_encode (TAO_OutputCDR &out_cdr)
           (out_cdr << this->mmap_lockname_));
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_SMEM_Properties::_tao_decode (TAO_InputCDR &in_cdr)
 {
-  return ((in_cdr >> this->preallocate_buffer_size_) 
+  return ((in_cdr >> this->preallocate_buffer_size_)
           &&
           (in_cdr >> this->mmap_filename_)
           &&
           (in_cdr >> this->mmap_lockname_));
 }
-      
+
 // ****************************************************************
 
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
@@ -747,15 +747,15 @@ TAO_GIOP_Properties::_tao_decode (TAO_InputCDR &in_cdr)
 
 RTCORBA::ProtocolProperties*
 TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::ProfileId id)
-{                    
+{
   RTCORBA::ProtocolProperties* property = 0;
 
   if (id == IOP::TAG_INTERNET_IOP)
 
-    ACE_NEW_RETURN (property, 
-                    TAO_TCP_Properties, 
+    ACE_NEW_RETURN (property,
+                    TAO_TCP_Properties,
                     0);
-  
+
   else if(id == TAO_TAG_SHMEM_PROFILE)
     ACE_NEW_RETURN (property,
                     TAO_SMEM_Properties,
@@ -774,19 +774,19 @@ TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id
   RTCORBA::ProtocolProperties* property = 0;
 
   if (id == IOP::TAG_INTERNET_IOP)
-    ACE_NEW_RETURN (property, 
-                    TAO_GIOP_Properties, 
+    ACE_NEW_RETURN (property,
+                    TAO_GIOP_Properties,
                     0);
-  
+
   // Right now the only supported ORB protocol is GIOP
   // so we couple this with every protocol property.
   // The else statement is not necessary, but it
   // is here just to make clear that as soon as
   // new ORB protocol are supported other case
   // should be considered.
-  else 
-    ACE_NEW_RETURN (property, 
-                    TAO_GIOP_Properties, 
+  else
+    ACE_NEW_RETURN (property,
+                    TAO_GIOP_Properties,
                     0);
    return property;
 }

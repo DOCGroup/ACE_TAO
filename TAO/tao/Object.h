@@ -70,7 +70,7 @@ public:
   // making such calls, but may be overridden when it appears
   // appropriate.
 
-  virtual CORBA::Boolean _is_a (const CORBA::Char *logical_type_id,
+  virtual CORBA::Boolean _is_a (const char *logical_type_id,
                                 CORBA_Environment &ACE_TRY_ENV =
                                   TAO_default_environment ());
   // determine if we are of the type specified by the "logical_type_id"
@@ -114,7 +114,7 @@ public:
   // 6.2.1.
 
   virtual void _create_request (CORBA::Context_ptr ctx,
-                                const CORBA::Char *operation,
+                                const char *operation,
                                 CORBA::NVList_ptr arg_list,
                                 CORBA::NamedValue_ptr result,
                                 CORBA::Request_ptr &request,
@@ -123,7 +123,7 @@ public:
                                   TAO_default_environment ());
 
   virtual void _create_request (CORBA::Context_ptr ctx,
-                                const CORBA::Char *operation,
+                                const char *operation,
                                 CORBA::NVList_ptr arg_list,
                                 CORBA::NamedValue_ptr result,
                                 CORBA::ExceptionList_ptr exclist,
@@ -137,7 +137,7 @@ public:
   // multi-protocol remote invocation interface as is assumed by the
   // calls above ... that's how it can have a default implementation.
 
-  virtual CORBA::Request_ptr _request (const CORBA::Char *operation,
+  virtual CORBA::Request_ptr _request (const char *operation,
                                        CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ());
   // DII operation to create a request.
@@ -226,7 +226,7 @@ public:
                 CORBA::Boolean collocated = 0,
                 TAO_Abstract_ServantBase *servant = 0);
 
-                
+
   virtual TAO_Stub *_stubobj (void) const;
   // get the underlying stub object
 
@@ -254,7 +254,7 @@ protected:
   CORBA::Boolean is_collocated_;
   // Flag to indicate collocation.  It is 0 except for collocated
   // objects.
-  
+
   TAO_Abstract_ServantBase *servant_;
   // Servant pointer.  It is 0 except for collocated objects.
 

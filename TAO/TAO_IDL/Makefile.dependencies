@@ -29,3 +29,5 @@ libTAO_IDL_FE_DLL.$(SOEXT):
 libTAO_IDL_BE_DLL.$(SOEXT):
 
 clean realclean:
+
+depend:

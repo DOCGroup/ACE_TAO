@@ -76,8 +76,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * main file or an #include'd file.
  */
 
-#include        "idl.h"
-#include        "idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "ace/SString.h"
 
 ACE_RCSID(ast, ast_decl, "$Id$")
 
@@ -122,8 +123,8 @@ AST_Decl::AST_Decl (void)
 {
 }
 
-AST_Decl::AST_Decl (NodeType nt, 
-                    UTL_ScopedName *n, 
+AST_Decl::AST_Decl (NodeType nt,
+                    UTL_ScopedName *n,
                     UTL_StrList *p)
   : pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
@@ -164,7 +165,7 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
   this->pd_name = 0;
 
   // Global scope?
-  if (defined_in () == 0) 
+  if (defined_in () == 0)
     {
       this->pd_name = n;
       return;
@@ -357,7 +358,7 @@ AST_Decl::name (void)
 // Variation of the <name>. Computes scoped name string, applying
 // prefix and suffix to the local name component.
 UTL_ScopedName *
-AST_Decl::compute_name (const char *prefix, 
+AST_Decl::compute_name (const char *prefix,
                         const char *suffix)
 {
   if (prefix == 0 || suffix == 0)
@@ -447,7 +448,7 @@ AST_Decl::local_name (void)
 }
 
 Identifier *
-AST_Decl::compute_local_name (const char *prefix, 
+AST_Decl::compute_local_name (const char *prefix,
                               const char *suffix)
 {
   if (prefix == 0 || suffix == 0)
@@ -486,8 +487,8 @@ void
 AST_Decl::original_local_name (Identifier *local_name)
 {
   // Remove _cxx_ if it is present.
-  if (ACE_OS::strstr (local_name->get_string (), 
-                      "_cxx_") 
+  if (ACE_OS::strstr (local_name->get_string (),
+                      "_cxx_")
         == local_name->get_string ())
     {
       // CSting class is good to do this stuff.
@@ -518,7 +519,7 @@ AST_Decl::original_local_name (void)
 void
 AST_Decl::add_pragmas (UTL_StrList *p)
 {
-  if (p != 0) 
+  if (p != 0)
     {
       if (this->pd_pragmas != 0)
         {

@@ -82,6 +82,7 @@ IDL_COMPILER_FILES = \
 
 ORB_CORE_FILES = \
   Any.cpp \
+  CORBA_String.cpp \
   CurrentC.cpp \
   Exception.cpp \
   WrongTransactionC.cpp \
@@ -253,6 +254,7 @@ HEADER_FILES = \
   CONV_FRAMEC.h \
   CONV_FRAMES.h \
   CONV_FRAMES_T.h \
+  CORBA_String.h \
   Client_Priority_Policy.h \
   Client_Strategy_Factory.h \
   Connector_Registry.h \
@@ -405,6 +407,7 @@ INLINE_FILES = \
   CONV_FRAMEC.i \
   CONV_FRAMES.i \
   CONV_FRAMES_T.i \
+  CORBA_String.inl \
   Client_Priority_Policy.i \
   Connector_Registry.i \
   Context.i \

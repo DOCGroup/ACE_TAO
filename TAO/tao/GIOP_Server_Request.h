@@ -28,6 +28,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SString.h"
 #include "tao/Server_Request.h"
 #include "tao/ORB.h"
 #include "tao/Principal.h"

@@ -1,3 +1,143 @@
+Tue Sep 19 16:49:23 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/CORBA_String.h:
+	* tao/CORBA_String.inl:
+	* tao/CORBA_String.cpp:
+
+	  New files that now contain the CORBA::String related classes.
+	
+	* tao/ORB.h:
+	* tao/ORB.i:
+	* tao/ORB.cpp:
+
+	  Moved the CORBA::String classes to the newly added
+	  CORBA_String.* files.  There was no reason why these classes had
+	  to be kept inside these files.  This makes it possible to only
+	  pull in the CORBA::String classes, instead of the entire set of
+	  classes and headers inside ORB.h, thus reducing inter-header
+	  dependencies.
+
+	* tao/Exception.h:
+
+	  Forward declare the TAO_{Output,Input}CDR classes so that
+	  `CDR.h' does not have to be explicitly included.
+
+	  (info):
+
+	  Return "const char *" instead "ACE_CString."  This allows us to
+	  remove the inter-header dependency on `ace/SString.h'.
+
+	* tao/Exception.cpp:
+
+	  Include `ace/SString.h' to pull in ACE_CString class.
+
+	  (info):
+	
+	  Return "const char *" instead "ACE_CString" since we only cared
+	  about the underlying C string, not the entire ACE_CString
+	  instance.
+
+	  (_tao_print_exception):
+
+	  Invoke "this->_info()" instead "this->_info().c_str()" since the
+	  _info() method now returns a "const char *."
+
+	* tao/Object.h (_request, _is_a, _create_object):
+	* tao/Object.cpp (_request, _is_a, _create_object):
+
+	  The C++ mapping for strings is "const char *," not "const
+	  CORBA::Char *."  Updated these signatures accordingly.
+
+	  (_is_a, _non_existent):
+
+	  Fixed incorrect usage of ACE_TRY_CHECK macro.  The proper macro
+	  is ACE_CHECK_RETURN.
+
+	* tao/ORB_Core.h (TAO_Collocation_Strategies):
+
+	  Merged extraneous enumeration that provided count of the number
+	  of collocation strategies into this enumeration.  We
+	  automatically get the count by making it the last value in the
+	  enumeration.
+
+	* tao/ORB_Core.cpp (init):
+
+	  Removed support for the -ORBSetUID and -ORBSetGID options.  They
+	  introduced potential security holes.
+	  Reported by Joe Hoffert <joeh@cs.wustl.edu>
+
+	  (collocation_strategy):
+
+	  Removed "TAO_Collocation_Strategy" from the enumeration value.
+	  It isn't necessary and it confused some compilers.
+
+	  Corrected enumeration value associated with the "DIRECT" case.
+	  The "TAO_ORB_Core::DIRECT_STRATEGY" should have been used.
+
+	* tao/corbafwd.h:
+
+	  Include `ace/CDR_Base.h' instead of `ace/CDR_Stream.h' since we
+	  only need the CDR types.
+
+	* tao/Policy_Factory.i (create_policy):
+	* tao/Policy_Factory.cpp:
+
+	  Moved this method to the `.cpp' file since it has the potential
+	  to become quite large, and since doing so allows us to reduce
+	  inter-header dependencies due to the headers that were included
+	  in the `.i' file (which are no longer necessary).
+
+	* tao/GIOP_Server_Request.h:
+	* tao/RT_Policy_i.h:
+	* tao/params.h:
+
+	  Include `ace/SString.h' to pull in definition of ACE_CString.
+
+	* tao/PortableServer/Collocated_Object.h:
+
+	  Include `Servant_Base.h' to pull in definition of
+	  TAO_ServantBase class.  This fixes a compile-time error when
+	  inlining is enabled.
+
+	* tao/PortableServer/Strategized_Object_Proxy_Broker.cpp
+	  (select_proxy):
+
+	  Fixed incorrect usage of ACE_TRY_CHECK macro.  The proper macro
+	  is ACE_CHECK_RETURN.
+
+	  (create_proxy):
+
+	  Added missing default case for switch statement.  The default is
+	  the REMOTE_STRATEGY.
+
+	* tao/PortableServer/Servant_Base.h:
+
+	  Use virtual inheritance from when deriving from the
+	  TAO_Abstract_ServantBase class to disambiguate the _add_ref()
+	  and _remove_ref() methods when mixing in the RefCountServantBase
+	  class. 
+
+	* tao/PortableServer/Servant_Base.cpp (_add_ref, _remove_ref):
+
+	  Moved these no-op methods to the TAO_Abstract_ServantBase class.
+
+	* tao/PortableServer/POA.cpp (destroy_i):
+
+	  Added missing ACE_TRY_ENV argument to the _remove_ref() call.
+
+	* TAO_IDL/Makefile.dependencies:
+
+	  Added a no-op "depend" target to prevent error from occuring
+	  when updating dependencies for the IDL compiler Makefiles.
+
+	* TAO_IDL/ast/ast_decl.cpp:
+
+	  Include `ace/SString.h' to pull in declaration of ACE_CString.
+
+	* docs/Options.html:
+
+	  Removed descriptions of the deprecated -ORBSet{U,G}ID options.
+
 Tue Sep 19 14:33:39 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/TAO_Static.dsp:
@@ -15,8 +155,7 @@ Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	  to make it possible to keep the reference to the servant
 	  in the CORBA::Object and still keeping the TAO library
 	  independent from the PortableServer library.
-	 
-	
+
 	* tao/Object.h:
 	* tao/Object.cpp:
 	* tao/Object.i
@@ -26,19 +165,18 @@ Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	  Moved servant pointer from TAO_Collocated_Object back to
 	  CORBA::Object. 
-	  
+
 	  Added member variable keep a reference to the Proxy Broker.
-	  
+
 	  Added methods to get/set the proxy broker.
-	
+
 	* tao/PortableServer/Servant_Base.h
 
 	  Now the TAO_ServantBase inherits from the TAO_Abstract_ServantBase.
 
-	
 	* tao/Object_Proxy_Broker.h:
 	* tao/Object_Proxy_Broker.cpp:
-	 
+
 	  Proxy Broker superclass. This class define the interface
 	  used by CORBA::Object and its subclasses to get the right
 	  proxy needed to perform a given call. In the new collocation
@@ -49,10 +187,9 @@ Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/PortableServer/Strategized_Object_Proxy_Broker.h:
 	* tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
-	
+
 	  Concrete Proxy Brokers implementations.
 
-	
 	* tao/Object_Proxy_Impl.h
 	* tao/Object_Proxy_Impl.cpp
 
@@ -61,16 +198,15 @@ Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	
 	* tao/Remote_Object_Proxy_Impl.h:
 	* tao/Remote_Object_Proxy_Impl.cpp:
-	  
+
 	  Implementation of the Proxy for non "collocated calls".
 
 	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
 	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
 	* tao/PortableServer/Direct_Object_Proxy_Impl.h:
 	* tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
-		  
-	  Implementation of the Proxy for "collocated calls".
 
+	  Implementation of the Proxy for "collocated calls".
 
 	* tao/PortableServer/Collocated_Object.h:
 	* tao/PortableServer/Collocated_Object.cpp:
@@ -80,7 +216,7 @@ Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/ORB_Core.h:
 	* tao/ORB_Core.cpp:
-	  
+
 	  Added method <collocation_strategy> to resolve dinamically
 	  the collocation strategy to be used on a call by call
 	  basis. Right now this method implement the old logic,
@@ -88,7 +224,6 @@ Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	  implementation are in place.
 
 	  Changend implementation of the method <create_object> to create
-	  
 
 	* tao/PortableServer/Object_Adapter.cpp:
 
@@ -97,23 +232,21 @@ Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	  right type of proxy broker. 
 
 	* tao/TAO.dsp:
-	  
+
 	  Added new files to the TAO's VC++ workspace.
 	  Added <Bind_Dispatcher_Guard.*> to the VC++ workspace.
 
 	* tao/PortableServer/TAO_PortableServer.dsp:
-	  
+
 	  Added new files to the TAO_Portable 's VC++ workspace.
 
 	* tao/Makefile
-	  
+
 	  Updated Makefile to compile the new files.
 
 	* tao/PortableServer/Makefile
 	  
 	  Updated Makefile to compile the new files.
-	
-
 
 Tue Sep 19 13:32:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -1666,6 +1799,7 @@ Mon Sep 11 12:56:11 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tao/params.h:
         * tao/params.i:
         * tao/params.cpp:
+
 	  Simplify #includes, use the IORTable classes.
 
         * */Makefile:
@@ -2449,7 +2583,7 @@ Sat Sep 02 16:47:29 2000  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/tests/AVStreams/benchmark/av_benchmark_child.dsp:
         * orbsvcs/tests/AVStreams/benchmark/av_benchmark_client.dsp:
         * orbsvcs/tests/AVStreams/benchmark/av_benchmark_server.dsp:
-        * orbsvcs/tests/Concurrency/CC_client.dsp:
+        * orbsvcs/teACEsts/Concurrency/CC_client.dsp:
         * orbsvcs/tests/EC_Basic/EC_Basic.dsp:
         * orbsvcs/tests/EC_Custom_Marshal/ECCM_Consumer.dsp:
         * orbsvcs/tests/EC_Custom_Marshal/ECCM_Supplier.dsp:
@@ -2587,7 +2721,7 @@ Fri Sep  1 14:18:35 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/DomainC.h:
           Some extern declaration should only be made if __ACE_INLINE__ is
-          not defined.
+          not defineACEd.
 
 Fri Sep  1 11:26:54 2000  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -144,6 +144,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -203,8 +204,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -223,6 +223,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -275,6 +277,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -334,8 +337,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -354,6 +356,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -406,6 +410,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -465,8 +470,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -485,6 +489,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -537,6 +543,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -596,8 +603,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -616,6 +622,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -668,6 +676,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -727,8 +736,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -747,6 +755,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -799,6 +809,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -858,8 +869,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -878,6 +888,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -930,6 +942,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -989,8 +1002,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1009,6 +1021,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -1061,6 +1075,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1120,8 +1135,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1140,6 +1154,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -1192,6 +1208,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1251,8 +1268,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1271,6 +1287,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -1323,6 +1341,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1382,8 +1401,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1402,6 +1420,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -1454,6 +1474,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1513,8 +1534,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1563,6 +1583,8 @@ realclean: clean
  be_include/be_visitor_interface/interceptors_sh.h \
  be_include/be_visitor_interface/interceptors_ss.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/be_global.h be_include/be_extern.h be_include/be_type.h \
@@ -1612,6 +1634,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1671,8 +1694,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1691,6 +1713,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -1743,6 +1767,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1802,8 +1827,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1822,6 +1846,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -1874,6 +1900,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -1933,8 +1960,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -1953,6 +1979,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -2005,6 +2033,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2064,8 +2093,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2084,6 +2112,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -2136,6 +2166,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2195,8 +2226,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2215,6 +2245,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -2267,6 +2299,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2326,8 +2359,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2346,6 +2378,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -2398,6 +2432,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2457,8 +2492,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2477,6 +2511,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -2529,6 +2565,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2588,8 +2625,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2608,6 +2644,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -2660,6 +2698,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2719,8 +2758,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2739,6 +2777,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -2791,6 +2831,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2850,8 +2891,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -2870,6 +2910,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -2922,6 +2964,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -2981,8 +3024,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3001,6 +3043,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -3064,6 +3108,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -3123,8 +3168,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3143,6 +3187,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -3195,6 +3241,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -3254,8 +3301,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3274,6 +3320,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -3326,6 +3374,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -3385,8 +3434,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3405,6 +3453,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -3457,6 +3507,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -3516,8 +3567,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3536,6 +3586,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -3588,6 +3640,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -3647,8 +3700,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3667,6 +3719,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -3719,6 +3773,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -3778,8 +3833,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3798,6 +3852,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -3850,6 +3906,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -3909,8 +3966,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -3929,6 +3985,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -3981,6 +4039,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -4040,8 +4099,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4060,6 +4118,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -4112,6 +4172,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -4171,8 +4232,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4191,6 +4251,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -4243,6 +4305,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -4302,8 +4365,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4322,6 +4384,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -4374,6 +4438,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -4433,8 +4498,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4453,6 +4517,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -4505,6 +4571,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -4564,8 +4631,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4584,6 +4650,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -4636,6 +4704,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -4695,8 +4764,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4715,6 +4783,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -4767,6 +4837,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -4826,8 +4897,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4846,6 +4916,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -4898,6 +4970,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -4957,8 +5030,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -4977,6 +5049,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -5029,6 +5103,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -5088,8 +5163,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5108,6 +5182,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -5390,6 +5466,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -5449,8 +5526,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5467,6 +5543,8 @@ realclean: clean
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
  include/utl_err.h include/utl_indenter.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -5522,6 +5600,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -5581,8 +5660,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5601,6 +5679,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -5652,6 +5732,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -5711,8 +5792,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5729,6 +5809,8 @@ realclean: clean
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
  include/utl_err.h include/utl_indenter.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -5815,6 +5897,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -5874,8 +5957,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -5894,6 +5976,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -5959,6 +6043,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -6018,8 +6103,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6038,6 +6122,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -6092,6 +6178,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -6151,8 +6238,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6171,6 +6257,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -6227,6 +6315,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -6286,8 +6375,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6306,6 +6394,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -6358,6 +6448,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -6417,8 +6508,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6437,6 +6527,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -6489,6 +6581,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -6548,8 +6641,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6568,6 +6660,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -6629,6 +6723,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -6688,8 +6783,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6708,6 +6802,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -6788,6 +6884,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -6847,8 +6944,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -6867,6 +6963,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -6928,6 +7026,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -6987,8 +7086,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7007,6 +7105,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -7084,8 +7184,7 @@ realclean: clean
  be/be_visitor_interface/interceptors_ss.cpp
 
 .obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.so .shobj/be_visitor_interface_fwd.o .shobj/be_visitor_interface_fwd.so: be/be_visitor_interface_fwd.cpp \
- include/idl.h \
- $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7113,6 +7212,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -7172,8 +7272,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7192,6 +7291,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -7253,6 +7354,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -7312,8 +7414,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7332,6 +7433,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -7445,8 +7548,7 @@ realclean: clean
  be/be_visitor_valuetype/ami_exception_holder_cs.cpp
 
 .obj/be_visitor_valuetype_fwd.o .obj/be_visitor_valuetype_fwd.so .shobj/be_visitor_valuetype_fwd.o .shobj/be_visitor_valuetype_fwd.so: be/be_visitor_valuetype_fwd.cpp \
- include/idl.h \
- $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7474,6 +7576,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -7533,8 +7636,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7553,6 +7655,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -7609,6 +7713,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -7668,8 +7773,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7688,6 +7792,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -7749,6 +7855,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -7808,8 +7915,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -7828,6 +7934,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -7981,6 +8089,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -8040,8 +8149,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8060,6 +8168,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -8128,6 +8238,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -8187,8 +8298,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8207,6 +8317,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -8259,6 +8371,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -8318,8 +8431,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8338,6 +8450,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -8430,6 +8544,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -8489,8 +8604,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8509,6 +8623,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -8585,6 +8701,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -8644,8 +8761,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8664,6 +8780,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -8720,6 +8838,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -8779,8 +8898,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8799,6 +8917,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -8869,6 +8989,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -8928,8 +9049,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -8948,6 +9068,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -8991,8 +9113,7 @@ realclean: clean
  be/be_visitor_union/cdr_op_ci.cpp be/be_visitor_union/cdr_op_cs.cpp
 
 .obj/be_visitor_union_branch.o .obj/be_visitor_union_branch.so .shobj/be_visitor_union_branch.o .shobj/be_visitor_union_branch.so: be/be_visitor_union_branch.cpp \
- include/idl.h \
- $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -9020,6 +9141,7 @@ realclean: clean
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -9079,8 +9201,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -9099,6 +9220,8 @@ realclean: clean
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
