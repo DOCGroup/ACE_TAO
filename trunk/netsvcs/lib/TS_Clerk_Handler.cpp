@@ -185,7 +185,7 @@ private:
   int update_time ();
   // Update delta_time using times obtained from all servers
 
-  typedef ACE_Malloc <ACE_MMAP_Memory_Pool, ACE_Null_Mutex> MALLOC;
+  typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
   typedef ACE_Allocator_Adapter<MALLOC> ALLOCATOR;
   ALLOCATOR *shmem_;
   // Allocator (used for reading/writing system time from/to shared memory)
@@ -223,11 +223,11 @@ private:
 
 ACE_TS_Clerk_Handler::ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor,
 					    ACE_INET_Addr &addr)
-: processor_ (processor),
-  remote_addr_ (addr),
-  state_ (ACE_TS_Clerk_Handler::IDLE),
+: state_ (ACE_TS_Clerk_Handler::IDLE),
   timeout_ (ACE_DEFAULT_TIMEOUT),
-  max_timeout_ (ACE_TS_Clerk_Handler::MAX_RETRY_TIMEOUT)
+  max_timeout_ (ACE_TS_Clerk_Handler::MAX_RETRY_TIMEOUT),
+  remote_addr_ (addr),
+  processor_ (processor)
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::ACE_TS_Clerk_Handler");
   this->time_info_.delta_time_ = 0;
@@ -236,7 +236,7 @@ ACE_TS_Clerk_Handler::ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor,
 
 // This is called when a <send> to a server fails...
 int
-ACE_TS_Clerk_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
+ACE_TS_Clerk_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::handle_signal");
   return 0;
@@ -376,7 +376,7 @@ ACE_TS_Clerk_Handler::reinitiate_connection (void)
 
 // Receive a time update from a server
 int
-ACE_TS_Clerk_Handler::handle_input (ACE_HANDLE handle)
+ACE_TS_Clerk_Handler::handle_input (ACE_HANDLE)
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::handle_input");
   // We're getting a time update message from a server
@@ -405,8 +405,8 @@ ACE_TS_Clerk_Handler::handle_input (ACE_HANDLE handle)
 
 // Restart connection asynchronously when timeout occurs.
 int
-ACE_TS_Clerk_Handler::handle_timeout (const ACE_Time_Value &tv,
-				      const void *arg)
+ACE_TS_Clerk_Handler::handle_timeout (const ACE_Time_Value &,
+				      const void *)
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::handle_timeout");
   ACE_DEBUG ((LM_DEBUG, 
@@ -535,8 +535,8 @@ ACE_TS_Clerk_Processor::alloc (void)
 
 // Query the servers for the latest time
 int
-ACE_TS_Clerk_Processor::handle_timeout (const ACE_Time_Value &tv,
-					const void *arg)
+ACE_TS_Clerk_Processor::handle_timeout (const ACE_Time_Value &,
+					const void *)
 {
   ACE_TRACE ("ACE_TS_Clerk_Processor::handle_timeout");
   return this->update_time ();
@@ -632,7 +632,7 @@ ACE_TS_Clerk_Processor::fini (void)
 }
 
 int 
-ACE_TS_Clerk_Processor::info (char **strp, size_t length) const
+ACE_TS_Clerk_Processor::info (char **, size_t) const
 {
   ACE_TRACE ("ACE_TS_Clerk_Processor::info");
   return 0;
@@ -651,9 +651,6 @@ ACE_TS_Clerk_Processor::init (int argc, char *argv[])
 #if !defined (ACE_WIN32)
   // Ignore SIPPIPE so each Output_Channel can handle it.
   ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
-
-//  ACE_Sig_Set sig_set;
-//  sig_set.sig_add (SIGINT);
 
   // Register ourselves to receive SIGINT and SIGPIPE
   // so we can shut down gracefully via signals.
@@ -809,7 +806,7 @@ ACE_TS_Clerk_Processor::resume (void)
 // Signal the server to shutdown gracefully.
 
 int
-ACE_TS_Clerk_Processor::handle_signal (int signum, siginfo_t *, ucontext_t *)
+ACE_TS_Clerk_Processor::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_TRACE ("ACE_TS_Clerk_Processor::handle_signal");
   ACE_Service_Config::end_reactor_event_loop ();
@@ -822,5 +819,5 @@ ACE_TS_Clerk_Processor::handle_signal (int signum, siginfo_t *, ucontext_t *)
 ACE_SVC_FACTORY_DEFINE (ACE_TS_Clerk_Processor)
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Connector<ACE_TS_Clerk_Handler, ACE_SOCK_Connector, ACE_INET_Addr>;
+template class ACE_Connector<ACE_TS_Clerk_Handler, ACE_SOCK_CONNECTOR>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

@@ -87,7 +87,7 @@ ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (const char rendezvous[])
 // This is called when a <send> to the logging server fails...
 
 int
-ACE_Client_Logging_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
+ACE_Client_Logging_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_TRACE ("ACE_Client_Logging_Connector::handle_signal");
 //  return 0;
@@ -175,7 +175,7 @@ ACE_Client_Logging_Handler::close (u_long)
 }
 
 int
-ACE_Client_Logging_Handler::handle_output (ACE_HANDLE handle)
+ACE_Client_Logging_Handler::handle_output (ACE_HANDLE)
 {
   return 0;
 }
@@ -355,7 +355,7 @@ ACE_Client_Logging_Connector::resume (void)
 // Signal the server to shutdown gracefully.
 
 int
-ACE_Client_Logging_Connector::handle_signal (int signum, siginfo_t *, ucontext_t *)
+ACE_Client_Logging_Connector::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_TRACE ("ACE_Client_Logging_Connector::handle_signal");
   ACE_Service_Config::end_reactor_event_loop ();
@@ -369,5 +369,5 @@ ACE_Client_Logging_Connector::handle_signal (int signum, siginfo_t *, ucontext_t
 ACE_SVC_FACTORY_DEFINE (ACE_Client_Logging_Connector)
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Connector<ACE_Client_Logging_Handler, ACE_SOCK_Connector, ACE_INET_Addr>;
+template class ACE_Connector<ACE_Client_Logging_Handler, ACE_SOCK_CONNECTOR>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

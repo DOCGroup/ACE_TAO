@@ -456,12 +456,12 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
   (const char service_name[],
    const char service_description[])
     : creation_strategy_ (0),
-      accept_strategy_ (0),
-      concurrency_strategy_ (0),
-      scheduling_strategy_ (0),
       delete_creation_strategy_ (0),
+      accept_strategy_ (0),
       delete_accept_strategy_ (0),
+      concurrency_strategy_ (0),
       delete_concurrency_strategy_ (0),
+      scheduling_strategy_ (0),
       delete_scheduling_strategy_ (0),
       service_name_ (0),
       service_description_ (0)
@@ -674,8 +674,8 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor (void)
-  : delete_concurrency_strategy_ (0),
-    reactor_ (0)
+  : reactor_ (0),
+    delete_concurrency_strategy_ (0)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor");
 }
@@ -716,8 +716,8 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE
       // Note that if we aren't actually registered with the
       // ACE_Reactor then it's ok for this call to fail...
 
-      this->reactor_ && this->reactor_->remove_handler (this,
-	ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+      this->reactor_ && this->reactor_->remove_handler 
+	(this, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
 
       this->reactor_ = 0;
 

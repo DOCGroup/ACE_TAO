@@ -173,7 +173,6 @@ int
 Gateway_Handler::handle_output (ACE_HANDLE)
 {
   ACE_Message_Block *mb = 0;
-  int		status = 0;
   
   ACE_DEBUG ((LM_DEBUG, "in handle_output\n"));
   // The list had better not be empty, otherwise there's a bug!
@@ -247,7 +246,7 @@ Gateway_Handler::send_peer (ACE_Message_Block *mb)
 
   if ((n = this->peer ().send (mb->rd_ptr (), len)) <= 0)
     return errno == EWOULDBLOCK ? 0 : n;
-  else if (n < len)
+  else if (n < (ssize_t) len)
     {
       // Re-adjust pointer to skip over the part we did send.
       mb->rd_ptr (n);
@@ -341,7 +340,7 @@ Gateway_Handler::recv_peer (ACE_Message_Block *&mb)
       return n;
 
     default:
-      if (n != len)
+      if (n != (ssize_t) len)
 	// Re-adjust pointer to skip over the part we've read.
 	{
 	  this->msg_frag_->wr_ptr (n);
@@ -509,8 +508,8 @@ Gateway_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 
       // Close down the peer.
       this->peer ().close ();
-      return 0;
     }
+  return 0;
 }
 
 Gateway_Acceptor::Gateway_Acceptor (Gateway_Handler *handler)

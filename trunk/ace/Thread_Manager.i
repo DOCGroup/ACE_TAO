@@ -39,8 +39,6 @@ ACE_Thread_Descriptor::state (void)
   return thr_state_;
 }
 
-#if defined (ACE_HAS_THREADS)
-
 // Set the exit status.
 
 ACE_INLINE void *
@@ -79,5 +77,3 @@ ACE_Thread_Control::thr_mgr (ACE_Thread_Manager *tm)
   return this->tm_ = tm;
   return o_tm;
 }
-
-#endif /* !defined (ACE_HAS_THREADS) */

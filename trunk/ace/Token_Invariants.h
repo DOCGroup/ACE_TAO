@@ -97,11 +97,11 @@ public:
   // Dump the state of the class.
 
 private:
-  int readers_;
-  // Number of owning readers.
-
   int writers_;
   // Number of owning writers.
+
+  int readers_;
+  // Number of owning readers.
 };
 
 class ACE_Export ACE_Token_Invariant_Manager

@@ -64,7 +64,6 @@ ACE_Logging_Strategy::parse_args (int argc, char *argv[])
 {
   ACE_TRACE ("ACE_Logging_Strategy::parse_args");
   char *temp;
-  u_long flag = 0;
 
   this->flags_ = 0;
   this->filename_ = ACE_DEFAULT_LOGFILE;
@@ -129,17 +128,3 @@ ACE_Logging_Strategy::init (int argc, char *argv[])
 // svc.conf file to dynamically initialize the state of the Logging_Strategy.
 
 ACE_SVC_FACTORY_DEFINE (ACE_Logging_Strategy)
-
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_Acceptor, ACE_INET_Addr>;
-template class ACE_Schedule_All_Reactive_Strategy<ACE_TS_Server_Handler>;
-#if defined (ACE_HAS_THREADS)
-template class ACE_Svc_Handler<ACE_SOCK_Stream, ACE_INET_Addr, ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
-template class ACE_Task<ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
-template class ACE_Message_Queue<ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
-template class ACE_Module<ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
-template class ACE_Task_Exit<ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
-template class ACE_TSS<ACE_Task_Exit<ACE_Null_Mutex, ACE_Null_Condition_Mutex> >;
-template class ACE_Thru_Task<ACE_Null_Mutex, ACE_Null_Condition_Mutex>;
-#endif
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

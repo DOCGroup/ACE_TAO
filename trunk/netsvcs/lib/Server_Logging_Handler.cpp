@@ -446,8 +446,8 @@ ACE_Thr_Server_Logging_Handler::svc (void)
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Strategy_Acceptor<ACE_Thr_Server_Logging_Handler, LOGGING_PEER_ACCEPTOR>;
 template class ACE_Schedule_All_Threaded_Strategy<ACE_Thr_Server_Logging_Handler>;
-template class ACE_Strategy_Acceptor<ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, unsigned long, ACE_Null_Mutex, ACE_Null_Condition_Mutex>, LOGGING_PEER_ACCEPTOR>;
-template class ACE_Schedule_All_Reactive_Strategy<ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, unsigned long, ACE_Null_Mutex, ACE_Null_Condition_Mutex> >;
+template class ACE_Strategy_Acceptor<ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH>, LOGGING_PEER_ACCEPTOR>;
+template class ACE_Schedule_All_Reactive_Strategy<ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH> >;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 

@@ -53,8 +53,8 @@ public:
     }
   // Constructor (this has to be inline to avoid bugs with some C++ compilers.
 
-  ~ACE_Allocator_Adapter (void);
-  // Destructor
+  virtual ~ACE_Allocator_Adapter (void);
+  // Destructor.
 
   // = Memory Management
 

@@ -1552,7 +1552,10 @@ ACE_Reactor::handle_events (ACE_Time_Value *max_wait_time)
           // as a result of signals since they may be
           // time critical...
 
-          if (this->any_ready ())
+	  if (nfound == -1)
+	    nfound = 0;
+          
+	  if (this->any_ready ())
             {
               nfound = this->fill_in_ready (rmask, wmask, emask);
               continue;

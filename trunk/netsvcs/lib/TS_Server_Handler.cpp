@@ -319,6 +319,6 @@ ACE_TS_Server_Handler::~ACE_TS_Server_Handler (void)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_Acceptor, ACE_INET_Addr>;
+template class ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Schedule_All_Reactive_Strategy<ACE_TS_Server_Handler>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

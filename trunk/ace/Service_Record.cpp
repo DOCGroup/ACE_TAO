@@ -4,6 +4,9 @@
 #define ACE_BUILD_DLL
 #include "ace/Service_Record.h"
 
+#if !defined (ACE_SERVICE_RECORD_C)
+#define ACE_SERVICE_RECORD_C
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Record.i"
 #endif /* __ACE_INLINE__ */
@@ -332,9 +335,10 @@ template class ACE_Module<ACE_SYNCH>;
 template class ACE_Stream<ACE_SYNCH>;
 template class ACE_Task<ACE_SYNCH>;
 template class ACE_Message_Queue<ACE_SYNCH>;
-template class ACE_Task_Exit<ACE_SYNCH>;
-template class ACE_TSS<ACE_Task_Exit<ACE_SYNCH> >;
+template class ACE_TSS<ACE_Task_Exit>;
 template class ACE_Thru_Task<ACE_SYNCH>;
 template class ACE_Stream_Head<ACE_SYNCH>;
 template class ACE_Stream_Tail<ACE_SYNCH>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
+#endif /* ACE_SERVICE_RECORD_C */

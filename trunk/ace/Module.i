@@ -25,7 +25,7 @@ ACE_Module<ACE_SYNCH_2>::name (void) const
 }
 
 template <ACE_SYNCH_1> ACE_INLINE void
-ACE_Module<ACE_SYNCH_2>::name (char *n)
+ACE_Module<ACE_SYNCH_2>::name (const char *n)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_2>::name");
   ACE_OS::strncpy (this->name_, n, MAXNAMLEN);

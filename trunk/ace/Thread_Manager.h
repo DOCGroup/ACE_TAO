@@ -67,71 +67,6 @@ private:
   // Current state of the thread.
 };
 
-#if !defined (ACE_HAS_THREADS)
-
-class ACE_Export ACE_Thread_Manager
-{
-public:
-  enum
-  {
-    DEFAULT_SIZE = 100
-  };
-
-  ACE_Thread_Manager (int = 0) {}
-  ~ACE_Thread_Manager (void) {}
-
-  int open (size_t = DEFAULT_SIZE) { return -1; }
-  int close (void) { return -1; }
-  int spawn (ACE_THR_FUNC,
-	     void * = 0,
-	     long = 0, 
-	     ACE_thread_t * = 0, 
-	     ACE_hthread_t * = 0,
-	     u_int = 0,
-	     int = -1,
-	     void * = 0, 
-	     size_t = 0) { return -1;}
-  int spawn_n (int, 
-	       ACE_THR_FUNC, 
-	       void * = 0, 
-	       long = 0, 
-	       u_int = 0,
-	       int = -1
-	       ACE_Task_Base * = 0) { return -1;}
-  void *exit (void *) { return 0; }
-  void wait (const ACE_Time_Value * = 0) {}
-  int thread_descriptor (ACE_thread_t, ACE_Thread_Descriptor &) { return -1;}
-  int hthread_descriptor (ACE_hthread_t, ACE_Thread_Descriptor &) { return -1;}
-  int suspend_all (void) { return -1; }
-  int suspend (ACE_thread_t) { return -1; }
-  int suspend_grp (ACE_thread_t) { return -1; }
-  int resume_all (void) { return -1; }
-  int resume (ACE_thread_t) { return -1; }
-  int resume_grp (ACE_thread_t) { return -1; }
-  int kill_all (int) { return -1; }
-  int kill (ACE_thread_t) { return -1; }
-  int kill_grp (ACE_thread_t) { return -1; }
-  int cancel_all (void) { return -1; }
-  int cancel (int) { return -1; }
-  int cancel_grp (int) { return -1; }
-  void dump (void) const { }
-};
-
-class ACE_Export ACE_Thread_Control
-{
-public:
-  ACE_Thread_Control (ACE_Thread_Manager * = 0, int = 0) {}
-  ~ACE_Thread_Control (void) {}
-  ACE_Thread_Manager *thr_mgr (void) { return 0; }
-  ACE_Thread_Manager *thr_mgr (ACE_Thread_Manager *) { return 0; }
-  void *exit (void *) { return 0; }
-  int insert (ACE_Thread_Manager *) { return 0; }
-  void *status (void *) { return 0; }
-  void *status (void) { return 0; }
-  void dump (void) const { }
-};
-#else
-
 // Forward declaration.
 class ACE_Thread_Control;
 
@@ -400,8 +335,10 @@ private:
   // Keeps track of the next group id to assign.
 
   // = ACE_Thread_Mutex and condition variable for synchronizing termination.
+#if defined (ACE_HAS_THREADS)
   ACE_Thread_Mutex lock_;
   ACE_Condition_Thread_Mutex zero_cond_;
+#endif /* ACE_HAS_THREADS */
 };
 
 
@@ -459,6 +396,5 @@ private:
 #include "ace/Thread_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* !defined (ACE_HAS_THREADS) */
 #endif /* ACE_THREAD_MANAGER_H */
 

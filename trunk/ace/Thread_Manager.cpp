@@ -11,8 +11,6 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Control)
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Manager)
 
-#if defined (ACE_HAS_THREADS)
-
 void
 ACE_Thread_Manager::dump (void) const
 {
@@ -50,7 +48,7 @@ ACE_Thread_Manager::thread_descriptor (ACE_thread_t thr_id,
 				       ACE_Thread_Descriptor &descriptor)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::thread_descriptor");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   return this->thread_descriptor_i (thr_id, descriptor);
 }
@@ -78,7 +76,7 @@ ACE_Thread_Manager::hthread_descriptor (ACE_hthread_t thr_handle,
 					ACE_Thread_Descriptor &descriptor)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::hthread_descriptor");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   return this->hthread_descriptor_i (thr_handle, descriptor);
 }
@@ -89,7 +87,7 @@ int
 ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::thr_self");  
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Try to get the cached HANDLE out of TSS to avoid lookup.
   ACE_hthread_t *handle = ACE_LOG_MSG->thr_handle ();
@@ -138,7 +136,7 @@ int
 ACE_Thread_Manager::open (size_t size)
 {
   ACE_TRACE ("ACE_Thread_Manager::open");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (this->max_table_size_ < size)
     this->resize (size);
@@ -151,8 +149,10 @@ ACE_Thread_Manager::ACE_Thread_Manager (size_t size)
   : thr_table_ (0),
     max_table_size_ (0), 
     current_count_ (0),
-    grp_id_ (1),
-    zero_cond_ (lock_)
+    grp_id_ (1)
+#if defined (ACE_HAS_THREADS)
+    , zero_cond_ (lock_)
+#endif /* ACE_HAS_THREADS */
 {
   ACE_TRACE ("ACE_Thread_Manager::ACE_Thread_Manager");
   if (this->open (size) == -1)
@@ -235,7 +235,7 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
 			   size_t stack_size)
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (grp_id == -1)
     grp_id = this->grp_id_++; // Increment the group id.
@@ -259,7 +259,7 @@ ACE_Thread_Manager::spawn_n (int n,
 			     ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn_n");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (grp_id == -1)
     grp_id = this->grp_id_++; // Increment the group id.
@@ -317,7 +317,7 @@ ACE_Thread_Manager::insert_thr (ACE_thread_t t_id,
 				int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::insert_thr");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Check for duplicates and bail out if they're already
   // registered...
@@ -347,9 +347,11 @@ ACE_Thread_Manager::remove_thr (int i)
 
   this->current_count_--;
 
+#if defined (ACE_HAS_THREADS)
   // Tell all waiters when there are no more threads left in the pool.
   if (this->current_count_ == 0)
     this->zero_cond_.broadcast ();
+#endif /* ACE_HAS_THREADS */
 }
 
 // Factory out some common behavior to simplify the following methods.
@@ -423,7 +425,7 @@ ACE_Thread_Manager::find (ACE_thread_t t_id)
 }
 
 #define ACE_EXECUTE_OP(OP) \
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1); \
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1)); \
   int i = this->find (t_id); \
   if (i == -1) return -1; \
   return OP (i);
@@ -469,7 +471,7 @@ ACE_Thread_Manager::check_state (ACE_Thread_State state,
 				 ACE_thread_t id) 
 {
   ACE_TRACE ("ACE_Thread_Manager::check_state");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   ACE_Thread_State *thr_state = 0;
 #if 0
@@ -537,7 +539,7 @@ int
 ACE_Thread_Manager::get_grp (ACE_thread_t t_id, int &grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::get_grp");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int i = this->find (t_id);
   if (i == -1)
@@ -552,7 +554,7 @@ int
 ACE_Thread_Manager::set_grp (ACE_thread_t t_id, int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::set_grp");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int i = this->find (t_id);
   if (i == -1)
@@ -569,7 +571,7 @@ ACE_Thread_Manager::apply_grp (int grp_id,
 			       int arg)
 {
   ACE_TRACE ("ACE_Thread_Manager::apply_grp");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int result = 0;
 
@@ -623,7 +625,7 @@ int
 ACE_Thread_Manager::apply_all (THR_FUNC func, int arg)
 {
   ACE_TRACE ("ACE_Thread_Manager::apply_all");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int result = 0;
 
@@ -671,7 +673,7 @@ void *
 ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 {
   ACE_TRACE ("ACE_Thread_Manager::exit");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
   int i = this->find (ACE_Thread::self ());
 
@@ -703,11 +705,15 @@ int
 ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Thread_Manager::wait");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
+#if defined (ACE_HAS_THREADS)
   while (this->current_count_ > 0)
     if (this->zero_cond_.wait (timeout) == -1)
       return -1;
+#else
+  timeout = timeout;
+#endif /* ACE_HAS_THREADS */
 
   return 0;
 }
@@ -749,7 +755,7 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
 				int arg)
 {
   ACE_TRACE ("ACE_Thread_Manager::apply_task");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int result = 0;
 
@@ -823,7 +829,7 @@ int
 ACE_Thread_Manager::num_tasks_in_group (int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::num_tasks_in_group");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int tasks_count = 0;
 
@@ -841,7 +847,7 @@ int
 ACE_Thread_Manager::num_threads_in_task (ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::num_threads_in_task");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int threads_count = 0;
 
@@ -860,7 +866,7 @@ ACE_Thread_Manager::task_list (int grp_id,
 			       size_t n)
 {
   ACE_TRACE ("ACE_Thread_Manager::task_list");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   ACE_Task_Base **task_list_iterator = task_list;
   size_t task_list_count = 0;
@@ -885,7 +891,7 @@ ACE_Thread_Manager::thread_list (ACE_Task_Base *task,
 				 size_t n)
 {
   ACE_TRACE ("ACE_Thread_Manager::thread_list");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   ACE_thread_t *thread_list_iterator = thread_list;
   size_t thread_list_count = 0;
@@ -908,7 +914,7 @@ ACE_Thread_Manager::hthread_list (ACE_Task_Base *task,
 				  size_t n)
 {
   ACE_TRACE ("ACE_Thread_Manager::thread_list");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   ACE_hthread_t *hthread_list_iterator = hthread_list;
   size_t hthread_list_count = 0;
@@ -930,7 +936,7 @@ ACE_Thread_Manager::set_grp (ACE_Task_Base *task, int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::set_grp");
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   for (size_t i = 0; i < this->current_count_; i++)
     if (this->thr_table_[i].task_ == task)
@@ -943,7 +949,7 @@ ACE_Thread_Manager::get_grp (ACE_Task_Base *task, int &grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::get_grp");
 
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int i = this->find_task (task);
 
@@ -1010,5 +1016,3 @@ ACE_Thread_Control::exit (void *exit_status)
       return 0;
     }
 }
-
-#endif /* !defined (ACE_HAS_THREADS) */

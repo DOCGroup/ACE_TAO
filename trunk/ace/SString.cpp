@@ -435,7 +435,8 @@ ACE_WString::ACE_WString (const char *s,
 
 // Constructor that actually copies memory.
 
-ACE_WString::ACE_WString (const ACE_USHORT16 *s, ACE_Allocator *allocator)
+ACE_WString::ACE_WString (const ACE_USHORT16 *s, 
+			  ACE_Allocator *allocator)
   : allocator_ (allocator)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");

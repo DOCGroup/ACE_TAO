@@ -3,30 +3,6 @@
 
 // Thread.i
 
-#if !defined (ACE_HAS_THREADS)
-
-ACE_INLINE ACE_thread_t 
-ACE_Thread::self (void)
-{
-//  ACE_TRACE ("ACE_Thread::self");
-  return ACE_OS::thr_self ();	
-}
-
-ACE_INLINE void
-ACE_Thread::self (ACE_hthread_t &t_id)
-{
-//  ACE_TRACE ("ACE_Thread::self");
-  ACE_OS::thr_self (t_id);
-}
-
-ACE_INLINE void
-ACE_Thread::exit (void *status)
-{
-  ACE_TRACE ("ACE_Thread::exit");
-  ACE_OS::exit (*((int *) status));
-}
-#else
-
 // Allocates a <keyp> that is used to identify data that is specific
 // to each thread in the process.  The key is global to all threads in
 // the process.
@@ -262,5 +238,3 @@ ACE_Thread::self (ACE_hthread_t &t_id)
 //  ACE_TRACE ("ACE_Thread::self");
   ACE_OS::thr_self (t_id);
 }
-
-#endif /* !defined (ACE_HAS_THREADS) */

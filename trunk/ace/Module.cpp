@@ -50,7 +50,7 @@ ACE_Module<ACE_SYNCH_2>::link (ACE_Module<ACE_SYNCH_2> *m)
 }
 
 template <ACE_SYNCH_1> int
-ACE_Module<ACE_SYNCH_2>::open (char *mod_name, 
+ACE_Module<ACE_SYNCH_2>::open (const char *mod_name, 
 			       ACE_Task<ACE_SYNCH_2> *writer_q, 
 			       ACE_Task<ACE_SYNCH_2> *reader_q, 
 			       void *arg)
@@ -114,7 +114,7 @@ ACE_Module<ACE_SYNCH_2>::~ACE_Module (void)
 }
 
 template <ACE_SYNCH_1> ACE_INLINE
-ACE_Module<ACE_SYNCH_2>::ACE_Module (char *mod_name, 
+ACE_Module<ACE_SYNCH_2>::ACE_Module (const char *mod_name,
 				     ACE_Task<ACE_SYNCH_2> *writer_q, 
 				     ACE_Task<ACE_SYNCH_2> *reader_q, 
 				     void *flags)

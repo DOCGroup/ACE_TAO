@@ -197,10 +197,10 @@ Gateway<IC, OC>::Gateway (ACE_Thread_Manager *thr_mgr)
     blocking_semantics_ (ACE_NONBLOCK),
     debug_ (0),
     connector_ (0),
+    socket_queue_size_ (0),
     thr_mgr_ (thr_mgr),
     input_thr_mgr_ (thr_mgr),
-    output_thr_mgr_ (thr_mgr),
-    socket_queue_size_ (0)
+    output_thr_mgr_ (thr_mgr)
 {
 }
 

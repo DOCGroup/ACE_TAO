@@ -30,7 +30,7 @@ Peer_Handler::open (void *)
       if (ACE::register_stdin_handler (this,
 				      ACE_Service_Config::reactor (),
 				      ACE_Service_Config::thr_mgr ()) == -1)
-	ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_stdin_handler"), -1);
     }
   else // If iterations_ has been set, send iterations_ buffers.
     {
@@ -46,9 +46,8 @@ Peer_Handler::open (void *)
       while (iterations_-- > 0
 	     && this->peer ().send_n (buffer, length) == length)
 	continue;
-
-      return this->peer ().close ();
     }
+  return this->peer ().close ();
 }
 
 int 
@@ -93,8 +92,8 @@ Peer_Handler::display_menu (void)
 }
 
 IPC_Client::IPC_Client (void)
-  : rendezvous_ ("acepipe"),
-    iterations_ (0),
+  : iterations_ (0),
+    rendezvous_ ("acepipe"),
     done_handler_ (ACE_Sig_Handler_Ex (ACE_Service_Config::end_proactor_event_loop))
 {
 }

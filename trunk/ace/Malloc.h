@@ -210,7 +210,7 @@ struct ACE_Export ACE_Malloc_Stats
 #include "ace/Malloc.i"
 #endif /* __ACE_INLINE__ */
 
-// Include the ACE_Malloc templates and ACE_Memory_Pool stuff at this point.
+// Include the ACE_Malloc templates and ACE_Memory_Pool classes at this point.
 #include "ace/Malloc_T.h"
 #include "ace/Memory_Pool.h"
 

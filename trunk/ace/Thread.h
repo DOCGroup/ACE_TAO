@@ -20,24 +20,6 @@
 
 #include "ace/ACE.h"
 
-#if !defined (ACE_HAS_THREADS) 
-class ACE_Export ACE_Thread
-{
-public:
-  static ACE_thread_t self (void);
-  // Return the unique ID of the thread.
-
-  static void self (ACE_hthread_t &t_id);
-  // Return the unique kernel ID of the thread.
-
-  static void exit (void *status = 0);
-  // Exit the current thread and return "status".
-
-private:
-  ACE_Thread (void);
-  // Ensure that we don't get instantiated.
-};
-#else
 class ACE_Export ACE_Thread
 {
   // = TITLE
@@ -175,7 +157,6 @@ private:
   ACE_Thread (void);
   // Ensure that we don't get instantiated.
 };
-#endif /* ACE_HAS_THREADS */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Thread.i"
