@@ -22,6 +22,7 @@
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 
+#include "ace/OS_Log_Msg_Attributes.h"
 #include "ace/Service_Object.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
@@ -195,6 +196,28 @@ public:
   /// Returns the current startup type.
   DWORD startup (void);
 
+  // = Methods to control ACE_Log_Msg behavior in the service.
+
+  /**
+   * Set the ACE_Log_Msg attributes that the service thread will use to
+   * initialize its ACE_Log_Msg instance. This is how the initiating
+   * thread's logging ostream, etc. get into the service thread. The
+   * logging attributes in effect when this function is called are what
+   * the service thread will have at its disposal when it starts; therefore,
+   * the main thread should set up logging options for the process, and
+   * call this function just before calling the StartServiceCtrlDispatcher
+   * function.
+   */
+  void capture_log_msg_attributes (void);
+
+  /**
+   * Set the ACE_Log_Msg attributes in the current thread to those saved
+   * in the most recent call to @c capture_log_msg_attributes(). This function
+   * should be called from the service's service thread. Ideally, it is the
+   * first method called to be sure that any logging done is incorporated
+   * correctly into the process's established logging setup.
+   */
+  void inherit_log_msg_attributes (void);
 
   // = Methods which control the service's execution.
 
@@ -332,6 +355,8 @@ protected:
   ACE_TCHAR *desc_;
   ACE_TCHAR *host_;
 
+  /// ACE_Log_Msg attributes to inherit from the starting thread.
+  ACE_OS_Log_Msg_Attributes  log_msg_attributes_;
 };
 
 // These macros help to get things set up correctly at compile time
@@ -356,6 +381,8 @@ protected:
         return;                                                             \
       delete_svc_obj = 1;                                                   \
     }                                                                       \
+    else                                                                    \
+      _ace_nt_svc_obj_##SVCNAME->inherit_log_msg_attributes ();             \
     _ace_nt_svc_obj_##SVCNAME->init(dwArgc, lpszArgv);                      \
     _ace_nt_svc_obj_##SVCNAME->svc_handle(                                  \
                   ACE_TEXT_RegisterServiceCtrlHandler(SVCDESC,              \
@@ -385,6 +412,7 @@ extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc,                \
     { 0, 0 }                                                               \
   };                                                                       \
   _ace_nt_svc_obj_##SVCNAME = SVCINSTANCE;                                 \
+  _ace_nt_svc_obj_##SVCNAME->capture_log_msg_attributes ();                \
   ACE_OS::last_error (0);                                                  \
   int RET = ACE_TEXT_StartServiceCtrlDispatcher(_ace_nt_svc_table);
 

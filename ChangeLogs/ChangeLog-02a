@@ -3,6 +3,26 @@ Tue Jan 22 21:27:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* ace/ace_dll.vcp: Add Frameork_Component.* to the builds. Thanks
 	  to Venkita for pointing it out.
 
+Tue Jan 22 17:42:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/NT_Service.(h cpp): Added two new methods:
+           void capture_log_msg_attributes (void): Grabs a copy of the
+                calling thread's ACE_OS_Log_Msg_Attributes to facilitate
+                inheritance of the logging attributes in the service thread.
+           void inherit_log_msg_attributes (void): Called in a service
+                thread, inherits the main thread's logging attributes.
+          Modified the ACE_NT_SERVICE_RUN macro to capture the main
+          thread's logging attributes before starting the service control
+          dispatcher. Modified the ACE_NT_SERVICE_DEFINE macro to call
+          inherit_log_msg_attributes if the ACE_NT_Service object for
+          the service was set up before the thread started.
+          Fixes Bugzilla # 82.
+
+        * examples/NT_Service/main.cpp:
+        * examples/NT_Service/ntsvc.cpp: Now writes a log file in the current
+          working directory which should have messages from both main and
+          service threads in it.
+
 Tue Jan 22 15:19:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/DLL.cpp:  Changed to invoke this->open() in the

@@ -6,6 +6,7 @@
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 
 #include "ace/NT_Service.h"
+#include "ace/Log_Msg.h"
 #include "ace/Service_Object.h"
 
 #if !defined (__ACE_INLINE__)
@@ -281,6 +282,22 @@ ACE_NT_Service::startup (void)
   return MAXDWORD;
 
 }
+
+
+void
+ACE_NT_Service::capture_log_msg_attributes (void)
+{
+  ACE_Log_Msg::init_hook (this->log_msg_attributes_);
+}
+
+void
+ACE_NT_Service::inherit_log_msg_attributes (void)
+{
+  // There's no thread descriptor involved with a NT-started
+  // thread, so the first arg is 0.
+  ACE_Log_Msg::inherit_hook (0, this->log_msg_attributes_);
+}
+
 
 int
 ACE_NT_Service::start_svc (ACE_Time_Value *wait_time,
