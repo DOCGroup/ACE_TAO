@@ -642,21 +642,27 @@ ACE::ldfind (const char filename[],
                                                     nextholder);
           int result = 0;
 
-          while (path_entry != 0)
+          for (;;)
             {
-              if (ACE_OS::strlen (path_entry)
-                  + 1 + ACE_OS::strlen (searchfilename) >= maxpathnamelen)
+              // Check if at end of search path.
+              if (path_entry == 0)
+                {
+                  errno = ENOENT;
+                  result = -1;
+                  break;
+                }
+              else if (ACE_OS::strlen (path_entry)
+                       + 1 + ACE_OS::strlen (searchfilename) >= maxpathnamelen)
                 {
                   errno = ENOMEM;
                   result = -1;
                   break;
                 }
-
               // This works around the issue where a path might have
               // an empty component indicating 'current directory'.
               // We need to do it here rather than anywhere else so
               // that the loop condition will still work.
-              if (path_entry[0] == '\0')
+              else if (path_entry[0] == '\0')
                 path_entry = ".";
 
               // First, try matching the filename *without* adding a
