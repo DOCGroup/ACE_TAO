@@ -398,16 +398,16 @@ public:
 
   // = STL styled iteration, compare, and reference functions.
 
-  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator++ (void);
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator++ (void);
   // Postfix advance.
 
-  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>& operator++ (int);
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator++ (int);
   // Prefix advance.
 
-  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (void);
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator-- (void);
   // Postfix advance.
 
-  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>& operator-- (int);
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (int);
   // Prefix advance.
 
   ACE_ALLOC_HOOK_DECLARE;

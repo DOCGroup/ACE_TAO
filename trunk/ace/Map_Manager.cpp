@@ -759,7 +759,7 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
 {
   ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)");
@@ -771,7 +771,7 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
+ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 {
   ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)");
@@ -806,7 +806,7 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::advance (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
+ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)
 {
   ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)");
@@ -817,7 +817,7 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>&
+ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 {
   ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)");
@@ -826,7 +826,7 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
+ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
 {
   ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)");
@@ -837,7 +837,7 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>&
+ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 {
   ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)");
