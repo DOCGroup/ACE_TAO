@@ -1156,7 +1156,9 @@ sub check_for_non_bool_operators ()
                     next;
                   }
 
-                if ($found_return_type == 0 && /((^\w+)|(\s+\w+))\s*$/)
+                if ($found_return_type == 0
+		    && /((^\w+)|(\s+\w+))\s*$/
+		    && !/[^\w]return\s*$/)
                   {
                     $found_return_type = 1;
                     next;
