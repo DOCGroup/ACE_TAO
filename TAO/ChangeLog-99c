@@ -1,3 +1,10 @@
+Wed Jun 30 18:14:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/Repository.cpp:
+	  Fixed template instantiations, the ACE_Equal_To<ACE_CString>
+	  template was instantiated twice, but this is not a problem with
+	  shared libraries so we didn't noticed until now.
+
 Wed Jun 30 17:39:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs.dsp:
