@@ -37,9 +37,6 @@ class ACE_Task : public ACE_Task_Base
 friend class ACE_Module<ACE_SYNCH_2>;
 friend class ACE_Module_Type;
 public:
-  // Trait.
-  typedef ACE_SYNCH_2 SYNCH;
-
   // = Initialization/termination methods.
   ACE_Task (ACE_Thread_Manager *thr_mgr = 0, 
 	    ACE_Message_Queue<ACE_SYNCH_2> *mq = 0);
