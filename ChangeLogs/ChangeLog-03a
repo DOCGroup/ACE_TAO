@@ -1,3 +1,7 @@
+Wed Dec 25 17:47:12 2002  Bala  <bala@cs.wustl.edu>
+
+        * ACE version 5.2.8 released.
+
 Wed Dec 25 17:39:05 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/make_release: Fixed problems with generation of vcproj etc. 
