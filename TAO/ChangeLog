@@ -1,3 +1,12 @@
+Mon Nov 04 11:10:14 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+	  in method <init_main_thread> change argument to
+	  ACE_ENV_ARG_DECL_NOT_USED.
+	
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	  Added code for explicit template instantiation.
+
 Mon Nov 04 10:47:41 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
