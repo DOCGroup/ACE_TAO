@@ -322,7 +322,7 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
     cur_size_ (0),          // Reset later if memory alloc'd ok
     max_size_ (0),
     flags_ (flags),
-    base_ ((char *) msg_data),
+    base_ (const_cast <char *> (msg_data)),
     allocator_strategy_ (allocator_strategy),
     locking_strategy_ (locking_strategy),
     reference_count_ (1),

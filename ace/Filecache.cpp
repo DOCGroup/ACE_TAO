@@ -111,7 +111,7 @@ ACE_Filecache_Handle::handle (void) const
   if (this->handle_ == ACE_INVALID_HANDLE && this->file_ != 0)
     {
       ACE_Filecache_Handle *mutable_this =
-        (ACE_Filecache_Handle *) this;
+        const_cast<ACE_Filecache_Handle *> (this);
       mutable_this->handle_ = ACE_OS::dup (this->file_->handle ());
     }
   return this->handle_;
