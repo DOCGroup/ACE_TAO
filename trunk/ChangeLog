@@ -12,10 +12,10 @@ Fri Mar  2 16:35:58 2001  Darrell Brunsch <brunsch@uci.edu>
 Fri Mar 02 19:36:22 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (ACE_OS::send): (only non-Win32), if call fails and
-          errno is EAGAIN, change it to EWOULDBLOCK. Improve portability for
-          platforms where EAGAIN and EWOULDBLOCK are different values and
-          both used, like HP-UX.
-          Thanks to snowymike@aol.com for reporting this problem.
+          errno is EAGAIN, change it to EWOULDBLOCK. Improve portability
+ 	  for platforms where EAGAIN and EWOULDBLOCK are different values
+ 	  and both used, like HP-UX.  Thanks to Mike Snowy
+ 	  <snowymike@aol.com> for reporting this problem.
 
         * ace/ACE.i (send_i): Call ACE_OS::send, not ACE_OS::write, on HP-UX.
           This makes it pick up the EAGAIN->EWOULDBLOCK change.

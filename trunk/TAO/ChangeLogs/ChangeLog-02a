@@ -94,9 +94,8 @@ Fri Mar 02 15:39:28 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Fri Mar 02 15:20:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-  * tests/AMI_Timeouts/timout_client.cpp:
-
-    Fixed a missing ".in ()" on a var type.
+        * tests/AMI_Timeouts/timout_client.cpp:
+	  Fixed a missing ".in ()" on a var type.
 
 Fri Mar  2 11:46:40 2001  Ossama Othman  <ossama@uci.edu>
 
