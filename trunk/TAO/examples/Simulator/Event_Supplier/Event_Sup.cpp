@@ -83,8 +83,11 @@ Demo_Supplier::Internal_Demo_Supplier::disconnect_push_supplier (CORBA::Environm
 Demo_Supplier::Demo_Supplier (u_int supplier_id)
   : supplier_id_ (supplier_id),
     internal_demo_consumer_ (new Internal_Demo_Consumer (this)),
-    internal_demo_supplier_ (new Internal_Demo_Supplier (this))
+    internal_demo_supplier_ (new Internal_Demo_Supplier (this)) 
 {
+    // this is neccessary because they are not initialized by the comiler
+   navigation_.roll = 0;
+   navigation_.pitch = 0;
 }
 
 Demo_Supplier::~Demo_Supplier (void)
@@ -414,77 +417,74 @@ Demo_Supplier::insert_event_data (CORBA::Any &data,
 {
   static u_long last_completion = 0;
 
-  TAO_TRY
-    {
-      Schedule_Viewer_Data **sched_data;
+  TAO_TRY {
+    Schedule_Viewer_Data **sched_data;
 
-      if ((schedule_iter.next (sched_data)) && (sched_data) && (*sched_data))
-      {
-        if ((strcmp((*sched_data)->operation_name, "high_20") == 0) ||
-            (strcmp((*sched_data)->operation_name, "low_20") == 0)  ||
-            (strcmp((*sched_data)->operation_name, "high_1") == 0)  ||
-            (strcmp((*sched_data)->operation_name, "low_1") == 0))
-        {
-          navigation_.position_latitude = ACE_OS::rand() % 90;
-          navigation_.position_longitude = ACE_OS::rand() % 180;
-          navigation_.altitude = ACE_OS::rand() % 100;
-          navigation_.heading = ACE_OS::rand() % 180;
-          navigation_.roll = (navigation_.roll == 180) ? -180 : navigation_.roll + 1;
-          navigation_.pitch =  (navigation_.pitch == 90) ? -90 : navigation_.pitch + 1;
+    if ((schedule_iter.next (sched_data)) && (sched_data) && (*sched_data)) {
+      if ((strcmp((*sched_data)->operation_name, "high_20") == 0) ||
+           (strcmp((*sched_data)->operation_name, "low_20") == 0)  ||
+           (strcmp((*sched_data)->operation_name, "high_1") == 0)  ||
+           (strcmp((*sched_data)->operation_name, "low_1") == 0)) {
+        navigation_.position_latitude = ACE_OS::rand() % 90;
+        navigation_.position_longitude = ACE_OS::rand() % 180;
+        navigation_.altitude = ACE_OS::rand() % 100;
+        navigation_.heading = ACE_OS::rand() % 180;
+        navigation_.roll = (navigation_.roll >= 180) ? -180 : navigation_.roll + 1;
+        navigation_.pitch =  (navigation_.pitch >= 90) ? -90 : navigation_.pitch + 1;
 
-          navigation_.utilization =     (*sched_data)->utilitzation;
-          navigation_.overhead =         (*sched_data)->overhead;
-          navigation_.arrival_time =     (*sched_data)->arrival_time;
-          navigation_.deadline_time =    (*sched_data)->deadline_time;
-          navigation_.completion_time =  (*sched_data)->completion_time;
-          navigation_.computation_time = (*sched_data)->computation_time;
+        navigation_.utilization =     (*sched_data)->utilitzation;
+        navigation_.overhead =         (*sched_data)->overhead;
+        navigation_.arrival_time =     (*sched_data)->arrival_time;
+        navigation_.deadline_time =    (*sched_data)->deadline_time;
+        navigation_.completion_time =  (*sched_data)->completion_time;
+        navigation_.computation_time = (*sched_data)->computation_time;
 
-	  // because the scheduler data does not supply these values
-	  navigation_.utilization = (double) (20.0 + ACE_OS::rand() % 10); 
-	  navigation_.overhead = (double) (ACE_OS::rand() % 10); 
+        // because the scheduler data does not supply these values
+        navigation_.utilization = (double) (20.0 + ACE_OS::rand() % 10); 
+        navigation_.overhead = (double) (ACE_OS::rand() % 10); 
 
-          data.replace (_tc_Navigation, &navigation_, CORBA::B_TRUE, TAO_TRY_ENV);
-        }
-        else if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
-                 (strcmp((*sched_data)->operation_name, "low_10") == 0)  ||
-                 (strcmp((*sched_data)->operation_name, "high_5") == 0)  ||
-                 (strcmp((*sched_data)->operation_name, "low_5") == 0))
-        {
-          weapons_.number_of_weapons = 2;
-          weapons_.weapon1_identifier = CORBA::string_alloc (30);
-          strcpy (weapons_.weapon1_identifier,"Photon Torpedoes");
-          weapons_.weapon1_status =(ACE_OS::rand() % 4) == 0 ? 0 : 1 ;
-          weapons_.weapon2_identifier = CORBA::string_alloc (30);
-          strcpy (weapons_.weapon2_identifier,"Quantum Torpedoes");
-          weapons_.weapon2_status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
-          weapons_.weapon3_identifier = CORBA::string_alloc (1);
-          strcpy (weapons_.weapon3_identifier, "");
-          weapons_.weapon3_status = 0;
-          weapons_.weapon4_identifier = CORBA::string_alloc (1);
-          strcpy (weapons_.weapon4_identifier, "");
-          weapons_.weapon4_status = 0;
-          weapons_.weapon5_identifier = CORBA::string_alloc (1);
-          strcpy (weapons_.weapon5_identifier, "");
-          weapons_.weapon5_status = 0;	  
+        data.replace (_tc_Navigation, &navigation_, CORBA::B_TRUE, TAO_TRY_ENV);
+      }
+      else if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
+               (strcmp((*sched_data)->operation_name, "low_10") == 0)  ||
+                (strcmp((*sched_data)->operation_name, "high_5") == 0)  ||
+                (strcmp((*sched_data)->operation_name, "low_5") == 0)) {
+        weapons_.number_of_weapons = 2;
+        weapons_.weapon1_identifier = CORBA::string_alloc (30);
+        strcpy (weapons_.weapon1_identifier,"Photon Torpedoes");
+        weapons_.weapon1_status =(ACE_OS::rand() % 4) == 0 ? 0 : 1 ;
+        weapons_.weapon2_identifier = CORBA::string_alloc (30);
+        strcpy (weapons_.weapon2_identifier,"Quantum Torpedoes");
+        weapons_.weapon2_status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
+        weapons_.weapon3_identifier = CORBA::string_alloc (1);
+        strcpy (weapons_.weapon3_identifier, "");
+        weapons_.weapon3_status = 0;
+        weapons_.weapon4_identifier = CORBA::string_alloc (1);
+        strcpy (weapons_.weapon4_identifier, "");
+        weapons_.weapon4_status = 0;
+        weapons_.weapon5_identifier = CORBA::string_alloc (1);
+        strcpy (weapons_.weapon5_identifier, "");
+        weapons_.weapon5_status = 0;	  
+        weapons_.utilization =     (*sched_data)->utilitzation;
+        weapons_.overhead =         (*sched_data)->overhead;
+        weapons_.arrival_time =     (*sched_data)->arrival_time;
+        weapons_.deadline_time =    (*sched_data)->deadline_time;
+        weapons_.completion_time =  (*sched_data)->completion_time;
+        weapons_.computation_time = (*sched_data)->computation_time;	 
 
-	  weapons_.utilization =     (*sched_data)->utilitzation;
-          weapons_.overhead =         (*sched_data)->overhead;
-          weapons_.arrival_time =     (*sched_data)->arrival_time;
-          weapons_.deadline_time =    (*sched_data)->deadline_time;
-          weapons_.completion_time =  (*sched_data)->completion_time;
-          weapons_.computation_time = (*sched_data)->computation_time;	 
+        // because the scheduler data does not supply these values
+        weapons_.utilization = (double) (20.0 + ACE_OS::rand() % 10); 
+        weapons_.overhead = (double) (ACE_OS::rand() % 10); 
 
-	  // because the scheduler data does not supply these values
-	  weapons_.utilization = (double) (20.0 + ACE_OS::rand() % 10); 
-	  weapons_.overhead = (double) (ACE_OS::rand() % 10); 
-
-          data.replace (_tc_Weapons, &weapons_, CORBA::B_TRUE, TAO_TRY_ENV);
-        }
-        else
-        {
-          ACE_ERROR ((LM_ERROR, "Demo_Supplier::insert_event_data: unrecognized operation name [%s]",
+        data.replace (_tc_Weapons, &weapons_, CORBA::B_TRUE, TAO_TRY_ENV);
+      }
+      else {
+        ACE_ERROR ((LM_ERROR, "Demo_Supplier::insert_event_data: unrecognized operation name [%s]",
                       (*sched_data)->operation_name));
-        }
+      }
+
+      TAO_CHECK_ENV;
+
 
 	if (last_completion > (*sched_data)->completion_time)
 	  last_completion = 0;
