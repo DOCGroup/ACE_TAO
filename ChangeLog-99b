@@ -1,3 +1,8 @@
+Thu Aug 26 21:01:02 1999  Jim Rucker  <James.D.Rucker@jpl.nasa.gov>
+
+        * ace/Thread_Manager.cpp (spawn_i): on VxWorks, if t_handle
+          is non-0, set it with thr_handle.
+
 Thu Aug 26 16:33:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Log_Msg.cpp: removed unnecessary #include "ace/Synch_T.h".
