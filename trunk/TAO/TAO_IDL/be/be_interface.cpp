@@ -966,7 +966,7 @@ be_interface::gen_operation_table (void)
         ACE_NEW_RETURN (temp_file,
                         char [ACE_OS::strlen (ACE_DEFAULT_TEMP_FILE) +
                              ACE_OS::strlen (this->flatname ()) +
-                             ACE_OS::strlen (".gperf") + 1],
+                             ACE_OS::strlen (".gperf") + 2],
                         -1);
         ACE_OS::sprintf (temp_file,
                          "%s_%s.gperf",
