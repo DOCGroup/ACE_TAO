@@ -22,6 +22,7 @@ template<typename T, bool dummy>
 struct value_traits
 {
   typedef T value_type;
+  typedef T const const_value_type;
 
   inline static void zero_range(
       value_type * /* begin */, value_type * /* end */)
