@@ -1,3 +1,10 @@
+Mon Sep 25 14:24:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* Static_performance.dsw:
+
+	  Added the modular IDL compiler projects, and set
+	  the dependencies.
+
 Mon Sep 25 11:45:53 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/config-win32-common.h: If NDEBUG is set, then also set
