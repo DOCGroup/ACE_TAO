@@ -2,22 +2,26 @@
 # $Id$
 #
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+
 BIN = Event_Sup Event_Con
 
 BUILD = $(BIN)
 
 
-IDL_SRC	= \
-	NavWeapC.cpp NavWeapS.cpp
+IDL_SRC = \
+        NavWeapC.cpp NavWeapS.cpp
 
 IDL_HDR = \
-	NavWeapC.h 
+        NavWeapC.h
 
 EVENT_TEST_SRCS= \
-	Event_Sup.cpp Event_Con.cpp DOVE_Supplier.cpp
+        Event_Sup.cpp Event_Con.cpp DOVE_Supplier.cpp
 
 LSRC= \
-	$(IDL_SRC) $(EVENT_TEST_SRCS) 
+        $(IDL_SRC) $(EVENT_TEST_SRCS)
 
 EVENT_SUP_OBJS = NavWeapC.o Event_Sup.o DOVE_Supplier.o
 EVENT_CON_OBJS = NavWeapC.o Event_Con.o
@@ -25,15 +29,15 @@ EVENT_CON_OBJS = NavWeapC.o Event_Con.o
 LDLIBS= -lorbsvcs -lTAO
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
-include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include	$(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #### Local rules and variables...
 
@@ -58,7 +62,7 @@ Event_Con: $(addprefix $(VDIR),$(EVENT_CON_OBJS))
 
 
 #----------------------------------------------------------------------------
-#	Dependencies
+#       Dependencies
 #----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
