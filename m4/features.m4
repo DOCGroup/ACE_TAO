@@ -406,7 +406,7 @@ query_aio_completions (void)
       // Wait for <milli_seconds> amount of time.
       // @@ Assigning <milli_seconds> to tv_sec.
       timespec timeout;
-      timeout.tv_sec = INT_MAX;
+      timeout.tv_sec = 5;
       timeout.tv_nsec = 0;
   
       // To get back the signal info.

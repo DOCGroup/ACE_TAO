@@ -52,6 +52,6 @@ Additional ACE related library configuration information.
 .SH BUGS
 None.
 .SH AUTHOR
-Ossama Othman <othman@cs.wustl.edu>
+Ossama Othman <ossama@uci.edu>
 .SH "SEE ALSO"
 .BR tao-config (1)

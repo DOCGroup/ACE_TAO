@@ -444,13 +444,12 @@ AC_ARG_ENABLE(purify,
                   AC_CHECK_PROG(PURIFY, purify, purify,)
                   if test -n "$PURIFY"; then
                     PURE_CACHE_BASE_DIR=/tmp/purifycache
-                    PURE_CACHE_DIR=${PURE_CACHE_BASE_DIR}-${LOGNAME}-${notdir ${CXX} }
-                    PURELINK="$PURIFY -best-effort -chain-length=20 \
-             -cache-dir=$PURE_CACHE_DIR \
-             -fds-inuse-at-exit=no -ignore-signals=SIGINT -inuse-at-exit \
-             -max_threads=100"
-                    ACE_CXXFLAGS="$ACE_CXXFLAGS -DACE_HAS_PURIFY"
-                    ACE_CFLAGS="$ACE_CFLAGS -DACE_HAS_PURIFY"
+                    PURE_CACHE_DIR="${PURE_CACHE_BASE_DIR}-${LOGNAME}"
+                    PURE_CACHE_DIR="${PURE_CACHE_DIR}-"`basename $CXX`
+                    PURELINK="$PURIFY -best-effort -chain-length=20 -cache-dir=$PURE_CACHE_DIR -fds-inuse-at-exit=no -inuse-at-exit -max_threads=100"
+                    dnl Pick up Quantify directory from the users PATH.
+		    ACE_PURIFY_DIR=`type purify | sed -e 's/.* is //' -e 's%/purify'`
+                    ACE_CPPFLAGS="-DACE_HAS_PURIFY -I$ACE_PURIFY_DIR"
                   else
                     AC_MSG_WARN(Purify program was not found.)
                     AC_MSG_WARN(Disabling purify support.)
@@ -473,11 +472,13 @@ AC_ARG_ENABLE(quantify,
                   AC_CHECK_PROG(QUANTIFY, quantify, quantify,)
                   if test -n "$QUANTIFY"; then
                     PURE_CACHE_BASE_DIR=/tmp/purifycache
-                    PURE_CACHE_DIR=${PURE_CACHE_BASE_DIR}-${LOGNAME}-${notdir ${CXX} }
-                    PRELINK="$QUANTIFY  -best-effort -max_threads=100 \
-             -cache-dir=$PURE_CACHE_DIR"
-                    ACE_CXXFLAGS="$ACE_CXXFLAGS -DACE_HAS_QUANTIFY"
-                    ACE_CFLAGS="$ACE_CFLAGS -DACE_HAS_QUANTIFY"
+                    PURE_CACHE_DIR="${PURE_CACHE_BASE_DIR}-${LOGNAME}"
+                    PURE_CACHE_DIR="${PURE_CACHE_DIR}-"`basename $CXX`
+
+                    PRELINK="$QUANTIFY -best-effort -max_threads=100 -cache-dir=$PURE_CACHE_DIR"
+                    dnl Pick up Quantify directory from the users PATH.
+		    ACE_QUANTIFY_DIR=`type quantify | sed -e 's/.* is //' -e 's%/quantify$$%%'`
+                    ACE_CPPFLAGS="-DACE_HAS_QUANTIFY -I$ACE_QUANTIFY_DIR"
                   else
                     AC_MSG_WARN(Quantify program was not found.)
                     AC_MSG_WARN(Disabling quantify support.)
@@ -791,9 +792,6 @@ dnl Platform specific flags
 case "$target" in
   *freebsd*)
     LIBS="$LIBS -lcompat"
-    ;;
-  *hpux9* | *hpux1[01]*)
-    LIBS="$LIBS -lcma -lrt"
     ;;
   *osf3.2*)
     LIBS="$LIBS -lmach -lsys5 -lcxx -lc -lrt"
@@ -7441,7 +7439,7 @@ ACE_CACHE_CHECK(if generated ACE configuration is usable,
 The generated configuration appears to be unusable.  Please verify
 that your system path and environment variables are correct.  If they
 appear to be correct then please send the maintainer of this configure
-script Ossama Othman <othman@cs.wustl.edu> the \`config.log' file and
+script Ossama Othman <ossama@ece.uci.edu> the \`config.log' file and
 the following information:
 
   ACE \`configure' Script Information
