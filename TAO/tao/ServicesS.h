@@ -55,21 +55,17 @@
 
 namespace POA_CORBA
 {
-  
+
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:80
 
 } // module CORBA
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:997
 
 #include "ServicesS_T.h"
-
-#if defined (__ACE_INLINE__)
-#include "ServicesS.inl"
-#endif /* defined INLINE */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

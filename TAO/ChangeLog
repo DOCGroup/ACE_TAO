@@ -1,3 +1,25 @@
+Tue Jan 26 10:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CONV_FRAMES.{h,cpp,inl}:
+        * tao/CONV_FRAMES_T.{h,cpp,inl}:
+        * tao/GIOPS.{h,cpp,inl}:
+        * tao/GIOPS_T.{h,cpp,inl}:
+        * tao/IOPS.{h,cpp,i}:
+        * tao/IOPS_T.{h,cpp,i}:
+        * tao/PollableS.{h,cpp,inl}:
+        * tao/PollableS_T.{h,cpp,inl}:
+        * tao/ServiceS.{h,cpp,inl}:
+        * tao/ServiceS_T.{h,cpp,inl}:
+        * tao/TAOS.{h,cpp,inl}:
+        * tao/TAOS_T.{h,cpp,inl}:
+        * tao/TimeBaseS.{h,cpp,inl}:
+        * tao/TimeBaseS_T.{h,cpp,inl}:
+          The generated S.cpp, S.inl, S_T.cpp and S_T.inl are empty and
+          don't contain real code, so we removed these files from the repo
+          and updated the correspondind S.h/S_T.h file. This is now done
+          by hand but there is a feature request to the TAO_IDL compiler
+          to be able to suppress the generation of these files
+
 Tue Jan 25 00:00:51 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/POA.cpp (reference_to_id):
