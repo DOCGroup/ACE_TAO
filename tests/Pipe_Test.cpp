@@ -40,9 +40,9 @@ print_usage_and_die (void)
 
 // Parse the command-line arguments and set options.
 static void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dci:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dci:"));
 
   int c;
 
@@ -84,7 +84,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   if (child_process)
     {
-      ACE_APPEND_LOG ("Pipe_Test-children");
+      ACE_APPEND_LOG (ACE_TEXT("Pipe_Test-children"));
       ACE_Pipe a, b, c, d, e;
 
       open (a, "a");
@@ -97,8 +97,8 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
   else
     {
-      ACE_START_TEST ("Pipe_Test");
-      ACE_INIT_LOG ("Pipe_Test-children");
+      ACE_START_TEST (ACE_TEXT("Pipe_Test"));
+      ACE_INIT_LOG (ACE_TEXT("Pipe_Test-children"));
 
       ACE_Process_Options options;
       if (close_pipe == 0)
