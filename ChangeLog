@@ -1,3 +1,10 @@
+Wed Aug 08 21:19:09 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Service_Config_Test.UTF-16.conf:
+
+	  Removed extraneous characters from this file that were causing
+	  the Service Configurator's underlying lexer to "choke."
+
 Wed Aug  8 16:23:31 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
