@@ -1,8 +1,12 @@
+Tue Jun 15 10:57:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* docs/compiler.html: Improved the TAO IDL compiler documentation.
+
 Tue Jun 15 11:51:38 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/benchmark/run_test.pl: 
-	  Fixed the run_test.pl so that the first line doesn't start with a
-	  # and also appended . to the executable PATH in the script.
+	* orbsvcs/tests/AVStreams/benchmark/run_test.pl: Fixed the
+ 	  run_test.pl so that the first line doesn't start with a # and
+ 	  also appended . to the executable PATH in the script.
 
 Tue Jun 15 11:06:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -32,9 +36,9 @@ Tue Jun 15 11:06:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Mon Jun 14 22:58:34 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: 	
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
-	Fixed ACE_THROW_SPEC issues again. Included the
-	CORBA::SystemException. 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: Fixed
+ 	  ACE_THROW_SPEC issues again. Included the
+ 	  CORBA::SystemException.
 
 Mon Jun 14 22:02:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
