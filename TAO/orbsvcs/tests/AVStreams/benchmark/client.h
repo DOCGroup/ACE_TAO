@@ -10,10 +10,11 @@
 #include "tao/TAO.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/SOCK_Dgram.h"
-#include "ace/SOCK_Connector.h"
 #include "orbsvcs/AV/AVStreams_i.h"
+#include "ace/SOCK_Acceptor.h"
 #include "ace/Synch.h"
 
+#define TCP_PORT 5000
 
 class Client_StreamEndPoint
   : public virtual TAO_Client_StreamEndPoint
@@ -49,6 +50,35 @@ public:
   
 };
 
+class ttcp_Client_StreamEndPoint;
+
+class ttcp_Acceptor 
+  :public virtual ACE_Acceptor <ttcp_Client_StreamEndPoint,ACE_SOCK_ACCEPTOR>
+{
+public:
+  ttcp_Acceptor (ttcp_Client_StreamEndPoint *endpoint);
+  
+  virtual int make_svc_handler (ttcp_Client_StreamEndPoint *&sh);
+private:
+  ttcp_Client_StreamEndPoint *endpoint_;
+};
+
+class ttcp_Client_StreamEndPoint
+  :public Client_StreamEndPoint,
+   public virtual ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+{
+public:
+  ttcp_Client_StreamEndPoint (void);
+  // constructor
+  virtual CORBA::Boolean handle_preconnect (AVStreams::flowSpec &the_spec);
+  // called before connecting
+
+  virtual int open (void *);
+  // called when server connects to us.
+private:
+  ttcp_Acceptor acceptor_;
+  // The Acceptor.
+};
 
 class Client : public ACE_Task<ACE_SYNCH>
 // one of these per client thread

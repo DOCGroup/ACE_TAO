@@ -14,6 +14,7 @@
 #include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
+#include "client.h"
 
 class Server
 {

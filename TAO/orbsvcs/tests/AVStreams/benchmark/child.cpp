@@ -42,8 +42,16 @@ CORBA::Boolean
 Bench_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &the_spec,  
                                                           CORBA::Environment &env) 
 {
-    ACE_DEBUG ((LM_DEBUG,"(%P|%t) Bench_Server_StreamEndPoint::handle_connection_requested:() %s \n",
-                the_spec[0]));
+    ACE_DEBUG ((LM_DEBUG,"(%P|%t) Bench_Server_StreamEndPoint::handle_connection_requested:() \n"));
+    
+    ACE_INET_Addr client_addr (the_spec [0]);
+    
+    if (this->connector_.connect (this->tcp_stream_,
+                                  client_addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Connection to server failed: %p\n",
+                       "connect"),
+                      CORBA::B_FALSE);
     return CORBA::B_TRUE;
 }
 
