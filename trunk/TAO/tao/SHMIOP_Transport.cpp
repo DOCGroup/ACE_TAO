@@ -110,7 +110,6 @@ TAO_SHMIOP_Server_Transport::
     TAO_SHMIOP_Server_Transport (TAO_SHMIOP_Server_Connection_Handler *handler,
                                TAO_ORB_Core* orb_core)
   : TAO_SHMIOP_Transport (handler, orb_core),
-    server_handler_ (handler),
     message_state_ (orb_core)
 {
 }
@@ -126,7 +125,6 @@ TAO_SHMIOP_Client_Transport::
                                TAO_ORB_Core *orb_core)
   :  TAO_SHMIOP_Transport (handler,
                          orb_core),
-     client_handler_ (handler),
      client_mesg_factory_ (0),
      orb_core_ (orb_core),
      lite_flag_ (0),
@@ -139,11 +137,6 @@ TAO_SHMIOP_Client_Transport::~TAO_SHMIOP_Client_Transport (void)
   delete this->client_mesg_factory_;
 }
 
-TAO_SHMIOP_Client_Connection_Handler *
-TAO_SHMIOP_Client_Transport::client_handler (void)
-{
-  return this->client_handler_;
-}
 
 void
 TAO_SHMIOP_Client_Transport::start_request (TAO_ORB_Core * /*orb_core*/,
@@ -303,10 +296,10 @@ TAO_SHMIOP_Client_Transport::register_handler (void)
   // @@ It seems like this method should go away, the right reactor is
   //    picked at object creation time.
   ACE_Reactor *r = this->orb_core ()->reactor ();
-  if (r == this->client_handler ()->reactor ())
+  if (r == this->handler ()->reactor ())
     return 0;
 
-  return r->register_handler (this->client_handler (),
+  return r->register_handler (this->handler (),
                               ACE_Event_Handler::READ_MASK);
 }
 
