@@ -67,14 +67,14 @@ TAO_Naming_Server::init (CORBA::ORB_var &orb,
                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      CORBA::String_var str =
+      this->naming_service_ior_=
         orb->object_to_string (obj.in (),
                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
                   "listening as object <%s>\n",
-                  str.in ()));
+                  this->naming_service_ior_.in ()));
 
 #if defined (ACE_HAS_IP_MULTICAST)
       // Get reactor instance from TAO.
@@ -98,7 +98,7 @@ TAO_Naming_Server::init (CORBA::ORB_var &orb,
       if (port == 0)
         port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
 
-      char *naming_ior = ACE_OS::strdup (str.in ());
+      char *naming_ior = ACE_OS::strdup (this->naming_service_ior_.in ());
 
       // Instantiate a server which will receive requests for an ior
       ACE_NEW_RETURN (this->ior_multicast_,
@@ -121,6 +121,7 @@ TAO_Naming_Server::init (CORBA::ORB_var &orb,
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Naming Service");
+      return -1;
     }
   TAO_ENDTRY;
   return 0;
@@ -132,6 +133,12 @@ NS_NamingContext &
 TAO_Naming_Server::GetNamingContext (void)
 {
   return naming_context_impl_ ;
+}
+
+CORBA::String
+TAO_Naming_Server::naming_service_ior (void)
+{
+  return CORBA::string_dup (this->naming_service_ior_.in ());
 }
 
 // Returns a pointer to the NamingContext.
