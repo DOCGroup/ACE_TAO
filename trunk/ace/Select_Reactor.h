@@ -23,8 +23,9 @@
 typedef ACE_Select_Reactor_Token_T<ACE_SELECT_TOKEN> ACE_Select_Reactor_Token;
 
 typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Token> ACE_Select_Reactor;
-ACE_TEMPLATE_SPECIALIZATION
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE == 0)
+ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Guard< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
  *
@@ -54,6 +55,7 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Guard< ACE_Select_Reactor_Token_T<ACE_Noop_Token> > &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Guard (const ACE_Guard< ACE_Select_Reactor_Token_T<ACE_Noop_Token> > &))
 };
+#endif /* ACE_MT_SAFE && ACE_MT_SAFE == 0 */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SELECT_REACTOR_H */

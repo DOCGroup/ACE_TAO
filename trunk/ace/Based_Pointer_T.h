@@ -17,7 +17,6 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
-#include "ace/Trace.h"
 
 #if defined (_MSC_VER)
 // Suppress warning e.g. "return type for

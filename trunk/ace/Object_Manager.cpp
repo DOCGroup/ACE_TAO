@@ -262,8 +262,10 @@ ACE_Object_Manager::init (void)
       // been initialized.
       object_manager_state_ = OBJ_MAN_INITIALIZED;
 
+#if defined (ACE_HAS_TRACE)
       // Allow tracing again (useful if user does init/fini/init)
       ACE_Trace::start_tracing ();
+#endif /* ACE_HAS_TRACE */
 
       return 0;
     } else {
@@ -612,7 +614,9 @@ ACE_Object_Manager::fini (void)
       preallocations_ = 0;
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
+#if defined (ACE_HAS_TRACE)
       ACE_Trace::stop_tracing ();
+#endif /* ACE_HAS_TRACE */
 
 #if !defined (ACE_LACKS_ACE_SVCCONF)
       // Close and possibly delete all service instances in the Service

@@ -54,7 +54,13 @@ ACE_NEW_THROWS_EXCEPTIONS               Compiler's 'new' throws exception on
                                         failure (ANSI C++ behavior).
 ACE_NLOGGING                            Turns off the LM_DEBUG and
                                         LM_ERROR logging macros...
-ACE_NTRACE                              Turns off the tracing feature.
+ACE_NTRACE                              Turns off the tracing feature when = 1.
+ACE_HAS_TRACE                           Defined when ACE_NTRACE=0 to help support
+                                        tracing.  Can also be defined by users who
+                                        implement their own tracing macros based on
+                                        ACE_TRACE_IMPL.  Not defining it helps reduce
+                                        footprint by not requiring applications to
+                                        link in Trace.o.
 ACE_PAGE_SIZE                           Defines the page size of the
                                         system (not used on Win32 or
                                         with ACE_HAS_GETPAGESIZE).

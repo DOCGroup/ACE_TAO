@@ -23,8 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Trace.h"
-
 #if defined (_MSC_VER)
 // Suppress warning e.g. "return type for
 // 'ACE_Auto_Array_Pointer<type>::operator ->' is 'type *' (i.e., not a UDT

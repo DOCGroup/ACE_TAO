@@ -646,10 +646,12 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
           (ACE_static_cast (char *, ACE_OS::atop (get_opt.opt_arg ())));
         break;
       case 'T':
+#if defined (ACE_HAS_TRACE)
         if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT ("ON")) == 0)
           ACE_Trace::start_tracing ();
         else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT ("OFF")) == 0)
           ACE_Trace::stop_tracing ();
+#endif /* ACE_HAS_TRACE */
         break;
       case 'v':
         this->verbosity_ = 1;

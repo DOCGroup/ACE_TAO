@@ -1,3 +1,41 @@
+Wed Jul 30 19:21:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Global_Macros.h:
+        * ace/Log_Msg.cpp:
+        * ace/Naming_Context.cpp:
+        * ace/Object_Manager.cpp:
+        * ace/README:
+        * examples/ASX/Event_Server/Event_Server/Options.cpp:
+        * examples/ASX/UPIPE_Event_Server/Options.cpp:
+        * examples/Shared_Malloc/Options.cpp:
+          Added ACE_HAS_TRACE macro that gets defined if ACE_NTRACE=0 and
+          is used to ifdef away calls to ACE_Trace when not tracing.  This
+          removes the need to link in Trace.o for static applications not
+          tracing. 
+
+        * ace/Asynch_Acceptor.cpp:
+        * ace/Auto_Ptr.h:
+        * ace/Auto_Ptr.i:
+        * ace/Based_Pointer_T.h:
+        * ace/Based_Pointer_T.i:
+        * ace/OS.h:
+        * ace/SV_Semaphore_Complex.i:
+        * ace/SV_Semaphore_Simple.i:
+        * ace/Synch_Options.cpp:
+        * ace/Trace.h:
+        * tests/Proactor_Timer_Test.cpp:
+        * tests/Reactor_Timer_Test.cpp:
+          Adjusted includes to reflect the above change by mainly removing
+          Trace.h, though in some cases by including Global_Macros.h or
+          Trace.h for the two tests.
+
+        * bin/generate_export_file.pl:
+          Made the generated code match what's in Global_Macros.h:
+
+        * ace/Select_Reactor.h:
+          When ACE_MT_SAFE=0, ifdef away the unused template specilization
+          of ACE_Guard<ACE_Select_Reactor_Token_T<ACE_Noop_Token>>.
+
 Wed Jul 30 17:00:03 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* ace/UUID.cpp: 	
