@@ -96,7 +96,7 @@ used by ORB's reacotr. With "<TT>-ORBreactorlock null</TT>" added into
 inside the ORB even on multi-threaded platforms. This eliminate some overheads
 caused by synchronizing access to the Select_Reactor. Usually, if you have
 TSS ORB and are using reactive concurrency startegy, the ORB are not accessed
-by multiple threads, then, you can safely turn the lock off. 
+by multiple threads, then, you can safely turn the lock off.
 
 <LI>
 Strategized the connection management scheme so that we don't always have
@@ -109,7 +109,7 @@ be called when the first stub is created.
 
 <LI> The ORB now handles nested upcalls correctly. See <A
 HREF="../leader_follower.html">this </A>for details on the design of
-the solution. 
+the solution.
 
 <LI> Making the collocation table configurable. We can either use a
 global collocation table to share objects among ORBs, or use the
@@ -324,6 +324,12 @@ at this already there--needs to be checked out).</LI>
 
 <LI>
 Added README file to multiCubit test.</LI>
+
+<LI>
+Added support for the -ORBInitRef option. This allows run-time specification of
+an ObjectId:IOR mapping. It is used by resolve_initial_references () and
+overrides the orb-install-time defaults.</LI>
+
 </UL>
 <B>Ongoing Work:</B>
 <UL>
