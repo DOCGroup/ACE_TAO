@@ -45,7 +45,7 @@ namespace CIAO
     *       // @@ Jules, why Any type?
     * descriptor files, to the  corresponding CORBA IDL Any type.
     */
-    class Config_Handlers_Export ADD_Handler : public Base_Handler
+    class Config_Handlers_Export ADD_Handler 
     {
     public:
       ADD_Handler (void);
