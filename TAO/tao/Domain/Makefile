@@ -163,7 +163,6 @@ endif
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -239,7 +238,6 @@ endif
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -258,6 +256,7 @@ endif
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
@@ -311,8 +310,6 @@ endif
   $(TAO_ROOT)/tao/Adapter.h \
   $(TAO_ROOT)/tao/Adapter.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
@@ -413,6 +410,7 @@ endif
   $(ACE_ROOT)/ace/Managed_Object.cpp \
   $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
   $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.h \
   $(TAO_ROOT)/tao/Tagged_Profile.h \
   $(TAO_ROOT)/tao/IOPC.h \
@@ -421,6 +419,8 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Tagged_Profile.i \
   $(TAO_ROOT)/tao/Service_Context.h \
   $(TAO_ROOT)/tao/Service_Context.inl \

@@ -274,7 +274,6 @@ endif
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -306,7 +305,6 @@ endif
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -386,8 +384,6 @@ endif
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -417,7 +413,7 @@ endif
   $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i ValueFactory.h \
-  ValueFactory.inl
+  ValueFactory.inl $(TAO_ROOT)/tao/debug.h
 
 .obj/Valuetype_Adapter_Impl.o .obj/Valuetype_Adapter_Impl.so .shobj/Valuetype_Adapter_Impl.o .shobj/Valuetype_Adapter_Impl.so: Valuetype_Adapter_Impl.cpp \
   Valuetype_Adapter_Impl.h $(ACE_ROOT)/ace/pre.h \
@@ -683,6 +679,23 @@ endif
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/params.i \
   $(TAO_ROOT)/tao/Adapter.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/Adapter.i \
+  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/OctetSeqC.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqC.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
@@ -691,39 +704,20 @@ endif
   $(TAO_ROOT)/tao/Objref_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
   $(TAO_ROOT)/tao/IOP_IORC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/Adapter.i \
-  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/DynamicC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
@@ -764,8 +758,6 @@ endif
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -942,9 +934,6 @@ endif
   ValueFactory.h ValueFactory.inl \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
-  $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/Sequence.h \
   $(TAO_ROOT)/tao/Managed_Types.h \
@@ -977,18 +966,31 @@ endif
   $(TAO_ROOT)/tao/Seq_Out_T.inl \
   $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
-  $(TAO_ROOT)/tao/IOP_IORC.h \
+  $(TAO_ROOT)/tao/MProfile.i \
+  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
   $(TAO_ROOT)/tao/VarOut_T.cpp \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/CORBA_String.h \
+  $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
+  $(TAO_ROOT)/tao/objectid.h \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/Object.h \
+  $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -1014,15 +1016,12 @@ endif
   $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/Any_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -1030,15 +1029,6 @@ endif
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PolicyC.i \
-  $(TAO_ROOT)/tao/MProfile.i \
-  $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/ServicesC.h \
-  $(TAO_ROOT)/tao/ServicesC.i \
-  $(TAO_ROOT)/tao/CORBA_String.h \
-  $(TAO_ROOT)/tao/CORBA_String.inl \
-  $(TAO_ROOT)/tao/ObjectIdListC.h \
-  $(TAO_ROOT)/tao/ObjectIdListC.i \
-  $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.h \
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.inl \
@@ -1114,8 +1104,6 @@ endif
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -1151,8 +1139,11 @@ endif
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
-  $(TAO_ROOT)/tao/Profile.i
+  $(TAO_ROOT)/tao/Profile.i \
+  $(TAO_ROOT)/tao/debug.h
 
 .obj/ValueFactory.o .obj/ValueFactory.so .shobj/ValueFactory.o .shobj/ValueFactory.so: ValueFactory.cpp ValueFactory.h \
   $(ACE_ROOT)/ace/pre.h valuetype_export.h \
@@ -1550,36 +1541,7 @@ endif
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/Object.h \
-  $(TAO_ROOT)/tao/Policy_ForwardC.h \
-  $(TAO_ROOT)/tao/CDR.h \
-  $(TAO_ROOT)/tao/CDR.i \
-  $(TAO_ROOT)/tao/Objref_VarOut_T.h \
-  $(TAO_ROOT)/tao/varbase.h \
-  $(TAO_ROOT)/tao/Objref_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Objref_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Environment.h \
-  $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
-  $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Environment.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
-  $(TAO_ROOT)/tao/Policy_ForwardC.i \
-  $(TAO_ROOT)/tao/IOP_IORC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.i \
-  $(TAO_ROOT)/tao/VarOut_T.h \
-  $(TAO_ROOT)/tao/VarOut_T.inl \
-  $(TAO_ROOT)/tao/VarOut_T.cpp \
-  $(TAO_ROOT)/tao/IOP_IORC.i \
-  $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -1649,6 +1611,9 @@ endif
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
+  $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Any.i ValueBase.h \
   valuetype_export.h Value_VarOut_T.h Value_VarOut_T.inl \

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -7,7 +7,6 @@
  *  $Id$
  *
  *   Keep track of profile lists
- *
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
@@ -26,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PolicyC.h"
+#include "tao/Policy_ForwardC.h"
 
 class TAO_Profile;
 
@@ -238,4 +237,4 @@ private:
 
 #include /**/ "ace/post.h"
 
-#endif /*TAO_MPROFILE_H */
+#endif  /* TAO_MPROFILE_H */

@@ -1,12 +1,10 @@
 // $Id$
 
-#ifndef TAO_ANY_SYSTEMEXCEPTION_C
-#define TAO_ANY_SYSTEMEXCEPTION_C
-
 #include "Any_SystemException.h"
+#include "CDR.h"
 #include "Exception.h"
+#include "Environment.h"
 #include "Marshal.h"
-#include "debug.h"
 #include "CORBA_String.h"
 #include "ace/Auto_Ptr.h"
 
@@ -207,4 +205,3 @@ TAO::Any_SystemException::demarshal_value (TAO_InputCDR &cdr)
   return 0;
 }
 
-#endif /* TAO_ANY_EXCEPTION_C */

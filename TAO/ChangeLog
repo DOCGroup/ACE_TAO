@@ -1,3 +1,125 @@
+Wed Aug 27 21:00:41 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Adapter.h:
+
+	  Removed unnecessary "tao/Object.h" include.  Forward declaring
+	  CORBA::Object_{ptr,out} (via corbafwd.h) and "TAO::ObjectKey" is
+	  enough.
+
+	* tao/Adapter.cpp:
+
+	  Include "Object.h" to pull in complete CORBA::Object_out type.
+
+	* tao/Any.h:
+
+	  Removed unnecessary "tao/Object.h" include.
+
+	* tao/Any_Dual_Impl_T.cpp: 
+	* tao/Any_SystemException.cpp: 
+
+	  Include "tao/Environment.h" to pull in CORBA::Environment
+	  declaration.
+
+	* tao/Acceptor_Filter.h:
+	* tao/LocalObject.h:
+
+          Removed unnecessary "tao/Object_KeyC.h" include.  A
+          "TAO::ObjectKey" forward declaration is enough.
+
+	* tao/CDR_Encaps_Codec.h:
+
+	  Include "IOP_CodecC.h" instead of "IOPC.h".  The former is
+	  lighter weight.
+
+	* tao/Connector_Registry.h:
+
+	  No longer any need to include "tao/Endpoint.h".
+
+	  (get_connector):
+	* tao/Connector_Registry.i (get_connector):
+
+	  Removed version of this method that accepts a TAO_Endpoint.  It
+	  is redundant.  Just use the version that accepts an endpoint tag
+	  value.  Allows removal of "tao/Endpoint.h" include.
+
+	* tao/Invocation.cpp (perform_call):
+
+	  Use version of ACE_Connector_Registry::get_connector() that
+	  accepts an endpoint tag value instead of a pointer to an
+	  endpoint.  The latter is redundant and has been removed.
+
+	* tao/MProfile.h:
+	* tao/Message_PolicyValueC.h:
+	* tao/PolicyFactory_Registry.h:
+
+	  Include "tao/Policy_ForwardC.h" instead of "tao/PolicyC.h".  The
+	  former is much lighter weight than the latter.  This helps
+	  improve compile times.
+
+	* tao/MProfile.i (create_policy_list):
+	* tao/MProfile.cpp (create_policy_list):
+
+	  Uninlined this method.  Inlining it didn't buy us much.
+
+	* tao/Muxed_TMS.h:
+	* tao/Typecode.h:
+
+	  Include "Hash_Map_Manager_T.h" instead of "Hash_Map_Manager.h".
+	  We save one level header indirection in doing so since the
+	  latter includes the former.
+
+	* tao/NVList.h:
+
+	  Forward declare TAO_ORB_Core class.
+
+	* tao/Object.h:
+	* tao/corbafwd.h:
+
+	  Moved the CORBA::Object_{var,out} typedefs to corbafwd.h.
+	  Allows reduction of inter-header dependencies for headers that
+	  only require forward declarations, not the complete types.
+
+	* tao/PolicyFactory_Registry.h (create_policy, _create_policy):
+	* tao/PolicyFactory_Registry.cpp (create_policy, _create_policy):
+
+	  Removed exception specifications.  They aren't strictly needed,
+	  and forced a dependency on PolicyC.h due to CORBA::PolicyError
+	  being placed in them.
+
+	* tao/Any_Impl_T.cpp:
+	* tao/DynamicC.h:
+	* tao/TimeBaseC.h:
+
+	  Include "tao/CDR.h" for TAO_{Input,Output}CDR types.
+
+	* tao/Transport.h:
+
+	  No need to include "tao/Exceptions.h" and
+	  "tao/Transport_Descriptor_Interface.h".
+
+	* tao/Transport_Mux_Strategy.h:
+
+	  No need to include "IOPC.h".  Include "corbafwd.h" instead.
+
+	* tao/Transport_Mux_Strategy.cpp:
+
+	  No need to include "Reply_Dispatcher.h"
+
+	* tao/TypeCodeFactory_Adapter.h:
+
+	  Do not use default CORBA::Environment parameter values for
+	  TAO-specific/internal code.  Removed the default parameter
+	  values.
+
+	* tao/target_specification.h:
+
+	  No need to include "tao/Object_KeyC.h" and "tao/IOPC.h".
+	  Suitable forward declarations in the IOP and TAO and namespaces
+	  are enough.
+
+	  Include "tao/corbafwd.h" to pull in primitive types in CORBA
+	  namespace.
+
 Thu Aug 28 03:46:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tao/Utils/Utils.mpc:

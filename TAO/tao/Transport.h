@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,6 +15,7 @@
 
 #ifndef TAO_TRANSPORT_H
 #define TAO_TRANSPORT_H
+
 #include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
@@ -23,8 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Exception.h"
-#include "Transport_Descriptor_Interface.h"
 #include "Transport_Cache_Manager.h"
 #include "Transport_Timer.h"
 #include "Incoming_Message_Queue.h"
@@ -916,6 +915,7 @@ private:
   /// translators are correct, since a null translator is valid if both ends
   /// are using the same codeset, whatever that codeset might be.
   CORBA::Boolean tcs_set_;
+
   /// First_request_ is true until the first request is sent or received. This
   /// is necessary since codeset context information is necessary only on the
   /// first request. After that, the translators are fixed for the life of the
@@ -943,4 +943,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_TRANSPORT_H */

@@ -28,7 +28,7 @@
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"
 
-
+class TAO_ORB_Core;
 class TAO_InputCDR;
 
 namespace CORBA

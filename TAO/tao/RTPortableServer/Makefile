@@ -187,7 +187,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -263,7 +262,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -282,6 +280,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
   RTPortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -329,8 +328,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Adapter.h \
   $(TAO_ROOT)/tao/Adapter.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
@@ -475,7 +472,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -551,7 +547,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -569,6 +564,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
@@ -617,13 +613,18 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/CDR_Base.inl \
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(TAO_ROOT)/tao/corbafwd.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Acceptor_Filter.i \
+  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
+  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
+  $(TAO_ROOT)/tao/VarOut_T.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(TAO_ROOT)/tao/VarOut_T.inl \
+  $(TAO_ROOT)/tao/VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.cpp \
   $(TAO_ROOT)/tao/Seq_Out_T.h \
@@ -638,13 +639,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Sequence.i \
   $(TAO_ROOT)/tao/Sequence_T.i \
   $(TAO_ROOT)/tao/Sequence_T.cpp \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/Acceptor_Filter.i \
-  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
-  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
-  $(TAO_ROOT)/tao/VarOut_T.h \
-  $(TAO_ROOT)/tao/VarOut_T.inl \
-  $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
@@ -686,7 +680,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -762,7 +755,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -781,6 +773,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
   RT_Acceptor_Filters.i \
   $(TAO_ROOT)/tao/Transport_Acceptor.h \
@@ -801,6 +794,8 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
   $(TAO_ROOT)/tao/Profile.i
 
@@ -995,6 +990,23 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/params.i \
   $(TAO_ROOT)/tao/Adapter.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/Adapter.i \
+  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/OctetSeqC.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
+  $(TAO_ROOT)/tao/OctetSeqC.i \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
@@ -1006,32 +1018,14 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Environment.i \
-  $(TAO_ROOT)/tao/Seq_Var_T.h \
-  $(TAO_ROOT)/tao/Seq_Var_T.inl \
-  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
-  $(TAO_ROOT)/tao/Seq_Out_T.h \
-  $(TAO_ROOT)/tao/Seq_Out_T.inl \
-  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
   $(TAO_ROOT)/tao/IOP_IORC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.h \
-  $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/Adapter.i \
-  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
-  $(TAO_ROOT)/tao/PortableInterceptorC.h \
-  $(TAO_ROOT)/tao/PI_ForwardC.h \
-  $(TAO_ROOT)/tao/StringSeqC.h \
-  $(TAO_ROOT)/tao/StringSeqC.i \
-  $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -1046,7 +1040,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/DynamicC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
@@ -1087,8 +1080,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -1150,6 +1141,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(ACE_ROOT)/ace/Map_T.h \
   $(ACE_ROOT)/ace/Pair_T.h \
@@ -1234,6 +1226,8 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/PortableServer/POAManager.i \
   $(TAO_ROOT)/tao/PortableServer/POA_Cached_Policies.h \
   $(TAO_ROOT)/tao/PortableServer/POA_Cached_Policies.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/PortableServer/POA.i \
   $(TAO_ROOT)/tao/RTCORBA/Thread_Pool.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
@@ -1242,6 +1236,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/TimeBaseC.i \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
   $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
   $(TAO_ROOT)/tao/New_Leader_Generator.h \
@@ -1378,7 +1373,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -1454,7 +1448,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -1471,6 +1464,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(ACE_ROOT)/ace/Map_T.h \
   $(ACE_ROOT)/ace/Pair_T.h \
@@ -1511,8 +1505,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Adapter.h \
   $(TAO_ROOT)/tao/Adapter.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
@@ -1808,7 +1800,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -1839,7 +1830,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
@@ -1853,6 +1843,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(ACE_ROOT)/ace/Map_T.h \
   $(ACE_ROOT)/ace/Pair_T.h \
@@ -1893,8 +1884,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Adapter.h \
   $(TAO_ROOT)/tao/Adapter.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
@@ -2010,6 +1999,8 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/PortableServer/POAManager.i \
   $(TAO_ROOT)/tao/PortableServer/POA_Cached_Policies.h \
   $(TAO_ROOT)/tao/PortableServer/POA_Cached_Policies.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
@@ -2089,6 +2080,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Policy_Manager.h \
   $(TAO_ROOT)/tao/Policy_Manager.i \
   $(TAO_ROOT)/tao/RTCORBA/Thread_Pool.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
   $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
   $(TAO_ROOT)/tao/New_Leader_Generator.h \
@@ -2222,7 +2214,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -2298,7 +2289,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -2316,12 +2306,11 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(TAO_ROOT)/tao/PortableServer/POA_Cached_Policies.h \
   $(TAO_ROOT)/tao/PortableServer/POA_Policies.h \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/PortableServer/POA_Policies.i \
   $(TAO_ROOT)/tao/PortableServer/POA_Cached_Policies.i \
@@ -2340,6 +2329,7 @@ endif # corba_messaging
   $(ACE_ROOT)/ace/SString.i \
   $(TAO_ROOT)/tao/RTCORBA/RT_Policy_i.i \
   $(TAO_ROOT)/tao/RTCORBA/Thread_Pool.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
   $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
   $(TAO_ROOT)/tao/New_Leader_Generator.h \
@@ -2641,7 +2631,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -2672,7 +2661,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
@@ -2686,6 +2674,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(ACE_ROOT)/ace/Map_T.h \
   $(ACE_ROOT)/ace/Pair_T.h \
@@ -2726,8 +2715,6 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Adapter.h \
   $(TAO_ROOT)/tao/Adapter.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
@@ -2850,12 +2837,15 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/PortableServer/POAManager.i \
   $(TAO_ROOT)/tao/PortableServer/POA_Cached_Policies.h \
   $(TAO_ROOT)/tao/PortableServer/POA_Cached_Policies.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PortableServer/POA.i \
   RTPortableServerC.h RTPortableServerC.i RT_POA.i \
   $(TAO_ROOT)/tao/RTCORBA/Thread_Pool.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
   $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
   $(TAO_ROOT)/tao/New_Leader_Generator.h \
@@ -2936,10 +2926,10 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Service_Context.inl \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/Transport.h \
-  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
-  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
   $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
   $(TAO_ROOT)/tao/Cache_Entries.h \
+  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
   $(ACE_ROOT)/ace/Recyclable.h \
   $(ACE_ROOT)/ace/Recyclable.inl \
   $(TAO_ROOT)/tao/Cache_Entries.inl \

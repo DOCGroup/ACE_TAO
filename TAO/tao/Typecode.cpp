@@ -15,6 +15,7 @@
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
 #include "tao/Any.h"
+#include "tao/CDR.h"
 #include "tao/Exception.h"
 #include "tao/Marshal.h"
 #include "tao/CORBA_String.h"

@@ -277,7 +277,6 @@ endif
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -292,7 +291,6 @@ endif
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
@@ -318,8 +316,6 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   BiDirPolicy_Validator.h \
   $(TAO_ROOT)/tao/Policy_Validator.h \
@@ -610,7 +606,6 @@ endif
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -625,7 +620,6 @@ endif
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
@@ -695,9 +689,9 @@ endif
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Object.h \
+  $(TAO_ROOT)/tao/Policy_ForwardC.h \
+  $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -715,9 +709,6 @@ endif
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/Object.h \
-  $(TAO_ROOT)/tao/Policy_ForwardC.h \
-  $(TAO_ROOT)/tao/CDR.h \
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
   $(TAO_ROOT)/tao/varbase.h \
@@ -735,8 +726,10 @@ endif
   $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -812,7 +805,6 @@ endif
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -836,8 +828,6 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   BiDir_PolicyFactory.h BiDirGIOP.h \
   $(TAO_ROOT)/tao/BiDir_Adapter.h \
@@ -948,9 +938,9 @@ endif
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/DynamicC.h \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
-  $(TAO_ROOT)/tao/Any.h \
+  $(TAO_ROOT)/tao/Object.h \
+  $(TAO_ROOT)/tao/Policy_ForwardC.h \
+  $(TAO_ROOT)/tao/CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -968,9 +958,6 @@ endif
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
-  $(TAO_ROOT)/tao/Object.h \
-  $(TAO_ROOT)/tao/Policy_ForwardC.h \
-  $(TAO_ROOT)/tao/CDR.h \
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/Objref_VarOut_T.h \
   $(TAO_ROOT)/tao/varbase.h \
@@ -988,8 +975,10 @@ endif
   $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -1065,7 +1054,6 @@ endif
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -1089,8 +1077,6 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i BiDirGIOP.h \
   $(TAO_ROOT)/tao/BiDir_Adapter.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -1343,7 +1329,6 @@ endif
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -1358,14 +1343,11 @@ endif
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PolicyC.i BiDirPolicyC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   BiDir_Policy_i.inl $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -1383,7 +1365,8 @@ endif
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.h \
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.inl \
-  $(TAO_ROOT)/tao/Stub.i
+  $(TAO_ROOT)/tao/Stub.i \
+  $(TAO_ROOT)/tao/debug.h
 
 .obj/BiDirPolicy_Validator.o .obj/BiDirPolicy_Validator.so .shobj/BiDirPolicy_Validator.o .shobj/BiDirPolicy_Validator.so: BiDirPolicy_Validator.cpp \
   BiDirPolicy_Validator.h $(ACE_ROOT)/ace/pre.h \
@@ -1594,7 +1577,6 @@ endif
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Typecode.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
@@ -1609,14 +1591,11 @@ endif
   $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PolicyC.i BiDirPolicyC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/LocalObject.i \
   BiDir_Policy_i.inl \
   $(TAO_ROOT)/tao/Policy_Set.h \
