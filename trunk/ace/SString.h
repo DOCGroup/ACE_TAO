@@ -482,7 +482,7 @@ class ACE_Export ACE_Tokenizer
   // = DESCRIPTION
   //    Tokenizes a buffer.  Allows application to set delimiters and
   //    preserve designators.  Does not allow special characters, yet
-  //    (e.g., printf ("\"like a quoted string\"").
+  //    (e.g., printf ("\"like a quoted string\"")).
 public:
   ACE_Tokenizer (LPTSTR buffer);
   // <buffer> will be parsed.

@@ -195,6 +195,7 @@ ACE_RW_Mutex::dump (void) const
 }
 
 ACE_RW_Mutex::ACE_RW_Mutex (int type, LPCTSTR name, void *arg)
+  : removed_ (0)
 {
 // ACE_TRACE ("ACE_RW_Mutex::ACE_RW_Mutex");
   if (ACE_OS::rwlock_init (&this->lock_, type, name, arg) != 0)
@@ -224,16 +225,20 @@ ACE_Semaphore::ACE_Semaphore (u_int count,
                               LPCTSTR name,
                               void *arg,
                               int max)
+  : removed_ (0)
 {
 // ACE_TRACE ("ACE_Semaphore::ACE_Semaphore");
   if (ACE_OS::sema_init (&this->semaphore_, count, type,
                          name, arg, max) != 0)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_Semaphore::ACE_Semaphore")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT("%p\n"),
+                ASYS_TEXT("ACE_Semaphore::ACE_Semaphore")));
 }
 
 ACE_Semaphore::~ACE_Semaphore (void)
 {
 // ACE_TRACE ("ACE_Semaphore::~ACE_Semaphore");
+
   this->remove ();
 }
 
@@ -376,6 +381,8 @@ ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, void *arg)
 #if defined (CHORUS)
   : process_lock_ (0),
     lockname_ (0)
+#else
+  : removed_ (0)
 #endif /* CHORUS */
 {
   // ACE_TRACE ("ACE_Mutex::ACE_Mutex");
@@ -454,6 +461,7 @@ ACE_Event::ACE_Event (int manual_reset,
                       int type,
                       LPCTSTR name,
                       void *arg)
+  : removed_ (0)
 {
   if (ACE_OS::event_init (&this->handle_,
                           manual_reset,
@@ -461,7 +469,9 @@ ACE_Event::ACE_Event (int manual_reset,
                           type,
                           name,
                           arg) != 0)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_Event::ACE_Event")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT("%p\n"), 
+                ASYS_TEXT("ACE_Event::ACE_Event")));
 }
 
 ACE_Event::~ACE_Event (void)
@@ -472,7 +482,13 @@ ACE_Event::~ACE_Event (void)
 int
 ACE_Event::remove (void)
 {
-  return ACE_OS::event_destroy (&this->handle_);
+  int result = 0;
+  if (this->removed_ == 0)
+    {
+      this->removed_ = 1;
+      result = ACE_OS::event_destroy (&this->handle_);
+    }
+  return result;
 }
 
 ACE_event_t
@@ -598,10 +614,11 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (LPCTSTR name,
   : nesting_mutex_ (name, arg),
     lock_available_ (nesting_mutex_, name, arg),
     nesting_level_ (0),
-    owner_id_ (ACE_OS::NULL_thread)
+    owner_id_ (ACE_OS::NULL_thread),
 #else /* ACE_WIN32 */
-  : ACE_Thread_Mutex (name, arg)
+  : ACE_Thread_Mutex (name, arg),
 #endif /* ACE_WIN32 */
+    removed_ (0)
 {
 #if defined (ACE_HAS_FSU_PTHREADS) && ! defined (ACE_WIN32)
 //      Initialize FSU pthreads package.
@@ -767,7 +784,8 @@ ACE_Condition_Thread_Mutex::dump (void) const
 ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
                                                         LPCTSTR name,
                                                         void *arg)
-  : mutex_ ((ACE_Thread_Mutex &) m)
+  : mutex_ ((ACE_Thread_Mutex &) m),
+    removed_ (0)
 {
 #if defined (ACE_HAS_FSU_PTHREADS)
 //      Initialize FSU pthreads package.
@@ -986,11 +1004,14 @@ ACE_Thread_Mutex::~ACE_Thread_Mutex (void)
 }
 
 ACE_Thread_Mutex::ACE_Thread_Mutex (LPCTSTR name, void *arg)
+  : removed_ (0)
 {
 //  ACE_TRACE ("ACE_Thread_Mutex::ACE_Thread_Mutex");
 
   if (ACE_OS::thread_mutex_init (&this->lock_, USYNC_THREAD, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_Thread_Mutex::ACE_Thread_Mutex")));
+    ACE_ERROR ((LM_ERROR, 
+                ASYS_TEXT("%p\n"),
+                ASYS_TEXT("ACE_Thread_Mutex::ACE_Thread_Mutex")));
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Thread_Mutex)
