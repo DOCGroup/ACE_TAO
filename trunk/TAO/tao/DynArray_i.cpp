@@ -9,7 +9,7 @@
 //    DynArray_i.cpp
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ====================================================================
 
@@ -104,7 +104,7 @@ TAO_DynArray_i::~TAO_DynArray_i (void)
 // Functions specific to DynArray
 
 AnySeq_ptr
-TAO_DynArray_i::get_elements (CORBA::Environment& TAO_IN_ENV)
+TAO_DynArray_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA::ULong length = this->da_members_.size ();
 
@@ -114,10 +114,10 @@ TAO_DynArray_i::get_elements (CORBA::Environment& TAO_IN_ENV)
   // Arg only sets maximum, so...
   AnySeq_ptr elements;
 
-  ACE_NEW_THROW_RETURN (elements,
-                        AnySeq (length),
-                        CORBA::NO_MEMORY (),
-                        0);
+  ACE_NEW_THROW_EX (elements,
+                    AnySeq (length),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
 
   // ...we must do this explicitly.
   elements->length (length);
@@ -125,9 +125,8 @@ TAO_DynArray_i::get_elements (CORBA::Environment& TAO_IN_ENV)
   // Initialize each Any.
   for (CORBA::ULong i = 0; i < length; i++)
     {
-      CORBA::Any_ptr temp = this->da_members_[i]->to_any (TAO_IN_ENV);
-      (*elements)[i] = *temp;
-      delete temp;
+      CORBA::Any_var temp = this->da_members_[i]->to_any (ACE_TRY_ENV);
+      (*elements)[i] = temp.in ();
     }
 
   return elements;
@@ -249,23 +248,23 @@ TAO_DynArray_i::from_any (const CORBA_Any& any,
 }
 
 CORBA::Any_ptr
-TAO_DynArray_i::to_any (CORBA::Environment& TAO_IN_ENV)
+TAO_DynArray_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 {
   TAO_OutputCDR out_cdr;
 
-  CORBA_TypeCode_ptr field_tc = this->get_element_type (TAO_IN_ENV);
+  CORBA_TypeCode_ptr field_tc = this->get_element_type (ACE_TRY_ENV);
 
   for (CORBA::ULong i = 0; i < this->da_members_.size (); i++)
     {
       // Each component must have been initialized.
       if (!this->da_members_[i].in ())
         {
-          TAO_IN_ENV.exception (new CORBA_DynAny::Invalid);
+          ACE_TRY_ENV.exception (new CORBA_DynAny::Invalid);
           return 0;
         }
 
       // Recursive step
-      CORBA_Any_ptr field_any = this->da_members_[i]->to_any (TAO_IN_ENV);
+      CORBA_Any_var field_any = this->da_members_[i]->to_any (ACE_TRY_ENV);
 
       ACE_Message_Block* field_mb = field_any->_tao_get_cdr ();
 
@@ -273,19 +272,17 @@ TAO_DynArray_i::to_any (CORBA::Environment& TAO_IN_ENV)
 
       out_cdr.append (field_tc,
                       &field_cdr,
-                      TAO_IN_ENV);
-
-      delete field_any;
+                      ACE_TRY_ENV);
     }
 
   TAO_InputCDR in_cdr (out_cdr);
 
   CORBA_Any* retval;
-  ACE_NEW_THROW_RETURN (retval,
-                        CORBA_Any (this->type (TAO_IN_ENV),
-                                   in_cdr.start ()),
-                        CORBA::NO_MEMORY (),
-                        0);
+  ACE_NEW_THROW_EX (retval,
+                    CORBA_Any (this->type (ACE_TRY_ENV),
+                               in_cdr.start ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
   return retval;
 }
 

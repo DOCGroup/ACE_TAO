@@ -9,7 +9,7 @@
 //    DynEnum_i.cpp
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ===================================================================
 
@@ -158,18 +158,18 @@ TAO_DynEnum_i::from_any (const CORBA_Any& any,
 }
 
 CORBA::Any_ptr
-TAO_DynEnum_i::to_any (CORBA::Environment& TAO_IN_ENV)
+TAO_DynEnum_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 {
   TAO_OutputCDR out_cdr;
 
   out_cdr.write_ulong (this->value_);
 
   CORBA_Any* retval;
-  ACE_NEW_THROW_RETURN (retval,
-                        CORBA_Any (this->type_.in (),
-                                   out_cdr.begin ()),
-                        CORBA::NO_MEMORY (),
-                        0);
+  ACE_NEW_THROW_EX (retval,
+                    CORBA_Any (this->type_.in (),
+                               out_cdr.begin ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
   return retval;
 }
 

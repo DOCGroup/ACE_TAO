@@ -18,7 +18,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 //
 //
-// Modified by Jeff Parsons <jp4@cs.wustl.edu>
+// Modified by Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ======================================================================
 
