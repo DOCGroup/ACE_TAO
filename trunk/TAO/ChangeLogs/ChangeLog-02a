@@ -1,3 +1,15 @@
+Thu Apr 20 13:50:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	  New field typecode_factory_, along with accessors
+	  initialization, and release code.
+
+	* ORB.cpp:
+	  Modified case for resolve_initial_references ("TypeCodeFactory")
+	  to use the above field, and to fill it if it is null.
+
 Thu Apr 20 12:08:10 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp: Fixed a
