@@ -45,3 +45,11 @@ TAO_Blocked_Connect_Strategy::wait (TAO_Connection_Handler *,
   // We cannot wait for connection completion
   return -1;
 }
+
+int
+TAO_Blocked_Connect_Strategy::wait (TAO_Transport *,
+                                    ACE_Time_Value *)
+{
+  // We cannot wait for connection completion
+  return -1;
+}

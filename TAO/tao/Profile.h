@@ -150,6 +150,9 @@ public:
   /// Returns true if this profile can specify multicast endpoints.
   virtual int supports_multicast (void) const;
 
+  /// Returns true if this profile supports non blocking oneways
+  virtual bool supports_non_blocking_oneways (void) const;
+
   /**
    * Set the addressing mode if a remote servant replies with
    * an addressing mode exception.  If this profile doesn't

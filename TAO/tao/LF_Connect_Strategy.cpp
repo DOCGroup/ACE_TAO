@@ -2,7 +2,7 @@
 #include "Connection_Handler.h"
 #include "LF_Follower.h"
 #include "Leader_Follower.h"
-
+#include "Transport.h"
 #include "ace/Synch_Options.h"
 
 ACE_RCSID(tao,
@@ -40,19 +40,24 @@ int
 TAO_LF_Connect_Strategy::wait (TAO_Connection_Handler *ch,
                                ACE_Time_Value *max_wait_time)
 {
-  ACE_ASSERT(ch != 0);
+  ACE_ASSERT (ch != 0);
 
-  // @@todo We need to use a auto_ptr<>-like object here!
-  // TAO_Transport * transport = ch->get_transport_locked();
-  TAO_Transport *transport = ch->transport ();
+  return this->wait (ch->transport (),
+                     max_wait_time);
+}
 
+int
+TAO_LF_Connect_Strategy::wait (TAO_Transport *transport,
+                               ACE_Time_Value *max_wait_time)
+{
   // Basically the connection was EINPROGRESS, but before we could
   // wait for it some other thread detected a failure and cleaned up
   // the connection handler.
-  if(transport == 0)
-    {
-      return -1;
-    }
+  if (transport == 0)
+    return -1;
+
+  TAO_Connection_Handler *ch =
+    transport->connection_handler ();
 
   TAO_Leader_Follower &leader_follower =
     this->orb_core_->leader_follower ();

@@ -3,7 +3,6 @@
 #include "operation_details.h"
 #include "Stub.h"
 #include "Bind_Dispatcher_Guard.h"
-#include "Pluggable_Messaging.h"
 #include "Transport.h"
 #include "Synch_Reply_Dispatcher.h"
 #include "GIOP_Utils.h"
@@ -62,7 +61,7 @@ namespace TAO
       this->resolver_.transport ();
 
     TAO_OutputCDR &cdr =
-      transport->messaging_object ()->out_stream ();
+      transport->out_stream ();
 
     int retval =
       transport->generate_locate_request (tspec,

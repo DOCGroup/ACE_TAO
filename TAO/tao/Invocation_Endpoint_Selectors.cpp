@@ -43,28 +43,34 @@ TAO_Default_Endpoint_Selector::select_endpoint (
     {
       r->profile (r->stub ()->profile_in_use ());
 
-      const size_t endpoint_count =
-        r->profile ()->endpoint_count ();
-
-      TAO_Endpoint *ep =
-        r->profile ()->endpoint ();
-
-      for (size_t i = 0; i < endpoint_count; ++i)
+      // Check whether we need to have do a blocked wait or we have a non
+      // blocked wait and we support that, if this is not the case we
+      // can't use this profile and try the next
+      if (r->blocked () ||
+         (!r->blocked () && r->profile ()->supports_non_blocking_oneways ()))
         {
-          TAO_Base_Transport_Property desc (ep);
+          const size_t endpoint_count =
+            r->profile ()->endpoint_count ();
 
-          bool retval =
-            r->try_connect (&desc,
-                            max_wait_time
-                            ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          TAO_Endpoint *ep =
+            r->profile ()->endpoint ();
 
-          // Check if the connect has completed.
-          if (retval)
-            return;
+          for (size_t i = 0; i < endpoint_count; ++i)
+            {
+              TAO_Base_Transport_Property desc (ep);
+              bool retval =
+                r->try_connect (&desc,
+                                max_wait_time
+                                ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
 
-          // Go to the next endpoint in this profile.
-          ep = ep->next ();
+              // Check if the connect has completed.
+              if (retval)
+                return;
+
+              // Go to the next endpoint in this profile.
+              ep = ep->next ();
+            }
         }
     }
   while (r->stub ()->next_profile_retry () != 0);

@@ -58,13 +58,22 @@ namespace TAO
    * object. This class helps in choosing the right profile, and pick
    * a transport from cache (or create a new transport if needed) that
    * represents the profile.
-   *
    */
   class TAO_Export Profile_Transport_Resolver
   {
   public:
-    Profile_Transport_Resolver (CORBA::Object *ep,
-                                TAO_Stub *);
+    /// Constructor
+    /**
+     * With @a block we tell whether this resolved should always deliver
+     * a connection by blocking or unblock before the connection is
+     * completely established. Please note that this has *nothing* to
+     * do with the synchronous or asynch connect strategy used for
+     * making connections. This is a local flag used by the clients of
+     * this to dictate some local behavior.
+     */
+    Profile_Transport_Resolver (CORBA::Object *p,
+                                TAO_Stub *stub,
+                                bool block = true);
 
     ~Profile_Transport_Resolver (void);
 
@@ -79,11 +88,11 @@ namespace TAO
                   ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-
     //@{
     /**
      * Accessors and mutators for this class. The following methods
-     * are used by the clients of this class to access.
+     * are used by the clients of this class to access strategies and
+     * other internal workings.
      */
 
     /// Mutator for profile.
@@ -100,6 +109,10 @@ namespace TAO
 
     /// Accessor for the transport reserved for this invocation.
     TAO_Transport *transport (void) const;
+
+    /// Accessor to indicate whether we should deliver a connection
+    /// blocking for completed connections
+    bool blocked (void) const;
     //@}
 
     /// Signal to let the resolver know that the transport has been
@@ -163,6 +176,9 @@ namespace TAO
      * avoid.
      */
     CORBA::PolicyList *inconsistent_policies_;
+
+    /// Should we block while trying to make a connection
+    const bool blocked_;
   };
 } // TAO namespace end
 
