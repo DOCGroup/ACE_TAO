@@ -57,7 +57,17 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
 
   // STEP I: generate the return type. Return type is simpy void. 
   *os << "void ";
-  
+
+  // check if we are an attribute node in disguise
+  if (this->ctx_->attribute ())
+    {
+      // now check if we are a "get" or "set" operation
+      if (node->nmembers () == 1) // set
+        *os << "set_";
+      else
+        *os << "get_";
+    }  
+
   // STEP 2: generate the operation name.
   *os << node->local_name ();
 

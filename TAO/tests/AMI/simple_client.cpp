@@ -1,10 +1,28 @@
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/AMI
+//
+// = FILENAME
+//    simple_client.cpp
+//
+// = DESCRIPTION
+//    A very simple client, which uses the AMI callback model.
+//
+// = AUTHOR
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>,
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
+
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "testC.h"
+#include "ami_testC.h"
+#include "ami_testS.h"
 
-ACE_RCSID(MT_Client, client, "$Id$")
+ACE_RCSID(AMI, simple_client, "$Id$")
 
 const char *ior = "file://test.ior";
 int niterations = 5;
@@ -47,27 +65,49 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-class Handler : public POA_AMI_Simple_Server_Handler
+class Handler : public POA_A::AMI_AMI_Test_Handler
 {
 public:
   Handler (void) {};
   // Constructor.
 
-  void get_put_number (CORBA::Long result,
-                       CORBA::Long out_l,
-                       CORBA::Environment&)
+    ~Handler (void) {};
+  // Destructor.
+
+  void foo (CORBA::Long result,
+            CORBA::Long out_l,
+            CORBA::Environment&)
     {
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Callback method called: result <%d>, out_arg <%d>\n",
+                      "Callback method <foo> called: result <%d>, out_arg <%d>\n",
                       result, 
                       out_l));
         }
     };
 
-  ~Handler (void) {};
-  // Destructor.
+  void get_yadda (CORBA::Long result, 
+                  CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Callback method <get_yadda> called: result <%d>\n",
+                      result));
+        }
+    };
+    
+  void set_yadda (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Callback method <set_yadda> called: \n"));
+        }
+    };
 };
 
 int
@@ -103,11 +143,11 @@ main (int argc, char *argv[])
       object = orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      Simple_Server_var server =
-        Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
+      A::AMI_Test_var ami_test_var =
+        A::AMI_Test::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (server.in ()))
+      if (CORBA::is_nil (ami_test_var.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil\n",
@@ -117,7 +157,7 @@ main (int argc, char *argv[])
 
       // Instantiate the ReplyHandler and register that with the POA. 
       Handler handler;
-      AMI_Simple_Server_Handler_var the_handler =
+      A::AMI_AMI_Test_Handler_var the_handler_var =
         handler._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
@@ -125,11 +165,32 @@ main (int argc, char *argv[])
 
       for (ssize_t ni = 0; ni < niterations; ni++)
         {
-          server->sendc_get_put_number (the_handler.in (),
-                                        l,
-                                        ACE_TRY_ENV);
+          ACE_DEBUG ((LM_DEBUG,
+                      "Sending asynch message: %d\n",
+                      ni));
+                    
+          ami_test_var->sendc_foo (the_handler_var.in (),
+                                   l,
+                                   ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+
+      // Begin test of attributes
+      ami_test_var->sendc_get_yadda (the_handler_var.in (),
+                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+
+      ami_test_var->sendc_set_yadda (the_handler_var.in (),
+                                     4711,
+                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ami_test_var->sendc_get_yadda (the_handler_var.in (),
+                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // End test of attributes
 
       if (debug)
         {
@@ -137,20 +198,20 @@ main (int argc, char *argv[])
                       "<%d> Asynchronous methods issued\n",
                       niterations));
         }
-      
+      */
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Issuing a synchronous method to collect the AMI replies\n"));
         }
       
-      CORBA::Long number = server->get_put_number (l,
-                                                   l,
-                                                   ACE_TRY_ENV);
+      CORBA::Long number = ami_test_var->foo (l,
+                                              l,
+                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (shutdown_flag)
-        server->shutdown ();
+      //if (shutdown_flag)
+      //  ami_test_var->shutdown ();
     }
   ACE_CATCHANY
     {
