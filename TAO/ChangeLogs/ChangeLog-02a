@@ -1,3 +1,13 @@
+Thu Aug 24 21:03:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/Makefile:
+	* TAO_IDL/Makefile.EXE:
+
+	  Moved the lines that set TAO_IDL_PREPROCESSOR from
+	  Makefile to Makefile.EXE, where it is actually needed.
+	  The wrong preprocessor was getting called by the IDL
+	  compiler, resulting in all kinds of problems.
+
 Thu Aug 24 20:27:26 2000  Marina Spivak  <marina@cs.wustl.edu>
 
         * tao/Invocation.cpp:
