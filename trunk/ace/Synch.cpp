@@ -18,10 +18,6 @@
 ACE_Recursive_Thread_Mutex *ACE_Static_Object_Lock::mutex_ = 0;
 #endif
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
-ACE_Thread_Mutex *ACE_TSS_Cleanup_Lock::mutex_ = 0;
-#endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
 ACE_ALLOC_HOOK_DEFINE(ACE_File_Lock)
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
@@ -929,52 +925,6 @@ ACE_Static_Object_Lock::instance (void)
   return ACE_Static_Object_Lock::mutex_;
 }
 
-////////////////////////////////////////////////////////////////
-#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
-
-ACE_Thread_Mutex *
-ACE_TSS_Cleanup_Lock::instance (void)
-{
-  // We assume things before main are single threaded.
-  if (ACE_TSS_Cleanup_Lock::mutex_ == 0)
-    {
-      ACE_NEW_RETURN (ACE_TSS_Cleanup_Lock::mutex_,
-		      ACE_Thread_Mutex, 0);
-
-      // Register for destruction with ACE_Object_Manager.
-#if defined ACE_HAS_SIG_C_FUNC
-      ACE_Object_Manager::at_exit (ACE_TSS_Cleanup_Lock::mutex_,
-                                   ACE_TSS_Cleanup_Lock_cleanup,
-                                   0);
-#else
-      ACE_Object_Manager::at_exit (ACE_TSS_Cleanup_Lock::mutex_,
-                                   ACE_TSS_Cleanup_Lock::cleanup,
-                                   0);
-#endif /* ACE_HAS_SIG_C_FUNC */
-    }
-
-  return ACE_TSS_Cleanup_Lock::mutex_;
-}
-
-#if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" void
-ACE_TSS_Cleanup_Lock_cleanup (void *instance, void *)
-{
-  ACE_TRACE ("ACE_TSS_Cleanup_Lock_cleanup");
-
-  delete (ACE_Thread_Mutex *) instance;
-}
-#else
-void
-ACE_TSS_Cleanup_Lock::cleanup (void *instance, void *)
-{
-  ACE_TRACE ("ACE_TSS_Cleanup_Lock::cleanup");
-
-  delete (ACE_Thread_Mutex *) instance;
-}
-#endif /* ACE_HAS_SIG_C_FUNC */
-
-#endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // These are only specialized with ACE_HAS_THREADS.
