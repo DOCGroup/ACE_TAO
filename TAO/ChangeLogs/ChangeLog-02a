@@ -1,3 +1,17 @@
+Tue Jan 18 18:45:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_union.cpp:
+	  Increased the signed long default discriminator
+	  value by 1. It was being set to ACE_INT32_MIN, 
+	  which is -2147483648. The literal constant is
+	  generated in the _default() method, and when
+	  MSVC sees the line
+		this->disc_ = -2147483648;
+	  it outputs the warning "unary minus operator applied to 
+	  unsigned type, result still unsigned". If the line is
+		this->disc_ = -2147483647;
+	  we get no warning.
+
 Tue Jan 18 17:26:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/deep_free.cpp:
