@@ -1,3 +1,11 @@
+Mon Apr 24 17:44:21 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Object_Manager.cpp:
+         
+          Ai Carumba!  I disabled some stuff here a while back when
+          I first disabled the Naming Service, but forgot to enable
+          it again once I fixed that.  
+
 Mon Apr 24 16:44:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/SString.i:
