@@ -1,9 +1,14 @@
+Sat May  1 22:01:41 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
+	  added virtual destructors.
+
 Sat May  1 21:01:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp:
 	  Stub code generation was not checking inout args for the
 	  char, wchar, boolean and octet cases, where the Any::to_*
-	  structs must be used when demarshaling. Result was 
+	  structs must be used when demarshaling. Result was
 	  'ambiguous >> operator' error in compilation. Added the
 	  switch statement, checks and code generation. Thanks to
 	  (trying to find who sent this in - will come back and update)
@@ -19,26 +24,26 @@ Sat May  1 17:44:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Time_Utilities.i: Fixed the precision error.
 	  Used 64-bit precision for 64bit*32bit operation.
-	  
+
 Sat May  1 15:06:40 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tao/Typecode.cpp (parameter): Changed the variable env to
-	  ACE_TRY_ENV in CORBA_TypeCode::parameter method. 
+	  ACE_TRY_ENV in CORBA_TypeCode::parameter method.
 
 Sat May  1 13:32:13 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp : Fixed the
-	g++ warnings. 
+	g++ warnings.
 
 1999-05-01  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): 
-	  Added stream.close () after stream.send_n () to explicitly 
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input):
+	  Added stream.close () after stream.send_n () to explicitly
 	  close the socket.
-	
-	  Thanks to James Johnson <jcej@lads.com> for finding this bug 
+
+	  Thanks to James Johnson <jcej@lads.com> for finding this bug
 	  and suggesting the fix.
-	
+
 Sat May 01 08:22:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
@@ -128,7 +133,7 @@ Fri Apr 30 18:46:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
           Added a couple of cases to the character constant switch
           that eliminated the IDL compiler error messages
           produced from one of the test IDL files in the OMG tests.
-          I don't think all of the IDL compiler tests have been run 
+          I don't think all of the IDL compiler tests have been run
 	  yet, so there may remain more to be done.
 
 Fri Apr 30 17:41:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
