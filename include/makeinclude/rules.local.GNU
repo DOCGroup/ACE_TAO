@@ -453,7 +453,7 @@ $(CLEANUP_DIRS):
 	@if not exist $@ mkdir $@
 else
 $(CLEANUP_DIRS):
-	@test -d $@ || mkdir $@ $(ACE_NUL_STDERR)
+	@test -d $@ || mkdir -p $@ $(ACE_NUL_STDERR)
 endif
 
 #---------------------------------------------------------------------------

@@ -1,3 +1,14 @@
+Mon Dec 15 07:29:27 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Removed a redundant rule to create the $(TEMPINCDIR) directory.
+
+        * include/makeinclude/rules.local.GNU:
+
+          Added -p to the mkdir command in the rules to make the
+          $(CLEANUP_DIRS).
+
 Mon Dec 15 11:35:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Naming_Context.cpp:
@@ -7,17 +18,17 @@ Mon Dec 15 11:35:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Dec 13 23:29:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/tao_orb_tests.lst:
-	* bin/tao_other_tests.lst:
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
 
-	  Many of the tests were being run in the single threaded
-	  configuration, though they shouldn't have been.
+          Many of the tests were being run in the single threaded
+          configuration, though they shouldn't have been.
 
 Fri Dec 12 19:31:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/tao_orb_tests.lst:
+        * bin/tao_orb_tests.lst:
 
-	  Some tests were run twice. They have been removed.
+          Some tests were run twice. They have been removed.
 
 Fri Dec 12 08:53:50 2003  Chad Elliott  <elliott_c@ociweb.com>
 
