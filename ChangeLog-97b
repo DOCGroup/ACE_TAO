@@ -1,3 +1,22 @@
+Wed Nov 19 15:55:45 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-sunos5.*.h: Replaced all uses of ACE_HAS_UNICODE with
+ 	  ACE_HAS_XPG4_MULTIBYTE_CHAR.  At this point, I think only NT has
+ 	  the UNICODE macro now.  Thanks to Steve Huston for validating
+ 	  this.
+
+	* STL/bstring.h: Added a special-case for BorlandC++.  However, I
+ 	  think this can be generalized for all compilers.  Thanks to
+ 	  Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
+
+	* ace/OS: Fixed strpbrk() to handle the const char * and char *
+ 	  cases of ANSI C++.  Thanks to Valik Solorzano Barboza
+ 	  <valik@xs4all.nl> for reporting this.
+
+	* ace/OS.h: Added a special case for _MSC_VER since BC++ doesn't
+ 	  have wchar.h!  Thanks to Valik Solorzano Barboza
+ 	  <valik@xs4all.nl> for reporting this.
+
 Wed Nov 19 13:43:33 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* Merged the purify testing into run_tests.  Just use 
@@ -13,20 +32,6 @@ Wed Nov 19 12:17:50 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 	  config.h from getting included multiple times.
 
 	* ace/stdcpp.h:  Reverted include OS.h back to config.h.
-
-Wed Nov 19 11:38:23 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* STL/bstring.h: Added a special-case for BorlandC++.  However, I
- 	  think this can be generalized for all compilers.  Thanks to
- 	  Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
-
-	* ace/OS: Fixed strpbrk() to handle the const char * and char *
- 	  cases of ANSI C++.  Thanks to Valik Solorzano Barboza
- 	  <valik@xs4all.nl> for reporting this.
-
-	* ace/OS.h: Added a special case for _MSC_VER since BC++ doesn't
- 	  have wchar.h!  Thanks to Valik Solorzano Barboza
- 	  <valik@xs4all.nl> for reporting this.
 
 Wed Nov 19 09:20:05 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
