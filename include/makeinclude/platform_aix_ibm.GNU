@@ -77,7 +77,7 @@ endif
 
 ARFLAGS	    = ruv
 AR	    = ar
-LD          = $(CXX)
+LD          = $(ACE_ROOT)/bin/aix_shr $(CXX)
 RANLIB	    = ranlib
 TEMPINCDIR  = tempinc
 
