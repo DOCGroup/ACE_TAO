@@ -434,7 +434,8 @@ namespace
   // Nested classes used by this emitter.
   private:
     struct PortsEmitterPublic : Traversal::EmitterData,
-                                Traversal::UserData,
+                                Traversal::SingleUserData,
+                                Traversal::MultiUserData,
                                 Traversal::PublisherData,
                                 EmitterBase
     {
@@ -460,18 +461,27 @@ namespace
       }
 
       virtual void
-      traverse (SemanticGraph::User& u)
+      traverse (SemanticGraph::SingleUser& u)
       {
-        // @@@ (JP) Need to handle multiple connections.
         os << "virtual ";
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << endl
             << "get_connection_" << u.name ()
             << " (" << endl
             << STRS[ENV_SNGL_HDR] << ")" << endl
             << STRS[EXCP_SNGL] << ";" << endl;
+      }
+
+      virtual void
+      traverse (SemanticGraph::MultiUser& u)
+      {
+        os << "virtual " << u.scoped_name () << "Connections *" << endl
+           << "get_connections_" << u.name ()
+           << " (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl
+           << STRS[EXCP_SNGL] << ";" << endl;
       }
 
       virtual void
@@ -494,7 +504,8 @@ namespace
     };
 
     struct PortsEmitterProtected : Traversal::EmitterData,
-                                   Traversal::UserData,
+                                   Traversal::SingleUserData,
+                                   Traversal::MultiUserData,
                                    Traversal::PublisherData,
                                    EmitterBase
     {
@@ -532,13 +543,12 @@ namespace
       }
 
       virtual void
-      traverse (SemanticGraph::User& u)
+      traverse (SemanticGraph::SingleUser& u)
       {
-        // @@@ (JP) Need to handle multiple connections.
         os << "virtual void" << endl
            << "connect_" << u.name () << " (" << endl;
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr" << endl
            << STRS[ENV_HDR] << ")" << endl
@@ -549,7 +559,7 @@ namespace
 
         os << "virtual ";
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr" << endl
            << "disconnect_" << u.name () << " (" << endl
@@ -557,6 +567,34 @@ namespace
            << STRS[EXCP_START] << endl
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_NC] << "));" << endl << endl;
+      }
+
+      virtual void
+      traverse (SemanticGraph::MultiUser& u)
+      {
+        os << "virtual ::Components::Cookie *" << endl
+           << "connect_" << u.name () << " (" << endl;
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+
+        os << "_ptr" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_ECL] << "," << endl
+           << STRS[EXCP_IC] << "));" << endl << endl;
+
+        os << "virtual ";
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+
+        os << "_ptr" << endl
+           << "disconnect_" << u.name () << " (" << endl
+           << "::Components::Cookie * ck" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_IC] << "));" << endl << endl;
       }
 
       virtual void
@@ -592,7 +630,8 @@ namespace
     };
 
     struct PortsEmitterMembers : Traversal::EmitterData,
-                                 Traversal::UserData,
+                                 Traversal::SingleUserData,
+                                 Traversal::MultiUserData,
                                  Traversal::PublisherData,
                                  EmitterBase
     {
@@ -614,14 +653,25 @@ namespace
       }
 
       virtual void
-      traverse (SemanticGraph::User& u)
+      traverse (SemanticGraph::SingleUser& u)
       {
-        // @@@ (JP) Need to handle multiple connections.
         os << "// Simplex " << u.name () << " connection." << endl;
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_var" << endl
+           << "ciao_uses_" << u.name () << "_;" << endl << endl;
+     }
+
+      virtual void
+      traverse (SemanticGraph::MultiUser& u)
+      {
+        os << "// Multiplex " << u.name () << " connection." << endl
+           << "ACE_Active_Map_Manager<" << endl;
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+
+        os << "_var>" << endl
            << "ciao_uses_" << u.name () << "_;" << endl << endl;
      }
 
@@ -843,7 +893,8 @@ namespace
   // Nested classes used by this emitter.
   private:
     struct PortsEmitterPublic : Traversal::EmitterData,
-                                Traversal::UserData,
+                                Traversal::SingleUserData,
+                                Traversal::MultiUserData,
                                 Traversal::PublisherData,
                                 Traversal::ConsumerData,
                                 Traversal::ProviderData,
@@ -874,13 +925,12 @@ namespace
       }
 
       virtual void
-      traverse (SemanticGraph::User& u)
+      traverse (SemanticGraph::SingleUser& u)
       {
-        // @@@ (JP) Need to handle multiple connections.
         os << "virtual void" << endl
            << "connect_" << u.name () << " (" << endl;
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr c" << endl
            << STRS[ENV_HDR] << ")" << endl
@@ -891,7 +941,7 @@ namespace
 
         os << "virtual ";
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr" << endl
            << "disconnect_" << u.name () << " (" << endl
@@ -902,10 +952,43 @@ namespace
 
         os << "virtual ";
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr" << endl
            << "get_connection_" << u.name () << " (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl
+           << STRS[EXCP_SNGL] << ";" << endl << endl;
+      }
+
+      virtual void
+      traverse (SemanticGraph::MultiUser& u)
+      {
+        os << "virtual ::Components::Cookie *" << endl
+           << "connect_" << u.name () << " (" << endl;
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+
+        os << "_ptr c" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_ECL] << "," << endl
+           << STRS[EXCP_IC] << "));" << endl << endl;
+
+        os << "virtual ";
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+
+        os << "_ptr" << endl
+           << "disconnect_" << u.name () << " (" << endl
+           << "::Components::Cookie * ck" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_IC] << "));" << endl << endl;
+
+        os << "virtual " << u.scoped_name () << "Connections *" << endl
+           << "get_connections_" << u.name () << " (" << endl
            << STRS[ENV_SNGL_HDR] << ")" << endl
            << STRS[EXCP_SNGL] << ";" << endl << endl;
       }

@@ -542,7 +542,8 @@ namespace
 
   // Nested classes used by ContextEmitter.
   private:
-    struct ContextPortsEmitter : Traversal::UserData,
+    struct ContextPortsEmitter : Traversal::SingleUserData,
+                                 Traversal::MultiUserData,
                                  Traversal::PublisherData,
                                  Traversal::EmitterData,
                                  EmitterBase
@@ -558,9 +559,9 @@ namespace
       }
 
       virtual void
-      traverse (SemanticGraph::User& u)
+      traverse (SemanticGraph::SingleUser& u)
       {
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr" << endl
            << scope_.name () << "_Context::get_connection_"
@@ -570,7 +571,7 @@ namespace
            << "{"
            << "return ";
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "::_duplicate (" << endl
            << "this->ciao_uses_" << u.name ()
@@ -581,7 +582,7 @@ namespace
            << scope_.name () << "_Context::connect_"
            << u.name () << " (" << endl;
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr c" << endl
            << STRS[ENV_SRC] << ")" << endl
@@ -601,12 +602,12 @@ namespace
            << "}" << endl
            << "this->ciao_uses_" << u.name () << "_ =" << endl;
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "::_duplicate (c);" << endl
            << "}" << endl;
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr" << endl
            << scope_.name () << "_Context::disconnect_"
@@ -622,12 +623,149 @@ namespace
            << "ACE_THROW_RETURN (" << endl
            << STRS[EXCP_NC] << " ()," << endl;
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "::_nil ());" << endl
            << "}" << endl
            << "return this->ciao_uses_" << u.name ()
            << "_._retn ();" << endl
+           << "}" << endl;
+      }
+
+      virtual void
+      traverse (SemanticGraph::MultiUser& u)
+      {
+        os << u.scoped_name () << "Connections *" << endl
+           << scope_.name () << "_Context::get_connections_"
+           << u.name () << " (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[EXCP_SNGL] << endl
+           << "{"
+           << u.scoped_name () << "Connections_var retv;"
+           << "ACE_NEW_RETURN (" << endl
+           << "retv.out ()," << endl
+           << u.scoped_name () << "Connections (this->ciao_uses_"
+           << u.name () << "_.current_size ())," << endl
+           << "0);" << endl;
+           
+        os << "CORBA::ULong i = 0;" << endl;
+        
+        os << "for (ACE_Active_Map_Manager<";
+           
+        Traversal::MultiUserData::belongs (u, belongs_);
+        
+        os << "_var>::iterator iter =" << endl
+           << "       this->ciao_uses_" << u.name () << "_.begin ();"
+           << "     iter != this->ciao_uses_" << u.name () << "_.end ();"
+           << "     ++iter)" << endl
+           << "{"
+           << "ACE_Active_Map_Manager<";
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+        
+        os << "_var>::ENTRY & entry = *iter;" << endl
+           << "retv[i].objref = ";
+        
+        Traversal::MultiUserData::belongs (u, belongs_);
+        
+        os << "::_narrow (" << endl
+           << "entry.int_id_.in ()" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK_RETURN (0);" << endl;
+           
+        os << "ACE_NEW_RETURN (" << endl
+           << "retv[i++].ck," << endl
+           << "CIAO::Map_Key_Cookie (entry.ext_id_)," << endl
+           << "0);" << endl
+           << "}" << endl;
+           
+        os << "return retv._retn ();" << endl
+           << "}" << endl;
+
+        os << "::Components::Cookie *" << endl
+           << scope_.name () << "_Context::connect_"
+           << u.name () << " (" << endl;
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+
+        os << "_ptr c" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_ECL] << "," << endl
+           << STRS[EXCP_IC] << "))" << endl
+           << "{"
+           << "if (! CORBA::is_nil (c))" << endl
+           << "{"
+           << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);" << endl
+           << "}" << endl;
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+        
+        os << "_var conn = ";
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+        
+        os << "::_duplicate (c);"
+           << "ACE_Active_Map_Manager_Key key;" << endl;
+        
+        os << "if (this->ciao_uses_" << u.name () 
+           << "_.bind (conn.in (), key) == -1)" << endl
+           << "{"
+           << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);" << endl
+           << "}" << endl;
+           
+        os << "conn._retn ();" << endl;
+        
+        os << "Components::Cookie_var retv;"
+           << "ACE_NEW_RETURN (" << endl
+           << "retv.out ()," << endl
+           << "CIAO::Map_Key_Cookie (key)," << endl
+           << "0);" << endl;
+           
+        os << "return retv._retn ();" << endl
+           << "}" << endl;
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+
+        os << "_ptr" << endl
+           << scope_.name () << "_Context::disconnect_"
+           << u.name () << " (" << endl
+           << "::Components::Cookie * ck" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_IC] << "))" << endl
+           << "{";
+           
+        Traversal::MultiUserData::belongs (u, belongs_);
+        
+        os << "_var retv;"
+           << "ACE_Active_Map_Manager_Key key;" << endl;
+        
+        os << "if (ck == 0 || ! CIAO::Map_Key_Cookie::extract (ck, key))"
+           << endl
+           << "{"
+           << "ACE_THROW_RETURN (" << endl
+           << STRS[EXCP_IC] << " ()," << endl;
+           
+        Traversal::MultiUserData::belongs (u, belongs_);
+        
+        os << "::_nil ());" << endl
+           << "}" << endl;
+           
+        os << "if (this->ciao_uses_" << u.name ()
+           << "_.unbind (key, retv) != 0)" << endl
+           << "{"
+           << "ACE_THROW_RETURN (" << endl
+           << STRS[EXCP_IC] << " ()," << endl;
+           
+        Traversal::MultiUserData::belongs (u, belongs_);
+        
+        os << "::_nil ());" << endl
+           << "}" << endl;
+           
+        os << "return retv._retn ();" << endl
            << "}" << endl;
       }
 
@@ -1126,7 +1264,8 @@ namespace
       SemanticGraph::Component& scope_;
     };
 
-    struct UsesConnectEmitter : Traversal::UserData,
+    struct UsesConnectEmitter : Traversal::SingleUserData,
+                                Traversal::MultiUserData,
                                 EmitterBase
     {
       UsesConnectEmitter (Context& c)
@@ -1137,17 +1276,17 @@ namespace
       }
 
       virtual void
-      traverse (Type& u)
+      traverse (SemanticGraph::SingleUser& u)
       {
         os << "if (ACE_OS::strcmp (name, \""
            << u.name () << "\") == 0)" << endl
            << "{";
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_var _ciao_conn =" << endl;
 
-        Traversal::UserData::belongs (u, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "::_narrow (" << endl
            << "connection" << endl
@@ -1161,8 +1300,38 @@ namespace
            << "// Simplex connect." << endl
            << "this->connect_" << u.name () << " (" << endl
            << "_ciao_conn.in ()" << endl
-           << STRS[ENV_ARG] << ");" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK_RETURN (0);" << endl
            << "return 0;" << endl
+           << "}" << endl;
+      }
+
+      virtual void
+      traverse (SemanticGraph::MultiUser& u)
+      {
+        os << "if (ACE_OS::strcmp (name, \""
+           << u.name () << "\") == 0)" << endl
+           << "{";
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+
+        os << "_var _ciao_conn =" << endl;
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+
+        os << "::_narrow (" << endl
+           << "connection" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK_RETURN (0);" << endl
+           << "if (::CORBA::is_nil (_ciao_conn.in ()))" << endl
+           << "{"
+           << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);"
+           << endl
+           << "}" << endl
+           << "// Multiplex connect." << endl
+           << "return this->connect_" << u.name () << " (" << endl
+           << "_ciao_conn.in ()" << endl
+           << STRS[ENV_ARG] << ");"
            << "}" << endl;
       }
 
@@ -1171,7 +1340,8 @@ namespace
       Traversal::Belongs belongs_;
     };
 
-    struct UsesDisconnectEmitter : Traversal::UserData,
+    struct UsesDisconnectEmitter : Traversal::SingleUserData,
+                                   Traversal::MultiUserData,
                                    EmitterBase
     {
       UsesDisconnectEmitter (Context& c)
@@ -1180,7 +1350,7 @@ namespace
       }
 
       virtual void
-      traverse (Type& u)
+      traverse (SemanticGraph::SingleUser& u)
       {
         os << "if (ACE_OS::strcmp (name, \""
            << u.name () << "\") == 0)" << endl
@@ -1190,9 +1360,23 @@ namespace
            << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
            << "}" << endl;
       }
+
+      virtual void
+      traverse (SemanticGraph::MultiUser& u)
+      {
+        os << "if (ACE_OS::strcmp (name, \""
+           << u.name () << "\") == 0)" << endl
+           << "{"
+           << "// Multiplex disconnect." << endl
+           << "return this->disconnect_" << u.name () << " (" << endl
+           << "ck" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "}" << endl;
+      }
     };
 
-    struct UsesEmitter : Traversal::UserData,
+    struct UsesEmitter : Traversal::SingleUserData,
+                         Traversal::MultiUserData,
                          EmitterBase
     {
       UsesEmitter (Context& c, SemanticGraph::Component& scope)
@@ -1204,13 +1388,13 @@ namespace
       }
 
       virtual void
-      traverse (Type& p)
+      traverse (SemanticGraph::SingleUser& u)
       {
         os << "void" << endl
            << scope_.name () << "_Servant::connect_"
-           << p.name () << " (" << endl;
+           << u.name () << " (" << endl;
 
-        Traversal::UserData::belongs (p, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr c" << endl
            << STRS[ENV_SRC] << ")" << endl
@@ -1219,38 +1403,90 @@ namespace
            << STRS[EXCP_AC] << "," << endl
            << STRS[EXCP_IC] << "))" << endl
            << "{"
-           << "this->context_->connect_" << p.name () << " ("
+           << "this->context_->connect_" << u.name () << " ("
            << endl
            << "c" << endl
            << STRS[ENV_ARG] << ");" << endl
            << "}" << endl;
 
-        Traversal::UserData::belongs (p, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr" << endl
            << scope_.name () << "_Servant::disconnect_"
-           << p.name () << " (" << endl
+           << u.name () << " (" << endl
            << STRS[ENV_SNGL_SRC] << ")" << endl
            << STRS[EXCP_START] << endl
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_NC] << "))" << endl
            << "{"
-           << "return this->context_->disconnect_" << p.name ()
+           << "return this->context_->disconnect_" << u.name ()
            << " (" << endl
            << STRS[ENV_SNGL_ARG] << ");" << endl
            << "}" << endl;
 
-        Traversal::UserData::belongs (p, belongs_);
+        Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr" << endl
            << scope_.name ()
-           << "_Servant::get_connection_" << p.name ()
+           << "_Servant::get_connection_" << u.name ()
            << " (" << endl
            << STRS[ENV_SNGL_SRC] << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "return this->context_->get_connection_"
-           << p.name () << " (" << endl
+           << u.name () << " (" << endl
+           << STRS[ENV_SNGL_ARG] << ");" << endl
+           << "}" << endl;
+      }
+
+      virtual void
+      traverse (SemanticGraph::MultiUser& u)
+      {
+        os << "::Components::Cookie *" << endl
+           << scope_.name () << "_Servant::connect_"
+           << u.name () << " (" << endl;
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+
+        os << "_ptr c" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_ECL] << "," << endl
+           << STRS[EXCP_IC] << "))" << endl
+           << "{"
+           << "return this->context_->connect_" << u.name () << " ("
+           << endl
+           << "c" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "}" << endl;
+
+        Traversal::MultiUserData::belongs (u, belongs_);
+
+        os << "_ptr" << endl
+           << scope_.name () << "_Servant::disconnect_"
+           << u.name () << " (" << endl
+           << "::Components::Cookie * ck" << endl
+           << STRS[ENV_SRC] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_IC] << "))" << endl
+           << "{"
+           << "return this->context_->disconnect_" << u.name ()
+           << " (" << endl
+           << "ck" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "}" << endl;
+
+        os << u.scoped_name () << "Connections *" << endl
+           << scope_.name ()
+           << "_Servant::get_connections_" << u.name ()
+           << " (" << endl
+           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[EXCP_SNGL] << endl
+           << "{"
+           << "return this->context_->get_connections_"
+           << u.name () << " (" << endl
            << STRS[ENV_SNGL_ARG] << ");" << endl
            << "}" << endl;
       }
@@ -2006,7 +2242,7 @@ namespace
       os << "CORBA::Object_ptr" << endl
          << t.name () << "_Servant::disconnect (" << endl
          << "const char *name," << endl
-         << STRS[COMP_CK] << " * /* ck */" << endl
+         << STRS[COMP_CK] << " * ck" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
