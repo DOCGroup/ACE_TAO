@@ -1,3 +1,12 @@
+Sun Sep  5 09:21:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.h:
+	* orbsvcs/orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.h:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+
+	  Added missing "tao/PolicyC.h" #include.
+
 Sun Sep  5 03:58:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
