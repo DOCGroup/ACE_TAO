@@ -524,6 +524,16 @@ be_visitor_traits::visit_field (be_field *node)
                         -1);
     }
 
+  // Valuetypes may not be *declared* in a field, so this will
+  // get handled elsewhere, and will also avoid nested valuetype
+  // recursion. So we set the field node as processed (the
+  // field *type* may not have been reached yet) and return.
+  if (bt->base_node_type () == AST_Decl::NT_valuetype)
+    {
+      node->cli_traits_gen (I_TRUE);
+      return 0;
+    }
+
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

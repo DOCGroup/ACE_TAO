@@ -284,7 +284,6 @@ public:
 
     ACE_UINT64 seq_seen_;
     ACE_UINT64 iface_seq_seen_;
-    ACE_UINT64 abs_iface_seq_seen_;
     ACE_UINT64 vt_seq_seen_;
     ACE_UINT64 array_seq_seen_;
     ACE_UINT64 pseudo_seq_seen_;

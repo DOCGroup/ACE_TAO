@@ -1,3 +1,24 @@
+Thu Aug  7 13:35:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * tao/Valuetype/Sequence_T.cpp:
+        * tao/Valuetype/Sequence_T.h:
+        * tao/Valuetype/Sequence_T.inl:
+
+          Removed TAO_Unbounded_Abstract_Sequence<>,
+          TAO_Bounded_Abstract_Sequence<> and TAO_Abstract_Manager<>,
+          along with the corresponding generated code. There is
+          no difference in the way a sequence handles concrete and
+          abstract interfaces.
+
 Wed Aug  6 21:44:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Object.h:
