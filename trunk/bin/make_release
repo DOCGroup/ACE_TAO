@@ -132,13 +132,14 @@ umask 022;
 ########
 if ($update_versions  &&  "$kit" ne 'ace+tao') {
   $major_version = $minor_version = $beta_version = 0;
-  $version = '';
+  $previous_version = $version = '';
 
   &check_workspace ()  ||
   &get_versions ()  ||
   &update_version_files ()  ||
   &update_changelog ()  ||
   &tag ()  ||
+  &diff ()  ||
   &create_kit ();
 } else {
   &create_kit ();
@@ -203,6 +204,14 @@ sub get_versions () {
   close VERSION;
 
   if ($release_type eq 'beta') {
+    if ($beta_version > 0) {
+      $previous_version = "$major_version.$minor_version.$beta_version";
+    } elsif ($minor_version > 0) {
+      $previous_version = "$major_version.$minor_version";
+    } else {
+      $previous_version = "$major_version";
+    }
+
     ++$beta_version;
     $version = "$major_version.$minor_version.$beta_version";
   } elsif ($release_type eq 'minor' ) {
@@ -293,6 +302,30 @@ sub tag () {
   return 1 if $? >> 8;
   print "finished tagging $tag\n";
 
+  0;
+}
+
+########
+######## If building a beta, create a diff from the previos version.
+########
+sub diff () {
+  if ("$previous_version") {
+    #### Only create a diff for a beta version.
+
+    my $previous_tag = "$KIT-$previous_version";
+    my $tag = "$KIT-$version";
+
+    #### cvs tag does not allow dots.
+    $previous_tag =~ tr/./_/;
+    $tag =~ tr/./_/;
+
+    my $module = $kit eq 'ace'  ?  'ACE_wrappers'  :  'ACE_wrappers/TAO';
+
+    system ("$cvs -q rdiff -u -r $previous_tag -r $tag $module | " .
+            "$gzip -9 > diffs/$previous_tag-$tag.diff.gz &");
+  }
+
+  #### Ignore return value.  No promises on diffs.
   0;
 }
 
