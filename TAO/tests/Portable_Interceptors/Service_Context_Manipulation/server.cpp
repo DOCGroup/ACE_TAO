@@ -38,17 +38,19 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-      PortableInterceptor::ServerRequestInterceptor_ptr interceptor = 0;
-
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor = 0;
 
       // Installing the Echo interceptor
       ACE_NEW_RETURN (interceptor,
                       Echo_Server_Request_Interceptor (orb.in ()),
                       -1);
       orb->_register_server_interceptor (interceptor);
+#endif /* (TAO_HAS_INTERCEPTORS == 1) */
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");

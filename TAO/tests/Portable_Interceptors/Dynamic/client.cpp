@@ -44,8 +44,8 @@ run_test (Test_Interceptors::Visual_ptr server,
   CORBA::Long one = 1, two = 1, result = 0;
   result = server->calculate (one,
                               two,
-                              ACE_TRY_ENV);  
-  ACE_DEBUG ((LM_DEBUG, 
+                              ACE_TRY_ENV);
+  ACE_DEBUG ((LM_DEBUG,
               "result=%d\n",
               result));
   ACE_CHECK;
@@ -79,7 +79,6 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-      PortableInterceptor::ClientRequestInterceptor_ptr interceptor = 0;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -87,11 +86,15 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
+#if (TAO_HAS_INTERCEPTORS == 1)
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor = 0;
+
       // Installing the Echo interceptor
       ACE_NEW_RETURN (interceptor,
                       Echo_Client_Request_Interceptor (orb.in ()),
                       -1);
       orb->_register_client_interceptor (interceptor);
+#endif /* (TAO_HAS_INTERCEPTORS == 1) */
 
       CORBA::Object_var object =
         orb->string_to_object (ior, ACE_TRY_ENV);
@@ -108,7 +111,7 @@ main (int argc, char *argv[])
                              ior),
                             1);
         }
-      
+
       run_test (server.in (), ACE_TRY_ENV);
 
       server->shutdown (ACE_TRY_ENV);
