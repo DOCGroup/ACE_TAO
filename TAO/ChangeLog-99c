@@ -1,3 +1,15 @@
+Sat Dec  4 16:36:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+	* performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+	  Added code to explicitly set the current thread's priority
+	  to the computed value, once RT priority class scheduling
+	  is enabled. Removed some unused variables to avoid kai
+	  and IRIX warnings.
+
+	  In the client, added code (commented out for now) to aid in
+	  making a histogram of the latency timings.
+
 Sat Dec  4 16:38:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.h:
