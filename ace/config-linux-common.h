@@ -11,6 +11,9 @@
 #if defined (__alpha__)
 # define ACE_HAS_64BIT_LONGS
 
+// The following might be necessary on Intel as well as Alpha.
+#define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
+
 // The following might only be necessary on Alpha?
 # define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
 # define ACE_HAS_SIGWAIT
