@@ -1,3 +1,11 @@
+Tue Aug 31 05:10:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* server/HTTP_Handler.cpp (destroy_http_handler): Switched
+	  the order in which handler and io were deleted since the current
+ 	  order seems to destroy handler first, which is problematic since
+ 	  io is contained within handler!  Thanks to Yosi Sarusi
+ 	  <yosi@appstream.com> for reporting this.
+
 Wed Aug 18 16:00:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * server/Makefile,client/Caching/Makefile: don't build if

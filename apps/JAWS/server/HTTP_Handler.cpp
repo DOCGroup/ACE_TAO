@@ -255,8 +255,8 @@ void
 Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
 						  JAWS_IO &io)
 {
-  delete &handler;
   delete &io;
+  delete &handler;
 }
 
 // This only works on Win32
