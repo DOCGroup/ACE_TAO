@@ -1,3 +1,11 @@
+Sun Aug 16 17:15:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connect.h: 
+	* tao/Connect.cpp: 
+	  Fixed incosistent use of response_required, sometimes it was an
+	  int and other it was a CORBA_Boolean. Thanks to Naga for
+	  reporting this problem.
+
 Sun Aug 16 11:52:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Offer_Database.h: 
