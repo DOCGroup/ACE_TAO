@@ -1,3 +1,10 @@
+Sat Aug 14 19:38:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/CDR_Base.h:
+
+	  Do not include "ace/If_Then_Else.h" when using MSVC++ 6.  It
+	  can't handle the partial template specializations in that file.
+
 Sat Aug 14 19:34:02 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Sock_Connect.cpp (ipv6_enabled_):
