@@ -98,7 +98,7 @@ module CosPropertyService
     read_only_property
   };
 
-  struct PropertyException
+  exception PropertyException
     {
       ExceptionReason reason;
       PropertyName failing_property_name;
