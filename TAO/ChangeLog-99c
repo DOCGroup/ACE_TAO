@@ -1,3 +1,10 @@
+Thu Jul 22 07:21:03 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/GIOP_Server_Request.cpp: added #include of tao/ORB.h,
+          so compilation will succeed with TAO_HAS_MINIMUM_CORBA.
+          Thanks to Erik Johannes <ejohannes@oresis.com> for reporting
+          this.
+
 Thu Jul 22 07:12:07 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/PolicyC.cpp (_unchecked_narrow): added ACE_TRY_ENV
