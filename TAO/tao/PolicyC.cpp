@@ -380,13 +380,13 @@ CORBA_Policy::_nil (void)
 CORBA_PolicyList::CORBA_PolicyList (void)
 {}
 CORBA_PolicyList::CORBA_PolicyList (CORBA::ULong max) // uses max size
-  : TAO_Unbounded_Object_Sequence<CORBA_Policy> (max)
+  : TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var> (max)
 {}
 CORBA_PolicyList::CORBA_PolicyList (CORBA::ULong max, CORBA::ULong length, CORBA_Policy_ptr *buffer, CORBA::Boolean release)
-  : TAO_Unbounded_Object_Sequence<CORBA_Policy> (max, length, buffer, release)
+  : TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var> (max, length, buffer, release)
 {}
 CORBA_PolicyList::CORBA_PolicyList (const CORBA_PolicyList &seq) // copy ctor
-  : TAO_Unbounded_Object_Sequence<CORBA_Policy> (seq)
+  : TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var> (seq)
 {}
 CORBA_PolicyList::~CORBA_PolicyList (void) // dtor
 {}
@@ -958,8 +958,8 @@ operator>> (
 
 template class TAO_Unbounded_Sequence<CORBA::UShort>;
 template class TAO_Unbounded_Sequence<CORBA::ULong>;
-template class TAO_Unbounded_Object_Sequence<CORBA_Policy>;
-template class TAO_Object_Manager<CORBA_Policy>;
+template class TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>;
+template class TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>;
 
 //  template class TAO_Object_Field_T<CORBA_Policy>;
 //  template class TAO_Object_Field_T<CORBA_PolicyManager>;
@@ -969,8 +969,8 @@ template class TAO_Object_Manager<CORBA_Policy>;
 
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::UShort>
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::ULong>
-#pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_Policy>
-#pragma instantiate TAO_Object_Manager<CORBA_Policy>
+#pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>
+#pragma instantiate TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>
 
 //#  pragma instantiate TAO_Object_Field_T<CORBA_Policy>
 //#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyManager>

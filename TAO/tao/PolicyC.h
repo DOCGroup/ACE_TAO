@@ -182,7 +182,7 @@ private:
 // CORBA_PolicyList
 // *************************************************************
 
-class TAO_Export  CORBA_PolicyList : public TAO_Unbounded_Object_Sequence<CORBA_Policy>
+class TAO_Export  CORBA_PolicyList : public TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>
 {
 public:
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -223,7 +223,7 @@ public:
   operator const CORBA_PolicyList &() const;
   operator CORBA_PolicyList &();
   operator CORBA_PolicyList &() const;
-  TAO_Object_Manager <CORBA_Policy > operator[] (CORBA::ULong index);
+  TAO_Object_Manager <CORBA_Policy,CORBA_Policy_var > operator[] (CORBA::ULong index);
   // in, inout, out, _retn
   const CORBA_PolicyList &in (void) const;
   CORBA_PolicyList &inout (void);
@@ -246,7 +246,7 @@ public:
   operator CORBA_PolicyList *&();
   CORBA_PolicyList *&ptr (void);
   CORBA_PolicyList *operator-> (void);
-  TAO_Object_Manager <CORBA_Policy > operator[] (CORBA::ULong index);
+  TAO_Object_Manager <CORBA_Policy,CORBA_Policy_var> operator[] (CORBA::ULong index);
 
 private:
   CORBA_PolicyList *&ptr_;

@@ -348,7 +348,7 @@ typedef void (*TAO_Skeleton)(
 
 // forward declare sequences.
 template <class T> class TAO_Unbounded_Sequence;
-template <class T> class TAO_Unbounded_Object_Sequence;
+template <class T,class T_var> class TAO_Unbounded_Object_Sequence;
 
 // Provide a simple function to access the TSS default environment.
 // We tried with CORBA_Environment::default_environment (),
