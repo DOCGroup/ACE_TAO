@@ -222,7 +222,7 @@ Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *>
 {
   ACE_UNUSED_ARG (anomaly_set);
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, lock_, ACE_Scheduler::FAILED);
+  ACE_GUARD_RETURN (LOCK, ace_mon, lock_, ACE_Scheduler::FAILED);
 
   // here goes . . .
 
