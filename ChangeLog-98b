@@ -1,28 +1,33 @@
+Sat Jun 06 16:43:01 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Timeprobe.cpp (dtor): inserted missing "[]" in delete of
+          array.
+
 Fri Jun  5 11:53:18 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/Log_Msg.{h,cpp}: Added enable_debug_messages() to do
-	  the opposite of disable_debug_messages().
-	  
-	* ace/Parse_Node.cpp: Got rid of all the checks of the 
-	  Service Configurator's debug flag.  Instead, the checking
-	  will occur in the Service Configurator.
+        * ace/Log_Msg.{h,cpp}: Added enable_debug_messages() to do
+          the opposite of disable_debug_messages().
 
-	* ace/Service_Config.cpp: Added to Stephen Coy's changes so
-	  that debug messages are turned back on after the Service
-	  Configurator is done.  That way, other code can still use
-	  debug messages.
+        * ace/Parse_Node.cpp: Got rid of all the checks of the
+          Service Configurator's debug flag.  Instead, the checking
+          will occur in the Service Configurator.
+
+        * ace/Service_Config.cpp: Added to Stephen Coy's changes so
+          that debug messages are turned back on after the Service
+          Configurator is done.  That way, other code can still use
+          debug messages.
 
 Thu Jun  4 12:25:48 1998  Rajiv C. Gandhi  <gandhi@tango.cs.wustl.edu>
 
-	* apps/gperf/src/Options.h: removing the option to stack
-	  allocate some large arrays as CC does not seem to like it.
+        * apps/gperf/src/Options.h: removing the option to stack
+          allocate some large arrays as CC does not seem to like it.
 
-	* apps/gperf/src/Key_List.cpp (output_lookup_array): removing
-	  the option to stack allocate some large arrays as CC does 
-          not seem to like it. 
+        * apps/gperf/src/Key_List.cpp (output_lookup_array): removing
+          the option to stack allocate some large arrays as CC does
+          not seem to like it.
 
-	* apps/gperf/src/Gen_Perf.cpp: removing the option to stack
-	  allocate some large arrays as CC does not seem to like it.
+        * apps/gperf/src/Gen_Perf.cpp: removing the option to stack
+          allocate some large arrays as CC does not seem to like it.
 
 Thu Jun 04 05:03:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -30,24 +35,24 @@ Thu Jun 04 05:03:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Jun  3 02:24:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-win32-common.h: Instead of defining _MT for users if
-	  it's not defined, spit out an error message and stop the
-	  compilation.  Thanks to Barney Dalton
-	  <barneyd@cyllene.uwa.edu.au> for suggesting this.
+        * ace/config-win32-common.h: Instead of defining _MT for users if
+          it's not defined, spit out an error message and stop the
+          compilation.  Thanks to Barney Dalton
+          <barneyd@cyllene.uwa.edu.au> for suggesting this.
 
 Tue Jun 02 20:03:51 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-hpux-1[01].x-hpc++.h: Added ACE_HAS_USING_KEYWORD for
-	  aC++ on both platforms.
+        * ace/config-hpux-1[01].x-hpc++.h: Added ACE_HAS_USING_KEYWORD for
+          aC++ on both platforms.
 
 Tue Jun 02 12:19:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp (wait_grp,wait_task):  These two were
-	  still copying thread_descriptors and deleting the copies
-	  directly.  This corrupted the cached thread_descriptor.
-	  Changing them to use Thread_Descriptor_Base solved the problem.
-	  Thanks to Zoran Ivanovic <zoranic@pathcom.dot.com> for finding
-	  this.
+        * ace/Thread_Manager.cpp (wait_grp,wait_task):  These two were
+          still copying thread_descriptors and deleting the copies
+          directly.  This corrupted the cached thread_descriptor.
+          Changing them to use Thread_Descriptor_Base solved the problem.
+          Thanks to Zoran Ivanovic <zoranic@pathcom.dot.com> for finding
+          this.
 
 Tue Jun 02 08:29:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
