@@ -434,6 +434,8 @@ Client_i::activate_low_client (ACE_Thread_Manager *thread_manager)
               (ACE_SCHED_FIFO, this->low_priority_, ACE_SCOPE_THREAD);
         }
     } /* end of for () */
+
+  return 0;
 }
 
 int
@@ -693,7 +695,7 @@ Client_i::do_priority_inversion_test (ACE_Thread_Manager *thread_manager)
       }
 
   // Create the clients.
-  u_int result = this->activate_high_client (thread_manager);
+  int result = this->activate_high_client (thread_manager);
 
   if (result < 0)
     return result;

@@ -110,5 +110,5 @@
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
-
+#define ACE_HAS_DIRENT
 #endif /* ACE_CONFIG_H */

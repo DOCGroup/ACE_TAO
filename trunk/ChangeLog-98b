@@ -1,3 +1,12 @@
+Mon Sep  7 10:06:54 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE.h (ACE): Moved strnew (wchar_t *) into an ACE_WIN32
+ 	  section to protect it properly.  Thanks to David Levine for
+ 	  reporting this.
+
+	* ace:config-sco-*.h: Added ACE_HAS_DIRENT on the advice of Arturo
+ 	  Montes <mitosys@colomsat.com.co>.
+
 Mon Sep 07 09:52:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added general rule to put system
