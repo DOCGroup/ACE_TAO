@@ -1,3 +1,14 @@
+Mon Mar 20 18:16:20 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/UIOP_Acceptor.h:
+
+	  Removed inclusion of `tao/GIOP_Message_State.h'.  It isn't
+	  needed by the TAO_UIOP_Acceptor class.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
 Mon Mar 20 17:27:58 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/DynAny_Test/basic_test.dsp:
