@@ -1,3 +1,9 @@
+Mon Jan 26 15:23:54 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AVStreams_i.cpp:
+	Added dummy implementation for VDev, MMDevice, and StreamEndPoint
+	classes
+
 Mon Jan 26 15:01:49 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* tests/POA/RootPOA.cpp: Added Comments
@@ -22,7 +28,7 @@ Sun Jan 25 14:30:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Sat Jan 24 21:55:55 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* orbsvcs/orbsvc/{AVStreams_i.h, AVStreams_i.cpp}:
+	* orbsvcs/orbsvcs/{AVStreams_i.h, AVStreams_i.cpp}:
 	  Made changes for new POA
 
 Sat Jan 24 21:46:23 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
