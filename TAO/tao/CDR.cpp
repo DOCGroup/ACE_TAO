@@ -78,6 +78,8 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
                               ACE_Allocator *data_block_allocator,
                               ACE_Allocator* message_block_allocator,
                               size_t memcpy_tradeoff,
+                              ACE_CDR::Octet major_version,
+                              ACE_CDR::Octet minor_version,
                               ACE_Char_Codeset_Translator *char_translator,
                               ACE_WChar_Codeset_Translator *wchar_translator)
   :  ACE_OutputCDR (size,
@@ -85,7 +87,9 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
                     buffer_allocator,
                     data_block_allocator,
                     message_block_allocator,
-                    memcpy_tradeoff)
+                    memcpy_tradeoff,
+                    major_version,
+                    minor_version)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
   this->char_translator_ = char_translator;
@@ -99,6 +103,8 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                               ACE_Allocator *data_block_allocator,
                               ACE_Allocator* message_block_allocator,
                               size_t memcpy_tradeoff,
+                              ACE_CDR::Octet major_version,
+                              ACE_CDR::Octet minor_version,
                               ACE_Char_Codeset_Translator *char_translator,
                               ACE_WChar_Codeset_Translator *wchar_translator)
   :  ACE_OutputCDR (data,
@@ -107,7 +113,9 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                     buffer_allocator,
                     data_block_allocator,
                     message_block_allocator,
-                    memcpy_tradeoff)
+                    memcpy_tradeoff,
+                    major_version,
+                    minor_version)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR2_ENTER);
   this->char_translator_ = char_translator;
@@ -117,11 +125,15 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
 TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
                               int byte_order,
                               size_t memcpy_tradeoff,
+                              ACE_CDR::Octet major_version,
+                              ACE_CDR::Octet minor_version,
                               ACE_Char_Codeset_Translator *char_translator,
                               ACE_WChar_Codeset_Translator *wchar_translator)
   :  ACE_OutputCDR (data,
                     byte_order,
-                    memcpy_tradeoff)
+                    memcpy_tradeoff,
+                    major_version,
+                    minor_version)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
   this->char_translator_ = char_translator;

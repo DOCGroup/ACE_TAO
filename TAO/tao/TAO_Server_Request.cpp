@@ -287,6 +287,8 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
                             this->orb_core_->output_cdr_dblock_allocator (),
                             this->orb_core_->output_cdr_msgblock_allocator (),
                             this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                            TAO_DEF_GIOP_MAJOR,
+                            TAO_DEF_GIOP_MINOR,
                             this->orb_core_->to_iso8859 (),
                             this->orb_core_->to_unicode ());
 
