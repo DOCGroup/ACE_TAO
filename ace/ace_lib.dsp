@@ -4935,6 +4935,10 @@ SOURCE=.\Read_Buffer.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Refcounted_Auto_Ptr.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Registry.h
 # End Source File
 # Begin Source File
@@ -5876,6 +5880,10 @@ SOURCE=.\ReactorEx.i
 # Begin Source File
 
 SOURCE=.\Read_Buffer.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Refcounted_Auto_Ptr.i
 # End Source File
 # Begin Source File
 
