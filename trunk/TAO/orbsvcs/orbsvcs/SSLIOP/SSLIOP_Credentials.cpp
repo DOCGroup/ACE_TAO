@@ -399,10 +399,10 @@ TAO_SSLIOP_Credentials::operator== (const TAO_SSLIOP_Credentials &rhs)
   return
     this->accepting_options_supported_ == rhs.accepting_options_supported_
     && this->accepting_options_required_ == rhs.accepting_options_required_
-    && this->invocation_options_supported_ == invocation_options_supported_
-    && this->invocation_options_required_ == this->invocation_options_required_
-    && (xa != 0 && xb != 0 && ::X509_cmp (xa, xb) == 0)
-    // && (ea != 0 && eb != 0 && ::EVP_PKEY_cmp (ea, eb) == 0)
+    && this->invocation_options_supported_ == rhs.invocation_options_supported_
+    && this->invocation_options_required_ == rhs.invocation_options_required_
+    && ((xa == xb) || (xa != 0 && xb != 0 && ::X509_cmp (xa, xb) == 0))
+    // && ((ea == eb) || (ea != 0 && eb != 0 && ::EVP_PKEY_cmp (ea, eb) == 0))
     ;
 }
 
