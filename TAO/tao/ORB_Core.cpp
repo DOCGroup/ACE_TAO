@@ -423,7 +423,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcasecmp (current_arg, 
+      else if (ACE_OS::strcasecmp (current_arg,
                                    "-ORBImplRepoIOR") == 0)
         {
           // Specify the IOR of the Implementation Repository
@@ -435,7 +435,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcasecmp (current_arg, 
+      else if (ACE_OS::strcasecmp (current_arg,
                                    "-ORBImplRepoPort") == 0)
         {
           // Specify the multicast port number for the Implementation Repository.
@@ -1751,17 +1751,6 @@ TAO_ORB_Table::unbind (const char* orb_id)
 }
 
 // ****************************************************************
-
-// This function exists because of Win32's proclivity for expanding
-// templates at link time.  Since DLLs are just executables, templates
-// get expanded and instantiated at link time.  Thus, if there are
-// references to the same template in an application AND in a DLL,
-// you're screwed.  Using this function, we workaround this by
-// insuring that everybody ALWAYS accesses the same instantiation.
-//
-// There's room for optimizations by making this inline for the ORB
-// core and non-inlined elsewhere, but that can be done later--after
-// it works.
 
 TAO_Export TAO_ORB_Core *
 TAO_ORB_Core_instance (void)
