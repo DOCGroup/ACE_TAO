@@ -1,3 +1,9 @@
+Sat Oct  3 13:11:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  Removed some of the tests, they were crashing more often than
+	  not.
+
 Sat Oct  3 09:36:09 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* examples/Reactor/Proactor/test_proactor.cpp: Comments.
