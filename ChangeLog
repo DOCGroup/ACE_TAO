@@ -1,26 +1,40 @@
+Thu Aug  3 17:50:39 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * THANKS:
+        * ace/config-irix6.x-sgic++-nothreads.h:
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+          Define ACE_HAS_EXCEPTION in the command line, so we can
+          configure exceptions in a single spot.
+          Enabled the -LANG:std option by default.
+          Detect if -LANG:std is used and enable the corresponding ACE
+          macros.
+          Thanks to John Hiltenbrand <jhiltenb@uiuc.edu> for detecting
+          this problem and suggesting the fixes.
+
 Thu Aug 03 17:40:01 2000 Eric Ding <qnd1@cs.wustl.edu>
-	* include/makeinclude/platform_linux.GNU
-	  Remove ifeq($(threads),1), xt_reactor=0, fl_reactor=0,
+
+        * include/makeinclude/platform_linux.GNU
+          Remove ifeq($(threads),1), xt_reactor=0, fl_reactor=0,
           and add -I/usr/X11R6/include, -L/usr/X11R6/include to
           platform_GL flags.
-          Patch supplied by Craig Rodrigues        
-                            http://www.gis.net/~craigr    
+          Patch supplied by Craig Rodrigues
+                            http://www.gis.net/~craigr
                             rodrigc@mediaone.net
 
 Wed Aug  2 17:44:58 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/config-win32-borland.h: Suppress all warnings from the
-	  preprocessor	so that	the IDL compiler does not fail on
-	  TAO/tao/Policy.pidl.
+        * ace/config-win32-borland.h: Suppress all warnings from the
+          preprocessor  so that the IDL compiler does not fail on
+          TAO/tao/Policy.pidl.
 
- 	* ace/SSL/Makefile.bor:
-  	* include/makeinclude/ace_flags.bor: Add makefile support for the
-	  SSL and security libraries in ACE and TAO.
+        * ace/SSL/Makefile.bor:
+        * include/makeinclude/ace_flags.bor: Add makefile support for the
+          SSL and security libraries in ACE and TAO.
 
-  	  The above patches were taken from
-	  http://www.tenermerx.com/programming/corba/tao_bcb/patch.html,
-	  which is the site maintained by Chistopher Kohlhoff
-	  <chris@kohlhoff.com>.
+          The above patches were taken from
+          http://www.tenermerx.com/programming/corba/tao_bcb/patch.html,
+          which is the site maintained by Chistopher Kohlhoff
+          <chris@kohlhoff.com>.
 
 Tue Aug 01 11:40:46 2000  Bala  <bala@cs.wustl.edu>
 

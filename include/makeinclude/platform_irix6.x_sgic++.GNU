@@ -28,7 +28,10 @@ OCCFLAGS	+= -O -OPT:Olimit=0
 DCCFLAGS	+= -g
 
 # Enable exceptions even in the o32 bit ABI.
-CCFLAGS		+= -exceptions
+CCFLAGS		+= -exceptions -DACE_HAS_EXCEPTIONS
+
+# Use the standard library and standard template instantiation mechanisms
+CCFLAGS		+= -LANG:std
 
 # Instantiate no templates automatically, do not run prelinker. There
 # are other choices available, but those have not been used in a while.
