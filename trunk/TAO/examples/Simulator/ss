@@ -1,40 +1,48 @@
-#! /bin/sh 
+#! /bin/sh
 # $Id$
 
-# =TITLE
+# = TITLE
 #  Restart script
 #
-# =AUTHOR
+# = AUTHOR
 #  Michael Kircher (mk1@cs.wustl.edu)
 #
-# =DESCRIPTION
+# = DESCRIPTION
 #  This script restarts the Naming, Scheduling and Event Service,
 #  if "clean" is specified as a parameter, then the old
-#  services are only killed and not restarted 
+#  services are only killed and not restarted.
 
-# save the old working dir
-old_dir=$cwd
-# get the user name
-login=`whoami`
-# get the user id 
-uid=`id | cut -c5-20 | cut -f1 -d"("`
-
+#### ps options are platform-specific.
 if [ `uname -s` = 'SunOS' ]; then
   ps_opts=-ef
 else
   ps_opts=aux
 fi
 
+#### Get the user name
+if [ "$LOGNAME" ]; then
+  #### LOGNAME is preserved across su
+  login=$LOGNAME
+else
+  #### whoami returns the users login, which changes across su
+  login=`whoami`
+fi
+
+#### Get the user id.
+uid=`id | sed 's/uid=\([0-9]\{1,\}\).*/\1/'`
+
 #### Set TAO_ROOT, if it wasn't set.
 if [ ! "$TAO_ROOT" ]; then
   if [ "$ACE_ROOT" ]; then
     TAO_ROOT=$ACE_ROOT/TAO
-    export TAO_ROOT
   else
     echo $0: you must set ACE_ROOT or TAO_ROOT!
     exit 1
   fi
 fi
+
+#### Set up a signal handler.
+trap "/bin/rm -f /tmp/pids$login" 0 1 2 3 15
 
 echo // Killing the old services
 
@@ -45,11 +53,9 @@ if [ -s /tmp/pids$login ]; then
   kill $pids
 fi
 
-# stop here if "ss clean" was called
-if [ $1 ]; then 
-  if [ $1 =  "clean" ]; then
-     exit
-  fi
+#### stop here if "ss clean" was called
+if [ "$1"  -a  "$1" = 'clean' ]; then
+  exit
 fi
 
 echo // Initializing the log file
@@ -65,17 +71,20 @@ schedulerserviceport=`expr 60023 + $uid`
 eventserviceport=`expr 100023 + $uid`
 
 cd $TAO_ROOT/orbsvcs/Naming_Service
+echo $ ./Naming_Service -ORBport $nameserviceport >> /tmp/logfile_$login
 ./Naming_Service -ORBport $nameserviceport >> /tmp/logfile_$login 2>&1  &
 
 sleep 1
 
-IOR=`cat /tmp/logfile_$login | grep IOR | cut -c22-300 | cut -f1 -d">" `
+IOR=`perl -ne 'if (s/NameService IOR is <(.*)>/$1/) { print; last; }' \
+      /tmp/logfile_$login`
 
 echo // The IOR of the Naming Service: $IOR
 
 echo // Started Naming Service on port $nameserviceport
 
 cd $TAO_ROOT/orbsvcs/Scheduling_Service
+echo $ ./Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  >> /tmp/logfile_$login
 ./Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  >> /tmp/logfile_$login  2>&1 &
 
 sleep 1
@@ -83,9 +92,9 @@ sleep 1
 echo // Started Scheduling Service on port $schedulerserviceport
 
 cd $TAO_ROOT/orbsvcs/Event_Service
+echo $ ./Event_Service -ORBnameserviceior $IOR -ORBport $eventserviceport >> /tmp/logfile_$login
 ./Event_Service -ORBnameserviceior $IOR -ORBport $eventserviceport >> /tmp/logfile_$login 2>&1 &
 
-cd $old_dir
 echo // Started Event Service on port $eventserviceport
 
 echo "// Enjoy the use ;-)"
