@@ -559,8 +559,8 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
     {
       // quick hack to test dynamic queue performance (to be replaced soon)
           ACE_ES_QUEUE *mq = 0;
-      #if defined (TAO_USES_STRATEGY_SCHEDULER)
-        #if defined (TAO_USES_EDF_SCHEDULING)
+#if defined (TAO_USES_STRATEGY_SCHEDULER)
+#if defined (TAO_USES_EDF_SCHEDULING)
 
           ACE_Deadline_Message_Strategy *adms = new ACE_Deadline_Message_Strategy;
 
@@ -569,7 +569,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
             mq = new ACE_Dynamic_Message_Queue<ACE_SYNCH> (*adms);
           }
 
-        #elif defined (TAO_USES_MLF_SCHEDULING) || defined (TAO_USES_MUF_SCHEDULING)
+#elif defined (TAO_USES_MLF_SCHEDULING) || defined (TAO_USES_MUF_SCHEDULING)
 
           ACE_Laxity_Message_Strategy *alms = new ACE_Laxity_Message_Strategy;
 
@@ -578,13 +578,13 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
             mq = new ACE_Dynamic_Message_Queue<ACE_SYNCH> (*alms);
           }
 
-        #else
+#else
           mq = new ACE_ES_QUEUE;
-        #endif
-      #else
+#endif
+#else
         // Allocate a message queue that does not notify.
         mq = new ACE_ES_MQ;
-      #endif
+#endif
 
       if (mq == 0)
         ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",

@@ -182,10 +182,6 @@ TAO_EC_Null_Factory::destroy_supplier_admin_lock (ACE_Lock* x)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_Null_Mutex>;
-
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

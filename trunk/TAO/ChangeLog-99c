@@ -1,3 +1,39 @@
+Tue May  4 21:15:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.i:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+	  Added new Dispatching strategy that uses multiple threads (one
+	  per priority) and a queues to dispatch the events. This strategy 
+	  allows invocations from high-priority suppliers to low-priority
+	  consumers or vice-versa with minimum priority inversion.
+	  It also decouples the collocated suppliers from the time spent
+	  in the collocated consumers.
+
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	  Added support for the new dispatching strategy and for Immediate
+	  changes in the supplier sets, but with locking.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	  Before passing data to the dispatching module we increment the
+	  reference count, that way the dispatching module doesn't have to 
+	  do it and we minimize locking overhead.
+
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+	  Minor cosmetic changes.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+	  Enabled debug message if an empty event is received.
+
+	* orbsvcs/tests/EC_Throughput/ec.conf:
+	* orbsvcs/tests/EC_Throughput/ec.mt.conf:
+	  Added new configuration for Priority_Dispatching strategy.
+	  Re-ordered options in old configuration to match the new one.
+
 Tue May  4 20:23:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.{h.cpp}:

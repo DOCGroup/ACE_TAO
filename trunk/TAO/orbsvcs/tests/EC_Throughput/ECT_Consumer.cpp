@@ -125,7 +125,8 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
 {
   if (events.length () == 0)
     {
-      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "ECT_Consumer (%P|%t) no events\n"));
       return;
     }
 
