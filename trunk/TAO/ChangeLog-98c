@@ -1,3 +1,18 @@
+Thu Jun 04 03:45:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface.cpp
+ 	  (be_visitor_interface_sh::visit_interface): Don't change the
+	  output stream until the template declaration part is complete.
+	  This delayed redirection of output writes the generated template
+	  classes into regular *S.h file and get them enclosed by
+	  appropriate namespace there.  Perhaps we can put them in the
+	  *S_T.h files, but that won't make platforms which don't have
+	  namespace support happy.
+
+	* TAO_IDL/be/be_visitor_module.cpp
+ 	  (be_visitor_module_sh::visit_module): Changed to use
+ 	  TAO_NAMESPACE as server side's module namescope.
+
 Wed Jun  3 17:50:09 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	Irfan Pyarali discussed the need to generate *_T.{h, i, cpp} files
