@@ -29,7 +29,7 @@ void foo (void)
 #else
 #include <stdio.h>
 
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   puts ("This example only works on g++ 2.96 and later.\n");
   return 0;
