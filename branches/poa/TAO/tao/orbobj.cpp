@@ -306,12 +306,13 @@ CORBA_ORB::resolve_poa (void)
   if (poa == 0)
     {
       TAO_POA_Manager *manager = new TAO_POA_Manager;
-      TAO_POA_Policies default_policies;
+      TAO_POA_Policies root_poa_policies;
+      root_poa_policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
 
       // Construct a new POA
       poa = new TAO_Strategy_POA ("RootPOA",
                                   *manager,
-                                  default_policies,
+                                  root_poa_policies,
                                   0,
                                   env);
 

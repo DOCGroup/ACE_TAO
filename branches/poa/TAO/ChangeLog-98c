@@ -1,3 +1,36 @@
+Sat Jan 17 00:45:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA: Added new tests: Explicit_Activation_POA_Ids and
+ 	  NewPOA.
+	
+	* tao/servant_base.h (TAO_ServantBase): Added a _downcast method
+ 	  that gets the servant with the correct vtable.  Also added a new
+ 	  class TAO_Local_ServantBase that overwrites _create_stub.
+  	  TAO_Local_ServantBase::_create_stub uses a fake key and does not
+ 	  registration with the default POA.
+
+	* tao/poaS.*: Added _downcast to the generated code. Also added
+ 	  attribute accessor methods.  Also updated constructors to
+ 	  explicitly initialize the virtual base class (CORBA::Object).
+
+	* tao/poaC.h: Added TAO_Local_ServantBase to the PortableServer
+ 	  namespace as PortableServer::LocalServantBase.
+
+	* tao/poaC.cpp (_narrow): Changed the implementation of _narrow to
+ 	  produce a collocated class when appropriate.
+
+	* tao/poa.cpp (TAO_POA::create_*_policy): Made sure these methods
+ 	  return collocated classes and not implementation classes.
+
+	* tao/poa.h (class TAO_POA_Policies): Added set methods to
+ 	  TAO_POA_Policies.
+
+	* tao/orbobj.cpp (resolve_poa): Made sure that the RootPOA is
+ 	  created with the PortableServer::IMPLICIT_ACTIVATION policy.
+
+	* tao/object: Added servant pointer and a collocated flag to
+ 	  object class.
+
 Fri Jan 16 03:27:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao:

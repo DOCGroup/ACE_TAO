@@ -236,7 +236,7 @@ private:
 
   IIOP::Profile *fwd_profile_;
   // This is a pointer to a profile used if the object is not
-  // colocated in the current process.
+  // collocated in the current process.
 
   ~IIOP_Object (void);
   // Destructor is to be called only through Release()

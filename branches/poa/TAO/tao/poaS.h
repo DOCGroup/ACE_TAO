@@ -15,7 +15,7 @@ class POA_PortableServer
 public:
   class CurrentBase;
   typedef CurrentBase *CurrentBase_ptr;
-  class CurrentBase :  public virtual PortableServer::ServantBase
+  class CurrentBase :  public virtual PortableServer::LocalServantBase
   {
   protected:
     CurrentBase (void);
@@ -27,6 +27,7 @@ public:
 
     PortableServer::CurrentBase *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -52,7 +53,7 @@ public:
 
   class Policy;
   typedef Policy *Policy_ptr;
-  class Policy :  public virtual PortableServer::ServantBase
+  class Policy :  public virtual PortableServer::LocalServantBase
   {
   protected:
     Policy (void);
@@ -70,6 +71,7 @@ public:
 
     PortableServer::Policy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -120,6 +122,7 @@ public:
 
     PortableServer::ThreadPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -135,6 +138,7 @@ public:
         STUB_Object *stub
       );
     ThreadPolicy_ptr _get_servant (void) const;
+    virtual PortableServer::ThreadPolicyValue value (CORBA::Environment &env);
   
   private:
     ThreadPolicy_ptr servant_;
@@ -165,6 +169,7 @@ public:
 
     PortableServer::LifespanPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -180,6 +185,7 @@ public:
         STUB_Object *stub
       );
     LifespanPolicy_ptr _get_servant (void) const;
+    virtual PortableServer::LifespanPolicyValue value (CORBA::Environment &env);
   
   private:
     LifespanPolicy_ptr servant_;
@@ -210,6 +216,7 @@ public:
 
     PortableServer::IdUniquenessPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -225,6 +232,7 @@ public:
         STUB_Object *stub
       );
     IdUniquenessPolicy_ptr _get_servant (void) const;
+    virtual PortableServer::IdUniquenessPolicyValue value (CORBA::Environment &env);
   
   private:
     IdUniquenessPolicy_ptr servant_;
@@ -255,6 +263,7 @@ public:
 
     PortableServer::IdAssignmentPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -270,6 +279,7 @@ public:
         STUB_Object *stub
       );
     IdAssignmentPolicy_ptr _get_servant (void) const;
+    virtual PortableServer::IdAssignmentPolicyValue value (CORBA::Environment &env);
   
   private:
     IdAssignmentPolicy_ptr servant_;
@@ -300,6 +310,7 @@ public:
 
     PortableServer::ImplicitActivationPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -315,6 +326,7 @@ public:
         STUB_Object *stub
       );
     ImplicitActivationPolicy_ptr _get_servant (void) const;
+    virtual PortableServer::ImplicitActivationPolicyValue value (CORBA::Environment &env);
   
   private:
     ImplicitActivationPolicy_ptr servant_;
@@ -345,6 +357,7 @@ public:
 
     PortableServer::ServantRetentionPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -360,6 +373,7 @@ public:
         STUB_Object *stub
       );
     ServantRetentionPolicy_ptr _get_servant (void) const;
+    virtual PortableServer::ServantRetentionPolicyValue value (CORBA::Environment &env);
   
   private:
     ServantRetentionPolicy_ptr servant_;
@@ -390,6 +404,7 @@ public:
 
     PortableServer::RequestProcessingPolicy *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -405,6 +420,7 @@ public:
         STUB_Object *stub
       );
     RequestProcessingPolicy_ptr _get_servant (void) const;
+    virtual PortableServer::RequestProcessingPolicyValue value (CORBA::Environment &env);
   
   private:
     RequestProcessingPolicy_ptr servant_;
@@ -416,7 +432,7 @@ public:
 
   class POAManager;
   typedef POAManager *POAManager_ptr;
-  class POAManager :  public virtual PortableServer::ServantBase
+  class POAManager :  public virtual PortableServer::LocalServantBase
   {
   protected:
     POAManager (void);
@@ -440,6 +456,7 @@ public:
 
     PortableServer::POAManager *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -481,7 +498,7 @@ public:
 
   class AdapterActivator;
   typedef AdapterActivator *AdapterActivator_ptr;
-  class AdapterActivator :  public virtual PortableServer::ServantBase
+  class AdapterActivator :  public virtual PortableServer::LocalServantBase
   {
   protected:
     AdapterActivator (void);
@@ -496,6 +513,7 @@ public:
 
     PortableServer::AdapterActivator *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -526,7 +544,7 @@ public:
 
   class ServantManager;
   typedef ServantManager *ServantManager_ptr;
-  class ServantManager :  public virtual PortableServer::ServantBase
+  class ServantManager :  public virtual PortableServer::LocalServantBase
   {
   protected:
     ServantManager (void);
@@ -538,6 +556,7 @@ public:
 
     PortableServer::ServantManager *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -581,6 +600,7 @@ public:
 
     PortableServer::ServantActivator *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -638,6 +658,7 @@ public:
 
     PortableServer::ServantLocator *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -679,7 +700,7 @@ public:
 
   class POA;
   typedef POA *POA_ptr;
-  class POA :  public virtual PortableServer::ServantBase
+  class POA :  public virtual PortableServer::LocalServantBase
   {
   protected:
     POA (void);
@@ -781,6 +802,7 @@ public:
 
     PortableServer::POA *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 
@@ -839,6 +861,16 @@ public:
         PortableServer::RequestProcessingPolicyValue value,
         CORBA::Environment &_tao_environment
       );
+    virtual char * the_name (CORBA::Environment &env);
+
+    virtual PortableServer::POA_ptr  the_parent (CORBA::Environment &env);
+
+    virtual PortableServer::POAManager_ptr  the_POAManager (CORBA::Environment &env);
+
+    virtual PortableServer::AdapterActivator_ptr  the_activator (CORBA::Environment &env);
+
+    virtual void the_activator(PortableServer::AdapterActivator_ptr the_activator, CORBA::Environment &env);
+
     virtual PortableServer::ServantManager_ptr get_servant_manager (
         CORBA::Environment &_tao_environment
       );
@@ -928,6 +960,7 @@ public:
 
     PortableServer::Current *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
+    virtual void *_downcast (const char *repository_id);
   };
 
 

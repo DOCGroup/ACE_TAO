@@ -12,13 +12,13 @@
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
-template <class STUB, class COLOCATED_SKELETON, class IMPLEMENTATION>
+template <class STUB, class COLLOCATED_SKELETON, class IMPLEMENTATION>
 IMPLEMENTATION *
 stub_to_impl (STUB stub)
 {
-  COLOCATED_SKELETON *colocated = ACE_dynamic_cast (COLOCATED_SKELETON *, stub);
+  COLLOCATED_SKELETON *collocated = ACE_dynamic_cast (COLLOCATED_SKELETON *, stub);
 
-  return ACE_dynamic_cast (IMPLEMENTATION *, colocated->_get_servant ());
+  return ACE_dynamic_cast (IMPLEMENTATION *, collocated->_get_servant ());
 }
 
 TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value)
@@ -342,6 +342,10 @@ TAO_POA_Policies::parse_policy (const PortableServer::Policy_ptr policy,
       this->thread_ = thread->value (env);
       return;
     }
+  else
+    {
+      env.clear ();
+    }  
 
   PortableServer::LifespanPolicy_var lifespan
     = PortableServer::LifespanPolicy::_narrow (policy, env);
@@ -350,6 +354,10 @@ TAO_POA_Policies::parse_policy (const PortableServer::Policy_ptr policy,
       this->lifespan_ = lifespan->value (env);
       return;
     }
+  else
+    {
+      env.clear ();
+    }  
 
   PortableServer::IdUniquenessPolicy_var id_uniqueness
     = PortableServer::IdUniquenessPolicy::_narrow (policy, env);
@@ -358,6 +366,10 @@ TAO_POA_Policies::parse_policy (const PortableServer::Policy_ptr policy,
       this->id_uniqueness_ = id_uniqueness->value (env);
       return;
     }
+  else
+    {
+      env.clear ();
+    }  
 
   PortableServer::IdAssignmentPolicy_var id_assignment
     = PortableServer::IdAssignmentPolicy::_narrow (policy, env);
@@ -366,6 +378,10 @@ TAO_POA_Policies::parse_policy (const PortableServer::Policy_ptr policy,
       this->id_assignment_ = id_assignment->value (env);
       return;
     }
+  else
+    {
+      env.clear ();
+    }  
 
   PortableServer::ImplicitActivationPolicy_var implicit_activation
     = PortableServer::ImplicitActivationPolicy::_narrow (policy, env);
@@ -374,6 +390,10 @@ TAO_POA_Policies::parse_policy (const PortableServer::Policy_ptr policy,
       this->implicit_activation_ = implicit_activation->value (env);
       return;
     }
+  else
+    {
+      env.clear ();
+    }  
 
   PortableServer::ServantRetentionPolicy_var servant_retention
     = PortableServer::ServantRetentionPolicy::_narrow (policy, env);
@@ -382,6 +402,10 @@ TAO_POA_Policies::parse_policy (const PortableServer::Policy_ptr policy,
       this->servant_retention_ = servant_retention->value (env);
       return;
     }
+  else
+    {
+      env.clear ();
+    }  
 
   PortableServer::RequestProcessingPolicy_var request_processing
     = PortableServer::RequestProcessingPolicy::_narrow (policy, env);
@@ -390,6 +414,10 @@ TAO_POA_Policies::parse_policy (const PortableServer::Policy_ptr policy,
       this->request_processing_ = request_processing->value (env);
       return;
     }
+  else
+    {
+      env.clear ();
+    }  
 
   CORBA::Exception *exception = new PortableServer::POA::InvalidPolicy;
   env.exception (exception);
@@ -397,45 +425,87 @@ TAO_POA_Policies::parse_policy (const PortableServer::Policy_ptr policy,
 }
 
 PortableServer::ThreadPolicyValue
-TAO_POA_Policies::thread (void)
+TAO_POA_Policies::thread (void) const
 {
   return this->thread_;
 }
 
+void
+TAO_POA_Policies::thread (PortableServer::ThreadPolicyValue value)
+{
+  this->thread_ = value;
+}
+
 PortableServer::LifespanPolicyValue
-TAO_POA_Policies::lifespan (void)
+TAO_POA_Policies::lifespan (void) const
 {
   return this->lifespan_;
 }
 
+void
+TAO_POA_Policies::lifespan (PortableServer::LifespanPolicyValue value)
+{
+  this->lifespan_ = value;
+}
+
 PortableServer::IdUniquenessPolicyValue
-TAO_POA_Policies::id_uniqueness (void)
+TAO_POA_Policies::id_uniqueness (void) const
 {
   return this->id_uniqueness_;
 }
 
+void
+TAO_POA_Policies::id_uniqueness (PortableServer::IdUniquenessPolicyValue value)
+{
+  this->id_uniqueness_ = value;
+}
+
 PortableServer::IdAssignmentPolicyValue
-TAO_POA_Policies::id_assignment (void)
+TAO_POA_Policies::id_assignment (void) const
 {
   return this->id_assignment_;
 }
 
+void
+TAO_POA_Policies::id_assignment (PortableServer::IdAssignmentPolicyValue value)
+{
+  this->id_assignment_ = value;
+}
+
 PortableServer::ImplicitActivationPolicyValue
-TAO_POA_Policies::implicit_activation (void)
+TAO_POA_Policies::implicit_activation (void) const
 {
   return this->implicit_activation_;
 }
 
+void
+TAO_POA_Policies::implicit_activation (PortableServer::ImplicitActivationPolicyValue value)
+{
+  this->implicit_activation_ = value;
+}
+
 PortableServer::ServantRetentionPolicyValue
-TAO_POA_Policies::servant_retention (void)
+TAO_POA_Policies::servant_retention (void) const
 {
   return this->servant_retention_;
 }
 
+void
+TAO_POA_Policies::servant_retention (PortableServer::ServantRetentionPolicyValue value)
+{
+  this->servant_retention_ = value;
+}
+
 PortableServer::RequestProcessingPolicyValue
-TAO_POA_Policies::request_processing (void)
+TAO_POA_Policies::request_processing (void) const
 {
   return this->request_processing_;
+}
+
+void
+TAO_POA_Policies::request_processing (PortableServer::RequestProcessingPolicyValue value)
+{
+  this->request_processing_ = value;
 }
 
 TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
@@ -2040,56 +2110,119 @@ PortableServer::ThreadPolicy_ptr
 TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value,
                                CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
-  return new TAO_Thread_Policy (value);
+  auto_ptr<TAO_Thread_Policy> new_policy (new TAO_Thread_Policy (value));
+  PortableServer::ThreadPolicy_var result = new_policy->_this (env);
+  if (env.exception () != 0)
+    return PortableServer::ThreadPolicy::_nil ();
+  else
+    {
+      // Make sure that the auto_ptr does not delete the
+      // implementation
+      new_policy.release ();
+      return result._retn ();
+    }
 }
 
 PortableServer::LifespanPolicy_ptr
 TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value,
                                  CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
-  return new TAO_Lifespan_Policy (value);
+  auto_ptr<TAO_Lifespan_Policy> new_policy (new TAO_Lifespan_Policy (value));
+  PortableServer::LifespanPolicy_var result = new_policy->_this (env);
+  if (env.exception () != 0)
+    return PortableServer::LifespanPolicy::_nil ();
+  else
+    {
+      // Make sure that the auto_ptr does not delete the
+      // implementation
+      new_policy.release ();
+      return result._retn ();
+    }
 }
 
 PortableServer::IdUniquenessPolicy_ptr
 TAO_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value,
                                       CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
-  return new TAO_Id_Uniqueness_Policy (value);
+  auto_ptr<TAO_Id_Uniqueness_Policy> new_policy (new TAO_Id_Uniqueness_Policy (value));
+  PortableServer::IdUniquenessPolicy_var result = new_policy->_this (env);
+  if (env.exception () != 0)
+    return PortableServer::IdUniquenessPolicy::_nil ();
+  else 
+    {
+      // Make sure that the auto_ptr does not delete the
+      // implementation
+      new_policy.release ();
+      return result._retn ();
+    }
 }
 
 PortableServer::IdAssignmentPolicy_ptr
 TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value,
                                       CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
-  return new TAO_Id_Assignment_Policy (value);
+  auto_ptr<TAO_Id_Assignment_Policy> new_policy (new TAO_Id_Assignment_Policy (value));
+  PortableServer::IdAssignmentPolicy_var result = new_policy->_this (env);
+  if (env.exception () != 0)
+    return PortableServer::IdAssignmentPolicy::_nil ();
+  else 
+    {
+      // Make sure that the auto_ptr does not delete the
+      // implementation
+      new_policy.release ();
+      return result._retn ();
+    }
 }
 
 PortableServer::ImplicitActivationPolicy_ptr
 TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,
                                             CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
-  return new TAO_Implicit_Activation_Policy (value);
+  auto_ptr<TAO_Implicit_Activation_Policy> new_policy (new TAO_Implicit_Activation_Policy (value));
+  PortableServer::ImplicitActivationPolicy_var result = new_policy->_this (env);
+  if (env.exception () != 0)
+    return PortableServer::ImplicitActivationPolicy::_nil ();
+  else 
+    {
+      // Make sure that the auto_ptr does not delete the
+      // implementation
+      new_policy.release ();
+      return result._retn ();
+    }
 }
 
 PortableServer::ServantRetentionPolicy_ptr
 TAO_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value,
                                           CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
-  return new TAO_Servant_Retention_Policy (value);
+  auto_ptr<TAO_Servant_Retention_Policy> new_policy (new TAO_Servant_Retention_Policy (value));
+  PortableServer::ServantRetentionPolicy_var result = new_policy->_this (env);
+  if (env.exception () != 0)
+    return PortableServer::ServantRetentionPolicy::_nil ();
+  else 
+    {
+      // Make sure that the auto_ptr does not delete the
+      // implementation
+      new_policy.release ();
+      return result._retn ();
+    }
 }
 
 PortableServer::RequestProcessingPolicy_ptr
 TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,
                                            CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (env);
-  return new TAO_Request_Processing_Policy (value);
+  auto_ptr<TAO_Request_Processing_Policy> new_policy (new TAO_Request_Processing_Policy (value));
+  PortableServer::RequestProcessingPolicy_var result = new_policy->_this (env);
+  if (env.exception () != 0)
+    return PortableServer::RequestProcessingPolicy::_nil ();
+  else 
+    {
+      // Make sure that the auto_ptr does not delete the
+      // implementation
+      new_policy.release ();
+      return result._retn ();
+    }
 }
 
 CORBA::Boolean

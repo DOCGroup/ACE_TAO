@@ -9,12 +9,15 @@
 #define _TAO_IDL_POAC_H_
 
 class TAO_ServantBase;
+class TAO_Local_ServantBase;
 
 class TAO_Export PortableServer{
 public:
 
   typedef TAO_ServantBase ServantBase;
   typedef ServantBase *Servant;
+  
+  typedef TAO_Local_ServantBase LocalServantBase;
   
   typedef CORBA::String Identifier;
   typedef CORBA::String_var Identifier_var;

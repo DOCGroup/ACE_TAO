@@ -46,6 +46,10 @@ public:
   // Get the "parent" in the QueryInterface hierarchy.
 
   virtual const char *_interface_repository_id (void) const = 0;
+  // Get this interface's repository id
+
+  virtual void *_downcast (const char *repository_id) = 0;
+  // Get the correct vtable
 
 protected:
   TAO_ServantBase (void);
@@ -70,6 +74,17 @@ protected:
 
   TAO_IUnknown *parent_;
   // @@ TODO find out why is this here....
+};
+
+class TAO_Export TAO_Local_ServantBase : public TAO_ServantBase
+{
+  // = TITLE
+  //   Base class for local skeletons and servants.
+  //
+protected:
+  STUB_Object *_create_stub (CORBA_Environment &_env);
+  // This is an auxiliar method for _this().  Make sure *not* to
+  // register with the default POA
 };
 
 #endif /* SERVANT_BASE_H */

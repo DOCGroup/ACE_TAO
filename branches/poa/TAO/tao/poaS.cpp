@@ -66,11 +66,18 @@ const char* POA_PortableServer::CurrentBase::_interface_repository_id (void) con
   return "IDL:PortableServer/CurrentBase:1.0";
 }
 
+void *
+POA_PortableServer::CurrentBase::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_CurrentBase::_tao_collocated_CurrentBase (
     POA_PortableServer::CurrentBase_ptr  servant,
     STUB_Object *stub
   )
-  : CurrentBase (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    CurrentBase (stub),
     servant_ (servant)
 {
 }
@@ -178,11 +185,18 @@ const char* POA_PortableServer::Policy::_interface_repository_id (void) const
   return "IDL:PortableServer/Policy:1.0";
 }
 
+void *
+POA_PortableServer::Policy::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_Policy::_tao_collocated_Policy (
     POA_PortableServer::Policy_ptr  servant,
     STUB_Object *stub
   )
-  : Policy (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    Policy (stub),
     servant_ (servant)
 {
 }
@@ -288,11 +302,18 @@ const char* POA_PortableServer::ThreadPolicy::_interface_repository_id (void) co
   return "IDL:PortableServer/ThreadPolicy:1.0";
 }
 
+void *
+POA_PortableServer::ThreadPolicy::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_ThreadPolicy::_tao_collocated_ThreadPolicy (
     POA_PortableServer::ThreadPolicy_ptr  servant,
     STUB_Object *stub
   )
-  : ThreadPolicy (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    ThreadPolicy (stub),
     _tao_collocated_Policy (servant, 0),
     servant_ (servant)
 {
@@ -303,6 +324,11 @@ POA_PortableServer::ThreadPolicy_ptr POA_PortableServer::_tao_collocated_ThreadP
   return this->servant_;
 }
 
+PortableServer::ThreadPolicyValue
+POA_PortableServer::_tao_collocated_ThreadPolicy::value (CORBA::Environment &env)
+{
+  return this->servant_->value (env);
+}
 
 PortableServer::ThreadPolicy*
 POA_PortableServer::ThreadPolicy::_this (CORBA_Environment &_env)
@@ -381,11 +407,18 @@ const char* POA_PortableServer::LifespanPolicy::_interface_repository_id (void) 
   return "IDL:PortableServer/LifespanPolicy:1.0";
 }
 
+void *
+POA_PortableServer::LifespanPolicy::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_LifespanPolicy::_tao_collocated_LifespanPolicy (
     POA_PortableServer::LifespanPolicy_ptr  servant,
     STUB_Object *stub
   )
-  : LifespanPolicy (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    LifespanPolicy (stub),
     _tao_collocated_Policy (servant, 0),
     servant_ (servant)
 {
@@ -396,6 +429,11 @@ POA_PortableServer::LifespanPolicy_ptr POA_PortableServer::_tao_collocated_Lifes
   return this->servant_;
 }
 
+PortableServer::LifespanPolicyValue
+POA_PortableServer::_tao_collocated_LifespanPolicy::value (CORBA::Environment &env)
+{
+  return this->servant_->value (env);
+}
 
 PortableServer::LifespanPolicy*
 POA_PortableServer::LifespanPolicy::_this (CORBA_Environment &_env)
@@ -474,11 +512,18 @@ const char* POA_PortableServer::IdUniquenessPolicy::_interface_repository_id (vo
   return "IDL:PortableServer/IdUniquenessPolicy:1.0";
 }
 
+void *
+POA_PortableServer::IdUniquenessPolicy::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_IdUniquenessPolicy::_tao_collocated_IdUniquenessPolicy (
     POA_PortableServer::IdUniquenessPolicy_ptr  servant,
     STUB_Object *stub
   )
-  : IdUniquenessPolicy (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    IdUniquenessPolicy (stub),
     _tao_collocated_Policy (servant, 0),
     servant_ (servant)
 {
@@ -489,6 +534,11 @@ POA_PortableServer::IdUniquenessPolicy_ptr POA_PortableServer::_tao_collocated_I
   return this->servant_;
 }
 
+PortableServer::IdUniquenessPolicyValue
+POA_PortableServer::_tao_collocated_IdUniquenessPolicy::value (CORBA::Environment &env)
+{
+  return this->servant_->value (env);
+}
 
 PortableServer::IdUniquenessPolicy*
 POA_PortableServer::IdUniquenessPolicy::_this (CORBA_Environment &_env)
@@ -567,11 +617,18 @@ const char* POA_PortableServer::IdAssignmentPolicy::_interface_repository_id (vo
   return "IDL:PortableServer/IdAssignmentPolicy:1.0";
 }
 
+void *
+POA_PortableServer::IdAssignmentPolicy::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_IdAssignmentPolicy::_tao_collocated_IdAssignmentPolicy (
     POA_PortableServer::IdAssignmentPolicy_ptr  servant,
     STUB_Object *stub
   )
-  : IdAssignmentPolicy (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    IdAssignmentPolicy (stub),
     _tao_collocated_Policy (servant, 0),
     servant_ (servant)
 {
@@ -582,6 +639,11 @@ POA_PortableServer::IdAssignmentPolicy_ptr POA_PortableServer::_tao_collocated_I
   return this->servant_;
 }
 
+PortableServer::IdAssignmentPolicyValue
+POA_PortableServer::_tao_collocated_IdAssignmentPolicy::value (CORBA::Environment &env)
+{
+  return this->servant_->value (env);
+}
 
 PortableServer::IdAssignmentPolicy*
 POA_PortableServer::IdAssignmentPolicy::_this (CORBA_Environment &_env)
@@ -660,11 +722,18 @@ const char* POA_PortableServer::ImplicitActivationPolicy::_interface_repository_
   return "IDL:PortableServer/ImplicitActivationPolicy:1.0";
 }
 
+void *
+POA_PortableServer::ImplicitActivationPolicy::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::_tao_collocated_ImplicitActivationPolicy (
     POA_PortableServer::ImplicitActivationPolicy_ptr  servant,
     STUB_Object *stub
   )
-  : ImplicitActivationPolicy (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    ImplicitActivationPolicy (stub),
     _tao_collocated_Policy (servant, 0),
     servant_ (servant)
 {
@@ -675,6 +744,11 @@ POA_PortableServer::ImplicitActivationPolicy_ptr POA_PortableServer::_tao_colloc
   return this->servant_;
 }
 
+PortableServer::ImplicitActivationPolicyValue
+POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::value (CORBA::Environment &env)
+{
+  return this->servant_->value (env);
+}
 
 PortableServer::ImplicitActivationPolicy*
 POA_PortableServer::ImplicitActivationPolicy::_this (CORBA_Environment &_env)
@@ -753,11 +827,18 @@ const char* POA_PortableServer::ServantRetentionPolicy::_interface_repository_id
   return "IDL:PortableServer/ServantRetentionPolicy:1.0";
 }
 
+void *
+POA_PortableServer::ServantRetentionPolicy::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_ServantRetentionPolicy::_tao_collocated_ServantRetentionPolicy (
     POA_PortableServer::ServantRetentionPolicy_ptr  servant,
     STUB_Object *stub
   )
-  : ServantRetentionPolicy (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    ServantRetentionPolicy (stub),
     _tao_collocated_Policy (servant, 0),
     servant_ (servant)
 {
@@ -768,6 +849,11 @@ POA_PortableServer::ServantRetentionPolicy_ptr POA_PortableServer::_tao_collocat
   return this->servant_;
 }
 
+PortableServer::ServantRetentionPolicyValue
+POA_PortableServer::_tao_collocated_ServantRetentionPolicy::value (CORBA::Environment &env)
+{
+  return this->servant_->value (env);
+}
 
 PortableServer::ServantRetentionPolicy*
 POA_PortableServer::ServantRetentionPolicy::_this (CORBA_Environment &_env)
@@ -846,11 +932,18 @@ const char* POA_PortableServer::RequestProcessingPolicy::_interface_repository_i
   return "IDL:PortableServer/RequestProcessingPolicy:1.0";
 }
 
+void *
+POA_PortableServer::RequestProcessingPolicy::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_RequestProcessingPolicy::_tao_collocated_RequestProcessingPolicy (
     POA_PortableServer::RequestProcessingPolicy_ptr  servant,
     STUB_Object *stub
   )
-  : RequestProcessingPolicy (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    RequestProcessingPolicy (stub),
     _tao_collocated_Policy (servant, 0),
     servant_ (servant)
 {
@@ -861,6 +954,11 @@ POA_PortableServer::RequestProcessingPolicy_ptr POA_PortableServer::_tao_colloca
   return this->servant_;
 }
 
+PortableServer::RequestProcessingPolicyValue
+POA_PortableServer::_tao_collocated_RequestProcessingPolicy::value (CORBA::Environment &env)
+{
+  return this->servant_->value (env);
+}
 
 PortableServer::RequestProcessingPolicy*
 POA_PortableServer::RequestProcessingPolicy::_this (CORBA_Environment &_env)
@@ -995,11 +1093,18 @@ const char* POA_PortableServer::POAManager::_interface_repository_id (void) cons
   return "IDL:PortableServer/POAManager:1.0";
 }
 
+void *
+POA_PortableServer::POAManager::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_POAManager::_tao_collocated_POAManager (
     POA_PortableServer::POAManager_ptr  servant,
     STUB_Object *stub
   )
-  : POAManager (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    POAManager (stub),
     servant_ (servant)
 {
 }
@@ -1146,11 +1251,18 @@ const char* POA_PortableServer::AdapterActivator::_interface_repository_id (void
   return "IDL:PortableServer/AdapterActivator:1.0";
 }
 
+void *
+POA_PortableServer::AdapterActivator::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_AdapterActivator::_tao_collocated_AdapterActivator (
     POA_PortableServer::AdapterActivator_ptr  servant,
     STUB_Object *stub
   )
-  : AdapterActivator (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    AdapterActivator (stub),
     servant_ (servant)
 {
 }
@@ -1236,11 +1348,18 @@ const char* POA_PortableServer::ServantManager::_interface_repository_id (void) 
   return "IDL:PortableServer/ServantManager:1.0";
 }
 
+void *
+POA_PortableServer::ServantManager::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_ServantManager::_tao_collocated_ServantManager (
     POA_PortableServer::ServantManager_ptr  servant,
     STUB_Object *stub
   )
-  : ServantManager (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    ServantManager (stub),
     servant_ (servant)
 {
 }
@@ -1328,11 +1447,18 @@ const char* POA_PortableServer::ServantActivator::_interface_repository_id (void
   return "IDL:PortableServer/ServantActivator:1.0";
 }
 
+void *
+POA_PortableServer::ServantActivator::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_ServantActivator::_tao_collocated_ServantActivator (
     POA_PortableServer::ServantActivator_ptr  servant,
     STUB_Object *stub
   )
-  : ServantActivator (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    ServantActivator (stub),
     _tao_collocated_ServantManager (servant, 0),
     servant_ (servant)
 {
@@ -1453,11 +1579,18 @@ const char* POA_PortableServer::ServantLocator::_interface_repository_id (void) 
   return "IDL:PortableServer/ServantLocator:1.0";
 }
 
+void *
+POA_PortableServer::ServantLocator::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_ServantLocator::_tao_collocated_ServantLocator (
     POA_PortableServer::ServantLocator_ptr  servant,
     STUB_Object *stub
   )
-  : ServantLocator (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    ServantLocator (stub),
     _tao_collocated_ServantManager (servant, 0),
     servant_ (servant)
 {
@@ -2089,11 +2222,17 @@ const char* POA_PortableServer::POA::_interface_repository_id (void) const
   return "IDL:PortableServer/POA:1.0";
 }
 
+void *
+POA_PortableServer::POA::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_POA::_tao_collocated_POA (
     POA_PortableServer::POA_ptr  servant,
     STUB_Object *stub
   )
-  : CORBA_Object (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
     POA (stub),
     servant_ (servant)
 {
@@ -2220,6 +2359,36 @@ PortableServer::RequestProcessingPolicy_ptr POA_PortableServer::_tao_collocated_
       value,
        _tao_environment
     );
+}
+
+char * 
+POA_PortableServer::_tao_collocated_POA::the_name (CORBA::Environment &env)
+{
+  return this->servant_->the_name (env);
+}
+
+PortableServer::POA_ptr  
+POA_PortableServer::_tao_collocated_POA::the_parent (CORBA::Environment &env)
+{
+  return this->servant_->the_parent (env);
+}
+
+PortableServer::POAManager_ptr  
+POA_PortableServer::_tao_collocated_POA::the_POAManager (CORBA::Environment &env)
+{
+  return this->servant_->the_POAManager (env);
+}
+
+PortableServer::AdapterActivator_ptr  
+POA_PortableServer::_tao_collocated_POA::the_activator (CORBA::Environment &env)
+{
+  return this->servant_->the_activator (env);
+}
+
+void  
+POA_PortableServer::_tao_collocated_POA::the_activator(PortableServer::AdapterActivator_ptr the_activator, CORBA::Environment &env)
+{
+  this->servant_->the_activator(the_activator, env);
 }
 
 PortableServer::ServantManager_ptr POA_PortableServer::_tao_collocated_POA::get_servant_manager (
@@ -2490,11 +2659,18 @@ const char* POA_PortableServer::Current::_interface_repository_id (void) const
   return "IDL:PortableServer/Current:1.0";
 }
 
+void *
+POA_PortableServer::Current::_downcast (const char *repository_id)
+{
+  return this;
+}
+
 POA_PortableServer::_tao_collocated_Current::_tao_collocated_Current (
     POA_PortableServer::Current_ptr  servant,
     STUB_Object *stub
   )
-  : Current (stub),
+  : CORBA_Object (stub, servant, CORBA::B_TRUE),
+    Current (stub),
     _tao_collocated_CurrentBase (servant, 0),
     servant_ (servant)
 {
