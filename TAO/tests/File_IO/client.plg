@@ -3,26 +3,39 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
---------------------Configuration: POA Default Servant Client - Win32 Debug--------------------
+--------------------Configuration: File_IO Client - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "c:\temp\RSPAE6.tmp" with contents
+Creating temporary file "C:\DOCUME~1\BALACH~1.SAM\LOCALS~1\Temp\RSP31.bat" with contents
 [
-/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "..\..\.." /I "..\..\..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fo"Debug/" /Fd"Debug/" /FD /c 
-"C:\StentorSoft\ACE_wrappers\TAO\tests\POA\MT_Client\client.cpp"
+@echo off
+..\..\..\bin\tao_idl -Ge 1 File.idl
 ]
-Creating command line "cl.exe @c:\temp\RSPAE6.tmp" 
-Creating temporary file "c:\temp\RSPAE7.tmp" with contents
+Creating command line "C:\DOCUME~1\BALACH~1.SAM\LOCALS~1\Temp\RSP31.bat"
+Creating temporary file "C:\DOCUME~1\BALACH~1.SAM\LOCALS~1\Temp\RSP32.tmp" with contents
 [
-TAOd.lib aced.lib TAO_PortableServerd.lib /nologo /subsystem:console /incremental:yes /pdb:"client.pdb" /debug /machine:I386 /out:"client.exe" /pdbtype:sept /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" 
+/nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fo"Debug/" /Fd"Debug/" /FD /c 
+"C:\ACE_wrappers\TAO\tests\File_IO\client.cpp"
+"C:\ACE_wrappers\TAO\tests\File_IO\FileC.cpp"
+"C:\ACE_wrappers\TAO\tests\File_IO\FileS.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\BALACH~1.SAM\LOCALS~1\Temp\RSP32.tmp" 
+Invoking TAO_IDL Compiler on .\File.idl
+idli_a01156.cc
+Creating temporary file "C:\DOCUME~1\BALACH~1.SAM\LOCALS~1\Temp\RSP33.tmp" with contents
+[
+TAOd.lib aced.lib TAO_PortableServerd.lib /nologo /subsystem:console /incremental:yes /pdb:"client.pdb" /debug /machine:I386 /out:"client.exe" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" 
 .\Debug\client.obj
 .\Debug\FileC.obj
 .\Debug\FileS.obj
 ]
-Creating command line "link.exe @c:\temp\RSPAE7.tmp"
+Creating command line "link.exe @C:\DOCUME~1\BALACH~1.SAM\LOCALS~1\Temp\RSP33.tmp"
 <h3>Output Window</h3>
 Compiling...
 client.cpp
+FileC.cpp
+FileS.cpp
+Generating Code...
 Linking...
 
 
