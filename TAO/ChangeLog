@@ -1,3 +1,12 @@
+Mon Nov 22 10:32:26 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+          gcc2.95 warns about possible uninitialized variable.
+          Make it obvious that it's initialized.
+
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+          Argument decl./defn. mismatch: CORBA::Boolean vs bool
+
 Mon Nov 22 10:20:49 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Proxy.cpp:
