@@ -254,6 +254,10 @@ TAO_Active_Demux_ObjTable::create_object_id (PortableServer::Servant servant,
 
   // Increment generation count
   id_data[TAO_Active_Demux_ObjTable::GENERATION_FIELD] = ++this->table_[index].generation_;
+  
+  // Move next along if index is not reused 
+  if (index == this->next_)
+    this->next_++;
 
   PortableServer::ObjectId &id = 
     *(new PortableServer::ObjectId (TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX));

@@ -66,7 +66,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
 
 protected:
   PortableServer::ThreadPolicyValue value_;
@@ -90,7 +90,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
 
 protected:
   PortableServer::LifespanPolicyValue value_;
@@ -114,7 +114,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
 
 protected:
   PortableServer::IdUniquenessPolicyValue value_;
@@ -138,7 +138,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
 
 protected:
   PortableServer::IdAssignmentPolicyValue value_;
@@ -162,7 +162,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
 
 protected:
   PortableServer::ImplicitActivationPolicyValue value_;
@@ -186,7 +186,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
 
 protected:
   PortableServer::ServantRetentionPolicyValue value_;
@@ -210,7 +210,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
 
 protected:
   PortableServer::RequestProcessingPolicyValue value_;
@@ -240,7 +240,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
+  // virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &_env = CORBA_Environment::default_environment ());  
 
 protected:
   PortableServer::SynchronizationPolicyValue value_;
