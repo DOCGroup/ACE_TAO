@@ -1,3 +1,8 @@
+Sat Oct  3 17:51:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/test-6.exp: 
+	  Added the new -B option.
+
 Sat Oct  3 13:47:40 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Key_List.cpp (output_binary_search_function): Added a new
