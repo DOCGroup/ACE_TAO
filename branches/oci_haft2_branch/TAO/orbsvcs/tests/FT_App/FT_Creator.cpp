@@ -21,13 +21,15 @@
 
 
 FTAPP::FT_Creator::FT_Creator ()
-  : registry_ior_ (0)
-  , replication_manager_ (0)
+  : creator_ ()
+  , orb_ (CORBA::ORB::_nil ())
+  , registry_ior_(0)
+  , replication_manager_ (::FT::ReplicationManager::_nil ())
   , have_replication_manager_ (0)
   , write_iors_ (0)
   , write_iogr_ (0)
-  , iogr_seq_ (0)
   , ns_register_ (1)
+  , iogr_seq_ (0)
   , prefix_ ("")
 {
 }
@@ -139,9 +141,9 @@ int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   {
     CORBA::Object_var registry_obj = this->orb_->string_to_object (this->registry_ior_  ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
-    PortableGroup::FactoryRegistry_var registry = PortableGroup::FactoryRegistry::_narrow(registry_obj  ACE_ENV_ARG_PARAMETER);
+    PortableGroup::FactoryRegistry_var registry = PortableGroup::FactoryRegistry::_narrow(registry_obj.in ()  ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
-    if (! CORBA::is_nil (registry))
+    if (! CORBA::is_nil (registry.in ()))
     {
       result = this->creator_.set_factory_registry(registry.in());
     }
@@ -178,7 +180,8 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   int result = 0;
   size_t typeCount = this->create_roles_.size();
-  for ( size_t nType = 0; result == 0 && nType < typeCount; ++nType)
+  size_t nType = 0;
+  for ( nType = 0; result == 0 && nType < typeCount; ++nType)
   {
     const char * role = this->create_roles_[nType].c_str();
     std::cout << std::endl << "Creator: Creating group of " << role << std::endl;
@@ -190,7 +193,7 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
 
     if (this->write_iogr_)
     {
-      CORBA::String_var iogr = this->orb_->object_to_string (group ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var iogr = this->orb_->object_to_string (group.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (1);
 
       char iogr_filename[1000];
@@ -260,7 +263,7 @@ main (int argc, char *argv[])
     result = app.parse_args(argc, argv);
     if (result == 0)
     {
-      result = app.init (orb ACE_ENV_ARG_PARAMETER);
+      result = app.init (orb.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result == 0)
       {
