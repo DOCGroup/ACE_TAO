@@ -15,13 +15,15 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
+#include "TP_Task.h"
 
 namespace POA_RtecScheduler
 {
     class Scheduler;
 };
 
-class FT_EventService
+class FT_EventService : private TAO_FTEC_Become_Primary_Listener
 {
 public:
   FT_EventService();
@@ -29,18 +31,22 @@ public:
 
   int run(int argc, ACE_TCHAR* argv[]);
 
+private:
   int parse_args (int argc, ACE_TCHAR* argv []);
   void setup_scheduler(CosNaming::NamingContext_ptr naming_context
                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   int report_factory(CORBA::ORB_ptr orb,
                    FtRtecEventChannelAdmin::EventChannel_ptr ec);
-private:
+  virtual void become_primary();
+
   int global_scheduler_;
   // Should we use a global scheduler or a local one?
   POA_RtecScheduler::Scheduler *sched_impl_;
   // The Scheduler implementation.
   TAO_FTEC_Event_Channel::MEMBERSHIP membership_;
   int num_threads_;
+  CORBA::ORB_var orb_;
+  TP_Task task_;
 };
 
 #endif
