@@ -57,11 +57,11 @@ public:
 
 // *********************************************************************
 ACE_POSIX_Proactor::ACE_POSIX_Proactor (void)
-  :  os_id_ (OS_UNDEFINED)
+  :  os_id_ (ACE_OS_UNDEFINED)
 {
 #if defined(sun)
 
-  os_id_ = OS_SUN; // set family
+  os_id_ = ACE_OS_SUN; // set family
 
   char Buf [32];
 
@@ -70,23 +70,23 @@ ACE_POSIX_Proactor::ACE_POSIX_Proactor (void)
   ACE_OS::sysinfo (SI_RELEASE , Buf, sizeof(Buf)-1);
 
   if (ACE_OS::strcasecmp (Buf , "5.6") == 0)
-    os_id_ = OS_SUN_56;
+    os_id_ = ACE_OS_SUN_56;
   else if (ACE_OS::strcasecmp (Buf , "5.7") == 0)
-    os_id_ = OS_SUN_57;
+    os_id_ = ACE_OS_SUN_57;
   else if (ACE_OS::strcasecmp (Buf , "5.8") == 0)
-    os_id_ = OS_SUN_58;
+    os_id_ = ACE_OS_SUN_58;
 
 #elif defined(HPUX)
 
-  os_id_ = OS_HPUX;   // set family
+  os_id_ = ACE_OS_HPUX;   // set family
 
 #elif defined(__sgi)
 
-  os_id_ = OS_IRIX;   // set family
+  os_id_ = ACE_OS_IRIX;   // set family
 
 #elif defined(__OpenBSD)
 
-  os_id_ = OS_OPENBSD; // set family
+  os_id_ = ACE_OS_OPENBSD; // set family
 
   // do the same
 
@@ -1878,7 +1878,7 @@ ACE_POSIX_SIG_Proactor::handle_events_i (const ACE_Time_Value *timeout)
   int error_status = 0;
   size_t transfer_count = 0;
 
-  if (sig_info.si_code == SI_ASYNCIO || this->os_id_ == OS_SUN_56)
+  if (sig_info.si_code == SI_ASYNCIO || this->os_id_ == ACE_OS_SUN_56)
     {
       flg_aio = 1;  // AIO signal received
       // define index to start
@@ -1892,7 +1892,7 @@ ACE_POSIX_SIG_Proactor::handle_events_i (const ACE_Time_Value *timeout)
       // there is one I/O to process, and it's correctly specified in the
       // siginfo received. There are, however, some special situations
       // where this isn't true...
-      if (os_id_ == OS_SUN_56) // Solaris 6
+      if (os_id_ == ACE_OS_SUN_56) // Solaris 6
         {
           // 1. Solaris 6 always loses any RT signal,
           //    if it has more SIGQUEMAX=32 pending signals

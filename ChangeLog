@@ -1,3 +1,9 @@
+Thu Sep 16 12:36:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/POSIX_Proactor.{h cpp}: Change the SystemType enumerator value
+	  names to begin with ACE_. This avoids conflicts with other facilities
+	  that use an OS_ prefix.
+
 Thu Sep 16 09:22:08 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/OS_NS_Thread.cpp:
@@ -8,7 +14,6 @@ Thu Sep 16 09:22:08 2004  Dale Wilson  <wilson_d@ociweb.com>
           of the ACE_TSS_Cleanup.
           The original code worked like this but I changed it when
           I added additional cleanup operations to the exit method.
-
 
 Thu Sep 16 08:14:14 2004  Chad Elliott  <elliott_c@ociweb.com>
 
