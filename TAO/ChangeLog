@@ -1,3 +1,8 @@
+Sun Nov  9 13:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/IORInterceptor/Makefile.bor:
+	  Added valuetype lib to lin with
+
 Sat Nov  8 23:58:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/File_IO/client.cpp
@@ -26,12 +31,12 @@ Sat Nov  8 23:36:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.h:
 
 	  #included "tao/ORB_Constants.h" and "ace/CORBA_macros.h"
-	
+
 Sat Nov  8 23:19:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/Security/Send_File/Makefile:
 
-	  Updated dependencies. 
+	  Updated dependencies.
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
 	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
@@ -40,7 +45,7 @@ Sat Nov  8 23:19:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Sat Nov  8 22:31:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/RtEC/Schedule/Makefile: 
+	* orbsvcs/examples/RtEC/Schedule/Makefile:
 
 	  Do not build if RTOLDEvent is not built.
 
@@ -58,7 +63,7 @@ Sat Nov  8 22:19:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
 	* tao/TypeCodeFactory/TypeCodeFactoryC.inl:
 
-	  Regenerated code. 
+	  Regenerated code.
 
 	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.cpp.diff:
 	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.h.diff:
@@ -74,8 +79,8 @@ Sun Nov  9 04:08:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 Sat Nov  8 22:06:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/diffs/TAO.diff:
-	  
-	  Placed the diffs in a single file. 
+
+	  Placed the diffs in a single file.
 
 	* tao/diffs/TAOC.cpp.diff:
 	* tao/diffs/TAOC.h.diff:
@@ -86,9 +91,9 @@ Sat Nov  8 22:06:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Sat Nov  8 22:00:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Acceptor_Impl.cpp:
-	  
-          #included debug.h. This should fix compilation errorson HPUX. 
-	
+
+          #included debug.h. This should fix compilation errorson HPUX.
+
 	* tao/IIOP_Connection_Handler.cpp:
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
 
@@ -96,21 +101,21 @@ Sat Nov  8 22:00:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  TCP_NODELAY on HPUX.
 
 	* tao/TAO.pidl:
-	  
-	  Improved comments in the file. 
+
+	  Improved comments in the file.
 
 	* tao/TAOC.cpp:
 	* tao/TAOC.h:
 	* tao/TAOC.i:
 
-	  Regenerated the code to fix warnings in HPUX and Solaris. 
+	  Regenerated the code to fix warnings in HPUX and Solaris.
 
 Sat Nov  8 17:51:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO/orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Client:
         * TAO/orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Server:
         * TAO/orbsvcs/tests/RTCosScheduling/Makefile.commonlib:
-	
+
           Removed DEPENENCY_FILE variable and updated dependencies.  This
           should cause the library to get rebuilt and relinked and clear
           up the autobuild errors.  This particular lib hasn't been
@@ -125,15 +130,15 @@ Sat Nov  8 05:40:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Fri Nov 7 21:12:37 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README: 	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp: 	
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
 
 	  Replaced the recording of frame rate with the recording of
 	  inter-frame arrival time. This does not use the
 	  ACE_Countdown_Time class and hence does not use the incorrect
 	  restart method on that class. This should fix the compile
 	  errors.
-	
+
 Fri Nov  7 20:11:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Time_Service/Server_i.cpp:
@@ -142,7 +147,7 @@ Fri Nov  7 20:11:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs//orbsvcs/Trader/Trading_Loader.cpp:
 
 	  #included "ace/os_include/os_netdb.h" to fix compile errors on
-	  Solaris 7 builds.  
+	  Solaris 7 builds.
 
 Fri Nov  7 19:40:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -188,14 +193,14 @@ Fri Nov  7 16:37:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Added another static method, demarshal_key (), which works more
 	  or less like extraction operator >>, but with a difference. We
 	  don't check for locked_data_blocks () within the resource
-	  factory while trying to extract the key. 
+	  factory while trying to extract the key.
 
 	  Why do we need all this? Please see bugzilla entry [BUGID 1616]
 	  for details. To make the long story short, under certain
 	  configurations (ie. when we set the locks on the buffer
 	  allocator to null), we tend to copy the object key. Further we
 	  tend to make copies over and over again when writing the GIOP
-	  header. 
+	  header.
 
 	  This new method, by not checking for the locked datablocks
 	  circumvents the copying for single threaded builds. We have to
