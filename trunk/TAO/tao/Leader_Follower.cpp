@@ -256,7 +256,7 @@ TAO_Complete_LF_Strategy::set_event_loop_thread (ACE_Time_Value *max_wait_time,
   return leader_follower.set_event_loop_thread (max_wait_time);
 }
 
-ACE_INLINE void
+void
 TAO_Complete_LF_Strategy::reset_event_loop_thread_and_elect_new_leader (int call_reset,
                                                                         TAO_Leader_Follower &leader_follower)
 {
