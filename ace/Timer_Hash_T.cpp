@@ -242,7 +242,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::~ACE_Timer_Hash_T (void)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::~ACE_Timer_Hash_T");
-  ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
+  ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
 
   delete iterator_;
 
@@ -318,7 +318,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule (const TYPE &type,
 						 const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::schedule");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   size_t position = future_time.usec () % this->table_size_;
 
@@ -347,7 +347,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (long timer_id,
 					       int dont_call)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::cancel");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   // Make sure we are getting a valid <timer_id>, not an error
   // returned by schedule ()
@@ -377,7 +377,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
 {
   ACE_TRACE ("ACE_Timer_Hash_T::cancel");
 
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   size_t i; // loop  variable
 
@@ -449,7 +449,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> int
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value &cur_time)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::expire");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   int number_of_timers_expired = 0;
 

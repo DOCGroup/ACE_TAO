@@ -54,7 +54,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::~ACE_Locked_Free_List (void)
 template <class T, class ACE_LOCK> void 
 ACE_Locked_Free_List<T, ACE_LOCK>::alloc (size_t n)
 {
-  ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
+  ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
 
   for (; n > 0; n--)
     {
@@ -71,7 +71,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::alloc (size_t n)
 template <class T, class ACE_LOCK> void 
 ACE_Locked_Free_List<T, ACE_LOCK>::dealloc (size_t n)
 {
-  ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
+  ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
 
   for (; this->free_list_ != NULL && n > 0;
        n--)

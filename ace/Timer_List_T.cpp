@@ -105,7 +105,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_List_T (void)
 {
   ACE_TRACE ("ACE_Timer_List_T::~ACE_Timer_List_T");
-  ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
+  ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
   
   delete iterator_;
 
@@ -175,7 +175,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
 						 const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_List_T::schedule");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   // Place in the middle of the list where it belongs (i.e., sorted in
   // ascending order of absolute time to expire).
@@ -210,7 +210,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
 					       int dont_call)
 {
   ACE_TRACE ("ACE_Timer_List_T::cancel");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   // Make sure we are getting a valid <timer_id>, not an error
   // returned by schedule ()
@@ -247,7 +247,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
 					       int dont_call)
 {
   ACE_TRACE ("ACE_Timer_List_T::cancel");
-  ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   ACE_Timer_Node_T<TYPE> *curr = this->head_->get_next ();
 
