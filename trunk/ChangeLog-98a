@@ -1,3 +1,8 @@
+Wed Jan 28 15:36:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  We can use the top level Makefile on TAO now.
+
 Wed Jan 28 11:59:41 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (isatty): Added conversion from a Win32 HANDLE to a C
