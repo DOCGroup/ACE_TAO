@@ -2,11 +2,12 @@
 // $Id$
 
 project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
-  exename   = tao_idl
-  libs     += TAO_IDL_BE TAO_IDL_FE
-  includes += include be_include fe 
-  install   = $(ACE_ROOT)/bin
-  after    += TAO_IDL_BE TAO_IDL_FE gperf
+  exename      = tao_idl
+  libs        += TAO_IDL_BE TAO_IDL_FE
+  includes    += include be_include fe
+  install      = $(ACE_ROOT)/bin
+  staticflags += TAO_AS_STATIC_LIBS
+  after       += TAO_IDL_BE TAO_IDL_FE gperf
   idlpreprocessor = 1
 
   Source_Files {
