@@ -1,3 +1,11 @@
+Tue Aug  3 15:25:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	From Jaroslaw Nozderko <jaroslaw.nozderko@polkomtel.com.pl>.
+	* ace/Dev_Poll_Reactor.cpp (register_handler_i):
+
+	  Allow same handler to be registered with a different event,
+	  which is consistent with the other reactor implementations.
+
 Tue Aug  3 13:04:24 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Svc_Handler.h:
