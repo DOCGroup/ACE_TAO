@@ -84,6 +84,19 @@ work (int time)
   ACE_OS::sleep (time);
 }
 
+// Test creation of ACE_Singletons during static object construction.
+// Timeprobes can do that, when they're enabled.
+static int
+create_singleton ()
+{
+  int *i = ACE_Singleton <int, ACE_SYNCH_RECURSIVE_MUTEX>::instance ();
+  *i = 3;
+
+  return *i;
+}
+
+int static_singleton_creator = create_singleton ();
+
 int
 main (int, ASYS_TCHAR *[])
 {
@@ -105,3 +118,9 @@ main (int, ASYS_TCHAR *[])
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class ACE_Singleton <int, ACE_SYNCH_RECURSIVE_MUTEX>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate ACE_Singleton <int, ACE_SYNCH_RECURSIVE_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
