@@ -281,6 +281,7 @@ ACE_INET_Addr::set (const ASYS_TCHAR port_name[],
 #if defined (VXWORKS) || defined (CHORUS) || defined (ACE_LACKS_GETSERVBYNAME)
   ACE_UNUSED_ARG (port_name);
   ACE_UNUSED_ARG (host_name);
+  ACE_UNUSED_ARG (protocol);
   ACE_NOTSUP_RETURN (-1);
 #else
   servent sentry;
@@ -310,6 +311,7 @@ ACE_INET_Addr::set (const ASYS_TCHAR port_name[],
 #if defined (VXWORKS) || defined (CHORUS) || defined (ACE_LACKS_GETSERVBYNAME)
   ACE_UNUSED_ARG (port_name);
   ACE_UNUSED_ARG (inet_address);
+  ACE_UNUSED_ARG (protocol);
   ACE_NOTSUP_RETURN (-1);
 #else
   servent sentry;
