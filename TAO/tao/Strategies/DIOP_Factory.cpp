@@ -74,7 +74,7 @@ TAO_DIOP_Protocol_Factory::make_connector (void)
 int
 TAO_DIOP_Protocol_Factory::requires_explicit_endpoint (void) const
 {
-  return 0;
+  return 1;
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_DIOP_Protocol_Factory,
