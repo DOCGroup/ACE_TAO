@@ -40736,7 +40736,7 @@ SOURCE=.\CosEventChannelAdmin.idl
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEVENTC="..\..\..\bin\Release\tao_idl.exe"	"CosEventCommC.h"	
+USERDEP__COSEVENTC="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosEventChannelAdmin.idl
 InputName=CosEventChannelAdmin
@@ -40775,7 +40775,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEVENTC="..\..\..\bin\tao_idl.exe"	"CosEventCommC.h"	
+USERDEP__COSEVENTC="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosEventChannelAdmin.idl
 InputName=CosEventChannelAdmin
@@ -42328,6 +42328,7 @@ SOURCE=.\Ping.idl
 !IF  "$(CFG)" == "orbsvcs - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__PING_="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Ping.idl
 InputName=Ping
@@ -42366,6 +42367,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__PING_="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Ping.idl
 InputName=Ping
