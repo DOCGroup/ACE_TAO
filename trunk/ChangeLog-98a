@@ -1,3 +1,38 @@
+Thu Mar 05 01:33:08 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-WinCE.h: Added more CE stuff.  Ostream is now
+	  redefined as FILE on CE.  
+
+	* ace/OS.{i,cpp}:
+	* ace/Synch_T.cpp
+	* ace/Message_Queue.cpp:
+	* ace/SOCK_Connector.i: Added ASYS_TEXT to numerous
+	  ACE_DEBUG/ACE_ERROR macros.  We must use wide char strings in
+	  CE. 
+
+	* ace/ACE.{h,cpp}: Redefined sock_error to return wchar string on
+	  CE.  Added ASYS_TEXT to debugging messages.
+	
+	* ace/Trace.{h,cpp}: 
+	* ace/Log_Msg.{h,cpp}:  Made it UNICODE compatible.
+
+	* ace/Log_Record.cpp: Changed how ostream is used on CE.  Although
+	  the code here become some how platform dependent, fortunately,
+	  it can be shielded out from the users thru various macros.
+	  Added ASYS_TEXT.
+
+	* ace/SString.h: Undefined friend relations of ACE_?String with
+	  ostream on CE.  CE doesn't support <iostream>.
+
+	* ace/OS.h: Changed the definition of ASYS_TEXT to use _TEXT.
+	  This macro can be used with other compiler defined macros
+	  (e.g. __FILE__.)  Added ASYS_TEXT to adorn parameters of
+	  ACE_TRACE so we don't need to modify our codes to make it
+	  portable to CE.
+
+	* ace/Log_Msg.cpp: Removed macro definition of ACE_WSPRINTF.  It
+	  didn't appear to be used anywhere.
+
 Wed Mar 04 09:32:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (readv,writev): added static cast of iov_len to int,
