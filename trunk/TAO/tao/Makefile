@@ -279,8 +279,7 @@ ORB_CORE_FILES += \
   NVList \
   IFR_Client_Adapter \
   IFR_TypeCodes \
-  Dynamic_Adapter \
-  DynamicInterface_Adapter
+  Dynamic_Adapter
 
 endif # minimum_corba
 
