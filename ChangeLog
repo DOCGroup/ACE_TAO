@@ -1,3 +1,13 @@
+Fri Mar 01 07:28:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.bor:
+          Added Swap.cpp to the list of installable files
+
+        * ace/SSL/SSL_Context.cpp:
+          Added ACE_TEXT_CHAR_TO_TCHAR around first argument of ACE_OS::fopen
+          call to convert char to ACE_TCHAR to fix compile errors in unicode
+          build
+
 Wed Feb 27 13:50:20 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 
 	* ace/INET_Addr.cpp:
@@ -6,7 +16,7 @@ Wed Feb 27 13:50:20 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 Wed Feb 27 06:00:37 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Synch.h: Clarified that ACE_Auto_Event, ACE_Manual_Event, and
-	  ACE_Event all support process-scope locking, but only Win32 
+	  ACE_Event all support process-scope locking, but only Win32
 	  supports global naming and system-scope locking.  Thanks to
 	  Kobi Cohen Arazi <kobi@mivzak.com> for motivating this change.
 
