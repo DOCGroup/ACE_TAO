@@ -473,6 +473,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // <lock_> held...
 #if 1
   ACE_Thread_Descriptor *new_thr_desc = this->thread_desc_freelist_.remove ();
+  new_thr_desc->registered_ = 0;
   // Get a "new" Thread Descriptor from the freelist.
 
   new_thr_desc->sync_->acquire ();
@@ -700,6 +701,7 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
   thr_desc->flags_ = flags;
 
   this->thr_list_.insert_head (thr_desc);
+  thr_desc->registered_ = 1;
   thr_desc->sync_->release ();
 
   return 0;
@@ -804,10 +806,19 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 {
   ACE_TRACE ("ACE_Thread_Manager::remove_thr");
 
-  td->sync_->acquire ();
-  // Acquire the lock before removing <td> from the thread table.  If
-  // this thread is in the table already, it should simply acquire the
-  // lock easily.
+  if (td->registered_ == 0)
+    {
+      td->sync_->acquire ();
+      // Acquire the lock before removing <td> from the thread table.  If
+      // this thread is in the table already, it should simply acquire the
+      // lock easily.
+
+      // Once we get the lock, we must have registered.
+      ACE_ASSERT (td->registered_ != 0);
+
+      td->sync_->release ();
+      // Release the lock before putting it back to freelist.
+    }
 
 #if defined (VXWORKS)
   ACE_thread_t tid = td->self ();
@@ -830,8 +841,6 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 #endif /* ACE_WIN32 */
 
 #if 1
-  td->sync_->release ();
-  // Release the lock before putting it back to freelist.
 
   this->thread_desc_freelist_.add (td);
 #else

@@ -165,6 +165,10 @@ private:
   // <ACE_Task_Base>;
 
   ACE_DEFAULT_THREAD_MANAGER_LOCK *sync_;
+  // Registration lock to prevent premature removal of thread descriptor.
+
+  int registered_;
+  // Keep track of registration status.
 
   ACE_Thread_Descriptor *next_;
   ACE_Thread_Descriptor *prev_;
