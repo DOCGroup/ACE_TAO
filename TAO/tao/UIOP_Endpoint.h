@@ -53,7 +53,7 @@ public:
   ~TAO_UIOP_Endpoint (void);
   // Destructor is to be called only through <_decr_refcnt>.
 
-  CORBA::Boolean is_equivalent (const TAO_IIOP_Endpoint *other_endpoint);
+  CORBA::Boolean is_equivalent (const TAO_UIOP_Endpoint *other_endpoint);
   // Return true if this profile is equivalent to other_profile.  Two
   // profiles are equivalent iff their key, port, host, object_key and
   // version are the same.
@@ -94,7 +94,7 @@ private:
   // Pointer to a connection handler which we successfully used
   // already.
 
-  TAO_IIOP_Endpoint *next_;
+  TAO_UIOP_Endpoint *next_;
   // Next endpoint in the list.
 };
 
@@ -106,4 +106,3 @@ private:
 
 #include "ace/post.h"
 #endif  /* TAO_UIOP_ENDPOINT_H */
-

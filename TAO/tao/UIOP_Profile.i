@@ -21,10 +21,4 @@ TAO_UIOP_Profile::_key (void) const
   return key;
 }
 
-ACE_INLINE const ACE_UNIX_Addr&
-TAO_UIOP_Profile::object_addr (void) const
-{
-  return this->object_addr_;
-}
-
 #endif  /* TAO_HAS_UIOP == 1 */

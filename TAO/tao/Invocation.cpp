@@ -128,7 +128,7 @@ TAO_GIOP_Invocation::select_endpoint_based_on_policy
     {
       TAO::PrioritySpecification priority_spec =
         policy->priority_specification (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK;
 
       TAO::PrioritySelectionMode mode = priority_spec.mode;
 
@@ -145,7 +145,7 @@ TAO_GIOP_Invocation::select_endpoint_based_on_policy
           // Determine  priority range used to select the profile.
           CORBA::Short min_priority;
           CORBA::Short max_priority;
-          
+
           if (mode == TAO::USE_PRIORITY_RANGE)
             {
               min_priority = priority_spec.min_priority;
@@ -164,7 +164,7 @@ TAO_GIOP_Invocation::select_endpoint_based_on_policy
                         ACE_TEXT ("TAO (%P|%t) - matching priority range %d %d\n"),
                         min_priority,
                         max_priority));
-          
+
           // Select profile/endpoint satisfying the priority range.
           // We start the search from <profile_in_use>.
           // @@ Optimization: if this->profile_ != 0, we can start the
@@ -172,8 +172,8 @@ TAO_GIOP_Invocation::select_endpoint_based_on_policy
           TAO_MProfile& mprofile = this->stub_->base_profiles ();
           this->endpoint_ = 0;
 
-          for (TAO_PHandle i = mprofile.get_current_handle (); 
-               i < mprofile.profile_count (); 
+          for (TAO_PHandle i = mprofile.get_current_handle ();
+               i < mprofile.profile_count ();
                ++i)
             {
               TAO_Profile *profile = mprofile.get_profile (i);
@@ -193,11 +193,11 @@ TAO_GIOP_Invocation::select_endpoint_based_on_policy
                       break;
                     }
                 }
-              
+
               if (this->endpoint_ != 0)
                 break;
             }
-         
+
           // We were not able to find profile with the endpoint of the
           // right priority.
           if (this->endpoint_ == 0)

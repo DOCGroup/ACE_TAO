@@ -85,7 +85,7 @@ public:
   virtual TAO_Endpoint *endpoint (void);
   //
 
-  void add_endpoint (TAO_IIOP_Endpoint *endp);
+  void add_endpoint (TAO_UIOP_Endpoint *endp);
   //
 
   int parse_string (const char *string,
@@ -128,7 +128,7 @@ private:
 
   void create_profile_body (TAO_OutputCDR &cdr) const;
   // Create an encapsulation of the struct ProfileBody in <cdr>
-  
+
   int encode_endpoints (void);
   // Encodes endpoints from this profile into a tagged component.
 
