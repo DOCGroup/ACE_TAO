@@ -10,7 +10,7 @@
 //    Task_T.h
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 

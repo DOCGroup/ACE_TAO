@@ -168,6 +168,7 @@ ACE_Process_Manager::open (size_t size,
 {
   ACE_TRACE ("ACE_Process_Manager::open");
 
+#if !defined (ACE_LACKS_SETPGID)
   // Set up a process group so that the thread that opened this
   // Manager will be able to put children into its own group and wait
   // for them.
@@ -176,6 +177,7 @@ ACE_Process_Manager::open (size_t size,
                  ASYS_TEXT ("%p.\n"),
                  ASYS_TEXT ("ACE_Process_Manager::open: can't create a ")
                  ASYS_TEXT ("process group; some wait functions may fail")));
+#endif /* ACE_LACKS_SETPGID */
 
   if (r)
     {
@@ -252,11 +254,13 @@ ACE_Process_Manager::close (void)
 {
   ACE_TRACE ("ACE_Process_Manager::close");
 
+#if !defined (ACE_WIN32)
   if (this->reactor ())
     {
       this->reactor ()->remove_handler (this, 0);
       this->reactor (0);
     }
+#endif /*  !ACE_WIN32  */
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
@@ -580,6 +584,13 @@ ACE_Process_Manager::remove_proc (size_t i)
          0);
       this->process_table_[i].exit_notify_ = 0;
     }
+
+#if defined (ACE_WIN32)
+  ACE_Reactor *r = this->reactor ();
+  if (r != 0)
+    r->remove_handler (this->process_table_[i].process_->gethandle (),
+                       ACE_Event_Handler::DONT_CALL);
+#endif /* ACE_WIN32 */
 
   this->process_table_[i].process_->unmanage ();
 
