@@ -308,6 +308,12 @@ public:
 
   static CORBA::ExceptionList *system_exceptions;
   // list of system exceptions
+
+private:
+  static ACE_Allocator *global_allocator_;
+  // This global allocator is used to initialize system exception typecodes.  Since at
+  // the time, the ORB is mostly still not available.  Using a separate allocator prevent
+  // CDR routine from accessing the optimized allocators from the ORB.
 };
 
 
