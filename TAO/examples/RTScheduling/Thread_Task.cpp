@@ -11,13 +11,15 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long> thread_count = 0;
 Thread_Task::Thread_Task (int importance,
 			  int start_time,
 			  int load,
-			  DT_Creator *dt_creator)
+			  DT_Creator *dt_creator,
+			  Task *task)
 {
   this->load_ = load;
   this->start_time_ = start_time;
   this->importance_ = importance;
   this->count_ = ++thread_count.value_i ();
   this->dt_creator_ = dt_creator;
+  this->task_ = task;
 }
 
 
@@ -50,29 +52,9 @@ Thread_Task::activate_task (RTScheduling::Current_ptr current,
   return 0;
 }
 
-
-int
-Thread_Task::perform_task (int times)
-{
-  static CORBA::ULong prime_number = 9619;
-  
-  for (int j = 0; j < times; j++)
-    {
-      
-      ACE::is_prime (prime_number,
-		     2,
-		     prime_number / 2);
-    }
-  return 0;
-}
-
 int
 Thread_Task::svc (void)
 {
-
-//   ACE_DEBUG ((LM_DEBUG,
-// 	      "After Thread_Task::svc \n"));
-      
   this->barrier_->wait ();
 
   ACE_OS::sleep (start_time_);
@@ -85,21 +67,8 @@ Thread_Task::svc (void)
 					    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_hrtime_t run_time;
-
-  for (int i = 0; i < 100; i++)
-    {
-
-      this->perform_task (load_);
-      /*
-      ACE_DEBUG ((LM_DEBUG,
-		  "%d\n", 
-		  this->count_));
-      */
-      run_time = ACE_OS::gethrtime ();
-      TASK_STATS::instance ()->sample (run_time,
-				       count_);
-    }
+  this->task_->perform_task (load_,
+			     count_);
 
   this->current_->end_scheduling_segment (name
 					  ACE_ENV_ARG_PARAMETER);

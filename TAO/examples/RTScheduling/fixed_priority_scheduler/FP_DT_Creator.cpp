@@ -2,10 +2,22 @@
 
 #include "FP_DT_Creator.h"
 #include "test.h"
+#include "FP_Task.h"
 
 FP_DT_Creator::FP_DT_Creator (void)
 {
   DT_TEST::instance ()->dt_creator (this);
+}
+
+Task*
+FP_DT_Creator::task (void)
+{
+  FP_Task *fp_task;
+  ACE_NEW_RETURN (fp_task,
+		  FP_Task,
+		  0);
+  return fp_task;
+
 }
 
 CORBA::Policy_ptr
