@@ -21,7 +21,7 @@
 
 // This is the arbitrary number that the Util_Thread uses to check for
 // primality.
-const int CUBIT_ARBIT_NUMBER = 10000019;
+const int CUBIT_ARBIT_NUMBER = 509; //10000019;
 
 class Util_Thread : public ACE_Task<ACE_SYNCH>
 {
