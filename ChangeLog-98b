@@ -1,3 +1,11 @@
+Thu Sep 17 18:51:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * examples/Reactor/Multicast/server.cpp:
+        * examples/Reactor/Multicast/Log_Wrapper.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
+          Revert back to iovec instead of ACE_IO_Vector.
+
+
 Thu Sep 17 18:33:19 EDT 1998  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/002/server.pp
