@@ -44,6 +44,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::~ACE_Cached_Connect_Strategy_Ex (void)
 {
   cleanup ();
 
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
   // Close down all cached service handlers.
   for (ACE_TYPENAME CONNECTION_CACHE::ITERATOR iter = this->connection_cache_.begin ();
        iter != this->connection_cache_.end ();
@@ -55,7 +56,9 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::~ACE_Cached_Connect_Strategy_Ex (void)
           (*iter).second ()->close ();
         }
     }
+#endif /* ! ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 }
+
 
 template <ACE_T1> int
 ACE_Cached_Connect_Strategy_Ex<ACE_T2>::check_hint_i
