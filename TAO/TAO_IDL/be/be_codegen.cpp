@@ -23,8 +23,6 @@
 
 TAO_CodeGen *tao_cg = TAO_CODEGEN::instance ();
 
-static const int CHUNK = 100;
-
 /* BE global Data */
 TAO_CodeGen::TAO_CodeGen (void)
   : client_header_ (0),
@@ -34,13 +32,8 @@ TAO_CodeGen::TAO_CodeGen (void)
     server_skeletons_ (0),
     server_inline_ (0),
     curr_os_ (0),
-    state_ (new TAO_CodeGen::CG_STATE [CHUNK]),
-    top_ (0),
-    size_ (CHUNK),
     visitor_factory_ (0)
 {
-  // set the current code generation state
-  this->state_ [this->top_++] = TAO_CodeGen::TAO_INITIAL;
 }
 
 // destructor
@@ -53,7 +46,6 @@ TAO_CodeGen::~TAO_CodeGen (void)
   delete this->client_inline_;
   delete this->server_inline_;
   this->curr_os_ = 0;
-  delete [] this->state_;
   delete this->visitor_factory_;
 }
 
@@ -63,101 +55,6 @@ TAO_CodeGen::make_visitor (be_visitor_context *ctx)
 {
   ACE_ASSERT (this->visitor_factory_ != 0);
   return this->visitor_factory_->make_visitor (ctx);
-}
-
-// factory method
-be_state *
-TAO_CodeGen::make_state (void)
-{
-  switch (this->state ())
-    {
-    case TAO_STRUCT_CH:
-    case TAO_STRUCT_CS:
-    case TAO_STRUCT_CI:
-      return TAO_BE_STATE_STRUCT::instance ();
-    case TAO_UNION_DISCTYPEDEFN_CH:
-      return TAO_BE_STATE_UNION_DISCTYPEDEFN_CH::instance ();
-    case TAO_UNION_DISCTYPEDEFN_CI:
-      return TAO_BE_STATE_UNION_DISCTYPEDEFN_CI::instance ();
-    case TAO_UNION_PUBLIC_CH:
-      return TAO_BE_STATE_UNION_PUBLIC_CH::instance ();
-    case TAO_UNION_PUBLIC_CI:
-      return TAO_BE_STATE_UNION_PUBLIC_CI::instance ();
-    case TAO_UNION_PUBLIC_CS:
-    case TAO_UNION_PUBLIC_ASSIGN_CS:
-      return TAO_BE_STATE_UNION_PUBLIC_CS::instance ();
-    case TAO_UNION_PRIVATE_CH:
-      return TAO_BE_STATE_UNION_PRIVATE_CH::instance ();
-    case TAO_OPERATION_CH:
-    case TAO_OPERATION_RETURN_TYPE_CS:
-    case TAO_OPERATION_RETVAL_DECL_CS:
-    case TAO_OPERATION_RETVAL_EXCEPTION_CS:
-    case TAO_OPERATION_RETVAL_RETURN_CS:
-    case TAO_OPERATION_SH:
-    case TAO_OPERATION_RETVAL_DECL_SS:
-    case TAO_OPERATION_RETVAL_ASSIGN_SS:
-    case TAO_OPERATION_RESULT_SS:
-      return TAO_BE_STATE_OPERATION::instance ();
-    case TAO_ARGUMENT_CH:
-    case TAO_ARGUMENT_CS:
-    case TAO_ARGUMENT_PRE_DOCALL_CS:
-    case TAO_ARGUMENT_DOCALL_CS:
-    case TAO_ARGUMENT_POST_DOCALL_CS:
-    case TAO_ARGUMENT_SH:
-    case TAO_ARGUMENT_SS:
-    case TAO_ARGUMENT_VARDECL_SS:
-    case TAO_ARGUMENT_PRE_UPCALL_SS:
-    case TAO_ARGUMENT_UPCALL_SS:
-    case TAO_ARGUMENT_POST_UPCALL_SS:
-      return TAO_BE_STATE_ARGUMENT::instance ();
-    case TAO_TYPEDEF_CH:
-    case TAO_TYPEDEF_CS:
-    case TAO_TYPEDEF_CI:
-      return TAO_BE_STATE_TYPEDEF::instance ();
-    case TAO_ARRAY_DEFN_CH:
-    case TAO_ARRAY_OTHER_CH:
-    case TAO_ARRAY_DEFN_CI:
-      return TAO_BE_STATE_ARRAY::instance ();
-    case TAO_SEQUENCE_BASE_CH:
-    case TAO_SEQUENCE_BASE_CS:
-    case TAO_SEQUENCE_BASE_CI:
-    case TAO_SEQUENCE_BODY_CH:
-    case TAO_SEQUENCE_BODY_CS:
-    case TAO_SEQUENCE_BODY_CI:
-    case TAO_SEQELEM_RETTYPE_CH:
-    case TAO_SEQELEM_RETTYPE_CI:
-    case TAO_SEQELEM_RETTYPE_CS:
-      return TAO_BE_STATE_SEQUENCE::instance ();
-    case TAO_ATTRIBUTE_RETURN_TYPE_CH:
-    case TAO_ATTRIBUTE_INPARAM_TYPE_CH:
-    case TAO_ATTRIBUTE_RETURN_TYPE_CS:
-    case TAO_ATTRIBUTE_RETVAL_DECL_CS:
-    case TAO_ATTRIBUTE_RETVAL_EXCEPTION_CS:
-    case TAO_ATTRIBUTE_RETVAL_RETURN_CS:
-    case TAO_ATTRIBUTE_INPARAM_TYPE_CS:
-    case TAO_ATTRIBUTE_PRE_DOCALL_CS:
-    case TAO_ATTRIBUTE_DOCALL_CS:
-    case TAO_ATTRIBUTE_POST_DOCALL_CS:
-    case TAO_ATTRIBUTE_RETURN_TYPE_SH:
-    case TAO_ATTRIBUTE_INPARAM_TYPE_SH:
-    case TAO_ATTRIBUTE_RETVAL_DECL_SS:
-    case TAO_ATTRIBUTE_RETVAL_ASSIGN_SS:
-    case TAO_ATTRIBUTE_RESULT_SS:
-    case TAO_ATTRIBUTE_INPARAM_TYPE_SS:
-    case TAO_ATTRIBUTE_PRE_UPCALL_SS:
-    case TAO_ATTRIBUTE_UPCALL_SS:
-    case TAO_ATTRIBUTE_POST_UPCALL_SS:
-      return TAO_BE_STATE_ATTRIBUTE::instance ();
-    case TAO_EXCEPTION_CH:
-    case TAO_EXCEPTION_CTOR_CH:
-    case TAO_EXCEPTION_CS:
-    case TAO_EXCEPTION_CTOR_CS:
-    case TAO_EXCEPTION_CTOR_ASSIGN_CS:
-    case TAO_EXCEPTION_CI:
-      return TAO_BE_STATE_EXCEPTION::instance ();
-    default:
-      return 0;
-    }
 }
 
 // change the string to all upcase
@@ -185,7 +82,7 @@ TAO_CodeGen::upcase (const char *str)
 
 // set the client header stream
 int
-TAO_CodeGen::client_header (const char *fname)
+TAO_CodeGen::start_client_header (const char *fname)
 {
   // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
@@ -224,8 +121,15 @@ TAO_CodeGen::client_header (const char *fname)
 
           ACE_OS::strcat (macro_name, "_H_");
 
+          // generate the #ifndef ... #define statements
           this->client_header_->print ("#if !defined (%s)\n", macro_name);
           this->client_header_->print ("#define %s\n\n", macro_name);
+
+          // generate the TAO_EXPORT_MACRO macro
+          *this->client_header_ << "#if !defined (TAO_EXPORT_MACRO)\n";
+          *this->client_header_ << "#define TAO_EXPORT_MACRO "
+                                << idl_global->export_macro () << be_nl;
+          *this->client_header_ << "#endif\n";
 
           *this->client_header_ << "#include \"tao/corba.h\"\n";
 
@@ -280,7 +184,7 @@ TAO_CodeGen::client_header (void)
 
 // set the client stub stream
 int
-TAO_CodeGen::client_stubs (const char *fname)
+TAO_CodeGen::start_client_stubs (const char *fname)
 {
   // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
@@ -321,7 +225,7 @@ TAO_CodeGen::client_stubs (void)
 
 // set the client inline stream
 int
-TAO_CodeGen::client_inline (const char *fname)
+TAO_CodeGen::start_client_inline (const char *fname)
 {
   // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
@@ -345,7 +249,7 @@ TAO_CodeGen::client_inline (void)
 
 // set the server header stream
 int
-TAO_CodeGen::server_header (const char *fname)
+TAO_CodeGen::start_server_header (const char *fname)
 {
   // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
@@ -375,8 +279,10 @@ TAO_CodeGen::server_header (const char *fname)
           for (int i=0; i < (suffix - fname); i++)
             if (isalpha (fname [i]))
               macro_name[i+9] = toupper (fname [i]);
-            else
+            else if (isdigit (fname [i]))
               macro_name[i+9] = fname[i];
+            else
+              macro_name[i+9] = '_';
 
           ACE_OS::strcat (macro_name, "_H_");
 
@@ -420,7 +326,7 @@ TAO_CodeGen::server_header (void)
 
 // set the server skeletons stream
 int
-TAO_CodeGen::server_skeletons (const char *fname)
+TAO_CodeGen::start_server_skeletons (const char *fname)
 {
   // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
@@ -459,7 +365,7 @@ TAO_CodeGen::server_skeletons (void)
 
 // set the server inline stream
 int
-TAO_CodeGen::server_inline (const char *fname)
+TAO_CodeGen::start_server_inline (const char *fname)
 {
   // retrieve the singleton instance to the outstream factory
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
@@ -485,6 +391,8 @@ TAO_CodeGen::server_inline (void)
 int
 TAO_CodeGen::end_client_header (void)
 {
+  // generate the <<= and >>= operators here
+
   // insert the code to include the inline file
   *this->client_header_ << "\n#if defined (__ACE_INLINE__)\n";
   *this->client_header_ << "#include \"" <<
@@ -536,39 +444,6 @@ TAO_CodeGen::outstream (void)
 }
 
 void
-TAO_CodeGen::push (TAO_CodeGen::CG_STATE s)
-{
-  if (this->top_ == this->size_)
-    {
-      TAO_CodeGen::CG_STATE *temp = this->state_;
-      this->size_ += CHUNK;
-      this->state_ = new TAO_CodeGen::CG_STATE [this->size_];
-      for (int i=0; i < this->top_; i++)
-        this->state_ [i] = temp [i];
-      delete []temp;
-    }
-  this->state_[this->top_++] = s;
-}
-
-void
-TAO_CodeGen::pop (void)
-{
-  this->top_--;
-}
-
-TAO_CodeGen::CG_STATE
-TAO_CodeGen::state (void)
-{
-  return this->state_[this->top_ - 1]; // top points to the next free slot
-}
-
-void
-TAO_CodeGen::reset (void)
-{
-  this->top_ = 1; // the 0th posn is always the INITIAL state
-}
-
-void
 TAO_CodeGen::node (be_decl *n)
 {
   this->node_ = n;
@@ -585,3 +460,12 @@ TAO_CodeGen::visitor_factory (TAO_Visitor_Factory *f)
 {
   this->visitor_factory_ = f;
 }
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<TAO_OutStream_Factory, ACE_SYNCH_RECURSIVE_MUTEX>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_OutStream_Factory, ACE_SYNCH_RECURSIVE_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -116,7 +116,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "be_native.h"           // class BE_Native
 
 #include        "be_helper.h"           // helper functions
-#include        "be_state.h"            // code generation states
 #include        "be_codegen.h"          // code generator
 #include        "be_factory.h"          // factory
 

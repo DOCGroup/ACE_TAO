@@ -58,45 +58,6 @@ public:
   // create a name for ourselves. If we are typedefed, then we get the name of
   // the typedef node, else we generate a name for ourselves
 
-  virtual int gen_client_header (void);
-  // Generates the client-side header information for the sequence
-
-  virtual int gen_client_stubs (void);
-  // Generates the client-side stubs for the sequence
-
-  virtual int gen_server_header (void);
-  // Generates the server-side header information for the sequence
-
-  virtual int gen_server_skeletons (void);
-  // Generates the server-side skeletons for the sequence
-
-  virtual int gen_client_inline (void);
-  // Generates the client-side inline for the sequence
-
-  virtual int gen_server_inline (void);
-  // Generates the server-side inlines for the sequence
-
-  virtual int gen_var_defn (void);
-  // generate the _var class definition
-
-  virtual int gen_var_impl (void);
-  // generate the implementation for the _var class
-
-  virtual int gen_out_defn (void);
-  // generate the _out class definition
-
-  virtual int gen_out_impl (void);
-  // generate the _out implementation
-
-  virtual int gen_managed_type_ch (void);
-  // generate code for managed types in header
-
-  virtual int gen_managed_type_ci (void);
-  // generate code for managed types in inlined file
-
-  virtual int gen_managed_type_cs (void);
-  // generate code for managed types in impl file
-
   virtual int gen_typecode (void);
   // generate the typecode
 

@@ -36,26 +36,6 @@ be_array::be_array (UTL_ScopedName *n, unsigned long ndims, UTL_ExprList *dims)
     AST_Decl (AST_Decl::NT_array, n, NULL),
     tao_name_ (0)
 {
-#if 0
-  // if we are inside of a union, we change our local name to have an
-  // underscore before us
-  AST_Decl *d = ScopeAsDecl (this->defined_in ());
-  if (d && (d->node_type () == AST_Decl::NT_union))
-    {
-      static char namebuf [200];
-      UTL_ScopedName *myname;
-
-      ACE_OS::memset (namebuf, '\0', 200);
-
-      // make a copy of our parent's name
-      myname = (UTL_ScopedName *)d->name ()->copy ();
-      ACE_OS::sprintf (namebuf, "_%s", this->local_name ()->get_string ());
-      myname->nconc (new UTL_ScopedName (new Identifier (ACE_OS::strdup
-                                                         (namebuf), 1, 0,
-                                                         I_FALSE), NULL));
-      this->set_name (myname);
-    }
-#endif
 }
 
 be_array::~be_array (void)
@@ -236,6 +216,8 @@ be_array::gen_dimensions (TAO_OutStream *os, unsigned short slice)
   return 0;
 }
 
+#if 0 // to be eventually removed after we add support
+
 int
 be_array::gen_client_header (void)
 {
@@ -252,7 +234,6 @@ be_array::gen_client_header (void)
 
       ch = cg->client_header (); // retrieve client hdr stream
 
-#if 0
       if (this->create_name () == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -261,7 +242,6 @@ be_array::gen_client_header (void)
                              "name creation failed\n"),
                             0);
         }
-#endif
       s = cg->make_state (); // get the state-based code generation object
       if (!s)
         {
@@ -432,6 +412,7 @@ be_array::gen_client_header (void)
       this->cli_hdr_gen_ = I_TRUE;
       cg->pop ();
     }
+
   return 0;
 }
 
@@ -543,6 +524,7 @@ be_array::gen_client_stubs (void)
       cs->decr_indent ();
       *cs << "}\n\n";
     }
+
   return 0;
 }
 
@@ -550,6 +532,7 @@ be_array::gen_client_stubs (void)
 int
 be_array::gen_client_inline (void)
 {
+
   if (!this->cli_inline_gen_)
     {
       TAO_OutStream *ci; // output stream
@@ -674,6 +657,8 @@ be_array::gen_server_inline (void)
   // nothing to be done
   return 0;
 }
+#endif
+
 
 // generate the var defn
 int

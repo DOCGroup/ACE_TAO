@@ -40,24 +40,6 @@ public:
   be_string (AST_Expression *v, long wide);
   // constructor
 
-  virtual int gen_client_header (void);
-  // generate client header for string
-
-  virtual int gen_client_stubs (void);
-  // generate client side stubs for string
-
-  virtual int gen_server_header (void);
-  // generate server header for string
-
-  virtual int gen_server_skeletons (void);
-  // generate server skeletons for string
-
-  virtual int gen_client_inline (void);
-  // Generates the client-side inline for the string
-
-  virtual int gen_server_inline (void);
-  // Generates the server-side inlines for the string
-
   virtual int gen_typecode (void);
   // generate the typecode
 

@@ -57,8 +57,17 @@ be_visitor_scope::visit_scope (be_scope *node)
       while (!si->is_done ())
 	{
 	  AST_Decl *d = si->item ();
+          if (!d)
+	    {
+	      delete si;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_scope::visit_scope - "
+                                 "bad node in this scope\n"), -1);
+
+	    }
 	  be_decl *bd = be_decl::narrow_from_decl (d);
-          // set the scope node in which the code is being generated
+          // set the scope node as "node" in which the code is being generated
+          // so that elements in the node's scope can use it for code generation
           this->ctx_->scope (node->decl ());
           // set the node to be visited
           this->ctx_->node (bd);

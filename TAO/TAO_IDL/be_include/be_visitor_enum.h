@@ -78,4 +78,48 @@ public:
 
 };
 
+class be_visitor_enum_any_op_ch : public be_visitor_scope
+{
+  //
+  // = TITLE
+  //   be_visitor_enum_any_op_ch
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor for enum that generates the Any operator
+  //   declarations
+  //
+
+public:
+  be_visitor_enum_any_op_ch (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_enum_any_op_ch (void);
+  // destructor
+
+  virtual int visit_enum (be_enum *node);
+  // visit enum
+};
+
+class be_visitor_enum_any_op_cs : public be_visitor_scope
+{
+  //
+  // = TITLE
+  //   be_visitor_enum_any_op_cs
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor for enum that generates the Any operator
+  //   implementations
+  //
+
+public:
+  be_visitor_enum_any_op_cs (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_enum_any_op_cs (void);
+  // destructor
+
+  virtual int visit_enum (be_enum *node);
+  // visit enum
+};
+
 #endif // TAO_BE_VISITOR_ENUM_H

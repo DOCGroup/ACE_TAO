@@ -39,27 +39,6 @@ public:
   be_root (UTL_ScopedName *n, UTL_StrList *p);
   // Constructor that sets its scoped name <n>, and any pragmas <p>
 
-  int gen_idl2cplusplus_mapping (void);
-  // generates the IDL to C++ mapping
-
-  virtual int gen_client_header (void);
-  // Generates the client-side header information for the root
-
-  virtual int gen_client_stubs (void);
-  // Generates the client-side stubs for the root
-
-  virtual int gen_server_header (void);
-  // Generates the server-side header information for the root
-
-  virtual int gen_server_skeletons (void);
-  // Generates the server-side skeletons for the root
-
-  virtual int gen_client_inline (void);
-  // Generates the client-side inline for the root
-
-  virtual int gen_server_inline (void);
-  // Generates the server-side inlines for the root
-
   // =Scope management functions that override the AST scope management methods
   // since the AST methods set the names of the sequences, strings, and arrays
   // to a fixed value which interferes with our back-end code generation
