@@ -5030,7 +5030,7 @@ template class ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer *>;
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_FlowSpec_Entry *,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 
-
+#pragma instantiate ACE_Equal_to<MMDevice_Map_Hash_Key>;
 #pragma instantiate ACE_Svc_Handler <ACE_SOCK_STREAM,ACE_NULL_SYNCH>
 #pragma instantiate ACE_Array<char*>
 #pragma instantiate ACE_Array_Base<char*>
