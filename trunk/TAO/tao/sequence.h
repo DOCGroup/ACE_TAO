@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -60,16 +61,16 @@ protected:
 
   TAO_Base_Sequence (CORBA::ULong maximum,
                      CORBA::ULong length,
-                     void* buffer,
+                     void *buffer,
                      CORBA::Boolean release = CORBA::B_FALSE);
   // Constructor with control of ownership.
 
   TAO_Base_Sequence (CORBA::ULong maximum,
-                     void* buffer);
+                     void *buffer);
   // Assume ownership and set length to 0.
 
-  TAO_Base_Sequence (const TAO_Base_Sequence& rhs);
-  TAO_Base_Sequence& operator=(const TAO_Base_Sequence& rhs);
+  TAO_Base_Sequence (const TAO_Base_Sequence &rhs);
+  TAO_Base_Sequence &operator=(const TAO_Base_Sequence &rhs);
   // Copy constructor and assignment operator are protected, the
   // derived classes must provided the right semantics for the buffer
   // copy, only the static fields are actually copy.
@@ -125,12 +126,12 @@ protected:
 
   TAO_Unbounded_Base_Sequence (CORBA::ULong maximum,
                                CORBA::ULong length,
-                               void* buffer,
+                               void *buffer,
                                CORBA::Boolean release = 0);
   // Constructor with control of ownership.
 
   TAO_Unbounded_Base_Sequence (CORBA::ULong maximum,
-                               void* buffer);
+                               void *buffer);
   // Assume ownership and set length to 0.
 };
 
@@ -163,13 +164,13 @@ protected:
   // destructor.
 
   TAO_Bounded_Base_Sequence (CORBA::ULong maximum,
-                     CORBA::ULong length,
-                     void* buffer,
-                     CORBA::Boolean release = 0);
+                             CORBA::ULong length,
+                             void *buffer,
+                             CORBA::Boolean release = 0);
   // Constructor with control of ownership.
 
   TAO_Bounded_Base_Sequence (CORBA::ULong maximum,
-                     void* buffer);
+                             void *buffer);
   // Assume ownership and set length to 0.
 };
 
@@ -271,7 +272,7 @@ public:
 
   TAO_Unbounded_String_Sequence (CORBA::ULong maximum,
                                  CORBA::ULong length,
-                                 char* *data,
+                                 char **data,
                                  CORBA::Boolean release=0);
   // The ``T *data'' constructor (as shown in the example above)
   // allows the length and contents of a bounded or unbounded sequence
@@ -332,7 +333,7 @@ public:
   // reason cannot allocate the requested vector. Vectors allocated by
   // allocbuf should be freed using the freebuf function.
 
-  static void freebuf (char* *);
+  static void freebuf (char **);
   // The freebuf function ensures that the destructor for each element
   // is called before the buffer is destroyed, except for string
   // elements, which are freed using string_free(), and object
@@ -344,7 +345,6 @@ public:
   virtual void _shrink_buffer (CORBA::ULong new_length,
                                CORBA::ULong old_length);
 };
-
 
 #if defined (__ACE_INLINE__)
 #include "tao/sequence.i"

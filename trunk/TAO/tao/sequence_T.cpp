@@ -24,8 +24,7 @@ TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<T> &rhs)
 }
 
 template <class T> TAO_Unbounded_Sequence<T> &
-TAO_Unbounded_Sequence<T>::operator=
-(const TAO_Unbounded_Sequence<T> &rhs)
+TAO_Unbounded_Sequence<T>::operator= (const TAO_Unbounded_Sequence<T> &rhs)
 {
   if (this == &rhs)
     return *this;
@@ -86,7 +85,9 @@ void TAO_Unbounded_Sequence<T>::_deallocate_buffer (void)
 {
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
+
   T *tmp = ACE_reinterpret_cast (T *, this->buffer_);
+
   TAO_Unbounded_Sequence<T>::freebuf (tmp);
   this->buffer_ = 0;
 }
