@@ -3,8 +3,8 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1998-10-19 16:39 EDT by <jcej@caldera.lads.com>.
-# Source directory was `/scsiA/home/jcej/projects/ACE_wrappers/docs/tutorials/015'.
+# Made on 1998-10-19 20:42 EDT by <jcej@chiroptera.tragus.org>.
+# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/015'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
 #
@@ -26,11 +26,16 @@
 #    334 -rw-rw-r-- page11.pre
 #    334 -rw-rw-r-- page12.pre
 #    326 -rw-rw-r-- page13.pre
-#    770 -rw-rw-r-- page14.pre
-#    660 -rw-rw-r-- page15.pre
-#    213 -rw-rw-r-- page16.pre
-#    129 -rw-rw-r-- page17.pre
-#    348 -rw-rw-r-- page04.pst
+#    540 -rw-rw-r-- page14.pre
+#    770 -rw-rw-r-- page15.pre
+#    660 -rw-rw-r-- page16.pre
+#    213 -rw-rw-r-- page17.pre
+#    372 -rw-rw-r-- page18.pre
+#    281 -rw-rw-r-- page19.pre
+#    356 -rw-rw-r-- page20.pre
+#    151 -rw-rw-r-- page21.pre
+#   2551 -rw-rw-r-- page22.pre
+#    398 -rw-rw-r-- page04.pst
 #    609 -rw-rw-r-- page09.pst
 #
 save_IFS="${IFS}"
@@ -78,7 +83,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh23762; then
+if mkdir _sh02329; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -594,6 +599,38 @@ if test -f 'page14.pre' && test "$first_param" != -c; then
 else
   $echo 'x -' extracting 'page14.pre' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page14.pre' &&
+The Xmit object knows how to send data to the peer.  It sits at the
+tail of the stream and gets everything that flows down from the head.
+In keeping with the spirit of things, this object does only one thing
+and doesn't concern itself with anyone else' details.
+<P>
+The only thing you might want to do is combine it with Recv.  Why?
+As you'll realize in a page or two, the Xmit and Recv objects must
+interact if you're going to ensure a safe transit.  By having a single 
+object it's easier to coordinate and maintain the interaction.
+<HR>
+SHAR_EOF
+  $shar_touch -am 1019203498 'page14.pre' &&
+  chmod 0664 'page14.pre' ||
+  $echo 'restore of' 'page14.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page14.pre:' 'MD5 check failed'
+bfc300ca2da5b82a5e452713cbf2f544  page14.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page14.pre'`"
+    test 540 -eq "$shar_count" ||
+    $echo 'page14.pre:' 'original size' '540,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page15.pre ==============
+if test -f 'page15.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page15.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page15.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page15.pre' &&
 The implementation of Xmit isn't too complicated.  If we choose to
 combine it with the Recv task we simply lift the recv() method from
 that object and drop it into this one.
@@ -611,27 +648,27 @@ processes which typically work better with blocks of data instead of
 streams of data.
 <HR>
 SHAR_EOF
-  $shar_touch -am 1019163798 'page14.pre' &&
-  chmod 0664 'page14.pre' ||
-  $echo 'restore of' 'page14.pre' 'failed'
+  $shar_touch -am 1019163798 'page15.pre' &&
+  chmod 0664 'page15.pre' ||
+  $echo 'restore of' 'page15.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
-    || $echo 'page14.pre:' 'MD5 check failed'
-0d79137eaedd73b820037fcafe6e16b6  page14.pre
+    || $echo 'page15.pre:' 'MD5 check failed'
+0d79137eaedd73b820037fcafe6e16b6  page15.pre
 SHAR_EOF
   else
-    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page14.pre'`"
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page15.pre'`"
     test 770 -eq "$shar_count" ||
-    $echo 'page14.pre:' 'original size' '770,' 'current size' "$shar_count!"
+    $echo 'page15.pre:' 'original size' '770,' 'current size' "$shar_count!"
   fi
 fi
-# ============= page15.pre ==============
-if test -f 'page15.pre' && test "$first_param" != -c; then
-  $echo 'x -' SKIPPING 'page15.pre' '(file already exists)'
+# ============= page16.pre ==============
+if test -f 'page16.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page16.pre' '(file already exists)'
 else
-  $echo 'x -' extracting 'page15.pre' '(text)'
-  sed 's/^X//' << 'SHAR_EOF' > 'page15.pre' &&
+  $echo 'x -' extracting 'page16.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page16.pre' &&
 Recv is the sibling to Xmit.  Again, they could be combined into a
 single object if you want.
 <P>
@@ -646,33 +683,6 @@ earlier, that data will eventually show up either in the <i>reader</i>
 message queue.
 <HR>
 SHAR_EOF
-  $shar_touch -am 1019163798 'page15.pre' &&
-  chmod 0664 'page15.pre' ||
-  $echo 'restore of' 'page15.pre' 'failed'
-  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
-  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
-    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
-    || $echo 'page15.pre:' 'MD5 check failed'
-2d89b3c894cfcfdfef47ae506913cdad  page15.pre
-SHAR_EOF
-  else
-    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page15.pre'`"
-    test 660 -eq "$shar_count" ||
-    $echo 'page15.pre:' 'original size' '660,' 'current size' "$shar_count!"
-  fi
-fi
-# ============= page16.pre ==============
-if test -f 'page16.pre' && test "$first_param" != -c; then
-  $echo 'x -' SKIPPING 'page16.pre' '(file already exists)'
-else
-  $echo 'x -' extracting 'page16.pre' '(text)'
-  sed 's/^X//' << 'SHAR_EOF' > 'page16.pre' &&
-The Recv implementation is nearly as simple as Xmit.  There's
-opportunity for error when we get the message size and we have to
-manage the lifetime of the tickler but other than that it's pretty
-basic stuff.
-<HR>
-SHAR_EOF
   $shar_touch -am 1019163798 'page16.pre' &&
   chmod 0664 'page16.pre' ||
   $echo 'restore of' 'page16.pre' 'failed'
@@ -680,12 +690,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page16.pre:' 'MD5 check failed'
-7db337f2c6ec74d75560534dec550b0e  page16.pre
+2d89b3c894cfcfdfef47ae506913cdad  page16.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page16.pre'`"
-    test 213 -eq "$shar_count" ||
-    $echo 'page16.pre:' 'original size' '213,' 'current size' "$shar_count!"
+    test 660 -eq "$shar_count" ||
+    $echo 'page16.pre:' 'original size' '660,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page17.pre ==============
@@ -694,8 +704,10 @@ if test -f 'page17.pre' && test "$first_param" != -c; then
 else
   $echo 'x -' extracting 'page17.pre' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page17.pre' &&
-This and the next three pages present the protocol objects that
-provide compression and encryption.  If you were hoping to 
+The Recv implementation is nearly as simple as Xmit.  There's
+opportunity for error when we get the message size and we have to
+manage the lifetime of the tickler but other than that it's pretty
+basic stuff.
 <HR>
 SHAR_EOF
   $shar_touch -am 1019163798 'page17.pre' &&
@@ -705,12 +717,212 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page17.pre:' 'MD5 check failed'
-d8553fb71b067ee360aca09883a6c775  page17.pre
+7db337f2c6ec74d75560534dec550b0e  page17.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page17.pre'`"
-    test 129 -eq "$shar_count" ||
-    $echo 'page17.pre:' 'original size' '129,' 'current size' "$shar_count!"
+    test 213 -eq "$shar_count" ||
+    $echo 'page17.pre:' 'original size' '213,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page18.pre ==============
+if test -f 'page18.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page18.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page18.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page18.pre' &&
+This and the next three pages present the protocol objects that
+provide compression and encryption.  If you were hoping to learn the
+secrets of compression and encryption then I'm going to disappoint
+you.  There are some really good libraries out there that do this
+stuff though and if anyone wants to integrate one of them into the
+tutorial I'll be glad to take it!
+<HR>
+SHAR_EOF
+  $shar_touch -am 1019203698 'page18.pre' &&
+  chmod 0664 'page18.pre' ||
+  $echo 'restore of' 'page18.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page18.pre:' 'MD5 check failed'
+dc5f706bd5a27009aed167c0b137648e  page18.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page18.pre'`"
+    test 372 -eq "$shar_count" ||
+    $echo 'page18.pre:' 'original size' '372,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page19.pre ==============
+if test -f 'page19.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page19.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page19.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page19.pre' &&
+Here we implement the details of our compression.  By having both
+compression and decompression in one object it's easier to keep track
+of implementation details.  Splitting Xmit/Recv like I did will make
+things more difficult if something has to change in their interaction.
+<HR>
+SHAR_EOF
+  $shar_touch -am 1019195798 'page19.pre' &&
+  chmod 0664 'page19.pre' ||
+  $echo 'restore of' 'page19.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page19.pre:' 'MD5 check failed'
+4eb5dcd181f180d6c460971903efb288  page19.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page19.pre'`"
+    test 281 -eq "$shar_count" ||
+    $echo 'page19.pre:' 'original size' '281,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page20.pre ==============
+if test -f 'page20.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page20.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page20.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page20.pre' &&
+While I might be able to come up with a competitive compressor, I
+don't have a snowball's chance to code up encryption.  I'd be better
+off piping the data through the standard Unix crypt command.
+<P>
+So, while I was lazy with Compress, I'm realistic with Crypt.  I'll
+show you the hooks and entry points and let someone else contribute an 
+encryptor.
+<HR>
+SHAR_EOF
+  $shar_touch -am 1019203798 'page20.pre' &&
+  chmod 0664 'page20.pre' ||
+  $echo 'restore of' 'page20.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page20.pre:' 'MD5 check failed'
+7f75130d385a34b2c421a8d7cae69cc3  page20.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page20.pre'`"
+    test 356 -eq "$shar_count" ||
+    $echo 'page20.pre:' 'original size' '356,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page21.pre ==============
+if test -f 'page21.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page21.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page21.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page21.pre' &&
+The encryption implementation isn't any smarter than that of the
+compressor.  Still, the hooks are there for you to insert your
+favorite library.
+<HR>
+SHAR_EOF
+  $shar_touch -am 1019203898 'page21.pre' &&
+  chmod 0664 'page21.pre' ||
+  $echo 'restore of' 'page21.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page21.pre:' 'MD5 check failed'
+7f0f64452098cdef38c5496340a4b6c7  page21.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page21.pre'`"
+    test 151 -eq "$shar_count" ||
+    $echo 'page21.pre:' 'original size' '151,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page22.pre ==============
+if test -f 'page22.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page22.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page22.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page22.pre' &&
+Well, this has certainly been one of the more verbose tutorials to
+date.  I must say "thanks" to everyone who stuck it out this far!
+<P>
+A quick review of what we've done:
+<UL>
+X
+<LI>Create a simple client application and Client object that uses a
+Protocol Stream without really knowing how they work.  The app (and
+object) rely on the public interface of the Protocol Stream to get the 
+job done.  At this level the protocol details are irrelevant.
+<P>
+<LI>Next, we create a simple server application and Server object
+similar to the client.  The Protocol Stream is of course used and we
+have to know a little more so that we can insert a <i>reader</i> that
+will ultimately process the data from the client.
+<P>
+<LI>We then go into the details of the Protocol_Stream implementation
+and it's Protocol_Task object that forms the basis for the stream
+tasks.  Each object is kept as small and simple as possible to improve 
+reusability and future maintenance.
+<P>
+<LI>Finally, the individual protocol objects are discused.  Separate
+objects for the peer interface were created as well as the bogus
+compressor and encryptor.  The protocol can be extended or modified by 
+creating new such objects and installing them in the Protocol_Stream's 
+open() method.
+X
+</UL>
+<P>
+X
+It doesn't sound like much but it certainly took a bunch of files to
+get there.  It's easy to get lost in the details when there's so much
+to cover so you're encouraged to go over things a couple of times.
+As always, enhancments of the tutorials is welcome!
+<P>
+Here's the complete file list:
+<UL>
+<LI><A HREF="client">Makefile</A>
+<P>
+<LI><A HREF="Makefile.client">client Makefile</A>
+<LI><A HREF="client.cpp">client.cpp</A>
+<LI><A HREF="Client.h">Client.h</A>
+<LI><A HREF="Client.cpp">Client.cpp</A>
+<P>
+<LI><A HREF="Makefile.server">Server Makefile</A>
+<LI><A HREF="server.cpp">server.cpp</A>
+<LI><A HREF="Server.h">Server.h</A>
+<LI><A HREF="Server.cpp">Server.cpp</A>
+<LI><A HREF="Handler.h">Handler.h</A>
+<LI><A HREF="Handler.cpp">Handler.cpp</A>
+<P>
+<LI><A HREF="Protocol_Stream.cpp">Protocol_Stream.cpp</A>
+<LI><A HREF="Protocol_Stream.h">Protocol_Stream.h</A>
+<LI><A HREF="Protocol_Task.cpp">Protocol_Task.cpp</A>
+<LI><A HREF="Protocol_Task.h">Protocol_Task.h</A>
+<P>
+<LI><A HREF="Xmit.cpp">Xmit.cpp</A>
+<LI><A HREF="Xmit.h">Xmit.h</A>
+<LI><A HREF="Recv.cpp">Recv.cpp</A>
+<LI><A HREF="Recv.h">Recv.h</A>
+<P>
+<LI><A HREF="Compressor.cpp">Compressor.cpp</A>
+<LI><A HREF="Compressor.h">Compressor.h</A>
+<LI><A HREF="Crypt.cpp">Crypt.cpp</A>
+<LI><A HREF="Crypt.h">Crypt.h</A>
+</UL>
+SHAR_EOF
+  $shar_touch -am 1019204198 'page22.pre' &&
+  chmod 0664 'page22.pre' ||
+  $echo 'restore of' 'page22.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page22.pre:' 'MD5 check failed'
+448ab5a481b51ec392aaac814a0bd005  page22.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page22.pre'`"
+    test 2551 -eq "$shar_count" ||
+    $echo 'page22.pre:' 'original size' '2551,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page04.pst ==============
@@ -726,6 +938,7 @@ X    followed by an equally simple Client object.
 <P>
 For a quick look back:
 <UL>
+<LI><A HREF="Makefile.client">client Makefile</A>
 <LI><A HREF="client.cpp">client.cpp</A>
 <LI><A HREF="Client.h">Client.h</A>
 <LI><A HREF="Client.cpp">Client.cpp</A>
@@ -733,19 +946,19 @@ For a quick look back:
 <P>
 Now we'll move on and examine the server counter-part of our client.
 SHAR_EOF
-  $shar_touch -am 1019163798 'page04.pst' &&
+  $shar_touch -am 1019202198 'page04.pst' &&
   chmod 0664 'page04.pst' ||
   $echo 'restore of' 'page04.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page04.pst:' 'MD5 check failed'
-67b8e000792dd12883f8c89c09f14f13  page04.pst
+8fcb88614fd879307c71cea1d53e276f  page04.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pst'`"
-    test 348 -eq "$shar_count" ||
-    $echo 'page04.pst:' 'original size' '348,' 'current size' "$shar_count!"
+    test 398 -eq "$shar_count" ||
+    $echo 'page04.pst:' 'original size' '398,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page09.pst ==============
@@ -763,23 +976,23 @@ cause confusion.  We're going to discuss that mystery now but before
 we do here's the list of server files if you want to review:
 X
 <UL>
+<LI><A HREF="Makefile.server">Server Makefile</A>
 <LI><A HREF="server.cpp">server.cpp</A>
 <LI><A HREF="Server.h">Server.h</A>
 <LI><A HREF="Server.cpp">Server.cpp</A>
 <LI><A HREF="Handler.h">Handler.h</A>
 <LI><A HREF="Handler.cpp">Handler.cpp</A>
-<LI><A HREF="Makefile.server">Server Makefile</A>
 </UL>
 <P>
 SHAR_EOF
-  $shar_touch -am 1019163798 'page09.pst' &&
+  $shar_touch -am 1019202198 'page09.pst' &&
   chmod 0664 'page09.pst' ||
   $echo 'restore of' 'page09.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page09.pst:' 'MD5 check failed'
-a391cfe4b4fcd0002c418310c5b254c9  page09.pst
+22cfa1a8dadd48fccc7ed0c82aeba842  page09.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page09.pst'`"
@@ -787,5 +1000,5 @@ SHAR_EOF
     $echo 'page09.pst:' 'original size' '609,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh23762
+rm -fr _sh02329
 exit 0
