@@ -33,8 +33,8 @@ OBJFILES = \
 	$(OBJDIR)\typedefS.obj \
 	$(OBJDIR)\unionC.obj \
 	$(OBJDIR)\unionS.obj \
-	$(OBJDIR)\reopened_modulesC.obj \
-	$(OBJDIR)\reopened_modulesS.obj \
+	$(OBJDIR)\nested_scopeC.obj \
+	$(OBJDIR)\nested_scopeS.obj \
 	$(OBJDIR)\main.obj \
 	$(OBJDIR)\namespace_check.obj
 
@@ -43,8 +43,6 @@ CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
 LIBFILES = $(ACE_LIB) $(TAO_LIB)
 
 CPPDIR = .
-
-IDLDIR = .
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 
@@ -91,5 +89,15 @@ $(IDLDIR)\typedefC.cpp $(IDLDIR)\typedefS.cpp: $(IDLDIR)\typedef.idl
 $(IDLDIR)\unionC.cpp $(IDLDIR)\unionS.cpp: $(IDLDIR)\union.idl
 	$(TAO_IDL) $**
 
+$(IDLDIR)\nested_scopeC.cpp $(IDLDIR)\nested_scopeS.cpp: $(IDLDIR)\nested_scope.idl
+	$(TAO_IDL) $**
+
 $(IDLDIR)\reopened_modulesC.cpp $(IDLDIR)\reopened_modulesS.cpp: $(IDLDIR)\reopened_modules.idl
 	$(TAO_IDL) $**
+
+$(IDLDIR)\reopen_include1C.cpp $(IDLDIR)\reopen_include1S.cpp: $(IDLDIR)\reopen_include1.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\reopen_include2C.cpp $(IDLDIR)\reopen_include2S.cpp: $(IDLDIR)\reopen_include2.idl
+	$(TAO_IDL) $**
+

@@ -25,5 +25,9 @@
 
 #include "reopened_modulesC.cpp"
 #include "reopened_modulesS.cpp"
+#include "reopen_include1C.cpp"
+#include "reopen_include1S.cpp"
+#include "reopen_include2C.cpp"
+#include "reopen_include2S.cpp"
 
 #endif /* ACE_HAS_USING_KEYWORD */
