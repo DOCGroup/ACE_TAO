@@ -4,10 +4,21 @@
 // The following configuration file is designed to work for SunOS 5.5
 // platforms using the SunC++ 4.1 compiler.
 
+// NOTE:  if you have link problems with undefined inline template
+// functions, try building with __ACE_INLINE__ (add it to the CXX
+// macro include/makeinclude/platform_macros.h).
+
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-#define ACE_HAS_EXCEPTIONS
+// ACE_HAS_EXCEPTIONS requires -noex, but that causes problems with
+// Sun C++ 4.1 on multiprocessor UltraSparcs:  threaded executables
+// core dump when threads exit.  This problem does not seem to appear
+// on single-processor UltraSparcs.
+// So until -noex gets fixed on MP machines, we can't use this with
+// Sun C++ 4.1 . . .
+// #define ACE_HAS_EXCEPTIONS
+
 #define ACE_HAS_UNICODE
 
 #if defined (__ACE_INLINE__)
