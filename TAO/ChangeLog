@@ -1,3 +1,69 @@
+Thu Apr 22 06:48:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocated_Invocation.cpp:
+        * tao/Collocated_Invocation.h:
+          Swapped the first arguments to target and then effective_target
+          so that this matches the signature of the base class.
+
+        * tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Adapter.h:
+          Updated for the signature change of Collocated_Invocation. Also
+          when we have a collocated proxy broker set we could by theory
+          use a collocated invocation, so then use
+          TAO_ORB_Core::collocation_strategy to see how the collocation
+          strategy is set. Dependent on this we do a collocated or remote
+          invocation. If is now possible that a remote invocation that
+          gets a forward location to a collocated servant now switches
+          from the remote invocation path to the collocated invocation path.
+          This fixes Bug 1495. Thanks to Bala for helping me with this.
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+          Previously when a servant was remote, no collocated proxy broker
+          was created, but by the change in Invocation_Adapter above it
+          can happen that we get a forward reference to a collocated servant
+          and then we need a collocated proxy broker. Changed the generated
+          code that the cpb is set when there is a valid
+          Proxy_Broker_Factory_function_pointer.
+
+        * tao/DomainC.cpp
+        * tao/DomainC.h
+        * tao/DomainC.i
+        * tao/PolicyC.cpp
+        * tao/PolicyC.h
+        * tao/PolicyC.i
+        * tao/IFR_Client/IFR_BaseC.cpp
+        * tao/IFR_Client/IFR_BaseC.h
+        * tao/IFR_Client/IFR_BaseC.i
+        * tao/IFR_Client/IFR_BasicC.cpp
+        * tao/IFR_Client/IFR_BasicC.h
+        * tao/IFR_Client/IFR_BasicC.i
+        * tao/IFR_Client/IFR_ComponentsC.cpp
+        * tao/IFR_Client/IFR_ComponentsC.h
+        * tao/IFR_Client/IFR_ComponentsC.i
+        * tao/IFR_Client/IFR_ExtendedC.cpp
+        * tao/IFR_Client/IFR_ExtendedC.h
+        * tao/IFR_Client/IFR_ExtendedC.i
+        * tao/Messaging/MessagingC.cpp
+        * tao/Messaging/MessagingC.h
+        * tao/Messaging/MessagingC.i
+        * tao/PortableServer/ImR_LocatorC.cpp
+        * tao/PortableServer/ImR_LocatorC.h
+        * tao/PortableServer/ImR_LocatorC.i
+        * tao/PortableServer/ImplRepoC.cpp
+        * tao/PortableServer/ImplRepoC.h
+        * tao/PortableServer/ImplRepoC.i
+          Regenerated these files because of the change of the signature
+          of the setup_collocation method.
+
+        * tests/Bug_1495_Regression/Bug_1495.mpc:
+          Removed dummy_label so that this test is build.
+
 Wed Apr 21 18:50:39 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/Makefile:
