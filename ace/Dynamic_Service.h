@@ -17,6 +17,8 @@
 #ifndef ACE_DYNAMIC_SERVICE_H
 #define ACE_DYNAMIC_SERVICE_H
 
+#include "ace/OS.h"
+
 template <class SERVICE>
 class ACE_Dynamic_Service
 {
