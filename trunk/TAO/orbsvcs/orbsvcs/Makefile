@@ -230,13 +230,13 @@ ifneq (,$(findstring  SSLIOP, $(TAO_ORBSVCS)))
   MKLIST += Makefile.SSLIOP
 endif
 ifneq (,$(findstring  FTORB, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.FTORB Makefile.PortableGroup
+  MKLIST += Makefile.FTORB 
 endif
 ifneq (,$(findstring  FaultTolerance, $(TAO_ORBSVCS)))
   MKLIST += Makefile.FTORB Makefile.FaultTolerance Makefile.PortableGroup
 endif
 ifneq (,$(findstring  PortableGroup, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.CosNaming Makefile.PortableGroup
+  MKLIST += Makefile.CosNaming Makefile.FTORB Makefile.PortableGroup
 endif
 ifneq (,$(findstring  IFRService, $(TAO_ORBSVCS)))
   MKLIST += Makefile.IFRService
@@ -331,14 +331,10 @@ $(foreach ext, $(targets), $(addsuffix $(ext),Makefile.DsNotifyLogAdmin-)): \
     Makefile.CosNaming-%
 $(foreach ext, $(targets), $(addsuffix $(ext),Makefile.FTORB-)): \
   Makefile.FTORB-%: \
-    Makefile.PortableGroup-% \
-    Makefile.CosNaming-% \
-    Makefile.CosNotification-% \
     Makefile.Svc_Utils-%
 $(foreach ext, $(targets), $(addsuffix $(ext),Makefile.FaultTolerance-)): \
   Makefile.FaultTolerance-%: \
     Makefile.FTORB-% \
-    Makefile.PortableGroup-% \
     Makefile.CosNaming-% \
     Makefile.CosNotification-% \
     Makefile.Svc_Utils-%
@@ -351,7 +347,8 @@ $(foreach ext, $(targets), $(addsuffix $(ext),Makefile.Metrics-)): \
     Makefile.CosTime-%
 $(foreach ext, $(targets), $(addsuffix $(ext),Makefile.PortableGroup-)): \
   Makefile.PortableGroup-%: \
-    Makefile.CosNaming-%
+    Makefile.CosNaming-% \
+    Makefile.FTORB-%
 $(foreach ext, $(targets), $(addsuffix $(ext),Makefile.RTCORBAEvent-)): \
   Makefile.RTCORBAEvent-%: \
     Makefile.RTEvent-% \

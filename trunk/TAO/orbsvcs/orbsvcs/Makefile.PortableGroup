@@ -65,7 +65,8 @@ FILES = \
   PortableGroup/PG_ObjectGroup_Map \
   PortableGroup/PG_Operators \
   PortableGroup/PG_PropertyManager \
-  PortableGroup/PG_Property_Utils
+  PortableGroup/PG_Property_Utils \
+  PortableGroup_Simple_DSC
 
 
 

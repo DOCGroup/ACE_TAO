@@ -39,8 +39,8 @@ include $(TAO_ROOT)/taoconfig.mk
 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 
-TAO_CLNT_LIBS += -lTAO_FTORB -lTAO_Messaging
-TAO_SRVR_LIBS += -lTAO_Messaging -lTMCast
+TAO_CLNT_LIBS += -lTAO_FTORB 
+TAO_SRVR_LIBS += -lTMCast
 
 #----------------------------------------------------------------------------
 #       Local targets
