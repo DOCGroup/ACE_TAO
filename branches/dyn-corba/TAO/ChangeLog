@@ -1,8 +1,9 @@
 Fri Dec 13 14:30:19 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/InterfaceRepo/InterfaceRepo.dsw:
+        * orbsvcs/tests/InterfaceRepo/Makefile:
 
-          Added project below to workspace.
+          Added project below to workspace, and directory to Makefile.
 
         * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency Test.dsp:
         * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.cpp:
