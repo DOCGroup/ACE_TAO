@@ -99,7 +99,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
                         -1);
   }
   *os << " *data," << be_nl
-	    << "CORBA::Boolean release = 0);" << be_uidt_nl;
+      << "CORBA::Boolean release = 0);" << be_uidt_nl;
 
   // constructor
   *os << class_name << " (const " << class_name << " &rhs);" << be_nl;
@@ -108,7 +108,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   *os << class_name << " &operator= (const " << class_name << " &rhs);" << be_nl;
 
   // destructor
-  *os << "~" << class_name << " (void); // Dtor." << be_nl;
+  *os << "virtual ~" << class_name << " (void); // Dtor." << be_nl;
 
   // Accessors
   *os << "// = Accessors." << be_nl;

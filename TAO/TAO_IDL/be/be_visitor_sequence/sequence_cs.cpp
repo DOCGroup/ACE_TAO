@@ -145,6 +145,18 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   if (node->cli_stub_gen () || node->imported ())
     return 0;
 
+  // instantiation
+
+  if (this->instantiate_sequence (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_sequence_ch::"
+                         "visit_sequence - "
+                         "codegen. for the primitive type sequence\n"), -1);
+    }
+
+  // end of instantiation
+
   // generate the ifdefined macro for the sequence type
   os->gen_ifdef_macro (node->flatname ());
 
@@ -281,3 +293,86 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
   return 0;
 }
+
+int
+be_visitor_sequence_cs::instantiate_sequence (be_sequence *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
+
+  bt = be_type::narrow_from_decl (node->base_type ());
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_sequence_cs::"
+                         "gen_instantiate_template_name - "
+                         "Bad element type\n"), -1);
+    }
+
+  // generate the appropriate sequence type
+  switch (node->managed_type ())
+    {
+    case be_sequence::MNG_PSEUDO:
+    case be_sequence::MNG_OBJREF:
+      if (node->unbounded ())
+        this->gen_unbounded_obj_sequence (node);
+      else
+        this->gen_bounded_obj_sequence (node);
+      break;
+    case be_sequence::MNG_STRING: // sequence of strings
+      if (!node->unbounded ())
+        this->gen_bounded_str_sequence (node);
+      // else 
+      //   inheriting from the right class is enough
+      break;
+    default: // not a managed type
+      if (node->unbounded ())
+	{
+#if 1
+	  // TAO provides extensions for octet sequences, first find out
+	  // if the base type is an octet (or an alias for octet)
+	  be_predefined_type *predef = 0;
+	  if (bt->base_node_type () == AST_Type::NT_pre_defined)
+	    {
+	      be_typedef* alias = 
+		be_typedef::narrow_from_decl (bt);
+	      
+	      if (alias == 0)
+		{
+		  predef =
+		    be_predefined_type::narrow_from_decl (bt);
+		}
+	      else
+		{
+		  predef = be_predefined_type::narrow_from_decl
+		    (alias->primitive_base_type ());
+		}
+	    }
+	  if (predef != 0)
+	    {
+	      if (predef->pt() != AST_PredefinedType::PT_octet)
+		this->gen_unbounded_sequence (node);
+	    }
+	  else
+	    this->gen_unbounded_sequence (node);
+#else
+	  // @@ This needs to be fixed. (Michael)
+	  be_predefined_type * bpt = 
+	    be_predefined_type::narrow_from_decl (node->base_type());
+	  if (bpt)
+	    {
+	      if (bpt->pt() != AST_PredefinedType::PT_octet)
+		this->gen_unbounded_sequence (node);
+	    }
+	  else
+	    this->gen_unbounded_sequence (node);
+#endif
+	}
+      else
+        this->gen_bounded_sequence (node);
+      break;
+    }
+
+  return 0;
+}
+

@@ -106,7 +106,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
       << "// Copy constructor." << be_nl;
 
   // destructor
-  *os << "~" << class_name << " (void);" << be_nl
+  *os << "virtual ~" << class_name << " (void);" << be_nl
       << "// destructor" << be_nl;
 
   // operator=

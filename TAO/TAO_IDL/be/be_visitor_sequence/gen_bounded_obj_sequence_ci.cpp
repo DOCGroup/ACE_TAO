@@ -159,32 +159,6 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "} " << be_nl
       << be_nl;
   
-  // allocate_buffer
-  *os << "// The Base_Sequence functions, please see tao/sequence.h" << be_nl
-      << "ACE_INLINE void " << be_nl
-      << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
-      << "{" << be_idt_nl
-      << "// For this class memory is never reallocated so the implementation" << be_nl
-      << "// is *really* simple." << be_nl
-      << "this->buffer_ = " << full_class_name << "::allocbuf (length);" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-
-  // deallocate_buffer
-  *os << "ACE_INLINE void" << be_nl
-      << full_class_name << "::_deallocate_buffer (void)" << be_nl
-      << "{" << be_idt_nl
-      << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
-      << "return;" << be_uidt_nl;
-  pt->accept(visitor); 
-  *os <<" **tmp = ACE_reinterpret_cast ("; 
-  pt->accept (visitor); 
-  *os << " **, this->buffer_);" << be_nl
-      << full_class_name << "::freebuf (tmp);" << be_nl
-      << "this->buffer_ = 0;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-  
   // constructor
   *os << "// default ctor" << be_nl;
   *os << "ACE_INLINE" << be_nl
@@ -225,15 +199,6 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "for (CORBA::ULong i = 0; i < rhs.length_; i++)" << be_idt_nl
       << "tmp1[i] = "; pt->accept (visitor); *os << "::_duplicate (tmp2[i]);" << be_uidt_nl
       << "this->buffer_ = tmp1;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
-
-  // destructor
-  *os << "ACE_INLINE" << be_nl
-      << full_class_name << "::~" << class_name << " (void)" << be_nl
-      << "// destructor" << be_nl
-      << "{" << be_idt_nl
-      << "this->_deallocate_buffer ();" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 
@@ -359,57 +324,6 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "}" << be_nl
       << be_nl;
   
-  // _shrink_buffer
-  *os << "ACE_INLINE void" << be_nl
-      << full_class_name << "::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)" << be_nl
-      << "{" << be_idt_nl;
-  pt->accept(visitor);
-  *os <<" **tmp = ACE_reinterpret_cast ("; 
-  pt->accept (visitor);
-  *os << " **, this->buffer_);" << be_nl
-      << be_nl
-      << "for (CORBA::ULong i = nl; i < ol; ++i)" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::release (tmp[i]);" << be_nl
-      << "tmp[i] = ";
-  pt->accept (visitor);
-  *os << "::_nil ();" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "}\n" << be_nl;
-
-  be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
-  if ((pt->node_type () != AST_Decl::NT_pre_defined) ||
-      (prim && (prim->pt () == AST_PredefinedType::PT_pseudo) &&
-       (!ACE_OS::strcmp (prim->local_name ()->get_string (), "Object"))))
-    {
-      // Pseudo objects do not require this methods.
-      *os << "ACE_INLINE void" << be_nl
-          << full_class_name << "::_downcast (" << be_idt << be_idt_nl
-	  << "void* target," << be_nl
-	  << "CORBA_Object *src," << be_nl
-	  << "CORBA::Environment &_env" << be_uidt_nl
-	  << ")" << be_uidt_nl
-	  << "{" << be_idt_nl;
-      pt->accept (visitor);
-      *os << " **tmp = ACE_static_cast (";
-      pt->accept (visitor);
-      *os << "**, target);" << be_nl
-	  << "*tmp = ";
-      pt->accept (visitor);
-      *os << "::_narrow (src, _env);" << be_uidt_nl
-	  << "}\n" << be_nl;
-
-      *os << "ACE_INLINE CORBA_Object*" << be_nl
-          << full_class_name << "::_upcast (void *src) const" <<  be_nl
-	  << "{" << be_idt_nl;
-      pt->accept (visitor);
-      *os << " **tmp = ACE_static_cast (";
-      pt->accept (visitor);
-      *os << "**, src);" << be_nl
-	  << "return *tmp;" << be_uidt_nl
-	  << "}" << be_nl;
-    }
-
   os->gen_endif ();
 
   // generate #endif for AHETI

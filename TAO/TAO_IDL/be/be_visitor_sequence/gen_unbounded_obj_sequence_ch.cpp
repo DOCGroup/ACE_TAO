@@ -99,7 +99,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   *os << class_name << "(const " << class_name << " &rhs);" << be_nl;
 
   // destructor
-  *os << "~" << class_name << " (void);" << be_nl;
+  *os << "virtual ~" << class_name << " (void);" << be_nl;
 
   // operator=
   *os << class_name << " &operator= (const " << class_name << " &rhs);" << be_nl;
