@@ -361,12 +361,15 @@ static ACE_Object_Manager_Destroyer ACE_Object_Manager_Destroyer_internal;
 ACE_Recursive_Thread_Mutex *
 ACE_Static_Object_Lock::instance (void)
 {
-  if (ACE_Object_Manager::starting_up ())
+  if (ACE_Object_Manager::starting_up () ||
+      ACE_Object_Manager::shutting_down ())
     {
       // The preallocated ACE_STATIC_OBJECT_LOCK has not been
-      // constructed yet.  The program is single-threaded at this
-      // point.  Allocate a lock to use, for interface compatibility,
-      // though there should be no contention on it.
+      // constructed yet.  Therefore, the program is single-threaded
+      // at this point.  Or, the ACE_Object_Manager instance has been
+      // destroyed, so the preallocated lock is not available.
+      // Allocate a lock to use, for interface compatibility, though
+      // there should be no contention on it.
       static ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *lock = 0;
 
       if (lock == 0)
