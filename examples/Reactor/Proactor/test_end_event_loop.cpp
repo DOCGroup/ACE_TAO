@@ -9,7 +9,7 @@
 //     Proactor. To end the event loop, threads that are blocked in
 //     waiting for completions are  woken up and the event loop comes
 //     to the end. This is tested in this program.
-// 
+//
 //     Threads are doing <run_event_loop> with/without time_out
 //     values and the main thread calls <end_event_loop>.
 //
@@ -38,8 +38,8 @@
 class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
   // = TITLE
-  //   
-  //     Contains thread functions which execute event loops. Each 
+  //
+  //     Contains thread functions which execute event loops. Each
   //     thread waits for a different signal.
   //
 public:
@@ -48,7 +48,7 @@ public:
     : time_flag_ (0)
     {}
 
-  
+
   virtual ~My_Task (void) {}
   // Destructor.
 
@@ -61,30 +61,30 @@ public:
         this->time_flag_ = 0;
       else
         this->time_flag_ = 1;
-      
+
       // Spawn the threads.
       if (this->activate (THR_NEW_LWP, 5) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%N:%l:%p\n",
                            "My_Task:open: <activate> failed"),
                           -1);
-      
+
       return 0;
     }
-  
+
   // Thread function.
   int svc (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t):Starting svc routine\n"));
-      
+
       if (this->time_flag_)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t):Going to do *timed* <run_event_loop> \n"));
 
           ACE_Time_Value run_time (13);
-          
+
           if (ACE_Proactor::instance ()->run_event_loop (run_time) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t):%p.\n",
                                "<Proactor::run_event_loop> failed"),
@@ -94,7 +94,7 @@ public:
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t):Going to do *indefinite* <run_event_loop> \n"));
-          
+
           if (ACE_Proactor::instance ()->run_event_loop () == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t):%p.\n",
                                "<Proactor::run_event_loop> failed"),
@@ -102,14 +102,14 @@ public:
         }
       return 0;
     };
-  
+
 private:
   int time_flag_;
-  // If zero, indefinite event loop, otherwise timed event loop. 
+  // If zero, indefinite event loop, otherwise timed event loop.
 };
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
@@ -136,7 +136,7 @@ main (int argc, char *argv [])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:(%P | %t):Failed to <open> the task\n"),
                       1);
-  
+
   // Give a gap.
   ACE_OS::sleep (3);
 
@@ -145,7 +145,7 @@ main (int argc, char *argv [])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:(%P | %t):Failed to <end_event_loop>\n"),
                       1);
-  
+
   ACE_Thread_Manager::instance ()->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -161,7 +161,7 @@ template class ACE_Task <ACE_NULL_SYNCH>;
 
 #else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
 
-int 
+int
 main (int, char *[])
 {
   ACE_DEBUG ((LM_DEBUG,

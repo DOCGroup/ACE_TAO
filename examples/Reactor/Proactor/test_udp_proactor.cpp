@@ -32,7 +32,7 @@ ACE_RCSID(Proactor, test_udp_proactor, "test_proactor.cpp,v 1.29 2001/02/02 23:4
   // This only works on Win32 platforms.
 
 // Host that we're connecting to.
-static char *host = 0;
+static ACE_TCHAR *host = 0;
 
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;
@@ -219,7 +219,7 @@ class Sender : public ACE_Handler
 public:
   Sender (void);
   ~Sender (void);
-  int open (const char *host, u_short port);
+  int open (const ACE_TCHAR *host, u_short port);
 
 protected:
   // These methods are called by the freamwork
@@ -252,7 +252,7 @@ Sender::~Sender (void)
 }
 
 int
-Sender::open (const char *host,
+Sender::open (const ACE_TCHAR *host,
               u_short port)
 {
   // Initialize stuff
@@ -293,7 +293,7 @@ Sender::open (const char *host,
   // chain up to IOV_MAX message block using this method.
   msg->cont(body);
 
-  
+
   // do the asynch send
   size_t number_of_bytes_sent = 0;
   ACE_INET_Addr serverAddr(port, host);
@@ -363,9 +363,9 @@ Sender::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
 }
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "h:p:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("h:p:"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -387,7 +387,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
     return -1;

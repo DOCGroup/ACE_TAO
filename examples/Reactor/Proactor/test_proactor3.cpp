@@ -11,7 +11,7 @@
 // = DESCRIPTION
 //    This program illustrates how the <ACE_Proactor> can be used to
 //    implement an application that does various asynchronous
-//    operations.  
+//    operations.
 //
 // = AUTHOR
 //    Irfan Pyarali <irfan@cs.wustl.edu>
@@ -69,13 +69,13 @@ static int proactor_type = 0;
 static int max_aio_operations = 0;
 
 // Host that we're connecting to.
-static char *host = 0;
+static ACE_TCHAR *host = 0;
 
 // number of Senders instances
 static int senders = 1;
 static const int MaxSenders = 100;
 
-// duplex mode: ==0 half-duplex 
+// duplex mode: ==0 half-duplex
 //              !=0 full duplex
 static int duplex = 0;
 
@@ -91,7 +91,7 @@ class MyTask: public ACE_Task<ACE_MT_SYNCH>
   //   MyTask plays role for Proactor threads pool
 public:
   MyTask (void) : threads_ (0), proactor_ (0) {}
-  
+
   int svc (void);
   void waitready (void) { event_.wait (); }
 
@@ -105,17 +105,17 @@ private:
   void delete_proactor (void);
 };
 
-void 
+void
 MyTask::create_proactor (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   if (threads_ == 0)
     {
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
       ACE_WIN32_Proactor *proactor = new ACE_WIN32_Proactor;
       ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=WIN32"));
-	
+
 #elif defined (ACE_HAS_AIO_CALLS)
 
       ACE_POSIX_Proactor *proactor = 0;
@@ -125,7 +125,7 @@ MyTask::create_proactor (void)
         case 1:	proactor = new ACE_POSIX_AIOCB_Proactor (max_aio_operations);
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=AIOCB\n"));
           break;
-        case 2:	proactor = new ACE_POSIX_SIG_Proactor; 
+        case 2:	proactor = new ACE_POSIX_SIG_Proactor;
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG\n"));
           break;
 #  if defined (sun)
@@ -137,7 +137,7 @@ MyTask::create_proactor (void)
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG\n"));
           break;
         }
-#endif 
+#endif
 
       proactor_ = new ACE_Proactor (proactor, 1);
 
@@ -148,10 +148,10 @@ MyTask::create_proactor (void)
   threads_++;
 }
 
-void 
+void
 MyTask::delete_proactor (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
   if (--threads_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) Delete Proactor\n"));
@@ -161,7 +161,7 @@ MyTask::delete_proactor (void)
     }
 }
 
-int 
+int
 MyTask::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) MyTask started\n"));
@@ -181,7 +181,7 @@ MyTask::svc (void)
 class Receiver : public ACE_Service_Handler
 {
 public:
- 
+
   Receiver (void);
   ~Receiver (void);
 
@@ -198,8 +198,8 @@ protected:
   // This is called when asynchronous <read> operation from the socket
   // complete.
 
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result); 
-  // This is called when an asynchronous <write> to the file 
+  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  // This is called when an asynchronous <write> to the file
   // completes.
 
 private:
@@ -221,25 +221,25 @@ Receiver::Receiver (void)
   : handle_ (ACE_INVALID_HANDLE),
     io_count_ (0)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
   sessions_++;
   ACE_DEBUG ((LM_DEBUG, "Receiver Ctor sessions_=%d\n", sessions_));
 }
 
 Receiver::~Receiver (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
   sessions_--;
   ACE_OS::closesocket (this->handle_);
   ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor sessions_=%d\n", sessions_));
 }
 
 //  return true if we alive, false  we commited suicide
-int 
+int
 Receiver::check_destroy (void)
 {
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
     if (io_count_ > 0)
       return 1;
@@ -249,13 +249,13 @@ Receiver::check_destroy (void)
   return 0;
 }
 
-void 
+void
 Receiver::open (ACE_HANDLE handle,
 		ACE_Message_Block &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:Receiver::open called\n"));
-  
+
   this->handle_ = handle;
 
   if (this->ws_.open (*this, this->handle_) == -1)
@@ -272,10 +272,10 @@ Receiver::open (ACE_HANDLE handle,
   check_destroy ();
 }
 
-int 
+int
 Receiver::initiate_read_stream (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,
@@ -296,10 +296,10 @@ Receiver::initiate_read_stream (void)
   return 0;
 }
 
-int 
+int
 Receiver::initiate_write_stream (ACE_Message_Block &mb, int nbytes)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
   if (nbytes <= 0)
     {
       mb.release ();
@@ -326,7 +326,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 {
   // Reset pointers.
   result.message_block ().rd_ptr ()[result.bytes_transferred ()] = '\0';
-  
+
   if (result.bytes_transferred () == 0 || result.error () != 0)
     {
       ACE_DEBUG ((LM_DEBUG, "handle_read_stream called\n"));
@@ -341,14 +341,14 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
       ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", result.message_block ().rd_ptr ()));
     }
-  
+
   if (result.success () && result.bytes_transferred () != 0)
     {
       // Successful read: write the data to the file asynchronously.
       // Note how we reuse the <ACE_Message_Block> for the writing.
       // Therefore, we do not delete this buffer because it is handled
       // in <handle_write_stream>.
-  
+
       if(this->initiate_write_stream (result.message_block (),
                                       result.bytes_transferred ()) == 0)
         {
@@ -366,7 +366,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     }
 
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
     io_count_--;
   }
   check_destroy ();
@@ -403,7 +403,7 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     }
 
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
     io_count_--;
   }
   check_destroy ();
@@ -416,7 +416,7 @@ class Sender : public ACE_Handler
 public:
   Sender (void);
   ~Sender (void);
-  int open (const char *host, u_short port);
+  int open (const ACE_TCHAR *host, u_short port);
   void close (void);
   ACE_HANDLE handle (void) const;
 
@@ -474,7 +474,7 @@ ACE_HANDLE Sender::handle (void) const
   return this->stream_.get_handle ();
 }
 
-int Sender::open (const char *host, u_short port)
+int Sender::open (const ACE_TCHAR *host, u_short port)
 {
   // Initialize stuff
   // Connect to remote host
@@ -516,15 +516,15 @@ int Sender::open (const char *host, u_short port)
   return 0;
 }
 
-int 
+int
 Sender::initiate_write_stream (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);   
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   welcome_message_.rd_ptr(welcome_message_.base ());
   welcome_message_.wr_ptr(welcome_message_.base ());
   welcome_message_.wr_ptr (ACE_OS::strlen (data));
-	
+
   if (this->ws_.write (welcome_message_,
                        welcome_message_.length ()) == -1)
     ACE_ERROR_RETURN((LM_ERROR,
@@ -535,10 +535,10 @@ Sender::initiate_write_stream (void)
   return 0;
 }
 
-int 
+int
 Sender::initiate_read_stream (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   // Create a new <Message_Block>.  Note that this message block will
   // be used both to <read> data asynchronously from the socket and to
@@ -565,7 +565,7 @@ Sender::initiate_read_stream (void)
   return 0;
 }
 
-void 
+void
 Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 {
   if (result.bytes_transferred () == 0 || result.error () != 0)
@@ -592,12 +592,12 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     {
       if (duplex != 0)  // full duplex, continue write
         initiate_write_stream ();
-      else  // half-duplex   read reply, after read we will start write 
+      else  // half-duplex   read reply, after read we will start write
         initiate_read_stream ();
     }
 
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
     io_count_--;
   }
 }
@@ -609,10 +609,10 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "handle_read_stream called\n"));
-  
+
       // Reset pointers.
       result.message_block ().rd_ptr ()[result.bytes_transferred ()] = '\0';
-  
+
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", result.bytes_to_read ()));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
@@ -624,7 +624,7 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
       ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", result.message_block ().rd_ptr ()));
     }
-  
+
   result.message_block().release ();
 
   if (result.success () && result.bytes_transferred () != 0)
@@ -633,7 +633,7 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       // Note how we reuse the <ACE_Message_Block> for the writing.
       // Therefore, we do not delete this buffer because it is handled
       // in <handle_write_stream>.
-  
+
       if (duplex != 0)  // full duplex, continue read
         initiate_read_stream ();
       else  // half-duplex  writey, after write we will start read
@@ -641,7 +641,7 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     }
 
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);        
+    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
     io_count_--;
   }
 }
@@ -649,7 +649,7 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 static int
 set_proactor_type (const char *ptype)
 {
-  if (!ptype) 
+  if (!ptype)
     return false;
 
   switch (toupper (*ptype))
@@ -665,9 +665,9 @@ set_proactor_type (const char *ptype)
 }
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "t:o:n:p:d:h:s:u");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("t:o:n:p:d:h:s:u"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -690,7 +690,7 @@ parse_args (int argc, char *argv[])
 	if (senders > MaxSenders)
 	  senders = MaxSenders;
 	break;
-      case 'o':     // max number of aio for proactor 
+      case 'o':     // max number of aio for proactor
         max_aio_operations = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
       case 't':    //  Proactor Type
@@ -721,7 +721,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 #if defined (sun)
   ACE_DEBUG ((LM_DEBUG, "\nSUN defined!\n"));
@@ -788,7 +788,7 @@ main (int argc, char *argv[])
   tm->wait_task (&task1);
 
   cout 	<< "\nNumber of Receivers objects="
-        << Receiver::get_number_sessions () 
+        << Receiver::get_number_sessions ()
         << flush;
 
   for (i = 0; i < senders; ++i)
@@ -800,7 +800,7 @@ main (int argc, char *argv[])
   return 0;
 }
 
-static int 
+static int
 disable_signal (int sigmin, int sigmax)
 {
 #ifndef ACE_WIN32
@@ -813,21 +813,21 @@ disable_signal (int sigmin, int sigmax)
 
   for (int i = sigmin; i <= sigmax; i++)
     sigaddset (&signal_set, i);
-	
+
   //  Put the <signal_set>.
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
     ACE_ERROR ((LM_ERROR,
                 "Error:(%P | %t):%p\n",
                 "pthread_sigmask failed"));
 #endif /* ACE_WIN32 */
-	
-  return 1; 
+
+  return 1;
 }
 
 // Get the <signal_set> back from the OS.
 
 #if 0
-static int 
+static int
 print_sigmask (void)
 {
 #ifndef ACE_WIN32
@@ -847,13 +847,13 @@ print_sigmask (void)
 
         COUT ("\nSig ")
         COUT (i)
-        COUT (" is ") 
+        COUT (" is ")
         COUT (member)
-	
+
         if (member == -1)
           break;
     }
- 
+
 #endif /* ACE_WIN32 */
   return 0;
 }

@@ -11,20 +11,20 @@
 // = DESCRIPTION
 //    This program tests cancelling an Asynchronous Operation in the
 //    Proactor framework.
-// 
+//
 //    This tests accepts a connection and issues an Asynchronous Read
 //    Stream. It reads <read_size> (option -s) number of bytes and
 //    when this operation completes, it issues another Asynchronous
 //    Read Stream to <read_size> and immediately calls <cancel> to
 //    cancel the operation and so the program exits closing the
-//    connection. 
+//    connection.
 //
 //    Works fine on NT. On Solaris platforms, the asynch read is
 //    pending, but the cancel returns with the value <AIO_ALLDONE>
 //    indicating all the operations in that handle are done.
 //    But, LynxOS has a good <aio_cancel> implementation. It works
-//    fine. 
-// 
+//    fine.
+//
 // = RUN
 //   ./test_cancel -p <port_number>
 //   Then telnet to this port and send <read_size> bytes and your
@@ -77,7 +77,7 @@ public:
   virtual void open (ACE_HANDLE handle,
 		     ACE_Message_Block &message_block);
   // This is called after the new connection has been accepted.
-  
+
 protected:
   // These methods are called by the framework
 
@@ -90,7 +90,7 @@ private:
 
   ACE_Message_Block mb_;
   // Message block to read from the stream.
- 
+
   ACE_HANDLE handle_;
   // Handle for IO to remote peer
 };
@@ -106,7 +106,7 @@ Receiver::~Receiver (void)
   ACE_DEBUG ((LM_DEBUG,
               "Receiver: Closing down Remote connection:%d\n",
               this->handle_));
-              
+
   ACE_OS::closesocket (this->handle_);
 }
 
@@ -115,9 +115,9 @@ Receiver::open (ACE_HANDLE handle,
 		ACE_Message_Block &)
 {
   // New connection, initiate stuff
-  
+
   ACE_DEBUG ((LM_DEBUG, "%N:%l:Receiver::open called\n"));
-  
+
   // Cache the new connection
   this->handle_ = handle;
 
@@ -129,11 +129,11 @@ Receiver::open (ACE_HANDLE handle,
     }
 
   // Try to read <n> bytes from the stream.
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "Receiver::open: Issuing Asynch Read of (%d) bytes from the stream\n",
               read_size));
-  
+
   if (this->rs_.read (this->mb_,
                       read_size) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -166,7 +166,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
       // Set the pointers back in the message block.
       result.message_block ().wr_ptr (result.message_block ().rd_ptr ());
-      
+
       // Issue another read, but immediately cancel it.
 
       // Issue the read.
@@ -174,15 +174,15 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       ACE_DEBUG ((LM_DEBUG,
                   "Issuing Asynch Read of (%d) bytes from the stream\n",
                   read_size));
-      
+
       if (this->rs_.read (this->mb_,
                           read_size) == -1)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "Receiver::handle_read_stream: Failed to issue the read"));
-      
+
       // Cancel the read.
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   "Cacelling Asynch Read "));
 
@@ -198,14 +198,14 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   else
     {
       done = 1;
-      
+
       ACE_DEBUG ((LM_DEBUG, "Receiver completed\n"));
 
       // Print the error message if any.
       if (result.error () != 0)
         {
           errno = result.error ();
-          
+
           ACE_ERROR ((LM_ERROR,
                       "%p\n",
                       "Asynch Read Stream Error: "));
@@ -214,9 +214,9 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 }
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "p:s:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("p:s:"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -240,11 +240,11 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
     return -1;
-  
+
   // Note: acceptor parameterized by the Receiver
   ACE_Asynch_Acceptor<Receiver> acceptor;
 
@@ -261,7 +261,7 @@ main (int argc, char *argv[])
   while (success > 0  && !done)
     // dispatch events
     success = ACE_Proactor::instance ()->handle_events ();
-  
+
   return 0;
 }
 
