@@ -56,6 +56,10 @@ Connector removes handlers from its connection cache depending upon
 the kind of connection caching strategy followed. (by default: Least
 Recently Used) set by the ORBConnectionCachingStrategy option.
 
+Its expected to see an exception when the handle limit is surpassed.
+The cached handles are then used and the test continues displaying 
+how scalability was increased using caching of connection handles.
+
 2. When the "accept" or "open" calls made by the Acceptors in the same
 process fail, request is made on all the Connectors of all the ORBs in
 the system to perform purging depending on the ORBPurgePercentage
