@@ -1,3 +1,147 @@
+Sun Apr 14 19:02:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        Merged in from my branch.
+	
+	Fri Apr 12 15:39:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connector_Impl.cpp: Dont add the handler to the reactor. 
+
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp: Add the handler to the
+	  reactor after the transport has been cached. 
+
+	  The above changes helps to works around a race condition. The
+	  race occurs in the following scenario:
+
+	  - the handler is added to the reactor as soon as the connection
+ 	    is established
+	  - the server crashes and a thread waiting on the reactor closes
+	    down the connection. As the connection handler and transports
+	    have not been ref counted (yet) they could be completely
+	    destroyed. 
+	  - the thread that initiated the connection would try to
+	    duplicate a null transport and try adding that to cache and
+	    all hell would break loose. 
+
+	  The methodology adopted is to delay adding the handler to the
+	  reactor till the handler is added to cache. This would make sure
+	  that the transport is refcounted and hence the thread making the
+	  connection will have a valid pointer to take action and do the
+	  cleanup when it finds that the connection is closed. 
+
+        Fri Apr 12 14:14:01 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connector_Registry.cpp:
+	* tao/Connector_Registry.h: 
+	* tao/Connector_Registry.i: Added a new method, get_connector ()
+	  which returns a TAO_Connector based on a TAO_Endpoint. Need to
+	  deprecate connect (). The connector registry should not be
+	  involved in doing active connects. 
+
+	* tao/Invocation.cpp: Used the connector_registry's get_connector
+	  () to retrieve a connector before calling a connect on it. 
+
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h: Consolidated some of the code from
+	  different protocols. All the transports before setting up a
+	  connection look for a connection in cache. That part of the code
+	  that looks for a connection in the cache has been moved in
+	  here. If a connection is not found in cache, the control is
+	  transferred to the underlying transports to set up a
+	  connection. 
+	
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h: 
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h : Renamed connect () to be
+	  make_connect (). This method now exclusively sets up an active
+	  connection from the client and adds the connection in cache.
+
+
+	Thu Apr 11 17:26:21 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Connector.cpp: 
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/DIOP_Connector.cpp: Cleaned up left over
+	  preconnect code.
+	
+        Thu Apr 11 14:36:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	This checkin does the following 
+
+	  - Splits the file Pluggable.{h,cpp,i} into two files namely
+	    Transport_Acceptor.{h,cpp,inl} and
+	    Transport_Connector.{h,cpp,inl}. 
+
+	  - Removes support for preconnects () totally. The code for
+	    preconnects is just #if 0'ed now. We can remove the code
+	    totally once these changes stabilizes. 
+
+	* tao/Pluggable.h:
+	* tao/Pluggable.cpp:
+	* tao/Pluggable.i: Files to be removed from the repository. 
+
+	* tao/Transport_Acceptor.h:
+	* tao/Transport_Acceptor.cpp:
+	* tao/Transport_Acceptor.inl:
+	* tao/Transport_Connector.h:
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.inl: New files to the repository. 
+	
+	* tao/Acceptor_Registry.cpp: 
+	* tao/IIOP_Acceptor.h:
+	* tao/Tagged_Profile.cpp:
+
+	* tao/PortableServer/Default_Acceptor_Filter.cpp:
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
+	* tao/RTPortableServer/RT_Acceptor_Filters.cpp:
+	* tao/RTPortableServer/RT_Policy_Validator.cpp:
+	* tao/Strategies/DIOP_Acceptor.h:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Acceptor.h:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Acceptor.h:
+	* tao/Strategies/UIOP_Connector.h: Changed the #include's of
+	  Pluggable.h to Transport_Acceptor.h or Transport_Connector.h, as
+	  the case may be
+		
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Generator_Parser_12.cpp:
+	* tao/GIOP_Message_State.cpp:
+	* tao/Pluggable_Messaging.cpp: Removed #include's of Pluggable.h
+	  since they are not needed.  
+
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Removed a few
+	  unnecessary #includes. 
+
+	* tao/Makefile:
+	* tao/DynamicInterface/Makefile:
+	* tao/Messaging/Makefile:
+	* tao/PortableServer/Makefile:
+	* tao/RTCORBA/Makefile:
+	* tao/RTPortableServer/Makefile:
+	* tao/Strategies/Makefile: Updated dependencies. 
+
+	* tao/IIOP_Connector.h:
+	* tao/IIOP_Connector.cpp: Removed the method preconnects () and
+	  template instantiations needed for them. 
+	
+	* tao/Connector_Registry.cpp:
+	* tao/Connector_Registry.h: 
+	* tao/params.cpp:
+	* tao/params.h:
+	* tao/params.i:
+	* tao/ORB_Core.cpp:Removed references necessary for preconnects. 
+
+
 Sun Apr 14 10:35:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp: Yet

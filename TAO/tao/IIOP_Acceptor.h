@@ -19,7 +19,7 @@
 #define TAO_IIOP_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "tao/Pluggable.h"
+#include "tao/Transport_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -64,7 +64,7 @@ public:
 
   /**
    * The TAO_Acceptor methods, check the documentation in
-   * Pluggable.h for details.
+   * Transport_Acceptor.h for details.
    */
   virtual int open (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,

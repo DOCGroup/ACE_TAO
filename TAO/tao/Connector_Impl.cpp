@@ -56,13 +56,8 @@ TAO_Connect_Concurrency_Strategy<SVC_HANDLER>::
     activate_svc_handler (SVC_HANDLER *sh,
                           void *arg)
 {
-  if (ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (sh,
-                                                                   arg) == -1)
-    return -1;
-
-  // If the wait strategy wants us to be registered with the reactor
-  // then we do so.
-  return sh->transport ()->wait_strategy ()->register_handler ();
+  return ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (sh,
+                                                                      arg);
 }
 
 

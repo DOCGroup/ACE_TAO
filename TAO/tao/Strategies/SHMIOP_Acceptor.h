@@ -29,7 +29,7 @@
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "tao/Pluggable.h"
+#include "tao/Transport_Acceptor.h"
 #include "SHMIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 #include "ace/Acceptor.h"

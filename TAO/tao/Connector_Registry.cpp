@@ -5,7 +5,7 @@
 #include "tao/Connector_Registry.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
-#include "tao/Pluggable.h"
+#include "tao/Transport_Connector.h"
 #include "tao/Protocol_Factory.h"
 #include "tao/Endpoint.h"
 #include "tao/Environment.h"
@@ -53,6 +53,8 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag)
 
   return 0;
 }
+
+
 
 int
 TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
@@ -121,152 +123,6 @@ TAO_Connector_Registry::close_all (void)
 
   return 0;
 }
-
-int
-TAO_Connector_Registry::preconnect (TAO_ORB_Core *orb_core,
-                                    TAO_EndpointSet &preconnections)
-{
-  // Put the preconnects in a form that makes it simple for protocol
-  // implementers to parse.
-  if (this->preprocess_preconnects (orb_core, preconnections) != 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("TAO (%P|%t) Unable to preprocess the preconnections.\n")));
-
-      return -1;
-    }
-
-  TAO_EndpointSetIterator preconnects = preconnections.begin ();
-
-  for (ACE_CString *i = 0;
-       preconnects.next (i) != 0;
-       preconnects.advance ())
-    {
-      TAO_ConnectorSetIterator first_connector = this->begin ();
-      TAO_ConnectorSetIterator last_connector = this->end ();
-
-      for (TAO_ConnectorSetIterator connector = first_connector;
-           connector != last_connector;
-           ++connector)
-        if (*connector)
-          (*connector)->preconnect (i->c_str ());
-    }
-
-  // No longer need the preconnect set since all associated
-  // preconnections have been opened by now.  Reclaim the memory used
-  // by the preconnect set.
-  preconnections.reset ();
-
-  return 0;  // Success
-}
-
-int
-TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
-                                                TAO_EndpointSet &preconnects)
-{
-  // Organize all matching protocol endpoints and addrs into a single
-  // endpoint for the given protocol.
-  //
-  // For example, the following endpoints:
-  //
-  //   uiop://1.1@/tmp/foobar,/tmp/chicken
-  //   iiop://1.0@localhost
-  //   uiop:///tmp/soup
-  //   iiop://1.1@mopbucket
-  //
-  // will be merged to create the following preconnects:
-  //
-  //   uiop://1.1@/tmp/foobar,/tmp/chicken,/tmp/soup
-  //   iiop://1.0@localhost,1.1@mopbucket
-  //
-  // The four elements in the preconnect set will be squeezed into two
-  // elements, in this case. This is done to simplify the preconnect
-  // parsing code in each protocol specific connector and to make sure
-  // that all preconnections are established during the first
-  // attempt.  Otherwise, secondary attempts to establish
-  // preconnections will not be successful since all preconnections
-  // will have been idled after during the first attempt, hence the
-  // need to pass all preconnects during the first attempt.
-
-  const size_t num_protocols =
-    orb_core->protocol_factories ()->size ();
-
-  ACE_CString *processed = 0;
-
-  ACE_NEW_RETURN (processed,
-                  ACE_CString[num_protocols],
-                  -1);
-
-  // Open one connector for each loaded protocol!
-  TAO_ProtocolFactorySetItor begin =
-    orb_core->protocol_factories ()->begin ();
-  TAO_ProtocolFactorySetItor end =
-    orb_core->protocol_factories ()->end ();
-
-  ACE_CString *tmp = processed;
-
-  // Iterate over the protocols, *not* the connectors!
-  for (TAO_ProtocolFactorySetItor factory = begin;
-       factory != end;
-       ++factory, ++tmp)
-    {
-      (*tmp) =
-        ACE_CString ((*factory)->factory ()->prefix ()) + ACE_CString ("://");
-
-      TAO_EndpointSetIterator p = preconnects.begin ();
-
-      for (ACE_CString *i = 0;
-           p.next (i) != 0;
-           p.advance ())
-        {
-          const int slot = i->find ("://");
-
-          ACE_CString protocol_name = i->substring (0, slot);
-
-          if (slot != ACE_CString::npos &&
-              (slot != ACE_static_cast (int, i->length ()) - 3) &&
-              (*factory)->factory ()->match_prefix (protocol_name.c_str ()))
-            {
-              (*tmp) += i->substring (slot + 3); // +3 due to "://"
-              (*tmp) += ACE_CString (',');
-            }
-        }
-
-      // Remove the trailing comma ','.
-      if ((*tmp)[tmp->length () - 1] == ',')
-        (*tmp) = tmp->substring (0, tmp->length () - 1);
-    }
-
-  // Empty the preconnect container.
-  preconnects.reset ();
-
-  // Now enqueue the re-formed preconnect strings.
-  for (size_t n = 0; n < num_protocols; ++n)
-    {
-      // If no preconnects for the given protocol exist then don't
-      // enqueue the empty preconnect list for that protocol.
-      // Such an empty preconnect string should be of the form
-      //
-      //     protocol://
-      //
-      // so check for the forward slash '/' at the end of the string.
-      if (processed[n][processed[n].length () - 1] != '/')
-        {
-          if (preconnects.enqueue_tail (processed[n]) != 0)
-            {
-              delete [] processed;
-
-              return -1;
-            }
-        }
-    }
-
-  delete [] processed;
-
-  return 0;
-}
-
 
 int
 TAO_Connector_Registry::connect (TAO_GIOP_Invocation *invocation,
@@ -424,3 +280,161 @@ TAO_Connector_Registry::object_key_delimiter (const char *ior)
   // against the provided string.
   return 0;
 }
+
+
+#if 0
+
+/*
+ *        To be removed..
+ *
+ * These methods are not needed since they have been deprecated. But
+ * just having them in  the bottom of the file to be removed later.
+ *
+ */
+int
+TAO_Connector_Registry::preconnect (TAO_ORB_Core *orb_core,
+                                    TAO_EndpointSet &preconnections)
+{
+  // Put the preconnects in a form that makes it simple for protocol
+  // implementers to parse.
+  if (this->preprocess_preconnects (orb_core, preconnections) != 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_LIB_TEXT ("TAO (%P|%t) Unable to preprocess the preconnections.\n")));
+
+      return -1;
+    }
+
+  TAO_EndpointSetIterator preconnects = preconnections.begin ();
+
+  for (ACE_CString *i = 0;
+       preconnects.next (i) != 0;
+       preconnects.advance ())
+    {
+      TAO_ConnectorSetIterator first_connector = this->begin ();
+      TAO_ConnectorSetIterator last_connector = this->end ();
+
+      for (TAO_ConnectorSetIterator connector = first_connector;
+           connector != last_connector;
+           ++connector)
+        if (*connector)
+          (*connector)->preconnect (i->c_str ());
+    }
+
+  // No longer need the preconnect set since all associated
+  // preconnections have been opened by now.  Reclaim the memory used
+  // by the preconnect set.
+  preconnections.reset ();
+
+  return 0;  // Success
+}
+
+int
+TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
+                                                TAO_EndpointSet &preconnects)
+{
+  // Organize all matching protocol endpoints and addrs into a single
+  // endpoint for the given protocol.
+  //
+  // For example, the following endpoints:
+  //
+  //   uiop://1.1@/tmp/foobar,/tmp/chicken
+  //   iiop://1.0@localhost
+  //   uiop:///tmp/soup
+  //   iiop://1.1@mopbucket
+  //
+  // will be merged to create the following preconnects:
+  //
+  //   uiop://1.1@/tmp/foobar,/tmp/chicken,/tmp/soup
+  //   iiop://1.0@localhost,1.1@mopbucket
+  //
+  // The four elements in the preconnect set will be squeezed into two
+  // elements, in this case. This is done to simplify the preconnect
+  // parsing code in each protocol specific connector and to make sure
+  // that all preconnections are established during the first
+  // attempt.  Otherwise, secondary attempts to establish
+  // preconnections will not be successful since all preconnections
+  // will have been idled after during the first attempt, hence the
+  // need to pass all preconnects during the first attempt.
+
+  const size_t num_protocols =
+    orb_core->protocol_factories ()->size ();
+
+  ACE_CString *processed = 0;
+
+  ACE_NEW_RETURN (processed,
+                  ACE_CString[num_protocols],
+                  -1);
+
+  // Open one connector for each loaded protocol!
+  TAO_ProtocolFactorySetItor begin =
+    orb_core->protocol_factories ()->begin ();
+  TAO_ProtocolFactorySetItor end =
+    orb_core->protocol_factories ()->end ();
+
+  ACE_CString *tmp = processed;
+
+  // Iterate over the protocols, *not* the connectors!
+  for (TAO_ProtocolFactorySetItor factory = begin;
+       factory != end;
+       ++factory, ++tmp)
+    {
+      (*tmp) =
+        ACE_CString ((*factory)->factory ()->prefix ()) + ACE_CString ("://");
+
+      TAO_EndpointSetIterator p = preconnects.begin ();
+
+      for (ACE_CString *i = 0;
+           p.next (i) != 0;
+           p.advance ())
+        {
+          const int slot = i->find ("://");
+
+          ACE_CString protocol_name = i->substring (0, slot);
+
+          if (slot != ACE_CString::npos &&
+              (slot != ACE_static_cast (int, i->length ()) - 3) &&
+              (*factory)->factory ()->match_prefix (protocol_name.c_str ()))
+            {
+              (*tmp) += i->substring (slot + 3); // +3 due to "://"
+              (*tmp) += ACE_CString (',');
+            }
+        }
+
+      // Remove the trailing comma ','.
+      if ((*tmp)[tmp->length () - 1] == ',')
+        (*tmp) = tmp->substring (0, tmp->length () - 1);
+    }
+
+  // Empty the preconnect container.
+  preconnects.reset ();
+
+  // Now enqueue the re-formed preconnect strings.
+  for (size_t n = 0; n < num_protocols; ++n)
+    {
+      // If no preconnects for the given protocol exist then don't
+      // enqueue the empty preconnect list for that protocol.
+      // Such an empty preconnect string should be of the form
+      //
+      //     protocol://
+      //
+      // so check for the forward slash '/' at the end of the string.
+      if (processed[n][processed[n].length () - 1] != '/')
+        {
+          if (preconnects.enqueue_tail (processed[n]) != 0)
+            {
+              delete [] processed;
+
+              return -1;
+            }
+        }
+    }
+
+  delete [] processed;
+
+  return 0;
+}
+
+// End of the portion that needs to be removed.
+#endif /*If 0 */

@@ -49,6 +49,7 @@ class TAO_Reverse_Active_Object_Map_Impl;
 typedef ACE_Unbounded_Queue<ACE_CString> TAO_EndpointSet;
 typedef ACE_Unbounded_Queue_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
+
 // -------------------------------------------------------------------
 
 /**
@@ -72,10 +73,17 @@ public:
   /// Destructor.
   ~TAO_ORB_Parameters (void);
 
+#if 0
+  /*
+   *  TODO: Need to be removed since preconnects are being
+   *  discontinued.
+   *
+   */
   /// Specifies the endpoints to pre-establish connections on.
   int preconnects (ACE_CString &preconnects);
   TAO_EndpointSet &preconnects (void);
   void add_preconnect (ACE_CString &preconnect);
+#endif /*if 0*/
 
   /// Specifies the endpoints on which this server is willing to
   /// listen for requests.
@@ -112,12 +120,6 @@ public:
    */
   int cdr_memcpy_tradeoff (void) const;
   void cdr_memcpy_tradeoff (int);
-
-  // @@Deprecated. Will not be used. - Bala
-  // int use_lite_protocol (void) const;
-  // void use_lite_protocol (int);
-  // The ORB will use a modified version of GIOP that minimizes the
-  // header size. By default we use the standard GIOP protocol.
 
   /// The ORB will use the dotted decimal notation for addresses. By
   /// default we use the full ascii names.
@@ -163,7 +165,7 @@ private:
                        TAO_EndpointSet &endpoints_list);
 
   /// List of endpoints used to pre-establish connections.
-  TAO_EndpointSet preconnects_list_;
+  // TAO_EndpointSet preconnects_list_;
 
   /// List of endpoints this server is willing to accept requests
   /// on.

@@ -28,7 +28,7 @@
 
 #include "ace/MEM_Connector.h"
 #include "ace/Connector.h"
-#include "tao/Pluggable.h"
+#include "tao/Transport_Connector.h"
 #include "SHMIOP_Connection_Handler.h"
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
@@ -58,10 +58,7 @@ public:
   // Pluggable.h
   int open (TAO_ORB_Core *orb_core);
   int close (void);
-  int connect (TAO_GIOP_Invocation *invocation,
-               TAO_Transport_Descriptor_Interface *desc
-               ACE_ENV_ARG_DECL);
-  int preconnect (const char *preconnections);
+
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
   virtual int check_prefix (const char *endpoint);
@@ -69,9 +66,11 @@ public:
   virtual char object_key_delimiter (void) const;
 
 protected:
-
   // = More TAO_Connector methods, please check the documentation on
   //   Pluggable.h
+  int make_connect (TAO_GIOP_Invocation *invocation,
+                    TAO_Transport_Descriptor_Interface *desc);
+
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
 
 public:
