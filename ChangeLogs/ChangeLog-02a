@@ -1,3 +1,8 @@
+Thu Sep 06 18:42:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1: New directory that contains all of the example
+          code for Doug/my book, C++ Network Programming, Vol 1.
+
 Thu Sep  6 12:01:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/OS.h: 
