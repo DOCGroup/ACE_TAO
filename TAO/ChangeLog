@@ -1,3 +1,19 @@
+Wed Nov 17 12:54:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* docs/index.html:
+
+	  Changed the name of the link used to point to ORB services
+	  documentation.
+	
+	* docs/orbsvcs.html:
+
+	  Pointed to the release notes for the latest information.
+	  
+	* docs/releasenotes/ec.html:
+	* docs/releasenotes/index.html:
+
+	  Added links to the ec_options.html and cec_options.html. 
+
 Wed Nov 17 17:13:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* tests/CodeSets/simple/server.cpp:
