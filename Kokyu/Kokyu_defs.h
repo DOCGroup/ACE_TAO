@@ -125,17 +125,6 @@ namespace Kokyu
     private:
       int dont_delete_;
     };
-
-  class Kokyu_Export non_copyable
-  {
-  protected:
-    non_copyable (void);
-    ~non_copyable (void);
-  private:
-    non_copyable (const non_copyable&);
-    const non_copyable& operator= (const non_copyable&);
-  };
-
 } //end of namespace
 
 #if defined (__ACE_INLINE__)

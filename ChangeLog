@@ -1,3 +1,18 @@
+Tue Aug 26 08:37:21 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/DSRT_Sched_Queue_T.h: Changed the prototype of
+	  Guid_Hash::operator method with full qualification for the
+	  Guid_t type. This is to fix compile errors in
+	  SunOS_8_Forte8_Debug build.
+
+	* Kokyu/Kokyu.h:
+	* Kokyu/Kokyu_defs.h: 
+	* Kokyu/Kokyu_dsrt.h: 
+	* Kokyu/DSRT_Dispatch_Item_T.h: 
+	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.h: 
+	* Kokyu/Kokyu_defs.i: 
+	  Replaced non_copyable with ACE_Copy_Disabled.	  
+	
 Tue Aug 26 08:24:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/MakeWorkspaceCreator.pm:
