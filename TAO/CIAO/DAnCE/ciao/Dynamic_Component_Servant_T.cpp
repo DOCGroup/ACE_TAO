@@ -34,6 +34,18 @@ namespace CIAO
             typename EXEC,
             typename EXEC_VAR,
             typename COMP>
+  void Dynamic_Component_Servant<COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR,
+    EXEC, EXEC_VAR, COMP>::update_destroy_count ()
+  {
+    component_removed_ = 1;
+  } 
+
+  template <typename COMP_SVNT,
+            typename COMP_EXEC,
+            typename COMP_EXEC_VAR,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename COMP>
   Dynamic_Component_Servant<COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR,
     EXEC, EXEC_VAR, COMP>::~Dynamic_Component_Servant (void)
   {
@@ -83,8 +95,6 @@ namespace CIAO
     COMP_SVNT *svt = new COMP_SVNT(ciao_comp.in (), this->home_.in (),
                                    this->home_servant_,
                                    this->container_);
-    ACE_DEBUG ((LM_DEBUG, "i am creating the servant\n"));
-    ACE_DEBUG ((LM_DEBUG, "flag is %d\n", component_removed_));
     if (component_removed_ == 1)
       {
         svt->ciao_preactivate ();

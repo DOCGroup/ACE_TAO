@@ -49,6 +49,8 @@ namespace CIAO
 
     virtual void destroy (PortableServer::ObjectId &oid);
 
+    virtual void update_destroy_count ();
+
   protected:
     Components::EnterpriseComponent_var executor_;
     Home_Servant_Impl_Base *home_servant_;
