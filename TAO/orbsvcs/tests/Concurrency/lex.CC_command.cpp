@@ -220,10 +220,13 @@ static char *ace_cc_yy_c_buf_p = (char *) 0;
 static int ace_cc_yy_init = 1;		/* whether we need to initialize */
 static int ace_cc_yy_start = 0;	/* start state number */
 
+#define ace_cc_yywrap() 1
 /* Flag which is used to allow ace_cc_yywrap()'s to do buffer switches
  * instead of setting up a fresh ace_cc_yyin.  A bit of a hack ...
  */
+#if (ace_cc_yywrap() != 1)
 static int ace_cc_yy_did_buffer_switch_on_eof;
+#endif
 
 void ace_cc_yyrestart ACE_CC_YY_PROTO(( FILE *input_file ));
 
@@ -262,7 +265,6 @@ static void ace_cc_yy_flex_free ACE_CC_YY_PROTO(( void * ));
 #define ACE_CC_YY_AT_BOL() (ace_cc_yy_current_buffer->ace_cc_yy_at_bol)
 
 
-#define ace_cc_yywrap() 1
 #define ACE_CC_YY_SKIP_ACE_CC_YYWRAP
 typedef unsigned char ACE_CC_YY_CHAR;
 FILE *ace_cc_yyin = (FILE *) 0, *ace_cc_yyout = (FILE *) 0;
@@ -910,7 +912,9 @@ case ACE_CC_YY_STATE_EOF(INITIAL):
 			{
 			case EOB_ACT_END_OF_FILE:
 				{
+#if (ace_cc_yywrap() != 1)
 				ace_cc_yy_did_buffer_switch_on_eof = 0;
+#endif
 
 				if ( ace_cc_yywrap() )
 					{
@@ -931,8 +935,10 @@ case ACE_CC_YY_STATE_EOF(INITIAL):
 
 				else
 					{
+#if (ace_cc_yywrap() != 1)
 					if ( ! ace_cc_yy_did_buffer_switch_on_eof )
 						ACE_CC_YY_NEW_FILE;
+#endif
 					}
 				break;
 				}
@@ -1333,7 +1339,9 @@ ACE_CC_YY_BUFFER_STATE new_buffer;
 	 * is looked at is after ace_cc_yywrap() is called, so it's safe
 	 * to go ahead and always set it.
 	 */
+#if (ace_cc_yywrap() != 1)
 	ace_cc_yy_did_buffer_switch_on_eof = 1;
+#endif
 	}
 
 
