@@ -96,35 +96,28 @@ ACE_Proactor_Timer_Handler::svc (void)
 {
   ACE_Time_Value absolute_time;
   int empty_flag = 0;
-  
+  int result = 0;
+
   while (this->shutting_down_ == 0)
     {
-      // If the timer queue is not empty
+      // Is the timer queue empty?
       empty_flag = this->proactor_.timer_queue ()->is_empty ();
+      
       if (!empty_flag)
 	{
 	  // Get the earliest absolute time.
-	  absolute_time =
-            this->proactor_.timer_queue ()->earliest_time () -
-            this->proactor_.timer_queue ()->gettimeofday ();
-#if 0
-          ACE_DEBUG ((LM_DEBUG,
-                      "%N%l:(%t):Earliest Time %d sec, %d msec time\n",
-                      absolute_time.sec (),
-                      absolute_time.msec ()));
-#endif
-          // Make it zero if it is negative.
-          if (absolute_time < ACE_Time_Value::zero)
-            absolute_time = ACE_Time_Value::zero;
+	  absolute_time = this->proactor_.timer_queue ()->earliest_time ();
+          
+          // Block for absolute time.
+          result = this->timer_event_.wait (&absolute_time);
         }
-
-      // Wait for event upto <absolute_time>.
-      int result = 0;
-      if (empty_flag)
-        result = this->timer_event_.wait (0);
       else
-        result = this->timer_event_.wait (&absolute_time);
+        {
+          // Wait for ever.
+          result = this->timer_event_.wait ();
+        }
       
+      // Check for timer expiries.
       if (result == -1)
         {
           switch (errno)
@@ -142,7 +135,6 @@ ACE_Proactor_Timer_Handler::svc (void)
             }
         }
     }
-
   return 0;
 }
 
@@ -166,19 +158,21 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
                        ASYS_TEXT ("(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall,")
                        ASYS_TEXT (" no completion port to post timeout to?!@\n")),
                       -1);
-
+  
   // Create the Asynch_Timer.
   ACE_Asynch_Result_Impl *asynch_timer = this->proactor_->create_asynch_timer (*handler,
-                                                                                 act,
-                                                                                 time,
-                                                                                 0);
+                                                                               act,
+                                                                               time,
+                                                                               ACE_INVALID_HANDLE,
+                                                                               0,
+                                                                               -1);
   if (asynch_timer == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:(%P | %t):%p\n",
                        "ACE_Proactor_Handle_Timeout_Upcall::timeout:"
                        "create_asynch_timer failed"),
                       -1);
-
+  
   // Post a completion.
   if (asynch_timer->post_completion (this->proactor_->implementation ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -239,7 +233,7 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
     delete_timer_queue_ (0)
 {
   this->implementation (implementation);
-
+  
   if (this->implementation () == 0)
     {
 #if defined (ACE_HAS_AIO_CALLS)
@@ -248,8 +242,8 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
       ACE_NEW (implementation, ACE_POSIX_AIOCB_Proactor);
   #elif defined (ACE_POSIX_SIG_PROACTOR)
       ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
-  #else /* Default is to use the AIOCB one */
-      ACE_NEW (implementation, ACE_POSIX_AIOCB_Proactor);
+#else /* Default is to use the SIG one */
+      ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
   #endif
 #elif (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
       // WIN_Proactor.
@@ -637,7 +631,8 @@ ACE_Proactor::create_asynch_read_stream_result (ACE_Handler &handler,
                                                 u_long bytes_to_read,
                                                 const void* act,
                                                 ACE_HANDLE event,
-                                                int priority)
+                                                int priority,
+                                                int signal_number)
 {
   return this->implementation ()->create_asynch_read_stream_result (handler,
                                                                     handle,
@@ -645,7 +640,8 @@ ACE_Proactor::create_asynch_read_stream_result (ACE_Handler &handler,
                                                                     bytes_to_read,
                                                                     act,
                                                                     event,
-                                                                    priority);
+                                                                    priority,
+                                                                    signal_number);
 }
 
 
@@ -656,7 +652,8 @@ ACE_Proactor::create_asynch_write_stream_result (ACE_Handler &handler,
                                                  u_long bytes_to_write,
                                                  const void* act,
                                                  ACE_HANDLE event,
-                                                 int priority)
+                                                 int priority,
+                                                 int signal_number)
 
 {
   return this->implementation ()->create_asynch_write_stream_result (handler,
@@ -665,7 +662,8 @@ ACE_Proactor::create_asynch_write_stream_result (ACE_Handler &handler,
                                                                      bytes_to_write,
                                                                      act,
                                                                      event,
-                                                                     priority);
+                                                                     priority,
+                                                                     signal_number);
 }
 
 
@@ -679,7 +677,8 @@ ACE_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
                                               u_long offset,
                                               u_long offset_high,
                                               ACE_HANDLE event,
-                                              int priority)
+                                              int priority,
+                                              int signal_number)
 
 {
   return this->implementation ()->create_asynch_read_file_result (handler,
@@ -690,7 +689,8 @@ ACE_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
                                                                   offset,
                                                                   offset_high,
                                                                   event,
-                                                                  priority);
+                                                                  priority,
+                                                                  signal_number);
 }
 
 
@@ -704,7 +704,8 @@ ACE_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                u_long offset,
                                                u_long offset_high,
                                                ACE_HANDLE event,
-                                               int priority)
+                                               int priority,
+                                               int signal_number)
 
 {
   return this->implementation ()->create_asynch_write_file_result (handler,
@@ -715,7 +716,8 @@ ACE_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                                    offset,
                                                                    offset_high,
                                                                    event,
-                                                                   priority);
+                                                                   priority,
+                                                                   signal_number);
 }
 
 
@@ -727,7 +729,8 @@ ACE_Proactor::create_asynch_accept_result (ACE_Handler &handler,
                                            u_long bytes_to_read,
                                            const void* act,
                                            ACE_HANDLE event,
-                                           int priority)
+                                           int priority,
+                                           int signal_number)
 
 {
   return this->implementation ()->create_asynch_accept_result (handler,
@@ -737,7 +740,8 @@ ACE_Proactor::create_asynch_accept_result (ACE_Handler &handler,
                                                                bytes_to_read,
                                                                act,
                                                                event,
-                                                               priority);
+                                                               priority,
+                                                               signal_number);
 }
 
 ACE_Asynch_Transmit_File_Result_Impl *
@@ -752,7 +756,8 @@ ACE_Proactor::create_asynch_transmit_file_result (ACE_Handler &handler,
                                                   u_long flags,
                                                   const void *act,
                                                   ACE_HANDLE event,
-                                                  int priority)
+                                                  int priority,
+                                                  int signal_number)
 
 {
   return this->implementation ()->create_asynch_transmit_file_result (handler,
@@ -766,7 +771,8 @@ ACE_Proactor::create_asynch_transmit_file_result (ACE_Handler &handler,
                                                                       flags,
                                                                       act,
                                                                       event,
-                                                                      priority);
+                                                                      priority,
+                                                                      signal_number);
 }
 
 ACE_Asynch_Result_Impl *
@@ -774,13 +780,15 @@ ACE_Proactor::create_asynch_timer (ACE_Handler &handler,
                                    const void *act,
                                    const ACE_Time_Value &tv,
                                    ACE_HANDLE event,
-                                   int priority)
+                                   int priority,
+                                   int signal_number)
 {
   return this->implementation ()->create_asynch_timer (handler,
                                                        act,
                                                        tv,
                                                        event,
-                                                       priority);
+                                                       priority,
+                                                       signal_number);
 }
 
 void

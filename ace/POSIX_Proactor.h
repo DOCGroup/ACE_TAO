@@ -92,18 +92,18 @@ public:
                                                                                 ACE_Message_Block &message_block,
                                                                                 u_long bytes_to_read,
                                                                                 const void* act,
-                                                                                ACE_HANDLE event,
-                                                                                int priority,
-                                                                                int signal_number);
+                                                                                ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                                int priority = 0,
+                                                                                int signal_number = ACE_SIGRTMIN);
 
   virtual ACE_Asynch_Write_Stream_Result_Impl *create_asynch_write_stream_result (ACE_Handler &handler,
                                                                                   ACE_HANDLE handle,
                                                                                   ACE_Message_Block &message_block,
                                                                                   u_long bytes_to_write,
                                                                                   const void* act,
-                                                                                  ACE_HANDLE event,
-                                                                                  int priority,
-                                                                                  int signal_number);
+                                                                                  ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                                  int priority = 0,
+                                                                                  int signal_number = ACE_SIGRTMIN);
 
   virtual ACE_Asynch_Read_File_Result_Impl *create_asynch_read_file_result (ACE_Handler &handler,
                                                                             ACE_HANDLE handle,
@@ -112,9 +112,9 @@ public:
                                                                             const void* act,
                                                                             u_long offset,
                                                                             u_long offset_high,
-                                                                            ACE_HANDLE event,
-                                                                            int priority,
-                                                                            int signal_number);
+                                                                            ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                            int priority = 0,
+                                                                            int signal_number = ACE_SIGRTMIN);
 
   virtual ACE_Asynch_Write_File_Result_Impl *create_asynch_write_file_result (ACE_Handler &handler,
                                                                               ACE_HANDLE handle,
@@ -123,9 +123,9 @@ public:
                                                                               const void* act,
                                                                               u_long offset,
                                                                               u_long offset_high,
-                                                                              ACE_HANDLE event,
-                                                                              int priority,
-                                                                              int signal_number);
+                                                                              ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                              int priority = 0,
+                                                                              int signal_number = ACE_SIGRTMIN);
 
   virtual ACE_Asynch_Accept_Result_Impl *create_asynch_accept_result (ACE_Handler &handler,
                                                                       ACE_HANDLE listen_handle,
@@ -133,9 +133,9 @@ public:
                                                                       ACE_Message_Block &message_block,
                                                                       u_long bytes_to_read,
                                                                       const void* act,
-                                                                      ACE_HANDLE event,
-                                                                      int priority,
-                                                                      int signal_number);
+                                                                      ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                      int priority = 0,
+                                                                      int signal_number = ACE_SIGRTMIN);
 
   virtual ACE_Asynch_Transmit_File_Result_Impl *create_asynch_transmit_file_result (ACE_Handler &handler,
                                                                                     ACE_HANDLE socket,
@@ -147,16 +147,16 @@ public:
                                                                                     u_long bytes_per_send,
                                                                                     u_long flags,
                                                                                     const void *act,
-                                                                                    ACE_HANDLE event,
-                                                                                    int priority,
-                                                                                    int signal_number);
+                                                                                    ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                                    int priority = 0,
+                                                                                    int signal_number = ACE_SIGRTMIN);
   
   virtual ACE_Asynch_Result_Impl *create_asynch_timer (ACE_Handler &handler,
                                                        const void *act,
                                                        const ACE_Time_Value &tv,
-                                                       ACE_HANDLE event,
-                                                       int priority,
-                                                       int signal_number);
+                                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                       int priority = 0,
+                                                       int signal_number = ACE_SIGRTMIN);
   // Create a timer result object which can be used with the Timer
   // mechanism of the Proactor. 
   
@@ -171,25 +171,6 @@ protected:
 				  u_long error);
   // Protect against structured exceptions caused by user code when
   // dispatching handles.
-
-  virtual int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result) = 0;
-  // <Asynch_Operation> class call this method to register the <aio_>
-  // call with the Proactor, so that Proactor can do completion
-  // querying. Different <POSIX_Proactor> implementations do different
-  // things to register the <aio_>. 
-
-#if 0
-  ACE_Thread_Manager thr_mgr_;
-  // This will manage the thread in the Timer_Handler.
-
-  ACE_Auto_Event event_;
-  // This event is used in conjunction with Reactor when we try to
-  // integrate the event loops of Reactor and the Proactor.
-
-  int used_with_reactor_event_loop_;
-  // Flag that indicates whether we are used in conjunction with
-  // Reactor.
-#endif /* 0 */
 };
 
 // Forward declarations.
@@ -296,8 +277,11 @@ class ACE_Export ACE_POSIX_SIG_Proactor : public ACE_POSIX_Proactor
   // = TITLE
   //
   //     This Proactor implementation does compeltion querying using
-  //     POSIX Real Time signals. <sigtimedwait> call is used to get
-  //     the notify/get the completions.
+  //     POSIX Real Time signals. <sigtimedwait>/<sigwaitinfo> call is
+  //     used to get the notify/get the completions.
+  //     The real-time signals that are going to be used with this
+  //     Proactor should be given apriori in the constructor, so that
+  //     those signals can be masked from asynchornous delivery. 
   //
   // = DESCRIPTION
   //
@@ -309,7 +293,15 @@ class ACE_Export ACE_POSIX_SIG_Proactor : public ACE_POSIX_Proactor
 
 public:
   ACE_POSIX_SIG_Proactor (void);
-  // Constructor.
+  // This constructor masks only the <ACE_SIGRTMIN>
+  // real-time signal. Only this signal should be used to issue
+  // asynchronous operations using this Proctor.
+
+  ACE_POSIX_SIG_Proactor (const sigset_t mask_set);
+  // This constructor should be used to tell the Proactor to mask and
+  // wait for the real-time signals specified in this set. Only these
+  // signals should be used by the asynchronous operations when they
+  // use this Proactor.
 
   virtual ~ACE_POSIX_SIG_Proactor (void);
   // Destructor.
@@ -345,17 +337,32 @@ public:
 
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
 
+  virtual ACE_Asynch_Result_Impl *create_asynch_timer (ACE_Handler &handler,
+                                                       const void *act,
+                                                       const ACE_Time_Value &tv,
+                                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                       int priority = 0,
+                                                       int signal_number = ACE_SIGRTMIN) ;
+  // If <signal_number> is -1, check with the Proactor and use one of
+  // the signals that is present in the mask set (i.e. the signals for
+  // which the Proactor will be waiting) of the Proactor. If there are
+  // more than one signal, the higher numbered signal will be chosen.
+
 protected:
+  int setup_signal_handler (int signal_number) const;
+  // To setup the handler for a real-time signbal.
+
+  static void null_handler (int signal_number, siginfo_t *info, void *context);
+  // Dummy signal handler. This wont get called at all, since we are
+  // going to be masking the signal in all the threads.
+  
+  int mask_all (void) const;
+  // To mask all the signals in a thread.
+
   virtual int handle_events (unsigned long milli_seconds);
   // Dispatch a single set of events.  If <milli_seconds> elapses
   // before any events occur, return 0. Return 1 if a completion is
   // dispatched. Return -1 on errors.
-
-  int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result);
-  // <Asynch_Operation> classes call this, to register the real-time
-  // signal used to issue the <aio_> call with the Proator. This
-  // should be done so that the Proactor can wait for completions of
-  // the asynchronous calls, issued using those signals.
 
   sigset_t RT_completion_signals_;
   // These signals are used for completion notification by the
@@ -373,7 +380,8 @@ class ACE_Export ACE_POSIX_Asynch_Timer : public ACE_POSIX_Asynch_Result
   //     called. 
   
   friend class ACE_POSIX_Proactor;
-  // The factory method for this class is with the POSIX_Proactor
+  friend class ACE_POSIX_SIG_Proactor;
+  // The factory method for this class is with the POSIX_Proactor 
   // class. 
 
 protected:
@@ -382,7 +390,7 @@ protected:
                           const ACE_Time_Value &tv,
                           ACE_HANDLE event = ACE_INVALID_HANDLE,
                           int priority = 0,
-                          int signal_number = SIGRTMIN);
+                          int signal_number = ACE_SIGRTMIN);
   // Constructor.
   
   virtual ~ACE_POSIX_Asynch_Timer (void) {}

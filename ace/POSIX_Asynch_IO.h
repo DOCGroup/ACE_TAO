@@ -172,12 +172,6 @@ protected:
   virtual ~ACE_POSIX_Asynch_Operation (void);
   // Destructor.
 
-  virtual int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result) = 0;
-  // <Asynch_Operation> class call this method to register the <aio_>
-  // call with the Proactor, so that Proactor can do completion
-  // querying effectively. Different POSIX Proactor implementations do
-  // different things to register the <aio_>. 
-  
   ACE_Proactor *proactor_;
   // Proactor that this Asynch IO will be registered with.
 
@@ -244,12 +238,6 @@ protected:
 
   virtual ~ACE_POSIX_SIG_Asynch_Operation (void);
   // Destructor.
-
-  int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result);
-  // <Asynch_Operation> classes call this, to register the real-time
-  // signal used to issue the <aio_> call with the Proator. This
-  // should be done so that the Proactor can wait for completions of
-  // the asynchronous calls, issued using those signals.
 
   ACE_POSIX_SIG_Proactor *posix_sig_proactor_;
   // It is easy to get this specific implementation proactor here,

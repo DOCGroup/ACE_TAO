@@ -113,7 +113,7 @@ public:
                                                                                 ACE_Message_Block &message_block,
                                                                                 u_long bytes_to_read,
                                                                                 const void* act,
-                                                                                ACE_HANDLE event,
+                                                                                ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                                 int priority = 0,
                                                                                 int signal_number = ACE_SIGRTMIN) = 0;
   // Create the correct implementation class for ACE_Asynch_Read_Stream::Result class. 
@@ -123,7 +123,7 @@ public:
                                                                                   ACE_Message_Block &message_block,
                                                                                   u_long bytes_to_write,
                                                                                   const void* act,
-                                                                                  ACE_HANDLE event,
+                                                                                  ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                                   int priority = 0,
                                                                                   int signal_number = ACE_SIGRTMIN) = 0;
   // Create the correct implementation class for ACE_Asynch_Write_Stream::Result.
@@ -135,7 +135,7 @@ public:
                                                                             const void* act,
                                                                             u_long offset,
                                                                             u_long offset_high,
-                                                                            ACE_HANDLE event,
+                                                                            ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                             int priority = 0,
                                                                             int signal_number = ACE_SIGRTMIN) = 0;
   // Create the correct implementation class for ACE_Asynch_Read_File::Result.  
@@ -147,7 +147,7 @@ public:
                                                                               const void* act,
                                                                               u_long offset,
                                                                               u_long offset_high,
-                                                                              ACE_HANDLE event,
+                                                                              ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                               int priority = 0,
                                                                               int signal_number = ACE_SIGRTMIN) = 0;
     // Create the correct implementation class for ACE_Asynch_Write_File::Result.
@@ -158,7 +158,7 @@ public:
                                                                       ACE_Message_Block &message_block,
                                                                       u_long bytes_to_read,
                                                                       const void* act,
-                                                                      ACE_HANDLE event,
+                                                                      ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                       int priority = 0,
                                                                       int signal_number = ACE_SIGRTMIN) = 0;
   // Create the correct implementation class for ACE_Asynch_Accept::Result.
@@ -173,7 +173,7 @@ public:
                                                                                     u_long bytes_per_send,
                                                                                     u_long flags,
                                                                                     const void *act,
-                                                                                    ACE_HANDLE event,
+                                                                                    ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                                     int priority = 0,
                                                                                     int signal_number = ACE_SIGRTMIN) = 0;
   // Create the correct implementation class for ACE_Asynch_Transmit_File::Result.
@@ -181,10 +181,12 @@ public:
   virtual ACE_Asynch_Result_Impl *create_asynch_timer (ACE_Handler &handler,
                                                        const void *act,
                                                        const ACE_Time_Value &tv,
-                                                       ACE_HANDLE event,
+                                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                        int priority = 0,
-                                                       int signal_number = ACE_SIGRTMIN) = 0;
-  // Create the correct implementation object for the Timer result.
+                                                       int signal_number = 0) = 0;
+  // Create the correct implementation object for the Timer
+  // result. POSIX_SIG_Proactor will create a Timer object with a
+  // meaningful signal number, if you leave the signal number as 0. 
 };
 
 #endif /* (ACE_WIN32 && ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS */
