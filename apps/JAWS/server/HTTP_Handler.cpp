@@ -32,30 +32,29 @@ HTTP_Handler::open (ACE_HANDLE handle,
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) New connection \n"));
 
-  {
-    int sockbufsize = 64*1024;
-    int result = ACE_OS::setsockopt (handle,
-                                     SOL_SOCKET,
-                                     SO_RCVBUF,
-                                     (char *) &sockbufsize,
-                                     sizeof (sockbufsize));
+  int sockbufsize = 64*1024;
+  int result = ACE_OS::setsockopt (handle,
+                                   SOL_SOCKET,
+                                   SO_RCVBUF,
+                                   (char *) &sockbufsize,
+                                   sizeof (sockbufsize));
 
-    if (result < 0)
-      {
-        perror ("SO_RCVBUF");
-      }
+  if (result < 0)
+    {
+      perror ("SO_RCVBUF");
+    }
 
-    int sendsockbufsize = 64*1024;
+  int sendsockbufsize = 64*1024;
 
-    result = ACE_OS::setsockopt (handle,
-                                 SOL_SOCKET,
-                                 SO_SNDBUF,
-                                 (char *) &sendsockbufsize,
-                                 sizeof (sendsockbufsize));
-    if (result < 0)
-      {
-        perror ("SO_SNDBUF");
-      }
+  result = ACE_OS::setsockopt (handle,
+                               SOL_SOCKET,
+                               SO_SNDBUF,
+                               (char *) &sendsockbufsize,
+                               sizeof (sendsockbufsize));
+  if (result < 0)
+    {
+      perror ("SO_SNDBUF");
+    }
 
 
   this->handle_ = handle;
