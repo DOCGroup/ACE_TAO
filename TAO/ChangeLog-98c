@@ -38,6 +38,10 @@ Fri Sep 18 08:39:13 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/POA.i (operator ==,!=): added ACE_UNUSED_ARG (rhs) with
           POA_NO_TIMESTAMP.
 
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile: ran make depend.
+          Thanks to Hans Rohnert for reporting that the build failed
+          without it.
+
 Fri Sep 18 02:15:23 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.12 released.
