@@ -60,7 +60,7 @@ int main (int argc, char *argv[])
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
-      naming_context->bind (schedule_name, scheduler, TAO_TRY_ENV);
+      naming_context->bind (schedule_name, scheduler.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       poa_manager->activate (TAO_TRY_ENV);
