@@ -49,7 +49,7 @@ CIAO::Session_Container::init (const char *name
    if (name == 0)
      {
        this->number_ = ++CIAO::Session_Container::serial_number_;
-       ACE_OS::sprintf (buffer, "CIAO::Session_Container-%d",
+       ACE_OS::sprintf (buffer, "CIAO::Session_Container-%ld",
                         this->number_);
        name = buffer;
      }
@@ -98,7 +98,7 @@ CIAO::Session_Container::install_servant (PortableServer::Servant p
   ACE_CHECK_RETURN (0);
 
   CORBA::Object_var objref
-    = this->poa_->id_to_reference (oid
+    = this->poa_->id_to_reference (oid.in ()
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -117,7 +117,7 @@ CIAO::Session_Container::install_component (PortableServer::Servant p,
   ACE_CHECK_RETURN (0);
 
   CORBA::Object_var objref
-    = this->poa_->id_to_reference (id
+    = this->poa_->id_to_reference (id.in ()
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -209,7 +209,7 @@ CIAO::Session_Container::uninstall (CORBA::Object_ptr objref
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->poa_->deactivate_object (oid
+  this->poa_->deactivate_object (oid.in ()
                                  ACE_ENV_ARG_PARAMETER);
 }
 
@@ -223,7 +223,7 @@ CIAO::Session_Container::uninstall (PortableServer::Servant svt
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->poa_->deactivate_object (oid
+  this->poa_->deactivate_object (oid.in ()
                                  ACE_ENV_ARG_PARAMETER);
 }
 
@@ -238,7 +238,7 @@ CIAO::Session_Container::uninstall_component (CORBA::Object_ptr objref,
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->poa_->deactivate_object (id
+  this->poa_->deactivate_object (id.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
