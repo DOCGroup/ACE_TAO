@@ -603,7 +603,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // Create a new thread running <func>.  *Must* be called with the
   // <lock_> held...
 #if 1
-  auto_ptr<ACE_Thread_Descriptor> new_thr_desc = this->thread_desc_freelist_.remove ();
+  auto_ptr<ACE_Thread_Descriptor> new_thr_desc (this->thread_desc_freelist_.remove ());
   new_thr_desc->thr_state_ = ACE_THR_IDLE;
   // Get a "new" Thread Descriptor from the freelist.
 
@@ -621,7 +621,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 
   ACE_Thread_Adapter *thread_args = 0;
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-  ACE_NEW_RETURN (thread_args, 
+  ACE_NEW_RETURN (thread_args,
                   ACE_Thread_Adapter (func,
                                       args,
                                       (ACE_THR_C_FUNC) ace_thread_adapter,
@@ -631,7 +631,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                       ACE_LOG_MSG->seh_except_handler()),
                   -1);
 #else
-  ACE_NEW_RETURN (thread_args, 
+  ACE_NEW_RETURN (thread_args,
                   ACE_Thread_Adapter (func,
                                       args,
                                       (ACE_THR_C_FUNC) ace_thread_adapter,
