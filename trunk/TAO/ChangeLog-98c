@@ -1,6 +1,12 @@
+
+Thu May 14  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: Removed PropertyService from the
+	conditional compilation.
+
 Thu May 14 10:00:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/OctetSeq/OctetSeq.cpp: 
+	* tests/OctetSeq/OctetSeq.cpp:
 	  Removed signed/unsigned comparison warnings.
 
 Wed May 13 21:48:08 1998  David L. Levine  <levine@cs.wustl.edu>
