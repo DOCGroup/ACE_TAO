@@ -1,16 +1,23 @@
+Wed Mar 21 23:13:23 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+          Fixed TAO_Export macro for TAO_Synch_Refcountable.  Thanks to
+          Johnny Willemsen <johnny.willemsen@meco.nl> for suggesting this
+          fix.
+
 Wed Mar 21 23:57:44 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp (key_to_stub_i):
-	  Fixed Typo.
+        * tao/PortableServer/POA.cpp (key_to_stub_i):
+          Fixed Typo.
 
-	* tests/RTCORBA/Explicit_Binding/client.cpp:
-	  Disabled temporarily one diagnostic message.
+        * tests/RTCORBA/Explicit_Binding/client.cpp:
+          Disabled temporarily one diagnostic message.
 
 Wed Mar 21 14:54:07 2001  Ossama Othman  <ossama@uci.edu>
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Updated CORBA Security Service release notes.
+          Updated CORBA Security Service release notes.
 
 Wed Mar 21 16:08:32 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -25,45 +32,45 @@ Wed Mar 21 16:08:32 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Wed Mar 21 15:17:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp:
-	* tao/Transport.h:
-	* tao/Transport.inl:
-	* tao/Transport_Cache_Manager.h:
-	* tao/Transport_Cache_Manager.cpp:
-	* tao/Transport_Cache_Manager.inl: It was observed during testing
-	  that there was a race condition in the code. The race condition
-	  was because of unsynchronized access to the hash_map_entry that
-	  TAO_Transport stores. This is a first attempt to solve the
-	  problem. The problem has been solved by protecting access and
-	  trying to hide the Hash_Map_Entry from direct access.
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Transport_Cache_Manager.inl: It was observed during testing
+          that there was a race condition in the code. The race condition
+          was because of unsynchronized access to the hash_map_entry that
+          TAO_Transport stores. This is a first attempt to solve the
+          problem. The problem has been solved by protecting access and
+          trying to hide the Hash_Map_Entry from direct access.
 
 Wed Mar 21 13:48:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/Options.html: Added the missing default reactor type to the
-	  documentation of "-ORBReactorType". Thanks to Craig Rodrigues
-	  for poiting this out.
+        * docs/Options.html: Added the missing default reactor type to the
+          documentation of "-ORBReactorType". Thanks to Craig Rodrigues
+          for poiting this out.
 
 Wed Mar 21 11:23:31 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PolicyFactory_Registry.cpp (register_policy_factory):
+        * tao/PolicyFactory_Registry.cpp (register_policy_factory):
 
-	  Throw a CORBA::BAD_PARAM exception instead of a
-	  CORBA::INV_OBJREF exception if the policy reference is nil.  A
-	  nil reference is perfectly valid, so CORBA::INV_OBJREF isn't
-	  appropriate in this case.
+          Throw a CORBA::BAD_PARAM exception instead of a
+          CORBA::INV_OBJREF exception if the policy reference is nil.  A
+          nil reference is perfectly valid, so CORBA::INV_OBJREF isn't
+          appropriate in this case.
 
 Wed Mar 21 11:04:27 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp (key_to_stub_i):
+        * tao/PortableServer/POA.cpp (key_to_stub_i):
 
-	  A part on non RTCORBA code was using an RTCORBA acceptor filter.
-	  The problem has been fixed using the standard TAO acceptor filter.
+          A part on non RTCORBA code was using an RTCORBA acceptor filter.
+          The problem has been fixed using the standard TAO acceptor filter.
 
 Wed Mar 21 20:44:33 2001 Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tests/RTCORBA/Banded_Connections/client.cpp:
+        * tests/RTCORBA/Banded_Connections/client.cpp:
 
-	  Fixed misleading error message.
+          Fixed misleading error message.
 
 Wed Mar 21 07:05:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
