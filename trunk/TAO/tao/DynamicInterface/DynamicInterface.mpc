@@ -16,4 +16,8 @@ project : taolib, core, portableserver {
     Server_Request.cpp
     Unknown_User_Exception.cpp
   }  
+
+  Header_Files {
+    dynamicinterface_export.h
+  }
 }

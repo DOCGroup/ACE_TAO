@@ -6,7 +6,7 @@ project : taolib, core, objreftemplate, valuetype, iorinterceptor {
   Source_Files {
     Active_Object_Map.cpp
     AMH_Response_Handler.cpp
-    Collocation_Object_Proxy_Broker.cpp
+    Collocated_Object_Proxy_Broker.cpp
     Default_Acceptor_Filter.cpp
     Default_ORTC.cpp
     Default_Policy_Validator.cpp
@@ -39,5 +39,11 @@ project : taolib, core, objreftemplate, valuetype, iorinterceptor {
     Servant_Dispatcher.cpp
     ServerInterceptorAdapter.cpp
     ServerRequestInfo.cpp
-  }  
+  }
+
+  Header_Files {
+    poa_macros.h
+    portableserver_export.h
+    Upcall_Wrapper.h
+  }
 }
