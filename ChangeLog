@@ -1,3 +1,13 @@
+Thu Oct  7 11:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Reverted my change below, broke the LynxOS build
+
+          Tue Sep 28 11:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          Removed setting of ACE_SIZEOF_LONG_DOUBLE, this is done in
+          Basic_Types.h
+
 Thu Oct  7 07:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-all.h:
