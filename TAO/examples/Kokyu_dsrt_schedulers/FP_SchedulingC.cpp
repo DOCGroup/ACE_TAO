@@ -26,13 +26,14 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// .\be\be_codegen.cpp:338
 
 
 #include "FP_SchedulingC.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
+#include "tao/Fixed_Size_Argument_T.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -44,15 +45,32 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:60
+// .\be\be_visitor_arg_traits.cpp:62
 
 // Arg traits specializations.
 namespace TAO
 {
+  
+  // TAO_IDL - Generated from
+  // .\be\be_visitor_arg_traits.cpp:474
+
+#if !defined (_FP_SCHEDULING_SEGMENTSCHEDULINGPARAMETER__ARG_TRAITS_CS_)
+#define _FP_SCHEDULING_SEGMENTSCHEDULINGPARAMETER__ARG_TRAITS_CS_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  class Kokyu_DSRT_Schedulers_Export Arg_Traits<FP_Scheduling::SegmentSchedulingParameter>
+    : public
+        Fixed_Size_Arg_Traits_T<
+            FP_Scheduling::SegmentSchedulingParameter
+          >
+  {
+  };
+
+#endif /* end #if !defined */
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_FP_Scheduling_SegmentSchedulingParameter[] =
 {
@@ -122,7 +140,7 @@ namespace FP_Scheduling
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/structure_cs.cpp:66
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 FP_Scheduling::SegmentSchedulingParameter::_tao_any_destructor (
@@ -135,10 +153,11 @@ FP_Scheduling::SegmentSchedulingParameter::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for FP_Scheduling::SegmentSchedulingParameterPolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
 TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::tao_duplicate (
     FP_Scheduling::SegmentSchedulingParameterPolicy_ptr p
@@ -147,6 +166,7 @@ TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::tao_duplica
   return FP_Scheduling::SegmentSchedulingParameterPolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::tao_release (
     FP_Scheduling::SegmentSchedulingParameterPolicy_ptr p
@@ -155,12 +175,14 @@ TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::tao_release
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
 TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::tao_nil (void)
 {
   return FP_Scheduling::SegmentSchedulingParameterPolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::tao_marshal (
     FP_Scheduling::SegmentSchedulingParameterPolicy_ptr p,
@@ -263,7 +285,7 @@ FP_Scheduling::SegmentSchedulingParameterPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_FP_Scheduling_SegmentSchedulingParameterPolicy[] =
 {
@@ -310,10 +332,11 @@ namespace FP_Scheduling
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for FP_Scheduling::FP_Scheduler.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 FP_Scheduling::FP_Scheduler_ptr
 TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::tao_duplicate (
     FP_Scheduling::FP_Scheduler_ptr p
@@ -322,6 +345,7 @@ TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::tao_duplicate (
   return FP_Scheduling::FP_Scheduler::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::tao_release (
     FP_Scheduling::FP_Scheduler_ptr p
@@ -330,12 +354,14 @@ TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 FP_Scheduling::FP_Scheduler_ptr
 TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::tao_nil (void)
 {
   return FP_Scheduling::FP_Scheduler::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<FP_Scheduling::FP_Scheduler>::tao_marshal (
     FP_Scheduling::FP_Scheduler_ptr p,
@@ -438,7 +464,7 @@ FP_Scheduling::FP_Scheduler::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_FP_Scheduling_FP_Scheduler[] =
 {
@@ -475,7 +501,7 @@ namespace FP_Scheduling
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/any_op_cs.cpp:54
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -533,7 +559,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -602,7 +628,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -669,123 +695,4 @@ operator>>= (
         _tao_elem
       );
 }
-
-// TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO_Fixed_Var_T<
-        FP_Scheduling::SegmentSchedulingParameter
-      >;
-
-  template class
-    TAO_Var_Base_T<
-        FP_Scheduling::SegmentSchedulingParameter
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        FP_Scheduling::SegmentSchedulingParameter
-      >;
-
-  template class
-    TAO::Objref_Traits<
-        FP_Scheduling::SegmentSchedulingParameterPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        FP_Scheduling::SegmentSchedulingParameterPolicy
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        FP_Scheduling::SegmentSchedulingParameterPolicy
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        FP_Scheduling::SegmentSchedulingParameterPolicy
-      >;
-
-  template class
-    TAO::Objref_Traits<
-        FP_Scheduling::FP_Scheduler
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        FP_Scheduling::FP_Scheduler
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        FP_Scheduling::FP_Scheduler
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        FP_Scheduling::FP_Scheduler
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO_Fixed_Var_T< \
-        FP_Scheduling::SegmentSchedulingParameter \
-      >
-
-# pragma instantiate \
-    TAO_Var_Base_T< \
-        FP_Scheduling::SegmentSchedulingParameter \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        FP_Scheduling::SegmentSchedulingParameter \
-      >
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        FP_Scheduling::SegmentSchedulingParameterPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        FP_Scheduling::SegmentSchedulingParameterPolicy
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        FP_Scheduling::SegmentSchedulingParameterPolicy
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        FP_Scheduling::SegmentSchedulingParameterPolicy \
-      >
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        FP_Scheduling::FP_Scheduler \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        FP_Scheduling::FP_Scheduler
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        FP_Scheduling::FP_Scheduler
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        FP_Scheduling::FP_Scheduler \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 

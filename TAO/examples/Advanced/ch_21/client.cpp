@@ -19,8 +19,10 @@
 // ============================================================================
 
 #include    "CCSC.h"        // ORB-specific
-// #include    <iostream.h>
+#include    <iostream>
 // #include    <fstream.h>
+
+using namespace std;
 
 //----------------------------------------------------------------
 
@@ -199,14 +201,14 @@ main(int argc, char * argv[])
         cout << endl;
         
         // Change the location of first device in the list
-        CCS::AssetType anum = list[0]->asset_num();
+        CCS::AssetType anum = list[0U]->asset_num();
         cout << "Changing location of device "
              << anum << "." << endl;
-        list[0]->location("Earth");
+        list[0U]->location("Earth");
         // Check that the location was updated
         cout << "New details for device "
              << anum << " are:" << endl;
-        cout << list[0] << endl;
+        cout << list[0U] << endl;
 
         // Find first thermostat in list.
         CCS::Thermostat_var tmstat;

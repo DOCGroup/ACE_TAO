@@ -18,7 +18,9 @@
 // ============================================================================
 
 #include    "CCSC.h"        // ORB-specific
-//#include    <iostream.h>
+#include    <iostream>
+
+using namespace std;
 
 // Show the details for a thermometer or thermostat.
 static ostream &

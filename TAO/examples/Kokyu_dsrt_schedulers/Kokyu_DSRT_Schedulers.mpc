@@ -1,6 +1,7 @@
 project(Kokyu_DSRT_Schedulers) : orbsvcslib, kokyu, rtscheduling, rtcorba {
   sharedname  = Kokyu_DSRT_Schedulers
   dynamicflags = KOKYU_DSRT_SCHEDULERS_BUILD_DLL
+  idl_flags += -I../../orbsvcs -I../.. -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h
 
   Source_Files {
         FP_Scheduler.cpp      
@@ -12,5 +13,9 @@ project(Kokyu_DSRT_Schedulers) : orbsvcslib, kokyu, rtscheduling, rtcorba {
         FP_SchedulingC.cpp    
         MUF_SchedulingC.cpp
         MIF_SchedulingC.cpp  
+  }
+  
+  Header_Files {
+		Kokyu_dsrt_schedulers_export.h
   }
 }

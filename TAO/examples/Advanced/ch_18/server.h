@@ -27,9 +27,10 @@
 #include "icp.h"
 #include <map>
 #include <list>
-//#include <assert.h>
+#include <assert.h>
 //#include <corba/poaS.h>
 
+using namespace std;
 
 class Controller_impl;
 
