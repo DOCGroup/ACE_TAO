@@ -1,3 +1,10 @@
+Mon Jun  9 02:31:36 1997  Nanbor Wang  <nw1@siesta.cs.wustl.edu>
+
+	* tests/Sigset_Ops_Test.cpp (main): Comment out testing of invalid
+	  sigset checking for most platforms don't seem to support it.
+	  Perhaps the ACE's sigset* functions should remove this check for
+	  compatibility.  
+
 Sun Jun  8 11:39:06 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* ace/OS.i (set): There was a typo here where 
