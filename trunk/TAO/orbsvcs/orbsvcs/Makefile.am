@@ -1,6 +1,6 @@
 ##  Process this file with automake to create Makefile.in
 
-includedir=@includedir@/orbsvcs
+includedir = @includedir@/orbsvcs
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -10,6 +10,8 @@ TAO_ROOT = $(top_srcdir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 
+noinst_HEADERS =
+noinst_LTLIBRARIES =
 nobase_include_HEADERS =
 lib_LTLIBRARIES =
 CLEANFILES =
@@ -995,6 +997,7 @@ FT_CORBA_ORB-stamp: $(srcdir)/FT_CORBA_ORB.idl
 BUILT_SOURCES += \
   PortableGroup_Simple_DSC.inl \
   PortableGroup_Simple_DSS.inl \
+  PortableGroup_Simple_DSS_T.inl \
   PortableGroup_Simple_DSC.cpp \
   PortableGroup_Simple_DSC.h \
   PortableGroup_Simple_DSS.h
@@ -1002,15 +1005,16 @@ BUILT_SOURCES += \
 CLEANFILES += \
   PortableGroup_Simple_DSC.inl \
   PortableGroup_Simple_DSS.inl \
+  PortableGroup_Simple_DSS_T.inl \
   PortableGroup_Simple_DSC.cpp \
   PortableGroup_Simple_DSC.h \
   PortableGroup_Simple_DSS.h \
   PortableGroup_Simple_DS-stamp
 
-PortableGroup_Simple_DSC.inl PortableGroup_Simple_DSS.inl PortableGroup_Simple_DSC.cpp PortableGroup_Simple_DSC.h PortableGroup_Simple_DSS.h: PortableGroup_Simple_DS-stamp
+PortableGroup_Simple_DSC.inl PortableGroup_Simple_DSS.inl PortableGroup_Simple_DSS_T.inl PortableGroup_Simple_DSC.cpp PortableGroup_Simple_DSC.h PortableGroup_Simple_DSS.h: PortableGroup_Simple_DS-stamp
 
 PortableGroup_Simple_DS-stamp: $(srcdir)/PortableGroup_Simple_DS.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/PortableGroup_Simple_DS.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,skel_export_include=tao/PortableServer/PolicyS.h -Wb,export_macro=TAO_PortableGroup_Simple_Export -Wb,export_include=orbsvcs/PortableGroup_Simple_export.h $(srcdir)/PortableGroup_Simple_DS.idl
 	@touch $@
 
 FTORB_Utils = \
@@ -1028,6 +1032,7 @@ libTAO_FTORB_Utils_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_PORTABLEGROUP_SIMPLE_HAS_DLL=0 \
   -DTAO_FT_ORB_UTILS_BUILD_DLL
 
 libTAO_FTORB_Utils_la_SOURCES = \
@@ -1056,6 +1061,7 @@ nobase_include_HEADERS += \
   FaultTolerance/FT_IOGR_Property.i \
   PortableGroup_Simple_DSC.inl \
   PortableGroup_Simple_DSS.inl \
+  PortableGroup_Simple_DSS_T.inl \
   FT_CORBA_ORBS_T.cpp \
   FT_CORBA_ORB.idl \
   PortableGroup_Simple_DS.idl
@@ -1180,7 +1186,8 @@ libTAO_PortableGroup_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_PORTABLEGROUP_BUILD_DLL
+  -DTAO_PORTABLEGROUP_BUILD_DLL \
+  -DTAO_PORTABLEGROUP_SIMPLE_BUILD_DLL
 
 libTAO_PortableGroup_la_SOURCES = \
   $(PortableGroup)
@@ -1843,6 +1850,7 @@ Notify = \
   Notify/Any/ProxyPushSupplier.cpp \
   Notify/Any/PushConsumer.cpp \
   Notify/Any/PushSupplier.cpp \
+  Notify/Bit_Vector.cpp \
   Notify/Buffering_Strategy.cpp \
   Notify/Builder.cpp \
   Notify/Consumer.cpp \
@@ -1850,6 +1858,7 @@ Notify = \
   Notify/CosNotify_Initializer.cpp \
   Notify/CosNotify_Service.cpp \
   Notify/Default_Factory.cpp \
+  Notify/Delivery_Request.cpp \
   Notify/ETCL_Filter.cpp \
   Notify/ETCL_FilterFactory.cpp \
   Notify/Event.cpp \
@@ -1866,6 +1875,7 @@ Notify = \
   Notify/Method_Request_Lookup.cpp \
   Notify/Method_Request_Shutdown.cpp \
   Notify/Method_Request_Updates.cpp \
+  Notify/Name_Value_Pair.cpp \
   Notify/Notify_Constraint_Interpreter.cpp \
   Notify/Notify_Constraint_Visitors.cpp \
   Notify/Notify_Default_CO_Factory.cpp \
@@ -1876,6 +1886,7 @@ Notify = \
   Notify/Object.cpp \
   Notify/POA_Helper.cpp \
   Notify/Peer.cpp \
+  Notify/Persistent_File_Allocator.cpp \
   Notify/Properties.cpp \
   Notify/PropertySeq.cpp \
   Notify/Property_Boolean.cpp \
@@ -1883,13 +1894,19 @@ Notify = \
   Notify/ProxyConsumer.cpp \
   Notify/ProxySupplier.cpp \
   Notify/QoSProperties.cpp \
+  Notify/Random_File.cpp \
   Notify/Reactive_Task.cpp \
+  Notify/Reconnection_Registry.cpp \
   Notify/Refcountable.cpp \
+  Notify/Routing_Slip.cpp \
+  Notify/Routing_Slip_Persistence_Manager.cpp \
+  Notify/Routing_Slip_Queue.cpp \
   Notify/Sequence/Batch_Buffering_Strategy.cpp \
   Notify/Sequence/SequenceProxyPushConsumer.cpp \
   Notify/Sequence/SequenceProxyPushSupplier.cpp \
   Notify/Sequence/SequencePushConsumer.cpp \
   Notify/Sequence/SequencePushSupplier.cpp \
+  Notify/Standard_Event_Persistence.cpp \
   Notify/Structured/StructuredEvent.cpp \
   Notify/Structured/StructuredProxyPushConsumer.cpp \
   Notify/Structured/StructuredProxyPushSupplier.cpp \
@@ -1901,6 +1918,9 @@ Notify = \
   Notify/ThreadPool_Task.cpp \
   Notify/Timer_Queue.cpp \
   Notify/Timer_Reactor.cpp \
+  Notify/Topology_Loader.cpp \
+  Notify/Topology_Object.cpp \
+  Notify/Topology_Saver.cpp \
   Notify/Worker_Task.cpp
 
 lib_LTLIBRARIES += libTAO_CosNotification_Serv.la
@@ -1926,9 +1946,10 @@ libTAO_CosNotification_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   libTAO_CosNotification_Skel.la \
   libTAO_CosEvent_Skel.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosNotification.la \
   libTAO_CosEvent.la \
+  libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1942,6 +1963,7 @@ nobase_include_HEADERS += \
   Notify/Any/ProxyPushSupplier.h \
   Notify/Any/PushConsumer.h \
   Notify/Any/PushSupplier.h \
+  Notify/Bit_Vector.h \
   Notify/Buffering_Strategy.h \
   Notify/Builder.h \
   Notify/Consumer.h \
@@ -1949,6 +1971,7 @@ nobase_include_HEADERS += \
   Notify/CosNotify_Initializer.h \
   Notify/CosNotify_Service.h \
   Notify/Default_Factory.h \
+  Notify/Delivery_Request.h \
   Notify/ETCL_Filter.h \
   Notify/ETCL_FilterFactory.h \
   Notify/Event.h \
@@ -1961,13 +1984,12 @@ nobase_include_HEADERS += \
   Notify/ID_Factory.h \
   Notify/Method_Request.h \
   Notify/Method_Request_Dispatch.h \
-  Notify/Method_Request_Dispatch_T.h \
   Notify/Method_Request_Event.h \
   Notify/Method_Request_Lookup.h \
-  Notify/Method_Request_Lookup_T.h \
   Notify/Method_Request_Shutdown.h \
   Notify/Method_Request_Updates.h \
   Notify/Method_Request_Updates_T.h \
+  Notify/Name_Value_Pair.h \
   Notify/Notify_Constraint_Interpreter.h \
   Notify/Notify_Constraint_Visitors.h \
   Notify/Notify_Default_CO_Factory.h \
@@ -1978,6 +2000,7 @@ nobase_include_HEADERS += \
   Notify/Object.h \
   Notify/POA_Helper.h \
   Notify/Peer.h \
+  Notify/Persistent_File_Allocator.h \
   Notify/Properties.h \
   Notify/PropertySeq.h \
   Notify/Property_Boolean.h \
@@ -1988,13 +2011,19 @@ nobase_include_HEADERS += \
   Notify/ProxySupplier_T.h \
   Notify/Proxy_T.h \
   Notify/QoSProperties.h \
+  Notify/Random_File.h \
   Notify/Reactive_Task.h \
+  Notify/Reconnection_Registry.h \
   Notify/Refcountable.h \
+  Notify/Routing_Slip.h \
+  Notify/Routing_Slip_Persistence_Manager.h \
+  Notify/Routing_Slip_Queue.h \
   Notify/Sequence/Batch_Buffering_Strategy.h \
   Notify/Sequence/SequenceProxyPushConsumer.h \
   Notify/Sequence/SequenceProxyPushSupplier.h \
   Notify/Sequence/SequencePushConsumer.h \
   Notify/Sequence/SequencePushSupplier.h \
+  Notify/Standard_Event_Persistence.h \
   Notify/Structured/StructuredEvent.h \
   Notify/Structured/StructuredProxyPushConsumer.h \
   Notify/Structured/StructuredProxyPushSupplier.h \
@@ -2006,6 +2035,9 @@ nobase_include_HEADERS += \
   Notify/ThreadPool_Task.h \
   Notify/Timer_Queue.h \
   Notify/Timer_Reactor.h \
+  Notify/Topology_Loader.h \
+  Notify/Topology_Object.h \
+  Notify/Topology_Saver.h \
   Notify/Worker_Task.h \
   Notify/Admin.inl \
   Notify/AdminProperties.inl \
@@ -2022,6 +2054,7 @@ nobase_include_HEADERS += \
   Notify/ConsumerAdmin.inl \
   Notify/CosNotify_Service.inl \
   Notify/Default_Factory.inl \
+  Notify/Delivery_Request.inl \
   Notify/ETCL_Filter.inl \
   Notify/ETCL_FilterFactory.inl \
   Notify/Event.inl \
@@ -2034,13 +2067,12 @@ nobase_include_HEADERS += \
   Notify/ID_Factory.inl \
   Notify/Method_Request.inl \
   Notify/Method_Request_Dispatch.inl \
-  Notify/Method_Request_Dispatch_T.inl \
   Notify/Method_Request_Event.inl \
   Notify/Method_Request_Lookup.inl \
-  Notify/Method_Request_Lookup_T.inl \
   Notify/Method_Request_Shutdown.inl \
   Notify/Method_Request_Updates.inl \
   Notify/Method_Request_Updates_T.inl \
+  Notify/Name_Value_Pair.inl \
   Notify/Object.inl \
   Notify/POA_Helper.inl \
   Notify/Peer.inl \
@@ -2055,7 +2087,10 @@ nobase_include_HEADERS += \
   Notify/Proxy_T.inl \
   Notify/QoSProperties.inl \
   Notify/Reactive_Task.inl \
+  Notify/Reconnection_Registry.inl \
   Notify/Refcountable.inl \
+  Notify/Routing_Slip.inl \
+  Notify/Routing_Slip_Queue.inl \
   Notify/Sequence/Batch_Buffering_Strategy.inl \
   Notify/Sequence/SequenceProxyPushConsumer.inl \
   Notify/Sequence/SequenceProxyPushSupplier.inl \
@@ -2072,9 +2107,8 @@ nobase_include_HEADERS += \
   Notify/ThreadPool_Task.inl \
   Notify/Timer_Queue.inl \
   Notify/Timer_Reactor.inl \
+  Notify/Topology_Object.inl \
   Notify/Worker_Task.inl \
-  Notify/Method_Request_Dispatch_T.cpp \
-  Notify/Method_Request_Lookup_T.cpp \
   Notify/Method_Request_Updates_T.cpp \
   Notify/ProxyConsumer_T.cpp \
   Notify/ProxySupplier_T.cpp \
@@ -2084,6 +2118,60 @@ endif !BUILD_MINIMUM_CORBA
 
 EXTRA_DIST += \
   CosNotification_Serv.rc
+
+## Makefile.CosNotification_Persist.am 
+
+if BUILD_ACEXML
+if !BUILD_MINIMUM_CORBA
+
+noinst_LTLIBRARIES += libTAO_CosNotification_Persist.la
+
+libTAO_CosNotification_Persist_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(ACE_ROOT)/ACEXML/common \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL \
+  -DTAO_NOTIFY_PERSIST_BUILD_DLL
+
+libTAO_CosNotification_Persist_la_SOURCES = \
+  Notify/XML_Loader.cpp \
+  Notify/XML_Saver.cpp \
+  Notify/XML_Topology_Factory.cpp
+
+libTAO_CosNotification_Persist_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_CosNotification_Persist_la_LIBADD = \
+  $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
+  $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
+  libTAO_CosNotification_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  libTAO_ETCL.la \
+  libTAO_CosNotification_Skel.la \
+  libTAO_CosEvent_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  libTAO_CosNotification.la \
+  libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+noinst_HEADERS += \
+  Notify/XML_Loader.h \
+  Notify/XML_Saver.h \
+  Notify/XML_Topology_Factory.h \
+  Channel_Clients_T.i \
+  Event_Utilities.i \
+  Runtime_Scheduler.i \
+  Scheduler_Factory.i \
+  Scheduler_Utilities.i \
+  Time_Utilities.i
+
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_ACEXML
 
 ## Makefile.CosTime.am 
 
@@ -3558,6 +3646,7 @@ libTAO_FTRT_EventChannel_la_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/EventChannel \
+  -DTAO_PORTABLEGROUP_SIMPLE_HAS_DLL=0 \
   -DTAO_FTRTEC_BUILD_DLL
 
 libTAO_FTRT_EventChannel_la_SOURCES = \
@@ -4046,8 +4135,8 @@ libTAO_HTIOP_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_HTIOP_la_LIBADD = \
-  $(ACE_BUILDDIR)/protocols/ace/HTBP/libACE_HTBP.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/protocols/ace/HTBP/libACE_HTBP.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
