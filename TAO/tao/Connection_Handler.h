@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Balachandran  Natarajan  <bala@cs.wustl.edu>
+ *  @author Balachandran Natarajan  <bala@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -101,10 +101,17 @@ protected:
   /// Object.
   int svc_i (void);
 
+  /// Increment and decrement the number of upcalls that have gone
+  /// through this handler. Returns the upcall count. The calls are
+  /// thread safe..
+  int incr_pending_upcalls (void);
 
+  int decr_pending_upcalls (void);
+
+  /// Query the upcall count
+  int pending_upcalls (void) const;
 
 private:
-
   /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core *orb_core_;
 
@@ -114,8 +121,15 @@ private:
   /// Cached tss resources of the ORB that activated this object.
   TAO_ORB_Core_TSS_Resources *tss_resources_;
 
-  /// Are we registered with the reactor?
-  // CORBA::Boolean is_registered_;
+  /// Count nested upcalls on this
+  /// svc_handler i.e., the connection can close during nested upcalls,
+  /// you should not delete the svc_handler until the stack unwinds
+  /// from the nested upcalls.
+  long pending_upcalls_;
+
+  /// Lock for the <pending_upcalls_>. We can have more than one
+  /// thread trying to access.
+  ACE_Lock *pending_upcall_lock_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -136,12 +136,6 @@ protected:
 
 private:
 
-  /// Reference count.It is used to count nested upcalls on this
-  /// svc_handler i.e., the connection can close during nested upcalls,
-  /// you should not delete the svc_handler until the stack unwinds
-  /// from the nested upcalls.
-  long pending_upcalls_;
-
   /// TCP configuration for this connection.
   TAO_IIOP_Properties *tcp_properties_;
 

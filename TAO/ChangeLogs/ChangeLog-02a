@@ -1,3 +1,38 @@
+Tue Jul 31 06:58:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	This checkin is for fixing a race condition while trying to
+	manipulate the number of upcalls. This was not a problem before
+	575 fix, as the manipulation was done when there was an implicit
+	synchronisation in the TP Reactor. As the implicit synchronisation
+	has been broken, we had a race condition. The surpsising element
+	was the fact that it took sometime to figure out this race
+	condition. We have now added a lock that will be held by the
+	thread  before the variable is manipulated.
+	
+	* tao/Connection_Handler.cpp:
+	* tao/Connection_Handler.h:
+	* tao/ Connection_Handler.inl: Added a lock to the class. Also
+	  added three methods, incr_pending_upcalls (),
+	  decr_pending_upcalls () and pending_upcalls (). The first two
+	  does the manipulation of the pending_upcalls_ variable after
+	  holding the lock.  
+	
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/IIOP_Connection_Handler.h: Removed he peding_upcalls_
+	  variable and called the incr_pending_upcalls () and
+	  decr_pending_upcalls () to achieve what needs to be done.
+
+	* tao/Strategies/DIOP_Connection_Handler.cpp
+	* tao/Strategies/DIOP_Connection_Handler.h
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp
+	* tao/Strategies/SHMIOP_Connection_Handler.h
+	* tao/Strategies/UIOP_Connection_Handler.cpp
+	* tao/Strategies/UIOP_Connection_Handler.h: 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	  Replicated the changes from IIOP to the above protocols. 
+	
+
 Sun Jul 29 19:31:34 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* tao/RTCORBA/RT_Mutex.cpp (try_lock): Since we fixed the timed
