@@ -1,9 +1,8 @@
 // $Id$
 
-#include "global.h"
+#include "Options.h"
 #include "Multicast_Manager.h"
 #include "ace/Get_Opt.h"
-#include "Options.h"
 
 // Initialize all the static variables. 
 

@@ -4802,8 +4802,8 @@ public:
   static int rename (const char *old_name,
                      const char *new_name);
   static int unlink (const char *path);
-  static char *tempnam (const char *dir,
-                        const char *pfx);
+  static char *tempnam (const char *dir = 0,
+                        const char *pfx = 0);
 # endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
   // = A set of wrappers for random number operations.
@@ -4917,11 +4917,6 @@ public:
                       struct sockaddr *addr,
                       int addrlen);
   static int closesocket (ACE_HANDLE s);
-  static struct passwd *getpwnam (const char *user);
-  static struct passwd *getpwnam_r (const char *name,
-                                    struct passwd *pwent,
-                                    char *buffer,
-                                    int buflen);
   static struct hostent *gethostbyaddr (const char *addr,
                                         int length,
                                         int type);
@@ -5009,6 +5004,16 @@ public:
 
   static int socket_fini (void);
   // Finalize WinSock after last use (e.g., when a DLL is unloaded).
+
+  // = A set of wrappers for password routines.
+  static void setpwent (void);
+  static void endpwent (void);
+  static struct passwd *getpwent (void);
+  static struct passwd *getpwnam (const char *user);
+  static struct passwd *getpwnam_r (const char *name,
+                                    struct passwd *pwent,
+                                    char *buffer,
+                                    int buflen);
 
   // = A set of wrappers for regular expressions.
   static char *compile (const char *instring,
