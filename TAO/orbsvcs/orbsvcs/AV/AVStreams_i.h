@@ -36,7 +36,9 @@
 
 #include "orbsvcs/Trader/Trader.h"
 // for the Hash_Map helper classes.
-class TAO_ORBSVCS_Export AV_Null_MediaCtrl : public virtual POA_Null_MediaCtrl
+class TAO_ORBSVCS_Export AV_Null_MediaCtrl
+  : public virtual POA_Null_MediaCtrl,
+    public virtual PortableServer::RefCountServantBase
 {
   public:
   AV_Null_MediaCtrl (void);
@@ -45,7 +47,8 @@ class TAO_ORBSVCS_Export AV_Null_MediaCtrl : public virtual POA_Null_MediaCtrl
 
 class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl 
   : public virtual POA_AVStreams::Basic_StreamCtrl,
-    public virtual TAO_PropertySet<POA_AVStreams::Basic_StreamCtrl>
+    public virtual TAO_PropertySet<POA_AVStreams::Basic_StreamCtrl>,
+    public virtual PortableServer::RefCountServantBase
   // = DESCRIPTION
   //    Base class for StreamCtrl, implements basic stream start
   //    and stop functionality
@@ -122,7 +125,8 @@ class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl
 };
 
 class TAO_ORBSVCS_Export TAO_Negotiator
-  : public POA_AVStreams::Negotiator
+  : public POA_AVStreams::Negotiator,
+    public virtual PortableServer::RefCountServantBase
 {
 public:
   virtual CORBA::Boolean negotiate (AVStreams::Negotiator_ptr remote_negotiator,
@@ -134,7 +138,8 @@ class TAO_MCastConfigIf;
 
 class TAO_ORBSVCS_Export TAO_StreamCtrl
   : public virtual POA_AVStreams::StreamCtrl,
-    public virtual TAO_Basic_StreamCtrl
+    public virtual TAO_Basic_StreamCtrl,
+    public virtual PortableServer::RefCountServantBase
 // = DESCRIPTION
 //    Implementation the A/V StreamCtrl class. this class
 //    is used to control the stream. It should be subclassed
@@ -182,7 +187,8 @@ private:
 
 class TAO_ORBSVCS_Export TAO_MCastConfigIf
   : public virtual POA_AVStreams::MCastConfigIf,
-    public virtual TAO_PropertySet<POA_AVStreams::MCastConfigIf>
+    public virtual TAO_PropertySet<POA_AVStreams::MCastConfigIf>,
+    public virtual PortableServer::RefCountServantBase
 {
 public:
   virtual CORBA::Boolean set_peer (CORBA::Object_ptr peer,
@@ -262,7 +268,8 @@ public:
 
 class TAO_ORBSVCS_Export TAO_Client_StreamEndPoint :
   public virtual TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint_A>,
-  public virtual TAO_Client_Base_StreamEndPoint
+  public virtual TAO_Client_Base_StreamEndPoint,
+  public virtual PortableServer::RefCountServantBase
 {
   // = DESCRIPTION
   //     The "A" side of a streamendpoint
@@ -300,7 +307,8 @@ public:
 class TAO_ORBSVCS_Export TAO_Server_StreamEndPoint :
   public virtual POA_AVStreams::StreamEndPoint_B,
   public virtual TAO_StreamEndPoint<POA_AVStreams::StreamEndPoint_B>,
-  public virtual TAO_Server_Base_StreamEndPoint // Abstract interface
+  public virtual TAO_Server_Base_StreamEndPoint,// Abstract interface
+  public virtual PortableServer::RefCountServantBase
 {
   // = DESCRIPTION
   //     The "B" side of a streamendpoint
@@ -332,7 +340,8 @@ public:
 
 class TAO_ORBSVCS_Export TAO_VDev
   :public virtual TAO_PropertySet<POA_AVStreams::VDev>,
-   public virtual POA_AVStreams::VDev
+   public virtual POA_AVStreams::VDev,
+   public virtual PortableServer::RefCountServantBase
 // = DESCRIPTION
 //    Implements the VDev interface. One of these is created per connection,
 //    and represents device-specific parameters
@@ -393,8 +402,8 @@ class TAO_AV_Endpoint_Strategy;
 
 class TAO_ORBSVCS_Export TAO_MMDevice
   :public virtual POA_AVStreams::MMDevice,
-   public TAO_PropertySet<POA_AVStreams::MMDevice>
-
+   public TAO_PropertySet<POA_AVStreams::MMDevice>,
+   public virtual PortableServer::RefCountServantBase
 // = DESCRIPTION
 //     Implements a factory to create Endpoints and VDevs
 {
@@ -480,8 +489,8 @@ class TAO_FlowProducer;
 
 class TAO_ORBSVCS_Export TAO_FlowConnection
  : public virtual POA_AVStreams::FlowConnection,
-   public TAO_PropertySet<POA_AVStreams::FlowConnection>
-					   
+   public TAO_PropertySet<POA_AVStreams::FlowConnection>,
+   public virtual PortableServer::RefCountServantBase
 {
   //  =TITLE
   //     Class to manage a flow connection.
@@ -556,7 +565,8 @@ private:
 
 class TAO_ORBSVCS_Export TAO_FlowEndPoint :
   public virtual POA_AVStreams::FlowEndPoint,
-  public virtual TAO_PropertySet<POA_AVStreams::FlowEndPoint>
+  public virtual TAO_PropertySet<POA_AVStreams::FlowEndPoint>,
+  public virtual PortableServer::RefCountServantBase
 {
   // = DESCRIPTION
   //     This class is used per flow e.g video flow and an audio flow
@@ -657,7 +667,8 @@ private:
 
 class TAO_ORBSVCS_Export TAO_FlowProducer:
   public virtual POA_AVStreams::FlowProducer,
-         public virtual TAO_FlowEndPoint
+  public virtual TAO_FlowEndPoint,
+  public virtual PortableServer::RefCountServantBase
 {
   public:
   TAO_FlowProducer (void);
@@ -708,7 +719,8 @@ class TAO_ORBSVCS_Export TAO_FlowProducer:
 
 class TAO_ORBSVCS_Export TAO_FlowConsumer :
   public virtual POA_AVStreams::FlowConsumer,
-         public virtual TAO_FlowEndPoint
+  public virtual TAO_FlowEndPoint,
+  public virtual PortableServer::RefCountServantBase
 {
   public:
   TAO_FlowConsumer (void);
@@ -737,7 +749,8 @@ class TAO_ORBSVCS_Export TAO_FlowConsumer :
 
 class TAO_ORBSVCS_Export TAO_FDev :
   public virtual POA_AVStreams::FDev,
-  public virtual TAO_PropertySet<POA_AVStreams::FDev>
+  public virtual TAO_PropertySet<POA_AVStreams::FDev>,
+  public virtual PortableServer::RefCountServantBase
 {
   public:
   TAO_FDev (void);
@@ -798,7 +811,8 @@ class TAO_ORBSVCS_Export TAO_FDev :
 };
 
 class TAO_ORBSVCS_Export TAO_MediaControl
-  :public virtual POA_AVStreams::MediaControl
+  :public virtual POA_AVStreams::MediaControl,
+   public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //     Abstract Mediacontrol class.

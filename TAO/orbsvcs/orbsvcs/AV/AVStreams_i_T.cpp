@@ -43,11 +43,27 @@ TAO_StreamEndPoint<IF>::start (const AVStreams::flowSpec &flow_spec,
 template <class IF>
 void
 TAO_StreamEndPoint<IF>::destroy (const AVStreams::flowSpec &the_spec,
-                             CORBA::Environment &ACE_TRY_ENV)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  // Make the upcall into the app
-  this->handle_destroy (the_spec, ACE_TRY_ENV);
+//   // Make the upcall into the app
+//   this->handle_destroy (the_spec, ACE_TRY_ENV);
+  //
+  // Remove self from POA.  Because of reference counting, the POA
+  // will automatically delete the servant when all pending requests
+  // on this servant are complete.
+  //
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
 }
+
 // Called by our peer endpoint, requesting us to establish
 // a connection
 template <class IF>
