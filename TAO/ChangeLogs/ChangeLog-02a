@@ -3,8 +3,8 @@ Mon Feb 25 19:25:27 2002 UTC  Don Hinton <dhinton@ieee.org>
 	* tao/default_resource.cpp (allocate_reactor_impl):
 	* tao/Strategies/advanced_resource.cpp (allocate_reactor_impl):
 
-	  Modified the ctors for the multi-threaded Select_Reactor and TP_Reactor to
-	  use the new ACE_Token::LIFO queueing strategy.	
+	  Modified the ctors for the multi-threaded Select_Reactor and
+	  TP_Reactor to use the new ACE_Token::LIFO queueing strategy.	 
 
 Fri Feb 22 19:07:36 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -230,15 +230,15 @@ Mon Feb 18 08:53:14 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/tao_idl_static.dsp:
         * TAO_IDL/driver/drv_init.cpp:
 
-          Made some changes to the project settings, and added an error message
-          if no valid preprocessor path is set on Windows. Thanks to Joe Hayes
-          <Joe.Hayes@lmco.com> for reporting the problem.
+          Made some changes to the project settings, and added an error
+	  message if no valid preprocessor path is set on Windows. Thanks
+	  to Joe Hayes <Joe.Hayes@lmco.com> for reporting the problem.
 
 Sun Feb 17 11:52:36 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* orbsvcs/examples/Notify/Subscribe/Subscribe.cpp (Subscribe): Initialize
-	  done_ to 0.  Thanks to Markus Wild <markus.wild@homag.de> for
- 	  reporting this.
+	* orbsvcs/examples/Notify/Subscribe/Subscribe.cpp (Subscribe):
+	  Initialize done_ to 0.  Thanks to Markus Wild
+	  <markus.wild@homag.de> for reporting this.
 
 Mon Feb 18 08:37:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -344,7 +344,7 @@ Wed Feb 13 12:47:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Tue Feb 12 17:53:31 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/PortableServer/POA.cpp (destroy_i):
-	  Got a duplicate before releasing the poa so that it stays around
+	  Got a duplicate before releasing the poa so that it stays around 
 	  while we change its status and call the corresponding
 	  interceptor's adapter_state_changed methods.
 
@@ -352,7 +352,7 @@ Tue Feb 12 16:01:25 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PICurrent.cpp (copy):
 
-	  Now that the code has been greatly simplified, an ACE_TRY block
+	  Now that the code has been greatly simplified, an ACE_TRY block 
 	  is no longer necessary.  Fixes an "unused label" warning in
 	  emulated exception builds.
 
@@ -384,7 +384,7 @@ Mon Feb 11 16:32:00 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PICurrent.h:
 
-	  Disable the "C4251" warning in MSVC++ builds.  MSVC++ is being
+	  Disable the "C4251" warning in MSVC++ builds.  MSVC++ is being 
 	  too paranoid about a class it thinks should be exported.
 
 	  (Table):
@@ -464,7 +464,7 @@ Mon Feb 11 18:20:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/examples/ORT/Server_IORInterceptor.h:
 	* tao/PortableServer/Object_Adapter.h:
 	* tao/PortableServer/ObjectReferenceFactory.h:
-	* tao/PortableServer/ObjectReferenceTemplate.h: More fuzz errors.
+	* tao/PortableServer/ObjectReferenceTemplate.h: More fuzz errors. 
 
 Mon Feb 11 18:02:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
