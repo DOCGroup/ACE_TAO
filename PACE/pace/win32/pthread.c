@@ -32,7 +32,7 @@ pthread_create (pace_pthread_t * thread,
 		void * arg)
 {
   unsigned flags = 0x0, thr_addr = 0x0;
-  if (attr->sparam_.priority_ != THREAD_PRIORITY_NORMAL)
+  if (attr->sparam_.sched_priority != THREAD_PRIORITY_NORMAL)
     {
       // CREATE_SUSPENDED is the only flag win32 currently supports
       flags = CREATE_SUSPENDED;
@@ -47,7 +47,7 @@ pthread_create (pace_pthread_t * thread,
 
   if (flags == CREATE_SUSPENDED && thread != 0)
     {
-      SetThreadPriority (thread, attr->sparam_.priority_);
+      SetThreadPriority (thread, attr->sparam_.sched_priority);
       ResumeThread (thread);
     }
 
@@ -79,7 +79,7 @@ pthread_getschedparam (pace_pthread_t thread,
 {
   if (param != (pace_sched_param*)0)
     {
-      param->priority_ = GetThreadPriority (thread);
+      param->sched_priority = GetThreadPriority (thread);
       return 0;
     }
   /* Invalid pointer to pace_sched_param. */
@@ -92,7 +92,7 @@ pthread_getschedparam (pace_pthread_t thread,
 			     int policy,
 			     const pace_sched_param * param)
 {
-  if (SetThreadPriority (thread, param->priority_))
+  if (SetThreadPriority (thread, param->sched_priority))
     {
       return 0;
     }
@@ -117,7 +117,7 @@ pthread_attr_init (pace_pthread_attr_t * attr)
   attr->init_ = 1;
   attr->detach_state_ = 0;
   attr->policy_ = 0;
-  attr->sparam_.priority_ = 0;
+  attr->sparam_.sched_priority = 0;
   attr->inherit_sched_ = 0;
   attr->contention_scope_ = 0;
   attr->guard_size_ = 0;
@@ -210,7 +210,7 @@ pthread_attr_getschedparam (const pace_pthread_attr_t * attr,
 {
   if (attr->init_ == 1)
     {
-      param->priority_ = attr->sparam_.priority_;
+      param->sched_priority = attr->sparam_.sched_priority;
       return 0;
     }
   /* ERROR: not initilalized properly! */
@@ -225,7 +225,7 @@ pthread_attr_setschedparam (pace_pthread_attr_t * attr,
 {
   if (attr->init_ == 1)
     {
-      attr->sparam_.priority_ = param->priority_;
+      attr->sparam_.sched_priority = param->sched_priority;
       return 0;
     }
   /* ERROR: not initilalized properly! */

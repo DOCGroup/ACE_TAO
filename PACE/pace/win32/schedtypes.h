@@ -56,7 +56,7 @@ extern "C" {
 #define PACE_SCHED_PARAM 1
   typedef struct sched_param
   {
-    int priority_;
+    int sched_priority;
   } pace_sched_param;
 #endif
 
