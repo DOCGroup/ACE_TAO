@@ -1,3 +1,9 @@
+Tue Mar  8 17:22:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Regenerate.
+
 Tue Mar 08 21:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/*S.{h,cpp,inl}:
