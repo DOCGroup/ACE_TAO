@@ -20,17 +20,16 @@ To run the Event Channel:
 
 Command line parameters:
 ------------------------
-      -n <COS Event Service name>
+       -n <COS Event Service name>
         specifies the name with which to register the Event Service.
-
-      -e <Real Time Event Service name>
-        specifies the name with which to *look* for the RtEC.
 
        -r
         specifies that a local Real Time Event Channel (Rtec) should be
         created and used.
-        If you specify this option but Rtec is not already running, then the
-        CosEvent_Service starts its own Rtec.
+
+        -t <Real Time Event Service name>
+        specifies the name with which to *look* for the RtEC.This option is
+        only useful along with the -r option.
 
 The next 3 options are used to introduce a filtering mechanism for the
 Event Channel based on event types and source ids.

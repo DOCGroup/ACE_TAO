@@ -175,7 +175,6 @@ CosEvent_Service::activate_rtec (CORBA::Environment &ACE_TRY_ENV)
     {
       // Try to locate a remote rtec.
       this->locate_rtec (ACE_TRY_ENV);
-      ACE_CHECK;
 
       // Use the return value to check success.
       if (CORBA::is_nil (this->rtec_.in ()))
