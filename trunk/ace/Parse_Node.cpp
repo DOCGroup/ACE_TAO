@@ -519,7 +519,8 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
       // Locate the factory function <function_name> in the shared
       // object.
 
-      char *function_name = ACE_const_cast (char *, this->function_name_);
+      char *function_name = ACE_const_cast (char *,
+                                            this->function_name_);
 
       func = (void *(*)(ACE_Service_Object_Exterminator *))
         ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
