@@ -1849,6 +1849,13 @@ typedef struct
   char *name_;
   // Name of the semaphore (if this is non-NULL then this is a named
   // POSIX semaphore, else its an unnamed POSIX semaphore).
+
+#if defined (ACE_LACKS_NAMED_POSIX_SEM)
+  int new_sema_;
+  // this->sema_ doesn't always get created dynamically if a platform
+  // doesn't support named posix semaphores.  We use this flag to
+  // remember if we need to delete <sema_> or not.
+#endif /* ACE_LACKS_NAMED_POSIX_SEM */
 } ACE_sema_t;
 # endif /* ACE_HAS_PACE */
 
