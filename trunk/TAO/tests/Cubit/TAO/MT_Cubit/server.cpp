@@ -554,7 +554,7 @@ start_servants (ACE_Barrier &start_barrier)
 
       // Drop the priority, so that the priority of clients will increase
       // with increasing client number.
-      for (i = 0; i < number_of_low_priority_servants + 1; i++)
+      for (i = 0; i < number_of_low_priority_servants; i++)
 	priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
 							priority,
 							ACE_SCOPE_THREAD);
