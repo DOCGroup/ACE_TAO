@@ -21,6 +21,8 @@
  *
  * cp orig/BoundsC.{h,i,cpp} .
  *
+ * Move the typecodes for exceptions in BoundsA.cpp to BoundsC.cpp.
+ *
  * The code left in BoundsC.{h,i,cpp} is ready for use.
  *
  */
