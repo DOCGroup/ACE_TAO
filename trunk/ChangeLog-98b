@@ -1,8 +1,15 @@
+Mon Nov 23 10:47:38 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/generate_man_pages: added this script, which generates
+          the ACE man and html pages.
+
+        * Makefile (release): added call to bin/generate_man_pages.
+
 Sun Nov 22 22:58:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SPIPE_Addr.h: Replaced the use of an anonymous struct so
- 	  that class2man will be happy.  Thanks to David Levine for
- 	  reporting this.
+        * ace/SPIPE_Addr.h: Replaced the use of an anonymous struct so
+          that class2man will be happy.  Thanks to David Levine for
+          reporting this.
 
 Sun Nov 22 22:07:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
