@@ -1,5 +1,8 @@
 Sun Feb 28 20:21:05 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
+	* tests/Makefile.DLL (realclean): Added the realclean target to
+	  the makefile.
+
 	* tests/run_tests.sh (ace_version): Disabled DLL_Test for chorus,
 	  LynxOS, Unicos platforms as they dont support shared libraries.
 
