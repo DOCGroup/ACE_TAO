@@ -32,6 +32,7 @@ Timeout_i::~Timeout_i ()
 void
 Timeout_i::sendTimeToWait (CORBA::Long msec,
                            CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, 
               "Timeout_i::sendTimeToWait: invoked with msec = %d\n\n",
@@ -49,6 +50,7 @@ Timeout_i::sendTimeToWait (CORBA::Long msec,
 
 void
 Timeout_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   orb_->shutdown (false);
   ACE_DEBUG ((LM_DEBUG,
