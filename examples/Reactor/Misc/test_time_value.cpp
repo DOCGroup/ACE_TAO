@@ -15,8 +15,8 @@ operator<< (ostream &stream, const ACE_Time_Value &tv)
     stream << "-";
 
   stream << my_abs (int (tv.sec ())) << "."
-//	 << setw (6) << setfill ('0') 
-	 << my_abs (int (tv.usec ()));
+//       << setw (6) << setfill ('0')
+         << my_abs (int (tv.usec ()));
   return stream;
 }
 
@@ -25,7 +25,7 @@ main (int, char *[])
 {
   ACE_Time_Value tv1;
   ACE_Time_Value tv2 (2);
-  ACE_Time_Value tv3 (100);  
+  ACE_Time_Value tv3 (100);
   ACE_Time_Value tv4 (1, 1000000);
   ACE_Time_Value tv5 (2);
   ACE_Time_Value tv6 (1, -1000000);
@@ -40,6 +40,15 @@ main (int, char *[])
   ACE_ASSERT (tv2 == tv4);
   ACE_ASSERT (tv1 != tv2);
   ACE_ASSERT (tv6 == tv1);
+
+# if defined (ACE_NDEBUG)
+  ACE_UNUSED_ARG (tv1);
+  ACE_UNUSED_ARG (tv2);
+  ACE_UNUSED_ARG (tv3);
+  ACE_UNUSED_ARG (tv4);
+  ACE_UNUSED_ARG (tv5);
+  ACE_UNUSED_ARG (tv6);
+# endif /* ACE_NDEBUG */
 
   cout << "0,0 :\t\t"        << ACE_Time_Value (0,0) << endl;
   cout << "-0,0 :\t\t"       << ACE_Time_Value (-0,0) << endl;
@@ -70,4 +79,3 @@ main (int, char *[])
 
   return 0;
 }
-
