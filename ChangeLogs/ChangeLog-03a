@@ -1,3 +1,9 @@
+Wed Jan 16 06:19:01 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
+
+	* ace/OS.i: Replaced "set" with "sset" in sigtimedwait() and sigwait()
+	  to avoid STL symbol clashes with MSVC++ 6.0.  Thanks to Shmulik
+ 	  Regev <shmul@vself.com> for reporting this.
+
 Wed Jan 16 09:01:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Containers_T.{h,cpp}:

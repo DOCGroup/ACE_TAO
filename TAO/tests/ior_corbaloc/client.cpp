@@ -16,7 +16,6 @@
 // = AUTHOR
 //     Priyanka Gontla <pgontla@ece.uci.edu>
 //
-//
 // ============================================================================
 
 #include "ior_corbaloc_client_i.h"
