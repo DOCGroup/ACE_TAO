@@ -18,12 +18,12 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 #include "ace/Malloc.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Free_List.h"
-#include "test_config.h"
 
 // Number of memory allocation strategies used in this test.
 static const int ACE_ALLOC_STRATEGY_NO = 2;

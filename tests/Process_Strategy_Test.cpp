@@ -36,6 +36,7 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Acceptor.h"
 #include "ace/Get_Opt.h"
 #include "ace/SOCK_Acceptor.h"
@@ -43,7 +44,6 @@
 #include "ace/Strategies_T.h"
 #include "ace/Service_Config.h"
 #include "ace/Singleton.h"
-#include "test_config.h"
 #include "Process_Strategy_Test.h"	// Counting_Service and Options in here
 
 u_int shutting_down = 0;

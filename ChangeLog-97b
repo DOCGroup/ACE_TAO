@@ -1,5 +1,9 @@
 Sat Sep 13 12:11:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* tests: #include "test_config.h" before all the other files so
+ 	  that we always have the ACE_ASSERT enabled...  Thanks to Carlos
+ 	  for noticing this.
+ 
 	* ace/Reactor.cpp: Added Arturo's improvements for suspending and
 	  resuming Event_Handlers.
 

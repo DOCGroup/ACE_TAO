@@ -21,8 +21,6 @@
 // 
 // ============================================================================
 
-#include "ace/OS.h"
-
 #include "test_config.h"
 #include "ace/Process.h"
 

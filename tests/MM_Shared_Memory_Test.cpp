@@ -20,11 +20,10 @@
 // 
 // ============================================================================
 
-
+#include "test_config.h"
 #include "ace/Shared_Memory_MM.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
-#include "test_config.h"
 
 const int SHMSZ = 27;
 static TCHAR shm_key[] = ACE_TEMP_FILE_NAME __TEXT ("XXXXXX");

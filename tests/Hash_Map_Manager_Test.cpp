@@ -18,10 +18,10 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 #include "ace/Synch.h"
-#include "test_config.h"
 
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 

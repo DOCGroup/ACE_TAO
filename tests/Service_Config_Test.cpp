@@ -17,9 +17,9 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Object_Manager.h"
 #include "ace/Service_Config.h"
-#include "test_config.h"
 
 #define VARIETIES 3
 

@@ -17,9 +17,9 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/Message_Queue.h"
 #include "ace/Synch.h"
-#include "test_config.h"
 
 typedef ACE_Message_Queue <ACE_NULL_SYNCH> QUEUE;
 typedef ACE_Message_Queue_Iterator <ACE_NULL_SYNCH> ITERATOR;
