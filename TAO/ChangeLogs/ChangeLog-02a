@@ -1,3 +1,17 @@
+Tue Mar 13 12:18:52 CST 2001 Chanaka Liyanaarachchi <chanaka@ociweb.com>
+
+        * utils/catior/catior.cpp
+          Added a condition to check for IIOP 1.0 before calling the
+          cat_tagged_components() operation. IIOP 1.0 IOR's do not have
+          tagged components [Bug 727].
+
+Tue Mar 13 12:18:06 CST 2001 Chanaka Liyanaarachchi <chanaka@ociweb.com>
+
+        * tao/TAO_Internal.cpp
+          If the specified service configurator file for -ORBsvcconf does
+          not exist, returns -1, eventually raising CORBA::INITIALIZE
+          exception [Bug 738].
+
 2001-03-13  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.h: 
