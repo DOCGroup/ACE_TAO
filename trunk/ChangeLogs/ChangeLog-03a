@@ -1,3 +1,11 @@
+Sun Apr 29 15:20:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* bin/auto_run_tests.lst:
+
+	  Added a flag to the Pluggable UDP test, so that it does not
+	  get run in environments using only statically linked libraries.
+
+
 Thu Apr 26 20:14:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/CDR_Stream.h (ACE_InputCDR): 
