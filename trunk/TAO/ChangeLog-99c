@@ -1,5 +1,16 @@
 Wed Jun  2 17:35:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tao/corbafwd.h:
+	  Added new locations for the TRANSIENT exceptions raised in the
+	  POA
+
+	* tao/POA.cpp:
+	  Added location info in the TRANSIENT exceptions raised here.
+
+	* tao/Exception.cpp:
+	  Added code to handle non-TAO minor codes.
+	  Added the strings for the new minor code locations
+
 	* TAO_IDL/include/fe_extern.h:
 	  Several functions where declared extern "C" but where actually
 	  regular C++ functions, this was causing problems on MVS.  Thanks
@@ -11,6 +22,10 @@ Wed Jun  2 17:35:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_args.cpp:
 	  Work around a problem in the access() function for MVS.
+
+	* tao/DynAnyS.cpp:
+	  One of the constructors was not using the ACE_NESTED_CLASS()
+	  macro, generating problems under MVS.
 
 	* TAO_IDL/ast/ast_module.cpp:
 	  Generate only a warning if a module is reopened on platforms
