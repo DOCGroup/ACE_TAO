@@ -299,7 +299,7 @@ public:
   ACE_Process (void);
   // Default construction.  Must use ACE_Process::start.
 
-  ~ACE_Process (void);
+  virtual ~ACE_Process (void);
   // Destructor.
 
   pid_t spawn (ACE_Process_Options &options);
