@@ -7,29 +7,27 @@
 CFG=MT_Cubit Client - Win32 static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "client.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "client.mak" CFG="MT_Cubit Client - Win32 static Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
-!MESSAGE "MT_Cubit Client - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "MT_Cubit Client - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "MT_Cubit Client - Win32 static Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "MT_Cubit Client - Win32 static Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
+!MESSAGE "MT_Cubit Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "MT_Cubit Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "MT_Cubit Client - Win32 static Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "MT_Cubit Client - Win32 static Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
+# PROP Scc_LocalPath "Desktop"
+# PROP WCE_FormatVersion ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -97,7 +95,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D ACE_NO_INLINE /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -134,7 +132,7 @@ LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao"
 # ADD LINK32 acesd.lib TAOsd.lib advapi32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -236,12 +234,13 @@ SOURCE=.\cubit.idl
 !IF  "$(CFG)" == "MT_Cubit Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__CUBIT="..\..\..\..\..\bin\release\tao_idl.exe"	
 # Begin Custom Build - Invoking tao_idl
 InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\..\bin\release\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -274,6 +273,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "MT_Cubit Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__CUBIT="..\..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking tao_idl
 InputPath=.\cubit.idl
 InputName=cubit
@@ -313,12 +313,13 @@ BuildCmds= \
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
+USERDEP__CUBIT="..\..\..\..\..\bin\release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking tao_idl
 InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\..\bin\release\tao_idl_static $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -352,12 +353,13 @@ BuildCmds= \
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
+USERDEP__CUBIT="..\..\..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking tao_idl
 InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	tao_idl_static $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -387,7 +389,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group
