@@ -1,3 +1,23 @@
+Tue Sep 28 14:31:10 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ACEXML/apps/svcconf/Makefile.am:
+	* ACEXML/common/Makefile.am:
+	* ACEXML/examples/SAXPrint/Makefile.am:
+	* ACEXML/parser/parser/Makefile.am:
+	* ACEXML/tests/Makefile.am:
+	* Makefile.am:
+	* ace/RMCast/Makefile.am:
+	* ace/SSL/Makefile.am:
+	* apps/gperf/Makefile.am:
+	* apps/gperf/src/Makefile.am:
+	* apps/gperf/tests/Makefile.am:
+	* configure.ac:
+	* netsvcs/servers/Makefile.am:
+	* tests/Makefile.am:
+	* tests/SSL/Makefile.am:
+
+	  Update so things successfully build when srcdir != builddir.
+
 Tue Sep 28 12:48:37 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/wrapper_macros.GNU:

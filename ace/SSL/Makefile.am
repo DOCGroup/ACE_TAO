@@ -8,17 +8,20 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
+ACE_ROOT = $(top_srcdir)
+ACE_BUILDDIR = $(top_builddir)
+
 nobase_include_HEADERS =
 lib_LTLIBRARIES =
+
 ## Makefile.SSL.am 
 
 if BUILD_SSL
 lib_LTLIBRARIES += libACE_SSL.la
 
 libACE_SSL_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -DACE_SSL_BUILD_DLL
 
 libACE_SSL_la_SOURCES = \
@@ -31,7 +34,7 @@ libACE_SSL_la_SOURCES = \
   SSL_SOCK_Stream.cpp
 
 libACE_SSL_la_LIBADD = \
- $(top_srcdir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
   SSL_Asynch_BIO.h \

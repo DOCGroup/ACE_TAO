@@ -9,66 +9,71 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
 ACE_ROOT = $(top_srcdir)
+ACE_BUILDDIR = $(top_builddir)
 
 ## Makefile.ContentHandler_Test.am 
 noinst_PROGRAMS = ContentHandler_Test
 
 ContentHandler_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
 ContentHandler_Test_SOURCES = \
   ContentHandler_Test.cpp
 
 ContentHandler_Test_LDADD = \
- $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/libACEXML.la $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
+ $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.HttpCharStream_Test.am 
 noinst_PROGRAMS += HttpCharStream_Test
 
 HttpCharStream_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
 HttpCharStream_Test_SOURCES = \
   HttpCharStream_Test.cpp
 
 HttpCharStream_Test_LDADD = \
- $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/libACEXML.la $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
+ $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.NamespaceSupport_Test.am 
 noinst_PROGRAMS += NamespaceSupport_Test
 
 NamespaceSupport_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
 NamespaceSupport_Test_SOURCES = \
   NamespaceSupport_Test.cpp
 
 NamespaceSupport_Test_LDADD = \
- $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/libACEXML.la $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
+ $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Transcoder_Test.am 
 noinst_PROGRAMS += Transcoder_Test
 
 Transcoder_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/ACEXML/common
 
 Transcoder_Test_SOURCES = \
   Transcoder_Test.cpp
 
 Transcoder_Test_LDADD = \
- $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/libACEXML.la $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
+ $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:
