@@ -9,7 +9,7 @@
 //    DynUnion_i_T.h
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ====================================================================
 
@@ -27,8 +27,8 @@ class DU_Extractor_base
   //    Base class of template class below
   //
 public:
-  virtual CORBA::Boolean check_match (CORBA_Any& inside_any,
-                                      CORBA_Any& outside_any) = 0;
+  virtual CORBA::Boolean check_match (const CORBA_Any &inside_any,
+                                      const CORBA_Any &outside_any) = 0;
 };
 
 template <class Type>
@@ -46,8 +46,8 @@ class DU_Extractor : public DU_Extractor_base
 public:
   virtual ~DU_Extractor (void);
 
-  virtual CORBA::Boolean check_match (CORBA_Any& inside_any,
-                                      CORBA_Any& outside_any);
+  virtual CORBA::Boolean check_match (const CORBA_Any& inside_any,
+                                      const CORBA_Any& outside_any);
 private:
   Type arg_index_;
   Type member_index_;
