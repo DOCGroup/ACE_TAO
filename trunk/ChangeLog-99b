@@ -1,34 +1,40 @@
+Sat Apr 17 08:34:22 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Naming/Makefile,performance-tests/Misc/Makefile,
+          tests/Makefile,all netsvcs Makefiles:
+          updated for proper support of ACE subsets, with BIN2/LIB2/SHLIB2.
+
 Fri Apr 16 22:14:36 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Auto_Ptr: Made several changes to bring the implementation
-	  up to the specification:
+        * ace/Auto_Ptr: Made several changes to bring the implementation
+          up to the specification:
 
-	  - Made the constructors take non-const parameters.
-	  - Made release() non-const.
-	  - Added reset().
+          - Made the constructors take non-const parameters.
+          - Made release() non-const.
+          - Added reset().
 
-	  Thanks to Simeon Simeonov <simeons@allaire.com>, Rainer Blome
-	  <blome@de.ibm.com>, Jody Hagins <jody@atdesk.com>, and John
-	  Mulhern <John.Mulhern@lawson.com> for helping.
+          Thanks to Simeon Simeonov <simeons@allaire.com>, Rainer Blome
+          <blome@de.ibm.com>, Jody Hagins <jody@atdesk.com>, and John
+          Mulhern <John.Mulhern@lawson.com> for helping.
 
-	* tests/Reactor_Performance_Test.cpp: Updated to work with new
-	  auto pointer implementation.
+        * tests/Reactor_Performance_Test.cpp: Updated to work with new
+          auto pointer implementation.
 
 Fri Apr 16 19:36:35 1999 Alexander Babu Arulanthu <alex@cs.wustl.edu>
 
-	* ace/Proactor.h (ACE_Proactor): Switched the order of TIMER_QUEUE
-	and delete_implementation in the constructor.
+        * ace/Proactor.h (ACE_Proactor): Switched the order of TIMER_QUEUE
+        and delete_implementation in the constructor.
 
-	* examples/Reactor/Proactor/test_multiple_loops.cpp: Fixed to work
-	on the WIN32 correctly. This can work only on WIN32 (combining
-	Proactor with Reactor's event loop). So I have put a #if defined
-	around the file.
+        * examples/Reactor/Proactor/test_multiple_loops.cpp: Fixed to work
+        on the WIN32 correctly. This can work only on WIN32 (combining
+        Proactor with Reactor's event loop). So I have put a #if defined
+        around the file.
 
 Fri Apr 16 18:09:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Conn_Test.cpp (server): If we timeout on accept(), it is
-	  not an error, and should not be reported as one. Thanks to
-	  Thomas Mehrkam <Thomas_Mehrkam@i-o.com> for pointing this out.
+        * tests/Conn_Test.cpp (server): If we timeout on accept(), it is
+          not an error, and should not be reported as one. Thanks to
+          Thomas Mehrkam <Thomas_Mehrkam@i-o.com> for pointing this out.
 
 Fri Apr 16 13:08:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
