@@ -931,8 +931,6 @@ main (int argc, char *argv [])
         }
       delete [] consumer;
 
-      // @@ TODO: Do this portably (keeping the ORB_ptr returned from
-      // ORB_init)
       ec->destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 

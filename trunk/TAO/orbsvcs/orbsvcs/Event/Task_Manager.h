@@ -30,6 +30,9 @@ public:
   ACE_Task_Manager (void);
   // Create the Task_Manager.
 
+  ~ACE_Task_Manager (void);
+  // The dtor also shutdowns the Task_Manager.
+
   void activate (void);
   // Activate the threads, it waits until the threads are up and
   // running.
