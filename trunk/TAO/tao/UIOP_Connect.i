@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+#if defined (TAO_HAS_UIOP)
 
 ACE_INLINE TAO_Transport *
 TAO_UIOP_Server_Connection_Handler::transport (void)
@@ -30,4 +30,4 @@ TAO_UIOP_Client_Connection_Handler::close (u_long /* flags */)
   return 0;
 }
 
-#endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+#endif /* TAO_HAS_UIOP */

@@ -21,16 +21,16 @@
 #ifndef TAO_UIOP_ACCEPTOR_H
 #define TAO_UIOP_ACCEPTOR_H
 
-#include "ace/Acceptor.h"
+#include "tao/Pluggable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+# if defined (TAO_HAS_UIOP)
 
+#include "ace/Acceptor.h"
 #include "ace/LSOCK_Acceptor.h"
-#include "tao/Pluggable.h"
 #include "tao/UIOP_Connect.h"
 #include "tao/Acceptor_Impl.h"
 
@@ -113,6 +113,6 @@ private:
   // occurs.
 };
 
-# endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+# endif /* TAO_HAS_UIOP */
 
 #endif  /* TAO_UIOP_ACCEPTOR_H */

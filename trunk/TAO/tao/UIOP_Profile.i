@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+# if defined (TAO_HAS_UIOP)
 
 ACE_INLINE const TAO_ObjectKey &
 TAO_UIOP_Profile::object_key (void) const
@@ -58,4 +58,4 @@ TAO_UIOP_Profile::tagged_components (void)
   return this->tagged_components_;
 }
 
-#endif  /* !defined ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+#endif  /* TAO_HAS_UIOP */

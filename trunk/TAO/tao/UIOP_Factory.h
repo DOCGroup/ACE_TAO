@@ -19,7 +19,7 @@
 
 #include "tao/Protocol_Factory.h"
 
-# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+# if defined (TAO_HAS_UIOP)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -60,6 +60,6 @@ private:
 ACE_STATIC_SVC_DECLARE (TAO_UIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_UIOP_Protocol_Factory)
 
-# endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+# endif  /* TAO_HAS_UIOP */
 
 #endif /* TAO_UIOP_FACTORY_H */
