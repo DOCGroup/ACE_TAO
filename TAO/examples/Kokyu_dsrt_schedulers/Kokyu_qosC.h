@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL_KOKYU_QOSC_H_
 #define _TAO_IDL_KOKYU_QOSC_H_
 
-#include /**/ "tao\RTCORBA\RTCORBA.h"
+#include /**/ "ace\pre.h"
 
 #include "tao/ORB.h"
 
@@ -48,7 +48,7 @@
 #include "tao/VarOut_T.h"
 
 #include "TimeBaseC.h"
-#include "tao/RTCORBA/RTCORBAC.h"
+#include "tao/RTCORBA/RTCORBA_includeC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -255,6 +255,8 @@ Kokyu_DSRT_Schedulers_Export CORBA::Boolean operator>> (TAO_InputCDR &, Kokyu::S
 #if defined (__BORLANDC__)
 #pragma option pop
 #endif /* __BORLANDC__ */
+
+#include /**/ "ace\post.h"
 
 #endif /* ifndef */
 
