@@ -51,7 +51,7 @@ Legend:
         [xxxxxx] runs for Short
         [xxxxxx] runs for Long
         [xxxxxx] runs for Struct
-[xx0x0x] Thruput/TAO compiles
+[0x0x0x] Thruput/TAO compiles
 [xx1x1x] liborbsvcs compiles
 [1 1 1 ] Naming_Service compiles
 [1 0 0 ] Scheduling_Service compiles
