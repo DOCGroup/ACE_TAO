@@ -1,3 +1,15 @@
+Fri May 09 16:37:48 1997  David L. Levine  <levine@cs.wustl.edu>
+        
+	* ace/Sched_Params.cpp (priority_min): On Solaris (with STHREADS),
+	  don't return priority of 0 because ::pthread_attr_setschedparam ()
+	  will refuse to use it (with EINVAL).  So, bump priority of 0 up to 1.
+
+	* tests/Priority_Task_Test.cpp: on Linux only, don't set FIFO policy
+	  or non-zero policy if not superuser.
+
+	* ace/ACE_Process.cpp (ACE_Process_Options ctor): reordered
+	  initializers to match declaration order.
+
 Fri May  9 13:07:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/UNIX_Addr: Changed the return values of all the set()
@@ -106,15 +118,6 @@ Fri May  9 13:07:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Containers: Revised all the interfaces for the various
  	  containers so that they all have the same "look and feel."
-
-Fri May 09 16:37:48 1997  David L. Levine  <levine@cs.wustl.edu>
-        
-	* ace/Sched_Params.cpp (priority_min): On Solaris (with STHREADS),
-	  don't return priority of 0 because ::pthread_attr_setschedparam ()
-	  will refuse to use it (with EINVAL).  So, bump priority of 0 up to 1.
-
-	* tests/Priority_Task_Test.cpp: on Linux only, don't set FIFO policy
-	  or non-zero policy if not superuser.
 
 Fri May  9 00:00:21 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
