@@ -1,3 +1,13 @@
+Wed Aug 12 12:00:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Runtime_Scheduler.{h, cpp}
+	  orbsvcs/orbsvcs/Sched/Scheduler.{h, cpp}
+	  orbsvcs/orbsvcs/Sched/DynSched.{h, cpp}
+	  orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{h, cpp}:
+
+	  Added methods and data members to generate dispatching
+	  queue configuration information.
+	
 Tue Aug 11 18:24:13 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.h (POA): Changed the children POA map from a Map_Manager
