@@ -1,3 +1,25 @@
+Fri Nov 12 00:30:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Connector.cpp (connect_i): Since we should change <sh> only
+	  in the confines on the connector lock, it is not proper to use
+	  the <new_sh> copy of <sh> and assign it to <sh> when the connect
+	  succeeds.  The removal of <new_sh> should not change the
+	  algorithm (famous last words ;) since <sh> not really be
+	  considered in the case of failures.
+
+	* ace/Strategies_T.cpp (ACE_Cached_Connect_Strategy):
+	* ace/Cached_Connect_Strategy_T.cpp:
+
+	  If the new connection fails, close out the svc_handler and set
+	  it to zero.
+
+	  Also in cleanup_hint_i(), reset the <*act_holder> in the
+	  confines and protection of the lock.
+
+	* ace/Svc_Handler.cpp (cleanup_hint): Expanded the interface to
+	  allow the resetting of the <act_holder> in an atomic manner wrt
+	  the lock of the connector.
+
 Fri Nov 12 12:13:29 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Made _BSD_INCLUDES and ACE_HAS_CHARPTR_DL
