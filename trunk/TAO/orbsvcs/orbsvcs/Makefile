@@ -73,19 +73,19 @@ ifneq (,$(findstring Naming,$(TAO_ORBSVCS)))
 endif # Naming
 
 ifneq (,$(findstring Time,$(TAO_ORBSVCS)))
+  IDL_SRCS += CosTimeBase TimeService
+  TAO_ORBSVCS_SRCS += \
+        Time_Utilities \
+        Time/TAO_Time_Service_Server \
+        Time/TAO_Time_Service_Clerk \
+        Time/TAO_UTO \
+        Time/TAO_TIO \
+        Time/Timer_Helper
+
   #### TAO's Time Service requires its ImplRepo Service.
-  ifeq (ImplRepo,$(findstring ImplRepo,$(TAO_ORBSVCS)))
-    IDL_SRCS += CosTimeBase TimeService
-    TAO_ORBSVCS_SRCS += \
-          Time_Utilities \
-          Time/TAO_Time_Service_Server \
-          Time/TAO_Time_Service_Clerk \
-          Time/TAO_UTO \
-          Time/TAO_TIO \
-          Time/Timer_Helper
-  else  # ! ImplRepo
-    #### Remove Time from TAO_ORBSVCS
-    TAO_ORBSVCS := $(subst Time,,$(TAO_ORBSVCS))
+  ifeq (,$(findstring ImplRepo,$(TAO_ORBSVCS)))
+    #### Add ImplRepo
+    TAO_ORBSVCS += "ImplRepo "
   endif # ! ImplRepo
 endif # Time
 
