@@ -1,3 +1,10 @@
+Fri Apr  6 17:08:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Single_Read/run_test.pl: Added this file to the
+	  repository. Strangely this file had missed our eyes for quite
+	  sometime. 
+	 
+
 Fri Apr  6 16:43:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Handler.cpp:
