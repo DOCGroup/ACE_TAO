@@ -12,7 +12,7 @@
 #### platform_sunos5_sunc++.GNU for an example.
 OBJDIRS += $(TEMPLATE_REPOSITORY)
 
-all.local: build.objdirs build.local install.local
+all.local: $(split_target) build.objdirs build.local install.local
 
 #----------------------------------------------------------------------------
 #       C/C++ compilation targets
@@ -85,8 +85,16 @@ else
 $(VSHDIR)%.$(SOEXT): %.cpp
 	$(SOBUILD)
 endif
+
+ifeq ($(split), 1)
+$(VSHDIR)%.$(OBJEXT): %.cpp
+	$(COMPILE.cc) $(PIC) SPLIT/`echo $< | sed "s/.cpp/_S\*/"`
+	mv *.$(OBJEXT) $(OBJDIRS)
+else
 $(VSHDIR)%.$(OBJEXT): %.cpp
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+endif
+
 $(VSHDIR)%.$(OBJEXT): %.cc
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 $(VSHDIR)%.$(OBJEXT): %.c
@@ -265,3 +273,11 @@ else
 $(OBJDIRS):
 	test -d $@ || mkdir $@
 endif
+
+#---------------------------------------------------------------------------
+#       Source file splitting
+#---------------------------------------------------------------------------
+SPLIT:
+	@echo "Splitting source files..."
+	@$(ACE_ROOT)/bin/split-cpp -s Svc_Conf_l.cpp -s Svc_Conf_y.cpp $(LSRC)
+	@echo "done."
