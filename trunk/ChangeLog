@@ -1,3 +1,9 @@
+Sun Jun 22 11:23:52 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* THANKS: Added our 1700th contributor to ACE+TAO.  It's amazing
+	  how many people have contributed to these open-source projects
+ 	  since 1992!
+
 Mon Jun 23 11:51:13 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
