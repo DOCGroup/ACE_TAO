@@ -225,7 +225,7 @@ private:
   // control memory managment semantics.
 };
 
-class TAO_Unbounded_String_Sequence : public TAO_Unbounded_Base_Sequence
+class TAO_Export TAO_Unbounded_String_Sequence : public TAO_Unbounded_Base_Sequence
 {
   // =TITLE
   //  Unbounded sequence of strings.
