@@ -155,15 +155,15 @@ TAO_CodeGen::start_client_header (const char *fname)
             {
               char* idl_name =
                 idl_global->included_idl_files ()[j];
-              
+
               // Make a String out of it.
               String idl_name_str = idl_name;
-              
+
               // Get the clnt header from the IDL file name.
               const char* client_hdr =
                 IDL_GlobalData::be_get_client_hdr (&idl_name_str);
-              
-              // Sanity check and then print. 
+
+              // Sanity check and then print.
               if (client_hdr != 0)
                 {
                   this->client_header_->print ("#include \"%s\"\n",
@@ -185,7 +185,7 @@ TAO_CodeGen::start_client_header (const char *fname)
           *this->client_header_ << "#define TAO_EXPORT_MACRO "
                                 << idl_global->export_macro ()
                                 << be_nl;
-          
+
           *this->client_header_ << "#if defined(_MSC_VER)\n"
                                 << "#pragma warning(disable:4250)\n"
                                 << "#endif /* _MSC_VER */\n\n";
@@ -220,7 +220,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
     {
       return -1;
     }
-  
+
   // generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
   *this->client_stubs_ << "#include \"" <<
@@ -322,7 +322,7 @@ TAO_CodeGen::start_server_header (const char *fname)
 
               // String'ifying the name.
               String idl_name_str (idl_name);
-              
+
               const char* server_hdr =
                 IDL_GlobalData::be_get_server_hdr (&idl_name_str);
 
@@ -656,7 +656,10 @@ TAO_CodeGen::end_server_template_skeletons (void)
 void
 TAO_CodeGen::gperf_input_stream (TAO_OutStream *os)
 {
+#if !defined (linux)
+  // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
   delete this->gperf_input_stream_;
+#endif /* ! linux */
   this->gperf_input_stream_ = os;
 }
 
