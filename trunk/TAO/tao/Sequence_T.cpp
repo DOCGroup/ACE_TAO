@@ -187,7 +187,7 @@ operator= (const TAO_Bounded_Sequence<T, MAX> &rhs)
       else
         {
           this->buffer_ =
-            TAO_Bounded_Sequence<T>::allocbuf (rhs.maximum_);
+            TAO_Bounded_Sequence<T, MAX>::allocbuf (rhs.maximum_);
         }
     }
 
@@ -626,7 +626,7 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::operator=
       else
         {
           this->buffer_ =
-            TAO_Bounded_Object_Sequence<T,T_var>::allocbuf (rhs.maximum_);
+            TAO_Bounded_Object_Sequence<T,T_var,MAX>::allocbuf (rhs.maximum_);
         }
     }
 
@@ -967,7 +967,7 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::operator=
       else
         {
           this->buffer_ =
-            TAO_Bounded_Pseudo_Sequence<T,T_var>::allocbuf (rhs.maximum_);
+            TAO_Bounded_Pseudo_Sequence<T,T_var,MAX>::allocbuf (rhs.maximum_);
         }
     }
 
@@ -1271,7 +1271,7 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::operator=
       else
         {
           this->buffer_ =
-            TAO_Bounded_Array_Sequence<T,T_var>::allocbuf (rhs.maximum_);
+            TAO_Bounded_Array_Sequence<T,T_var,MAX>::allocbuf (rhs.maximum_);
         }
     }
 
