@@ -76,6 +76,9 @@ how to run the following tests:
 
         . Forwarding
 
+	  Regression test for LOCATION_FORWARD messages in the
+	  follower thread.
+
         . IDL_Test
 
           A collection of the IDL examples that have caused problems
@@ -108,6 +111,8 @@ how to run the following tests:
 
         . LongUpcalls          
           
+	  Regression test for bugs #175 and #575
+
         . MProfile
 
           This program tests fundamentals of TAO's ORB fault tolerance
@@ -169,6 +174,8 @@ how to run the following tests:
 
         . Object_Loader          
           
+	  Regression test for the DLL-style IORs.
+
         . OctetSeq
 
           Measures the cost of marshaling and demarshaling of
