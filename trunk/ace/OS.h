@@ -3876,12 +3876,14 @@ public:
   ACE_Thread_Adapter (ACE_THR_FUNC user_func,
                       void *arg,
                       ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter,
-                      ACE_Thread_Manager *tmgr = 0,
+                      ACE_Thread_Manager *thr_mgr = 0,
                       ACE_Thread_Descriptor *td = 0);
   // Constructor.
 
   void *invoke (void);
-  // Execute the <user_func_> with the <arg>.
+  // Execute the <user_func_> with the <arg>.  This function deletes
+  // <this>, thereby rendering the object useless after the call
+  // returns.
 
   ACE_Thread_Manager *thr_mgr (void);
   // Accessor for the optional <Thread_Manager>.
@@ -3891,6 +3893,9 @@ public:
   // routine.
 
 private:
+  ~ACE_Thread_Adapter (void);
+  // Ensure that this object must be allocated on the heap.
+
   void inherit_log_msg (void);
   // Inherit the logging features if the parent thread has an
   // <ACE_Log_Msg>.
