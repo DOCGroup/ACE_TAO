@@ -1,3 +1,8 @@
+Fri Nov 28 14:33:09 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+          Removed template files from sources
+
 Fri Nov 28 13:34:03 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Sequence_Latency/Deferred/client.bor:
