@@ -18,6 +18,8 @@ TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (
 {
 }
 
+#if !defined (ACE_WIN32) // @@ TODO: Temporary Fix
+
 TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (const TAO_RelativeRoundtripTimeoutPolicy_i &rhs)
   : PortableServer::RefCountServantBase (rhs),
     POA_Messaging::RelativeRoundtripTimeoutPolicy (rhs),
@@ -25,6 +27,8 @@ TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (cons
     relative_expiry_ (rhs.relative_expiry_)
 {
 }
+
+#endif /* ACE_WIN32 */
 
 TimeBase::TimeT
 TAO_RelativeRoundtripTimeoutPolicy_i::relative_expiry (
@@ -136,6 +140,8 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronizati
 {
 }
 
+#if !defined (ACE_WIN32) // @@ TODO: Temporary Fix
+
 TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
   : PortableServer::RefCountServantBase (rhs),
     POA_Messaging::SyncScopePolicy (rhs),
@@ -143,6 +149,8 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
     poa_ (rhs.poa_)
 {
 }
+
+#endif /* ACE_WIN32 */
 
 Messaging::SyncScope
 TAO_Sync_Scope_Policy::synchronization (CORBA::Environment &)

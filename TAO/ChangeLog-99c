@@ -1,3 +1,23 @@
+Sat Oct 23 17:35:45 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/Naming_Service/Naming_Service.dsw:
+          Had corrupted line endings.
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+        * tao/TAO_Static.dsp:
+          Updated the projects so they have the same contents.                  
+        
+        * tao/Buffering_Constraint_Policy.cpp:
+        * tao/Buffering_Constraint_Policy.h:
+        * tao/Client_Priority_Policy.cpp:
+        * tao/Client_Priority_Policy.h:
+        * tao/Messaging_Policy_i.cpp:
+        * tao/Messaging_Policy_i.h:
+          Irfan's changes for SUN CC 5.0 do not compile on NT.  They
+          are #ifdef'ed out on WIN32 in order to get the beta kit out
+          the door.
+
 Sat Oct 23 09:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_field/field_ch.cpp,

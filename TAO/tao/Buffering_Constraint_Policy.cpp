@@ -17,6 +17,8 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::Buf
 {
 }
 
+#if !defined (ACE_WIN32) // @@ TODO: Temporary Fix
+
 TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs)
   : PortableServer::RefCountServantBase (rhs),
     POA_TAO::BufferingConstraintPolicy (rhs),
@@ -24,6 +26,9 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buff
     poa_ (rhs.poa_)
 {
 }
+
+#endif /* ACE_WIN32 */
+
 
 TAO::BufferingConstraint
 TAO_Buffering_Constraint_Policy::buffering_constraint (CORBA::Environment &)
