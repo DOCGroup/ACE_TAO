@@ -141,7 +141,7 @@ endif
 	@$(MAKE) -f Makefile.DLL
 
 realclean: clean
-	-$(RM) libDLL_Test.$(SOEXT)
+	-$(RM) libDLL_Test.$(SOEXT) log/compilations.log*
 
 #----------------------------------------------------------------------------
 #       Dependencies
