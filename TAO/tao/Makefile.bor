@@ -83,9 +83,7 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Message_Generator_Parser_11.obj \
 	$(OBJDIR)\GIOP_Message_Generator_Parser_12.obj \
 	$(OBJDIR)\GIOP_Message_Generator_Parser_Impl.obj \
-	$(OBJDIR)\GIOP_Message_Lite.obj \
 	$(OBJDIR)\GIOP_Message_Locate_Header.obj \
-	$(OBJDIR)\GIOP_Message_Reactive_Handler.obj \
 	$(OBJDIR)\GIOP_Message_State.obj \
 	$(OBJDIR)\GIOP_Message_Version.obj \
 	$(OBJDIR)\GIOP_Utils.obj \
@@ -102,6 +100,7 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Lite_Factory.obj \
 	$(OBJDIR)\IIOP_Profile.obj \
 	$(OBJDIR)\IIOP_Transport.obj \
+	$(OBJDIR)\Incoming_Message_Queue.obj \
 	$(OBJDIR)\Interceptor_List.obj \
 	$(OBJDIR)\Invocation.obj \
 	$(OBJDIR)\Invocation_Endpoint_Selectors.obj \
@@ -161,6 +160,7 @@ OBJFILES = \
 	$(OBJDIR)\Remote_Object_Proxy_Impl.obj \
 	$(OBJDIR)\Reply_Dispatcher.obj \
 	$(OBJDIR)\Resource_Factory.obj \
+	$(OBJDIR)\Resume_Handle.obj \
 	$(OBJDIR)\RequestInfo_Util.obj \
 	$(OBJDIR)\Sequence.obj \
 	$(OBJDIR)\Server_Strategy_Factory.obj \
