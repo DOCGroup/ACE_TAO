@@ -1,3 +1,9 @@
+Sun Sep 12 14:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Leader_Followers/client.cpp:
+          Changed type of the sleep_ member from u_long to long, to fix
+          warnings in our HPUX 64bit build.
+
 Sat Sep 11 19:43:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
