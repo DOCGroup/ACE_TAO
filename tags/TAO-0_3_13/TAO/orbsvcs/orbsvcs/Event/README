@@ -1,0 +1,308 @@
+# $Id$
+
+                The new implementation of the Event Channel
+
+= Abstract
+
+        The current implementation of TAO's real-time Event Channel
+has proven to be efficient, generally reliable and in general bug
+free; but it was designed to solve the forces in one problem domain
+(hard real-time avionics), so performance considerations (latency)
+were the main concern over other requirements.  
+        A new implementation of the real-time Event Channel is
+proposed that will preserve the performance of the the original event
+channel, yet it will be properly strategized so it can be adapted and
+extended to other domains (such as distributed interactive
+simulation).
+
+= Thanks to Irfan for providing feedback on this document and
+  designing the delayed operation for the event dispatching.
+
+= The module architecture
+
+        The current event channel is based on a series of modules
+organized in a stack, each module is supposed to execute a single
+task, for instance correlation; and could potentially be extracted or
+replaced to adapt the EC to new requirements.  Unfortunately the
+modules keep explicit references to the modules above them and below
+them, including the exact type of the module.  Even though adding base
+classes to represent the modules in a generic way would solve the
+syntactic problems of this architecture, the relation between the
+modules have semantic significance and they cannot simply be organized
+in an arbitrary way; even more, we have found that only a few
+operations on each module need to be strategized, and that using
+Template Method or Strategy on each module would be a better solution
+than to replace the module wholesale.
+
+= The new architecture
+
+        The new Event Channel will consist of the following
+components:
+
+- The Filter object: each consumer will have a filter object, this
+  filters are organized in a hierarchical structure, for instance a
+  disjunction filter has N children and accepts an event if any of its
+  children do, in contrast a conjunction filter will wait until all
+  its children have accepted the event.
+    The filter hierarchy for a particular consumer is created using
+  the Builder pattern, i.e. a separate class creates the hierarchy
+  from the ConsumerQOS specification.  The user can add new filtering
+  strategies (such as "wait until this events arrive in this
+  sequence" or "do not accept events from this source") by providing a
+  new filter and a new Filter_Builder objects.
+    Notice that the per-consumer filters were already present in the
+  old event channel, the main difference is that all events went
+  through the correlation module, in many cases just to check that the
+  consumer did not require correlation; the new scheme will eliminate
+  that extra test.  More importantly, if the event was accepted a
+  ACE_ES_Dispatch_Request was dynamically allocated and passed to the
+  dispatching module; this was necessary because some implementations
+  of the dispatching module required to enqueue the event.   Clearly
+  the allocation of some node for the queue is a decision better left
+  for the dispatching module, thus avoiding memory allocations in the
+  single threaded case.
+    Another importat feature of this design is that in the case where
+  the consumer only has disjunctive filtering no copies of the data
+  are needed (until we arrive to the dispatching module).
+
+    This filter objects can also be used to strategize the priority
+  assignment in conjuctive and disjunctive correlations; for example,
+  some consumers may require a fixed priority for disjunctions or the
+  highest priority for conjunctions, instead of just the priority of
+  the last event.
+
+- The Dispatching module: as in the original event channel
+  implementation there are multiple ways to dispatch events, this
+  feature is preserved with only a few syntactic changes.
+      Possible implementations: Reactive Dispatching, a single queue
+  served by multiple threads, multiple queues serviced by threads at
+  different priorities.
+      An interesting challenge to solve in this module is to minimize
+  the amount of copying of events, for instance:
+    + Reactive dipatching does not require any copies for an event,
+      the event is simply pushed from the supplier to the consumer.
+    + If the dispatching module has any form of queueing then at least 
+      one copy must be made. Ideally we want to avoid making multiple
+      copies for each consumer interested in the event; a potential
+      solution is to let the dispatching module create up front a
+      "reference counted" version of the event; this reference counted 
+      version is used by the SupplierFiltering strategy to push to
+      each consumer. 
+      @@ TODO: how do we match this with the filtering interfaces?
+
+- The ConsumerAdmin module: this object acts as a factory for the
+  ProxyPushSupplier objects (i.e. the interface between the event
+  channel and its consumers); the object delegates on the event
+  channel implementation to create the objects, and provides a simple
+  mechanism to control the object activation in different POAs: it
+  queries the Event Channel for the right POA to use.
+      Possible implementations: it could keep the consumers classified 
+  by the events they consume, minimizing the time required to
+  connect/disconnect a consumer or to dispatch an event
+  [see the relationship with SupplierFiltering]
+
+- The SupplierAdmin module: this is a factory for the
+  ProxyPushConsumer objects (again delegating on the event channel);
+  it also provides the user with control over the proxy activation.
+  It provides two template methods that can be used to:
+    + Inform all supplier that a consumer has connected/disconnected.
+    + Inform only the suppliers that are publish the events in the
+      consumer.
+    + Do not inform the suppliers.
+      Possible implementations: it could keep the supplier classified 
+  by the events they publish, minimizing the time to
+  connect/disconnect a supplier.
+
+- The ProxyPushSupplier object delegates on the filter to do most of
+  its job, but it can be subclassed to provide event counting and
+  similar features.  Notice that providing the Supplier with a
+  Null_Filter moves all the filtering responsability to the
+  ProxyPushConsumers.
+      Possible implementations: use templates to define the kind of
+  locking strategy.
+
+- The ProxyPushConsumer object is strategized to provide different
+  ways to handle (close to the supplier) filtering (see the
+  SupplierFiltering description).
+      Possible implementations: use templates to define the kind of
+  locking strategy.
+
+- The SupplierFiltering classes are used to control the filtering
+  strategy close the the Suppliers (remember that the object close to
+  the supplier is the ProxyPushConsumer).  This object receives an
+  event set from the PushSupplier and passes it up to the right set of 
+  ProxyPushSupplier (the Consumer representatives).
+      Possible implementations:
+     + Each one keeps track of the consumers possibly interested in
+       the events published here; in this way the dispatching is
+       proportional to the number of consumers interested in the
+       event, not the total number of consumers.
+     + Use the global consumer list to find objects interested in the
+       current event; it is simpler, scales betters memory-wise, but
+       will perform worse than the first alternative, unless most
+       consumers are interested in most events.
+     + Use a global list for each type of event, thus amortizing the
+       cost between all the suppliers that have an event.
+     + Keep a single list of consumers, but do not try to filter them
+       by source or type, the ProxyPushSuppliers are then responsible
+       for filtering (using the EC_Filter objects).
+
+  An interesting aspect of this object is how is it to manage event
+  dispatching: will it iterate over the set of consumers (holding a
+  lock?) and just dispatch the event to each one? Will it make a copy
+  of the consumers (reducing the duration of the lock)?  We forsee
+  several alternatives:
+
+	+ Simply iterate over the set of consumers for the current
+	  supplier (can be a global set), holding a lock as we go.
+	  This is potentially the most efficient version, but it can
+	  suffer from priority inversion because the lock is held for
+	  a long time. 
+	  It can also produce dead-locks if there is no queueing in
+	  the dispatching module. 
+
+	+ Make a copy of the current set of consumers, unfortunately
+	  this could requires a memory allocation, and potentially
+	  increasing the reference count on the consumers.
+	    An interesting idea to explore is to keep a work array in
+	  TSS storage, this array can be used to copy the consumers
+	  from the shared resource.
+	    Since the size of the array can be determined before hand
+	  (using the subscriptions and publications), the array could
+	  be pre-allocated to the maximum size of all the supplier, or 
+	  simply grown on demand.  For hard real-time applications the 
+  	  initial size of this array could be configured at compile
+	  time, and chosen so that no re-allocation is ever needed.
+	    In any case the shared resource is held for a shorter
+	  time, just long enough to copy the necessary elements into
+	  the array, the dispatching to each consumer is done after
+	  releasing the global lock.
+
+	+ Mark the list as "busy" so no changes will be made to it
+	  while we iterate over it.  Instead, any changes to the list
+	  are "posted" in a list of Command objects.
+	  After finishing the iteration the lock is acquired again,
+	  the is is marked as "idle" and any posted operations are
+	  executed.
+	  "busy" and "idle" could be implemented using a reference
+	  count; so multiple "reader" threads can go in [with a
+	  limit?]
+	  Drawbacks: can lead to dead-lock if the HWM is reached when
+	  a consumer that also plays the Supplier role pushes an event 
+	  as part of its upcall.
+	  Can give too much priority to the writes if the HWM is 1.
+
+- The Timer_Module: this is used by the EC_Filter_Builder to create
+  per-consumer timeout events. It will simply push events directly to
+  the EC_ProxyPushSupplier objects.
+
+- The Event_Channel: this class acts as a mediator between the
+  components above.  It is completely strategized by an abstract
+  factory (EC_Factory) that creates each one of the objects already
+  described, in fact, the factory methods in the Event Channel are
+  implemented as simple delegation on the EC_Factory.
+
+- The EC_Factory: using this class the user can strategize and control
+  all the object creations in the EC; notice that this is an abstract
+  factory because not all the combinations of the classes described
+  make sense.
+
+= Interactions
+
+  The architecture described above is a bit hard to understand if we
+  don't describe the interaction between all the components above:
+
+  - Dispatching an event: the path to dispatch an event starts with an 
+    EC_ProxyPushConsumer that receives the event from its supplier, 
+    it simply delegates on the SupplierFiltering object bound to it at 
+    creation time.
+    The SupplierFiltering object pushes the event [since the event is
+    a set it has to push one event at a time] to the a set of
+    ProxyPushSuppliers [recall that this are the consumer ambassadors] 
+    
+
+  - Adding a consumer:
+
+  - Adding a supplier:
+
+  - Removing a consumer:
+
+  - Removing a supplier:
+
+  - Shutting down the event channel:
+
+= Performance
+
+  The main sources of overhead in the EC are:
+
+  - Locking
+  - Memory allocation
+  - Data copying
+
+  the new design do not neglect this issues, for instance:
+
+  - The EC_Factory creates strategized locks, so the single threaded
+    implementations can perform optimally.
+
+  - Each consumer has its own filters, so no locking is required at
+    each filter (just one for the consumer).
+
+  - In the common case data can be pushed from the original supplier
+    to the dispatching module without any data copies or memory
+    allocations, at that point the dispatching module can make the
+    copies it deems necessary to push the data ahead.
+
+  - The filtering mechanism will provide two data paths, one for the
+    data that is owned by the filter or the event channel (and thus
+    require no copying) and one for external data; this will be used
+    in the dispatching module to minimize data copying too.
+
+  - Features that are not important for production code can be plugged 
+    out, for example: timestamping (for performance analysis) can be
+    implemented as a Decorator on the ProxyPushConsumer and the
+    Dispatching classes.  Similarly the configuration runs require
+    that the EC call the scheduler with the subscription and
+    correlation information, this calls can be completely removed for
+    the production code.
+
+  - Initial experiments show that the new EC can (in some
+    configurations) dispatch one event without a single memory
+    allocation, contrast this with the 8 memory allocations in the old 
+    EC.
+
+  - Initial experiments show that the new EC can (in some
+    configurations) dispatch one event with 0 locks for single
+    threaded applications and we estimate that less than 5 locks
+    (exact numbers are not available yet) will be required for the
+    multi-threaded version.
+    Contrast this with the 28 locks required by the old EC.
+
+  - Initial experiments suggest that the EC can filter and dispatch
+    events with no data copying (with Reactive dispatching) and with 
+    only one data copy (if Prioritized dispatching is used).
+    We believe that even this extra data copy could be minimized in
+    the multi-threaded case (or at least limited to the event header
+    and avoided for the event payload).
+
+	In general we expect that the performance of the new real-time 
+Event Service will be equal or better than the previous
+implementation. As we mention above initial experiments suggest that
+this is going to be the case.
+
+= Locking revisited
+
+  There are several ways to support strategized locking, for example:
+  
+  - Each class is implemented without any locking, all the locks must
+    be taken outside the context of the class.
+  - Each class is implemented as a base class without any locking,
+    derived classes provide the right kind of locking [inflexible]
+  - Each class can be Decorated with a version that supports locking
+    [inefficient]
+  - Each class parametric over the kind of locking [complex]
+  - Each class has an strategy (ACE_Lock) to do the locking [easier]
+
+	we will try the last alternative first, if the performance
+penalty in the case with no locking (or in the case where the exact
+locking type is known well in advance) proves to be too high we can
+explore the other solutions.

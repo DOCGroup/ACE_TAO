@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+if [ -z "$NameServicePort" ]; then
+  NameServicePort=0
+  export NameServicePort
+fi
+
+MSG_COUNT=500
+# The number of messages to send.
+
+HP_CONSUMERS="1 5 10 20"
+# The number of high priority consumers.
+
+HP_SUPPLIERS="1 2 10"
+# The number of high priority suppliers
+
+HP_INTERVALS="30000 25000 20000 19000 18000 17000 16000 15000 12000 10000"
+
+/bin/rm -f NameService.ior NameService.pid EC1.pid EC2.pid EC.pid
+
+for s in $HP_SUPPLIERS; do
+  for c in $HP_CONSUMERS; do
+    for i in $HP_INTERVALS; do
+      echo echo Supplier = $s Consumer = $c Interval = $i
+      ../../Naming_Service/Naming_Service -ORBport $NameServicePort \
+        -o NameService.ior -p NameService.pid >/dev/null 2>&1 &
+      sleep 2
+      NameService=`cat NameService.ior`
+      export NameService
+
+      ./EC_Multiple -ORBport 0 -l ECM1 -p ECM1.pid -s runtime \
+        -h ${s},${c},0,${i},${MSG_COUNT},1,2,1,2 > \
+        THR.LCL.S${s}.C${c}.I${i}.log 2>&1
+      kill `cat NameService.pid`
+    done
+  done
+done
