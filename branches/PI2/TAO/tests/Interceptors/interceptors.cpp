@@ -1,7 +1,7 @@
 // $Id$
 
 #include "interceptors.h"
-#include "Request_Info.h"
+
 
 ACE_RCSID(Interceptors, interceptors, "$Id$")
 
