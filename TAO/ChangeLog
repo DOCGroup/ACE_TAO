@@ -1,3 +1,17 @@
+Thu Apr 15 23:13:55 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Any.h:
+
+	  Reverted change "Wed Apr 14 06:42:12 UTC 2004  Johnny Willemsen
+	  <jwillemsen@remedy.nl>" that added a #include
+	  "tao/Exception.h".  Including "ace/CORBA_macros.h" instead is
+	  enough and much lighterweight.
+
+	* tao/PolicyC.h:
+
+	  Include "tao/Exception.h" to pull in CORBA exception class
+	  declarations.
+
 Thu Apr 15 06:00:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/EC_Custom_Marshal/ECM_Data.cpp:
