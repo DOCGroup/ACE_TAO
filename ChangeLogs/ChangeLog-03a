@@ -1,3 +1,14 @@
+Fri Aug  4 15:53:27 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/TP_Reactor.h:
+        * ace/TP_Reactor.cpp:
+          The owner_ field has no effect in the TP reactor, but setting it
+          or checking its value wakes up the leader thread.  This can
+          result in performance problems for applications that use both TP
+          and regular reactors, such as TAO.
+          Thanks to Brian Wright <bwright@paladyne.com> for detecting the
+          problem and putting us in the right track to solve it.
+
 Thu Aug  3 17:50:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * THANKS:
