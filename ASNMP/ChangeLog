@@ -1,3 +1,17 @@
+Tue Dec 21 16:22:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/*.cpp: removed the unnecessary explicit template
+          instantiation.  Other instantiations were necessary
+          with it, and it seemed to serve no useful purpose:
+          there was no use of an ACE_Unbounded_Set<Log_Msg *>.
+          Thanks to Jose Rubio <jrubio@tr.comm.mot.com> for
+          reporting link failures with Sun CC 5.0, with explicit
+          template instantiation enabled.
+
+        * tests/test_config.h: added #include of "ace/ACE.h",
+          because the file uses it later.  g++ 2.91.66 on Linux
+          needed it.
+
 Wed Jul 14 08:26:42 1999  Brian Raven <brianr@liffe.com>
 
         * asnmp/snmp.{h,cpp},wpdu.cpp:

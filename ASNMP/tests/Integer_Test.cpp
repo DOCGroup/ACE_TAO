@@ -1,5 +1,5 @@
 // $Id$
- 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //  Test all the member functions of the Integer class. An Object
-//  representing an ASN.1 Integer64 SMI 32 bit Integer SYNTAX. 
+//  representing an ASN.1 Integer64 SMI 32 bit Integer SYNTAX.
 //
 // = AUTHOR
 //    Michael R. MacFaden <mrm@cisco.com>
@@ -18,7 +18,7 @@
 // ============================================================================
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
- 
+
 Permission to use, copy, modify, and distribute this software for any
 purpose and without fee is hereby granted, provided that this
 copyright and permission notice appear on all copies of the software and
@@ -27,7 +27,7 @@ in advertising or publicity pertaining to distribution of the
 program without specific prior permission, and notice be given
 in supporting documentation that modification, copying and distribution is by
 permission of Cisco Systems, Inc.
- 
+
 Cisco Systems, Inc. makes no representations about the suitability of this
 software for any purpose.  THIS SOFTWARE IS PROVIDED ``AS IS''
 AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT
@@ -37,7 +37,7 @@ LIABLE FOR ANY DAMAGES ARISING OUT OF THIS LICENSE OR YOUR USE OF THE
 SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
- 
+
 
 #include "ace/OS.h"
 #include "asnmp/integer.h"
@@ -51,11 +51,7 @@ static int i = INT_MAX, ni = INT_MIN;
 static unsigned int ui = UINT_MAX;
 static unsigned short us = 10;
 static short si = 65535;
- 
-// hack: do this so when linking SUNC 4.x compiler will instantiate template
-#include "ace/Containers.h"
-ACE_Unbounded_Set<ACE_Log_Msg*> x;
- 
+
 /*
      SnmpInt32( void);
      SnmpInt32 (const long i);
@@ -73,7 +69,7 @@ ACE_Unbounded_Set<ACE_Log_Msg*> x;
 
 static void TestInteger32()
 {
- 
+
    // constructors
    SnmpInt32 i1;
    ACE_ASSERT(i1 == def);
@@ -92,7 +88,7 @@ static void TestInteger32()
    SnmpInt32 *i8 = new SnmpInt32(i5);
    ACE_ASSERT(i8 != 0);
    delete i8;
- 
+
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) i1(\"\") [%u]\n",
     (unsigned long)i1));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) i2(\"%u\") [%u]\n",
@@ -119,7 +115,7 @@ static void TestInteger32()
   ACE_ASSERT(i1 == us);
   i1 = si; // unsigned short
   ACE_ASSERT(i1 == si);
-} 
+}
 
 /*
      SnmpUInt32( void);
@@ -155,7 +151,7 @@ static void TestUnsignedInteger32()
    SnmpUInt32 *u8 = new SnmpUInt32(u5);
    ACE_ASSERT(u8 != 0);
    delete u8;
- 
+
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) u1(\"\") [%u]\n",
     (unsigned long)u1));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) u2(\"%u\") [%u]\n",
@@ -189,14 +185,10 @@ main (int, char *[])
 {
   ACE_START_TEST ("Integer_Test");
 
-  TestInteger32(); 
+  TestInteger32();
 
-  TestUnsignedInteger32(); 
- 
+  TestUnsignedInteger32();
+
   ACE_END_TEST;
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Set<ACE_Log_Msg *>;
-#endif

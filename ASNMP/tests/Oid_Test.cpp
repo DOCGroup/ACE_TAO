@@ -1,5 +1,5 @@
 // $Id$
- 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -10,15 +10,15 @@
 //
 // = DESCRIPTION
 //  Test all the member functions of the Oid class. An Object
-//  representing an ASN.1 Integer64 SMI OID SYNTAX. 
-// 
+//  representing an ASN.1 Integer64 SMI OID SYNTAX.
+//
 // = AUTHOR
 //    Michael R. MacFaden <mrm@cisco.com>
 //
 // ============================================================================
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
- 
+
 Permission to use, copy, modify, and distribute this software for any
 purpose and without fee is hereby granted, provided that this
 copyright and permission notice appear on all copies of the software and
@@ -27,7 +27,7 @@ in advertising or publicity pertaining to distribution of the
 program without specific prior permission, and notice be given
 in supporting documentation that modification, copying and distribution is by
 permission of Cisco Systems, Inc.
- 
+
 Cisco Systems, Inc. makes no representations about the suitability of this
 software for any purpose.  THIS SOFTWARE IS PROVIDED ``AS IS''
 AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT
@@ -37,23 +37,19 @@ LIABLE FOR ANY DAMAGES ARISING OUT OF THIS LICENSE OR YOUR USE OF THE
 SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
- 
+
 #include "ace/OS.h"
 #include "asnmp/oid.h"
 #include "test_config.h"
- 
-ACE_RCSID(tests, Oid_Test, "$Id$")
 
-// hack: do this so when linking SUNC 4.x compiler will instantiate template
-#include "ace/Containers.h"
-ACE_Unbounded_Set<ACE_Log_Msg*> x;
+ACE_RCSID(tests, Oid_Test, "$Id$")
 
 /*
   Oid( const char * dotted_oid_string = "", size_t size = -1);
   Oid ( const Oid &oid);
   Oid(const unsigned long *raw_oid, size_t oid_len);
   ~Oid();
- 
+
   SmiUINT32 get_syntax();
   Oid& operator=( const Oid &oid);
   int operator==( const Oid &lhs,const Oid &rhs);
@@ -78,7 +74,7 @@ ACE_Unbounded_Set<ACE_Log_Msg*> x;
   char *to_string();
   SnmpSyntax *clone() const;
   SnmpSyntax& operator=( SnmpSyntax &val);
- */ 
+ */
 
 static void OidTest()
 {
@@ -149,22 +145,22 @@ static void OidTest()
   d1 += ll;
   d1 += ll;
   d1 += "0";
-  ACE_ASSERT(d1.valid() == 1); 
-  ACE_ASSERT(d1.length() == 4); 
+  ACE_ASSERT(d1.valid() == 1);
+  ACE_ASSERT(d1.length() == 4);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Oid:d1(0,max,max,0) [%s]\n",
     d1.to_string()));
-  ACE_ASSERT(d1[0] == (unsigned long)0); 
-  ACE_ASSERT(d1[1] == ll); 
-  ACE_ASSERT(d1[2] == ll); 
-  ACE_ASSERT(d1[3] == (unsigned long)0); 
+  ACE_ASSERT(d1[0] == (unsigned long)0);
+  ACE_ASSERT(d1[1] == ll);
+  ACE_ASSERT(d1[2] == ll);
+  ACE_ASSERT(d1[3] == (unsigned long)0);
 
-  d2 += d1; 
+  d2 += d1;
   ACE_ASSERT(d2.valid() == 1);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Oid:(5.6.7.8.9.10) [%s]\n",
     d2.to_string()));
 
-  // test out max Oid string... 
- 
+  // test out max Oid string...
+
   // relational operators oid,oid
   ACE_ASSERT(d2 == d2);
   ACE_ASSERT(!(d2 != d2));
@@ -174,7 +170,7 @@ static void OidTest()
   ACE_ASSERT(d2 <= d2);
 
 }
- 
+
 int
 main (int, char *[])
 {
@@ -183,7 +179,3 @@ main (int, char *[])
   ACE_END_TEST;
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Set<ACE_Log_Msg*>;
-#endif

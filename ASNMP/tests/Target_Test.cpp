@@ -1,5 +1,5 @@
 // $Id$
- 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -9,9 +9,9 @@
 //    Target_Test.cpp
 //
 // = DESCRIPTION
-//  Test all the member functions of the Target class. 
+//  Test all the member functions of the Target class.
 //  Not sure if this object is really required or not in the new framework
-// 
+//
 // = AUTHOR
 //    Michael R. MacFaden <mrm@cisco.com>
 //
@@ -19,7 +19,7 @@
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
- 
+
 Permission to use, copy, modify, and distribute this software for any
 purpose and without fee is hereby granted, provided that this
 copyright and permission notice appear on all copies of the software and
@@ -28,7 +28,7 @@ in advertising or publicity pertaining to distribution of the
 program without specific prior permission, and notice be given
 in supporting documentation that modification, copying and distribution is by
 permission of Cisco Systems, Inc.
- 
+
 Cisco Systems, Inc. makes no representations about the suitability of this
 software for any purpose.  THIS SOFTWARE IS PROVIDED ``AS IS''
 AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT
@@ -38,25 +38,21 @@ LIABLE FOR ANY DAMAGES ARISING OUT OF THIS LICENSE OR YOUR USE OF THE
 SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
- 
 
-#include "ace/OS.h" 
+
+#include "ace/OS.h"
 #include "asnmp/octet.h"
 #include "asnmp/target.h"
 #include "test_config.h"
- 
+
 ACE_RCSID(tests, Target_Test, "$Id$")
 
-// hack: do this so when linking SUNC 4.x compiler will instantiate template
-#include "ace/Containers.h"
-ACE_Unbounded_Set<ACE_Log_Msg*> x;
- 
 /*
   Percieved Problems with this CTarget aka UdpTarget Interface:
 
   1) can't set snmp version during constructor (default value?)
-  2) doesn't use ANSI C++ String class (still uses char *) 
-  3) Makes it easy to mix up read and write comm strs (could be diff types) 
+  2) doesn't use ANSI C++ String class (still uses char *)
+  3) Makes it easy to mix up read and write comm strs (could be diff types)
   3) so many get/set's, leads one to rethink the design/use of UdpTarget
   4) Use of resolve_to_C smells like a HACK...
   5) No valid() member function returns 1 even if no address given..
@@ -88,7 +84,7 @@ ACE_Unbounded_Set<ACE_Log_Msg*> x;
     UdpTarget& operator=( const UdpTarget& target);
     friend int operator==( const UdpTarget &lhs, const UdpTarget &rhs);
 
- */ 
+ */
 
 static void TestSnmpTarget()
 {
@@ -108,8 +104,8 @@ static void TestSnmpTarget()
   ACE_ASSERT(a == b);
   c1.get_write_community(a);
   ACE_ASSERT(a == c);
-  c1.get_address (ga); 
-  ACE_ASSERT(c1.get_version() == version1); 
+  c1.get_address (ga);
+  ACE_ASSERT(c1.get_version() == version1);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpTarget:c1(\"\") [%s]\n",
     c1.to_string()));
@@ -117,9 +113,9 @@ static void TestSnmpTarget()
   IpAddress ip("127.0.0.1");
   UdpTarget c2(ip);
   ACE_ASSERT(c2.valid() == 1);
-  c2.get_address (ga); 
+  c2.get_address (ga);
   ACE_ASSERT(ga.valid() == 1);
-  ACE_ASSERT(c2.get_version() == version1); 
+  ACE_ASSERT(c2.get_version() == version1);
   ACE_ASSERT(ga.valid() == 1);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpTarget:c2(\"\") [%s]\n",
     c2.to_string()));
@@ -129,7 +125,7 @@ static void TestSnmpTarget()
   ACE_ASSERT(c5->valid() == 1);
   c5->get_address (ga);
   ACE_ASSERT(ga.valid() == 1);
-  ACE_ASSERT(c5->get_version() == version1); 
+  ACE_ASSERT(c5->get_version() == version1);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpTarget:c5(\"\") [%s]\n",
     c5->to_string()));
   delete c5;
@@ -145,11 +141,7 @@ main (int, char *[])
 {
   ACE_START_TEST ("Target_Test");
   TestSnmpTarget();
- 
+
   ACE_END_TEST;
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Set<ACE_Log_Msg*>;
-#endif
