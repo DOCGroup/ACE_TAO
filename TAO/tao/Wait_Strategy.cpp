@@ -29,8 +29,8 @@ TAO_Wait_Strategy::sending_request (TAO_ORB_Core * /* orb_core */,
 
 // Constructor.
 TAO_Wait_On_Reactor::TAO_Wait_On_Reactor (TAO_Transport *transport)
-  : TAO_Wait_Strategy (transport),
-    reply_received_ (0)
+  : TAO_Wait_Strategy (transport)
+    // reply_received_ (0)
 {
 }
 
@@ -40,29 +40,30 @@ TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
 }
 
 int
-TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time)
+TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
+                           int &reply_received)
 {
   // Reactor does not change inside the loop.
   ACE_Reactor* reactor =
     this->transport_->orb_core ()->reactor ();
 
   // Do the event loop, till we fully receive a reply.
-  
+
   int result = 1; // So the first iteration works...
-  this->reply_received_ = 0;
-  while (this->reply_received_ == 0 && result > 0)
+  // this->reply_received_ = 0;
+  while (reply_received  == 0 && result > 0)
     {
       result = reactor->handle_events (max_wait_time);
     }
 
-  if (result == -1 || this->reply_received_ == -1)
+  if (result == -1 || reply_received == -1)
     return -1;
 
-  // Return an error if there was a problem receiving the reply...
+  // Return an error if there was a problem receiving the reply.
   if (max_wait_time != 0)
     {
-      if (this->reply_received_ != 1
-          && *max_wait_time == ACE_Time_Value::zero)
+      if (reply_received != 1 &&
+          *max_wait_time == ACE_Time_Value::zero)
         {
           result = -1;
           errno = ETIME;
@@ -71,7 +72,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time)
   else
     {
       result = 0;
-      if (this->reply_received_ == -1)
+      if (reply_received == -1)
         result = -1;
     }
 
@@ -85,14 +86,14 @@ TAO_Wait_On_Reactor::handle_input (void)
 
   if (result == 1)
     {
-      this->reply_received_ = 1;
+      // this->reply_received_ = 1;
       result = 0;
     }
 
-  if (result == -1)
-    this->reply_received_ = -1;
+  // if (result == -1)
+  //  reply_received = -1;
 
-  return result;
+ return result;
 }
 
 // Register the handler with the Reactor.
@@ -149,7 +150,7 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
 
   // Register the handler.
   this->transport_->register_handler ();
-  
+
   // Send the request.
   int result =
     this->TAO_Wait_Strategy::sending_request (orb_core,
@@ -171,7 +172,8 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
+TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
+                                   int &)
 {
   // Cache the ORB core, it won't change and is used multiple times
   // below:
@@ -248,7 +250,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
       if (this->reply_received_ == 1)
         {
           // But first reset our state in case we are invoked
-          // again... 
+          // again...
           this->reply_received_ = 0;
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
@@ -258,7 +260,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
       else if (this->reply_received_ == -1)
         {
           // But first reset our state in case we are invoked
-          // again... 
+          // again...
           this->reply_received_ = 0;
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
@@ -362,7 +364,7 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
 
   // Obtain the lock.
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                    orb_core->leader_follower ().lock (), 
+                    orb_core->leader_follower ().lock (),
                     -1);
 
   //  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - reading reply <%x>\n",
@@ -477,7 +479,8 @@ TAO_Wait_On_Read::~TAO_Wait_On_Read (void)
 
 // Wait on the read operation.
 int
-TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time)
+TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
+                        int &)
 {
   int reply_complete = 0;
   while (reply_complete != 1)

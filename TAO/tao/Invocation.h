@@ -11,7 +11,7 @@
 //
 // = DESCRIPTION
 //    Encapsulate the logic for remote invocations, oneways or
-//    twoways.  
+//    twoways.
 //
 //   THREADING NOTE: Threads should never manipulate another
 //   thread's invocations.  In this implementation, all data
@@ -22,7 +22,7 @@
 //
 // = AUTHOR
 //    Carlos O'Ryan <coryan@cs.wustl.edu> and Alexander Babu Arulanthu
-//    <alex@cs.wustl.edu> 
+//    <alex@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -57,22 +57,25 @@ class TAO_Export TAO_GIOP_Invocation
 {
   // = TITLE
   //     Encapsulates common behavior for both oneway and twoway
-  //     invocations. 
+  //     invocations.
   //
   // = DESCRIPTION
   //     This class connects (or lookups a connection from the cache)
   //     to the remote server, builds the CDR stream for the Request,
   //     send the CDR stream and expects the response and interprets
-  //     the incoming CDR stream. 
-  
+  //     the incoming CDR stream.
+
 public:
   TAO_GIOP_Invocation (TAO_Stub *data,
                        const char *operation,
                        TAO_ORB_Core* orb_core);
   // Constructor.
-  
+
   virtual ~TAO_GIOP_Invocation (void);
-  // Destructor. This is virtual so that we can have 
+  // This destructor is virtual so that the derived synchronous
+  // invocation classes can call <idle> method on the <Transport>, if
+  // they want to. All the synchronous invocations <idle> the
+  // Transport, but asynchronous invocations do not do that.
 
   void put_param (CORBA::TypeCode_ptr tc,
                   void *value,

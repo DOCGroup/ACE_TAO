@@ -50,13 +50,6 @@ public:
 
   virtual TAO_GIOP_Message_State *message_state (void) const;
   // Get the Message State into which the reply has been read.
-
-  // virtual int reply_received (void) const;
-  // Return the reply received flag.
-
-  // protected:
-  // int reply_received_;
-  // Reply received flag.
 };
 
 // *********************************************************************
@@ -101,6 +94,12 @@ public:
   virtual TAO_InputCDR &reply_cdr (void);
   // Return the reply CDR.
 
+  virtual int &reply_received (void);
+  // Return the reference to the reply received flag. This will not
+  // make sense in the Asynch Reply Dispatcher case, since the
+  // reply will be dispatched as soon as it is available and the
+  // dispatcher will go away immediately after that. 
+
 private:
   CORBA::ULong reply_status_;
   // Reply or LocateReply status.
@@ -118,6 +117,9 @@ private:
 
   TAO_InputCDR reply_cdr_;
   // CDR where the reply message is placed.
+
+  int reply_received_;
+  // Flag that indicates the reply  has been received. 
 };
 
 // *********************************************************************

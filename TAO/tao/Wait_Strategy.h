@@ -48,8 +48,10 @@ public:
   // variables because the reply may arrive *before* the user calls
   // wait.
 
-  virtual int wait (ACE_Time_Value *max_wait_time) = 0;
-  // Base class virtual method.
+  virtual int wait (ACE_Time_Value *max_wait_time,
+                    int &reply_received) = 0;
+  // Base class virtual method. Wait till the <reply_received> flag is
+  // true or the time expires.
 
   virtual int handle_input (void) = 0;
   // Handle the input.
@@ -86,12 +88,13 @@ public:
 
   // = Documented in TAO_Wait_Strategy.
 
-  virtual int wait (ACE_Time_Value *max_wait_time);
+  virtual int wait (ACE_Time_Value *max_wait_time,
+                    int &reply_received);
   virtual int handle_input (void);
   virtual int register_handler (void);
 
 private:
-  int reply_received_;
+  // int reply_received_;
   // This flag indicates if a *complete* reply has been received. Used
   // to exit the event loop.
 };
@@ -118,7 +121,8 @@ public:
 
   virtual int sending_request (TAO_ORB_Core *orb_core,
                                int two_way);
-  virtual int wait (ACE_Time_Value *max_wait_time);
+  virtual int wait (ACE_Time_Value *max_wait_time,
+                    int &reply_received);
   virtual int handle_input (void);
   virtual int register_handler (void);
 
@@ -162,7 +166,10 @@ public:
   virtual ~TAO_Wait_On_Read (void);
   // Destructor.
 
-  virtual int wait (ACE_Time_Value *max_wait_time);
+  // = Documented in TAO_Wait_Strategy.
+
+  virtual int wait (ACE_Time_Value *max_wait_time,
+                    int &reply_received);
   virtual int handle_input (void);
   virtual int register_handler (void);
 };

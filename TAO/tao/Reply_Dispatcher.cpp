@@ -25,12 +25,6 @@ TAO_Reply_Dispatcher::message_state (void) const
   return 0;
 }
 
-// int
-// TAO_Reply_Dispatcher::reply_received (void) const
-// {
-//   return reply_received_;
-// }
-
 // *********************************************************************
 
 // Constructor.
@@ -38,7 +32,8 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core)
   : message_state_ (0),
     reply_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
                 TAO_ENCAP_BYTE_ORDER,
-                orb_core)
+                orb_core),
+    reply_received_ (0)
 {
 }
 
@@ -54,7 +49,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
                                             TAO_GIOP_ServiceContextList &reply_ctx,
                                             TAO_GIOP_Message_State *message_state)
 {
-  // this->reply_received_ = 1;
+  this->reply_received_ = 1;
 
   this->reply_status_ = reply_status;
   this->version_ = version;
@@ -85,6 +80,11 @@ TAO_Synch_Reply_Dispatcher::reply_cdr (void)
   return this->reply_cdr_;
 }
 
+int &
+TAO_Synch_Reply_Dispatcher::reply_received (void)
+{
+  return reply_received_;
+}
 
 // *********************************************************************
 #if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
