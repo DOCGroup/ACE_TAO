@@ -62,6 +62,7 @@
 # define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 # define ACE_HAS_GNUG_PRE_2_8
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
+# define ACE_LACKS_MIN_MAX_TEMPLATES
 #endif /* ! egcs */
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
