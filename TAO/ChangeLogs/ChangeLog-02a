@@ -1,3 +1,8 @@
+Thu Sep 20 15:48:33 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Thread_Pool/client.cpp: Added ability
+	  to adjust timeout for max throughput run.
+
 Thu Sep 20 13:23:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/BiDirectional_NestedUpcall/client.cpp:
