@@ -3,14 +3,12 @@
 #include "EC_Basic_Factory.h"
 #include "EC_Dispatching.h"
 #include "EC_Basic_Filter_Builder.h"
-#include "EC_Trivial_Supplier_Filter.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_ProxySupplier.h"
 #include "EC_SupplierFiltering.h"
 #include "EC_ObserverStrategy.h"
-#include "EC_Null_Scheduling.h"
 #include "EC_ProxyPushSupplier_Set_T.h"
 #include "EC_Reactive_Timeout_Generator.h"
 
@@ -22,6 +20,8 @@ ACE_RCSID(Event, EC_Basic_Factory, "$Id$")
 
 TAO_EC_Basic_Factory::~TAO_EC_Basic_Factory (void)
 {
+  delete this->supplier_filtering_;
+  this->supplier_filtering_ = 0;
 }
 
 TAO_EC_Dispatching*
@@ -44,18 +44,6 @@ TAO_EC_Basic_Factory::create_filter_builder (TAO_EC_Event_Channel *ec)
 
 void
 TAO_EC_Basic_Factory::destroy_filter_builder (TAO_EC_Filter_Builder *x)
-{
-  delete x;
-}
-
-TAO_EC_Supplier_Filter_Builder*
-TAO_EC_Basic_Factory::create_supplier_filter_builder (TAO_EC_Event_Channel *ec)
-{
-  return new TAO_EC_Trivial_Supplier_Filter_Builder (ec);
-}
-
-void
-TAO_EC_Basic_Factory::destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder *x)
 {
   delete x;
 }
@@ -99,7 +87,11 @@ TAO_EC_Basic_Factory::destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier *x)
 TAO_EC_ProxyPushConsumer*
 TAO_EC_Basic_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel *ec)
 {
-  return new TAO_EC_ProxyPushConsumer (ec);
+  if (this->supplier_filtering_ == 0)
+    ACE_NEW_RETURN (this->supplier_filtering_,
+                    TAO_EC_Null_SupplierFiltering (ec),
+                    0);
+  return new TAO_EC_ProxyPushConsumer (ec, this->supplier_filtering_);
 }
 
 void
@@ -142,22 +134,22 @@ TAO_EC_Basic_Factory::create_proxy_push_supplier_set (TAO_EC_Event_Channel *)
   return new TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH> ();
 }
 
-TAO_EC_Scheduling_Strategy*
-TAO_EC_Basic_Factory::create_scheduling_strategy (TAO_EC_Event_Channel*)
-{
-  return new TAO_EC_Null_Scheduling;
-}
-
-void
-TAO_EC_Basic_Factory::destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy* x)
-{
-  delete x;
-}
-
 void
 TAO_EC_Basic_Factory::destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set *x)
 {
   delete x;
+}
+
+PortableServer::POA_ptr
+TAO_EC_Basic_Factory::consumer_poa (CORBA::Environment&)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
+}
+
+PortableServer::POA_ptr
+TAO_EC_Basic_Factory::supplier_poa (CORBA::Environment&)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 ACE_Lock*
@@ -175,7 +167,7 @@ TAO_EC_Basic_Factory::destroy_consumer_lock (ACE_Lock* x)
 ACE_Lock*
 TAO_EC_Basic_Factory::create_supplier_lock (void)
 {
-  return new ACE_Lock_Adapter<ACE_SYNCH_RECURSIVE_MUTEX> ();
+  return new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
 }
 
 void

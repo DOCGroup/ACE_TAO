@@ -34,7 +34,6 @@
 #include "EC_QOS_Info.h"
 
 class TAO_EC_Event_Channel;
-class TAO_EC_ProxyPushSupplier;
 
 class TAO_ORBSVCS_Export TAO_EC_Timeout_Filter : public TAO_EC_Filter
 {
@@ -47,7 +46,6 @@ class TAO_ORBSVCS_Export TAO_EC_Timeout_Filter : public TAO_EC_Filter
   //
 public:
   TAO_EC_Timeout_Filter (TAO_EC_Event_Channel *event_channel,
-                         TAO_EC_ProxyPushSupplier *supplier,
                          const TAO_EC_QOS_Info& qos_info,
                          RtecEventComm::EventType type,
                          RtecEventComm::Time period);
@@ -61,11 +59,6 @@ public:
 
   RtecEventComm::EventType type (void) const;
   // The type of timeout event that we generate.
-
-  void push_to_proxy (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info,
-                      CORBA::Environment& ACE_TRY_ENV);
-  // Callback from the Timeout_Generator
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
@@ -84,9 +77,6 @@ public:
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
   virtual int can_match (const RtecEventComm::EventHeader& header) const;
-  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info,
-                                CORBA::Environment &ACE_TRY_ENV);
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Timeout_Filter
@@ -97,9 +87,6 @@ private:
 private:
   TAO_EC_Event_Channel* event_channel_;
   // The event channel.
-
-  TAO_EC_ProxyPushSupplier *supplier_;
-  // The supplier that finally receives the timeout event.
 
   TAO_EC_QOS_Info qos_info_;
   // Events "generated" by this filter use this QOS_Info.

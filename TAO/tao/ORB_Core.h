@@ -23,12 +23,10 @@
 #include "tao/Policy_Manager.h"
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
-#include "tao/POAC.h"
 
 class TAO_Client_Connection_Handler;
 class TAO_POA;
 class TAO_POA_Current;
-class TAO_POA_Current_Impl;
 class TAO_POA_Manager;
 class TAO_POA_Policies;
 class TAO_Acceptor;
@@ -39,7 +37,6 @@ class TAO_Resource_Factory;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_Connection_Cache;
-class TAO_ORB_Core_TSS_Resources;
 
 // ****************************************************************
 
@@ -50,9 +47,9 @@ class TAO_Export TAO_ORB_Core
   //
   // = DESCRIPTION
   //   This is the implementation class for the CORBA::ORB interface.
-  //   The class also encapsulates the access to the ORB resources and
+  //   The class also encapsulates the access to the ORB resources and 
   //   its state.
-  //   Some resources can be TSS or global, those resources are always
+  //   Some resources can be TSS or global, those resources are always 
   //   accessed through a TSS interface, but are allocated using the
   //   Resource_Factory.  If the resource is really global the
   //   Resource_Factory will simply return a pointer to the global
@@ -75,8 +72,13 @@ public:
   TAO_ORB_Parameters *orb_params (void);
   // Accessor for the ORB parameters.
 
-  TAO_POA_Current &poa_current (void) const;
-  // Accessor to the POA current.
+  TAO_POA_Current *poa_current (void);
+  // Accessor which returns a pointer to a structure containing
+  // context on the current POA upcall.
+
+  TAO_POA_Current *poa_current (TAO_POA_Current *new_current);
+  // Sets the thread-specific pointer to the new POA Current state,
+  // returning a pointer to the existing POA Current state.
 
   // = Set/get the connector registry - used to just be the connector.
   TAO_Connector_Registry *connector_registry (TAO_Connector_Registry *c);
@@ -112,7 +114,7 @@ public:
   TAO_Object_Adapter *object_adapter (void);
   // Get <Object Adapter>.
 
-  int inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resources);
+  int inherit_from_parent_thread (TAO_ORB_Core *p);
   // A spawned thread needs to inherit some properties/objects from
   // the spawning thread in order to serve requests.  Return 0 if
   // it successfully inherits from the parent, -1 otherwise.
@@ -360,13 +362,6 @@ protected:
   TAO_Policy_Manager_Impl default_policies_;
   // The default policies.
 #endif /* TAO_HAS_CORBA_MESSAGING */
-
-  TAO_POA_Current *poa_current_;
-  // POA current.
-  //
-  // Note that this is a pointer in order to reduce the include file
-  // dependencies.
-  //
 };
 
 // ****************************************************************
@@ -379,7 +374,7 @@ class TAO_Export TAO_ORB_Core_TSS_Resources
   // = DESCRIPTION
   //   This class is used by the ORB_Core to store the resources
   //   potentially bound to a thread in TSS storage.
-  //   The members are public because only the ORB Core is expected to
+  //   The members are public because only the ORB Core is expected to 
   //   access them.
   //
 public:
@@ -392,7 +387,7 @@ public:
   ACE_Reactor *reactor_;
   // Used for responding to I/O reactively
 
-  TAO_POA_Current_Impl *poa_current_impl_;
+  TAO_POA_Current *poa_current_;
   // Points to structure containing state for the current upcall
   // context in this thread.  Note that it does not come from the
   // resource factory because it must always be held in
@@ -413,7 +408,7 @@ public:
   // The initial PolicyCurrent for this thread. Should be a TSS
   // resource.
 
-  TAO_Policy_Current *policy_current_;
+  TAO_Policy_Current* policy_current_;
   // This pointer is reset by the POA on each upcall.
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
@@ -428,9 +423,6 @@ public:
 };
 
 // ****************************************************************
-
-typedef ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
-        TAO_ORB_CORE_TSS_RESOURCES;
 
 extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 

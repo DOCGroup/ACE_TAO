@@ -88,9 +88,6 @@
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
 
-// Platform's select() has non-const timeval argument
-#define ACE_HAS_NONCONST_SELECT_TIMEVAL
-
 // Compiler/platform supports poll().
 #define ACE_HAS_POLL
 
@@ -233,6 +230,7 @@
 
 #  define ACE_HAS_PTHREADS
 #  define ACE_HAS_PTHREADS_STD
+#  define ACE_HAS_PTHREAD_SIGMASK
 
 #  define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #endif /* ACE_HAS_THREADS */

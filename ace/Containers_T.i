@@ -308,10 +308,7 @@ ACE_Ordered_MultiSet<T>::size (void) const
 template <class T> ACE_INLINE
 ACE_Array_Base<T>::~ACE_Array_Base (void)
 {
-  ACE_DES_ARRAY_FREE (this->array_,
-                      this->max_size_,
-                      this->allocator_->free,
-                      T);
+   delete [] this->array_;
 }
 
 template <class T> ACE_INLINE size_t
@@ -347,17 +344,15 @@ ACE_Array_Base<T>::operator[] (size_t index) const
 // ****************************************************************
 
 template <class T> ACE_INLINE
-ACE_Array<T>::ACE_Array (size_t size,
-                         ACE_Allocator *alloc)
-  : ACE_Array_Base<T> (size, alloc)
+ACE_Array<T>::ACE_Array (size_t size)
+  : ACE_Array_Base<T>(size)
 {
 }
 
 template <class T> ACE_INLINE
 ACE_Array<T>::ACE_Array (size_t size,
-                         const T &default_value,
-                         ACE_Allocator *alloc)
-  : ACE_Array_Base<T> (size, default_value, alloc)
+                         const T &default_value)
+  : ACE_Array_Base<T> (size, default_value)
 {
 }
 
@@ -456,9 +451,7 @@ template <class T> ACE_INLINE int
 ACE_DLList<T>::remove (ACE_DLList_Node *n)
 {
   int result = ACE_DLList_Base::remove (n);
-  ACE_DES_FREE (n,
-                this->allocator_->free,
-                ACE_DLList_Node);
+  ACE_DES_FREE (n, this->allocator_->free, ACE_DLList_Node);
   return result;
 }
 

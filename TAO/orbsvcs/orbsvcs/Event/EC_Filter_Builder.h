@@ -32,7 +32,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_EC_Filter;
-class TAO_EC_ProxyPushSupplier;
 
 class TAO_ORBSVCS_Export TAO_EC_Filter_Builder
 {
@@ -40,7 +39,7 @@ class TAO_ORBSVCS_Export TAO_EC_Filter_Builder
   //   Abstract base class for the filter builders.
   //
   // = DESCRIPTION
-  //   The creation of a filter hierarchy is controlled by a
+  //   The creation of a builder hierarchy is controlled by a
   //   Filter_Builder. The relationship between TAO_EC_Filter and
   //   TAO_EC_Filter_Builder follows the "Builder Pattern" (Gamma et
   //   al.)
@@ -51,9 +50,7 @@ public:
   // destructor...
 
   virtual TAO_EC_Filter*
-      build (TAO_EC_ProxyPushSupplier *supplier,
-             RtecEventChannelAdmin::ConsumerQOS& qos,
-             CORBA::Environment &ACE_TRY_ENV) const = 0;
+      build (RtecEventChannelAdmin::ConsumerQOS& qos) const = 0;
   // Create the filter, the caller must assume ownership of the filter
   // returned.
 
@@ -77,9 +74,7 @@ public:
   // destructor...
 
   // = The TAO_EC_Filter_Builder methods...
-  TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
-                        RtecEventChannelAdmin::ConsumerQOS& qos,
-                        CORBA::Environment &ACE_TRY_ENV) const;
+  TAO_EC_Filter* build (RtecEventChannelAdmin::ConsumerQOS& qos) const;
 };
 
 // ****************************************************************

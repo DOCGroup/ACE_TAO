@@ -2,8 +2,8 @@
 // $Id$
 
 
-#ifndef JAWS_CACHE_OBJECT_H
-#define JAWS_CACHE_OBJECT_H
+#ifndef ACE_CACHE_OBJECT_H
+#define ACE_CACHE_OBJECT_H
 
 #include "ace/OS.h"
 #include "ace/Synch.h"
@@ -11,11 +11,11 @@
 
 // Cache bucket -- use Hash_Bucket to hold cacheable objects.
 
-class JAWS_Cache_Object
+class ACE_Cache_Object
 {
 public:
-  JAWS_Cache_Object (const void *, size_t);
-  virtual ~JAWS_Cache_Object (void);
+  ACE_Cache_Object (const void *, size_t);
+  virtual ~ACE_Cache_Object (void);
 
   void *internal (void) const;
   void internal (void *);
@@ -60,11 +60,11 @@ private:
 
 };
 
-class JAWS_Referenced_Cache_Object : public JAWS_Cache_Object
+class ACE_Referenced_Cache_Object : public ACE_Cache_Object
 {
 public:
-  JAWS_Referenced_Cache_Object (const void *, size_t);
-  virtual ~JAWS_Referenced_Cache_Object (void);
+  ACE_Referenced_Cache_Object (const void *, size_t);
+  virtual ~ACE_Referenced_Cache_Object (void);
 
   virtual ACE_Lock & lock (void);
 
@@ -82,11 +82,11 @@ private:
   
 };
 
-class JAWS_Counted_Cache_Object : public JAWS_Cache_Object
+class ACE_Counted_Cache_Object : public ACE_Cache_Object
 {
 public:
-  JAWS_Counted_Cache_Object (const void *, size_t);
-  virtual ~JAWS_Counted_Cache_Object (void);
+  ACE_Counted_Cache_Object (const void *, size_t);
+  virtual ~ACE_Counted_Cache_Object (void);
 
   virtual ACE_Lock & lock (void);
 
@@ -106,17 +106,17 @@ private:
 
 };
 
-class JAWS_Cache_Object_Factory
+class ACE_Cache_Object_Factory
 {
 public:
 
-  JAWS_Cache_Object_Factory (ACE_Allocator *alloc = 0);
-  virtual ~JAWS_Cache_Object_Factory (void);
+  ACE_Cache_Object_Factory (ACE_Allocator *alloc = 0);
+  virtual ~ACE_Cache_Object_Factory (void);
 
   int open (ACE_Allocator *alloc = 0);
 
-  virtual JAWS_Cache_Object * create (const void *, size_t) = 0;
-  virtual void destroy (JAWS_Cache_Object *) = 0;
+  virtual ACE_Cache_Object * create (const void *, size_t) = 0;
+  virtual void destroy (ACE_Cache_Object *) = 0;
 
 protected:
 
@@ -124,26 +124,26 @@ protected:
 
 };
 
-class JAWS_Referenced_Cache_Object_Factory : public JAWS_Cache_Object_Factory
+class ACE_Referenced_Cache_Object_Factory : public ACE_Cache_Object_Factory
 {
 public:
-  JAWS_Referenced_Cache_Object_Factory (ACE_Allocator *alloc = 0);
-  virtual ~JAWS_Referenced_Cache_Object_Factory (void);
+  ACE_Referenced_Cache_Object_Factory (ACE_Allocator *alloc = 0);
+  virtual ~ACE_Referenced_Cache_Object_Factory (void);
 
-  virtual JAWS_Cache_Object * create (const void *, size_t);
-  virtual void destroy (JAWS_Cache_Object *);
+  virtual ACE_Cache_Object * create (const void *, size_t);
+  virtual void destroy (ACE_Cache_Object *);
 
 };
 
-class JAWS_Counted_Cache_Object_Factory : public JAWS_Cache_Object_Factory
+class ACE_Counted_Cache_Object_Factory : public ACE_Cache_Object_Factory
 {
 public:
-  JAWS_Counted_Cache_Object_Factory (ACE_Allocator *alloc = 0);
-  virtual ~JAWS_Counted_Cache_Object_Factory (void);
+  ACE_Counted_Cache_Object_Factory (ACE_Allocator *alloc = 0);
+  virtual ~ACE_Counted_Cache_Object_Factory (void);
 
-  virtual JAWS_Cache_Object * create (const void *, size_t);
-  virtual void destroy (JAWS_Cache_Object *);
+  virtual ACE_Cache_Object * create (const void *, size_t);
+  virtual void destroy (ACE_Cache_Object *);
 
 };
 
-#endif /* JAWS_CACHE_OBJECT_H */
+#endif /* UTL_CACHE_OBJECT_H */

@@ -8,11 +8,8 @@
 PSS_LIBC_DIR	= $(PSS_ROOT)/sys/libc
 PSS_SYS_DIR	= $(PSS_ROOT)/sys/os
 
-# PSOS_LIBS = -L $(PSS_LIBC_DIR) -lprepcH -lcxxsp \
-#             -L $(PSS_SYS_DIR) -lsysxx -lsys
-
 PSOS_LIBS = -L $(PSS_LIBC_DIR) -lprepcH -lcxxsp \
-            -L $(PSS_SYS_DIR) -lsys
+            -L $(PSS_SYS_DIR) -lsysxx -lsys
 
 PSS_BSP_LIB	= -L $(PSS_BSP) -lbsp
 
@@ -37,7 +34,10 @@ PSOSINCL = -I$(PSS_ROOT)/include -I$(PSS_BSP)
 # PSOSINCL = -Y I,$(PSS_ROOT)/include -I$(PSS_BSP)
 
 # hacks to resolve incompatibilities between the compiler and OS headers
+#DIAB_PSOS_HACKS = -D__Itypes -D_TIME_T_DEFINED -D_WCHAR_T_DEFINED -D__wchar_t  //original line
+#sandass's stuff is below
 DIAB_PSOS_HACKS = -D__Itypes -D_WCHAR_T_DEFINED -D__wchar_t  
+# DIAB_PSOS_HACKS = -D__Itypes -D_WCHAR_T_DEFINED -D__wchar_t
 
 # ================================================================
 # Compilation Settings and Flags
@@ -57,7 +57,7 @@ static_libs = 1
 
 
 # C Compiler
-CC              = dcc -tPPC860ES:psos
+CC              = dcc -tMC68060FS:psos
 # -WDCDCONFIG=psos.conf
 
 # C Debug Compiler Flags
@@ -88,12 +88,8 @@ CFLAGS += -D__DIAB -D__DIAB_42a -Xkill-opt=0x400 -Xno-old-style -Xlint $(PSOSINC
 # -# prints subprograms with arguments as they are executed
 # -## prints subprograms with arguments without executing them
 # -### prints subprograms with arguments (in quotes) without executing them
-# -g embeds debug info but turns off a bunch of optimizations, 
-#    including inlining.  It may also trigger a known bug in the Diab 4.2b
-#    and earlier compilers that results in an internal compiler error
-#    about ctmpl_copystm () when compiling certain ACE tests.
-# -g1 embeds debug info but not line numbers, and preserves inlining.  It may
-#    also trigger the same compiler bugs that -g triggers.
+# -g embeds debug info but turns off a bunch of optimizations, including inlining
+# -g1 embeds debug info but not line numbers, and preserves inlining
 # -v runs the compiler in verbose mode
 # -w suppresses warnings
 # -H prints path names of all include files to stderr
@@ -108,12 +104,8 @@ CFLAGS += -D__DIAB -D__DIAB_42a -Xkill-opt=0x400 -Xno-old-style -Xlint $(PSOSINC
 #    -Xstop-on-warning treats warnings like errors and stops compilation
 #    -Xinit-locals[=<mask>] initializes memory pattern for local variables
 #    -Xno-optimized-debug turns off optimizations for debugging
+# sandass was here
 DCFLAGS         += -g -w -Ws 
-
-# These cause internal compiler errors for some ACE tests, because of the
-# debug information embedded by the -g and -g1 switches (see above).
-#DCFLAGS         += -g1 -w -Ws 
-#DCFLAGS         += -g -w -Ws 
 #DCFLAGS         += -g -w -Ws -P -o precomp.out
 #DCFLAGS         += -g -w -Ws -H
 
@@ -148,11 +140,11 @@ DCCFLAGS         +=  $(DCFLAGS)
 
 # Dynamic Linker
 # DLD             = dld
-DLD             = dplus -tPPC860ES:psos -Wm $(PSS_BSP)/ram.dld $(PSS_BSP)/anchor.dld
+DLD             = dplus -tMC68060FS:psos -Wm$(PSS_BSP)/ram.lnk
 
 # Static Linker
 # LD              = dld
-LD              = dplus -tPPC860ES:psos -Wm $(PSS_BSP)/ram.dld $(PSS_BSP)/anchor.dld
+LD              = dplus -tMC68060FS:psos -Wm$(PSS_BSP)/ram.lnk
 
 # Static Linker Flags
 # -L<path> adds a directory path to the linker search path

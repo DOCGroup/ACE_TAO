@@ -53,7 +53,6 @@ TAO_DynArray_i::TAO_DynArray_i (const CORBA_Any& any)
         {
           // This Any constructor is a TAO extension.
           CORBA_Any field_any (field_tc,
-                               0,
                                cdr.start ());
 
           // This recursive step will call the correct constructor
@@ -104,7 +103,7 @@ TAO_DynArray_i::~TAO_DynArray_i (void)
 ///////////////////////////////////////////////////////////////////////
 // Functions specific to DynArray
 
-CORBA_AnySeq_ptr
+AnySeq_ptr
 TAO_DynArray_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA::ULong length = this->da_members_.size ();
@@ -113,10 +112,10 @@ TAO_DynArray_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
     return 0;
 
   // Arg only sets maximum, so...
-  CORBA_AnySeq_ptr elements;
+  AnySeq_ptr elements;
 
   ACE_NEW_THROW_EX (elements,
-                    CORBA_AnySeq (length),
+                    AnySeq (length),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -134,7 +133,7 @@ TAO_DynArray_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
 }
 
 void
-TAO_DynArray_i::set_elements (const CORBA_AnySeq& value,
+TAO_DynArray_i::set_elements (const AnySeq& value,
                               CORBA::Environment& env)
 {
   CORBA::ULong length = value.length ();
@@ -231,7 +230,6 @@ TAO_DynArray_i::from_any (const CORBA_Any& any,
         {
           // This Any constructor is a TAO extension.
           CORBA_Any field_any (field_tc,
-                               0,
                                cdr.start ());
 
           if (!CORBA::is_nil (this->da_members_[i].in ()))
@@ -282,7 +280,6 @@ TAO_DynArray_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   CORBA_Any* retval;
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (this->type (ACE_TRY_ENV),
-                               0,
                                in_cdr.start ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);

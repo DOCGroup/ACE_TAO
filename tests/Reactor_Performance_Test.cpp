@@ -42,7 +42,11 @@ USELIB("..\ace\aced.lib");
 #if defined (ACE_HAS_THREADS)
 
 // Number of client (user) threads
+#if (!defined (ACE_WIN32) || (defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 != 0))
+static int opt_nconnections = 20;
+#else /* ACE_WIN32 || (ACE_HAS_WINNT4 && ACE_HAS_WINNT4 != 0) */
 static int opt_nconnections = 5;
+#endif /* ACE_WIN32 || (ACE_HAS_WINNT4 && ACE_HAS_WINNT4 != 0) */
 
 // Number of data exchanges
 static int opt_nloops = 200;
@@ -185,24 +189,27 @@ client (void *arg)
   int i;
 
   // Automagic memory cleanup.
+  ACE_Auto_Basic_Array_Ptr <Write_Handler *> writers;
   Write_Handler **temp_writers;
   ACE_NEW_RETURN (temp_writers,
                   Write_Handler *[opt_nconnections],
                   0);
-  ACE_Auto_Basic_Array_Ptr <Write_Handler *> writers (temp_writers);
+  writers = temp_writers;
 
+  ACE_Auto_Basic_Array_Ptr <ASYS_TCHAR> failed_svc_handlers;
   ASYS_TCHAR *temp_failed;
   ACE_NEW_RETURN (temp_failed,
                   ASYS_TCHAR[opt_nconnections],
                   0);
-  ACE_Auto_Basic_Array_Ptr <ASYS_TCHAR> failed_svc_handlers (temp_failed);
+  failed_svc_handlers = temp_failed;
 
   // Automagic memory cleanup.
+  ACE_Auto_Array_Ptr <ACE_INET_Addr> addresses;
   ACE_INET_Addr *temp_addresses;
   ACE_NEW_RETURN (temp_addresses,
                   ACE_INET_Addr [opt_nconnections],
                   0);
-  ACE_Auto_Array_Ptr <ACE_INET_Addr> addresses (temp_addresses);
+  addresses = temp_addresses;
 
   // Initialize array.
   for (i = 0; i < opt_nconnections; i++)
@@ -345,10 +352,7 @@ main (int argc, ASYS_TCHAR *argv[])
   // If we are using other that the default implementation, we must
   // clean up.
   if (opt_select_reactor || opt_wfmo_reactor)
-    {
-      auto_ptr<ACE_Reactor_Impl> auto_impl (ACE_Reactor::instance ()->implementation ());
-      impl = auto_impl;
-    }
+    impl = auto_ptr<ACE_Reactor_Impl> (ACE_Reactor::instance ()->implementation ());
 
   Read_Handler::set_countdown (opt_nconnections);
 
@@ -379,11 +383,9 @@ main (int argc, ASYS_TCHAR *argv[])
                 ASYS_TEXT ("(%t) %p\n"),
                 ASYS_TEXT ("thread create failed")));
 
-  ACE_Time_Value run_limit (10);
-
   ACE_Profile_Timer timer;
   timer.start ();
-  ACE_Reactor::instance()->run_event_loop (run_limit);
+  ACE_Reactor::instance()->run_event_loop ();
   timer.stop ();
 
   ACE_Profile_Timer::ACE_Elapsed_Time et;

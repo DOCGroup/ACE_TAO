@@ -68,7 +68,7 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
 //                    iiop_profile->addr_to_string (),
 //                    "errno"));
 //
-//        TAO_THROW_ENV_RETURN_VOID (CORBA::TRANSIENT (), env);
+//        TAO_THROW_ENV_RETURN_VOID (CORBA::TRANSIENT (CORBA::COMPLETED_NO), env);
 //        }
 //    }
 //  else
@@ -106,7 +106,7 @@ int
 TAO_IIOP_Connector::open (TAO_Resource_Factory *trf,
                           ACE_Reactor *reactor)
 {
-  // @@ Fred: why not just
+  // @ Fred: why not just
   //
   // return this->base_connector_.open (....); ????
   //

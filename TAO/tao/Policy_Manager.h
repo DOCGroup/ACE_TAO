@@ -20,8 +20,6 @@
 #ifndef TAO_POLICY_MANAGER_H
 #define TAO_POLICY_MANAGER_H
 
-#include "tao/orbconf.h"
-
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
 #include "tao/POA_CORBA.h"

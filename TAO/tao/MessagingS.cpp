@@ -8,10 +8,6 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "tao/orbconf.h"
-
-#if defined (TAO_HAS_CORBA_MESSAGING)
-
 #include "tao/MessagingS.h"
 #include "tao/POA_CORBA.h"
 #include "tao/Operation_Table.h"
@@ -65,7 +61,7 @@ void* POA_Messaging::RebindPolicy::_downcast (
 
 void POA_Messaging::RebindPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::RebindPolicy::_interface_repository_id (void) const
@@ -162,7 +158,7 @@ void* POA_Messaging::SyncScopePolicy::_downcast (
 
 void POA_Messaging::SyncScopePolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::SyncScopePolicy::_interface_repository_id (void) const
@@ -259,7 +255,7 @@ void* POA_Messaging::RequestPriorityPolicy::_downcast (
 
 void POA_Messaging::RequestPriorityPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::RequestPriorityPolicy::_interface_repository_id (void) const
@@ -356,7 +352,7 @@ void* POA_Messaging::ReplyPriorityPolicy::_downcast (
 
 void POA_Messaging::ReplyPriorityPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::ReplyPriorityPolicy::_interface_repository_id (void) const
@@ -453,7 +449,7 @@ void* POA_Messaging::RequestStartTimePolicy::_downcast (
 
 void POA_Messaging::RequestStartTimePolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::RequestStartTimePolicy::_interface_repository_id (void) const
@@ -550,7 +546,7 @@ void* POA_Messaging::RequestEndTimePolicy::_downcast (
 
 void POA_Messaging::RequestEndTimePolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::RequestEndTimePolicy::_interface_repository_id (void) const
@@ -647,7 +643,7 @@ void* POA_Messaging::ReplyStartTimePolicy::_downcast (
 
 void POA_Messaging::ReplyStartTimePolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::ReplyStartTimePolicy::_interface_repository_id (void) const
@@ -744,7 +740,7 @@ void* POA_Messaging::ReplyEndTimePolicy::_downcast (
 
 void POA_Messaging::ReplyEndTimePolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::ReplyEndTimePolicy::_interface_repository_id (void) const
@@ -841,7 +837,7 @@ void* POA_Messaging::RelativeRequestTimeoutPolicy::_downcast (
 
 void POA_Messaging::RelativeRequestTimeoutPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::RelativeRequestTimeoutPolicy::_interface_repository_id (void) const
@@ -938,7 +934,7 @@ void* POA_Messaging::RelativeRoundtripTimeoutPolicy::_downcast (
 
 void POA_Messaging::RelativeRoundtripTimeoutPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::RelativeRoundtripTimeoutPolicy::_interface_repository_id (void) const
@@ -1035,7 +1031,7 @@ void* POA_Messaging::RoutingPolicy::_downcast (
 
 void POA_Messaging::RoutingPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::RoutingPolicy::_interface_repository_id (void) const
@@ -1132,7 +1128,7 @@ void* POA_Messaging::MaxHopsPolicy::_downcast (
 
 void POA_Messaging::MaxHopsPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::MaxHopsPolicy::_interface_repository_id (void) const
@@ -1229,7 +1225,7 @@ void* POA_Messaging::QueueOrderPolicy::_downcast (
 
 void POA_Messaging::QueueOrderPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::QueueOrderPolicy::_interface_repository_id (void) const
@@ -1323,7 +1319,7 @@ void* POA_Messaging::ReplyHandler::_downcast (
 
 void POA_Messaging::ReplyHandler::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_Messaging::ReplyHandler::_interface_repository_id (void) const
@@ -1504,7 +1500,7 @@ void POA_Messaging::Poller::_get_operation_target_skel (
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -1527,7 +1523,7 @@ void POA_Messaging::Poller::_get_operation_name_skel (
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -1550,7 +1546,7 @@ void POA_Messaging::Poller::_get_associated_handler_skel (
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -1567,7 +1563,7 @@ void POA_Messaging::Poller::_set_associated_handler_skel (
   if (!(
     (_tao_in >> associated_handler.out ())
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
   _tao_impl->associated_handler (
     associated_handler.in (),
@@ -1596,7 +1592,7 @@ void POA_Messaging::Poller::_get_is_from_poller_skel (
   if (!(
     (_tao_out << CORBA::Any::from_boolean (_tao_retval))
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -1619,7 +1615,7 @@ void POA_Messaging::Poller::_get_target_skel (
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -1642,7 +1638,7 @@ void POA_Messaging::Poller::_get_op_name_skel (
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -1736,7 +1732,7 @@ void POA_Messaging::Poller::_dispatch (CORBA::ServerRequest &req, void *context,
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -1848,5 +1844,3 @@ POA_Messaging::Poller::_this (CORBA_Environment &ACE_TRY_ENV)
   return new POA_Messaging::_tao_collocated_Poller (this, stub);
 }
 #endif /* TAO_POLLER */
-
-#endif /* TAO_HAS_CORBA_MESSAGING */

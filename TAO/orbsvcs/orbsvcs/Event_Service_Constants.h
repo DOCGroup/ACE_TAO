@@ -46,9 +46,6 @@ const long ACE_ES_CONJUNCTION_DESIGNATOR = 8;
 const long ACE_ES_DISJUNCTION_DESIGNATOR = 9;
 const long ACE_ES_EVENT_UNDEFINED = 16;
 
-// = Predefined event sources.
-const long ACE_ES_EVENT_SOURCE_ANY = 0;
-
 // The max number of priorities provided by the target platform.
 // TODO: This should be defined in ACE (somehow) and only mapped here
 // to some variables (and even that is doubtful).
@@ -76,13 +73,8 @@ const u_long ACE_Scheduler_MAX_SUB_PRIORITY =
 const u_long ACE_Scheduler_MIN_SUB_PRIORITY =
       ACE_Message_Block::MB_NORMAL;
 
-#if defined(TAO_EC_USE_RECURSIVE_MUTEX)
-typedef ACE_SYNCH_RECURSIVE_MUTEX ACE_ES_MUTEX;
-typedef ACE_Guard<ACE_ES_RECURSIVE_MUTEX> ACE_ES_GUARD;
-#else
 typedef ACE_SYNCH_MUTEX ACE_ES_MUTEX;
 typedef ACE_Guard<ACE_ES_MUTEX> ACE_ES_GUARD;
-#endif
 
 typedef ACE_SYNCH_RW_MUTEX ACE_ES_RW_LOCK;
 typedef ACE_Write_Guard<ACE_ES_RW_LOCK> ACE_ES_WGUARD;

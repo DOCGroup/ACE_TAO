@@ -9,9 +9,6 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "tao/MessagingC.h"
-
-#if defined (TAO_HAS_CORBA_MESSAGING)
-
 #include "tao/MessagingS.h"
 #include "tao/POA_CORBA.h"
 #include "tao/Stub.h"
@@ -204,7 +201,7 @@ Messaging::RebindMode Messaging::RebindPolicy::rebind_mode (
 {
     Messaging::RebindMode _tao_retval = 0;
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RebindPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -276,7 +273,7 @@ Messaging::SyncScope Messaging::SyncScopePolicy::synchronization (
 {
     Messaging::SyncScope _tao_retval = 0;
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
 CORBA::Boolean Messaging::SyncScopePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -375,10 +372,8 @@ Messaging::PriorityRange Messaging::RequestPriorityPolicy::priority_range (
   )
 {
     Messaging::PriorityRange _tao_retval;
-    _tao_retval.min = 0;
-    _tao_retval.max = 0;
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RequestPriorityPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -449,10 +444,8 @@ Messaging::PriorityRange Messaging::ReplyPriorityPolicy::priority_range (
   )
 {
     Messaging::PriorityRange _tao_retval;
-    _tao_retval.min = 0;
-    _tao_retval.max = 0;
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
 CORBA::Boolean Messaging::ReplyPriorityPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -523,12 +516,8 @@ TimeBase::UtcT Messaging::RequestStartTimePolicy::start_time (
   )
 {
     TimeBase::UtcT _tao_retval;
-    _tao_retval.time = 0;
-    _tao_retval.inacclo = 0;
-    _tao_retval.inacchi = 0;
-    _tao_retval.tdf = 0;
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RequestStartTimePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -599,12 +588,8 @@ TimeBase::UtcT Messaging::RequestEndTimePolicy::end_time (
   )
 {
     TimeBase::UtcT _tao_retval;
-    _tao_retval.time = 0;
-    _tao_retval.inacclo = 0;
-    _tao_retval.inacchi = 0;
-    _tao_retval.tdf = 0;
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RequestEndTimePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -675,12 +660,8 @@ TimeBase::UtcT Messaging::ReplyStartTimePolicy::start_time (
   )
 {
     TimeBase::UtcT _tao_retval;
-    _tao_retval.time = 0;
-    _tao_retval.inacclo = 0;
-    _tao_retval.inacchi = 0;
-    _tao_retval.tdf = 0;
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
 CORBA::Boolean Messaging::ReplyStartTimePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -751,12 +732,8 @@ TimeBase::UtcT Messaging::ReplyEndTimePolicy::end_time (
   )
 {
     TimeBase::UtcT _tao_retval;
-    _tao_retval.time = 0;
-    _tao_retval.inacclo = 0;
-    _tao_retval.inacchi = 0;
-    _tao_retval.tdf = 0;
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
 CORBA::Boolean Messaging::ReplyEndTimePolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -828,7 +805,7 @@ TimeBase::TimeT Messaging::RelativeRequestTimeoutPolicy::relative_expiry (
 {
     TimeBase::TimeT _tao_retval = 0;
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RelativeRequestTimeoutPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -900,7 +877,7 @@ TimeBase::TimeT Messaging::RelativeRoundtripTimeoutPolicy::relative_expiry (
 {
     TimeBase::TimeT _tao_retval = 0;
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RelativeRoundtripTimeoutPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -999,10 +976,8 @@ Messaging::RoutingTypeRange Messaging::RoutingPolicy::routing_range (
   )
 {
     Messaging::RoutingTypeRange _tao_retval;
-    _tao_retval.min = Messaging::ROUTE_NONE;
-    _tao_retval.max = Messaging::ROUTE_NONE;
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
 CORBA::Boolean Messaging::RoutingPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -1074,7 +1049,7 @@ CORBA::UShort Messaging::MaxHopsPolicy::max_hops (
 {
     CORBA::UShort _tao_retval = 0;
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
 CORBA::Boolean Messaging::MaxHopsPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -1146,7 +1121,7 @@ Messaging::Ordering Messaging::QueueOrderPolicy::allowed_orders (
 {
     Messaging::Ordering _tao_retval = 0;
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
 CORBA::Boolean Messaging::QueueOrderPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
@@ -1460,7 +1435,7 @@ CORBA::Object_ptr Messaging::Poller::operation_target (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1486,7 +1461,7 @@ CORBA::Object_ptr Messaging::Poller::operation_target (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -1496,7 +1471,7 @@ CORBA::Object_ptr Messaging::Poller::operation_target (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -1508,7 +1483,7 @@ char * Messaging::Poller::operation_name (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1534,7 +1509,7 @@ char * Messaging::Poller::operation_name (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -1544,7 +1519,7 @@ char * Messaging::Poller::operation_name (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -1556,7 +1531,7 @@ Messaging::ReplyHandler_ptr Messaging::Poller::associated_handler (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1582,7 +1557,7 @@ Messaging::ReplyHandler_ptr Messaging::Poller::associated_handler (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -1592,7 +1567,7 @@ Messaging::ReplyHandler_ptr Messaging::Poller::associated_handler (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -1604,7 +1579,7 @@ void Messaging::Poller::associated_handler (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INV_OBJREF ());
+    ACE_THROW (CORBA::INV_OBJREF (CORBA::COMPLETED_NO));
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1624,7 +1599,7 @@ void Messaging::Poller::associated_handler (
     if (!(
           (_tao_out << associated_handler)
       ))
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO));
 
     int _invoke_status =
       _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -1636,7 +1611,7 @@ void Messaging::Poller::associated_handler (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA::UNKNOWN (CORBA::COMPLETED_YES));
 
     }
     break;
@@ -1653,7 +1628,7 @@ CORBA::Boolean Messaging::Poller::is_from_poller (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1679,7 +1654,7 @@ CORBA::Boolean Messaging::Poller::is_from_poller (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -1689,7 +1664,7 @@ CORBA::Boolean Messaging::Poller::is_from_poller (
   if (!(
         (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -1701,7 +1676,7 @@ CORBA::Object_ptr Messaging::Poller::target (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1727,7 +1702,7 @@ CORBA::Object_ptr Messaging::Poller::target (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -1737,7 +1712,7 @@ CORBA::Object_ptr Messaging::Poller::target (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -1749,7 +1724,7 @@ char * Messaging::Poller::op_name (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1775,7 +1750,7 @@ char * Messaging::Poller::op_name (
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -1785,7 +1760,7 @@ char * Messaging::Poller::op_name (
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -2286,5 +2261,3 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
 #endif /* TAO_POLLER */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* TAO_HAS_CORBA_MESSAGING */

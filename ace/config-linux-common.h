@@ -71,11 +71,10 @@
 #   define ACE_LACKS_SIGINFO_H
 #   define ACE_HAS_UCONTEXT_T
 # endif /* __GLIBC__ 2.1+ */
-#else  /* ! __GLIBC__ */
-    // Fixes a problem with some non-glibc versions of Linux...
-#   define ACE_LACKS_MADVISE
+#else /* ! __GLIB__ */
+  // Fixes a problem with some non-glibc versions of Linux...
 #   define ACE_LACKS_MSG_ACCRIGHTS
-#endif /* ! __GLIBC__ */
+#endif /* __GLIBC__ */
 
 
 // Then the compiler specific parts
@@ -147,6 +146,7 @@
 #define ACE_LACKS_STRRECVFD
 
 //#define ACE_LACKS_MSYNC
+//#define ACE_LACKS_MADVISE
 #define ACE_HAS_PROCFS
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)

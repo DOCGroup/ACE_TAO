@@ -25,10 +25,7 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#pp">Pluggable Protocols</a></li>
 
 <li>
-<a href="#poa">Portable Object Adapter (POA)</a></li>
-
-<li>
-<a HREF="../poa_migration.html">POA Migration Notes</a></li>
+<a href="#poa">Portable Object Adapter</a></li>
 
 <li>
 <a href="../implrepo/status.html">Implementation Repository</a></li>
@@ -37,10 +34,7 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#interfrepo">Interface Repository</a></li>
 
 <li>
-<a href="OBV.html">Object-by-Value</a></li>
-
-<li>
-<a href="#nservices">CORBA Naming Service </a>and <a href="../INS.html">Interoperable Naming Service</a></li>
+<a href="#nservices">CORBA Naming Service and Interoperable Naming Service</a></li>
 
 <li>
 <a href="#tservices">CORBA Trading Service</a></li>
@@ -97,16 +91,11 @@ A complete list of all modifications to TAO is available in the <a href="http://
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:gokhale@research.bell-labs.com">Aniruddha
 Gokhale</a>
-<p>Current status: (As of May 15, 1999.)
+<p>Current status: (As of Jan 22, 1999.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
 C++ mapping for CORBA 2.3 (Document ptc/98-09-03).</li>
-
-<li>
-We are now able to handle recursive types. We are also able to
-generate optimized typecodes.
-</li>
 
 <li>
 Struct members of type strings and arrays of strings now use the managed
@@ -446,11 +435,20 @@ requests to servants. <P>
 TAO supports the POA spec. This section will carry updates as available.</li>
 </ul>
 Known issues:
-
 <ul>
 
-<li> ORB::shutdown needs to deactive the POA Managers. We need to fix
-this. </li><P>
+<li>The synchronization in the POA is not optimal. For example, the
+locks are held across the invocation on the servant. The locks are
+also held across the invocation on the AdapterActivator. This forces
+the use of recursive locks inside the POA. However, the problem with
+recursive locks is that multiple threads cannot dispatch requests on
+the same POA simultaneous.</li><P>
+
+<li>We need to add the new RefCountServantBase class to TAO. This
+reference counted base class was added to the CORBA specification to
+avoid race conditions for servant deletion in threaded servers. <a
+href="ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf">ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf</a>
+contains the relevant text.</li><P>
 
 </UL>
 
@@ -470,25 +468,8 @@ Recently completed work:<P>
 
 <ul>
 
-<li> TAO's POA now properly supports both the threading policies:
-SINGLE_THREAD_MODEL and ORB_CTRL_MODEL. </li><P>
-
-<li>The synchronization in the POA is now very optimal. For example,
-the locks are not held across the invocation on the servant. The locks
-are also not held across the invocation on the AdapterActivator and
-ServantManagers. This allows us to use regular locks instead of
-recursive locks inside the POA. This also allows multiple threads to
-dispatch requests on the same POA simultaneous.</li><P>
-
-<li>TAO now supports reference counting between POA and servants,
-including the new RefCountServantBase and ServantBase_var
-classes. RefCountServantBase is a reference counted base class that
-was added to the CORBA specification to avoid race conditions for
-servant deletion in threaded servers. <a
-href="ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf">ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf</a>
-contains the relevant text. Check <a
-href="../poa_migration.html#Reference counting Servants">here</a> on
-some hints to avoid trouble.</li><P>
+<li> Support for collocation should be much better now because the POA
+can tell if we created the object reference.</li><P>
 
 <li> The POA now supports active demultiplexing of servants in the
 SYSTEM_ID and the USER_ID policy. This should make the POA faster and
@@ -560,9 +541,6 @@ removed. </li> <P>
 <li> New examples have been added to show how servants can be
 dynamically loaded from DLLs on demand. </li> <P>
 
-<li> Support for collocation should be much better now because the POA
-can tell if we created the object reference.</li><P>
-
 </UL>
 <hr>
 <h3>
@@ -580,12 +558,7 @@ object and make invocations on it using the DII.
 <p>Recent Work: TDB
 <p>Future Work: TDB
 <p>
-
 <hr>
-
-<br><!--#include virtual="OBV.html" -->
-<hr>
-
 <h3>
 <a NAME="nservices"></a>CORBA Naming Service and Interoperable Naming Service</h3>
 Points of contact: <a href="mailto:marina@cs.wustl.edu">Marina
@@ -617,7 +590,7 @@ Added support for Persistence (using memory-mapped files).  Persistence
 feature is optional, and is controlled by the command line argument.</li>
 
 <li>
-Updated the implementation of the Naming Service to use new ACE
+Updated he implementation of the Naming Service to use new ACE
 exception macros.</li>
 <li>
 Added support for the InterOperable Naming Service, which enables the

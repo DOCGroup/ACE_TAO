@@ -13,44 +13,18 @@ int main (int argc, char *argv[])
 {
   if (argc < 2)
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       "Usage: %s hostname [-s selector] [QoS in KB/sec]\n",
+                       "Usage: %s hostname [QoS in KB/sec] [timeout]\n",
                        argv[0]),
                       1);
-
   const char *host = argv[1];
-  unsigned char selector = ACE_ATM_Addr::DEFAULT_SELECTOR;
-  int selector_specified = 0;
-  int opt;
-  while ((opt = ACE_OS::getopt (argc, argv, "s:?h")) != EOF)
-    {
-    switch(opt)
-      {
-      case 's':
-        selector = ACE_OS::atoi (optarg);
-        selector_specified = 1;
-        break;
-      case '?':
-      case 'h':
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage: %s hostname [-s selector] [QoS in KB/s]\n",
-                           argv[0]),
-                          1);
-      } // switch
-    } // while getopt
-
-  int qos = (argc == 3) ? ACE_OS::atoi (argv[2]) :
-    (argc == 5) ? ACE_OS::atoi (argv[4]) : 0;
-  // The timeout really gets ignored since FORE's drivers don't work when
-  //  ioctl or fcntl calls are made on the transport id/file descriptor
-  int timeout = ACE_DEFAULT_TIMEOUT;
+  int qos = argc > 2 ? ACE_OS::atoi (argv[2]) : 0;
+  int timeout = argc > 3 ? ACE_OS::atoi (argv[3]) : ACE_DEFAULT_TIMEOUT;
 
   char buf[BUFSIZ];
 
   ACE_TLI_Stream cli_stream;
 
   ACE_ATM_Addr remote_addr (host);
-  if (selector_specified)
-    remote_addr.set_selector(selector);
   char hostname[MAXNAMELEN];
   ACE_OS::hostname(hostname, MAXNAMELEN);
   ACE_ATM_Addr local_addr (hostname);
@@ -58,7 +32,7 @@ int main (int argc, char *argv[])
   // In order to construct connections options the file handle is
   // needed.  Therefore, we need to open the TLI_Stream before we
   // construct the options.
-  if (cli_stream.open (ACE_XTI_ATM_DEVICE, O_RDWR, 0) == -1)
+  if (cli_stream.open (ACE_TLI_TCP_DEVICE, O_RDWR, 0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "open failed"),
@@ -81,15 +55,16 @@ int main (int argc, char *argv[])
   optbuf.buf = options;
 
   // Not sure why but reuse_addr set to true/1 causes problems for
-  // FORE/XTI/ATM - this is now handled in ACE_TLI_Connector::connect()
+  // FORE/XTI/ATM - this is now handled in
+  // ACE_TLI_Connector::connect()
   if (con.connect (cli_stream,
                    remote_addr, 
-                   (ACE_Time_Value *) &ACE_Time_Value::zero,
+                   (ACE_Time_Value *) &ACE_Time_Value::zero, 
                    local_addr,
                    1,
                    O_RDWR,
                    0,
-                   ACE_XTI_ATM_DEVICE,
+                   ACE_TLI_TCP_DEVICE,
                    0,
                    1,
                    0,

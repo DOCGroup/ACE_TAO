@@ -31,28 +31,45 @@
 
 // ****************************************************************
 
-class TAO_Export TAO_Allocated_Resources
+class TAO_Default_Reactor : public ACE_Reactor
 {
   // = TITLE
-  //   Container for the resources allocated by the factory.
+  //
+  //   Force TAO to use Select Reactor.
+public:
+  TAO_Default_Reactor (int nolock = 0);
+  virtual ~TAO_Default_Reactor (void);
+};
+
+// ****************************************************************
+
+class TAO_Export TAO_Pre_Allocated_Resources
+{
+  //
+  // = TITLE
+  //   Container for pre-allocated resources.
   //
   // = DESCRIPTION
+  //   Structure containing resources which can be pre-allocated by
+  //   the default Resource Factory without intervention from the
+  //   application.
   //
 public:
-  TAO_Allocated_Resources (void);
-  // Constructor necessary because we have pointers.  It's inlined
-  // here rather than in the .i file because it's easier than trying
-  // to re-order header files in corba.h to eliminate the "used
-  // before declared inline" warnings/errors on certain compilers.
+  TAO_Pre_Allocated_Resources (void);
+  // Constructor
 
-  ~TAO_Allocated_Resources (void);
-  // Destructor is also necessary because we now allocate some of
-  // the objects held here.
-
-  // = Resources
+  ~TAO_Pre_Allocated_Resources (void);
+  // Destructor
 
   ACE_Thread_Manager tm_;
   // The Thread Manager
+
+  TAO_Connector_Registry cr_;
+  // The Connector Registry!
+
+  TAO_IIOP_Connector c_;
+  // The Connector, HACK to create the first connector which happens
+  // to be IIOP.
 
   TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
   // This no-op creation strategy is necessary for using the
@@ -65,14 +82,36 @@ public:
   TAO_IIOP_Acceptor a_;
   // The Acceptor
 
-  TAO_IIOP_Connector c_;
-  // The Connector, HACK to create the first connector which happens
-  // to be IIOP.
+  TAO_ORB_Parameters orbparams_;
+  // ORB Parameters
+};
 
-  TAO_Connector_Registry cr_;
-  // The Connector Registry!
+// ****************************************************************
 
-  ACE_Reactor *r_;
+class TAO_Export TAO_App_Allocated_Resources
+{
+  // = TITLE
+  //   Container for application allocated resources.
+  //
+  // = DESCRIPTION
+  //   Structure containing resources which can only be allocated
+  //   after obtaining information from the application such as
+  //   arguments, etc.
+  //
+public:
+  TAO_App_Allocated_Resources (void);
+  // Constructor necessary because we have pointers.  It's inlined
+  // here rather than in the .i file because it's easier than trying
+  // to re-order header files in corba.h to eliminate the "used
+  // before declared inline" warnings/errors on certain compilers.
+
+  ~TAO_App_Allocated_Resources (void);
+  // Destructor is also necessary because we now allocate some of
+  // the objects held here.
+
+  // = Resources
+
+  TAO_Default_Reactor *r_;
   // The Reactor.
 
   TAO_Object_Adapter *object_adapter_;
@@ -131,12 +170,8 @@ public:
   // = Type of Reactor
   enum
   {
-    TAO_REACTOR_SELECT_MT, // Use ACE_Token
-    TAO_REACTOR_SELECT_ST, // Use ACE_Noop_Token
-    TAO_REACTOR_FL,
-    TAO_REACTOR_XT,
-    TAO_REACTOR_WFMO,
-    TAO_REACTOR_MSGWFMO
+    TAO_TOKEN,     // Use ACE_Token as Select_Reactor's internal lock
+    TAO_NULL_LOCK  // Use ACE_Noop_Token as Select_Reactor's internal lock
   };
 
   // = Range of values for <{resource source specifier}>.
@@ -165,15 +200,12 @@ public:
   virtual TAO_POA *get_root_poa (void);
   virtual TAO_Object_Adapter *object_adapter (void);
   virtual TAO_GLOBAL_Collocation_Table *get_global_collocation_table (void);
+  virtual int reactor_lock (void);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
   virtual ACE_Allocator* output_cdr_dblock_allocator (void);
   virtual ACE_Allocator* output_cdr_buffer_allocator (void);
   virtual ACE_Data_Block *create_input_cdr_data_block (size_t size);
-
-protected:
-  ACE_Reactor_Impl *allocate_reactor_impl (void) const;
-  // Obtain the reactor implementation
 
 protected:
 
@@ -191,8 +223,9 @@ protected:
   // thread-specific.  It defaults to TAO_GLOBAL if not set
   // specifically.
 
-  int reactor_type_;
-  // Flag indicating which kind of reactor we should use.
+  int reactor_lock_;
+  // Flag indicating wether we should provide a lock-freed reactor
+  // or not.
 
   int cdr_allocator_source_;
   // The source for the CDR allocator. Even with a TSS resource
@@ -202,11 +235,15 @@ protected:
 
   // = Typedefs for the singleton types used to store our orb core
   // information.
-  typedef ACE_Singleton<TAO_Allocated_Resources, ACE_SYNCH_MUTEX>
-          GLOBAL_ALLOCATED;
-  typedef ACE_TSS_Singleton<TAO_Allocated_Resources, ACE_SYNCH_MUTEX>
-          TSS_ALLOCATED;
+  typedef ACE_Singleton<TAO_Pre_Allocated_Resources, ACE_SYNCH_MUTEX>
+          GLOBAL_PRE_ALLOCATED;
+  typedef ACE_TSS_Singleton<TAO_Pre_Allocated_Resources, ACE_SYNCH_MUTEX>
+          TSS_PRE_ALLOCATED;
 
+  typedef ACE_Singleton<TAO_App_Allocated_Resources, ACE_SYNCH_MUTEX>
+          GLOBAL_APP_ALLOCATED;
+  typedef ACE_TSS_Singleton<TAO_App_Allocated_Resources, ACE_SYNCH_MUTEX>
+          TSS_APP_ALLOCATED;
   typedef ACE_Singleton<TAO_GLOBAL_Collocation_Table, ACE_SYNCH_MUTEX>
           GLOBAL_Collocation_Table;
 };

@@ -2,12 +2,6 @@
 #
 # ACE one-button test for VxWorks 5.2/3.x.
 # To use:  -> < run_tests.vxworks > run_tests.log
-#
-# NOTE: if you build with a shared ACE library, be sure to load
-# that first:
-#  -> ld < ../ace/libACE.so
-# and unld it after running the tests.
-#
 # The output logs can be checked from a Unix host:
 #    % ./run_tests.check log/*.log
 #
@@ -187,10 +181,6 @@ ace_main; unld "Priority_Buffer_Test"
 ld < Recursive_Mutex_Test
 write 2, "Recursive_Mutex_Test ", 21
 ace_main; unld "Recursive_Mutex_Test"
-
-ld < Reverse_Lock_Test
-write 2, "Reverse_Lock_Test ", 18
-ace_main; unld "Reverse_Lock_Test"
 
 ld < Map_Manager_Test
 write 2, "Map_Manager_Test ", 17
