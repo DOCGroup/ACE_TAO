@@ -1,3 +1,10 @@
+Thu Jun 17 21:54:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/configure.ac:
+	  Changed ACE_LACKS_UNIX_DOMAIN_SOCKETS check to #include
+	  <sys/types.h> before <sys/un.h>; it is required by many
+	  systems.
+
 Thu Jun 17 22:10:18 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Timer_Wheel_T.cpp:
