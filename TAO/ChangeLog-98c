@@ -1,3 +1,18 @@
+Fri Jun  5 12:22:44 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/debug.{h,cpp}: Added TAO_orbdebug flag so TAO code
+	  does not check the flag in Service Configurator anymore.
+	  That way, it should still work when there isn't a 
+	  Service Configurator.
+
+	* tao/Connect.cpp: Made the switch to TAO_orbdebug.
+
+	* tao/ORB_Core.cpp: First, since the semantics of the -d 
+	  flag in the Service Configurator now means to suppress
+	  debug messages, it is now passed in by default unless
+	  -ORBdebug was specified.  Also sets TAO_orbdebug when
+	  -ORBdebug is specified.
+
 Thu Jun 04 05:05:39 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.1.26 released.
