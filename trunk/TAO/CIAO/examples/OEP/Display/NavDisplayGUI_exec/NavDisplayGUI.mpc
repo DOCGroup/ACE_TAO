@@ -1,5 +1,5 @@
 // $Id$
-project(NavDisplayGUI_exec) : ciao_component, qt-min_moc {
+project(NavDisplayGUI_exec) : ciao_component, qt, qt_moc {
   after   += NavDisplay_exec
   sharedname = NavDisplayGUI_exec
   libs      += NavDisplay_stub NavDisplay_svnt HUDisplay_stub HUDisplay_svnt
@@ -8,16 +8,6 @@ project(NavDisplayGUI_exec) : ciao_component, qt-min_moc {
   includes  += ../NavDisplay
   idlflags  +=  -I ../NavDisplay -Wb,export_macro=NAVDISPLAY_EXEC_Export -Wb,export_include=NavDisplay_exec_export.h
   idlgendir = ./
-
-  specific(borland, nmake, em3, vc6, vc7, vc71) {
-    lit_libs += qt-mt230nc
-  }
-
-  // @@ Notice: If you are building with Cygwin, you may need to manually
-  //            change the following Qt library to qt-mt230nc.
-  specific(gnuace, make) {
-    lit_libs += qt-mt
-  }
 
   IDL_Files {
     ../NavDisplay/NavDisplayEI.idl

@@ -1,3 +1,10 @@
+Wed Jan 28 13:21:00 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/QtTests/QtTests.mpc:
+
+          Inherit from the ace_qt base project as part of the reorganization
+          of qt and qt_moc.
+
 Tue Jan 27 18:05:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -5,12 +12,12 @@ Tue Jan 27 18:05:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_root/root.cpp:
         * TAO_IDL/be_include/be_codegen.h:
         * TAO_IDL/be_include/be_global.h:
-        
+
           Eliminated generation of the *A.h file, containing
           declarations for Any operators and triggered by the
           option -GA. Moved generation of Any operator declarations
           back to the *C.h file. Left generation of the *A.cpp file
-          unchanged, except for removal of *A.h #include. This 
+          unchanged, except for removal of *A.h #include. This
           change allows us to avoid linking *A.cpp in
           DLLs if the Any operators are not used, while still
           allowing their declarations to be found if they are referenced
@@ -20,7 +27,7 @@ Tue Jan 27 17:41:38 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/OctetSeqA.h:
         * tao/OctetSeqC.h:
-        
+
           Moved the declaration of Any operators and type code from
           OctetSeqA.h to OctetSeqC.h, so the operators can be seen
           in generated code if CORBA::OctetSeq is used there. Thanks
@@ -31,16 +38,16 @@ Mon Jan 26 17:46:18 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
-        
+
           In generated operation stub code, changed the name of the
           array of argument helper classes passed to Invocation_Adapter,
           so that the array name does not begin with the characters
           '_tao_'. These characters are coincidentally applied as a prefix
-          to each argument helper class identifier, and so there was a 
+          to each argument helper class identifier, and so there was a
           possibility of a name clash. Of course there is still a
           chance of a name clash with the argument identifier itself,
           but there is no way to eliminate that, only to minimize it.
-          This fix closes [BUGID:1725]. Thanks to Mouna Seri 
+          This fix closes [BUGID:1725]. Thanks to Mouna Seri
           <seri@crhc.uiuc.edu> for reporting the bug and for sending
           the example IDL file that illustrated it.
 
