@@ -175,7 +175,8 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                          "ImplRepoService") != 0
       && ACE_OS::strcmp (service_name,
                          "InterfaceRepository") != 0
-                         )
+      && ACE_OS::strcmp (service_name,
+                         "MCASTServer") != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unknown service requested.\n"),
