@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
 
 //=============================================================================
 /**
@@ -48,11 +47,11 @@ public:
    * AF_INET6. To specify IPv4, use AF_INET.  
    */
     ACE_Multihomed_INET_Addr(u_short port_number,
-			   const char primary_host_name[],
-			   int encode = 1,
-			   int address_family = AF_UNSPEC,
-			   const char *(secondary_host_names[]) = 0,
-			   size_t size = 0);
+                           const char primary_host_name[],
+                           int encode = 1,
+                           int address_family = AF_UNSPEC,
+                           const char *(secondary_host_names[]) = 0,
+                           size_t size = 0);
 
   /**
    * Constructs an <ACE_Multihomed_INET_Addr> from a @a port_number,
@@ -63,10 +62,10 @@ public:
    * network byte order already and are passed straight through.
    */
   ACE_Multihomed_INET_Addr(u_short port_number,
-			   ACE_UINT32 primary_ip_addr = INADDR_ANY,
-			   int encode = 1,
-			   const ACE_UINT32 *secondary_ip_addrs = 0,
-			   size_t size = 0);
+                           ACE_UINT32 primary_ip_addr = INADDR_ANY,
+                           int encode = 1,
+                           const ACE_UINT32 *secondary_ip_addrs = 0,
+                           size_t size = 0);
   
   /// Use compiler-generated copy constructor.
   
@@ -94,8 +93,8 @@ public:
            const char primary_host_name[],
            int encode = 1,
            int address_family = AF_UNSPEC,
-	   const char *(secondary_host_names[]) = 0,
-	   size_t size = 0);
+           const char *(secondary_host_names[]) = 0,
+           size_t size = 0);
 
   /**
    * Initializes an <ACE_Multihomed_INET_Addr> from a @a port_number,
@@ -108,8 +107,8 @@ public:
   int set (u_short port_number,
            ACE_UINT32 primary_ip_addr = INADDR_ANY,
            int encode = 1,
-	   const ACE_UINT32 *secondary_ip_addrs = 0,
-	   size_t size = 0);
+           const ACE_UINT32 *secondary_ip_addrs = 0,
+           size_t size = 0);
 
   // = Accessor methods.
 
@@ -123,7 +122,7 @@ public:
    * secondary addresses.  <size> is taken as the size of this array.
    */
   int get_secondary_addresses(ACE_INET_Addr *secondary_addrs,
-			      size_t size) const;
+                              size_t size) const;
 
   /**
    * Initialize user-supplied array <addrs> with the the current
