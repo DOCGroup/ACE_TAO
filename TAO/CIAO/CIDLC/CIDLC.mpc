@@ -16,6 +16,7 @@ project(*CIDLC) {
     ServantHeaderGenerator.cpp
     ServantSourceGenerator.cpp
     TypeNameEmitter.cpp
+    Literals.cpp
     cidlc.cpp
   }
   specific(vc71) {

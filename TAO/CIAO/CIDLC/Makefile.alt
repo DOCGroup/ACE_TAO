@@ -14,6 +14,7 @@ $(call include, $(UTILITY_BUILD_RULES)/Executable.pre.rules)
 # RepositoryIdGenerator.cpp    \
 
 cxx_translation_units := ExecutorMappingGenerator.cpp \
+                         Literals.cpp                 \
                          DescriptorGenerator.cpp      \
                          SizeTypeCalculator.cpp       \
                          ServantGenerator.cpp         \

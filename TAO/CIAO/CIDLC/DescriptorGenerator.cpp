@@ -33,7 +33,7 @@ namespace
   Nameable* defined_in (Nameable& n)
   {
     for (Nameable::NamedIterator i (n.named_begin ()), e (n.named_end ());
-        i != e; 
+        i != e;
         ++i)
     {
       if (Defines* d = dynamic_cast<Defines*> (*i))
@@ -41,7 +41,7 @@ namespace
         return &d->scope ();
       }
     }
-    
+
     return 0;
   }
 
@@ -55,48 +55,48 @@ namespace
 
     string prefix ("");
     TypePrefix *tp = 0;
-    
+
     if (d.context ().count (STRS[TYPE_PREFIX]))
     {
-      tp = d.context ().get<TypePrefix*> (STRS[TYPE_PREFIX]);  
+      tp = d.context ().get<TypePrefix*> (STRS[TYPE_PREFIX]);
       prefix = tp->prefix ().literal ();
     }
     else
     {
       Nameable* parent = defined_in (d);
-        
+
       while (parent != 0)
       {
         if (parent->context ().count (STRS[TYPE_PREFIX]))
         {
           tp =
             parent->context ().get<TypePrefix*> (STRS[TYPE_PREFIX]);
-            
+
           prefix = tp->prefix ().literal ();
           break;
         }
-          
+
         parent = defined_in (*parent);
       }
     }
-      
+
     if (prefix != "") prefix += "/";
-    
+
     ScopedName scoped (d.scoped_name ());
     Name stripped (scoped.begin () + 1, scoped.end ());
-    
+
     string scope_name =
       regex::perl_s (name_to_string (stripped),
                      "%::%/%",
                      '%');
-                     
+
     string repo_id = "IDL:" + prefix + scope_name + ":1.0";
-    
+
     // Store the repo id for possible future reference.
     d.context ().set<string> (STRS[REPO_ID], repo_id);
     return repo_id;
   }
-  
+
   class EmitterBase
   {
   public:
@@ -113,7 +113,7 @@ namespace
   {
   // Nested classes for emitters created and dispatched inside
   // ComponsitionEmitter::traverse().
-  private:  
+  private:
     struct ComponentIdEmitter : Traversal::Component, EmitterBase
     {
       ComponentIdEmitter (fs::ofstream& ofs)
@@ -133,7 +133,7 @@ namespace
       HomeIdEmitter (fs::ofstream& ofs)
         : EmitterBase (ofs)
       {}
- 
+
       virtual void
       traverse (Type& h)
       {
@@ -147,7 +147,7 @@ namespace
       HomeFeaturesEmitter (fs::ofstream& ofs)
         : EmitterBase (ofs)
       {}
- 
+
       virtual void
       traverse (Type& h)
       {
@@ -155,26 +155,26 @@ namespace
            << "name=\"" << h.name () << "\"" << endl
            << "repid=\"" << compute_repo_id (h)
            << "\">" << endl;
-          
+
         Traversal::Inherits home_inherits;
         HomeInheritanceEmitter emitter (os);
         home_inherits.node_traverser (emitter);
-        
+
         inherits (h, home_inherits);
 
         os << "</homefeatures>" << endl << endl;
-        
+
         // Go after inherited homes.
         //
         Traversal::Home::traverse (h);
       }
-      
+
       struct HomeInheritanceEmitter : Traversal::Home, EmitterBase
       {
         HomeInheritanceEmitter (fs::ofstream& ofs)
           : EmitterBase (ofs)
         {}
-        
+
         virtual void
         traverse (Type& h)
         {
@@ -189,7 +189,7 @@ namespace
       ComponentFeaturesEmitter (fs::ofstream& ofs)
         : EmitterBase (ofs)
       {}
- 
+
       virtual void
       traverse (Type& h)
       {
@@ -197,40 +197,40 @@ namespace
            << "name=\"" << h.name () << "\"" << endl
            << "repid=\"" << compute_repo_id (h)
            << "\">" << endl;
-          
+
         Traversal::Inherits component_inherits;
         Traversal::Supports component_supports;
         ComponentInheritanceEmitter i_emitter (os);
         ComponentSupportsEmitter s_emitter (os);
         component_inherits.node_traverser (i_emitter);
         component_supports.node_traverser (s_emitter);
-        
+
         inherits (h, component_inherits);
         supports (h, component_supports);
-        
+
         os << "<ports>" << endl;
-        
+
         Traversal::Defines defines;
         PortsEmitter ports_emitter (os);
         defines.node_traverser (ports_emitter);
-        
+
         names (h, defines);
-        
+
         os << "</ports>" << endl;
 
         os << "</componentfeatures>" << endl << endl;
-        
+
         // Go after inherited components.
         //
         Traversal::Component::traverse (h);
       }
-      
+
       struct ComponentInheritanceEmitter : Traversal::Component, EmitterBase
       {
         ComponentInheritanceEmitter (fs::ofstream& ofs)
           : EmitterBase (ofs)
         {}
-        
+
         virtual void
         traverse (Type& h)
         {
@@ -238,13 +238,13 @@ namespace
              << endl;
         }
       };
-      
+
       struct ComponentSupportsEmitter : Traversal::Interface, EmitterBase
       {
         ComponentSupportsEmitter (fs::ofstream& ofs)
           : EmitterBase (ofs)
         {}
-        
+
         virtual void
         traverse (Type& h)
         {
@@ -252,7 +252,7 @@ namespace
              << endl;
         }
       };
-      
+
       struct PortsEmitter : Traversal::EmitterData,
                             Traversal::UserData,
                             Traversal::ProviderData,
@@ -261,70 +261,70 @@ namespace
                             EmitterBase
       {
         PortsEmitter (fs::ofstream& ofs)
-          : EmitterBase (ofs), 
+          : EmitterBase (ofs),
             type_name_emitter_ (ofs),
-            facettag_ (1U)     
+            facettag_ (1U)
         {
           belongs_.node_traverser (type_name_emitter_);
         }
-        
+
         virtual void
         traverse (SemanticGraph::Emitter& e)
         {
           os << "<emits" << endl
              << "emitsname=\"" << e.name () << "\"" << endl
              << "eventtype=";
-            
+
           Traversal::EmitterData::belongs (e, belongs_);
-            
+
           os << ">" << endl
              << "<eventpolicy policy=\"normal\"/>" << endl
              << "</emits>" << endl;
         }
-        
+
         virtual void
         traverse (SemanticGraph::User& u)
         {
           os << "<uses" << endl
              << "usesname=\"" << u.name () << "\"" << endl
              << "repid=";
-            
+
           Traversal::UserData::belongs (u, belongs_);
-            
+
           os << ">" << endl
              << "</uses>" << endl;
         }
-        
+
         virtual void
         traverse (SemanticGraph::Provider& p)
         {
           os << "<provides" << endl
              << "providesname=\"" << p.name () << "\"" << endl
              << "repid=";
-            
+
           Traversal::ProviderData::belongs (p, belongs_);
-            
-          os << endl 
+
+          os << endl
              << "facettag=\"" << facettag_ << "\">" << endl
              << "</provides>" << endl;
 
           ++facettag_;
         }
-        
+
         virtual void
         traverse (SemanticGraph::Consumer& c)
         {
           os << "<consumes" << endl
              << "consumesname=\"" << c.name () << "\"" << endl
              << "eventtype=";
-            
+
           Traversal::ConsumerData::belongs (c, belongs_);
-            
+
           os << ">" << endl
              << "<eventpolicy policy=\"normal\"/>" << endl
              << "</consumes>" << endl;
         }
-        
+
         virtual void
         traverse (SemanticGraph::Publisher& p)
         {
@@ -332,34 +332,34 @@ namespace
             << "publishesname=\"" << p.name ()
             << "\"" << endl
             << "eventtype=";
-            
+
           Traversal::PublisherData::belongs (p, belongs_);
-            
+
           os << ">" << endl
              << "<eventpolicy policy=\"normal\"/>" << endl
              << "</publishes>" << endl;
         }
-        
+
         struct TypeNameEmitter : Traversal::Type, EmitterBase
         {
           TypeNameEmitter (fs::ofstream& ofs)
             : EmitterBase (ofs)
           {}
-          
+
           virtual void
           traverse (SemanticGraph::Type& t)
           {
             os << '\"' << compute_repo_id (t) << '\"';
           }
         };
-        
+
       private:
         TypeNameEmitter type_name_emitter_;
         unsigned long facettag_;
         Traversal::Belongs belongs_;
       };
     };
-    
+
     struct InterfaceEmitter : Traversal::UnconstrainedInterface,
                               EmitterBase
     {
@@ -383,15 +383,15 @@ namespace
               << "\"" << endl
               << "repid=\"" << compute_repo_id (i)
               << "\">" << endl;
-              
+
           Traversal::Inherits interface_inherits;
           InterfaceInheritanceEmitter i_emitter (os);
           interface_inherits.node_traverser (i_emitter);
-          
+
           inherits (i, interface_inherits);
 
           os << "</interface>" << endl << endl;
-          
+
           // Go after inherited interfaces.
           Traversal::UnconstrainedInterface::traverse (i);
         }
@@ -402,7 +402,7 @@ namespace
       InterfaceInheritanceEmitter (fs::ofstream& ofs)
         : EmitterBase (ofs)
       {}
-      
+
       virtual void
       traverse (Type& i)
       {
@@ -410,7 +410,7 @@ namespace
             << "\"/>" << endl;
       }
     };
-    
+
     private:
       std::set<UnconstrainedInterface*> interfaces_;
     };
@@ -449,11 +449,11 @@ namespace
         component_executor.edge_traverser (implements);
         home_executor.edge_traverser (implements);
         implements.node_traverser (component_id_emitter);
-        implements.node_traverser (home_id_emitter);   
-      
+        implements.node_traverser (home_id_emitter);
+
         names (c, defines);
-      }   
-      
+      }
+
       os << "<componentkind>" << endl
          << "<session>" << endl
          << "<servant lifetime=\"container\"/>" << endl
@@ -469,14 +469,14 @@ namespace
         defines.node_traverser (home_executor);
         Traversal::Implements implements;
         home_executor.edge_traverser (implements);
-        implements.node_traverser (home_features_emitter);   
-        
+        implements.node_traverser (home_features_emitter);
+
         Traversal::Inherits inherits;
         home_features_emitter.edge_traverser (inherits);
         inherits.node_traverser (home_features_emitter);
-      
+
         names (c, defines);
-      }   
+      }
 
       {
         ComponentFeaturesEmitter component_features_emitter (os);
@@ -485,15 +485,15 @@ namespace
         defines.node_traverser (component_executor);
         Traversal::Implements implements;
         component_executor.edge_traverser (implements);
-        implements.node_traverser (component_features_emitter);   
-        
+        implements.node_traverser (component_features_emitter);
+
         Traversal::Inherits inherits;
         component_features_emitter.edge_traverser (inherits);
         inherits.node_traverser (component_features_emitter);
-      
+
         names (c, defines);
       }
-      
+
       {
         Traversal::Component component;
         Traversal::Home home;
@@ -507,13 +507,13 @@ namespace
         home_executor.edge_traverser (implements);
         implements.node_traverser (component);
         implements.node_traverser (home);
-        
+
         Traversal::Supports supports;
         InterfaceEmitter interface_emitter (os);
         supports.node_traverser (interface_emitter);
         component.edge_traverser (supports);
         home.edge_traverser (supports);
-        
+
         Traversal::Defines component_defines;
         component.edge_traverser (component_defines);
         Traversal::Provider provider;
@@ -524,15 +524,15 @@ namespace
         belongs.node_traverser (interface_emitter);
         provider.edge_traverser (belongs);
         user.edge_traverser (belongs);
-        
+
         Traversal::Inherits inherits;
         inherits.node_traverser (interface_emitter);
         interface_emitter.edge_traverser (inherits);
-      
+
         names (c, defines);
       }
-      
-      os << "</component>" << endl;  
+
+      os << "</corbacomponent>" << endl;
     }
 
   private:
@@ -595,7 +595,7 @@ DescriptorGenerator::generate (CommandLine const& cl,
   Indentation::Implanter<Indentation::XML> guard (ofs_);
 
   Traversal::TranslationUnit unit;
-  
+
   // Layer 1
   //
   Traversal::ContainsPrincipal contains_principal;
@@ -609,12 +609,12 @@ DescriptorGenerator::generate (CommandLine const& cl,
   //
   Traversal::ContainsRoot contains_root;
   Traversal::Includes includes;
-  
+
   region.edge_traverser (includes);
   region.edge_traverser (contains_root);
-  
+
   //--
-  Traversal::Root root;  
+  Traversal::Root root;
   includes.node_traverser (region);
   contains_root.node_traverser (root);
 
@@ -628,6 +628,6 @@ DescriptorGenerator::generate (CommandLine const& cl,
   CompositionEmitter composition (ofs_, cl);
   defines.node_traverser (module);
   defines.node_traverser (composition);
-  
+
   unit.traverse (u);
 }
