@@ -43,7 +43,7 @@ TAO_PSDL_Scope::to_lower_case (ACE_CString &identifier)
   size_t len = identifier.length ();
   for (size_t i = 0; i <= len; ++i)
     {
-      identifier[i] = ACE_OS::to_lower (identifier[i]);
+      identifier[i] = ACE_OS::ace_tolower (identifier[i]);
     }
 }
 
