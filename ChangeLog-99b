@@ -1,3 +1,18 @@
+Wed Jun  9 00:20:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Svc_Handler_Test.cpp: Added a simple test for the new
+ 	  buffering feature in ACE_Svc_Handler.
+
+	* ace/Strategies.cpp: Added an explicit template instantiation for
+ 	  ACE_Message_Queue_Iterator <ACE_NULL_SYNCH> since this is now
+ 	  used in ACE_Svc_Handler.
+
+	* ace/Svc_Handler: Added a "buffering" feature to the
+ 	  ACE_Svc_Handler.  This feature makes it possible to queue up
+ 	  ACE_Message_Blocks in an ACE_Message_Queue until (1) the queue
+ 	  is "full" or (2) a period of time elapses, at which point the
+ 	  queue is "flushed" via sendv_n() to the peer.
+
 Tue Jun  8 22:44:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Hacked BYACC to generate a parser that doesn't have any
