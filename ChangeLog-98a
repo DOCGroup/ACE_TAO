@@ -26,6 +26,18 @@ Tue Dec 16 22:09:42 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-tandem.h: removed commented-out line that mentioned
           ACE_HAS_64BIT_LONGS.
 
+        * ace/OS.{h,i} (sigwait): removed DEC cxx version dependence.  The
+          standard two-arg POSIX ::sigwait () seems to work just fine even
+          on older releases of Digital Unix 4.0, with the sigwait declaration
+          that we have in OS.h.  Thanks to Erik Margraf
+          <erik@asgard.gud.siemens.co.at> and Thilo
+          <kielmann@informatik.uni-siegen.de> for helping to sort this out.
+
+          I did change the ACE_OS::sigwait () return value determination
+          in OS.i.  It now depends on whether or not POSIX ::sigwait ()
+          returns 0, to agree with the documenation for POSIX sigwait.
+          Before, the code checked for a -1 return value from ::sigwait ().
+         
 Tue Dec 16 21:00:49 1997  Chris Gill  <cdgill@tango.cs.wustl.edu>
 
         Single Threaded port of ACE to pSOSim - first checkin
@@ -61,27 +73,27 @@ Tue Dec 16 21:00:49 1997  Chris Gill  <cdgill@tango.cs.wustl.edu>
 
 Tue Dec 16 17:23:49 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* tests/Time_Value_Test.cpp: Removed inclusion of "ace/config.h".
+        * tests/Time_Value_Test.cpp: Removed inclusion of "ace/config.h".
 
-	* ace/inc_user_config.h:  Added this file to prevent multiple
-	  inclusions of config.h file.  Replace `#include "ace/config.h"'
-	  with `#include "ace/inc_user_config.h"'.
+        * ace/inc_user_config.h:  Added this file to prevent multiple
+          inclusions of config.h file.  Replace `#include "ace/config.h"'
+          with `#include "ace/inc_user_config.h"'.
 
-	* ace/Log_Msg.cpp:
-	* ace/OS.h:
-	* ace/Trace.cpp:
-	* ace/streams.h:
-	* ace/iosfwd.h:  Replace "config.h" with "inc_user_config.h".
+        * ace/Log_Msg.cpp:
+        * ace/OS.h:
+        * ace/Trace.cpp:
+        * ace/streams.h:
+        * ace/iosfwd.h:  Replace "config.h" with "inc_user_config.h".
 
 Tue Dec 16 08:30:41 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* examples/IPC_SAP/FILE_SAP/client.cpp (main): Fixed "lines" to
- 	  "links."  Thanks to Istvan Buki <ibuki@fedex.com> for reporting
- 	  this.
+        * examples/IPC_SAP/FILE_SAP/client.cpp (main): Fixed "lines" to
+          "links."  Thanks to Istvan Buki <ibuki@fedex.com> for reporting
+          this.
 
 Tue Dec 16 14:15:48 1997    <irfan@TWOSTEP>
 
-	* ace/OS.i (fstat): Fixed Dr. Schmidt's typo.
+        * ace/OS.i (fstat): Fixed Dr. Schmidt's typo.
 
 Tue Dec 16 09:17:53 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -115,19 +127,19 @@ Mon Dec 15 22:47:24 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Dec 15 20:17:10 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.cpp: Fixed pread() and pwrite() so that they work
- 	  correctly even if we don't support threads.  Thanks to Irfan for
- 	  finding this.
+        * ace/OS.cpp: Fixed pread() and pwrite() so that they work
+          correctly even if we don't support threads.  Thanks to Irfan for
+          finding this.
 
-	* ace/OS.i: Tried to fix the fstat() wrapper on Win32 so that
-	  it does the right think for HANDLES.  Thanks to Lori Anderson
-	  <lori@probita.com> for pointing this out.
+        * ace/OS.i: Tried to fix the fstat() wrapper on Win32 so that
+          it does the right think for HANDLES.  Thanks to Lori Anderson
+          <lori@probita.com> for pointing this out.
 
 Mon Dec 15 15:36:07 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp (exit,wait): Changed these two functions
-	  more for Chorus.  Thanks again to Wei Chian
-	  <chiang@tele.nokia.fi> for providing the patch.
+        * ace/Thread_Manager.cpp (exit,wait): Changed these two functions
+          more for Chorus.  Thanks again to Wei Chian
+          <chiang@tele.nokia.fi> for providing the patch.
 
 Mon Dec 15 06:42:42 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -145,29 +157,29 @@ Mon Dec 15 06:42:42 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Dec 15 01:12:33 1997    <irfan@TWOSTEP>
 
-	* ace/Synch_T.h (ACE_Atmoic_Op::value_i): Explicitly return
- 	  <value_> (by reference).  This gives the user full, unrestricted
- 	  access to the underlying value.  This method will usually be
- 	  used in conjunction with explicit access to the lock.  Use with
- 	  care ;-)
+        * ace/Synch_T.h (ACE_Atmoic_Op::value_i): Explicitly return
+          <value_> (by reference).  This gives the user full, unrestricted
+          access to the underlying value.  This method will usually be
+          used in conjunction with explicit access to the lock.  Use with
+          care ;-)
 
 Sun Dec 14 21:37:08 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i (cond_wait,cond_timedwait): Fixed a missing return to
- 	  handle the case where we're using USYNC_PROCESS for the external
- 	  mutexes.
+        * ace/OS.i (cond_wait,cond_timedwait): Fixed a missing return to
+          handle the case where we're using USYNC_PROCESS for the external
+          mutexes.
 
-	* ace/OS: Made the use of the waiters_lock_ mutex consistent in
- 	  the ACE_cond_t implementation.  This was broken since we used
- 	  the external_mutex to serialize access to the waiters_ count
- 	  inconsistently.  Thanks to Patrick J. McNerthney
- 	  <pat@thememedia.com> for reporting this very subtle bug.
+        * ace/OS: Made the use of the waiters_lock_ mutex consistent in
+          the ACE_cond_t implementation.  This was broken since we used
+          the external_mutex to serialize access to the waiters_ count
+          inconsistently.  Thanks to Patrick J. McNerthney
+          <pat@thememedia.com> for reporting this very subtle bug.
 
 Sun Dec 14 12:29:26 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp (exit,wait): Disabled thread join
-	  functionality in Chorus.  Thanks to Wei Chiang
-	  <chiang@tele.nokia.fi> for providing the fix.
+        * ace/Thread_Manager.cpp (exit,wait): Disabled thread join
+          functionality in Chorus.  Thanks to Wei Chiang
+          <chiang@tele.nokia.fi> for providing the fix.
 
 Fri Dec 12 21:48:38 1997  Torbjorn Lindgren <tl@funcom.com>
 
