@@ -1,128 +1,164 @@
-// $Id$
+// file      : CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
 #include "ExecutorMappingGenerator.hpp"
 
 #include <map>
 #include <ostream>
 #include <fstream>
 
-#include "CCF/CIDL/CIDL_SyntaxTree.hpp"
-#include "CCF/CIDL/CIDL_Traversal.hpp"
+#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/Traversal.hpp"
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
-#include "CCF/CodeGenerationKit/IDLStream.hpp"
+#include "CCF/CodeGenerationKit/IndentationIDL.hpp"
+#include "CCF/CodeGenerationKit/IndentationImplanter.hpp"
 
 using std::cout;
 using std::endl;
 using std::string;
 using std::make_pair;
 
-using namespace CIDL;
-using namespace CIDL::SyntaxTree;
+using namespace CCF::CIDL;
+using namespace SyntaxTree;
+
+/*
+
+@@ bad code: i->scope ()->table ()
+
+*/
 
 namespace
 {
-  typedef
-  std::map <CompositionPtr, ComponentDefPtr, CompositionOrderComparator>
-  CompositionMap;
-
-  // ProvidesCollector collects interfaces that appear in provides
-  // declaration of a component in question. Used as a building block
-  // by Collector.
-  //
-  class ProvidesCollector : public virtual Traversal::ComponentDef,
-                            public virtual Traversal::ProvidesDecl
+  class Declarations
   {
   public:
-    ProvidesCollector(UnconstrainedInterfaceDeclSet& interface_set)
-        : interface_set_ (interface_set)
+    bool
+    add (HomeDefPtr const& h)
     {
+      return homes_.insert (h).second;
     }
 
-    virtual void
-    visit_provides_decl (ProvidesDeclPtr const& p)
+    bool
+    add (ComponentDefPtr const& c)
     {
-      //@@ CCM issue: interface should be defined at this point
-      //              and this should be ensured during semantic
-      //              checking.
+      return components_.insert (c).second;
+    }
 
-      UnconstrainedInterfaceDeclPtr decl (
-        p->type ()->dynamic_type<UnconstrainedInterfaceDecl> ());
+    bool
+    add (CompositionPtr const& cs, ComponentDefPtr const& cn)
+    {
+      return compositions_.insert (make_pair(cs, cn)).second;
+    }
 
-      // We are only interested in unconstrained interfaces.
-      if (decl != 0)
+    bool
+    add (UnconstrainedInterfaceDeclPtr const& i)
+    {
+      return interfaces_.insert (i).second;
+    }
+
+  public:
+    bool
+    find (HomeDefPtr const& h) const
+    {
+      return homes_.find (h) != homes_.end ();
+    }
+
+    bool
+    find (ComponentDefPtr const& c) const
+    {
+      return components_.find (c) != components_.end ();
+    }
+
+    bool
+    find (CompositionPtr const& c) const
+    {
+      return compositions_.find (c) != compositions_.end ();
+    }
+
+    bool
+    find (UnconstrainedInterfaceDeclPtr const& i) const
+    {
+      return interfaces_.find (i) != interfaces_.end ();
+    }
+
+  public:
+    ComponentDefPtr
+    resolve (CompositionPtr const& c) const
+    {
+      CompositionMap::const_iterator i = compositions_.find (c);
+      if (i != compositions_.end ())
       {
-        ScopedName orig (decl->name ());
-        ScopedName mapping (orig.scope (), "CCM_" + orig.simple ());
-
-        // Check if mapping has already been provided.
-        //@@ bad code: i->scope ()->table ()
-        if (!decl->scope ()->table ().exist (mapping))
-        {
-          // Add to the list if it's not already there.
-          interface_set_.insert (decl);
-        }
+        return i->second;
+      }
+      else
+      {
+        return ComponentDefPtr (0);
       }
     }
 
+  public:
+    bool
+    contains_suborder (Order const& o) const
+    {
+      for (UnconstrainedInterfaceDeclSet::const_iterator i =
+           interfaces_.begin ();
+           i != interfaces_.end ();
+           i++)
+      {
+        if (o.suborder ((*i)->order ())) return true;
+      }
+
+      for (ComponentDefSet::const_iterator i = components_.begin ();
+           i != components_.end ();
+           i++)
+      {
+        if (o.suborder ((*i)->order ())) return true;
+      }
+
+      for (HomeDefSet::const_iterator i = homes_.begin ();
+           i != homes_.end ();
+           i++)
+      {
+        if (o.suborder ((*i)->order ())) return true;
+      }
+
+      for (CompositionMap::const_iterator i = compositions_.begin ();
+           i != compositions_.end ();
+           i++)
+      {
+        if (o.suborder (i->first->order ())) return true;
+      }
+
+      return false;
+    }
+
   private:
-    UnconstrainedInterfaceDeclSet& interface_set_;
+    typedef
+    std::map <CompositionPtr, ComponentDefPtr, CompositionOrderComparator>
+    CompositionMap;
+
+    HomeDefSet homes_;
+    ComponentDefSet components_;
+    CompositionMap compositions_;
+    UnconstrainedInterfaceDeclSet interfaces_;
   };
 
 
-  // Collector populates lists of declarations for which local facet
-  // executor mapping should be provided.
   //
-  class Collector : public virtual Traversal::TranslationUnit,
-                    public virtual Traversal::PrincipalTranslationRegion,
-                    public virtual Traversal::FileScope,
-                    public virtual Traversal::Module,
-                    public virtual Traversal::Composition,
-                    public virtual Traversal::HomeExecutor,
-                    public virtual Traversal::ConcreteEventTypeDef
+  //
+  //
+  class HomeCollector : public Traversal::HomeDef
   {
   public:
-    Collector (UnconstrainedInterfaceDeclSet& interface_set,
-               ComponentDefSet& component_set,
-               ConcreteEventTypeDefSet& event_type_set,
-               HomeDefSet& home_set,
-               CompositionMap& composition_map)
-        : home_set_ (home_set),
-          component_set_ (component_set),
-          event_type_set_ (event_type_set),
-          composition_map_ (composition_map),
-          provides_collector_ (interface_set)
+    HomeCollector (Declarations& declarations)
+        : declarations_ (declarations)
     {
     }
 
     virtual void
-    visit_home_executor (HomeExecutorPtr const& he)
-    {
-      CompositionPtr composition (
-        he->scope ()->dynamic_type<SyntaxTree::Composition> ());
-
-      HomeDefPtr home (he->implements ());
-
-      ComponentDefPtr component (home->manages ());
-
-      composition_map_.insert (make_pair (composition, component));
-
-      add_home (home);
-      add_component (component);
-    }
-
-    virtual void
-    visit_concrete_event_type_def (ConcreteEventTypeDefPtr const& et)
-    {
-      /*
-      @@ CCM issue: spec says that I need to ganarate this but nobody
-                    knows why.
-      event_type_set_.insert (et);
-      */
-    }
-
-  private:
-    void
-    add_home (HomeDefPtr const& h)
+    traverse (HomeDefPtr const& h)
     {
       ScopedName n (h->name ());
 
@@ -135,166 +171,126 @@ namespace
           h->table ().exist (expl) ||
           h->table ().exist (impl)) return;
 
-      if(home_set_.insert (h).second)
+      if(declarations_.add (h))
       {
-        // Note that I don't go after components that home manages
+        // Note that I don't go after components that inherited home manages
         // because it will be handled by component inheritance tree.
         //
-        if (h->inherits ()) add_home (h->inherits ().resolve ());
-      }
-    }
-
-    void
-    add_component (ComponentDefPtr const& component)
-    {
-      ScopedName n (component->name ());
-
-      ScopedName monolith (n.scope (), "CCM_" + n.simple ());
-      ScopedName context (n.scope (), "CCM_" + n.simple () + "_Context");
-
-      // Check if mapping has already been provided.
-      if (component->table ().exist (context) ||
-          component->table ().exist (monolith)) return;
-
-      if(component_set_.insert (component).second)
-      {
-        component->accept (&provides_collector_);
-
-        if (component->inherits ())
-        {
-          add_component (component->inherits ().resolve ());
-        }
+        if (h->inherits ()) traverse (h->inherits ().resolve ());
       }
     }
 
   private:
-    HomeDefSet& home_set_;
-    ComponentDefSet& component_set_;
-    ConcreteEventTypeDefSet& event_type_set_;
-    CompositionMap& composition_map_;
-
-    ProvidesCollector provides_collector_;
+    Declarations& declarations_;
   };
 
   //
   //
   //
-  class ForcedCollector : public virtual Traversal::TranslationUnit,
-                          public virtual Traversal::PrincipalTranslationRegion,
-                          public virtual Traversal::FileScope,
-                          public virtual Traversal::Module,
-                          public virtual Traversal::ComponentDef,
-                          public virtual Traversal::HomeDef,
-                          public virtual Traversal::UnconstrainedInterfaceDef
+  class ComponentCollector : public Traversal::ComponentDef
   {
   public:
-    ForcedCollector (UnconstrainedInterfaceDeclSet& interface_set,
-                     ComponentDefSet& component_set,
-                     ConcreteEventTypeDefSet& event_type_set,
-                     HomeDefSet& home_set,
-                     CompositionMap& composition_map)
-        : home_set_ (home_set),
-          component_set_ (component_set),
-          event_type_set_ (event_type_set),
-          composition_map_ (composition_map),
-          interface_set_ (interface_set)
+    ComponentCollector (Declarations& declarations)
+        : declarations_ (declarations)
     {
     }
 
     virtual void
-    visit_component_def (ComponentDefPtr const& c)
+    pre (ComponentDefPtr const& c)
     {
-      add_component (c);
+      ScopedName n (c->name ());
+
+      ScopedName monolith (n.scope (), "CCM_" + n.simple ());
+      ScopedName context (n.scope (), "CCM_" + n.simple () + "_Context");
+
+      // Check if mapping has already been provided.
+      if (c->table ().exist (context) ||
+          c->table ().exist (monolith)) return;
+
+      if(declarations_.add (c))
+      {
+        if (c->inherits ())
+        {
+          traverse (c->inherits ().resolve ());
+        }
+      }
+    }
+
+  private:
+    Declarations& declarations_;
+  };
+
+  //
+  //
+  //
+  class InterfaceCollector : public Traversal::UnconstrainedInterfaceDecl
+  {
+  public:
+    InterfaceCollector (Declarations& declarations)
+        : declarations_ (declarations)
+    {
     }
 
     virtual void
-    visit_home_def (HomeDefPtr const& h)
-    {
-      add_home (h);
-    }
-
-    virtual void
-    visit_unconstrained_interface_def (UnconstrainedInterfaceDefPtr const& i)
+    traverse (UnconstrainedInterfaceDeclPtr const& i)
     {
       ScopedName orig (i->name ());
       ScopedName mapping (orig.scope (), "CCM_" + orig.simple ());
 
       // Check if mapping has already been provided.
-      if (i->table ().exist (mapping)) return;
+      if (i->scope ()->table ().exist (mapping)) return;
 
       // Add to the list if it's not already there.
-      interface_set_.insert (i);
-    }
-
-    virtual void
-    visit_concrete_event_type_def (ConcreteEventTypeDefPtr const& et)
-    {
-      /*
-      @@ CCM issue: spec says that I need to ganarate this but nobody
-                    knows why.
-      event_type_set_.insert (et);
-      */
+      declarations_.add (i);
     }
 
   private:
-    void
-    add_home (HomeDefPtr const& h)
-    {
-      ScopedName n (h->name ());
-
-      ScopedName main (n.scope (), "CCM_" + n.simple ());
-      ScopedName expl (n.scope (), "CCM_" + n.simple () + "Explicit");
-      ScopedName impl (n.scope (), "CCM_" + n.simple () + "Implicit");
-
-      // Check if mapping has already been provided.
-      if (h->table ().exist (main) ||
-          h->table ().exist (expl) ||
-          h->table ().exist (impl)) return;
-
-      if(home_set_.insert (h).second)
-      {
-        // Note that I don't go after components that home manages
-        // because it will be handled by component inheritance tree.
-        //
-        if (h->inherits ()) add_home (h->inherits ().resolve ());
-      }
-    }
-
-    void
-    add_component (ComponentDefPtr const& component)
-    {
-      ScopedName n (component->name ());
-
-      ScopedName monolith (n.scope (), "CCM_" + n.simple ());
-      ScopedName context (n.scope (), "CCM_" + n.simple () + "_Context");
-
-      // Check if mapping has already been provided.
-      if (component->table ().exist (context) ||
-          component->table ().exist (monolith)) return;
-
-      if(component_set_.insert (component).second)
-      {
-        if (component->inherits ())
-        {
-          add_component (component->inherits ().resolve ());
-        }
-      }
-    }
-
-  private:
-    HomeDefSet& home_set_;
-    ComponentDefSet& component_set_;
-    ConcreteEventTypeDefSet& event_type_set_;
-    CompositionMap& composition_map_;
-    UnconstrainedInterfaceDeclSet& interface_set_;
+    Declarations& declarations_;
   };
 
 
   //
   //
   //
-  class TypeNameEmitter : public virtual Traversal::BuiltInTypeDef,
-                          public virtual Traversal::TypeDecl
+  class HomeExecutorCollector : public Traversal::HomeExecutor
+  {
+  public:
+    HomeExecutorCollector (Declarations& declarations,
+                           Traversal::Dispatcher* home_collector,
+                           Traversal::Dispatcher* component_collector)
+        : declarations_ (declarations),
+          home_collector_ (home_collector),
+          component_collector_ (component_collector)
+    {
+    }
+
+    virtual void
+    traverse (HomeExecutorPtr const& he)
+    {
+      HomeDefPtr home (he->implements ());
+      home_collector_->dispatch (home);
+
+      ComponentDefPtr component (home->manages ());
+      component_collector_->dispatch (component);
+
+      CompositionPtr composition (
+        he->scope ()->dynamic_type<SyntaxTree::Composition> ());
+      declarations_.add (composition, component);
+    }
+
+  private:
+    Declarations& declarations_;
+
+    Traversal::Dispatcher* home_collector_;
+    Traversal::Dispatcher* component_collector_;
+  };
+
+
+  //
+  //
+  //
+  class TypeNameEmitter : public Traversal::BuiltInTypeDef,
+                          public Traversal::TypeDecl
   {
   public:
     TypeNameEmitter (std::ostream& os_)
@@ -303,13 +299,13 @@ namespace
     }
 
     virtual void
-    visit_built_in_type_def (BuiltInTypeDefPtr const& t)
+    traverse (BuiltInTypeDefPtr const& t)
     {
       os << t->name ().simple ();
     }
 
     virtual void
-    visit_type_decl (TypeDeclPtr const& t)
+    traverse (TypeDeclPtr const& t)
     {
       os << t->name ();
     }
@@ -319,35 +315,49 @@ namespace
   };
 
 
-  // MonolithEmitter generates what spec calls 'Monolithic Component
-  // Executor'.
   //
-  class MonolithEmitter : public virtual Traversal::ComponentDef,
-                          public virtual Traversal::AttributeDecl,
-                          public virtual Traversal::ProvidesDecl,
-                          public virtual Traversal::ConsumesDecl
+  //
+  //
+  class ComponentEmitter : public Traversal::ComponentDef
   {
   public:
-    MonolithEmitter (std::ostream& os_,
-                     ComponentDefSet const& component_set,
-                     CCF::Traversal::Visitor* type_name_emitter)
-        : AttributeDecl (type_name_emitter),
-          os (os_),
-          component_set_ (component_set)
+    ComponentEmitter (Declarations const& declarations)
+        : declarations_ (declarations)
     {
     }
 
     virtual void
-    visit_component_def (ComponentDefPtr const& c)
+    traverse (ComponentDefPtr const& c)
     {
-      if (component_set_.find (c) != component_set_.end ())
+      if (declarations_.find (c))
       {
-        Traversal::ComponentDef::visit_component_def (c);
+        Traversal::ComponentDef::traverse (c);
       }
     }
 
+  private:
+    Declarations const& declarations_;
+  };
+
+
+  // MonolithEmitter generates what spec calls 'Monolithic Component
+  // Executor'.
+  //
+  class MonolithEmitter : public Traversal::ComponentDef,
+                          public Traversal::AttributeDecl,
+                          public Traversal::ProvidesDecl,
+                          public Traversal::ConsumesDecl
+  {
+  public:
+    MonolithEmitter (std::ostream& os_,
+                     Traversal::Dispatcher* type_name_emitter)
+        : AttributeDecl (type_name_emitter),
+          os (os_)
+    {
+    }
+
     virtual void
-    visit_component_def_pre (ComponentDefPtr const& c)
+    pre (ComponentDefPtr const& c)
     {
       os << "local interface CCM_" << c->name ().simple () << " : ";
 
@@ -369,82 +379,62 @@ namespace
         os << ", " << i->name ();
       }
 
-      os << endl
-         << "{" << endl;
+      os << "{";
     }
 
     virtual void
-    visit_attribute_pre (AttributeDeclPtr const& a)
+    pre (AttributeDeclPtr const& a)
     {
       os << "attribute ";
     }
 
     virtual void
-    visit_attribute_post (AttributeDeclPtr const& a)
+    post (AttributeDeclPtr const& a)
     {
-      os << " " << a->name ().simple () << ";" << endl;
+      os << " " << a->name ().simple () << ";";
     }
 
     virtual void
-    visit_provides_decl (ProvidesDeclPtr const& p)
+    traverse (ProvidesDeclPtr const& p)
     {
       ScopedName n = p->type ()->name ();
 
       os << n.scope () << "::CCM_" << n.simple ()
-         << " get_" << p->name ().simple () << " ();" << endl;
+         << " get_" << p->name ().simple () << " ();";
     }
 
     virtual void
-    visit_consumes_decl (ConsumesDeclPtr const& p)
+    traverse (ConsumesDeclPtr const& p)
     {
-      os << "void push_" << p->name ().simple ()
-         << " (in " << p->type()->name () << " ev);" << endl;
+      os << "void push_" << p->name ().simple () << " ("
+         << "in " << p->type()->name () << " ev);";
     }
 
     virtual void
-    visit_component_def_post (ComponentDefPtr const& c)
+    post (ComponentDefPtr const& c)
     {
-      os << "};" << endl
-         << endl;
+      os << "};" << endl;
     }
 
   private:
     std::ostream& os;
-    ComponentDefSet const& component_set_;
   };
 
   // ContextEmitter generates component context interface.
   //
   //
-  class ContextEmitter : public virtual Traversal::ComponentDef,
-                         public virtual Traversal::UsesDecl,
-                         public virtual Traversal::PublishesDecl,
-                         public virtual Traversal::EmitsDecl
+  class ContextEmitter : public Traversal::ComponentDef,
+                         public Traversal::UsesDecl,
+                         public Traversal::PublishesDecl,
+                         public Traversal::EmitsDecl
   {
   public:
-    ContextEmitter (std::ostream& os_,
-                    ComponentDefSet const& component_set)
-        : os (os_),
-          component_set_ (component_set)
-    {
-    }
+    ContextEmitter (std::ostream& os_) : os (os_) {}
 
     virtual void
-    visit_component_def (ComponentDefPtr const& c)
+    pre (ComponentDefPtr const& c)
     {
-      if (component_set_.find (c) != component_set_.end ())
-      {
-        Traversal::ComponentDef::visit_component_def (c);
-      }
-    }
-
-
-    virtual void
-    visit_component_def_pre (ComponentDefPtr const& c)
-    {
-      os << "local interface "
-         << "CCM_" << c->name ().simple () << "_Context "
-         << " : ";
+      os << "local interface CCM_" << c->name ().simple () << "_Context : ";
 
       ComponentDefRef cr = c->inherits ();
 
@@ -455,60 +445,81 @@ namespace
       }
       else
       {
-        os << "::Components::SessionContext";
+        os << "::Components::CCMContext";
       }
 
-      os << endl
-         << "{" << endl;
+      os << "{";
     }
 
     virtual void
-    visit_uses_decl (UsesDeclPtr const& d)
+    traverse (UsesDeclPtr const& d)
     {
       os << d->type ()->name ()
-         << " get_connection_" << d->name ().simple ()
-         << " ();" << endl;
+         << " get_connection_" << d->name ().simple () << " ();";
     }
 
     virtual void
-    visit_publishes_decl (PublishesDeclPtr const& d)
+    traverse (PublishesDeclPtr const& d)
     {
-      os << "void push_" << d->name ().simple ()
-         << " (in " << d->type ()->name () << " ev);" << endl;
+      os << "void push_" << d->name ().simple () << " ("
+         << "in " << d->type ()->name () << " ev);";
     }
 
     virtual void
-    visit_emits_decl (EmitsDeclPtr const& d)
+    traverse (EmitsDeclPtr const& d)
     {
-      os << "void push_" << d->name ().simple ()
-         << " (in " << d->type ()->name () << " ev);" << endl;
+      os << "void push_" << d->name ().simple () << " ("
+         << "in " << d->type ()->name () << " ev);";
     }
 
     virtual void
-    visit_component_def_post (ComponentDefPtr const& c)
+    post (ComponentDefPtr const& c)
     {
-      os << "};" << endl
-         << endl;
+      os << "};" << endl;
     }
 
   private:
     std::ostream& os;
-    ComponentDefSet const& component_set_;
+  };
+
+
+  //
+  //
+  //
+  class HomeEmitter : public Traversal::HomeDef
+  {
+  public:
+    HomeEmitter (Declarations const& declarations)
+        : declarations_ (declarations)
+    {
+    }
+
+    virtual void
+    traverse (HomeDefPtr const& h)
+    {
+      if (declarations_.find (h))
+      {
+        Traversal::HomeDef::traverse (h);
+      }
+    }
+
+  private:
+    Declarations const& declarations_;
   };
 
   // HomeExplicitEmitter generates home explicit interface
   //
   //
-  class HomeExplicitEmitter : public virtual Traversal::OperationParameter,
-                              public virtual Traversal::Comma,
-                              public virtual Traversal::HomeFactoryDecl,
-                              public virtual Traversal::OperationDecl,
-                              public virtual Traversal::AttributeDecl,
-                              public virtual Traversal::HomeDef
+  class HomeExplicitEmitter : public Traversal::OperationParameter,
+                              public Traversal::Comma,
+                              public Traversal::HomeFactoryDecl,
+                              public Traversal::OperationDecl,
+                              public Traversal::AttributeDecl,
+                              public Traversal::HomeDef
   {
   public:
     HomeExplicitEmitter (std::ostream& os_,
-                         CCF::Traversal::Visitor* type_name_emitter)
+                         Traversal::Dispatcher* type_name_emitter)
         : OperationParameter (type_name_emitter,
                               type_name_emitter,
                               type_name_emitter),
@@ -520,11 +531,9 @@ namespace
     }
 
     virtual void
-    visit_home_def_pre (HomeDefPtr const& h)
+    pre (HomeDefPtr const& h)
     {
-      os << "local interface "
-         << "CCM_" << h->name ().simple () << "Explicit"
-         << " : ";
+      os << "local interface CCM_" << h->name ().simple () << "Explicit : ";
 
       HomeDefRef hr = h->inherits ();
 
@@ -545,9 +554,14 @@ namespace
         os << ", " << i->name ();
       }
 
-      os << endl
-         << "{" << endl;
+      os << "{";
 
+    }
+
+    virtual void
+    post (HomeDefPtr const& h)
+    {
+      os << "};" << endl;
     }
 
     //
@@ -555,13 +569,13 @@ namespace
     //
 
     virtual void
-    visit_operation_parameter_post (OperationParameterPtr const& op)
+    post (OperationParameterPtr const& op)
     {
       os << " " << op->name ();
     }
 
     virtual void
-    visit_comma (CommaPtr const& s)
+    traverse (CommaPtr const& s)
     {
       os << ", ";
     }
@@ -571,21 +585,21 @@ namespace
     //
 
     virtual void
-    visit_home_factory_decl_type (HomeFactoryDeclPtr const& d)
+    type (HomeFactoryDeclPtr const& d)
     {
       os << "::Components::EnterpriseComponent ";
     }
 
     virtual void
-    visit_home_factory_decl_name (HomeFactoryDeclPtr const& d)
+    name (HomeFactoryDeclPtr const& d)
     {
       os << d->name ().simple () << " (";
     }
 
     virtual void
-    visit_home_factory_decl_post (HomeFactoryDeclPtr const& d)
+    post (HomeFactoryDeclPtr const& d)
     {
-      os << ");" << endl;
+      os << ");";
     }
 
     //
@@ -593,21 +607,21 @@ namespace
     //
 
     virtual void
-    visit_operation_decl_name (OperationDeclPtr const& d)
+    name (OperationDeclPtr const& d)
     {
       os << " " << d->name ().simple () << " (";
     }
 
     virtual void
-    visit_operation_parameter_pre (OperationParameterPtr const& op)
+    pre (OperationParameterPtr const& op)
     {
       os << op->direction () << " ";
     }
 
     virtual void
-    visit_operation_decl_post (OperationDeclPtr const& d)
+    post (OperationDeclPtr const& d)
     {
-      os << ");" << endl;
+      os << ");";
     }
 
     //
@@ -615,344 +629,242 @@ namespace
     //
 
     virtual void
-    visit_attribute_pre (AttributeDeclPtr const& a)
+    pre (AttributeDeclPtr const& a)
     {
       os << "attribute ";
     }
 
     virtual void
-    visit_attribute_post (AttributeDeclPtr const& a)
+    post (AttributeDeclPtr const& a)
     {
-      os << " " << a->name ().simple () << ";" << endl;
-    }
-
-    virtual void
-    visit_home_def_post (HomeDefPtr const& h)
-    {
-      os << "};" << endl
-         << endl;
+      os << " " << a->name ().simple () << ";";
     }
 
   private:
     std::ostream& os;
   };
 
+
   // HomeImplicitEmitter generates home implicit interface
   //
   //
-  class HomeImplicitEmitter : public virtual Traversal::HomeDef
+  class HomeImplicitEmitter : public Traversal::HomeDef
   {
   public:
     HomeImplicitEmitter (std::ostream& os_) : os (os_) {}
 
     virtual void
-    visit_home_def_pre (HomeDefPtr const& h)
+    pre (HomeDefPtr const& h)
     {
-      os << "local interface "
-         << "CCM_" << h->name ().simple () << "Implicit" << endl
-         << "{" << endl
+      os << "local interface " << "CCM_" << h->name ().simple () << "Implicit"
+         << "{"
          << "::Components::EnterpriseComponent "
-         << "create () raises (::Components::CCMException);"
-         << endl;
-
+         << "create () raises (::Components::CCMException);";
     }
 
     virtual void
-    visit_home_def_post (HomeDefPtr const& h)
+    post (HomeDefPtr const& h)
     {
-      os << "};" << endl
-         << endl;
+      os << "};" << endl;
     }
 
   private:
     std::ostream& os;
   };
 
+
   // HomeMainEmitter generates home main interface
   //
   //
-  class HomeMainEmitter : public virtual Traversal::HomeDef
+  class HomeMainEmitter : public Traversal::HomeDef
   {
   public:
     HomeMainEmitter (std::ostream& os_) : os (os_) {}
 
     virtual void
-    visit_home_def_pre (HomeDefPtr const& h)
+    traverse (HomeDefPtr const& h)
     {
       SimpleName name = h->name ().simple ();
 
-      os << "local interface "
-         << "CCM_" << name
-         << " : "
+      os << "local interface CCM_" << name << " : "
          << "CCM_" << name << "Explicit, "
-         << "CCM_" << name << "Implicit" << endl
-         << "{" << endl;
-    }
-
-    virtual void
-    visit_home_def_post (HomeDefPtr const& h)
-    {
-      os << "};" << endl
-         << endl;
+         << "CCM_" << name << "Implicit"
+         << "{"
+         << "};" << endl;
     }
 
   private:
     std::ostream& os;
   };
 
-  class IncludeEmitter :
-    public virtual Traversal::TranslationUnit,
-    public virtual Traversal::ImpliedIncludeTranslationRegion,
-    public virtual Traversal::PrincipalTranslationRegion,
-    public virtual Traversal::IncludeTranslationRegion,
-    public virtual Traversal::SysIncludeTranslationRegion
+  //
+  //
+  //
+  class IncludeEmitter : public Traversal::PrincipalTranslationRegion,
+                         public Traversal::UserIncludeTranslationRegion,
+                         public Traversal::SysIncludeTranslationRegion,
+                         public Traversal::ImpliedIncludeTranslationRegion
   {
   public:
     IncludeEmitter (std::ostream& os_) : os (os_) {}
 
     virtual void
-    visit_implied_include_translation_region (
-      ImpliedIncludeTranslationRegionPtr const& r)
+    traverse (ImpliedIncludeTranslationRegionPtr const& r)
     {
       os << "#include <" << r->file_path ().string () << ">" << endl;
     }
 
     virtual void
-    visit_include_translation_region (IncludeTranslationRegionPtr const& r)
+    traverse (UserIncludeTranslationRegionPtr const& r)
     {
       os << "#include \"" << r->file_path ().string () << "\"" << endl;
     }
 
     virtual void
-    visit_sys_include_translation_region (
-      SysIncludeTranslationRegionPtr const& r)
+    traverse (SysIncludeTranslationRegionPtr const& r)
     {
       os << "#include <" << r->file_path ().string () << ">" << endl;
     }
+
   private:
     std::ostream& os;
   };
 
-
-  // Emitter generates local executor mapping for declarations collected
-  // by Collector. Note that the original structire of modules is preserved.
   //
-  class Emitter : public virtual Traversal::TranslationUnit,
-                  public virtual Traversal::TranslationRegion,
-                  public virtual Traversal::FileScope,
-                  public virtual Traversal::Module,
-                  public virtual Traversal::UnconstrainedInterfaceDecl,
-                  public virtual Traversal::ConcreteEventTypeDef,
-                  public virtual Traversal::ComponentDef,
-                  public virtual Traversal::HomeDef,
-                  public virtual Traversal::Composition
+  //
+  //
+  class ModuleEmitter : public Traversal::Module
   {
   public:
-    Emitter (std::ostream& os_,
-             UnconstrainedInterfaceDeclSet const& interface_set,
-             ComponentDefSet const& component_set,
-             ConcreteEventTypeDefSet const& event_type_set,
-             HomeDefSet const& home_set,
-             CompositionMap const& composition_map)
-        : os(os_),
-          home_set_ (home_set),
-          component_set_ (component_set),
-          event_type_set_ (event_type_set),
-          interface_set_ (interface_set),
-          composition_map_ (composition_map),
-
-          type_name_emitter_ (os_),
-
-          context_emitter_ (os, component_set),
-          include_emitter_ (os),
-          monolith_emitter_ (os, component_set, &type_name_emitter_),
-          home_main_emitter_ (os),
-          home_explicit_emitter_ (os, &type_name_emitter_),
-          home_implicit_emitter_ (os)
+    ModuleEmitter (std::ostream& os_,
+                   Declarations const& declarations)
+        : os (os_),
+          declarations_ (declarations)
     {
     }
 
-    bool
-    contains_element (ModulePtr const& m) const
-    {
-      for (UnconstrainedInterfaceDeclSet::const_iterator i =
-             interface_set_.begin ();
-           i != interface_set_.end ();
-           i++)
-      {
-        if (m->order ().suborder ((*i)->order ())) return true;
-      }
-
-      for (ComponentDefSet::const_iterator i = component_set_.begin ();
-           i != component_set_.end ();
-           i++)
-      {
-        if (m->order ().suborder ((*i)->order ())) return true;
-      }
-
-      for (ConcreteEventTypeDefSet::const_iterator i =
-             event_type_set_.begin ();
-           i != event_type_set_.end ();
-           i++)
-      {
-        if (m->order ().suborder ((*i)->order ())) return true;
-      }
-
-      for (HomeDefSet::const_iterator i = home_set_.begin ();
-           i != home_set_.end ();
-           i++)
-      {
-        if (m->order ().suborder ((*i)->order ())) return true;
-      }
-
-      for (CompositionMap::const_iterator i = composition_map_.begin ();
-           i != composition_map_.end ();
-           i++)
-      {
-        if (m->order ().suborder (i->first->order ())) return true;
-      }
-
-      return false;
-    }
+  public:
 
     virtual void
-    visit_translation_unit_pre (TranslationUnitPtr const& u)
+    traverse (ModulePtr const& m)
     {
-      u->accept(&include_emitter_);
-      os << endl;
-    }
-
-    virtual void
-    visit_module_pre (ModulePtr const& m)
-    {
-      if (contains_element (m))
+      if (declarations_.contains_suborder (m->order ()))
       {
-        os << "module " << m->name ().simple () << endl
-           << "{" << endl;
+        Traversal::Module::traverse (m);
       }
     }
 
     virtual void
-    visit_module_post (ModulePtr const& m)
+    pre (ModulePtr const& m)
     {
-      if (contains_element (m))
-      {
-        os << "};" << endl
-           << endl;
-      }
+      os << "module " << m->name ().simple () << "{";
     }
 
     virtual void
-    visit_unconstrained_interface_decl_pre (
-      UnconstrainedInterfaceDeclPtr const& i)
+    post (ModulePtr const& m)
     {
-      if (interface_set_.find (i) != interface_set_.end ())
-      {
-        os << "local interface CCM_" << i->name ().simple ()
-           << " : " << i->name ().simple () << endl
-           << "{"   << endl
-           << "};"  << endl
-           << endl;
-      }
+      os << "};" << endl;
     }
-
-    virtual void
-    visit_concrete_event_type_def_pre (ConcreteEventTypeDefPtr const& et)
-    {
-      /*
-      @@ CCM issue: spec says that I need to ganarate this but nobody
-                    knows why.
-
-      os << "local interface "
-         << "CCM_" << et->name ().simple () << "Consumer" << endl
-         << "{"  << endl
-         << "void push (in " << et->name ().simple () << " ev);" << endl
-         << "};"  << endl
-         << endl;
-      */
-    }
-
-    virtual void
-    visit_component_def (ComponentDefPtr const& c)
-    {
-      c->accept (&monolith_emitter_);
-      c->accept (&context_emitter_);
-    }
-
-    virtual void
-    visit_home_def (HomeDefPtr const& h)
-    {
-      if (home_set_.find (h) != home_set_.end ())
-      {
-        h->accept (&home_explicit_emitter_);
-        h->accept (&home_implicit_emitter_);
-        h->accept (&home_main_emitter_);
-      }
-    }
-
-    virtual void
-    visit_composition (CompositionPtr const& c)
-    {
-      if (composition_map_.find (c) != composition_map_.end ())
-      {
-        Traversal::Composition::visit_composition (c);
-      }
-    }
-
-    virtual void
-    visit_composition_pre (CompositionPtr const& c)
-    {
-      ComponentDefPtr component (composition_map_.find (c)->second);
-      SyntaxTree::Composition::Category::Value category = c->category ();
-
-      os << "module " << c->name ().simple () << endl
-         << "{" << endl;
-
-      os << "local interface _Context : "
-         << component->name ().scope () << "::CCM_"
-         << component->name ().simple () << "_Context, ";
-
-      if (category == SyntaxTree::Composition::Category::ENTITY)
-      {
-        os << "::Components::EntityContext" << endl;
-      }
-      else
-      {
-        os << "::Components::SessionContext" << endl;
-      }
-
-      os << "{" << endl
-         << "};" << endl
-         << endl;
-    }
-
-
-    virtual void
-    visit_composition_post (CompositionPtr const& c)
-    {
-      os << "};" << endl
-         << endl;
-    }
-
 
   private:
-
     std::ostream& os;
+    Declarations const& declarations_;
+  };
 
-    HomeDefSet const& home_set_;
-    ComponentDefSet const& component_set_;
-    ConcreteEventTypeDefSet const& event_type_set_;
-    UnconstrainedInterfaceDeclSet const& interface_set_;
-    CompositionMap const& composition_map_;
+  //
+  //
+  //
+  class InterfaceEmitter : public Traversal::UnconstrainedInterfaceDecl
+  {
+  public:
+    InterfaceEmitter (std::ostream& os_,
+                      Declarations const& declarations)
+        : os (os_),
+          declarations_ (declarations)
+    {
+    }
 
-    TypeNameEmitter type_name_emitter_;
+  public:
+    virtual void
+    traverse (UnconstrainedInterfaceDeclPtr const& i)
+    {
+      if (declarations_.find (i))
+      {
+        os << "local interface CCM_" << i->name ().simple ()
+           << " : " << i->name ().simple ()
+           << "{};" << endl;
+      }
+    }
 
-    ContextEmitter context_emitter_;
-    IncludeEmitter include_emitter_;
-    MonolithEmitter monolith_emitter_;
-    HomeMainEmitter home_main_emitter_;
-    HomeExplicitEmitter home_explicit_emitter_;
-    HomeImplicitEmitter home_implicit_emitter_;
+  private:
+    std::ostream& os;
+    Declarations const& declarations_;
+  };
+
+  //
+  //
+  //
+  class CompositionEmitter : public Traversal::Composition
+  {
+  public:
+    CompositionEmitter (std::ostream& os_,
+                        Declarations const& declarations)
+        : os (os_),
+          declarations_ (declarations)
+    {
+    }
+
+  public:
+
+    virtual void
+    traverse (CompositionPtr const& c)
+    {
+      if (declarations_.find (c))
+      {
+        Traversal::Composition::traverse (c);
+      }
+    }
+
+    virtual void
+    pre (CompositionPtr const& c)
+    {
+      ComponentDefPtr component (declarations_.resolve (c));
+      ScopedName name (component->name ());
+
+      SyntaxTree::Composition::Category::Value category = c->category ();
+
+      os << "module " << c->name ().simple ()
+         << "{";
+
+      os << "local interface " << name.simple () << "Context : "
+         << name.scope () << "::CCM_" << name.simple () << "_Context, ";
+
+      switch (category)
+      {
+      case SyntaxTree::Composition::Category::ENTITY:
+        {
+          os << "::Components::EntityContext";
+          break;
+        }
+      default:
+        {
+          os << "::Components::SessionContext";
+          break;
+        }
+      }
+
+      os << "{};" << endl;
+    }
+
+    virtual void
+    post (CompositionPtr const& c)
+    {
+      os << "};" << endl;
+    }
+
+  private:
+    std::ostream& os;
+    Declarations const& declarations_;
   };
 }
 
@@ -999,13 +911,13 @@ generate (CommandLine const& cl,
     string suffix = cl.get_value ("lem-file-suffix", "_exec.idl");
     string expr = cl.get_value (
       "lem-file-regex",
-      "/^(.*?)(\\.(idl|cidl))?$/$1" + suffix + "/");
+      "/(\\.(idl|cidl))?$/" + suffix + "/");
 
     string lem_file_name = regex::perl_s (file_name, expr);
 
     fs::path lem_file_path (lem_file_name);
 
-    ofs.open (lem_file_path, std::ios_base::out);
+    ofs.open (lem_file_path);
 
     if (!ofs.is_open ())
     {
@@ -1015,52 +927,128 @@ generate (CommandLine const& cl,
     }
   }
 
-  std::ostream& os =
-    ofs.is_open ()
-    ? static_cast<std::ostream&> (ofs)
-    : static_cast<std::ostream&> (std::cout);
-
-  //@@ need to apply RAII here
+  std::ostream& os = ofs.is_open () ? ofs : std::cout;
 
   // Set auto-indentation for os
-  IDLFormattingBuffer ifb (os.rdbuf ());
-  os.rdbuf (&ifb);
+  Indentation::Implanter<Indentation::IDL> guard (os);
 
-  HomeDefSet home_set;
-  ComponentDefSet component_set;
-  CompositionMap composition_map;
-  ConcreteEventTypeDefSet event_type_set;
-  UnconstrainedInterfaceDeclSet interface_set;
+  Declarations declarations;
 
   if (cl.get_value ("lem-force-all", false))
   {
-    ForcedCollector collector (interface_set,
-                               component_set,
-                               event_type_set,
-                               home_set,
-                               composition_map);
-    u->accept (&collector);
+    InterfaceCollector interface (declarations);
+    Traversal::ProvidesDecl provides (&interface);
+
+    ComponentCollector component (declarations);
+    component.add_scope_delegate (&provides);
+
+    HomeCollector home (declarations);
+
+    // Note the trick. interface is of type InterfaceDecl but I only
+    // want to traverse InterfaceDef's. So I use original InterfaceDef but
+    // delegate to InterfaceDecl.
+    //
+    Traversal::UnconstrainedInterfaceDef interface_def;
+    interface_def.add_delegate (&interface);
+
+    Traversal::Module module;
+    module.add_scope_delegate (&home);
+    module.add_scope_delegate (&component);
+    module.add_scope_delegate (&interface_def);
+
+    Traversal::FileScope file_scope;
+    file_scope.add_scope_delegate (&module);
+    file_scope.add_scope_delegate (&home);
+    file_scope.add_scope_delegate (&component);
+    file_scope.add_scope_delegate (&interface_def);
+
+    Traversal::PrincipalTranslationRegion region (&file_scope);
+
+    Traversal::TranslationUnit unit;
+    unit.add_content_delegate (&region);
+
+    unit.dispatch (u);
   }
   else
   {
-    Collector collector (interface_set,
-                         component_set,
-                         event_type_set,
-                         home_set,
-                         composition_map);
-    u->accept (&collector);
+    InterfaceCollector interface (declarations);
+    Traversal::ProvidesDecl provides (&interface);
+
+    ComponentCollector component (declarations);
+    component.add_scope_delegate (&provides);
+
+    HomeCollector home (declarations);
+
+    HomeExecutorCollector home_executor (declarations, &home, &component);
+
+    Traversal::Composition composition;
+    composition.add_scope_delegate (&home_executor);
+
+    Traversal::Scope scope;
+    scope.add_scope_delegate (&composition);
+    scope.add_scope_delegate (&scope);
+
+    Traversal::Module module;
+    module.add_scope_delegate (&composition);
+
+    Traversal::FileScope file_scope;
+    file_scope.add_scope_delegate (&module);
+    file_scope.add_scope_delegate (&composition);
+
+    Traversal::PrincipalTranslationRegion region (&file_scope);
+
+    Traversal::TranslationUnit unit;
+    unit.add_content_delegate (&region);
+
+    unit.dispatch (u);
   }
 
   {
-    Emitter emitter (os,
-                     interface_set,
-                     component_set,
-                     event_type_set,
-                     home_set,
-                     composition_map);
-    u->accept (&emitter);
-  }
+    TypeNameEmitter type_name (os);
 
-  // Reset auto-indentation for os
-  os.rdbuf (ifb.next ());
+    MonolithEmitter monolith (os, &type_name);
+    ContextEmitter context (os);
+
+    ComponentEmitter component (declarations);
+    component.add_delegate (&monolith);
+    component.add_delegate (&context);
+
+    HomeImplicitEmitter home_implicit (os);
+    HomeExplicitEmitter home_explicit (os, &type_name);
+    HomeMainEmitter home_main (os);
+
+    HomeEmitter home (declarations);
+    home.add_delegate (&home_implicit);
+    home.add_delegate (&home_explicit);
+    home.add_delegate (&home_main);
+
+    InterfaceEmitter interface (os, declarations);
+    CompositionEmitter composition (os, declarations);
+
+    ModuleEmitter module (os, declarations);
+
+    module.add_scope_delegate (&interface);
+    module.add_scope_delegate (&component);
+    module.add_scope_delegate (&home);
+    module.add_scope_delegate (&composition);
+    module.add_scope_delegate (&module);
+
+    Traversal::FileScope file_scope;
+    file_scope.add_scope_delegate (&module);
+    file_scope.add_scope_delegate (&interface);
+    file_scope.add_scope_delegate (&component);
+    file_scope.add_scope_delegate (&home);
+    file_scope.add_scope_delegate (&composition);
+
+
+    Traversal::TranslationRegion region (&file_scope);
+
+    IncludeEmitter include (os);
+
+    Traversal::TranslationUnit unit;
+    unit.add_content_delegate (&include);
+    unit.add_content_delegate (&region);
+
+    unit.dispatch (u);
+  }
 }

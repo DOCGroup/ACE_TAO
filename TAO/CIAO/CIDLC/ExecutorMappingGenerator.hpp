@@ -1,11 +1,16 @@
-// $Id$
+// file      : CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.hpp
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
 #ifndef EXECUTOR_MAPPING_GENERATOR_HPP
 #define EXECUTOR_MAPPING_GENERATOR_HPP
 
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 #include "CCF/CodeGenerationKit/CommandLineDescriptor.hpp"
 
-#include "CCF/CIDL/CIDL_SyntaxTreeFwd.hpp"
+//@@ Don't really nee this. just forward declaration of TranslationUnit would
+//   be enough.
+#include "CCF/CIDL/SyntaxTree.hpp"
 
 class ExecutorMappingGenerator
 {
@@ -16,7 +21,7 @@ public:
 
   void
   generate (CommandLine const& cl,
-            CIDL::SyntaxTree::TranslationUnitPtr const&);
+            CCF::CIDL::SyntaxTree::TranslationUnitPtr const&);
 };
 
 #endif // EXECUTOR_MAPPING_GENERATOR_HPP
