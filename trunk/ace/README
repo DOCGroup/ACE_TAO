@@ -79,6 +79,7 @@ ACE_HAS_CHARPTR_SPRINTF                 sprintf() returns char * rather than int
 ACE_HAS_CLOCK_GETTIME                   Platform supports POSIX 1.b clock_gettime ()
 ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES    Prototypes for both signal() and struct sigaction are consistent.
 ACE_HAS_CPLUSPLUS_HEADERS               Compiler/platform has correctly prototyped header files
+ACE_HAS_DIRENT                          Compiler/platform has Dirent iterator.
 ACE_HAS_DLFCN_H_BROKEN_EXTERN_C         For platforms, e.g., RedHat 4.2/Linux 2.0.30/Alpha, that don't declare dl* functions as extern "C" in dlfcn.h.
 ACE_HAS_DLL                             Build ACE using the frigging PC DLL nonsense...
 ACE_HAS_EXCEPTIONS                      Compiler supports C++ exception handling
