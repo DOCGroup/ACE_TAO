@@ -1,20 +1,38 @@
+Tue Dec 30 05:23:13 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/driver.cpp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/client.cpp
+          Added #include Barrier.h needed due to Synch[_T].h removal
+          below.
+
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Callback.cpp:
+          Added #include OS_NS_time.h needed due to Synch[_T].h removal
+          below.
+
+        * orbsvcs/performance_tests/*Makefile*:
+          Updated dependencies.
+
 Tue Dec 30 04:59:53 UTC 2003  Don Hinton <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/Event/GPlot_File.cpp:
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
-          Added #include OS_NS_stdio.h needed due to Synch[_T].h removal.
+          Added #include OS_NS_stdio.h needed due to Synch[_T].h removal
+          below.
 
         * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.cpp:
         * orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp:
-          Added #include Barrier.h needed due to Synch[_T].h removal.
+          Added #include Barrier.h needed due to Synch[_T].h removal below.
 
         * orbsvcs/performance-tests/RTEvent/lib/Consumer.cpp:
-          Added #include OS_NS_unistd.h needed due to Synch[_T].h removal.
+          Added #include OS_NS_unistd.h needed due to Synch[_T].h removal
+          below.
 
 Tue Dec 30 00:09:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
-          Added #include OS_NS_stdio.h needed due to Synch[_T].h removal.
+          Added #include OS_NS_stdio.h needed due to Synch[_T].h removal
+          below.
 
 Mon Dec 29 14:43:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
