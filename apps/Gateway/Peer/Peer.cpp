@@ -30,15 +30,15 @@ Peer_Handler::open (void *a)
   // Call down to the base class to activate and register this handler
   // with an <ACE_Reactor>.
   if (this->inherited::open (a) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "%p\n", 
-                       "open"), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "open"),
                       -1);
 
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n", 
-                       "enable"), 
+                       "%p\n",
+                       "enable"),
                       -1);
 
   ACE_Time_Value timeout (Options::instance ()->timeout ());
@@ -167,7 +167,8 @@ Peer_Handler::transmit_stdin (void)
   // reset first_time_ to 1, which will register_stdin_handler again.
   if (result == -1)
     first_time_ = 1;
-  return ret;
+
+  return result;
 }
 
 // Perform a non-blocking <put> of event MB.  If we are unable to send
@@ -469,7 +470,7 @@ int
 Peer_Handler::handle_input (ACE_HANDLE sd)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "in handle_input, sd = %d\n", 
+              "in handle_input, sd = %d\n",
               sd));
   if (sd == ACE_STDIN) // Handle event from stdin.
     return this->transmit_stdin ();
@@ -538,7 +539,7 @@ Peer_Handler::await_connection_id (void)
       // Next time in await_connection_id(), I'll don't call
       // register_stdin_handler().
       first_time_ = 0;
-    } 
+    }
   return 0;
 }
 
@@ -637,7 +638,7 @@ Peer_Handler::handle_close (ACE_HANDLE,
                   "shutting down Peer on handle %d\n",
                  this->get_handle ()));
 
-      ACE_Reactor_Mask mask = 
+      ACE_Reactor_Mask mask =
         ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK;
 
       // Explicitly remove ourselves for ACE_STDIN (the <ACE_Reactor>
@@ -851,7 +852,7 @@ Peer_Factory::init (int argc, char *argv[])
                                                   this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
-                       "register_handler"), 
+                       "register_handler"),
                       -1);
 
   if (Options::instance ()->enabled (Options::SUPPLIER_ACCEPTOR)
