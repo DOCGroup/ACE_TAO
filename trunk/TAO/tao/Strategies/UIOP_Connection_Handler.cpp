@@ -21,7 +21,6 @@
 
 ACE_RCSID(Strategies, UIOP_Connect, "$Id$")
 
-#include "tao/GIOP_Message_Acceptors.h"
 #include "tao/GIOP_Message_Lite.h"
 
 
