@@ -1,3 +1,14 @@
+Wed Nov 25 22:28:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/INET_Addr.cpp: 
+	  Reverted the behavior to version 4.35, we don't use the first
+	  alias as the hostname, but the value returned in the h_name
+	  field.
+	  This change was to support TAO in our local site, but it caused
+	  many problems for other configurations of /etc/hosts and DNS. We
+	  found another workaround for our local site which makes more
+	  sense to the rest of the world.
+
 Wed Nov 25 20:34:12 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/DLL_Test.cpp (main): Removed ACE_OS::strcat which was
