@@ -138,7 +138,7 @@ TAO_NamingContext::bind (const CosNaming::Name& n,
     {
       TAO_TRY
         {
-          CosNaming::NamingContext_var context = 
+          CosNaming::NamingContext_var context =
             this->get_context (n, TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
@@ -192,7 +192,7 @@ TAO_NamingContext::rebind (const CosNaming::Name& n,
     {
       TAO_TRY
         {
-          CosNaming::NamingContext_var context = 
+          CosNaming::NamingContext_var context =
             get_context (n, TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
@@ -361,7 +361,7 @@ TAO_NamingContext::resolve (const CosNaming::Name& n,
 
   if (this->context_.find (name,
                            entry) == -1)
-    TAO_THROW_RETURN (CosNaming::NamingContext::NotFound 
+    TAO_THROW_RETURN (CosNaming::NamingContext::NotFound
                       (CosNaming::NamingContext::not_object,
                        n),
                       result);
@@ -466,7 +466,7 @@ TAO_NamingContext::unbind (const CosNaming::Name& n,
       TAO_ExtId name (n[0].id, n[0].kind);
       // Try unbinding the name.
       if (this->context_.unbind (name) == -1)
-        TAO_THROW (CosNaming::NamingContext::NotFound 
+        TAO_THROW (CosNaming::NamingContext::NotFound
                    (CosNaming::NamingContext::not_object,
                     n));
     }
@@ -507,8 +507,6 @@ TAO_NamingContext::new_context (CORBA::Environment &_env)
 
       result = c->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      return result._retn ();
     }
   TAO_CATCHANY
     {
