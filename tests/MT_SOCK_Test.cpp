@@ -38,7 +38,12 @@ client (void *arg)
   ACE_INET_Addr client_addr;
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
-  ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT); 
+  ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
+#if defined (ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS)
+  ACE_Time_Value *timeout = 0;
+#else
+  ACE_Time_value timeout = &tv;
+#endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting timed connect\n"));
   // Initiate timed connection with server.
@@ -46,7 +51,7 @@ client (void *arg)
   // Attempt a timed connect to the server.
   if (con.connect (cli_stream,
 		   server_addr,
-		   &timeout) == -1)
+		   timeout) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "(%P|%t) %p\n",

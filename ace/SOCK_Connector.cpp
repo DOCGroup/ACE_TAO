@@ -86,7 +86,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
   if (result != -1 || errno == EISCONN)
     // Start out with non-blocking disabled on the <new_stream>.
     new_stream.disable (ACE_NONBLOCK);
-  else if (!(errno == EWOULDBLOCK || errno == ETIME))
+  else if (!(errno == EWOULDBLOCK || errno == ETIMEDOUT))
     {
       // If things have gone wrong, close down and return an error.
       int saved_errno = errno;
