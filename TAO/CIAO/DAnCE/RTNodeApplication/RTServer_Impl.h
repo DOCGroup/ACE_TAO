@@ -59,14 +59,13 @@ namespace CIAO
       RTNodeApplication_Impl (CORBA::ORB_ptr o,
                               RTCORBA::RTORB_ptr rto,
                               PortableServer::POA_ptr p);
- 
+
       /// Destructor
       virtual ~RTNodeApplication_Impl (void);
 
       /// Initialize the ComponentServer with a name.
-      CORBA::Long init (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CORBA::Long init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
-
 
     protected:
       RTCORBA::RTORB_var rtorb_;
