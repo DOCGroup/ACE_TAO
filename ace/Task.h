@@ -119,6 +119,9 @@ public:
   // values are EXTREMEMLY implementation-dependent, and are probably
   // best avoided.
 
+  virtual int wait (void);
+  // Wait for all threads running in this task to exit.
+
   // = Suspend/resume a Task
   virtual int suspend (void);
   // Suspend a task.

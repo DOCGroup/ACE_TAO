@@ -1,22 +1,18 @@
-Thu May  8 18:04:14 1997  Irfan Pyarali  <irfan@cs.wustl.edu>
+Thu May  8 20:55:30 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Containers: Made the return values of Container methods
-	  more consistant with other components of ACE (i.e., 0 for
-	  success, -1 for failure).
+	* ace/Module.cpp: Changed the implementation of the close_i()
+ 	  method so that it will wait for all active threads in a Task to
+ 	  exit before deleting the task.
 
-	* ace/Containers (ACE_Unbounded_Stack<T>::delete_all_nodes):
-	  Fixed subtle bug in delete_all_nodes.
+	* ace/Task: Added a wait() method on an ACE_Task that will use the
+ 	  new ACE_Thread_Manager::wait_task() method to block until all
+ 	  threads have shutdown in a Task.
 
-	* ace/OS.cpp (ACE_TSS_Cleanup::exit): Changed because of
-	  return value changes in ACE containers. 
+	* ace/Thread_Manager: Finally implemented the wait_task() and
+	  wait_grp() interfaces on ACE_Thread_Manager.  
 
-Thu May  8 18:04:14 1997  James C Hu  <jxh@polka.cs.wustl.edu>
-
-	* include/makeinclude/platform_irix6.2_sgic++.GNU:  Moved SGI C++
-	  options out of CPPFLAGS into CCFLAGS so that gcc won't emit
-	  diagnostics during a make depend.
-
-Thu May  8 12:51:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+	* ace/SOCK_Dgram.cpp: Added a timed recv() operation.  Thanks
+	  to Hongbo Xu <hxu@mas.co.nz> for contributing this.
 
 	* ace/Timer_Queue_T.cpp: Added #include "ace/Synch.h" to keep the
  	  DEC C++ compiler happy.  Thanks to James CE Johnson
@@ -55,18 +51,17 @@ Thu May  8 12:51:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 	* ace/Containers: Revised all the interfaces for the various
  	  containers so that they all have the same "look and feel."
 
-Thu May  8 11:52:41 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+Thu May  8 18:04:14 1997  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/{Task,Thread}.h: Added documentation describing
-	  thread priority determination to methods where priority
-	  is an [optional] argument.  Note that if you want to inspect
-	  the REAL documentation, you should look at the code for
-	  ACE_OS::thr_create().  But that's convoluted and touchy.
+	* ace/Containers: Made the return values of Container methods
+	  more consistant with other components of ACE (i.e., 0 for
+	  success, -1 for failure).
 
-	* ace/Strategies_T.h (ACE_Cached_Connection_Strategy): Added
-	  documentation for this class.
+	* ace/Containers (ACE_Unbounded_Stack<T>::delete_all_nodes):
+	  Fixed subtle bug in delete_all_nodes.
 
-Thu May 08 01:12:59 1997    <irfan@TWOSTEP>
+	* ace/OS.cpp (ACE_TSS_Cleanup::exit): Changed because of
+	  return value changes in ACE containers. 
 
 	* Containers: Added size methods to stack containers and
  	  consolidated friendship between ACE_Unbounded_Stack_Iterator and
@@ -91,6 +86,23 @@ Thu May 08 01:12:59 1997    <irfan@TWOSTEP>
 
 	* tests: Added new test. Following changed:
 	  Makefile run_tests.bat run_tests.sh tests.mak tests.mdp
+
+Thu May  8 18:04:14 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* include/makeinclude/platform_irix6.2_sgic++.GNU:  Moved SGI C++
+	  options out of CPPFLAGS into CCFLAGS so that gcc won't emit
+	  diagnostics during a make depend.
+
+Thu May  8 11:52:41 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/{Task,Thread}.h: Added documentation describing
+	  thread priority determination to methods where priority
+	  is an [optional] argument.  Note that if you want to inspect
+	  the REAL documentation, you should look at the code for
+	  ACE_OS::thr_create().  But that's convoluted and touchy.
+
+	* ace/Strategies_T.h (ACE_Cached_Connection_Strategy): Added
+	  documentation for this class.
 
 Thu May 08 00:10:00 1997    <harrison@samba.cs.wustl.edu>
 
