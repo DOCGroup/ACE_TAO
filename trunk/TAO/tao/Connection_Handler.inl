@@ -40,7 +40,7 @@ TAO_Connection_Handler::is_connect_complete (void) const
 ACE_INLINE int
 TAO_Connection_Handler::is_connect_successful (void) const
 {
-  return this->error_detected ();
+  return (this->error_detected () == 0);
 }
 
 ACE_INLINE int
