@@ -1,3 +1,18 @@
+Sat Jun 26 15:13:59 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Makefile.am: 
+
+	  Synchronized with latest version of TAO.
+	
+	* tao/Pluggable.cpp (start_locate, start_request):
+
+	  Fixed unused argument warnings when native exception handling is
+	  enabled.
+
+	* tao/Pluggable.h (TAO_Transport):
+
+	  Exception handling update.
+
 Sat Jun 26 14:23:25 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/client.cpp
