@@ -88,7 +88,8 @@ int
 wchar_reference::match_wchar (short key, ACE_OS::WChar test)
 {
   if (verbose_)
-    ACE_DEBUG ((LM_DEBUG,"match_wchar, expecting %x, got %x for key %d\n",
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("match_wchar, expecting %x, got %x for key %d\n"),
                 wchar_reference::ref_wchar[key],test,key));
   return wchar_reference::ref_wchar[key] == test;
 }
@@ -96,8 +97,18 @@ wchar_reference::match_wchar (short key, ACE_OS::WChar test)
 int
 wchar_reference::match_wstring (short key, const ACE_OS::WChar *test)
 {
+  if (key == -1)
+    {
+      if (verbose_)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("match_wstring: expecting nul string, ")
+                    ACE_TEXT("got string length %d\n"),
+                    ACE_OS::strlen (test)));
+      return (ACE_OS::strlen (test) == 0);
+    }
   if (verbose_)
-    ACE_DEBUG ((LM_DEBUG,"match_wstring: expecting %W, got %W for key %d\n",
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("match_wstring: expecting %W, got %W for key %d\n"),
                 wchar_reference::ref_wstring[key],test,key));
   return ACE_OS::strcmp(wchar_reference::ref_wstring[key],test) == 0;
 }
@@ -106,11 +117,13 @@ int
 wchar_reference::match_warray (short key, const ACE_OS::WChar *test)
 {
   if (verbose_)
-    ACE_DEBUG ((LM_DEBUG, "match_warray: key %d\n",key));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("match_warray: key %d\n"),key));
   for (int i = 0; i < 10; i++)
     {
       if (verbose_)
-        ACE_DEBUG ((LM_DEBUG,"  expecting[%d] %x, got %x\n",
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("  expecting[%d] %x, got %x\n"),
                     i, wchar_reference::ref_warray[key][i],
                     test[i]));
       if (wchar_reference::ref_warray[key][i] != test[i])
@@ -123,7 +136,8 @@ int
 wchar_reference::match_except(short key, const ACE_OS::WChar *test)
 {
   if (verbose_)
-    ACE_DEBUG ((LM_DEBUG,"match_except: expecting %W, got %W for key %d\n",
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("match_except: expecting %W, got %W for key %d\n"),
                 wchar_reference::ref_except[key],test,key));
   return ACE_OS::strcmp(wchar_reference::ref_except[key],test) == 0;
 }

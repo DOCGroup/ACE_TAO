@@ -1,3 +1,24 @@
+Wed Jan  5 22:06:14 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/UTF16_BOM_Translator.cpp (write_wstring):
+
+          When writing a nul wstring in a GIOP 1.2 message, the translator
+          had been writing out a BOM. While this behavior was consistent
+          with the CORBA specification, and handled just fine by some
+          ORBs, others, specifically JDK's ORB, did not tolerate this. The
+          solution is to simply not write out a BOM when writing a zero
+          length wstring.
+
+        * interop-tests/wchar/client.cpp:
+        * interop-tests/wchar/Client.java:
+        * interop-tests/wchar/wchar_reference.cpp:
+        * interop-tests/wchar/WCharReference.java:
+        * interop-tests/wchar/README:
+
+          Added a new test case specifically for sending a nul wstring.
+          Thanks to Deiter Schneiders <dschneiders@lhs-systems.com> for
+          pointing this out.
+
 Wed Jan  5 19:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor_Impl.{h,cpp,i}:
