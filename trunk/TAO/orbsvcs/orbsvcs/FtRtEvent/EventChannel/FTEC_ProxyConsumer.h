@@ -53,7 +53,7 @@ public:
                  ACE_ENV_ARG_DECL);
 
   typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
-    (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL);
 
   static const RollbackOperation rollback_obtain;
 private:
