@@ -2032,8 +2032,9 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 
   this->gen_cond_file_include (
       idl_global->exception_seen_
-      | idl_global->fixed_size_arg_seen_ // Could be a struct
-      | idl_global->var_size_arg_seen_,  // Could be a struct
+//       | idl_global->fixed_size_arg_seen_ // Could be a struct
+//       | idl_global->var_size_arg_seen_   // Could be a struct
+      | idl_global->aggregate_seen_,
       "tao/Struct_TypeCode.h",
       stream);
 
