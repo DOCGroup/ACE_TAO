@@ -4,6 +4,7 @@
 #include <signal.h>
 #include <string.h>
 #include <iostream.h>
+#include <fstream.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <signal.h>
@@ -19,9 +20,11 @@
 #include <ace/Thread.h>
 #include <ace/Thread_Manager.h>
 #include <ace/Service_Config.h>
+#include <ace/Log_Msg.h>
 
 #include <math.h>
 
+#define ERRLOG "http_tester.errors"
 
 #ifndef extern_c_symbols
 #define extern_c_symbols
