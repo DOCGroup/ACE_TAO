@@ -146,8 +146,13 @@ if [ ${AUTO} -eq 1 ]
 then
   if [ $1 != "auto" ]
   then
-    echo "$USAGE"
-    exit 2
+    if [ $1 = "nounzip" ] ; then
+      UNZIP=0
+      AUTO=0
+    else
+      echo "$USAGE"
+      exit 2
+    fi
   fi
 fi
 
