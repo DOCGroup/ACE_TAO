@@ -155,6 +155,10 @@ PIC             =
 #### Tornado II uses egcs
 ifeq (egcs,$(findstring egcs, $(shell, $(CC) --version)))
   ACE_HAS_GNUG_PRE_2_8 := 0
+  ifndef exceptions
+    #### With exceptions, this is applied in wrapper_macros.GNU.
+    CFLAGS += -Wno-uninitialized
+  endif # ! exceptions
 endif # egcs
 
 
