@@ -738,7 +738,7 @@ public:
   static ORB_ptr ORB_init (int &argc,
                            char *const *argv,
                            const char *orb_name = 0,
-                           Environment &env = CORBA_Environment::default_environment ());
+                           Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // ORB initialisation, per OMG document 94-9-46.
 
   // = The following two methods are TAO-specific extensions.
@@ -1003,25 +1003,25 @@ public:
   // Dynamic Any factory functions.
 
   CORBA_DynAny_ptr       create_dyn_any       (const CORBA_Any& any,
-                                               CORBA::Environment& env);
+                                               CORBA::Environment &TAO_IN_ENV);
 
   CORBA_DynAny_ptr       create_basic_dyn_any (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment& env);
+                                               CORBA::Environment &TAO_IN_ENV);
 
   CORBA_DynStruct_ptr    create_dyn_struct    (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment& env);
+                                               CORBA::Environment &TAO_IN_ENV);
 
   CORBA_DynSequence_ptr  create_dyn_sequence  (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment& env);
+                                               CORBA::Environment &TAO_IN_ENV);
 
   CORBA_DynArray_ptr     create_dyn_array     (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment& env);
+                                               CORBA::Environment &TAO_IN_ENV);
 
   CORBA_DynUnion_ptr     create_dyn_union     (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment& env);
+                                               CORBA::Environment &TAO_IN_ENV);
 
   CORBA_DynEnum_ptr      create_dyn_enum      (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment& env);
+                                               CORBA::Environment &TAO_IN_ENV);
 
 protected:
   // We must be created via the <ORB_init> call.

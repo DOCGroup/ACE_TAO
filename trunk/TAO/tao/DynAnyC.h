@@ -112,7 +112,7 @@ public:
   static CORBA_DynAny_ptr _duplicate (CORBA_DynAny_ptr obj);
   static CORBA_DynAny_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynAny_ptr _nil (void);
@@ -454,7 +454,7 @@ public:
      );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &env =
+      CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -551,7 +551,7 @@ public:
   static CORBA_DynEnum_ptr _duplicate (CORBA_DynEnum_ptr obj);
   static CORBA_DynEnum_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynEnum_ptr _nil (void);
@@ -576,7 +576,7 @@ public:
      );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &env =
+      CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -855,7 +855,7 @@ public:
 // NameValuePairSeq
 // *************************************************************
 
-class TAO_Export NameValuePairSeq : public 
+class TAO_Export NameValuePairSeq : public
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
        || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_NameValuePairSeq
@@ -1022,7 +1022,7 @@ public:
   static CORBA_DynStruct_ptr _duplicate (CORBA_DynStruct_ptr obj);
   static CORBA_DynStruct_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynStruct_ptr _nil (void);
@@ -1046,7 +1046,7 @@ public:
      );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &env =
+      CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -1143,7 +1143,7 @@ public:
   static CORBA_DynUnion_ptr _duplicate (CORBA_DynUnion_ptr obj);
   static CORBA_DynUnion_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynUnion_ptr _nil (void);
@@ -1184,7 +1184,7 @@ public:
      );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &env =
+      CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -1405,7 +1405,7 @@ public:
 // AnySeq
 // *************************************************************
 
-class TAO_Export AnySeq : public 
+class TAO_Export AnySeq : public
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
        || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_AnySeq
@@ -1572,7 +1572,7 @@ public:
   static CORBA_DynSequence_ptr _duplicate (CORBA_DynSequence_ptr obj);
   static CORBA_DynSequence_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynSequence_ptr _nil (void);
@@ -1597,7 +1597,7 @@ public:
      );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &env =
+      CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -1694,7 +1694,7 @@ public:
   static CORBA_DynArray_ptr _duplicate (CORBA_DynArray_ptr obj);
   static CORBA_DynArray_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env =
+      CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynArray_ptr _nil (void);
@@ -1710,7 +1710,7 @@ public:
      );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &env =
+      CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;

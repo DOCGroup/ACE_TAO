@@ -6,11 +6,11 @@
 ACE_INLINE void
 CORBA_Any::replace (CORBA::TypeCode_ptr type,
                     const void *value,
-                    CORBA::Environment &env)
+                    CORBA::Environment &TAO_IN_ENV)
 {
   // invoke the first form of the replace method and pass the default value
   // (FALSE) for the "any_owns_data" parameter
-  this->replace (type, value, 0, env);
+  this->replace (type, value, 0, TAO_IN_ENV);
 }
 
 // insertion operators

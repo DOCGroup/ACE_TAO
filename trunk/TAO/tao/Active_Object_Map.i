@@ -33,7 +33,7 @@ TAO_Active_Object_Map_Impl::find (const PortableServer::Servant servant)
   return this->find (servant, id);
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Dynamic_Hash_Active_Object_Map::TAO_Dynamic_Hash_Active_Object_Map (CORBA::ULong size)
   : hash_map_ (size),
     counter_ (0)
@@ -86,7 +86,7 @@ TAO_Dynamic_Hash_Active_Object_Map::system_id_size (void) const
   return sizeof (CORBA::ULong);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_Dynamic_Hash_Active_Object_Map::is_free (const TAO_Active_Object_Map_Entry &item) const
 {
   ACE_UNUSED_ARG (item);
@@ -236,7 +236,7 @@ TAO_Linear_Active_Object_Map::system_id_size (void) const
   return sizeof (CORBA::ULong);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_Linear_Active_Object_Map::is_free (const TAO_Active_Object_Map_Entry &item) const
 {
   return item.is_free_;
@@ -332,64 +332,64 @@ TAO_Array_Active_Object_Map_Iterator::~TAO_Array_Active_Object_Map_Iterator (voi
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Reverse_Active_Object_Map_Impl::TAO_Reverse_Active_Object_Map_Impl (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Reverse_Active_Object_Map_Impl::~TAO_Reverse_Active_Object_Map_Impl (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy::TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy (size_t size)
   : map_ (size)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy::~TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy (void)
 {
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy::bind (PortableServer::Servant servant,
                                                           const PortableServer::ObjectId &id)
 {
   return this->map_.bind (servant, id);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy::unbind (PortableServer::Servant servant)
 {
   return this->map_.unbind (servant);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy::find (const PortableServer::Servant servant,
                                                           PortableServer::ObjectId &id)
 {
   return this->map_.find (servant, id);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy::find (PortableServer::Servant servant)
 {
   return this->map_.find (servant);
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy (void)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::~TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy (void)
 {
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::bind (PortableServer::Servant servant,
                                                             const PortableServer::ObjectId &id)
 {
@@ -400,7 +400,7 @@ TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::bind (PortableServer::Serv
   return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::unbind (PortableServer::Servant servant)
 {
   ACE_UNUSED_ARG (servant);
@@ -409,7 +409,7 @@ TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::unbind (PortableServer::Se
   return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::find (const PortableServer::Servant servant,
                                                             PortableServer::ObjectId &id)
 {
@@ -420,7 +420,7 @@ TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::find (const PortableServer
   return -1;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::find (PortableServer::Servant servant)
 {
   ACE_UNUSED_ARG (servant);
@@ -512,9 +512,9 @@ TAO_Active_Object_Map::bind (const PortableServer::ObjectId &id,
   int result = this->impl_->bind (id, servant);
   if (result != 0)
     {
-      return result;  
+      return result;
     }
-    
+
   result = this->reverse_impl_->bind (servant, id);
   if (result != 0)
     {
@@ -530,8 +530,8 @@ TAO_Active_Object_Map::unbind (const PortableServer::ObjectId &id,
 {
   int result = this->impl_->unbind (id, servant);
   if (result != 0)
-    return result;  
-    
+    return result;
+
   return this->reverse_impl_->unbind (servant);
 }
 
@@ -589,9 +589,9 @@ TAO_Active_Object_Map::end (void) const
 
 ACE_INLINE PortableServer::ObjectId *
 TAO_Active_Object_Map::create_object_id (PortableServer::Servant servant,
-                                         CORBA::Environment &env)
+                                         CORBA::Environment &TAO_IN_ENV)
 {
-  return this->impl_->create_object_id (servant, env);
+  return this->impl_->create_object_id (servant, TAO_IN_ENV);
 }
 
 ACE_INLINE CORBA::ULong
@@ -599,4 +599,3 @@ TAO_Active_Object_Map::system_id_size (void) const
 {
   return this->impl_->system_id_size ();
 }
-

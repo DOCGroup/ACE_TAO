@@ -197,12 +197,12 @@ class TAO_Export STUB_Object
   //   The stub and DII interpreter APIs are member functions of this
   //   type.
 public:
-  virtual void do_static_call (CORBA_Environment &env,
+  virtual void do_static_call (CORBA_Environment &TAO_IN_ENV,
                                const TAO_Call_Data *info,
                                void** args) = 0;
   // The "stub interpreter" method parameters are:
   //
-  //    - env ... used for exception reporting
+  //    - TAO_IN_ENV ... used for exception reporting
   //    - info ... describes the call
   //    - args parameters follow
   //
@@ -240,7 +240,7 @@ public:
   //    - result ... result and its description
   //    - flags ... only one DII flag is legal
   //    - exceptions ... list of legal user-defined exceptions
-  //    - env ... used for exception reporting.
+  //    - TAO_IN_ENV ... used for exception reporting.
 
   CORBA::String_var type_id;
   // All objref representations carry around a type ID.
