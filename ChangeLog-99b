@@ -1,3 +1,19 @@
+Tue May 18 10:14:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Makefile:
+	* ace/FlReactor.h:
+	* ace/FlReactor.i:
+	* ace/FlReactor.cpp:
+	* include/makeinclude/platform_linux_lxpthread.GNU:
+	* include/makeinclude/wrapper_macros.GNU:
+	* tests/Makefile:
+	* tests/FlReactor_Test.cpp:
+	  Added new reactor implementation based on the event loop of the
+	  Fast-Light toolkit, similar to the XtReactor.
+	  FLTK is a GUI toolkit that works on UNIX/X-Windows and on Win32, 
+	  it is integrated to OpenGL and is pure C++.
+	  Check http://fltk.easysw.org for more details.
+
 Tue May 18 09:35:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Thread_Manager_Test.{h,cpp},Makefile:
