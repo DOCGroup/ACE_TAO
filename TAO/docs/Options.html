@@ -551,14 +551,6 @@ would load all the options listed within "".
   </TD>
 </TR>
 <TR>
-  <TD><CODE>-ORBConnectionLock</CODE> <EM>locktype</EM></TD>
-  <TD><a name="-ORBConnectionLock"></a>
-      This option deprecated. Usage of this option will switch usage
-      automatically to "-ORBConnectionCacheLock". Please see the
-      documentation of "-ORBConnectionCacheLock" for details.
-  </TD>
-</TR>
-<TR>
   <TD><CODE>-ORBConnectionCacheLock</CODE> <EM>locktype</EM></TD>
   <TD><a name="-ORBConnectionCacheLock"></a>
       Specify the type of lock to be used by the Connection
@@ -868,14 +860,22 @@ would load all the options listed within "".
 
     </TD>
   </TR>
-
   <TR>
-    <TD><CODE>-ORBConnectorLock</CODE> <EM>lock type</EM></TD>
-    <TD><a
-        name="-ORBConnectorLock"></a> This option has been deprecated.
-    </TD>
-  </TR>
-
+  <TD><CODE>-ORBConnectStrategy</CODE> <EM>type</EM></TD>
+  <TD><a name="-ORBConnectStrategy"></a>
+      TAO provides three strategies to connect to remote  servers. 
+      The default <CODE>leader_follower</CODE> strategy uses the
+      Reactor and non-blocking connects to connect and this strategy
+      participates in the Leader/Followers protocol to synchronize
+      access to the Reactor. The <CODE>reactive</CODE> strategy uses
+      the Reactor for non-blocking connects but does not take part in
+      the Leader/Followers protocol, thus it is better used only in
+      single threaded applications. Finally, the <CODE>blocking</CODE>
+      strategy as the name implies, blocks the  thread until
+      connection is complete. Some of the protocols in TAO viz. SHMIOP
+      and SSLIOP can only use blocked strategy.
+  </TD>
+</TR>
 </TABLE>
 </P>
 </BLOCKQUOTE>
