@@ -316,7 +316,9 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
   if (!this->deactivated_)
     {
       size_t msize = 0;
-      for (ACE_Message_Block *temp = new_item;
+      ACE_Message_Block *temp;
+
+      for (temp = new_item;
            temp != 0;
            temp = temp->cont ())
         msize += temp->size ();
