@@ -46,13 +46,13 @@ public class SOCKStream
    *@param s Socket associated with the SOCK Stream.
    */
   public void socket (Socket s) throws IOException
-    {
-      // Note that if s is not a valid socket or is null, the
-      // following calls will throw exceptions
-      this.iStream_ = new DataInputStream (s.getInputStream ());
-      this.oStream_ = new PrintStream (s.getOutputStream ());
-      this.socket_ = s;
-    }
+  {
+    this.socket_ = s;
+    // Note that if s is not a valid socket or is null, the
+    // following calls will throw exceptions
+    this.iStream_ = new DataInputStream (s.getInputStream ());
+    this.oStream_ = new PrintStream (s.getOutputStream ());
+  }
 
   /* Get the underlying Socket.
    *@return the underlying socket

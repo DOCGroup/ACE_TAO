@@ -58,7 +58,7 @@ pkg_os = \
 
 os:	$(addsuffix .java,$(pkg_os))
 	$(COMPILE.java)
-	
+
 pkg_concurrency = \
 	Condition \
 	Mutex \
@@ -102,6 +102,7 @@ reactor:	asx_timestuff $(addsuffix .java,$(pkg_reactor))
 	$(COMPILE.java)
 
 pkg_socksap = \
+	INETAddr \
 	SOCKStream \
 	SOCKAcceptor \
 	SOCKConnector
