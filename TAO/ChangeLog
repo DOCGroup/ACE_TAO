@@ -1,3 +1,16 @@
+Wed Dec 31 15:26:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+
+	  Reverted part of the changes made in "Wed Dec 31 13:44:20 2003
+	  Jeff Parsons <j.parsons@vanderbilt.edu>" since they don't
+	  compile with g++.
+	
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+
+	  Fixed warnings on TRU 64.
+
 Wed Dec 31 14:24:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 
