@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Proactor.h"
 #include "ace/Filecache.h"
 
 #include "JAWS/JAWS.h"
