@@ -1,5 +1,10 @@
 Thu Jun 17 00:33:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* include/makeinclude/platform_freebsd.GNU (VERSION): Applied
+	  the patch to automatically detect FreeBSD version.  Thanks to
+	  Goldshtain Dmitry <goldshtain@bank.gov.ua> for providing the
+	  patch.
+
 	* bin/Process_Win32.pm (TimedWait):
 	  Get and return the exit status from the waited process.
 
