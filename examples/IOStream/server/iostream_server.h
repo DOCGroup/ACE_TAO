@@ -12,6 +12,8 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Synch.h"
 
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
+
 // Declare a new type which will case an ACE_SOCK_Stream to behave
 // like an iostream.  The new ACE_SOCK_IOStream type can be used
 // anywhere an ACE_SOCK_Stream is used.
@@ -46,5 +48,7 @@ public:
   // = <Event_Handler> hooks.
   virtual int handle_input (ACE_HANDLE);
 };
+
+#endif /* ACE_LACKS_ACE_IOSTREAM */
 
 #endif /* __IOSTREAM_SERVER_H */
