@@ -153,8 +153,8 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
       TimeBase::TimeT microseconds =
         timeout->relative_expiry (ACE_TRY_ENV) / 10;
       ACE_CHECK;
-      this->max_wait_time_value_.set (microseconds / 1000000,
-                                      microseconds % 1000000);
+      this->max_wait_time_value_.set ((long) microseconds / 1000000,
+                                      (long) microseconds % 1000000);
       this->max_wait_time_ = &this->max_wait_time_value_;
       if (TAO_debug_level > 0)
         {
