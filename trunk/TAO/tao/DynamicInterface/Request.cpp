@@ -287,7 +287,7 @@ CORBA::Request::get_response (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Boolean
-CORBA::Request::poll_response (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::Request::poll_response (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
