@@ -1,3 +1,41 @@
+Thu Jan  6 15:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orb.idl:
+        * tao/Typecode_types.pidl:
+        * tao/orb_types.pidl:
+          Moved typecode stuff to Typecode_types.pidl and simple typedefs to
+          orb_types.pidl and include both new files again in orb.idl. Other
+          idl/pidl files which just need the typedefs or typecode stuff just
+          can then include the specific pidl file instead of orb.idl which
+          pulls in a lot more then really needed
+
+        * tao/ORB.h:
+          Removed typedefs that now are in orb_types.pidl, added a needed
+          forward declaration and removed some commented out code
+
+        * tao/orb_typesA.cpp:
+        * tao/orb_typesC.{h,cpp,inl}:
+        * tao/orb_typesS.h:
+        * tao/Typecode_typesC.{h,cpp,inl}:
+        * tao/Typecode_typesS.h:
+          Added new generated files
+
+        * tao/tao.mpc:
+          Added new fils
+
+        * tao/Makefile.am:
+          Added new files
+
+        * tao/Typecode.{h,cpp}:
+          Removed things that are now in Typecode.pidl and included
+          the TypecodeC.h file instead.
+
+        * tao/diffs/Typecode_types.diff:
+          New diff file
+
+        * tao/Typecode_Constants.cpp:
+          Removed typecode for ORBid, it is now in orb_types
+
 Thu Jan  6 08:24:39 2005  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h:

@@ -37,6 +37,8 @@
 #include "tao/OBV_Constants.h"
 #include "tao/CORBA_methods.h"
 #include "tao/Sequence_T.h"
+#include "tao/Typecode_typesC.h"
+#include "tao/TAO_Export.h"
 
 // Forward declarations.
 class TAO_InputCDR;
@@ -49,70 +51,11 @@ namespace TAO
 
 namespace CORBA
 {
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
+   class TypeCode;
+   typedef TypeCode *TypeCode_ptr;
 
-  typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
-  typedef TAO_Pseudo_Out_T<TypeCode, TypeCode_var> TypeCode_out;
-
-  enum TCKind
-  {
-    // = Kinds of typecodes.
-
-    // Do not change these enum values, or duplicate them if you need
-    // to add values.  They are used to index tables, and if you
-    // change the values you'll need to find and update all of those
-    // tables.  The values are also part of the Common Data
-    // Representation, and hence are part of IIOP and other ORB
-    // protocols.
-
-    tk_null               = 0,
-    tk_void               = 1,
-    tk_short              = 2,
-    tk_long               = 3,
-    tk_ushort             = 4,
-    tk_ulong              = 5,
-    tk_float              = 6,
-    tk_double             = 7,
-    tk_boolean            = 8,
-    tk_char               = 9,
-    tk_octet              = 10,
-    tk_any                = 11,
-    tk_TypeCode           = 12,
-    tk_Principal          = 13,
-    tk_objref             = 14,
-    tk_struct             = 15,
-    tk_union              = 16,
-    tk_enum               = 17,
-    tk_string             = 18,
-    tk_sequence           = 19,
-    tk_array              = 20,
-    tk_alias              = 21,
-    tk_except             = 22,
-
-    tk_longlong           = 23,
-    tk_ulonglong          = 24,
-    tk_longdouble         = 25,
-    tk_wchar              = 26,
-    tk_wstring            = 27,
-    tk_fixed              = 28,
-    tk_value              = 29,
-    tk_value_box          = 30,
-    tk_native             = 31,
-    tk_abstract_interface = 32,
-    tk_local_interface    = 33,
-    tk_component          = 34,
-    tk_home               = 35,
-    tk_event              = 36,
-
-    // This symbol is not defined by CORBA 3.0.  It's used to speed up
-    // dispatch based on TCKind values, and lets many important ones
-    // just be table lookups.  It must always be the last enum value!!
-
-    TC_KIND_COUNT
-  };
-
-  typedef TCKind &TCKind_out;
+   typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
+   typedef TAO_Pseudo_Out_T<TypeCode, TypeCode_var> TypeCode_out;
 
   /**
    * @class TypeCode
@@ -621,13 +564,19 @@ namespace TAO
   };
 
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Export Objref_Traits<CORBA::TypeCode>
+  struct TAO_Export Objref_Traits< ::CORBA::TypeCode>
   {
-    static CORBA::TypeCode_ptr duplicate (CORBA::TypeCode_ptr);
-    static void release (CORBA::TypeCode_ptr);
-    static CORBA::TypeCode_ptr nil (void);
-    static CORBA::Boolean marshal (CORBA::TypeCode_ptr p,
-                                   TAO_OutputCDR & cdr);
+    static ::CORBA::TypeCode_ptr duplicate (
+        ::CORBA::TypeCode_ptr
+      );
+    static void release (
+        ::CORBA::TypeCode_ptr
+      );
+    static ::CORBA::TypeCode_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::TypeCode_ptr p,
+        TAO_OutputCDR & cdr
+      );
   };
 
   /**
@@ -687,8 +636,6 @@ namespace TAO
   };
 }  // End TAO namespace
 
-// --------------------------------------------------------------
-
 // Workaround for a Visual Studio .NET bug where this class is not
 // properly imported by an application if typedef'd or subclassed,
 // resulting in 'multiply defined' link errors. The export macro
@@ -698,16 +645,12 @@ namespace TAO
   template class TAO_Export TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
+// --------------------------------------------------------------
+
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR& cdr,
                                       const CORBA::TypeCode *x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR& cdr,
                                       CORBA::TypeCode *&x);
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &,
-                                      const CORBA::TCKind &);
-
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,
-                                      CORBA::TCKind &);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Typecode.i"
