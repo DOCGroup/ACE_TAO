@@ -9,7 +9,7 @@ main (int argc, char *argv[])
 {
   Server_Impl server;
 
-  ACE_DEBUG ((LM_DEBUG, "\n\tSimple_Server\n\n"));
+  ACE_DEBUG ((LM_DEBUG, "\n\ttime and date server\n\n"));
   TAO_TRY
     {
       if (server.init (argc, argv, TAO_TRY_ENV) == -1)

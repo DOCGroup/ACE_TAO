@@ -10,7 +10,7 @@
 //    simple_object_impl.h
 //
 // = DESCRIPTION
-//    This class implements the Simple Object object.
+//    This class implements the Time interface.
 //
 // = AUTHOR
 //    Darrell Brunsch <brunsch@cs.wustl.edu>
@@ -39,6 +39,7 @@ class Time_Impl: public POA_Time
   //    return the current time/date on the server and the other that
   //    shuts down the server.  
 public:
+  // = Initialization and termination methods.
   Time_Impl (const char *obj_name = 0);
   // Constructor
 
@@ -49,7 +50,7 @@ public:
   // Return the current time/date on the server.
 
   virtual void shutdown (CORBA::Environment &env);
-  // Shutdown routine.
+  // Shutdown the server.
 };
 
 #endif /* TIME_IMPL_H */
