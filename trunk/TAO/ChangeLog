@@ -1,3 +1,10 @@
+Tue Aug 13 10:54:08 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.bor (CFLAGS):
+
+	  Added missing CosNaming flags to this variable.  Thanks to
+	  Johnny for pointing this out.
+
 Tue Aug 13 10:25:36 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/DLL_ORB/Makefile (CLIENT_MODULE_LIB, SERVER_MODULE_LIB):
