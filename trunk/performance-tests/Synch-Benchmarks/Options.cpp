@@ -3,7 +3,7 @@
 
 
 #if defined (ACE_HAS_THREADS)
-/* Manages the options */
+// Manages the options.
 Options options;
 
 size_t
@@ -32,33 +32,33 @@ Options::init (void)
 }
 
 Options::Options (void)
-		 : _debugging (0),
-		   _verbosity (0),
-		   _low_water_mark (1024),
-		   _high_water_mark (8 * 1024),
-		   _msg_size (128),
-		   _thr_count (4),
-		   _generate (0),
-		   _initial_queue_length (0),
-		   _iterations (100000),
-		   _t_flags (0),
-		   _logical_connections (1),
-		   _physical_connections (1),
-		   _ack (1),
-		   thr_wc_size (10000),
+		 : thr_wc_size (10000),
 		   _service_entry (0),
 		   _mapped_file (0),
-		   _pipe_addr ("/tmp/pipe"),
-		   _checksum (1),
-		   _xdr (1),
+		   _pipe_addr (ACE_DEFAULT_RENDEZVOUS),
 		   _sleep_time (100),
 		   _n_lwps (0),
+		   _thr_count (4),
+		   _t_flags (0),
+		   _high_water_mark (8 * 1024),
+		   _low_water_mark (1024),
+		   _msg_size (128),
+		   _initial_queue_length (0),
+		   _logical_connections (1),
+		   _physical_connections (1),
+		   _iterations (100000),
+		   _generate (0),
+		   _udp (0),
+		   _debugging (0),
+		   _verbosity (0),
+		   _ack (1),
+		   _checksum (1),
+		   _xdr (1),
 		   _free_memory (1),
 		   _zero_copy (0),
 		   _print_summary (0),
 		   _consecutive_ports (1),
-		   _eager_exit (0),
-		   _udp (0)
+		   _eager_exit (0)
 {
   this->thr_work_count = new int[this->thr_wc_size];
   this->init ();

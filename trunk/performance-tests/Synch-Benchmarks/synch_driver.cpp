@@ -86,6 +86,7 @@ Benchmark_Test::run_test (void)
 
 // Initialize and run the benchmarks tests.
 
+int
 Benchmark_Test::init (int argc, char **argv)
 {
   options.parse_args (argc, argv);

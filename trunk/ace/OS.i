@@ -136,10 +136,10 @@ extern "C" char *mktemp (char *);
 
 #if defined (ACE_HAS_THR_C_FUNC)
 // This is necessary to work around nasty problems with MVS C++.
-extern "C" void *ace_mutex_lock_cleanup_adapter (void *args);
-#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_THR_C_FUNC (ace_mutex_lock_cleanup_adapter), (void *) A));
+extern "C" void ace_mutex_lock_cleanup_adapter (void *args);
+#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A));
 #else
-#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_THR_FUNC (ACE_OS::mutex_lock_cleanup), (void *) A));
+#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) A));
 #endif /* ACE_HAS_THR_C_FUNC */
 
 #if defined (ACE_HAS_REGEX)
@@ -3207,7 +3207,7 @@ ACE_OS::thr_sigsetmask (int how,
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_sigsetmask (how, nsm, osm), 
 				       ace_result_),
 		     int, -1);
-#elif defined (ACE_HAS_SETKIND_NP) || defined (ACE_HAS_DCETHREADS)
+#elif defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
   // DCE threads have no such function.
   ACE_NOTSUP_RETURN (-1);  
 #elif defined (ACE_HAS_PTHREADS_1003_DOT_1C)

@@ -23,10 +23,9 @@ ssize_t
 ACE_SOCK_Dgram::recv (iovec *io_vec, ACE_Addr &addr, int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
+#if defined (FIONREAD)
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int addr_len = addr.get_size ();
-
-#if defined (FIONREAD)
   u_long inlen;
 
   if (ACE_OS::ioctl (this->get_handle (), 

@@ -844,26 +844,25 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       p_thr = (thr_id == 0 ? &tmp_thr : thr_id);
 
 #if defined (ACE_HAS_SETKIND_NP)
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, attr, func, args), 
+				    result),
+		  int, -1, result);
+      ::pthread_attr_delete (&attr);
+#else /* !ACE_HAS_SETKIND_NP */
 #if defined (ACE_HAS_THR_C_FUNC)
       ACE_Thread_Adapter *thread_args;
       ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
 
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, attr,
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, &attr,
 						      ACE_THR_C_FUNC (&ace_thread_adapter), 
 						      thread_args),
 				    result),
 		  int, -1, result);
 #else
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, attr, func, args), 
-				    result),
-		  int, -1, result);
-#endif /* ACE_HAS_THR_C_FUNC */
-
-      ::pthread_attr_delete (&attr);
-#else /* !ACE_HAS_SETKIND_NP */
       ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, &attr, func, args), 
 				    result),
 		  int, -1, result);
+#endif /* ACE_HAS_THR_C_FUNC */
       ::pthread_attr_destroy (&attr);
 #endif /* ACE_HAS_SETKIND_NP */
 #if defined (ACE_HAS_STHREADS)
@@ -1363,9 +1362,8 @@ siginfo_t::siginfo_t (ACE_HANDLE handle)
 
 // This is necessary to work around nasty problems with MVS C++.
 
-extern "C" void *
+extern "C" void
 ace_mutex_lock_cleanup_adapter (void *args)
 {
   ACE_OS::mutex_lock_cleanup (args);
-  return 0;
 }
