@@ -145,7 +145,9 @@ ACE_Process::wait (const ACE_Time_Value &tv)
 // ************************************************************
 
 ACE_Process_Options::ACE_Process_Options (int ie,
-                                          int cobl)
+                                          int cobl,
+                                          int ebl,
+                                          int mea)
   :
 #if !defined (ACE_HAS_WINCE)
     inherit_environment_ (ie),
@@ -166,6 +168,10 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     environment_buf_index_ (0),
     environment_argv_index_ (0),
 #endif /* !ACE_HAS_WINCE */
+    environment_buf_ (0),
+    environment_buf_len_ (ebl),
+    max_environment_args_ (mea),
+    max_environ_argv_index_ (mea - 1),
     command_line_argv_calculated_ (0),
     command_line_buf_ (0)
 {
@@ -174,6 +180,8 @@ ACE_Process_Options::ACE_Process_Options (int ie,
 
 #if !defined (ACE_HAS_WINCE)
   working_directory_[0] = '\0';
+  ACE_NEW (environment_buf_, TCHAR[ebl]);
+  ACE_NEW (environment_argv_, LPTSTR[mea]);
   environment_buf_[0] = '\0';
   environment_argv_[0] = 0;
 
@@ -346,9 +354,13 @@ ACE_Process_Options::setenv_i (LPTSTR assignment, int len)
   // Add one for the null char.
   len++;
 
-  // Check if we're out of room.
-  if ((len + environment_buf_index_) >= ENVIRONMENT_BUFFER)
+  // If environment larger than allocated buffer return. Also check to
+  // make sure we have enough room.
+  if ( environment_argv_index_ == max_environ_argv_index_  ||
+       (len + environment_buf_index_) >= environment_buf_len_ )
+  {
     return -1;
+  }
 
   // Copy the new environment string.
   ACE_OS::memcpy (environment_buf_ + environment_buf_index_,
@@ -440,6 +452,8 @@ ACE_Process_Options::~ACE_Process_Options (void)
 #endif /* !ACE_HAS_WINCE */
 
   delete [] command_line_buf_;
+  delete [] environment_buf_;
+  delete [] environment_argv_;
 }
 
 int
