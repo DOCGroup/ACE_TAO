@@ -8,7 +8,7 @@ Fri Jul 24 21:44:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  A similar problem ocurred with the CORBA::_tc_* exceptions.
 	  NOTE: Purify-4.0.1 on Solaris 2.5 gets confused by these fixes
 	  and reports bogus FNH and memory leak problems. The bug is
-	  trigger by an interaction with TAO's use of the Service
+	  triggered by an interaction with TAO's use of the Service
 	  Configurator to dynamically load libTAO, apparently when using
 	  Purify the library static constructors are called two times; the
 	  problem does not ocurr when *not* using purify or when not
