@@ -17,7 +17,9 @@
 #include <openssl/err.h>
 #include <openssl/rand.h>
 
-ACE_RCSID (ACE_SSL, SSL_Context, "$Id$")
+ACE_RCSID (ACE_SSL,
+           SSL_Context,
+           "$Id$")
 
 #ifdef ACE_HAS_THREADS
 ACE_mutex_t * ACE_SSL_Context::lock_ = 0;
@@ -57,7 +59,7 @@ ACE_SSL_Context::ssl_library_init (void)
       ::SSL_library_init ();
       ::SSL_load_error_strings ();
       ::SSLeay_add_ssl_algorithms ();
-      ::ERR_load_crypto_strings ();
+
       // Seed the random number generator.  Note that the random
       // number generator can be seeded more than once to "stir" its
       // state.
