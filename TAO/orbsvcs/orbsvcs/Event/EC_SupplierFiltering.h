@@ -90,7 +90,7 @@ public:
   // Wheneve a ProxyPushConsumer is about to be destroyed it calls
   // this method to inform the FilteringStrategy that it should
   // release any resources related to it.
-  // Filtering strategies that are bound to a particular ProxyConsumer 
+  // Filtering strategies that are bound to a particular ProxyConsumer
   // can use this opportunity to destroy themselves; filtering
   // strategies that do not keep ProxyPushConsumer specific
   // information can simply ignore the message.

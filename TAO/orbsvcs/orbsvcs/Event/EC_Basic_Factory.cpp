@@ -124,3 +124,50 @@ TAO_EC_Basic_Factory::supplier_poa (CORBA::Environment&)
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
+ACE_Lock*
+TAO_EC_Basic_Factory::create_consumer_lock (void)
+{
+  return new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
+}
+
+void
+TAO_EC_Basic_Factory::destroy_consumer_lock (ACE_Lock* x)
+{
+  delete x;
+}
+
+ACE_Lock*
+TAO_EC_Basic_Factory::create_supplier_lock (void)
+{
+  return new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
+}
+
+void
+TAO_EC_Basic_Factory::destroy_supplier_lock (ACE_Lock* x)
+{
+  delete x;
+}
+
+ACE_Lock*
+TAO_EC_Basic_Factory::create_consumer_admin_lock (void)
+{
+  return new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
+}
+
+void
+TAO_EC_Basic_Factory::destroy_consumer_admin_lock (ACE_Lock* x)
+{
+  delete x;
+}
+
+ACE_Lock*
+TAO_EC_Basic_Factory::create_supplier_admin_lock (void)
+{
+  return new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
+}
+
+void
+TAO_EC_Basic_Factory::destroy_supplier_admin_lock (ACE_Lock* x)
+{
+  delete x;
+}

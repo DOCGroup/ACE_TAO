@@ -192,17 +192,17 @@ ECT_Throughput::run (int argc, char* argv[])
 
           if (this->reactive_ec_ == 1)
             {
-              module_factory = 
+              module_factory =
                 auto_ptr<TAO_Module_Factory> (new TAO_Reactive_Module_Factory);
             }
           else
             {
-              module_factory = 
+              module_factory =
                 auto_ptr<TAO_Module_Factory> (new TAO_Default_Module_Factory);
             }
-          
+
           // Create the EC
-          ec_impl = 
+          ec_impl =
             auto_ptr<POA_RtecEventChannelAdmin::EventChannel>
                 (new ACE_EventChannel (scheduler.in (),
                                        1,
@@ -212,10 +212,10 @@ ECT_Throughput::run (int argc, char* argv[])
       else
         {
 #if defined (TAO_ORBSVCS_HAS_Event2)
-          ec_factory = 
+          ec_factory =
             auto_ptr<TAO_EC_Factory>(new TAO_EC_Basic_Factory (root_poa.in ()));
-          
-          TAO_EC_Event_Channel* ec = 
+
+          TAO_EC_Event_Channel* ec =
             new TAO_EC_Event_Channel (ec_factory.get ());
           ec->activate (TAO_TRY_ENV);
           TAO_CHECK_ENV;
@@ -482,7 +482,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
               this->reactive_ec_ = 0;
             }
           break;
-	  
+
         case 'c':
           this->n_consumers_ = ACE_OS::atoi (get_opt.optarg);
           break;
