@@ -224,7 +224,8 @@ CORBA_NVList::remove (CORBA::ULong /*n*/, CORBA::Environment &/*env*/)
 
 // Helper method
 CORBA::NamedValue_ptr
-CORBA_NVList::add_element (CORBA::Flags flags, CORBA::Environment &ACE_TRY_ENV)
+CORBA_NVList::add_element (CORBA::Flags flags,
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   if (ACE_BIT_DISABLED (flags,
                         CORBA::ARG_IN | CORBA::ARG_OUT | CORBA::ARG_INOUT))
@@ -253,13 +254,11 @@ CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &ACE_TRY_ENV)
 {
   if (n >= this->max_) // 0 based indexing
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
-  else
-    {
-      CORBA::NamedValue_ptr *nv;
 
-      this->values_.get (nv, n);
-      return *nv;
-    }
+  CORBA::NamedValue_ptr *nv;
+
+  this->values_.get (nv, n);
+  return *nv;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

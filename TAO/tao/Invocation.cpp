@@ -446,7 +446,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
           ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
           // @@ Think about a better way to raise the exception here,
-          // maybe we need some more macros?
+          //    maybe we need some more macros?
           ACE_TRY_ENV.exception (exception);  // We can not use ACE_THROW here.
           return TAO_INVOKE_EXCEPTION;
         }
@@ -531,7 +531,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                         buf.in ()));
 
           // @@ Think about a better way to raise the exception here,
-          // maybe we need some more macros?
+          //    maybe we need some more macros?
           ACE_TRY_ENV.exception (exception); // We can not use ACE_THROW here.
           return TAO_INVOKE_EXCEPTION;
         }

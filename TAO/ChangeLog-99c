@@ -1,3 +1,17 @@
+Thu Jun 24 21:30:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	* tao/Context.cpp:
+	* tao/CurrentC.cpp:
+	* tao/CurrentS.cpp:
+	* tao/Exception.cpp:
+	* tao/GIOP_Server_Request.cpp:
+	* tao/Invocation.cpp:
+	* tao/NVList.cpp:
+	* tao/ORB.cpp:
+	* tao/PolicyS.cpp:
+	  More exception handling changes and some cosmetic changes.
+
 Thu Jun 24 21:03:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/try_macros.h: Guarded the definition of all TAO try macros

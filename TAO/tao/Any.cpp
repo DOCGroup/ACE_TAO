@@ -62,7 +62,7 @@ CORBA_Any::type (CORBA::TypeCode_ptr tc,
       this->type_ = CORBA::TypeCode::_duplicate (tc);
     }
   else
-    ACE_TRY_ENV.exception (new CORBA::BAD_TYPECODE ());
+    ACE_THROW (CORBA::BAD_TYPECODE ());
 }
 
 // TAO doesn't give any guarantees if the value returned by value can
