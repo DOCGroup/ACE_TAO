@@ -1,3 +1,13 @@
+Wed Jun 23 17:35:00 1999  Chris Gill <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.{cpp, h, i}
+          orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.{cpp, h, i} (new):
+
+	Hacked apart and am in the process of revamping how the DFS based
+	passes over the dependency graph are done.  This code is in a
+        state of flux and does not yet compile - please do not attempt
+	to add it to any make or project files until it is cleaned up.
+
 Wed Jun 23 17:19:52 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/tao_ir_i.cpp: Fixed some errors on
