@@ -17,7 +17,7 @@
 
 class Consumer_Handler; // Forward declaration....
 
-typedef long CONSUMER_KEY;
+typedef ACE_HANDLE CONSUMER_KEY;
 
 typedef Peer_Router<Consumer_Handler, CONSUMER_KEY> CONSUMER_ROUTER;
 

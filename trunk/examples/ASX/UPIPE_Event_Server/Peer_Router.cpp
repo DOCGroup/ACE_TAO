@@ -57,7 +57,7 @@ Acceptor_Factory<PH, PK>::router (void)
 
 template <class ROUTER, class KEY> 
 Peer_Handler<ROUTER, KEY>::Peer_Handler (ACE_Thread_Manager *tm)
-  : ACE_Svc_Handler<ACE_UPIPE_Stream, ACE_UPIPE_Addr, ACE_MT_SYNCH> (tm)
+  : ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_MT_SYNCH> (tm)
 {
 }
 
@@ -89,7 +89,7 @@ Peer_Handler<ROUTER, KEY>::svc (void)
       else // Transform incoming buffer into a Message and pass downstream.
 	{
 	  db->wr_ptr (n);
-	  *(long *) hb->rd_ptr () = this->get_handle (); // structure assignment.
+	  *(ACE_HANDLE *) hb->rd_ptr () = this->get_handle (); // structure assignment.
 	  hb->wr_ptr (sizeof (long));
 	  if (this->router_task_->reply (hb) == -1)
 	    {
