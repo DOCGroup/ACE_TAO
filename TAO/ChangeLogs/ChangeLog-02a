@@ -1,3 +1,8 @@
+Mon Mar  4 08:10:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/Makefile.bor:
+          Removed messaging cflags and added portableserver cflags
+
 Sun Mar  3 18:18:08 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tao/Makefile:
@@ -17,7 +22,7 @@ Sun Mar  3 17:48:19 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tao/DynamicInterface/Request.h:
 	  Remove include of "tao/Messaging/MessagingC.h"
- 
+
 	* tao/DynamicInterface/Makefile:
 	* tao/DynamicInterface/Makefile.bor:
 	  Remove TAO_Messaging library.
@@ -37,15 +42,15 @@ Sun Mar  3 16:09:14 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	  Add ACE exception handling macros in svc() method.
 
 	* orbsvcs/performance-tests/RTEvent/lib/SyncScope_Setup.cpp:
-	  Change ACE_ENV_ARG_PARAMETER to 
+	  Change ACE_ENV_ARG_PARAMETER to
 	  ACE_SINGLE_ENV_ARG_PARAMETER  in call to policy_list->destroy().
 
 Sun Mar  3 10:20:23 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/performance-tests/RTEvent/lib/RIR_Narrow.cpp:
 	  Add ACE_TYPENAME to RIR_Narrow<Interface>::resolve()
-	  to eliminate gcc 3.1 warning: 
-	  "typename RIR_Narrow<Interface>::Interface_ptr' 
+	  to eliminate gcc 3.1 warning:
+	  "typename RIR_Narrow<Interface>::Interface_ptr'
 	  is implicitly a typename"
 
 Sun Mar  3 10:19:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
