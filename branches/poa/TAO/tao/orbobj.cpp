@@ -295,14 +295,16 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 CORBA_Object_ptr
 CORBA_ORB::resolve_poa (void)
 {
-  if (TAO_ORB_Core_instance()->root_poa() == 0)
+  // Need to do double-checked locking here to cover the case of
+  // multiple threads using a global resource policy.
+  if (TAO_ORB_Core_instance->root_poa() == 0)
     {
       // Construct a new POA
       // Irfan fill this in properly
       POA* newpoa = new POA ();
 
       // set the poa in the orbcore instance
-      TAO_ORB_Core_instance()->resource_factory()->set_root_poa (newpoa);
+      TAO_ORB_Core_instance->root_poa (newpoa);
     }
   
   return TAO_ORB_Core_instance()->root_poa();
