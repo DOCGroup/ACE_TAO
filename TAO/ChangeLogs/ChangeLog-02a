@@ -1,3 +1,8 @@
+Mon Jan 14 10:25:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Fault_Tolerance.dsp (RSC): Added the right
+	  library for linking in the debug  builds. 
+
 Mon Jan 14 09:34:35 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/IDL_Test/including.idl:
