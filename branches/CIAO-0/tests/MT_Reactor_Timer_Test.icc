@@ -1,0 +1,15 @@
+// $Id$
+
+include "vacpp_setup.icc"
+option
+    link(libSearchPath, platformLibSearchPath),
+    incl(searchPath, ".."),
+    link(linkWithMultiThreadLib,yes),
+    link(debug)
+    {
+	target type (exe) "MT_Reactor_Timer_Test"
+	{
+	   source type (cpp) "MT_Reactor_Timer_Test.cpp"
+	   source platformLinkLibs
+	}
+    }

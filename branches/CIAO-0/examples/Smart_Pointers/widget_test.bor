@@ -1,0 +1,22 @@
+#
+# Makefile for building the Widget example
+#
+
+NAME = widget_test
+
+OBJFILES = \
+	$(OBJDIR)\Widget.obj \
+	$(OBJDIR)\Widget_Factory.obj \
+	$(OBJDIR)\Widget_Impl.obj \
+	$(OBJDIR)\Widget_Part.obj \
+	$(OBJDIR)\Widget_Part_Factory.obj \
+	$(OBJDIR)\Widget_Part_Impl.obj \
+	$(OBJDIR)\widget_test.obj
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

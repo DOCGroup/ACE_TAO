@@ -1,0 +1,10 @@
+#
+# Makefile for building the TAO Notify Blocking test
+# $Id$
+#
+
+MAKEFILES = \
+        Structured_Consumer.bor \
+        Structured_Supplier.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
