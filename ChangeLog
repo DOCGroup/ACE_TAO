@@ -1,3 +1,9 @@
+Fri Sep 12 10:56:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/DLL_Test_Impl.dsp:
+
+          Turned on RTTI for all configurations.
+
 Thu Sep 11 06:39:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
