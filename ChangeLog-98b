@@ -1,3 +1,8 @@
+Wed Jul 22 17:50:58 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/OS.h: Defiend ACE_SIG_AIO to be SIGRTMIN. This is the only
+	signal used for all the <Asynch_Operation>s.
+
 Wed Jul 22 17:46:45 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/Asynch_IO.h,Asynch_IO.cpp Proactor.h Proactor.cpp : 
