@@ -72,19 +72,19 @@ Repository::resolve (const char *key, Repository::Record &rec)
   int retval = this->repository_.resolve (key, value, type);
 
   if (retval == 0)
-  {
-    // +1 to get rid of the space
-    rec.comm_line = ACE::strnew (ACE_OS::strtok (value, "\n") + 1);
-    rec.env = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
-    rec.wdir = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
-    rec.host = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
-    ::sscanf (ACE_OS::strtok (NULL, "\n"), "%hu", &rec.port);
-    rec.ping_ior = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
-  }
+    {
+      // +1 to get rid of the space
+      rec.comm_line = ACE::strnew (ACE_OS::strtok (value, "\n") + 1);
+      rec.env = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
+      rec.wdir = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
+      rec.host = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
+      ::sscanf (ACE_OS::strtok (NULL, "\n"), "%hu", &rec.port);
+      rec.ping_ior = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
+    }
   else
-  {
-    retval = -1;
-  }
+    {
+      retval = -1;
+    }
 
   delete [] value;
   delete [] type;
