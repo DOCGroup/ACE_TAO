@@ -23,7 +23,7 @@ TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core,
     // @@ This doesn't seem to work. The problem comes when we extract
     // data portion from this buffer in the skeleton. Why?? Needs
     // investigation.
-    //current_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
+    // current_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
     supp_buffer_ (ACE_CDR::DEFAULT_BUFSIZE),
     message_state_ (orb_core)
 {
@@ -33,33 +33,9 @@ TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core,
 int
 TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
 {
-  // Read the message from the transport. The size of the message read
-  // is the maximum size of the buffer that we have less the amount of
-  // data that has already been read in to the buffer.
+  if (this->read_messages (transport) == -1)
+    return -1;
 
-  ssize_t n = transport->recv (this->current_buffer_.wr_ptr (),
-                               this->current_buffer_.space ());
-
-  if (n == -1)
-    {
-      if (errno == EWOULDBLOCK)
-        return 0;
-
-      return -1;
-    }
-  // @@ What are the other error handling here??
-  else if (n == 0)
-    {
-      return -1;
-    }
-
-  // Now we have a succesful read. First adjust the write pointer
-  this->current_buffer_.wr_ptr (n);
-
-  if (TAO_debug_level > 8)
-    {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes \n", n));
-    }
 
   // Check what message are we waiting for and take suitable action
   if (this->message_status_ == TAO_GIOP_WAITING_FOR_HEADER)
@@ -151,7 +127,7 @@ TAO_GIOP_Message_Handler::parse_header (void)
     }
 
   // By this point we are doubly sure that we have a more or less
-  // valid GIOP message with a valid major revisiosn number.
+  // valid GIOP message with a valid major revision number.
   if (this->message_state_.more_fragments &&
       this->message_state_.giop_version.minor == 2 &&
       this->current_buffer_.length () > TAO_GIOP_MESSAGE_FRAGMENT_HEADER)
@@ -189,7 +165,8 @@ TAO_GIOP_Message_Handler::parse_magic_bytes (void)
       // For the present...
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) bad header, magic word [%2.2x%2.2x%2.2x%2.2x]\n"),
+                    ACE_TEXT ("TAO (%P|%t) bad header, "
+                              "magic word [%2.2x,%2.2x,%2.2x,%2.2x]\n"),
                     buf[0],
                     buf[1],
                     buf[2],
@@ -241,7 +218,7 @@ TAO_GIOP_Message_Handler::get_payload_size (void)
       this->message_size_ = x + TAO_GIOP_MESSAGE_HEADER_LEN;
     }
 
-  // Set the read pointer to the end of the GIOP header
+  // Set the read pointer to the end of the GIOP message
   this->current_buffer_.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN -
                                 TAO_GIOP_MESSAGE_SIZE_OFFSET);
   return x;
@@ -279,22 +256,26 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
     {
       size_t len = this->current_buffer_.length ();
       char *buf = this->current_buffer_.rd_ptr ();
+
+      // Set the buf pointer to the start of the GIOP header
+      buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
+
       if (len == this->message_state_.message_size)
         {
           // If the buffer length is equal to the size of the payload we
-          // have exactly one message. Check whether we have received
-          // only the first part of the fragment.
+          // have exactly one message.
           this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
 
-          buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
+          // The message will be dumped only if the debug level is
+          // greater than 5 anyway.
+          this->mesg_base_->dump_msg (
+              "Recv msg",
+              ACE_reinterpret_cast (u_char *,
+                                    buf),
+              len + TAO_GIOP_MESSAGE_HEADER_LEN);
 
-          if (TAO_debug_level >= 4)
-            this->mesg_base_->dump_msg (
-                "Recv msg",
-                ACE_reinterpret_cast (u_char *,
-                                      buf),
-                len + TAO_GIOP_MESSAGE_HEADER_LEN);
-
+          // Check whether we have received only the first part of the
+          // fragment.
           return this->message_state_.is_complete (this->current_buffer_);
         }
       else if (len > this->message_state_.message_size)
@@ -304,15 +285,13 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
           // from  1 to N.
           this->message_status_ = TAO_GIOP_MULTIPLE_MESSAGES;
 
-          buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
-
-          if (TAO_debug_level >= 4)
-            this->mesg_base_->dump_msg (
+          // The message will be dumped only if the debug level is
+          // greater than 5 anyway.
+          this->mesg_base_->dump_msg (
               "Recv msg",
               ACE_reinterpret_cast (u_char *,
                                     buf),
-              this->message_state_.message_size +
-              TAO_GIOP_MESSAGE_HEADER_LEN);
+              len + TAO_GIOP_MESSAGE_HEADER_LEN);
 
           this->supp_buffer_.data_block (
             this->current_buffer_.data_block ()->clone ());
@@ -341,31 +320,8 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
       // @@ next beta - Bala
       else if (transport->reactor_signalling ())
         {
-          // If the reactor is used by the transport for signalling,
-          // then do the rest of the read here.
-          ssize_t n = transport->recv (this->current_buffer_.wr_ptr (),
-                                       this->current_buffer_.space ());
-
-          if (n == -1)
-            {
-              if (errno == EWOULDBLOCK)
-                return 0;
-
-              return -1;
-            }
-          // @@ What are the other error handling here??
-          else if (n == 0)
-            {
-              return -1;
-            }
-
-          // Now we have a succesful read. First adjust the write pointer
-          this->current_buffer_.wr_ptr (n);
-
-          if (TAO_debug_level > 8)
-          {
-            ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes\n", n));
-          }
+          if (this->read_messages (transport) == -1)
+            return -1;
 
           // By now we should be having the whole message read in.
           this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
@@ -386,23 +342,6 @@ TAO_GIOP_Message_Handler::more_messages (void)
     {
       size_t len = this->supp_buffer_.length ();
 
-      // @@ Once we start receing fragments, somthing like this would
-      // be needed. We will revisit this then.
-      /*      if (len > TAO_GIOP_MESSAGE_HEADER_LEN)
-        {
-          this->current_buffer_.reset ();
-          if (len > (TAO_GIOP_MESSAGE_HEADER_LEN +
-                     TAO_GIOP_MESSAGE_FRAGMENT_HEADER))
-            {
-              this->current_buffer_.copy (
-                this->supp_buffer_.rd_ptr (),
-                TAO_GIOP_MESSAGE_HEADER_LEN +
-                TAO_GIOP_MESSAGE_FRAGMENT_HEADER);
-
-              this->supp_buffer_.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN +
-                                         TAO_GIOP_MESSAGE_FRAGMENT_HEADER);
-            }
-            else*/
       if (len > TAO_GIOP_MESSAGE_HEADER_LEN)
         {
           this->current_buffer_.copy (
@@ -442,7 +381,10 @@ TAO_GIOP_Message_Handler::get_message (void)
   if (this->message_status_ == TAO_GIOP_WAITING_FOR_PAYLOAD)
     {
       size_t len = this->supp_buffer_.length ();
+      char * buf =
+        this->current_buffer_.rd_ptr ();
 
+      buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
       if (len == this->message_state_.message_size)
         {
           // If the buffer length is equal to the size of the payload we
@@ -452,18 +394,13 @@ TAO_GIOP_Message_Handler::get_message (void)
           this->current_buffer_.copy (this->supp_buffer_.rd_ptr (),
                                       this->message_state_.message_size);
 
-          char * buf =
-            this->current_buffer_.rd_ptr ();
-
-          buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
-
-          if (TAO_debug_level >= 4)
-            this->mesg_base_->dump_msg (
-                "Recv msg",
-                ACE_reinterpret_cast (u_char *,
-                                      buf),
-                this->message_state_.message_size +
-                TAO_GIOP_MESSAGE_HEADER_LEN);
+          // The message will be dumped only if the debug level is
+          // greater than 5 anyway.
+          this->mesg_base_->dump_msg (
+              "Recv msg",
+              ACE_reinterpret_cast (u_char *,
+                                    buf),
+              len + TAO_GIOP_MESSAGE_HEADER_LEN);
 
           this->supp_buffer_.rd_ptr (this->message_state_.message_size);
           return this->message_state_.is_complete (this->current_buffer_);
@@ -478,13 +415,9 @@ TAO_GIOP_Message_Handler::get_message (void)
           this->current_buffer_.copy (this->supp_buffer_.rd_ptr (),
                                       this->message_state_.message_size);
 
-          char * buf =
-            this->current_buffer_.rd_ptr ();
-
-          buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
-
-          if (TAO_debug_level >= 4)
-            this->mesg_base_->dump_msg (
+          // The message will be dumped only if the debug level is
+          // greater than 5 anyway.
+          this->mesg_base_->dump_msg (
               "Recv msg",
               ACE_reinterpret_cast (u_char *,
                                     buf),
@@ -506,4 +439,54 @@ TAO_GIOP_Message_Handler::get_message (void)
     }
 
   return TAO_MESSAGE_BLOCK_INCOMPLETE;
+}
+
+int
+TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
+{
+  // Read the message from the transport. The size of the message read
+  // is the maximum size of the buffer that we have less the amount of
+  // data that has already been read in to the buffer.
+  ssize_t n = transport->recv (this->current_buffer_.wr_ptr (),
+                               this->current_buffer_.space ());
+
+  if (n == -1)
+    {
+      if (errno == EWOULDBLOCK)
+        return 0;
+
+      return -1;
+    }
+  else if (n == 0)
+    {
+      return -1;
+    }
+
+  if (TAO_debug_level > 6)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - GIOP_Message_Handler::read_messages"
+                  " received %d bytes\n",
+                  n));
+
+      size_t len;
+      for (size_t offset = 0; offset < n; offset += len)
+        {
+          len = n - offset;
+          if (len > 512)
+            len = 512;
+          ACE_HEX_DUMP ((LM_DEBUG,
+                         this->current_buffer_.wr_ptr () + offset,
+                         len,
+                         "TAO (%P|%t) - read_messages "));
+        }
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes \n", n));
+    }
+
+  // Now we have a succesful read. First adjust the write pointer
+  this->current_buffer_.wr_ptr (n);
+
+
+  return 0;
+
 }

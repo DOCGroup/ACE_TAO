@@ -7,6 +7,7 @@
 #include "ace/pre.h"
 
 #include "TestS.h"
+#include "Sender_Task.h"
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)
@@ -80,6 +81,9 @@ private:
 
   /// Setup event count
   CORBA::ULong event_count_;
+
+  /// Used to run the threads
+  Sender_Task sender_task_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
