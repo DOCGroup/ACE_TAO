@@ -1,3 +1,9 @@
+Mon Jun 28 13:39:15 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/tests/Property/client.cpp: Made the test more
+	  silent. Put a lot debug statements under
+   	  TAO_debug_level > 4.
+
 Mon Jun 28 12:57:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp (compute_coll_name): Fixed ABW
@@ -15,9 +21,9 @@ Mon Jun 28 12:54:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Mon Jun 28 12:46:57 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-  	Fixed the exception macros problems. Thanks Carlos for reporting the
-	errors.
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
+  	  Fixed the exception macros problems. Thanks Carlos for reporting
+	  the errors. 
 
 Mon Jun 28 12:19:21 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
