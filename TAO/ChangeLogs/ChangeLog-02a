@@ -1,3 +1,12 @@
+Thu Mar 14 13:44:15 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        Committing this change for Yan Dai <dai_y@ociweb.com>.
+
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_i.cpp:
+
+          Changed MyTieStock to be a friend of class Quoter_Stock_i instead
+          of the constructor to avoid a compilation error on AIX.
+
 Thu Mar 14 09:26:54 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Makefile.CosNaming:
