@@ -16,6 +16,9 @@ Tue Oct 13 07:28:38 1998  David L. Levine  <levine@cs.wustl.edu>
           join call on AIX.  Thanks to Ian Wright <I.Wright@elsevier.co.uk>
           for reporting this.
 
+        * ace/Makefile,examples/Bounded_Packet_Relay/Makefile:
+          updated dependencies.
+
 Tue Oct 13 00:19:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/OS.i (sema_destroy): I believe I've fixed the rats nest of
