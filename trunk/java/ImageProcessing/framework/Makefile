@@ -31,4 +31,10 @@ files =	ImageFilterFactory.java \
 	Hierarchy.java \
 	HierarchyAdapter.java \
 	FileBrowser.java \
-	ListFiles.java
+	ListFiles.java \
+	IntHashtable.java \
+	ImageEncoder.java \
+	GifEncoder.java \
+	GIFOutputStream.java \
+	GIFHandler.java \
+	ImageSender.java
