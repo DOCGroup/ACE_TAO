@@ -38,7 +38,7 @@ CORBA::release (CORBA::Request_ptr req)
 CORBA::Boolean
 CORBA::is_nil (CORBA::Request_ptr req)
 {
-  return (CORBA::Boolean) req == 0;
+  return (CORBA::Boolean) (req == 0);
 }
 
 

@@ -185,7 +185,7 @@ void CORBA::release (CORBA::TypeCode_ptr tc)
 // returns true if the typecode is NULL
 CORBA::Boolean CORBA::is_nil (CORBA::TypeCode_ptr tc)
 {
-  return (CORBA::Boolean) tc == 0;
+  return (CORBA::Boolean) (tc == 0);
 }
 
 // Return the i-th member typecode if it exists, else raise an
