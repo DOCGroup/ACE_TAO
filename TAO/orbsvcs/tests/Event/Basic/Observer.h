@@ -94,7 +94,6 @@ public:
   // add some command line args to enable/disable observerions
 
   void execute_test (CORBA::Environment& ACE_TRY_ENV);
-  void run_cleanup (CORBA::Environment& ACE_TRY_ENV);
   // Run the suppliers, using the <thread_manager> parameter
 
   void dump_results (void);
@@ -112,9 +111,6 @@ private:
   int id_;
 
   TAO_EC_Gateway_IIOP *gwys_;
-
-  ACE_SYNCH_MUTEX lock_;
-  // lock internal state
 };
 
 #endif /* EC_OBSERVER_H */
