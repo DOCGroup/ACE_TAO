@@ -77,6 +77,8 @@ Valid IDL_Cubit test arguments are:
         mixin
         rti_data
         one_way
+	any
+	any_struct
 
 The following are the three ways of giving the CubitFactory IOR to the
 client:
@@ -84,7 +86,7 @@ client:
         1. From a file using the -f option. (This file can be produced using
                 the -f option of the server.)
 
-        2. Directly on the commandline using the -k option.
+        2. Directly on the command line using the -k option.
 
         3. Get it from the Naming Service (which is the default client
            behavior).
