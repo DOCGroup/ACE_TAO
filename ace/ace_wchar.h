@@ -82,10 +82,19 @@ using std::size_t;
 # endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
 #endif /* ACE_HAS_WCHAR && !_MSC_VER */
 
+// Set the default behaviour for ACE_TEXT_WIDE to use the L-prefix
+#if !defined (ACE_USES_L_PREFIX)
+# define ACE_USES_L_PREFIX 1
+#endif /* ACE_USES_L_PREFIX */
+
 // Define the unicode/wchar related macros correctly
 
 # if !defined (ACE_TEXT_WIDE)
-#  define ACE_TEXT_WIDE_I(STRING) L##STRING
+#  if (ACE_USES_L_PREFIX == 1)
+#    define ACE_TEXT_WIDE_I(STRING) L##STRING
+#  else /* ACE_USES_L_PREFIX */
+#    define ACE_TEXT_WIDE_I(STRING) STRING
+#  endif /* ACE_USES_L_PREFIX */
 #  define ACE_TEXT_WIDE(STRING) ACE_TEXT_WIDE_I (STRING)
 # endif /* ACE_TEXT_WIDE */
 
