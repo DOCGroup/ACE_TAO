@@ -1,0 +1,4179 @@
+Sun Dec 31 01:02:01 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* ace/OS (mmap): Added a new parameter to the argument list for
+	  mmap().  This parameter is an ACE_HANDLE * and is used in the
+	  Win32 implementation, which requires CreateFileMapping to open a
+	  new HANDLE.  This handle is passed back to the caller, which is
+	  then responsible for freeing it...  I'll probably need to modify
+	  the ACE_Mem_Map class to manage this new handle for the WIN32
+	  version.
+
+	* ace: Updated all the SPIPE files in preparation to porting them
+	  to Windows NT, where they will be implemented using Win32 Named
+	  Pipes!
+
+	* ace/Typed_SV_Message: Fixed a mysterious braino where the method
+	  definitions for Typed_SV_Message were actually within
+	  Typed_SV_Message_Queue.cpp.  I'm not sure why this happened, but
+	  it's clearly been this way for eons...  Also, changed the name
+	  of the method "max" to "max_size" to avoid conflicts with macros
+	  on Windows NT...
+
+	* ace: Added a new config symbol: ACE_HAS_SYSV_IPC.  If this is
+	  *not* set (e.g., Win32) then don't try to compile any of the
+	  System V IPC mechanisms (e.g., shared memory, message queues,
+	  semaphores).
+
+	* ace/Malloc: Reimplemented the Malloc-family to factor out common
+	  code.  Also added a new method called "trybind" which atomically
+	  tries to bind a new void *pointer to a char *name.  If there is
+	  no name with the same value, the bind succeeds.  Otherwise, the
+	  bind "fails", but returns the existing pointer.
+
+	* ace/Map_Manager: Reimplemented the Map_Manager to factor out
+	  common code.  Also added a new method called "trybind" which
+	  atomically tries to bind a new int_id to an ext_id.  If there is
+	  no ext_id with the same name, the bind succeeds.  Otherwise, the
+	  bind "fails", but returns the existing int_id.
+
+	* ace/Memory_Pool.cpp: Commented out all the diagnostic messages
+	  in the various ACE_*_Memory_Pools.  Now that we're actually
+	  using this within ACE, they were distracting.
+
+	* ace/CORBA_Handler.cpp (ACE_ST_CORBA_Handler): Gave iterations_
+	  an initial value of "5" for backwards compatibility.  Thanks to
+	  Irfan for doing this.
+
+	* ace/Map_Manager.cpp (ACE_Map_Manager): Fixed some more braino in
+	  the constructors of Map_Manager.  During the recent changes I'd
+	  forgotten to initialize the Map_Manager's instance variables to
+	  0.  Thanks to Irfan for finding this out the hard way... ;-)
+
+	* ace/OS.i (gettimeofday): Added a WIN32 implementation of
+	  gettimeofday.  This is pretty nasty, but it should centralize
+	  all of this processing in one place in ACE!
+
+Sat Dec 30 00:50:20 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* ace/Timer_Queue: Removed the current_time() method from the
+	  Timer_Queue class.  All uses will be replaced with calls to
+	  ACE_OS::gettimeofday().  Not only does this factor out more
+	  code, but it is also reentrant!
+
+	* ace/ACE.cpp (handle_timed_accept): Consolidated code so that
+	  select() is always used, rather than poll().
+
+        * ace: Generalized the ACE file locking wrappers (both at the
+	  Synch-level and the ACE_OS class level) to enable them to lock
+	  arbitrary regions (aka "records") of a file.  Before, they could
+	  only lock the entire file (which remains the default behavior).
+	  This new behavior works for both NT and UNIX.
+
+	* ace/Synch: Removed the definition and use of the
+	  ACE_SYNCH_ERROR_RETURN macro from all the ACE Synch* methods.
+	  This behavior has been integrated into the ACE_OS class instead
+	  since it cleans up lots of code that would otherwise have been
+	  hard to write.
+
+	* ace/INET_Addr.cpp (get_host_name): Fixed a bug that arose by
+	  trying to use the reentrant version of gethostbyaddr all the
+	  time.  In order to fix this, I've added a new get_host_name()
+	  method that allows the caller to supply a buffer for the
+	  hostname.
+
+	* ace: Cleaned up all the POSIX_TIMER junk that permeated ACE.
+	  Now all platforms will have the POSIX timer structures (e.g.,
+	  timestruc_t and timespec), though only those that actually
+	  support nano-second timing will be able to do anything useful
+	  with this...  As part of this cleanup, the poll, select, and
+	  cond_timedwait method in ACE_OS now take ACE_Time_Value * rather
+	  than int, timeval *, and timestruc_t, respectively.  This
+	  *greatly* cleans up the clutter throughout the rest of ACE.
+
+	* ace/ACE: Added two new methods called tv2msec and msec2tv that
+	  converts ACE_Time_Value format into millisecond format and vice
+	  versa.  This will make it easier to port code between NT and
+	  UNIX.
+
+	* ace/Reactor: Removed the code in the Reactor that previously
+	  allowed it to be resized after it had been initialized.  This
+	  code no longer was used due to the recent enhancements that
+	  ensure the Reactor is only initialized once per-process.
+
+	* ace/Reactor: Modified the Reactor so that it now compiles on NT.
+	  It doesn't work yet, but at least it compiles!
+
+	* ace/Reactor: Moved the "max3" method from the Reactor to OS.h,
+	  where it has become a template function usable throughout ACE.
+
+	* ace/OS.cpp: Added extern "C" before the NT implementations of 
+	  readv() and writev().
+
+	* ace/OS.i: Fixed the declaration of ::readv() and ::writev() for
+	  cases where the OS doesn't provide them natively.
+
+	* ace/Event_Handler: Modified handle_signal() to take an int
+	  rather than an ACE_HANDLE.  The old way broke under NT...
+
+	* ace: Made lots of minor changes to resolve signed int
+	  vs. unsigned int mismatches.  Thanks to the MSVC++ 4.0 compiler
+	  for pointing these out.  At least it's good for
+	  something... ;-).
+
+Fri Dec 29 15:01:10 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* ace/ACE.cpp (handle_timed_accept): Reimplemented the core
+	  select() loop to make the code portable to Win32.
+
+	* ace/Map_Manager.cpp (ACE_Map_Manager): Fixed a minor bug caused
+	  by recent changes (forgot to initialize max_size_ in the
+	  constructor...).
+
+	* Updated all the manual pages to reflect the latest changes.
+
+	* ace/ACE.cpp: Fixed up the ACE class so that all of the methods
+	  should compile on both Windows NT and UNIX!
+
+	* ace/OS: Moved the get_file_size() method from class ACE and put
+	  it into class ACE_OS, where it's been renamed to filesize().
+	  This is really more of an "OS" function, e.g., it's supported on
+	  Win32 directly.
+
+	* ace/OS.cpp: added readv() and writev() implementations for those
+	  platforms (e.g., Windows NT) that require them.
+
+	* ace/Makefile: Added a new regex to the Svc_Conf_l.cpp target
+	  that will substitute <stdio> for <unistd>.  This should solve a
+	  portability problem with Windows NT...
+
+	* ace/Malloc: Modified the sync() and protect() methods to use
+	  void * rather than char *.  This is now consistent with the OS
+	  classes.
+
+	* ace/OS: Changed things so that all the mmap() related OS
+	  wrappers use void * in their external interface.  Any
+	  discrepancies between platforms are now dealt with internally,
+	  in the implementation of the methods.  Thanks to Chris Lahey
+	  (clahey@ix.netcom.com) for suggesting this.
+
+	* ace/Local_Name_Space: Modified how ACE_NS_String is used to
+	  instantiate ACE_Map_Manager in order to work around problems
+	  with AIX C++.  Thanks to Chris Lahey (clahey@ix.netcom.com) for
+	  reporting this.
+
+	* ace/Synch.i: Added a definition for ACE_RW_Mutex::acquire().
+
+Fri Dec 29 00:34:16 1995 Chris Lahey (clahey@ix.netcom.com)
+
+        * ace/OS.h: Changed the #ifdef for ACE_HAS_COMPLEX_LOCKS to
+	  ACE_HAS_COMPLEX_LOCK.
+	
+  	  Changed prototypes for ACE_OS:mprotect(), msync(), and munmap()
+	  to accept ACE_MMAP_TYPE for their first arg.  The AIX versions
+	  of these calls all expect void * for their pointer variable.
+	  Note that madvise() takes a caddr_t for its 1st arg and
+	  therefore does not need to be altered.  (See related changes in
+	  OS.i and Mem_Map.i)
+
+	  Changed prototype for ACE_OS::getsockname(), arg3 to int * (See
+	  related change in OS.i)
+
+	  Changed prototype for ACE_OS::setsockopt(), arg4 to const char *
+	  and arg 5 to int (See related change in OS.i)
+
+	* ace/OS.i: Changed function definition for ACE_OS::mprotect(),
+	  msync(), and munmap() to accept ACE_MMAP_TYPE as their 1st arg.
+
+	  The following changes relate to the inconsistencies in the
+	  sockets calls on AIX.  I thought it would make more sense to
+	  leave the public interfaces alone and then handle the
+	  differences internally.  That way it won't break any exisiting
+	  code.
+
+          Changed function definition for ACE_OS::getsockname() to accept
+	  arg3 as int *.  Made similar changes in ACE_OS::setsockopt() -
+	  change definition to accept const char * for arg4 and int for
+	  arg5. Add the following code at the start of the function:
+	  Also made changes to ACE_OS::recvfrom() - change arg 6 back so it is 
+	  int *. 
+
+	* ace/Mem_Map.i: In ACE_Mem_Map::advise(), cast 1st arg to
+	  ACE_OS:madvise() to (caddr_t).
+
+	* ace/Memory_Pool.cpp: In ACE_MMAP_Memory_Pool::acquire(), make
+	  cast to char * in the return statement.  In
+	  ACE_MMAP_Memory_Pool::handle_signal(), also make same cast in
+	  the ACE_DEBUG statement near the top of the function.
+
+	* ace/Reactor.cpp and ace/Reactor.h: ACE_Reactor::handler_i()
+	  doesn't return properly if *eh != 0.  Remove last "else" so
+	  function always returns 0 if handler != 0.
+
+	  In ACE_Reactor::owner(), we need to change signature since
+	  thread_t is not an integer.  This has been changed to int
+	  ACE_Reactor::owner(thread_t *t_id); The last two lines have been
+	  changed to: *t_id = this->owner_; return 0;
+
+	* ace/Synch.cpp: In ACE_Condition_Mutex::wait(), the call to
+	  cond_timedwait() does not exist, but ACE_OS::cond_timedwait()
+	  does exist.  It takes the same arguments.
+
+	* ace/Synch.h and ace/Synch_T.h: At the end of both files, before
+	  the #define INLINE check for this define's existence to avoid
+	  causing compilers to choke.
+
+	* ace/Mem_Map.i: In ACE_Mem_Map::operator(), the return statement
+	  looked very odd.  In the assignment to addr, why is the ", 0" in
+	  the statement?
+
+Fri Dec 29 00:34:16 1995  Douglas C. Schmidt  (schmidt@lambada.cs.wustl.edu)
+
+	* ace: Fixed up many minor problems with the various types of
+	  Shared_Memory wrappers.  This mostly entailed changing from char
+	  * to void * to be more consistent with the other parts of ACE.
+	  In addition, I now only include the *.i files if __INLINE__ is
+	  enabled.
+
+	* ace/Memory_Pool.cpp (map_file): Fixed a minor bug by enabling
+	  MAP_FIXED if we're trying to map a file using a fixed address.
+
+Thu Dec 28 18:39:16 1995  Douglas C. Schmidt  (schmidt@merengue.cs.wustl.edu)
+
+	* ace/Local_Name_Space.cpp: Finished implementing changes to the
+	  ACE_Malloc stuff and the Local_Name_Space that Irfan had begun
+	  last semester.
+
+	* ace/SString.cpp: Added new optimizations to the assignment
+	  operators of the ACE_[WCS]String classes to avoid
+	  freeing/allocating memory if the current size is large enough.
+
+	* ace/SString: Added copy constructors...
+
+	* ace/Local_Name_Space.cpp: Modified the implementation of bind()
+	  to avoid a race condition.
+
+	* ace/Map_Manager.cpp (bind): Changed the semantics of bind() so
+	  that callers can control whether or not INT_IDs are reassigned.
+	  Also changed things so that callers can get back the existing
+	  value if they choose not to reassign.
+
+	* ace/SString.cpp: Removed the "P" (persistent) versions of all
+	  these classes and merged them into the default versions.  The
+	  persistence is now determined by the type of allocator passed in
+	  as a parameter to the constructor (or by using the "default"
+	  allocator that is accessible via
+	  ACE_Service_Config::allocator()).
+
+	* ace/Map_Manager.cpp: Removed the "P" (persistent) versions of
+	  all these classes and merged them into the default versions.
+	  The persistence is now determined by the type of allocator
+	  passed in as a parameter to the constructor (or by using the
+	  "default" allocator that is accessible via
+	  ACE_Service_Config::allocator()).
+
+	* ace/Malloc_T: Modified the bind() algorithm so that it will
+	  allow the caller to determine whether duplicates are allowed or
+	  not...  Also changed things so that callers can get back the
+	  existing value if they choose not to allow duplicates.  Irfan
+	  questions the sanity of this... ;-)
+
+	* ace/Synch: To be consistent, added acquire_write and
+	  acquire_read methods to ACE_Mutex.  These are useful for cases
+	  where we are going to be parameterizing classes like ACE_Malloc
+	  with some type of mutex wrapper (e.g., ACE_RW_Mutex, ACE_Mutex).
+
+	* ace/Malloc_T.cpp (calloc): Added a new method called "calloc"
+	  that will not only allocate the memory dynamically, but will
+	  also give it an initial value (e.g., '\0').
+
+Thu Dec 28 01:10:43 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* ace/OS.i: Modified the implementation of the TLI methods so that
+	  they are conditionally compiled away if the platform doesn't
+	  support TLI...  Thanks to Neil Cohen for pointing out the need
+	  for this...
+
+	* ace/OS.i: Modified the implementation of dlopen() and dlsym() to
+	  account for limitations with SunOS 4.x...
+
+	* ace/Service_Repository.cpp: Modified this class to use the
+	  ACE_OS::dlclose method.
+
+	* ace/Parse_Node.cpp: Modified this class to use the
+	  ACE_OS::dlopen and ACE_OS::dlsym methods.
+
+Wed Dec 27 23:25:03 1995  Jesper S. M|ller  (stophph@diku.dk)
+
+	* Added appropriate flags in OS.h for successful inclusion of
+	  several header files, such as Malloc.h and friends.  Also added
+	  mprotect to ACE_OS for Win32 to avoid linker errors.
+
+	* Added a return value (from map_file) to
+	  ACE_MMAP_Memory_Pool::handle_signal.  The compiler was
+	  complaining.  Likewise on
+	  ACE_MMAP_Memory_Pool::commit_backing_store (there 0 seemed like
+	  the correct off-the-end return value).
+
+	* Removed include of some SV semaphore file, if not needed in
+	  Malloc.h.  Worse for Memory_Pool.h, since the SV_Semaphore
+	  wrappers consistently differ completely from the other
+	  synchronization routines. I guess we'll need some variant of
+	  ACE_Process_Semaphore that takes an integer as a key instead of
+	  a string, and does not perform automatic init/destroy.
+	  
+	* Also upgraded fd's from int to ACE_HANDLEs and changes -1 to
+	  ACE_INVALID_HANDLE where appropriate.
+
+	* By help of aggresive preprocessor conditionals, made Handle_Set
+	  work with Win32. There is a fd_set abstraction with appropriate
+	  FD_xxx macros for WinSock, and it requires no sync'ing.  The
+	  Handle_Set_Iterator should also work. The good looks of
+	  Handle_Set was impaired, though. Right now, the trigger is the
+	  ACE_WIN32 flag, although it should be something like
+	  ACE_FD_SET_USES_BITS for the unix approach, or like
+	  ACE_FD_SET_USES_VECTOR for the WinSock approach.
+
+	* Reactor almost compiles now, but not quite: Handlers are
+	  addressed by fd, this is no longer possible - what a mess - we
+	  need to step through the handle indices somehow. This will
+	  likely get into some nasty quadratic complexities when iterating
+	  the handles to find the event_handler for each file
+	  handle. Mabye we can circumvent this with a hash table lookup
+	  for those opaque handles.
+
+	* There was a problem with the Svc_Conf.l.cpp and the
+	  Svc_Conf.y.cpp and the extremely lame MSVC++ 2.0.  I had to
+	  rename them to Svc_Conf_y.cpp, etc. Awful!
+
+	* Added code to inquire the 'host' name for Win32 in the ACE_Client_Id
+	  class. Another candidate for ACE_OS.
+
+	* About 60 or so ACE .cpp files compile now, which reminds me that
+	  I'll be working on some precompiled header scheme soon, since it
+	  takes for ever and ever, even on my 32meg system with pretty
+	  good SCSI drives.  Mabye it's because I'm only running a 66MHz
+	  i486 DX2 (yawn).
+
+	* Dozens of other changes have been made to various files, all
+	  pertaining to int vs. ACE_HANDLE. In Service_Manager.h, a signal
+	  number was an ACE_HANDLE, but just close by, some fd's were
+	  ints. Fixed that, too.
+
+Sat Dec 23 14:15:16 1995  Jesper S. M|ller  (stophph@diku.dk)
+
+        * I've also grouped the .i and .cpp functions by class,
+	  and #if'ed the sbrk and SysV pools out, since 
+	  Win32 cannot support those.
+
+	* Added 'inline' to day accessor functions in Date_Time.
+
+	* Two things that missed me in Trace.cpp:
+	  1) The inclusion order was so that I couldn't
+	     build Trace.o, since it didn't know the MALLOC_HOOK thing.
+	     I moved the #include of Trace.h down below that of ACE.h.
+	  2) The declaration and definition of the ACE_Trace constructor
+	     differed by a const, which I added.
+	  3) When linking, multiple symbols were found for some
+	     OS calls like mutex_init, corresponding to the larger
+	     OS Win32 functions. I has ACE_INLINED_OS_CALLS off,
+	     so sometimes the OS functions were inlined, sometimes
+	     not.
+	     I disabled the inline hack in Trace.cpp for WIN32 for now.
+	  This seemed to resolve matters.
+
+	* There was a major problem in OS.i, where Synch.h was needed for
+	  mutex support (in conjunction with TSS info linked list).  I
+	  chose to make thr_keycreate and some others non-inlined.
+
+	* More 'is-it-a-handle-or-success' confusion in SOCK*.* Changed
+	  ACE_SOCK_Dgram to use int status.  Changed ACE_SOCK_CODgram to
+	  use int status.  Changed ACE_LSOCK to use int status. Also
+	  changed a few derived classes
+	
+Fri Dec 22 14:03:15 1995  Douglas C. Schmidt  (schmidt@lambada.cs.wustl.edu)
+
+	* ace/OS.h: Added a new type for rwlock_t for platforms that don't
+	  support threading...  Thanks to Neil Cohen for reporting this.
+
+	* ace: Merged in all of Jesper's changes for NT and Chris Lahey's
+	  changes for AIX.
+
+	* ace: Merged tli.h into OS.h to avoid name conflicts on Win32.
+
+	* Fixed duplicated names where case is the only difference.
+		ace/thread.cpp
+		ace/Thread.cpp
+		ace/TLI.h
+		ace/tli.h
+		apps/Token_Server/mutex_example/simple_token_client.cpp
+		apps/Token_Server/mutex_example/Simple_Token_Client.cpp
+		apps/Token_Server/script_example/scripting_token_client.cpp
+		apps/Token_Server/script_example/Scripting_Token_Client.cpp
+		tests/IPC_SAP/SOCK_SAP/FD-client.cpp
+		tests/IPC_SAP/SOCK_SAP/fd-client.cpp
+		tests/IPC_SAP/SOCK_SAP/FD-server.cpp
+		tests/IPC_SAP/SOCK_SAP/fd-server.cpp
+	
+Wed Dec 20 22:26:24 1995  Jesper S. M|ller  (stophph@diku.dk)
+
+	* FIFO.cpp: One last comparison of 'open' return status where and
+	  ACE_INVALID_HANDLE should be changed to -1.
+
+	* One more last wrong comparison in FIFO_Recv_Msg.cpp.
+	  (Never say never again!)
+
+	* Put an appropriate conditional around the inclusion of
+	  Handle_Set.h for ACE_WIN32 (for now).
+
+	* Introduced a few backslashes in the macros of Dump.h that were
+	  somehow left out...  Had to add a really stupid constructor for
+	  struct Tuple.  I haven't a clue why MSVC++ wants this!  Replaced
+	  'return ACE_ODB;' with 'return ACE_ODB::instance_;' in the
+	  Singleton access function. 
+
+	* Added a constructor for ACE_ODB. It may be private, but it still
+	  needs to be defined...
+
+	* Stack and Set compiles fine for Win32 (not surprisingly)
+	
+	* If'ed out the guts of ACE_IPC_SAP enable/disable calls for
+	  Win32, since async IO doesn't work that way on there.
+
+	* Event_Handler now uses ACE_INVALID_HANDLE for default args.
+
+	* SOCK compiles except for the ACE_SOCKET <> ACE_HANDLE
+	  problem. Refer to issue #3 above.
+
+	* We're swamping the ace directory with .mak files. I used the
+	  winntace.mak file, which is compilable and linkable.
+
+Thu Dec 21 15:37:42 1995  Douglas C. Schmidt  (schmidt@merengue.cs.wustl.edu)
+
+	* ace: Greatly simplified the include files so that (1) compilers
+	  are faster and (2) the ACE_Trace mechanism works correctly.
+
+	* ace/Trace: Modified the ACE_Trace_TSS class so that it is no
+	  longer a template.  This was overkill since we know the type
+	  head of time (i.e., ACE_Trace_State).
+
+	* ace: Added a number of new changes to ACE to make things work on
+	  AIX.  Thanks to Chris Lahey <clahey@ix.netcom.com> for these
+	  changes.
+
+	* ace/Thread_Manager.cpp: Removed the get_max_thr_id() method
+	  since it was not portable to NT or POSIX pthreads.  Nothing in
+	  ACE depended on it anyway...
+
+	* ace/OS: Added a new static data member called NULL_thread that
+	  is a "zero'd" out thread id.  This is necessary to deal with the
+	  POSIX pthread implementation of a thread id, which is not always
+	  implemented as a number...  By using this new approach, all the
+	  special-case code in Synch.cpp disappears...
+
+	* ace/OS: Added a new method to class ACE_OS called thr_equal()
+	  that masks the differences between comparing thread ids using
+	  the threading libraries.  This simplifies the code in Synch.cpp
+	  and Reactor.cpp.
+
+        * ace: Updated all uses of mmap() to use the new ACE_MMAP_TYPE
+	  typedef.  This deals with the fact that different versions of
+	  UNIX define mmap() inconsistently (e.g., some use void * and
+	  some use char *...).
+
+	* ace: Removed testconfig.h and merged all of those #defines into
+	  OS.h.  This centralizes changes in one place and also eliminates
+	  the need for ./apps and ./tests to include extraneous files...
+
+	* ace/testconfig.h: Changed all uses of 0666 to ACE_DEFAULT_PERMS.
+	  Also, removed all PERMS enums and substituted ACE_DEFAULT_PERMS
+	  instead.
+
+Wed Dec 20 17:29:55 1995  Tim H. Harrison  (harrison@merengue.cs.wustl.edu)
+
+	* Rewrote the Token deadlock detection algorithm.  It now performs
+	  "best-effort" detection of deadlock for remote acquires and
+	  complete deadlock detection for local acquires.
+
+Wed Dec 20 02:37:39 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* ace/OS.h: The select() system call has its own include file on
+	  AIX: <sys/select.h>.  We can wrap the #include with a variable
+	  #if defined (ACE_HAS_SELECT_H).
+
+	* include/makeinclude/platform_aix.GNU: Added new support for AIX.
+	  Thanks to Chris Lahey <clahey@ix.netcom.com> for these changes.
+	  Added a number of other minor changes, as well.
+
+	* ace: Made a bunch of minor changes to get ACE to compile on
+	  SunOS4.x, Linux, and SGI.
+
+	* ace/config-linux.h: added ACE_HAS_MSG (thanks to Neil Cohen
+	  for this).
+
+	* ace/OS.h: Conditionally compile for ACE_HAS_UTIME for
+	  <sys/utime.h>.
+
+	* Released an alpha version of ACE containing the new Windows NT
+	  port.
+
+	* Integrated and tested all the new Windows NT changes in class
+	  ACE_OS, as well as the Synch* and Threads* classes.  We're now
+	  able to build Jesper's win32_test.cpp file in ./ace!  A complete
+	  NT port should be just around the corner...
+
+Tue Dec 19 17:59:04 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * ace: Move the remaining contents of sysincludes.h into ACE.h.
+	  There is no more sysincludes.h (at long last!).
+
+	* ace: Rearranged things so that the OS.[hi] files contain all the
+	  OS-specific #defines and #includes that were previously in
+	  sysincludes.h.
+
+        * ace: Renamed the ACE_Misc class to class ACE, which is more
+	  representative of what it does.
+
+	* INSTALL: updated the installation instructions to explain how
+	  the new directory structure works.  Thanks to Neil Cohen for
+	  pointing out the discrepancy beteen the source and the
+	  documentation ;-).
+
+	* Reorganized (by flattening) the ACE library directory structure
+	  to make it work for both Windows NT and UNIX.  Note that Windows
+	  NT does not have symbolic links, so the old way of doing things
+	  didn't port...  The consequences of these changes is there is
+	  now a single directory called $WRAPPER_ROOT/ace that contains
+	  the *.[hi] and *.cpp source files.  This is also where the
+	  libACE.a and libACE.so libraries are built by default.  Also,
+	  note that the suffix used by ACE has been changed from *.C to
+	  *.cpp to deal with the lame Visual C++ compiler...
+
+Tue Dec 19 01:26:54 1995  Douglas C. Schmidt  (schmidt@merengue.cs.wustl.edu)
+
+	* tests/ASX/Event_Server/Event_Server/Supplier_Router.cpp (put):
+	  Fixed up a problem with the Event_Server.  Somewhere along the
+	  way it stopped being concurrent!  The new version fixes this.
+	  Thanks to Alex V Maclinvosky <alexm@teltrunk1.tait.co.nz> for
+	  noticing this...
+
+	* Added a billion new changes to class OS to integrate the Windows
+	  NT port with the rest of ACE.  We are getting very close...
+
+Mon Dec 18 12:45:13 1995  Jesper S. Møller  (stophph@diku.dk)
+ 
+	* Major problems in the IPC_SAP. First, I detected that some open
+	  calls returned handles, some returned -1 or 0.  For instance
+	  ACE_SOCK has a constructor, that calls this->open and expects a
+	  handle (which it even sets as the current handle
+	  value!). Unfortunately, the return from open is either 0 or -1,
+	  depending on how well the open went.  ACE_HANDLE being
+	  typedef'ed to a void* really reveals some problems!  I have
+	  solved the problem for the FIFO*.* family and for SOCK.* 
+
+Mon Dec 18 12:43:46 1995  Douglas C. Schmidt  (schmidt@merengue.cs.wustl.edu)
+
+	* tests/Reactor/CODgram/CODgram.C (main): Fixed a bug in main()
+	  caused by initializing the Reactor twice.  Thanks to Aurelio
+	  Nocerino <aurelio@irsipcs2-27-le0.irsip.na.cnr.it> for reporting
+	  this.
+
+	* libsrc/Service_Configurator/Service_Config.C Added a new
+	  constructor to ACE_Service_Config that can be used to initialize
+	  internal variables without performing a full configuration.
+
+Mon Dec 18 01:22:22 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Service_Config: renamed tokens.h to sc_tokens.h to avoid
+	  file name collision on Win32.  Thanks to Jesper S. M|ller
+	  <stophph@diku.dk> for reporting this.
+
+	* tests/Mem_Map/IO_Test: renamed io_test.C to test_io.C to avoid
+	  file name collision on Win32.  Thanks to Jesper S. M|ller
+	  <stophph@diku.dk> for reporting this.
+
+	* libsrc/Misc/OS: Implemented condition variables for Windows NT.
+
+Sun Dec 17 21:23:32 1995  Douglas C. Schmidt  (schmidt@merengue.cs.wustl.edu)
+
+	* libsrc/Misc/Trace: Fixed up the ACE_Trace class so that it
+	  doesn't include any calls that will improperly trigger infinite
+	  recursion!  This allows the ACE library to be traced completely.
+
+Sat Dec 16 19:12:37 1995  Jesper S. Møller  (stophph@diku.dk)
+ 
+	* Changes to OS.*:
+	  * Added conditionals to the OS.h for Win32, for the special ACE/Win32
+	    thr_destroy_tss(), which is automatic for Solaris.
+	  * Changed declarations of thr_create, thr_suspend, thr_continue, 
+	    thr_join and thr_[gs]etprio to use hthread_t instead of thread_t.
+	  * Changed return type of OS::open from int to ACE_HANDLE.
+	  * Provided non-obtrusive handling of thr_handle in OS::thr_create
+	    for non-Win32.
+	  * Copied ACE::writev to OS::writev for Win32. Something similar
+	    should happen for other systems...
+
+	* Changes to Thread.*:
+	  * Changed join, suspend and continue to take handles.
+	  * Added thread handle return address to spawn.
+
+	* Changes to Thread_Manager.*:
+	  * Added thread handles to the Thread_Descriptor structure.
+	  * Modified insert_thr and append_thr functions to also take
+	    handles.
+	  * Made ACE_Thread_Descriptor::Thread_State (a enum) public
+	    so Thread_Manager::append_thr could use it as a formal
+	    parameter (I suspect this is a bug in MSVC++).
+	  * Changes the various flavours of suspend, continue, etc. to
+	    use handles instead of id's. Keep in mind that none of this
+	    is destructive for Unix, but vital for Win32.
+	  * There is still a problem with ACE_Thread_Control registering
+	    itself with the Thread_Manager - the thread does not have means
+	    of finding it's own handle. In this particular case, we could
+	    have the thread duplicate it's pseudohandle into a real one,
+	    and pass that one along. I'd really, really, really rather not
+	    have to maintain a thread id->handle mapping myself; It would
+	    slow down thread manipulation and give some troublesome memory
+	    overhead.
+
+	* Changes to Log_Msg.*:
+	  * OS::getpid instead of ::getpid.
+
+	* Changes to Misc.*:
+ 	  * Sections inappropriate for Win32 #if'd out...
+	  * Provided naive timestamp function (No date) for Win32.
+
+	* Changes to IPC_SAP.*:
+ 	  * Uses OS::ioctl instead of ::ioctl
+	  * Uses ACE_INVALID_HANDLE instead of ACE::INVALID_HANDLE
+
+	* Changes to FIFO.*, :
+	  * Uses ACE_INVALID_HANDLE instead of ACE::INVALID_HANDLE
+
+	* Changes to FIFO_Send.*:
+	  * open now returns an int insted of an ACE_HANDLE.
+	  * Uses ACE_INVALID_HANDLE instead of ACE::INVALID_HANDLE
+
+	* Changes to FIFO_Send_Msg.*:
+	  * open now returns an int insted of an ACE_HANDLE.
+	  * Uses ACE_INVALID_HANDLE instead of ACE::INVALID_HANDLE
+	  * Uses OS::writev instead of ::writev
+
+	* Changes to FIFO_Recv.*:
+	  * open now returns an int insted of an ACE_HANDLE.
+	  * Uses ACE_INVALID_HANDLE instead of ACE::INVALID_HANDLE
+
+	* Changes to FIFO_Recv_Msg.*:
+	  * open now returns an int insted of an ACE_HANDLE.
+	  * Uses ACE_INVALID_HANDLE instead of ACE::INVALID_HANDLE
+
+	* Changes to sysincludes.h:
+	  * Uses ACE_INVALID_HANDLE instead of ACE::INVALID_HANDLE
+
+Sat Dec 16 12:29:06 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP/Addr/INET_Addr.C: Changed the implementation so
+	  that the reentrant versions of the library calls are always used
+	  (class OS sorts this all out).  This reduces the amount of
+	  clutter in the code.
+
+	* libsrc/Threads/Synch: Added a new implementation of
+	  "readers/writer" locks for both Windows NT and POSIX pthreads.
+	  By default, these threads packages don't have this feature.
+
+	* libsrc/Threads/Synch: Added a new macro called
+	  ACE_SYNCH_ERROR_RETURN that greatly simplifies the definition of
+	  the synchronization wrappers.
+
+	* include/ace/sysincludes.h: Removed the pthreads_map.h file and
+	  integrated this into sysincludes.h.  
+
+Fri Dec 15 02:39:25 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Misc/OS.i: Finished updating class OS so that it will
+	  compile correctly for OS platforms that don't support threads,
+	  as well as platforms that support POSIX Pthreads vs. Solaris
+	  threads, etc.
+
+	* libsrc/Misc/OS: integrated Jesper S. M|ller <stophph@diku.dk>
+	  support for POSIX regular expressions (e.g., compile() and
+	  step()) and sysinfo() into ACE.
+
+	* Integrated and tested all of Irfan's changes to ACE to support
+	  the new persistence Name_Server.  This added some new classes in
+	  various places that use the ACE_Allocator.
+
+Thu Dec 14 00:23:43 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* tests/ASX/Event_Server/Event_Server: Fixed an "off by 1" bug in
+	  the declaration of char *argv[3] in the open() methods of
+	  Supplier_Router.C and Consumer_Router.C.  Thanks to the "ever
+	  dissatisfied" Alex V Maclinvosky <alexm@teltrunk1.tait.co.nz>
+	  for reporting this.
+
+	* libsrc/Service_Configurator/Service_Config: Added a new
+	  "Singleton" access point for the global ACE_Allocator.
+
+	* libsrc/Naming/Name_Options.C (parse_args): Made it possible to
+	  change the name of the process on the command line via the -P
+	  option.  The default is still to use argv[0] as the process
+	  name.
+
+	* include/ace/testconfig.h (ACE_DEFAULT_GLOBALNAME): Changed the
+	  value from "/localnames" to "/globalnames" to avoid a conflict.
+
+	* libsrc/Misc/SString.C: Added Irfan's new "persistent" string
+	  mechanisms that use the ACE_Allocator_Manager.  We may
+	  eventually update the existing SS* stuff to use this.
+
+	* Merged in Jesper S. M|ller <stophph@diku.dk> updates for Windows
+	  NT.
+
+	* include/ace/Malloc.h: Added a forward declaration for
+	  ACE_Malloc_Iterator right before ACE_Malloc.  Thanks to Antonio
+	  Tortorici <antonio@rh0011.roma.tlsoft.it> for reporting it.
+
+	* libsrc/Threads/Synch_T.h: Fixed a small typo in
+	  ACE_Null_Condition.  Thanks to Antonio Tortorici
+	  <antonio@rh0011.roma.tlsoft.it> for reporting it.
+
+	* include: Added new config-linux.h and platform_macros.GNU config
+	  files for Linux.  Thanks to Timothy Newell
+	  <910430n@dragon.acadiau.ca> for this stuff.
+
+Wed Dec 13 23:08:11 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP/Addr/INET_Addr.C (set): Fixed a small typo in the
+	  ACE_INET_Addr::set (const char port_name[], ACE_UINT32
+	  inet_address) method where the test should be != rather than ==
+	  0.  Thanks to Bill Lear (rael@anarchy.cybercom.net) for
+	  reporting this.
+
+Sun Dec 10 12:23:54 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Service_Configurator/Service_Record.C (init): Fixed a
+	  small problem where a NULL pointer was being returned if a user
+	  passes a non-existent config file (using the -f option) to
+	  ACE_Service_Config::open().  Thanks to Dieter Quehl
+	  (quehl@erlh.siemens.de) for noticing this.
+
+	* libsrc/Log_Msg/Log_Msg.C (log): added a new option (%T) that
+	  causes the current timestamp to be inserted into the log msg.
+	  Thanks to Dieter Quehl (quehl@erlh.siemens.de) for suggesting
+	  this.
+
+	* libsrc/Misc/Misc: Added a new timestamp() method that returns
+	  the current timestamp in the form
+	  "hour:minute:second:microsecond."  The month, day, and year are
+	  also stored in the beginning of the date_and_time array.
+
+	* tests/Shared_Malloc: Added Irfan Pyarali <ip1@cec.wustl.edu> new
+	  test program that exercises the new features of ACE_Malloc that
+	  are described in the following bullet.
+
+	* libsrc/Shared_Malloc: Added Irfan Pyarali <ip1@cec.wustl.edu>
+	  cool new versions of ACE_Malloc and ACE_MMAP_Memory_Pool.  These
+	  new versions provide the following enhancements:
+	  
+	  1. Persistence -- via the sync() method
+	  2. Protection -- via the prot() method
+	  3. Named malloc chunks -- via bind(), find(), unbind().
+	  4. Named iteration -- via ACE_Malloc_Iterator
+
+Thu Dec  7 00:31:26 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Reactor/Signal.C: Replaced ACE_Guard with ACE_TSS_Guard
+	  to ensure that locks are correctly released even if
+	  Event_Handler::handle_signal() callbacks invoke
+	  ACE_Thread::exit().  Thanks to Detlef Becker
+	  (beckerd@erlh.siemens.de) for suggesting this.
+
+	* libsrc/Threads/Synch_T: Used inheritance to factor out the
+	  shared code between ACE_Guard, ACE_Read_Guard, and
+	  ACE_Write_Guard in order to reduce unnecessary duplication.
+
+	* libsrc/Threads/Synch_T: Changed the implementation of ACE_Guard
+	  to keep a pointer to the LOCK rather than a reference.  This
+	  makes the code more flexible and aids in factorization.
+
+	* libsrc/Threads/Synch_T: Changed the implementation of ACE_Guard
+	  to incorporate ACE_Try_Guard semantics.  This reduces the amount
+	  of classes and duplicate code in ACE.
+
+Wed Dec  6 21:36:02 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* include/ace/Trace: Changed the type of the string passed into
+	  ACE_Trace from char * to const char *.
+
+	* libsrc/Reactor/Reactor.C: Had forgotten to initialize the
+	  initialized_ and requeue_position_ members appropriately in the
+	  constructor of the ACE_Reactor if ACE_MT_SAFE is *disabled*.
+	  Thanks to Mark Zusman <marklz@topaz.technion.ac.il> for pointing
+	  this out.
+
+	* libsrc/Threads/Synch_T.C: changed the order of some methods so
+	  they would be properly defined if ACE_HAS_THREADS and
+	  ACE_HAS_THREAD_SPECIFIC are *not* enabled.  This should fix
+	  remaining problems with ACE on SunOS 4 and SGI.  Thanks to
+	  Aniruddha Gokhale <gokhale@cs.wustl.edu> for noticing this.
+
+Tue Dec  5 01:06:14 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* Changed things around so that the Name_Server and Token_Server
+	  client interfaces are include in libACE.
+
+	* libsrc/Shared_Malloc: added a const char *pool_name to
+	  ACE_Malloc::ACE_Malloc.  This is passed into the constructor of
+	  the MEMORY_POOL to make it easier to dynamically name memory
+	  pools.
+
+Mon Dec  4 21:20:28 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Synch_T: Modified the place that the
+	  ACE_Thread_Specific methods are defined so that they will be
+	  compiled correctly for platforms without threads or
+	  thread-specific storage.
+
+Sun Dec  3 23:04:41 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/ASX/Message_Block: Modified clone() so that it takes an
+	  extra parameter that specifies which flags SHOULD NOT BE
+	  TRANSFERED to the clone.  This defaults to
+	  ACE_Message_Block::DONT_DELETE.  Thanks to Alex V Maclinvosky
+	  <alexm@teltrunk1.tait.co.nz> for suggesting this.
+
+Sun Dec  3 17:43:11 1995  Tim H. Harrison  (harrison@lambada.cs.wustl.edu)
+
+	* The number of files in the Token library has been reduced.  As a
+	  result, many of the files have been renamed.  Also, the .i files
+	  have been purged of relatively large methods (these have been
+	  moved to the .C files.)  Lastly, most uses of dynamic memory
+	  allocation have been removed from the library.  This was
+	  important to reduce the amount of serialization in threaded
+	  applications caused by the dynamic allocation.
+
+Sun Dec  3 17:29:54 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Synch: Modified all the synchronization classes
+	  so that they disallow assignment and initialization!
+
+	* libsrc/Threads/Synch: Moved the ACE_Thread_Specific class from
+	  its own files into the Threads/Synch.[Chi] files.  This should
+	  eliminate a set of horrible interdependencies among files.
+
+Sat Dec  2 16:07:40 1995  Douglas C. Schmidt  (schmidt@mambo.cs.wustl.edu)
+
+	* libsrc/Misc/SString.C (ACE_CString): Added a destructor to
+	  CString.  Thanks to Tim for noticing this...
+
+Tue Nov 28 17:25:02 1995  Prashant Jain  (pjain@tango.cs.wustl.edu)
+
+	* apps/Name_Server/client/lib/Name_Proxy: Changed Name_Proxy to
+	  inherit from ACE_Service_Object rather than ACE_Event_Handler.
+	  This will allow a Name_Proxy to be dynamically linked into an
+	  application via the svc.conf file.
+
+	* apps/Name_Server/client/lib/Name_Proxy: Added new methods
+	  init, fini, and info.
+
+Tue Nov 28 00:56:52 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* tests/Threads/test_thread_specific.C: Added code to test the new
+	  ACE_TSS_Guard class...
+
+	* libsrc/Threads/Synch_T: Added the new ACE_TSS_Guard class.  This
+	  class is similar to the existing ACE_Guard, except that it uses
+	  thread-specific storage to ensure locks are released even if a
+	  thread exits via thr_exit()!
+
+Mon Nov 27 20:39:58 1995  Prashant Jain  (pjain@tango.cs.wustl.edu)
+
+        * apps/Name_Server/{client,server}/tests: Added new tests to
+	  exercise the key features of the name server.
+
+	* apps/Name_Server/client/lib: Simplified access to the nameserver
+	  database.  For example, all the network-byte ordering code was
+	  moved out of the Local and Remote Name_Spaces.  This code is no
+	  longer necessary since we'll be providing a different means to
+	  get portable name service repositories via a tool that extracts
+	  the "key/value/type" tuples and stores them in a
+	  machine-independent format.  The result of this change is that
+	  the Name_Server code is much easier to understand and modify.
+
+	* apps/Name_Server/client/lib: Split local and remote name spaces
+	  into two classes to simplify usage.  This approach uses the
+	  Bridge pattern to have a baseclass called Binding and then have
+	  subclasses called Local_Name_Space and Remote_Name_Space.  The
+	  constructor of Naming_Context then allocates the right one
+	  (i.e., it serves as a factory).  This approach remove all the
+	  switch statements in the code and makes it much easier to use
+	  and extend.
+
+	* apps/Name_Server: updated all the Name_Server components to 
+	  use ACE naming conventions.
+
+	* apps/Name_Server/client/lib: Changed ACE_Name_Options to use the
+	  Singleton pattern rather than the global variable...
+
+Mon Nov 27 00:47:32 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Shared_Malloc/Malloc.h: Named the previously anonymous
+	  struct inside of ACE_Malloc_Header to be
+	  ACE_Malloc_Control_Block in order to keep the OSE tools working.
+	  Thanks to Karlheinz for reporting this.
+
+	* libsrc/Threads/Synch: Fixed a major bug in the ACE_Semaphore
+	  wrappers.  Apparently, these had slipped between the cracks and
+	  were not correctly mapping onto the ACE return value scheme
+	  where -1 corresponds to an error with errno set to indicate the
+	  type of error.
+
+	* tests: Cleaned up some files that mistakenly were defining 
+	  LSOCK* objects even for platforms (i.e., Linux) that don't
+	  support them.  Thanks to Timothy Newell
+	  <910430n@dragon.acadiau.ca> for noticing this.
+
+Sun Nov 26 12:42:51 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Shared_Malloc/Malloc: Added a new accessor method
+	  (memory_pool) that returns a reference to the MEMORY_POOL object
+	  used to configure ACE_Malloc.
+
+	* libsrc/Shared_Malloc/Malloc: Changed the constructor of
+	  ACE_Malloc to take advantage of the new init_release method on
+	  all the ACE_*_Memory_Pools.
+
+	* libsrc/Shared_Malloc/Memory_Pool: Added a new method to all the
+	  ACE_*_Memory_Pool classes called "init_release".  This is called
+	  when ACE_Malloc finishes initializing the dynamic memory
+	  manager.  This method is necessary in order to initialize the
+	  ACE_MMAP_Memory_Pool correctly if there are multiple processes
+	  that try to initialize ACE_Malloc simultaneously.  In addition,
+	  also added an ACE_SV_Semaphore_Complex to the
+	  ACE_MMAP_Memory_Pool in order to serialize initialization
+	  correctly.
+
+	* libsrc/Shared_Malloc/Memory_Pool: Added sync() and protect()
+	  methods to all of the ACE_*_Memory_Pool classes in order to
+	  support a uniform interface for use with the "robust memory"
+	  mechanism we're building.
+
+	* libsrc/Mem_Map/Mem_Map: Added two new "protect" methods to
+	  ACE_Map_Manager in order to allow clients to change the
+	  protection of memory-mapped regions.
+
+	* libsrc/ASX/Map_Manager: Changed Map_Manager methods to use
+	  "const" for EXT_ID and INT_ID at request of Prashant Jain
+	  (pjain@cs.wustl.edu).
+
+	* libsrc/Shared_Malloc/Memory_Pool: Revised the
+	  ACE_Shared_Memory_Pool so that it would actually work
+	  correctly...  This code hadn't been reviewed carefully before
+	  and there were some bugs...
+
+	* libsrc/Shared_Malloc/Malloc: added "INLINE" to the
+	  ACE_Allocator_Adapter components.
+
+	* libsrc/Shared_Malloc/Memory_Pool: Greatly simplified and
+	  consolidated the mmap(2) code for ACE_MMAP_Memory_Pool.
+
+	* libsrc/Shared_Malloc/Memory_Pool.i (release): Removed the
+	  vestigal this->mmap_.remove() call in release(), but added the
+	  appropriate code to close the fd and unmap the region.  Thanks
+	  to Irfan Pyarali <ip1@cec.wustl.edu> for noticing this.
+
+Sat Nov 25 18:12:55 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/CORBA/CORBA_Handler.C (activate_service): 
+	  Modified activate_service so that
+
+	  if (service_name != 0
+	      && this->register_service (service_name, marker_name, 
+	                                 service_location) == -1)
+            return -1;
+
+	  is changed to 
+
+	  if (service_name != 0 && service_location != 0
+	      && this->register_service (service_name, marker_name, 
+		            		 service_location) == -1)
+            return -1;
+
+	  Irfan Pyarali <ip1@cec.wustl.edu> requested this.
+
+Sat Nov 25 16:41:15 1995  Douglas C. Schmidt  (schmidt@lambada.cs.wustl.edu)
+
+	* libsrc/Misc/Set: Changed all the find() and size() methods to
+	  be const member functions.  Thanks to Irfan Pyarali
+	  (ip1@cec.wustl.edu) for requesting this.
+
+Fri Nov 24 02:51:59 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Reactor/Reactor.C: Fixed the Reactor so that if we're
+	  compiling with DEADLOCK_DETECTION enabled it will create a
+	  uniquely named mutex by stringifying "this".
+
+Thu Nov 23 21:45:43 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP: Changed
+
+	* libsrc/Service_Configurator/Service_Config: Added three new
+	  methods to allow programmers to set the process-wide Singletons
+	  for Reactor, Service_Repository, and Thread_Manager.
+
+Tue Nov 21 01:59:06 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Mem_Map/Mem_Map.C: Fixed a stupid typo in map_it() that
+	  was causing problems due to unsigned arithmetic semantics...
+	  This should make the file_reverse.C Mem_Map tests work correctly
+	  now...  Thanks to Bill Lear <rael@anarchy.cybercom.net> for
+	  noticing the problem.
+
+	* tests/Mem_Map/IO-tests/io_test.C (parse_args):  Fixed a
+	  classic C/C++ braino in io_test.C:
+
+	  The for loop in parse_args()
+
+	  for (int c; (c = get_opt () != -1); )
+
+	  should be
+
+	  for (int c; ((c = get_opt ()) != -1); )
+
+	  How embarrassing.  Maybe Bertrand Meyer is right -- C++ is too
+	  dangerous for its own good... ;-).  Thanks to Bill Lear
+	  <rael@anarchy.cybercom.net> for finding this!
+
+	* Removed all traces of ACE_Condition<ACE_Mutex> from the library.
+	  This should make life much easier for compilers (like G++) that
+	  can't grok templates very well...
+
+	* libsrc/Threads/Thread_Specific.C (ts_object): Added a new method
+	  that allows you to simultaneously "test and set" thread-specific
+	  data!  This is used to support a neat new trick that ensures
+	  locks are released even if a thr_exit() is called!
+
+	* libsrc/Service_Configurator/Service_Repository: Removed the
+	  Recursive_Mutex from Service_Repository and replaced it with a
+	  regular (non-recursive) mutex.  Had to rewrite the code a bit so
+	  that it wouldn't try to call internal methods that acquired the
+	  mutex (this leads to instant deadlock!)
+
+Mon Nov 20 01:05:47 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Synch: Finally gave in and accepted the fact that
+	  GNU G++ is a horrible, horrible blight on mankind...  Changed
+	  the internals of Synch.[Chi] to completely remove any
+	  dependencies on templates.  I hope this fixes some portability
+	  problems deep in the libraries...  Added several new classes to
+	  reflect this change: ACE_Mutex_Guard, ACE_Mutex_Condition, and
+	  ACE_Recursive_Mutex.
+
+	* libsrc/IPC_SAP/UPIPE_SAP/UPIPE_Acceptor.C (ACE_UPIPE_Acceptor):
+	  Fixed a stupid typo that was causing the constructor of
+	  UPIPE_Acceptor to become inlined!!!
+
+	* apps/Gateway/Gateway: Fixed up the Makefile so that the gatewayd
+	  executable would compile with G++.
+
+	* include/ace/config-irix5.3-sgic++.h: Changed the SGI config.h
+	  file so that it uses select() rather than poll() by default.
+	  The select() version of the Reactor is implemented more
+	  efficiently in ACE...
+
+        * include: Added config files for AIX courtesy of Byron Walton
+	  <bwalton@hughes.scg.hac.com>.
+
+	* libsrc/Reactor/Signal.C: #ifdef'd out some code in Signal.[hC]
+	  that was causing problems for the HPUX C++ compiler.  What a
+	  *horrible* compiler!
+
+	* libsrc/Reactor/Event_Handler.h: Added two new methods to
+	  ACE_Event_Handler: get_priority() and set_priority().  These
+	  will be used to control the behavior of the ACE_Reactor's
+	  dispatching.  This also required added a new data member to
+	  ACE_Event_Handler that stores the priority (which defaults to
+	  MIN_PRIORITY).
+
+	* libsrc/Misc/Stack.C (enqueue): Added a new class called
+	  ACE_Unbounded_Queue.  This is required for Tim's Token_Server
+	  connection repository stuff...
+
+	* libsrc/CORBA/CORBA_Handler.C: Added new support to both the
+	  single-threaded and multi-threaded versions of CORBA_Handler so
+	  that it will now suspend/resume the services associated with a
+	  CORBA_Handler.
+
+	* libsrc/CORBA/CORBA_Handler.C (ACE_MT_CORBA_Handler): Updated the
+	  constructor to use the associated Thread_Manager to spawn a new
+	  thread.  This will allow the suspend() and resume() methods to
+	  atomically resume and suspend the daemon thread and its event
+	  handler.
+
+	* libsrc/Threads/Synch.h: Fixed up the order of #includes to solve
+	  problems with circular header dependencies!
+
+	* Had to add zillions of little changes to avoid problems with
+	  circular includes for G++...
+
+	* tests/ASX/Event_Server/Event_Server/Peer_Router.C (bind_peer):
+	  Fixed a typo that had been dormant for ages due to C++'s very
+	  late binding of templates...  G++ picked this right up!
+
+Sun Nov 19 11:55:02 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Reactor/Signal: Replaced the static HANDLER_SET stuff
+	  withing ACE_Sig_Handlers with a different implementation using
+	  ACE_Fixed_Set.  This should fix nasty problems with static
+	  variables on HP/UX...
+
+        * Fixed the entire library so that all occurrences of ace_log_msg
+	  are changed to use the ACE_LOG_MSG macro.  This macro has magic
+	  properties that should greatly simplify the effort required to
+	  compile ACE robustly on platforms with lame C++ compilers...
+
+	* libsrc/Log_Msg/Log_Msg: Finally got my act together with respect
+	  to thread-specific data and the ACE_Log_Msg class.  The new
+	  version can be conditionally compiled such that it won't use the
+	  ACE_Thread_Specific smart-pointer wrapper mechanism unless the
+	  platform supports thread-specific storage and threads.  This
+	  will make life much easier for lame C++ compilers that can't
+	  handle static data member templates correctly...  
+
+	* apps/Name_Server/{client,server}/lib/Makefile (LIBS): Added a
+	  reference to -lACE in the Makefiles of the ./lib directories in
+	  order to get GCC to work correctly...
+
+        * Added a bunch of fixes courtesy of Bill Lear
+	  <rael@anarchy.cybercom.net> to make ACE compile more cleanly
+	  with GNU GCC 2.7.x.
+
+Sat Nov 18 11:27:40 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Misc/Trace.C: Fixed up the ACE_Trace class so that it
+	  will compile better on platforms that don't support
+	  thread-specific storage.  The trick was to make a new Singleton
+	  called ACE_Nest_Depth and then conditionally compile it
+	  according to whether the platform supports thread-specific data
+	  or not!
+
+	* include/makeinclude/platform_sunos5_g++.GNU: Added the new
+	  config file that should allow ACE to build correctly with GCC
+	  2.7.x.  Todd L. Montgomery <tmont@cerc.wvu.edu> deserves a big
+	  round of applause for getting this stuff to work!  If I had a
+	  budget, I'd give him a raise ;-)
+
+	* libsrc/Misc/Set.C (remove): Tightened up the semantics of all
+	  the *Set::remove() methods so that they return 1 if they
+	  succeed, 0 if the item isn't in the set, and -1 if they fail.
+	  Thanks to Tim Harrison for noticing the inconsistencies.
+
+Fri Nov 17 01:34:51 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* apps/Logger/Reactor_Logger: Fixed up this example app so that it
+	  would compile with GNU G++ correctly.  There was a problem with
+	  the order of include files!  Thanks to Todd L. Montgomery
+	  <tmont@cerc.wvu.edu> for reporting this.
+
+	* libsrc/ASX/Module.C (writer): Fixed ACE_READER so that it is
+	  properly qualified with ACE_Task_Flags::ACE_READER.  Thanks to
+	  Neil Cohen (nbc@metsci.com) for finding this!
+
+	* apps/Gateway/Gateway/Routing_Entry: Replaced ACE_Fixed_Set with
+	  ACE_Unbounded_Set to get around the seemingly endless problems
+	  with HP/UX...
+
+	* libsrc/Misc/Set: Fixed a braino in ACE_Unbounded_Set, where I'd
+	  forgotten to define cur_size_.  Thanks to Todd L. Montgomery
+	  <tmont@cerc.wvu.edu> for reporting this.
+
+	* libsrc/Connection/Acceptor.C: Change the #undefs of the
+	  shorthand names PA_AC_1, PA_AC_2, and PA_AD in
+	  libsrc/Connection/Acceptor.C to PR_AC_1, PR_AC_2, and PR_AD
+	  (same as in Connector.C and Strategies.C).  Thanks to 
+	  Dieter Quehl <quehl@erlh.siemens.de> for reporting this.
+
+Thu Nov 16 02:14:22 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Misc/Trace: Fixed the ACE_Trace stuff by making the
+	  "nesting_indent_" a static data member.  This will undoubtedly
+	  break some lame C++ compilers, but it's easy enough to remove
+	  this stuff via conditional compilation using the ACE_NTRACE
+	  #define in ./include/ace/config.h.
+
+	* libsrc/Threads/Thread_Specific.C (cleanup): Under no
+	  circumstances should ACE_Thread_Specific be allowed to
+	  called ACE_Trace.  Otherwise, chaos will result!
+
+	* apps/Name_Server/{client,server}/tests/Makefile: Switched the
+	  order of the -lACE and -lName* so that -lACE came *afterwards*
+	  in order for the SGI linker to pick up the symbols correctly.
+
+	* libsrc/Reactor/Signal: I'd accidentally put the "dump" methods
+	  in the *.i file rather than the *.C file.  This was causing
+	  problems for G++.
+
+	* libsrc/ASX/Task: Changed all "Q_" prefixes to "ACE_" prefixes in
+	  order to work around a bug with HP/UX...
+
+	* Recompiled everything on SunOS 4.x with SunC++ 4.0.1.  It seems
+	  to work!
+
+Thu Nov 16 18:05:03 1995  Tim H. Harrison  (harrison@tango.cs.wustl.edu)
+
+	* I moved around some class declarations so that g++ can properly
+	  instantiate templates for ACE_Token_Collection and
+	  ACE_Token_Manager.
+
+Wed Nov 15 00:26:40 1995  Tim H. Harrison  (harrison@lambada.cs.wustl.edu)
+
+	* The token library should now compile on platforms which do not
+	  support threads.  All token components will be compiled into the
+	  library, but use null mutexes and condition variables.  The
+	  remote mutex library shall run properly on single-threaded
+	  platforms, so it compiles as usual.
+
+Wed Nov 15 01:05:38 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* Fixed a bunch of minor problems with the SGI port.  Things
+	  should work now on IRIX 5.3!
+
+	* man/man3: Completely regenerated all the manual pages to
+	  reflect all the recent updates.
+
+	* libsrc: Added ACE_TRACE macros to every single method in ACE!
+	  This will help with debugging...
+
+Wed Nov 15 00:26:40 1995  Tim H. Harrison  (harrison@lambada.cs.wustl.edu)
+
+	* The token library should now compile on platforms which do not
+	  support threads.  All token components will be compiled into the
+	  library, but use null mutexes and condition variables.  The
+	  remote mutex library shall run properly on single-threaded
+	  platforms, so it compiles as usual.
+
+Tue Nov 14 01:58:47 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* tests/CORBA: Added a new test to illustrate the
+	  ACE_MT_CORBA_Handler.
+
+	* libsrc/ASX/Task.C (ACE_Task_Exit): Fixed a niggling problem with
+	  ACE_Task_Exit.  Originally, if a thread exited via an implicit
+	  ACE_Thread::exit() (i.e., "falling off the end of the
+	  ACE_Task::svc_run function) then the ACE_Thread_Control on the
+	  thread stack would automatically unregister the thread from the
+	  ACE_Thread_Manager.  However, this did *not* occur if a thread
+	  explicitly called ACE_Thread::exit() since in that case the
+	  destructor for ACE_Thread_Control never got called.  The
+	  solution to this is a trivial change to ACE_Task_Exit, which now
+	  maintains an instance of ACE_Thread_Control internally, which
+	  will automatically be released when the thread-specific
+	  thread-exit-hook destructor gets called to cleanup upon thread
+	  exit.  Since this happens regardless of whether the thread
+	  terminates implicitly or explicitly the ACE_Thread_Manager will
+	  always be able to clean up it's internal resources (unless the
+	  process exit()s, which is a whole different issue... ;-)).
+
+        * Changed all occurrences of ACE_CORBA_Handler to
+	  ACE_ST_CORBA_Handler.  Now we've got two types of
+	  CORBA_Handlers: single-threaded (ST) and multi-threaded (MT).
+	  Take a look at ./apps/Orbix-examples/Event_Comm/{Supplier,Consumer} 
+	  for an example of how to leverage this in a portable manner!
+
+	* libsrc/CORBA/CORBA_Handler: Totally redesigned the ACE
+	  CORBA_Handler stuff so that it now uses the Singleton pattern
+	  explicitly, rather than using the half-baked static method
+	  version...  Changed the test code to reflect this update!
+
+	* libsrc/CORBA/CORBA_Handler.C (activate_service): Changed the
+	  check so that if <service_name> == 0 then we don't try to do a
+	  putit (previously, this check used <marker_name>, which is less
+	  useful...).
+
+	* libsrc/CORBA/CORBA_Handler.C (activate_service): Removed the
+	  <default_iterations> flag from the constructor so that we can
+	  make the CORBA_Handler and the MT_CORBA_Handler equivalent.
+
+	* include/ace/sysincludes.h: Added a new macro called
+	  ACE_THREAD_EXIT_HOOK that enables application threads
+	  (including the main thread) to register a Task * who's
+	  close method will automatically be called when the thread
+	  exits, either implicitly (by falling off the end) or explicitly
+	  (by a thread calling ACE_Thread::exit ()).
+
+	* libsrc/ASX/Task: Moved ACE_Task_Exit into the interface part of
+	  ACE_Task so that Irfan can maybe use this in his stuff ;-).
+
+	* libsrc/Misc: Incorporated the ACE_Date_Time class into the
+	  release.  This is an *interface* for a system independent
+	  representation of date and time.  Implementation will follow...
+
+	* libsrc/CORBA: Added a new MT_CORBA_Handler, which makes it
+	  very straightforward to integrate the ACE_Reactor with
+	  multi-threaded (MT) Orbix.
+
+	* libsrc/Threads/Token.C: Yow, fixed a dumb problem in Tokens.C
+	  where I was failing to include the *.i file if we weren't
+	  compiling with inlining on!!!!
+
+Mon Nov 13 01:13:37 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/ASX/Message_Block: Added several new methods to
+	  Message_Block to allow users to access and set various flags.
+	  Thanks to Alex V Maclinvosky <alexm@teltrunk1.tait.co.nz> for
+	  suggesting this and providing a prototype implementation.
+
+        * include/ace/sysincludes.h: Added a new macro called ACE_NDEBUG
+	  that can be used to toggle support for "live object dumping".
+	  If this macro is enabled then
+
+	* libsrc/Misc/Dump.h: Added support for "live object dumping" into
+	  ACE.  This technique is implemented with the "External
+	  Polymorphism" pattern described in a paper available at
+	  http://www.cs.wustl.edu/~schmidt/EuroPLoP-96.ps.Z.  
+
+	* libsrc/Threads: Added new classes called *_Process_* and
+	  *_Thread_* for ACE_RW_Mutex, ACE_Barrier, ACE_Condition, and
+	  ACE_Semphaore.  This will allow programmers explicitly state the
+	  scope of their locks more explicitly and will also facilitate
+	  portability to Windows NT...
+
+	* libsrc/Threads: Updated the constructors of all the Synch and
+	  Synch_T classes to take an option const char * called "name."
+	  At the moment, this doesn't do anything, but when we port to
+	  Window NT it will be used to ensure that we can name our
+	  process-global synchronization objects.
+
+	* libsrc/Threads/Synch: Added a new tryacquire method to
+	  ACE_RW_Mutex to be consistent with acquire and release...
+
+	* libsrc/Threads/Synch.C (ACE_Mutex): Added a new "name" parameter
+	  to an ACE_Mutex in order to support process-semantics on NT...
+
+	* include/ace/sysincludes.h: Added a #define for EDEADLK in case
+	  some systems don't support it (this is needed by the new
+	  ACE_*_Token stuff).
+
+Sun Nov 12 14:17:01 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* apps/Name_Server: Modified the client and server test programs
+	  so that they can both be linked statically and/or dynamically.
+	  If svc.conf is present then dynamic linking is used, otherwise
+	  static linking is used.  This makes it much easier to test!!!
+
+	* apps/Name_Server/client/lib/Naming_Context.C (local): Changed
+	  things a bit so that if our server host name is "localhost" then
+	  we assume we are local no matter what...
+
+	* apps/Name_Server: Moved directories around a bit so that all the
+	  tests and libs for the client/server portions of the
+	  ACE_Name_Server build correctly...
+
+	* apps/Name_Server/server: Replaced the ad hoc Name_Acceptor and
+	  Name_Handler to use the official ACE_Acceptor and
+	  ACE_Svc_Handler...  This cleans up the code considerably...
+
+	* libsrc/Threads/Synch: Added a new wrapper for the the UNIX file
+	  locking mechanism called ACE_File_Lock.  This has the same
+	  interface as the other locking mechanisms (e.g., ACE_Mutex and
+	  ACE_Semaphore).  Therefore, it can be used in the ACE_Guard
+	  class!
+
+Sat Nov 11 13:53:48 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Shared_Malloc/Memory_Pool: Improved MMAP_Memory_Pool so
+	  that it will be smarter about remapping the file if we aren't
+	  trying to force a fixed addr to be used for the mapping.  In
+	  particular, if we *aren't* forcing a particular address, the new
+	  solution will be more flexible and allow the OS to determine
+	  where to remap the memory should we need to grow the backing
+	  store and the mapping range...
+
+	* libsrc/Misc/Set: Implemented a simple version of the
+	  Unbounded_Set class and its iterator.
+
+	* libsrc/Misc/SString: Changed all the implementations of methods
+	  in SString classes to use new/delete rather than
+	  strdup()/free().
+
+	* apps/Name_Server/client/Name_Proxy: Changed rcv_reply() to
+	  recv_reply().
+
+	* apps/Name_Server/client/Name_Proxy: Modified ACE_Name_Proxy so
+	  that the constructor and open take an ACE_Synch_Options.
+
+	* apps/Name_Server/client/Name_Options.C (ACE_Name_Options): Added
+	  a default for the Name_Space directory called
+	  (ACE_DEFAULT_NAMESPACE_DIR) to the testconfig.h file...
+
+Sat Nov 11 00:24:37 1995  Tim H. Harrison  (harrison@lambada.cs.wustl.edu)
+
+	* tests/Tokens/test_token_manager/test_token_manager.C: The token
+	  manager has a working deadlock detection algorithm.
+	  ACE_Local_Mutex uses this to report deadlock situations.
+	  Changes were made to ACE_Local_Mutex to fix a couple bugs which
+	  were causing deadlock.  Also, a new test application has been
+	  added to test deadlock detection using the local mutex.	  
+
+Fri Nov 10 17:16:06 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Mem_Map/Mem_Map.h: Changed the type of <length_> from
+	  long to size_t.
+
+	* tests/Threads/test_thread_manager.C (main): Added a main() for
+	  the case when there's
+
+	* tests/ASX/UPIPE_Event_Server/event_server.C (main): Fixed a
+	  typo that was causing problems on SunOS 4.x.
+
+	* tests/Service_Configurator/IPC-tests/client/local_spipe_client_test.C:
+	  added #include "ace/Log_Msg.h" (why was this working?!).
+
+	* include/makeinclude/rules.lib.GNU: Changed the order of operations
+	  in rules.lib.GNU from
+
+	  $(AR) $(ARFLAGS) $@ $?
+	  -$(RANLIB) $@
+	  -chmod a+r $@
+ 
+          to
+
+	  $(AR) $(ARFLAGS) $@ $?
+	  -chmod a+r $@
+	  -$(RANLIB) $@
+
+	  to keep ranlib happy on SunOS 4.x.
+
+	* apps/Time_Server: Added a Makefile
+
+	* include/ace/sysincludes.h: Removed the <termios.h> include
+	  since it was causing major problems on SunOS 4.x...
+
+	* apps/Name_Server/Naming_Context.C: Fixed up a couple of problems
+	  with casts.  Thanks to Jack Erickson <jack@cibc.com> for
+	  pointing this out.
+
+Thu Nov  9 15:49:40 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Synch_T: moved Atomic_Op from ./Misc to ./Threads
+	  and merged it into the Synch_T files.  This makes more sense as
+	  a place to put it...
+
+	* libsrc/Misc/SString.C (operator +=): Fixed a typo that would
+	  have caused mistakes when memcpy() was used.  Thanks to Prashant
+	  Jain <pjain@wuerl.wustl.edu> for noticing this.
+
+Wed Nov  8 22:36:51 1995  Tim H. Harrison  (harrison@lambada.cs.wustl.edu)
+
+	* libsrc/Reactor/Reactor.C (TOKEN_GUARD): The reactor now uses the
+	  TOKEN_GUARD macro.  The Reactor can now be conditionally
+	  compiled with ACE_REACTOR_HAS_DEADLOCK_DETECTION to use the new
+	  ACE_Local_Mutex in conjunction with the ACE_Token_Manager to
+	  detect deadlock.  The deadlock detection algorithm has not yet
+	  been implemented, but the hooks are now in place.
+
+	* libsrc/Tokens:  This subdir includes ACE's new Token library.
+	  Check out libsrc/Tokens/README for more info.
+
+	* tests/Tokens:  There are a couple test applications for the new
+	  Token library.  See tests/Tokens/README for more info.
+
+	* apps/Token_Server:  This directory contains some new client
+	  interfaces to the old ACE TokenServer, now Token_Server.  There
+	  are also some example use cases included in this directory.  As
+	  always, see apps/Token_Server/README for more info.
+
+Wed Nov  8 00:14:55 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP/IO_SAP: Added the new classes for IO_SAP from
+	  Gerhard Lenzer (lenzer@csaserv.erlh.siemens.de).  This 
+	  eliminates UNIX I/O-specific features from ACE.
+
+	* libsrc/Misc/Set: Added a new find() method to each of the
+	  ACE_*_Set classes...
+
+	* include/ace/sysincludes.h (ACE_ALLOC_HOOK_DECLARE): Changed
+	  enum __Ace { __ACE } to struct __ACE {}.  I think this
+	  will cause less problems with M.I...
+
+	* libsrc/ASX/Message_Block: Added a new "allocator" parameter to a
+	  Message_Block.  This allows the memory stored by a Message_Block
+	  to come from someplace besides the normal heap (e.g., a shared
+	  memory segment!).
+
+	* libsrc/ASX/Message_Block.C (ACE_Message_Block): Yow, fixed a bug
+	  in the destructor where ACE_BIT_ENABLED was being used in place
+	  of ACE_BIT_DISABLED!  I think this was causing a memory leak...
+
+	* libsrc/Reactor/Reactor: added a pair of methods that allow a
+	  thread to set/get the notion of who "owns" the event loop.  Only
+	  the owner of the loop can do a handle_events() call.  Also
+	  changed things so that the requeue_position() are available for
+	  both threaded and non-threaded implementations (just to have a
+	  uniform interface...).
+
+	* libsrc/ASX/Message_Block: added a new constructor and a new
+          init() method that just assume ownership of a char * passed
+	  as the parameter.  Note that this does *not* set any other
+	  fields in the Message_Block and is only used to ferry around 
+	  totally opaque data in the Message Block!
+
+Tue Nov  7 00:52:15 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* tests/Log_Msg/test_log_msg.C (main): Added some new tests to
+	  make sure that op_status() and errnum() work on ace_log_msg.
+	  Thanks to Tim Harrison for these tests.
+
+Mon Nov  6 12:55:46 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Thread_Specific: Changed a couple of places in
+	  the Thread_Specific code so that key_ is initialized to 0 and
+	  the ts_obj * is initialized to 0.  If these *aren't* 0 then
+	  weird bugs happen on Solaris...  Thanks to Tim Harrison for
+	  noticing this and suggesting the fix!
+
+	* libsrc/Threads/Synch_T: Added an accessor method to obtain
+	  the underlying mutex within ACE_Condition.
+
+	* libsrc/Threads/Synch.C (ACE_Process_Mutex): Added a dummy
+	  argument of type const char * to ACE_Process_Mutex.  This is in
+	  anticipation of the info required in Windows NT to support a
+	  named process-wide Mutex.  On UNIX, this argument is ignored...
+
+Fri Nov  3 19:02:54 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP/SOCK_SAP: Back from C++ World...  Fixed a couple
+	  of typos in SOCK_Dgram_Bcast and SOCK_CODgram that included the
+	  *.i files multiple times...  Thanks to Alex V Maclinvosky
+	  <alexm@teltrunk1.tait.co.nz> for reporting this.
+
+Tue Oct 31 02:12:13 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Reactor/Reactor: Modifed the MT_SAFE Reactor so that the
+	  its open() method keeps track of which thread originally created
+	  it.  This thread is then considered the "owner" of the Reactor.
+	  If a different thread tries to run the handle_events() method
+	  then an error is returned.
+
+	* libsrc/ASX/Task.C: Added a "group id" field to the ACE_Task.
+	  This can be used to suspend and resume a group of tasks
+	  atomically.  Also added default suspend() and resume() methods
+	  that do just that!
+
+	* libsrc/Reactor/Reactor: Made the open() method
+	  thread-safe.  Thanks to Detlef Becker (beckerd@erlh.siemens.de)
+	  for pointing out the need for this.
+
+Mon Oct 30 00:02:53 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Shared_Malloc/Memory_Pool.C (ACE_MMAP_Memory_Pool): 
+	  Made it possible to configure the ACE_MMAP_Memory_Pool with a
+	  (backing_store_) file name so that it is possible for multiple
+	  processes to share one wellknown file, as well as to have
+	  multiple pools per process.  Check out the
+	  ./tests/Shared_Malloc/test_malloc.C file for an example of how
+	  this works (try the -p -e -L10000 -t3 options).  
+
+	* libsrc/Reactor/Reactor: Moved handler_i into the *.C file to
+	  avoid problems with inline functions on HP/UX.
+
+        * libsrc/Misc/SString: Added a new class called ACE_CString.  This
+	  class is similar to ACE_WString (which has "wide character"
+	  size), though CString has regular "char" size.  Note that both
+	  of these classes are "true" string classes, unlike ACE_SString,
+	  which is a very simple string class that is only to be used for
+	  very specific purposes...
+
+	* libsrc/Shared_Malloc/Memory_Pool.C (acquire): Fixed an
+	  "off-by-one" error in ACE_MMAP_Memory_Pool::acquire() that was
+	  causing an extra byte to be written to the backing store file...
+	  This was causing the ./tests/Shared_Malloc/test_malloc.C program
+	  to fail when -p was given.  After this fix the test works
+	  again... (thank God!).
+
+Sun Oct 29 22:43:25 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Shared_Malloc/Malloc: Added two new classes:
+	  ACE_Allocator and ACE_Allocator_Adapter.  ACE_Allocator uses
+	  inheritance and dynamic binding to provide extensible mechanisms
+	  for allocating and deallocating memory.  ACE_Allocator_Adapter
+	  implements the Adapter pattern to enable ACE_Allocator to be
+	  used with instantiations of the ACE_Malloc<> template class.
+
+Sat Oct 28 13:51:07 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* tests/ASX/Event_Server: Added a new directory called
+	  UPIPE_Event_Server, which tests a version of the Event_Server 
+	  that is instantiated with ACE_UPIPE_* IPC mechanisms,
+	  rather than by the ACE_SOCK_* mechanisms.
+
+	* libsrc/IPC_SAP/Addr: Created a new file called UPIPE_Addr.h.
+	  This file contains a typedef of ACE_SPIPE_Addr to
+	  ACE_UPIPE_Addr.  The purpose of doing this is to "logically"
+	  decouple the ACE_UPIPE* classes from the ACE_SPIPE* classes
+	  (even though they share the same *physical* representation at
+	  this point...).
+
+	* libsrc/IPC_SAP: Fixed a small bug in TLI_Connector.connect() and
+	  SOCK_Connector.connect() that failed to set the
+	  new_stream::handle_ to ACE::INVALID_HANDLE when the connection
+	  failed.  Thanks to the ever-astute Mark Patton
+	  (mark_patton@tx72.mot.com) for noticing this.
+
+Thu Oct 26 15:08:22 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* tests/Threads: created a new test program called
+	  test_thread_manager.C that tests the new semantics for managing
+	  groups of threads.
+
+	* libsrc/Reactor/Signal.C (ACE_Sig_Action): Added a new method
+	  that allows me to create a Sig_Action object that contains both
+	  the handler and the signal to register for.  This handler is
+	  register to handle the signal in the constructor of the
+	  object...
+
+	* libsrc/Threads/Thread_Manager: enhanced the Thread_Manager to
+	  add support for operations (i.e., suspend, resume, kill) on a
+	  group of threads.
+
+	* libsrc/Threads/Thread_Manager: Added a new method that allows
+	  the Thread_Manager to resize itself automatically when it's
+	  internal table gets full.
+
+	* libsrc/Threads/Thread_Manager: Updated the return value of
+	  Thread_Manager::spawn() and Thread_Manager::spawn_n() so that
+	  they return -1 on failure *and the group id* on success.
+	  Originally, they returned 0 on success, but this new return
+	  value is more useful since it can be used to control groups of
+	  threads atomically.
+
+Wed Oct 25 01:03:32 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * apps/Name_Server: Began integrating the newly donated name
+	  server into ACE.  There are a number of dependencies on
+	  RogueWave that must be removed, but things are looking good so
+	  far.
+
+	* libsrc/Misc/Set: Changed the name of ACE_Unordered_Set to
+	  ACE_Fixed_Set to be consistent with the ACE Stack classes...
+
+	* libsrc/Misc/Set: Added new ACE classes called ACE_Unbounded_Set,
+	  ACE_Bounded_Set, ACE_Unbounded_Set_Iterator, and
+	  ACE_Bounded_Set_Iterator to deal with ACE name service
+	  stuff.
+
+	* libsrc/Misc/SString: Added a new class called ACE_WString that
+	  gives a very simple "wide-character" string representation for
+	  ACE.  This is needed for the ACE name service stuff.
+
+	* libsrc/Misc/SString.C (operator =): Fixed this so that ::strdup
+	  is matched up with ::free, rather than with delete...
+
+	* libsrc/Log_Msg/Log_Msg.C (log): Updated the ACE_Log_Msg class to
+	  store an ostream * in thread-specific storage.  This can be used
+	  in conjunction with the dump() method on each ACE class, as well
+	  as with the ACE_ERROR and ACE_DEBUG logging macros.
+
+Tue Oct 24 00:19:13 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* Added a definition of the dump() method to every class in ACE in
+	  anticipation of the changes requested for Siemens.
+
+	* Changed all occurrences of ACE_Signal_* to ACE_Sig_* to make the
+	  ACE naming of signal handling wrappers consistent.
+
+	* libsrc/Threads/Thread: Fixed some obscure bugs with the way that
+	  ACE_Thread was compiling on platforms that don't support
+	  threads.
+
+	* include/ace/config-irix*.h: Removed all TLI support from the SGI
+	  platform.  It seems to be totally screwed up from the tests that
+	  I've run and there's no sense in bending over backwards to
+	  support an IPC API that is brain-damaged to begin with...
+
+	* apps/Logger/Service_Configurator_Logger/Thr_Server_Logger: Fixed
+	  up the code so that the Thr_Logging_Server stuff will compile
+	  correctly even for platforms that lack threads!
+
+	* libsrc/Connection/Strategies: Added new strategies that provide
+  	  Singleton creation and Process concurrency policies.
+
+	* libsrc/Connection/Connector.C (handle_close): Make sure that all
+	  pending timer objects are removed from the Reactor's timer queue
+	  when a Connector shuts down.  In addition, make sure to remove
+	  and delete all dynamically allocated ASTs, as well.  Thanks to
+	  Karl-Heinz Dorn (kdorn@erlh.siemens.de) for suggesting this.
+
+	* libsrc/Threads/Thread_Manager.C (wait): Modified wait() so that
+	  it now takes an ACE_Time_Value *, which can be used to wait
+	  until all threads terminate or a timeout occurs...
+
+	* libsrc/Threads/Thread_Manager: Moved Thr_Descriptor from within
+	  the ACE_Thread_Manager class to become ACE_Thr_Descriptor at
+	  file scope.  This is in anticipation of the cool new thread
+	  manager stuff on the way...
+
+	* libsrc: Updated every class in ACE to include a "dump" method
+	  with the signature "void dump (void);" This method soon will be
+	  tied into the ACE_Dump mechanism to allow all live objects in
+	  ACE to have their state dumped automagically on-demand.  This is
+	  useful for debugging and tracing etc.
+
+	* libsrc: Updated every class in ACE to include a "Alloc hook."
+	  This hook will enable all ACE classes to be allocated from a
+	  particular memory pool.
+
+	* include/makeinclude/rules.local.GNU: fixed the clean target to
+	  delete the *.rpo files (else gcc -frepo can get some crazy
+	  errors) and combines all rm-commands for the target realclean
+	  into one command (in some cases the last two lines do not have
+	  any files to delete, in which case rm produces an usage
+	  message).  Thanks to John Huchinson (hutchiso@epi.syr.ge.com)
+	  for the patch.
+
+	* libsrc/IPC_SAP/Addr/INET_Addr: Fixed all the uses of gethost*
+	  and getserv* to use the reentrant get*_r functions if
+	  ACE_HAS_REENTRANT_FUNCTIONS is set and ACE_MT_SAFE is set.
+	  Thanks to Bill Tang <tang@tekats.com> for suggesting this.
+
+	* libsrc/Misc/OS: Started adding support for the POSIX *_r
+	  functions to the OS class.
+
+	* include/ace: Added a new #define called
+	  ACE_HAS_REENTRANT_FUNCTIONS.  This indicates that the platform
+	  supports reentrant functions (i.e., all the POSIX *_r functions
+	  like gethostbyname_r).
+
+Mon Oct 23 21:15:50 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* include/makeinclude/platform_irix5.3.GNU (LIBS): Removed the
+	  link of the nsl lib since it seems not to be present on this
+	  platform.  Thanks to Karel Zuiderveld
+	  <Karel.Zuiderveld@cv.ruu.nl> for noticing this.
+
+	* libsrc/IPC_SAP/Addr/INET_Addr.i (operator ==): Enhanced the
+	  semantics of comparison to check both the port number and IP
+	  address.  Thanks to Mark Patton (mark_patton@tx72.mot.com) for
+	  suggesting this.
+
+Thu Oct 19 00:10:28 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP/Addr/INET_Addr.C (set): Fixed a stupid bug that
+	  failed to set errno appropriately if things go wrong with this
+	  method.  Thanks to Mark Patton (mark_patton@tx72.mot.com) for
+	  noticing this!
+
+Sat Oct 14 12:07:16 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Thread_Manager: Modified the Thread_Manager so
+	  that even in the case where we are compiling for non-MT systems
+	  the Thread_Manager still has the same method interface (all of
+	  which are no-ops).
+
+Wed Oct 11 00:12:57 1995  Douglas C. Schmidt  (schmidt@mambo.cs.wustl.edu)
+
+	* Finished commenting all the classes in ACE.  Updated all manual
+	  pages accordingly.
+
+Fri Oct  6 14:17:17 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* tests/ASX/Event_Server/Event_Server: Changed 
+
+	  ACE_SOCK_Acceptor &sa = (ACE_SOCK_Acceptor &) *this->acceptor_;
+ 
+          to
+ 
+          ACE_SOCK_Acceptor &sa = this->acceptor_->acceptor();
+
+	  Thanks to Dieter Quehl (quehl@erlh.siemens.de) for suggesting
+          this.
+
+Thu Oct  5 00:22:56 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/ASX/Map_Manager: Added a new find() method to the
+	  Map_Manager.  This method only checks for the existence of an
+	  EXTERNAL_ID, and doesn't return the INTERNAL_ID.
+
+	* Introduced the new "trait"-based *_Connector, *_Acceptor, and
+	  *_Stream interfaces for all the IPC_SAP classes.  Basically, for
+	  each class like
+	  {SOCK,TLI,SPIPE,etc,}_{Acceptor,Connector,Stream}, there's now a
+	  typedef for the appropriate type of ACE_*_Addr subclass and the
+	  appropriate type of ACE_*_Stream class.  For example, here's
+	  what's in ACE_SOCK_Acceptor (same goes for ACE_SOCK_Connector):
+	  
+	  class ACE_SOCK_Acceptor 
+	  {
+	  public:
+	    // ...
+	    
+	    // = Traits.
+	    typedef ACE_INET_Addr PEER_ADDR;
+	    typedef ACE_SOCK_Stream PEER_STREAM;
+	  };
+
+	  Once C++ compilers can grok template typedefs correct, this new
+	  approach will allow much greater simplification of code, so that
+	  template classes like
+
+	  template <class SVC_HANDLER, class PEER_ACCEPTOR, class PEER_ADDR>	  
+	  class ACE_Acceptor { /* ... */ 
+	    virtual int open (const PEER_ADDR &); 
+	  };
+	  
+	  that are currently used like this:
+	  
+	  ACE_Acceptor <My_Svc_Handler, ACE_SOCK_Acceptor, ACE_INET_Addr> acc;
+
+	  can be replaced with
+
+	  template <class SVC_HANDLER, class PEER_ACCEPTOR>
+	  class ACE_Acceptor { /* ... */ 
+	    virtual int open (const PEER_ACCEPTOR::PEER_ADDR &); 
+          };
+
+	  that are used like this:
+
+	  ACE_Acceptor <My_Svc_Handler, ACE_SOCK_Acceptor> acc;
+
+	  i.e., the ACE_SOCK_Acceptor maintains a "trait" that the
+	  ACE_Acceptor uses to determine the appropriate addr.  This is
+	  more concise and less error-prone than the current scheme that
+	  requires you to pass into the ACE_INET_Addr separately (ugh).
+
+	  Note that the trick to making all this work is to typedef the
+	  PEER_ADDR trait into the ACE_SOCK_Acceptor class, as follows:
+
+	  class ACE_SOCK_Acceptor {
+	  public:
+	    typedef ACE_INET_Addr PEER_ADDR; // Trait...
+	  };
+	  
+	  Unfortunately, none of the C++ compilers (e.g., SunC++ 4.0.1,
+	  G++ 2.7.0) support this stuff yet...  Therefore, I've added
+	  a set of macros that that will toggle back and forth between
+	  whichever approach works, depending on the setting of 
+	  ACE_HAS_TEMPLATE_TYPEDEFS.  Hopefully, over time compilers will
+	  support this stuff correctly and life will become easier.
+
+	* libsrc/ASX/Message_Queue: Changed all occurrences of the S_MUTEX
+	  and S_CONDITION macros to ACE_SYNCH_MUTEX and
+	  ACE_SYNCH_CONDITION in order to conform to the new ACE namespace
+	  control conventions.
+
+	* libsrc/Connection/Acceptor: Modified the Acceptor class to split
+	  it into two classes: ACE_Acceptor (which implements a very
+	  simple, very concise version of the Acceptor pattern, without
+	  all the extra strategy mechanisms, etc.).  These strategies have
+	  now been factored out into a new class called
+	  ACE_Strategy_Acceptor.  The point of these changes is to "keep
+	  simple things simple, but enable powerful extensions when
+	  necessary."  All the test programs that utilized the earlier
+	  strategy version of the Acceptor have been updated to the the
+	  Strategy_Acceptor instead.
+
+	* libsrc/Connection/Connector: added two new protected methods,
+	  connect_svc_handler() and activate_svc_handler().  These methods
+	  allow subclasses to override the Connector's strategies for
+	  connection establishment and concurrency.  In addition, it makes
+	  the pattern much easier to explain via the Connector pattern and
+	  also is more similar to the Acceptor.
+
+Wed Oct  4 18:45:58 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* apps/Orbix-Examples/Event_Comm: Fixed the examples in this
+	  directory so that they compile with the new ACE.
+
+Tue Oct  3 17:33:46 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* include/makeinclude/rules.nested.GNU: Added support so that
+	  ACE can now be built in parallel using the -jN option of GNU
+	  make.  To accomplish this, just type
+	  
+	  % make MAKEFLAGS=-j2
+	  
+	  on the command line and the "-j2" flag will be passed through to
+	  the make hierarchy.  Once the SunC++ compiler supports parallel
+	  makes correctly (Template.DB causes problems) this will allow me
+	  to tke advantage of my new dual-CPU SPARCstation 20!!!
+
+Mon Oct  2 13:34:14 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Connection: Cleaned up some of the code related to
+	  Time_Values * by adding a new method call time_value() to the
+	  ACE_Synch_Options class.
+
+	* libsrc/Service_Config/Service_Record: Changed things a bit so
+	  that we don't have to include "ace/Stream.h" in
+	  Service_Record.h, but instead use forward decls of the
+	  appropriate types.  This breaks a circular dependency that was
+	  causing problems for GNU C++.  Thanks to John Hutchinson
+	  (hutchiso@epi.syr.ge.com) for finding this problem.
+
+Sat Sep 30 13:45:08 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* Changed all uses of typedef PARENT to inherited, which is less
+	  obtrusive.
+
+Fri Sep 29 01:33:54 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Misc: Completed the new OS class, which will be used
+	  shortly to remove all direct UNIX system calls in ACE.
+
+	* libsrc: Completed redocumented the header files for almost all
+	  of ACE.  The goal was to document all the methods in all the
+	  classes.  This has most been achieved (only a few minor changes
+	  remain).  The result is *much* better manual page entires in
+	  ./man/man3, as well as much more consistent header files and
+	  overall documentation for ACE.
+
+	* libsrc/Reactor/Reactor: Changed all uses of get() to
+	  handler_i().  Also changed the check_connections() method to
+	  check_handles().  Note that all these changes are invisible to
+	  apps...
+
+Thu Sep 28 01:22:36 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP/Addr/SPIPE_Addr: Changed all occurrences of
+	  {get,set}_user_id() and {get,set}_group_id() to user_id() and
+	  group_id() in order to be more consistent with other parts of
+          ACE.
+
+	* libsrc/ASX/Task.C (module): Modified the implementation of
+	  several Task helper methods (e.g., sibling()) so that they don't
+	  crash if there is not Module associated with the Task.
+
+	* libsrc/ASX/Stream: Removed the sync_ data member from the
+	  private part of Stream since it didn't seem to be used for
+	  anything.
+
+	* libsrc/ASX/Map_Manager.C (bind): Changed the type of the INT_ID
+	  to bind() from INT_ID to const INT_ID &.
+
+	* libsrc/IPC_SAP/Addr/Addr: Moved some methods around in the *.i
+	  file to the *.C file in order to be smarter about inlining.
+
+	* libsrc/Misc/Auto_Ptr.h: Added a new pair of classes called
+	  "auto_ptr" and "auto_array_ptr".  These implement the ANSI/ISO
+	  C++ standard auto_ptr mechanism, which helps to write
+	  exception-safe code.  The code is based on material from Jack
+	  Reeves (jack@fx.com) and Dr. Harald M. Mueller
+	  (mueller@garwein.hai.siemens.co.at).
+
+	* libsrc/Threads/Synch_T.h (ACE_Null_Condition): Changed the
+	  behavior of Null_Condition::{signal,broadcast} so that they
+	  return 0 rather than setting errno = ETIME and returning -1.
+
+Wed Sep 27 00:16:01 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Synch: Fixed a bug with class ACE_Barrier: count_
+	  wasn't being set properly.
+
+	* tests/Threads/test_barrier.C (main): Fixed a stupid bug 
+	  in the ACE_Barrier -- the main function was exiting, thereby
+	  destroying the barrier!
+
+	* tests/IPC_SAP/{SOCK,TLI}_SAP: Added test cases to exercise the
+	  new reuse_addr feature of SOCK_Connector and TLI_Connector.
+
+	* libsrc/IPC_SAP/{SOCK,TLI}_SAP/{SOCK,TLI}_Connector: Implemented
+	  the new behavior for reusing a local address.  Also fixed a few
+	  error cases that would have lead to descriptor leaks.
+
+	* libsrc/IPC_SAP/SOCK_SAP/SOCK.C (open): Modified a few return
+	  values and comparisons to ease the transition to WIN32.  
+
+	* libsrc/ASX/Task.C (ACE_Task): Changed the behavior of
+	  Task::activate() so that it uses the
+	  ACE_Service_Config::thr_mgr() Singleton if no thread manager has
+	  been associated with a Task when it becomes an active object.
+
+	* libsrc/Service_Configurator/Service_Config: Added a new static
+	  method to class Service_Config called thr_mgr().  This static
+	  method behaves as a "Singleton" and provides a convenient
+	  default thread manager that is available to all threads
+	  throughout a process.
+
+	* libsrc/IPC_SAP: Changed all the IPC_SAP/*_SAP/*_Connector.[hiC]
+	  files and the Connection/Connector.[Chi] class in order to add
+	  "reuse_addr" behavior consistent with the Reactor.  This enables
+	  the client to specify that the "local_addr" should be reused
+	  (e.g., via SOCKREUSEADDR), even if its "2 minute wait" time
+	  hasn't elapsed yet.  The libsrc/Connection/Connector.[Chi] files
+	  were also changed to support this new interface.
+
+	* libsrc/Log_Msg/Log_Msg.C (log): Fixed a mistake in Log_Record
+	  caused by the new thread-safe storage enhancement.  The data
+	  being logged was being rounded up incorrectly.  Thanks to Daniel
+	  Proulx (daproulx@qc.bell.ca) for reporting this.
+
+	* libsrc/Reactor/Signal.i (operator): Made a minor change to the
+	  definition of operator struct sigaction * to work around a bug
+	  with the HP/UX C++ compiler (lame, lame, lame)...
+
+	* libsrc/Service_Config: Changed all occurrences of
+	  ACE_Service_Config::reactor (which was originally a globally
+	  accessible public method of class ACE_Service_Config) to
+	  ACE_Service_Config::reactor () (i.e., made the reactor a
+	  Singleton implemented by a static method).  This was long
+	  overdue and will fix all sorts of niggling problems with order
+	  of initialization since the reactor() method can do "lazy
+	  creation" of Reactors now, i.e., create one the first time it is
+	  referenced.  In addition, changed the
+	  ACE_Service_Config::svc_rep to ACE_Service_Config::svc_rep () in
+	  the same manner.
+
+	* Changed all occurrences of the form:
+	
+	  *_Stream stream;
+	  *_Connector con (stream, remote_addr);
+	  
+	  if (stream.get_handle () == ACE::INVALID_HANDLE)
+	     ...
+	
+          To 
+
+	  *_Stream stream;
+	  *_Connector con;
+	  
+	  if (con.connect (stream, remote_addr) == -1)
+	     ...
+	  
+	  which is cleaner and less error prone with respect to
+	  UPIPE_Stream (which doesn't have a valid handle once it's
+	  connected).
+
+	* Changed all occurrences of get_handle () == -1 to get_handle ()
+	  == ACE::INVALID_HANDLE to help smooth the move to WIN32...
+
+	* libsrc: Created a new directory called Shared_Memory and moved
+	  the Shared_Malloc_MM and Shared_Malloc_SV classes from the
+	  ./Shared_Malloc directory to here, where they are now called
+	  Shared_Memory_MM and Shared_Memory_SV.  This is a better
+	  name/place for them since they never really had anything to do
+	  with malloc in the first place!  What remains the Shared_Malloc
+	  is the Malloc.* and Memory_Pool.* classes, which are typically
+	  used for truly shared malloc/free.
+
+	* apps/Gateway/Gateway: added new logic to the Gateway to enable
+	  it to specify which local port to bind() to.
+
+Tue Sep 26 21:17:29 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Connection/Strategies.C (open): Added a return 0; at the
+	  end of the ACE_Thread_Strategy::open method.
+
+	* tests/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.C:
+	  Made CLI_Stream a template so that we don't have to worry about
+	  multiple includes of classes...
+
+Mon Sep 25 01:41:27 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP: Revised the close() method of TLI_SAP and
+	  SOCK_SAP so that they don't try to close down a handle that ==
+	  ACE::INVALID_HANDLE.
+
+	* Changed all uses of ::free ((char *) ...) to ::free
+	  (ACE_MALLOC_T (...)) to work around inconsistent prototype
+	  problems with some compilers.
+
+	* include/ace/sysincludes.h: Changed ACE_MALLOC_TYPE to
+	  ACE_MALLOC_T which is a bit less verbose...
+
+	* libsrc/Service_Configurator/Makefile (BUILD): Fixed the argument
+	  to sed from -s (which is invalid) to -e (which is valid).
+	  Thanks to Doug Ritter (dougr@guilder.datalytics.com) for
+	  noticing this.  Also used sed to do a more elegant fix on the
+	  age-old problem of inconsistent prototypes for free() and
+	  realloc()...
+
+	* libsrc/IPC_SAP/UPIPE_SAP: Rewrote all the UPIPE_* classes to
+	  remove any dependencies on class UPIPE.  This class appears to
+	  be unnecessary since it mimics the behavior of class SPIPE.  To
+	  simplify the behavior of the UPIPE_* classes, they now inherit
+	  from the SPIPE_* classes where appropriate.
+
+	* libsrc/IPC_SAP/UPIPE_SAP: Changed the semantics of the
+	  UPIPE_Connector and UPIPE_Acceptor connection methods so that
+	  they close down the SPIPE_Stream after a connection is
+	  established successfully.  This is important to conserve
+	  descriptors.
+
+	* libsrc/Misc: Created a new class called OS, which encapsulates
+	  *all* of the UNIX system calls and library routines within a
+	  single class.  The rest of ACE will program only to the methods
+	  in this interface, which will make it much easier to port to
+	  other versions of UNIX (and WIN32!).
+
+Sun Sep 24 11:49:47 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP/SOCK_SAP: Conditionally compile the LSOCK_* stuff
+	  if the OS platform (e.g., Linux) doesn't support it.
+
+	* Changed all occurrences of ACE_HAS_NO_... to ACE_LACKS_... in
+	  all the config*.h files and the headers/source.  This reads
+	  better...
+
+	* Changed all uses of (1) Acceptor::peer_acceptor_ to
+	  Acceptor::acceptor(), (2) Svc_Handler::peer_ to
+	  Svc_Handler::peer(), and (3) Connector::peer_connector_ to
+	  Connector::connector() to make the code more abstract and
+	  resilient to future changes.
+
+	* include/ace/sysincludes.h: Added a new macro called
+	  ACE_NEW_RETURN that provides a useful abstraction for
+	  expressions involving operator new since we can change memory
+	  allocation error handling policies (e.g., depending on whether
+	  ANSI/ISO exception handling semantics are being used).
+
+	* libsrc/Threads/Thread.C: Changed things a bit so that if
+	  ACE_MT_SAFE == 0 then Thread::self() returns 1, regardless of
+	  whether the platform supports threads.
+
+	* Went through the entire library and (hopefully) made sure that
+	  all calls to global system calls and library routines are
+	  prefixed with "::".
+
+	* libsrc/Misc/Get_Opt.C: Changed this class to use the Log_Msg
+	  logging mechanism rather than stderr...
+
+	* tests/Misc: Added a new test program to test the Profile_Timer.
+
+	* tests/Reactor/misc: Added a new test program to test the
+	  Handle_Set.
+
+	* libsrc/Service_Configurator: Changed the error messages in
+	  Svc_Conf.y and Svc_Conf.l to go to the ACE Log_Msg logging
+	  mechanism rather than stderr...
+
+	* libsrc/Connection/Acceptor: Modified the Acceptor and
+	  Oneshot_Acceptor classes so that they take advantage of the new
+	  ACE_Creation_Strategy, ACE_Accept_Strategy, and
+	  ACE_Concurrency_Strategy components.  This will make is easy to
+	  define Acceptors that can be flexibly configured to use various
+	  creation strategies (e.g., dynamic linking, singletons, dynamic
+	  memory creation, etc.) for making Svc_Handlers.
+
+	* libsrc/Connection/Svc_Handler: Added several new classes --
+	  ACE_Creation_Strategy, ACE_Accept_Strategy, and
+	  ACE_Concurrency_Strategy -- that form the heart of the new
+	  ACE_Acceptor implementation.  These classes define the creation,
+	  passive connection acceptance, and concurrency strategies
+	  employed by the Acceptor factory when it receives a connection
+	  from a client.
+
+	* libsrc/Connection/Acceptor: Modified the implementation of the
+	  Acceptor and the Oneshot_Acceptor.  These classes are no longer
+	  related by inheritance since they behave in fundamentally
+	  different ways and sharing code was making it hard to write and
+	  use these classes correctly.
+
+	* libsrc/Misc/Misc: Moved the enum INVALID_HANDLE from IPC_SAP.h
+	  to Misc.h since this is actually more general than just the
+	  sockets stuff and we need to be portable to WIN32...  Therefore,
+	  any code that originally said ACE_IPC_SAP::INVALID_HANDLE should
+	  now be ACE::INVALID_HANDLE.
+
+	* Removed the ACE_OMIT_SERVICE_CONFIGURATOR flags.  These are
+	  annoying -- anyone who wants to subset ACE should be responsible
+	  for doing this stuff.
+
+Fri Sep 22 22:36:33 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Thread_Spawn.C: Greatly simplified the
+	  implementation of Thread_Spawn by leveraging the new class Task
+	  semantics for activate().  Now, all the concurrency activation
+	  mechanisms necessary to create active objects are associated
+	  with a Task and all the Thread_Spawn needs to do is to define a
+	  new make_svc_handler() Factory Method to create a SVC_HANDLER
+	  and activate it!
+
+	* libsrc/ASX/Task.C: Tightened up the semantics of Task::activate
+	  (which turns a passive object into an active object, i.e., one
+	  with its own thread).  Now, if an object is activated more than
+	  once it ignores the other requests, unless the force_active
+	  parameter is enabled.  Moreover, activate() now takes a
+	  parameter that indicates the number of threads to allocate for
+	  the Task.  This makes it simple to have a "thread pool"
+	  associated with a Task.
+
+Thu Sep 21 00:49:55 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* tests/Connection: Updated the CPP-acceptor and CPP-connector to
+	  use the underlying Acceptor and Connector patterns more
+	  robustly.  Also added new hooks to include a Service_Config
+	  component so that integrating this with the ACE dynamic linking
+	  scheme will be a snap!
+
+	* libsrc/Connection/Acceptor.C: Revised the Oneshot_Acceptor to be
+	  robust in situations where it isn't given a Reactor *...
+
+	* apps/Logger: Fixed a couple of minor problems with *.i files
+	  being included when __INLINE__ is set.  This should help G++
+	  compiler ACE better...
+
+	* libsrc/Reactor/Reactor: Enhanced the Reactor::notify() method so
+	  that it takes both an Event_Hander * and a Reactor_Mask, which
+	  it passes to the Reactor's main event loop thread via the pipe.
+	  The event loop thread uses this mask to determine which method
+	  to invoke.  This new feature is due to the insight of Karl-Heinz
+	  Dorn (kdorn@erlh.siemens.de).
+
+	* libsrc/Connection/Connector: Fixed a braino in
+	  Connector::handle_output, which was using ::getpeername() to
+	  check whether a connection has been established with a peer.
+	  Naturally, this only works for sockets, and doesn't work at all
+	  for TLI or SPIPEs...
+
+	* libsrc/IPC_SAP/Addr/SPIPE_Addr.C (set): Changed the return type
+	  of this method to "int" in order to conform to the types
+	  expected by the Acceptor/Connector patterns.
+
+	* Removed all uses of the global scope "::" for all variables and
+	  methods that are not UNIX system calls or library calls in
+	  preparation to change over to the new OS class (requested by
+	  Siemens).
+
+Wed Sep 20 14:39:08 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP/SPIPE_SAP: Renamed the SPIPE_IO classes to
+	  SPIPE_Stream to be consistent with the other parts of the ACE
+	  library.  Updated all parts of the library to reflect this
+	  change.
+
+	* tests/Service_Configurator: Moved the current contents of this
+	  directory into a new directory called IPC-tests.  Created a new
+	  directory called Connection-tests where the dynamic linking
+	  examples for Siemens will go.
+
+	* libsrc/Reactor/Signal: Made a bunch of minor changes to support
+	  signal handling on SunOS 4.x platforms.  Thanks to Aniruddha
+	  Gokhale <gokhale@cs.wustl.edu> for help with this.
+
+	* libsrc/Threads/Synch.h: Modified the #ifdefs a bit so that
+	  Synch_T.h gets included regardless of whether ACE_HAS_THREADS.
+
+	* libsrc/Threads/Synch_Options: Added a new set() method to make
+	  it possible to initialize the Synch_Options from outside the
+	  constructor.
+
+	* libsrc/Connection/Svc_Handler.C: Added checks within the
+	  ACE_Svc_Handler so that if we are given a NULL Reactor we don't
+	  crash!
+
+	* libsrc/Mem_Map: Tidied up this class and added comments to the
+	  header so that the class2man has something to generate manual
+	  pages from!
+
+	* libsrc/Misc/Misc: Added a new method called "round_to_pagesize",
+	  which was previously in Mem_Map.  This is a better place for it
+	  since other parts of ACE (e.g., Shared_Memory) use it.
+
+	* libsrc/Misc/Misc: Added a new method called "get_file_size",
+	  which was previously in Mem_Map.  This is a better place for it
+	  since other parts of ACE might want to use it.
+
+Tue Sep 19 00:24:41 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* Released a beta version of ACE 3.3.1 for G++ testing.
+
+	* libsrc/IPC_SAP/SOCK_SAP/SOCK_Dgram.C: Removed a stray INLINE
+	  that was causing problems for G++.  Thanks to E. Jason Scheck
+	  <jasons@ims.com> for reporting this.
+
+	* libsrc/IPC_SAP/Addr/INET_Addr: Improved the documentation for
+	  this class and also added new semantics to the constructor and
+	  set() method so that a "ip_addr:port_number" tuple can be given
+	  as a single string (e.g., "1234:tango.cs.wustl.edu" or
+	  "1234:128.252.166.57").  This is useful since it gives a uniform
+	  interface for addressing for Internet domain, UNIX domain, and
+	  SPIPE domain addresses...  Updated the ./tests/Connection tests
+	  to use this form (which is nice since now they are all very
+	  orthogonal!)
+
+	* tests/Connection: Created a whole new suite of tests that
+	  exercise the connection patterns for all of the relevant IPC
+	  mechanisms (e.g., SOCK_SAP, TLI_SAP, SPIPE_SAP, and UPIPE_SAP).
+
+	* bin/clone.C: fixed the first #include so that it uses #include
+	  "ace/sysincludes.h".  Thanks to Alex V Maclinvosky
+	  <alexm@teltrunk1.tait.co.nz> for noticing this.
+
+Mon Sep 18 01:52:07 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/ASX/Message_Queue.C (close): Fixed yet another problem
+	  with variables being defined in for loops.  G++ is good for
+	  detecting this ;-).
+
+	* libsrc/Threads: Moved all the template classes from Synch.* into
+	  Synch_T.* in order to make it possible to compile templates with
+	  G++.  Thanks to E. Jason Scheck <jasons@ims.com> for suggesting
+	  this.
+
+	* libsrc/IPC_SAP/UPIPE_SAP: Make a number of changes to ensure
+	  that all the UPIPE_SAP classes conform to the same interface as
+	  all the other ACE IPC classes.
+
+	* Changed all occurrences of THR_FUNC to ACE_THR_FUNC to protect
+	  the global namespace better.
+
+Sun Sep 17 13:36:23 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* tests/ASX/Message_Queue: Fixed a typo in these test programs
+	  that caused a segfault since a vararg parameter was omitted on a
+	  call to the Log_Msg::log() method.  Maybe iostreams isn't so bad
+	  after all... ;-)
+
+	* apps/Logger/Service_Configurator_Logger/Thr_Server_Logger: fixed
+	  a stupid error that was caused by some mods I made after ECOOP
+	  to update the threaded logging server.  When I changed the
+	  Thr_Logging_Acceptor so that it no longer inherited from the
+	  Logging_Acceptor I forgot to redefine the init() method...
+
+	* man: Totally regenerated the ACE manual pages using the new
+	  versions of the OSE tools provided by Karl-Heinz Dorn
+	  (kdorn@erlh.siemens.de).
+
+	* Changed all occurrences of MT_SYNCH and NULL_SYNCH to
+	  ACE_MT_SYNCH and ACE_NULL_SYNCH, respectively.  This is
+	  consistent with the ACE naming conventions and had been an
+	  oversight when I renamed everything earlier.
+
+	* Fully built and tested ACE with the __INLINE__ flag enabled.
+	  This will generate code with many small methods in the library
+	  inlined.  Had to fix a bunch of minor things to allow this to
+	  work without compilation-order dependency problems.
+
+        * libsrc: Made a bunch of changes to the way that header files are
+	  included internally to ACE in order to break compilation-order
+	  dependencies.  This is necessary to support GNU G++'s lame
+	  handling of templates.  None of this stuff should affect
+	  application code.
+
+	* tests: Added a whole new slew of tests for the remaining parts
+	  of ACE that weren't currently included in ./tests.  This stuff
+	  exercises ACE components like the Log_Msg logger and factors all
+	  the #if defined (DEBUGGING) code out of the ./libsrc directory
+	  tree and puts it in the ./tests directory tree, where it
+	  belongs.
+
+	* Changed all uses of the error macros LM_* to ACE_* in order to
+	  avoid name collisions with other libraries, frameworks, and
+	  toolkits.  In addition, changed all uses of the error enumerals
+	  LOG_ to LM_ in order to avoid a conflict with system #defines in
+	  <sys/syslog.h>.
+
+	  In order to change these automatically, I used the following 
+	  UNIX command sequence:
+
+	  % find . -type f -print | xargs perl -p -i -e 's/LM_/ACE_/g'
+	  % find . -type f -print | xargs perl -p -i -e 's/LOG_/LM_/g'
+
+Sat Sep 16 11:55:18 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* tests/Threads: Added a new test for Thread_Specific storage.
+
+	* Added a new platform/compiler configuration flag called
+	  ACE_TEMPLATES_REQUIRE_SOURCE that must be set for compilers 
+	  (e.g., GNU G++) whose template mechanism must be able to
+	  see the source code (i.e., the *.C files).  Changed *lots* of
+	  header files to enable this...  Also had to change the
+	  corresponding *.C files so that they wouldn't get included
+	  twice...
+
+        * libsrc/Connection: redid the implementation of Acceptor,
+	  Connector, and Svc_Handler to get more control over the scope of
+	  #defines like #define SH SVC_HANDLER, etc.
+
+	* libsrc/Threads/Thread_Spawn: Totally redid the implementation of
+          Thread_Spawn to use the Acceptor class template.  This greatly
+          reduces the amount of code to implement the Thread_Spawn!
+
+	* libsrc/Threads/Thread_Spawn: Moved the Thread_Spawn
+	  implementation into the ./libsrc/Threads directory rather than
+	  in the ./libsrc/Service_Configurator directory since it deals
+	  with threading and thus belongs in the other place.
+
+Fri Sep 15 00:25:51 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Token.i (tryacquire): Added a cast to fix passing
+	  a const pointer to a function that was expecting a non-const.
+	  Thanks to E. Jason Scheck <jasons@ims.com> for reporting this.
+
+	* libsrc: Added a bunch of changes to enable G++ to compile ACE.
+	  A lot of this involves moving around info in header files so
+	  that templates can be dealt with using the relatively lame GNU
+	  C++ repository scheme.  Thanks to E. Jason Scheck
+	  <jasons@ims.com> for all his help in this.
+
+        * libsrc/Synch: created Synch_Options.C out of Svc_Handler.C, so
+	  that Svc_Handler.C could be "template pure"; all the other files
+	  were already separated.  Thanks to E. Jason Scheck
+	  <jasons@ims.com> for recommending this.
+
+	* Makefile (clone): Added a tiny fix that solves a weird problem
+	  that arises with symbolic links on HP/UX.  Thanks to Jam Hamidi
+	  (jh1@osi.com) for tips on how to fix this.
+
+Thu Sep 14 10:55:30 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* apps/Gateway/Gateway/Channel.C (route_message): Updated the main
+	  routing code to check for whether a channel is_active()
+	  (i.e., is actually connected) before trying to send messages
+	  to it.  This was originally done in the Set class iterator, but
+	  I revised that to make it more reuseable and to workaround bugs
+	  in the HP/UX compiler so I had to update the main code...
+
+	* libsrc/Threads/Thread_Specific: Added a new method to called
+	  ts_object () to class ACE_Thread_Specific that get the
+	  thread-specific object for the key associated with this object.
+	  Returns 0 if the data has never been initialized, otherwise
+	  returns a pointer to the data.  This is useful since now you can
+	  query a thread-specific storage mechanism to see if there's ever
+	  been a thread-specific object created *without* having to
+	  actually create one if one hasn't been created yet!  Thanks to
+	  Detlef Becker (beckerd@erlh.siemens.de) for pointing this out.
+
+	* include/makeinclude/platform_sunos5_sunc++_orbix.GNU (LIBS):
+	  Changed the default compilation strategy for SunOS 5.x machines
+	  to use -mt.  This seems to be necessary to build robust
+	  libraries that are thread-safe.  Thanks to Phil Mesnier
+	  <phil@yakko.envision.com> and Chris Cleeland
+	  <chris@envision.com> for hounding me until I changed the
+	  existing solution.  If you *don't* want this behavior you need
+	  to remove -mt from the platform_macros.GNU file and and remove
+	  the ACE_HAS_THREADS and ACE_MT_SAFE flags, etc. from the
+	  config-sunos5.*.h files.
+
+	* libsrc/Shared_Malloc/Memory_Pool.C (ACE_MMAP_Memory_Pool): Added
+	  a new parameter to the constructor called write_each_page that
+	  if enabled forces a write to each page to ensure that space is
+	  allocated from the file system (otherwise, we can end up failing
+	  due to optimisitic resource allocation...).  Thanks to Phil
+	  Brooks <phil_brooks@mentorg.com> for detecting this issue and
+	  implementing a solution.
+
+	* include/ace/sysincludes.h: Added #ifdef support for HP/UX, which
+	  fails to properly wrap <sys/mman.h> with an extern "C" block.
+
+Mon Sep 11 01:39:35 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Connection/Connector.C (handle_input): Changed the call
+	  to Svc_Handler::close() to accept the default value of 0 rather
+	  than -1...  Thanks to Mark Seaborn
+	  <mseaborn@itthp1.comm.mot.com> for noticing this.
+
+	* libsrc/Connection: Changed all uses of ADDR to PEER_ADDR to
+	  avoid a name clash in Linux...  Thanks to James Morris
+	  <jmorris@aurora.apana.org.au> for finding this.
+
+Sun Sep 10 03:56:18 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Synch: Added support for "barrier
+	  synchronization" to ACE in the form of ACE_Barrier.  Thanks to
+	  Bruce Worden (bruce@betsy.gps.caltech.edu) for suggesting this
+	  and pointing me in the right direction.
+
+	* tests/Threads: Added a test for the new barrier synchronization
+	  mechanism. 
+
+Sat Sep  9 11:58:16 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Reactor/Reactor: Changed Reactor::max to Reactor::max3 to
+	  avoid problems with conflicting names of macros in Sun header
+	  files!
+
+Mon Sep  4 14:34:52 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Reactor/Signal: The new ACE_Signal_Handlers mechanism
+	  appears to be working!  There's a test in ./tests/Reactor/misc
+	  called test-signal.C that illustrates how all this works.
+
+	* libsrc/Reactor/Signal: Added several new methods to
+	  ACE_Sig_Action to make life easier to implement the new
+	  ACE_Signal_Handler code...
+
+	* libsrc/Reactor/Signal.C (ACE_Sig_Action): Changed the order of
+	  the arguments to the ACE_Sig_Action constructor.  It's almost
+	  always the case that you want to vary the SignalHandler, but
+	  only rarely do you want to vary the mask or flags.  By
+	  reordering this, it's easier to get the correct default values
+	  without adding extra junk...
+
+Mon Sep  4 01:11:29 1995  Tim Harrison  (harrison@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP/SOCK_SAP/SOCK_Dgram_Multicast: added support to
+	  allow a port to be reused for multicast sockets.  This is useful
+	  if you are multicasting to multiple processes, some of which are
+	  on the same host!
+
+	* libsrc/ASX/Map_Manager: Fixed an odd bug that must have gone
+	  undetected for a long time somehow.  Basically, the "is_free_"
+	  field of the ACE_Search_Structure struct was never being set to
+	  it's correct initial value of 1.  I don't know how this didn't
+	  surface before...  At any rate, it is fixed now...
+
+	* include/ace/sysincludes.h: Changed the inline methods for
+	  SET'ing and CLR'ing bits to be macros in order to get cheap
+	  polymorphic behavior...  Also changed them to use the prefix
+	  "ACE_" to avoid namespace pollution.  Changed all dependencies
+	  in the source code (only a few...).
+
+	* libsrc/Reactor/Signal: Added a new class called
+	  ACE_Signal_Handlers, which subclasses from ACE_Signal_Handler.
+	  This new class implements the semantics required for Siemens.
+	  For example, this class allows multiple signal handlers to be
+	  registered for the same signal.  It also makes SA_RESTART the
+	  default mode.  Note that by default, the Reactor uses the
+	  original ACE_Signal_Handler semantics.  If you want the new
+	  semantics, simply pass the Reactor a pointer to
+	  ACE_Signal_Handlers.
+
+	* include/ace/sysincludes.h: Removed the automatic inclusion of
+	  ./libsrc/Misc/Misc.h from sysincludes.h since this was causing
+	  problems with include file ordering.
+
+Sun Sep  3 00:22:11 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Reactor/Signal.C (remove_handler): Moved a definition of
+	  ACE_Sig_Action out of an inner block to avoid portability
+	  problems.
+
+	* libsrc/ASX/Map_Manager: Improved the documentation of this class
+	  and fixed up a couple of problems with the scope of loop
+	  indexes.
+
+	* libsrc/Misc/{Stack,Set}: Added this new file that contains a set
+	  of Stack and Unordered Set implementations.  The Unordered Set
+	  is used in various places in ACE (e.g., libsrc/Reactor/Signal
+	  and apps/Gateway/Gateway/Routing_Entry).
+
+	* libsrc/Log_Msg/Log_Msg: Moved the definition and declaration of
+	  Thread_Specific<Log_Msg> ace_log_msg from this directory to
+	  ./libsrc/Misc/Misc.h in order to cleanup the namespace and also
+	  to help make this work on DEC platforms...
+
+	* libsrc/Reactor/Signal: Changed ACE_Signal_Handler from a static
+	  class to a non-static class in order to allow subclassing.  This
+	  is necessary to support the Siemens requirements.
+
+	* libsrc/Shared_Malloc/Memory_Pool: Modified ACE_MMAP_Memory_Pool
+	  so that it no longer stores the name of the backing store in a
+	  static character array (which made it impossible to have more
+	  than one of these at a time...).  The new version stores the
+	  name in each ACE_MMAP_Memory_Pool object.  It also selects a
+	  name that won't conflict with other names by using ::mktemp.
+
+	* tests/Shared_Malloc/test_malloc.C (parse_args): Fixed two stupid
+	  omissions of "break" when parsing command-line arguments.  Isn't
+	  C++ great?! (NOT)...
+
+	* apps/Synch-Benchmarks: Came up with a killer solution to the
+	  nagging problem of POSIX Pthread's lack of an integral thread id
+	  (a la Solaris threads thr_self()).  The solution leverages off
+	  of our new ACE_Thread_Specific wrapper to provide the necessary
+	  functionality.  Thanks to Reginald S. Perry (perry@zso.dec.com)
+	  for triggering the thoughts that lead to this solution...
+
+Sat Sep  2 17:00:46 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP/TLI_SAP/TLI_Acceptor: Changed the implementation
+	  of ACE_TLI_Acceptor so that ACE_TLI_Request is defined inside
+	  the TLI_Acceptor.C file (this is the so-called "Cheshire Cat"
+	  technique).  This clean up the code and the global namespace a
+	  bit.
+
+Fri Sep  1 00:53:47 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* Released new version of ACE 3.3
+
+	* libsrc/IPC_SAP/UPIPE_SAP/UPIPE.C: Fixed a small problem with
+	  failing to #ifdef this file correctly if we don't have
+	  threads...  Thanks to John Morey (jmorey@hitel.com) for
+	  reporting this.
+
+	* tests/ASX/CCM_App/svc.conf: Fixed the svc.conf file so that it
+	  looked in the .shobj directory rather than the .obj directory.
+
+	* Released new version of ACE 3.2.9...
+
+	* libsrc/Log_Msg/Log_Msg: Added a new field called "restart_" to
+	  the thread-specific storage.  This will be used to control
+	  whether system calls are restarted when interrupted.
+
+	* Changed inheritance syntax from
+
+	  class xxx
+	    : public yyyy
+	  {
+	  };
+
+	  to 
+
+	  class xxx : public yyyy
+	  {
+	  };
+
+	  so that the OSE tools would work correctly.
+
+Thu Aug 31 00:12:40 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP/UPIPE_SAP: Changed all uses of UPIPE_Addr to
+	  SPIPE_Addr since they were the same thing.  This also allows
+	  much reuse of code...
+
+	* libsrc/IPC_SAP/{TLI_SAP,SOCK_SAP,SPIPE_SAP}: fixed the
+	  "complete" method for these classes so that it uses the new
+	  ACE::handle_timed_complete() method in libsrc/Misc.  This cleans
+	  up the code by merging common logic.
+
+	* libsrc/IPC_SAP/{DEV_SAP,FILE_SAP,SPIPE_SAP}: fixed the "connect"
+	  method for these classes to conform to the API used by the
+	  SOCK_SAP and TLI_SAP wrappers.  In addition, cleaned up the code
+	  so that common logic was pushed into a new method in libsrc/Misc
+	  called ACE::handle_timed_connect().
+
+Wed Aug 30 00:20:18 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Connection/Acceptor.C (open): Fixed this method so that
+	  it returns a value on all paths through the code...
+
+	* libsrc/IPC_SAP/TLI_SAP/TLI.C (ACE_TLI): Moved the option
+	  allocation code from the TLI::open() method into the TLI
+	  constructor in order to make sure it is always called!
+
+	* libsrc/IPC_SAP/DEV_SAP/DEV_Connector: Changed the signature of
+	  the DEV_Connector::connect method to allow users to specify
+	  flags, permissions, and timeouts (this is now consistent with
+	  other parts of ACE).
+
+	* libsrc/IPC_SAP/FILE_SAP/FILE_Connector: Changed the signature of
+	  the FILE_Connector::connect method to allow users to specify
+	  flags, permissions, and timeouts (this is now consistent with
+	  other parts of ACE).
+
+	* tests/IPC_SAP/TLI_SAP: Updated the test code to check the new
+	  timer support for connection establishment.
+
+	* libsrc/IPC_SAP/TLI_SAP: Updated the code to make it conform to
+	  the interfaces provided by SOCK_SAP.  This primarily affected
+	  the TLI_Acceptor and TLI_Connector classes in order to add
+	  support for timed connects and accepts.
+
+	* libsrc/Reactor/Signal.C: Modified Signal_Handler::dispatch so
+	  that it saves/restores errno to prevent it from being corrupted
+	  by the handle_signal callback.  Thanks to Detlef for suggesting
+	  this.
+
+	* libsrc/Shared_Malloc/Memory_Pool: Changed the name of
+	  ACE_Local_Memory_Pool to ACE_Sbrk_Memory_Pool.  Then added a new
+	  version of ACE_Local_Memory_Pool that uses the C++ operator new
+	  to acquire chunks of memory.  This enables the ACE Malloc class
+	  to integrate with existing programs that use new/delete.  Thanks
+	  to Karlheinz for suggesting this.
+
+	* libsrc/IPC_SAP: Added the UPIPE mechanism donated by SIEMENS.
+	  This provides an intra-process IPC mechanism that has the same
+	  API as the interprocess and network mechanisms.
+
+	* Reran catman on ./man/windex.  Thanks to Dieter Quehl
+	  (quehl@csaserv.erlh.siemens.de) for reporting the need for this.
+
+	* Released new version of ACE 3.2.9...
+
+	* tests: Fixed a bunch of minor problems that occurred when
+	  building on HP/UX.  Thanks to John Morey
+	  (jmorey@hitel.com) for reporting these.
+
+	* apps/Gateway/Gateway/Peer_Message.h: Changed the default values
+	  of the parameters to Peer_Addr so they aren't trying to assign
+	  negative values to unsigned chars!  Thanks to John Morey
+	  (jmorey@hitel.com) for noticing this...
+
+Tue Aug 29 18:52:17 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Thread/Thread_Specific: Changed the constructor so
+	  that it will take an initial TYPE *, which will be used to
+	  initialize the thread-specific object.  This is necessary to
+	  support the changes to ACE_Task described in the following
+	  bullet.
+
+	* libsrc/ASX/Task: Added a new class called ACE_Task_Exit to
+	  Task.C.  This class is used in conjunction with
+	  ACE_Thread_Specific to keep exit information for a Task in
+	  thread-specific storage.  This ensures that the Task::close()
+	  method will get called no matter how the thread exits (e.g., via
+	  Thread::exit() or by "falling off the end of Task::svc_run").
+
+Mon Aug 28 09:54:35 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* Released new version of ACE 3.2.9...
+
+	* libsrc/Reactor/Handle_Set.C: changed the type of MSB_MASK from
+	  u_long to ACE_UINT32 to handle problems with the Alpha's 64 bit
+	  longs...
+
+	* libsrc/Threads/Thread_Specific: Continued to try and get this
+	  class to build correctly on other platforms...  I think I've
+	  just about got it working right now...
+
+	* libsrc/IPC_SAP/IO_SAP/IO_SAP: Added installation flags that
+	  indicate whether the platform has terminal ioctl flags like
+	  TCGETS and TCSETS.  I know that SunOS 5.x has these, but I'm not
+	  sure about other platforms...
+
+Sat Aug 26 13:55:45 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* Released new version of ACE 3.2.9...
+
+Fri Aug 25 09:05:09 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Thread_Specific.h: Fixed a typo that was causing
+	  this file to fail on HP/UX.  Thanks to Neil Cohen
+	  (nbc@metsci.com) for finding this!
+
+	* libsrc/IPC_SAP/DEV_SAP/DEV_IO: Added conditional support for
+	  getmsg/putmsg calls in the DEV_IO class.  This will make things
+	  work correctly for platforms that don't support SVR4 STREAM
+	  pipes.
+
+	* libsrc/IPC_SAP/FILE_SAP/FILE_IO: Added the same fixes to FILE_IO
+	  that I added to DEV_IO...
+
+	* include/ace/sysincludes.h (MAXNAMELEN): Fixed a typo in
+	  sysincludes.h that caused problems for the G++ compiler.
+
+	* libsrc/Connection/Acceptor.C (handle_close): Removed a
+	  diagnostic message that was getting printed if a
+	  Oneshot_Acceptor had already been removed from the reactor (it's
+	  ok for this call to fail).  Thanks to Irfan Pyarali
+	  (ip1@cec.wustl.edu) for noticing this!
+
+	* libsrc/ASX/Task.C (ACE_Task): Fixed a bug in the constructor
+	  that prevented a Message_Queue from being allocated
+	  automagically.
+
+Thu Aug 24 16:47:14 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* include/ace/sysincludes.h: added support for 64 bit machines so
+	  that Internet addresses are 32 bits, as they must be!
+
+	* libsrc/Shared_Malloc/Malloc: Changed things so that MALLOC_STATS
+	  is now *off* by default...  (also changed the name to
+	  ACE_MALLOC_STATS).
+
+Wed Aug 23 15:21:25 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* include/ace/config-osf1.h: Added support for thread-specific
+	  storage.  Please let me know if this breaks on OSF/1!
+
+	* libsrc/Threads/Thread: Added support for the thread-specific
+	  storage wrappers for both Pthreads and Solaris threads.  Also,
+	  rearranged some of the code to emphasize similarities between
+	  Pthreads and Solaris threads.
+
+	* libsrc/Threads/Thread_Specific: Updated this to remove "static"
+	  from all the data members in this class since those should be
+	  specific to an *instance* rather than to an instantiation of the
+	  particular template class.  Tim claims this works...
+
+	* libsrc/Threads/Token.C: Fixed a couple of typos that misspelled
+	  "assert" (jaysus...).  Thanks to David Trumble
+	  (trumble@cvg.enet.dec.com) for noticing this.
+
+	* libsrc/Threads/Token.C (release): Fixed a very stupid bug that
+	  was causing the Token never to become "unused"...  No excuses
+	  for this, except that Pthreads is partly responsible ;-)
+
+Tue Aug 22 11:36:58 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/ASX/Task: Changed the behavior of task so that it doesn't
+	  try to delete the Message_Queue or Thread_Manager if it didn't
+	  allocate them!  Thanks to Karl-Heinz Dorn
+	  (kdorn@erlh.siemens.de) for suggesting this fix.
+
+	* libsrc/ASX/Message_Block: Changed the semantics for
+	  Message_Block::end() so that it returns a pointer to 1 past the
+	  end of the data.  This is more consistent with toolkits like
+	  STL.  Also changed the behavior of Message_Block::copy() so that
+	  it checks to make sure the data will fit in its buffer.
+
+	* tests and apps: Revised a bunch of files to add #ifdef so that
+	  TLI tests and apps are not compiled if the platform doesn't
+	  support it...
+
+	* Fixed a bunch of minor problems for HP/UX (which lacks TLI and
+          other common OS features).  Thanks to Mark Seaborn
+	  (mseaborn@itthp1.comm.mot.com) for noticing these.
+
+Mon Aug 21 00:19:29 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Misc: Changed the name of the class Argument_Vector to
+	  ACE_ARGV.  This is a bit more concise...  UNIX programmer will
+	  know precisely what argv is...
+
+	* Updated all of ACE to use the new naming scheme, which prepends
+	  all ACE classes with "ACE_".  This is an important change since
+	  it prevents ACE from polluting the namespace of applications
+	  (unless they also prefix "ACE_" in front of their classes, which
+	  is not very likely!).
+
+	  Since this change basically affects every single file in the
+	  entire release, as well as all existing user code I've written a
+	  perl script called "rename-ace.pl" to automate all of this.
+	  This script is in $WRAPPER_ROOT/bin.  To use it, simply type:
+	  
+	  % find . -type f -print | egrep '[Chi]$' | xargs rename-ace.pl
+
+	  Note that you will need to change the first line of
+	  rename-ace.pl to point it to whereever perl is located on your
+	  system.
+
+	  I've tested this on the entire ACE source code base and it seems
+	  to work fine.  Please be careful using it on your code, however,
+	  since it may conflict with names that you use.  When in doubt,
+	  remove the '-pi' from the first line of the rename-ace.pl perl
+	  script and replace it with '-p' (which is non-destructive).
+	  Then run the commands above and check the output carefully.
+	  When you're convinced that everything is ok, add the '-pi' back
+	  again.  Let me know immediately if you find any problems with
+	  this scheme!
+
+	* libsrc/Connection/Acceptor.C: Added a virtual destructor to the
+	  Oneshot_Acceptor to make sure that descriptors are closed down
+	  correctly.  Thanks to Irfan (irfan@wuerl.wustl.edu) for
+	  suggesting this.
+
+	* libsrc: Change all occurrences of Shared_Memory to
+	  SV_Shared_Memory to firmly indicate the origins of this
+	  wrapper...
+
+Sun Aug 20 23:12:03 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP: added the IO_SAP, DEV_SAP, and FILE_SAP
+	  components donated by SIEMENS to the ACE release.
+
+	* libsrc/ASX: Split the Message_Queue.* files into Message_Block.*
+	  and Message_Queue.* in anticipation of the Windows NT port...
+
+Fri Aug 18 13:54:09 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Thread_Specific: Move the operator->() 
+	  method back into the *.C file in order to make HP/UX
+	  happy...
+
+	* apps/Gateway/Peer: Removed the Options.* files since they
+	  weren't being used and they were causing problems on OSF/1...
+
+	* libsrc/Misc/Profile_Timer: Factored common code together by
+	  making a new typedef called Rusage that defaults to either
+	  struct rusage or prusage_t, depending on installation flags.
+	  Fixed a couple places in the code that were depending on the
+	  prusage_t type (which is now the Profile_Timer::Rusage type...).
+
+Thu Aug 17 14:31:11 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Connection/Connector.h: Changed some typedefs in order to
+	  keep the Centerline compiler from crapping out.  I can't
+	  *believe* how screwed up that compiler is when it comes to
+	  templates...
+
+	* Released new version of ACE 3.2.9...
+
+	* libsrc/Threads/Synch: Fixed a bunch of typos that showed up
+	  on OSF/1.  Also tried to fix some other problems by removing
+	  "const" from all the methods...
+
+Wed Aug 16 22:26:24 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Thread_Specific.h: Fixed another stupid bug
+	  caused by a braino that failed to unconditionally include
+	  Thread_Specific.i.  Stuart Powell found this also... (thanks!).
+
+	* libsrc/Threads/Thread_Specific.h: In Thread_Specific.h the
+	  inlining macros were only included if threads were used.  This
+	  obviously didn't work for people without threads...  I
+	  moved the #endif for ACE_HAS_THREADS... back before the #ifdef
+	  __INLINE__ stuff (e.g. to line 71).  Thanks to Stuart Powell
+	  (stuartp@ot.com.au) for suggesting this.
+
+	* libsrc/Threads/Synch.h: Fixed a typo that manifested itself for
+	  pthreads: Condition count_nonzero_ should obviously be
+	  Condition<Mutex> count_nonzero_.  Thanks to Rob Clairmont
+	  (rclairmo@bnr.ca) for reporting this.
+
+Tue Aug 15 00:31:44 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Log_Msg/Log_Msg.C (log): Fixed a stupid typo (*format++
+	  should have been format++...).
+
+	* libsrc/Misc/Trace.h: Move the class TSS_Int from within class
+	  Trace to file scope and changed the name to ACE_TSS_Int to
+	  handle problems with the HP/UX compiler.
+
+	* include/ace/sysincludes.h: Added the word "struct" in front
+	  of rusage to make things work on HP/UX.  Thanks to Neil Cohen
+	  (nbc@metsci.com) for reporting this fix.
+
+	* apps/TokenServer/server/TokenMap.C: Fixed yet another problem
+	  with scope of variables defined in for loops...
+
+	* Released new version of ACE 3.2.9...
+
+	* libsrc/Connector: Fixed a braino whereby I didn't use consistent
+	  naming for my #defines (PA should have been PRC).  Thanks to
+	  Alex (alexey@ace.elektra.ru) for noticing this.
+
+Mon Aug 14 18:13:46 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/IPC_SAP/SPIPE_Acceptor: Modified the interface of open()
+	  and accept() so they would conform to the SOCK_Acceptor and
+	  TLI_Acceptor.  This makes it possible to use SPIPE_Acceptor in
+	  similar situations (e.g., Acceptor and Connector patterns).
+
+	* libsrc/ASX/Stream: Fix a bug that occurred when trying to dump()
+	  a linked Stream.
+
+	* libsrc/Connection/Acceptor: Moved the body of the init() method
+	  out of this class since it was unnecessarily dependent on the
+	  INET_Addr domain addressing types.  This required changes to the
+	  ./apps and ./tests directory in order to add the init() method
+	  to classes that used the default behavior.  
+
+	* libsrc/IPC_SAP/SPIPE_SAP/SPIPE_Acceptor.C: Fixed close() so that
+	  it will call fdetach(2) *before* closing down the descriptor.  I
+	  hope this will fix a problem noticed by people at SIEMENS.
+
+	* tests/ASX/Event_Server/Event_Server/Options: Fixed a problem
+	  with the default port numbers (they weren't using the values
+	  from ./include/ace/testconfig.h).
+
+	* include/ace/sysincludes.h (MAXNAMELEN): If MAXNAMELEN is not
+	  defined by a platform then ACE sets it to be FILENAME_MAX, 
+	  which should be defined in stdio.h.  Thanks to Todd Blanchard
+	  (tblancha@evolving.com) for this suggestion.
+
+Sun Aug 13 17:02:57 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Service_Configurator/Parse_Node: Changed the name of
+	  Function_Node::symbol (const void *) so that it won't give 
+	  those annoying warnings anymore...
+
+	* libsrc/Reactor/Handle_Set: Moved the definition of MSB_MASK from
+	  the header file into a static const within the .C file in order
+	  to avoid overflow problems on certain compilers.
+
+	* libsrc/Threads/Synch: Implemented bare-bones versions of
+	  Semaphore and RW_Mutex for the POSIX Pthreads wrappers so that
+	  they'll be more compatible with the Solaris threads wrappers.
+	  The semaphore implementation uses a Condition object and a
+	  Mutex, which should be a reasonable solution.  The RW_Mutex is a
+	  cop-out for now and just uses a Mutex (i.e., no extra
+	  parallelism for readers...).  If anyone has a good
+	  implementation of RW_Mutex that they'd like to share please let
+	  me know.
+
+	* libsrc/Threads/Thread_Specific: Fixed the prototypes for copy
+	  constructor and operator=, which were broken...  Thanks to Alex
+	  (alexey@ace.elektra.ru) for noticing this.
+
+	* libsrc/Shared_Malloc/Memory_Pool.C: Added some casts to
+	  MAP_FAILED to handle OSF/1.  Thanks to Alex
+	  (alexey@ace.elektra.ru) for noticing this.
+
+	* libsrc/Threads/Token: Fixed things so that threads waiting for a
+	  token wouldn't get screwed up by signals that occur...
+
+	* include/ace/sysincludes.h: Changed the #ifdef
+	  ACE_SELECT_USES_LONG to ACE_SELECT_USES_INT for HP/UX since
+	  believe it or not, it really does use int, not long!
+
+	* libsrc/SV_Semaphores: Fixed some weird problems that the HP/UX
+	  compiler was having when trying to inline methods in this class.
+	  As a consequence, I've rearranged the class to avoid inlining
+	  non-trivial methods.  Thanks to John Morey (jmorey@hitel.com)
+	  for reporting these problems.
+
+Wed Aug  9 01:29:16 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Token: Added a tryacquire() method to become
+	  interface compliant with other LOCK mechanisms.
+
+Sat Aug  5 09:18:29 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Connection: Fixed a couple of bugs when using
+	  the Acceptor and Svc_Handler when ACE_OMIT_SERVICE_CONFIGURATOR 
+	  is enabled.  Thanks to Stuart Powell (stuartp@ot.com.au) for
+	  bringing this to my attention. 
+
+	* include/ace/sysincludes.h: Added a #ifdef for MAXNAMELEN to
+	  handle systems (like HP/UX) that don't support it.
+
+Thu Aug  3 22:59:13 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* Released new version of ACE 3.2.9...
+
+	* libsrc/Reactor/Time_Value.i (normalize): Added new code to
+	  perform normalization of Time_Values.  Thanks to Hans Rohnert
+	  (Hans.Rohnert@zfe.siemens.de) of SIEMENS for the suggestion.
+
+Tue Aug  1 00:19:00 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* Changed all code that used Log_Msg::log() directly to use
+	  LM_ERROR or LM_DEBUG.  This will ensure that logging will work
+	  with the new thread-specific storage implementation.
+
+	* libsrc/Threads/Thread_Manager.i (open): Fixed this method so
+	  that it is thread-safe when a Thread_Manager is resized.
+
+	* libsrc/ASX/Map_Manager.i (open): Fixed this method so that it is
+	  thread-safe when a Map_Manager is resized.
+
+Mon Jul 31 12:56:17 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Misc/Trace: Reimplemented the ACE Trace class to use the
+	  new thread-specific storage wrapper.
+
+	* libsrc/Log_Msg: Reimplemented the Log_Msg class to use the new
+	  thread-specific storage wrapper.  This shouldn't affect any
+	  existing code that was careful to only use the LM* macros...
+
+	* libsrc/Threads: Added a new class called Thread_Specific which
+	  implements a C++ wrapper for SunOS 5.x thread-specific data
+	  (this will also work for POSIX pthreads I believe).  Thanks to
+	  Tim Harrison (harrison@cs.wustl.edu) for coming up with the idea
+	  for using C++ "smart pointers" to implement this.
+
+	* libsrc/Reactor/Timer_Queue.h: Moved Timer_Node from within
+	  Timer_Queue to outside Timer_Queue and renamed it to
+	  ACE_Timer_Node.  Unfortunately, some compilers still don't like
+	  nested classes (ugh)...
+
+	* Changed ACE_Synch_Options to be simply Synch_Options since it
+	  is *not* an ACE private class...
+
+Sun Jul 30 00:07:28 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* include/makeinclude/README: Added a new #define called
+	  ACE_HAS_THREAD_SPECIFIC_STORAGE, which does exactly what it
+	  sounds like!  So far, I know that Solaris defines this.  I'm not
+	  sure which other platforms do (perhaps OSF/1 does?).
+
+Fri Jul 28 14:53:45 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* Fixed a bunch more problems with loop variables that were
+	  uncovered with GCC 2.7.  Thanks to Matt Stevens
+	  (mstevens@ent.mrj.com) for noticing this.
+
+	* apps/Logger/Service_Configurator_Logger: Added a new flag called
+	  ACE_HAS_NO_STATIC_DATA_MEMBER_TEMPLATES which is necessary to
+	  workaround bugs with GNU G++...  Thanks to Matt Stevens
+	  (mstevens@ent.mrj.com) for noticing this.
+
+	* libsrc/Connection/Connector.C (cleanup_AST): Changed the
+	  parameter list just a tad to try and fix a problem with
+	  G++ (which doesn't seem to like unscoped typedefs in
+	  argument lists or return values.
+
+	* libsrc/Misc/Profile_Timer.i: Changed ::getrusage to be getrusage
+	  to avoid problems with macros and scope operators...  
+
+	* include/ace/testconfig.h (ACE_DEFAULT_RENDEZVOUS): Changed the
+	  value from /tmp/foo to /tmp/fifo.ace.  Thanks to Neil B. Cohen
+	  (nbc@metsci.com) for suggesting this.
+
+Thu Jul 27 12:30:06 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* apps/TokenServer/server/TokenHandler.C (abandon): Fixed a minor
+	  bug that caused assert() to fail when a client abandoned a
+	  Token.
+
+	* libsrc/Reactor: Fixed a bug with the design of the Reactor's
+	  Timer_Queue cancellation mechanism.  The new mechanism is much
+	  more robust since it ensures that timer_ids (used to cancel
+	  pending timers) are unique up to values of greater than 2
+	  billion timers!  As long as timers don't stay around longer than
+	  this there should be no problems with accidentally deleting the
+	  wrong timer.  Thanks to Bill Sears (wsears@world.std.com) for
+	  noticing this problem.
+	  
+	  One nice consequence to this change is that legacy code that
+	  would have broken with the previous change is now 100%
+	  compatible!
+
+	* Provided a definition of ACE_Synch_Options::arg(const void *),
+	  which I'd forgotten to define before (darn templates...).
+	  Thanks to Tim Harrison (harrison@cs.wustl.edu) for finding this!
+
+	* include/ace/sysincludes.h: Added a total hack to get HP/UX to
+	  understand getrusage().  The trick is to use the following 
+	  undocumented syscall:
+
+	  #define getrusage(a, b)  syscall(SYS_GETRUSAGE, a, b);
+
+	  What a hack (but it works...).
+
+Tue Jul 25 13:20:58 1995  Douglas C. Schmidt  (schmidt@kavita.cs.wustl.edu)
+
+	* libsrc/Misc/Profile_Timer: Fixed a typo in Profile_Timer.h
+	  (ACE_HAS_RUSAGE_T should have been ACE_HAS_GETRUSAGE).  Thanks
+	  to George Reynolds (george@dvcorp.com) for noticing this.
+
+	* Changed all uses of ::getopt() to use the ACE class Get_Opt
+	  get_opt.  Also changed all uses of optarg to get_opt.optarg.
+	  Thanks to Bob Vistica (robertv@ims.com) for detecting and
+	  reporting some inconsistencies in my previous changes...
+
+Mon Jul 24 19:03:03 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* include: I've added config and platform support for SGI IRIX5.3
+	  for use with the SGI C++ compiler.  Thanks to Stuart Powell
+	  (stuartp@ot.com.au) for these config files.
+
+	* libsrc/Connection/Acceptor.C (handle_input): Added the
+	  Event_Handler::DONT_CALL flag when removing the Oneshot_Acceptor
+	  from the Reactor so that we don't set it's peer_acceptor_ to -1.
+
+Mon Jul 24 12:46:10 1995  Douglas C. Schmidt  (schmidt@kavita.cs.wustl.edu)
+
+	* libsrc/Misc/Profile_Timer: Fixed problems stemming from the fact
+	  that HP/UX doesn't seem to support getrusage() (how odd).
+
+	* tests/Connection: a new test directory to test out the Connector
+	  and Acceptor pattern implementations.
+
+Sun Jul 23 12:26:37 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Connection/Acceptor.C: Fixed a minor bug with the 
+	  Oneshot_Acceptor constructor.  Thanks to John Morey
+	  (jmorey@hitel.com) for noticing this and the one below.
+
+	* libsrc/Reactor/Timer_Queue: Moved the static method current_time
+	  from the Timer_Queue.i file to the Timer_Queue.C file.  This
+	  avoids a bug with HP/UX C++.
+
+Sat Jul 22 15:54:27 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Released beta version 3.2.9.  Once this compiles on all major
+	  platforms then it's time to move to version 3.3.
+
+	* Added a number of miscellaneous changes for OSF/1 courtesy of
+  	  David Trumble (trumble@cvg.enet.dec.com).  One of these changes
+  	  involved changing all uses of Reactor::{ADD,SET,CLR,GET} to
+  	  Reactor::{ADD,SET,CLR,GET}_MASK in order to avoid a class with
+  	  some symbols in OSF/1.
+
+Fri Jul 21 00:21:02 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* Finally was able to test ACE on the SunOS 4.x platform (using
+	  the SunC++ 4.0.1 compiler).  The entire release compiled
+	  correctly!  This is a great relief after fighting with this
+	  stuff for months...  If you are building ACE on SunOS 4.x I'd
+	  *strongly* recommend you get SunC++ 4.0.1 since it is the only
+	  compiler that seems to be able to grok the weirdness of SunOS
+	  4.x...
+
+	* Finished updating all the ./tests and ./apps code so that it
+	  works correctly with the new Acceptor/Connector modifications.
+	  To see examples of these changes check out
+	  ./tests/IPC_SAP/SOCK_SAP/CPP-{nbclient,inserver}.C.
+
+	* libsrc/Misc/Profile_Timer: Merged in the new Profile_Timer
+	  implementation from David Trumble (trumble@cvg.enet.dec.com).
+	  This will work with basically the same interface as the current
+	  scheme even if the OS platform doesn't support the prusage_t
+	  type...
+
+Thu Jul 20 01:07:23 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Connection: Added a new class called ACE_Synch_Options
+	  which is used in both the Acceptor and Connector classes to
+	  consolidate options related to synchronous and asynchronous
+	  behavior.
+
+	* libsrc/Connection: Added a new class called Oneshot_Acceptor.
+	  This class inherits from the Acceptor but it only accepts one
+	  connection at a time (i.e., it doesn't keep itself registered
+	  with the Reactor).  Several examples in the tests/SOCK_SAP
+	  directory have been added to illustrate how all this works.
+
+	* libsrc/Connection/Connector: completely redid the Connector and
+	  Acceptor class interfaces to incorporate the new changes for
+	  asynchronous and synchronous behavior.  The new scheme should be
+	  much more general (and correct...).  Thanks to Tim and Irfan for
+	  helping out with this.
+
+	* libsrc/Threads/Synch: Fixed the implementation of Recursive_Lock
+	  so that it won't have race conditions when testing the thread id
+	  and nesting level in parallel threads.
+
+Wed Jul 19 13:15:05 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Reactor/Timer_Queue: Added new support for cancellation
+	  of individual Event_Handlers in the Reactor.  In addition, it is
+	  now possible to cancel all Event_Handlers with a single call to
+	  Timer_Queue::cancel().  Note that this new scheme will break
+	  existing code since Timer_Queue::schedule() (and
+	  Reactor::schedule_timer()) now return ACE_Timer_Node *'s rather
+	  than ints...
+
+	* libsrc/Service_Configurator/Service_Config: Fixed a problem
+	  where the "-s" option didn't work since it was parsed when
+	  "Service_Config::open" was called
+	  (it sets Service_Config::signum_).  However, previously the
+	  signal handler was already setup by the constructor.  By moving
+	  this registration to the open() method the problem was solved.
+	  Thanks to Bob Vistica (robertv@ims.com) for noticing this.
+
+	* libsrc/Service_Configurator/Service_Manager: Changed the
+	  Service_Manager::reconfigure_services to use this->signum_
+	  rather than to hard code SIGHUP.  Thanks to Bob Vistica
+	  (robertv@ims.com) for this insight.
+
+Mon Jul 17 12:08:08 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Threads/Token.C (renew): Fixed a typo so that we compare
+	  this->head_ == 0 rather than this->head_->next_ == 0.
+
+	* libsrc/Reactor/Reactor.h: Changed the Reactor to use the
+	  Reactor_Token rather than the pure Token to make sure that the
+	  sleep_hook() is called to unblock the Reactor.
+
+Fri Jul 14 14:12:07 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* libsrc/Connection: Changed the default behavior of the Connector
+	  and Acceptor classes such that they pass a -1 to
+	  svc_handler_->close() when things go wrong.  This is useful as a
+	  flag to close() (e.g., if it needs to figure out what to do if
+	  is shuts down prematurely).
+
+	* libsrc/Connection/Svc_Handler.C: Added a default definition of
+	  the put() method, which is defined as a pure virtual method in
+	  class Task.
+
+Thu Jul 13 23:10:35 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* include/ace/sysincludes.h: Added support for the SGI IRIX 5.3
+	  OS.  More screwy gettimeofday() hacks (what a pain...).  Thanks
+	  to Matt Stevens (mstevens@kirk.softeng.infonautics.com) for
+	  these fixes.
+
+	* include/makeinclude/platform_sunos5_centerline.GNU: Fixed a
+	  vexing problem that was causing the Centerline C++ compiler to
+	  puke when compiling ACE.  Thanks to Chandra Venkatapathy
+	  (cvenkat@develop.bsis.com) for finding a solution!
+
+Tue Jul 11 00:01:15 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Released version 3.2.6 for use by Karl and Detlef.
+
+Mon Jul 10 00:28:51 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* apps/TTCP: Added support for benchmarking the performance of
+	  Orbix, ORBeline, ACE SOCK_SAP, and C sockets.  These results are
+	  available at URL http://www.cs.wustl.edu/~schmidt/COOTS-95.ps.Z
+
+	* libsrc/Service_Configurator/Makefile: Added new commands to the
+	  Service Configurator Makefile so that all automatically
+	  generated flex and yacc symbols (i.e., the "yy" stuff) is
+	  renamed "ace_yy".  The purpose is to avoid conflicts with other
+	  uses of flex/yacc lexers/parsers with ACE.  Thanks to Steve
+	  Ritter (ritter@titan.com) for this suggestion and code.
+
+	* libsrc/IPC_SAP/TLI: Changed the TLI files so they are
+          conditionally compiled only if the platform supports TLI...
+
+	* libsrc/Connection: Changed the inlining strategy of Connector,
+	  Acceptor, and Svc_Handler so that very short methods are always
+	  inlined, but anything larger is never inlined...
+
+Sun Jul  9 14:07:02 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+	* include/ace/testconfig.h: Changed all occurrences of DEFAULT_*
+	  to ACE_DEFAULT_ to prevent namespace collision.
+
+        * libsrc/Connection/Connector: Massively improved the Connector
+          class so that its connect() method supports the following
+          behavior (tv == "timeout value" and ur == "use Reactor"):
+
+          Parameters      | Description                   
+                          |                             
+          tv   |  ur      |                             
+          -----|----------|-------------------------------
+               |	  |                               
+          NULL | yes      | infinite timeout (using Reactor)
+               |          |
+          time | yes      | try asynch transaction for    
+               |          | the specified time (using Reactor)
+               |          |
+          0,0  | yes      | poll; try, if EWOULDBLOCK,    
+               |          |       then return immediately
+               |          |       (using Reactor)
+               |          |
+          NULL | no       | block forever (don't use Reactor)
+               |          |                               
+          time | no       | do a blocking transaction     
+               |          | for the specified time
+               |          | (don't use Reactor)                 
+               |          |                               
+          0,0  | no       | poll; but do not initiate a
+               |          | nonblocking transaction
+               |          | (don't use Reactor)    
+
+	* libsrc/IPC_SAP/SOCK_SAP/SOCK_Connector: Changed the behavior of
+	  the SOCK_Connector::connect() method so that it uses Time_Values
+	  rather than a simple flag that indicates whether or not to use
+	  non-blocking connectors.  The new scheme is an improvement since
+	  it allows greater control over synchronous and asynchronous
+	  timeouts for connection establishment.  This behavior parallels
+	  that of SOCK_Acceptor, as well!  If this works well then I'll
+	  update the TLI_Connector and SPIPE_Connector to match this
+	  interface.
+
+        * libsrc: Continued to improve ACE's use of the global name space
+          by prefixing all "helper" classes with "ACE_"
+
+        * Updated SPIPE_Acceptor so that it would have the same basic
+          interface as the SOCK_Acceptor and TLI_Acceptor.
+
+        * libsrc/IPC_SAP: Consolidated the handle_timed_wait() methods
+          used by the TLI, socket, and STREAM pipe wrappers so that they
+          share the new ACE::handle_timed_accept() method, which is in
+          libsrc/Misc.
+
+        * libsrc/Misc: Modified the structure of Misc.[Ch].  Originally,
+          this file contained a bunch of stand-alone C functions with the
+          prefix "ace_" to keep them from conflicting with user's code.
+          I've modified things now so that all the miscellaneous functions
+          are now static methods in class ACE.  This provides better scope
+          control...
+
+        * libsrc/Log_Msg/Log_Msg: Replaced the use of a Mutex in class
+          Log_Msg with a Recursive_Lock<Mutex>.  This is necessary to
+          handle signals correctly...
+
+        * libsrc/Reactor/Reactor: Modified the behavior of
+          Reactor::notify() so that writers will block if the pipe is
+          full.  This solves some nasty flow-control problems.
+
+        * libsrc/Reactor/Handle_Set: changed all uses of fd_set to
+          ACE_FD_SET_TYPE * so that HP_UX would work correctly...
+
+        * include/ace/config-hpux.h: Removed the ACE_HAS_XLI flag until I
+          get a better idea which HP systems this is installed on.
+
+        * libsrc/Threads/Thread: Added a new static method called
+          spawn_n() that spawns "n" threads all running the same function.
+
+Sat Jul  8 14:14:34 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Service_Configurator: Made some miscellaneous changes to
+          "const" methods and parameters in order to handle the new
+          Reactor changes (C++ can be such a pain about this
+          sometimes...).
+
+        * libsrc/Threads: Added "yield" and "sigsetmask" methods to class
+          Thread.  How did I manage to omit these before?!
+
+        * libsrc/Reactor: Updated the Reactor to use the new Token class
+          described below.  This greatly simplies the structure of the
+          multi-thread support in the Reactor code.  In addition, it
+          should improve performance because it cuts the number of context
+          switches compared with the old scheme.  Many thanks to
+          Karl-Heinz and Detlef for encouraging me to redo the Reactor
+          implementation.
+
+        * libsrc/Threads: Added a new class called Token that provides a
+          flexible and efficient recursive mutex scheme.  Thanks to
+          Karl-Heinz Dorn (kdorn@erlh.siemens.de) and Detlef Becker
+          (beckerd@erlh.siemens.de) for sharing their original code for this.
+
+Thu Jul  6 10:37:45 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Reactor/Event_Handler_T: Conditionally compiled this so
+          that it will only compile if the compiler supports template
+          typedefs (e.g., G++ doesn't seem to like this...).
+
+        * Started to make changes in ACE to deal with the new ANSI C++
+          semantics in the scope of variables defined within for loops.
+          Thanks to Aniruddha Gokhale (gokhale@cs.wustl.edu) for noticing
+          this in G++ 2.7...
+
+Wed Jul  5 21:50:39 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Connection/Svc_Handler: Fixed the behavior of the
+          Svc_Handler class so that it can be configured with a Reactor
+          other than Service_Config::reactor, just like the Acceptor and
+          Connector.  Thanks to Karl-Heinz Dorn (kdorn@erlh.siemens.de)
+          for suggesting this!
+
+Tue Jul  4 00:21:31 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Added some new changes for Linux courtesy of Charles Rennolet
+          (clr@thurse.mn.org).
+
+        * libsrc/Reactor/Reactor.C (bit_ops): Fixed a dumb error in
+          bit_ops that was caused by checking "else if (Reactor::SET)"
+          rather than "else if (ops == Reactor::SET)".  Thanks to Mark
+          Patton (mark_patton@tx72.mot.com) for finding this bug and
+          reporting it along with the fix.
+
+        * include/ace/sysincludes.h: Added new fixes for M_SYNC and
+          ENOTSUP on SunOS 4.
+
+        * libsrc/Reactor: Added new support for integrating X and the
+          Reactor.  These files are called XtReactor.* and XReactor.*.
+          Thanks to Eric Vaughan (evaughan@arinc.com) for providing this
+          stuff...
+
+Mon Jul  3 19:44:07 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Added support for SunOS 5.5 on i86 PC.  Thanks to Bin Mu
+          (mubin@wfg.com) for the config files and fixes.
+
+        * libsrc/Misc/Profile_Timer: Added new support for versions of
+          UNIX that don't support prusage_t.  The new version of
+          Profile_Timer will use gettimeofday() and getrusage() of
+          prusage_t and /procfs isn't available...  This code hasn't been
+          tested yet (since I don't have SunOS 4.x) so I don't know if it
+          works.
+
+        * Hopefully fixed the SunOS4 prototype for gettimeofday().  Thanks
+          to Andrew McGowan (ajm@se09.wg2.waii.com) for the suggested fix.
+
+        * include/makeinclude/platform_hpux.GNU (CC): Added new support
+          for building ACE and shared libraries on HP/UX.  Thanks to Jam
+          Hamidi (jh1@osi.com) for this code.
+
+        * libsrc/Reactor/Handle_Set: Fixed Handle_Set_Iterator::operator++
+          to check for index to be greater or equal than NUM_WORDS instead
+          of just equal. This is better for sanity, although it may not be
+          needed. Thanks to Carlos Garcia Braschi (cgarcia@caramba.tid.es)
+          for suggesting this fix.
+
+Wed Jun 14 11:16:40 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/IPC_SAP/TLI_Acceptor: modified TLI_Acceptor so that it's
+          public constructor/open() and accept() methods are more similar
+          to the SOCK_Acceptor.  In particular, added support for
+          "SO_REUSEADDR" in TLI_Acceptor and time values for accept().
+          Thanks to John P. Hearn (jph@ccrl.nj.nec.com), TLI_SAP now does
+          the right thing for socket options.
+
+        * libsrc/IPC_SAP: Fixed up the SOCK_Acceptor and TLI_Acceptor in
+          order to add better support for "timed accepts."  The new scheme
+          uses Time_Values, which is more consistent with other parts of
+          ACE.  In addition, the Time_Value was moved from the
+          constructor/open() to the accept() method, which allows more
+          fine grained control over this behavior.  Thanks to Irfan
+          (ip1@cs.wustl.edu) for suggesting this.
+
+        * libsrc/IPC_SAP: Cleaned up the SOCK_Acceptor::open and
+          TLI_Acceptor::open routine.  In addition to being more compact
+          and robust, this routine now also let's open() determine which
+          local port to bind to (if you pass in Addr::sap_any as the
+          local_addr).  Thanks to Irfan (ip1@cs.wustl.edu) for suggesting
+          this.
+
+Tue Jun 13 16:09:13 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Reactor/Timer_Queue: Fixed an odd problem with the
+          Timer_Queue on Solaris.  Apparently the select() call will
+          return slightly earlier than the timeout dictates due to lack of
+          granularity with the system clock.  This was causing problems
+          where the Reactor wasn't correctly dispatching the
+          handle_timeout() method of Event_Handlers.  The fix was to add a
+          10 Millisec "fudge factor" when calling the
+          Timer_Queue::expire() method.  Please let me know if this causes
+          any problems.  Thanks to Giang Hoang Nguyen
+          (yang@titan.com) to noticing this problem.
+
+        * libsrc/Connection/Acceptor: Enhanced the Acceptor class so that
+          it is possible to accept a new SVC_HANDLER synchronously, rather
+          than always driving this acceptance out of the Reactor's event
+          loop.  Thanks to Irfan (ip1@cs.wustl.edu) for suggesting this.
+
+        * libsrc/IPC_SAP/Addr: Changed all occurrences of ace_sap_any to
+          Addr::sap_any (i.e., sap_any is now a static data member in
+          class Addr).  This is an improvement since it helps to limit the
+          scope of what would otherwise be global variables...
+
+Wed Jun  7 17:26:31 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * apps/Logger/Reactor_Logger/Client_Acceptor.i (handle_input):
+          Fixed a braino that omitted an important block of code!  Thanks
+          to Ken Konecki (kenk@wfg.com) for finding this.
+
+Fri Jun  2 13:59:07 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/IPC_SAP/Addr/INET_Addr.i (set): Removed the special case
+          for INADDR_ANY.  This should just fall right out...
+
+Thu Jun  1 19:45:21 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/IPC_SAP/SOCK_SAP/SOCK_Connector: Added support to
+          SOCK_Connector so that it is possible to bind the local TCP port
+          number prior to establishing the connection.  Also fixed the
+          TLI_Connector to be consistent with this approach.  Thanks to
+          Mark Patton (mark_patton@tx72.mot.com) for this idea.
+
+        * Fixed a problem with Mem_Map that was caused by the fact that
+          some versions of Unix (e.g., SunOS 4.x) don't support MS_SYNC...
+          Thanks to Andy McGowan (mcgowan@wg2.waii.com) for noticing this.
+
+        * Fixed a very stupid bug in ./libsrc/Synch.h that accidentally
+          omitted this->lock_.acquire() from the Guard class constructor.
+          Thanks to Bin Mu (mubin@wfg.com) for noticing this!
+
+Fri May 26 13:20:38 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Connection/Acceptor: Added a new method called
+          make_svc_handler() that generalizes the dynamic creation of a
+          SVC_HANDLER by the Acceptor's Template Method handle_input().
+          This scheme is completely backwardly compatible with the
+          original approach, but now allows transparent extension too!
+          
+        * libsrc/Connection/Acceptor: cleaned up the Template Method logic
+          in Acceptor::handle_input.  No longer do we set the listener
+          socket into non-blocking mode and then rely on a -1 with
+          EWOULDBLOCK to indicate there are no more connections to
+          establish.  This was causing problems for singleton Svc_Handlers
+          since the Acceptor was setting their peer_stream_ to -1...  The
+          new approach should complete solve this problem.
+
+Mon May 22 15:10:27 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Released version 3.2.3 so that Bill Sears can test the new
+          #include "ace/" features.
+
+        * Modified all the ACE source, tests, and apps so that all
+          #includes of its headers are refixed by ace/, e.g.:
+
+          #include <ace/Reactor.h>
+
+          There are two reasons for have the include files be of
+          this form:
+
+          First, you can tell at a glance by looking at the caller where 
+          the library is coming from.  
+
+          Secondly, you can build an include tree of the form:
+
+                  /include/lib1
+                  /include/lib2
+                  /include/lib3 
+                  /include/ace
+
+          which then links to WRAPPER_ROOT.  Now, all you have to do
+          when you build a make file is point to the include root, and
+          put links in the include root.  This is especially helpful
+          if there are multiple versions.
+
+          This means just one less thing that has to be modified in the
+          Makefile.  Thanks to Bill Sears (wsears@world.std.com) for
+          recommending this change.
+
+Sat May 20 17:12:35 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * config-irix5.3-sgic++.h: Added new configuration support for SGI
+          IRIX5.3 courtesy of Stuart Powell (stuartp@ot.com.au).
+
+Sat May 13 20:44:06 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Generalized the SOCK_Connector::complete method so that it takes
+          a Time_Value timeout.  This allows applications to wait upto a
+          certain limit before giving up on a non-blocking connection.
+          Updated the tests in ./tests/IPC_SAP/SOCK_SAP/CPP-inclient.C to
+          illustrate how this is used.
+
+        * Added some interesting new tests to ./tests/Mem_Map that can be
+          used to benchmark the performance of various strategies (e.g.,
+          stdio, read/write, mmap, etc.) for copying files.
+
+Fri May 12 19:09:10 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Mem_Map/Mem_Map: Added two new overloaded methods called
+          sync() that are wrappers around the msync(3c) system call.  Also
+          added a new unmap() method that gives access to the full
+          behavior of munmap(3c).
+
+Wed May 10 14:16:16 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Tried yet another fix for the gettimeofday() botch that both
+          Centerline and SunOS 5.4 screw up in different ways.  Thanks to
+          Medhi Tabatabai (Mehdi.Tabatabai@ed.nce.sita.int) for the latest
+          fixes.
+
+Tue May  9 19:05:58 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Reactor/Handle_Set.C: Fixed some "off-by-one" errors that
+          were occurring in the Handle_Set::sync() and set_max() methods.
+          Thanks to Nigel Hooke (n.hooke@trl.oz.au) for finding and fixing
+          these.
+
+Mon May  8 02:01:54 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Reactor/Reactor.C: Moved the Null_Callback class from
+          being nested within the Reactor class to outside the Reactor
+          class.  This fixes a problem with the SIG compiler.
+
+        * Released version 3.2.2.
+
+        * libsrc/Reactor/Signal.C: Made the Signal_Handler class
+          thread-safe as well as signal-safe.
+
+        * libsrc/Reactor/Reactor.C: Modified the new Reactor
+          implementation slightly to handle signals correctly.
+
+        * libsrc/Threads/Synch.h: Added a new conversion operator to
+          Recursive_Lock that returns the underlying LOCK in case we need
+          it for something (e.g., to initialize a Condition object).
+
+Sun May  7 04:17:46 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Reactor/Reactor.C: Finished what I hope will be the last
+          set of changes to make the Reactor robust in multi-threaded
+          programs in situations where separate threads are used to
+          register and remove handlers.  The final solution is elegant in
+          that it does not significantly penalize the performance of
+          programs that do not use separate threads to register and remove
+          handlers.  Moreover, if you compile without the ACE_MT_SAFE flag
+          the Reactor will not include additional state information
+          related to the multi-threaded implementation.
+          
+        * libsrc/Threads/Synch.h: Subclassed the Guard class to make a new
+          class Try_Guard that uses tryacquire() to obtain a LOCK.
+
+Fri May  5 18:43:50 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Released version 3.2.1
+
+Thu May  4 19:43:01 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/IPC_SAP/TLI_SAP/TLI_Connector.C (connect): Fixed a
+          problem whereby a t_bind() was being done twice.  Since I didn't
+          write this code I don't know if my fix will work generically on
+          all platforms supporting TLI.  Please let me know if there are
+          any problems.
+
+Tue May  2 17:21:53 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Reactor: Added a new notification feature that allows
+          multiple threads of control to enqueue Event_Handler * to the
+          main Reactor thread via the pipe used to wake up the main
+          Reactor thread.  The Reactor will call the handle_exception()
+          method on Event_Handler with a HANDLE == -1 to notify the
+          handler.  This feature is very useful if you need to have
+          certain operations (such as handler termination) performed in
+          the main thread.
+
+Tue Apr 25 00:34:18 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Reactor: Fixed a stupid pair of typos in the Reactor that
+          failed to cast arguments to the pipe to char *.
+          
+        * libsrc/Connection: Fixed a portability problem with the
+          Connector: we can't use RW_Mutex for synchronization since not
+          all platforms support threads.  The quick fix is to use
+          Null_Mutex, but a better long term approach is on the way!
+
+        * Released version 3.2.
+
+        * Added richer support for the TLI_Connector to make it work
+          better with protocols other than TCP/IP.  Thanks to Mats
+          Sundvall (sundvall@perrier.embnet.se) for these enhancements.
+
+Mon Apr 24 02:26:04 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Changed the SOCK_Dgram_Brdcast class name to SOCK_Dgram_Bcast
+          and the SOCK_Mcast to SOCK_Dgram_Mcast to be more consistent.
+
+        * Massively improved the Reactor's support for multi-threading.
+          There was actually a major problem in previous versions of ACE
+          that used poll() as the underlying event demultiplexor.  Poll()
+          produced incorrect results when the Reactor::handle_events()
+          method was run in one thread, but another thread came along and
+          registered or removed an Event_Handler.  The new version fixes
+          this problem so that the Reactor will now work correctly in
+          multi-threaded programs.
+
+          One consequence of this change is that sysincludes.h and the
+          SunOS 5.x configuration files have been changed so that poll()
+          is no longer used as the default demultiplexor.  The reason is
+          that poll() doesn't work as efficiently when used in
+          multi-threaded programs (ugh).  See the Reactor code for
+          examples of how this all works now.  Basically, the trick is to
+          use the select()-style implementation for most of the code, and
+          transform to poll()-style implementation only when necessary.
+
+Sat Apr 22 03:35:51 1995  Douglas C. Schmidt  (schmidt@lambada.cs.wustl.edu)
+
+        * libsrc/ASX/Message_Queue: Added a new method to the
+          Message_Queue class called unblock().  This method allows one
+          thread to release all other threads that are waiting for
+          messages to be enqueued or dequeued on a Message_Queue.
+          Modified the return value of methods like enqueue_head() and
+          dequeue_head() so that if a thread unblocks() then these methods
+          return -1 with errno == ESHUTDOWN.  Also changed the name of
+          some of the internal methods so that they would be more
+          consistent.
+
+        * libsrc/Connection/Connector: Fixed a stupid bug caused by
+          failing to have a destructor for Connector.  Thus, there are
+          cases where unconnected Svc_Handlers are left around in the
+          handler_map_.  This causes problems for dynamic linking in
+          conjunction with the Reactor, so now the destructor iterates
+          through all the unconnected Svc_Handlers and removes them from
+          the Reactor.
+
+Fri Apr 21 15:28:46 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Reactor/Signal: Changed Sig_Set::addset() and
+          Sig_Set::delset() to the more appropriately named sig_add() and
+          sig_del().  Also added '_' in the Sig_Set method names to be
+          more consistent...
+
+        * Removed the ./libsrc/IPC_SAP/SOCK_SAP/misc.[hC] file and merged
+          the one function in that file (ace_bind_port) into
+          ./libsrc/Misc/Misc.[hC].
+
+        * Added a bunch of fixes from various people to make ACE compile
+          better on SGI, SunOS 4, and HP/UX.  Thanks for all the fixes!
+
+        * libsrc/IPC_SAP/Addr: Changed sap_any to ace_sap_any to avoid
+          problems with the namespace.
+
+        * Added a new portability flag that only compiles the SOCK_Mcast.*
+          stuff if the platform supports multicast!
+
+        * ./libsrc/Shared_Malloc: Fixed some portability bugs with
+          Memory_Pool.C and added new support for SunOS 4.x running SunC++
+          4.x.  Thanks to Steve Warwick (swarwick@arinc.com) for this
+          strategic help.
+
+Wed Apr 19 09:05:43 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Fixed up the ./libsrc/CORBA_Handler so that it will correctly
+          compile on platforms that don't have Orbix...
+
+        * libsrc/Misc: added a new "Simple String" class called SString.
+          This is not really meant to be used by end-user applications.
+          It is used by certain portions of ACE that need to have
+          operator== and operator!= defined on a string (e.g., the
+          Token_Server and the Orbix Event_Comm components that use the
+          Map_Manager).
+
+Tue Apr 18 00:09:31 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/ASX: Fixed a stupid bug in Task::activate() that didn't
+          spawn a thread if the Thread_Manager was NULL...
+
+Sat Apr 15 19:39:30 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Reactor: Added a new class to the Reactor called
+          Event_Handler_T.[hi].  This class makes it easy to integrate
+          existing classes into the Reactor framework without requiring
+          them to inherit from Event_Handler directly.  This technique is
+          a superset of the DEF_TIE approach used by IONA in Orbix as one
+          of the ways to combine an existing class (that doesn't know
+          anything about CORBA) with a CORBA interface.  Thanks to Greg
+          Lavender
+          (g.lavender@isode.com) for the suggestion.
+
+Fri Apr 14 14:41:49 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Run catman on the ./man directory so that it now has a windex
+          file.  This facilitates "man -k".
+
+Thu Apr 13 23:39:22 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Reactor: Made the Reactor be a stand-alone component that
+          does not require any other ACE libraries.
+
+        * Added two new methods to the Reactor so that you can now
+          register or remove a set of HANDLEs in a single call.  Thanks to
+          Bill Sears
+          (wsears@world.std.com) for this suggestion.  Basically, now you
+	  can register or deregister a set of n HANDLEs with one operation
+          (rather than doing n register_handler () or n remove_handler
+          ()).
+
+        * include/sysincludes.h: Changed the name of the macro MT to
+          ACE_MT and DB to ACE_DB to avoid polluting the namespace.
+
+Wed Apr 12 11:14:46 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Reactor/Reactor.C (close): Added code to close down the
+          pipe handles when the Reactor is shut down.  Thanks to Mark
+          Patton (mark_patton@tx72.mot.com) for this info.
+
+Fri Apr  7 18:33:30 1995  Douglas C. Schmidt  (schmidt@siesta.cs.wustl.edu)
+
+        * Added a new method to CORBA_Handler so that handlers don't need
+          to subclass from CORBA_Handler, but rather can call the
+          CORBA_Handler::register_service() method (which is static).
+          Thanks to Chris Tarr (ctarr@objectspace.co) for this suggestion.
+
+Mon Apr  3 13:09:45 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Added a new static method to Service_Config.[hC] called
+          end_event_loop().  This can be used to stop the run_event_loop()
+          method of the Service_Config.  In addition, all the methods in
+          Service_Config were changed to be static to emphasize the fact
+          that the Service Configurator is a singleton...
+
+        * include/Trace.h (ACE_TRACE): Changed the macro T to ACE_TRACE.
+          This will prevent namespace pollution.
+
+        * Added support for the Orbix CORBA implementation.  If you don't
+          have Orbix, you'll need to remove this flag from the
+          config-sunos5-sunc++.4.x.h file if you are compiling on SunOS
+          5.x.
+
+Sun Apr  2 01:12:19 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Added new support for C++ wrappers around the IP multicasting.
+          There are three new files in ./libsrc/IPC_SAP/SOCK_SAP called
+          SOCK_Mcast.[hiC] and a new test directory in
+          ./tests/Reactor/multicast and ./tests/Reactor/ntalker to
+          illustrate how to use this stuff.  Thanks to Tim Harrison
+          (harrison@cs.wustl.edu) for this code.
+
+Sat Apr  1 18:48:40 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Added support to the libsrc/Shared_Malloc/Memory_Pool.[hC] class
+          for System V shared memory, as well as for mmap(2) and sbrk(2)
+          memory.  Please note that this has not been extensively tested
+          yet, so use with caution...
+
+Thu Mar 30 21:50:00 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Misc/Atomic_Op: Added the postfix versions of the ++ and
+          -- operators.  This stops the Sun CC compiler from griping about
+          the "anachronistic" usage when using a++ rather than ++a.
+          Thanks to Bruce Worden <bruce@betsy.gps.caltech.edu> for the
+          suggestion.
+
+Wed Mar 29 22:26:37 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Reactor/Handle_Set: Fixed a weird problem where I was
+          using NOFILE as the max number of descriptors rather than
+          FD_SETSIZE.  I don't know why I was doing this.
+
+        * Also fixed up a problem with Handle_Set that was causing the
+          iterator to go nuts when it got a strange initial value of
+          fd_set in Handle_Set.  Orbix triggers this kind of nonsense in
+          some cases...
+
+Tue Mar 28 21:01:36 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/Reactor/Reactor.C: swapped the order of dispatching so
+          that handle_exception methods are dispatched before handle_input
+          methods to improve response time for exceptions (e.g., OOB
+          data).  Thanks to Detlef Becker
+          (beckerd@erlh.siemens.de) for suggesting this.
+
+        * Fixed a bug in ./ASX/Stream.i that caused problems when a Module
+          was popped off a Stream.  Thanks to Paul Stephenson for noticing
+          this and sending me the fix.
+
+        * Changed the Reactor::dispatch methods so that they dispatch the
+          timers *before* dispatching the I/O-based event handlers.  This
+          is helpful for systems that are time-delay sensitive.
+
+        * libsrc/Reactor/Time_Value: Added new += and -= operators to
+          Time_Value.  Thanks to Alex V. Maclinovsky
+          (garyh@teleng1.tait.co.nz) for this suggestion.
+
+Thu Mar 23 15:38:23 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/IPC_SAP/Addr/SPIPE_Addr.i (set): Fixed a problem that the
+          HP/UX compiler had with complex arithmetic expressions.
+
+        * libsrc/Service_Configurator: fixed up the Service_Configurator
+          source code so that it will compile correctly on HP/UX
+          platforms.
+
+Tue Mar 21 00:28:25 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * libsrc/IPC_SAP/SOCK_SAP/LSOCK_Connector.h: Fixed an amazingly
+          stupid bug with LSOCK_Connector, where I was passing in a
+          default argument of PF_INET instead of PF_UNIX... Arrgh!
+
+Mon Mar 20 20:24:29 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Fixed up the $WRAPPER_ROOT/include/makeinclude/ directory to
+          define a new set of platform-specific configuration files.  This
+          should greatly improve the portability of ACE to different
+          OS/compiler platforms.
+
+        * Added a bunch of changes to allow ACE to build with Lucid C++ on
+          SunOs 4.x.  This should also fix some other problems we've been
+          having with SunOS 4.x.  Thanks to Lee Baker (baker@ctis.af.mil)
+          for these changes.
+
+Sun Mar 19 00:34:30 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Added manual pages for all of the ./libsrc libraries.  These
+          manual pages are all generated automagically from the libsrc
+          header files.
+
+Sat Mar 18 10:48:46 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Finally broke down and fixed the Makefile scheme so that there
+          is just one shared library (libACE.so) and one archive library
+          (libACE.a).  This should massively simplify the application
+          development process, though it may require a bit of fixing of
+          Makefiles to remove all the -lReactor -lIPC_SAP stuff that was
+          in there before.
+
+        * libsrc/IPC_SAP/TLI_SAP/: Fixed a stupid bug that was causing
+          core dumps since the TLI option pointers weren't initialized to
+          0 in the TLI::TLI constructor.  Thanks to Ed Brown for noticing
+          this (eebrown@netcom.com).
+
+Wed Mar 15 00:08:19 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Added some new fixes to get ACE to run on OSF1 and Linux.
+
+Tue Mar 14 13:36:31 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Added several changes to the source code and config-hpux.h
+          configuration file based on comments from Alex Ranous
+          (ranous@nsa.hp.com).  In particular, changed ACE_HAS_NO_FDSET to
+          ACE_SELECT_USES_LONG. 
+
+Mon Mar 13 09:23:58 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Improved the Makefile scheme so that the use of PTDIRS is no
+          longer required.  The trick was to link the appropriate template
+          *.C files into the WRAPPER_ROOT/include directory.  This enables
+          the compiler to find them in one single place.
+
+Sun Mar 12 22:35:50 1995  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
+
+        * Added a new mechanism to clean up the insane number of -D's in
+          the Makefile.  This new mechanism requires a bit more work at
+          installation time, but should greatly reduce the effort during
+          normal software development
+          (once ACE is installed...).  See the INSTALL file 
+          for more details.
+
+Fri Mar 10 17:29:02 1995  Douglas Schmidt  <douglas@gtcterminator>
+
+        * Fixed a stupid bug in Map_Manager.i which wasn't correctly
+          setting default values for fields in one of the Map_Manager
+          constructors.
+
+Fri Mar 10 08:54:42 1995  Doug Schmidt  <douglas@gtccipher>
+
+        * /libsrc/Connection/Acceptor.i: Fixed a potential memory leak in
+          handle_input().
+
+Thu Mar  9 11:59:54 1995  Doug Schmidt  <douglas@gtccipher>
+
+        * Changed the Map_Manager::find() method to use class Read_Guard
+          so that multiple finds may proceed in parallel on a multiple
+          threaded application.  Likewise, changed the implementation of
+          bind() and unbind() to use class Write_Guard so that destructive
+          operations will be serialized correctly.  One consequence of
+          this is that RW_Mutex must be used instead of Mutex...
+
+        * Added a new overloaded Map_Manager::unbind() method with an
+          INT_ID parameter.  This parameter that passes back a reference
+          to the internal id being unbound.  This allows the caller to
+          clean up any dynamic memory associated with the INT_ID.
+
+Tue Mar  7 13:32:17 1995  Doug Schmidt  <douglas@gtccipher>
+
+        * Changed a bunch more things to get ACE to compile with
+          Centerline C++.  This should also make ACE more portable to
+          other cfront-based compilers.
+
+        * Had to change the ASX source in ACE to work around a stupid
+          problem with templates in cfront-based C++ compilers.
+          Fortunately, it was possible to mask most of the problems using
+          the C++ preprocessor.
+
+        * There seem to be some problems with cfront-based compilers (such
+          as centerline).  They don't like the new SYNCH::MUTEX usage in
+          the Message_Queue.
+
+        * Removed several unused local variables in the INET_Addr::set()
+          method.
+
+Wed Mar  1 00:35:11 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * Added a major performance boost on high-speed networks.  It
+          turns out that send(3) and revc(3) are slower than write(2) and
+          read(2) (since the latter are system calls, and the former are
+          library calls.  Therefore, I added new overloaded methods to
+          SOCK_IO so that write(2) and read(2) are available to the user!
+
+Tue Feb 28 10:13:09 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Reactor/Reactor.C: Fixed the implementation of the
+          Reactor::open and Reactor::Reactor constructor so that it is now
+          possible to resize the size of the Reactor *after* the
+          constructor has run (by calling open()) *without* having to shut
+          down the Reactor first.
+
+        * Modified the Reactor::attach() method so that it will ADD the
+          new bits to the bitmask rather than SET them.  Thanks to Mark
+          Patton for recommending this
+          (mark_patton@tx72.mot.com).
+
+Sat Feb 25 15:08:04 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * Released version 3.0.5.
+
+Fri Feb 24 17:57:01 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * Used the OSE class2man scripts to generate UNIX manual pages for
+          IPC_SAP, Thread, Connection, and Reactor.  Other manual pages
+          will be forthcoming...
+
+        * libsrc/IPC_SAP/Addr/INET_Addr.i: Fixed a bug in one of the
+          INET_Addr::set() methods that caused a segmentation fault if
+          host_name was NULL.  In addition, greatly cleaned up the code so
+          that all the "set" methods share a common basis of code.
+
+Tue Feb 21 19:32:28 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * Updated the entire release to use the new SYNCH template
+          interface for Task, Module, Stream, and Message_Queue.  This is
+          *much* cleaner, though it reveals some bugs with the Sun C++
+          templates facility.
+
+Mon Feb 20 22:46:14 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * Changed the SPIPE_SAP, SOCK_SAP, and TLI_SAP *Connector class
+          methods from open() to connect().  This is a more accurate name
+          and it also fits in nicely with the Acceptor::accept() method.
+
+        * Started integrating new versions of various header files that
+          include hooks to automatically generate documentation.
+
+Tue Feb 14 20:52:13 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * Changed the order in which the Reactor dispatches descriptors.
+          Originally, it dispatched the "read" descriptors *before* the
+          "write" descriptors.  Now, it dispatches the "write" descriptors
+          first.  This was necessary to handle weird behavior of sockets
+          over TCP/IP when data is piggy-backed with the final ACK on a
+          non-blocking connection.
+
+Mon Feb 13 15:49:21 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * Changed the name of Event_Handler::get_fd() to
+          Event_Handler::get_handle() to be more consistent with other
+          usage in ACE.
+
+Sat Feb  4 22:47:34 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Service_Configurator/Service_Object: changed the
+          destructor to be virtual (thanks to Steffen Winther Sorensen
+          <sts@dad.stibo.dk> for noticing this).
+
+Sat Jan 28 16:29:49 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * Changed the name of class Map_Manager's Search_Structure struct
+          to Map_Entry.  This is more specific to what that data structure
+          really does.
+
+        * Began adding support for Linux, courtesy of sts@dad.stibo.dk.
+
+Sun Jan 22 23:15:38 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * Changed the name of the ./libsrc/Connector-Acceptor directory to
+          ./libsrc/Connection.  Also changed the name of libConn_Acc.so to
+          libConnection.so to be more consistent.
+
+Sat Jan 21 13:59:18 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/IPC_SAP: Fixed the *Acceptor classes for SOCK_SAP and
+          SPIPE_SAP so they behave just like FIFO_SAP and contain a method
+          called remove().  This method closes the underlying descriptor
+          and also unlinks the local address from the file system.
+
+        * libsrc/ASX/Message_Queue.i (copy): Fixed this code so that it
+          correctly stores starting at the wr_ptr rather than the rd_ptr.
+          Thanks to Chris Cleeland
+          (chris@milo.st-louis.mo.us) for pointing this out
+          to me.
+
+Wed Jan 11 13:07:19 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * Changed all uses of class Thr_Manager to class Thread_Manager
+          and class Thr_Cntl to Thread_Control.  This is more readable and
+          is now consistent with the documentation...
+
+Tue Jan 10 13:49:31 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * Modified the makefile scheme so that only the *.so files are
+          built by default.  If you want to build both *.a and *.so files,
+          uncomment out the lines described in
+          $WRAPPER_ROOT/include/makeinclude/rules.lib.GNU.  Note that this
+          will require you to run make on the ./libsrc directories twice
+          in order to properly build and install both the *.a and *.so
+          libraries.
+
+Mon Jan  9 22:57:29 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Reactor/Signal.h: Changed the name of the Signal_Block
+          class to the Signal_Guard class to be more consistent with the
+          Guard class in Synch.h.
+
+Sat Jan  7 19:49:46 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * tests/ASX/Event_Server/Event_Server: Revised the Event Server
+          test example to use the Acceptor pattern components.
+
+Fri Jan  6 23:38:21 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * Added a new method to class Task that turns a task into an
+          active object (i.e., associates a thread of control with the
+          task).  This is useful since it replaces all the places in
+          application code that original said "this->thr_mgr_.spawn
+          (THR_FUNC
+          (&this->svc_run))", etc...
+
+Thu Jan  5 21:05:15 1995  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/ASX: Changed the capitalization of class STREAM to class
+          Stream.  This seems more reasonable since I don't see any
+          particular reason to shout about Streams!
+
+        * libsrc/ASX/Task: Changed name of method qreply() to reply() to
+          reflect the fact that the name of the class is no longer Queue!
+          
+        * libsrc/ASX: Made both Task and Message_Queue into parameterized
+          types.  This greatly improves the ability to parameterized
+          synchronization into an application.
+
+        * Changed all occurrences of timestruc_t to use Time_Value
+          instead.  This helps to improve portability and reduce the
+          "impedence mismatch" caused by mixing both C and C++ types in
+          the ACE interfaces.  Note that one drawback of this is that we
+          lose nano-second timing accuracy.  However, I don't know of any
+          real OS platforms that support that degree of precision anyway!
+
+        * libsrc/Reactor: Moved the static "zero" data member from the
+          Timer_Queue class to the Time_Value class.  Also added a new
+          static data member called "zerop," which is a pointer to "zero".
+
+        * libsrc/Threads/Synch: Changed the interface of class Condition
+          so that it no longer has both wait() and a timedwait() methods.
+          Since C++ has default values, these two methods were redundant.
+          Now, there is only a single method called wait().  By default,
+          it's argument is 0, which defaults to the original wait()
+          semantics.  If the argument is non-zero then the timewait
+          semantics apply.
+
+        * libsrc/Threads/Synch: Added a new class called Null_Condition.
+          This is similar to the Null_Mutex class in the sense that it has
+          the same interface as class Condition, but it's methods are all
+          no-ops
+          (however, wait() and signal() both set errno = ETIME
+          before returning...).  This class is useful for
+          parameterizing synchronization into an application.
+
