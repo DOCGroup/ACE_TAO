@@ -1,7 +1,6 @@
 // This example tests the non-blocking features of the
-// $Id$
-
 // ACE_SOCK_Acceptor and ACE_SOCK_Stream classes.
+// $Id$
 
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Acceptor.h"                             
@@ -81,13 +80,19 @@ main (int argc, char *argv[])
 	  
 	      for (ssize_t r_bytes;;)
 		{
+		  // Wait to read until there's something from the client.
 		  if (ACE_OS::select (int (new_stream.get_handle ()) + 1,
 				      handle_set,
 				      0, 0, 0) == -1)
 		    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "select"), -1);
 	      
+		  // Keep reading until the client shuts down.
 		  for (;;)
 		    {
+		      // Sleep for some amount of time in order
+		      // to test client flow control.
+		      ACE_OS::sleep (SOME_RANDOM_TIME_SET_BY_COMMAND_LINE);
+
 		      r_bytes = new_stream.recv (buf, sizeof buf);
 
 		      if (r_bytes <= 0)
