@@ -298,26 +298,12 @@ TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
 //
 // NOTE that this must NOT go across the network!
 
-// @@ Use all profiles for hash function!!!!!  FRED
-//    can get different values, depending on the profile_in_use!!
 CORBA::ULong
 TAO_Stub::hash (CORBA::ULong max,
                 CORBA::Environment &ACE_TRY_ENV)
 {
-  // we rely on the profile object that its address info
-  if (profile_in_use_)
-    return profile_in_use_->hash (max, ACE_TRY_ENV);
-
-  if (TAO_debug_level > 3)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) hash called on a null profile\n")));
-
-  ACE_THROW_RETURN (CORBA::INTERNAL (
-                      CORBA_SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        0),
-                      CORBA::COMPLETED_NO),
-                    0);
+  // we rely on the profile objects that its address info
+  return this->base_profiles_.hash (max, ACE_TRY_ENV);
 }
 
 // Expensive comparison of objref data, to see if two objrefs
