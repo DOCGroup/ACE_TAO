@@ -103,7 +103,7 @@ main (int argc, char *argv[])
       // Now throw a bogus exception to test whether or not exceptions 
       // break when the last ORB is released.
       // -------------------------------------------------------------
-      ACE_TRY_THROW (CORBA::UNKNOWN);
+      ACE_TRY_THROW (CORBA::UNKNOWN ());
     }
   ACE_CATCH (CORBA::UNKNOWN, exc)
     {
