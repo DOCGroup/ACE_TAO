@@ -1,6 +1,28 @@
+Fri Jun 19 15:18:04 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Scheduler_Factory.{h,cpp} (preemption_priority,
+          set_preemption_priority): added these static functions.  They are for
+          use by applications and the Event Channel, to get/set the
+          preemption priority of the calling thread.
+
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp: replaced the static
+          ACE_Runtime_Factory instance with an ACE_Singleton instance
+          of a locally-defined struct.  In addition, the struct
+          contains the ACE_TSS instance that is used by the static
+          {set_,}preemption_priority functions.
+
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp (svc): register each
+          Event Channel dispatch thread with the Scheduler's
+          set_preemption_priority () function.
+
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp (svc): suppress the
+          warning about thr_setprio failure on Solaris, if the
+          priority is 0 and not running as root.  It's a no-op,
+          in that case, but Solaris' ::thr_setprio fails with EINVAL.
+
 Fri Jun 19 12:07:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* tests/Quoter/Generic_Factory.cpp: added .in() to passed
+        * tests/Quoter/Generic_Factory.cpp: added .in() to passed
           object reference parameter to remove compiler error
           using g++ on Solaris 2.6 for Intel x86
 
@@ -10,33 +32,33 @@ Fri Jun 19 11:29:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Jun 19 10:14:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/POA/On_Demand_Activation/Servant_Activator.h: 
-	* tests/POA/On_Demand_Activation/Servant_Activator.cpp: 
-	* tests/POA/On_Demand_Activation/Servant_Locator.h: 
-	* tests/POA/On_Demand_Activation/Servant_Locator.cpp: 
-	* tests/POA/On_Demand_Activation/server.cpp: 
-	  The Locator and Activator objects require an ORB_ptr now (that
-	  in turn is passed to the MyFooServant).
+        * tests/POA/On_Demand_Activation/Servant_Activator.h:
+        * tests/POA/On_Demand_Activation/Servant_Activator.cpp:
+        * tests/POA/On_Demand_Activation/Servant_Locator.h:
+        * tests/POA/On_Demand_Activation/Servant_Locator.cpp:
+        * tests/POA/On_Demand_Activation/server.cpp:
+          The Locator and Activator objects require an ORB_ptr now (that
+          in turn is passed to the MyFooServant).
 
-	* tests/POA/On_Demand_Activation/Makefile: 
-	* tests/POA/Forwarding/Makefile: 
-	  Updated dependencies.
+        * tests/POA/On_Demand_Activation/Makefile:
+        * tests/POA/Forwarding/Makefile:
+          Updated dependencies.
 
 Fri Jun 19 09:56:55 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/README:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Util_Thread.h:
-	* tests/Cubit/TAO/MT_Cubit/client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:	
-	* tests/Cubit/TAO/MT_Cubit/server.cpp: 
-	(1) Minor aesthetic changes and code cleanup.
-	(2) Changes to the utilization tests of the server and client.  We
- 	now make the utilization "scavenger" thread run for a determined
- 	period of time and report the number of computations performed.
-  	The client thread that performs CORBA calls also reports the
- 	number of calls performed.
+        * tests/Cubit/TAO/MT_Cubit/README:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Util_Thread.h:
+        * tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+        (1) Minor aesthetic changes and code cleanup.
+        (2) Changes to the utilization tests of the server and client.  We
+        now make the utilization "scavenger" thread run for a determined
+        period of time and report the number of computations performed.
+        The client thread that performs CORBA calls also reports the
+        number of calls performed.
 
 Fri Jun 19 07:25:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
