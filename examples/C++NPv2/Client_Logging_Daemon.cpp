@@ -150,8 +150,8 @@ void *CLD_Handler::run_svc (void *arg) {
 
 void *CLD_Handler::forward () {
   ACE_Message_Block *blocks[ACE_IOV_MAX];
-  ACE_Time_Value time_of_last_send (ACE_OS::gettimeofday ());
   size_t message_index = 0;
+  ACE_Time_Value time_of_last_send (ACE_OS::gettimeofday ());
   ACE_Sig_Action no_sigpipe ((ACE_SignalHandler) SIG_IGN);
   ACE_Sig_Action original_action;
   no_sigpipe.register_action (SIGPIPE, &original_action);
