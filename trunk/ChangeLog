@@ -1,3 +1,9 @@
+Sun May 16 12:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disabled the crash_on_write tests on Win32 because it doesn't work
+          and there are no plans to fix this soon. See bugzilla 959.
+
 Sun May 16 11:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
