@@ -1,3 +1,11 @@
+Thu Jul 13 07:55:41 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: added general guideline to not
+          end text lines with spaces, and the .emacs incantation
+          that removes them.  Thanks to Craig Rodrigues <crodrigu@bbn.com>
+          for suggesting this addition, which we already check for
+          when committing to our CVS repository.
+
 Wed Jul 12 09:42:21 2000  Giga Giguashvili <gregoryg@paradigmgeo.com>
 
         * ace/CDR_Stream.h: added forward declaration of
