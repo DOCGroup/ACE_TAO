@@ -10291,7 +10291,7 @@ ACE_OS::waitpid (pid_t pid,
 #if defined (VXWORKS) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (status);
-  ACE_UNUSED_ARG (options);
+  ACE_UNUSED_ARG (wait_options);
 
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
@@ -10333,6 +10333,8 @@ ACE_OS::waitpid (pid_t pid,
   ::CloseHandle (handle);
   return result;
 #elif defined (CHORUS)
+  ACE_UNUSED_ARG (status);
+  ACE_UNUSED_ARG (wait_options);
   ACE_OSCALL_RETURN (::await (&ACE_OS::actorcaps_[pid]),
                      pid_t, -1);
 #else
