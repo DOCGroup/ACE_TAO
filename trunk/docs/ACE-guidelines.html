@@ -1025,9 +1025,9 @@ bgcolor="#ffffff">
     the following code at the top of the script to pick up
     perl from the users <code>PATH</code>:<br>
       <pre>
-eval '(exit $?0)' &&
-     eval 'exec perl -S $0 ${1+"$@"}' &
-     eval 'exec perl -S $0 $argv:q' if 0;
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
       </pre><p>
 
   <li>Never, never, never start the first line of a script

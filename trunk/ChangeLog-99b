@@ -1,3 +1,10 @@
+Thu Jul 15 14:21:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: reverted to the original
+          perl magic that goes at the top of every script.  The
+          fix that was supposed to work on HP/UX doesn't.  See
+          Thu Jul 08 22:15:50 1999  David L. Levine  <levine@cs.wustl.edu>
+
 Thu Jul 15 12:19:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: added -u option, to allow updating the
