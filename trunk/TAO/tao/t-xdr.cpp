@@ -7,15 +7,7 @@
 //
 // It's suitable only for a simple performance test just now ...
 
-#include "tao/orb.h"
-
-#if defined (HAVE_WIDEC_H)
-#  include	<widec.h>
-#endif /* HAVE_WIDEC_H */
-
-#include "tao/cdr.h"
-#include "tao/debug.h"
-
+#include "tao/corba.h"
 #include "tao/xdr.h"
 
 // A structure that's somewhat representative of an IIOP message in
@@ -73,9 +65,9 @@ do_test (int use_XDR,
 	 CORBA_TypeCode_ptr tc,
 	 void *data)
 {
-  unsigned loopcount = 100 * 1000;
-  unsigned i;
-  unsigned error_count = 0;
+  u_int loopcount = 100 * 1000;
+  u_int i;
+  u_int error_count = 0;
   ACE_Time_Value before, after;
   CORBA_String opname = "kill_husband";
   opaque key;
@@ -88,130 +80,118 @@ do_test (int use_XDR,
 
   if (use_XDR) 
     {
-
       // Using XDR APIs and encoding rules ...  encode the structure
       // repeatedly
 
-      for (i = 0; i < loopcount; i++) {
-	CORBA_Environment	env;
-	XDR_stream		stream (-1);
+      for (i = 0; i < loopcount; i++) 
+        {
+          CORBA_Environment env;
+          XDR_stream stream (-1);
 
-	// GIOP header plus most of request header
-	status = status
-	  && stream.put_long ('GIOP')		// magic
-	  && stream.put_long ('\01\01\01\01')	// version etc
-	  && stream.put_long (99)		// msg len
-	  && stream.put_long (0)		// no svc ctx
-	  && stream.put_long (42)		// request ID
-	  && stream.put_boolean (CORBA_B_TRUE)// response?
-	  ;
+          // GIOP header plus most of request header
+          status = status
+            && stream.put_long ('GIOP')		// magic
+            && stream.put_long ('\01\01\01\01')	// version etc
+            && stream.put_long (99)		// msg len
+            && stream.put_long (0)		// no svc ctx
+            && stream.put_long (42)		// request ID
+            && stream.put_boolean (CORBA_B_TRUE)// response?
+            ;
 
-	if (status)
-	  status = XDR_stream::encoder (&TC_opaque, &key, 0, &stream, env)
-	    == CORBA_TypeCode::TRAVERSE_CONTINUE;
+          if (status)
+            status = XDR_stream::encoder (&TC_opaque, &key, 0, &stream, env)
+              == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
-	if (status)
-	  status = XDR_stream::encoder (_tc_CORBA_String, &opname,
-					0, &stream, env)
-	    == CORBA_TypeCode::TRAVERSE_CONTINUE;
+          if (status)
+            status = XDR_stream::encoder (_tc_CORBA_String, &opname,
+                                          0, &stream, env)
+              == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
-	/*
-	  if (status)
-	  status = XDR_stream::encoder (_tc_CORBA_Principal, &key,
-	  0, &stream, env)
-	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
-	  */
+          // Parameters:  two longs, a string
+          status = status
+            && stream.put_long (99)
+            && stream.put_long (-3455);
+          if (status)
+            status = XDR_stream::encoder (_tc_CORBA_String, &opname,
+                                          0, &stream, env)
+              == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
-	// Parameters:  two longs, a string
-	status = status
-	  && stream.put_long (99)
-	  && stream.put_long (-3455);
-	if (status)
-	  status = XDR_stream::encoder (_tc_CORBA_String, &opname,
-					0, &stream, env)
-	    == CORBA_TypeCode::TRAVERSE_CONTINUE;
+          // Gratuitous extra "interesting" data
+          status = XDR_stream::encoder (tc, data, 0, &stream, env)
+            == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
-	// Gratuitous extra "interesting" data
-	status = XDR_stream::encoder (tc, data, 0, &stream, env)
-	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
+          if (status != CORBA_B_TRUE)
+            error_count++;
+        }
+    } 
+  else 
+    {
+      // This branch is the same, but using CDR APIs and encoding ...
+      // encode the structure repeatedly
 
-	    
-	if (status != CORBA_B_TRUE)
-	  error_count++;
-      }
+      for (i = 0; i < loopcount; i++) 
+        {
+          CORBA_Environment	env;
+          u_char	buffer [CDR::DEFAULT_BUFSIZE];
+          CDR			stream (buffer, sizeof buffer);
 
-    } else {
+          // GIOP header plus most of request header
+          status = status
+            && stream.put_long ('GIOP')		// magic
+            && stream.put_long ('\01\01\01\01')	// version etc
+            && stream.put_long (99)		// msg len
+            && stream.put_long (0)		// no svc ctx
+            && stream.put_long (42)		// request ID
+            && stream.put_boolean (CORBA_B_TRUE)// response?
+            ;
 
-    // This branch is the same, but using CDR APIs and encoding ...
-    // encode the structure  repeatedly
+          if (status)
+            status = stream.encode (&TC_opaque, &key, 0, env)
+              == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
-    for (i = 0; i < loopcount; i++) {
-      CORBA_Environment	env;
-      unsigned char	buffer [CDR::DEFAULT_BUFSIZE];
-      CDR			stream (buffer, sizeof buffer);
+          if (status)
+            status = stream.encode (_tc_CORBA_String, &opname,
+                                    0, env)
+              == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
-      // GIOP header plus most of request header
-      status = status
-	&& stream.put_long ('GIOP')		// magic
-	&& stream.put_long ('\01\01\01\01')	// version etc
-	&& stream.put_long (99)		// msg len
-	&& stream.put_long (0)		// no svc ctx
-	&& stream.put_long (42)		// request ID
-	&& stream.put_boolean (CORBA_B_TRUE)// response?
-	;
+          // Parameters:  two longs, a string
+          status = status
+            && stream.put_long (99)
+            && stream.put_long (-3455);
+          if (status)
+            status = stream.encode (_tc_CORBA_String, &opname,
+                                    0, env)
+              == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
-      if (status)
-	status = stream.encode (&TC_opaque, &key, 0, env)
-	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
-
-      if (status)
-	status = stream.encode (_tc_CORBA_String, &opname,
-			       0, env)
-	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
-
-      /*
-	if (status)
-	status = CDR::encoder (_tc_CORBA_Principal, &key,
-	0, &stream, env)
-	== CORBA_TypeCode::TRAVERSE_CONTINUE;
-	*/
-
-      // Parameters:  two longs, a string
-      status = status
-	&& stream.put_long (99)
-	&& stream.put_long (-3455);
-      if (status)
-	status = stream.encode (_tc_CORBA_String, &opname,
-			       0, env)
-	  == CORBA_TypeCode::TRAVERSE_CONTINUE;
-
-      // Gratuitous extra "interesting" data
-      status = stream.encode (tc, data, 0, env)
-	== CORBA_TypeCode::TRAVERSE_CONTINUE;
+          // Gratuitous extra "interesting" data
+          status = stream.encode (tc, data, 0, env)
+            == CORBA_TypeCode::TRAVERSE_CONTINUE;
 
 
-      if (status != CORBA_B_TRUE)
-	error_count++;
+          if (status != CORBA_B_TRUE)
+            error_count++;
+        }
+
     }
-
-  }
 
   after = ACE_OS::gettimeofday ();
 
-  if (loopcount > 0) {
-    if (error_count == 0) {
-      ACE_Time_Value diff = after - before;
-      unsigned long	usecs = diff.sec() * 1000 * 1000 + diff.usec();
+  if (loopcount > 0) 
+    {
+      if (error_count == 0) 
+        {
+          ACE_Time_Value diff = after - before;
+          u_long usecs = diff.sec() * 1000 * 1000 + diff.usec();
 
-      ACE_OS::printf ("%s average encode time\t= %ld.%.03ldms, \t"
-		      "%ld calls/second\n",
-		      use_XDR ? "XDR" : "CDR",
-		      usecs / 1000, usecs % 1000,
-		      1000000L / usecs);
+          ACE_OS::printf ("%s average encode time\t= %ld.%.03ldms, \t"
+                          "%ld calls/second\n",
+                          use_XDR ? "XDR" : "CDR",
+                          usecs / 1000, usecs % 1000,
+                          1000000L / usecs);
+        }
+
+      ACE_OS::printf ("%d calls, %d errors\n", loopcount, error_count);
     }
-
-    ACE_OS::printf ("%d calls, %d errors\n", loopcount, error_count);
-  }
 }
 
 int

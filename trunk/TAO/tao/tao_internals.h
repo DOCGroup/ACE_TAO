@@ -22,16 +22,11 @@
 
 #  include "ace/Synch.h"
 
-// @@ Can we use the ACE_SYNCH_MUTEX here rather than these typedefs?
-#  if !defined (ACE_HAS_THREADS)
-typedef ACE_Null_Mutex ACE_Thread_Mutex;
-#  endif /* ACE_HAS_THREADS */
-
 class ACE_Svc_Export TAO_Internal
-// = TITLE
-//    This class encapsulates some private behaviors and global data
-//    structures used internal to TAO.  No application should EVER see
-//    this class.
+  // = TITLE
+  //    This class encapsulates some private behaviors and global data
+  //    structures used internal to TAO.  No application should EVER
+  //    see this class.
 {
 public:
   static int open_services (int& argc, char** argv);
@@ -56,14 +51,11 @@ protected:
   // repository.
   
 private:
-  TAO_Internal ();
+  TAO_Internal (void);
   // Private CTOR prevents this class from being instantiated.
 
  static int service_open_count_;
+ // @@ Please document me.
 };
-
-#if defined(__ACE_INLINE__)
-#  include "tao_internals.i"
-#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_INTERNALS_H */

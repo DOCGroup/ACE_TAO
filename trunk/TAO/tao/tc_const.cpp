@@ -12,12 +12,6 @@
 // that speeds program startup and page sharing in shared libraries.
 //
 // THREADING NOTE:  no issues, these are immutable constants
-//
-
-#if 0
-#include "tao/orb.h"
-#include "tao/typecode.h"
-#endif
 
 #include "tao/corba.h"
 
@@ -34,7 +28,6 @@ CORBA::TypeCode::_nil (void)
 
 static CORBA::TypeCode tc_void (CORBA::tk_void);
 ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_void = &tc_void;
-
 
 // Basic numeric types:  short, long, longlong, and unsigned variants
 
@@ -128,7 +121,7 @@ ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_Principal = &tc_principal;
 static const u_char oc_objref [] = 
 { 
   0, 0, 0, 0,			// big endian encoding (+ padding)
-  0, 0, 0, 29,		// 29 char string + 3 pad bytes
+  0, 0, 0, 29,                  // 29 char string + 3 pad bytes
   'I', 'D', 'L', ':',
   'o', 'm', 'g', '.',
   'o', 'r', 'g', '/',

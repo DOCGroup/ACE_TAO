@@ -6,12 +6,6 @@
 
 #include "tao/corba.h"
 
-// @@ Chris, do we really need to use HAVE_WIDEC_H anymore?  Isn't
-// this handled by ACE?  
-#if defined (HAVE_WIDEC_H)
-#	include <widec.h>
-#endif /* HAVE_WIDEC_H */
-
 // String utility support; this can need to be integrated with the
 // ORB's own memory allocation subsystem.
 
@@ -27,10 +21,6 @@ CORBA::string_copy (const CORBA::Char *str)
 
   return ACE_OS::strcpy (retval, str);
 }
-
-// ----------------------------------------------------------------------
-// String_var type
-// ----------------------------------------------------------------------
 
 CORBA::String_var &
 CORBA::String_var::operator= (char *p)
@@ -63,32 +53,6 @@ CORBA::String_var::operator= (const CORBA::String_var& r)
   return *this;
 }
 
-#if	!defined (HAVE_WIDEC_H)
-// NOTE: assuming that these don't exist unless they're declared in
-// that header file ...
-
-extern "C" unsigned
-wslen (const CORBA::WChar *str)
-{
-  u_int len = 0;
-
-  while (*str++)
-    len++;
-  return len;
-}
-
-extern "C" CORBA::WChar *
-wscpy (CORBA::WChar *dest,
-       const CORBA::WChar *src)
-{
-    CORBA::WChar	*retval = dest;
-
-    while ((*dest++ = *src++) != 0)
-	continue;
-    return retval;
-}
-#endif	/* HAVE_WIDEC_H */
-
 // Wide Character string utility support; this can need to be
 // integrated with the ORB's own memory allocation subsystem.
 
@@ -104,8 +68,8 @@ CORBA::wstring_copy (const CORBA::WChar *const str)
   if (*str)
     return 0;
 
-  CORBA::WString	retval = CORBA::wstring_alloc (wslen (str));
-  return wscpy (retval, str);
+  CORBA::WString retval = CORBA::wstring_alloc (ACE_OS::strlen (str));
+  return ACE_OS::strcpy (retval, str);
 }
 
 void

@@ -237,7 +237,7 @@ private:
   // Who knows!?!
 
   ACE_SYNCH_MUTEX lock_;	
-  // Locks critical sections within ROA code methods (was
+  // Locks critical sections within POA code methods (was
   // tcpoa_mutex).
 
   ACE_SYNCH_MUTEX com_lock_;	
@@ -249,15 +249,14 @@ private:
 };
 
 struct TAO_Dispatch_Context
-{
   // = TITLE
-  //    Structure holding information necessary for GIOP functionality.
+  //   Structure holding information necessary for GIOP functionality.
   //
   // = DESCRIPTION 
-  // Data structure passed as "context" to the GIOP code, which then
-  // calls back one of the two helper routines as part of handling any
-  // particular incoming request.
-
+  //   Data structure passed as "context" to the GIOP code, which then
+  //   calls back one of the two helper routines as part of handling
+  //   any particular incoming request.
+{
   CORBA::POA::dsi_handler skeleton_;
   // Function pointer to skeleton glue function.
 
@@ -278,7 +277,7 @@ struct TAO_Dispatch_Context
 
   ACE_SOCK_Stream endpoint_;
   // The communication endpoint from which the data needs to be read.
-  // NOTE!!!  This type MUST match that used for ROA_Handler!
+  // NOTE!!!  This type MUST match that used for POA_Handler!
 };
 
 #endif	/* TAO_POA_H */

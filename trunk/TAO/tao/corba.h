@@ -57,6 +57,8 @@
 // ORB configuration
 #include "tao/orbconf.h"
 
+#include "tao/orb.h"
+
 // Alignment macros
 #include "tao/align.h"
 
@@ -91,17 +93,17 @@
 #include "tao/cdr.h"
 #include "tao/stub.h"
 
+// TAO specific includes
+#include "tao/connect.h"
+#include "tao/orb_core.h"
+#include "tao/objtable.h"
+#include "tao/optable.h"
+#include "tao/debug.h"
+
 // GIOP - IIOP related includes 
 #include "tao/iiopobj.h"
 #include "tao/iioporb.h"
 #include "tao/giop.h"
-
-// TAO specific includes
-#include "tao/orb_core.h"
-#include "tao/connect.h"
-#include "tao/objtable.h"
-#include "tao/optable.h"
-#include "tao/debug.h"
 
 //#include "tao/xdr.h"
 
@@ -122,7 +124,6 @@
 #include "tao/object.i"
 #include "tao/orbobj.i"
 #include "tao/marshal.i"
-#include "tao/client_factory.i"
 
 #  if defined (do_undef_on_ACE_INLINE)
 #    undef do_undef_on_ACE_INLINE
@@ -134,7 +135,6 @@
 #if defined (__ACE_INLINE__)
 #include "tao/poa.i"
 #include "tao/giop.i"
-#include "tao/svrrqst.i"
 #include "tao/params.i"
 #include "tao/server_factory.i"
 #include "tao/default_client.i"

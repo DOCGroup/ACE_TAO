@@ -17,7 +17,8 @@ TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : thread_flags_ (0),
     object_table_size_ (TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE),
     concurrency_strategy_ (0)
-{}
+{
+}
 
 TAO_Default_Server_Strategy_Factory::~TAO_Default_Server_Strategy_Factory (void)
 {
@@ -84,9 +85,9 @@ TAO_Default_Server_Strategy_Factory::create_object_table (void)
 void
 TAO_Default_Server_Strategy_Factory::tokenize (char *flag_string)
 {
-  // @@ Danger!  strtok not re-entrant...need to find a re-entrant version!
-  // @@ Chris, please see ACE_OS::strtok_r ().  There are some examples of
-  // how to use this in JAWS.
+  // @@ Danger!  strtok not re-entrant...need to find a re-entrant
+  // version!  @@ Chris, please see ACE_OS::strtok_r ().  There are
+  // some examples of how to use this in JAWS.
 
   for (char *flag = ACE_OS::strtok (flag_string, "|");
        flag != 0;

@@ -11,11 +11,6 @@
 //
 // XXX on Windows, make it always use OutputDebugString () instead of stdio
 
-#if 0
-#include "tao/orb.h"
-#include "tao/debug.h"
-#endif
-
 #include "tao/corba.h"
 
 #if !defined (ACE_HAS_PTHREADS)		// _POSIX_THREAD_SAFE_FUNCTIONS implied
@@ -34,22 +29,21 @@ static FILE *debug_stream = stderr;
 // NOTE:  some older platforms have "_doprnt" that provides much the
 // same functionality ... this could be modified to use that routine
 // where it's available.
-//
+
 #if	defined (DEBUG) && defined (HAVE_VPRINTF)
 
-//
-// Support for prefixing debug messages with process ID and, if threaded,
-// the thread ID.  This lets messages from different sources be safely
-// disentangled, even though they're interspersed in the output stream.
-//
+// Support for prefixing debug messages with process ID and, if
+// threaded, the thread ID.  This lets messages from different sources
+// be safely disentangled, even though they're interspersed in the
+// output stream.
 static pid_t my_pid;
 
 #if defined (unix) || defined (VXWORKS)
 
 #if defined (ACE_HAS_PTHREADS)
-//
+
 // Use POSIX initialization support to initialize just once.
-//
+
 static pthread_once_t debug_init = PTHREAD_ONCE_INIT;
 
 #define setup() pthread_once (&debug_init, setup_once)
@@ -89,10 +83,9 @@ setup (void)
 
 #elif	defined (_WIN32)
 
-//
-// Not all implementations of Win32 have threads, but in any case
-// this code doesn't yet support Win32 threads.
-//
+// Not all implementations of Win32 have threads, but in any case this
+// code doesn't yet support Win32 threads.
+
 static void
 setup (void)
 {

@@ -28,33 +28,13 @@
 // 
 // ============================================================================
 
-#if 0
-#include "tao/orb.h"
-#include "tao/cdr.h"
-#include "tao/giop.h"
-#include "tao/debug.h"
-#endif
-
 #include "tao/corba.h"
-
-#if	defined (HAVE_WIDEC_H)
-#		include <widec.h>
-#else
-extern "C" 
-{
-  u_int wslen (const CORBA::WChar *);
-  CORBA::WChar *wscpy (CORBA::WChar *, const CORBA::WChar *);
-}
-#endif /* HAVE_WIDEC_H */
 
 extern CORBA::TypeCode TC_opaque;
 
-  // Deep copy from "source" to "dest" ... this code "knows" a bit
-  // about representations, verify it when porting to oddball
-  // platforms with non-IEEE floating point values or atypical byte
-  // and word sizes.
-  //
-
+// Deep copy from "source" to "dest" ... this code "knows" a bit about
+// representations, verify it when porting to oddball platforms with
+// non-IEEE floating point values or atypical byte and word sizes.
 
 CORBA::TypeCode::traverse_status
 DEEP_FREE (CORBA::TypeCode_ptr  param,
@@ -64,7 +44,7 @@ DEEP_FREE (CORBA::TypeCode_ptr  param,
 {
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
 
-  switch (param->_kind)
+  switch (param->kind_)
     {
     case CORBA::tk_null:
     case CORBA::tk_void:
@@ -212,7 +192,7 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 		      alignment = param->alignment (env);
 		      if (env.exception () == 0)
 			{
-			  switch (param->_kind)
+			  switch (param->kind_)
 			    {
 			    case CORBA::tk_null:
 			    case CORBA::tk_void:
@@ -500,7 +480,7 @@ TAO_Marshal_Sequence::deep_free (CORBA::TypeCode_ptr  tc,
 	      bounds = src->length;
 
 		  value1 = (char *)src->buffer;
-		  switch (tc2->_kind)
+		  switch (tc2->kind_)
 		    {
 		    case CORBA::tk_null:
 		    case CORBA::tk_void:
@@ -676,7 +656,7 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
 	      size = tc2->size (env);
 	      if (env.exception () == 0)
 		{
-		  switch (tc2->_kind)
+		  switch (tc2->kind_)
 		    {
 		    case CORBA::tk_null:
 		    case CORBA::tk_void:
@@ -835,7 +815,7 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
 	{
 	  // switch on the data type and handle the cases for primitives here for
 	  // efficiency
-	  switch (tc2->_kind)
+	  switch (tc2->kind_)
 	    {
 	    case CORBA::tk_null:
 	    case CORBA::tk_void:

@@ -21,7 +21,8 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
 }
 
 TAO_Default_Client_Strategy_Factory::~TAO_Default_Client_Strategy_Factory (void)
-{}
+{
+}
 
 int
 TAO_Default_Client_Strategy_Factory::init (int argc, char *argv[])

@@ -26,9 +26,9 @@
 
 class ACE_Svc_Export CORBA_ServerRequest : public IUnknown
   // = TITLE
-  // XXX this is currently in an intermediate state; this is not
-  // supposed to be IIOP-specific, or to expose quite so many
-  // implementation details, but right now it is.
+  //   XXX this is currently in an intermediate state; this is not
+  //   supposed to be IIOP-specific, or to expose quite so many
+  //   implementation details, but right now it is.
 {
 public:
   virtual void __stdcall params (CORBA::NVList_ptr list,
@@ -124,6 +124,7 @@ public:
   // are stack-allocated.
 
 private:
+  // @@ Please comment all the following.
   ACE_SYNCH_MUTEX lock_;
 
   u_int refcount_;

@@ -23,11 +23,6 @@
 #if !defined (TAO_IIOPOBJ_H)
 #  define TAO_IIOPOBJ_H
 
-// @@ Can we use the ACE_SYNCH_MUTEX here rather than these typedefs?
-#  if !defined (ACE_HAS_THREADS)
-typedef ACE_Null_Mutex ACE_Thread_Mutex;
-#  endif /* ACE_HAS_THREADS */
-
 class ACE_Svc_Export IIOP 
   // = TITLE
   //   This class provides a namespace.
@@ -131,7 +126,7 @@ public:
   // returns the current value.
 
   // = Non-thread-safe accessors for the forwarding profile
-  ACE_Thread_Mutex &fwd_profile_lock (void);
+  ACE_SYNCH_MUTEX &fwd_profile_lock (void);
   // Gives reference to the lock guarding the forwarding profile.
   
   IIOP::Profile *fwd_profile_i (void);
@@ -157,13 +152,13 @@ public:
 private:
   CORBA::Object base;
 
-  ACE_Thread_Mutex IUnknown_lock_;
+  ACE_SYNCH_MUTEX IUnknown_lock_;
   // Mutex to protect <IUnknown>-related stuff.
   
   u_int refcount_;
   // Number of outstanding references to this object.
 
-  ACE_Thread_Mutex fwd_profile_lock_;
+  ACE_SYNCH_MUTEX fwd_profile_lock_;
   // This lock covers the mutable info in all IIOP objref data,
   // namely the forwarded-to objref.  It must be held when a client
   // thread is reading or modifying that data, to prevent one from

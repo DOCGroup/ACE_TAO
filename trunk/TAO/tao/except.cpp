@@ -7,22 +7,7 @@
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
 
-#if 0
-#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
-#include <objbase.h>
-#include <initguid.h>
-
-#include "ace/Log_Msg.h"
-
-#include "tao/orb.h"
-#include "tao/cdr.h"
-#endif
-
 #include "tao/corba.h"
-
-#if defined (HAVE_WIDEC_H)
-#  include <widec.h>
-#endif /* HAVE_WIDEC_H */
 
 // {77420082-F276-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_CORBA_Exception,
@@ -35,7 +20,6 @@ DEFINE_GUID (IID_CORBA_UserException,
 // {77420084-F276-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_CORBA_SystemException,
 0x77420084, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
 
 CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc)
   : _type (tc),
@@ -107,7 +91,7 @@ CORBA_Exception::type (void) const
 ULONG __stdcall
 CORBA_Exception::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
 
   assert (refcount_ > 0);
   return ++refcount_;
@@ -117,7 +101,7 @@ ULONG __stdcall
 CORBA_Exception::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
 
     assert (refcount_ > 0);
     refcount_--;
@@ -281,32 +265,32 @@ make_standard_typecode (CORBA::TypeCode_ptr tcp,
 // typecodes statically in all cases!)
 
 #define	STANDARD_EXCEPTION_LIST \
-    SYSEX (UNKNOWN) \
-    SYSEX (BAD_PARAM) \
-    SYSEX (NO_MEMORY) \
-    SYSEX (IMP_LIMIT) \
-    SYSEX (COMM_FAILURE) \
-    SYSEX (INV_OBJREF) \
-    SYSEX (OBJECT_NOT_EXIST) \
-    SYSEX (NO_PERMISSION) \
-    SYSEX (INTERNAL) \
-    SYSEX (MARSHAL) \
-    SYSEX (INITIALIZE) \
-    SYSEX (NO_IMPLEMENT) \
-    SYSEX (BAD_TYPECODE) \
-    SYSEX (BAD_OPERATION) \
-    SYSEX (NO_RESOURCES) \
-    SYSEX (NO_RESPONSE) \
-    SYSEX (PERSIST_STORE) \
-    SYSEX (BAD_INV_ORDER) \
-    SYSEX (TRANSIENT) \
-    SYSEX (FREE_MEM) \
-    SYSEX (INV_IDENT) \
-    SYSEX (INV_FLAG) \
-    SYSEX (INTF_REPOS) \
-    SYSEX (BAD_CONTEXT) \
-    SYSEX (OBJ_ADAPTER) \
-    SYSEX (DATA_CONVERSION)
+    TAO_SYSTEM_EXCEPTION (UNKNOWN) \
+    TAO_SYSTEM_EXCEPTION (BAD_PARAM) \
+    TAO_SYSTEM_EXCEPTION (NO_MEMORY) \
+    TAO_SYSTEM_EXCEPTION (IMP_LIMIT) \
+    TAO_SYSTEM_EXCEPTION (COMM_FAILURE) \
+    TAO_SYSTEM_EXCEPTION (INV_OBJREF) \
+    TAO_SYSTEM_EXCEPTION (OBJECT_NOT_EXIST) \
+    TAO_SYSTEM_EXCEPTION (NO_PERMISSION) \
+    TAO_SYSTEM_EXCEPTION (INTERNAL) \
+    TAO_SYSTEM_EXCEPTION (MARSHAL) \
+    TAO_SYSTEM_EXCEPTION (INITIALIZE) \
+    TAO_SYSTEM_EXCEPTION (NO_IMPLEMENT) \
+    TAO_SYSTEM_EXCEPTION (BAD_TYPECODE) \
+    TAO_SYSTEM_EXCEPTION (BAD_OPERATION) \
+    TAO_SYSTEM_EXCEPTION (NO_RESOURCES) \
+    TAO_SYSTEM_EXCEPTION (NO_RESPONSE) \
+    TAO_SYSTEM_EXCEPTION (PERSIST_STORE) \
+    TAO_SYSTEM_EXCEPTION (BAD_INV_ORDER) \
+    TAO_SYSTEM_EXCEPTION (TRANSIENT) \
+    TAO_SYSTEM_EXCEPTION (FREE_MEM) \
+    TAO_SYSTEM_EXCEPTION (INV_IDENT) \
+    TAO_SYSTEM_EXCEPTION (INV_FLAG) \
+    TAO_SYSTEM_EXCEPTION (INTF_REPOS) \
+    TAO_SYSTEM_EXCEPTION (BAD_CONTEXT) \
+    TAO_SYSTEM_EXCEPTION (OBJ_ADAPTER) \
+    TAO_SYSTEM_EXCEPTION (DATA_CONVERSION)
 
 // Declare static storage for these ... the buffer is "naturally"
 // aligned and overwritten.
@@ -314,12 +298,12 @@ make_standard_typecode (CORBA::TypeCode_ptr tcp,
 // XXX this actually doesn't guarantee "natural" alignment, but
 // it works that way in most systems.
 
-#define	SYSEX(name) \
+#define	TAO_SYSTEM_EXCEPTION(name) \
     static long tc_buf_ ## name [TC_BUFLEN / sizeof (long)]; \
     static CORBA::TypeCode tc_std_ ## name (CORBA::tk_except); \
     CORBA::TypeCode_ptr CORBA::_tc_ ## name = &tc_std_ ## name;
 STANDARD_EXCEPTION_LIST
-#undef	SYSEX
+#undef	TAO_SYSTEM_EXCEPTION
 
 // Runtime initialization of all standard exception typecodes.  Called
 // from CORBA::ORB::init ().
@@ -334,14 +318,14 @@ __TC_init_standard_exceptions (CORBA::Environment &env)
   __system_exceptions.buffer = &sys_exceptions [0];
 
   // Initialize the typecodes.
-#define	SYSEX(name) \
+#define	TAO_SYSTEM_EXCEPTION(name) \
   if (env.exception () == 0) \
 			       make_standard_typecode (&tc_std_ ## name, #name, \
  (unsigned char *) tc_buf_ ## name, \
 						       sizeof tc_buf_ ## name, env);
 
   STANDARD_EXCEPTION_LIST
-#undef	SYSEX
+#undef	TAO_SYSTEM_EXCEPTION
     }
 
 #undef	STANDARD_EXCEPTION_LIST

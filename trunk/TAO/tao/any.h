@@ -34,9 +34,9 @@ public:
   // = Minor codes for exceptional returns
   enum 
   {
-    uninitialised_type = 0xf000,
-    value_without_type,
-    unsupported_operation
+    UNINITIALIZED_type = 0xf000,
+    VALUE_WITHOUT_TYPE,
+    UNSUPPORTED_OPERATION
   };
 
   // = Initialization and termination operations.

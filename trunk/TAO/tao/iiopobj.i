@@ -62,7 +62,7 @@ ACE_INLINE
 IIOP::Profile *
 IIOP_Object::fwd_profile (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->fwd_profile_lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->fwd_profile_lock_, 0));
   return this->fwd_profile_i ();
 }
 
@@ -70,12 +70,12 @@ ACE_INLINE
 IIOP::Profile *
 IIOP_Object::fwd_profile (IIOP::Profile *new_profile)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, this->fwd_profile_lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->fwd_profile_lock_, 0));
   return this->fwd_profile_i (new_profile);
 }
 
 ACE_INLINE
-ACE_Thread_Mutex &
+ACE_SYNCH_MUTEX &
 IIOP_Object::fwd_profile_lock (void)
 {
   return fwd_profile_lock_;

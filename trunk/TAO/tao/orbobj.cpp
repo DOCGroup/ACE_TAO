@@ -9,20 +9,6 @@
 // component and have a loose table-driven coupling to ORB/protocol
 // library components.
 
-#if 0
-#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
-#include <objbase.h>
-#include <initguid.h>
-
-#include "tao/orb.h"
-#include "tao/stub.h"
-#include "tao/iioporb.h"		// XXX
-#include "tao/params.h"
-#include "tao/poa.h"
-#include "tao/nvlist.h"
-#include "tao/debug.h"
-#endif /* 0 */
-
 #include "tao/corba.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
@@ -153,7 +139,7 @@ ULONG __stdcall
 CORBA_ORB::Release (void)
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
 
     ACE_ASSERT (this != 0);
 
@@ -233,9 +219,9 @@ CORBA_ORB::create_list (CORBA::Long count,
 
   if (count != 0) 
     {
-      retval->_len = 0;
-      retval->_max = (u_int) count;
-      retval->_values = (CORBA::NamedValue_ptr) ACE_OS::calloc ((u_int) count,
+      retval->len_ = 0;
+      retval->max_ = (u_int) count;
+      retval->values_ = (CORBA::NamedValue_ptr) ACE_OS::calloc ((u_int) count,
 								sizeof (CORBA::NamedValue));
     }
 }
@@ -307,9 +293,9 @@ CORBA_ORB::POA_init (int &argc,
       return 0;
     }
 
-#if defined (ROA_NEEDS_REQ_KEY)
+#if defined (POA_NEEDS_REQ_KEY)
   (void) ACE_Thread::keycreate (&req_key_);
-#endif /* ROA_NEEDS_REQ_KEY */
+#endif /* POA_NEEDS_REQ_KEY */
     
   ACE_NEW_RETURN (rp, CORBA::POA (this, env), 0);
 

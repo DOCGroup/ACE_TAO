@@ -29,7 +29,7 @@
 // "tao_debug_level", etc. to protect the namespace.
 
 // 0 to ??; higher == more
-extern unsigned int ACE_Svc_Export TAO_debug_level;	
+extern u_int ACE_Svc_Export TAO_debug_level;	
 
 // set by getopt
 extern char * ACE_Svc_Export TAO_debug_filter;
@@ -81,18 +81,18 @@ extern char * ACE_Svc_Export TAO_debug_filter;
 #if defined (DEBUG)
 
 // This is like an fprintf statement except the filter is a set of
-// characters (string).  If TAO_debug_level is nonzero and any characters
-// in that string are in the "TAO_debug_filter" string, the message is
-// then printed.  Assign thosee characters as needed.
+// characters (string).  If TAO_debug_level is nonzero and any
+// characters in that string are in the "TAO_debug_filter" string, the
+// message is then printed.  Assign thosee characters as needed.
 
 extern void ACE_Svc_Export dmsg_filter (const char *_FAR filter,
-				  const char *_FAR fmt, ...);
+                                        const char *_FAR fmt, ...);
 
-// Filter according to TAO_debug_level instead of category.  (For speed,
-// test against TAO_debug_level directly.)
+// Filter according to TAO_debug_level instead of category.  (For
+// speed, test against TAO_debug_level directly.)
 
 extern void ACE_Svc_Export dmsg_filter (u_int level, 
-				  const char *_FAR fmt, ...);
+                                        const char *_FAR fmt, ...);
 
 // General varargs debug message printer, no filtering
 

@@ -66,11 +66,6 @@
 // only the data being fed to the interpreter must be protected
 // against concurrency.
 
-#if 0
-#include "tao/orb.h"
-#include "tao/cdr.h"
-#endif
-
 #include "tao/corba.h"
 
 // Utility routines are used to manipulate CDR-encapsulated TypeCode
@@ -463,9 +458,9 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
       // Initialize the TypeCode if requested
       if (tc) 
 	{
-	  tc->_kind = kind;
-	  tc->_buffer = stream->next;
-	  tc->_length = temp;
+	  tc->kind_ = kind;
+	  tc->buffer_ = stream->next;
+	  tc->length_ = temp;
 	}
 
       // Set up a separate stream for the parameters; it may easily
@@ -503,7 +498,7 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
     {
       CORBA::ULong len;
 
-      tc->_kind = kind;
+      tc->kind_ = kind;
       switch (kind) 
 	{
 	default:
@@ -517,7 +512,7 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 	      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 	      return 0;
 	    } 
-	  tc->_length = len;
+	  tc->length_ = len;
 	  break;
 
 	case CORBA::tk_enum:
@@ -528,10 +523,10 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 	      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 	      return 0;
 	    } 
-	  tc->_length = len;
+	  tc->length_ = len;
 
 	  assert (len < UINT_MAX);
-	  tc->_buffer = stream->next;
+	  tc->buffer_ = stream->next;
 	  stream->skip_bytes ((unsigned) len);
 	  break;
 	}
@@ -743,7 +738,7 @@ calc_key_union_attributes (CDR *stream,
     // NOTE:  This modifies 94-9-32 Appendix A to stipulate that
     // "long long" values are not legal as discriminants.
 
-    switch (discrim_tc._kind) 
+    switch (discrim_tc.kind_) 
       {
       case CORBA::tk_short:
       case CORBA::tk_ushort:
@@ -1198,7 +1193,7 @@ union_traverse (CDR *stream,
 
       CORBA::Boolean discrim_matched;
 
-      discrim_matched = match_value (discrim_tc._kind,
+      discrim_matched = match_value (discrim_tc.kind_,
 				     stream,
 				     discrim_ptr,
 				     env);
@@ -1298,15 +1293,15 @@ CORBA::TypeCode::traverse (const void *value1,
   // again.  Luckily, changing protocol constants is quite rare; they
   // normally just get added to (at the end).
   //
-  if (_kind <= CORBA::tk_objref
-      || (CORBA::tk_longlong <= _kind && _kind <= CORBA::tk_wstring))
+  if (kind_ <= CORBA::tk_objref
+      || (CORBA::tk_longlong <= kind_ && kind_ <= CORBA::tk_wstring))
     return visit (this, value1, value2, context, env);
 
   // Handle the cases that aren't in convenient numeric ranges.
 
   traverse_status retval;
 
-  switch (_kind) 
+  switch (kind_) 
     { 
     case CORBA::tk_string:
     case CORBA::tk_enum:
@@ -1362,7 +1357,7 @@ CORBA::TypeCode::traverse (const void *value1,
 
 	CDR stream;
 
-	stream.setup_encapsulation (_buffer, (size_t) _length);
+	stream.setup_encapsulation (buffer_, (size_t) length_);
 
 	return struct_traverse (&stream, value1, value2,
 				visit, context, env);
@@ -1374,7 +1369,7 @@ CORBA::TypeCode::traverse (const void *value1,
 	// relevant union member and then visit that member.
 	CDR stream;
 
-	stream.setup_encapsulation (_buffer, (size_t) _length);
+	stream.setup_encapsulation (buffer_, (size_t) length_);
 
 	return union_traverse (&stream, value1, value2,
 			       visit, context, env);
@@ -1455,28 +1450,28 @@ CORBA::TypeCode::traverse (const void *value1,
 size_t
 CORBA::TypeCode::private_size (CORBA::Environment &env)
 {
-  if (_kind >= TC_KIND_COUNT) 
+  if (kind_ >= TC_KIND_COUNT) 
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
   env.clear ();
 
-  if (table [_kind].calc == 0)
+  if (table [kind_].calc == 0)
     {
-      _private_state->tc_size_known_ = CORBA::B_TRUE;
-      _private_state->tc_size_ = table [_kind].size;
-      return _private_state->tc_size_;
+      private_state_->tc_size_known_ = CORBA::B_TRUE;
+      private_state_->tc_size_ = table [kind_].size;
+      return private_state_->tc_size_;
     }
 
   size_t alignment;
   CDR stream;
 
-  stream.setup_encapsulation (_buffer, (size_t) _length);
+  stream.setup_encapsulation (buffer_, (size_t) length_);
 
-  _private_state->tc_size_known_ = CORBA::B_TRUE;
-  _private_state->tc_size_ = table [_kind].calc (&stream, alignment, env);
-  return _private_state->tc_size_;
+  private_state_->tc_size_known_ = CORBA::B_TRUE;
+  private_state_->tc_size_ = table [kind_].calc (&stream, alignment, env);
+  return private_state_->tc_size_;
 }
 
 // Tell user the alignment restriction for the data type described by
@@ -1486,27 +1481,27 @@ CORBA::TypeCode::private_size (CORBA::Environment &env)
 size_t
 CORBA::TypeCode::private_alignment (CORBA::Environment &env)
 {
-  if (_kind >= TC_KIND_COUNT) 
+  if (kind_ >= TC_KIND_COUNT) 
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
   env.clear ();
 
-  if (table [_kind].calc == 0)
+  if (table [kind_].calc == 0)
     {
-        _private_state->tc_alignment_known_ = CORBA::B_TRUE;
-        _private_state->tc_alignment_ = table [_kind].alignment;
-	return _private_state->tc_alignment_;
+        private_state_->tc_alignment_known_ = CORBA::B_TRUE;
+        private_state_->tc_alignment_ = table [kind_].alignment;
+	return private_state_->tc_alignment_;
     }
 
   size_t alignment;
   CDR stream;
 
-  stream.setup_encapsulation (_buffer, (size_t) _length);
+  stream.setup_encapsulation (buffer_, (size_t) length_);
 
-  (void) table [_kind].calc (&stream, alignment, env);
-  _private_state->tc_alignment_known_ = CORBA::B_TRUE;
-  _private_state->tc_alignment_ = alignment;
+  (void) table [kind_].calc (&stream, alignment, env);
+  private_state_->tc_alignment_known_ = CORBA::B_TRUE;
+  private_state_->tc_alignment_ = alignment;
   return alignment;
 }

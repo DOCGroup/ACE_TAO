@@ -19,20 +19,17 @@
 #if !defined (TAO_VAROUT_H)
 #define TAO_VAROUT_H
 
-// *****************************************************
-// _var for fixed length struct and union data types
-// *****************************************************
-
 template <class T>
 class TAO_Fixed_var
-  // =TITLE
-  //  template<class T> TAO_Fixed_var
-  // =DESCRIPTION
-  //  Provides a parametrized version of the _var class for fixed length data
-  //  structs and unions.
+  // = TITLE
+  //    template<class T> TAO_Fixed_var
+  //
+  // = DESCRIPTION
+  //    Provides a parametrized version of the _var class for fixed
+  //    length data structs and unions.
 {
 public:
-  // =Operations
+  // = Operations
 
   TAO_Fixed_var (void);
   // default constructor
@@ -64,7 +61,7 @@ public:
   operator T *&();
   // cast operator
 
-  // operations for parameter passing modes
+  // = Operations for parameter passing modes.
 
   const T &in (void);
   // for in type parameter
@@ -77,25 +74,23 @@ public:
 
   T _retn (void);
   // for return type
+
 private:
   T *ptr_;
   // instance
 };
 
-// *****************************************************
-// _var for variable length struct and union data types
-// *****************************************************
-
 template <class T>
 class TAO_Variable_var
+  // = TITLE
+  //   template<class T> TAO_Variable_var
+  //
+  // = DESCRIPTION
+  //   Provides a parametrized version of the _var class for Variable
+  //   length data structs and unions.
 {
-  // =TITLE
-  //  template<class T> TAO_Variable_var
-  // =DESCRIPTION
-  //  Provides a parametrized version of the _var class for Variable length data
-  //  structs and unions.
 public:
-  // =Operations
+  // = Operations
 
   TAO_Variable_var (void);
   // default constructor
@@ -127,7 +122,7 @@ public:
   operator T *&();
   // cast operator
 
-  // operations for parameter passing modes
+  // = operations for parameter passing modes
 
   const T &in (void);
   // for in type parameter
@@ -145,20 +140,18 @@ private:
   T *ptr_;
 };
 
-// *****************************************************
-// _var and _out types for sequences. CORBA sequences are considered to be
-// always variable length
-// *****************************************************
-
 template <class T>
 class TAO_Sequence_var
+  // = TITLE
+  //   template<class T> TAO_Sequence_var
+  //
+  // = DESCRIPTION
+  //   Provides a parametrized version of the _var class for Sequence
+  //   data type.  CORBA sequences are considered to always be
+  //   variable length.
 {
-  // =TITLE
-  //  template<class T> TAO_Sequence_var
-  // =DESCRIPTION
-  //  Provides a parametrized version of the _var class for Sequence data type
 public:
-  // =Operations
+  // = Operations
 
   TAO_Sequence_var (void);
   // default constructor
@@ -190,12 +183,12 @@ public:
   operator T *&();
   // cast operator
 
-  // additional operators for sequence
+  // = additional operators for sequence
 
   T::ElemType &operator[] (CORBA::ULong);
   // operator [] that passes the argument to the [] operator of T
 
-  // =operations for parameter passing modes
+  // = operations for parameter passing modes
 
   const T &in (void);
   // for in type parameter
@@ -208,22 +201,21 @@ public:
 
   T *_retn (void);
   // for return type
+
 private:
   T *ptr_;
   // seq instance
 };
 
-// ***************************************
-// _var class for object references
-// ***************************************
-
 template <class T_ptr>
 class TAO_Object_var
+  // = TITLE
+  //   template<class T, class T_ptr> TAO_Object_var
+  //
+  // = DESCRIPTION
+  //   Provides a parametrized version of the _var class for obj
+  //   references.
 {
-  // =TITLE
-  //  template<class T, class T_ptr> TAO_Object_var
-  // =DESCRIPTION
-  //  Provides a parametrized version of the _var class for obj references
 public:
   // =Operations
 
@@ -254,7 +246,7 @@ public:
   operator T_ptr &();
   // cast operator
 
-  // operations for parameter passing modes
+  // = operations for parameter passing modes
 
   const T_ptr &in (void);
   // for in type parameter
@@ -267,23 +259,22 @@ public:
 
   T_ptr _retn (void);
   // for return type
+
 private:
   T_ptr ptr_;
 };
 
-// *****************************************************
-// _var class for fixed arrays
-// *****************************************************
-
 template <class T, class T_slice>
 class TAO_FixedArray_var
+  // = TITLE
+  //   template<class T, class T_slice> TAO_FixedArray_var
+  //
+  // = DESCRIPTION
+  //   Provides a parametrized version of the _var class for obj
+  //   references.
 {
-  // =TITLE
-  //  template<class T, class T_slice> TAO_FixedArray_var
-  // =DESCRIPTION
-  //  Provides a parametrized version of the _var class for obj references
 public:
-  // =Operations
+  // = Operations
 
   TAO_FixedArray_var (void);
   // default constructor
@@ -315,8 +306,7 @@ public:
   operator T_slice &();
   // cast operator
 
-
-  // operations for parameter passing modes
+  // = operations for parameter passing modes
 
   const T &in (void);
   // for in type parameter
@@ -329,23 +319,22 @@ public:
 
   T_slice *_retn (void);
   // for return type
+
 private:
   T_slice *ptr_;
 };
 
-// *****************************************************
-// _var class for variable arrays
-// *****************************************************
-
 template <class T, class T_slice>
 class TAO_VariableArray_var
+  // = TITLE
+  //   template<class T, class T_slice> TAO_VariableArray_var
+  //
+  // = DESCRIPTION
+  //   Provides a parametrized version of the _var class for obj
+  //   references.
 {
-  // =TITLE
-  //  template<class T, class T_slice> TAO_VariableArray_var
-  // =DESCRIPTION
-  //  Provides a parametrized version of the _var class for obj references
 public:
-  // =Operations
+  // = Operations
 
   TAO_VariableArray_var (void);
   // default constructor
@@ -377,7 +366,7 @@ public:
   operator T_slice &();
   // cast operator
 
-  // =operations for parameter passing modes
+  // = operations for parameter passing modes
 
   const T &in (void);
   // for in type parameter
@@ -390,21 +379,20 @@ public:
 
   T_slice *_retn (void);
   // for return type
+
 private:
   T_slice *ptr_;
 };
 
-// *****************************************************
-// _forany class for fixed arrays
-// *****************************************************
-
 template <class T, class T_slice>
 class TAO_FixedArray_forany
+  // = TITLE
+  //   template<class T, class T_slice> TAO_FixedArray_forany
+  //
+  // = DESCRIPTION
+  //   Provides a parametrized version of the _var class for obj
+  //   references.
 {
-  // =TITLE
-  //  template<class T, class T_slice> TAO_FixedArray_forany
-  // =DESCRIPTION
-  //  Provides a parametrized version of the _var class for obj references
 public:
   // =Operations
 
@@ -451,21 +439,20 @@ public:
 
   T_slice *_retn (void);
   // for return type
+
 private:
   T_slice *ptr_;
 };
 
-// *****************************************************
-// _forany class for variable arrays
-// *****************************************************
-
 template <class T, class T_slice>
 class TAO_VariableArray_forany
+  // = TITLE
+  //   template<class T, class T_slice> TAO_VariableArray_forany
+  //
+  // = DESCRIPTION
+  //   Provides a parametrized version of the _var class for obj
+  //   references.
 {
-  // =TITLE
-  //  template<class T, class T_slice> TAO_VariableArray_forany
-  // =DESCRIPTION
-  //  Provides a parametrized version of the _var class for obj references
 public:
   // =Operations
 
@@ -512,25 +499,19 @@ public:
 
   T_slice *_retn (void);
   // for return type
+
 private:
   T_slice *ptr_;
 };
 
-// *****************************************************
-// there is no _out class for a fixed length types
-// *****************************************************
-
-// *****************************************************
-// _out class for variable length struct and union
-// *****************************************************
-
 template <class T, class T_var>
 class TAO_Variable_out
+  // = TITLE
+  //   TAO_Variable_out
+  //
+  // = Description
+  //  _out class definition for variable size struct/union.
 {
-  // =TITLE
-  // TAO_Variable_out
-  // =Description
-  // _out class definition for variable size struct/union
 public:
   TAO_Variable_out (T *&);
   // constructor
@@ -560,17 +541,14 @@ private:
   T *&ptr_;
 };
 
-// *****************************************************
-// _out class for sequence
-// *****************************************************
-
 template <class T, class T_var>
 class TAO_Sequence_out
+  // = TITLE
+  //   TAO_Sequence_out
+  //
+  // = Description
+  //   _out class definition for Sequence
 {
-  // =TITLE
-  // TAO_Sequence_out
-  // =Description
-  // _out class definition for Sequence
 public:
   TAO_Sequence_out (T *&);
   // constructor
@@ -603,17 +581,14 @@ private:
   T *&ptr_;
 };
 
-// *****************************************************
-// _out class for obj ref
-// *****************************************************
-
 template <class T_ptr, class T_var>
 class TAO_Object_out
 {
-  // =TITLE
-  // TAO_Object_out
-  // =Description
-  // _out class definition for Object
+  // = TITLE
+  //   TAO_Object_out
+  //
+  // = Description
+  //   _out class definition for Object
 public:
   TAO_Object_out (T_ptr &);
   // constructor
@@ -646,9 +621,5 @@ private:
   T_ptr &ptr_;
 };
 
-// *****************************************************
-// _out class for arrays
-// *****************************************************
-
-#endif // end of if !defined (...) 
+#endif /* TAO_VAROUT_H */
 

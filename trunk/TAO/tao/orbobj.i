@@ -36,7 +36,7 @@ CORBA::is_nil (CORBA::ORB_ptr obj)
 ACE_INLINE ULONG __stdcall
 CORBA_ORB::AddRef (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
 
   return refcount_++;
 }

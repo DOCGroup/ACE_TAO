@@ -34,26 +34,16 @@
 
 #include "tao/corba.h"
 
-#if 0
-#include "tao/orb.h"
-#include "tao/cdr.h"
-#include "tao/debug.h"
-
-#if !defined (__ACE_INLINE__)
-#  include "any.i"
-#endif /* __ACE_INLINE__ */
-#endif /* 0 */
-
 CORBA::TypeCode_ptr
 CORBA_Any::type (void) const
 {
-  return type_;
+  return this->type_;
 }
 
 const void *
 CORBA_Any::value (void) const
 {
-  return value_;
+  return this->value_;
 }
 
 // Default "Any" constructor -- initializes to nulls per the
@@ -63,11 +53,11 @@ CORBA_Any::value (void) const
 // the null typecode ...
 
 CORBA_Any::CORBA_Any (void) 
+  : type_ (CORBA::_tc_null)
+    value_ (0),
+    orb_owns_data_ (CORBA::B_FALSE),
+    refcount_ (1)
 {
-  type_ = CORBA::_tc_null;
-  value_ = 0;
-  orb_owns_data_ = CORBA::B_FALSE;
-  refcount_ = 1;
 }
 
 // The more common "Any" constructor has its own copy of a
@@ -77,13 +67,12 @@ CORBA_Any::CORBA_Any (void)
 CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
                       void *value,
                       CORBA::Boolean orb_owns_data) 
-                      
-  : value_ (value),
-    orb_owns_data_ (orb_owns_data) 
+  : type_ (tc),
+    value_ (value),
+    orb_owns_data_ (orb_owns_data),
+    refcount_ (1)
 {
-  type_ = tc;
   tc->AddRef ();
-  refcount_ = 1;
 }
 
 // Helper routine for "Any" copy constructor ...
@@ -102,7 +91,7 @@ static CORBA::TypeCode::traverse_status
 deep_copy (CORBA::TypeCode_ptr tc,
            const void *source,
            const void *dest,
-           void *,              // no context
+           void *, // no context
            CORBA::Environment &env) 
 {
   CORBA::TypeCode::traverse_status retval;
@@ -305,17 +294,14 @@ deep_copy (CORBA::TypeCode_ptr tc,
 // Copy constructor for "Any".
 
 CORBA_Any::CORBA_Any (const CORBA_Any &src) 
+  : type_ (src.type_ != 0 ? src.type_ : CORBA::_tc_null),
+    orb_owns_data_ (CORBA::B_TRUE),
+    refcount_ (1)
 {
   CORBA::Environment env;
   size_t size;
 
-  if (src.type_ != 0) 
-    type_ = src.type_;
-  else
-    type_ = CORBA::_tc_null;
-
   type_->AddRef ();
-  orb_owns_data_ = CORBA::B_TRUE;
 
   size = type_->size (env);           // XXX check error status
   value_ = (char *) calloc (1, size);
@@ -474,17 +460,17 @@ CORBA_Any::~CORBA_Any (void)
 
   // assert (refcount_ == 0);
 
-  if (orb_owns_data_) 
+  if (this->orb_owns_data_) 
     {
       //      (void) deep_free (type_, value_, 0, 0, env);
-      DEEP_FREE (type_, value_, 0, env);
+      DEEP_FREE (this->type_, this->value_, 0, env);
       // TODO: This crashes the server on NT, apparently the previous
       // DEEP_FREE does the job and make the delete operator uneeded.
       // delete value_;
     }
 
-  if (type_) 
-    type_->Release ();
+  if (this->type_) 
+    this->type_->Release ();
 }
 
 // all-at-once replacement of the contents of an "Any"
@@ -524,7 +510,7 @@ ULONG
 __stdcall
 CORBA_Any::AddRef (void) 
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
 
   return ++refcount_;
 }
@@ -533,7 +519,7 @@ ULONG __stdcall
 CORBA_Any::Release (void) 
 {
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, this->lock_, 0));
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0));
 
     ACE_ASSERT (this != 0);
 
@@ -581,7 +567,8 @@ CORBA_Any::operator = (const VARIANT &src)
 {
   this->~CORBA_Any ();
 
-  assert ((src.vt & 0xB000) == 0);    // XXX better, report exception
+  // XXX better, report exception
+  assert (ACE_BIT_DISABLED (src.vt, 0xB000));
 
   switch (src.vt & 0x0fff) 
     {
@@ -597,26 +584,26 @@ CORBA_Any::operator = (const VARIANT &src)
         
     case VT_I2:
       type_ = CORBA::_tc_short;
-      value_ = new CORBA::Short ((src.vt & VT_BYREF) 
-				? (*src.piVal) : src.iVal);
+      value_ = 
+        new CORBA::Short ((src.vt & VT_BYREF) ? (*src.piVal) : src.iVal);
       break;
 
     case VT_I4:
       type_ = CORBA::_tc_long;
-      value_ = new CORBA::Long ((src.vt & VT_BYREF) 
-			       ? (*src.plVal) : src.lVal);
+      value_ =
+        new CORBA::Long ((src.vt & VT_BYREF) ? (*src.plVal) : src.lVal);
       break;
 
     case VT_R4:
       type_ = CORBA::_tc_float;
-      value_ = new CORBA::Float ((src.vt & VT_BYREF) 
-				? (*src.pfltVal) : src.fltVal);
+      value_ = 
+        new CORBA::Float ((src.vt & VT_BYREF) ? (*src.pfltVal) : src.fltVal);
       break;
 
     case VT_R8:
       type_ = CORBA::_tc_double;
-      value_ = new CORBA::Double ((src.vt & VT_BYREF) 
-				 ? (*src.pdblVal) : src.dblVal);
+      value_ = 
+        new CORBA::Double ((src.vt & VT_BYREF) ? (*src.pdblVal) : src.dblVal);
       break;
 
       // case VT_CY:
@@ -639,8 +626,8 @@ CORBA_Any::operator = (const VARIANT &src)
 
     case VT_UI1:
       type_ = CORBA::_tc_octet;
-      value_ = new CORBA::Octet ((src.vt & VT_BYREF) 
-				? (*src.pbVal) : src.bVal);
+      value_ = 
+        new CORBA::Octet ((src.vt & VT_BYREF) ? (*src.pbVal) : src.bVal);
       break;
 
     default:
@@ -674,6 +661,7 @@ CORBA_Any_var::operator= (CORBA::Any *p)
     {
       if (this->ptr_ != 0)
 	delete (this->ptr_);
+
       this->ptr_ = p;
     }
   return *this;
@@ -684,6 +672,7 @@ CORBA_Any_var::operator= (const CORBA::Any_var& r)
 {
   if (this->ptr_ != 0)
     delete (this->ptr_);
+
   this->ptr_ = new CORBA::Any (*r.ptr_);
   return *this;
 }

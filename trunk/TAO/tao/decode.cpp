@@ -20,24 +20,7 @@
 // 
 // ============================================================================
 
-#if 0
-#include "tao/orb.h"
-#include "tao/cdr.h"
-#include "tao/giop.h"
-#include "tao/debug.h"
-#endif
-
 #include "tao/corba.h"
-
-#if defined (HAVE_WIDEC_H)
-#               include <widec.h>
-#else
-extern "C" 
-{
-  u_int wslen (const CORBA::WChar *);
-  CORBA::WChar *wscpy (CORBA::WChar *, const CORBA::WChar *);
-}
-#endif /* HAVE_WIDEC_H */
 
 extern CORBA::TypeCode TC_opaque;
 
@@ -64,40 +47,38 @@ extern CORBA::TypeCode TC_opaque;
 
 CORBA::TypeCode_ptr __tc_consts [CORBA::TC_KIND_COUNT] = 
 {
-  CORBA::_tc_null
-  , CORBA::_tc_void
-  , CORBA::_tc_short
-  , CORBA::_tc_long
-  , CORBA::_tc_ushort
+  CORBA::_tc_null, 
+  CORBA::_tc_void, 
+  CORBA::_tc_short, 
+  CORBA::_tc_long, 
+  CORBA::_tc_ushort,
+ 
+  CORBA::_tc_ulong, 
+  CORBA::_tc_float, 
+  CORBA::_tc_double, 
+  CORBA::_tc_boolean, 
+  CORBA::_tc_char,
 
-  , CORBA::_tc_ulong
-  , CORBA::_tc_float
-  , CORBA::_tc_double
-  , CORBA::_tc_boolean
-  , CORBA::_tc_char
+  CORBA::_tc_octet, 
+  CORBA::_tc_any, 
+  CORBA::_tc_TypeCode, 
+  CORBA::_tc_Principal, 
 
-  , CORBA::_tc_octet
-  , CORBA::_tc_any
-  , CORBA::_tc_TypeCode
-  , CORBA::_tc_Principal
-  , 0           // CORBA::_tc_Object ... type ID is CORBA_Object
+  0, // CORBA::_tc_Object ... type ID is CORBA_Object
+  0, // CORBA_tk_struct
+  0, // CORBA_tk_union
+  0, // CORBA_tk_enum
+  0, // CORBA::_tc_string ... unbounded
+  0, // CORBA_tk_sequence
+  0, // CORBA_tk_array
+  0, // CORBA_tk_alias
+  0, // CORBA_tk_except
 
-  , 0           // CORBA_tk_struct
-  , 0           // CORBA_tk_union
-  , 0           // CORBA_tk_enum
-  , 0           // CORBA::_tc_string ... unbounded
-  , 0           // CORBA_tk_sequence
-
-  , 0           // CORBA_tk_array
-
-  , 0           // CORBA_tk_alias
-  , 0           // CORBA_tk_except
-
-  , CORBA::_tc_longlong
-  , CORBA::_tc_ulonglong
-  , CORBA::_tc_longdouble
-  , CORBA::_tc_wchar
-  , 0           // CORBA::_tc_wstring ... unbounded
+  CORBA::_tc_longlong, 
+  CORBA::_tc_ulonglong, 
+  CORBA::_tc_longdouble, 
+  CORBA::_tc_wchar, 
+  0           // CORBA::_tc_wstring ... unbounded
 };
 
 CORBA::TypeCode::traverse_status
@@ -112,7 +93,7 @@ TAO_Marshal_Primitive::decode (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status   retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE; // status of encode operation 
 
-  switch (tc->_kind)
+  switch (tc->kind_)
     {
     case CORBA::tk_null:
     case CORBA::tk_void:
@@ -186,7 +167,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
         {
           // switch on the data type and handle the cases for
           // primitives here for efficiency rather than calling
-          switch (elem_tc->_kind)
+          switch (elem_tc->kind_)
             {
             case CORBA::tk_null:
             case CORBA::tk_void:
@@ -324,7 +305,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                             *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
                                                        bound, 0, CORBA::B_FALSE,
 						       parent);
-			    //                            (*tcp)->_parent = parent;
+			    //                            (*tcp)->parent_ = parent;
                           }
                       }
                   }
@@ -372,7 +353,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                         indir_stream.remaining = indir_stream.length = 8;
 
                         // Reject indirections outside parent's scope.
-                        if (indir_stream.next < parent->_buffer)
+                        if (indir_stream.next < parent->buffer_)
                           continue_decoding = CORBA::B_FALSE;
                       }
 
@@ -411,7 +392,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
 								  // doesn't own
 						   parent); // this is our parent
 #if 0
-                        (*tcp)->_parent = parent;
+                        (*tcp)->parent_ = parent;
                         parent->AddRef ();
 #endif /* 0 */
                       }
@@ -462,14 +443,14 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
 		    // skip length number of bytes in the stream, else we may
 		    // leave the stream in an undefined state
 		    (void) stream->skip_bytes (length);
-		    //                    (*tcp)->_parent = parent;
+		    //                    (*tcp)->parent_ = parent;
                   }
                 } // end of switch
             }
-          else // bad _kind value to be decoded
+          else // bad kind_ value to be decoded
             {
               env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-              dmsg ("TAO_Marshal_TypeCode: Bad _kind value in CDR stream");
+              dmsg ("TAO_Marshal_TypeCode: Bad kind_ value in CDR stream");
               return CORBA::TypeCode::TRAVERSE_STOP;
             }
         }
@@ -707,7 +688,7 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
 		  if (env.exception () == 0)
 		    {
 		      data = ptr_align_binary (data, alignment);
-		      switch (param->_kind)
+		      switch (param->kind_)
 			{
 			case CORBA::tk_null:
 			case CORBA::tk_void:
@@ -1027,7 +1008,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                   // allocate a buffer to hold the sequence
                   seq->buffer = new CORBA::Octet [size *(size_t) seq->maximum];
                   value = (char *) seq->buffer;
-                  switch (tc2->_kind)
+                  switch (tc2->kind_)
                     {
                     case CORBA::tk_null:
                     case CORBA::tk_void:
@@ -1194,7 +1175,7 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
           size = tc2->size (env);
           if (env.exception () == 0)
             {
-              switch (tc2->_kind)
+              switch (tc2->kind_)
                 {
                 case CORBA::tk_null:
                 case CORBA::tk_void:
@@ -1349,7 +1330,7 @@ TAO_Marshal_Alias::decode (CORBA::TypeCode_ptr  tc,
     {
     // switch on the data type and handle the cases for primitives here for
     // efficiency rather than calling 
-    switch (tc2->_kind)
+    switch (tc2->kind_)
       {
       case CORBA::tk_null:
       case CORBA::tk_void:
@@ -1453,7 +1434,7 @@ TAO_Marshal_Except::decode (CORBA::TypeCode_ptr  tc,
 		  if (env.exception () == 0)
 		    {
 		      data = ptr_align_binary (data, alignment);
-		      switch (param->_kind)
+		      switch (param->kind_)
 			{
 			case CORBA::tk_null:
 			case CORBA::tk_void:

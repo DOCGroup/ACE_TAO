@@ -28,14 +28,6 @@
 // generate better code, which in some cases may be very hard to
 // unwind.
 
-#if 0
-#include "tao/orb.h"
-#include "tao/cdr.h"
-#include "tao/giop.h"
-#include "tao/nvlist.h"
-#include "tao/debug.h"
-#endif
-
 #include "tao/corba.h"
 
 class ACE_Synchronous_Cancellation_Required
