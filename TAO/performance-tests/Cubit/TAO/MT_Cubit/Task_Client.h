@@ -115,11 +115,6 @@ public:
   CORBA::String key_;
   // All cubit objects will have this as prefix to its key.
 
-  u_int start_count_;
-  // Keeps a count of the number of clients started.  This count also
-  // serves as a thread-id.  The first thread created gets an ID of 0,
-  // then 1, and so on.
-
   u_int loop_count_;
   // Number of times to loop, making calls.
 
@@ -204,6 +199,17 @@ public:
   // flag to indicate we are to use multiple priorities for the low
   // priority clients.  By default we use only one priority for all
   // client threads.
+
+  int utilization_task_started_;
+  // Indicates whether the utilization task has started.
+
+  ACE_High_Res_Timer timer_;
+  // global timer to be started by the utilization task.
+
+  u_int run_server_utilization_test_;
+  // flag to indicate we are to run the utilization test of the server.
+  // This means we are not sending requests at a determined frequency, 
+  // but rather "let it rip"!
 };
 
 class Client : public ACE_Task<ACE_SYNCH>

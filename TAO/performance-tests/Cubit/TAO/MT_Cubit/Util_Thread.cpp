@@ -29,7 +29,13 @@ Util_Thread::svc (void)
               "(%t) Threads have bound, "
               "utilization test STARTED\n"));
 
+  this->ts_->utilization_task_started_ = 1;
+  
+  this->ts_->timer_.start ();
+
   this->run_computations ();
+
+  this->ts_->timer_.stop ();
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) utilization test ENDED\n"));

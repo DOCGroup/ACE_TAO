@@ -3,7 +3,8 @@
 #include "tao/corba.h"
 #include "cubit_i.h"
 
-Cubit_i::Cubit_i (void)
+Cubit_i::Cubit_i (Task_State *ts)
+  :ts_ (ts)
 {
 }
 
@@ -16,6 +17,8 @@ Cubit_i::cube_octet (CORBA::Octet o,
                      CORBA::Environment &)
 {
   //ACE_ERROR (( LM_ERROR, "   {%t}\n"));
+  if (ts_->utilization_task_started_ == 0)
+    ts_->barrier_->wait ();
   return (CORBA::Octet) (o * o * o);
 }
 
