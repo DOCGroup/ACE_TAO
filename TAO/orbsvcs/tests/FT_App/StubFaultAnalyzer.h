@@ -43,9 +43,9 @@ public:
   int parse_args (int argc, char * argv[]);
 
   /**
-   * Publish this objects IOR.
+   * Initialize this object
    */
-  int self_register (TAO_ORB_Manager & orbManager);
+  int init (TAO_ORB_Manager & orbManager);
 
   /**
    * Return a string to identify this object for logging/console message purposes.
@@ -60,10 +60,10 @@ public:
   int idle(int &result);
 
   /**
-   * Revoke the publication of this objects IOR.
+   * Prepare to exit.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int self_unregister (ACE_ENV_SINGLE_ARG_DECL);
+  int fini (ACE_ENV_SINGLE_ARG_DECL);
 
   /////////////////
   // Implementation

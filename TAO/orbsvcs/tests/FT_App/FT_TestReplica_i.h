@@ -20,6 +20,10 @@
 #include "ace/pre.h"
 #include "FT_TestReplicaS.h"
 
+////////////////////
+// Forward Reference
+class FT_ReplicaFactory_i;
+
 /**
  * Implement the TestReplica IDL interface.
  *
@@ -29,7 +33,7 @@
 class FT_TestReplica_i : public virtual POA_FT_TEST::TestReplica
 {
 public:
-  FT_TestReplica_i (CORBA::ORB_var & orb, int identity = 0);
+  FT_TestReplica_i (FT_ReplicaFactory_i * factory, int identity = 0);
   virtual ~FT_TestReplica_i ();
 
   /**
@@ -55,6 +59,8 @@ public:
    * @returns 0 to continue; nonzero to quit
    */
   int idle(int &result);
+
+  void requestQuit();
 
 private:
   ///////////////////////////
@@ -128,11 +134,6 @@ private:
   FT_TEST::TestReplica::Bane death_pending_;
 
   /**
-   * our ORB.
-   */
-  CORBA::ORB_var orb_;
-
-  /**
    * verbosity level, settable by client.
    */
   int verbose_;
@@ -141,6 +142,8 @@ private:
    * a replica number to distinguish between multiple replicas in trace messages.
    */
   int identity_;
+
+  FT_ReplicaFactory_i * factory_;
 };
 
 #include "ace/post.h"

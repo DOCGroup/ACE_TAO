@@ -144,7 +144,7 @@ int StubFaultConsumer::parse_args (int argc, char * argv[])
 /**
  * Register this object.
  */
-int StubFaultConsumer::self_register (TAO_ORB_Manager & orbManager,
+int StubFaultConsumer::init (TAO_ORB_Manager & orbManager,
     ::FT::FaultNotifier_var & notifier
     ACE_ENV_ARG_DECL)
 {
@@ -180,7 +180,7 @@ const char * StubFaultConsumer::identity () const
 /**
  * Clean house for process shut down.
  */
-int StubFaultConsumer::self_unregister (ACE_ENV_SINGLE_ARG_DECL)
+int StubFaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
   notifier_->disconnect_consumer(consumerId_ ACE_ENV_ARG_PARAMETER);
   return 0;

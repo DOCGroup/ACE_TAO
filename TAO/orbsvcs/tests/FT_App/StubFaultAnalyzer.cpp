@@ -7,6 +7,8 @@
 #include <ace/Get_Opt.h>
 #include <tao/PortableServer/ORB_Manager.h>
 #include <orbsvcs/PortableGroup/PG_Properties_Encoder.h>
+#include <iostream>
+#include <fstream>
 
 StubFaultAnalyzer::StubFaultAnalyzer ()
   : replicaIorBuffer_(0)
@@ -147,7 +149,7 @@ int StubFaultAnalyzer::parse_args (int argc, char * argv[])
 /**
  * Register this object as necessary
  */
-int StubFaultAnalyzer::self_register (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
+int StubFaultAnalyzer::init (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_DECL)
 {
   int result = 0;
   orb_ = orbManager.orb();
@@ -195,12 +197,12 @@ int StubFaultAnalyzer::self_register (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_
   // register fault consumers
   if (result == 0)
   {
-    result = faultConsumer_.self_register(orbManager, notifier_);
+    result = faultConsumer_.init(orbManager, notifier_);
   }
 
   if (result == 0)
   {
-    result = batchConsumer_.self_register(orbManager, notifier_);
+    result = batchConsumer_.init(orbManager, notifier_);
   }
 
   /////////////////////////
@@ -291,8 +293,8 @@ int StubFaultAnalyzer::self_register (TAO_ORB_Manager & orbManager  ACE_ENV_ARG_
 
     if (result == 0 && readyFile_ != 0)
     {
-      ofstream ready(readyFile_, ios::out);
-      ready << "ready" << endl;
+      std::ofstream ready(readyFile_, ios::out);
+      ready << "ready" << std::endl;
       ready.close();
     }
   }
@@ -311,10 +313,10 @@ const char * StubFaultAnalyzer::identity () const
 /**
  * Clean house for process shut down.
  */
-int StubFaultAnalyzer::self_unregister (ACE_ENV_SINGLE_ARG_DECL)
+int StubFaultAnalyzer::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
-  faultConsumer_.self_unregister(ACE_ENV_SINGLE_ARG_PARAMETER);
-  batchConsumer_.self_unregister(ACE_ENV_SINGLE_ARG_PARAMETER);
+  faultConsumer_.fini(ACE_ENV_SINGLE_ARG_PARAMETER);
+  batchConsumer_.fini(ACE_ENV_SINGLE_ARG_PARAMETER);
   return 0;
 }
 

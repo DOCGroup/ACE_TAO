@@ -44,9 +44,14 @@ public:
   int parse_args (int argc, char * argv[]);
 
   /**
-   * Publish this objects IOR.
+   * Initialize.
    */
-  int self_register (TAO_ORB_Manager & orbManager);
+  int init (TAO_ORB_Manager & orbManager);
+
+  /**
+   * Prepare to exit.
+   */
+  int fini ();
 
   /**
    * Return a string to identify this object for logging/console message purposes.

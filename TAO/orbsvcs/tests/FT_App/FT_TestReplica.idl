@@ -95,6 +95,15 @@ module FT_TEST
      */
     attribute long counter;
   };
+
+  interface ReplicaFactory : ::FT::GenericFactory, ::FT::PullMonitorable
+  {
+    /**
+     * die a clean death.
+     */
+    oneway void shutdown();
+  };
+
 };
 
 #endif // for #ifndef FT_TESTREPLICA_IDL

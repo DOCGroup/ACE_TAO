@@ -14,6 +14,7 @@
 //
 
 #include "FT_TestReplica_i.h"
+#include <iostream>
 
 //////////////////
 // TestReplica_i
@@ -83,8 +84,9 @@ namespace
 
 //////////////////////////////////////////////////
 // class FT_TestReplica_i construction/destruction
-FT_TestReplica_i::FT_TestReplica_i (CORBA::ORB_var & orb, int identity)
-  : orb_(orb)
+
+FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, int identity)
+  : factory_(factory)
   , identity_(identity)
   , death_pending_(FT_TEST::TestReplica::NOT_YET)
   , verbose_(1)
@@ -242,7 +244,6 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
 void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-//  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
   death_pending_ = FT_TEST::TestReplica::CLEAN_EXIT;
 }
 
@@ -266,6 +267,11 @@ int FT_TestReplica_i::idle (int & result)
     quit = 1;
   }
   return quit;
+}
+
+void FT_TestReplica_i::requestQuit()
+{
+  death_pending_ = FT_TEST::TestReplica::WHILE_IDLE;
 }
 
 

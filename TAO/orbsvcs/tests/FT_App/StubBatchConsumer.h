@@ -42,7 +42,7 @@ public:
   /**
    * Publish this objects IOR.
    */
-  int self_register (
+  int init (
     TAO_ORB_Manager & orbManager,
     ::FT::FaultNotifier_var & notifier
     ACE_ENV_ARG_DECL);
@@ -62,7 +62,7 @@ public:
   /**
    * Clean house for process shut down.
    */
-  void self_unregister (ACE_ENV_SINGLE_ARG_DECL);
+  void fini (ACE_ENV_SINGLE_ARG_DECL);
 
 
 public:
