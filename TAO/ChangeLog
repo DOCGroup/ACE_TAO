@@ -35,29 +35,29 @@ Thu Jul 24 14:26:12 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	
 Thu Jul 24 13:48:33 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs\examples\Notify\ThreadPool\Supplier.cpp
+	* orbsvcs/examples/Notify/ThreadPool/Supplier.cpp
 	  (subscription_change): 
 
 	  string_var needed .in() accessor.
 
-	* orbsvcs\examples\Notify\ThreadPool\run_test.pl: 
+	* orbsvcs/examples/Notify/ThreadPool/run_test.pl: 
 
 	  Fixed typo.
 
 Thu Jul 24 13:36:48 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\RTScheduling\Scheduler.cpp: 
-	* tests\RTScheduling\VoidData\test_client.cpp (main): 
-	* tests\RTScheduling\Scheduling_Interceptor\test_client.cpp (main): 
-	* tests\RTScheduling\Current\test.cpp: 
-	* tests\RTScheduling\Current\Thread_Task.cpp: 
-	* tests\RTScheduling\Thread_Cancel\Thread_Task.cpp: 
+	* tests/RTScheduling/Scheduler.cpp: 
+	* tests/RTScheduling/VoidData/test_client.cpp (main): 
+	* tests/RTScheduling/Scheduling_Interceptor/test_client.cpp (main): 
+	* tests/RTScheduling/Current/test.cpp: 
+	* tests/RTScheduling/Current/Thread_Task.cpp: 
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp: 
 
 	  Fixed use of ACE_ENV.
 
 Thu Jul 24 13:01:46 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\RTCORBA\Priority_Inversion_With_Bands\test_i.cpp
+	* tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp
 	  (initialize): 
 	  
 	  ACE_ENV_ARG was not used in this function.
