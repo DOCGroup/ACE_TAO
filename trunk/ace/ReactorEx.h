@@ -32,7 +32,6 @@ class ACE_Export ACE_Wakeup_All_Threads_Handler : public ACE_Event_Handler
   //     on <ACE_ReactorEx->wakeup_all_threads_>  
 {
 public:
-
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Called when the <ACE_ReactorEx->wakeup_all_threads_>
   
@@ -163,8 +162,9 @@ public:
   ACE_ReactorEx_Notify (void);
   // Constructor
 
-  int open (ACE_ReactorEx &reactorEx);
-  // Initialization
+  int open (ACE_ReactorEx &reactorEx,
+	    ACE_Timer_Queue *timer_queue);
+  // Initialization.  <timer_queue> is stored to call gettimeofday.
 
   int notify (ACE_Event_Handler *eh = 0,
 	      ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
@@ -199,6 +199,9 @@ public:
   // <ACE_Message_Queue::dequeue> loop.
 
 private:
+  ACE_Timer_Queue *timer_queue_;
+  // Pointer to the reactor's timer queue.
+
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Called when the notification event waited on by <ACE_ReactorEx>
   // is signaled.  This dequeues all pending <ACE_Event_Handlers> and

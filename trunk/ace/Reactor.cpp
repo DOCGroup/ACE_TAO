@@ -1078,7 +1078,7 @@ ACE_Reactor::schedule_timer (ACE_Event_Handler *handler,
   ACE_MT (ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1));
 
   return this->timer_queue_->schedule 
-    (handler, arg, ACE_OS::gettimeofday () + delta_time, interval);
+    (handler, arg, timer_queue_->gettimeofday () + delta_time, interval);
 }
 
 // Main event loop driver that blocks for <max_wait_time> before
