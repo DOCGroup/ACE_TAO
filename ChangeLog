@@ -1,3 +1,10 @@
+Thu Apr 20 08:53:31 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/CDR_Stream.i:
+	  Fixed problem in the align_write_ptr() method.  It was optimized
+	  for the case where there was enough room in the current buffer,
+	  but the optimization broke with a previous fix from Feb 29.
+
 Thu Apr 20 08:40:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* examples/Bounded_Packet_Relay/BPR_Drivers_T.h,
