@@ -2,7 +2,7 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xmi="http://www.omg.org/XMI"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Deployment="http://www.omg.org/Deployment"
   targetNamespace="http://www.omg.org/Deployment" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema XMLSchema.xsd">
-  <xsd:import namespace="http://www.omg.org/XMI" />
+  <xsd:import namespace="http://www.omg.org/XMI" schemaLocation="XMI.xsd"/>
   <xsd:complexType name="Any">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="type" type="Deployment:DataType" />
