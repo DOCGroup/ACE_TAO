@@ -1,6 +1,12 @@
+Thu Mar 18 14:30:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (timezone): Removed the leading '::' to cope with VC
+	  5.  Thanks to Lan Yaolong <lyaolong@cs.sunysb.edu> for reporting
+	  this.
+
 Thu Mar 18 11:53:48 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record): 
+	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record):
 	  Changed the argument of the ntohl() call to be a temporary
 	  variable that had the same value as the original argument.
 	  This is need to get around what is apparently a bug in the
