@@ -1,3 +1,8 @@
+Tue Oct 15 05:58:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp:
+          Fixed warning in cygwin g++ build about uninitialized variable.
+
 Mon Oct 13 22:10:35 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/Makefile:
