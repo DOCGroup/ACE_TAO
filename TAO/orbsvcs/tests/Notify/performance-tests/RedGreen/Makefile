@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_CosNotification -lTAO_CosNaming -lTAO_DynamicAny -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_CosNotification -lTAO_CosNaming -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lTAO_Svc_Utils
 
 LSRC = RedGreen_Test.cpp main.cpp
 
