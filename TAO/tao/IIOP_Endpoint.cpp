@@ -179,7 +179,9 @@ TAO_IIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 CORBA::ULong
 TAO_IIOP_Endpoint::hash (void)
 {
-  return
-    ACE::hash_pjw (this->host_.in ())
-    + this->port_;
+  // We could call ACE_INET_Addr::hash() since it does much the same
+  // thing except that it converts the port from network byte order to
+  // host byte order.  As such, this implementation is actually less
+  // costly.
+  return this->object_addr_.get_ip_address () + this->port_;
 }

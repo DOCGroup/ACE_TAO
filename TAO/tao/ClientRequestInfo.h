@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file     ClientRequestInfo.h
+ * @file ClientRequestInfo.h
  *
  * $Id$
  *
@@ -41,26 +41,40 @@
 
 class TAO_GIOP_Invocation;
 
+/**
+ * @class TAO_ClientRequestInfo
+ *
+ * @brief Implementation of the PortableInterceptor::ClientRequestInfo
+ *        interface.
+ */
 class TAO_Export TAO_ClientRequestInfo
   : public virtual PortableInterceptor::ClientRequestInfo,
     public virtual CORBA::LocalObject
 {
 public:
+
+  /// Constructor.
   TAO_ClientRequestInfo (TAO_GIOP_Invocation *invocation,
                          CORBA::Object_ptr target);
 
+  /// Return an ID unique to the current request.  This request ID may
+  /// or may not be the same as the GIOP request ID.
   virtual CORBA::ULong request_id (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return the operation name for the current request.
   virtual char * operation (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return the list of arguments passed to the current operation.
   virtual Dynamic::ParameterList * arguments (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return the list of exceptions the current operation is capable
+  /// of throwing.
   virtual Dynamic::ExceptionList * exceptions (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -73,24 +87,38 @@ public:
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return the result of the current request.  If there is no return
+  /// value then an Any with tk_void TypeCode is returned.  This is
+  /// method is not valid for oneway operations.
   virtual CORBA::Any * result (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Returns true for a two-way operation, and false otherwise.
   virtual CORBA::Boolean response_expected (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
 #if TAO_HAS_CORBA_MESSAGING == 1
+  /// Return the sync_scope policy value for the current one-way
+  /// operation.  If the operation is not a one-way, a
+  /// CORBA::BAD_INV_ORDER exception is thrown.
   virtual CORBA::Short sync_scope (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+  /// Return the reply status for the current request.  Statuses can
+  /// be PortableInterceptor::SUCCESSFUL, SYSTEM_EXCEPTION,
+  /// USER_EXCEPTION, LOCATION_FORWARD, LOCATION_FORWARD_PERMANENT,
+  /// TRANSPORT_RETRY.
   virtual PortableInterceptor::ReplyStatus reply_status (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// If the reply status is PortableInterceptor::LOCATION_FORWARD or
+  /// PortableInterceptor::LOCATION_FORWARD_PERMANENT, return the
+  /// object reference to which the request was forwarded.
   virtual CORBA::Object_ptr forward_reference (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException)) ;
@@ -101,20 +129,28 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::InvalidSlot));
 
+  /// Return the IOP::ServiceContext with the given IOP::ServiceId
+  /// from the request service context list.
   virtual IOP::ServiceContext * get_request_service_context (
       IOP::ServiceId id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return the IOP::ServiceContext with the given IOP::ServiceId
+  /// from the reply service context list.
   virtual IOP::ServiceContext * get_reply_service_context (
       IOP::ServiceId id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return the (initial, non-forwarded, or permanently forwarded)
+  /// object reference of the target.
   virtual CORBA::Object_ptr target (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return the object reference for the current target.  The target
+  /// may change in the even of a location forward.
   virtual CORBA::Object_ptr effective_target (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -123,44 +159,62 @@ public:
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// This method causes problem since there is no trivial way to
-  /// extract the exception from the Any.
+  /// Return an Any containing the received exception, if any.
+  /// Otherwise, throw a CORBA::BAD_INV_ORDER exception.
+  /**
+   * @note There is no trivial way to extract the exception from an Any.
+   */
   virtual CORBA::Any * received_exception (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Note: This is TAO specific and was done to combat the previous
-  /// problem to some extent.
+  /**
+   * @note This is TAO specific and was done to combat the previous
+   *       problem to some extent.  Avoid this method whenever
+   *       possible.
+   */
   virtual CORBA::Exception * _received_exception (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return the repository ID for the received exception.
   virtual char * received_exception_id (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return the first IOP::TaggedComponent that matches the given
+  /// IOP::ComponentId in the object reference for the current
+  /// target.
   virtual IOP::TaggedComponent * get_effective_component (
       IOP::ComponentId id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return all IOP::TaggedComponent(s) that match the given
+  /// IOP::ComponentId in the object reference for the current
+  /// target.
   virtual IOP::TaggedComponentSeq * get_effective_components (
       IOP::ComponentId id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return the policy of the given type in effect for the current
+  /// request.
   virtual CORBA::Policy_ptr get_request_policy (
       CORBA::PolicyType type,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Add the IOP::ServiceContext to the request (outgoing)
+  /// IOP::ServiceContextList.
   virtual void add_request_service_context (
       const IOP::ServiceContext & service_context,
       CORBA::Boolean replace,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /** @name Stub helper methods
+  /**
+   * @name Stub helper methods
    *
    * The following methods are used in the implementation of the
    * Stubs, they are not part of the ClientRequestInfo interface, but
@@ -195,13 +249,21 @@ protected:
 
 protected:
 
+  /// Pointer to the GIOP invocation object.
   TAO_GIOP_Invocation *invocation_;
 
+  /// Reference to the target object.
   CORBA::Object_ptr target_;
+
+  /// Pointer to the caught exception.
   CORBA::Exception *caught_exception_;
 
+  /// True if a two-way operation, false otherwise.
   CORBA::Boolean response_expected_;
+
+  /// Reply status for the current request.
   PortableInterceptor::ReplyStatus reply_status_;
+
 };
 
 # if defined (__ACE_INLINE__)

@@ -83,6 +83,17 @@ public:
   /// Get/Set <recycle_state>.
   ACE_Recyclable_State recycle_state (void);
 
+  /// Relinquish ownership of the TAO_Transport object associated with
+  /// this TAO_Cache_IntId.
+  /**
+   * @note This method should go away once the
+   *       Transport_Cache_Map_Manager is improved so that it returns
+   *       TAO_Transport objects when performing a find() operation.
+   *       This method really only exists to get around inadequacies
+   *       in the Transport_Cache_Map_Manager interface.
+   */
+  TAO_Transport *relinquish_transport (void);
+
 private:
 
   /// The transport that needs to be cached.

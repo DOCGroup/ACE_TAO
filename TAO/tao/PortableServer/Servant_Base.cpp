@@ -4,7 +4,6 @@
 #include "Servant_Base.h"
 #include "POA.h"
 #include "Operation_Table.h"
-#include "Collocated_Object.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
