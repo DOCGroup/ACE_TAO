@@ -72,6 +72,12 @@ be_string::compute_tc_name (void)
                                                              I_FALSE), NULL));
 }
 
+UTL_ScopedName *
+be_string::compute_tc_name (const char *prefix, const char *suffix)
+{
+  return be_type::compute_tc_name (prefix, suffix);
+}
+
 int
 be_string::accept (be_visitor *visitor)
 {
