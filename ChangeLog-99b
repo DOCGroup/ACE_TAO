@@ -1,3 +1,16 @@
+Sun Jan 31 16:09:55 1999  Jeff Parswons >parsons@cs.wustl.edu>
+
+        * ACE_wrappers/tests/CDR_Test.cpp:
+          Plugged a memory leak in a string read from the CDR stream.
+
+        * ace/CDR.{h,i,cpp}:
+          Changed the name of the "base" class holding the constants to
+          'CDR' from 'ACE_CDR'. In leveraging this code in the TAO cdr
+          classes, I've discovered that there are many files that
+          use these constants, so probably best to keep the original
+          name. Also made minor changes to read_string, read_wstring,
+          append_string and append_wstring to prevent a memeory leak
+          if the operation fails.
 
 Sun Jan 31 11:58:32 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
