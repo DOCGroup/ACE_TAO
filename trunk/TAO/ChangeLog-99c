@@ -1,3 +1,8 @@
+Thu Dec 23 08:39:50 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB.cpp: with DEC cxx, disable using std::set_unexpected
+          because cxx X6.3-016 on Linux can't handle it.
+
 Thu Dec 23 08:37:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Makefile: disabled Buffered_AMI because it doesn't
