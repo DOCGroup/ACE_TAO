@@ -29,6 +29,7 @@ main (int argc, char *argv[])
 template class ACE_Connector<PEER_HANDLER, ACE_TLI_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_TLI_STREAM, ACE_SYNCH>;
 template class ACE_Svc_Tuple<PEER_HANDLER>;
+template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<PEER_HANDLER> *>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<PEER_HANDLER> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<PEER_HANDLER> *, ACE_SYNCH_RW_MUTEX>;
 template class IPC_Client<PEER_HANDLER, ACE_TLI_CONNECTOR>;
