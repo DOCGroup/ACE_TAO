@@ -3,8 +3,11 @@
 #ifndef ACE_TIMER_LIST_T_C
 #define ACE_TIMER_LIST_T_C
 
-#include "ace/Timer_List_T.h"
-#include "ace/Log_Msg.h"
+#include "ace/Timer/Timer_List_T.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

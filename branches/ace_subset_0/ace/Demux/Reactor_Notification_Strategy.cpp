@@ -1,8 +1,8 @@
-#include "ace/Reactor_Notification_Strategy.h"
-#include "ace/Reactor.h"
+#include "ace/Demux/Reactor_Notification_Strategy.h"
+#include "ace/Demux/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Reactor_Notification_Strategy.inl"
+#include "ace/Demux/Reactor_Notification_Strategy.inl"
 #endif /* __ACE_INLINE __ */
 
 ACE_RCSID(ace, Strategies, "$Id$")

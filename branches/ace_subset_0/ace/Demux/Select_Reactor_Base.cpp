@@ -1,16 +1,19 @@
 // $Id$
 
-#include "ace/Select_Reactor_Base.h"
-#include "ace/Reactor.h"
-#include "ace/Thread.h"
-#include "ace/Synch_T.h"
-#include "ace/SOCK_Acceptor.h"
-#include "ace/SOCK_Connector.h"
-#include "ace/Timer_Heap.h"
+#include "ace/Demux/Select_Reactor_Base.h"
+#include "ace/Demux/Reactor.h"
+#include "ace/Threads/Thread.h"
+#include "ace/Threads/Synch_T.h"
+#include "ace/Sockets/SOCK_Acceptor.h"
+#include "ace/Sockets/SOCK_Connector.h"
+#include "ace/Timer/Timer_Heap.h"
+
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Select_Reactor_Base.i"
+#include "ace/Demux/Select_Reactor_Base.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Select_Reactor_Base, "$Id$")

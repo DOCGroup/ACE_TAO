@@ -15,14 +15,14 @@
 #define ACE_TASK_T_H
 #include "ace/pre.h"
 
-#include "ace/Message_Queue.h"
+#include "ace/Streams/Message_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
-#include "ace/Task.h"
+#include "ace/Threads/Synch_T.h"
+#include "ace/Streams/Task.h"
 
 // Forward decls...
 template <ACE_SYNCH_DECL> class ACE_Module;
@@ -159,11 +159,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Task_T.i"
+#include "ace/Streams/Task_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Task_T.cpp"
+#include "ace/Streams/Task_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -4,7 +4,7 @@
 #ifndef ACE_STREAM_MODULES_C
 #define ACE_STREAM_MODULES_C
 
-#include "ace/Stream_Modules.h"
+#include "ace/Streams/Stream_Modules.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -14,13 +14,13 @@
 #define ACE_TASK_H
 #include "ace/pre.h"
 
-#include "ace/Service_Object.h"
+#include "ace/Svcconf/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Thread_Manager.h"
+#include "ace/Threads/Thread_Manager.h"
 
 /**
  * @class ACE_Task_Flags
@@ -255,11 +255,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Task.i"
+#include "ace/Streams/Task.i"
 #endif /* __ACE_INLINE__ */
 
 // Include the ACE_Task templates classes at this point.
-#include "ace/Task_T.h"
+#include "ace/Streams/Task_T.h"
 
 #include "ace/post.h"
 #endif /* ACE_TASK_H */

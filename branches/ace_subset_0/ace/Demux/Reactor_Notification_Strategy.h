@@ -13,7 +13,7 @@
 #define ACE_REACTOR_NOTIFICATION_STRATEGY_H
 #include "ace/pre.h"
 
-#include "ace/Notification_Strategy.h"
+#include "ace/Streams/Notification_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -51,7 +51,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Reactor_Notification_Strategy.inl"
+#include "ace/Demux/Reactor_Notification_Strategy.inl"
 #endif /* __ACE_INLINE __ */
 
 #include "ace/post.h"

@@ -14,7 +14,7 @@
 #define ACE_TIMER_LIST_T_H
 #include "ace/pre.h"
 
-#include "ace/Timer_Queue_T.h"
+#include "ace/Timer/Timer_Queue_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -206,7 +206,7 @@ private:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE) && !defined(ACE_HAS_BROKEN_HPUX_TEMPLATES)
-#include "ace/Timer_List_T.cpp"
+#include "ace/Timer/Timer_List_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE && !ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -4,17 +4,17 @@
 #ifndef ACE_TASK_T_C
 #define ACE_TASK_T_C
 
-#include "ace/Task_T.h"
+#include "ace/Streams/Task_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Module.h"
+#include "ace/Streams/Module.h"
 //#include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Task_T.i"
+#include "ace/Streams/Task_T.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Task_T, "$Id$")

@@ -3,10 +3,10 @@
 #if !defined (ACE_TIMER_WHEEL_C)
 #define ACE_TIMER_WHEEL_C
 
-#include "ace/Timer_Wheel.h"
+#include "ace/Timer/Timer_Wheel.h"
 
 #if defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
-#include "ace/Timer_Wheel_T.cpp"
+#include "ace/Timer/Timer_Wheel_T.cpp"
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 ACE_RCSID(ace, Timer_Wheel, "$Id$")

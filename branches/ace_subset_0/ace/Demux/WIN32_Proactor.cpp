@@ -2,13 +2,16 @@
 
 // ACE_RCSID(ace, Proactor, "$Id$")
 
-#include "ace/WIN32_Proactor.h"
+#include "ace/Demux/WIN32_Proactor.h"
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 // WIN implemenatation of the Proactor.
 
-#include "ace/Log_Msg.h"
-#include "ace/Object_Manager.h"
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
+
+#include "ace/Utils/Object_Manager.h"
 
 class ACE_Export ACE_WIN32_Wakeup_Completion : public ACE_WIN32_Asynch_Result
 {

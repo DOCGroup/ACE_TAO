@@ -1,58 +1,38 @@
 # $Id$
 
 #----------------------------------------------------------------------------
-#       Makefile for the libACE_OS
+#       Makefile for the libACE_Memory
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
-LIBNAME   = libACE_Utils
+LIBNAME   = libACE_Memory
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-SUBDIRS = Templates
 
-FILES = \
-	ARGV\
-	Active_Map_Manager\
-	Active_Map_Manager_T\
-	Arg_Shifter\
-	Capabilities\
-	Configuration\
-	Configuration_Import_Export\
-	Connection_Recycling_Strategy\
-	Containers\
-	Dirent\
-	Dirent_Selector\
-	Dynamic\
-	Filecache\
-	Flag_Manip\
-	Functor\
-	Functor_T\
-	Future\
-	Future_Set\
-	Get_Opt\
-	Hash_Map_Manager\
-	Hashable\
-	IO_Cntl_Msg\
-	Init_ACE\
-	Lib_Find\
-	Map\
-	Message_Block\
-	Method_Request\
-	Multiplexor\
-	NT_Service\
-	Object_Manager\
-	Pair\
-	Recyclable\
-	Refcountable\
-	Registry\
-	SString\
-	Sample_History\
-	Stats\
-	String_Base_Const\
-	Test_and_Set\
-	Unbounded_Queue\
-	Unbounded_Set
+LIB_FILES = \
+	Based_Pointer_Repository\
+	Based_Pointer_T\
+	MEM_Acceptor\
+	MEM_Addr\
+	MEM_Connector\
+	MEM_IO\
+	MEM_SAP\
+	MEM_Stream\
+	Malloc\
+	Malloc_Allocator\
+	Malloc_Instantiations\
+	Malloc_T\
+	Mem_Map\
+	Memory_Pool\
+	Obchunk\
+	Obstack\
+	Obstack_T\
+	PI_Malloc\
+	Read_Buffer\
+	Shared_Memory\
+	Shared_Memory_MM\
+	Shared_Memory_SV
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -63,6 +43,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ####
 #### ACE_COMPONENTS support.
 ####
+FILES += $(LIB_FILES)
 
 LSRC  = $(addsuffix .cpp,$(FILES))
 
@@ -78,16 +59,8 @@ clean:
 	$(RM) -f $(LIBNAME).a $(LIBNAME).so
 
 #----------------------------------------------------------------------------
-#       Local targets
-#----------------------------------------------------------------------------
-
-
-
-#----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
-
-
 

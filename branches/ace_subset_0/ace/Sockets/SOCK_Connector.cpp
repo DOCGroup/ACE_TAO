@@ -1,13 +1,17 @@
 // SOCK_Connector.cpp
 // $Id$
 
-#include "ace/SOCK_Connector.h"
-#include "ace/INET_Addr.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS_QoS.h"
+#include "ace/Sockets/SOCK_Connector.h"
+#include "ace/IPC/INET_Addr.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
+
+#include "ace/OS/OS_QoS.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Connector.i"
+#include "ace/Sockets/SOCK_Connector.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, SOCK_Connector, "$Id$")

@@ -31,8 +31,11 @@
 #define ACE_TP_REACTOR_H
 #include "ace/pre.h"
 
-#include "ace/Select_Reactor.h"
-#include "ace/Log_Msg.h"
+#include "ace/Demux/Select_Reactor.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -350,7 +353,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/TP_Reactor.i"
+#include "ace/Other/TP_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

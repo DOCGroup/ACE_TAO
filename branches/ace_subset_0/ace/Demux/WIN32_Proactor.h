@@ -17,14 +17,14 @@
 #define ACE_WIN32_PROACTOR_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
-#include "ace/WIN32_Asynch_IO.h"
-#include "ace/Event_Handler.h"
+#include "ace/OS/OS.h"
+#include "ace/Connection/WIN32_Asynch_IO.h"
+#include "ace/Demux/Event_Handler.h"
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 // WIN32 implementation of the Proactor.
 
-#include "ace/Proactor_Impl.h"
+#include "ace/Demux/Proactor_Impl.h"
 
 // Forward declarations.
 class ACE_WIN32_Asynch_Result;

@@ -13,7 +13,7 @@
 #ifndef ACE_SUN_PROACTOR_H
 #define ACE_SUN_PROACTOR_H
 
-#include "ace/POSIX_Proactor.h"
+#include "ace/Demux/POSIX_Proactor.h"
 
 #if defined (ACE_HAS_AIO_CALLS) && defined (sun)
 
@@ -114,7 +114,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SUN_Proactor.i"
+#include "ace/Demux/SUN_Proactor.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_AIO_CALLS && sun */

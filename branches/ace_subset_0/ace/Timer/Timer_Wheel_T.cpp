@@ -3,14 +3,17 @@
 #ifndef ACE_TIMER_WHEEL_T_C
 #define ACE_TIMER_WHEEL_T_C
 
-#include "ace/Timer_Wheel_T.h"
+#include "ace/Timer/Timer_Wheel_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/High_Res_Timer.h"
-#include "ace/Log_Msg.h"
+#include "ace/Timer/High_Res_Timer.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace, Timer_Wheel_T, "$Id$")
 

@@ -1,5 +1,5 @@
 //$Id$
-#include "ace/QtReactor.h"
+#include "ace/Demux/QtReactor.h"
 
 #if defined (ACE_HAS_QT)
 

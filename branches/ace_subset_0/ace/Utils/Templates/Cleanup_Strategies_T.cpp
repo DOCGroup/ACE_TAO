@@ -3,7 +3,7 @@
 #ifndef CLEANUP_STRATEGIES_T_C
 #define CLEANUP_STRATEGIES_T_C
 
-#include "ace/Cleanup_Strategies_T.h"
+#include "ace/Utils/Templates/Cleanup_Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define ACE_LACKS_PRAGMA_ONCE

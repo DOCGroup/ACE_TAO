@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/Reactor.h"
+#include "ace/Demux/Reactor.h"
 
 template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handler (ACE_Event_Handler *h)
