@@ -382,12 +382,12 @@ module RtecScheduler
 
     void set_rt_info_enable_state (in handle_t handle,
                                    in RT_Info_Enabled_Type_t enabled)
-      raises (SYNCHRONIZATION_FAILURE, UNKNOWN_TASK);
+      raises (SYNCHRONIZATION_FAILURE, INTERNAL, UNKNOWN_TASK);
     // Enables or disables the RT_Info.  Raises UNKNOWN_TASK
     // if no matching RT_Info is found.
 
     void set_rt_info_enable_state_seq (in RT_Info_Enable_State_Pair_Set pair_set)
-      raises (SYNCHRONIZATION_FAILURE, UNKNOWN_TASK);
+      raises (SYNCHRONIZATION_FAILURE, INTERNAL, UNKNOWN_TASK);
     // Enables or disables each rt_info in the passed set.  Raises UNKNOWN_TASK
     // if no matching dependency is found.
 

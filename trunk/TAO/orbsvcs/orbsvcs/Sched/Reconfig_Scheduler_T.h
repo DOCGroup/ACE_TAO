@@ -276,6 +276,7 @@ public:
                                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
+                      RtecScheduler::INTERNAL,
                      RtecScheduler::UNKNOWN_TASK));
   // This method enables or disables an RT_Info.
 
@@ -283,6 +284,7 @@ public:
                                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
+                      RtecScheduler::INTERNAL,
                      RtecScheduler::UNKNOWN_TASK));
   // This method enables or disables a sequence of RT_Infos.
 
@@ -524,6 +526,7 @@ protected:
                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
+                      RtecScheduler::INTERNAL,
                      RtecScheduler::UNKNOWN_TASK));
   // Internal method that removes a dependency between two RT_Infos.
   // Assumes it is being called with all locks held, and does *not*
@@ -537,6 +540,7 @@ protected:
                                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
+                      RtecScheduler::INTERNAL,
                      RtecScheduler::UNKNOWN_TASK));
   // Internal method that enables or disables a dependency between two RT_Infos.
   // Assumes it is being called with all locks held, and does *not*
