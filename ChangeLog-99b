@@ -10,6 +10,13 @@ Mon Feb 01 12:00:55 1999  David L. Levine  <levine@cs.wustl.edu>
           of CC 5.0 seem to have problems with automatic template
           instantiation and ACE_IOStream.
 
+        * include/makeinclude/platform_sunos5_sunc++.GNU: added CC 5.0
+          support to enable explicit template instantiation, and disable
+          inlining by default.
+
+        Thanks to Diethard Ohrt <Diethard.Ohrt@siemens.at> for confirming
+        that above fixes allow ACE and TAO to build with CC 5.0.
+
 Mon Feb  1 10:41:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tests/CDR_Test.cpp:
