@@ -165,22 +165,27 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                                     remote_address,
                                     synch_options);
 
-   // This call creates the service handler.  There are three
-   // possibilities: (a) connection succeeds immediately - in this
-   // case, the #REFCOUNT# on the handler is one; (b) connection
-   // completion is pending - in this case, the #REFCOUNT# on the
-   // handler is also one; (c) connection fails immediately - in this
-   // case, the #REFCOUNT# on the handler is zero since close() gets
-   // called on the handler;
+   // This call creates the service handler and bumps the #REFCOUNT#
+   // up one extra.  There are three possibilities: (a) connection
+   // succeeds immediately - in this case, the #REFCOUNT# on the
+   // handler is two; (b) connection completion is pending - in this
+   // case, the #REFCOUNT# on the handler is also two; (c) connection
+   // fails immediately - in this case, the #REFCOUNT# on the handler
+   // is one since close() gets called on the handler.
+   //
+   // The extra reference count in
+   // TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
+   // the case when connection completion is pending and we are going
+   // to wait on a variable in the handler to changes, signifying
+   // success or failure.  Note, that this increment cannot be done
+   // once the connect() returns since this might be too late if
+   // another thread pick up the completion and potentially deletes
+   // the handler before we get a chance to increment the reference
+   // count.
 
    // No immediate result.  Wait for completion.
    if (result == -1 && errno == EWOULDBLOCK)
      {
-       // We add to the #REFCOUNT# since we are going to wait on a
-       // variable in the handler to changes, signifying success or
-       // failure.
-       svc_handler->add_reference ();
-
        if (TAO_debug_level > 2)
          ACE_DEBUG ((LM_DEBUG,
                      "TAO (%P|%t) - IIOP_Connector::make_connection, "
@@ -205,10 +210,6 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
        int closed =
          svc_handler->is_finalized ();
 
-       // Irrespective of success or failure, remove the #REFCOUNT#
-       // added for waiting.
-       svc_handler->remove_reference ();
-
        // In case of failure, check if the connection has been closed.
        if (result == -1)
          {
@@ -221,6 +222,9 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
              }
          }
      }
+
+   // Irrespective of success or failure, remove the extra #REFCOUNT#.
+   svc_handler->remove_reference ();
 
    // In case of errors.
    if (result == -1)
