@@ -47,35 +47,35 @@ public:
   // E.g., the "3" in ACE 4.3.19.
 
   static u_int beta_version ();
-  // E.g., the "19" in ACE 4.3.19.
+  // E.g., the "19" in ACE 4.3.19.  Returns 0 for "stable" (non-beta) releases.
 
   // = Recv operations that factor out differences between Win32 and UNIX.
   static ssize_t recv (ACE_HANDLE handle, 
-		       void *buf, 
-		       size_t len, 
-		       int flags);
+                       void *buf, 
+                       size_t len, 
+                       int flags);
   // Receive up to <len> bytes into <buf> from <handle> (uses the
   // <ACE_OS::recv> call).
 
   static ssize_t recv (ACE_HANDLE handle, 
-		       void *buf, 
-		       size_t len);
+                       void *buf, 
+                       size_t len);
   // Receive up to <len> bytes into <buf> from <handle> (uses the
   // <ACE_OS::read> system call on UNIX and the <ACE_OS::recv> call on
   // Win32).
 
   // = Recv operations that receive exactly n bytes.
   static ssize_t recv_n (ACE_HANDLE handle, 
-			 void *buf, 
-			 size_t len, 
-			 int flags);
+                         void *buf, 
+                         size_t len, 
+                         int flags);
   // Receive <len> bytes into <buf> from <handle> (uses the
   // <ACE_OS::recv> call).  If <handle> is set to non-blocking mode
   // this call will poll until all <len> bytes are received.
 
   static ssize_t recv_n (ACE_HANDLE handle, 
-			 void *buf, 
-			 size_t len);
+                         void *buf, 
+                         size_t len);
   // Receive <len> bytes into <buf> from <handle> (uses the
   // <ACE_OS::read> system call on UNIX and the <ACE_OS::recv> call on
   // Win32).  If <handle> is set to non-blocking mode this call will
@@ -83,10 +83,10 @@ public:
 
   // = Timed <recv> operations.
   static ssize_t recv (ACE_HANDLE handle, 
-		       void *buf, 
-		       size_t len, 
-		       int flags,
-		       const ACE_Time_Value *timeout);
+                       void *buf, 
+                       size_t len, 
+                       int flags,
+                       const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to receive up to <len> bytes
   // into <buf> from <handle> (uses the <ACE_OS::recv> call).  The
   // <timeout> indicates how long to blocking trying to receive.  If
@@ -96,9 +96,9 @@ public:
   // ETIME>.  If it succeeds the number of bytes received is returned.
 
   static ssize_t recv (ACE_HANDLE handle, 
-		       void *buf, 
-		       size_t len, 
-		       const ACE_Time_Value *timeout);
+                       void *buf, 
+                       size_t len, 
+                       const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to receive up to <len> bytes
   // into <buf> from <handle> (uses the <ACE_OS::read> call).  The
   // <timeout> indicates how long to blocking trying to receive.  If
@@ -108,9 +108,9 @@ public:
   // ETIME>.  If it succeeds the number of bytes received is returned.
 
   static ssize_t recvmsg (ACE_HANDLE handle,
-			  struct msghdr *msg,
-			  int flags,
-			  const ACE_Time_Value *timeout);
+                          struct msghdr *msg,
+                          int flags,
+                          const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to receive <msg> from
   // <handle> (uses the <ACE_OS::recvmsg> call).  The <timeout>
   // indicates how long to blocking trying to receive.  If <timeout>
@@ -120,12 +120,12 @@ public:
   // If it succeeds the number of bytes received is returned.
 
   static ssize_t recvfrom (ACE_HANDLE handle,
-			   char *buf,
-			   int len, 
-			   int flags,
-			   struct sockaddr *addr,
-			   int *addrlen,
-			   const ACE_Time_Value *timeout);
+                           char *buf,
+                           int len, 
+                           int flags,
+                           struct sockaddr *addr,
+                           int *addrlen,
+                           const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to recv up to <len> bytes
   // into <buf> from <handle> (uses the <ACE_OS::recvfrom> call).  The
   // <timeout> indicates how long to blocking trying to recv.  If
@@ -136,10 +136,10 @@ public:
   // returned.
 
   static ssize_t recv_n (ACE_HANDLE handle, 
-			 void *buf, 
-			 size_t len, 
-			 int flags,
-			 const ACE_Time_Value *timeout);
+                         void *buf, 
+                         size_t len, 
+                         int flags,
+                         const ACE_Time_Value *timeout);
   // Try to recv exactly <len> bytes into <buf> from <handle> (uses
   // the <ACE_OS::recv> call).  The <timeout> indicates how long to
   // blocking trying to receive.  If <timeout> == 0, the caller will
@@ -152,31 +152,31 @@ public:
 
   // = Send operations that factor out differences between Win32 and UNIX.
   static ssize_t send (ACE_HANDLE handle, 
-		       const void *buf, 
-		       size_t len, 
-		       int flags);
+                       const void *buf, 
+                       size_t len, 
+                       int flags);
   // Send up to <len> bytes into <buf> from <handle> (uses the
   // <ACE_OS::send> call).
 
   static ssize_t send (ACE_HANDLE handle, 
-		       const void *buf, 
-		       size_t len);
+                       const void *buf, 
+                       size_t len);
   // Send up to <len> bytes into <buf> from <handle> (uses the
   // <ACE_OS::write> system call on UNIX and the <ACE_OS::send> call
   // on Win32).
 
   // = Send operations that send exactly n bytes.
   static ssize_t send_n (ACE_HANDLE handle, 
-			 const void *buf, 
-			 size_t len, 
-			 int flags);
+                         const void *buf, 
+                         size_t len, 
+                         int flags);
   // Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::send>
   // system call).  If <handle> is set to non-blocking mode this call
   // will poll until all <len> bytes are sent.
 
   static ssize_t send_n (ACE_HANDLE handle, 
-			 const void *buf, 
-			 size_t len);
+                         const void *buf, 
+                         size_t len);
   // Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::write>
   // system call on UNIX and the <ACE_OS::recv> call on Win32).  If
   // <handle> is set to non-blocking mode this call will poll until
@@ -184,9 +184,9 @@ public:
 
   // = Timed <send> operations.
   static ssize_t send (ACE_HANDLE handle, 
-		       const void *buf, 
-		       size_t len, 
-		       const ACE_Time_Value *timeout);
+                       const void *buf, 
+                       size_t len, 
+                       const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to send up to <len> bytes
   // into <buf> from <handle> (uses the <ACE_OS::write> system call on
   // UNIX and the <ACE_OS::send> call on Win32).  The <timeout>
@@ -197,10 +197,10 @@ public:
   // succeeds the number of bytes sent is returned.
 
   static ssize_t send (ACE_HANDLE handle, 
-		       const void *buf, 
-		       size_t len, 
-		       int flags,
-		       const ACE_Time_Value *timeout);
+                       const void *buf, 
+                       size_t len, 
+                       int flags,
+                       const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to send up to <len> bytes
   // into <buf> from <handle> (uses the <ACE_OS::send> call).  The
   // <timeout> indicates how long to blocking trying to send.  If
@@ -210,9 +210,9 @@ public:
   // ETIME>.  If it succeeds the number of bytes sent is returned.
 
   static ssize_t sendmsg (ACE_HANDLE handle, 
-			  const struct msghdr *msg, 
-			  int flags,
-			  const ACE_Time_Value *timeout);
+                          const struct msghdr *msg, 
+                          int flags,
+                          const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to send the <msg> to <handle>
   // (uses the <ACE_OS::sendmsg> call).  The <timeout> indicates how
   // long to blocking trying to send.  If <timeout> == 0, the caller
@@ -222,12 +222,12 @@ public:
   // the number of bytes sent is returned.
 
   static ssize_t sendto (ACE_HANDLE handle,
-			 const char *buf,
-			 int len, 
-			 int flags,
-			 const struct sockaddr *addr,
-			 int addrlen,
-			 const ACE_Time_Value *timeout);
+                         const char *buf,
+                         int len, 
+                         int flags,
+                         const struct sockaddr *addr,
+                         int addrlen,
+                         const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to send up to <len> bytes
   // into <buf> from <handle> (uses the <ACE_OS::sendto> call).  The
   // <timeout> indicates how long to blocking trying to send.  If
@@ -237,10 +237,10 @@ public:
   // ETIME>.  If it succeeds the number of bytes sent is returned.
 
   static ssize_t send_n (ACE_HANDLE handle, 
-			 const void *buf, 
-			 size_t len, 
-			 int flags,
-			 const ACE_Time_Value *timeout);
+                         const void *buf, 
+                         size_t len, 
+                         int flags,
+                         const ACE_Time_Value *timeout);
   // Try to send exactly <len> bytes into <buf> from <handle> (uses
   // the <ACE_OS::send> call).  The <timeout> indicates how long to
   // blocking trying to send.  If <timeout> == 0, the caller will
@@ -254,9 +254,9 @@ public:
   // = Timed Scatter-read and gather-write functions.
 
   static ssize_t writev (ACE_HANDLE handle, 
-			 const struct iovec* iov,
-			 int iovcnt,
-			 const ACE_Time_Value *timeout);
+                         const struct iovec* iov,
+                         int iovcnt,
+                         const ACE_Time_Value *timeout);
   // Send <iovcnt> <iovec> structs to <handle> (uses the
   // <ACE_OS::writev> call).  If <timeout> == 0, the caller will block
   // until action is possible, else will wait until the relative time
@@ -265,9 +265,9 @@ public:
   // bytes written is returned.
 
   static ssize_t readv (ACE_HANDLE handle,
-			struct iovec *iov,
-			int iovcnt,
-			const ACE_Time_Value *timeout);
+                        struct iovec *iov,
+                        int iovcnt,
+                        const ACE_Time_Value *timeout);
   // Read <iovcnt> <iovec> structs from <handle> (uses the
   // <ACE_OS::readv> call).  If <timeout> == 0, the caller will block
   // until action is possible, else will wait until the relative time
@@ -287,8 +287,8 @@ public:
   // send and recv exactly n bytes.
 
   static ssize_t read_n (ACE_HANDLE handle, 
-			 void *buf, 
-			 size_t len);
+                         void *buf, 
+                         size_t len);
   // Receive <len> bytes into <buf> from <handle> (uses the
   // <ACE_OS::read> call, which uses the <read> system call on UNIX
   // and the <ReadFile> call on Win32).  If <handle> is set to
@@ -296,8 +296,8 @@ public:
   // received.
 
   static ssize_t write_n (ACE_HANDLE handle, 
-			  const void *buf, 
-			  size_t len);
+                          const void *buf, 
+                          size_t len);
   // Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::write>
   // calls, which is uses the <write> system call on UNIX and the
   // <WriteFile> call on Win32).  If <handle> is set to non-blocking
@@ -309,9 +309,9 @@ public:
   // Bind a new unused port to <handle>.
 
   static int get_bcast_addr (ACE_UINT32 &bcast_addr,
-			     const char *hostname = 0,
-			     ACE_UINT32 host_addr = 0,
-			     ACE_HANDLE handle = ACE_INVALID_HANDLE);
+                             const char *hostname = 0,
+                             ACE_UINT32 host_addr = 0,
+                             ACE_HANDLE handle = ACE_INVALID_HANDLE);
   // Get our broadcast address based on our <host_addr>.  If
   // <hostname> is non-0 we'll use it to determine our IP address.  If
   // <handle> is not <ACE_INVALID_HANDLE> then we'll use this to
@@ -320,13 +320,13 @@ public:
   // success.
 
   static int get_ip_interfaces (size_t &count, 
-				ACE_INET_Addr *&addr_array);
+                                ACE_INET_Addr *&addr_array);
   // Return count and array of all configured IP interfaces on this
   // host, rc = 0 on success (count == number of interfaces else -1).
   // Caller is responsible for calling delete [] on <addr_array>.
 
   static int count_interfaces (ACE_HANDLE handle,
-			       size_t &how_many);
+                               size_t &how_many);
   // Helper routine for get_ip_interfaces, differs by UNIX platform so
   // put into own subroutine.  perform some ioctls to retrieve ifconf
   // list of ifreq structs.
@@ -336,15 +336,15 @@ public:
   // made.  Caller must <close> the handle.
 
   static int handle_timed_accept (ACE_HANDLE listener,
-				  ACE_Time_Value *timeout, 
-				  int restart);
+                                  ACE_Time_Value *timeout, 
+                                  int restart);
   // Wait up to <timeout> amount of time to passively establish a
   // connection.  This method doesn't perform the <accept>, it just
   // does the timed wait...
 
   static ACE_HANDLE handle_timed_complete (ACE_HANDLE listener, 
-					   ACE_Time_Value *timeout,
-					   int is_tli = 0);
+                                           ACE_Time_Value *timeout,
+                                           int is_tli = 0);
   // Wait up to <timeout> amount of time to complete an actively
   // established non-blocking connection.  If <is_tli> is non-0 then
   // we are being called by a TLI wrapper (which behaves slightly
@@ -353,20 +353,20 @@ public:
   // = Operations on HANDLEs.
 
   static ACE_HANDLE handle_timed_open (ACE_Time_Value *timeout,
-				       LPCTSTR name,
-				       int flags, 
-				       int perms);
+                                       LPCTSTR name,
+                                       int flags, 
+                                       int perms);
   // Wait up to <timeout> amount of time to actively open a device.
   // This method doesn't perform the <connect>, it just does the timed
   // wait...
 
   // = Set/get/clear various flags related to I/O HANDLE.
   static int set_flags (ACE_HANDLE handle, 
-			int flags);
+                        int flags);
   // Set flags associated with <handle>.
 
   static int clr_flags (ACE_HANDLE handle, 
-			int flags);
+                        int flags);
   // Clear flags associated with <handle>.
 
   static int get_flags (ACE_HANDLE handle);
@@ -423,8 +423,8 @@ public:
   // = Methods for searching and opening shared libraries.
 
   static int ldfind (const char *filename, 
-		     char *pathname, 
-		     size_t maxlen);
+                     char *pathname, 
+                     size_t maxlen);
   // Finds the file <filename> either using an absolute path or using
   // a relative path in conjunction with ACE_LD_SEARCH_PATH (e.g.,
   // $LD_LIBRARY_PATH on UNIX or $PATH on Win32).  This function will
@@ -451,15 +451,15 @@ public:
   // reading from ACE_STDIN.
 
   static int register_stdin_handler (ACE_Event_Handler *eh,
-				     ACE_Reactor *reactor,
-				     ACE_Thread_Manager *thr_mgr,
-				     int flags = THR_DETACHED);
+                                     ACE_Reactor *reactor,
+                                     ACE_Thread_Manager *thr_mgr,
+                                     int flags = THR_DETACHED);
   // Abstracts away from the differences between Win32 and ACE with
   // respect to reading from ACE_STDIN (which is non-select()'able on
   // Win32.
 
   // = Miscelleous functions.
-  static size_t	round_to_pagesize (off_t length);
+  static size_t round_to_pagesize (off_t length);
   // Rounds the request to a multiple of the page size.
 
   static int format_hexdump (const char *buffer, int size, char *obuf,
@@ -502,8 +502,8 @@ public:
   // may not have a chance to cleanup before it shuts down.
 
   static void unique_name (const void *object,
-			   LPTSTR name, 
-			   size_t length);
+                           LPTSTR name, 
+                           size_t length);
   // This method uses process id and object pointer to come up with a
   // machine wide unique name.  The process ID will provide uniqueness
   // between processes on the same machine. The "this" pointer of the
@@ -519,26 +519,26 @@ private:
   // Ensure we can't define an instance of this class...
 
   static int enter_recv_timedwait (ACE_HANDLE handle,
-				   const ACE_Time_Value *timeout,
-				   int &val);
+                                   const ACE_Time_Value *timeout,
+                                   int &val);
   // Wait for <timeout> before proceeding to a <recv> operation.
   // <val> keeps track of whether we're in non-blocking mode or not.
 
   static void leave_recv_timedwait (ACE_HANDLE handle,
-				    const ACE_Time_Value *timeout,
-				    int val);
+                                    const ACE_Time_Value *timeout,
+                                    int val);
   // Cleanup after a <recv> operation (e.g., restore the appropriate
   // non-blocking status of <handle>).
 
   static int enter_send_timedwait (ACE_HANDLE handle,
-				   const ACE_Time_Value* timeout,
-				   int &val);
+                                   const ACE_Time_Value* timeout,
+                                   int &val);
   // Wait for <timeout> before proceeding to a <send> operation.
   // <val> keeps track of whether we're in non-blocking mode or not.
 
   static void leave_send_timedwait (ACE_HANDLE handle,
-				    const ACE_Time_Value *timeout,
-				    int val);
+                                    const ACE_Time_Value *timeout,
+                                    int val);
   // Cleanup after the <send> operation (e.g., restore the appropriate
   // non-blocking status of <handle>).
 
