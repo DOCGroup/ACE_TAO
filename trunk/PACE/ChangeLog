@@ -1,3 +1,28 @@
+Tue Jun 12 14:46:48 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/vxworks/unistd.inl: 
+          Added cast for non-const char*.
+
+        * pace/vxworks/time.inl: 
+          Removed declaration of errno.
+
+        * pace/vxworks/pthread.inl: 
+        * pace/vxworks/pthread.h: 
+        * pace/vxworks/pthread.c: 
+          Added supported for pthreads. The vast majority of this code
+          was donated by Hughes Network Systems via Braeton Taylor
+          <btaylor@hns.com>.
+
+        * pace/config/config.h: 
+
+        * pace/pthread.h: 
+          With the addition of VxWorks not all PACE functions are inlined
+          now. Added #if !(PACE_VXWORKS) to handle this.
+
+        * THANKS: 
+          Added Braeton Taylor of Hughes Network Systems for his
+          contribution of pthread code for VxWorks.
+
 Fri Jun  1 15:38:45 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/vxworks/aio.c: 
