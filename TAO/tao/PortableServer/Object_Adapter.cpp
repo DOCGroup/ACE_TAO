@@ -113,6 +113,7 @@ TAO_Object_Adapter::set_transient_poa_name_size (const TAO_Server_Strategy_Facto
 TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,
                                         TAO_ORB_Core &orb_core)
   : hint_strategy_ (0),
+    servant_dispatcher_ (0),
     persistent_poa_name_map_ (0),
     transient_poa_map_ (0),
     orb_core_ (orb_core),
@@ -124,7 +125,6 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     non_servant_upcall_condition_ (thread_lock_),
     non_servant_upcall_in_progress_ (0),
     non_servant_upcall_thread_ (ACE_OS::NULL_thread),
-    servant_dispatcher_ (0),
     root_ (0)
 {
   TAO_Object_Adapter::set_transient_poa_name_size (creation_parameters);
