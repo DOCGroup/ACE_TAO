@@ -35,9 +35,9 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                    TAO_DEF_GIOP_MAJOR,
                    TAO_DEF_GIOP_MINOR)
 {
-#if defined (ACE_HAS_MEMORY_PROFILER)
+#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
   ACE_OS::memset(buffer_, 0, sizeof (buffer_));
-#endif /* ACE_HAS_MEMORY_PROFILER */
+#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 }
 
 

@@ -1,28 +1,44 @@
+Wed Jun 23 06:52:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/ORB.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Transport.cpp:
+          Replaced all checks for ACE_HAS_MEMORY_PROFILER with
+          ACE_INITIALIZE_MEMORY_BEFORE_USE. This covers better what we do.
+
+        * tao/Strategies/DIOP_Transport.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+          Replaced ACE_HAS_PURIFY with ACE_INITIALIZE_MEMORY_BEFORE_USE
+
 Tue Jun 22 19:51:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/orbconf.h:	
+	* tao/orbconf.h:
 
 	  Removed some of the TAO_ENV* macros. They were supposed to be
 	  deprecated from time immemorial and it was finally time to bid
-	  adieu. 
-	
+	  adieu.
+
 	* tao/Any_Unknown_IDL_Type.cpp:
 	* tao/ORBInitializer_Registry.h:
 	* tao/ORB_Core.cpp:
 	* tao/PortableServer/Object_Adapter.cpp:
 
 	  Strange, our code had a bunch of TAO_ENV* in the cpp
-	  files. Changed them to the ACE_ENV* equivalents. 
+	  files. Changed them to the ACE_ENV* equivalents.
 
 Tue Jun 22 11:45:07 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:
-        
+
           Added VPATH statement to the verbatim block of the TAO_IFR_EXE
           project. This allows the gnu linker to find object files
           built from source files in some directory which is not a
           subdirectory of the local one. Thanks to Don Hinton
-          <dhinton@dre.vanderbilt.edu> and Bala Natarajan 
+          <dhinton@dre.vanderbilt.edu> and Bala Natarajan
           <bala@dre.vanderbilt.edu> for their help with this problem.
 
 Tue Jun 22 14:10:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
