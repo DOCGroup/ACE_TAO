@@ -52,7 +52,7 @@ public:
                              size_t n);
   // Constructor. It assumes ownership of both the array and the
   // children.
-  
+
   virtual ~TAO_EC_Conjunction_Filter (void);
   // Destructor
 
@@ -72,7 +72,7 @@ public:
                             CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (TAO_EC_Filter::Headers& headers);
+  virtual int can_match (const RtecEventComm::EventHeader& header) const;
 
   typedef TAO_EC_Filter* value_type;
   typedef TAO_EC_Filter* const const_value_type;
@@ -83,14 +83,14 @@ public:
 
   typedef unsigned int Word;
 
-private: 
+private:
   int all_received (void) const;
   // Determine if all the children have received their events.
-  
+
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Conjunction_Filter
                               (const TAO_EC_Conjunction_Filter&))
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Conjunction_Filter& operator=
-                              (const TAO_EC_Conjunction_Filter&))  
+                              (const TAO_EC_Conjunction_Filter&))
 
 private:
   TAO_EC_Filter** children_;

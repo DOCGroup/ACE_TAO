@@ -1,3 +1,70 @@
+Wed Mar  3 18:28:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h: 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i: 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin_T.h: 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin_T.i: 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin_T.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.i: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.h: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.i: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp: 
+	  Factored out the collection of ProxyPushSuppliers from the
+	  ConsumerAdmin class: it is used in other places like the
+	  SupplierFiltering strategies.
+	  I also added extensive documentation about the several
+	  variations on this particular strategy.
+
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h: 
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.i: 
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp: 
+	  Added a new SupplierFiltering strategy, simply keep the list of
+	  consumers for each supplier.
+
+	* orbsvcs/orbsvcs/Event/EC_Filter.h: 
+	* orbsvcs/orbsvcs/Event/EC_Filter.i: 
+	* orbsvcs/orbsvcs/Event/EC_Filter.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h: 
+	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.h: 
+	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.h: 
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp: 
+	  Changed the mechanism to match suppliers and consumers: the
+	  filter objects have a new method that can be used to detect if a 
+	  event is potentially interesting to the consumer.
+	  The red-black tree is not needed anymore.
+
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h: 
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.i: 
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp: 
+	  Moved the instantiation of the EventHeader red-black tree to
+	  this file, because now this is the only place we use it.
+
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/EC_Factory.h: 
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h: 
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h: 
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp: 
+	  Added new factory methods to create and detroy
+	  EC_ProxyPushSupplier_Set objects.
+
+	* tao/orbconf.h: 
+	  Added description of the TAO_DOTTED_DECIMAL_ADDRESSES macro.
+
+	* tao/MProfile.i: 
+	* tao/Any.h: 
+	* orbsvcs/Event_Service/Event_Service.cpp: 
+	  Minor cosmetic fixes.
+
 Wed Mar  3 03:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
