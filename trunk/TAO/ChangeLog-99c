@@ -1,3 +1,11 @@
+Thu Mar 25 15:09:37 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Added the following files for the InterOperable Naming Service
+	test.
+	* tests/InterOp-Naming/InterOp_test.cpp: 
+	* tests/InterOp-Naming/README: 
+	* tests/InterOp-Naming/Makefile: 
+
 Thu Mar 25 07:41:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_global.cpp: 
