@@ -1,14 +1,22 @@
+Wed Feb 28 22:58:50 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * html/index.html:
+          Reference */index.html directly, instead of assuming that the
+          web browser will use index.html as the default file, this also
+          works better when browsing locally.  Thanks to Alain Decamps
+          <Alain.Decamps@pidpa.be> for pointing this out.
+
 Wed Feb 28 16:41:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
-	* docs/bugzilla-build-setup.html:
+        * docs/bugzilla-build-setup.html:
 
           Updated the section about the scoreboard and added a
           placeholder for Win32 nightly build information.
 
 Wed Feb 28 16:04:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst (TYPE): Added a build with AMI and
-	  Messaging support disabled for the nightly builds.
+        * bin/nightlybuilds/builds.lst (TYPE): Added a build with AMI and
+          Messaging support disabled for the nightly builds.
 
 Wed Feb 28 15:35:59 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -22,7 +30,7 @@ Wed Feb 28 00:25:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
           The examples/POA/Adapter_Activator/run_test.pl test was being run
           twice.  In fairness to all the other tests that only get to run once,
-          I removed the second instance.  
+          I removed the second instance.
 
 Tue Feb 27 17:31:48 2001  Steve Huston  <shuston@riverace.com>
 
@@ -45,30 +53,30 @@ Tue Feb 27 17:31:48 2001  Steve Huston  <shuston@riverace.com>
 
 Tue Feb 27 11:38:38 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* performance-tests/TCP/tcp_test.cpp (main): Zapped the
-	  non-existent '-f' option.  Thanks to Mike Curtis for reporting
- 	  this.
-  
-  	* performance-tests/TCP/tcp_test.cpp (main): Check for improper
-	  bufsz.  Thanks to Mike Curtis for reporting this.
+        * performance-tests/TCP/tcp_test.cpp (main): Zapped the
+          non-existent '-f' option.  Thanks to Mike Curtis for reporting
+          this.
 
-  	* performance-tests/TCP/tcp_test.cpp (main): Documented the '-t'
-	  option, which specifies the number of threads.  
+        * performance-tests/TCP/tcp_test.cpp (main): Check for improper
+          bufsz.  Thanks to Mike Curtis for reporting this.
 
-	* performance-tests/TCP/README: Fixed a typo.  Thanks to 
-	  Mike Curtis for reporting this.
+        * performance-tests/TCP/tcp_test.cpp (main): Documented the '-t'
+          option, which specifies the number of threads.
+
+        * performance-tests/TCP/README: Fixed a typo.  Thanks to
+          Mike Curtis for reporting this.
 
 Tue Feb 27 10:51:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Added the AMI tests to the daily
-	  builds. 
+        * bin/auto_run_tests.lst: Added the AMI tests to the daily
+          builds.
 
 Tue Feb 27 10:23:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Makefile: Changed the ChangeLog listing in the CONTROLLED_FILES
-	  to ChangeLog*. This should help us to avoid missing ChangeLog
-	  entries in the beta distribution, just about every time we split
-	  and add a ChangeLog.
+        * Makefile: Changed the ChangeLog listing in the CONTROLLED_FILES
+          to ChangeLog*. This should help us to avoid missing ChangeLog
+          entries in the beta distribution, just about every time we split
+          and add a ChangeLog.
 
 Mon Feb 27 07:39:16 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -81,16 +89,16 @@ Mon Feb 27 07:39:16 2001  Chad Elliott  <elliott_c@ociweb.com>
         * ace/config-hpux-11.00.h:
 
           Modification to remove system header macro definition conflicts.
-  	  This change does not suppress the conflicts, but does an undef
- 	  of the two conflicting macros before includeing tcp.h.  Thanks
- 	  to Sam Chong <sam@i2i-inc.com> for reporting this problem.
+          This change does not suppress the conflicts, but does an undef
+          of the two conflicting macros before includeing tcp.h.  Thanks
+          to Sam Chong <sam@i2i-inc.com> for reporting this problem.
 
 Mon Feb 26 19:01:16 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Logging_Strategy.{h,cpp}: Added a new -k option to 
-	  set the logging key via the ACE_Logging_Strategy.  Thanks to
- 	  Chris Kohlhoff <chris@kohlhoff.com> for contributing this.
-	
+        * ace/Logging_Strategy.{h,cpp}: Added a new -k option to
+          set the logging key via the ACE_Logging_Strategy.  Thanks to
+          Chris Kohlhoff <chris@kohlhoff.com> for contributing this.
+
 Mon Feb 26 18:18:38 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/SString.i
@@ -119,23 +127,23 @@ Mon Feb 26 15:01:55 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Feb 26 12:29:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/ARGV.h: Clarify that the int add (const ACE_TCHAR *next_arg)
-	  method assumes ownership of <next_arg>, rather than copying it.
-  	  Thanks to Steve Hespelt <shespelt@bear.com> for reporting this.
-	  Fixes [Bug 807].
-  
+        * ace/ARGV.h: Clarify that the int add (const ACE_TCHAR *next_arg)
+          method assumes ownership of <next_arg>, rather than copying it.
+          Thanks to Steve Hespelt <shespelt@bear.com> for reporting this.
+          Fixes [Bug 807].
+
           The generated version_tests dsp didn't work (since DLL_Test_Impl
           creates a library).  Manually created the configurations in the
           tests/DLL_Test_Impl.dsp version instead.
 
 Mon Feb 26 15:54:33 2001  Phil Mesnier  <mesnier_p@ociweb.com>
-  
+
         Port to Unixware 7 (7.1.1) Using UDK CC (7.1.1.b)
 
         * docs/tutorials/013/message_queue.cpp:
         * tests/Malloc_Test.cpp:
 
-        Fixed errors in #pragma instiate lines including removal of ';', 
+        Fixed errors in #pragma instiate lines including removal of ';',
         mispellings
 
         * ace/config-all.h:
