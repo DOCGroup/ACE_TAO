@@ -1,6 +1,6 @@
 // $Id$
 
-#include "../idl3/idl3_grammar.cpp"
+#include "idl3/idl3_grammar.cpp"
 
 #ifndef CIDL_GRAMMAR_C
 #define CIDL_GRAMMAR_C
