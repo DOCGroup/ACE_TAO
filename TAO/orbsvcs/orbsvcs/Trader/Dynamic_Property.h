@@ -18,9 +18,7 @@
 #ifndef TAO_DYNAMIC_PROPERTY_H
 #define TAO_DYNAMIC_PROPERTY_H
 
-#include <map>
-#include <string>
-
+#include "stl.h" 
 #include "orbsvcs/CosTradingS.h"
 
 class TAO_DP_Evaluation_Handler

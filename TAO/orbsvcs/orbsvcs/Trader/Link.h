@@ -21,8 +21,7 @@
 
 #include "Attributes.h"
 #include "Monitor.h" 
-#include <string>
-#include <map>
+#include "stl.h"
 
 template <class TRADER, class MAP_LOCK_TYPE>
 class TAO_Link : 

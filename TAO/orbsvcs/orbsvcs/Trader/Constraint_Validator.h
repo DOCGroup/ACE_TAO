@@ -17,9 +17,7 @@
 #ifndef TAO_CONSTRAINT_VALIDATOR_H
 #define TAO_CONSTRAINT_VALIDATOR_H
 
-#include <map>
-#include <string>
-
+#include "stl.h"
 #include "Constraint_Nodes.h"
 
 class TAO_Constraint_Validator : public TAO_Constraint_Visitor

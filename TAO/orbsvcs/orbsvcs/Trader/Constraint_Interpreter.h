@@ -17,8 +17,7 @@
 #ifndef TAO_CONSTRAINT_INTERPRETER_H
 #define TAO_CONSTRAINT_INTERPRETER_H
 
-#include <stack>
-#include <deque>
+#include "stl.h"
 #include "Interpreter.h"
 #include "Constraint_Validator.h"
 #include "Constraint_Evaluator.h"

@@ -17,10 +17,7 @@
 #ifndef TAO_PROPERTY_EVALUATOR_H
 #define TAO_PROPERTY_EVALUATOR_H
 
-#include <map>
-#include <set>
-#include <string>
-
+#include "stl.h"
 #include "orbsvcs/CosTradingC.h"
 
 class TAO_Property_Evaluator

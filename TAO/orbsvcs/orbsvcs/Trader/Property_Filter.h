@@ -17,8 +17,7 @@
 #ifndef TAO_PROPERTY_FILTER_H
 #define TAO_PROPERTY_FILTER_H
 
-#include <set>
-#include <deque>
+#include "stl.h"
 #include "Trader.h"
 
 class TAO_Property_Filter

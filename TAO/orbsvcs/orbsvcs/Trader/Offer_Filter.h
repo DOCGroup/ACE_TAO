@@ -20,8 +20,7 @@
 #include "Policies.h"
 #include "Property_Evaluator.h"
 
-#include <set>
-#include <string>
+#include "stl.h"
 
 class TAO_Offer_Filter
 // = TITLE

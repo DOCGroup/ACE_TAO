@@ -17,9 +17,7 @@
 #ifndef TAO_CONSTRAINT_EVALUATOR_H
 #define TAO_CONSTRAINT_EVALUATOR_H
 
-#include <map> 
-#include <deque>
-#include <string>
+#include "stl.h"
 
 #include "Property_Evaluator.h"
 #include "Constraint_Visitor.h"

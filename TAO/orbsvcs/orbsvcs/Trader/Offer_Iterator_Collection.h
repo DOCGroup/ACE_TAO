@@ -17,7 +17,7 @@
 #ifndef TAO_OFFER_ITERATOR_COLLECTION_H
 #define TAO_OFFER_ITERATOR_COLLECTION_H
 
-#include <deque>
+#include "stl.h"
 #include "orbsvcs/CosTradingS.h"
 
 class TAO_Offer_Iterator_Collection : public POA_CosTrading::OfferIterator

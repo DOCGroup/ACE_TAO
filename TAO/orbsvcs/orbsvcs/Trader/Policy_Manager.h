@@ -17,10 +17,7 @@
 #ifndef TAO_POLICY_MANAGER_H
 #define TAO_POLICY_MANAGER_H
 
-#include <map>
-#include <string>
-
-#include "Policies.h"
+#include "stl.h"
 
 class TAO_Policy_Manager
 // = TITLE
