@@ -64,7 +64,9 @@ namespace ACE_RMCast
     m->add (Profile_ptr (new SN (sn_++)));
     m->add (Profile_ptr (new Data (buf, s)));
 
-    send (m);
+    // Qualification is for VC6.
+    //
+    Element::send (m);
   }
 
   size_t Socket::

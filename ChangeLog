@@ -1,3 +1,8 @@
+Fri Feb 18 07:21:33 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Socket.cpp: Qualified call to
+	base's send(). Hopefully it will make VC6 happy.
+
 Thu Feb 17 18:23:33 2005  Steve Huston  <shuston@riverace.com>
 
 	* m4/ace.m4: Corrected error message on --enable-wfmo.
