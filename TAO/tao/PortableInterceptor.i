@@ -208,8 +208,6 @@ receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
       // the flow stack in this interception point since it is an
       // intermediate interception point.
     }
-
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
 ACE_INLINE void
