@@ -112,7 +112,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                            &msg,
                            &flags);
 
-  // We've got a framed IPC mechanism, so we can just to a recv().
+  // We've got a framed IPC mechanism, so we can just to a <recv>.
   if (result < 0 || msg.len == 0)
     {
       if (ACE_Reactor::instance ()->remove_handler
