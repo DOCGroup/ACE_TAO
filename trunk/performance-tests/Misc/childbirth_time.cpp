@@ -169,7 +169,7 @@ prof_native_thread (int iteration)
       for (size_t i = 0; i < iteration; i++) 
 	{
 	  ptimer.start ();
-	  for (size_T j = 0; j < MULTIPLY_FACTOR; j++) 
+	  for (size_t j = 0; j < MULTIPLY_FACTOR; j++) 
 	    {
 #if defined (ACE_HAS_WTHREADS)
 	      if (::CreateThread (NULL,
@@ -216,7 +216,7 @@ prof_ace_os_thread (int iteration)
 	{
 	  ptimer.start ();
 
-	  for (size_t j == 0; j < MULTIPLY_FACTOR; j++) 
+	  for (size_t j = 0; j < MULTIPLY_FACTOR; j++) 
 	    if (ACE_OS::thr_create (empty,
 				    0,
 				    THR_SUSPENDED,
@@ -253,7 +253,7 @@ main (int argc, char* argv[])
 	case 'n':
 	  iteration = ACE_OS::atoi (get_opt.optarg);
 	  break;
-	case 'p':			// *DON'T* test ACE_Process.spawn ()
+	case 'p':			// test ACE_Process.spawn ()
 	  profiler = prof_ace_process;
 	  profile_name = "ACE_Process.spawn ()";
 	  break;
@@ -281,7 +281,7 @@ main (int argc, char* argv[])
     }
 
   if (profiler == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Usage: profile_childbirth {-p|-f|-t|-a} [-n ###] [-h] [-e]\n"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, "Usage: childbirth_time {-p|-f|-t|-a} [-n ###] [-h] [-e]\n"), 1);
   else 
     {
       double time = profiler (iteration);
