@@ -1,3 +1,14 @@
+Fri Oct 10 11:12:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Valuetype/ValueBase.h:
+
+          Added default implementation for the formerly pure virtual
+          _tao_obv_narrow(). This method is no longer needed since it
+          was used only by _downcast(), which now uses dynamic_cast<>
+          instead. After hand-crafted code is regenerated in this 
+          branch, CORBA::ValueBase::_tao_obv_narrow() can be removed
+          entirely.
+
 Thu Oct  9 19:38:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
