@@ -17,7 +17,7 @@ CFLAGS          +=
     WARNING_FLAGS += -msg_display_number -msg_display_tag
   endif # VERBOSE_WARNING
 
-CCFLAGS         += $(CFLAGS) -D__USE_STD_IOSTREAM $(WARNING_FLAGS)
+CCFLAGS         += $(CFLAGS) $(WARNING_FLAGS)
 ifeq ($(rtti),)
   CCFLAGS += -nortti
 endif # rtti
@@ -34,7 +34,7 @@ ARFLAGS         = rsuv
 # When libraries are archived, a hash index is automatically created
 # so there is no need for ranlib
 RANLIB          = @true
-SOFLAGS         = -shared -use_ld_input $(ACELIB) cxx_repository/*.o
+SOFLAGS         = -shared $(ACELIB) cxx_repository/*.o
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
 
