@@ -14,13 +14,14 @@ Sat Dec 11 14:31:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 Sat Dec 11 10:15:42 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init): Changed -ORBDebug flag to not
-	  eat following argument.
+	  eat following argument.  Thanks to Mark L Boriack
+ 	  <mboriack@std.saic.com> for reporting this.
 
-	  -ORBDaemon, -ORBSkipServiceConfigOpen, -ORBGIOPLite
-	  to follow similar behavior. In the past, these flags would
-	  accept 'longer' names ... but by their nature, they should
-	  never be longer. The flags following this group may have
-	  their arguments immediately following, but not this group.
+	  -ORBDaemon, -ORBSkipServiceConfigOpen, -ORBGIOPLite to follow
+ 	  similar behavior. In the past, these flags would accept 'longer'
+ 	  names ... but by their nature, they should never be longer. The
+ 	  flags following this group may have their arguments immediately
+ 	  following, but not this group.
 
 Sat Dec 11 00:08:50 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
