@@ -1,3 +1,8 @@
+Sun Dec 23 09:06:05 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp: 
+	  Fixed compiler warnings.
+
 Sat Dec 22 23:30:12 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/RTCORBA/Activity/Task_Stats.h: 
