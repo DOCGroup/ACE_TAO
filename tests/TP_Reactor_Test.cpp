@@ -295,7 +295,7 @@ Acceptor::on_new_receiver (Receiver &rcvr)
 {
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
   this->sessions_++;
-  this->list_receivers_[ rcvr.index_] = & rcvr;
+  this->list_receivers_[rcvr.index_] = & rcvr;
   ACE_DEBUG ((LM_DEBUG,
               "Receiver::CTOR sessions_=%d\n",
               this->sessions_));
@@ -358,7 +358,7 @@ Acceptor::make_svc_handler (Receiver *&sh)
   if (sessions_ >= MAX_RECEIVERS)
     return -1;
 
-  for (int i = 0; i < MAX_RECEIVERS; ++i)
+  for (size_t i = 0; i < MAX_RECEIVERS; ++i)
     if (this->list_receivers_ [i] == 0)
       {
         ACE_NEW_RETURN (sh,
@@ -371,7 +371,7 @@ Acceptor::make_svc_handler (Receiver *&sh)
 
 // *************************************************************
 
-Receiver::Receiver (Acceptor * acceptor, int index)
+Receiver::Receiver (Acceptor * acceptor, size_t index)
   : acceptor_ (acceptor),
     index_ (index),
     flg_mask_ (ACE_Event_Handler::NULL_MASK),
@@ -736,7 +736,7 @@ Connector::make_svc_handler (Sender * & sh)
   if (sessions_ >= MAX_SENDERS)
     return -1;
 
-  for (int i = 0; i < MAX_SENDERS; ++i)
+  for (size_t i = 0; i < MAX_SENDERS; ++i)
     if (this->list_senders_ [i] == 0)
       {
         ACE_NEW_RETURN (sh,
@@ -750,7 +750,7 @@ Connector::make_svc_handler (Sender * & sh)
 
 // *************************************************************
 
-Sender::Sender (Connector* connector, int index)
+Sender::Sender (Connector* connector, size_t index)
   : connector_ (connector),
     index_ (index),
     flg_mask_ (ACE_Event_Handler::NULL_MASK),
@@ -1097,7 +1097,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 's':     // number of senders
           senders = ACE_OS::atoi (get_opt.optarg);
-          if (senders > MAX_SENDERS)
+          if (size_t (senders) > MAX_SENDERS)
             senders = MAX_SENDERS;
           break;
         case 'u':

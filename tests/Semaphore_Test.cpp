@@ -44,7 +44,7 @@ static int test_result = 0;
 static ACE_Thread_Semaphore s (0);
 
 // Default number of iterations.
-static size_t n_iterations = 10;
+static int n_iterations = 10;
 
 // Number of worker threads.
 static size_t n_workers = 10;
@@ -144,7 +144,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static void *
 worker (void *)
 {
-  for (long iterations = 1;
+  for (int iterations = 1;
        iterations <= n_iterations;
        iterations++)
     {
@@ -209,7 +209,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   s.release (n_release_count);
 
   if (ACE_Thread_Manager::instance ()->spawn_n
-      (n_workers,
+      (ACE_static_cast (size_t, n_workers),
        ACE_THR_FUNC (worker),
        0,
        THR_NEW_LWP) == -1)

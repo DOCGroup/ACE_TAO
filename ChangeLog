@@ -1,3 +1,17 @@
+Wed Aug 28 22:42:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/Service_Configurator/Misc/main.cpp:
+        * netsvcs/clients/Naming/Client/main.cpp:
+        * tests/ARGV_Test.cpp:
+        * tests/Get_Opt_Test.cpp: Change size_t to int as a side-affect of:
+          Tue Aug 27 13:28:17 2002  Steve Huston  <shuston@riverace.com>
+          * ace/ARGV.{h i cpp}: Changed argc() value from size_t to int. It
+            needs to get passed to many places that expect int (argc, argv).
+
+        * tests/Semaphore_Test.cpp:
+        * tests/TP_Reactor_Test.{cpp h}:
+        * tests/Upgradable_RW_Test.cpp: Further int/size_t corrections.
+
 Wed Aug 28 19:56:16 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* docs/ACE-subsets.html: Updated the document to point to the

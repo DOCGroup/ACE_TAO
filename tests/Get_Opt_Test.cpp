@@ -177,7 +177,7 @@ parse_args (int test_number,
     }
 
   // Print out the rest of the arguments left in the command line (if any).
-  size_t index = 0;
+  int index = 0;
   for (index = get_opt.opt_ind (); index < args.argc (); index++)
     ACE_DEBUG ((LM_INFO, "   Found non-option argument \"%s\"\n",
                 args.argv ()[index]));

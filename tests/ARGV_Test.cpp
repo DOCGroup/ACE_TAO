@@ -42,7 +42,7 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
               a.argc ()));
 
   // Print the contents of the combined <ACE_ARGV>.
-  for (size_t i = 0; i < a.argc (); i++)
+  for (int i = 0; i < a.argc (); i++)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%d) %s\n"),
                 i,
