@@ -1,3 +1,7 @@
+Mon Nov 10 18:30:22 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+
+	* tao/orbobj.cpp: Added template instantiation for ACE_Atomic_Op.
+
 Mon Nov 10 15:56:58 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* tao/orbconf.h: NetBSD has a long double of size 12, as does
