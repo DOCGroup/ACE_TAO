@@ -1,16 +1,20 @@
+Mon Oct 27 06:40:18 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* include/makeinclude/rules.local.GNU (show_uninit): Added a
+ 	  missing semi-colon for one of the install rules.  Thanks to
+ 	  Manojkumar Acharya <mja@cvsf325.gpt.co.uk> for reporting this.
+
+	* ace/Synch_T.h: Make sure that ACE_Guard::remove() calls
+ 	  this->lock_->remove() rather than this->lock_->release().
+  	  Thanks to Johannes Gutleber <Johannes.Gutleber@cern.ch> for
+ 	  reporting this.
+
 Mon Oct 27 11:36:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * (exit_cleanup_i): removed protection against recursive calls.
           This protection no longer is necessary, because ACE_TSS_Cleanup ()
           is only called by ACE_Thread_Adapter::invoke ().  It was
           problematic because it used the ACE_Allocator instance.
-
-Mon Oct 27 06:40:18 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/Synch_T.h: Make sure that ACE_Guard::remove() calls
-          this->lock_->remove() rather than this->lock_->release().
-          Thanks to Johannes Gutleber <Johannes.Gutleber@cern.ch> for
-          reporting this.
 
 Mon Oct 27 00:20:13 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 

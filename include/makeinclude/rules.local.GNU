@@ -129,7 +129,7 @@ $(INSMAN)/mann/% :
 		else \
 			echo "Installing $(@F) -> $(@D)" ; \
 			ln -s $(shell pwd)/$(@F) $@ ; \
-		fi \
+		fi ; \
 	fi
 ifdef MVSLIB
 #special for MVS in order to use the .x files
