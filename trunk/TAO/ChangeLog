@@ -1,3 +1,16 @@
+Fri Oct 15 20:37:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/Synch_Invocation.cpp:
+	* tao/Messaging/Asynch_Invocation.cpp:
+
+	  Fixed a subtle bug that prevented the service context list from
+	  being marshalled to the server. This was from the following
+	  change
+
+          Mon Aug 23 21:40:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>           
+	  Thanks to Chad Elliott for pointing out the problem from our
+	  daily builds. 
+
 Fri Oct 15 13:08:06 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/Simple/time-date/run_test.pl:
