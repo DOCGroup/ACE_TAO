@@ -399,12 +399,13 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
         }
       *end++ = '\0';
       ACE_TCHAR *name = this->squish (line);
+#if 0
       if (ACE_OS::strlen (name) == 0)          // No name; just an '='
         {
           ACE_OS::fclose (in);
           return -3;
         }
-
+#endif
       // Now find the start of the value
       ACE_TCHAR *value = this->squish (end);
       size_t value_len = ACE_OS::strlen (value);
