@@ -132,7 +132,7 @@ endif
 #----------------------------------------------------------------------------
 
 clean.local:
-	-$(RM) -f *.o *~ *.bak *.rpo *.sym Makefile.old core
+	-$(RM) -f *.o *~ *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
 	-$(RM) -rf $(OBJDIRS) $(TEMPINCDIR) ptrepository Templates.DB \
                    gcctemp.c gcctemp so_locations
 
