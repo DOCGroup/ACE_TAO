@@ -207,8 +207,17 @@ TAO_EC_Basic_ObserverStrategy::supplier_qos_update (
 
   for (int i = 0; i != size; ++i)
     {
-      copy[i]->update_supplier (s_qos ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY
+        {
+          copy[i]->update_supplier (s_qos ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // Ignore exceptions, we must isolate other observers from
+          // failures on this one.
+        }
+      ACE_ENDTRY;
     }
 }
 
@@ -249,8 +258,17 @@ TAO_EC_Basic_ObserverStrategy::consumer_qos_update (
 
   for (int i = 0; i != size; ++i)
     {
-      copy[i]->update_consumer (c_qos ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY
+        {
+          copy[i]->update_consumer (c_qos ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // Ignore exceptions, we must isolate other observers from
+          // failures on this one.
+        }
+      ACE_ENDTRY;
     }
 }
 
