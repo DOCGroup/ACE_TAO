@@ -9,6 +9,7 @@
 #include "ace/DLL.h"
 #include "ace/ARGV.h"
 #include "ace/Module.h"
+#include "ace/OS_NS_strings.h"
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
 
