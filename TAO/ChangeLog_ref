@@ -1,3 +1,9 @@
+Thu Oct 16 12:49:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp
+	  (endpoint_from_profile):  Fix for the loop that iterates over
+	  the endpoint list was busted. 
+
 Thu Oct 16 12:42:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/LocateRequest_Invocation_Adapter.cpp:
