@@ -1,3 +1,24 @@
+Mon Oct 28 18:38:35 CET 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* orbsvcs/tests/Makefile:
+	* orbsvcs/tests/Makefile.am:
+	* orbsvcs/tests/Makefile.bor:
+	* orbsvcs/tests/EC_MT_Mcast/AddrServer.cpp:
+	* orbsvcs/tests/EC_MT_Mcast/AddrServer.h:
+	* orbsvcs/tests/EC_MT_Mcast/Consumer.cpp:
+	* orbsvcs/tests/EC_MT_Mcast/Consumer.h:
+	* orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+	* orbsvcs/tests/EC_MT_Mcast/MCast.dsp:
+	* orbsvcs/tests/EC_MT_Mcast/MCast.dsw:
+	* orbsvcs/tests/EC_MT_Mcast/Makefile:
+	* orbsvcs/tests/EC_MT_Mcast/README:
+	* orbsvcs/tests/EC_MT_Mcast/Supplier.cpp:
+	* orbsvcs/tests/EC_MT_Mcast/Supplier.h:
+	* orbsvcs/tests/EC_MT_Mcast/svc.conf:
+	* orbsvcs/tests/EC_MT_Mcast/run_test.pl:
+	  Added a regression test for the multithreading problem in class
+	  TAO_ECG_UDP_Receiver.
+
 Mon Oct 28 18:21:18 CET 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.{h,cpp}:
