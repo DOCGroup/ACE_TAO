@@ -38,6 +38,7 @@ BIN = 	Async_Timer_Queue_Test \
 	Reactor_Timer_Test \
 	Reader_Writer_Test \
 	Recursive_Mutex_Test \
+	Semaphore_Test \
 	Service_Config_Test \
 	Sigset_Ops_Test \
 	SOCK_Test \

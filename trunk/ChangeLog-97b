@@ -1,11 +1,33 @@
-Wed Sep 17 15:17:38 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+Wed Sep 17 17:25:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Filecache.cpp: ACE_Filecache::finish should check to see if
-	  the file passed in is NULL before attempting to grab the
-	  associated hash lock.  Reported by Samuel Melamed
-	  <sam@vdo.net>.
+	* ace/Log_Msg.cpp (open): In the UNICODE version the compiler
+	  complains about mixed wchar/char usage in Log_Msg.cpp:
 
-Wed Sep 17 13:40:16 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	  Log_Msg.cpp(468) : error C2665: 'ACE_INET_Addr::ACE_INET_Addr' :
+	  none of the 8 overloads can convert parameter 1
+	  from type 'const unsigned short *' 
+
+	  I fixed it modifing the connect() call from
+
+	  status = con.connect (*ACE_Log_Msg_message_queue,
+                                ACE_INET_Addr (logger_key));
+ 
+          to
+
+	  status = con.connect (*ACE_Log_Msg_message_queue,
+                                ACE_INET_Addr
+				(ACE_MULTIBYTE_STRING(logger_key)));
+
+          Thanks to Dieter Quehl <dietrich.quehl@med.siemens.de> for
+	  reporting this.				
+
+	* ace/SV_Semaphore_Simple.h: By default, we want the flags to
+ 	  perform a SEM_UNDO.  Thanks to Sandro Doro
+ 	  <doros@aureus.sublink.org> for reporting this.
+
+	* tests/Makefile (BIN): Added Semaphore_Test.cpp to the Makefile.
+	  Thanks to Sandro Doro <doros@aureus.sublink.org> for reporting
+	  this.
 
 	* tests/Async_Timer_Queue_Test.cpp: If you want to print a '\',
  	  you need to make it a \\...  Thanks to David for noticing this.
@@ -24,6 +46,13 @@ Wed Sep 17 13:40:16 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  so that the length field comes first.  This is necessary for the
  	  framing mechanisms used throughout ACE in various
  	  configurations.
+
+Wed Sep 17 15:17:38 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* ace/Filecache.cpp: ACE_Filecache::finish should check to see if
+	  the file passed in is NULL before attempting to grab the
+	  associated hash lock.  Reported by Samuel Melamed
+	  <sam@vdo.net>.
 
 Wed Sep 17 13:51:25 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
