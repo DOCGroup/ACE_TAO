@@ -21,8 +21,8 @@ Wed Oct 27 17:06:31 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  "sizeof (int)" to the set_option() method.  "sizeof (int)" is
 	  correct, but the corresponding variable "no_delay" in
 	  *_Protocol_Properties was incorrectly defined as a
-	  CORBA::Boolean, which resulted in data type/size mismatch in the
-	  arguments passed to setsockopt().  This change prevents data
+	  CORBA::Boolean, which resulted in data a type/size mismatch in
+	  the arguments passed to setsockopt().  This change prevents data
 	  type/size mismatches from reoccuring should the data type be
 	  changed in the future, even though it remain as "int".
 	  Addresses a "contains uninitialised or unaddressable byte(s)"
