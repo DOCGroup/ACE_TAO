@@ -12,8 +12,8 @@
 #include "CAD_Handler.h"
 #include "MID_Handler.h"
 #include "ID_Handler.h"
-#include "Capability_Handler.h"
-#include "CompIntfDesc_Handler.h"
+#include "Cap_Handler.h"
+#include "CompIntrDesc_Handler.h"
 #include "CompImplDesc_Handler.h"
 
 #include <iostream>
