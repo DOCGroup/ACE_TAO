@@ -499,17 +499,17 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
       return 0;
     }
 
-  // Return the CORBA::Object_ptr interface to this objref.
-  CORBA::Object_ptr new_obj;
+  // Create the CORBA level proxy
+  CORBA_Object *new_obj = new CORBA_Object (data);
 
-  if (data->QueryInterface (IID_CORBA_Object,
-                            (void **) &new_obj) != TAO_NOERROR)
-    env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
+  // Clean up in case of errors.
+  if (new_obj == 0)
+    {
+      data->Release ();
+      env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_NO));
+    }
 
-  data->Release ();
   return new_obj;
-
-  // return new CORBA::Object (data);
 }
 
 

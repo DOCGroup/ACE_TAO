@@ -220,9 +220,6 @@ public:
   // Profile for this object.
 
 private:
-  CORBA::Object base;
-  // The actual CORBA object for this.
-
   ACE_SYNCH_MUTEX IUnknown_lock_;
   // Mutex to protect <IUnknown>-related stuff.
 

@@ -1,3 +1,26 @@
+Thu Mar  5 18:15:32 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/giop.cpp: Removed crufty unused code.
+
+	* tao/iioporb.cpp: 
+	* tao/iiopobj.*: 
+	* tao/decode.cpp: 
+	* tao/object.{h,i}:
+	* tao/orbobj.cpp:
+	* tao/poaC.cpp:
+	* tao/request.cpp:
+	* tao/servant_base.{h,cpp}:
+	Broke the old, incestous, bizarre "contained" relationship between
+ 	IIOP_Object and CORBA_Object.  Now, multiple CORBA_Objects can
+ 	reference the same IIOP_Object, and each is reference-counted
+ 	separately.  Moreover, an IIOP_Object has no back-pointer to a
+ 	CORBA_Object.  All of this should help alleviate many memory
+ 	leaks.
+
+	* TAO_IDL/be/be_interface.cpp: Changed emitted code for _narrow
+ 	and _bind to deal with new relationship btw. CORBA_Object and
+ 	IIOP_Object.
+
 Thu Mar  5 17:45:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/cdr.i: 

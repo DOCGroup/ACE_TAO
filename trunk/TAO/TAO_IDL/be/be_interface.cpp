@@ -536,28 +536,9 @@ be_interface::gen_client_stubs (void)
 
   *cs << "if (!obj->_is_collocated () || !obj->_servant())" << be_nl
       << "{" << be_idt_nl;
-  *cs << "STUB_Object *istub;" << nl;
-  *cs << this->name () << "_ptr new_obj; // to be returned " << nl;
-#if 0 // XXXASG - I was told that emitting this line of code is the root cause
-      // of all evil
-  *cs << "obj->Release ();" <<
-    " // need this since _is_a grabbed an obj reference " << nl;
-#endif
-  *cs << "if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) " <<
-    "!= TAO_NOERROR)\n";
-  cs->incr_indent ();
-  *cs << "return " << this->name () << "::_nil ();\n";
-  cs->decr_indent ();
-  *cs << nl;
-#if 0 // also the cause of all evil
-  *cs << "obj->Release (); " <<
-    "// need this since QueryIntf bumped our refcount" << nl;
-#endif
-  *cs << "new_obj = new " << this->name () << " (istub); "
-      << "// construct obj ref using the stub object" << nl;
-  *cs << "return new_obj;\n";
-  cs->decr_indent ();
-  *cs << "} // end of if\n" << nl;
+  *cs << this->name () << "_ptr new_obj = new " << this->name () << "(obj->_get_parent ());" << be_nl
+      << "return new_obj;" << be_uidt_nl
+      << "} // end of if" << be_nl;
 
   *cs << "STUB_Object *stub = obj->_servant ()->_create_stub (env);" << be_nl
       << "if (env.exception () != 0)" << be_idt_nl
@@ -581,27 +562,17 @@ be_interface::gen_client_stubs (void)
   *cs << this->name () << "_ptr " << this->name () << "::_bind (" <<
     "const char *host, CORBA::UShort port, const char *key, " <<
     "CORBA::Environment &env)" << nl;
-  *cs << "{\n";
-  cs->incr_indent ();
-  *cs << "CORBA::Object_ptr objref = CORBA::Object::_nil ();" << nl;
-  *cs << "IIOP_Object *data = new IIOP_Object (host, port, key);" << nl;
-  *cs << "if (!data) return " << this->name () << "::_nil ();" << nl;
-  *cs << "// get the object_ptr using Query Interface" << nl;
-  *cs <<
-    "if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != TAO_NOERROR)"
-      << nl;
-  *cs << "{" << nl;
-  *cs << "\tenv.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));"
-      << nl;
-  *cs << "\treturn " << this->name () << "::_nil ();" << nl;
-  *cs << "}" << nl;
-  *cs << "data->Release (); // QueryInterface had bumped up our count" << nl;
-  *cs << "if (CORBA::is_nil (objref))" << nl;
-  *cs << "\treturn " << this->name () << "::_nil ();" << nl;
-  *cs << "else // narrow it" << nl;
-  *cs << "\treturn " << this->name () << "::_narrow (objref, env);\n";
-  cs->decr_indent ();
-  *cs << "}\n\n";
+  *cs << "{" << be_idt_nl
+      << "IIOP_Object *data = new IIOP_Object (host, port, key);" << be_nl
+      << "if (!data) return " << this->name () << "::_nil ();" << be_nl
+      << "// create the CORBA level proxy" << be_nl
+      << "CORBA::Object_ptr objref = new CORBA_Object (data);" << be_nl
+      << "if (objref == 0)" << be_idt_nl << "{" << be_idt_nl
+      << "data->Release ();" << be_nl
+      << "env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));" << be_nl
+      << "return " << this->name () << "::_nil ();" << be_uidt_nl << "}" << be_uidt_nl
+      << "return " << this->name () << "::_narrow (objref, env);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // generate code for the elements of the interface
   if (this->be_scope::gen_client_stubs () == -1)

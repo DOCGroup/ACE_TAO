@@ -649,11 +649,13 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
     }
   else
     {
-      // retrieve the CORBA::Object from the IIOP_Object we created before.
-      if (objdata->QueryInterface (IID_CORBA_Object,
-                                   (void **) data) != TAO_NOERROR)
+      // Create a new CORBA_Object and give it the IIOP_Object just
+      // created.
+      CORBA_Object *corba_proxy = new CORBA_Object (objdata);
+      if (corba_proxy)
+        *(CORBA_Object **)data = corba_proxy;
+      else
         continue_decoding = CORBA::B_FALSE;
-      objdata->Release ();
     }
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_decoding == CORBA::B_TRUE)
