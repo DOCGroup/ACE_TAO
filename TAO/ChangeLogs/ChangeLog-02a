@@ -1,3 +1,50 @@
+Sat Jan  5 21:31:43 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h: 
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp: 
+	  Added code to generate the Client side abstract RH class and the 
+	  skeleton RH class. For the above two interfaces, there should be 
+	  no classes generated on teh 'other side' i.e. for the client RH
+	  interface node, there should be no class generatd in the skeleton
+	  files.  Currently there are a few problems with this and with the
+	  exact names and inheritance of the generated classes.
+
+Sat Jan  5 18:27:59 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h: 
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp: 
+	  Added code to generate the skeleton-source code for AMH-skelton
+	  operation.  The amh-method differs from the original method in 
+	  the following ways:
+	  - Return type is always void
+	  - IN and INOUT parameters _only_ are de-marshalled
+	  One part left to be done is the creation and instantiation of 
+	  the RH inside the generated method body.
+
+	
+Sat Jan  5 18:15:34 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface.cpp: 
+	  Added actions for all the AMH states (including amh_rh).
+	  Previously some of them returned 0 or just didn't do anything.
+	
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: 
+	  Removed all the code from the visit_interface that generates
+	  code for the this_method and put it into a seperate method called 
+	  this_method.  This method alre4ady existed but for some reason a
+	  part of the code was left in the visit_interface method.  With 
+	  this in place, the AMH class can now implement all the changes that 
+	  are needed in the _this () method.
+	  
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp: 
+	  - Changed the this_method().  This method now generates all the code 
+	  for the _this() method in amh-skeleton.  Changes include a narrow
+	  of original interface rather than teh AMH-skeleton narrow and 
+	  commenting of the generation of the safe_stub.release() line.
+	  - Changed the dispath_method () so that it now generates a call to 
+	  asynchronous_upcall_dispatch rather than synchronous_upcall_dispatch
+	  as is generated for a normal skeleton.
+
 Sat Jan  5 20:39:25 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Connection_Handler.cpp (handle_input, handle_output):
