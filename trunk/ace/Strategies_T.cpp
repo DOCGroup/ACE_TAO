@@ -695,7 +695,7 @@ Hash_Addr<ADDR_T,SVC_HANDLER>::operator==(const Hash_Addr<ADDR_T,SVC_HANDLER>& r
     }
 }
 
-template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>
 ::connect_svc_handler(SVC_HANDLER*& sh,
 		      const ACE_PEER_CONNECTOR_ADDR& remote_addr,
