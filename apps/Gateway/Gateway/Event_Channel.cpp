@@ -13,7 +13,8 @@ ACE_Event_Channel_Options::ACE_Event_Channel_Options (void)
     threading_strategy_ (REACTIVE),
     acceptor_port_ (ACE_DEFAULT_GATEWAY_SERVER_PORT),
     connector_role_ (0),
-    acceptor_role_ (0)
+    acceptor_role_ (0),
+    verbose_ (0)
 {
 }
 

@@ -77,7 +77,9 @@ Peer_Router_Context::Peer_Router_Context (u_short port)
       
       if (this->acceptor().get_local_addr (addr) != -1)
 	ACE_DEBUG ((LM_DEBUG, 
-		    "(%t) initializing on port = %d, handle = %d, this = %u\n", 
+		    "(%t) initializing %s on port = %d, handle = %d, this = %u\n", 
+		    addr.get_port_number () == Options::instance ()->supplier_port () ? 
+		    "Supplier_Handler" : "Consumer_Handler",
 		    addr.get_port_number (),
 		    this->acceptor().get_handle (), 
 		    this));

@@ -3684,33 +3684,33 @@ ACE_INLINE int
 ACE_OS::sigwait (sigset_t *set, int *sig)
 {
   // ACE_TRACE ("ACE_OS::sigwait");
-  sig = sig;
+  int local_sig;
+  if (sig == 0)
+    sig = &local_sig;
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_FSU_PTHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigwait (set), 
-				       ace_result_),
-		     int, -1);
+  *sig = ::sigwait (set);
+  return *sig;
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #if defined (ACE_HAS_SETKIND_NP) || defined (ACE_HAS_ONEARG_SIGWAIT)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigwait (set), 
-                                       ace_result_), 
-                     int, -1);
+  *sig = ::sigwait (set);
+  return *sig;
 #else /* ACE_HAS_SETKIND_NP */
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigwait (set, sig), 
-                                       ace_result_), 
-                     int, -1);
+  errno = ::sigwait (set, sig);
+  if (errno == -1)
+    return -1;
+  else
+    return *sig;
 #endif /* ACE_HAS_SETKIND_NP */
 #elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG(set);
-  
   ACE_NOTSUP_RETURN (-1);
 #elif defined (VXWORKS)
   // second arg is a struct siginfo *, which we don't need (the selected
   // signal number is returned)
   // third arg is timeout:  0 means forever
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigtimedwait (set, 0, 0),
-				       ace_result_),
-		     int, -1);   // yes, the doc says -1, not ERROR
+  *sig = ::sigtimedwait (set, 0, 0);
+  return *sig;
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);

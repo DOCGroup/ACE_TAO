@@ -98,7 +98,7 @@ Gateway::parse_args (int argc, char *argv[])
   ACE_OS::strcpy (this->consumer_config_file_, "consumer_config");
   this->debug_ = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, "abC:cdP:pq:t:w:", 0);
+  ACE_Get_Opt get_opt (argc, argv, "abC:cdP:pq:t:vw:", 0);
 
   for (int c; (c = get_opt ()) != EOF; )
     {
@@ -151,6 +151,9 @@ Gateway::parse_args (int argc, char *argv[])
 
 	    break;
 	  }
+	case 'v': // Verbose mode.
+	  this->event_channel_.options ().verbose_ = 1;
+	  break;
 	case 'w': // Time performance for a designated amount of time.
 	  this->event_channel_.options ().performance_window_ = 
 	    ACE_OS::atoi (get_opt.optarg);
