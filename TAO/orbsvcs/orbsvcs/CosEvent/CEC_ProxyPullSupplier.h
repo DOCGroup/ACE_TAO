@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Cos Event Channel
-//
-// = FILENAME
-//   CEC_ProxyPushSupplier
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   CEC_ProxyPushSupplier
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_CEC_PROXYPULLSUPPLIER_H
 #define TAO_CEC_PROXYPULLSUPPLIER_H
@@ -30,64 +26,67 @@
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPullConsumer;
 
+/**
+ * @class TAO_CEC_ProxyPullSupplier
+ *
+ * @brief ProxyPullSupplier
+ *
+ * Implement the CosEventChannelAdmin::ProxyPullSupplier interface,
+ * remember that this class is used to communicate with a
+ * PullConsumer, so, in effect, this is the ambassador for a
+ * consumer inside the event channel.
+ * = MEMORY MANAGMENT
+ * It does not assume ownership of the TAO_CEC_Dispatching object.
+ * It makes a copy of the ConsumerQOS and the consumer object
+ * reference.
+ * = LOCKING
+ * Locking is strategized, the event channel acts as a factory for
+ * the locking strategies.
+ */
 class TAO_Event_Export TAO_CEC_ProxyPullSupplier : public POA_CosEventChannelAdmin::ProxyPullSupplier
 {
-  // = TITLE
-  //   ProxyPullSupplier
-  //
-  // = DESCRIPTION
-  //   Implement the CosEventChannelAdmin::ProxyPullSupplier interface,
-  //   remember that this class is used to communicate with a
-  //   PullConsumer, so, in effect, this is the ambassador for a
-  //   consumer inside the event channel.
-  //
-  // = MEMORY MANAGMENT
-  //   It does not assume ownership of the TAO_CEC_Dispatching object.
-  //   It makes a copy of the ConsumerQOS and the consumer object
-  //   reference.
-  //
-  // = LOCKING
-  //   Locking is strategized, the event channel acts as a factory for
-  //   the locking strategies.
-  //
 public:
   typedef CosEventChannelAdmin::ProxyPullSupplier_ptr _ptr_type;
   typedef CosEventChannelAdmin::ProxyPullSupplier_var _var_type;
 
+  /// constructor...
   TAO_CEC_ProxyPullSupplier (TAO_CEC_EventChannel* event_channel);
-  // constructor...
 
+  /// destructor...
   virtual ~TAO_CEC_ProxyPullSupplier (void);
-  // destructor...
 
+  /// Activate in the POA
   virtual CosEventChannelAdmin::ProxyPullSupplier_ptr activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC ((CORBA::SystemException));
-  // Activate in the POA
 
+  /// Deactivate from the POA
   virtual void deactivate (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Deactivate from the POA
 
+  /// Return 0 if no consumer is connected...
   CORBA::Boolean is_connected (void) const;
-  // Return 0 if no consumer is connected...
 
+  /**
+   * Return the consumer object reference. It returns nil() if it has
+   * not connected yet.
+   * NOTE: This method does not return a new reference!!! Doing so
+   * will increase the locking overhead on the critical path.
+   */
   CosEventComm::PullConsumer_ptr consumer (void) const;
-  // Return the consumer object reference. It returns nil() if it has
-  // not connected yet.
-  // NOTE: This method does not return a new reference!!! Doing so
-  // will increase the locking overhead on the critical path.
 
+  /// The event channel is shutting down
   virtual void shutdown (CORBA::Environment &env);
-  // The event channel is shutting down
 
+  /**
+   * Invoke the _non_existent() pseudo-operation on the consumer. If
+   * it is disconnected then it returns true and sets the
+   * <disconnected> flag.
+   */
   CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected,
                                         CORBA::Environment &ACE_TRY_ENV);
-  // Invoke the _non_existent() pseudo-operation on the consumer. If
-  // it is disconnected then it returns true and sets the
-  // <disconnected> flag.
 
+  /// Push an event into the queue.
   void push (const CORBA::Any &event,
              CORBA::Environment &ACE_TRY_ENV);
-  // Push an event into the queue.
 
   // = The CosEventChannelAdmin::ProxyPullSupplier methods...
   virtual void connect_pull_consumer (
@@ -103,9 +102,9 @@ public:
   virtual void disconnect_pull_supplier (CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Increment and decrement the reference count.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
-  // Increment and decrement the reference count.
 
   // = The Servant methods
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
@@ -113,41 +112,41 @@ public:
   virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV);
 
 protected:
+  /// Set the consumer, used by some implementations to change the
+  /// policies used when invoking operations on the consumer.
   void consumer (CosEventComm::PullConsumer_ptr consumer);
   void consumer_i (CosEventComm::PullConsumer_ptr consumer);
-  // Set the consumer, used by some implementations to change the
-  // policies used when invoking operations on the consumer.
 
+  /// The private version (without locking) of is_connected().
   CORBA::Boolean is_connected_i (void) const;
-  // The private version (without locking) of is_connected().
 
+  /// Release the child and the consumer
   void cleanup_i (void);
-  // Release the child and the consumer
 
 private:
+  /// The Event Channel that owns this object.
   TAO_CEC_EventChannel* event_channel_;
-  // The Event Channel that owns this object.
 
+  /// The locking strategy.
   ACE_Lock* lock_;
-  // The locking strategy.
 
+  /// The reference count.
   CORBA::ULong refcount_;
-  // The reference count.
 
+  /// The consumer....
   CosEventComm::PullConsumer_var consumer_;
-  // The consumer....
 
+  /// If the flag is not zero then we are connected, notice that the
+  /// consumer can be nil.
   int connected_;
-  // If the flag is not zero then we are connected, notice that the
-  // consumer can be nil.
 
+  /// Store the default POA.
   PortableServer::POA_var default_POA_;
-  // Store the default POA.
 
+  /// Use a message queue to pass the
   TAO_SYNCH_MUTEX queue_lock_;
   TAO_SYNCH_CONDITION wait_not_empty_;
   ACE_Unbounded_Queue<CORBA::Any> queue_;
-  // Use a message queue to pass the
 };
 
 #if defined (__ACE_INLINE__)
