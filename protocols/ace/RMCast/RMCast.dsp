@@ -98,7 +98,11 @@ SOURCE=.\RMCast.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\RMCast_Control_Splitter.cpp
+SOURCE=.\RMCast_Ack_Worker.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Fork.cpp
 # End Source File
 # Begin Source File
 
@@ -134,6 +138,10 @@ SOURCE=.\RMCast_Reassembly.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Receiver_Module.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Reliable_Factory.cpp
 # End Source File
 # Begin Source File
@@ -146,7 +154,15 @@ SOURCE=.\RMCast_Resend_Handler.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Resend_Worker.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Retransmission.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Sequencer.cpp
 # End Source File
 # Begin Source File
 
@@ -178,11 +194,15 @@ SOURCE=.\RMCast.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\RMCast_Control_Splitter.h
+SOURCE=.\RMCast_Ack_Worker.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\RMCast_Export.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Fork.h
 # End Source File
 # Begin Source File
 
@@ -218,6 +238,10 @@ SOURCE=.\RMCast_Reassembly.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Receiver_Module.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Reliable_Factory.h
 # End Source File
 # Begin Source File
@@ -230,7 +254,15 @@ SOURCE=.\RMCast_Resend_Handler.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Resend_Worker.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Retransmission.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Sequencer.h
 # End Source File
 # Begin Source File
 
@@ -262,7 +294,11 @@ SOURCE=.\RMCast.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\RMCast_Control_Splitter.i
+SOURCE=.\RMCast_Ack_Worker.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Fork.i
 # End Source File
 # Begin Source File
 
@@ -298,6 +334,10 @@ SOURCE=.\RMCast_Reassembly.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Receiver_Module.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Reliable_Factory.i
 # End Source File
 # Begin Source File
@@ -310,7 +350,15 @@ SOURCE=.\RMCast_Resend_Handler.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Resend_Worker.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Retransmission.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Sequencer.i
 # End Source File
 # Begin Source File
 
