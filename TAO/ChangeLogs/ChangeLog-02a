@@ -1,3 +1,12 @@
+Mon Jun 17 21:19:50 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/TypeCode.cpp (private_member_type, private_member_count):
+
+	  Fixed a bug in the valuetype case where, instead of checking
+	  tc_kind_holder for the 0xffffffff that indicates a recursive type,
+	  we were incorrectly checking encap_length. Thanks to Wanjia 
+	  <jiawan@huawei.com> for pointing out the mistake.
+
 Mon Jun 17 14:59:52 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation.cpp (gen_environment_decl): 
