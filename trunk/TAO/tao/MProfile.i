@@ -1,4 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+//
 // $Id$
 
 
@@ -43,7 +44,7 @@ TAO_MProfile::~TAO_MProfile (void)
 {
   if (policy_list_ != 0)
     {
-      for (CORBA::ULong i = 0; i < policy_list_->length (); i++)
+      for (CORBA::ULong i = 0; i < policy_list_->length (); ++i)
         (*policy_list_)[i]->destroy ();
     }
   delete policy_list_;
@@ -201,55 +202,6 @@ ACE_INLINE TAO_Profile **
 TAO_MProfile::pfiles (void) const
 {
   return this->pfiles_;
-}
-
-
-// Not thread safe!
-ACE_INLINE int
-TAO_MProfile::grow (CORBA::ULong sz)
-{
-  if (sz <= this->size_)
-    return 0;
-
-  // get the additional space
-  TAO_Profile **new_pfiles, **old_pfiles;
-  ACE_NEW_RETURN (new_pfiles,
-                  TAO_Profile *[sz],
-                  -1);
-
-  old_pfiles = this->pfiles_;
-
-  // got it, now copy profiles
-  for (TAO_PHandle h = 0; h < this->size_; ++h)
-    {
-      new_pfiles[h] = old_pfiles[h];
-      old_pfiles[h] = 0;
-    }
-
-  this->pfiles_ = new_pfiles;
-  this->size_ = sz;
-  delete [] old_pfiles;
-
-  return 0;
-}
-
-ACE_INLINE int
-TAO_MProfile::add_profile (TAO_Profile *pfile)
-{
-  // skip by the used slots
-  if (last_ == size_) // full!
-    {
-      if (this->grow (this->size_ + 1) < 0)
-        return -1;
-    }
-
-  pfiles_[last_++] = pfile;
-
-  if (pfile && pfile->_incr_refcnt () == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Unable to increment reference count in add_profile!\n"),
-                      -1);
-  return last_ - 1;
 }
 
 ACE_INLINE void

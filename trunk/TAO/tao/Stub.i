@@ -1,28 +1,6 @@
 // -*- C++ -*-
+//
 // $Id$
-
-
-ACE_INLINE TAO_Profile *
-TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
-{
-  TAO_Profile *old = this->profile_in_use_;
-
-  // Since we are actively using this profile we dont want
-  // it to disappear, so increase the reference count by one!!
-  if (pfile && (pfile->_incr_refcnt () == 0))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) unable to increment profile ref!\n")),
-                        0);
-    }
-
-  this->profile_in_use_ = pfile;
-
-  if (old)
-    old->_decr_refcnt ();
-
-  return this->profile_in_use_;
-}
 
 ACE_INLINE void
 TAO_Stub::reset_base (void)
@@ -56,28 +34,6 @@ TAO_Stub::service_profile_selection (void)
     }
 
   return 0;
-}
-
-ACE_INLINE void
-TAO_Stub::forward_back_one (void)
-{
-  TAO_MProfile *from = forward_profiles_->forward_from ();
-
-  delete this->forward_profiles_;
-
-  // the current profile in this profile list is no
-  // longer being forwarded, so set the reference to zero.
-  if (from == &this->base_profiles_)
-    {
-      this->base_profiles_.get_current_profile ()->forward_to (0);
-      this->forward_profiles_ = 0;
-    }
-  else
-    {
-      from->get_current_profile ()->forward_to (0);
-      this->forward_profiles_ = from;
-    }
-
 }
 
 ACE_INLINE void

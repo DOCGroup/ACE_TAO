@@ -24,8 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/MProfile.h"
-
+class TAO_MProfile;
 class TAO_GIOP_Invocation;
 
 

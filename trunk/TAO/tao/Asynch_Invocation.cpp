@@ -5,6 +5,7 @@
 
 #include "tao/Timeprobe.h"
 #include "tao/Stub.h"
+#include "tao/Profile.h"
 #include "tao/Object_KeyC.h"
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/Transport.h"
@@ -13,7 +14,9 @@
 # include "tao/Asynch_Invocation.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Asynch_Invocation, "$Id$")
+ACE_RCSID (tao,
+           Asynch_Invocation,
+           "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

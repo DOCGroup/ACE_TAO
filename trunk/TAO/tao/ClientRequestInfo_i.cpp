@@ -3,6 +3,7 @@
 #include "ClientRequestInfo_i.h"
 #include "Invocation.h"
 #include "Stub.h"
+#include "Profile.h"
 #include "Tagged_Components.h"
 #include "debug.h"
 

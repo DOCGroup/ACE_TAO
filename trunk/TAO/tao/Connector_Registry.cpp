@@ -1,4 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+//
 // $Id$
 
 #include "tao/Connector_Registry.h"
@@ -13,7 +14,9 @@
 #include "tao/Connector_Registry.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Connector_Registry, "$Id$")
+ACE_RCSID (tao,
+           Connector_Registry,
+           "$Id$")
 
 TAO_Connector_Registry::TAO_Connector_Registry (void)
   : connectors_ (0),
@@ -419,9 +422,3 @@ TAO_Connector_Registry::object_key_delimiter (const char *ior)
   // against the provided string.
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -31,16 +31,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Stub.h"
-#include "Any.h"
 #include "Synch_Reply_Dispatcher.h"
 #include "TAOC.h"
 #include "operation_details.h"
 #include "target_specification.h"
-#include "Invocation_Endpoint_Selectors.h"
 
 struct TAO_Exception_Data;
 class TAO_Transport;
+class TAO_Stub;
+class TAO_Transport_Descriptor_Interface;
+class TAO_Endpoint;
+class TAO_Profile;
+class TAO_Invocation_Endpoint_Selector;
 
 enum TAO_Invoke_Status
 {
@@ -184,7 +186,7 @@ public:
   void endpoint (TAO_Endpoint *ep);
 
   /// Profile Accessor
-  TAO_Profile *profile(void);
+  TAO_Profile *profile (void);
 
   /// Profile Accessor
   void profile (TAO_Profile *p);
