@@ -1,3 +1,10 @@
+Sat Nov 22 16:04:07 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/Message_Queue.cpp: 
+	  Fixed some formating problems in the ACE_Message_Queue::dump
+	  method, thanks to Arturo Montes <mitosys@colomsat.net.co> for
+	  finding this one.
+
 Sat Nov 22 14:38:22 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-aix-4.2.x.h: Added ACE_TLI_TCP_DEVICE "/dev/xti/tcp".
