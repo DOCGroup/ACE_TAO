@@ -459,7 +459,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
 
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_item, 
-                                                   ACE_Time_Value *tv)
+                                                     ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
@@ -470,22 +470,10 @@ ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_i
       return -1;
     }
 
-  // Wait for at least one item to become available 
+  // Wait for at least one item to become available.
 
-  while (this->is_empty_i ())
-    {
-      if (this->not_empty_cond_.wait (tv) == -1)
-        {
-          if (errno == ETIME)
-            errno = EWOULDBLOCK;
-          return -1;
-        }
-      if (this->deactivated_)
-        {
-          errno = ESHUTDOWN;
-          return -1;
-        }
-    }
+  if (this->wait_not_empty_cond_ (ace_mon, tv) == -1)
+    return -1;
 
   first_item = this->head_;
   return this->cur_count_;
@@ -495,13 +483,17 @@ template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
 						    ACE_Time_Value *tv)
 {
+  int result = 0;
 #if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
-  while (this->is_full_i ())
+  while (this->is_full_i () && result != -1)
     {
       ++this->enqueue_waiters_;
       // @@ Need to add sanity checks for failure...
       mon.release ();
-      this->not_full_cond_.acquire ();
+      if (tv == 0)
+        result = this->not_full_cond_.acquire ();
+      else
+        result = this->not_full_cond_.acquire (*tv);        
       mon.acquire ();
     }
 #else
@@ -515,29 +507,39 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_
         {
           if (errno == ETIME)
             errno = EWOULDBLOCK;
-          return -1;
+          result = -1;
+          break;
         }
       if (this->deactivated_)
         {
           errno = ESHUTDOWN;
-          return -1;
+          result = -1;
+          break;
         }
     }
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
-  return 0;
+  return result;
 }
 
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon, 
-						     ACE_Time_Value *tv)
+                                                       ACE_Time_Value *tv)
 {
+  int result = 0;
 #if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
-  while (this->is_empty_i ())
+  while (this->is_empty_i () && result != -1)
     {
       ++this->dequeue_waiters_;
       // @@ Need to add sanity checks for failure...
       mon.release ();
-      this->not_empty_cond_.acquire ();
+      if (tv == 0)
+        result = this->not_empty_cond_.acquire ();
+      else
+        {
+          result = this->not_empty_cond_.acquire (*tv);
+          if (result == -1 && errno == ETIME)
+            errno = EWOULDBLOCK;
+        }
       mon.acquire ();
     }
 #else
@@ -551,24 +553,26 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX
         {
           if (errno == ETIME)
             errno = EWOULDBLOCK;
-          return -1;
+          result = -1;
+          break;
         }
       if (this->deactivated_)
         {
           errno = ESHUTDOWN;
-          return -1;
+          result = -1;
+          break;
         }
     }
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
-  return 0;
+  return result;
 }
 
-// Block indefinitely waiting for an item to arrive,
-// does not ignore alerts (e.g., signals). 
+// Block indefinitely waiting for an item to arrive, does not ignore
+// alerts (e.g., signals).
 
 template <ACE_SYNCH_DECL> int 
 ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item, 
-                                              ACE_Time_Value *tv)
+                                                ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
@@ -599,7 +603,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
 
 template <ACE_SYNCH_DECL> int 
 ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item, 
-                                              ACE_Time_Value *tv)
+                                                ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
