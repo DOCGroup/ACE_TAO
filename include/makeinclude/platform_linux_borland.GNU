@@ -96,19 +96,24 @@ BUILDSOFLAGS = -DACE_BUILD_DLL -DACE_OS_BUILD_DLL -DTAO_IDL_FE_BUILD_DLL -DTAO_I
 CFLAGS = $(BUILDSOFLAGS) $(WARNINGS_CFLAGS) -q -VP -Vx -a8 -b- -k $(DCFLAGS) \
 	-c -I$(INCLUDEPATH)
 
-CPPFLAGS = #$(CFLAGS)
+CPPFLAGS += #$(CFLAGS)
 CCFLAGS += $(CFLAGS)
-BORLDFLAGS = -c -Tpd -L$(LIBPATH):$(ACELIBPATH)  #-Tpd -x -Gn -v -L$(LIBPATH):$(ACELIBPATH)
-BORINITOBJ = borinitso.o
-LDFLAGS = libborcrtl.so libborstl.so libborunwind.so \
+BORLDFLAGS = -c -L$(LIBPATH):$(ACELIBPATH) -x -Gn -v -L$(LIBPATH):$(ACELIBPATH)
+BORINITOBJ = borinitso.o borinit.o crt1.o 
+BORSHAREDOBJ += libborcrtl.so libborstl.so libborunwind.so \
 	libpthread.so libc.so libm.so libdl.so
 
 PRELINK=
-SOFLAGS= $(BORLDFLAGS) $(BORINITOBJ)
-ACELIB= libACE.so
+SOFLAGS=
+#ACELIB= libACE.so
 TAO_IDL_FE_LIB= libTAO_IDL_FE_DLL.so
 
+SOLINK.cc = $(LD) $(BORINITOBJ) -Tpd 
+LINK.cc = override
+LINK.cc.override = $(LD) $(LDFLAGS) $(VLDLIBS) $(BORINITOBJ) $(BORSHAREDOBJ) $(BORLDFLAGS) $(POSTLINK) 
 
+SONAME= 
+SOVERSION=
 #  ARFLAGS      Flags for the archive utility (ar)
 #  CC           C compiler command
 #  CXX          C++ compiler command
