@@ -49,7 +49,7 @@ namespace TAO
                         ThreadPolicy,
                         CORBA::NO_MEMORY ());
 
-      ACE_CHECK_RETURN (::PortableServer::LifespanPolicy::_nil ());
+      ACE_CHECK_RETURN (::PortableServer::ThreadPolicy::_nil ());
 
       (void) policy->init (value ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (::PortableServer::ThreadPolicy::_nil ());

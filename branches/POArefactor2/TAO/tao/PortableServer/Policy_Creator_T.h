@@ -62,7 +62,7 @@ namespace TAO
       POLICYTYPE create (
         const char *factory_string,
         const ACE_TCHAR directive[],
-        POLICYVALUETYPE value)
+        POLICYVALUETYPE value ACE_ENV_ARG_DECL)
       {
         FACTORY *policy_factory =
            ACE_Dynamic_Service<FACTORY>::instance (factory_string);
@@ -80,7 +80,7 @@ namespace TAO
         if (policy_factory == 0)
           return 0;
         else
-          return policy_factory->create (value);
+          return policy_factory->create (value ACE_ENV_ARG_PARAMETER);
       }
     };
   }
