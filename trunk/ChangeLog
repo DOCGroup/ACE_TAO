@@ -1,3 +1,11 @@
+Sun Feb 25 16:33:26 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/DLL_Test.cpp:
+
+          Left the DLL end with a d in debug mode, but changed
+          the test to add the d when _DEBUG and ACE_WIN32 is
+          defined.  Test should now work again on Win2000_Debug.
+
 Sun Feb 25 11:28:06 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/run_test.pl:
