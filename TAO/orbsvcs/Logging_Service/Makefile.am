@@ -1,0 +1,30 @@
+##---------------------------------------------------------------------------
+##       $Id$
+##
+##       Makefile for TAO's Logging Service
+##
+##---------------------------------------------------------------------------
+
+##
+##  Process this file with automake to create Makefile.in
+##
+
+## The number in AUTOMAKE_OPTIONS is the minimum required version automake
+## needed to process this file.
+AUTOMAKE_OPTIONS = 1.4
+
+INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+
+bin_PROGRAMS = Logging_Service
+
+Logging_Service_LDADD = \
+	$(top_builddir)/ace/libACE.la $(top_builddir)/TAO/tao/libTAO.la
+
+Logging_Service_SOURCES = \
+        Logging_Service.cpp \
+        Logging_Service_i.cpp
+
+noinst_HEADERS = \
+        Logging_Service_i.h
+
+## EXTRA_DIST = README
