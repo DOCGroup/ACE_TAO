@@ -1,3 +1,11 @@
+Tue Apr  5 13:30:21 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Pipe.cpp:
+
+	  Removed defined(ACE_WIN32) from preprocessor conditional which
+	  selects whether socketpair() is used, as config-win32-common.h
+	  already defines the ACE_LACKS_SOCKETPAIR feature test macro.
+
 Mon Apr  4 11:20:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/Process.pm:
