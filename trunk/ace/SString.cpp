@@ -6,6 +6,7 @@
 #  include "ace/Service_Config.h"
 #endif /* !ACE_HAS_WINCE */
 #include "ace/SString.h"
+#include "Auto_Ptr.h"
 
 #include "ace/streams.h"
 
@@ -216,23 +217,27 @@ const int ACE_WString::npos = -1;
 ostream &
 operator<< (ostream &os, const ACE_CString &cs)
 {
-  for (size_t i = 0; i < cs.length (); i++)
-    os << cs[i];
+  if (cs.fast_rep () != 0)
+    os << cs.fast_rep ();
   return os;
 }
 
 ostream &
 operator<< (ostream &os, const ACE_WString &ws)
 {
-  if (ws.length () > 0)
-    os << ACE_MULTIBYTE_STRING (ws);
+  if (ws.fast_rep () != 0)
+    {
+      ACE_Auto_Basic_Array_Ptr<char> char_string(ws.char_rep ());
+      os << char_string.get ();
+    }
   return os;
 }
 
 ostream &
 operator<< (ostream &os, const ACE_SString &ss)
 {
-  os << ss.fast_rep ();
+  if (ss.fast_rep () != 0)
+    os << ss.fast_rep ();
   return os;
 }
 #endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
