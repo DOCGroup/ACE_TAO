@@ -27,7 +27,7 @@ Mon Jun 07 15:47:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  later point of time.
 
 	  (init): Added a new option -ORBcollocationstrategy which takes
-	  two possible value "thru_poa" and "direct".  The defualt is, of
+	  two possible values "thru_poa" and "direct".  The defualt is, of
 	  course, "thru_poa".
 
 	* tao/Servant_Base.{h,cpp} (_create_collocated_objref): Added a
