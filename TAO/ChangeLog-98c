@@ -1,3 +1,10 @@
+Tue Dec 29 14:40:55 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading/README: Added changes to the
+	  README so as to make it clear that the level of granualarity in
+	  this example is at the object level, i.e. every object is
+	  associated with an dll which is loaded on demand.
+	 
 Tue Dec 29 13:16:08 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
