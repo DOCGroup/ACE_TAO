@@ -834,10 +834,7 @@ void
 ACE_OS::mutex_lock_cleanup (void *mutex)
 {
   ACE_OS_TRACE ("ACE_OS::mutex_lock_cleanup");
-#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  pace_pthread_mutex_t *p_lock = (pace_pthread_mutex_t *) mutex;
-  pace_pthread_mutex_unlock (p_lock);
-# elif defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS)
 #  if defined (ACE_HAS_PTHREADS)
   ACE_mutex_t *p_lock = (ACE_mutex_t *) mutex;
   ACE_OS::mutex_unlock (p_lock);
@@ -846,7 +843,7 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 #  endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (mutex);
-# endif /* ACE_HAS_PACE && !ACE_WIN32 */
+# endif /* ACE_HAS_THREADS */
 }
 
 #if defined (ACE_USES_WCHAR)
@@ -941,11 +938,7 @@ ACE_OS::fprintf (FILE *fp, const char *format, ...)
   int result = 0;
   va_list ap;
   va_start (ap, format);
-#if defined (ACE_HAS_PACE)
-  ACE_OSCALL (::pace_vfprintf (fp, format, ap), int, -1, result);
-#else
   ACE_OSCALL (::vfprintf (fp, format, ap), int, -1, result);
-#endif /* ACE_HAS_PACE */
   va_end (ap);
   return result;
 }
@@ -980,11 +973,7 @@ ACE_OS::printf (const char *format, ...)
   int result;
   va_list ap;
   va_start (ap, format);
-#if defined (ACE_HAS_PACE)
-  ACE_OSCALL (::pace_vprintf (format, ap), int, -1, result);
-#else
   ACE_OSCALL (::vprintf (format, ap), int, -1, result);
-#endif /* ACE_HAS_PACE */
   va_end (ap);
   return result;
 }
@@ -997,11 +986,7 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
   int result;
   va_list ap;
   va_start (ap, format);
-#if defined (ACE_HAS_PACE)
-  ACE_OSCALL (ACE_SPRINTF_ADAPTER (::pace_vsprintf (buf, format, ap)), int, -1, result);
-#else
   ACE_OSCALL (ACE_SPRINTF_ADAPTER (::vsprintf (buf, format, ap)), int, -1, result);
-#endif /* ACE_HAS_PACE */
   va_end (ap);
   return result;
 }
@@ -1035,9 +1020,6 @@ char *
 ACE_OS::gets (char *str, int n)
 {
   ACE_OS_TRACE ("ACE_OS::gets");
-#if defined (ACE_HAS_PACE)
-  return pace_fgets (str, n, stdin);
-#else
   int c;
   char *s = str;
 
@@ -1066,7 +1048,6 @@ ACE_OS::gets (char *str, int n)
   if (s) *s = '\0';
 
   return (c == EOF) ? 0 : str;
-#endif /*  ACE_HAS_PACE  */
 }
 
 int
@@ -1277,46 +1258,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                       ACE_id_t id)
 {
   ACE_OS_TRACE ("ACE_OS::sched_params");
-#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  ACE_UNUSED_ARG (id);
-  if (sched_params.quantum () != ACE_Time_Value::zero)
-    {
-      // quantums not supported
-      errno = EINVAL;
-      return -1;
-    }
-
-  // Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
-  // providing this code for 1003.1c PThreads.  Please note that this
-  // has only been tested for POSIX 1003.1c threads, and may cause problems
-  // with other PThreads flavors!
-
-  struct sched_param param;
-  param.sched_priority = sched_params.priority ();
-
-  if (sched_params.scope () == ACE_SCOPE_PROCESS)
-    return pace_sched_setscheduler (0, // this process
-                                    sched_params.policy (),
-                                    &param) == -1 ? -1 : 0;
-  else if (sched_params.scope () == ACE_SCOPE_THREAD)
-    {
-      ACE_thread_t thr_id = ACE_OS::thr_self ();
-      return pace_pthread_setschedparam (thr_id,
-                                         sched_params.policy (),
-                                         &param);
-    }
-#if defined (sun)
-  // We need to be able to set LWP priorities on Suns, even without
-  // ACE_HAS_STHREADS, to obtain preemption.
-  else if (sched_params.scope () == ACE_SCOPE_LWP)
-    return ACE_OS::set_scheduling_params (sched_params, id);
-#endif /* sun */
-  else // sched_params.scope () == ACE_SCOPE_LWP, which isn't POSIX
-    {
-      errno = EINVAL;
-      return -1;
-    }
-# elif defined (CHORUS)
+# if defined (CHORUS)
   ACE_UNUSED_ARG (id);
   int result;
   struct sched_param param;
@@ -1380,12 +1322,12 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                          int, -1);
 #   endif  /* ACE_HAS_PTHREADS_DRAFT4 */
     }
-#if defined (sun)
+#   if defined (sun)
   // We need to be able to set LWP priorities on Suns, even without
   // ACE_HAS_STHREADS, to obtain preemption.
   else if (sched_params.scope () == ACE_SCOPE_LWP)
     return ACE_OS::set_scheduling_params (sched_params, id);
-#endif /* sun */
+#   endif /* sun */
   else // sched_params.scope () == ACE_SCOPE_LWP, which isn't POSIX
     {
       errno = EINVAL;
@@ -1448,11 +1390,11 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 
   // Set the thread priority on the current thread.
   return ACE_OS::thr_setprio (sched_params.priority ());
-#else
+# else
   ACE_UNUSED_ARG (sched_params);
   ACE_UNUSED_ARG (id);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_PACE && !ACE_WIN32 */
+# endif /* CHORUS */
 }
 
 // = Static initialization.
@@ -2469,301 +2411,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #   define  ACE_THREAD_ARGUMENT  thread_args
 # endif /* ! defined (ACE_NO_THREAD_ADAPTER) */
 
-#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  ACE_Base_Thread_Adapter *thread_args;
-  if (thread_adapter == 0)
-    ACE_NEW_RETURN (thread_args,
-                    ACE_OS_Thread_Adapter (func, args,
-                                           (ACE_THR_C_FUNC) ace_thread_adapter),
-                    -1);
-  else
-    thread_args = thread_adapter;
-
-# if defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
-  if (stacksize < ACE_NEEDS_HUGE_THREAD_STACKSIZE)
-    stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
-# endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
-
-  ACE_thread_t tmp_thr;
-
-  if (thr_id == 0)
-    thr_id = &tmp_thr;
-
-  ACE_hthread_t tmp_handle;
-  if (thr_handle == 0)
-    thr_handle = &tmp_handle;
-
-  int result = 0;
-  pace_pthread_attr_t attr;
-  if (::pace_pthread_attr_init (&attr) != 0)
-    return -1;
-
-  if (stacksize != 0)
-    {
-      size_t size = stacksize;
-#   if defined (PACE_PTHREAD_STACK_MIN)
-      if (size < ACE_static_cast (pace_size_t, PACE_PTHREAD_STACK_MIN))
-        size = PACE_PTHREAD_STACK_MIN;
-#   endif /* PACE_PTHREAD_STACK_MIN */
-
-      if (ACE_ADAPT_RETVAL(::pace_pthread_attr_setstacksize (&attr, size), result) == -1)
-        {
-          ::pace_pthread_attr_destroy (&attr);
-          return -1;
-        }
-    }
-
-  // *** Set Stack Address
-  if (stack != 0)
-    {
-      if (::pace_pthread_attr_setstackaddr (&attr, stack) != 0)
-        {
-          ::pace_pthread_attr_destroy (&attr);
-          return -1;
-        }
-    }
-
-  // *** Deal with various attributes
-  if (flags != 0)
-    {
-      // *** Set Detach state
-      if (ACE_BIT_ENABLED (flags, THR_DETACHED)
-          || ACE_BIT_ENABLED (flags, THR_JOINABLE))
-        {
-          int dstate = PACE_PTHREAD_CREATE_JOINABLE;
-
-          if (ACE_BIT_ENABLED (flags, THR_DETACHED))
-            dstate = PACE_PTHREAD_CREATE_DETACHED;
-          if (ACE_ADAPT_RETVAL(::pace_pthread_attr_setdetachstate (&attr, dstate),
-                               result) != 0)
-            {
-              ::pace_pthread_attr_destroy (&attr);
-              return -1;
-            }
-        }
-
-      // *** Set Policy
-      // If we wish to set the priority explicitly, we have to enable
-      // explicit scheduling, and a policy, too.
-      if (priority != ACE_DEFAULT_THREAD_PRIORITY)
-        {
-          ACE_SET_BITS (flags, THR_EXPLICIT_SCHED);
-          if (ACE_BIT_DISABLED (flags, THR_SCHED_FIFO)
-              && ACE_BIT_DISABLED (flags, THR_SCHED_RR)
-              && ACE_BIT_DISABLED (flags, THR_SCHED_DEFAULT))
-            ACE_SET_BITS (flags, THR_SCHED_DEFAULT);
-        }
-
-      if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO)
-          || ACE_BIT_ENABLED (flags, THR_SCHED_RR)
-          || ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
-        {
-          int spolicy;
-
-#       if defined (ACE_HAS_ONLY_SCHED_OTHER)
-          // SunOS, thru version 5.6, only supports SCHED_OTHER.
-          spolicy = SCHED_OTHER;
-#       else
-          // Make sure to enable explicit scheduling, in case we didn't
-          // enable it above (for non-default priority).
-          ACE_SET_BITS (flags, THR_EXPLICIT_SCHED);
-
-          if (ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
-            spolicy = SCHED_OTHER;
-          else if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
-            spolicy = SCHED_FIFO;
-#         if defined (SCHED_IO)
-          else if (ACE_BIT_ENABLED (flags, THR_SCHED_IO))
-            spolicy = SCHED_IO;
-#         else
-          else if (ACE_BIT_ENABLED (flags, THR_SCHED_IO))
-            {
-              errno = ENOSYS;
-              return -1;
-            }
-#         endif /* SCHED_IO */
-          else
-            spolicy = SCHED_RR;
-
-          ACE_ADAPT_RETVAL(::pace_pthread_attr_setschedpolicy (&attr, spolicy),
-                           result);
-          if (result != 0)
-            {
-              ::pace_pthread_attr_destroy (&attr);
-              return -1;
-            }
-        }
-
-      // *** Set Priority (use reasonable default priorities)
-#   if defined(ACE_HAS_PTHREADS_STD)
-      // If we wish to explicitly set a scheduling policy, we also
-      // have to specify a priority.  We choose a "middle" priority as
-      // default.  Maybe this is also necessary on other POSIX'ish
-      // implementations?
-      if ((ACE_BIT_ENABLED (flags, THR_SCHED_FIFO)
-           || ACE_BIT_ENABLED (flags, THR_SCHED_RR)
-           || ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
-          && priority == ACE_DEFAULT_THREAD_PRIORITY)
-        {
-          if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
-            priority = ACE_THR_PRI_FIFO_DEF;
-          else if (ACE_BIT_ENABLED (flags, THR_SCHED_RR))
-            priority = ACE_THR_PRI_RR_DEF;
-          else // THR_SCHED_DEFAULT
-            priority = ACE_THR_PRI_OTHER_DEF;
-        }
-#   endif /* ACE_HAS_PTHREADS_STD */
-      if (priority != ACE_DEFAULT_THREAD_PRIORITY)
-        {
-          pace_sched_param sparam;
-          ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
-          sparam.sched_priority = priority;
-#     if defined (sun)  &&  defined (ACE_HAS_ONLY_SCHED_OTHER)
-          // SunOS, through 5.6, POSIX only allows priorities > 0 to
-          // ::pthread_attr_setschedparam.  If a priority of 0 was
-          // requested, set the thread priority after creating it, below.
-          if (priority > 0)
-#     endif /* sun && ACE_HAS_ONLY_SCHED_OTHER */
-            {
-              ACE_ADAPT_RETVAL(::pace_pthread_attr_setschedparam (&attr, &sparam),
-                               result);
-              if (result != 0)
-                {
-                  ::pace_pthread_attr_destroy (&attr);
-                  return -1;
-                }
-            }
-        }
-
-      if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED)
-          || ACE_BIT_ENABLED (flags, THR_EXPLICIT_SCHED))
-        {
-          int sched = PTHREAD_EXPLICIT_SCHED;
-          if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED))
-            sched = PTHREAD_INHERIT_SCHED;
-          if (::pace_pthread_attr_setinheritsched (&attr, sched) != 0)
-            {
-              ::pace_pthread_attr_destroy (&attr);
-              return -1;
-            }
-        }
-
-      // *** Set Scope
-#   if !defined (ACE_LACKS_THREAD_PROCESS_SCOPING)
-      if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM)
-          || ACE_BIT_ENABLED (flags, THR_SCOPE_PROCESS))
-        {
-#         if defined (ACE_CONFIG_LINUX_H)
-          // LinuxThreads do not have support for PTHREAD_SCOPE_PROCESS.
-          int scope = PTHREAD_SCOPE_SYSTEM;
-#         else /* ACE_CONFIG_LINUX_H */
-          int scope = PTHREAD_SCOPE_PROCESS;
-#         endif /* ACE_CONFIG_LINUX_H */
-          if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM))
-            scope = PTHREAD_SCOPE_SYSTEM;
-
-          if (::pace_pthread_attr_setscope (&attr, scope) != 0)
-            {
-              ::pace_pthread_attr_destroy (&attr);
-              return -1;
-            }
-        }
-#   endif /* !ACE_LACKS_THREAD_PROCESS_SCOPING */
-
-      if (ACE_BIT_ENABLED (flags, THR_NEW_LWP))
-        {
-          // Increment the number of LWPs by one to emulate the
-          // SunOS semantics.
-          int lwps = ACE_OS::thr_getconcurrency ();
-          if (lwps == -1)
-            {
-              if (errno == ENOTSUP)
-                // Suppress the ENOTSUP because it's harmless.
-                errno = 0;
-              else
-                // This should never happen on SunOS:
-                // ::thr_getconcurrency () should always succeed.
-                return -1;
-            }
-          else if (ACE_OS::thr_setconcurrency (lwps + 1) == -1)
-            {
-              if (errno == ENOTSUP)
-                {
-                  // Unlikely: ::thr_getconcurrency () is supported
-                  // but ::thr_setconcurrency () is not?
-                }
-              else
-                return -1;
-            }
-        }
-    }
-
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::pace_pthread_create (thr_id,
-                                                       &attr,
-                                                       PACE_THR_ENTRY_CAST (void * (*)(void *)) thread_args->entry_point (),
-                                                       thread_args),
-                                result),
-              int, -1, result);
-  ::pace_pthread_attr_destroy (&attr);
-# endif /* ACE_HAS_PTHREADS_DRAFT4 */
-
-  // This is a SunOS or POSIX implementation of pthreads,
-  // where we assume that ACE_thread_t and ACE_hthread_t are the same.
-  // If this *isn't* correct on some platform, please let us know.
-  if (result != -1)
-    *thr_handle = *thr_id;
-
-# if defined (sun)  &&  defined (ACE_HAS_ONLY_SCHED_OTHER)
-  // SunOS prior to 5.7:
-
-  // If the priority is 0, then we might have to set it now
-  // because we couldn't set it with
-  // ::pthread_attr_setschedparam, as noted above.  This doesn't
-  // provide strictly correct behavior, because the thread was
-  // created (above) with the priority of its parent.  (That
-  // applies regardless of the inherit_sched attribute: if it
-  // was PTHREAD_INHERIT_SCHED, then it certainly inherited its
-  // parent's priority.  If it was PTHREAD_EXPLICIT_SCHED, then
-  // "attr" was initialized by the SunOS ::pthread_attr_init
-  // () to contain NULL for the priority, which indicated to
-  // SunOS ::pthread_create () to inherit the parent
-  // priority.)
-  if (priority == 0)
-    {
-      // Check the priority of this thread, which is the parent
-      // of the newly created thread.  If it is 0, then the
-      // newly created thread will have inherited the priority
-      // of 0, so there's no need to explicitly set it.
-      struct sched_param sparam;
-      int policy = 0;
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::pace_pthread_getschedparam (thr_self (),
-                                                                  &policy,
-                                                                  &sparam),
-                                    result), int,
-                  -1, result);
-
-      // The only policy supported by by SunOS, thru version 5.6,
-      // is SCHED_OTHER, so that's hard-coded here.
-      policy = ACE_SCHED_OTHER;
-
-      if (sparam.sched_priority != 0)
-        {
-          ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
-          // The memset to 0 sets the priority to 0, so we don't need
-          // to explicitly set sparam.sched_priority.
-
-          ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setschedparam (
-                                                                             *thr_id,
-                                                                             policy,
-                                                                             &sparam),
-                                               result),
-                             int, -1);
-        }
-    }
-# endif /* sun && ACE_HAS_ONLY_SCHED_OTHER */
-  return result;
-
-#else /* ACE_HAS_PACE && !ACE_WIN32 */
 
   ACE_Base_Thread_Adapter *thread_args;
   if (thread_adapter == 0)
@@ -3582,16 +3229,13 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   ACE_UNUSED_ARG (stacksize);
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_THREADS */
-#endif /* ACE_HAS_PACE && !ACE_WIN32 */
 }
 
 void
 ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
 {
   ACE_OS_TRACE ("ACE_OS::thr_exit");
-#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  ::pace_pthread_exit (status);
-# elif defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
     ::pthread_exit (status);
 #   elif defined (ACE_HAS_STHREADS)
@@ -3659,7 +3303,7 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
 #   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (status);
-# endif /* ACE_HAS_PACE && !ACE_WIN32 */
+# endif /* ACE_HAS_THREADS */
 }
 
 int
@@ -3769,13 +3413,7 @@ int
 ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 {
   // ACE_OS_TRACE ("ACE_OS::thr_setspecific");
-  // If we are using TSS emulation then we shuld use ACE's implementation
-  //  of it and not make any PACE calls.
-#if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setspecific (key, data),
-                                       ace_result_),
-                     int, -1);
-# elif defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
     ACE_KEY_INDEX (key_index, key);
 
@@ -3834,18 +3472,14 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (data);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_PACE && !ACE_HAS_TSS_EMULATION && !ACE_WIN32 */
+# endif /* ACE_HAS_THREADS */
 }
 
 int
 ACE_OS::thr_keyfree (ACE_thread_key_t key)
 {
   ACE_OS_TRACE ("ACE_OS::thr_keyfree");
-  // If we are using TSS emulation then we should use ACE's implementation
-  //  of it and not make any PACE calls.
-# if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_WIN32)
-    return ::pace_pthread_key_delete (key);
-# elif defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
     // Release the key in the TSS_Emulation administration
     ACE_TSS_Emulation::release_key (key);
@@ -3877,7 +3511,7 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
 # else
   ACE_UNUSED_ARG (key);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_PACE && !ACE_HAS_TSS_EMULATION && !ACE_WIN32 */
+# endif /* ACE_HAS_THREADS */
 }
 
 # if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
@@ -3891,12 +3525,7 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
                        void *inst)
 {
   // ACE_OS_TRACE ("ACE_OS::thr_keycreate");
-# if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_key_create (key, dest),
-                                       ace_result_),
-                     int, -1);
-
-#   elif defined (ACE_HAS_THREADS)
+#   if defined (ACE_HAS_THREADS)
 #     if defined (ACE_HAS_PTHREADS)
     ACE_UNUSED_ARG (inst);
 
@@ -3937,7 +3566,7 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
   ACE_UNUSED_ARG (dest);
   ACE_UNUSED_ARG (inst);
   ACE_NOTSUP_RETURN (-1);
-#   endif /* ACE_HAS_PACE && !ACE_WIN32 */
+#   endif /* ACE_HAS_THREADS */
 }
 # endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
@@ -3951,17 +3580,7 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
                        void *inst)
 {
   // ACE_OS_TRACE ("ACE_OS::thr_keycreate");
-  // If we are using TSS emulation then we shuld use ACE's implementation
-  //  of it and not make any PACE calls.
-#if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_WIN32)
-  ACE_UNUSED_ARG (inst);
-#   if defined (ACE_WIN32)
-  int ace_result_ = 0;
-#   endif /* ACE_WIN32 */
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_key_create (key, dest),
-                                       ace_result_),
-                     int, -1);
-# elif defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
     if (ACE_TSS_Emulation::next_key (*key) == 0)
       {
@@ -4037,7 +3656,7 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
   ACE_UNUSED_ARG (dest);
   ACE_UNUSED_ARG (inst);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_PACE && !ACE_HAS_TSS_EMULATION && !ACE_WIN32 */
+# endif /* ACE_HAS_THREADS */
 }
 
 int
@@ -4891,7 +4510,7 @@ spaef (FUNCPTR entry, ...)
 # endif /* VXWORKS */
 
 # if !defined (ACE_HAS_SIGINFO_T)
-#    if !defined (ACE_HAS_PACE) || !defined (ACE_WIN32)
+#    if !defined (ACE_WIN32)
 siginfo_t::siginfo_t (ACE_HANDLE handle)
   : si_handle_ (handle),
     si_handles_ (&handle)
@@ -4903,7 +4522,7 @@ siginfo_t::siginfo_t (ACE_HANDLE *handles)
     si_handles_ (handles)
 {
 }
-#    endif /* ! ACE_HAS_PACE || ! ACE_WIN32 */
+#    endif /* ! ACE_WIN32 */
 # endif /* ACE_HAS_SIGINFO_T */
 
 pid_t
@@ -5815,10 +5434,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 }
 # endif /* ! ACE_HAS_THREADS || ACE_LACKS_RWLOCK_T */
 
-// If we're using PACE then we don't want this method (since PACE
-// takes care of it) unless we're on Windows. Win32 mutexes, semaphores,
-// and condition variables are not yet supported in PACE.
-#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS) && ! (defined (ACE_HAS_PACE) && ! defined (ACE_WIN32))
+#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
 // NOTE: The ACE_OS::cond_* functions for some non-Unix platforms are
 // defined here either because they're too big to be inlined, or
 // to avoid use before definition if they were inline.
@@ -6012,9 +5628,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
                    ACE_mutex_t *external_mutex)
 {
   ACE_OS_TRACE ("ACE_OS::cond_wait");
-# if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  return (::pace_pthread_cond_wait(cv, external_mutex);
-# elif defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_THREADS)
   // Prevent race conditions on the <waiters_> count.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
   cv->waiters_++;
@@ -6025,17 +5639,10 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #   if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   if (external_mutex->type_ == USYNC_PROCESS)
     // This call will automatically release the mutex and wait on the semaphore.
-#   if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-    ACE_WIN32CALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (external_mutex->proc_mutex_,
-                                                            cv->sema_.sema_, INFINITE, FALSE),
-                                     result),
-                   int, -1, result);
-#   else
     ACE_WIN32CALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (external_mutex->proc_mutex_,
                                                             cv->sema_, INFINITE, FALSE),
                                      result),
                    int, -1, result);
-#   endif /* ACE_HAS_PACE && !ACE_WIN32 */
   else
 #   endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
     {
@@ -6116,9 +5723,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                         ACE_Time_Value *timeout)
 {
   ACE_OS_TRACE ("ACE_OS::cond_timedwait");
-# if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  return (::pace_pthread_cond_timedwait(cv, external_mutex, timeout);
-# elif defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_THREADS)
   // Handle the easy case first.
   if (timeout == 0)
     return ACE_OS::cond_wait (cv, external_mutex);
@@ -6154,17 +5759,10 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   if (external_mutex->type_ == USYNC_PROCESS)
     // This call will automatically release the mutex and wait on the
     // semaphore.
-#   if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-    result = ::SignalObjectAndWait (external_mutex->proc_mutex_,
-                                    cv->sema_.sema_,
-                                    msec_timeout,
-                                    FALSE);
-#   else
     result = ::SignalObjectAndWait (external_mutex->proc_mutex_,
                                     cv->sema_,
                                     msec_timeout,
                                     FALSE);
-#   endif /* ACE_HAS_PACE && !ACE_WIN32 */
   else
 #     endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
     {

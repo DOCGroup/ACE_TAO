@@ -1,3 +1,20 @@
+Wed Jul 17 03:50:56 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
+
+	* ace/ACE.cpp:
+	* ace/OS.{h,i,cpp}:
+	* ace/OS_Dirent.inl:
+	* ace/OS_Memory.h
+	* ace/OS_String.inl:
+	* ace/Thread_Manager.cpp:
+	* ace/WFMO_Reactor.cpp:
+	* ace/config-all.h:
+	* ace/config-win32-borland.h:
+	* ace/config-win32-msvc-5.h:
+	* ace/config-win32-msvc-6.h:
+	* include/makeinclude/wrapper_macros.GNU:
+
+	  Removed PACE.
+	
 Tue Jul 16 14:19:37 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/DLL_Manager.cpp:
