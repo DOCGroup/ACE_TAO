@@ -130,20 +130,6 @@ TAO_POA::activate_object_with_id (const PortableServer::ObjectId &id,
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_POA::create_reference (const char *intf
-                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
-
-  return this->create_reference_i (intf,
-                                   this->cached_policies_.server_priority ()
-                                   ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object_ptr
 TAO_POA::create_reference_with_id (const PortableServer::ObjectId &id,
                                    const char *intf
                                    ACE_ENV_ARG_DECL)

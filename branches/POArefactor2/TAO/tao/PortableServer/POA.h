@@ -545,31 +545,6 @@ protected:
                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-  PortableServer::ServantManager_ptr get_servant_manager_i (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
-
-  void set_servant_manager_i (PortableServer::ServantManager_ptr imgr
-                              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
-
-  PortableServer::Servant get_servant_i (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::NoServant,
-                     PortableServer::POA::WrongPolicy));
-
-  void set_servant_i (PortableServer::Servant servant
-                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
   /// Wrapper for the ORB's key_to_object that will alter the object pointer
   /// if the ImplRepo is used.
   CORBA::Object_ptr key_to_object (const TAO::ObjectKey &key,
