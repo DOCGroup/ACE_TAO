@@ -3,7 +3,19 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "pace_lib"=.\pace_lib.dsp - Package Owner=<4>
+Project: "paces"=.\paces.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "pacesd"=.\pacesd.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
