@@ -12,6 +12,8 @@ ifeq (,$(optimize))
   optimize = 0
 endif
 
+with_ld = macosx
+
 CC              = gcc
 CXX             = g++
 CFLAGS          += -Wall -Wpointer-arith -Wno-long-double -pipe -I/sw/include
