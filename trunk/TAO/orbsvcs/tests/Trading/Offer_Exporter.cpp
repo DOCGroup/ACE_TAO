@@ -50,7 +50,7 @@ TAO_Offer_Exporter (PortableServer::POA_ptr poa_object,
 {
   this->create_offers ();
   this->admin_ = register_if->admin_if (_env);
-  TAO_CHECK_ENV_RETURN (_env,);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
 }
 
 TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
@@ -119,7 +119,7 @@ TAO_Offer_Exporter::withdraw_offers (CORBA::Environment& _env)
       if (offer_id_seq.ptr () != 0)
 	{
 	  length = offer_id_seq->length ();
-	  for (int i = 0; i < length; i++)
+	  for (CORBA::ULong i = 0; i < length; i++)
 	    {
 	      this->register_->withdraw (offer_id_seq[i], TAO_TRY_ENV);
 	      TAO_CHECK_ENV;
@@ -154,7 +154,7 @@ TAO_Offer_Exporter::describe_offers (CORBA::Environment& _env)
       if (offer_id_seq.ptr () != 0)
 	{
 	  length = offer_id_seq->length ();
-	  for (int i = 0; i < length; i++)
+	  for (CORBA::ULong i = 0; i < length; i++)
 	    {
 	      CosTrading::Register::OfferInfo_var offer_info =
 		this->register_->describe (offer_id_seq[i], TAO_TRY_ENV);
@@ -251,8 +251,6 @@ TAO_Offer_Exporter::grab_offerids (CORBA::Environment& _env)
       ACE_DEBUG ((LM_DEBUG, "\tThe following offer ids are registered:\n"));
       for (int len = offer_id_seq->length (), j = 0; j < len; j++)
 	ACE_DEBUG ((LM_DEBUG, "\tOffer Id: %s\n", (const char *)(*offer_id_seq)[j]));
-      
-      return offer_id_seq;
     }
   TAO_CATCHANY
     {
@@ -260,6 +258,8 @@ TAO_Offer_Exporter::grab_offerids (CORBA::Environment& _env)
       TAO_RETHROW_RETURN (offer_id_seq);
     }
   TAO_ENDTRY;
+      
+  return offer_id_seq;
 }
 
 void

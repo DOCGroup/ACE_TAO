@@ -60,8 +60,9 @@ private:
 
   void create_types (void);
 
-  void dump_typestruct (const char* typename,
-			const SERVICE_TYPE_REPOS::TypeStruct& type_struct) const;
+  void 
+  dump_typestruct (const char* type_name,
+		   const SERVICE_TYPE_REPOS::TypeStruct& type_struct) const;
   
   CosTradingRepos::ServiceTypeRepository_var repos_;
   SERVICE_TYPE_REPOS::TypeStruct type_structs_[NUM_TYPES];

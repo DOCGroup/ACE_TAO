@@ -46,4 +46,6 @@ main (int argc, char** argv)
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Trader Import Tests Failed."), -1);
     }
   TAO_ENDTRY;
+
+  return 0;
 }
