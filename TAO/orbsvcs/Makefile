@@ -18,6 +18,7 @@ DIRS  =	orbsvcs \
 	Trading_Service \
 	Logging_Service \
 	Time_Service \
+	ImplRepo_Service \
 	tests
 
 #----------------------------------------------------------------------------
@@ -29,4 +30,3 @@ include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
-
