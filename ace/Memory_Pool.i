@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Memory_Pool.i
-
 ACE_INLINE
 ACE_Local_Memory_Pool::~ACE_Local_Memory_Pool (void)
 {
@@ -22,14 +20,14 @@ ACE_Local_Memory_Pool::sync (void *, size_t, int)
   return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Local_Memory_Pool::protect (ssize_t, int)
 {
   ACE_TRACE ("ACE_Local_Memory_Pool::protect");
   return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Local_Memory_Pool::protect (void *, size_t, int)
 {
   ACE_TRACE ("ACE_Local_Memory_Pool::protect");
@@ -37,12 +35,12 @@ ACE_Local_Memory_Pool::protect (void *, size_t, int)
 }
 
 ACE_INLINE
-ACE_Lite_MMAP_Memory_Pool::~ACE_Lite_MMAP_Memory_Pool (void)
+ACE_MMAP_Memory_Pool::~ACE_MMAP_Memory_Pool (void)
 {
 }
 
 ACE_INLINE
-ACE_MMAP_Memory_Pool::~ACE_MMAP_Memory_Pool (void)
+ACE_Lite_MMAP_Memory_Pool::~ACE_Lite_MMAP_Memory_Pool (void)
 {
 }
 
@@ -56,9 +54,9 @@ ACE_MMAP_Memory_Pool::round_up (size_t nbytes)
 // Ask system for initial chunk of local memory.
 
 ACE_INLINE void *
-ACE_Local_Memory_Pool::init_acquire (size_t nbytes, 
-				     size_t &rounded_bytes, 
-				     int &first_time)
+ACE_Local_Memory_Pool::init_acquire (size_t nbytes,
+                                     size_t &rounded_bytes,
+                                     int &first_time)
 {
   ACE_TRACE ("ACE_Local_Memory_Pool::init_acquire");
   // Note that we assume that when ACE_Local_Memory_Pool is used,
@@ -82,7 +80,7 @@ ACE_Local_Memory_Pool::round_up (size_t nbytes)
 // Implement the algorithm for rounding up the request to an
 // appropriate chunksize.
 
-ACE_INLINE 
+ACE_INLINE
 ACE_Shared_Memory_Pool::~ACE_Shared_Memory_Pool (void)
 {
 }
@@ -111,14 +109,14 @@ ACE_Shared_Memory_Pool::sync (void *, size_t, int)
   return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Shared_Memory_Pool::protect (ssize_t, int)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::protect");
   return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Shared_Memory_Pool::protect (void *, size_t, int)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::protect");
@@ -128,7 +126,7 @@ ACE_Shared_Memory_Pool::protect (void *, size_t, int)
 
 #if !defined (ACE_LACKS_SBRK)
 
-ACE_INLINE 
+ACE_INLINE
 ACE_Sbrk_Memory_Pool::~ACE_Sbrk_Memory_Pool (void)
 {
 }
@@ -136,9 +134,9 @@ ACE_Sbrk_Memory_Pool::~ACE_Sbrk_Memory_Pool (void)
 // Ask system for initial chunk of local memory.
 
 ACE_INLINE void *
-ACE_Sbrk_Memory_Pool::init_acquire (size_t nbytes, 
-				    size_t &rounded_bytes, 
-				    int &first_time)
+ACE_Sbrk_Memory_Pool::init_acquire (size_t nbytes,
+                                    size_t &rounded_bytes,
+                                    int &first_time)
 {
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::init_acquire");
   // Note that we assume that when ACE_Sbrk_Memory_Pool is used,
@@ -181,14 +179,14 @@ ACE_Sbrk_Memory_Pool::sync (void *, size_t, int)
   return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Sbrk_Memory_Pool::protect (ssize_t, int)
 {
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::protect");
   return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Sbrk_Memory_Pool::protect (void *, size_t, int)
 {
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::protect");
