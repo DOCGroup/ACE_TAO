@@ -44,9 +44,9 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_var &orb,
 // and POA.
 
 int
-TAO_Naming_Server::init (CORBA::ORB_var &orb,
-                         PortableServer::POA_var &child_poa,
-			 int argc, 
+TAO_Naming_Server::init (CORBA::ORB_ptr orb,
+                         PortableServer::POA_ptr child_poa,
+			 int argc,
                          char **argv)
 {
   // Parse command-line arguments to determine if this name server
@@ -64,7 +64,7 @@ TAO_Naming_Server::init (CORBA::ORB_var &orb,
 
 	  if (args.is_parameter_next ())
 	    {
-	      this->naming_context_name_ = 
+	      this->naming_context_name_ =
 		CORBA::string_dup (args.get_current ());
 	      args.consume_arg ();
 	    }

@@ -50,8 +50,8 @@ public:
   // arguments are parsed to determine if this name server instance is
   // part of a naming tree that resides under the default name server.
 
-  int init (CORBA::ORB_var &orb,
-            PortableServer::POA_var &root_poa,
+  int init (CORBA::ORB_ptr orb,
+            PortableServer::POA_ptr root_poa,
 	    int argc = 0,
             char **argv = 0);
   // Initialize the name server under the given ORB and POA.  The
@@ -89,4 +89,3 @@ private:
 };
 
 #endif /* _NAMING_SERVER_H */
-
