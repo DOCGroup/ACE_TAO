@@ -218,6 +218,21 @@ ACE_WFMO_Reactor_Handler_Repository::remove_handler_i (size_t index,
       // Increment the handle count
       this->handles_to_be_deleted_++;
     }
+  else
+    {
+      // Since it is not a complete removal, we'll call handle_close
+      // for all the masks that were removed.  This does not change
+      // the internal state of the reactor.
+      //
+      // Note: this condition only applies to I/O entries
+      //
+      if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::DONT_CALL) == 0)
+        {
+          ACE_HANDLE handle = this->current_info_[index].io_handle_;
+          this->current_info_[index].event_handler_->handle_close (handle, 
+                                                                   to_be_removed_masks);
+        }
+    }
 
   return 0;
 }
@@ -266,6 +281,21 @@ ACE_WFMO_Reactor_Handler_Repository::remove_suspended_handler_i (size_t index,
       // Increment the handle count
       this->handles_to_be_deleted_++;
     }
+  else
+    {
+      // Since it is not a complete removal, we'll call handle_close
+      // for all the masks that were removed.  This does not change
+      // the internal state of the reactor.
+      //
+      // Note: this condition only applies to I/O entries
+      //
+      if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::DONT_CALL) == 0)
+        {
+          ACE_HANDLE handle = this->current_suspended_info_[index].io_handle_;
+          this->current_suspended_info_[index].event_handler_->handle_close (handle,
+                                                                             to_be_removed_masks);
+        }
+    }
 
   return 0;
 }
@@ -313,6 +343,21 @@ ACE_WFMO_Reactor_Handler_Repository::remove_to_be_added_handler_i (size_t index,
       this->to_be_added_info_[index].close_masks_ = to_be_removed_masks;
       // Increment the handle count
       this->handles_to_be_deleted_++;
+    }
+  else
+    {
+      // Since it is not a complete removal, we'll call handle_close
+      // for all the masks that were removed.  This does not change
+      // the internal state of the reactor.
+      //
+      // Note: this condition only applies to I/O entries
+      //
+      if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::DONT_CALL) == 0)
+        {
+          ACE_HANDLE handle = this->to_be_added_info_[index].io_handle_;
+          this->to_be_added_info_[index].event_handler_->handle_close (handle, 
+                                                                       to_be_removed_masks);
+        }
     }
 
   return 0;
