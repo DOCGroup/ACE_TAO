@@ -1,56 +1,64 @@
+Wed May  3 11:59:14 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/macros.GNU:
+        * include/makeinclude/rules.common.GNU:
+        * include/makeinclude/rules.local.GNU:
+          New <idl_stubs> target that recusively builds all the IDL
+          generated files.
+
 Wed May  3 09:49:57 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/Caching_Utility_T.cpp:
-	* ace/Map.cpp:
-	* ace/Pair.cpp:
-	* ace/Svc_Handler.cpp:
-	* ace/Win32_Asynch_IO.cpp:
-	* ace/Win32_Proactor.cpp:
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
-	  Removed inclusion of non-existent .i files from corresponding
-	  .cpp files and from the project files.
+        * ace/Caching_Utility_T.cpp:
+        * ace/Map.cpp:
+        * ace/Pair.cpp:
+        * ace/Svc_Handler.cpp:
+        * ace/Win32_Asynch_IO.cpp:
+        * ace/Win32_Proactor.cpp:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Removed inclusion of non-existent .i files from corresponding
+          .cpp files and from the project files.
 
 Tue May  2 19:33:57 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* Updated all the dependencies.
+        * Updated all the dependencies.
 
-	* ace: Removed all the following files because they were empty and
-	  yet were being #included into various other *.h files, which
- 	  slowed down compilation unnnecessarily!  Thanks to Espen Harlinn
- 	  <espen@harlinn.no> for reporting this.	
+        * ace: Removed all the following files because they were empty and
+          yet were being #included into various other *.h files, which
+          slowed down compilation unnnecessarily!  Thanks to Espen Harlinn
+          <espen@harlinn.no> for reporting this.
         * ace/Acceptor.i
-	* ace/WIN32_Proactor.i: 
-	* ace/WIN32_Asynch_IO.i: 
-	* ace/Token_Invariants.i: 
-	* ace/TLI_Acceptor.i:
-	* ace/Svc_Handler.i: 
-  	* ace/Proactor.i:
-    	* ace/Stream_Modules.i:
-    	* ace/Select_Reactor.i:
-	* ace/Map.i:
-  	* ace/Priority_Reactor.i:
-  	* ace/Pair.i:
-	* ace/Hash_Map_Manager.i:
-  	* ace/LSOCK_Acceptor.i
-	* ace/CORBA_Ref.i:
-	* ace/Configuration.i: 
-  	* ace/Connector.i: 
-	* ace/Cleanup_Strategies_T.i;
-	* ace/SPIPE_Acceptor.i: 
-  	* ace/Trace.i: 
-	* ace/Log_Msg.i: 
-	* ace/IO_Cntl_Msg.i: 
-	* ace/Dynamic_Service.i: 
-	* ace/Caching_Utility_T.i: 
-	* ace/Cached_Connect_Strategy_T.i: 
-	* ace/Asynch_IO.i: 
-	* ace/Asynch_Acceptor.i:
+        * ace/WIN32_Proactor.i:
+        * ace/WIN32_Asynch_IO.i:
+        * ace/Token_Invariants.i:
+        * ace/TLI_Acceptor.i:
+        * ace/Svc_Handler.i:
+        * ace/Proactor.i:
+        * ace/Stream_Modules.i:
+        * ace/Select_Reactor.i:
+        * ace/Map.i:
+        * ace/Priority_Reactor.i:
+        * ace/Pair.i:
+        * ace/Hash_Map_Manager.i:
+        * ace/LSOCK_Acceptor.i
+        * ace/CORBA_Ref.i:
+        * ace/Configuration.i:
+        * ace/Connector.i:
+        * ace/Cleanup_Strategies_T.i;
+        * ace/SPIPE_Acceptor.i:
+        * ace/Trace.i:
+        * ace/Log_Msg.i:
+        * ace/IO_Cntl_Msg.i:
+        * ace/Dynamic_Service.i:
+        * ace/Caching_Utility_T.i:
+        * ace/Cached_Connect_Strategy_T.i:
+        * ace/Asynch_IO.i:
+        * ace/Asynch_Acceptor.i:
 
-	* ace/OS.i (readdir_r): Apparently the GNU compiler on DEC UNIX
-	  defines a macro for readdir_r() that was breaking things.
-  	  Therefore, we #ifdef for that!  Thanks to Jean-Marc Strauss
- 	  <jms97@club-internet.fr> for reporting this.
+        * ace/OS.i (readdir_r): Apparently the GNU compiler on DEC UNIX
+          defines a macro for readdir_r() that was breaking things.
+          Therefore, we #ifdef for that!  Thanks to Jean-Marc Strauss
+          <jms97@club-internet.fr> for reporting this.
 
 Tue May  2 12:48:00 2000  Carlos O'Ryan  <coryan@uci.edu>
 

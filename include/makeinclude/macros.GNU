@@ -15,7 +15,8 @@ TARGETS_LOCAL  = \
 	realclean.local \
 	clobber.local \
 	depend.local \
-	rcs_info.local
+	rcs_info.local \
+	idl_stubs.local
 
 TARGETS_NESTED   = \
 	$(TARGETS_LOCAL:.local=.nested)
