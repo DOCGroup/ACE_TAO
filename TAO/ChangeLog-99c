@@ -1,3 +1,14 @@
+Thu May 27 18:14:26 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/Options.html:
+
+	  Added the new `-ORBendpoint' option to the CORBA::ORB option
+	  table, and added a note to the `-ORBhost' and `-ORBport' options 
+	  explaining that the `-ORBendpoint' option supercedes them.
+
+	  Updated the `-ORBpreconnect' option description to reflect the
+	  new endpoint format.
+
 Thu May 27 14:27:21 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/[IU]IOP_Connector.cpp (preconnect): 
