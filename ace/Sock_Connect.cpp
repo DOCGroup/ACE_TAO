@@ -8,7 +8,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
-# if defined (ACE_HAS_GETIFADDRS)   
+# if defined (ACE_HAS_GETIFADDRS)
 #   include /**/ <ifaddrs.h>
 # endif /* ACE_HAS_GETIFADDRS */
 
@@ -973,7 +973,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
 
   return 0;
 
-#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) 
+#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
   // COMMON (SVR4 and BSD) UNIX CODE
 
   size_t num_ifs;
@@ -1168,7 +1168,7 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
                      SIOCGIFNUM,
                      (caddr_t) &tmp_how_many) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("ACE_Sock_Connect::get_ip_interfaces:")
+                       ACE_LIB_TEXT ("ACE_Sock_Connect::count_interfaces:")
                        ACE_LIB_TEXT ("ioctl - SIOCGIFNUM failed")),
                       -1);
   how_many = (size_t) tmp_how_many;
@@ -1231,8 +1231,8 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
     {
       ACE_OS::free (ifcfg.ifc_req);
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("count_interfaces:ioctl:")
-                         ACE_LIB_TEXT ("SIOCGIFCONF failed")),
+                         ACE_LIB_TEXT ("ACE_Sock_Connect::count_interfaces:")
+                         ACE_LIB_TEXT ("ioctl - SIOCGIFCONF failed")),
                         -1);
     }
 
