@@ -22,7 +22,6 @@
 
 // Constructor
 TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl (void)
-  : orb_ (TAO_ORB_Core_instance ()->orb ())
 {
 }
 
@@ -194,8 +193,8 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
   
   ACE_DEBUG ((LM_DEBUG, 
               "\nstream_endpoint_b_ = %s",
-              this->orb_->object_to_string (this->stream_endpoint_b_,
-                                            env)));
+              TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_,
+                                                                  env)));
   TAO_CHECK_ENV_RETURN (env, 1);
 
   // Tell the 2 VDev's about one another
@@ -525,7 +524,6 @@ TAO_Server_StreamEndPoint::~TAO_Server_StreamEndPoint (void)
 // ----------------------------------------------------------------------
 
 TAO_VDev::TAO_VDev (void)
-  : orb_ (TAO_ORB_Core_instance ()->orb ())
 {
   ACE_DEBUG ((LM_DEBUG, 
               "\n(%P|%t) TAO_VDev::TAO_VDev: created"));
@@ -543,8 +541,8 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) TAO_VDev::set_peer: called"));
   
-  CORBA::String_var ior = this->orb_->object_to_string (the_peer_dev,
-                                                        env);
+  CORBA::String_var ior = TAO_ORB_Core_instance ()->orb ()->object_to_string (the_peer_dev,
+                                                                              env);
 
   TAO_CHECK_ENV_RETURN (env, 
                         CORBA::B_FALSE);

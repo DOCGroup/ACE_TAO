@@ -84,9 +84,6 @@ class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl
   // Destructor
 
  protected:
-  CORBA::ORB_var orb_;
-  // ORB reference
-   
   AVStreams::VDev_var vdev_a_;
   AVStreams::VDev_var vdev_b_;
   // The Virtual Devices for this stream
@@ -397,8 +394,6 @@ class TAO_ORBSVCS_Export TAO_VDev
    
   AVStreams::VDev_var peer_;
   // My peer
- private:
-  CORBA::ORB_ptr orb_;
 };
 
 class TAO_ORBSVCS_Export TAO_Endpoint_Strategy
