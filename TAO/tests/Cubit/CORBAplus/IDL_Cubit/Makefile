@@ -50,10 +50,10 @@ $(IDL_SRC): cubit.idl
 	-/bin/mv cubit_s.C cubit_s.cpp
 
 svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 clnt:	$(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 ########
 # Sanity check builds by running basic functionality tests.

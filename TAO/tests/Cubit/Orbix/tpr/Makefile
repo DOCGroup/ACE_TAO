@@ -51,7 +51,7 @@ IDLFLAGS = -s S.cpp -c C.cpp -B
 all: server
 
 server: $(addprefix $(VDIR),$(SVR_OBJS))
-	$(LINK.cc) -o server $(addprefix $(VDIR),$(SVR_OBJS)) $(LDFLAGS) $(ITIIOP) $(ITSRV) $(VLDLIBS)
+	$(LINK.cc) -o server $(addprefix $(VDIR),$(SVR_OBJS)) $(LDFLAGS) $(ITIIOP) $(ITSRV) $(VLDLIBS) $(POSTLINK)
 
 #----------------------------------------------------------------------------
 #	Dependencies

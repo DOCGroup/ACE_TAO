@@ -51,7 +51,7 @@ $(IDL_SRC): cubit.idl
 	-/bin/mv cubit_s.C cubit_s.cpp
 
 svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(PBHOME)/lib/iiop_s.o $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(PBHOME)/lib/iiop_s.o $(VLDLIBS) $(POSTLINK)
 
 clean:	
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
