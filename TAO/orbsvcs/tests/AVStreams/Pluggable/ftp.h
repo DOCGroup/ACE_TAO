@@ -5,7 +5,6 @@
 #define TAO_AV_FTP_H
 
 #include "ace/Get_Opt.h"
-#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -31,7 +30,7 @@ protected:
 class FTP_Client_StreamEndPoint  : public TAO_Client_StreamEndPoint
 {
 public:
-  FTP_Client_StreamEndPoint (TAO_ORB_Manager *orb_manager = 0);
+  FTP_Client_StreamEndPoint (void);
 
   virtual int get_callback (const char *flowname,
                             TAO_AV_Callback *&callback);
@@ -39,7 +38,6 @@ public:
   virtual int set_protocol_object (const char *flowname,
                                    TAO_AV_Protocol_Object *object);
 protected:
-  TAO_ORB_Manager *orb_manager_;
   FTP_Client_Callback *callback_;
 };
 
@@ -49,8 +47,7 @@ class Client;
 class Endpoint_Reactive_Strategy  : public ENDPOINT_STRATEGY
 {
 public:
-  Endpoint_Reactive_Strategy (TAO_ORB_Manager *orb_manager,
-                              Client *client_ptr);
+  Endpoint_Reactive_Strategy (Client *client_ptr);
   // constructor . The orb manager is needed for the TAO_AV_Endpoint_Reactive_Strategy_A.
 
   virtual int make_stream_endpoint (FTP_Client_StreamEndPoint *& endpoint);
@@ -58,7 +55,6 @@ public:
 private:
   Client *client_;
   // pointer to command handler object
-  TAO_ORB_Manager *orb_manager_;
 };
 
 
@@ -74,7 +70,6 @@ public:
 private:
   int parse_args (int argc, char **argv);
   int bind_to_server (void);
-  TAO_ORB_Manager *orb_manager_;
   Endpoint_Reactive_Strategy endpoint_strategy_;
   AVStreams::MMDevice_var server_mmdevice_;
   TAO_MMDevice client_mmdevice_;

@@ -54,7 +54,8 @@ FTP_Client_Callback::handle_timeout (void *)
       CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
       CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
-      TAO_AV_CORE::instance ()->stop_run ();
+      //TAO_AV_CORE::instance ()->stop_run ();
+      TAO_AV_CORE::instance ()->orb ()->shutdown (0);
       return 0;
     }
   ACE_hrtime_t stamp = ACE_OS::gethrtime ();
@@ -106,10 +107,8 @@ FTP_Client_Callback::handle_timeout (void *)
   return 0;
 }
 
-FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (TAO_ORB_Manager *orb_manager)
-  :orb_manager_ (orb_manager)
+FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (void)
 {
-
 }
 
 int
@@ -131,11 +130,9 @@ FTP_Client_StreamEndPoint::set_protocol_object (const char *,
   return 0;
 }
 
-Endpoint_Reactive_Strategy::Endpoint_Reactive_Strategy (TAO_ORB_Manager *orb_manager,
-                                                        Client *client)
-  :ENDPOINT_STRATEGY (orb_manager),
-   client_ (client),
-   orb_manager_ (orb_manager)
+Endpoint_Reactive_Strategy::Endpoint_Reactive_Strategy (Client *client)
+  :ENDPOINT_STRATEGY (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ()),
+   client_ (client)
 {
 }
 
@@ -144,7 +141,7 @@ Endpoint_Reactive_Strategy::make_stream_endpoint (FTP_Client_StreamEndPoint *&en
 {
   ACE_DEBUG ((LM_DEBUG,"Endpoint_Reactive_Strategy::make_stream_endpoint"));
   ACE_NEW_RETURN (endpoint,
-                  FTP_Client_StreamEndPoint (this->orb_manager_),
+                  FTP_Client_StreamEndPoint,
                   -1);
   return 0;
 }
@@ -206,11 +203,11 @@ Client::streamctrl (void)
 }
 
 Client::Client (void)
-  :orb_manager_ (TAO_AV_CORE::instance ()->orb_manager ()),
-   endpoint_strategy_ (orb_manager_,this),
-   client_mmdevice_ (&endpoint_strategy_),
-   fp_ (0),
-   protocol_ (ACE_OS::strdup ("UDP"))
+  : endpoint_strategy_ (this),
+    client_mmdevice_ (&endpoint_strategy_),
+    fp_ (0),
+    address_ (ACE_OS::strdup ("224.9.9.2:12345")),
+    protocol_ (ACE_OS::strdup ("UDP"))
 {
 }
 
@@ -223,7 +220,7 @@ Client::bind_to_server (void)
   ACE_TRY
     {
       // Initialize the naming services
-      if (my_naming_client_.init (this->orb_manager_->orb ()) != 0)
+      if (my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
                            "the TAO_Naming_Client. \n"),
@@ -269,28 +266,14 @@ Client::init (int argc,char **argv)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      // @@ Pass the ORB as an argument to the init.
-      TAO_AV_CORE::instance ()->init (argc,
-                                      argv,
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      this->orb_manager_ = TAO_AV_CORE::instance ()->orb_manager ();
-      this->orb_manager_->init_child_poa (argc,
-                                          argv,
-                                          "child_poa",
-                                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      PortableServer::POAManager_var mgr
+        = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
+      
+      mgr->activate ();
+
       this->parse_args (argc, argv);
 
-      this->orb_manager_->activate_poa_manager (ACE_TRY_ENV);
-      // activate the client video mmdevice under the child poa.
-      ior = this->orb_manager_->activate (&this->client_mmdevice_,
-                                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Initialize the naming services
-      CORBA::ORB_var orb = orb_manager_->orb ();
-      if (this->my_naming_client_.init (orb.in ()) != 0)
+      if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
                            "the TAO_Naming_Client. \n"),
@@ -380,11 +363,11 @@ Client::run (void)
       this->streamctrl_.start (start_spec,ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      TAO_AV_CORE::instance ()->run ();
+      TAO_AV_CORE::instance ()->orb ()->run ();
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client::run");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client::run\n");
       return -1;
     }
   ACE_ENDTRY;
@@ -396,21 +379,55 @@ int
 main (int argc,
       char **argv)
 {
-
-  int result = 0;
-  result = CLIENT::instance ()->init (argc,argv);
-  if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
-  result = CLIENT::instance ()->run ();
-  if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
-  ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  ACE_DEBUG ((LM_DEBUG, "done\n"));
-
-  recv_latency.dump_results ("Receive", gsf);
-
-  send_latency.dump_results ("Send", gsf);
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+                                            argv);
+      CORBA::Object_var obj
+        = orb->resolve_initial_references ("RootPOA");
+      
+      PortableServer::POA_var poa
+        = PortableServer::POA::_narrow (obj);
+      
+      TAO_AV_CORE::instance ()->init (argc,
+                                      argv,
+                                      orb.in (),
+                                      poa.in (),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      int result = 0;
+      result = CLIENT::instance ()->init (argc,argv);
+      if (result < 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
+      result = CLIENT::instance ()->run ();
+      if (result < 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
+      ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
+      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_DEBUG ((LM_DEBUG, "done\n"));
+      
+      recv_latency.dump_results ("Receive", gsf);
+        
+      send_latency.dump_results ("Send", gsf);
+      poa->destroy (1, 1, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+      
+      orb->destroy (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+      
+      if (result < 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
+      
+    }
+  ACE_CATCHANY
+    
+    {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client Failed\n");
+    return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
