@@ -419,7 +419,7 @@ CORBA::Boolean & constr_policy_;
 #define _CORBA_CONSTRUCTIONPOLICY___THRU_POA_COLLOCATED_SH_
 
 class TAO_PortableServer_Export POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy   : public virtual ::CORBA::ConstructionPolicy,
-    public virtual POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy
+    public virtual POA_CORBA::_tao_thru_poa_collocated_Policy
 {
 public:
   POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy (

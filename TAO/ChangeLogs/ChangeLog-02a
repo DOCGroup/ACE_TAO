@@ -1,3 +1,9 @@
+Wed Sep 13 14:10:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/PortableServer/DomainS.h (_tao_thru_poa_collocated_Policy):
+	* tao/PortableServer/DomainS.cpp: Changed the base class name for
+	  POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy.
+
 Wed Sep 13 13:41:44 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/DomainC.cpp:
