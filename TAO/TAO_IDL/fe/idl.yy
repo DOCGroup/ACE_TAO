@@ -12,7 +12,7 @@ license restricting its use.
 
 The Interface Definition Language Compiler Front End (CFE) is made
 available for your use provided that you include this license and copyright
-notice on all media and documentation and the software program in which
+notice on all media and documentation and the software program in whichlong
 this product is incorporated in whole or part. You may copy and extend
 functionality (but may not remove functionality) of the Interface
 Definition Language CFE without charge, but you are not authorized to
@@ -144,6 +144,7 @@ extern int yyleng;
 %token		IDL_WCHAR
 %token		IDL_OCTET
 %token		IDL_BOOLEAN
+%token		IDL_FIXED
 %token		IDL_ANY
 %token		IDL_STRUCT
 %token		IDL_UNION
@@ -227,7 +228,7 @@ extern int yyleng;
 %type <ffval>	element_spec
 
 %type <etval>	const_type integer_type char_type boolean_type
-%type <etval>	floating_pt_type any_type signed_int
+%type <etval>	floating_pt_type any_type fixed_type signed_int
 %type <etval>	unsigned_int base_type_spec octet_type
 
 %type <dival>	direction
@@ -915,6 +916,7 @@ const_type
 	| octet_type
 	| boolean_type
 	| floating_pt_type
+	| fixed_type
 	| string_type_spec
 	{
 	  $$ = AST_Expression::EV_string;
@@ -1223,6 +1225,7 @@ base_type_spec
 	| char_type
 	| boolean_type
 	| octet_type
+	| fixed_type
 	| any_type
 	;
 
@@ -1368,6 +1371,15 @@ floating_pt_type
 	{
 	  $$ = AST_Expression::EV_longdouble;
         }
+	;
+
+fixed_type
+	: IDL_FIXED
+	{	  
+           cerr << "error in " << idl_global->filename()->get_string()
+		<< " line " << idl_global->lineno() << ":\n" ;
+           cerr << "Sorry, I (TAO_IDL) can't handle fixed types yet\n";
+	}
 	;
 
 char_type

@@ -141,6 +141,7 @@ string		return IDL_STRING;
 wstring 	return IDL_WSTRING;
 sequence	return IDL_SEQUENCE;
 union		return IDL_UNION;
+fixed		return IDL_FIXED;
 switch		return IDL_SWITCH;
 case		return IDL_CASE;
 default		return IDL_DEFAULT;
