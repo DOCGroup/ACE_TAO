@@ -11,7 +11,7 @@ Tue Aug 14 14:19:49 2001  Steve Huston  <shuston@riverace.com>
 Tue Aug 14 14:19:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp: Applied the patches sent by Tibor Kiss
-	  <tkiss@mindmaker.hu>.
+	  <tkiss@mindmaker.hu> for ACE_Log_Msg::close ()
 
 Tue Aug 14 13:55:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
