@@ -160,7 +160,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           {
             TAO_Protocol_Item *item = 0;
             ACE_NEW_RETURN (item,
-                            TAO_Protocol_Item (argv[curarg]),
+                            TAO_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                             -1);
             if (pset->insert (item) == -1)
               ACE_ERROR ((LM_ERROR,
@@ -492,7 +492,7 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
         }
 
       ACE_NEW_RETURN (item,
-                      TAO_Protocol_Item (ACE_LIB_TEXT("IIOP_Factory")),
+                      TAO_Protocol_Item ("IIOP_Factory"),
                       -1);
       // If the TAO_Protocol_Item retains ownership of the
       // TAO_Protocol_Factory then we used an auto_ptr<> above, so
@@ -544,7 +544,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
 
   for (; factory != end; factory++)
     {
-      const ACE_TString &name = (*factory)->protocol_name ();
+      const ACE_CString &name = (*factory)->protocol_name ();
       (*factory)->factory (
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));
       if ((*factory)->factory () == 0)
@@ -552,7 +552,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("TAO (%P|%t) Unable to load ")
                              ACE_LIB_TEXT ("protocol <%s>, %p\n"),
-                             name.fast_rep (), ""),
+                             ACE_TEXT_CHAR_TO_TCHAR(name.c_str ()), ""),
                             -1);
         }
 
@@ -560,7 +560,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_LIB_TEXT ("TAO (%P|%t) Loaded protocol <%s>\n"),
-                      name.fast_rep ()));
+                      ACE_TEXT_CHAR_TO_TCHAR(name.c_str ())));
         }
     }
 

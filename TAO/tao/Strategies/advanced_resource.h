@@ -42,7 +42,7 @@ public:
   // Destructor.
 
   // = Service Configurator hooks.
-  virtual int init (int argc, char* argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
   // Dynamic linking hook
 
   // = Member Accessors
@@ -80,10 +80,10 @@ protected:
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
   // Obtain the reactor implementation
 
-  void report_option_value_error (const char* option_name,
-                                  const char* option_value);
+  void report_option_value_error (const ACE_TCHAR* option_name,
+                                  const ACE_TCHAR* option_value);
 
-  void report_unsupported_error (const char* option_name);
+  void report_unsupported_error (const ACE_TCHAR* option_name);
 
   TAO_ProtocolFactorySet protocol_factories_;
   // list of loaded protocol factories.

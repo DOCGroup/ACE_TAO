@@ -85,7 +85,7 @@ TAO_SHMIOP_Connection_Handler::open (void*)
   // completely connected.
   ACE_INET_Addr addr;
 
-  char client[MAXHOSTNAMELEN + 16];
+  ACE_TCHAR client[MAXHOSTNAMELEN + 16];
 
   // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
@@ -98,8 +98,8 @@ TAO_SHMIOP_Connection_Handler::open (void*)
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) SHMIOP connection from client")
-                  ACE_TEXT ("<%s> on %d\n"),
+                  ACE_LIB_TEXT ("TAO (%P|%t) SHMIOP connection from client")
+                  ACE_LIB_TEXT ("<%s> on %d\n"),
                   client, this->peer ().get_handle ()));
     }
 
@@ -123,8 +123,8 @@ TAO_SHMIOP_Connection_Handler::activate (long flags,
 {
   if (TAO_debug_level)
     ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) SHMIOP_Connection_Handler::activate %d ")
-                 ACE_TEXT ("threads, flags = %d\n"),
+                 ACE_LIB_TEXT ("TAO (%P|%t) SHMIOP_Connection_Handler::activate %d ")
+                 ACE_LIB_TEXT ("threads, flags = %d\n"),
                  n_threads,
                  flags,
                  THR_BOUND));
@@ -172,9 +172,9 @@ TAO_SHMIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
   //    all waiting reply handlers).
   if (TAO_debug_level)
     ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) ")
-                 ACE_TEXT ("SHMIOP_Connection_Handler::handle_close ")
-                 ACE_TEXT ("(%d, %d)\n"),
+                 ACE_LIB_TEXT ("TAO (%P|%t) ")
+                 ACE_LIB_TEXT ("SHMIOP_Connection_Handler::handle_close ")
+                 ACE_LIB_TEXT ("(%d, %d)\n"),
                  handle,
                  rm));
 
@@ -196,9 +196,9 @@ TAO_SHMIOP_Connection_Handler::handle_close_i (void)
 {
   if (TAO_debug_level)
     ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) ")
-                 ACE_TEXT ("SHMIOP_Connection_Handler::handle_close_i ")
-                 ACE_TEXT ("(%d)\n"),
+                 ACE_LIB_TEXT ("TAO (%P|%t) ")
+                 ACE_LIB_TEXT ("SHMIOP_Connection_Handler::handle_close_i ")
+                 ACE_LIB_TEXT ("(%d)\n"),
                  this->transport ()->id ()));
 
   if (this->transport ()->wait_strategy ()->is_registered ())

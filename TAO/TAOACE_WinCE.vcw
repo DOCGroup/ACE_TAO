@@ -3,7 +3,7 @@ Microsoft eMbedded Visual Tools Workspace File, Format Version 3.00
 
 ###############################################################################
 
-Project: "Concurrency_Service"=.\orbsvcs\Concurrency_Service\Concurrency_Service.vcp - Package Owner=<4>
+Project: "Concurrency_Service"=".\orbsvcs\Concurrency_Service\Concurrency_Service.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosConcurrency"=.\orbsvcs\orbsvcs\CosConcurrency.vcp - Package Owner=<4>
+Project: "CosConcurrency"=".\orbsvcs\orbsvcs\CosConcurrency.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -33,7 +33,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosEvent"=.\orbsvcs\orbsvcs\CosEvent.vcp - Package Owner=<4>
+Project: "CosEvent"=".\orbsvcs\orbsvcs\CosEvent.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -54,7 +54,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosEvent_Service"=.\ORBSVCS\COSEVENT_SERVICE\CosEvent_Service.vcp - Package Owner=<4>
+Project: "CosEvent_Service"=".\ORBSVCS\COSEVENT_SERVICE\CosEvent_Service.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -78,7 +78,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosLifeCycle"=.\orbsvcs\orbsvcs\CosLifeCycle.vcp - Package Owner=<4>
+Project: "CosLifeCycle"=".\orbsvcs\orbsvcs\CosLifeCycle.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -99,7 +99,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosNaming"=.\orbsvcs\orbsvcs\CosNaming.vcp - Package Owner=<4>
+Project: "CosNaming"=".\orbsvcs\orbsvcs\CosNaming.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -123,7 +123,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosNotification"=.\orbsvcs\orbsvcs\CosNotification.vcp - Package Owner=<4>
+Project: "CosNotification"=".\orbsvcs\orbsvcs\CosNotification.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -147,7 +147,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosProperty"=.\orbsvcs\orbsvcs\CosProperty.vcp - Package Owner=<4>
+Project: "CosProperty"=".\orbsvcs\orbsvcs\CosProperty.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -165,7 +165,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosTime"=.\orbsvcs\orbsvcs\CosTime.vcp - Package Owner=<4>
+Project: "CosTime"=".\orbsvcs\orbsvcs\CosTime.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -186,7 +186,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosTrading"=.\orbsvcs\orbsvcs\CosTrading.vcp - Package Owner=<4>
+Project: "CosTrading"=".\orbsvcs\orbsvcs\CosTrading.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -207,7 +207,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DsLogAdmin"=.\orbsvcs\orbsvcs\DsLogAdmin.vcp - Package Owner=<4>
+Project: "DsLogAdmin"=".\orbsvcs\orbsvcs\DsLogAdmin.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -219,7 +219,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Dump_Schedule"=.\ORBSVCS\DUMP_SCHEDULE\Dump_Schedule.vcp - Package Owner=<4>
+Project: "Dump_Schedule"=".\ORBSVCS\DUMP_SCHEDULE\Dump_Schedule.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -243,7 +243,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Event_Service"=.\ORBSVCS\EVENT_SERVICE\Event_Service.vcp - Package Owner=<4>
+Project: "Event_Service"=".\ORBSVCS\EVENT_SERVICE\Event_Service.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -273,7 +273,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Fault_Tolerance"=.\orbsvcs\orbsvcs\Fault_Tolerance.vcp - Package Owner=<4>
+Project: "Fault_Tolerance"=".\orbsvcs\orbsvcs\Fault_Tolerance.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -306,7 +306,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LifeCycle_Service"=.\ORBSVCS\LIFECYCLE_SERVICE\LifeCycle_Service.vcp - Package Owner=<4>
+Project: "LifeCycle_Service"=".\ORBSVCS\LIFECYCLE_SERVICE\LifeCycle_Service.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -333,7 +333,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Naming_Service"=.\ORBSVCS\NAMING_SERVICE\Naming_Service.vcp - Package Owner=<4>
+Project: "Naming_Service"=".\ORBSVCS\NAMING_SERVICE\Naming_Service.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -357,7 +357,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Notify_Service"=.\ORBSVCS\NOTIFY_SERVICE\Notify_Service.vcp - Package Owner=<4>
+Project: "Notify_Service"=".\ORBSVCS\NOTIFY_SERVICE\Notify_Service.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -384,7 +384,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTEvent"=.\orbsvcs\orbsvcs\RTEvent.vcp - Package Owner=<4>
+Project: "RTEvent"=".\orbsvcs\orbsvcs\RTEvent.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -408,7 +408,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTOLDEvent"=.\ORBSVCS\ORBSVCS\RTOLDEvent.vcp - Package Owner=<4>
+Project: "RTOLDEvent"=".\ORBSVCS\ORBSVCS\RTOLDEvent.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -438,7 +438,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTSched"=.\orbsvcs\orbsvcs\RTSched.vcp - Package Owner=<4>
+Project: "RTSched"=".\orbsvcs\orbsvcs\RTSched.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -462,7 +462,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTSchedEvent"=.\orbsvcs\orbsvcs\RTSchedEvent.vcp - Package Owner=<4>
+Project: "RTSchedEvent"=".\orbsvcs\orbsvcs\RTSchedEvent.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -474,7 +474,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Scheduling_Service"=.\ORBSVCS\SCHEDULING_SERVICE\Scheduling_Service.vcp - Package Owner=<4>
+Project: "Scheduling_Service"=".\ORBSVCS\SCHEDULING_SERVICE\Scheduling_Service.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -498,7 +498,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Security"=.\orbsvcs\orbsvcs\Security.vcp - Package Owner=<4>
+Project: "Security"=".\orbsvcs\orbsvcs\Security.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -516,7 +516,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SmartProxies"=.\tao\SmartProxies\SmartProxies.vcp - Package Owner=<4>
+Project: "SmartProxies"=".\tao\SmartProxies\SmartProxies.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -531,7 +531,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Svc_Utils"=.\orbsvcs\orbsvcs\Svc_Utils.vcp - Package Owner=<4>
+Project: "Svc_Utils"=".\orbsvcs\orbsvcs\Svc_Utils.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -549,7 +549,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO"=.\tao\TAO.vcp - Package Owner=<4>
+Project: "TAO"=".\tao\TAO.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -567,7 +567,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO_BiDir_GIOP"=.\tao\BiDir_GIOP\TAO_BiDir_GIOP.vcp - Package Owner=<4>
+Project: "TAO_BiDir_GIOP"=".\tao\BiDir_GIOP\TAO_BiDir_GIOP.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -588,7 +588,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO_Domain"=.\tao\Domain\TAO_Domain.vcp - Package Owner=<4>
+Project: "TAO_Domain"=".\tao\Domain\TAO_Domain.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -609,7 +609,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO_DynamicAny"=.\tao\DynamicAny\TAO_DynamicAny.vcp - Package Owner=<4>
+Project: "TAO_DynamicAny"=".\tao\DynamicAny\TAO_DynamicAny.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -624,7 +624,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO_DynamicInterface"=.\tao\DynamicInterface\TAO_DynamicInterface.vcp - Package Owner=<4>
+Project: "TAO_DynamicInterface"=".\tao\DynamicInterface\TAO_DynamicInterface.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -642,7 +642,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO_IFR_Client"=.\tao\IFR_Client\TAO_IFR_Client.vcp - Package Owner=<4>
+Project: "TAO_IFR_Client"=".\tao\IFR_Client\TAO_IFR_Client.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -657,7 +657,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO_IORManip"=.\tao\IORManipulation\TAO_IORManip.vcp - Package Owner=<4>
+Project: "TAO_IORManip"=".\tao\IORManipulation\TAO_IORManip.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -672,7 +672,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO_IORTable"=.\tao\IORTable\TAO_IORTable.vcp - Package Owner=<4>
+Project: "TAO_IORTable"=".\tao\IORTable\TAO_IORTable.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -687,7 +687,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO_PortableServer"=.\tao\PortableServer\TAO_PortableServer.vcp - Package Owner=<4>
+Project: "TAO_PortableServer"=".\tao\PortableServer\TAO_PortableServer.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -702,7 +702,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO_RTCORBA"=.\tao\RTCORBA\TAO_RTCORBA.vcp - Package Owner=<4>
+Project: "TAO_RTCORBA"=".\tao\RTCORBA\TAO_RTCORBA.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -717,7 +717,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO_RTPortableServer"=.\tao\RTPortableServer\TAO_RTPortableServer.vcp - Package Owner=<4>
+Project: "TAO_RTPortableServer"=".\tao\RTPortableServer\TAO_RTPortableServer.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -738,7 +738,22 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO_Strategies"=.\tao\Strategies\TAO_Strategies.vcp - Package Owner=<4>
+Project: "TAO_Strategies"=".\tao\Strategies\TAO_Strategies.vcp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Time_Service_Clerk"=".\ORBSVCS\TIME_SERVICE\Time_Service_Clerk.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -750,7 +765,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Time_Service_Clerk"=.\ORBSVCS\TIME_SERVICE\Time_Service_Clerk.vcp - Package Owner=<4>
+Project: "Time_Service_Server"=".\ORBSVCS\TIME_SERVICE\Time_Service_Server.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -762,19 +777,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Time_Service_Server"=.\ORBSVCS\TIME_SERVICE\Time_Service_Server.vcp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Trading_Service"=.\orbsvcs\Trading_Service\Trading_Service.vcp - Package Owner=<4>
+Project: "Trading_Service"=".\orbsvcs\Trading_Service\Trading_Service.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -804,7 +807,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TypeCodeFactory"=.\tao\TypeCodeFactory\TypeCodeFactory.vcp - Package Owner=<4>
+Project: "TypeCodeFactory"=".\tao\TypeCodeFactory\TypeCodeFactory.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -822,7 +825,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ace"=..\ace\ace_dll.vcp - Package Owner=<4>
+Project: "ace"="..\ace\ace_dll.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -837,7 +840,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ace_os"=..\ace\ace_os_dll.vcp - Package Owner=<4>
+Project: "ace_os"="..\ace\ace_os_dll.vcp" - Package Owner=<4>
 
 Package=<5>
 {{{
