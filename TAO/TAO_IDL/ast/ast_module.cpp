@@ -834,27 +834,6 @@ AST_Module::add_CORBA_members (void)
                           );
 
   this->fe_add_predefined_type (pdt);
-
-# ifdef IDL_HAS_VALUETYPE
-  if (idl_global->obv_support ())
-    {
-      ACE_NEW (id,
-               Identifier ("ValueBase"));
-
-      ACE_NEW (sn,
-               UTL_ScopedName (id,
-                               0));
-
-      pdt = 
-        idl_global->gen ()->create_predefined_type ( 
-                                AST_PredefinedType::PT_pseudo,
-                                sn,
-                                0
-                              );
-
-      this->fe_add_predefined_type (pdt);
-    }
-# endif /* IDL_HAS_VALUETYPE */
 }
 
 void
