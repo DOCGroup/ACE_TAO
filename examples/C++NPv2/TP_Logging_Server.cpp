@@ -16,9 +16,9 @@ int TP_Logging_Handler::handle_input (ACE_HANDLE) {
       (log_blk, ACE_Message_Block
                   (ACE_reinterpret_cast (char *, this)), -1);
     log_blk->cont (mblk);
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, -1);
     if (TP_LOGGING_TASK::instance ()->put (log_blk) == -1)
     { log_blk->release (); return -1; }
-    ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, -1);
     ++queued_count_;
     return 0;
   } else return -1;
