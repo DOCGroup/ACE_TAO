@@ -1,3 +1,11 @@
+Tue Oct 22 12:36:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Stats.h:
+        * ace/Dirent_Selector.h:
+        * ace/Service_Config.h:
+        * ace/Timer_Heap_T.h:
+          Improved doxygen documentation.
+
 Mon Oct 21 22:30:51 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/SString_Test.cpp (ACE_TMAIN): Fixed a warning in Win32 builds.

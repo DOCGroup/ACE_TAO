@@ -95,12 +95,14 @@ public:
    * This can also take in a upcall functor and freelist (if 0, then
    * defaults will be created).
    *
-   * @param size size_t, the maximum number of timers that can be
+   * @param size The maximum number of timers that can be
    * inserted into the new object.
-   * @param preallocated int (default 0), if non-0 then all the memory
+   * @param preallocated Default 0, if non-0 then all the memory
    * for the @c ACE_Timer_Node objects will be pre-allocated. This saves
    * time and is more predictable (though it requires more space).
    * Otherwise, timer nodes are allocated as needed.
+   * @param freelist is the freelist of timer nodes.
+   * @param upcall_function If 0 Timer Heap will create a default FUNCTOR.
    */
   ACE_Timer_Heap_T (size_t size,
                     int preallocated = 0,
@@ -186,7 +188,7 @@ public:
    * Removes the earliest node from the queue and returns it. Note that
    * the timer is removed from the heap, but is not freed, and its ID
    * is not reclaimed. The caller is responsible for calling either
-   * @c reschedule or @c free_node after this function returns. Thus,
+   * @c reschedule() or @c free_node() after this function returns. Thus,
    * this function is for support of @c ACE_Timer_Queue::expire and
    * should not be used unadvisedly in other conditions.
    */
@@ -218,7 +220,7 @@ private:
   /// heap property.
   ACE_Timer_Node_T<TYPE> *remove (size_t slot);
 
-  /// Insert <new_node> into the heap and restore the heap property.
+  /// Insert @a new_node into the heap and restore the heap property.
   void insert (ACE_Timer_Node_T<TYPE> *new_node);
 
   /**
