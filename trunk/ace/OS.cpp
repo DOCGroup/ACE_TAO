@@ -1018,6 +1018,7 @@ ACE_OS::thr_setprio (const ACE_Sched_Priority prio)
   // LWP.  (Instead of doing this if the thread is in the RT class, it
   // should be done for all bound threads.  But, there doesn't appear
   // to be an easy way to determine if the thread is bound.)
+
   if (status == 0)
     {
       // Find what scheduling class the thread's LWP is in.
@@ -1081,9 +1082,9 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 
   if (sched_params.scope () == ACE_SCOPE_PROCESS)
     {
-      int result = ::sched_setscheduler(0, // this process
-                                        sched_params.policy (),
-                                        &param) == -1 ? -1 : 0;
+      int result = ::sched_setscheduler (0, // this process
+                                         sched_params.policy (),
+                                         &param) == -1 ? -1 : 0;
 #   if defined DIGITAL_UNIX
         return result == 0
           ? // Use priocntl (2) to set the process in the RT class,
@@ -1113,6 +1114,12 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 #   endif  /* ACE_HAS_PTHREADS_DRAFT4 */
 
     }
+#if defined (sun)
+  // We need to be able to set LWP priorities on Suns, even without
+  // ACE_HAS_STHREADS, to obtain preemption.
+  else if (sched_params.scope () == ACE_SCOPE_LWP)
+    return ACE_OS::set_scheduling_params (sched_params, id);
+#endif /* sun */
   else // sched_params.scope () == ACE_SCOPE_LWP, which isn't POSIX
     {
       errno = EINVAL;
@@ -1165,7 +1172,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
   ACE_UNUSED_ARG (sched_params);
   ACE_UNUSED_ARG (id);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_STHREADS */
+#endif /* CHORUS */
 }
 
 // = Static initialization.
@@ -1992,6 +1999,7 @@ ACE_Thread_Adapter::invoke (void)
   // ACE_OS::thr_setprio () has the special logic to set the LWP priority,
   // if running in the RT class.
   ACE_OS::thr_setprio (prio);
+
 #endif /* ACE_NEEDS_LWP_PRIO_SET */
 
   void *status = 0;
@@ -3081,7 +3089,7 @@ ACE_OS::thr_exit (void *status)
 int
 ACE_OS::lwp_getparams (ACE_Sched_Params &sched_params)
 {
-# if defined (ACE_HAS_STHREADS)
+# if defined (ACE_HAS_STHREADS) || defined (sun)
   // Get the class TS and RT class IDs.
   ACE_id_t rt_id;
   ACE_id_t ts_id;
@@ -3138,23 +3146,23 @@ ACE_OS::lwp_getparams (ACE_Sched_Params &sched_params)
     }
 
   return 0;
-# else  /* ! ACE_HAS_STHREADS */
+# else  /* ! ACE_HAS_STHREADS && ! sun */
   ACE_UNUSED_ARG (sched_params);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ! ACE_HAS_STHREADS */
+# endif /* ! ACE_HAS_STHREADS && ! sun */
 }
 
 int
 ACE_OS::lwp_setparams (const ACE_Sched_Params &sched_params)
 {
-# if defined (ACE_HAS_STHREADS)
+# if defined (ACE_HAS_STHREADS) || defined (sun)
   ACE_Sched_Params lwp_params (sched_params);
   lwp_params.scope (ACE_SCOPE_LWP);
   return ACE_OS::sched_params (lwp_params);
-# else  /* ! ACE_HAS_STHREADS */
+# else  /* ! ACE_HAS_STHREADS && ! sun */
   ACE_UNUSED_ARG (sched_params);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ! ACE_HAS_STHREADS */
+# endif /* ! ACE_HAS_STHREADS && ! sun */
 }
 
 # if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
