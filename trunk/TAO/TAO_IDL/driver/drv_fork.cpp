@@ -74,35 +74,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/Process_Manager.h"
 
-#ifdef		SOLARIS2
-
-#include	<unistd.h>		// POSIX standard types
-
-#if defined (ACE_NETBSD)  || defined (__FreeBSD__)
-#include        <sys/wait.h>
-#else
-#include	<wait.h>		// POSIX definition of wait()
-#endif /* ACE_NETBSD || __FreeBSD__ */
-
-#endif		// SOLARIS2
-
-#if defined(apollo)
-#include	<sysent.h>
-#endif		// apollo
-
-#if defined(hpux) || defined(__hpux) || defined(SUNOS4)
-#include	<sys/unistd.h>		// POSIX standard types
-#include	<sys/wait.h>		// POSIX definition of wait()
-#endif		// defined(hpux) || defined(__hpux) || defined(SUNOS4)
-
-
 /*
  * Fork off a process, wait for it to die
  */
 void
 DRV_fork()
 {
-#if !defined (CORYAN_USE_FORK)
   // This will not work on NT, but I can hardly think of some way to
   // make it work.
   // The idea is to make it compile, and always use the compiler with
@@ -141,44 +118,6 @@ DRV_fork()
 	  /*NOTREACHED*/
 	}
     }
-#else /* CORYAN_USE_FORK */
-  pid_t child_pid;
-  pid_t wait_pid;
-#if defined(apollo) || defined(SUNOS4)
-  union wait wait_status;
-#else
-  int wait_status;
-#endif	// defined(apollo) || defined(SUNOS4)
-
-  /*
-   * The parent loops over all files to be processed, forking off a child
-   * for each one. When they terminate, the exit status is checked. If not
-   * zero, the parent does not process any more files.
-   */
-  for (DRV_file_index = 0; DRV_file_index < DRV_nfiles; DRV_file_index++) {
-    if ((child_pid = fork()) != 0) {
-      if (child_pid == -1) {
-	cerr << GTDEVEL("IDL: fork failed\n");
-	exit(99);
-      }
-
-      while ((wait_pid = wait(&wait_status)) != child_pid);
-#if defined(apollo) || defined(SUNOS4)
-      if (wait_status.w_status != 0)
-	exit(wait_status.w_status);
-#else
-      if (wait_status != 0)
-	exit(wait_status);
-#endif	// defined(apollo) || defined(SUNOS4)
-    } else {
-      /*
-       * OK, do it to this file (in the child)
-       */
-      DRV_drive(DRV_files[DRV_file_index]);
-      exit(0);
-    }
-  }
-#endif /* !CORYAN_USE_FORK */
   /*
    * Now the parent process can exit
    */
