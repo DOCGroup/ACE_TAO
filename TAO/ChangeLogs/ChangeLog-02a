@@ -1,3 +1,21 @@
+Mon Sep 11 11:33:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/PortableServer.dsp:
+	* tao/PortableServer/PortableServer_Static.dsp:
+	* tao/PortableServer/Makefile:
+
+	  New files:
+
+	* tao/PortableServer/Default_Acceptor_Filter.cpp:
+	* tao/PortableServer/Default_Acceptor_Filter.h:
+
+	  Removed the class TAO_Default_Acceptor_Filter from
+	  POA.cpp and put it in its own files. There is a call
+	  to TAO_Acceptor_Registry::make_mprofile in 
+	  ImplRepo_i::server_is_running that needs this class
+	  for the last argument in the call.
+
 Mon Sep 11 11:09:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/Makefile.dependencies:
