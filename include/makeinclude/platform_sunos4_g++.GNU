@@ -4,8 +4,8 @@
 #
 CC	= gcc 
 CXX	= g++
-CFLAGS  +=  -fno-strict-prototypes
-CCFLAGS += $(CFLAGS)      # -frepo
+CFLAGS  += -fno-strict-prototypes
+CCFLAGS += -fno-strict-prototypes -fno-implicit-templates
 DLD	= /bin/ld
 LD	= $(CXX)
 #
