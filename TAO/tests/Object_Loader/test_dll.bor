@@ -9,21 +9,24 @@ TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 
 OBJFILES = \
 	$(OBJDIR)\testC.obj \
-        $(OBJDIR)\testS.obj
+	$(OBJDIR)\testS.obj \
+	$(OBJDIR)\test_i.obj \
+	$(OBJDIR)\Loader.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
-        $(TAO_CFLAGS) \
-        $(TAO_PORTABLESERVER_CFLAGS)
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	-DOLT_BUILD_DLL=1
 
 
 LIBFILES = \
 	$(ACE_LIB) \
-        $(TAO_LIB) \
-        $(TAO_PORTABLESERVER_LIB)
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB)
 
 IDLFILES = \
-        test.idl
+	test.idl
 
 CPPDIR = .
 
