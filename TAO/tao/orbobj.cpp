@@ -62,10 +62,10 @@ CORBA_ORB::~CORBA_ORB (void)
 {
   TAO_Internal::close_services ();
 
-  if (! client_factory_from_service_config_)
+  if (!this->client_factory_from_service_config_)
     delete client_factory_;
 
-  if (! server_factory_from_service_config_)
+  if (!this->server_factory_from_service_config_)
     delete server_factory_;
 
   // This assertion isn't valid because our ORB is a singleton
@@ -381,33 +381,22 @@ CORBA::ORB_init (int &argc,
   // Initialize the Service Configurator
   TAO_Internal::open_services (svc_config_argc, svc_config_argv);
 
-  // Open the <Strategy_Connector>.
-  this->connector_.open (TAO_ORB_Core_instance ()->reactor (),
-			 &this->null_creation_strategy_,
-			 &this->caching_connect_strategy_,
-#if defined (TAO_HAS_CLIENT_CONCURRENCY)
-			 this->concurrency_strategy_ ()
-#else
-		   0
-#endif /* TAO_HAS_CLIENT_CONCURRENCY */
-		   );
-
   // Inititalize the "ORB" pseudo-object now.
-  IIOP_ORB_ptr the_orb = 0;
-  ACE_NEW_RETURN (the_orb, IIOP_ORB, 0);
+  IIOP_ORB_ptr this_orb = 0;
+  ACE_NEW_RETURN (this_orb, IIOP_ORB, 0);
 
   // Install the ORB * into the ORB Core instance.  Note that if we're
   // running with a "thread-per-rate" concurrency model this ORB *
   // will be located in thread-specific storage.
-  TAO_ORB_Core_instance ()->orb (the_orb);
+  TAO_ORB_Core_instance ()->orb (this_orb);
 
   // @@ Seems like the following should happen inside the ORB Core,
   // not at this level.  Do we really need this stuff?  What is the
   // alternative format (other than IOR)?  --cjc
-  the_orb->use_omg_ior_format (CORBA::Boolean (use_ior));
-  the_orb->params ()->addr (rendezvous);
+  this_orb->use_omg_ior_format (CORBA::Boolean (use_ior));
+  this_orb->params ()->addr (rendezvous);
   
-  return the_orb;
+  return this_orb;
 }
 
 void
