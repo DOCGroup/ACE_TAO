@@ -20,12 +20,12 @@ main (int argc, char *argv[])
 
   ACE_DLL dll;
 
-  int retval = dll.open ("./" ACE_DLL_PREFIX "Today" ACE_DLL_SUFFIX);
+  int retval = dll.open ("./" ACE_DLL_PREFIX "Today");
 
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s",
-                       dll.error ()),
+                       "%p",
+                       "dll.open"),
                       -1);
   Magazine_Creator mc;
 
@@ -33,8 +33,8 @@ main (int argc, char *argv[])
 
   if (mc == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s",
-                      dll.error ()),
+                       "%p",
+                      "dll.symbol"),
                       -1);
   {
     auto_ptr <Magazine> magazine (mc ());
@@ -46,20 +46,20 @@ main (int argc, char *argv[])
 
   // The other library is now loaded on demand.
 
-  retval = dll.open ("./" ACE_DLL_PREFIX "Newsweek" ACE_DLL_SUFFIX);
+  retval = dll.open ("./" ACE_DLL_PREFIX "Newsweek");
 
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s",
-                       dll.error ()),
+                       "%p",
+                       "dll.open"),
                       -1);
 
   mc = (Magazine_Creator) dll.symbol ("create_magazine");
 
   if (mc == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                      "%s",
-                       dll.error ()),
+                      "%p",
+                       "dll.symbol"),
                       -1);
   {
     auto_ptr <Magazine> magazine (mc ());
