@@ -54,6 +54,22 @@ ACE_SOCK::get_local_addr (ACE_Addr &sa) const
   return 0;
 }
 
+// Close down a ACE_SOCK.
+
+int
+ACE_SOCK::close (void)
+{
+  ACE_TRACE ("ACE_SOCK::close");
+  int result = 0;
+
+  if (this->get_handle () != ACE_INVALID_HANDLE)
+    {
+      result = ACE_OS::closesocket (this->get_handle ());
+      this->set_handle (ACE_INVALID_HANDLE);
+    }
+  return result;
+}
+
 int
 ACE_SOCK::open (int type, 
                 int protocol_family, 
@@ -82,22 +98,6 @@ ACE_SOCK::open (int type,
   return 0;
 }
 
-// Close down a ACE_SOCK.
-
-int
-ACE_SOCK::close (void)
-{
-  ACE_TRACE ("ACE_SOCK::close");
-  int result = 0;
-
-  if (this->get_handle () != ACE_INVALID_HANDLE)
-    {
-      result = ACE_OS::closesocket (this->get_handle ());
-      this->set_handle (ACE_INVALID_HANDLE);
-    }
-  return result;
-}
-
 // General purpose constructor for performing server ACE_SOCK
 // creation.
 
@@ -107,7 +107,54 @@ ACE_SOCK::ACE_SOCK (int type,
                     int reuse_addr)
 {
   // ACE_TRACE ("ACE_SOCK::ACE_SOCK");
-  if (this->open (type, protocol_family, 
-                  protocol, reuse_addr) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("ACE_SOCK::ACE_SOCK")));
+  if (this->open (type,
+                  protocol_family, 
+                  protocol,
+                  reuse_addr) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_SOCK::ACE_SOCK")));
 }
+
+int
+ACE_SOCK::open (int type, 
+                int protocol_family, 
+                int protocol,
+                ACE_Protocol_Info *protocolinfo,
+                ACE_SOCK_GROUP g,
+                u_long flags)
+{
+  ACE_TRACE ("ACE_SOCK::open");
+  int one = 1;
+
+  this->set_handle (ACE_OS::socket (protocol_family,
+                                    type,
+                                    protocol,
+                                    protocolinfo,
+                                    g,
+                                    flags));
+
+  if (this->get_handle () == ACE_INVALID_HANDLE)
+    return -1;
+  return 0;
+}
+
+ACE_SOCK::ACE_SOCK (int type, 
+                    int protocol_family, 
+                    int protocol,
+                    ACE_Protocol_Info *protocolinfo,
+                    ACE_SOCK_GROUP g,
+                    u_long flags)
+{
+  // ACE_TRACE ("ACE_SOCK::ACE_SOCK");
+  if (this->open (type,
+                  protocol_family,
+                  protocol,
+                  protocolinfo,
+                  g,
+                  flags) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_SOCK::ACE_SOCK")));
+}
+

@@ -125,12 +125,12 @@ public:
   ssize_t send (const void *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
-  // Send <n> bytes via Win32 WriteFile using overlapped I/O.
+  // Send <n> bytes via Win32 <WriteFile> using overlapped I/O.
 
   ssize_t recv (void *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
-  // Recv <n> bytes via Win32 ReadFile using overlapped I/O.
+  // Recv <n> bytes via Win32 <ReadFile> using overlapped I/O.
 
   void dump (void) const;
   // Dump the state of an object.

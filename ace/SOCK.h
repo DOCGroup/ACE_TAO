@@ -75,14 +75,32 @@ public:
             int protocol_family,
             int protocol,
             int reuse_addr);
-  // Wrapper around the <socket> system call.
+  // Wrapper around the BSD-style <socket> system call (no QoS).
+
+  int open (int type,
+            int protocol_family,
+            int protocol,
+            ACE_Protocol_Info *protocolinfo,
+            ACE_SOCK_GROUP g,
+            u_long flags);
+  // Wrapper around the QoS-enabled <WSASocket> function.
 
 protected:
   ACE_SOCK (int type,
             int protocol_family,
             int protocol = 0,
             int reuse_addr = 0);
-  // Constructor with arguments to call the <socket> system call.
+  // Constructor with arguments to call the BSD-style <socket> system
+  // call (no QoS).
+
+  ACE_SOCK (int type,
+            int protocol_family,
+            int protocol,
+            ACE_Protocol_Info *protocolinfo,
+            ACE_SOCK_GROUP g,
+            u_long flags);
+  // Constructor with arguments to call the QoS-enabled <WSASocket>
+  // function.
 
   ACE_SOCK (void);
   // Default constructor is private to prevent instances of this class

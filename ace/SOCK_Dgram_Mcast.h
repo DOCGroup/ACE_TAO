@@ -67,7 +67,7 @@ public:
   // them into numbers via <ACE_OS::atoi>.
 
   ACE_HANDLE subscribe (const ACE_INET_Addr &mcast_addr,
-                        const ACE_Connect_QoS_Params &qos_params,
+                        const ACE_QoS_Params &qos_params,
                         int reuse_addr = 1,
                         const ASYS_TCHAR *net_if = 0,
                         int protocol_family = PF_INET,
