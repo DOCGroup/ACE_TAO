@@ -45,14 +45,14 @@ class TAO_RTSched_Export ACE_Scheduler_Factory
   //   local server, which will use the results of the config runs to
   //   actually do the scheduling, without incurring in RPC overheads.
 public:
-  enum Factory_Status 
+  enum Factory_Status
   {
     // = TITLE
     //   Factory Status
     //
     // = DESCRIPTION
     //   This type enumerates the possible states of the factory:
-    //   uninitialized, or in a configuration, runtime, or 
+    //   uninitialized, or in a configuration, runtime, or
     //   reconfigurable mode of operation.
 
     UNINITIALIZED,
@@ -182,7 +182,7 @@ public:
                                    FILE* file);
   // This helper function prints out a single scheduling entry contents
 
-  static int log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** entry_ptr_array, 
+  static int log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** entry_ptr_array,
                                      long entry_ptr_array_size,
                                      const char* file_name);
   // This helper function prints out the intermediate scheduling entries
@@ -250,7 +250,7 @@ protected:
 
 private:
   static RtecScheduler::Scheduler_ptr server_;
-  
+
   static Factory_Status status_;
   // Default period configuration.  (Boeing Extension)
   static RtecScheduler::Period_t period_default_;
@@ -268,7 +268,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Scheduler_Factory.i"
+#include "orbsvcs/orbsvcs/Scheduler_Factory.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
