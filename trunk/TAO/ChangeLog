@@ -1,3 +1,8 @@
+Tue Oct 14 09:32:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/PSS/Makefile.parser: Removed lingTAO_Svc_Utils from the
+	  link line. Shouldn't be needed.
+
 Tue Oct 15 07:39:39 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
