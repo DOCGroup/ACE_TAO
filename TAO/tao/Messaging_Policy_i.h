@@ -32,7 +32,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if (TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1)
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
 class TAO_Export TAO_RelativeRoundtripTimeoutPolicy
   : public Messaging::RelativeRoundtripTimeoutPolicy,
@@ -87,7 +87,8 @@ private:
   TimeBase::TimeT relative_expiry_;
   // The attribute
 };
-#endif /* TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 ////////////////////////////////////////////////////////////////////////////////
 
