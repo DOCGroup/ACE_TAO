@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    apps
+//    gateway
 // 
 // = FILENAME
 //    Event_Forwarding_Discriminator.h

@@ -207,8 +207,8 @@ Proxy_Handler_Factory::make_proxy_handler (const Proxy_Config_Info &pci)
     {
 #if defined (ACE_HAS_THREADS)
       // Create a threaded Consumer_Proxy.
-      if (ACE_BIT_ENABLED (pci.event_channel_->options ().threading_strategy_,
-			   ACE_Event_Channel_Options::OUTPUT_MT))
+      if (ACE_BIT_ENABLED (Options::instance ()->threading_strategy (),
+			   Options::OUTPUT_MT))
 	ACE_NEW_RETURN (proxy_handler,
 			Thr_Consumer_Proxy (pci),
 			0);
@@ -224,8 +224,8 @@ Proxy_Handler_Factory::make_proxy_handler (const Proxy_Config_Info &pci)
     {
 #if defined (ACE_HAS_THREADS)
       // Create a threaded Supplier_Proxy.
-      if (ACE_BIT_ENABLED (pci.event_channel_->options ().threading_strategy_,
-			   ACE_Event_Channel_Options::INPUT_MT))
+      if (ACE_BIT_ENABLED (Options::instance ()->threading_strategy (),
+			   Options::INPUT_MT))
 	ACE_NEW_RETURN (proxy_handler,
 			Thr_Supplier_Proxy (pci),
 			0);

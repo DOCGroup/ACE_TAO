@@ -18,6 +18,7 @@ FILES	= Concrete_Proxy_Handlers \
 	  Gateway \
 	  Event_Channel \
 	  Event_Forwarding_Discriminator \
+	  Options \
 	  Proxy_Handler \
 	  Proxy_Handler_Acceptor \
 	  Proxy_Handler_Connector

@@ -211,7 +211,7 @@ Supplier_Proxy::recv (ACE_Message_Block *&forward_addr)
 				       0,
 				       0,
 				       0,
-				       this->event_channel_->options ().locking_strategy_),
+				       Options::instance ()->locking_strategy ()),
 		    -1);
 
   Event *event = (Event *) this->msg_frag_->rd_ptr ();
@@ -320,7 +320,7 @@ Supplier_Proxy::recv (ACE_Message_Block *&forward_addr)
 						this->msg_frag_,
 						0,
 						0,
-						this->event_channel_->options ().locking_strategy_);
+						Options::instance ()->locking_strategy ());
 	  if (forward_addr == 0)
 	    {
 	      this->msg_frag_ = this->msg_frag_->release ();
@@ -342,7 +342,7 @@ Supplier_Proxy::recv (ACE_Message_Block *&forward_addr)
       this->total_bytes (data_received + header_received);
       ACE_DEBUG ((LM_DEBUG, "(%t) supplier id = %d, cur len = %d, total bytes read = %d\n",
 		  event->header_.supplier_id_, event->header_.len_, data_received + header_received));
-      if (this->event_channel_->options ().verbose_)
+      if (Options::instance ()->enabled (Options::VERBOSE))
 	ACE_DEBUG ((LM_DEBUG, "data_ = %*s\n", event->header_.len_ - 2, event->data_));
 
       // Encode before returning so that we can set things out in
