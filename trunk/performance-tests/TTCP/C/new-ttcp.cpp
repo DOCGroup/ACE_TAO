@@ -470,7 +470,7 @@ main (int argc, char *argv[])
 			       "ttcp"), -1);
 	  
 	  if (ack != data_buf_len)
-	    ACE_DEBUG ((LM_DEBUG, "%received ack for only %d bytes\n", ack));
+	    ACE_DEBUG ((LM_DEBUG, "received ack for only %d bytes\n", ack));
 	}
     }
   else

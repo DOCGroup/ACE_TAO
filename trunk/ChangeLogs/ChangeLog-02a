@@ -1,3 +1,11 @@
+Fri Dec 29 16:53:22 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp (main),
+	* performance-tests/TTCP/C/new-ttcp.cpp (main),
+	* tests/Conn_Test.cpp: Incorrect use of %r, which caused 
+	  problems...  Thanks to Mike Curtis <mccurry@my-deja.com> for
+ 	  pointing this out.	
+  
 Fri Dec 29 14:21:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_SAP.cpp: Fixed incorrect ACE_RCSID identifier.  Thanks
