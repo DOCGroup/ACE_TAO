@@ -25,7 +25,7 @@ TAO_NS_Method_Request_Shutdown::copy (void)
 }
 
 int
-TAO_NS_Method_Request_Shutdown::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NS_Method_Request_Shutdown::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // Shut down the scheduler by deactivating the activation queue's
   // underlying message queue - should pop all worker threads off their
