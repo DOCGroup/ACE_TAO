@@ -283,9 +283,9 @@ private:
    */
   long *timer_ids_;
 
-  /// "Pointer" to the next element in the <timer_ids_> array that will
-  /// be checked for use when a new timer ID is needed.
-  size_t timer_ids_next_;
+  /// "Pointer" to the element in the <timer_ids_> array that was
+  /// last given out as a timer ID.
+  size_t timer_ids_curr_;
 
   /// Index representing the lowest timer ID that has been freed. When
   /// the timer_ids_next_ value wraps around, it starts back at this
