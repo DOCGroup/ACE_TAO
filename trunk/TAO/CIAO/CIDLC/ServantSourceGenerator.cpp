@@ -3569,7 +3569,7 @@ ServantSourceEmitter::pre (TranslationUnit&)
                                       "_svnt.h");
 
   file_name = regex::perl_s (file_name,
-                             "/(\\.(idl|cidl))?$/"
+                             "/(\\.(idl|cidl|cdl))?$/"
                              + file_suffix
                              + "/");
 

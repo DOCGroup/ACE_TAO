@@ -1,3 +1,16 @@
+Thu Sep 30 11:03:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ExecImplGenerator.cpp:
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Added handling of file extension .cdl, as found in
+          spec documents.
+
 Thu Sep 30 09:16:52 2004  Nanbor Wang  <nanbor_a_txcorp_._com>
 
 	* CCF/Config.rules: Added new definitions to actually add the
