@@ -12,7 +12,7 @@
 package ACE.Concurrency;
 
 import ACE.ASX.TimeoutException;
-import ACE.Reactor.TimeValue;
+import ACE.ASX.TimeValue;
 
 /**
  * <hr>
