@@ -91,6 +91,7 @@ public:
                                                         TAO_AV_Flow_Handler *handler,
                                                         TAO_AV_Transport *transport);
   virtual const char *control_flow_factory (void);
+  int ref_count;
 };
 
 #include "ace/post.h"

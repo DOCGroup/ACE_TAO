@@ -26,19 +26,11 @@ TAO_FlowSpec_Entry::parse_flow_protocol_string (const char *flow_string)
 {
   if (flow_string == 0)
     return 0;
-  if (ACE_OS::strncasecmp (flow_string,"sfp",3) == 0)
-    {
-      this->use_flow_protocol_ = 1;
-      // do some flow protocol processing.
-      this->flow_protocol_ = flow_string;
-    }
-  if (ACE_OS::strncasecmp (flow_string,"rtp",3) == 0)
-    {
-      // TODO: this makes it work but should probably change
-//      this->use_flow_protocol_ = 1;
-
-      this->flow_protocol_ = flow_string;
-    }
+  
+  this->use_flow_protocol_ = 1;
+  // do some flow protocol processing.
+  this->flow_protocol_ = flow_string;
+  
   return 0;
 }
 
