@@ -1,4 +1,18 @@
-Sun Dec 22 12:22:59 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Sun Dec 22 21:23:57 1996  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Acceptor.cpp:  replaced two statements that looked like this:
+	  "ptr && ptr->foo ()"  with "if (ptr) ptr-> foo()" to prevent
+	  compiler warnings about computed values that aren't used
+
+	* netsvcs/clients/Tokens/manual/manual.cpp:  added explicit "int"
+	  return type to declaration of handle_exception (ACE_HANDLE) so
+	  that compilers don't complain about no type
+
+Sun Dec 22 21:16:23 1996  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ace/OS.cpp (thr_create): added a new ACE_HAS_PTHREADS_XAVIER to
+ 	  deal with the sparam.sched_priority features of the Linux
+ 	  pthreads implementation.  Thanks to James Johnson for this.
 
 	* ace/OS.i (thr_setprio): I forgot to define int policy = 0;
 
@@ -114,7 +128,7 @@ Sat Dec 21 09:43:35 1996  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,i}: fixes for VxWorks introduced in 4.1, and for
           inlining: moved #include of OS.i after #defines but before
-          other ace #includes OS.h OS.i
+          other ace #includes
 
 Thu Dec 19 15:58:09 1996  David L. Levine  <levine@cs.wustl.edu>
 
