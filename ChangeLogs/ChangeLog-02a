@@ -1,8 +1,13 @@
+Fri Feb 25 13:03:35 2000  Fernando D. Mato Mira  <matomira@iname.com>
+
+        * include/makeinclude/platform_vxworks5.x_{diab,g++}.GNU:
+          added PPC603 support.
+
 Fri Feb 25 10:47:33 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-win32-msvc.h,
-	* ace/config-win32-borland.h: Added ACE_INT64_FORMAT_SPECIFIER
-	  for both platforms.  Thanks to Christopher
+        * ace/config-win32-msvc.h,
+        * ace/config-win32-borland.h: Added ACE_INT64_FORMAT_SPECIFIER
+          for both platforms.  Thanks to Christopher
           Kohlhoff <chris@kohlhoff.com> for providing the fix.
 
 Thu Feb 24 15:44:42 2000  Steve Huston  <shuston@riverace.com>
@@ -111,17 +116,17 @@ Thu Feb 24 12:15:46 2000  Steve Huston  <shuston@riverace.com>
 
 Thu Feb 24 01:52:51 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp (append_thr): Moved the setting of
-	  THR_SPAWNED state down to right before releasing the thread
-	  creation lock.  Hopefully, this will eliminate a warning about a
-	  non-existing race condition from KAI Assure.  Thanks to John
-	  Hickin <hickin@nortelnetworks.com> for reporting this.
+        * ace/Thread_Manager.cpp (append_thr): Moved the setting of
+          THR_SPAWNED state down to right before releasing the thread
+          creation lock.  Hopefully, this will eliminate a warning about a
+          non-existing race condition from KAI Assure.  Thanks to John
+          Hickin <hickin@nortelnetworks.com> for reporting this.
 
 Wed Feb 23 23:52:15 2000  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* ace/Log_Msg.h: Added a hack to work around nasty libraries
-	  that #define THREAD 1.  Thanks to Pierre Oberson
- 	  <oberson@nagra-kudelski.ch> for reporting this.
+        * ace/Log_Msg.h: Added a hack to work around nasty libraries
+          that #define THREAD 1.  Thanks to Pierre Oberson
+          <oberson@nagra-kudelski.ch> for reporting this.
 
 Wed Feb 23 19:37:29 2000  Carlos O'Ryan  <coryan@uci.edu>
 
