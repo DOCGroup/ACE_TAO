@@ -46,8 +46,13 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // Close the Log_Msg instance.
   ACE_Log_Msg::close ();
 
-  // Finally, close the ACE_Allocator and ACE_Static_Object_Lock.
+  // Close the ACE_Allocator.
+  ACE_Allocator::close_singleton ();
+
+# if defined (ACE_HAS_THREADS)
+  // Close the ACE_Allocator and ACE_Static_Object_Lock.
   ACE_Static_Object_Lock::close_singleton ();
+# endif /* ACE_HAS_THREADS */
 }
 
 ACE_Object_Manager *
