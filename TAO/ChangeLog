@@ -1,3 +1,10 @@
+Tue Sep 17 16:57:19 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp
+	  (establish_components):
+
+	  Fixed operator precedence problem.
+
 Tue Sep 17 09:09:32 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation/Collocation_Test_Stubs.bor:
