@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class T> ACE_INLINE int
-ACE_Noop_Key_Generator<T>::operator() (T &t)
+ACE_Noop_Key_Generator<T>::operator() (T &)
 {
   return -1;
 }
