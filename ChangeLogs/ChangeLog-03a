@@ -1,3 +1,10 @@
+Wed Apr 10 20:00:57 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Proactor.h:
+
+	  Include "ace/ACE_export.h" to pull in definition of ACE_Export
+	  macro.
+
 Wed Apr 10 19:53:01 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Argv_Type_Converter.cpp:

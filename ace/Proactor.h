@@ -15,6 +15,7 @@
 
 #ifndef ACE_PROACTOR_H
 #define ACE_PROACTOR_H
+
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
@@ -35,6 +36,7 @@
 #  include "ace/Timer_List.h"
 #  include "ace/Timer_Heap.h"
 #  include "ace/Timer_Wheel.h"
+#  include "ace/ACE_export.h"
 
 // Forward declarations.
 class ACE_Proactor_Impl;
@@ -233,11 +235,11 @@ public:
    * method returns -1 or the <end_proactor_event_loop> method is invoked.
    */
   virtual int proactor_run_event_loop (PROACTOR_EVENT_HOOK = 0);
-  
+
   /**
-   * Run the event loop until the <ACE_Proactor::handle_events> 
+   * Run the event loop until the <ACE_Proactor::handle_events>
    * method returns -1, the
-   * <end_proactor_event_loop> method is invoked, 
+   * <end_proactor_event_loop> method is invoked,
    * or the <ACE_Time_Value>
    * expires.
    */
@@ -461,7 +463,7 @@ public:
                                      ACE_HANDLE event = ACE_INVALID_HANDLE,
                                      int priority = 0,
                                      int signal_number = ACE_SIGRTMIN);
-  
+
   /// Create the correct implementation class for
   /// ACE_Asynch_Write_Dgram::Result.
   virtual ACE_Asynch_Write_Dgram_Result_Impl *
@@ -622,4 +624,5 @@ public:
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
 
 #include "ace/post.h"
+
 #endif /* ACE_PROACTOR_H */
