@@ -166,12 +166,12 @@ CORBA_UserException::~CORBA_UserException (void)
 {
 }
 
-CORBA::SystemException::CORBA_SystemException (CORBA::TypeCode_ptr tc,
+CORBA_SystemException::CORBA_SystemException (CORBA::TypeCode_ptr tc,
 					      CORBA::ULong code,
 					      CORBA::CompletionStatus completed) 
   : _minor (code),
     _completed (completed),
-    CORBA::Exception (tc)
+    CORBA_Exception (tc)
 {
 }
 
