@@ -1,5 +1,5 @@
 <!--//$Id$  -->
-<!--Made by lut <lu@dre.vanderbilt.edu>-->
+<!--Made by Tao Lu <lu@dre.vanderbilt.edu>-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -28,6 +28,7 @@ This Hello example is contructed in the following ways:
 <li>1. There are 2 components in the system: Sender and Receiver</li>
 <li>2. The Sender will send out the timeout event to the Receiver.</li>
 <li>3. Upon receiving the timeout event, the Receiver will go and fetch data from the Sender. </li>
+<li>4. The user could deploy multiple instances of the Receiver without changing any C++/idl source code.</li>
 <hr>
 
 <h2>Step-By-Step</h2>
@@ -42,8 +43,11 @@ This Hello example is contructed in the following ways:
      <li>Change the parent prject from <code>ciao_svnt</strong> to <code>ciao_server.</strong></li>
      <li>Delete the <code>IDL_Files</code> and <code>CIDL_Files</code> part.</li>
      <li>Delete all the files in the <code>Source_File</code> part except <code>Hello_BaseS.cpp.</code></li>
+     <br>
+     <strong>Note:</strong> These steps are needed because that <code>Hello_Base</code> is not a component but libs(stub and skel) which will be used by the component libraries. However, since we generate the mpc file using the <code>generate_component_mpc.pl</code> we have to handcraft the file. The user can hand write this file if he prefer to.
 </ul>
 
+<br>
 <li>4. Follow the instruction from the output of the last step, use the perl script (<code>generate_export_file.pl</code>) to generate the Export files.</li>
 </ul>
 
@@ -59,11 +63,6 @@ This Hello example is contructed in the following ways:
 Note:
 <ul>
 <li>I have different directories for <code>Hello_Base/Sender/Receiver</code> respectively.</li>
-<li>For the <code>_exec</code> part of the mpc file(I user Sender here as an exmaple):</li>
-<ul>
-   Add <code>SenderEI.idl</code> to the <code>IDL_Files</code> <br>
-   Add <code>SenderEIC.cpp</code> to the <code>Source_Files</code>
-</ul>
 
 <li>For every <code>_stub</code> project, add:<br>
   <code>"libs  += Hello_Base_stub"</code><br>
@@ -74,12 +73,9 @@ Note:
 
 <li>3. Write an idl file for every compoent. Here you can put the component specific IDL definitions in this file. In this example we have a interface <code>trigger</code> specific to the Sender.</li>
 
-<li>4. Write the EI.idl file for every component. This file defines the local interfaces for the component.
-    <br>Note: This file could be ignored if one wants to.(For example: $CIAO_ROOT/docs/tutorial/Hello.) In some cases this file <strong>MUST be used with caution</strong>. Please see the discussion about this issue at <a href="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1672">bugzilla</a>.</li>
+<li>4. Write the CIDL file for every component.</li>
 
-<li>5. Write the CIDL file for every component.</li>
-
-<li>6. Write <code>_exec.h</code> and <code>_exec.cpp</code> files which actually implement the compnent.</li>
+<li>5. Write <code>_exec.h</code> and <code>_exec.cpp</code> files which actually implement the compnent.</li>
 <br>
 Writing all those files could be troublesome to a new CCM user. The best way of learning this is to read the example source code. If you are familliar with CORBA programming, it should not take too much time before you can delcare yourself as a CIAO programmer.
 
@@ -154,7 +150,12 @@ In <code>./descriptors</code> directory: <code>./run_test_default.pl</code> dose
 </ul>
 
 <br>
-If you are interested you could try to deploy multiple instances of the Receiver.
+
+4. Run the example with 2 receivers deployed on the same ComponentServer.
+<ul>
+    In <code>./descriptors</code> directory: <code>./run_test_multirecv.pl</code>
+</ul>
+
 <hr>
 <b>Email: </b><a href="mailto:"</a<ADDRESS>ciao-users@cse.wustl.edu</ADDRESS>
 </body>

@@ -6,12 +6,11 @@
  */
 
 #include "Sender_exec.h"
-
 // message_impl
 //
 //
 char*
-MyImpl::message_impl::get_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Sender_Impl::Message_Impl::get_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Sender sending out message. \n"));
@@ -23,36 +22,36 @@ MyImpl::message_impl::get_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Sender_exec_i
 //
 //
-MyImpl::Sender_exec_i::~Sender_exec_i ()
+Sender_Impl::Sender_exec_i::~Sender_exec_i ()
 {
 }
 
 void
-MyImpl::Sender_exec_i::local_message (const char * local_message
+Sender_Impl::Sender_exec_i::local_message (const char * local_message
 		       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  message_ = local_message;
-  this->message_impl_i->set_message (local_message) ;
+  message_ = CORBA::string_dup (local_message);
 }
 
 char *
-MyImpl::Sender_exec_i::local_message (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+Sender_Impl::Sender_exec_i::local_message (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup(message_);
 }
 
 Hello::CCM_message_ptr
-MyImpl::Sender_exec_i::get_push_message (ACE_ENV_SINGLE_ARG_DECL)
+Sender_Impl::Sender_exec_i::get_push_message (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return new message_impl (*this);
+  ACE_DEBUG ((LM_DEBUG, "Sender_Impl::Sender_exec.i::get_push_message called\n "));
+  return ( new Message_Impl (*this) );
 }
 
 
 void
-MyImpl::Sender_exec_i::start (ACE_ENV_SINGLE_ARG_DECL)
+Sender_Impl::Sender_exec_i::start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Hello::timeout_var event = new OBV_Hello::timeout;
@@ -65,65 +64,67 @@ MyImpl::Sender_exec_i::start (ACE_ENV_SINGLE_ARG_DECL)
 
 // Operations from Components::SessionComponen
 void
-MyImpl::Sender_exec_i::set_session_context (Components::SessionContext_ptr ctx
+Sender_Impl::Sender_exec_i::set_session_context (Components::SessionContext_ptr ctx
                                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::Sender_exec_i::set_session_context\n"));
+  ACE_DEBUG ((LM_DEBUG, "Sender_Impl::Sender_exec_i::set_session_context\n"));
 
   this->context_ =
-    Hello::CCM_Sender_Context::_narrow (ctx
-                                             ACE_ENV_ARG_PARAMETER);
+        Sender_Impl::Sender_Exec_Context::_narrow (ctx
+                                                   ACE_ENV_ARG_PARAMETER);
+
   ACE_CHECK;
 
   if (CORBA::is_nil (this->context_.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+
+       ACE_THROW (CORBA::INTERNAL ());
   // Urm, we actually discard exceptions thown from this operation.
 }
 
 void
-MyImpl::Sender_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Sender_Impl::Sender_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::Sender_exec_i::ccm_activate\n"));
+  ACE_DEBUG ((LM_DEBUG, "Sender_Impl::Sender_exec_i::ccm_activate\n"));
 }
 
 void
-MyImpl::Sender_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Sender_Impl::Sender_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::Sender_exec_i::ccm_passivate\n"));
+  ACE_DEBUG ((LM_DEBUG, "Sender_Impl::Sender_exec_i::ccm_passivate\n"));
 }
 
 void
-MyImpl::Sender_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Sender_Impl::Sender_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  ACE_DEBUG ((LM_DEBUG, "MyImpl::Sender_exec_i::ccm_remove\n"));
+  ACE_DEBUG ((LM_DEBUG, "Sender_Impl::Sender_exec_i::ccm_remove\n"));
 }
 
 
 // SenderHome_exec_i
 //
 //
-MyImpl::SenderHome_exec_i::SenderHome_exec_i ()
+Sender_Impl::SenderHome_exec_i::SenderHome_exec_i ()
 {
 }
 
-MyImpl::SenderHome_exec_i::~SenderHome_exec_i ()
+Sender_Impl::SenderHome_exec_i::~SenderHome_exec_i ()
 {
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::SenderHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+Sender_Impl::SenderHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  return new MyImpl::Sender_exec_i;
+  return new Sender_Impl::Sender_exec_i;
 }
 
 //
@@ -132,5 +133,5 @@ MyImpl::SenderHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
 extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
 createSenderHome_Impl (void)
 {
-  return new MyImpl::SenderHome_exec_i ();
+  return new Sender_Impl::SenderHome_exec_i ();
 }
