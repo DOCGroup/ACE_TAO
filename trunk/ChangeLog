@@ -1,3 +1,8 @@
+Sat Feb 21 19:49:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/msvc_static_order.lst:
+	  Build FaultTolerance.dsp after FTORB_Utils and PortableGroup
+
 Sat Feb 21 15:14:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* Kokyu/tests/EDF/test.cpp:
