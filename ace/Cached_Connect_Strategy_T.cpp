@@ -118,6 +118,20 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::check_hint_i
       // Tell the <svc_handler> that it should prepare itself for
       // being recycled.
       this->prepare_for_recycling (sh);
+
+      //
+      // Update the caching attributes directly since we don't do a
+      // find() on the cache map.
+      //
+
+      // Indicates successful find.
+      int find_result = 0;
+
+      int result = this->caching_strategy ().notify_find (find_result,
+                                                          possible_entry->int_id_.second ());
+
+      if (result == -1)
+        return result;
     }
   else
     {
@@ -450,6 +464,21 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find (ACE_Refcounted_Hash_Recyclable<ACE
         continue;
 
       entry = &(*iterator);
+
+      //
+      // Update the caching attributes directly since we don't do a
+      // find() on the cache map.
+      //
+
+      // Indicates successful find.
+      int find_result = 0;
+
+      int result = this->caching_strategy ().notify_find (find_result,
+                                                          entry->int_id_.second ());
+
+      if (result == -1)
+        return result;
+
       return 0;
     }
 
