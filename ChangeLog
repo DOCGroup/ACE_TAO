@@ -1,3 +1,8 @@
+Thu May  2 10:35:25 2002  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* ace/Log_Msg.cpp: ACE_Log_Msg::open() did not properly initialize a
+	custom backend due to improper evaluation of result code.
+
 Thu May 02 07:15:31 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/IO_Cntl_Msg.h:
