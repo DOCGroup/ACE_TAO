@@ -1,3 +1,31 @@
+Sat Oct  9 14:29:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* CIDLC/ServantSourceGenerator.cpp:
+
+	  Added a .in () to the _var variable used in push_event ().
+	
+	* DAnCE/Config_Handlers/XercesString.cpp:
+	* DAnCE/Config_Handlers/XercesString.h:
+
+	  Removed an unnecessary operator== which was confusing some
+	  compilers. 
+	
+	* DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+	* DAnCE/RepositoryManager/Repository_Manager.cpp:
+
+	  Changed the wrong exceptions that were being thrown.
+	
+	* DAnCE/examples/BasicSP/EC/EC_exec.cpp:
+	* DAnCE/examples/BasicSP/EC/EC_exec.h:
+	* examples/OEP/BasicSP/EC/EC_exec.cpp:
+	* examples/OEP/BasicSP/EC/EC_exec.h:
+
+	  The declaration of open () and close () was hiding the base
+	  class methods. Changed the name of the functions.
+
+	  The above changes should fix part of the errors from the Borland
+	  builds.
+
 Thu Oct  7 03:17:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* docs/schema/Basic_Deployment_Data.xsd:
