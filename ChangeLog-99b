@@ -1,3 +1,9 @@
+Thu Aug 26 11:44:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Time_Value_Test.cpp (main): added static casts
+          of the doubles to longs.  g++ 2.7.2.3 warned about
+          passing a double to a long :-)
+
 Thu Aug 26 11:20:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Time_Value_Test.cpp (main): added a test showing
