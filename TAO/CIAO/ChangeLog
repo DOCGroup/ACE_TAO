@@ -14,7 +14,9 @@ Mon Sep 13 13:18:33 2004  Gan Deng  <gan.deng@vanderbilt.edu>
           Changed the output stub, servant, and executor library names 
           for all the components in BasicSP example. The reason is 
           becasue all the DnC descriptors are tightly coupled with the
-          output library names.
+          output library names. I might come back switch this change
+          back since this will conflict with the BasicSP example in
+          CIAO_ROOT/examples.
 
 Mon Sep 13 13:07:33 2004  Gan Deng  <gan.deng@vanderbilt.edu>
 
