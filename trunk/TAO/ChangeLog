@@ -1,10 +1,16 @@
+Thu Nov 28 07:03:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Any/client.bor:
+        * tests/OBV/Any/server.bor:
+          Fix errors in these bcb makefiles.
+
 Wed Nov 27 22:31:34 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1361_Regression/Server_Thread_Pool.h:
 	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp: Converted the
 	  usage of ACE_SYNCH_MUTEX to ACE_SYNCH. Missed that
 	  Message_Queue needs a condition variable in addition to the
-	  mutex. 
+	  mutex.
 
 Wed Nov 27 18:58:25 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -30,7 +36,7 @@ Wed Nov 27 14:02:16 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Nov 27 13:45:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Log/NotifyLog_i.h: Fixed conflicts the files.  
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h: Fixed conflicts the files.
 
 Wed Nov 27 13:03:19 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -72,16 +78,16 @@ Wed Nov 27 12:30:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* orbsvcs/orbsvcs/Makefile.DsEventLogAdmin:
 	* orbsvcs/orbsvcs/Makefile.DsLogAdmin:
-	* orbsvcs/orbsvcs/Makefile.DsNotifyLogAdmin: Updated dependencies. 
+	* orbsvcs/orbsvcs/Makefile.DsNotifyLogAdmin: Updated dependencies.
 
 Wed Nov 27 16:35:03 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* orbsvcs/orbsvcs/Log/NotifyLogConsumer.h: 
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h: 
-	* orbsvcs/orbsvcs/Log/NotifyLogNotification.h: 
+	* orbsvcs/orbsvcs/Log/NotifyLogConsumer.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
 
 	  Removed includes to deprecated files.
-	
+
 
 Wed Nov 27 13:54:55 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
@@ -91,7 +97,7 @@ Wed Nov 27 13:54:55 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/tests/Log/Basic_Log_Test/Makefile:
 
 	  Documentation changes to files.
-	
+
 
 Wed Nov 27 13:48:19 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
@@ -106,11 +112,11 @@ Wed Nov 27 13:48:19 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
 
 	  Documentation changes to files.
-	
+
 
 Wed Nov 27 13:36:11 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* orbsvcs/examples/Log/Basic/main.cpp: 
+	* orbsvcs/examples/Log/Basic/main.cpp:
 	* orbsvcs/examples/Log/Basic/TLS_Client.cpp:
 	* orbsvcs/examples/Log/Basic/TLS_Client.h:
 	* orbsvcs/examples/Log/Event/Event_Consumer.cpp:
@@ -141,7 +147,7 @@ Wed Nov 27 13:19:19 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/orbsvcs/Makefile.RTEventLogAdmin:
 
 	  Files amended for new *LogConsumer files.
-	
+
 Wed Nov 27 13:12:54 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
@@ -195,7 +201,7 @@ Wed Nov 27 13:12:54 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 Wed Nov 27 10:14:26 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* orbsvcs/orbsvcs/RTEventLog.dsp: 
+	* orbsvcs/orbsvcs/RTEventLog.dsp:
 	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
 	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
           
