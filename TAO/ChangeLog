@@ -1,6 +1,7 @@
 Mon Dec 29 17:50:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/Messaging/Twoway_Asynch_Invocation.{h,cpp,i}:
+
 	  Removed these files from the repo, they are not needed.
 
 Mon Dec 29 11:44:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
