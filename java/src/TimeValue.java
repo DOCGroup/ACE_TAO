@@ -98,7 +98,7 @@ public class TimeValue
    */
   public static TimeValue getTimeOfDay ()
   {
-    return new TimeValue (System.currentTimeMillis ());
+    return new TimeValue (System.currentTimeMillis ()/1000);
   }
 
   /**
