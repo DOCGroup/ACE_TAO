@@ -43,7 +43,7 @@ ACE_Process::wait (const ACE_Time_Value &tv,
       if (status != 0)
         // The error status of <GetExitCodeProcess> is nonetheless not
         // tested because we don't know how to return the value.
-        ::GetExitCodeProcess (handle,
+        ::GetExitCodeProcess (process_info_.hProcess,
                               (LPDWORD) status);
       return 0;
     case WAIT_TIMEOUT:
