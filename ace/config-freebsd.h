@@ -189,7 +189,10 @@ extern "C" { char * cuserid (char *s); }
 
 #define ACE_HAS_MSG
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
-#define ACE_HAS_NONCONST_MSGSND
+
+#if (__FreeBSD_version < 500100)
+#  define ACE_HAS_NONCONST_MSGSND
+#endif
 
 // Thread specific settings
 // Yes, we do have threads.

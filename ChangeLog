@@ -1,11 +1,16 @@
+Mon Feb  3 16:33:02 2003  Heather Drury  <drury_h@ociweb.com>
+
+	* ace/config-freebsd.h: msgsnd() with const parameter was recently
+	  added to FreeBSD-CURRENT. Thanks to Craig Rodrigues' for this change. 
+
 Sat Feb  1 09:34:45 2003  Ossama Othman  <ossama@uci.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Disable TAO's IORInterceptor test for the GIOP 1.0 build
-	  configuration.  The test requires IOR tagged components that are
-	  not supported in GIOP 1.0.  Fixes a false positive in our
-	  scoreboard.
+          Disable TAO's IORInterceptor test for the GIOP 1.0 build
+          configuration.  The test requires IOR tagged components that are
+          not supported in GIOP 1.0.  Fixes a false positive in our
+          scoreboard.
 
 Sat Feb  1 09:00:00 2003  Steve Huston  <shuston@riverace.com>
 
@@ -14,44 +19,44 @@ Sat Feb  1 09:00:00 2003  Steve Huston  <shuston@riverace.com>
 
 Fri Jan 31 12:55:26 2003  Frank Hunleth  <frank@hunleth.com>
 
-	* tests/Reactor_Exceptions_Test.cpp (worker):  Added #if defined
-	  (ACE_HAS_THREADS) guard around worker () function to remove a
-	  compiler warning on single threaded configurations that have
-	  exceptions enabled.
+        * tests/Reactor_Exceptions_Test.cpp (worker):  Added #if defined
+          (ACE_HAS_THREADS) guard around worker () function to remove a
+          compiler warning on single threaded configurations that have
+          exceptions enabled.
 
 Thu Jan 30 21:57:58 2003  Frank Hunleth  <frank@hunleth.com>
 
-	* examples/Threads/thread_specific.cpp (worker): Added __OpenBSD__
-	  to the list of OS/compilers that can check printf arguments.
-	  This removes a compilation warning.
+        * examples/Threads/thread_specific.cpp (worker): Added __OpenBSD__
+          to the list of OS/compilers that can check printf arguments.
+          This removes a compilation warning.
 
 Thu Jan 30 21:50:27 2003  Frank Hunleth  <frank@hunleth.com>
 
-	* ace/config-openbsd.h: Added ACE_LACKS_SETSCHED, since it turns
-	  out that sched_setscheduler hasn't been implemented on OpenBSD.
+        * ace/config-openbsd.h: Added ACE_LACKS_SETSCHED, since it turns
+          out that sched_setscheduler hasn't been implemented on OpenBSD.
 
-	* bin/auto_run_tests.lst: Disabled the MT_Cubit test for OpenBSD,
+        * bin/auto_run_tests.lst: Disabled the MT_Cubit test for OpenBSD,
           since it fails completely when sched_params returns an error.
 
 Thu Jan 30 10:34:02 2003  Ossama Othman  <ossama@uci.edu>
 
-	From Olivier Brunet <o.brunet@free.fr>
-	* ace/SSL/SSL_Context.cpp (report_error):
+        From Olivier Brunet <o.brunet@free.fr>
+        * ace/SSL/SSL_Context.cpp (report_error):
 
-	  Corrected format specifier for wide string case.
+          Corrected format specifier for wide string case.
 
 Wed Jan 29 12:31:51 2003  Frank Hunleth  <frank@hunleth.com>
 
-	* ace/config-openbsd.h:
-	* ace/config-openbsd-pthreads.h: Merged config files together and
-	  removed config-openbsd-pthreads.h like what was done for
-	  FreeBSD.
+        * ace/config-openbsd.h:
+        * ace/config-openbsd-pthreads.h: Merged config files together and
+          removed config-openbsd-pthreads.h like what was done for
+          FreeBSD.
 
-	* include/makeinclude/platform_openbsd.GNU:
-	* include/makeinclude/platform_openbsd_pthreads.GNU:  Merged files
-	  together and removed platform_openbsd_pthreads.GNU like
-	  FreeBSD.  Also removed gratuitous link of -lstdc++.  g++ already
-	  does that for us.  Thanks to Craig Rodrigues' changelog entry.
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_openbsd_pthreads.GNU:  Merged files
+          together and removed platform_openbsd_pthreads.GNU like
+          FreeBSD.  Also removed gratuitous link of -lstdc++.  g++ already
+          does that for us.  Thanks to Craig Rodrigues' changelog entry.
 
 Wed Jan 29 11:47:29 2003  Steve Huston  <shuston@riverace.com>
 
@@ -94,8 +99,8 @@ Tue Jan 28 15:47:29 2003  Steve Huston  <shuston@riverace.com>
 
 Mon Jan 27 14:28:16 2003  Heather Drury  <drury_h@ociweb.com>
 
-	* include/makeinclude/wrapper_macros.GNU: Remove unnecessary use
-	  of GNU make basename command.  Supplied by Ganesh Pai <gpai@sonusnet.com>.
+        * include/makeinclude/wrapper_macros.GNU: Remove unnecessary use
+          of GNU make basename command.  Supplied by Ganesh Pai <gpai@sonusnet.com>.
 
 Sun Jan 26 16:42:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
