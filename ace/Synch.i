@@ -722,7 +722,7 @@ ACE_Null_Mutex::acquire (void)
 }
 
 ACE_INLINE int
-ACE_Null_Mutex::acquire (ACE_Time_Value &tv)
+ACE_Null_Mutex::acquire (ACE_Time_Value &)
 {
   return 0;
 }
