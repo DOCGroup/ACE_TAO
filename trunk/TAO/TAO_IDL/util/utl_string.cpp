@@ -143,25 +143,13 @@ UTL_String::UTL_String (UTL_String *s)
 // Compute a canonical form for this string. This is (implemented as)
 // a corresponding string with all upper case characters where the
 // original has lower case characters, identical characters otherwise.
-// In addition, Microsoft-style pathnames are put into a canonical
-// form (i.e., replacing = '\\' with '\').
 void
 UTL_String::canonicalize (void)
 {
   long i;
-  long j;
 
-  for (i = 0, j = 0; i < len; i++, j++)
-    {
-      // Put Microsoft-style pathnames into a canonical form.
-      if (p_str[j] == '\\' && p_str[j + 1] == '\\')
-        {
-          c_str[i] = '\\';
-          j++;
-        }
-      else
-        c_str[i] = isalpha (p_str[j]) ? toupper (p_str[j]) : p_str[j];
-    }
+  for (i = 0; i < len; i++)
+    c_str[i] = isalpha (p_str[i]) ? toupper (p_str[i]) : p_str[i];
 
   c_str[i] = '\0';
 }
