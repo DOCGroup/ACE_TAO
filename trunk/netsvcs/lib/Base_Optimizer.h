@@ -19,10 +19,10 @@
 
 template<class Base, class Member>
 struct Base_Optimizer : public Base
-// = TITLE
-//
-// = DESCRIPTION
-//     Thanks to Nathan Myers and Fergus Henderson for this little beauty
+  // = TITLE
+  //
+  // = DESCRIPTION
+  //     Thanks to Nathan Myers and Fergus Henderson for this little beauty
 {
   Base_Optimizer (void);
   Base_Optimizer (const Base &base);
