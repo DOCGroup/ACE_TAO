@@ -1,3 +1,12 @@
+Wed Dec 10 18:20:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue.h:
+          Mark deprecated enums with @deprecated so that they appear on the
+          doxygen deprated page
+
+        * ace/Thread.h:
+          Moved comment above method instead of between argumens.
+
 Wed Dec 10 13:16:03 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/UUID.cpp (to_string):
