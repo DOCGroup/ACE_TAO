@@ -1,4 +1,7 @@
-Mon May 10 15:00:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon May 10 16:21:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Changed to use ACE_NO_INLINE to supress
+	  inlining to match with the recent dsp file changes.
 
 	* ace/Select_Reactor_Base.cpp (unbind): We need to make sure the
 	  reactor's suspend_set_ also gets cleaned up when unbinding a
