@@ -1,3 +1,41 @@
+Tue Dec 12 06:55:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp (process_request_message): Avoid
+	  sending a datablock with DONT_DELETE flag, if the datablock came
+	  of the heap -- possible in large messages. We used to send the
+	  datablock with the above flag and the datablock would be cleaned
+	  up by the transport after the upcall is complete. This creates
+	  problems for object references. When a client sends a object
+	  reference, the upcall tries to make a copy of the incoming
+	  object reference. This copy would be necessary if the datablock
+	  came of the stack and unnecessary if the datablock came of the
+	  heap. If it came of the heap we, just duplicate the datablock
+	  and send it with no flags to the upcall. This should avoid a
+	  copy for large object references. 
+
+	  This problem came to the surface from a bug report submitted by
+	  Petr Tuma <petr.tuma@mff.cuni.cz>. He was trying to send large
+	  object references which was more than 7 MB and the server
+	  crashed. The crash was occuring in ACE_Data_Block as it wasnt
+	  able to make such a large chunk available during copy. I am not
+	  sure why this was happening. I havent been able to reproduce
+	  this allocation problem with a simple example. When I was
+	  tracking this further, I noticed that the whole copy business
+	  was coming in because of this flag setting. This change makes
+	  things working even for larger object sequences. The fix is
+	  right, in the sense we avoid an extra allocation and datacopy. I
+	  am not sure why this didnt occur to me at all before :(. I (or
+	  we) need to investigate why malloc fails for large memory
+	  chunks. Someday I will know why. Thanks to Petr Tuma
+	  <petr.tuma@mff.cuni.cz> for reporting this problem.  The test
+	  case that will be checked in after getting his permissions.
+
+	* tests/DLL_ORB/Test_Server_Module.cpp: Added
+	  "ace/Service_Config.h"  to fix a compilation error in the
+	  builds. 
+	
+	* tests/DLL_ORB/Makefile: Updated dependencies.
+	
 Wed Dec 12 07:25:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/ORB_Init/Portscan/Makefile.bor:
