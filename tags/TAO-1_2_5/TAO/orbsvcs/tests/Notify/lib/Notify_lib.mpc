@@ -1,0 +1,3 @@
+project(Notify Lib): orbsvcslib, notify {
+  sharedname = NotifyTests  
+}

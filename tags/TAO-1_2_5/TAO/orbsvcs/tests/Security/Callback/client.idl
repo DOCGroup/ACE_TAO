@@ -1,0 +1,11 @@
+//
+// Client interface definition.
+//
+// $Id$
+//
+
+
+interface client
+{
+  void test_reply (in string msg);
+};
