@@ -1,3 +1,10 @@
+Fri May 26 21:04:38 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Removed the mention of the
+	  specific date for the IDL compiler updates since it's not really
+ 	  up to date anymore.  Thanks to William Horn
+ 	  <whorn1984@my-deja.com> for reporting this.
+
 Fri May 26 11:09:45 2000  Ossama Othman  <ossama@uci.edu>
 
 	* utils/IOR-parser/ior-handler.cpp:
