@@ -1,3 +1,10 @@
+Sun Jul 06 21:37:22 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/RTComponentServer/ComponentServer_Task.cpp (svc): Changed
+	  to take advantage of CIAO::Activator_Callback interface change
+	  for getting back our own ConfigValues.  We will need to use
+	  these configuration values in the future.
+
 Sun Jul 06 11:50:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/RTComponentServer/ComponentServer_Task.cpp:
