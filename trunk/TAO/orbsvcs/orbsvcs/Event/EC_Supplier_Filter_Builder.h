@@ -37,7 +37,7 @@ class TAO_EC_ProxyPushConsumer;
 class TAO_RTEvent_Export TAO_EC_Supplier_Filter_Builder
 {
 public:
-  /// destructor...
+  /// Destructor...
   virtual ~TAO_EC_Supplier_Filter_Builder (void);
 
   /**

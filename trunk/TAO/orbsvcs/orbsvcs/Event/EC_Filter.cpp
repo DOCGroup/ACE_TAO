@@ -37,9 +37,10 @@ TAO_EC_Filter::size (void) const
 }
 
 void
-TAO_EC_Filter::get_qos_info (TAO_EC_QOS_Info&
+TAO_EC_Filter::get_qos_info (TAO_EC_QOS_Info& qos_info
                              ACE_ENV_ARG_DECL)
 {
+  ACE_UNUSED_ARG (qos_info);
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
 }
