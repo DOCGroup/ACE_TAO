@@ -1,11 +1,29 @@
+Mon Mar  5 19:14:03 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Callback/client.cpp:
+        * performance-tests/Callback/server.cpp:
+        * performance-tests/Latency/ami-latency-client.cpp:
+        * performance-tests/Latency/ami-throughput-client.cpp:
+        * performance-tests/Latency/server.cpp:
+        * performance-tests/Latency/st_server.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.cpp:
+        * tests/OctetSeq/server.cpp:
+        * tests/Param_Test/server.cpp:
+        * tests/Timeout/server.cpp:
+        * utils/nslist/nslist.cpp:
+          More ACE_TRY_ENV / resolve_initial_references() fixes.
+
 Mon Mar  5 19:01:15 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Dynamic.pidl:
-	* tao/Messaging.pidl:
-	* tao/Pollable.pidl:
+        * tao/Dynamic.pidl:
+        * tao/Messaging.pidl:
+        * tao/Pollable.pidl:
 
-	  Removed backslashes from the comments in these files.  Some
-	  preprocessors complain about "multi-line" comments.
+          Removed backslashes from the comments in these files.  Some
+          preprocessors complain about "multi-line" comments.
 
 Mon Mar  5 18:46:42 2001  Fuzz Master D <brunsch@uci.edu>
 
