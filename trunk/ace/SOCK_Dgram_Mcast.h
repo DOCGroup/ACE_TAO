@@ -117,20 +117,26 @@ public:
   // - The address (and port#) passed to <open> (or the first <subscribe>, if
   //   <open> is not explicitly invoked) is the one that is bound.
   //
+    /// Disable address bind. (Bind only port.)
+    // Note that this might seem odd, but we need a way to distinquish between
+    // default behavior, which might or might not be to bind, and explicitely
+    // choosing to bind or not to bind--which "is the question." ;-)
+    OPT_BINDADDR_NO   = 0,
     /// Enable address bind. (Bind port and address.)
     OPT_BINDADDR_YES   = 1,
     /// Default value for BINDADDR option. (Environment-dependent.)
-#ifdef linux
-      // (Bring forward ad-hoc legacy hack: enable if 'linux' macro is defined)
+#if defined (ACE_LACKS_PERFECT_MULTICAST_FILTERING) \
+    && (ACE_LACKS_PERFECT_MULTICAST_FILTERING == 1)
+      // Platforms that don't support perfect filtering. Note that perfect
+      // filtering only really applies to multicast traffic, not unicast 
+      // or broadcast.
       DEFOPT_BINDADDR  = OPT_BINDADDR_YES,
-#elif  defined (ACE_WIN32)
+# else
       // At least some Win32 OS's can not bind mcast addr, so disable it.
-      DEFOPT_BINDADDR  = 0,
-#else // !linux && !WIN32
       // General-purpose default behavior is 'disabled', since effect is
       // environment-specific and side-effects might be surprising.
-      DEFOPT_BINDADDR  = 0,
-#endif
+      DEFOPT_BINDADDR  = OPT_BINDADDR_NO,
+#endif /* ACE_LACKS_PERFECT_MULTICAST_FILTERING = 1) */
   //
   /// Define the interpretation of 'NULL' as a recv interface specification.
   // If the interface part of a multicast address specification is NULL, it
@@ -146,6 +152,11 @@ public:
   // - This applies only to receives, not sends (which always use only one
   //   interface; NULL means use the "system default" interface).
   // Supported values:
+    /// If (net_if==NULL), use default interface.
+    // Note that this might seem odd, but we need a way to distinquish between
+    // default behavior, which might or might not be to bind, and explicitely
+    // choosing to bind or not to bind--which "is the question." ;-)
+    OPT_NULLIFACE_ONE  = 0,
     /// If (net_if==NULL), use all mcast interfaces.
     OPT_NULLIFACE_ALL  = 2,
     /// Default value for NULLIFACE option. (Environment-dependent.)
@@ -156,11 +167,10 @@ public:
       DEFOPT_NULLIFACE = OPT_NULLIFACE_ALL,
 #else
       // General-purpose default behavior (as per legacy behavior).
-      DEFOPT_NULLIFACE = 0,
+      DEFOPT_NULLIFACE = OPT_NULLIFACE_ONE,
 #endif /* ACE_WIN32 */
     /// All default options.
     DEFOPTS = DEFOPT_BINDADDR | DEFOPT_NULLIFACE
-
   };
 
   // = Initialization routines.
@@ -318,7 +328,9 @@ public:
    * or <IP_MULTICAST_TTL>.  This is just a more concise, nice interface to a
    * subset of possible <ACE_SOCK::set_option> calls, but only works for 
    * IPPROTO_IP or IPPROTO_IPV6 level options.  Use <ACE_SOCK::set_option> 
-   * directly to set anything else.
+   * directly to set anything else. 
+   * \deprecated { This method has been deprecated since it cannot be used
+   * easily with with IPv6 options.}
    * Returns 0 on success, -1 on failure.
    */
   int set_option (int option,
