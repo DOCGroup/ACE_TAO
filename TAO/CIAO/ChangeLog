@@ -1,6 +1,5 @@
 Wed Mar 02 11:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-
         * DAnCE/Config_Handlers/Config_Handlers.mpc
         * DAnCE/RepositoryManager/RepositoryManager.mpc
         * performance-tests/Protocols/Controller/Controller.mpc
