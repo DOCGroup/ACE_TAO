@@ -1,3 +1,8 @@
+Sun Jun  6 00:23:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
+	  Added missing template instantiations
+
 Sun Jun  6 00:06:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/Scheduler.h:

@@ -1129,19 +1129,30 @@ TAO_SFP::dump_buf(char *buffer,int size)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 template class ACE_DNode<TAO_SFP_Fragment_Node>;
+template class ACE_Equal_To<CORBA::ULong>;
 template class ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node>;
 template class ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node>;
 template class ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<unsigned int, TAO_SFP_Fragment_Table_Entry *>;
 template class ACE_Hash_Map_Iterator_Base_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #pragma instantiate ACE_DNode<TAO_SFP_Fragment_Node>
 #pragma instantiate ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node>
 #pragma instantiate ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node>
+#pragma instantiate ACE_Equal_To<CORBA::ULong>
 #pragma instantiate ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<unsigned int, TAO_SFP_Fragment_Table_Entry *>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>
+
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<unsigned int, TAO_SFP_Fragment_Table_Entry *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
