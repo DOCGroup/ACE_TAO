@@ -308,7 +308,7 @@ SFP::send_frame (ACE_Message_Block *frame)
       frame_header.magic_number [3] = ACE_HTONS ('P');
       // sizeof (frameHeader) may have to be replaced with more
       // accurate size??.
-      if (total_length > (ACE_MAX_DGRAM_SIZE- sizeof (frameHeader)))
+      if (total_length > (ACE_MAX_DGRAM_SIZE- sizeof (flowProtocol::frameHeader)))
         {
           // If the message size is not okay including the headers i.e it
           // cannot fit in a dgram.
