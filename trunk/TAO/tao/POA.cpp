@@ -3344,7 +3344,7 @@ template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
 template class ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>;
 template class ACE_Map_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator_Base<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
-template class ACE_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
 template class ACE_Read_Guard<ACE_Lock>;
 template class ACE_Unbounded_Set<TAO_POA *>;
 template class ACE_Unbounded_Set_Iterator<TAO_POA *>;
@@ -3383,7 +3383,7 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>
 #pragma instantiate ACE_Map_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator_Base<ACE_CString, TAO_POA *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
 #pragma instantiate ACE_Read_Guard<ACE_Lock>
 #pragma instantiate ACE_Unbounded_Set<TAO_POA *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_POA *>

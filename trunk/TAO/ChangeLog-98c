@@ -1,3 +1,9 @@
+Tue Aug 11 18:24:13 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.h (POA): Changed the children POA map from a Map_Manager
+ 	  to a Hash_Map_Manager.  This should improve the time it takes to
+ 	  find child POAs.
+
 Tue Aug 11 17:27:58 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* docs/compiler.html : Updated the documentation.
