@@ -256,6 +256,10 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "Using VC7 files\n" if ( $verbose );
         $vc7 = 1;
     }
+    elsif ($ARGV[0] =~ '-vc8') {    # Use VC8 project and solution files.
+        print "Using VC8 files\n" if ( $verbose );
+        $vc7 = 1; // vc8 is like vc7
+    }
     elsif ($ARGV[0] =~ '-v') {          # verbose mode
         $verbose = 1;
     }
@@ -320,6 +324,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "-s         = Print status messages to STDERR\n";
         print "-u         = Tell MSVC to use the environment\n";
         print "-vc7       = Use MSVC 7 toolset\n";
+        print "-vc8       = Use MSVC 8 toolset\n";
         print "\n";
         print "-CORE      = Build ACE+TAO+CIAO core \n";
         print "-ACE       = Build ACE and its tests\n";
