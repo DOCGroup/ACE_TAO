@@ -5,6 +5,10 @@ Fri Jan 23 06:27:51 1998  David L. Levine  <levine@cs.wustl.edu>
           to Gonzo <gonzo@ing.puc.cl> for the patch.  Also, changed
           DEC_CXX to __DECCXX_VER because that's more accurate.
 
+        * tests/Barrier_Test.cpp: specify thread name and stack size
+          on VxWorks.  Thanks to Stan Leeson <STANLEY.D.LEESON@cdev.com>
+          for suggesting this.
+
 Thu Jan 22 16:34:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Connection/misc/Connection_Handler.cpp (svc): Fixed a
