@@ -126,7 +126,11 @@ ACE_INLINE
 ACE_Time_Value::operator timeval * () const
 {
   // ACE_TRACE ("ACE_Time_Value::operator timeval");
-  return (timeval *) &this->tv_;
+ACE_INLINE
+ACE_Time_Value::operator timeval * () const
+{
+  // ACE_TRACE ("ACE_Time_Value::operator timeval");
+  return ACE_const_cast (timeval *, &this->tv_);
 }
 
 ACE_INLINE void
@@ -3939,10 +3943,12 @@ ACE_OS::sendto (ACE_HANDLE handle,
   // ACE_TRACE ("ACE_OS::sendto");
 #if defined (VXWORKS)
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, (char *) buf, len, flags,
-                                 (struct sockaddr *) addr, addrlen), int, -1);
+                                 ACE_const_cast (struct sockaddr *, addr), addrlen),
+                       int, -1);
 #else
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, buf, len, flags,
-                                 (struct sockaddr *) addr, addrlen), int, -1);
+                                 ACE_const_cast (struct sockaddr *, addr), addrlen),
+                       int, -1);
 #endif /* VXWORKS */
 }
 
@@ -7135,7 +7141,9 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock)
       if (lock->lockname_ != 0)
         {
           ACE_OS::unlink (lock->lockname_);
-          ACE_OS::free ((void*) lock->lockname_);
+          ACE_OS::free (ACE_static_cast (void *,
+                                         ACE_const_cast (char *,
+                                                         lock->lockname_)));
           lock->lockname_ = 0;
         }
     }
