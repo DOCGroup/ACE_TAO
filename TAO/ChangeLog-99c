@@ -1,3 +1,97 @@
+Thu Jan 28 16:34:14 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
+* Added support for Pluggable Protocols (PP)
+  This required the modification of several files, deleting others as well as
+  adding and removing classes.
+
+* removed the files IIOP_Object.{h,i,cpp} and object IIOP_Object.  All
+functionality now resided in the old base class STUB_Object. 
+
+* Added the following classes and files
+  1) Pluggable.h - Contains all the base classes and registries used in 
+     Pluggable protocols.  New transport implementations will have to
+     use these classes in order to 'plugin' to the framework.
+       a) TAO_Profile
+       b) TAO_Connector
+       c) TAO_Transport
+       d) TAO_Acceptor
+       e) TAO_Connector_Registry
+     Pluggable.cpp - Connector_Registry implementation and Profile Version
+     class.  Each transport specific TAO_[*]_Connector registers itself
+     with this singleton.
+  2) IIOP_Profile.{h,cpp}
+       Class TAO_IIOP_Profile is defined here and it profides IIOP
+       specific processing.  Much of the transport specific processing
+       located in the old IIOP_Object has been relocated to here.
+       In particular an IIOP_Profile will contain a reference to the
+       currently used transport, that is the connection handler.
+  3) IIOP_Connector.{h,cpp}
+       All transport specific connection processing is hidden behind
+       this class. The connection handler hint () is taken from
+       the TAO_Profile (i.e. IIOP_Profile) object.
+  4) IIOP_Acceptor - basically just a transport neutral wrapper for
+     the Acceptor.
+
+* Changed many files and classes to use this new transport independent
+  Pluggable classes.  Also relocated transport specific processing to the
+  new classes.
+   1) Connect.{h,cpp}
+         Created new base classes TAO_IIOP_Client_Transport
+         and TAO_IIOP_Server_Transport in order to keep TAO_Transport
+         references and leverage dynamic binding.  That is, all handlers
+         use either of these classes as a base class.  TAO_SVC_HANDLER
+         is a member object.  
+         
+         Edited code so it passed TAO_Transport object references to 
+         GIOP::send_request and GIOP::recv_request.  
+   2) GIOP.{h,cpp}
+         Replaced all references to the handler object with the new
+         transport object.  Also moved all transport specific code
+         used for reading and writing messages to the network to the
+         new IIOP_Transport class.
+   3) IIOP_ORB.{h,cpp}
+        IIOP_ORB.h -> got rid of the #include "tao/corba.h"
+        IIOP_ORB.cpp changed references from IIOP_Object and
+        Client_Handler to STUB_Object and TAO_Transport.  Also
+        moved much of the IIOP specific marsheling code to IIOP_Profile.
+   4) Invocation.{h,i,cpp}
+        Changed references from IIOP_Object to STUB_Object.  Also use
+        TAO_Transport and TAO_Profile instead of Client_Handler and
+        IIOP_Object::IIOP.
+        Additionally, the connection is now made by the Connector_Registry
+        object.
+        All IIOP specific processing moved to TAO_IIOP_Profile.
+   5) ORB.{h,i,cpp}
+      The preconnect method's functionality is moved to Connector_Registry
+      and TAO_[*]_Profile.
+   6) ORB_Core.{h,i,cpp}
+      The ORB_Core was changed to allocate memory for the new objects:
+      TAO_Connector_Registry, TAO_IIOP_Connector and TAO_IIOP_Acceptor.
+      Preconnect () moved also.
+   7) Object.{i,cpp}
+      Changed to use STUB_Object refs rather than IIOP_Object.
+   8) Servant_Base.cpp
+      Changed to use STUB_Object refs rather than IIOP_Object.
+   9) Server_Request.cpp
+      Changed to use STUB_Object refs rather than IIOP_Object.
+  10) Stub.{h,i,cpp}
+      All logic from IIOP_Object (minus transport specific stuff) moved to
+      the STUB_Object.  
+  11) decode.cpp
+      Changed IIOP_Object ref to STUB_Object
+      Moved all IIOP specific processing (parsing IORs) to IIOP_Profile.
+  12) encode.cpp
+      Changed IIOP_Object ref to STUB_Object
+      Moved all IIOP specific processing (parsing IORs) to IIOP_Profile.
+  13) params.{h,i,cpp}
+      Changed use_IIOP_lite_protocol to use_lite_protocol.
+  14) Any.h
+      Changed "friend class IIOP_Object" to "friend class STUB_Object"
+  15) corba.h
+      Added #include's for the new Pluggable Protocol header files.
+
+
+
 Thu Jan 28 15:26:49 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tao/examples/Simple/grid/client.dsp:
