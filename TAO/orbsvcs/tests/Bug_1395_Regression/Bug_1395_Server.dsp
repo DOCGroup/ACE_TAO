@@ -32,7 +32,7 @@ RSC=rc.exe
 
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -137,7 +137,7 @@ SOURCE=.\Test.idl
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-OutDir=.\Release
+OutDir=.
 InputPath=.\Test.idl
 InputName=Test
 
