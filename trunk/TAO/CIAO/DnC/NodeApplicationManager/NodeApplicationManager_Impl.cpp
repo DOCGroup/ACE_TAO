@@ -12,7 +12,7 @@ CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl ()
 {
 }
 
-int
+Deployment::NodeApplicationManager_ptr
 CIAO::NodeApplicationManager_Impl::
 init (const char *nodeapp_location,
       CORBA::ULong delay,
@@ -27,17 +27,17 @@ init (const char *nodeapp_location,
                                 // successfully.
 
   if (nodeapp_location == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::Object::_nil ());
 
   if (spawn_delay_ == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::Object::_nil ());
 
   this->nodeapp_path_.set (nodeapp_location);
   this->spawn_delay_ = delay;
 
   PortableServer::POAManager_var mgr
     = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   CORBA::PolicyList policies (0);
 
@@ -47,24 +47,24 @@ init (const char *nodeapp_location,
                             mgr.in (),
                             policies
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Activate the ourself.
   PortableServer::ObjectId_var oid
     = this->poa_->activate_object (this
                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   CORBA::Object_var obj = this->poa_->id_to_reference (oid.in ()
                                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // And cache the object reference.
   this->objref_ = Deployment::NodeApplicationManager::_narrow (obj.in ()
 							       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  return 0;
+  return Deployment::NodeApplicationManager::_duplicate (this->objref_.in ());
 }
 
 void

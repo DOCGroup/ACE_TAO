@@ -1,18 +1,25 @@
+Tue Jun  1 12:09:18 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.h:
+	  Changed the init method to return a objectRef of
+	  the NodeApplicationManager to make NodeManager happy.
+
 Tue Jun  1 11:40:29 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-        * DnC/Config_Handlers/Basic_Handler.h 
-        * DnC/Config_Handlers/CompIntrDesc_Handler.h 
-        * DnC/Config_Handlers/CompPkgDesc_Handler.h 
-        * DnC/Config_Handlers/CompPortDesc_Handler.h 
-        * DnC/Config_Handlers/CompPropDesc_Handler.h 
-        * DnC/Config_Handlers/Config_Error_Handler.h 
-        * DnC/Config_Handlers/DnC_Dump.h 
-        * DnC/Config_Handlers/IAD_Handler.h 
-        * DnC/Config_Handlers/IR_Handler.h 
-        * DnC/Config_Handlers/MID_Handler.h 
-        * DnC/Config_Handlers/NIA_Handler.h 
-        * DnC/Config_Handlers/PCI_Handler.h 
-        * DnC/Config_Handlers/PC_Handler.h 
+        * DnC/Config_Handlers/Basic_Handler.h
+        * DnC/Config_Handlers/CompIntrDesc_Handler.h
+        * DnC/Config_Handlers/CompPkgDesc_Handler.h
+        * DnC/Config_Handlers/CompPortDesc_Handler.h
+        * DnC/Config_Handlers/CompPropDesc_Handler.h
+        * DnC/Config_Handlers/Config_Error_Handler.h
+        * DnC/Config_Handlers/DnC_Dump.h
+        * DnC/Config_Handlers/IAD_Handler.h
+        * DnC/Config_Handlers/IR_Handler.h
+        * DnC/Config_Handlers/MID_Handler.h
+        * DnC/Config_Handlers/NIA_Handler.h
+        * DnC/Config_Handlers/PCI_Handler.h
+        * DnC/Config_Handlers/PC_Handler.h
         * DnC/Config_Handlers/RUK_Handler.h
 
           Fixed the export libary problem for Windows.
