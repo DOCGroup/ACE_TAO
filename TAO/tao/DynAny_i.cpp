@@ -752,7 +752,7 @@ TAO_DynAny_i::get_any (CORBA::Environment& ACE_TRY_ENV)
 
   CORBA_Any_var val = tmp;
 
-  if (!(this->value_ >>= *val.out ()))
+  if (!(this->value_ >>= *tmp))
     {
       val = 0;
       ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (),

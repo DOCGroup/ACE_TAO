@@ -1198,6 +1198,8 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::operator=
         TAO_Bounded_Array_Sequence<T, T_var, MAX>::allocbuf (rhs.maximum_);
     }
 
+  TAO_Bounded_Base_Sequence::operator= (rhs);
+
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
 #if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)

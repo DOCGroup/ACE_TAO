@@ -274,23 +274,26 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
   CORBA::release (this->type_);
   this->type_ = tmp;
 
-  // @@ NW: I think an Any should alway owns the CDR stream, so I removed the
-  //     check here.
-  // if the Any owns the data, we encode the "value" into a CDR stream
-  // and store it. We also destroy the "value" since we own it.
-  TAO_OutputCDR stream;
-  stream.encode (tc,
-                 value,
-                 0,
-                 ACE_TRY_ENV);
-  ACE_CHECK;
-
   this->value_ = ACE_const_cast (void *, value);
   this->any_owns_data_ = any_owns_data;
   this->cdr_ = 0;
 
-  // Retrieve the start of the message block chain and duplicate it.
-  this->cdr_ = ACE_Message_Block::duplicate (stream.begin ());
+  if (value)
+    {
+      // @@ NW: I think an Any should alway owns the CDR stream, 
+      //  so I removed the check here.
+      // if the Any owns the data, we encode the "value" into a CDR stream
+      // and store it. We also destroy the "value" since we own it.
+      TAO_OutputCDR stream;
+      stream.encode (tc,
+                     value,
+                     0,
+                     ACE_TRY_ENV);
+      ACE_CHECK;
+
+      // Retrieve the start of the message block chain and duplicate it.
+      this->cdr_ = ACE_Message_Block::duplicate (stream.begin ());
+    }
 }
 
 void
@@ -860,14 +863,14 @@ CORBA_Any::operator<<= (from_string s)
       // Non-copying.
       if (s.nocopy_)
         {
-          ACE_NEW(tmp,
-                  char* (s.val_));
+          ACE_NEW (tmp,
+                   char* (s.val_));
         }
       // Copying.
       else
         {
-          ACE_NEW(tmp,
-                  char* (CORBA::string_dup (s.val_)));
+          ACE_NEW (tmp,
+                   char* (CORBA::string_dup (s.val_)));
         }
 
       this->replace (tc,
@@ -922,14 +925,14 @@ CORBA_Any::operator<<= (from_wstring ws)
       // Non-copying.
       if (ws.nocopy_)
         {
-          ACE_NEW(tmp,
-                  CORBA::WChar* (ws.val_));
+          ACE_NEW (tmp,
+                   CORBA::WChar* (ws.val_));
         }
       // Copying.
       else
         {
-          ACE_NEW(tmp,
-                  CORBA::WChar* (CORBA::wstring_dup (ws.val_)));
+          ACE_NEW (tmp,
+                   CORBA::WChar* (CORBA::wstring_dup (ws.val_)));
         }
 
       this->replace (tc,
@@ -1299,9 +1302,9 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
                                &a,
                                0,
                                ACE_TRY_ENV);
-             return (CORBA::Boolean) ((retval == CORBA::TypeCode::TRAVERSE_CONTINUE) 
-                                      ? 1 
-                                      : 0);
+              return (CORBA::Boolean) ((retval == CORBA::TypeCode::TRAVERSE_CONTINUE) 
+                                       ? 1 
+                                       : 0);
             }
         }
       else
@@ -1463,9 +1466,9 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
                                0,
                                ACE_TRY_ENV);
               ACE_TRY_CHECK;
-             return (CORBA::Boolean) ((retval == CORBA::TypeCode::TRAVERSE_CONTINUE) 
-                                      ? 1 
-                                      : 0);
+              return (CORBA::Boolean) ((retval == CORBA::TypeCode::TRAVERSE_CONTINUE) 
+                                       ? 1 
+                                       : 0);
             }
         }
       else
@@ -1768,10 +1771,9 @@ CORBA_Any::operator>>= (to_object obj) const
 
   ACE_TRY
     {
+      // Any interface is allowed
       CORBA::Boolean result =
-        this->type_->equivalent (CORBA::_tc_Object,
-                                 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        (this->type_->kind () == CORBA::tk_objref);
 
       if (result)
         {
@@ -1790,8 +1792,8 @@ CORBA_Any::operator>>= (to_object obj) const
               // demarshal objects (to create the right profiles for that
               // object), but the Any does not belong to any ORB.
               TAO_InputCDR stream (this->cdr_,
-                                  ACE_CDR_BYTE_ORDER,
-                                  TAO_ORB_Core_instance ());
+                                   ACE_CDR_BYTE_ORDER,
+                                   TAO_ORB_Core_instance ());
 
               CORBA::TypeCode::traverse_status status =
                 stream.decode (CORBA::_tc_Object,
@@ -1802,9 +1804,9 @@ CORBA_Any::operator>>= (to_object obj) const
 
               // Because of the CORBA 2.3 change mentioned above, there is no
               // need to assign to this->value_.
-             return (CORBA::Boolean) ((status == CORBA::TypeCode::TRAVERSE_CONTINUE) 
-                                      ? 1 
-                                      : 0);
+              return (CORBA::Boolean) ((status == CORBA::TypeCode::TRAVERSE_CONTINUE) 
+                                       ? 1 
+                                       : 0);
             }
         }
       else
