@@ -1,3 +1,8 @@
+Thu May 24 10:51:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Thread_Pool_Reactor_Resume_Test.dsp:
+	* tests/tests.dsw: Files for Win32.
+
 Thu May 24 10:35:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Thread_Pool_Reactor_Resume_Test.cpp
@@ -7,7 +12,7 @@ Thu May 24 10:35:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Makefile: Added the test for compilation.
 	* tests/run_test.lst: Added the above test for the nightly
-	  builds. 
+	  builds.
 
 Thu May 24 10:26:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -18,10 +23,10 @@ Thu May 24 10:26:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  resume_handler (). Applications that use the TP_Reactor and
 	  would like to take control of resuming the handler can overload
 	  this method in their implementation and return a value other
-	  than zero. 
-	
+	  than zero.
+
 	* tao/TP_Reactor.cpp: Added a check by calling the resume_handler
-	  () on the event handler object before resuming the handler. 
+	  () on the event handler object before resuming the handler.
 
 Wed May 23 16:35:15 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
@@ -42,8 +47,8 @@ Wed May 23 17:37:30 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	  Removed some tests from being run on Single Threaded
 	  Configuration as they were spawning threads. The tests removed
-	  are: 
-	
+	  are:
+
 	  TAO/performance-tests/AMI_Latency/run_test.pl
 	  TAO/tests/AMI_Timeouts/run_test.pl
           and
@@ -130,13 +135,13 @@ Tue May 22 21:57:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Mon May 21 18:34:52 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* include/makeinclude/platform_linux.GNU: Added default macros for:
-	
+
 	  PLATFORM_QT_LIBS
 	  PLATFORM_QT_LDFLAGS
 	  PLATFORM_QT_LDFLAGS
-  
+
           Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de> for
- 	  contributing this.  
+ 	  contributing this.
 
 	* performance-tests/Misc/Makefile (LDLIBS): Added back
 	  -lPerf.  Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de> for
