@@ -1,3 +1,11 @@
+Thu Jul 15 14:01:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/AST_Union.cpp:
+	* TAO_IDL/be_include/be_union.h:
+	* TAO_IDL/be/be_union.cpp:
+	  Added some switch cases and a union member to allow wchar as 
+	  a discriminator type.
+
 Thu Jul 15 13:11:02 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Object_Adapter.cpp (find_transient_poa): Changed use of
