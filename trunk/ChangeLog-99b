@@ -1,21 +1,57 @@
+Thu Feb 25 18:37:27 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/WFMO_Reactor (cancel_wakeup and masks_ops): Fixed the
+	  cancel_wakeup() method.  It was doing too much, i.e., if the
+	  masks were reduced to null, it was removing the event handler
+	  entry.  The new version behaves more like the Select Reactor in
+	  that it simply plays with the masks without removing the event
+	  handler.
+
+	  Also, implemented the mask_ops() operation.
+
+	  Thanks to Douglas C. Schmidt <schmidt@cs.wustl.edu> and Zoran
+	  Ivanovic <zorani@pathcom.com> for helping in pinpointing the
+	  problem.
+
+	* ace/Service_Config.cpp (fini_svcs and close): Since the reactor
+	  and proactor singletons potentially call user code (in
+	  handle_close()), we must shut them down *before* the log msg is
+	  destroyed.  Therefore, moved the close_singletons() call from
+	  close() to fini_svcs().
+
+	* ace/Select_Reactor_Base.cpp (bit_ops): Since we return the old
+	  masks everytime, find the old reactor masks at the start of the
+	  method.  This automatically does the work of the GET_MASK
+	  operation.
+
+	* ace/Proactor.cpp: Added #include "ace/Object_Manager.h"
+
+	* examples/Reactor/WFMO_Reactor/test_prerun_state_changes.cpp:
+	  handle_close() was getting called twice; changed code to prevent
+	  double deletion.
+
+	* examples/Reactor/WFMO_Reactor/test_handle_close.cpp: Added the
+	  ability to cancel reads, change masks, and check for existing
+	  reactor masks.
+
 Thu Feb 25 17:35:10 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/DLL_Test.cpp:
 	  Changed the OBJ_SUFFIX to ".so" as on Linux the .o file cannot
-	  be a shared object. Also the OBJ_PREFIX is now "./lib" for 
+	  be a shared object. Also the OBJ_PREFIX is now "./lib" for
 	  non-Win32 platforms.
 	* tests/Makefile:
 	  Additional option DLL_TEST added so that a .so can be produced
 	  for DLL_Test.
 	* tests/Makefile.DLL:
 	  This is the makefile which produces libDLL_Test.so for DLL_Test.
-	
+
 Wed Feb 24 23:47:22 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* examples/Reactor/Proactor/test_proactor.cpp: 
-	* ace/WIN32_Asynch_IO.h: 
+	* examples/Reactor/Proactor/test_proactor.cpp:
+	* ace/WIN32_Asynch_IO.h:
 	* ace/Proactor.cpp:
-	* ace/WIN32_Proactor.cpp: 
+	* ace/WIN32_Proactor.cpp:
 	* ace/Proactor.h:
 	* ace/Proactor_Impl.h:
 	* ace/POSIX_Proactor.h:
@@ -23,13 +59,13 @@ Wed Feb 24 23:47:22 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         return -1 on error, 0 on timeout, 1 on success. This has been done so
         that it looks like the <ACE_Reactor::handle_events>. Previously
         <ACE_Proactor::handle_events> was returning -1 on error, 0 on success
-        and 0 on timeout also.	  
-        			  
+        and 0 on timeout also.
+
         Fixed the <ACE_POSIX_AIOCB_Proactor::handle_events> and
         <ACE_POSIX_SIG_Proactor::handle_events> to do indefinite blocking when
         ACE_INFINITE is passed. <sigwaitinfo> is used instead of
-        <sigtimedwait>.		  
-        			  
+        <sigtimedwait>.
+
         Renamed the <ACE_AIO_Accept_Handler> class to more appropriate
         <ACE_Notify_Pipe_Manager>.
 
@@ -42,8 +78,8 @@ Wed Feb 24 22:08:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Wed Feb 24 17:40:49 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/combine: 
-	* docs/tutorials/colorize: 
+	* docs/tutorials/combine:
+	* docs/tutorials/colorize:
 	  A few enhancements to make the colorization better.  Also, when
  	  #include "ace/something.h" is seen by the colorizer, it will
  	  create a link to ../../../ace/something.h.  That should give
@@ -55,12 +91,12 @@ Wed Feb 24 16:56:51 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 	  change the thread count while threads are still active.
 
 	* docs/tutorials/017/*.html: Regenerated due to the new file.
-	
+
 	* docs/tutorials/018/*.html: Added Kirthika's abstract &
 	  regenerated.
-	
+
 	* docs/tutorials/018/token.cpp:  Typo in the comments...
-	
+
 Wed Feb 24 14:57:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (ASYS_ONLY_WIDE_STRING): New UNICODE macros to convert
