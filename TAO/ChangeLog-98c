@@ -6,6 +6,9 @@ Tue Oct 27 08:39:38 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/Simple_Naming/client.cpp (init): wrapped
           final return 0 statement with ACE_NOTREACHED.
 
+        * TAO/examples/Quoter/Quoter_i.cpp (copy): wrapped
+          final return 0 statement with ACE_NOTREACHED.
+
         * TAO_IDL/driver/drv_preproc.cpp: reverted to version 1.29
           because 1.30 doesn't work.
 
