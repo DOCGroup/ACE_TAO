@@ -41,8 +41,8 @@ bgcolor="#ffffff">
         <strong><code>-?</code></strong> command line argument, are
         provided to the program.<p>
 
-    <li>The program <strong><code>main</code></strong> function should
-        always be declared with arguments, e.g.,
+    <li>The program <strong><code>main</code></strong> function must
+        always be declared with arguments, <em>e.g.</em>,
         <pre>
         int
         main (int argc, char *argv[])
@@ -53,8 +53,25 @@ bgcolor="#ffffff">
         }
         </pre><p>
 
-        It should also return 0 on successful termination, and non-zero
-        otherwise.<p>
+        If you don't use the <code>argc</code> and/or <code>argv</code>
+        arguments, don't declare them, <em>e.g.</em>,
+        <pre>
+        int
+        main (int, char *[])
+        {
+          [...]
+
+          return 0;
+        }
+        </pre><p>
+
+        Please declare the second argument as <code>char *[]</code>
+        instead of <code>char **</code>.  Ancient versions of MSC
+        complained about <code>char **</code>; I've never seen a
+        C++ compiler complain about <code>char *[]</code>.<p>
+
+        <code>main</code> must also return 0 on successful
+        termination, and non-zero otherwise.<p>
 
     <li>Avoid use of floating point types (float and double) and operations
         unless absolutely necessary.  Not all ACE platforms support them.
@@ -65,8 +82,8 @@ bgcolor="#ffffff">
   <li><strong>Code Documentation</strong><p>
   <ul>
     <li>Use comments and whitespace (:-) liberally.  Comments
-        should consist of complete sentences, i.e., start
-        with a captial letter and end with a period.<p>
+        should consist of complete sentences, <em>i.e.</em>, start
+        with a capital letter and end with a period.<p>
 
     <li>Insert a CVS/RCS keyword string at the top of every source file,
         Makefile, config file, <em>etc</em>.  For C++ files, it is:
@@ -192,8 +209,8 @@ bgcolor="#ffffff">
         <code>#pragma once</code> construct should only be used after
         an <code>#include</code> of an ACE library header.  Note that
         many compilers enable the optimization if the <code>#ifndef</code>
-        protection construct is used, so for them, <code>#pragm once</code>
-        is superflous.<p>
+        protection construct is used, so for them, <code>#pragma once</code>
+        is superfluous.<p>
 
         <strong>No</strong> code can appear after the final
         <code>#endif</code> for the optimization to be effective and
