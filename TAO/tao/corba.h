@@ -1,6 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -10,24 +10,20 @@
 //    corba.h
 //
 // = DESCRIPTION
-//     MASTER HEADER file for C/C++ Win32 interface to a CORBA 2.0 ORB.
-//     Include only this file, to see all ORB interfaces declared.
+//     Master Header file for the TAO CORBA ORB.  Include only this
+//     file, to see all public ORB interfaces declared by TAO.
 //
-//     This interface uses COM as the basis for its binary standard,
-//     and follows the OMG C++ mapping for compilers which don't
-//     support C++ exceptions (COM doesn't use them) or namespaces.
-//     Objects which are implemented using this source base support
-//     OLE Automation.
-//
-//     XXX Note re status of this as reference, cosubmitted with RFP?
+//     This follows the OMG C++ mapping for compilers that don't
+//     support C++ exceptions or namespaces.
 //
 // = AUTHOR
-//     Copyright 1994-1995 by Sun Microsystems Inc.
+//     Copyright 1994-1995 by Sun Microsystems Inc., Chris Cleeland,
+//     and Douglas C. Schmidt.
 //
 // ============================================================================
 
-#if !defined (TAO_CORBA_H)
-#define TAO_CORBA_H
+#if !defined (TAO_MASTER_CORBA_H)
+#define TAO_MASTER_CORBA_H
 
 // ACE specific includes
 #include "ace/OS.h"
@@ -80,48 +76,120 @@
 // ORB configuration
 #include "tao/orbconf.h"
 
-#include "tao/orb.h"
+// For some reason, PC compilers don't implement "natural" alignment,
+// but only use fixed alignment policies.  The following #pragmas
+// configure fixed one-byte alignment policy, since some fixed policy
+// needs to apply throughout an ORB.
+
+#if	defined (_MSC_VER)
+#	pragma	pack (push, 1)		// VC++, stack 1-byte alignment policy
+
+#	ifdef	_DEBUG			// convert from VC++ convention ...
+#		define	DEBUG		// ... to normal convention
+#	endif
+
+#elif	defined (__BORLANDC__)
+#	pragma option -a		// BC++, use 1 byte alignment
+
+#endif /* _MSC_VER */
+
+// Get various definitions facilitating portability.
+#include "tao/orbconf.h"
+
+// Forward declarations of some data types are needed.
+
+class CORBA_Any;
+typedef class CORBA_Any *CORBA_Any_ptr;
+
+class CORBA_TypeCode;
+typedef class CORBA_TypeCode *CORBA_TypeCode_ptr;
+
+class CORBA_Exception;
+typedef class CORBA_Exception *CORBA_Exception_ptr;
+
+class CORBA_Request;
+typedef class CORBA_Request *CORBA_Request_ptr;
+
+class CORBA_NamedValue;
+typedef class CORBA_NamedValue *CORBA_NamedValue_ptr;
+
+class CORBA_NVList;
+typedef class CORBA_NVList *CORBA_NVList_ptr;
+
+class CORBA_ORB;
+typedef class CORBA_ORB *CORBA_ORB_ptr;
+
+class CORBA_Object;
+typedef class CORBA_Object *CORBA_Object_ptr;
+
+class CORBA_ServerRequest;
+typedef class CORBA_ServerRequest *CORBA_ServerRequest_ptr;
+
+class CORBA_Environment;
+typedef class CORBA_Environment *CORBA_Environment_ptr;
+
+class CORBA_Principal;
+typedef class CORBA_Principal *CORBA_Principal_ptr;
+
+typedef class CORBA_ImplementationDef *CORBA_ImplementationDef_ptr;
+
+typedef class CORBA_InterfaceDef *CORBA_InterfaceDef_ptr;
+
+class CORBA_String_var;
+
+// enum values defined in nvlist.hh, bitwise ORed.
+typedef u_int CORBA_Flags;
+
+typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
+                             //			     CORBA_Object_ptr,
+                             void *,
+                             void *,
+                             CORBA_Environment &);
+
+// NOTE: stub APIs are nonportable, and must be explicitly #included
+// by code emitted from an IDL compiler.
+
+#if	defined (_MSC_VER)
+#	pragma pack (pop)		// VC++, goes back to other padding rules
+#endif /* _MSC_VER */
 
 // Alignment macros
-#include "tao/align.h"
+#include "tao/Align.h"
 
-// Defines CORBA namespace
-#include "tao/corbacom.h"
+// CORBA class.
+#include "tao/CORBA.h"
 
-// individual CORBA classes
-#include "tao/sequence.h"
-#include "tao/sequence_T.h"
+#include "tao/Sequence.h"
+#include "tao/Sequence_T.h"
 
-#include "tao/objkeyC.h"
+#include "tao/Object_KeyC.h"
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
 extern CORBA::TypeCode TC_opaque;
 
-#include "tao/any.h"
+#include "tao/Any.h"
 
 #include "tao/params.h"
-#include "tao/client_factory.h"
-#include "tao/client_factory.h"
-#include "tao/server_factory.h"
+#include "tao/Client_Strategy_Factory.h"
+#include "tao/Server_Strategy_Factory.h"
 #include "tao/default_client.h"
 #include "tao/default_server.h"
 
-#include "tao/except.h"
-#include "tao/nvlist.h"
-#include "tao/orbobj.h"
-#include "tao/object.h"
-#include "tao/orbobj.h"
-#include "tao/principa.h"
-#include "tao/request.h"
-#include "tao/svrrqst.h"
-#include "tao/typecode.h"
+#include "tao/Exception.h"
+#include "tao/NVList.h"
+#include "tao/Object.h"
+#include "tao/ORB.h"
+#include "tao/Principal.h"
+#include "tao/Request.h"
+#include "tao/Server_Request.h"
+#include "tao/Typecode.h"
 
 // Marshaling
-#include "tao/marshal.h"
-#include "tao/cdr.h"
-#include "tao/stub.h"
+#include "tao/Marshal.h"
+#include "tao/CDR.h"
+#include "tao/Stub.h"
 
-#include "tao/poa.h"
+#include "tao/POA.h"
 
 extern TAO_Export int operator== (const PortableServer::ObjectId &l,
                                   const PortableServer::ObjectId &r);
@@ -130,18 +198,17 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
                                   const TAO_ObjectKey &r);
 
 // TAO specific includes
-#include "tao/connect.h"
-#include "tao/orb_core.h"
-#include "tao/objtable.h"
-#include "tao/optable.h"
+#include "tao/Connect.h"
+#include "tao/ORB_Core.h"
+#include "tao/Object_Table.h"
+#include "tao/Operation_Table.h"
 #include "tao/debug.h"
-//#include "tao/managed_types.h"
 
 // GIOP - IIOP related includes
-#include "tao/iiopobj.h"
-#include "tao/iioporb.h"
-#include "tao/interp.h"
-#include "tao/giop.h"
+#include "tao/IIOP_Object.h"
+#include "tao/IIOP_ORB.h"
+#include "tao/IIOP_Interpreter.h"
+#include "tao/GIOP.h"
 
 // The following *.i files are always included here
 #  if !defined(__ACE_INLINE__)
@@ -150,21 +217,19 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #    define do_undef_on_ACE_INLINE
 #  endif
 
-#include "tao/orb_core.i"
-#include "tao/corbacom.i"
-#include "tao/typecode.i"
-#include "tao/nvlist.i"
-#include "tao/any.i"
-#include "tao/stub.i"
-#include "tao/object.i"
-#include "tao/orbobj.i"
-#include "tao/marshal.i"
-#include "tao/cdr.i"
-#include "tao/giop.i"
-#include "tao/iioporb.i"
-#include "tao/iiopobj.i"
-#include "tao/svrrqst.i"
-//#include "tao/managed_types.i"
+#include "tao/ORB_Core.i"
+#include "tao/Typecode.i"
+#include "tao/NVList.i"
+#include "tao/Any.i"
+#include "tao/Stub.i"
+#include "tao/Object.i"
+#include "tao/ORB.i"
+#include "tao/Marshal.i"
+#include "tao/CDR.i"
+#include "tao/GIOP.i"
+#include "tao/IIOP_ORB.i"
+#include "tao/IIOP_Object.i"
+#include "tao/Server_Request.i"
 
 #  if defined (do_undef_on_ACE_INLINE)
 #    undef do_undef_on_ACE_INLINE
@@ -175,10 +240,12 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 // the following *.i files are conditionally included here
 #if defined (__ACE_INLINE__)
 #include "tao/params.i"
-#include "tao/server_factory.i"
+#include "Exception.i"
 #include "tao/default_client.i"
 #include "tao/default_server.i"
-#include "tao/connect.i"
+#include "tao/Connect.i"
+#include "tao/CORBA.i"
+#include "tao/Request.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (__ACE_INLINE__)
@@ -307,7 +374,6 @@ _env.exception (TAO_TRY_ENV.exception ()); \
 return RETURN
 
 #define TAO_THROW_SPEC(X)
-
 #endif /* ACE_HAS_EXCEPTIONS */
 
-#endif /* TAO_CORBA_H */
+#endif /* TAO_MASTER_CORBA_H */
