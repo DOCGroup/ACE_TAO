@@ -847,6 +847,39 @@ sub check_for_changelog_errors ()
     }
 }
 
+# This test checks for ptr_arith_t usage in source code.  ptr_arith_t
+# is non-portable.  Use ptrdiff_t instead.
+sub check_for_ptr_arith_t ()
+{
+    print "Running ptr_arith_t check\n";
+    foreach $file (@files_cpp, @files_inl, @files_h) {
+        my $line = 0;
+        if (open (FILE, $file)) {
+
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                ++$line;
+
+                next if m/^\s*\/\//;  # Ignore C++ comments.
+                next if m/^\s*$/;     # Skip lines only containing
+                                      # whitespace.
+
+		# Check for ptr_arith_t usage.  This test should
+		# ignore typedefs, and should only catch variable
+		# declarations and parameter types.
+                if (m/ptr_arith_t / || m/ptr_arith_t,/) {
+                    print_error ("ptr_arith_t in $file ($line)."
+				 . "  Use ptrdiff_t instead.");
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 ##############################################################################
 
 use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_m $opt_v/;
@@ -899,6 +932,7 @@ check_for_bad_ace_trace () if ($opt_l >= 4);
 check_for_missing_rir_env () if ($opt_l >= 5);
 check_for_ace_check () if ($opt_l >= 3);
 check_for_changelog_errors () if ($opt_l >= 4);
+check_for_ptr_arith_t () if ($opt_l >= 4);
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 
