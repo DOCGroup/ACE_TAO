@@ -1,3 +1,14 @@
+Tue Oct  8 21:06:23 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-sunos5.6.h: Undef ACE_HAS_TEMPLATE_TYPEDEFS for the
+          Forte 7 compiler (C++ 5.4). It should work, but Malloc_T doesn't
+          compile correctly with it enabled. Thanks to Serge Kolgan
+          <skolgan@objectsciences.com> for this fix.
+
+        * ace/config-sunos5.9.h: New config.h file for Solaris 9. Right now,
+          it just includes config-sunos5.8.h, but Solaris 9 has some new things
+          to play with as time goes on.
+
 Tue Oct  8 09:22:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Dgram_Bcast.cpp (send): Use next_ to find next
