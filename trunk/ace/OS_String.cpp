@@ -33,7 +33,7 @@ ACE_OS_String::strnstr (const char *s1, const char *s2, size_t len2)
 }
 
 #if defined (ACE_HAS_WCHAR)
-ACE_INLINE const wchar_t *
+const wchar_t *
 ACE_OS_String::strnstr (const wchar_t *s1, const wchar_t *s2, size_t len2)
 {
   // Substring length
@@ -57,7 +57,7 @@ ACE_OS_String::strnstr (const wchar_t *s1, const wchar_t *s2, size_t len2)
 }
 #endif /* ACE_HAS_WCHAR */
 
-ACE_INLINE char *
+char *
 ACE_OS_String::strdup (const char *s)
 {
   // @@ WINCE Should we provide this function on WinCE?
@@ -73,7 +73,7 @@ ACE_OS_String::strdup (const char *s)
 }
 
 #if defined (ACE_HAS_WCHAR)
-ACE_INLINE wchar_t *
+wchar_t *
 ACE_OS_String::strdup (const wchar_t *s)
 {
 #   if defined (__BORLANDC__)
