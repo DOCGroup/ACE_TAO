@@ -1044,6 +1044,7 @@ Jonathan Astle <JNASTLE@dera.gov.uk>
 Javier Lopez Sanchez <jlopez@uida.es>
 Nir Drang <Nir@bandwiz.com> 
 Albert Wijnja <Albert.Wijnja@meco.nl>
+Marcel Van Der Weert <mvdweert@aweta.nl>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
