@@ -104,7 +104,7 @@ TAO_PICurrent_Impl::~TAO_PICurrent_Impl (void)
 {
   size_t len = this->slot_table_.size ();
   for (size_t i = 0; i < len; ++i)
-    delete ACE_static_cast (CORBA::Any *, this->slot_table_[i]);
+    delete (CORBA::Any *) this->slot_table_[i];
 }
 
 CORBA::Any *
@@ -138,8 +138,7 @@ TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id,
       return any;
     }
 
-  const CORBA::Any *data =
-    ACE_static_cast (CORBA::Any *, table[id]);
+  const CORBA::Any *data = (CORBA::Any *) table[id];
 
   ACE_NEW_THROW_EX (any,
                     CORBA::Any (*data), // Make a copy.
@@ -179,8 +178,7 @@ TAO_PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
           if (i == id)
             continue;  // Avoid copying data twice.
 
-          const CORBA::Any *lc_data =
-            ACE_static_cast (CORBA::Any *, table[i]);
+          const CORBA::Any *lc_data = (CORBA::Any *) table[i];
 
           CORBA::Any *any = 0;
           ACE_NEW_THROW_EX (any,

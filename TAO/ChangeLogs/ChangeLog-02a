@@ -1,3 +1,15 @@
+Mon Sep 24 12:17:28 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PICurrent.cpp (~TAO_PICurrent_Impl, get_slot, set_slot):
+
+	  Use C-style casts to get around Sun CC 4.2 static_cast brain
+	  damage.  Sun CC 4.2 could not handle statically casting from a
+	  "void *&" to a "CORBA::Any *".  Thanks to Bala for the tip.
+
+	  Note that we could get around this problem by making the slot
+	  table contain CORBA::Any pointers instead void pointers, but
+	  that would increase footprint.
+
 Mon Sep 24 11:47:34 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.cpp:
