@@ -1,5 +1,8 @@
 Tue Feb  2 12:27:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/ACE.cpp: Added an ACE_UNUSED_ARG for program_name for
+ 	  ACE::daemonize().  Thanks to David Levine for reporting this.
+
 	* ace/OS.h: Generalized the WIF* macros so that they will be
  	  defined on any platform that lacks them, not just NT.  Thanks to
  	  David Levine for reporting this.
