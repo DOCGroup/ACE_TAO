@@ -116,8 +116,10 @@ public:
   CORBA_ValueBase_var &operator= (const CORBA_ValueBase_var &);
   CORBA::ValueBase *operator-> (void) const;
 
-  /// in, inout, out, _retn
+  operator const CORBA::ValueBase *&() const;
   operator CORBA::ValueBase *&();
+
+  /// in, inout, out, _retn
   CORBA::ValueBase *in (void) const;
   CORBA::ValueBase *&inout (void);
   CORBA::ValueBase *&out (void);
