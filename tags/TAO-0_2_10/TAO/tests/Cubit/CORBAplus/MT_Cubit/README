@@ -1,0 +1,58 @@
+The MT-Cubit example
+--------------------
+
+Compiling
+---------
+
+Makefiles are provided. Use make to compile.
+
+You can either run the server in the background in the same window as
+the client or open a separate window for the client and server.
+
+server:
+-------
+
+./svr -pbtrace
+
+port_num is the port number at which the server will start the high
+priority servant. The low priority servant will be created at
+(port_num+1).
+
+The server will print the IOR of the high and low priority servants,
+but it is not required by the client.
+
+client:
+-------
+
+./client -d <datatype> -n <num_calls> -t <num_threads> -pbtrace -pbinit Cubit iiop://<remoteHost>:<port>/Cubit00 
+
+<datatype> is one of the following:
+
+0 Octet
+1 Short
+2 Long
+3 Struct of the above 3 types
+
+<port_num> is the port number of the high priority servant. The low
+priority servant is assumed to be at (port_num+1).
+
+<server_hostname> is the hostname of the server.
+
+Based on the server_hostname and the port_num, the client constructs
+the IOR's for the high priority servant and the low priority servant.
+
+<num_calls> is the number of CORBA twoway calls to be made
+
+<num_threads> is the total number of concurrent clients to be
+created. One of these clients will be a high priority client (and thus
+send requests to the high priority servant), and the rest will have
+low priority.
+
+The high priority client makes requests at 20Hz, and the low priority
+clients make requests at 10Hz.
+
+Results
+-------
+
+The client prints the latency observed by the high priority client,
+and the average latency observed by the low priority client.
