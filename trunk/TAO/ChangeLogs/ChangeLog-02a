@@ -1,225 +1,241 @@
+Fri Dec  1 15:09:06 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Latency/multi_threaded.pl:
+          New driver script, it performs the basic test with a
+          multi-thread-safe configuration.  It is good to compare the
+          results from single_threaded.pl
+
+        * performance-tests/Latency/client.cpp:
+          Work around [BUGID:189], the ORB rejects multiple simulatenous
+          requests.  After much exploration we found out that it is
+          actually the kernel what rejects the requests, and not the ORB.
+          Maybe we need to find a workaround for that problem, meanwhile
+          the workaround in this change works quite nicely, and it is
+          actually a better approach for what we really want to test
+          here.
+
 Fri Dec  1 16:24:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/AliasDef_i.cpp:
-	* orbsvcs/IFR_Service/AliasDef_i.h:
-	* orbsvcs/IFR_Service/ArrayDef_i.cpp:
-	* orbsvcs/IFR_Service/ArrayDef_i.h:
-	* orbsvcs/IFR_Service/AttributeDef_i.cpp:
-	* orbsvcs/IFR_Service/AttributeDef_i.h:
-	* orbsvcs/IFR_Service/ComponentDef_i.cpp:
-	* orbsvcs/IFR_Service/ComponentDef_i.h:
-	* orbsvcs/IFR_Service/ComponentRepository_i.cpp:
-	* orbsvcs/IFR_Service/ComponentRepository_i.h:
-	* orbsvcs/IFR_Service/ConstantDef_i.cpp:
-	* orbsvcs/IFR_Service/ConstantDef_i.h:
-	* orbsvcs/IFR_Service/ConsumesDef_i.cpp:
-	* orbsvcs/IFR_Service/ConsumesDef_i.h:
-	* orbsvcs/IFR_Service/Contained_i.cpp:
-	* orbsvcs/IFR_Service/Contained_i.h:
-	* orbsvcs/IFR_Service/Container_i.cpp:
-	* orbsvcs/IFR_Service/Container_i.h:
-	* orbsvcs/IFR_Service/EmitsDef_i.cpp:
-	* orbsvcs/IFR_Service/EmitsDef_i.h:
-	* orbsvcs/IFR_Service/EnumDef_i.cpp:
-	* orbsvcs/IFR_Service/EnumDef_i.h:
-	* orbsvcs/IFR_Service/EventDef_i.cpp:
-	* orbsvcs/IFR_Service/EventDef_i.h:
-	* orbsvcs/IFR_Service/ExceptionDef_i.cpp:
-	* orbsvcs/IFR_Service/ExceptionDef_i.h:
-	* orbsvcs/IFR_Service/FactoryDef_i.cpp:
-	* orbsvcs/IFR_Service/FactoryDef_i.h:
-	* orbsvcs/IFR_Service/FinderDef_i.cpp:
-	* orbsvcs/IFR_Service/FinderDef_i.h:
-	* orbsvcs/IFR_Service/FixedDef_i.cpp:
-	* orbsvcs/IFR_Service/FixedDef_i.h:
-	* orbsvcs/IFR_Service/HomeDef_i.cpp:
-	* orbsvcs/IFR_Service/HomeDef_i.h:
-	* orbsvcs/IFR_Service/IDLType_i.h:
-	* orbsvcs/IFR_Service/IFR_Service.cpp:
-	* orbsvcs/IFR_Service/IFR_Service.h:
-	* orbsvcs/IFR_Service/IRObject_i.h:
-	* orbsvcs/IFR_Service/InterfaceDef_i.cpp:
-	* orbsvcs/IFR_Service/InterfaceDef_i.h:
-	* orbsvcs/IFR_Service/ModuleDef_i.cpp:
-	* orbsvcs/IFR_Service/ModuleDef_i.h:
-	* orbsvcs/IFR_Service/NativeDef_i.cpp:
-	* orbsvcs/IFR_Service/NativeDef_i.h:
-	* orbsvcs/IFR_Service/OperationDef_i.cpp:
-	* orbsvcs/IFR_Service/OperationDef_i.h:
-	* orbsvcs/IFR_Service/PrimaryKeyDef_i.cpp:
-	* orbsvcs/IFR_Service/PrimaryKeyDef_i.h:
-	* orbsvcs/IFR_Service/PrimitiveDef_i.cpp:
-	* orbsvcs/IFR_Service/PrimitiveDef_i.h:
-	* orbsvcs/IFR_Service/ProvidesDef_i.cpp:
-	* orbsvcs/IFR_Service/ProvidesDef_i.h:
-	* orbsvcs/IFR_Service/PublishesDef_i.cpp:
-	* orbsvcs/IFR_Service/PublishesDef_i.h:
-	* orbsvcs/IFR_Service/Repository_i.cpp:
-	* orbsvcs/IFR_Service/Repository_i.h:
-	* orbsvcs/IFR_Service/SequenceDef_i.cpp:
-	* orbsvcs/IFR_Service/SequenceDef_i.h:
-	* orbsvcs/IFR_Service/Servant_Factory.cpp:
-	* orbsvcs/IFR_Service/Servant_Factory.h:
-	* orbsvcs/IFR_Service/StringDef_i.cpp:
-	* orbsvcs/IFR_Service/StringDef_i.h:
-	* orbsvcs/IFR_Service/StructDef_i.cpp:
-	* orbsvcs/IFR_Service/StructDef_i.h:
-	* orbsvcs/IFR_Service/TypedefDef_i.cpp:
-	* orbsvcs/IFR_Service/TypedefDef_i.h:
-	* orbsvcs/IFR_Service/UnionDef_i.cpp:
-	* orbsvcs/IFR_Service/UnionDef_i.h:
-	* orbsvcs/IFR_Service/UsesDef_i.cpp:
-	* orbsvcs/IFR_Service/UsesDef_i.h:
-	* orbsvcs/IFR_Service/ValueBoxDef_i.cpp:
-	* orbsvcs/IFR_Service/ValueBoxDef_i.h:
-	* orbsvcs/IFR_Service/ValueDef_i.cpp:
-	* orbsvcs/IFR_Service/ValueDef_i.h:
-	* orbsvcs/IFR_Service/ValueMemberDef_i.cpp:
-	* orbsvcs/IFR_Service/ValueMemberDef_i.h:
-	* orbsvcs/IFR_Service/WstringDef_i.cpp:
-	* orbsvcs/IFR_Service/WstringDef_i.h:
-	* orbsvcs/IFR_Service/tmplinst.cpp:
+        * orbsvcs/IFR_Service/AliasDef_i.cpp:
+        * orbsvcs/IFR_Service/AliasDef_i.h:
+        * orbsvcs/IFR_Service/ArrayDef_i.cpp:
+        * orbsvcs/IFR_Service/ArrayDef_i.h:
+        * orbsvcs/IFR_Service/AttributeDef_i.cpp:
+        * orbsvcs/IFR_Service/AttributeDef_i.h:
+        * orbsvcs/IFR_Service/ComponentDef_i.cpp:
+        * orbsvcs/IFR_Service/ComponentDef_i.h:
+        * orbsvcs/IFR_Service/ComponentRepository_i.cpp:
+        * orbsvcs/IFR_Service/ComponentRepository_i.h:
+        * orbsvcs/IFR_Service/ConstantDef_i.cpp:
+        * orbsvcs/IFR_Service/ConstantDef_i.h:
+        * orbsvcs/IFR_Service/ConsumesDef_i.cpp:
+        * orbsvcs/IFR_Service/ConsumesDef_i.h:
+        * orbsvcs/IFR_Service/Contained_i.cpp:
+        * orbsvcs/IFR_Service/Contained_i.h:
+        * orbsvcs/IFR_Service/Container_i.cpp:
+        * orbsvcs/IFR_Service/Container_i.h:
+        * orbsvcs/IFR_Service/EmitsDef_i.cpp:
+        * orbsvcs/IFR_Service/EmitsDef_i.h:
+        * orbsvcs/IFR_Service/EnumDef_i.cpp:
+        * orbsvcs/IFR_Service/EnumDef_i.h:
+        * orbsvcs/IFR_Service/EventDef_i.cpp:
+        * orbsvcs/IFR_Service/EventDef_i.h:
+        * orbsvcs/IFR_Service/ExceptionDef_i.cpp:
+        * orbsvcs/IFR_Service/ExceptionDef_i.h:
+        * orbsvcs/IFR_Service/FactoryDef_i.cpp:
+        * orbsvcs/IFR_Service/FactoryDef_i.h:
+        * orbsvcs/IFR_Service/FinderDef_i.cpp:
+        * orbsvcs/IFR_Service/FinderDef_i.h:
+        * orbsvcs/IFR_Service/FixedDef_i.cpp:
+        * orbsvcs/IFR_Service/FixedDef_i.h:
+        * orbsvcs/IFR_Service/HomeDef_i.cpp:
+        * orbsvcs/IFR_Service/HomeDef_i.h:
+        * orbsvcs/IFR_Service/IDLType_i.h:
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.h:
+        * orbsvcs/IFR_Service/IRObject_i.h:
+        * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+        * orbsvcs/IFR_Service/InterfaceDef_i.h:
+        * orbsvcs/IFR_Service/ModuleDef_i.cpp:
+        * orbsvcs/IFR_Service/ModuleDef_i.h:
+        * orbsvcs/IFR_Service/NativeDef_i.cpp:
+        * orbsvcs/IFR_Service/NativeDef_i.h:
+        * orbsvcs/IFR_Service/OperationDef_i.cpp:
+        * orbsvcs/IFR_Service/OperationDef_i.h:
+        * orbsvcs/IFR_Service/PrimaryKeyDef_i.cpp:
+        * orbsvcs/IFR_Service/PrimaryKeyDef_i.h:
+        * orbsvcs/IFR_Service/PrimitiveDef_i.cpp:
+        * orbsvcs/IFR_Service/PrimitiveDef_i.h:
+        * orbsvcs/IFR_Service/ProvidesDef_i.cpp:
+        * orbsvcs/IFR_Service/ProvidesDef_i.h:
+        * orbsvcs/IFR_Service/PublishesDef_i.cpp:
+        * orbsvcs/IFR_Service/PublishesDef_i.h:
+        * orbsvcs/IFR_Service/Repository_i.cpp:
+        * orbsvcs/IFR_Service/Repository_i.h:
+        * orbsvcs/IFR_Service/SequenceDef_i.cpp:
+        * orbsvcs/IFR_Service/SequenceDef_i.h:
+        * orbsvcs/IFR_Service/Servant_Factory.cpp:
+        * orbsvcs/IFR_Service/Servant_Factory.h:
+        * orbsvcs/IFR_Service/StringDef_i.cpp:
+        * orbsvcs/IFR_Service/StringDef_i.h:
+        * orbsvcs/IFR_Service/StructDef_i.cpp:
+        * orbsvcs/IFR_Service/StructDef_i.h:
+        * orbsvcs/IFR_Service/TypedefDef_i.cpp:
+        * orbsvcs/IFR_Service/TypedefDef_i.h:
+        * orbsvcs/IFR_Service/UnionDef_i.cpp:
+        * orbsvcs/IFR_Service/UnionDef_i.h:
+        * orbsvcs/IFR_Service/UsesDef_i.cpp:
+        * orbsvcs/IFR_Service/UsesDef_i.h:
+        * orbsvcs/IFR_Service/ValueBoxDef_i.cpp:
+        * orbsvcs/IFR_Service/ValueBoxDef_i.h:
+        * orbsvcs/IFR_Service/ValueDef_i.cpp:
+        * orbsvcs/IFR_Service/ValueDef_i.h:
+        * orbsvcs/IFR_Service/ValueMemberDef_i.cpp:
+        * orbsvcs/IFR_Service/ValueMemberDef_i.h:
+        * orbsvcs/IFR_Service/WstringDef_i.cpp:
+        * orbsvcs/IFR_Service/WstringDef_i.h:
+        * orbsvcs/IFR_Service/tmplinst.cpp:
 
-	  Removed use of IR namespace in scoped names, and
-	  used flat names instead, in preparation for future move
-	  of IfR classes to the CORBA namespace, as dictated
-	  by CORBA 2.4.
+          Removed use of IR namespace in scoped names, and
+          used flat names instead, in preparation for future move
+          of IfR classes to the CORBA namespace, as dictated
+          by CORBA 2.4.
 
 Fri Dec  1 15:37:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/InterfaceC.i:
-	* tao/diffs/InterfaceC.i.diff:
+        * tao/InterfaceC.i:
+        * tao/diffs/InterfaceC.i.diff:
 
-	  Changes to flat name of sequence base classes, caught by
-	  Sun egcs.
+          Changes to flat name of sequence base classes, caught by
+          Sun egcs.
 
 Fri Dec  1 15:15:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/InterfaceC.i:
-	* tao/diffs/InterfaceC.i.diff:
+        * tao/InterfaceC.i:
+        * tao/diffs/InterfaceC.i.diff:
 
-	  Removed the use of the scoped name for IRObject_var and
-	  IRObject_out constructors and destructor, and used the
-	  flat name instead. Error reported by Sun egcs compiler.
+          Removed the use of the scoped name for IRObject_var and
+          IRObject_out constructors and destructor, and used the
+          flat name instead. Error reported by Sun egcs compiler.
 
 Fri Dec  1 14:44:25 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/corbafwd.h:
-	* tao/ifrfwd.h:
-	* tao/InterfaceC.h:
-	* tao/diffs/InterfaceC.h.diff:
+        * tao/corbafwd.h:
+        * tao/ifrfwd.h:
+        * tao/InterfaceC.h:
+        * tao/diffs/InterfaceC.h.diff:
 
-	  Had to move enum definitions from InterfaceC.h to corbafwd.h,
-	  and #inlucde corbafwd.h in ifrfwd.h, to make sunCC happy.
+          Had to move enum definitions from InterfaceC.h to corbafwd.h,
+          and #inlucde corbafwd.h in ifrfwd.h, to make sunCC happy.
 
 Fri Dec  1 13:16:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/InterfaceC.h:
-	* tao/InterfaceC.i:
-	* tao/InterfaceC.cpp:
-	* tao/ifrfwd.h:
+        * tao/InterfaceC.h:
+        * tao/InterfaceC.i:
+        * tao/InterfaceC.cpp:
+        * tao/ifrfwd.h:
 
-	  Removed use of IR namespace, as preparation for moving
-	  IfR code to the CORBA namespace in the future, regenerated
-	  files with the new collocation scheme, and removed code for
-	  smart proxies.
+          Removed use of IR namespace, as preparation for moving
+          IfR code to the CORBA namespace in the future, regenerated
+          files with the new collocation scheme, and removed code for
+          smart proxies.
 
-	* tao/Interface.pidl:
+        * tao/Interface.pidl:
 
-	  Removed TypeCodeFactory declarations. Now this file can
-	  be regenerated without IDL compile errors.
+          Removed TypeCodeFactory declarations. Now this file can
+          be regenerated without IDL compile errors.
 
-	* tao/PortableServer/POA_CORBA.h:
+        * tao/PortableServer/POA_CORBA.h:
 
-	  Updated code for CORBA::IRObject to reflect the new
-	  collocation scheme.
+          Updated code for CORBA::IRObject to reflect the new
+          collocation scheme.
 
-	* orbsvcs/IFR_Service/InterfaceS.h:
-	* orbsvcs/IFR_Service/InterfaceS.cpp:
-	* orbsvcs/IFR_Service/InterfaceS_T.i:
+        * orbsvcs/IFR_Service/InterfaceS.h:
+        * orbsvcs/IFR_Service/InterfaceS.cpp:
+        * orbsvcs/IFR_Service/InterfaceS_T.i:
 
-	  Regenerated files with the new collocation scheme, and removed
-	  use of IR namespace.
+          Regenerated files with the new collocation scheme, and removed
+          use of IR namespace.
 
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_CLient.cpp:
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_CLient.h:
-	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
-	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.h:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_CLient.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_CLient.h:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.h:
 
-	  Removed use of IR namespace.
+          Removed use of IR namespace.
 
-	* tao/Stub.h:
+        * tao/Stub.h:
 
-	  Removed enum TAO_Param_Type because it isn't used and
-	  because its members conflict with those of IR_ParameterMode.
+          Removed enum TAO_Param_Type because it isn't used and
+          because its members conflict with those of IR_ParameterMode.
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	* tao/Makefile:
-	* tao/Makefile.bor:
-	* tao/Makefile.am:
-	* tao/Smart_Proxies.cpp:
-	* tao/Smart_Proxies.i:
-	* tao/Smart_Proxies.h:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/Makefile:
+        * tao/Makefile.bor:
+        * tao/Makefile.am:
+        * tao/Smart_Proxies.cpp:
+        * tao/Smart_Proxies.i:
+        * tao/Smart_Proxies.h:
 
-	  Removed the source files from the directory and updated
-	  the projects and makefiles.
+          Removed the source files from the directory and updated
+          the projects and makefiles.
 
-	* tao/corba.h:
+        * tao/corba.h:
 
-	  Removed inclusion of Smart_Proxy.h.
+          Removed inclusion of Smart_Proxy.h.
 
-	* tao/MessagingC.cpp:
-	* tao/MessagingC.i:
-	* tao/MesssagingC.h:
+        * tao/MessagingC.cpp:
+        * tao/MessagingC.i:
+        * tao/MesssagingC.h:
 
-	  Removed smart proxy code.
+          Removed smart proxy code.
 
-	* TAO_IDL/be/be_codegen.cpp:
-	* TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
 
-	  Made generation of smart proxy code dependent only on
-	  the command line -Gsp option, and not also on 
-	  TAO_HAS_SMART_PROXIES as before. Also added
-	  generation of '#include tao/SmartProxies/Smart_Proxy.h'
-	  with the option.
+          Made generation of smart proxy code dependent only on
+          the command line -Gsp option, and not also on
+          TAO_HAS_SMART_PROXIES as before. Also added
+          generation of '#include tao/SmartProxies/Smart_Proxy.h'
+          with the option.
 
-	* tao/orbconf.h:
+        * tao/orbconf.h:
 
-	  Removed the TAO_HAS_SMART_PROXIES macro.
+          Removed the TAO_HAS_SMART_PROXIES macro.
 
-	* tao/SmartProxies/Smart_Proxies.cpp:
-	* tao/SmartProxies/Smart_Proxies.inl:
-	* tao/SmartProxies/Smart_Proxies.h:
-	* tao/SmartProxies/smartproxy_export.h:
-	* tao/SmartProxies/SmartProxies.dsp:
-	* tao/SmartProxies/Makefile:
-	* tao/SmartProxiess/Makefile.bor:
+        * tao/SmartProxies/Smart_Proxies.cpp:
+        * tao/SmartProxies/Smart_Proxies.inl:
+        * tao/SmartProxies/Smart_Proxies.h:
+        * tao/SmartProxies/smartproxy_export.h:
+        * tao/SmartProxies/SmartProxies.dsp:
+        * tao/SmartProxies/Makefile:
+        * tao/SmartProxiess/Makefile.bor:
 
-	  Added these files to the new smart proxies library.
+          Added these files to the new smart proxies library.
 
-	* tests/Smart_Proxies/Makefile:
-	* tests/Smart_Proxies/client.dsp:
-	* tests/Smart_Proxies/server.dsp:
-	* tests/Smart_Proxies/Benchmark/Makefile:
-	* tests/Smart_Proxies/Collocation/Coll_Test_Stubs.bor:
-	* tests/Smart_Proxies/Collocation/Coll_Test_Stubs.dsp:
-	* tests/Smart_Proxies/Collocation/Collocation.dsp:
-	* tests/Smart_Proxies/Collocation/Diamond.dsp:
-	* tests/Smart_Proxies/On_Demand/Makefile:
-	* tests/Smart_Proxies/Policy/Makefile:
+        * tests/Smart_Proxies/Makefile:
+        * tests/Smart_Proxies/client.dsp:
+        * tests/Smart_Proxies/server.dsp:
+        * tests/Smart_Proxies/Benchmark/Makefile:
+        * tests/Smart_Proxies/Collocation/Coll_Test_Stubs.bor:
+        * tests/Smart_Proxies/Collocation/Coll_Test_Stubs.dsp:
+        * tests/Smart_Proxies/Collocation/Collocation.dsp:
+        * tests/Smart_Proxies/Collocation/Diamond.dsp:
+        * tests/Smart_Proxies/On_Demand/Makefile:
+        * tests/Smart_Proxies/Policy/Makefile:
 
-	  Modified these files to link to the new library.
+          Modified these files to link to the new library.
 
-	* tao/diffs/InterfaceC.h.diff:
-	* tao/diffs/InterfaceC.h.diff:
-	* tao/diffs/InterfaceC.h.diff:
-	* tao/orbsvcs/IFR_Service/diffs/InterfaceS.h.diff:
-	* tao/orbsvcs/IFR_Service/diffs/InterfaceS.cpp.diff:
-	* tao/orbsvcs/IFR_Service/diffs/InterfaceS_T.i.diff:
+        * tao/diffs/InterfaceC.h.diff:
+        * tao/diffs/InterfaceC.h.diff:
+        * tao/diffs/InterfaceC.h.diff:
+        * tao/orbsvcs/IFR_Service/diffs/InterfaceS.h.diff:
+        * tao/orbsvcs/IFR_Service/diffs/InterfaceS.cpp.diff:
+        * tao/orbsvcs/IFR_Service/diffs/InterfaceS_T.i.diff:
 
-	  Added these diff files for regenerating files from
-	  Interface.pidl.
+          Added these diff files for regenerating files from
+          Interface.pidl.
 
 Fri Dec  1 09:31:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -235,7 +251,7 @@ Fri Dec  1 09:31:28 2000  Carlos O'Ryan  <coryan@uci.edu>
           version of wxWindows).
           It crashes sometimes and the fonts are way too small, but it is
           a good start.
-        
+
 Fri Dec  1 09:15:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
