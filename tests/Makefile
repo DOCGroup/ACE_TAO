@@ -66,6 +66,7 @@ BIN =   Aio_Platform_Test \
 	Tokens_Test \
 	TSS_Test \
 	UPIPE_SAP_Test \
+	Upgradable_RW_Test \
 	XtReactor_Test 
 
 LSRC   = $(addsuffix .cpp,$(BIN))

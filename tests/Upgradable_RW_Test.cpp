@@ -25,7 +25,7 @@
 ACE_RCSID(tests, Upgradable_RW_Test, "$Id$")
 
 #if defined (__BORLANDC__) && __BORLANDC__ >= 0x0530
-USELIB ("..\ace\aced.lib");
+  USELIB ("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined (__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
@@ -66,9 +66,9 @@ static u_int not_upgraded = 0;
 
 // Lock for shared_data (upgraded, not_upgraded, hash_Map)
 #if defined RW_MUTEX
-  static ACE_RW_Thread_Mutex rw_mutex;
+static ACE_RW_Thread_Mutex rw_mutex;
 #else
-  static ACE_Thread_Mutex mutex;
+static ACE_Thread_Mutex mutex;
 #endif
 
 // Count of the number of readers and writers.
@@ -97,11 +97,11 @@ find_last ()
   for (ACE_Double_Linked_List_Iterator<Element> iterator(*linked_List_ptr); 
        !iterator.done();
        iterator.advance())
-       {
-         if (element_ptr = iterator.next())
-          if (*element_ptr->value() == cString)
-             return 1;
-       }
+    {
+      if ((element_ptr = iterator.next()))
+        if (*element_ptr->value() == cString)
+          return 1;
+    }
 
   return 0;
 
@@ -126,26 +126,26 @@ parse_args (int argc, ASYS_TCHAR *argv[])
 
   while ((c = get_opt ()) != -1)
     switch (c)
-    {
-    case 'e':
-      n_entries = ACE_OS::atoi (get_opt.optarg);
-      break;
-    case 'r':
-      n_readers = ACE_OS::atoi (get_opt.optarg);
-      break;
-    case 'w':
-      n_writers = ACE_OS::atoi (get_opt.optarg);
-      break;
-    case 'n':
-      n_iterations = ACE_OS::atoi (get_opt.optarg);
-      break;
-    case 'u':
-      use_try_upgrade = 1;
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      {
+      case 'e':
+        n_entries = ACE_OS::atoi (get_opt.optarg);
+        break;
+      case 'r':
+        n_readers = ACE_OS::atoi (get_opt.optarg);
+        break;
+      case 'w':
+        n_writers = ACE_OS::atoi (get_opt.optarg);
+        break;
+      case 'n':
+        n_iterations = ACE_OS::atoi (get_opt.optarg);
+        break;
+      case 'u':
+        use_try_upgrade = 1;
+        break;
+      default:
+        print_usage_and_die ();
+        break;
+      }
 }
 
 // Iterate <n_iterations> each time checking that nobody modifies the data
@@ -175,9 +175,9 @@ Reader_Task::svc ()
 
       {
 #if defined RW_MUTEX
-          ACE_Read_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
+        ACE_Read_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
 #else
-          ACE_Guard<ACE_Thread_Mutex> g (mutex);
+        ACE_Guard<ACE_Thread_Mutex> g (mutex);
 #endif
 
         find_last ();
@@ -203,9 +203,9 @@ Reader_Task::svc ()
           || !use_try_upgrade)              // we did not try at all
         {
 #if defined RW_MUTEX
-            ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
+          ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
 #else
-            ACE_Guard<ACE_Thread_Mutex> g (mutex);
+          ACE_Guard<ACE_Thread_Mutex> g (mutex);
 #endif
 
           not_upgraded++;
@@ -303,20 +303,20 @@ Time_Calculation ::print_stats ()
       double tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,ASYS_TEXT ("\n"
-		  "\treal_time\t = %0.06f ms, \n"
-		  "\tuser_time\t = %0.06f ms, \n"
-		  "\tsystem_time\t = %0.06f ms, \n"
-		  "\t%0.00f calls/second\n"),
+                                      "\treal_time\t = %0.06f ms, \n"
+                                      "\tuser_time\t = %0.06f ms, \n"
+                                      "\tsystem_time\t = %0.06f ms, \n"
+                                      "\t%0.00f calls/second\n"),
 		  elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
 		  elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
 		  elapsed_time.system_time < 0.0 ? 0.0 : elapsed_time.system_time,
 		  tmp < 0.0 ? 0.0 : tmp));
 
       ACE_DEBUG ((LM_DEBUG, 
-              ASYS_TEXT ("Number of reported times: %d\n"), 
-              this->reported_times_));
+                  ASYS_TEXT ("Number of reported times: %d\n"), 
+                  this->reported_times_));
 
-  }
+    }
   else
     ACE_ERROR ((LM_ERROR,
 		"\tNo time stats printed.  Zero iterations or error ocurred.\n"));
@@ -335,13 +335,13 @@ init ()
                   -1);
 
   for (unsigned long i = 0; i < n_entries; i++)
-  {
-    ACE_OS::sprintf(entry,"%d",i);
-    ACE_NEW_RETURN (cString_ptr, ACE_CString(entry), -1);
-    ACE_NEW_RETURN (element_ptr, Element(cString_ptr), -1);
+    {
+      ACE_OS::sprintf(entry,"%d",i);
+      ACE_NEW_RETURN (cString_ptr, ACE_CString(entry), -1);
+      ACE_NEW_RETURN (element_ptr, Element(cString_ptr), -1);
 
-    linked_List_ptr->insert_tail(element_ptr);
-  }
+      linked_List_ptr->insert_tail(element_ptr);
+    }
   return 0;
 }
 
@@ -374,8 +374,8 @@ int main (int argc, ASYS_TCHAR *argv[])
   parse_args (argc, argv);
 
 #if !defined RW_MUTEX
-        use_try_upgrade = 0;
-        // make sure that we have to acquire the write lock
+  use_try_upgrade = 0;
+  // make sure that we have to acquire the write lock
 #endif
 
 
@@ -405,16 +405,16 @@ int main (int argc, ASYS_TCHAR *argv[])
   for (i = 0;
        i < n_readers;
        i++)
-       {
-         ACE_NEW_RETURN (reader_tasks[i], 
-                         Reader_Task(time_Calculation,
-                                     barrier), 
-                         -1);
-         reader_tasks[i]->activate (THR_BOUND | ACE_SCHED_FIFO, 
-                                    1, 
-                                    0, 
-                                    ACE_DEFAULT_THREAD_PRIORITY);
-       }
+    {
+      ACE_NEW_RETURN (reader_tasks[i], 
+                      Reader_Task(time_Calculation,
+                                  barrier), 
+                      -1);
+      reader_tasks[i]->activate (THR_BOUND | ACE_SCHED_FIFO, 
+                                 1, 
+                                 0, 
+                                 ACE_DEFAULT_THREAD_PRIORITY);
+    }
 
 
   // Create all the writers
@@ -428,20 +428,18 @@ int main (int argc, ASYS_TCHAR *argv[])
   for (i = 0;
        i < n_writers;
        i++)
-       {
-         ACE_NEW_RETURN (writer_tasks[i], 
-                         Writer_Task(time_Calculation, 
-                                     barrier), 
-                         -1);
-         writer_tasks[i]->activate (THR_BOUND | ACE_SCHED_FIFO, 
-                                    1, 
-                                    0, 
-                                    ACE_DEFAULT_THREAD_PRIORITY);
-       }
+    {
+      ACE_NEW_RETURN (writer_tasks[i], 
+                      Writer_Task(time_Calculation, 
+                                  barrier), 
+                      -1);
+      writer_tasks[i]->activate (THR_BOUND | ACE_SCHED_FIFO, 
+                                 1, 
+                                 0, 
+                                 ACE_DEFAULT_THREAD_PRIORITY);
+    }
 
-
-
-  int result = ACE_Thread_Manager::instance ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 
   // compute average time.
   time_Calculation.print_stats ();
@@ -465,14 +463,14 @@ int main (int argc, ASYS_TCHAR *argv[])
   for (i = 0; 
        i < n_entries;
        i++)
-       {
-         if (element_ptr = linked_List_ptr->delete_head())
-         {
-           cString_ptr = element_ptr->value();
-           delete cString_ptr;
-           delete element_ptr;
-         }
-       }
+    {
+      if ((element_ptr = linked_List_ptr->delete_head()))
+        {
+          cString_ptr = element_ptr->value();
+          delete cString_ptr;
+          delete element_ptr;
+        }
+    }
   delete linked_List_ptr;
 
 #else
@@ -486,13 +484,9 @@ int main (int argc, ASYS_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Entry<MAP_STRING, MAP_STRING>;
-template class ACE_Hash_Map_Manager<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
+template class ACE_Double_Linked_List<Element>;
+template class ACE_Double_Linked_List_Iterator<Element>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Entry<MAP_STRING, MAP_STRING>
-#pragma instantiate ACE_Hash_Map_Manager<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
+#pragma instantiate ACE_Double_Linked_List<Element>
+#pragma instantiate ACE_Double_Linked_List_Iterator<Element>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
