@@ -1,3 +1,13 @@
+Tue Dec  9 18:22:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Makefile:
+
+	  Added a bunch of new tests into the Makefiles for compilation. 
+
+	* orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
+
+	  Fixed a compilation error.
+
 Tue Dec  9 15:17:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp (visit_union):
